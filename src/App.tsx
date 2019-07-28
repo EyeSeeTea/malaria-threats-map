@@ -1,35 +1,25 @@
 import React from "react";
-import * as mapboxgl from "mapbox-gl";
+import { I18nextProvider } from "react-i18next";
+import i18next from "i18next";
+import Map from "./components/Map";
 import styled from "styled-components";
 
-Object.getOwnPropertyDescriptor(mapboxgl, "accessToken").set(
-  "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA"
-);
-
-const Map = styled.div`
+const PageWrapper = styled.div`
   position: absolute;
   top: 0;
+  right: 0;
   bottom: 0;
-  width: 100%;
+  left: 0;
 `;
-
 class App extends React.Component {
-  map: any;
-  mapContainer: any;
-
-  componentDidMount() {
-    this.map = new mapboxgl.Map({
-      container: this.mapContainer,
-      style: "mapbox://styles/mapbox/streets-v9"
-    });
-  }
-
-  componentWillUnmount() {
-    this.map.remove();
-  }
-
   render() {
-    return <Map ref={el => (this.mapContainer = el)} />;
+    return (
+      <I18nextProvider i18n={i18next}>
+        <PageWrapper>
+          <Map />
+        </PageWrapper>
+      </I18nextProvider>
+    );
   }
 }
 
