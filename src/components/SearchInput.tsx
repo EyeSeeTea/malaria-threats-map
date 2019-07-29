@@ -44,7 +44,7 @@ export default function SearchInput() {
       </IconButton>
       <Divider className={classes.divider} />
       <IconButton
-        color="primary"
+        color="default"
         className={classes.iconButton}
         aria-label="directions"
       >

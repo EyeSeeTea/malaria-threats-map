@@ -2,7 +2,8 @@ import { ActionType } from "typesafe-actions";
 import * as malariaActions from "../malaria/actions";
 
 export enum ActionTypeEnum {
-  MalariaSetTitle = "malaria/SET_TITLE"
+  MalariaSetTitle = "malaria/SET_TITLE",
+  MalariaToogleEndemicityLayer = "malaria/TOGGLE_ENDEMICITY_LAYER"
 }
 
 export type MalariaAction = ActionType<typeof malariaActions>;

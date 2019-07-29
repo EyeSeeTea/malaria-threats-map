@@ -7,3 +7,10 @@ export const setTitleAction = createAction(
     return (title: string) => action(title);
   }
 );
+
+export const toggleEndemicityLayerAction = createAction(
+  ActionTypeEnum.MalariaToogleEndemicityLayer,
+  action => {
+    return (visible: boolean) => action(visible);
+  }
+);

@@ -12,6 +12,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import SendIcon from "@material-ui/icons/Send";
 import { Checkbox, List, ListItem } from "@material-ui/core";
+import { State } from "../store/types";
+import { selectEndemicity, selectTitle } from "../malaria/reducer";
+import {
+  setTitleAction,
+  toggleEndemicityLayerAction
+} from "../malaria/actions";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,14 +29,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Layers() {
+function Layers({ toogleEndemicityLayer, endemicityLayer }: any) {
   // @ts-ignore
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
   function handleToggle() {
-    setOpen(prevOpen => !prevOpen);
+    // setOpen(prevOpen => !prevOpen);
+    toogleEndemicityLayer(!endemicityLayer);
   }
 
   function handleClose(event: any) {
@@ -108,3 +116,16 @@ export default function Layers() {
     </div>
   );
 }
+
+const mapStateToProps = (state: State) => ({
+  endemicityLayer: selectEndemicity(state)
+});
+
+const mapDispatchToProps = {
+  toogleEndemicityLayer: toggleEndemicityLayerAction
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Layers);

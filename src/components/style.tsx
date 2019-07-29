@@ -21,4 +21,10 @@ const style: any = {
   ]
 };
 
-export default style;
+const empty: any = {
+  version: 8,
+  sources: {},
+  layers: []
+};
+
+export default empty;
