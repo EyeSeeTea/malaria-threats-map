@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.0.0-rc.0",
+    "@material-ui/icons": "^4.0.0-rc.0",
     "@types/jest": "24.0.15",
     "@types/mapbox-gl": "^0.51.11",
     "@types/node": "12.6.8",
@@ -10,6 +12,8 @@
     "@types/react-dom": "16.8.4",
     "@types/react-map-gl": "^5.0.0",
     "@types/styled-components": "^4.1.18",
+    "highcharts": "^7.1.2",
+    "highcharts-react-official": "^2.2.2",
     "i18next": "^17.0.6",
     "mapbox-gl": "^1.1.1",
     "react": "^16.8.6",
