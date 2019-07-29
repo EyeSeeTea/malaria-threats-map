@@ -3,6 +3,8 @@ import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import Map from "./components/Map";
 import styled from "styled-components";
+import { Provider } from "react-redux";
+import createStore from "./store";
 
 const PageWrapper = styled.div`
   position: absolute;
@@ -13,11 +15,14 @@ const PageWrapper = styled.div`
 `;
 class App extends React.Component {
   render() {
+    const { store } = createStore();
     return (
       <I18nextProvider i18n={i18next}>
-        <PageWrapper>
-          <Map />
-        </PageWrapper>
+        <Provider store={store}>
+          <PageWrapper>
+            <Map />
+          </PageWrapper>
+        </Provider>
       </I18nextProvider>
     );
   }

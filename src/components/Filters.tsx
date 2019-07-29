@@ -8,6 +8,10 @@ import styled from "styled-components";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Button from "@material-ui/core/Button";
 import Fade from "@material-ui/core/Fade/Fade";
+import { connect } from "react-redux";
+import { State } from "../store/types";
+import { selectTitle } from "../malaria/reducer";
+import { setTitleAction } from "../malaria/actions";
 
 const StyledPaper = styled(Paper)`
   padding: 20px;
@@ -15,7 +19,7 @@ const StyledPaper = styled(Paper)`
   overflow-y: auto;
 `;
 
-export default function Filters() {
+function Filters({ setTitle, title }: any) {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -30,8 +34,9 @@ export default function Filters() {
     <React.Fragment>
       <Grow in={open}>
         <StyledPaper>
+          <Button onClick={() => setTitle("Hello World")}>Change Title</Button>
           <Typography variant="h5" component="h3">
-            This is a sheet of paper.
+            {title}
           </Typography>
           <Typography component="p">
             Paper can be used to build surface or other elements for your
@@ -115,3 +120,16 @@ export default function Filters() {
     </React.Fragment>
   );
 }
+
+const mapStateToProps = (state: State) => ({
+  title: selectTitle(state)
+});
+
+const mapDispatchToProps = {
+  setTitle: setTitleAction
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Filters);
