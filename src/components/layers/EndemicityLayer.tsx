@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import { selectDiagnosisStudies } from "../../malaria/diagnosis/reducer";
-import { circleLayout, circlePaint, studiesToGeoJson } from "./layer-utils";
-import { Layer } from "react-mapbox-gl";
+import { selectEndemicity } from "../../malaria/reducer";
+import { setThemeAction } from "../../malaria/actions";
 
 const ENDEMICITY_LAYER_ID = "endemicity-layer";
 const ENDEMICITY_SOURCE_ID = "endemicity-source";
@@ -21,6 +20,14 @@ const layer: any = {
   source: ENDEMICITY_SOURCE_ID
 };
 
+const mapStateToProps = (state: State) => ({
+  endemicity: selectEndemicity(state)
+});
+
+const mapDispatchToProps = {
+  setTheme: setThemeAction
+};
+
 class EndemicityLayer extends Component<any> {
   componentDidMount(): void {
     const source: any = {
@@ -30,10 +37,15 @@ class EndemicityLayer extends Component<any> {
     };
     this.props.map.addSource(ENDEMICITY_SOURCE_ID, source);
     this.props.map.addLayer(layer);
+    if (this.props.endemicity) {
+      this.showLayer();
+    } else {
+      this.hideLayer();
+    }
   }
 
   componentDidUpdate() {
-    if (this.props.visible) {
+    if (this.props.endemicity) {
       this.showLayer();
     } else {
       this.hideLayer();
@@ -68,4 +80,8 @@ class EndemicityLayer extends Component<any> {
     return <div />;
   }
 }
-export default EndemicityLayer;
+
+export default connect(
+  mapStateToProps,
+  null
+)(EndemicityLayer);

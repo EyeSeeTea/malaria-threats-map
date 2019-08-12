@@ -5,9 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Fab from "@material-ui/core/Fab";
 import FilterIcon from "@material-ui/icons/FilterList";
 import styled from "styled-components";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Button from "@material-ui/core/Button";
-import Fade from "@material-ui/core/Fade/Fade";
 import { connect } from "react-redux";
 import { State } from "../store/types";
 import { selectTitle } from "../malaria/reducer";
@@ -34,84 +32,88 @@ function Filters({ setTitle, title }: any) {
     <React.Fragment>
       <Grow in={open}>
         <StyledPaper>
-          <Button onClick={() => setTitle("Hello World")}>Change Title</Button>
-          <Typography variant="h5" component="h3">
-            {title}
-          </Typography>
-          <Typography component="p">
-            Paper can be used to build surface or other elements for your
-            application.
-          </Typography>
-          <Typography variant="h5" component="h3">
-            This is a sheet of paper.
-          </Typography>
-          <Typography component="p">
-            Paper can be used to build surface or other elements for your
-            application.
-          </Typography>
-          <Typography variant="h5" component="h3">
-            This is a sheet of paper.
-          </Typography>
-          <Typography component="p">
-            Paper can be used to build surface or other elements for your
-            application.
-          </Typography>
-          <Typography variant="h5" component="h3">
-            This is a sheet of paper.
-          </Typography>
-          <Typography component="p">
-            Paper can be used to build surface or other elements for your
-            application.
-          </Typography>
-          <Typography variant="h5" component="h3">
-            This is a sheet of paper.
-          </Typography>
-          <Typography component="p">
-            Paper can be used to build surface or other elements for your
-            application.
-          </Typography>
-          <Typography variant="h5" component="h3">
-            This is a sheet of paper.
-          </Typography>
-          <Typography component="p">
-            Paper can be used to build surface or other elements for your
-            application.
-          </Typography>
-          <Typography variant="h5" component="h3">
-            This is a sheet of paper.
-          </Typography>
-          <Typography component="p">
-            Paper can be used to build surface or other elements for your
-            application.
-          </Typography>
-          <Typography variant="h5" component="h3">
-            This is a sheet of paper.
-          </Typography>
-          <Typography component="p">
-            Paper can be used to build surface or other elements for your
-            application.
-          </Typography>
-          <Typography variant="h5" component="h3">
-            This is a sheet of paper.
-          </Typography>
-          <Typography component="p">
-            Paper can be used to build surface or other elements for your
-            application.
-          </Typography>
-          <Typography variant="h5" component="h3">
-            This is a sheet of paper.
-          </Typography>
-          <Typography component="p">
-            Paper can be used to build surface or other elements for your
-            application.
-          </Typography>
-          <Typography variant="h5" component="h3">
-            This is a sheet of paper.
-          </Typography>
-          <Typography component="p">
-            Paper can be used to build surface or other elements for your
-            application.
-          </Typography>
+          <React.Fragment>
+            <Button onClick={() => setTitle("Hello World")}>
+              Change Title
+            </Button>
+            <Typography variant="h5" component="h3">
+              {title}
+            </Typography>
+            <Typography component="p">
+              Paper can be used to build surface or other elements for your
+              application.
+            </Typography>
+            <Typography variant="h5" component="h3">
+              This is a sheet of paper.
+            </Typography>
+            <Typography component="p">
+              Paper can be used to build surface or other elements for your
+              application.
+            </Typography>
+            <Typography variant="h5" component="h3">
+              This is a sheet of paper.
+            </Typography>
+            <Typography component="p">
+              Paper can be used to build surface or other elements for your
+              application.
+            </Typography>
+            <Typography variant="h5" component="h3">
+              This is a sheet of paper.
+            </Typography>
+            <Typography component="p">
+              Paper can be used to build surface or other elements for your
+              application.
+            </Typography>
+            <Typography variant="h5" component="h3">
+              This is a sheet of paper.
+            </Typography>
+            <Typography component="p">
+              Paper can be used to build surface or other elements for your
+              application.
+            </Typography>
+            <Typography variant="h5" component="h3">
+              This is a sheet of paper.
+            </Typography>
+            <Typography component="p">
+              Paper can be used to build surface or other elements for your
+              application.
+            </Typography>
+            <Typography variant="h5" component="h3">
+              This is a sheet of paper.
+            </Typography>
+            <Typography component="p">
+              Paper can be used to build surface or other elements for your
+              application.
+            </Typography>
+            <Typography variant="h5" component="h3">
+              This is a sheet of paper.
+            </Typography>
+            <Typography component="p">
+              Paper can be used to build surface or other elements for your
+              application.
+            </Typography>
+            <Typography variant="h5" component="h3">
+              This is a sheet of paper.
+            </Typography>
+            <Typography component="p">
+              Paper can be used to build surface or other elements for your
+              application.
+            </Typography>
+            <Typography variant="h5" component="h3">
+              This is a sheet of paper.
+            </Typography>
+            <Typography component="p">
+              Paper can be used to build surface or other elements for your
+              application.
+            </Typography>
+            <Typography variant="h5" component="h3">
+              This is a sheet of paper.
+            </Typography>
+            <Typography component="p">
+              Paper can be used to build surface or other elements for your
+              application.
+            </Typography>
+          </React.Fragment>
         </StyledPaper>
       </Grow>
       <Fab color="default" aria-label="add" onClick={handleClick}>

@@ -1,29 +1,21 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import style from "./style";
+import empty from "./style";
 import styled from "styled-components";
 import SearchInput from "./SearchInput";
-import Filters from "./Filters";
 import Layers from "./Layers";
-import ReactMapboxGl, {
-  Feature,
-  GeoJSONLayer,
-  Layer,
-  Source
-} from "react-mapbox-gl";
+import ReactMapboxGl from "react-mapbox-gl";
 
 import { State } from "../store/types";
-import { selectEndemicity, selectTheme } from "../malaria/reducer";
+import { selectTheme } from "../malaria/reducer";
 import { connect } from "react-redux";
 import { selectPreventionStudies } from "../malaria/prevention/reducer";
-import { PreventionStudy } from "../types/Prevention";
 import { selectDiagnosisStudies } from "../malaria/diagnosis/reducer";
 import { selectTreatmentStudies } from "../malaria/treatment/reducer";
 import { selectInvasiveStudies } from "../malaria/invasive/reducer";
 import IconButton from "@material-ui/core/IconButton";
-import LayersIcon from "@material-ui/icons/Layers";
 import { Study } from "../types/Malaria";
 import mapboxgl from "mapbox-gl";
-import empty from "./style";
 import PreventionLayer from "./layers/PreventionLayer";
 import DiagnosisLayer from "./layers/DiagnosisLayer";
 import TreatmentLayer from "./layers/TreatmentLayer";
@@ -112,7 +104,6 @@ const circlePaint = {
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
-  endemicityLayer: selectEndemicity(state),
   preventionStudies: selectPreventionStudies(state),
   diagnosisStudies: selectDiagnosisStudies(state),
   treatmentStudies: selectTreatmentStudies(state),
@@ -209,7 +200,7 @@ class Map extends React.Component<any> {
             width: "100%",
             height: "100%"
           }}
-        ></div>
+        />
         {this.map && this.state.ready && <PreventionLayer map={this.map} />}
         {this.map && this.state.ready && <DiagnosisLayer map={this.map} />}
         {this.map && this.state.ready && <TreatmentLayer map={this.map} />}
