@@ -1,25 +1,43 @@
-import React from "react";
-import MapGL, { NavigationControl } from "react-map-gl";
+import React, { CSSProperties } from "react";
 import style from "./style";
 import styled from "styled-components";
-import Title from "../Title";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 import SearchInput from "./SearchInput";
 import Filters from "./Filters";
 import Layers from "./Layers";
 import ReactMapboxGl, {
-  Source,
-  Layer,
   Feature,
-  GeoJSONLayer
+  GeoJSONLayer,
+  Layer,
+  Source
 } from "react-mapbox-gl";
-import { State } from "../store/types";
-import { selectEndemicity } from "../malaria/reducer";
-import { toggleEndemicityLayerAction } from "../malaria/actions";
-import { connect } from "react-redux";
 
-const MAPBOX_TOKEN =
+import { State } from "../store/types";
+import { selectEndemicity, selectTheme } from "../malaria/reducer";
+import { connect } from "react-redux";
+import { selectPreventionStudies } from "../malaria/prevention/reducer";
+import { PreventionStudy } from "../types/Prevention";
+import { selectDiagnosisStudies } from "../malaria/diagnosis/reducer";
+import { selectTreatmentStudies } from "../malaria/treatment/reducer";
+import { selectInvasiveStudies } from "../malaria/invasive/reducer";
+import IconButton from "@material-ui/core/IconButton";
+import LayersIcon from "@material-ui/icons/Layers";
+import { Study } from "../types/Malaria";
+import mapboxgl from "mapbox-gl";
+import empty from "./style";
+import PreventionLayer from "./layers/PreventionLayer";
+import DiagnosisLayer from "./layers/DiagnosisLayer";
+import TreatmentLayer from "./layers/TreatmentLayer";
+import InvasiveLayer from "./layers/InvasiveLayer";
+import {
+  DiagnosisIcon,
+  InvasiveIcon,
+  PreventionIcon,
+  TreatmentIcon
+} from "./Icons";
+import EndemicityLayer from "./layers/EndemicityLayer";
+import { setThemeAction } from "../malaria/actions";
+
+mapboxgl.accessToken =
   "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
 const BaseMap = ReactMapboxGl({
@@ -68,6 +86,10 @@ const Divider = styled.div`
   height: 10px;
 `;
 
+const ButtonGroup = styled.div`
+  display: flex;
+`;
+
 const RASTER_SOURCE_OPTIONS = {
   type: "raster",
   tiles: [
@@ -83,8 +105,30 @@ const ENDEMICITY_SOURCE_OPTIONS = {
     "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer/6/query?where=ENDEMICITY%3D0&f=geojson&geometryPrecision=2.5"
 };
 
+const circleLayout = { visibility: "visible" };
+const circlePaint = {
+  "circle-color": "#E54E52"
+};
+
+const mapStateToProps = (state: State) => ({
+  theme: selectTheme(state),
+  endemicityLayer: selectEndemicity(state),
+  preventionStudies: selectPreventionStudies(state),
+  diagnosisStudies: selectDiagnosisStudies(state),
+  treatmentStudies: selectTreatmentStudies(state),
+  invasiveStudies: selectInvasiveStudies(state)
+});
+
+const mapDispatchToProps = {
+  setTheme: setThemeAction
+};
+
 class Map extends React.Component<any> {
+  map: any;
+  mapContainer: any;
   state = {
+    ready: false,
+    theme: "prevention",
     style: style,
     viewport: {
       latitude: 40,
@@ -95,74 +139,108 @@ class Map extends React.Component<any> {
     }
   };
 
+  componentDidMount() {
+    this.map = new mapboxgl.Map({
+      container: this.mapContainer,
+      style: empty,
+      center: [-16.629129, 28.291565],
+      zoom: 2
+    });
+
+    this.map.on("load", () => {
+      this.map.addSource("raster-tiles", {
+        type: "raster",
+        tiles: [
+          "https://maps.who.int/arcgis/rest/services/Basemap/WHO_West_Africa_background_7/MapServer/tile/{z}/{y}/{x}?blankTile=false"
+        ],
+        tileSize: 256,
+        attribution: ""
+      });
+
+      this.map.addLayer({
+        id: "simple-tiles",
+        type: "raster",
+        source: "raster-tiles",
+        minzoom: 1,
+        maxzoom: 8
+      });
+
+      this.setState({ ready: true });
+    });
+  }
+
+  geoJson = (studies: Study[]) => ({
+    type: "FeatureCollection",
+    features: studies.map(study => ({
+      type: "Feature",
+      properties: study,
+      geometry: {
+        type: "Point",
+        coordinates: [parseFloat(study.Longitude), parseFloat(study.Latitude)]
+      }
+    }))
+  });
+
+  componentWillUnmount() {
+    this.map.remove();
+  }
+
+  componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void {
+    if (this.state.theme !== prevState.theme) {
+    }
+  }
+
   _onViewportChange = (viewport: any) => this.setState({ viewport });
   _onStyleChange = (mapStyle: any) => this.setState({ mapStyle });
+
+  selectTheme = (theme: string) => {
+    this.setState({ theme });
+  };
+
   render() {
+    const { setTheme, theme } = this.props;
     const { viewport, style } = this.state;
     return (
-      <BaseMap
-        style={style}
-        zoom={[2]}
-        containerStyle={{
-          height: "100vh",
-          width: "100vw"
-        }}
-      >
-        <Source id="source_id" tileJsonSource={RASTER_SOURCE_OPTIONS} />
-        <Layer
-          type="raster"
-          id="layer_id"
-          sourceId="source_id"
-          minZoom={0}
-          maxZoom={20}
-        />
+      <React.Fragment>
+        <div
+          ref={el => (this.mapContainer = el)}
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%"
+          }}
+        ></div>
+        {this.map && this.state.ready && <PreventionLayer map={this.map} />}
+        {this.map && this.state.ready && <DiagnosisLayer map={this.map} />}
+        {this.map && this.state.ready && <TreatmentLayer map={this.map} />}
+        {this.map && this.state.ready && <InvasiveLayer map={this.map} />}
+        {this.map && this.state.ready && <EndemicityLayer map={this.map} />}
 
-        <Source
-          id="endemicity_layer"
-          geoJsonSource={ENDEMICITY_SOURCE_OPTIONS}
-        />
-        {this.props.endemicityLayer && (
-          <React.Fragment>
-            <Layer
-              type="fill"
-              id="endemicity_id"
-              sourceId="endemicity_layer"
-              paint={{
-                "fill-color": "rgba(0,0,0,0.4)",
-                "fill-opacity": 0.5,
-                "fill-outline-color": "rgba(0,0,0,0.1)"
-              }}
-              minZoom={0}
-              maxZoom={20}
-            />
-          </React.Fragment>
-        )}
-        {/*<ControlsContainer>*/}
-        {/*<NavigationControl />*/}
-        {/*</ControlsContainer>*/}
-        <TitleContainer>
-          <Title />
-        </TitleContainer>
         <SearchContainer>
-          <SearchInput />
-          <Divider />
+          <ButtonGroup>
+            <IconButton onClick={() => setTheme("prevention")}>
+              <PreventionIcon active={theme === "prevention"} />
+            </IconButton>
+            <IconButton onClick={() => setTheme("diagnosis")}>
+              <DiagnosisIcon active={theme === "diagnosis"} />
+            </IconButton>
+            <IconButton onClick={() => setTheme("treatment")}>
+              <TreatmentIcon active={theme === "treatment"} />
+            </IconButton>
+            <IconButton onClick={() => setTheme("invasive")}>
+              <InvasiveIcon active={theme === "invasive"} />
+            </IconButton>
+          </ButtonGroup>
           <SearchInput />
           <Divider />
           <Layers />
         </SearchContainer>
-        <FilterContainer>
-          <Filters />
-        </FilterContainer>
-      </BaseMap>
+      </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = (state: State) => ({
-  endemicityLayer: selectEndemicity(state)
-});
-
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Map);

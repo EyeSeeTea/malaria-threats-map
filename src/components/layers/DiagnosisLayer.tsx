@@ -1,0 +1,84 @@
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { State } from "../../store/types";
+import { selectDiagnosisStudies } from "../../malaria/diagnosis/reducer";
+import { circleLayout, circlePaint, studiesToGeoJson } from "./layer-utils";
+import { selectTheme } from "../../malaria/reducer";
+import { Study } from "../../types/Malaria";
+
+const DIAGNOSIS = "diagnosis";
+const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
+const DIAGNOSIS_SOURCE_ID = "diagnosis-source";
+
+const layer: any = {
+  id: DIAGNOSIS_LAYER_ID,
+  type: "circle",
+  layout: circleLayout,
+  paint: circlePaint,
+  source: DIAGNOSIS_SOURCE_ID
+};
+
+const mapStateToProps = (state: State) => ({
+  studies: selectDiagnosisStudies(state),
+  theme: selectTheme(state)
+});
+
+type Props = {
+  studies: Study[];
+  theme: string;
+  map: any;
+};
+
+class DiagnosisLayer extends Component<Props> {
+  componentDidUpdate(prevProps: any): void {
+    if (prevProps.studies.length !== this.props.studies.length) {
+      if (this.props.map.getSource(DIAGNOSIS_SOURCE_ID)) {
+        this.props.map.removeSource(DIAGNOSIS_SOURCE_ID);
+      }
+      const source: any = {
+        type: "geojson",
+        data: studiesToGeoJson(this.props.studies)
+      };
+      this.props.map.addSource(DIAGNOSIS_SOURCE_ID, source);
+      this.props.map.addLayer(layer);
+    }
+
+    if (this.props.theme === DIAGNOSIS) {
+      this.showLayer();
+    } else {
+      this.hideLayer();
+    }
+  }
+
+  componentWillUnmount(): void {
+    this.hideLayer();
+  }
+
+  showLayer = () => {
+    if (this.props.map.getLayer(DIAGNOSIS_LAYER_ID)) {
+      this.props.map.setLayoutProperty(
+        DIAGNOSIS_LAYER_ID,
+        "visibility",
+        "visible"
+      );
+    }
+  };
+
+  hideLayer = () => {
+    if (this.props.map.getLayer(DIAGNOSIS_LAYER_ID)) {
+      this.props.map.setLayoutProperty(
+        DIAGNOSIS_LAYER_ID,
+        "visibility",
+        "none"
+      );
+    }
+  };
+
+  render() {
+    return <div />;
+  }
+}
+export default connect(
+  mapStateToProps,
+  null
+)(DiagnosisLayer);

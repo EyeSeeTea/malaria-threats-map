@@ -1,4 +1,4 @@
-const style: any = {
+export const style: any = {
   version: 8,
   sources: {
     "raster-tiles": {
