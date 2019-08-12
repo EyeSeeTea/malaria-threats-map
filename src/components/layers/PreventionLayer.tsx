@@ -13,7 +13,17 @@ const PREVENTION_SOURCE_ID = "prevention-source";
 
 const circleLayout = { visibility: "visible" };
 const circlePaint = {
-  "circle-color": "#E54E52"
+  "circle-radius": 6,
+  "circle-color": "#E54E52",
+  "circle-opacity": 1,
+  "circle-stroke-color": "lightgrey",
+  "circle-stroke-width": 4,
+  "circle-stroke-opacity": [
+    "case",
+    ["boolean", ["feature-state", "hover"], false],
+    0.7,
+    0
+  ]
 };
 
 const layer: any = {
@@ -37,7 +47,10 @@ type Props = {
 
 class PreventionLayer extends Component<Props> {
   componentDidUpdate(prevProps: Props) {
-    if (prevProps.studies.length !== this.props.studies.length) {
+    if (
+      prevProps.studies.length !== this.props.studies.length &&
+      this.props.studies.length > 0
+    ) {
       if (this.props.map.getSource(PREVENTION_SOURCE_ID)) {
         this.props.map.removeSource(PREVENTION_SOURCE_ID);
       }
@@ -61,6 +74,34 @@ class PreventionLayer extends Component<Props> {
           .setLngLat(coordinates)
           .setHTML(description)
           .addTo(this.props.map);
+      });
+
+      let hoveredStateId: any = null;
+
+      this.props.map.on("mousemove", PREVENTION_LAYER_ID, (e: any) => {
+        if (e.features.length > 0) {
+          if (hoveredStateId) {
+            this.props.map.setFeatureState(
+              { source: PREVENTION_SOURCE_ID, id: hoveredStateId },
+              { hover: false }
+            );
+          }
+          hoveredStateId = e.features[0].properties.OBJECTID;
+          this.props.map.setFeatureState(
+            { source: PREVENTION_SOURCE_ID, id: hoveredStateId },
+            { hover: true }
+          );
+        }
+      });
+
+      this.props.map.on("mouseleave", PREVENTION_LAYER_ID, () => {
+        if (hoveredStateId) {
+          this.props.map.setFeatureState(
+            { source: PREVENTION_SOURCE_ID, id: hoveredStateId },
+            { hover: false }
+          );
+        }
+        hoveredStateId = null;
       });
     }
 
