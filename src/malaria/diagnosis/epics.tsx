@@ -27,7 +27,7 @@ export const getDiagnosisStudiesEpic = (
         where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${MapServerConfig.years.to}`,
         returnGeometry: false,
         spatialRel: "esriSpatialRelIntersects",
-        outFields: "*",
+        outFields: "OBJECTID,Latitude,Longitude",
         resultOffset: 0,
         resultRecordCount: 25000
       };

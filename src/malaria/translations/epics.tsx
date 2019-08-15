@@ -4,30 +4,30 @@ import { ActionTypeEnum } from "../../store/actions";
 import * as ajax from "../../store/ajax";
 import { of } from "rxjs";
 import {
-  fetchPreventionStudiesError,
-  fetchPreventionStudiesRequest,
-  fetchPreventionStudiesSuccess
+  fetchTranslationsErrorAction,
+  fetchTranslationsSuccessAction,
+  fetchTranslationsRequestAction
 } from "./actions";
-import { switchMap, mergeMap, catchError } from "rxjs/operators";
+import { catchError, mergeMap, switchMap } from "rxjs/operators";
 import { AjaxError } from "rxjs/ajax";
-import { PreventionResponse } from "../../types/Prevention";
 import { MapServerConfig } from "../constants";
+import { TranslationResponse } from "../../types/Translation";
 
 interface Params {
   [key: string]: string | number | boolean;
 }
 
-export const getPreventionStudiesEpic = (
-  action$: ActionsObservable<ActionType<typeof fetchPreventionStudiesRequest>>
+export const getTreatmentStudiesEpic = (
+  action$: ActionsObservable<ActionType<typeof fetchTranslationsRequestAction>>
 ) =>
-  action$.ofType(ActionTypeEnum.FetchPreventionStudiesRequest).pipe(
+  action$.ofType(ActionTypeEnum.FetchTranslationsRequest).pipe(
     switchMap(action => {
       const params: Params = {
         f: "json",
-        where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${MapServerConfig.years.to}`,
+        where: "1=1",
         returnGeometry: false,
         spatialRel: "esriSpatialRelIntersects",
-        outFields: "OBJECTID,Latitude,Longitude",
+        outFields: "*",
         resultOffset: 0,
         resultRecordCount: 25000
       };
@@ -35,13 +35,13 @@ export const getPreventionStudiesEpic = (
         .map(key => `${key}=${params[key]}`)
         .join("&");
       return ajax
-        .get(`/${MapServerConfig.layers.prevention}/query?${query}`)
+        .get(`/${MapServerConfig.layers.translations}/query?${query}`)
         .pipe(
-          mergeMap((response: PreventionResponse) => {
-            return of(fetchPreventionStudiesSuccess(response));
+          mergeMap((response: TranslationResponse) => {
+            return of(fetchTranslationsSuccessAction(response));
           }),
           catchError((error: AjaxError) =>
-            of(fetchPreventionStudiesError(error))
+            of(fetchTranslationsErrorAction(error))
           )
         );
     })

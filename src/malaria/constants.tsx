@@ -3,7 +3,8 @@ export const MapServerConfig = {
     prevention: 8,
     diagnosis: 10,
     treatment: 9,
-    invasive: 14
+    invasive: 14,
+    translations: 11
   },
   years: {
     from: 1998,

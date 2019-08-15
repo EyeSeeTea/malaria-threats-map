@@ -19,7 +19,11 @@ export enum ActionTypeEnum {
 
   FetchInvasiveStudiesRequest = "invasive/FETCH_INVASIVE_STUDIES_REQUEST",
   FetchInvasiveStudiesSuccess = "invasive/FETCH_INVASIVE_STUDIES_SUCCESS",
-  FetchInvasiveStudiesError = "invasive/FETCH_INVASIVE_STUDIES_ERROR"
+  FetchInvasiveStudiesError = "invasive/FETCH_INVASIVE_STUDIES_ERROR",
+
+  FetchTranslationsRequest = "translations/FETCH_TRANSLATIONS_REQUEST",
+  FetchTranslationsSuccess = "translations/FETCH_TRANSLATIONS_SUCCESS",
+  FetchTranslationsError = "translations/FETCH_TRANSLATIONS_ERROR"
 }
 
 export type MalariaAction = ActionType<typeof malariaActions>;

@@ -8,6 +8,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import DirectionsIcon from "@material-ui/icons/Directions";
 import styled from "styled-components";
+import { useTranslation, withTranslation } from "react-i18next";
 
 const useStyles = makeStyles({
   root: {
@@ -29,6 +30,7 @@ const useStyles = makeStyles({
 export default function SearchInput() {
   // @ts-ignore
   const classes = useStyles();
+  const { t } = useTranslation("common");
 
   return (
     <Paper className={classes.root}>
@@ -36,6 +38,7 @@ export default function SearchInput() {
         <MenuIcon />
       </IconButton>
       <InputBase
+        value={t("AFRICA_SOUTH-EAST_SUB-REGION")}
         placeholder="Search Google Maps"
         inputProps={{ "aria-label": "search google maps" }}
       />

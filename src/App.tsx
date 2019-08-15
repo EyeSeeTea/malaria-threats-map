@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Provider } from "react-redux";
 import createStore from "./store";
 import MapContainer from "./MapContainer";
+import DataProvider from "./components/DataProvider";
 
 const PageWrapper = styled.div`
   position: absolute;
@@ -18,13 +19,15 @@ class App extends React.Component {
   render() {
     const { store } = createStore();
     return (
-      <I18nextProvider i18n={i18next}>
-        <Provider store={store}>
-          <PageWrapper>
-            <MapContainer />
-          </PageWrapper>
-        </Provider>
-      </I18nextProvider>
+      <Provider store={store}>
+        <DataProvider>
+          <I18nextProvider i18n={i18next}>
+            <PageWrapper>
+              <MapContainer />
+            </PageWrapper>
+          </I18nextProvider>
+        </DataProvider>
+      </Provider>
     );
   }
 }

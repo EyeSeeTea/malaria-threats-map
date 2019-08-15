@@ -3,6 +3,7 @@ import { PreventionState } from "../malaria/prevention/reducer";
 import { DiagnosisState } from "../malaria/diagnosis/reducer";
 import { TreatmentState } from "../malaria/treatment/reducer";
 import { InvasiveState } from "../malaria/invasive/reducer";
+import { TranslationsState } from "../malaria/translations/reducer";
 
 export interface State {
   malaria: MalariaState;
@@ -10,4 +11,5 @@ export interface State {
   diagnosis: DiagnosisState;
   treatment: TreatmentState;
   invasive: InvasiveState;
+  translations: TranslationsState;
 }
