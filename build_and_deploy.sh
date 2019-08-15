@@ -2,7 +2,7 @@
 
 rm -rf build
 
-npm run run build
+npm run build
 
 aws s3 cp build s3://malaria-v2/ \
     --region us-east-1 \

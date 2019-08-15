@@ -6,6 +6,7 @@ import { studiesToGeoJson } from "./layer-utils";
 import { selectTheme } from "../../malaria/reducer";
 import { Study } from "../../types/Malaria";
 import mapboxgl from "mapbox-gl";
+import { colors } from "../theme";
 
 const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -13,16 +14,31 @@ const PREVENTION_SOURCE_ID = "prevention-source";
 
 const circleLayout = { visibility: "visible" };
 const circlePaint = {
-  "circle-radius": 6,
-  "circle-color": "#E54E52",
+  "circle-radius": [
+    "case",
+    ["boolean", ["feature-state", "hover"], false],
+    7,
+    6
+  ],
+  "circle-color": colors.prevention.N,
   "circle-opacity": 1,
-  "circle-stroke-color": "lightgrey",
-  "circle-stroke-width": 4,
+  "circle-stroke-color": [
+    "case",
+    ["boolean", ["feature-state", "hover"], false],
+    "lightgrey",
+    colors.prevention.D1
+  ],
+  "circle-stroke-width": [
+    "case",
+    ["boolean", ["feature-state", "hover"], false],
+    5,
+    1
+  ],
   "circle-stroke-opacity": [
     "case",
     ["boolean", ["feature-state", "hover"], false],
     0.7,
-    0
+    0.7
   ]
 };
 
