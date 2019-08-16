@@ -6,6 +6,7 @@ import { circleLayout, studiesToGeoJson } from "./layer-utils";
 import { selectTheme } from "../../malaria/reducer";
 import { Study } from "../../types/Malaria";
 import treatmentSymbol from "./symbols/treatment";
+import setupEffects from "./effects";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -56,6 +57,8 @@ class TreatmentLayer extends Component<Props> {
       };
       this.props.map.addSource(TREATMENT_SOURCE_ID, source);
       this.props.map.addLayer(layer);
+
+      setupEffects(this.props.map, TREATMENT_SOURCE_ID, TREATMENT_LAYER_ID)
     }
   }
 

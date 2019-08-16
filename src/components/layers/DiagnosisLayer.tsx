@@ -6,6 +6,7 @@ import { circleLayout, studiesToGeoJson } from "./layer-utils";
 import { selectTheme } from "../../malaria/reducer";
 import { Study } from "../../types/Malaria";
 import diagnosisSymbol from "./symbols/diagnosis";
+import setupEffects from "./effects";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -47,6 +48,7 @@ class DiagnosisLayer extends Component<Props> {
   mountLayer(prevProps?: Props) {
     if (!prevProps || prevProps.studies.length !== this.props.studies.length) {
       if (this.props.map.getSource(DIAGNOSIS_SOURCE_ID)) {
+        this.props.map.removeLayer(DIAGNOSIS_LAYER_ID);
         this.props.map.removeSource(DIAGNOSIS_SOURCE_ID);
       }
       const source: any = {
@@ -55,6 +57,8 @@ class DiagnosisLayer extends Component<Props> {
       };
       this.props.map.addSource(DIAGNOSIS_SOURCE_ID, source);
       this.props.map.addLayer(layer);
+
+      setupEffects(this.props.map, DIAGNOSIS_SOURCE_ID, DIAGNOSIS_LAYER_ID);
     }
   }
 

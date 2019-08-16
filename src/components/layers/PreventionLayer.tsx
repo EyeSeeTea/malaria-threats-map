@@ -6,8 +6,7 @@ import { studiesToGeoJson } from "./layer-utils";
 import { selectTheme } from "../../malaria/reducer";
 import { Study } from "../../types/Malaria";
 import preventionSymbol from "./symbols/prevention";
-import mapboxgl from "mapbox-gl";
-import { colors } from "../theme";
+import setupEffects from "./effects";
 
 const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -60,6 +59,8 @@ class PreventionLayer extends Component<Props> {
       };
       this.props.map.addSource(PREVENTION_SOURCE_ID, source);
       this.props.map.addLayer(layer);
+
+      setupEffects(this.props.map, PREVENTION_SOURCE_ID, PREVENTION_LAYER_ID)
     }
   }
 
