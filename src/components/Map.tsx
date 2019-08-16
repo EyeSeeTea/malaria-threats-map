@@ -222,7 +222,7 @@ class Map extends React.Component<any> {
               <InvasiveIcon active={theme === "invasive"} />
             </IconButton>
           </ButtonGroup>
-          <SearchInput />
+          {/*<SearchInput />*/}
           <Divider />
           <Layers />
         </SearchContainer>

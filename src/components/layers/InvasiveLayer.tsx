@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectInvasiveStudies } from "../../malaria/invasive/reducer";
-import { circleLayout, circlePaint, studiesToGeoJson } from "./layer-utils";
+import { circleLayout, studiesToGeoJson } from "./layer-utils";
 import { selectTheme } from "../../malaria/reducer";
 import { Study } from "../../types/Malaria";
+import invasiveSymbol from "./symbols/invasive";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
@@ -14,7 +15,7 @@ const layer: any = {
   id: INVASIVE_LAYER_ID,
   type: "circle",
   layout: circleLayout,
-  paint: circlePaint,
+  paint: invasiveSymbol,
   source: INVASIVE_SOURCE_ID
 };
 
@@ -29,9 +30,23 @@ type Props = {
   map: any;
 };
 class InvasiveLayer extends Component<Props> {
+  componentDidMount() {
+    this.mountLayer();
+  }
+
   componentDidUpdate(prevProps: Props) {
-    if (prevProps.studies.length !== this.props.studies.length) {
+    this.mountLayer(prevProps);
+    this.renderLayer();
+  }
+
+  componentWillUnmount() {
+    this.renderLayer();
+  }
+
+  mountLayer(prevProps?: Props) {
+    if (!prevProps || prevProps.studies.length !== this.props.studies.length) {
       if (this.props.map.getSource(INVASIVE_SOURCE_ID)) {
+        this.props.map.removeLayer(INVASIVE_LAYER_ID);
         this.props.map.removeSource(INVASIVE_SOURCE_ID);
       }
       const source: any = {
@@ -41,31 +56,23 @@ class InvasiveLayer extends Component<Props> {
       this.props.map.addSource(INVASIVE_SOURCE_ID, source);
       this.props.map.addLayer(layer);
     }
-
-    if (this.props.theme === INVASIVE) {
-      this.showLayer();
-    } else {
-      this.hideLayer();
-    }
   }
 
-  componentWillUnmount(): void {
-    this.hideLayer();
-  }
-
-  showLayer = () => {
+  renderLayer = () => {
     if (this.props.map.getLayer(INVASIVE_LAYER_ID)) {
-      this.props.map.setLayoutProperty(
-        INVASIVE_LAYER_ID,
-        "visibility",
-        "visible"
-      );
-    }
-  };
-
-  hideLayer = () => {
-    if (this.props.map.getLayer(INVASIVE_LAYER_ID)) {
-      this.props.map.setLayoutProperty(INVASIVE_LAYER_ID, "visibility", "none");
+      if (this.props.theme === INVASIVE) {
+        this.props.map.setLayoutProperty(
+          INVASIVE_LAYER_ID,
+          "visibility",
+          "visible"
+        );
+      } else {
+        this.props.map.setLayoutProperty(
+          INVASIVE_LAYER_ID,
+          "visibility",
+          "none"
+        );
+      }
     }
   };
 

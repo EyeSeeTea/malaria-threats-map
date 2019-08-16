@@ -4,7 +4,7 @@ import { ActionTypeEnum } from "../store/actions";
 export const setTitleAction = createAction(
   ActionTypeEnum.MalariaSetTheme,
   action => {
-    return (theme: string) => action(theme);
+    return (title: string) => action(title);
   }
 );
 
@@ -12,6 +12,13 @@ export const setThemeAction = createAction(
   ActionTypeEnum.MalariaSetTheme,
   action => {
     return (theme: string) => action(theme);
+  }
+);
+
+export const setFiltersAction = createAction(
+  ActionTypeEnum.MalariaSetFilters,
+  action => {
+    return (filters: string[]) => action(filters);
   }
 );
 

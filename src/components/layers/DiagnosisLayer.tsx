@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectDiagnosisStudies } from "../../malaria/diagnosis/reducer";
-import { circleLayout, circlePaint, studiesToGeoJson } from "./layer-utils";
+import { circleLayout, studiesToGeoJson } from "./layer-utils";
 import { selectTheme } from "../../malaria/reducer";
 import { Study } from "../../types/Malaria";
+import diagnosisSymbol from "./symbols/diagnosis";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -14,7 +15,7 @@ const layer: any = {
   id: DIAGNOSIS_LAYER_ID,
   type: "circle",
   layout: circleLayout,
-  paint: circlePaint,
+  paint: diagnosisSymbol,
   source: DIAGNOSIS_SOURCE_ID
 };
 
@@ -30,8 +31,21 @@ type Props = {
 };
 
 class DiagnosisLayer extends Component<Props> {
-  componentDidUpdate(prevProps: any): void {
-    if (prevProps.studies.length !== this.props.studies.length) {
+  componentDidMount() {
+    this.mountLayer();
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    this.mountLayer(prevProps);
+    this.renderLayer();
+  }
+
+  componentWillUnmount() {
+    this.renderLayer();
+  }
+
+  mountLayer(prevProps?: Props) {
+    if (!prevProps || prevProps.studies.length !== this.props.studies.length) {
       if (this.props.map.getSource(DIAGNOSIS_SOURCE_ID)) {
         this.props.map.removeSource(DIAGNOSIS_SOURCE_ID);
       }
@@ -42,35 +56,23 @@ class DiagnosisLayer extends Component<Props> {
       this.props.map.addSource(DIAGNOSIS_SOURCE_ID, source);
       this.props.map.addLayer(layer);
     }
-
-    if (this.props.theme === DIAGNOSIS) {
-      this.showLayer();
-    } else {
-      this.hideLayer();
-    }
   }
 
-  componentWillUnmount(): void {
-    this.hideLayer();
-  }
-
-  showLayer = () => {
+  renderLayer = () => {
     if (this.props.map.getLayer(DIAGNOSIS_LAYER_ID)) {
-      this.props.map.setLayoutProperty(
-        DIAGNOSIS_LAYER_ID,
-        "visibility",
-        "visible"
-      );
-    }
-  };
-
-  hideLayer = () => {
-    if (this.props.map.getLayer(DIAGNOSIS_LAYER_ID)) {
-      this.props.map.setLayoutProperty(
-        DIAGNOSIS_LAYER_ID,
-        "visibility",
-        "none"
-      );
+      if (this.props.theme === DIAGNOSIS) {
+        this.props.map.setLayoutProperty(
+          DIAGNOSIS_LAYER_ID,
+          "visibility",
+          "visible"
+        );
+      } else {
+        this.props.map.setLayoutProperty(
+          DIAGNOSIS_LAYER_ID,
+          "visibility",
+          "none"
+        );
+      }
     }
   };
 

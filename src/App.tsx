@@ -1,12 +1,27 @@
 import React from "react";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
-import Map from "./components/Map";
 import styled from "styled-components";
 import { Provider } from "react-redux";
 import createStore from "./store";
 import MapContainer from "./MapContainer";
 import DataProvider from "./components/DataProvider";
+import ReduxQuerySync from "./store/query-middleware";
+import { State } from "./store/types";
+import { setThemeAction } from "./malaria/actions";
+
+const { store } = createStore();
+
+ReduxQuerySync({
+  store,
+  params: {
+    theme: {
+      selector: (state: State) => state.malaria.theme,
+      action: setThemeAction
+    }
+  },
+  initialTruth: "location"
+});
 
 const PageWrapper = styled.div`
   position: absolute;
@@ -15,9 +30,9 @@ const PageWrapper = styled.div`
   bottom: 0;
   left: 0;
 `;
+
 class App extends React.Component {
   render() {
-    const { store } = createStore();
     return (
       <Provider store={store}>
         <DataProvider>

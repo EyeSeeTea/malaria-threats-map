@@ -2,7 +2,9 @@ import { ActionType } from "typesafe-actions";
 import * as malariaActions from "../malaria/actions";
 
 export enum ActionTypeEnum {
+  MalariaSetTitle = "malaria/SET_TITLE",
   MalariaSetTheme = "malaria/SET_THEME",
+  MalariaSetFilters = "malaria/SET_FILTERS",
   MalariaToogleEndemicityLayer = "malaria/TOGGLE_ENDEMICITY_LAYER",
 
   FetchPreventionStudiesRequest = "prevention/FETCH_PREVENTION_STUDIES_REQUEST",

@@ -5,7 +5,7 @@ import preventionIcon from "../assets/img/prevention.svg";
 import invasiveIcon from "../assets/img/invasive.svg";
 import invasiveBaseIcon from "../assets/img/invasive-base.svg";
 import styled, { css } from "styled-components";
-import {colors} from "./theme";
+import { colors } from "./theme";
 
 const baseIcon = css`
   max-width: 48px;
@@ -19,7 +19,8 @@ const TreatmentSVG = ({ active, ...rest }: Props) => (
 );
 
 export const TreatmentIcon = styled(TreatmentSVG)`
-  background-color: ${props => (props.active ? "#5bcdce" : "lightgrey")};
+  background-color: ${props =>
+    props.active ? colors.treatment.N : "lightgrey"};
   ${baseIcon};
 `;
 
@@ -27,7 +28,8 @@ const DiagnosisSVG = ({ active, ...rest }: Props) => (
   <img {...rest} src={diagnosisIcon} />
 );
 export const DiagnosisIcon = styled(DiagnosisSVG)`
-  background-color: ${props => (props.active ? "#0099cc" : "lightgrey")};
+  background-color: ${props =>
+    props.active ? colors.diagnosis.N : "lightgrey"};
   ${baseIcon};
 `;
 
@@ -35,7 +37,8 @@ const PreventionSVG = ({ active, ...rest }: Props) => (
   <img {...rest} src={preventionIcon} />
 );
 export const PreventionIcon = styled(PreventionSVG)`
-  background-color: ${props => (props.active ? colors.prevention.N : "lightgrey")};
+  background-color: ${props =>
+    props.active ? colors.prevention.N : "lightgrey"};
   ${baseIcon};
 `;
 
@@ -43,6 +46,7 @@ const InvasiveSVG = ({ active, ...rest }: Props) => (
   <img {...rest} src={active ? invasiveIcon : invasiveBaseIcon} />
 );
 export const InvasiveIcon = styled(InvasiveSVG)`
-  background-color: ${props => (props.active ? colors.invasive.N : "lightgrey")};
+  background-color: ${props =>
+    props.active ? colors.invasive.N : "lightgrey"};
   ${baseIcon};
 `;
