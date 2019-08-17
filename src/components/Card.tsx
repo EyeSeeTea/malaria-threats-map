@@ -1,19 +1,27 @@
 import React from "react";
-import { createMuiTheme, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { PreventionIcon } from "./Icons";
-import styled, { ThemeProvider } from "styled-components";
-import { colors } from "../components/theme";
-import { green, purple } from "@material-ui/core/colors";
+import {
+  DiagnosisIcon,
+  InvasiveIcon,
+  PreventionIcon,
+  TreatmentIcon
+} from "./Icons";
+import styled from "styled-components";
 
 const useStyles = makeStyles({
   card: {
-    margin: 16,
-    textAlign: "center"
+    margin: 8,
+    maxWidth: 300,
+    textAlign: "center",
+    justifyContent: "space-between",
+    flexDirection: "column",
+    display: "flex",
+    alignItems: "center"
   },
   bullet: {
     display: "inline-block",
@@ -35,29 +43,39 @@ const ButtonContainer = styled.div`
   margin-bottom: 16px;
 `;
 
-const theme = createMuiTheme({
-  palette: {
-    primary: green
-  }
-});
+const FlexGrow = styled.div`
+  flex-grow: 1;
+`;
 
-export default function SimpleCard() {
+const StyledCardContent = styled(CardContent)`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+`;
+
+export const SimpleCard = ({
+  title,
+  description,
+  Icon
+}: {
+  title?: string;
+  description?: string;
+  Icon?: any;
+}) => {
   const classes = useStyles({});
-  const bull = <span className={classes.bullet}>•</span>;
-
   return (
     <Card className={classes.card}>
-      <CardContent>
-        <PreventionIcon active style={{ maxWidth: "96px" }} />
+      <Icon active style={{ maxWidth: "96px", marginTop: "24px" }} />
+      <StyledCardContent>
         <Typography className={classes.pos} variant="h6" component="h2">
-          PARASITE pfhrp2/3 GENE DELETIONS
+          {title}
         </Typography>
         <Typography variant="body2" component="p">
-          Resistance of malaria mosquitoes to insecticides used in core
-          prevention tools of treated bed nets and indoor residual sprays
-          threatens vector control effectiveness
+          {description}
         </Typography>
-      </CardContent>
+      </StyledCardContent>
       <CardActions>
         <ButtonContainer>
           <Button variant="contained" color="default">
@@ -67,4 +85,33 @@ export default function SimpleCard() {
       </CardActions>
     </Card>
   );
-}
+};
+
+export const PreventionCard = () => (
+  <SimpleCard
+    title="VECTOR INSECTICIDE RESISTANCE"
+    description="Resistance of malaria mosquitoes to insecticides used in core prevention tools of treated bed nets and indoor residual sprays threatens vector control effectiveness"
+    Icon={PreventionIcon}
+  />
+);
+export const DiagnosisCard = () => (
+  <SimpleCard
+    title="PARASITE pfhrp2/3 GENE DELETIONS"
+    description="Gene deletions among some malaria parasites cause false negative diagnostic test results, complicating case management and control"
+    Icon={DiagnosisIcon}
+  />
+);
+export const TreatmentCard = () => (
+  <SimpleCard
+    title="PARASITE DRUG EFFICACY AND RESISTANCE"
+    description="Resistance of malaria parasites to artemisinin – the core compound of the best available antimalarial medicines – threatens antimalarial drug efficacy"
+    Icon={TreatmentIcon}
+  />
+);
+export const InvasiveCard = () => (
+  <SimpleCard
+    title="INVASIVE VECTOR SPECIES"
+    description=""
+    Icon={InvasiveIcon}
+  />
+);

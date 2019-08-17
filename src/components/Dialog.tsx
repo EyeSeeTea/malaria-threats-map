@@ -1,6 +1,11 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
-import Card from "../components/Card";
+import {
+  PreventionCard,
+  DiagnosisCard,
+  TreatmentCard,
+  InvasiveCard
+} from "./Card";
 import styled from "styled-components";
 
 const Row = styled.div`
@@ -9,7 +14,7 @@ const Row = styled.div`
 `;
 
 export default function AlertDialog() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   function handleClickOpen() {
     setOpen(true);
@@ -22,7 +27,7 @@ export default function AlertDialog() {
   return (
     <Dialog
       open={open}
-      maxWidth={"xl"}
+      maxWidth={"lg"}
       onClose={handleClose}
       PaperProps={{
         style: {
@@ -32,10 +37,10 @@ export default function AlertDialog() {
       }}
     >
       <Row>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <PreventionCard />
+        <DiagnosisCard />
+        <TreatmentCard />
+        <InvasiveCard />
       </Row>
     </Dialog>
   );
