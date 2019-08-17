@@ -29,6 +29,8 @@ import {
 import EndemicityLayer from "./layers/EndemicityLayer";
 import { setThemeAction } from "../malaria/actions";
 import Dialog from "./Dialog";
+import Slider from "./Slider";
+import { Paper } from "@material-ui/core";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
@@ -81,6 +83,22 @@ const Divider = styled.div`
 
 const ButtonGroup = styled.div`
   display: flex;
+  justify-content: space-around;
+  font-size: 90%;
+`;
+
+const StyledPaper = styled(Paper)`
+  padding: 8px;
+`;
+
+const ThemeButton = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+`;
+
+const StyledIconButton = styled(IconButton)`
+  padding: 8px !important;
 `;
 
 const RASTER_SOURCE_OPTIONS = {
@@ -209,23 +227,39 @@ class Map extends React.Component<any> {
         {this.map && this.state.ready && <EndemicityLayer map={this.map} />}
 
         <SearchContainer>
-          <ButtonGroup>
-            <IconButton onClick={() => setTheme("prevention")}>
-              <PreventionIcon active={theme === "prevention"} />
-            </IconButton>
-            <IconButton onClick={() => setTheme("diagnosis")}>
-              <DiagnosisIcon active={theme === "diagnosis"} />
-            </IconButton>
-            <IconButton onClick={() => setTheme("treatment")}>
-              <TreatmentIcon active={theme === "treatment"} />
-            </IconButton>
-            <IconButton onClick={() => setTheme("invasive")}>
-              <InvasiveIcon active={theme === "invasive"} />
-            </IconButton>
-          </ButtonGroup>
-          {/*<SearchInput />*/}
+          <StyledPaper>
+            <ButtonGroup>
+              <ThemeButton>
+                <StyledIconButton onClick={() => setTheme("prevention")}>
+                  <PreventionIcon active={theme === "prevention"} />
+                </StyledIconButton>
+                Prevention
+              </ThemeButton>
+              <ThemeButton>
+                <StyledIconButton onClick={() => setTheme("diagnosis")}>
+                  <DiagnosisIcon active={theme === "diagnosis"} />
+                </StyledIconButton>
+                Diagnosis
+              </ThemeButton>
+              <ThemeButton>
+                <StyledIconButton onClick={() => setTheme("treatment")}>
+                  <TreatmentIcon active={theme === "treatment"} />
+                </StyledIconButton>
+                Treatment
+              </ThemeButton>
+              <ThemeButton>
+                <StyledIconButton onClick={() => setTheme("invasive")}>
+                  <InvasiveIcon active={theme === "invasive"} />
+                </StyledIconButton>
+                Invasive
+              </ThemeButton>
+            </ButtonGroup>
+          </StyledPaper>
           <Divider />
+          <SearchInput />
+          <Slider />
         </SearchContainer>
+
         <TitleContainer>
           <Layers />
         </TitleContainer>

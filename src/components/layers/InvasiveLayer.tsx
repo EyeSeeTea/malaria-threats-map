@@ -57,7 +57,8 @@ class InvasiveLayer extends Component<Props> {
       this.props.map.addSource(INVASIVE_SOURCE_ID, source);
       this.props.map.addLayer(layer);
 
-      setupEffects(this.props.map, INVASIVE_SOURCE_ID, INVASIVE_LAYER_ID)
+      setupEffects(this.props.map, INVASIVE_SOURCE_ID, INVASIVE_LAYER_ID);
+      this.renderLayer();
     }
   }
 

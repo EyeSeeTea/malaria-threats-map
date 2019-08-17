@@ -59,6 +59,8 @@ class DiagnosisLayer extends Component<Props> {
       this.props.map.addLayer(layer);
 
       setupEffects(this.props.map, DIAGNOSIS_SOURCE_ID, DIAGNOSIS_LAYER_ID);
+      this.renderLayer();
+
     }
   }
 

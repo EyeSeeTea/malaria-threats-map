@@ -8,20 +8,20 @@ export interface MalariaState {
   title: string;
   theme: string;
   endemicity: boolean;
-  filters: string[];
+  filters: number[];
 }
 
 const initialState: MalariaState = Object.freeze({
   title: "Malaria Threats Map",
   theme: "prevention",
   endemicity: false,
-  filters: ["one", "two"]
+  filters: [2010]
 });
 
 export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.MalariaSetTitle]: (theme: string) => R.assoc("title", theme),
   [ActionTypeEnum.MalariaSetTheme]: (theme: string) => R.assoc("theme", theme),
-  [ActionTypeEnum.MalariaSetFilters]: (filters: string[]) =>
+  [ActionTypeEnum.MalariaSetFilters]: (filters: number[]) =>
     R.assoc("filters", filters),
   [ActionTypeEnum.MalariaToogleEndemicityLayer]: (visible: boolean) =>
     R.assoc("endemicity", visible)

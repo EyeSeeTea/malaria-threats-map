@@ -9,7 +9,7 @@ const Row = styled.div`
 `;
 
 export default function AlertDialog() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   function handleClickOpen() {
     setOpen(true);

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectPreventionStudies } from "../../malaria/prevention/reducer";
 import { studiesToGeoJson } from "./layer-utils";
-import { selectTheme } from "../../malaria/reducer";
+import { selectFilters, selectTheme } from "../../malaria/reducer";
 import { Study } from "../../types/Malaria";
 import preventionSymbol from "./symbols/prevention";
 import setupEffects from "./effects";
@@ -24,14 +24,15 @@ const layer: any = {
 
 const mapStateToProps = (state: State) => ({
   studies: selectPreventionStudies(state),
-  theme: selectTheme(state)
+  theme: selectTheme(state),
+  filters: selectFilters(state)
 });
 
-type Props = {
-  studies: Study[];
-  theme: string;
+type StateProps = ReturnType<typeof mapStateToProps>;
+type OwnProps = {
   map: any;
 };
+type Props = StateProps & OwnProps;
 
 class PreventionLayer extends Component<Props> {
   componentDidMount() {
@@ -41,6 +42,13 @@ class PreventionLayer extends Component<Props> {
   componentDidUpdate(prevProps: Props) {
     this.mountLayer(prevProps);
     this.renderLayer();
+    if (this.props.map && prevProps.filters[0] !== this.props.filters[0]) {
+      this.props.map.setFilter(PREVENTION_LAYER_ID, [
+        "<=",
+        "YEAR_START",
+        this.props.filters[0]
+      ]);
+    }
   }
 
   componentWillUnmount() {
@@ -60,7 +68,8 @@ class PreventionLayer extends Component<Props> {
       this.props.map.addSource(PREVENTION_SOURCE_ID, source);
       this.props.map.addLayer(layer);
 
-      setupEffects(this.props.map, PREVENTION_SOURCE_ID, PREVENTION_LAYER_ID)
+      setupEffects(this.props.map, PREVENTION_SOURCE_ID, PREVENTION_LAYER_ID);
+      this.renderLayer();
     }
   }
 

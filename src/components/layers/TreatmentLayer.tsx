@@ -58,7 +58,8 @@ class TreatmentLayer extends Component<Props> {
       this.props.map.addSource(TREATMENT_SOURCE_ID, source);
       this.props.map.addLayer(layer);
 
-      setupEffects(this.props.map, TREATMENT_SOURCE_ID, TREATMENT_LAYER_ID)
+      setupEffects(this.props.map, TREATMENT_SOURCE_ID, TREATMENT_LAYER_ID);
+      this.renderLayer();
     }
   }
 
