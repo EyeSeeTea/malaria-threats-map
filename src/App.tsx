@@ -4,11 +4,11 @@ import i18next from "i18next";
 import styled from "styled-components";
 import { Provider } from "react-redux";
 import createStore from "./store";
-import MapContainer from "./MapContainer";
 import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
 import { State } from "./store/types";
 import { setThemeAction } from "./malaria/actions";
+import Map from "./components/Map";
 
 const { store } = createStore();
 
@@ -38,7 +38,7 @@ class App extends React.Component {
         <DataProvider>
           <I18nextProvider i18n={i18next}>
             <PageWrapper>
-              <MapContainer />
+              <Map />
             </PageWrapper>
           </I18nextProvider>
         </DataProvider>

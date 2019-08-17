@@ -28,6 +28,7 @@ import {
 } from "./Icons";
 import EndemicityLayer from "./layers/EndemicityLayer";
 import { setThemeAction } from "../malaria/actions";
+import Dialog from "./Dialog";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
@@ -50,7 +51,7 @@ const Container = styled(BaseContainer)`
   border-radius: 3px;
 `;
 
-const TitleContainer = styled(Container)`
+const TitleContainer = styled(BaseContainer)`
   position: absolute;
   top: 0;
   right: 0;
@@ -224,8 +225,11 @@ class Map extends React.Component<any> {
           </ButtonGroup>
           {/*<SearchInput />*/}
           <Divider />
-          <Layers />
         </SearchContainer>
+        <TitleContainer>
+          <Layers />
+        </TitleContainer>
+        <Dialog />
       </React.Fragment>
     );
   }

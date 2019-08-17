@@ -33,7 +33,7 @@ export const DiagnosisIcon = styled(DiagnosisSVG)`
   ${baseIcon};
 `;
 
-const PreventionSVG = ({ active, ...rest }: Props) => (
+const PreventionSVG = ({ active, ...rest }: any) => (
   <img {...rest} src={preventionIcon} />
 );
 export const PreventionIcon = styled(PreventionSVG)`

@@ -7,6 +7,10 @@ import {
 } from "../malaria/translations/reducer";
 import { fetchTranslationsRequestAction } from "../malaria/translations/actions";
 import i18next from "i18next";
+import { fetchPreventionStudiesRequest } from "../malaria/prevention/actions";
+import { fetchDiagnosisStudiesRequest } from "../malaria/diagnosis/actions";
+import { fetchTreatmentStudiesRequest } from "../malaria/treatment/actions";
+import { fetchInvasiveStudiesRequest } from "../malaria/invasive/actions";
 
 const mapStateToProps = (state: State) => ({
   translationsLoading: selectTranslationsAreLoading(state),
@@ -14,7 +18,11 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  fetchTranslations: fetchTranslationsRequestAction
+  fetchTranslations: fetchTranslationsRequestAction,
+  fetchPreventionStudies: fetchPreventionStudiesRequest,
+  fetchDiagnosisStudies: fetchDiagnosisStudiesRequest,
+  fetchTreatmentStudies: fetchTreatmentStudiesRequest,
+  fetchInvasiveStudies: fetchInvasiveStudiesRequest
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -24,6 +32,10 @@ type Props = DispatchProps & StateProps;
 class DataProvider extends Component<Props> {
   componentDidMount(): void {
     this.props.fetchTranslations();
+    this.props.fetchPreventionStudies();
+    this.props.fetchDiagnosisStudies();
+    this.props.fetchTreatmentStudies();
+    this.props.fetchInvasiveStudies();
   }
 
   componentDidUpdate(prevProps: Readonly<Props>) {
