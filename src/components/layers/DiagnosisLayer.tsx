@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectDiagnosisStudies } from "../../malaria/diagnosis/reducer";
 import { circleLayout, studiesToGeoJson } from "./layer-utils";
-import { selectTheme } from "../../malaria/reducer";
+import {selectFilters, selectTheme} from "../../malaria/reducer";
 import { Study } from "../../types/Malaria";
 import diagnosisSymbol from "./symbols/diagnosis";
 import setupEffects from "./effects";
@@ -22,14 +22,15 @@ const layer: any = {
 
 const mapStateToProps = (state: State) => ({
   studies: selectDiagnosisStudies(state),
-  theme: selectTheme(state)
+  theme: selectTheme(state),
+  filters: selectFilters(state)
 });
 
-type Props = {
-  studies: Study[];
-  theme: string;
+type StateProps = ReturnType<typeof mapStateToProps>;
+type OwnProps = {
   map: any;
 };
+type Props = StateProps & OwnProps;
 
 class DiagnosisLayer extends Component<Props> {
   componentDidMount() {
@@ -39,6 +40,12 @@ class DiagnosisLayer extends Component<Props> {
   componentDidUpdate(prevProps: Props) {
     this.mountLayer(prevProps);
     this.renderLayer();
+    const [from, to] = this.props.filters;
+    this.props.map.setFilter(DIAGNOSIS_LAYER_ID, [
+      "all",
+      [">=", "YEAR_START", from],
+      ["<=", "YEAR_START", to]
+    ]);
   }
 
   componentWillUnmount() {

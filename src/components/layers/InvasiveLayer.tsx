@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectInvasiveStudies } from "../../malaria/invasive/reducer";
 import { circleLayout, studiesToGeoJson } from "./layer-utils";
-import { selectTheme } from "../../malaria/reducer";
+import { selectFilters, selectTheme } from "../../malaria/reducer";
 import { Study } from "../../types/Malaria";
 import invasiveSymbol from "./symbols/invasive";
 import setupEffects from "./effects";
@@ -22,14 +22,16 @@ const layer: any = {
 
 const mapStateToProps = (state: State) => ({
   studies: selectInvasiveStudies(state),
-  theme: selectTheme(state)
+  theme: selectTheme(state),
+  filters: selectFilters(state)
 });
 
-type Props = {
-  studies: Study[];
-  theme: string;
+type StateProps = ReturnType<typeof mapStateToProps>;
+type OwnProps = {
   map: any;
 };
+type Props = StateProps & OwnProps;
+
 class InvasiveLayer extends Component<Props> {
   componentDidMount() {
     this.mountLayer();
@@ -38,6 +40,12 @@ class InvasiveLayer extends Component<Props> {
   componentDidUpdate(prevProps: Props) {
     this.mountLayer(prevProps);
     this.renderLayer();
+    const [from, to] = this.props.filters;
+    this.props.map.setFilter(INVASIVE_LAYER_ID, [
+      "all",
+      [">=", "YEAR_START", from],
+      ["<=", "YEAR_START", to]
+    ]);
   }
 
   componentWillUnmount() {

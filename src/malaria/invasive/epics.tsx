@@ -27,7 +27,7 @@ export const getInvasiveStudiesEpic = (
         where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${MapServerConfig.years.to}`,
         returnGeometry: false,
         spatialRel: "esriSpatialRelIntersects",
-        outFields: "OBJECTID,Latitude,Longitude",
+        outFields: "OBJECTID,Latitude,Longitude,YEAR_START",
         resultOffset: 0,
         resultRecordCount: 25000
       };
