@@ -18,7 +18,7 @@ export const setThemeAction = createAction(
 export const setFiltersAction = createAction(
   ActionTypeEnum.MalariaSetFilters,
   action => {
-    return (filters: number[]) => action(filters);
+    return (filters: number[] | undefined) => action(filters);
   }
 );
 

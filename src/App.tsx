@@ -25,7 +25,9 @@ ReduxQuerySync({
     years: {
       selector: (state: State) => state.malaria.filters,
       action: (value: string) =>
-        setFiltersAction(value.split(",").map(value => parseInt(value)))
+        setFiltersAction(
+          value ? value.split(",").map(value => parseInt(value)) : undefined
+        )
     }
   },
   initialTruth: "location"

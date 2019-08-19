@@ -21,7 +21,7 @@ const initialState: MalariaState = Object.freeze({
 export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.MalariaSetTitle]: (theme: string) => R.assoc("title", theme),
   [ActionTypeEnum.MalariaSetTheme]: (theme: string) => R.assoc("theme", theme),
-  [ActionTypeEnum.MalariaSetFilters]: (filters: number[]) =>
+  [ActionTypeEnum.MalariaSetFilters]: (filters: number[] | undefined) =>
     R.assoc("filters", filters || initialState.filters),
   [ActionTypeEnum.MalariaToogleEndemicityLayer]: (visible: boolean) =>
     R.assoc("endemicity", visible)
