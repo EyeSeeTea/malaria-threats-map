@@ -15,14 +15,14 @@ const initialState: MalariaState = Object.freeze({
   title: "Malaria Threats Map",
   theme: "prevention",
   endemicity: false,
-  filters: [2010]
+  filters: [2010, 2018]
 });
 
 export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.MalariaSetTitle]: (theme: string) => R.assoc("title", theme),
   [ActionTypeEnum.MalariaSetTheme]: (theme: string) => R.assoc("theme", theme),
   [ActionTypeEnum.MalariaSetFilters]: (filters: number[]) =>
-    R.assoc("filters", filters),
+    R.assoc("filters", filters || initialState.filters),
   [ActionTypeEnum.MalariaToogleEndemicityLayer]: (visible: boolean) =>
     R.assoc("endemicity", visible)
 });

@@ -88,8 +88,9 @@ function DiscreteSlider({ filters, setFilter }: Props) {
     <div className={classes.root}>
       <PrettoSlider
         value={filters[0]}
+        valueLabelFormat={valueLabelFormat}
         getAriaValueText={valuetext}
-        aria-labelledby="discrete-slider"
+        aria-labelledby="discrete-slider-restrict"
         valueLabelDisplay="auto"
         step={1}
         marks

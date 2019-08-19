@@ -7,12 +7,12 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import DirectionsIcon from "@material-ui/icons/Directions";
-import styled from "styled-components";
-import { useTranslation, withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles({
   root: {
     padding: "2px 4px",
+    marginBottom: "8px",
     display: "flex",
     alignItems: "center",
     maxWidth: 400

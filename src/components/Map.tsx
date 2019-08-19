@@ -31,6 +31,7 @@ import { setThemeAction } from "../malaria/actions";
 import Dialog from "./Dialog";
 import Slider from "./Slider";
 import { Paper } from "@material-ui/core";
+import Filters from "./Filters";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
@@ -257,12 +258,9 @@ class Map extends React.Component<any> {
           </StyledPaper>
           <Divider />
           <SearchInput />
-          <Slider />
-        </SearchContainer>
-
-        <TitleContainer>
           <Layers />
-        </TitleContainer>
+          <Filters />
+        </SearchContainer>
         <Dialog />
       </React.Fragment>
     );

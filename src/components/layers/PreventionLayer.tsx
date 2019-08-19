@@ -42,13 +42,12 @@ class PreventionLayer extends Component<Props> {
   componentDidUpdate(prevProps: Props) {
     this.mountLayer(prevProps);
     this.renderLayer();
-    if (this.props.map && prevProps.filters[0] !== this.props.filters[0]) {
-      this.props.map.setFilter(PREVENTION_LAYER_ID, [
-        "<=",
-        "YEAR_START",
-        this.props.filters[0]
-      ]);
-    }
+    const [from, to] = this.props.filters;
+    this.props.map.setFilter(PREVENTION_LAYER_ID, [
+      "all",
+      [">=", "YEAR_START", from],
+      ["<=", "YEAR_START", to]
+    ]);
   }
 
   componentWillUnmount() {
