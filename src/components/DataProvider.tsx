@@ -40,10 +40,18 @@ class DataProvider extends Component<Props> {
 
   componentDidUpdate(prevProps: Readonly<Props>) {
     if (this.props.translations.length !== prevProps.translations.length) {
-      const resources = this.props.translations.reduce((acc, translation) => {
+      const englishResources = this.props.translations.reduce((acc, translation) => {
         return { ...acc, [translation.VALUE_]: translation.EN };
       }, {});
-      i18next.addResourceBundle("en", "common", resources);
+      const spanishResources = this.props.translations.reduce((acc, translation) => {
+        return { ...acc, [translation.VALUE_]: translation.ES };
+      }, {});
+      const frenchResources = this.props.translations.reduce((acc, translation) => {
+        return { ...acc, [translation.VALUE_]: translation.FR };
+      }, {});
+      i18next.addResourceBundle("en", "common", englishResources);
+      i18next.addResourceBundle("es", "common", spanishResources);
+      i18next.addResourceBundle("fr", "common", frenchResources);
     }
   }
 

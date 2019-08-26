@@ -32,6 +32,7 @@ import Dialog from "./Dialog";
 import Slider from "./Slider";
 import { Paper } from "@material-ui/core";
 import Filters from "./Filters";
+import LanguageSelector from "./LanguageSelector";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
@@ -54,7 +55,7 @@ const Container = styled(BaseContainer)`
   border-radius: 3px;
 `;
 
-const TitleContainer = styled(BaseContainer)`
+const TopRightContainer = styled(BaseContainer)`
   position: absolute;
   top: 0;
   right: 0;
@@ -261,6 +262,9 @@ class Map extends React.Component<any> {
           <Layers />
           <Filters />
         </SearchContainer>
+        <TopRightContainer>
+          <LanguageSelector />
+        </TopRightContainer>
         <Dialog />
       </React.Fragment>
     );

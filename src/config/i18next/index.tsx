@@ -2,7 +2,7 @@ import i18next from "i18next";
 import common_en from "../../translations/en/common.json";
 import common_es from "../../translations/es/common.json";
 
-const lng = localStorage.getItem("language") || "en";
+export const lng = localStorage.getItem("language") || "en";
 
 i18next.init({
   interpolation: { escapeValue: false },
