@@ -15,10 +15,14 @@ const useStyles = makeStyles({
     marginBottom: "8px",
     display: "flex",
     alignItems: "center",
+    minWidth: 325,
     maxWidth: 400
   },
   iconButton: {
     padding: 10
+  },
+  input: {
+    flex: 1
   },
   divider: {
     width: 1,
@@ -41,11 +45,8 @@ export default function SearchInput() {
         value={t("AFRICA_SOUTH-EAST_SUB-REGION")}
         placeholder="Search Google Maps"
         inputProps={{ "aria-label": "search google maps" }}
+        className={classes.input}
       />
-      <IconButton className={classes.iconButton} aria-label="search">
-        <SearchIcon />
-      </IconButton>
-      <Divider className={classes.divider} />
       <IconButton
         color="default"
         className={classes.iconButton}
