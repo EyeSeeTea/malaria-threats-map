@@ -1,4 +1,9 @@
 import { colors } from "../../theme";
+export const ConfirmationStatusColors = {
+  Confirmed: ["#D43501", "#882201"],
+  Possible: ["#FF9502", "#b56900"],
+  Susceptible: ["#869C66", "#5e6e47"]
+};
 
 export default {
   "circle-radius": [
@@ -7,13 +12,33 @@ export default {
     7,
     6
   ],
-  "circle-color": colors.prevention.N,
+  "circle-color": [
+    "match",
+    ["get", "CONFIRMATION_STATUS"],
+    "Confirmed",
+    ConfirmationStatusColors.Confirmed[0],
+    "Possible",
+    ConfirmationStatusColors.Possible[0],
+    "Susceptible",
+    ConfirmationStatusColors.Susceptible[0],
+    /* other */ "#ccc"
+  ],
   "circle-opacity": 1,
   "circle-stroke-color": [
     "case",
     ["boolean", ["feature-state", "hover"], false],
     "lightgrey",
-    colors.prevention.D1
+    [
+      "match",
+      ["get", "CONFIRMATION_STATUS"],
+      "Confirmed",
+      ConfirmationStatusColors.Confirmed[1],
+      "Possible",
+      ConfirmationStatusColors.Possible[1],
+      "Susceptible",
+      ConfirmationStatusColors.Susceptible[1],
+      /* other */ "#111"
+    ]
   ],
   "circle-stroke-width": [
     "case",

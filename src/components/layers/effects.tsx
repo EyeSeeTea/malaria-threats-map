@@ -1,7 +1,13 @@
 import mapboxgl from "mapbox-gl";
+import ReactDOM from "react-dom";
+import * as React from "react";
+import SearchInput from "../SearchInput";
+import Chart from "../Chart";
 
 export default (map: any, source: string, layer: string) => {
   map.on("click", layer, (e: any, a: any) => {
+    const placeholder = document.createElement("div");
+    ReactDOM.render(<Chart />, placeholder);
     const coordinates = e.features[0].geometry.coordinates.slice();
     const description = e.features[0].properties["VILLAGE_NAME"];
 
@@ -11,7 +17,7 @@ export default (map: any, source: string, layer: string) => {
 
     new mapboxgl.Popup()
       .setLngLat(coordinates)
-      .setHTML(description)
+      .setDOMContent(placeholder)
       .addTo(map);
   });
 

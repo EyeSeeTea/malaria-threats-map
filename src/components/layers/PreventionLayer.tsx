@@ -7,6 +7,7 @@ import { selectFilters, selectTheme } from "../../malaria/reducer";
 import { Study } from "../../types/Malaria";
 import preventionSymbol from "./symbols/prevention";
 import setupEffects from "./effects";
+import * as R from "ramda";
 
 const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -60,9 +61,30 @@ class PreventionLayer extends Component<Props> {
         this.props.map.removeLayer(PREVENTION_LAYER_ID);
         this.props.map.removeSource(PREVENTION_SOURCE_ID);
       }
+
+      console.log(this.props.studies.length)
+      const groupedStudies = R.groupBy(R.path(["SITE_ID"]), this.props.studies);
+      const filteredStudies = R.values(groupedStudies).map(group => group[0]);
+      console.log(filteredStudies.length)
+
+      const studies = filteredStudies.map(study => {
+        const percentage = parseFloat(study["MORTALITY_ADJUSTED"]);
+        return {
+          ...study,
+          CONFIRMATION_STATUS: (() => {
+            if (percentage < 0.9) {
+              return "Confirmed";
+            } else if (percentage >= 0.9 && percentage < 0.98) {
+              return "Possible";
+            } else {
+              return "Susceptible";
+            }
+          })()
+        };
+      });
       const source: any = {
         type: "geojson",
-        data: studiesToGeoJson(this.props.studies)
+        data: studiesToGeoJson(studies)
       };
       this.props.map.addSource(PREVENTION_SOURCE_ID, source);
       this.props.map.addLayer(layer);

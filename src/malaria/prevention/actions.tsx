@@ -2,6 +2,7 @@ import { createAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
 import { PreventionResponse } from "../../types/Prevention";
 import { AjaxError } from "rxjs/ajax";
+import { PreventionMapType } from "./reducer";
 
 export const fetchPreventionStudiesRequest = createAction(
   ActionTypeEnum.FetchPreventionStudiesRequest,
@@ -9,15 +10,24 @@ export const fetchPreventionStudiesRequest = createAction(
     return () => action();
   }
 );
+
 export const fetchPreventionStudiesSuccess = createAction(
   ActionTypeEnum.FetchPreventionStudiesSuccess,
   action => {
     return (response: PreventionResponse) => action(response);
   }
 );
+
 export const fetchPreventionStudiesError = createAction(
   ActionTypeEnum.FetchPreventionStudiesError,
   action => {
     return (error: AjaxError) => action();
+  }
+);
+
+export const setPreventionMapType = createAction(
+  ActionTypeEnum.SetPreventionMapType,
+  action => {
+    return (mapType: PreventionMapType) => action(mapType);
   }
 );

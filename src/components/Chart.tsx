@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useTranslation } from "react-i18next";
-import { changeLanguage } from "./config/i18next";
+import { changeLanguage } from "../config/i18next";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
@@ -19,7 +19,7 @@ const options: Highcharts.Options = {
   }
 };
 
-const Title = () => {
+const Chart = () => {
   const { t }: any = useTranslation("common");
   return (
     <React.Fragment>
@@ -28,4 +28,4 @@ const Title = () => {
     </React.Fragment>
   );
 };
-export default Title;
+export default Chart;

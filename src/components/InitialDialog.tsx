@@ -13,7 +13,7 @@ const Row = styled.div`
   display: flex;
 `;
 
-export default function AlertDialog() {
+export default function InitialDialog() {
   const [open, setOpen] = React.useState(true);
 
   function handleClickOpen() {

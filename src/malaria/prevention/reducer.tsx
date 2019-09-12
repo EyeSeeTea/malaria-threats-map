@@ -5,18 +5,46 @@ import { createSelector } from "reselect";
 import { State } from "../../store/types";
 import { PreventionResponse, PreventionStudy } from "../../types/Prevention";
 
+export enum PreventionMapType {
+  RESISTANCE_STATUS,
+  INTENSITY_STATUS,
+  RESISTANCE_MECHANISM,
+  LEVEL_OF_INVOLVEMENT
+}
+
+interface PreventionFilters {
+  mapType: PreventionMapType;
+}
+
 export interface PreventionState {
   studies: PreventionStudy[];
+  filters: PreventionFilters;
 }
 
 const initialState: PreventionState = Object.freeze({
-  studies: []
+  studies: [],
+  filters: {
+    mapType: PreventionMapType.RESISTANCE_STATUS
+  }
 });
+
+function updatePreventionMapType(mapType: PreventionMapType) {
+  return (state: PreventionState) => {
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        mapType
+      }
+    };
+  };
+}
 
 export default createReducer<PreventionState>(initialState, {
   [ActionTypeEnum.FetchPreventionStudiesSuccess]: (
     response: PreventionResponse
-  ) => R.assoc("studies", response.features.map(feature => feature.attributes))
+  ) => R.assoc("studies", response.features.map(feature => feature.attributes)),
+  [ActionTypeEnum.SetPreventionMapType]: updatePreventionMapType
 });
 
 export const selectPreventionState = (state: State) => state.prevention;
@@ -24,4 +52,9 @@ export const selectPreventionState = (state: State) => state.prevention;
 export const selectPreventionStudies = createSelector(
   selectPreventionState,
   R.prop("studies")
+);
+
+export const selectFilters = createSelector(
+  selectPreventionState,
+  R.prop("filters")
 );

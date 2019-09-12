@@ -11,6 +11,7 @@ import { fetchPreventionStudiesRequest } from "../malaria/prevention/actions";
 import { fetchDiagnosisStudiesRequest } from "../malaria/diagnosis/actions";
 import { fetchTreatmentStudiesRequest } from "../malaria/treatment/actions";
 import { fetchInvasiveStudiesRequest } from "../malaria/invasive/actions";
+import * as R from "ramda";
 
 const mapStateToProps = (state: State) => ({
   translationsLoading: selectTranslationsAreLoading(state),
@@ -52,6 +53,7 @@ class DataProvider extends Component<Props> {
       i18next.addResourceBundle("en", "common", englishResources);
       i18next.addResourceBundle("es", "common", spanishResources);
       i18next.addResourceBundle("fr", "common", frenchResources);
+      console.log(R.groupBy(R.path(["FIELD"]), this.props.translations))
     }
   }
 

@@ -10,6 +10,7 @@ export enum ActionTypeEnum {
   FetchPreventionStudiesRequest = "prevention/FETCH_PREVENTION_STUDIES_REQUEST",
   FetchPreventionStudiesSuccess = "prevention/FETCH_PREVENTION_STUDIES_SUCCESS",
   FetchPreventionStudiesError = "prevention/FETCH_PREVENTION_STUDIES_ERROR",
+  SetPreventionMapType = "prevention/SET_PREVENTION_MAP_TYPE",
 
   FetchDiagnosisStudiesRequest = "diagnosis/FETCH_DIAGNOSIS_STUDIES_REQUEST",
   FetchDiagnosisStudiesSuccess = "diagnosis/FETCH_DIAGNOSIS_STUDIES_SUCCESS",

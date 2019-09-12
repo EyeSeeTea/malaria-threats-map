@@ -28,12 +28,15 @@ import {
 } from "./Icons";
 import EndemicityLayer from "./layers/EndemicityLayer";
 import { setThemeAction } from "../malaria/actions";
-import Dialog from "./Dialog";
+import InitialDialog from "./InitialDialog";
 import Slider from "./Slider";
 import { Paper } from "@material-ui/core";
 import Filters from "./Filters";
 import LanguageSelector from "./LanguageSelector";
 import Legend from "./Leyend";
+import MalariaTable from "./MalariaTable";
+import BasicSelect from "./BasicSelect";
+import PreventionMapTypesSelector from "./PreventionMapTypesSelector";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
@@ -60,6 +63,8 @@ const TopRightContainer = styled(BaseContainer)`
   position: absolute;
   top: 0;
   right: 0;
+  display: flex;
+  align-items: center;
 `;
 
 const BottomRightContainer = styled(BaseContainer)`
@@ -265,17 +270,19 @@ class Map extends React.Component<any> {
             </ButtonGroup>
           </StyledPaper>
           <Divider />
-          <SearchInput />
+          {/*<SearchInput />*/}
+          <PreventionMapTypesSelector />
           <Layers />
           <Filters />
         </SearchContainer>
         <TopRightContainer>
+          <MalariaTable />
           <LanguageSelector />
         </TopRightContainer>
         <BottomRightContainer>
           <Legend />
         </BottomRightContainer>
-        <Dialog />
+        <InitialDialog />
       </React.Fragment>
     );
   }
