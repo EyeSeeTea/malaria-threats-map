@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      marginBottom: theme.spacing(2)
     },
     inputPaper: {
       padding: theme.spacing(1, 2)
@@ -42,7 +43,10 @@ const useStyles = makeStyles((theme: Theme) =>
     input: {
       display: "flex",
       padding: 0,
-      height: "auto"
+      height: "auto",
+      "& span": {
+        backgroundColor: "transparent"
+      }
     },
     valueContainer: {
       display: "flex",
@@ -125,7 +129,8 @@ function Control(props: ControlProps<OptionType>) {
             ref: innerRef,
             children,
             ...innerProps
-          }
+          },
+          disableUnderline: true
         }}
         {...TextFieldProps}
       />

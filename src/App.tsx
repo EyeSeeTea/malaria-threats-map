@@ -12,6 +12,7 @@ import Map from "./components/Map";
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { blue, deepOrange } from "@material-ui/core/colors";
+import { setPreventionMapType } from "./malaria/prevention/actions";
 
 const { store } = createStore();
 
@@ -20,7 +21,12 @@ ReduxQuerySync({
   params: {
     theme: {
       selector: (state: State) => state.malaria.theme,
-      action: setThemeAction
+      action: (value: string) => setThemeAction(value || "prevention")
+    },
+    mapType: {
+      selector: (state: State) => state.prevention.filters.mapType,
+      action: (value: string) =>
+        setPreventionMapType(value ? parseInt(value) : 1)
     },
     years: {
       selector: (state: State) => state.malaria.filters,

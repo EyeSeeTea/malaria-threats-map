@@ -75,7 +75,6 @@ export default function Filters() {
           </Toolbar>
         </AppBar>
         <InsecticideClassFilter />
-        <AssayTypeFilter />
         <YearRangeSelector />
       </Dialog>
     </div>

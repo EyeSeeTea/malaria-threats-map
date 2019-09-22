@@ -37,6 +37,7 @@ import Legend from "./Leyend";
 import MalariaTable from "./MalariaTable";
 import BasicSelect from "./BasicSelect";
 import PreventionMapTypesSelector from "./PreventionMapTypesSelector";
+import TopicSelector from "./TopicSelector";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
@@ -102,6 +103,7 @@ const ButtonGroup = styled.div`
 `;
 
 const StyledPaper = styled(Paper)`
+  min-width: 275px;
   padding: 8px;
 `;
 
@@ -217,10 +219,6 @@ class Map extends React.Component<any> {
   _onViewportChange = (viewport: any) => this.setState({ viewport });
   _onStyleChange = (mapStyle: any) => this.setState({ mapStyle });
 
-  selectTheme = (theme: string) => {
-    this.setState({ theme });
-  };
-
   render() {
     const { setTheme, theme } = this.props;
     const { viewport, style } = this.state;
@@ -241,34 +239,7 @@ class Map extends React.Component<any> {
         {this.map && this.state.ready && <EndemicityLayer map={this.map} />}
 
         <SearchContainer>
-          <StyledPaper>
-            <ButtonGroup>
-              <ThemeButton>
-                <StyledIconButton onClick={() => setTheme("prevention")}>
-                  <PreventionIcon active={theme === "prevention"} />
-                </StyledIconButton>
-                Prevention
-              </ThemeButton>
-              <ThemeButton>
-                <StyledIconButton onClick={() => setTheme("diagnosis")}>
-                  <DiagnosisIcon active={theme === "diagnosis"} />
-                </StyledIconButton>
-                Diagnosis
-              </ThemeButton>
-              <ThemeButton>
-                <StyledIconButton onClick={() => setTheme("treatment")}>
-                  <TreatmentIcon active={theme === "treatment"} />
-                </StyledIconButton>
-                Treatment
-              </ThemeButton>
-              <ThemeButton>
-                <StyledIconButton onClick={() => setTheme("invasive")}>
-                  <InvasiveIcon active={theme === "invasive"} />
-                </StyledIconButton>
-                Invasive
-              </ThemeButton>
-            </ButtonGroup>
-          </StyledPaper>
+          <TopicSelector />
           <Divider />
           {/*<SearchInput />*/}
           <PreventionMapTypesSelector />
@@ -277,7 +248,7 @@ class Map extends React.Component<any> {
         </SearchContainer>
         <TopRightContainer>
           <MalariaTable />
-          <LanguageSelector />
+          {/*<LanguageSelector />*/}
         </TopRightContainer>
         <BottomRightContainer>
           <Legend />

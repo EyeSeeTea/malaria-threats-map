@@ -40,7 +40,6 @@ class PreventionMapTypesSelector extends Component<Props> {
     this.props.setPreventionMapType(selection.value);
   };
   render() {
-    console.log(this.props.filters);
     return (
       <IntegrationReactSelect
         suggestions={suggestions}

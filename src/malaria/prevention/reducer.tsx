@@ -12,7 +12,7 @@ export enum PreventionMapType {
   LEVEL_OF_INVOLVEMENT
 }
 
-interface PreventionFilters {
+export interface PreventionFilters {
   mapType: PreventionMapType;
 }
 
@@ -34,7 +34,7 @@ function updatePreventionMapType(mapType: PreventionMapType) {
       ...state,
       filters: {
         ...state.filters,
-        mapType
+        mapType: mapType || PreventionMapType.RESISTANCE_STATUS
       }
     };
   };

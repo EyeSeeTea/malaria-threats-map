@@ -27,7 +27,7 @@ export const getPreventionStudiesEpic = (
         where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${MapServerConfig.years.to}`,
         returnGeometry: false,
         spatialRel: "esriSpatialRelIntersects",
-        outFields: "OBJECTID,SITE_ID,Latitude,Longitude,YEAR_START,ASSAY_TYPE,MORTALITY_ADJUSTED",
+        outFields: "*",
         resultOffset: 0,
         resultRecordCount: 25000
       };
