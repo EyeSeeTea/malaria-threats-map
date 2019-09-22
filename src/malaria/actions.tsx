@@ -1,5 +1,6 @@
 import { createAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../store/actions";
+import { RegionState } from "./reducer";
 
 export const setTitleAction = createAction(
   ActionTypeEnum.MalariaSetTheme,
@@ -12,6 +13,13 @@ export const setThemeAction = createAction(
   ActionTypeEnum.MalariaSetTheme,
   action => {
     return (theme: string) => action(theme);
+  }
+);
+
+export const setRegionAction = createAction(
+  ActionTypeEnum.MalariaSetRegion,
+  action => {
+    return (region: RegionState) => action(region);
   }
 );
 

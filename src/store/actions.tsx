@@ -4,6 +4,7 @@ import * as malariaActions from "../malaria/actions";
 export enum ActionTypeEnum {
   MalariaSetTitle = "malaria/SET_TITLE",
   MalariaSetTheme = "malaria/SET_THEME",
+  MalariaSetRegion = "malaria/SET_REGION",
   MalariaSetFilters = "malaria/SET_FILTERS",
   MalariaToogleEndemicityLayer = "malaria/TOGGLE_ENDEMICITY_LAYER",
 

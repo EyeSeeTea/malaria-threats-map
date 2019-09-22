@@ -4,6 +4,7 @@ import empty from "./style";
 import styled from "styled-components";
 import SearchInput from "./SearchInput";
 import Layers from "./Layers";
+import mapboxgl from "mapbox-gl";
 import ReactMapboxGl from "react-mapbox-gl";
 
 import { State } from "../store/types";
@@ -15,7 +16,6 @@ import { selectTreatmentStudies } from "../malaria/treatment/reducer";
 import { selectInvasiveStudies } from "../malaria/invasive/reducer";
 import IconButton from "@material-ui/core/IconButton";
 import { Study } from "../types/Malaria";
-import mapboxgl from "mapbox-gl";
 import PreventionLayer from "./layers/PreventionLayer";
 import DiagnosisLayer from "./layers/DiagnosisLayer";
 import TreatmentLayer from "./layers/TreatmentLayer";
@@ -38,6 +38,8 @@ import MalariaTable from "./MalariaTable";
 import BasicSelect from "./BasicSelect";
 import PreventionMapTypesSelector from "./PreventionMapTypesSelector";
 import TopicSelector from "./TopicSelector";
+import RegionLayer from "./layers/RegionLayer";
+import CountrySelector from "./CountrySelector";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
@@ -237,12 +239,14 @@ class Map extends React.Component<any> {
         {this.map && this.state.ready && <TreatmentLayer map={this.map} />}
         {this.map && this.state.ready && <InvasiveLayer map={this.map} />}
         {this.map && this.state.ready && <EndemicityLayer map={this.map} />}
+        {this.map && this.state.ready && <RegionLayer map={this.map} />}
 
         <SearchContainer>
           <TopicSelector />
           <Divider />
           {/*<SearchInput />*/}
           <PreventionMapTypesSelector />
+          <CountrySelector />
           <Layers />
           <Filters />
         </SearchContainer>

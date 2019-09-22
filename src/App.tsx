@@ -7,7 +7,11 @@ import createStore from "./store";
 import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
 import { State } from "./store/types";
-import { setFiltersAction, setThemeAction } from "./malaria/actions";
+import {
+  setFiltersAction,
+  setRegionAction,
+  setThemeAction
+} from "./malaria/actions";
 import Map from "./components/Map";
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
@@ -34,6 +38,13 @@ ReduxQuerySync({
         setFiltersAction(
           value ? value.split(",").map(value => parseInt(value)) : undefined
         )
+    },
+    country: {
+      selector: (state: State) => state.malaria.region.country,
+      action: (value: string) =>
+        setRegionAction({
+          country: value
+        })
     }
   },
   initialTruth: "location"
