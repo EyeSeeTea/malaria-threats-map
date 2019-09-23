@@ -73,6 +73,7 @@ class PreventionLayer extends Component<Props> {
     const countryChange = prevProps.region.country !== region.country;
     if (mapTypeChange || yearChange || countryChange) {
       this.filterSource();
+      this.applyMapTypeSymbols();
     }
   }
 
