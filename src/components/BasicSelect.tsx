@@ -5,11 +5,10 @@ import {
   createStyles,
   emphasize,
   makeStyles,
-  useTheme,
-  Theme
+  Theme,
+  useTheme
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import NoSsr from "@material-ui/core/NoSsr";
 import TextField, { BaseTextFieldProps } from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import Chip from "@material-ui/core/Chip";
@@ -42,6 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(1, 2)
     },
     input: {
+      cursor: "pointer",
       display: "flex",
       padding: 0,
       height: "auto",
@@ -233,12 +233,9 @@ const components = {
 export default function IntegrationReactSelect({
   suggestions = [],
   value,
-  onChange
-}: {
-  suggestions?: OptionType[];
-  value: any;
-  onChange: (value: ValueType<OptionType>) => void;
-}) {
+  onChange,
+  ...rest
+}: any) {
   const classes = useStyles({});
   const theme = useTheme();
   const [single, setSingle] = React.useState<ValueType<OptionType>>(null);
@@ -267,11 +264,11 @@ export default function IntegrationReactSelect({
       <Select
         classes={classes}
         styles={selectStyles}
-        placeholder="Search a country (start with a)"
         options={suggestions}
         components={components}
         value={value}
         onChange={onChange}
+        {...rest}
       />
     </div>
   );

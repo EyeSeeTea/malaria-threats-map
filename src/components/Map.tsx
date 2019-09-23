@@ -24,7 +24,8 @@ import {
   DiagnosisIcon,
   InvasiveIcon,
   PreventionIcon,
-  TreatmentIcon
+  TreatmentIcon,
+  WhoLogoBlue
 } from "./Icons";
 import EndemicityLayer from "./layers/EndemicityLayer";
 import { setThemeAction } from "../malaria/actions";
@@ -40,6 +41,7 @@ import PreventionMapTypesSelector from "./PreventionMapTypesSelector";
 import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";
 import CountrySelector from "./CountrySelector";
+import WhoLogo from "./WhoLogo";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
@@ -74,6 +76,12 @@ const BottomRightContainer = styled(BaseContainer)`
   position: absolute;
   bottom: 0;
   right: 0;
+`;
+
+const BottomLeftContainer = styled(BaseContainer)`
+  position: absolute;
+  bottom: 0;
+  left: 0;
 `;
 
 const FilterContainer = styled(BaseContainer)`
@@ -230,8 +238,10 @@ class Map extends React.Component<any> {
           ref={el => (this.mapContainer = el)}
           style={{
             position: "absolute",
-            width: "100%",
-            height: "100%"
+            bottom: 0,
+            top: 0,
+            right: 0,
+            left: 0
           }}
         />
         {this.map && this.state.ready && <PreventionLayer map={this.map} />}
@@ -257,6 +267,9 @@ class Map extends React.Component<any> {
         <BottomRightContainer>
           <Legend />
         </BottomRightContainer>
+        <BottomLeftContainer>
+          <WhoLogo />
+        </BottomLeftContainer>
         <InitialDialog />
       </React.Fragment>
     );

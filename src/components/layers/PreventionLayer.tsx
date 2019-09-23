@@ -2,20 +2,23 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import {
-  PreventionFilters,
   PreventionMapType,
+  selectFilters as selectPreventionFilters,
   selectPreventionStudies
 } from "../../malaria/prevention/reducer";
 import { studiesToGeoJson } from "./layer-utils";
-import { selectFilters, selectTheme } from "../../malaria/reducer";
-import { selectFilters as selectPreventionFilters } from "../../malaria/prevention/reducer";
+import {
+  selectFilters,
+  selectRegion,
+  selectTheme
+} from "../../malaria/reducer";
 import setupEffects from "./effects";
 import * as R from "ramda";
 import resistanceStatusSymbols from "./prevention/ResistanceStatus/symbols";
-import intensityStatusSymbols from "./prevention/IntensityStatus/symbols";
 import { resolveResistanceStatus } from "./prevention/ResistanceStatus/utils";
 import { PreventionStudy } from "../../types/Prevention";
 import {
+  filterByCountry,
   filterByIntensityStatus,
   filterByResistanceStatus,
   filterByYearRange
@@ -40,7 +43,8 @@ const mapStateToProps = (state: State) => ({
   studies: selectPreventionStudies(state),
   theme: selectTheme(state),
   filters: selectFilters(state),
-  preventionFilters: selectPreventionFilters(state)
+  preventionFilters: selectPreventionFilters(state),
+  region: selectRegion(state)
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -55,17 +59,19 @@ class PreventionLayer extends Component<Props> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    const { preventionFilters, filters } = this.props;
+    const {
+      preventionFilters: { mapType },
+      filters,
+      region
+    } = this.props;
     this.mountLayer(prevProps);
     this.renderLayer();
-    if (prevProps.preventionFilters.mapType !== preventionFilters.mapType) {
-      this.applyMapTypeSymbols();
-      this.filterSource();
-    }
-    if (
+    const mapTypeChange = prevProps.preventionFilters.mapType !== mapType;
+    const yearChange =
       prevProps.filters[0] !== filters[0] ||
-      prevProps.filters[1] !== filters[1]
-    ) {
+      prevProps.filters[1] !== filters[1];
+    const countryChange = prevProps.region.country !== region.country;
+    if (mapTypeChange || yearChange || countryChange) {
       this.filterSource();
     }
   }
@@ -88,12 +94,20 @@ class PreventionLayer extends Component<Props> {
   };
 
   buildFilters = () => {
-    const { preventionFilters, filters } = this.props;
+    const { preventionFilters, filters, region } = this.props;
     switch (preventionFilters.mapType) {
       case PreventionMapType.RESISTANCE_STATUS:
-        return [filterByResistanceStatus, filterByYearRange(filters)];
+        return [
+          filterByResistanceStatus,
+          filterByYearRange(filters),
+          filterByCountry(region.country)
+        ];
       case PreventionMapType.INTENSITY_STATUS:
-        return [filterByIntensityStatus, filterByYearRange(filters)];
+        return [
+          filterByIntensityStatus,
+          filterByYearRange(filters),
+          filterByCountry(region.country)
+        ];
       default:
         return [];
     }

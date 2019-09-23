@@ -29,16 +29,18 @@ const suggestions: any[] = [
 
 class CountrySelector extends Component<Props> {
   onChange = (selection: any) => {
-    this.props.setRegion({ country: selection.value });
+    this.props.setRegion({ country: selection ? selection.value : undefined });
   };
   render() {
-    const { region, countryLayer, countries = [] } = this.props;
+    const { region, countries = [] } = this.props;
     const suggestions: any[] = countries.map((country: Translation) => ({
       label: country.VALUE_,
       value: country.VALUE_
     }));
     return (
       <IntegrationReactSelect
+        isClearable
+        placeholder={"Select Country"}
         suggestions={suggestions}
         onChange={this.onChange}
         value={suggestions.find((s: any) => s.value === region.country)}

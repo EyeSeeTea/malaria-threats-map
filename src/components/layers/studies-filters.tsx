@@ -16,3 +16,7 @@ export const filterByIntensityStatus = (study: any) => {
 export const filterByResistanceStatus = (study: any) => {
   return study.ASSAY_TYPE === "DISCRIMINATING_CONCENTRATION_BIOASSAY";
 };
+
+export const filterByCountry = (country: string) => (study: any) => {
+  return !country || study.COUNTRY_NAME === country;
+};
