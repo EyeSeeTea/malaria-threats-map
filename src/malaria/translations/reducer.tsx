@@ -36,3 +36,11 @@ export const selectTranslationsAreLoading = createSelector(
   selectTranslationsState,
   R.prop("loading")
 );
+
+export const selectCountries = createSelector(
+  selectTranslationsState,
+  state => {
+    const { COUNTRY_NAME } = R.groupBy(R.path(["FIELD"]), state.translations);
+    return COUNTRY_NAME;
+  }
+);

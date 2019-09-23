@@ -4,9 +4,14 @@ import { State } from "../store/types";
 import IntegrationReactSelect from "./BasicSelect";
 import { setRegionAction } from "../malaria/actions";
 import { selectRegion } from "../malaria/reducer";
+import { selectCountryLayer } from "../store/reducers/country-layer-reducer";
+import { selectCountries } from "../malaria/translations/reducer";
+import { Translation, TranslationFeature } from "../types/Translation";
 
 const mapStateToProps = (state: State) => ({
-  region: selectRegion(state)
+  region: selectRegion(state),
+  countryLayer: selectCountryLayer(state),
+  countries: selectCountries(state)
 });
 
 const mapDispatchToProps = {
@@ -27,7 +32,11 @@ class CountrySelector extends Component<Props> {
     this.props.setRegion({ country: selection.value });
   };
   render() {
-    const { region } = this.props;
+    const { region, countryLayer, countries = [] } = this.props;
+    const suggestions: any[] = countries.map((country: Translation) => ({
+      label: country.VALUE_,
+      value: country.VALUE_
+    }));
     return (
       <IntegrationReactSelect
         suggestions={suggestions}

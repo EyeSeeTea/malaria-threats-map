@@ -25,6 +25,7 @@ import { SingleValueProps } from "react-select/src/components/SingleValue";
 import { ValueType } from "react-select/src/types";
 import { Omit } from "@material-ui/types";
 import { PreventionMapType } from "../malaria/prevention/reducer";
+import { useTranslation } from "react-i18next";
 
 export interface OptionType {
   label: string;
@@ -139,6 +140,8 @@ function Control(props: ControlProps<OptionType>) {
 }
 
 function Option(props: OptionProps<OptionType>) {
+  const { t } = useTranslation("common");
+  const value = props.children ? t(props.children.toString()) : "";
   return (
     <MenuItem
       ref={props.innerRef}
@@ -149,7 +152,7 @@ function Option(props: OptionProps<OptionType>) {
       }}
       {...props.innerProps}
     >
-      {props.children}
+      {value}
     </MenuItem>
   );
 }
@@ -170,12 +173,14 @@ function Placeholder(props: MuiPlaceholderProps) {
 }
 
 function SingleValue(props: SingleValueProps<OptionType>) {
+  const { t } = useTranslation("common");
+  const value = props.children ? t(props.children.toString()) : "";
   return (
     <Typography
       className={props.selectProps.classes.singleValue}
       {...props.innerProps}
     >
-      {props.children}
+      {value}
     </Typography>
   );
 }

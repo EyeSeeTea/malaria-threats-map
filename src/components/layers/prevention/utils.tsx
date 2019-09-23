@@ -26,6 +26,6 @@ export const resolveMapTypeLegend = (preventionFilters: PreventionFilters) => {
     case PreventionMapType.INTENSITY_STATUS:
       return <IntensityStatusLegend />;
     default:
-      return;
+      return <span />;
   }
 };

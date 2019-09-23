@@ -98,15 +98,14 @@ class RegionLayer extends Component<Props> {
       (feature: any) => feature.properties.ADM0_NAME == country
     );
     if (!feature) return;
-    const coordinates: any[] = R.chain(
-      (coords: any) => coords[0],
-      feature.geometry.coordinates
-    );
+    const coordinates: any[] = R.chain((coords: any) => {
+      return coords[0].length === 2 ? coords : coords[0];
+    }, feature.geometry.coordinates);
     const bounds = coordinates.reduce((bounds: any, coord: any) => {
       return bounds.extend(coord);
     }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
     this.props.map.fitBounds(bounds, {
-      padding: 40
+      padding: 100
     });
   };
 

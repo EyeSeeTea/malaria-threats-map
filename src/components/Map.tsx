@@ -252,7 +252,7 @@ class Map extends React.Component<any> {
         </SearchContainer>
         <TopRightContainer>
           <MalariaTable />
-          {/*<LanguageSelector />*/}
+          <LanguageSelector />
         </TopRightContainer>
         <BottomRightContainer>
           <Legend />

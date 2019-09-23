@@ -21,7 +21,7 @@ export const getPreventionStudiesEpic = (
   action$: ActionsObservable<ActionType<typeof fetchPreventionStudiesRequest>>
 ) =>
   action$.ofType(ActionTypeEnum.FetchPreventionStudiesRequest).pipe(
-    switchMap(action => {
+        switchMap(action => {
       const params: Params = {
         f: "json",
         where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${MapServerConfig.years.to}`,
