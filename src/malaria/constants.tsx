@@ -4,7 +4,8 @@ export const MapServerConfig = {
     diagnosis: 10,
     treatment: 9,
     invasive: 14,
-    translations: 11
+    translations: 11,
+    countries: 6
   },
   years: {
     from: 1998,

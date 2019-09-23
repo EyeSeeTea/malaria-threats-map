@@ -1,109 +1,93 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import InputBase from "@material-ui/core/InputBase";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
-import DirectionsIcon from "@material-ui/icons/Directions";
 import { useTranslation } from "react-i18next";
-import {
-  ListItemIcon,
-  ListItemText,
-  ListItem,
-  List,
-  Typography
-} from "@material-ui/core";
-import InboxIcon from "@material-ui/icons/Inbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
+import { Typography } from "@material-ui/core";
 
 import styled from "styled-components";
+import { State } from "../store/types";
+import { selectFilters, selectTheme } from "../malaria/reducer";
+import { selectFilters as selectPreventionFilters } from "../malaria/prevention/reducer";
+import { setPreventionMapType } from "../malaria/prevention/actions";
+import { connect } from "react-redux";
+import { resolveMapTypeLegend } from "./layers/prevention/utils";
 
-const LegendContainer = styled(Paper)`
+export const LegendContainer = styled(Paper)`
   padding: 16px;
   margin-bottom: 8px;
   display: flex;
   flex-direction: column;
   width: 175px;
   font-size: 12px;
-  background-color: rgba(255, 255, 255, 0.75) !important;
 `;
 
-const LegendEntries = styled.div`
+export const LegendEntries = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const LegendTitleContainer = styled.div`
+export const LegendTitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 8px;
 `;
 
-const LegendFooterContainer = styled.div`
+export const LegendFooterContainer = styled.div`
   display: flex;
   margin-top: 8px;
 `;
 
-const LegendEntry = styled.div`
+export const LegendEntry = styled.div`
   display: flex;
   align-items: center;
 `;
-const LegendSymbol = styled.span<{ color: string }>`
+export const LegendSymbol = styled.span<{ color: string }>`
   background-color: ${props => props.color};
   border-radius: 99999px;
   width: 12px;
   height: 12px;
   margin-right: 8px;
 `;
-const LegendText = styled.span`
+export const LegendText = styled.span`
   line-height: 24px;
 `;
 
-const LegendTypography = styled(Typography)`
+export const LegendTypography = styled(Typography)`
   font-size: 0.8rem !important;
 `;
 
-const LegendTitleTypography = styled(Typography)`
+export const LegendTitleTypography = styled(Typography)`
   font-size: 0.9rem !important;
 `;
-const LegendFooterTypography = styled(Typography)`
+export const LegendFooterTypography = styled(Typography)`
   font-size: 0.7rem !important;
 `;
+const mapStateToProps = (state: State) => ({
+  filters: selectFilters(state),
+  theme: selectTheme(state),
+  preventionFilters: selectPreventionFilters(state)
+});
 
-export default function Legend({}) {
+const mapDispatchToProps = {
+  setPreventionMapType: setPreventionMapType
+};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+type Props = DispatchProps & StateProps;
+
+function Legend({ filters, preventionFilters, theme }: Props) {
   const { t } = useTranslation("common");
-
-  return (
-    <LegendContainer>
-      <LegendTitleContainer>
-        <LegendTitleTypography color="textPrimary" gutterBottom>
-          Resistance Status
-        </LegendTitleTypography>
-        <LegendTypography color="textSecondary">
-          (% mosquito mortality)
-        </LegendTypography>
-      </LegendTitleContainer>
-      <LegendEntries>
-        <LegendEntry>
-          <LegendSymbol color="#d43501" />
-          <LegendText>{"Confirmed (<90%)"}</LegendText>
-        </LegendEntry>
-        <LegendEntry>
-          <LegendSymbol color="#ff9502" />
-          <LegendText>{"Possible (90-97%)"}</LegendText>
-        </LegendEntry>
-        <LegendEntry>
-          <LegendSymbol color="#869c66" />
-          <LegendText>{"Susceptible (≥98%)"}</LegendText>
-        </LegendEntry>
-      </LegendEntries>
-      <LegendFooterContainer>
-        <LegendFooterTypography color="textSecondary">
-          Most recent data shown
-        </LegendFooterTypography>
-      </LegendFooterContainer>
-    </LegendContainer>
-  );
+  switch (theme) {
+    case "prevention":
+      return resolveMapTypeLegend(preventionFilters);
+    case "diagnosis":
+      return resolveMapTypeLegend(preventionFilters);
+    default:
+      return <span />;
+  }
 }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Legend);

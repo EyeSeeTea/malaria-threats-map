@@ -6,6 +6,7 @@ import diagnosisReducer from "../malaria/diagnosis/reducer";
 import treatmentReducer from "../malaria/treatment/reducer";
 import invasiveReducer from "../malaria/invasive/reducer";
 import translationsReducer from "../malaria/translations/reducer";
+import countryLayerReducer from "../store/reducers/country-layer-reducer";
 
 const rootReducer = () =>
   combineReducers({
@@ -14,7 +15,8 @@ const rootReducer = () =>
     diagnosis: diagnosisReducer,
     treatment: treatmentReducer,
     invasive: invasiveReducer,
-    translations: translationsReducer
+    translations: translationsReducer,
+    countryLayer: countryLayerReducer
   } as any);
 
 export default rootReducer;

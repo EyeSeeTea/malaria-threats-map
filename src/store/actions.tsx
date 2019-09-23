@@ -27,7 +27,11 @@ export enum ActionTypeEnum {
 
   FetchTranslationsRequest = "translations/FETCH_TRANSLATIONS_REQUEST",
   FetchTranslationsSuccess = "translations/FETCH_TRANSLATIONS_SUCCESS",
-  FetchTranslationsError = "translations/FETCH_TRANSLATIONS_ERROR"
+  FetchTranslationsError = "translations/FETCH_TRANSLATIONS_ERROR",
+
+  FetchCountryLayerRequest = "layers/FETCH_COUNTRY_LAYER_REQUEST",
+  FetchCountryLayerSuccess = "layers/FETCH_COUNTRY_LAYER_SUCCESS",
+  FetchCountryLayerError = "layers/FETCH_COUNTRY_LAYER_ERROR"
 }
 
 export type MalariaAction = ActionType<typeof malariaActions>;

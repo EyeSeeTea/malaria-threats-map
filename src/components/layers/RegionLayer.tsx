@@ -2,9 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import mapboxgl from "mapbox-gl";
 import { State } from "../../store/types";
-import { selectEndemicity, selectRegion } from "../../malaria/reducer";
+import {
+  RegionState,
+  selectEndemicity,
+  selectRegion
+} from "../../malaria/reducer";
 import { setThemeAction } from "../../malaria/actions";
 import * as R from "ramda";
+import { fetchCountryLayerRequest } from "../../store/actions/country-layer-actions";
+import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
 
 const REGION_LAYER_ID = "regions-layer";
 const REGION_SOURCE_ID = "regions-source";
@@ -17,6 +23,9 @@ const layer: any = {
     "fill-opacity": 0.5,
     "fill-outline-color": "rgba(0,0,0,0.1)"
   },
+  layout: {
+    visibility: "none"
+  },
   minZoom: 0,
   maxZoom: 20,
   source: REGION_SOURCE_ID
@@ -24,52 +33,82 @@ const layer: any = {
 
 const mapStateToProps = (state: State) => ({
   endemicity: selectEndemicity(state),
-  region: selectRegion(state)
+  region: selectRegion(state),
+  countryLayer: selectCountryLayer(state)
 });
 
 const mapDispatchToProps = {
-  setTheme: setThemeAction
+  fetchCountryLayer: fetchCountryLayerRequest
 };
 
-class RegionLayer extends Component<any> {
+interface OwnProps {
+  map: any;
+}
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+type Props = DispatchProps & StateProps & OwnProps;
+
+class RegionLayer extends Component<Props> {
   componentDidMount(): void {
-    const { region } = this.props;
+    const { region, fetchCountryLayer } = this.props;
+    fetchCountryLayer();
+    const host = "https://who-cache.esriemcs.com";
+    const query =
+      "where=1%3D1&f=geojson&geometryPrecision=2.5&outFields=ADM0_SOVRN,ADM0_NAME,CENTER_LAT,CENTER_LON";
     const source: any = {
       type: "geojson",
-      data:
-        "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer/3/query?where=1%3D1&f=geojson&geometryPrecision=2.5&outFields=ADM0_SOVRN,ADM0_NAME,CENTER_LAT,CENTER_LON"
+      data: `${host}/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer/3/query?${query}`
     };
     this.props.map.addSource(REGION_SOURCE_ID, source);
     this.props.map.addLayer(layer);
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    const { region, countryLayer } = this.props;
+    if (prevProps.region.country !== region.country) {
+      this.applyCountryUpdates(region);
+    }
+    if (prevProps.countryLayer !== countryLayer) {
+      this.applyCountryUpdates(region);
+    }
+  }
+
+  applyCountryUpdates = (region: RegionState) => {
+    if (region.country) {
+      this.zoomToCountry(region.country);
+      this.highlightToCountry(region.country);
+      this.showLayer();
+    } else {
+      this.hideLayer();
+    }
+  };
+
+  highlightToCountry = (country: string) => {
     this.props.map.setFilter(REGION_LAYER_ID, [
       "all",
-      ["!=", "ADM0_NAME", region.country]
+      ["!=", "ADM0_NAME", country]
     ]);
-    const scr = this.props.map.getSource(REGION_SOURCE_ID);
-    const lyr = this.props.map.getLayer(REGION_LAYER_ID);
-    this.showLayer();
-    setTimeout(() => {
-      const point = this.props.map.querySourceFeatures(REGION_SOURCE_ID, {
-        filter: ["all", ["==", "ADM0_NAME", region.country]]
-      });
-      if (!point) return;
-      const coordinates: any[] = R.chain(
-        (coords: any) => coords[0],
-        point[0].geometry.coordinates
-      );
-      const bounds = coordinates.reduce((bounds: any, coord: any) => {
-        return bounds.extend(coord);
-      }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+  };
 
-      this.props.map.fitBounds(bounds, {
-        padding: 40
-      });
-    }, 2000);
-  }
-
-  componentDidUpdate() {
-    this.showLayer();
-  }
+  zoomToCountry = (country: string) => {
+    const { countryLayer } = this.props;
+    if (!countryLayer) return;
+    const feature = countryLayer.features.find(
+      (feature: any) => feature.properties.ADM0_NAME == country
+    );
+    if (!feature) return;
+    const coordinates: any[] = R.chain(
+      (coords: any) => coords[0],
+      feature.geometry.coordinates
+    );
+    const bounds = coordinates.reduce((bounds: any, coord: any) => {
+      return bounds.extend(coord);
+    }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+    this.props.map.fitBounds(bounds, {
+      padding: 40
+    });
+  };
 
   componentWillUnmount(): void {
     this.hideLayer();
@@ -98,5 +137,5 @@ class RegionLayer extends Component<any> {
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(RegionLayer);
