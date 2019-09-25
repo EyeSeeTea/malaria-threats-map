@@ -180,8 +180,12 @@ class Map extends React.Component<any> {
       container: this.mapContainer,
       style: empty,
       center: [-16.629129, 28.291565],
+      maxZoom: 7.99999,
+      minZoom: 1,
       zoom: 2
     });
+    this.map.dragRotate.disable();
+    this.map.touchZoomRotate.disableRotation();
 
     this.map.on("load", () => {
       this.map.addSource("raster-tiles", {
@@ -202,6 +206,7 @@ class Map extends React.Component<any> {
       });
 
       this.setState({ ready: true });
+      this.map.on("zoom", () => {});
     });
   }
 
