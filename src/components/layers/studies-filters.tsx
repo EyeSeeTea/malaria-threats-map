@@ -17,6 +17,22 @@ export const filterByResistanceStatus = (study: any) => {
   return study.ASSAY_TYPE === "DISCRIMINATING_CONCENTRATION_BIOASSAY";
 };
 
+export const filterByResistanceMechanism = (study: any) => {
+  return (
+    study.ASSAY_TYPE === "MOLECULAR_ASSAY" ||
+    study.ASSAY_TYPE === "BIOCHEMICAL_ASSAY" ||
+    study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY"
+  );
+};
+export const filterByLevelOfInvolvement = (study: any) => {
+  return (
+    study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY" &&
+    study.MECHANISM_PROXY !== "CANNOT_BE_RELIABLY_ASSESSED" &&
+    study.MECHANISM_PROXY !== "NEGATIVE_INVOLVEMENT" &&
+    study.MECHANISM_PROXY !== "NA"
+  );
+};
+
 export const filterByCountry = (country: string) => (study: any) => {
   return !country || study.COUNTRY_NAME === country;
 };

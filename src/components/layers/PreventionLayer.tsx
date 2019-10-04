@@ -19,7 +19,8 @@ import { resolveResistanceStatus } from "./prevention/ResistanceStatus/utils";
 import { PreventionStudy } from "../../types/Prevention";
 import {
   filterByCountry,
-  filterByIntensityStatus,
+  filterByIntensityStatus, filterByLevelOfInvolvement,
+  filterByResistanceMechanism,
   filterByResistanceStatus,
   filterByYearRange
 } from "./studies-filters";
@@ -106,6 +107,18 @@ class PreventionLayer extends Component<Props> {
       case PreventionMapType.INTENSITY_STATUS:
         return [
           filterByIntensityStatus,
+          filterByYearRange(filters),
+          filterByCountry(region.country)
+        ];
+      case PreventionMapType.RESISTANCE_MECHANISM:
+        return [
+          filterByResistanceMechanism,
+          filterByYearRange(filters),
+          filterByCountry(region.country)
+        ];
+      case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+        return [
+          filterByLevelOfInvolvement,
           filterByYearRange(filters),
           filterByCountry(region.country)
         ];

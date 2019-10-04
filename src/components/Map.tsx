@@ -255,7 +255,6 @@ class Map extends React.Component<any> {
         {this.map && this.state.ready && <InvasiveLayer map={this.map} />}
         {this.map && this.state.ready && <EndemicityLayer map={this.map} />}
         {this.map && this.state.ready && <RegionLayer map={this.map} />}
-
         <SearchContainer>
           <TopicSelector />
           <Divider />

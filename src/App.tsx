@@ -31,7 +31,7 @@ ReduxQuerySync({
     mapType: {
       selector: (state: State) => state.prevention.filters.mapType,
       action: (value: string) =>
-        setPreventionMapType(value ? parseInt(value) : 1)
+        setPreventionMapType(value ? parseInt(value) : 0)
     },
     years: {
       selector: (state: State) => state.malaria.filters,
