@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectTreatmentStudies } from "../../malaria/treatment/reducer";
 import { circleLayout, studiesToGeoJson } from "./layer-utils";
-import {selectFilters, selectTheme} from "../../malaria/reducer";
-import { Study } from "../../types/Malaria";
+import { selectFilters, selectTheme } from "../../malaria/reducer";
 import treatmentSymbol from "./symbols/treatment";
 import setupEffects from "./effects";
 

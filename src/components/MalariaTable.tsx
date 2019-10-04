@@ -5,11 +5,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Slide from "@material-ui/core/Slide";
 import { TransitionProps } from "@material-ui/core/transitions";
 import FilterIcon from "@material-ui/icons/FilterList";
-import InsecticideClassFilter from "./filters/InsecticideClassFilter";
-import AssayTypeFilter from "./filters/AssayTypeFilter";
-import { AppBar, Button, Toolbar, Typography } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import YearRangeSelector from "./YearRangeSelector";
 import Table, { Data } from "./Table";
 
 const useStyles = makeStyles((theme: Theme) =>

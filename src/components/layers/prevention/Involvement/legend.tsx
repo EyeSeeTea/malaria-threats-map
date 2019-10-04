@@ -21,7 +21,7 @@ export default function Legend({}) {
     <LegendContainer>
       <LegendTitleContainer>
         <LegendTitleTypography color="textPrimary" gutterBottom>
-          Resistance Mechanism
+          Level of Involvement
         </LegendTitleTypography>
       </LegendTitleContainer>
       <LegendEntries>
