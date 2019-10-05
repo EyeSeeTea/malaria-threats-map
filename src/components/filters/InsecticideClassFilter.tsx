@@ -20,6 +20,7 @@ import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
 import { setInsecticideClass } from "../../malaria/prevention/actions";
 import { selectFilters } from "../../malaria/prevention/reducer";
+import { Paper } from "@material-ui/core";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   & span {
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(3)
     },
     group: {
-      margin: theme.spacing(1, 0)
+      padding: theme.spacing(1, 2)
     },
     radio: {
       padding: theme.spacing(0.5, 0)
@@ -72,27 +73,23 @@ function InsecticideClassFilter({
   const { t } = useTranslation("common");
 
   return (
-    <div className={classes.root}>
-      <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">Insecticide Class</FormLabel>
-        <RadioGroup
-          className={classes.group}
-          value={preventionFilters.insecticideClass}
-          onChange={handleChange}
-        >
-          {(insecticideClasses as Translation[])
-            .filter(translation => translation.VALUE_ !== "NA")
-            .map((insecticideClass: Translation) => (
-              <StyledFormControlLabel
-                key={insecticideClass.VALUE_}
-                value={insecticideClass.VALUE_}
-                control={<Radio color="primary" />}
-                label={t(insecticideClass.VALUE_)}
-              />
-            ))}
-        </RadioGroup>
-      </FormControl>
-    </div>
+    <Paper className={classes.group}>
+      <RadioGroup
+        value={preventionFilters.insecticideClass}
+        onChange={handleChange}
+      >
+        {(insecticideClasses as Translation[])
+          .filter(translation => translation.VALUE_ !== "NA")
+          .map((insecticideClass: Translation) => (
+            <StyledFormControlLabel
+              key={insecticideClass.VALUE_}
+              value={insecticideClass.VALUE_}
+              control={<Radio color="primary" />}
+              label={t(insecticideClass.VALUE_)}
+            />
+          ))}
+      </RadioGroup>
+    </Paper>
   );
 }
 

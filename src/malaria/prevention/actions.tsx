@@ -45,3 +45,11 @@ export const setInsecticideTypes = createAction(
     return (insecticideTypes: string[]) => action(insecticideTypes);
   }
 );
+
+export const setType = createAction(ActionTypeEnum.SetType, action => {
+  return (type: string) => action(type);
+});
+
+export const setSpecies = createAction(ActionTypeEnum.SetSpecies, action => {
+  return (species: string[]) => action(species);
+});

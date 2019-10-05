@@ -34,8 +34,7 @@ export interface OptionType {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
-      marginBottom: theme.spacing(1)
+      flexGrow: 1
     },
     inputPaper: {
       padding: theme.spacing(1, 2)

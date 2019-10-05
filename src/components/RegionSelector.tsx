@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function RegionSelector() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const classes = useStyles({});
+  const classes = useStyles({})
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -81,6 +81,15 @@ export default function RegionSelector() {
         <LayersIcon className={classes.extendedIcon} />
         Layers
       </Fab>
+      <Button
+        aria-controls="customized-menu"
+        aria-haspopup="true"
+        variant="contained"
+        color="primary"
+        onClick={handleClick}
+      >
+        Open Menu
+      </Button>
       <StyledMenu
         id="customized-menu"
         anchorEl={anchorEl}

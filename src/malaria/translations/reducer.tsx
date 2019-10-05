@@ -54,8 +54,18 @@ export const selectInsecticideClasses = createSelector(
 );
 
 export const selectInsecticideTypes = createSelector(
-    selectFields,
-    R.prop("INSECTICIDE_TYPE")
+  selectFields,
+  R.prop("INSECTICIDE_TYPE")
+);
+
+export const selectTypes = createSelector(
+  selectFields,
+  R.prop("TYPE")
+);
+
+export const selectSpecies = createSelector(
+  selectFields,
+  R.prop("SPECIES")
 );
 
 export const selectCountries = createSelector(

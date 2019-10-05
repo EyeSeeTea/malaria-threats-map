@@ -70,6 +70,10 @@ const Divider = styled.div`
   height: 10px;
 `;
 
+const FilterWrapper = styled.div`
+  margin-botton: 10px;
+`;
+
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
   preventionStudies: selectPreventionStudies(state),
@@ -183,8 +187,9 @@ class Map extends React.Component<any> {
           <Divider />
           {/*<SearchInput />*/}
           <PreventionMapTypesSelector />
+          <Divider />
           <CountrySelector />
-          <RegionSelector />
+          <Divider />
           <Filters />
           <Layers />
         </SearchContainer>

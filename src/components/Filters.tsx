@@ -13,6 +13,8 @@ import styled from "styled-components";
 import InsecticideTypeFilter from "./filters/InsecticideTypeFilter";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
+import TypeFilter from "./filters/TypeFilter";
+import SpeciesFilter from "./filters/SpeciesFilter";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,7 +43,7 @@ const FilterButton = styled(IconButton)`
 `;
 
 const FilterWrapper = styled.div`
-  margin: 20px;
+  margin: 10px 20px;
 `;
 const Divider = styled.div`
   height: 10px;
@@ -106,11 +108,25 @@ export default function Filters() {
             </Button>
           </Toolbar>
         </AppBar>
-        <InsecticideClassFilter />
+        <FilterWrapper>
+          <FormLabel component="legend">Insecticide Class</FormLabel>
+          <Divider />
+          <InsecticideClassFilter />
+        </FilterWrapper>
         <FilterWrapper>
           <FormLabel component="legend">Insecticide Type</FormLabel>
           <Divider />
           <InsecticideTypeFilter />
+        </FilterWrapper>
+        <FilterWrapper>
+          <FormLabel component="legend">Type</FormLabel>
+          <Divider />
+          <TypeFilter />
+        </FilterWrapper>
+        <FilterWrapper>
+          <FormLabel component="legend">Vector Species</FormLabel>
+          <Divider />
+          <SpeciesFilter />
         </FilterWrapper>
         <YearRangeSelector />
       </Dialog>

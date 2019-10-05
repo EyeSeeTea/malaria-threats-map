@@ -18,7 +18,10 @@ import { ThemeProvider } from "@material-ui/styles";
 import { blue, deepOrange } from "@material-ui/core/colors";
 import {
   setInsecticideClass,
-  setPreventionMapType
+  setInsecticideTypes,
+  setPreventionMapType,
+  setSpecies,
+  setType
 } from "./malaria/prevention/actions";
 import InitialDialog from "./components/InitialDialog";
 
@@ -39,6 +42,20 @@ ReduxQuerySync({
     insecticideClass: {
       selector: (state: State) => state.prevention.filters.insecticideClass,
       action: (value: string) => setInsecticideClass(value)
+    },
+    insecticideTypes: {
+      selector: (state: State) => state.prevention.filters.insecticideTypes,
+      action: (value: string) =>
+        setInsecticideTypes(value ? value.split(",") : undefined)
+    },
+    type: {
+      selector: (state: State) => state.prevention.filters.type,
+      action: (value: string) => setType(value)
+    },
+    species: {
+      selector: (state: State) => state.prevention.filters.species,
+      action: (value: string) =>
+        setSpecies(value ? value.split(",") : undefined)
     },
     years: {
       selector: (state: State) => state.malaria.filters,

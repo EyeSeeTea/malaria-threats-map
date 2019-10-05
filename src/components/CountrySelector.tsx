@@ -1,12 +1,12 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {State} from "../store/types";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { State } from "../store/types";
 import IntegrationReactSelect from "./BasicSelect";
-import {setRegionAction} from "../malaria/actions";
-import {selectRegion} from "../malaria/reducer";
-import {selectCountryLayer} from "../store/reducers/country-layer-reducer";
-import {selectCountries} from "../malaria/translations/reducer";
-import {Translation} from "../types/Translation";
+import { setRegionAction } from "../malaria/actions";
+import { selectRegion } from "../malaria/reducer";
+import { selectCountryLayer } from "../store/reducers/country-layer-reducer";
+import { selectCountries } from "../malaria/translations/reducer";
+import { Translation } from "../types/Translation";
 
 const mapStateToProps = (state: State) => ({
   region: selectRegion(state),

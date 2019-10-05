@@ -51,3 +51,11 @@ export const filterByInsecticideTypes = (insecticideTypes: string[]) => (
     insecticideTypes.includes(study.INSECTICIDE_TYPE)
   );
 };
+
+export const filterByType = (type: string) => (study: any) => {
+  return !type || study.TYPE === type;
+};
+
+export const filterBySpecies = (species: string[]) => (study: any) => {
+  return !species.length || species.includes(study.SPECIES);
+};

@@ -16,6 +16,8 @@ export interface PreventionFilters {
   mapType: PreventionMapType;
   insecticideClass: string;
   insecticideTypes: string[];
+  type: string | null;
+  species: string[];
 }
 
 export interface PreventionState {
@@ -28,7 +30,9 @@ const initialState: PreventionState = Object.freeze({
   filters: {
     mapType: PreventionMapType.RESISTANCE_STATUS,
     insecticideClass: "PYRETHROIDS",
-    insecticideTypes: []
+    insecticideTypes: [],
+    type: null,
+    species: []
   }
 });
 
@@ -68,13 +72,39 @@ function updateInsecticideTypes(insecticideTypes: string[]) {
   };
 }
 
+function updateType(type: string) {
+  return (state: PreventionState) => {
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        type
+      }
+    };
+  };
+}
+
+function updateSpecies(species: string[]) {
+  return (state: PreventionState) => {
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        species: species || []
+      }
+    };
+  };
+}
+
 export default createReducer<PreventionState>(initialState, {
   [ActionTypeEnum.FetchPreventionStudiesSuccess]: (
     response: PreventionResponse
   ) => R.assoc("studies", response.features.map(feature => feature.attributes)),
   [ActionTypeEnum.SetPreventionMapType]: updatePreventionMapType,
   [ActionTypeEnum.SetInsecticideClass]: updateInsecticideClass,
-  [ActionTypeEnum.SetInsecticideTypes]: updateInsecticideTypes
+  [ActionTypeEnum.SetInsecticideTypes]: updateInsecticideTypes,
+  [ActionTypeEnum.SetType]: updateType,
+  [ActionTypeEnum.SetSpecies]: updateSpecies
 });
 
 export const selectPreventionState = (state: State) => state.prevention;
