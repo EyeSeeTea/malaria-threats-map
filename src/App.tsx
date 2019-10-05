@@ -16,7 +16,10 @@ import Map from "./components/Map";
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { blue, deepOrange } from "@material-ui/core/colors";
-import { setPreventionMapType } from "./malaria/prevention/actions";
+import {
+  setInsecticideClass,
+  setPreventionMapType
+} from "./malaria/prevention/actions";
 import InitialDialog from "./components/InitialDialog";
 
 const { store } = createStore();
@@ -32,6 +35,10 @@ ReduxQuerySync({
       selector: (state: State) => state.prevention.filters.mapType,
       action: (value: string) =>
         setPreventionMapType(value ? parseInt(value) : 0)
+    },
+    insecticideClass: {
+      selector: (state: State) => state.prevention.filters.insecticideClass,
+      action: (value: string) => setInsecticideClass(value)
     },
     years: {
       selector: (state: State) => state.malaria.filters,

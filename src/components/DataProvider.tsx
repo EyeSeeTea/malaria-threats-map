@@ -62,7 +62,7 @@ class DataProvider extends Component<Props> {
       i18next.addResourceBundle("en", "common", englishResources);
       i18next.addResourceBundle("es", "common", spanishResources);
       i18next.addResourceBundle("fr", "common", frenchResources);
-      // console.log(R.groupBy(R.path(["FIELD"]), this.props.translations))
+      console.log(R.groupBy(R.path(["FIELD"]), this.props.translations))
     }
   }
 

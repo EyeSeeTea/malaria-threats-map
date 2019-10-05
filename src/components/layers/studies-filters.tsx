@@ -36,3 +36,18 @@ export const filterByLevelOfInvolvement = (study: any) => {
 export const filterByCountry = (country: string) => (study: any) => {
   return !country || study.COUNTRY_NAME === country;
 };
+
+export const filterByInsecticideClass = (insecticideClass: string) => (
+  study: any
+) => {
+  return study.INSECTICIDE_CLASS === insecticideClass;
+};
+
+export const filterByInsecticideTypes = (insecticideTypes: string[]) => (
+  study: any
+) => {
+  return (
+    !insecticideTypes.length ||
+    insecticideTypes.includes(study.INSECTICIDE_TYPE)
+  );
+};

@@ -31,3 +31,17 @@ export const setPreventionMapType = createAction(
     return (mapType: PreventionMapType) => action(mapType);
   }
 );
+
+export const setInsecticideClass = createAction(
+  ActionTypeEnum.SetInsecticideClass,
+  action => {
+    return (insecticideClass: string) => action(insecticideClass);
+  }
+);
+
+export const setInsecticideTypes = createAction(
+  ActionTypeEnum.SetInsecticideTypes,
+  action => {
+    return (insecticideTypes: string[]) => action(insecticideTypes);
+  }
+);

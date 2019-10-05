@@ -29,6 +29,7 @@ import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";
 import CountrySelector from "./CountrySelector";
 import WhoLogo from "./WhoLogo";
+import RegionSelector from "./RegionSelector";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
@@ -183,6 +184,7 @@ class Map extends React.Component<any> {
           {/*<SearchInput />*/}
           <PreventionMapTypesSelector />
           <CountrySelector />
+          <RegionSelector />
           <Filters />
           <Layers />
         </SearchContainer>

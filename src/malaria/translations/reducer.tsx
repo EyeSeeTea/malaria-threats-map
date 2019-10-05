@@ -8,11 +8,13 @@ import { Translation, TranslationResponse } from "../../types/Translation";
 export interface TranslationsState {
   translations: Translation[];
   loading: boolean;
+  fields: any;
 }
 
 const initialState: TranslationsState = Object.freeze({
   translations: [],
-  loading: false
+  loading: false,
+  fields: {}
 });
 
 export default createReducer<TranslationsState>(initialState, {
@@ -20,7 +22,11 @@ export default createReducer<TranslationsState>(initialState, {
   [ActionTypeEnum.FetchTranslationsSuccess]: (response: TranslationResponse) =>
     R.mergeLeft({
       translations: response.features.map(feature => feature.attributes),
-      loading: false
+      loading: false,
+      fields: R.groupBy(
+        R.path(["FIELD"]),
+        response.features.map(feature => feature.attributes)
+      )
     }),
   [ActionTypeEnum.FetchTranslationsError]: () => R.assoc("loading", false)
 });
@@ -35,6 +41,21 @@ export const selectTranslations = createSelector(
 export const selectTranslationsAreLoading = createSelector(
   selectTranslationsState,
   R.prop("loading")
+);
+
+export const selectFields = createSelector(
+  selectTranslationsState,
+  R.prop("fields")
+);
+
+export const selectInsecticideClasses = createSelector(
+  selectFields,
+  R.prop("INSECTICIDE_CLASS")
+);
+
+export const selectInsecticideTypes = createSelector(
+    selectFields,
+    R.prop("INSECTICIDE_TYPE")
 );
 
 export const selectCountries = createSelector(

@@ -22,11 +22,6 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const suggestions: any[] = [
-  { label: "France", value: "FRANCE" },
-  { label: "Spain", value: "SPAIN" }
-];
-
 class CountrySelector extends Component<Props> {
   onChange = (selection: any) => {
     this.props.setRegion({ country: selection ? selection.value : undefined });

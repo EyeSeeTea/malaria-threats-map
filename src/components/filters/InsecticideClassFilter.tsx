@@ -7,6 +7,19 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import styled from "styled-components";
+import { State } from "../../store/types";
+import { selectRegion } from "../../malaria/reducer";
+import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
+import {
+  selectCountries,
+  selectInsecticideClasses
+} from "../../malaria/translations/reducer";
+import { setRegionAction } from "../../malaria/actions";
+import { connect } from "react-redux";
+import { Translation } from "../../types/Translation";
+import { useTranslation } from "react-i18next";
+import { setInsecticideClass } from "../../malaria/prevention/actions";
+import { selectFilters } from "../../malaria/prevention/reducer";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   & span {
@@ -31,13 +44,32 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function InsecticideClassFilter() {
+const mapStateToProps = (state: State) => ({
+  insecticideClasses: selectInsecticideClasses(state),
+  preventionFilters: selectFilters(state)
+});
+
+const mapDispatchToProps = {
+  setInsecticideClass: setInsecticideClass
+};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+type Props = DispatchProps & StateProps;
+
+function InsecticideClassFilter({
+  insecticideClasses = [],
+  preventionFilters,
+  setInsecticideClass
+}: Props) {
   const classes = useStyles({});
   const [value, setValue] = React.useState("female");
 
   function handleChange(event: React.ChangeEvent<unknown>) {
-    setValue((event.target as HTMLInputElement).value);
+    setInsecticideClass((event.target as HTMLInputElement).value);
   }
+
+  const { t } = useTranslation("common");
 
   return (
     <div className={classes.root}>
@@ -45,31 +77,26 @@ export default function InsecticideClassFilter() {
         <FormLabel component="legend">Insecticide Class</FormLabel>
         <RadioGroup
           className={classes.group}
-          value={value}
+          value={preventionFilters.insecticideClass}
           onChange={handleChange}
         >
-          <StyledFormControlLabel
-            value="female"
-            control={<Radio color="primary" />}
-            label="Pyrethroids"
-          />
-          <StyledFormControlLabel
-            value="male"
-            control={<Radio color="primary" />}
-            label="Organochlorines"
-          />
-          <StyledFormControlLabel
-            value="other"
-            control={<Radio color="primary" />}
-            label="Carbamates"
-          />
-          <StyledFormControlLabel
-            value="disabled"
-            control={<Radio color="primary" />}
-            label="Organophosphates"
-          />
+          {(insecticideClasses as Translation[])
+            .filter(translation => translation.VALUE_ !== "NA")
+            .map((insecticideClass: Translation) => (
+              <StyledFormControlLabel
+                key={insecticideClass.VALUE_}
+                value={insecticideClass.VALUE_}
+                control={<Radio color="primary" />}
+                label={t(insecticideClass.VALUE_)}
+              />
+            ))}
         </RadioGroup>
       </FormControl>
     </div>
   );
 }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InsecticideClassFilter);

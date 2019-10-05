@@ -19,7 +19,10 @@ import { resolveResistanceStatus } from "./prevention/ResistanceStatus/utils";
 import { PreventionStudy } from "../../types/Prevention";
 import {
   filterByCountry,
-  filterByIntensityStatus, filterByLevelOfInvolvement,
+  filterByInsecticideClass,
+  filterByInsecticideTypes,
+  filterByIntensityStatus,
+  filterByLevelOfInvolvement,
   filterByResistanceMechanism,
   filterByResistanceStatus,
   filterByYearRange
@@ -61,7 +64,7 @@ class PreventionLayer extends Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     const {
-      preventionFilters: { mapType },
+      preventionFilters: { mapType, insecticideClass, insecticideTypes },
       filters,
       region
     } = this.props;
@@ -72,7 +75,18 @@ class PreventionLayer extends Component<Props> {
       prevProps.filters[0] !== filters[0] ||
       prevProps.filters[1] !== filters[1];
     const countryChange = prevProps.region.country !== region.country;
-    if (mapTypeChange || yearChange || countryChange) {
+    const insecticideChange =
+      prevProps.preventionFilters.insecticideClass !== insecticideClass;
+    const insecticideTypesChange =
+      prevProps.preventionFilters.insecticideTypes.length !==
+      insecticideTypes.length;
+    if (
+      mapTypeChange ||
+      yearChange ||
+      countryChange ||
+      insecticideChange ||
+      insecticideTypesChange
+    ) {
       this.filterSource();
       this.applyMapTypeSymbols();
     }
@@ -101,6 +115,8 @@ class PreventionLayer extends Component<Props> {
       case PreventionMapType.RESISTANCE_STATUS:
         return [
           filterByResistanceStatus,
+          filterByInsecticideClass(preventionFilters.insecticideClass),
+          filterByInsecticideTypes(preventionFilters.insecticideTypes),
           filterByYearRange(filters),
           filterByCountry(region.country)
         ];

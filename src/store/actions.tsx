@@ -12,6 +12,8 @@ export enum ActionTypeEnum {
   FetchPreventionStudiesSuccess = "prevention/FETCH_PREVENTION_STUDIES_SUCCESS",
   FetchPreventionStudiesError = "prevention/FETCH_PREVENTION_STUDIES_ERROR",
   SetPreventionMapType = "prevention/SET_PREVENTION_MAP_TYPE",
+  SetInsecticideClass = "prevention/SET_INSECTICIDE_CLASS",
+  SetInsecticideTypes = "prevention/SET_INSECTICIDE_TYPES",
 
   FetchDiagnosisStudiesRequest = "diagnosis/FETCH_DIAGNOSIS_STUDIES_REQUEST",
   FetchDiagnosisStudiesSuccess = "diagnosis/FETCH_DIAGNOSIS_STUDIES_SUCCESS",

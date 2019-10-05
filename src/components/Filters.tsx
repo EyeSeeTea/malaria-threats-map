@@ -1,15 +1,18 @@
 import React from "react";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import IconButton from "@material-ui/core/IconButton";
 import Slide from "@material-ui/core/Slide";
-import {TransitionProps} from "@material-ui/core/transitions";
+import { TransitionProps } from "@material-ui/core/transitions";
 import FilterIcon from "@material-ui/icons/FilterList";
 import InsecticideClassFilter from "./filters/InsecticideClassFilter";
-import {AppBar, Button, Fab, Toolbar, Typography} from "@material-ui/core";
+import { AppBar, Button, Fab, Toolbar, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import YearRangeSelector from "./YearRangeSelector";
 import styled from "styled-components";
+import InsecticideTypeFilter from "./filters/InsecticideTypeFilter";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormControl from "@material-ui/core/FormControl";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,12 +29,22 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     extendedIcon: {
       marginRight: theme.spacing(1)
+    },
+    paper: {
+      backgroundColor: "#f3f3f3"
     }
   })
 );
 
 const FilterButton = styled(IconButton)`
   background-color: white;
+`;
+
+const FilterWrapper = styled.div`
+  margin: 20px;
+`;
+const Divider = styled.div`
+  height: 10px;
 `;
 
 const Transition = React.forwardRef<unknown, TransitionProps>(
@@ -68,6 +81,9 @@ export default function Filters() {
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}
+        PaperProps={{
+          className: classes.paper
+        }}
         style={{
           position: "absolute",
           left: 0,
@@ -91,6 +107,11 @@ export default function Filters() {
           </Toolbar>
         </AppBar>
         <InsecticideClassFilter />
+        <FilterWrapper>
+          <FormLabel component="legend">Insecticide Type</FormLabel>
+          <Divider />
+          <InsecticideTypeFilter />
+        </FilterWrapper>
         <YearRangeSelector />
       </Dialog>
     </div>

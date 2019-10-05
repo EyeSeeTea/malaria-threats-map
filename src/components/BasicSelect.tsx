@@ -238,16 +238,6 @@ export default function IntegrationReactSelect({
 }: any) {
   const classes = useStyles({});
   const theme = useTheme();
-  const [single, setSingle] = React.useState<ValueType<OptionType>>(null);
-  const [multi, setMulti] = React.useState<ValueType<OptionType>>(null);
-
-  function handleChangeSingle(value: ValueType<OptionType>) {
-    setSingle(value);
-  }
-
-  function handleChangeMulti(value: ValueType<OptionType>) {
-    setMulti(value);
-  }
 
   const selectStyles = {
     input: (base: CSSProperties) => ({
