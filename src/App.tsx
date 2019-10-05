@@ -24,6 +24,8 @@ import {
   setType
 } from "./malaria/prevention/actions";
 import InitialDialog from "./components/InitialDialog";
+import purple from "@material-ui/core/colors/purple";
+import green from "@material-ui/core/colors/green";
 
 const { store } = createStore();
 
@@ -101,8 +103,12 @@ const Disclaimer = styled.div`
 
 const theme = createMuiTheme({
   palette: {
-    primary: blue,
-    secondary: deepOrange
+    primary: {
+      main: "#008dc9"
+    },
+    secondary: {
+      main: "#d86422"
+    }
   }
 });
 

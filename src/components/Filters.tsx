@@ -19,7 +19,7 @@ import SpeciesFilter from "./filters/SpeciesFilter";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
-      backgroundColor: "#404041",
+      backgroundColor: "#008dc9",
       position: "relative"
     },
     title: {
@@ -71,7 +71,7 @@ export default function Filters() {
     <div>
       <Fab
         variant="extended"
-        color="default"
+        color="primary"
         onClick={handleClickOpen}
         className={classes.fab}
       >
@@ -83,6 +83,11 @@ export default function Filters() {
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}
+        BackdropProps={{
+          style: {
+            backgroundColor: "transparent"
+          }
+        }}
         PaperProps={{
           className: classes.paper
         }}
@@ -94,6 +99,11 @@ export default function Filters() {
       >
         <AppBar className={classes.appBar}>
           <Toolbar>
+            <FilterIcon />
+            <Typography variant="h6" className={classes.title}>
+              {" "}
+              Filters
+            </Typography>
             <IconButton
               edge="start"
               color="inherit"
@@ -102,10 +112,6 @@ export default function Filters() {
             >
               <CloseIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title}></Typography>
-            <Button color="inherit" onClick={handleClose}>
-              Reset
-            </Button>
           </Toolbar>
         </AppBar>
         <FilterWrapper>
