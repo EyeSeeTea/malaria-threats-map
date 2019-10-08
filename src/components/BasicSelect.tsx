@@ -21,14 +21,12 @@ import { MultiValueProps } from "react-select/src/components/MultiValue";
 import { OptionProps } from "react-select/src/components/Option";
 import { PlaceholderProps } from "react-select/src/components/Placeholder";
 import { SingleValueProps } from "react-select/src/components/SingleValue";
-import { ValueType } from "react-select/src/types";
 import { Omit } from "@material-ui/types";
-import { PreventionMapType } from "../malaria/prevention/reducer";
 import { useTranslation } from "react-i18next";
 
 export interface OptionType {
   label: string;
-  value: PreventionMapType;
+  value: any;
 }
 
 const useStyles = makeStyles((theme: Theme) =>

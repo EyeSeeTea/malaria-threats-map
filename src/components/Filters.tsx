@@ -6,13 +6,12 @@ import Slide from "@material-ui/core/Slide";
 import { TransitionProps } from "@material-ui/core/transitions";
 import FilterIcon from "@material-ui/icons/FilterList";
 import InsecticideClassFilter from "./filters/InsecticideClassFilter";
-import { AppBar, Button, Fab, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Fab, Toolbar, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import YearRangeSelector from "./YearRangeSelector";
 import styled from "styled-components";
 import InsecticideTypeFilter from "./filters/InsecticideTypeFilter";
 import FormLabel from "@material-ui/core/FormLabel";
-import FormControl from "@material-ui/core/FormControl";
 import TypeFilter from "./filters/TypeFilter";
 import SpeciesFilter from "./filters/SpeciesFilter";
 
@@ -37,10 +36,6 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
-
-const FilterButton = styled(IconButton)`
-  background-color: white;
-`;
 
 const FilterWrapper = styled.div`
   margin: 10px 20px;

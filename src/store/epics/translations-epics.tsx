@@ -1,17 +1,17 @@
 import { ActionsObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
-import { ActionTypeEnum } from "../../store/actions";
+import { ActionTypeEnum } from "../actions";
 import * as ajax from "../../store/ajax";
 import { of } from "rxjs";
-import {
-  fetchTranslationsErrorAction,
-  fetchTranslationsSuccessAction,
-  fetchTranslationsRequestAction
-} from "./actions";
 import { catchError, mergeMap, switchMap } from "rxjs/operators";
 import { AjaxError } from "rxjs/ajax";
-import { MapServerConfig } from "../constants";
 import { TranslationResponse } from "../../types/Translation";
+import { MapServerConfig } from "../../constants/constants";
+import {
+  fetchTranslationsErrorAction,
+  fetchTranslationsRequestAction,
+  fetchTranslationsSuccessAction
+} from "../actions/translations-actions";
 
 interface Params {
   [key: string]: string | number | boolean;
@@ -21,7 +21,7 @@ export const getTreatmentStudiesEpic = (
   action$: ActionsObservable<ActionType<typeof fetchTranslationsRequestAction>>
 ) =>
   action$.ofType(ActionTypeEnum.FetchTranslationsRequest).pipe(
-    switchMap(action => {
+    switchMap(() => {
       const params: Params = {
         f: "json",
         where: "1=1",

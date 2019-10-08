@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import { selectInvasiveStudies } from "../../malaria/invasive/reducer";
 import { circleLayout, studiesToGeoJson } from "./layer-utils";
-import { selectFilters, selectTheme } from "../../malaria/reducer";
-import { Study } from "../../types/Malaria";
 import invasiveSymbol from "./symbols/invasive";
 import setupEffects from "./effects";
+import { selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
+import { selectFilters, selectTheme } from "../../store/reducers/base-reducer";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";

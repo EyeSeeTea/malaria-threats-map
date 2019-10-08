@@ -1,26 +1,17 @@
 import React from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
 import styled from "styled-components";
 import { State } from "../../store/types";
-import { selectRegion } from "../../malaria/reducer";
-import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
-import {
-  selectCountries,
-  selectInsecticideClasses
-} from "../../malaria/translations/reducer";
-import { setRegionAction } from "../../malaria/actions";
 import { connect } from "react-redux";
 import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
-import { setInsecticideClass } from "../../malaria/prevention/actions";
-import { selectFilters } from "../../malaria/prevention/reducer";
 import { Paper } from "@material-ui/core";
+import { selectInsecticideClasses } from "../../store/reducers/translations-reducer";
+import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
+import { setInsecticideClass } from "../../store/actions/prevention-actions";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   & span {
@@ -47,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const mapStateToProps = (state: State) => ({
   insecticideClasses: selectInsecticideClasses(state),
-  preventionFilters: selectFilters(state)
+  preventionFilters: selectPreventionFilters(state)
 });
 
 const mapDispatchToProps = {
@@ -64,7 +55,6 @@ function InsecticideClassFilter({
   setInsecticideClass
 }: Props) {
   const classes = useStyles({});
-  const [value, setValue] = React.useState("female");
 
   function handleChange(event: React.ChangeEvent<unknown>) {
     setInsecticideClass((event.target as HTMLInputElement).value);

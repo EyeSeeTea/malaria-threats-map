@@ -4,23 +4,24 @@ import Slider from "@material-ui/core/Slider";
 import FormLabel from "@material-ui/core/FormLabel";
 import { connect } from "react-redux";
 import { State } from "../store/types";
-import { selectFilters } from "../malaria/reducer";
-import { setFiltersAction } from "../malaria/actions";
+import { selectFilters } from "../store/reducers/base-reducer";
+import { setFiltersAction } from "../store/actions/base-actions";
 
 function range(start: number, end: number) {
   return Array(end - start + 1)
     .fill(1)
     .map((_, idx) => start + idx);
 }
-const marks = range(1998, 2019).map(year =>
-  year % 5 === 0
-    ? {
-        value: year,
-        label: year.toString()
-      }
-    : {
-        value: year
-      }
+const marks = range(1998, 2019).map(
+  year =>
+    year % 5 === 0
+      ? {
+          value: year,
+          label: year.toString()
+        }
+      : {
+          value: year
+        }
 );
 
 const useStyles = makeStyles({

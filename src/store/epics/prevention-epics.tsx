@@ -3,15 +3,15 @@ import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
 import * as ajax from "../../store/ajax";
 import { of } from "rxjs";
+import { catchError, mergeMap, switchMap } from "rxjs/operators";
+import { AjaxError } from "rxjs/ajax";
+import { PreventionResponse } from "../../types/Prevention";
+import { MapServerConfig } from "../../constants/constants";
 import {
   fetchPreventionStudiesError,
   fetchPreventionStudiesRequest,
   fetchPreventionStudiesSuccess
-} from "./actions";
-import { switchMap, mergeMap, catchError } from "rxjs/operators";
-import { AjaxError } from "rxjs/ajax";
-import { PreventionResponse } from "../../types/Prevention";
-import { MapServerConfig } from "../constants";
+} from "../actions/prevention-actions";
 
 interface Params {
   [key: string]: string | number | boolean;
@@ -21,10 +21,12 @@ export const getPreventionStudiesEpic = (
   action$: ActionsObservable<ActionType<typeof fetchPreventionStudiesRequest>>
 ) =>
   action$.ofType(ActionTypeEnum.FetchPreventionStudiesRequest).pipe(
-        switchMap(action => {
+    switchMap(() => {
       const params: Params = {
         f: "json",
-        where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${MapServerConfig.years.to}`,
+        where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${
+          MapServerConfig.years.to
+        }`,
         returnGeometry: false,
         spatialRel: "esriSpatialRelIntersects",
         outFields: "*",

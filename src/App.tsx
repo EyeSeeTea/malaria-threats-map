@@ -7,25 +7,22 @@ import createStore from "./store";
 import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
 import { State } from "./store/types";
+import Map from "./components/Map";
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
 import {
   setFiltersAction,
   setRegionAction,
   setThemeAction
-} from "./malaria/actions";
-import Map from "./components/Map";
-import { createMuiTheme } from "@material-ui/core";
-import { ThemeProvider } from "@material-ui/styles";
-import { blue, deepOrange } from "@material-ui/core/colors";
+} from "./store/actions/base-actions";
 import {
   setInsecticideClass,
   setInsecticideTypes,
   setPreventionMapType,
   setSpecies,
   setType
-} from "./malaria/prevention/actions";
-import InitialDialog from "./components/InitialDialog";
-import purple from "@material-ui/core/colors/purple";
-import green from "@material-ui/core/colors/green";
+} from "./store/actions/prevention-actions";
+import Disclaimer from "./components/Disclaimer";
 
 const { store } = createStore();
 
@@ -92,15 +89,6 @@ const MapWrapper = styled.div`
   position: relative;
 `;
 
-const Disclaimer = styled.div`
-  font-size: 60%;
-  line-height: 11px;
-  background-color: #e0e0e0;
-  flex-grow: 0;
-  color: rgba(0, 0, 0, 0.87);
-  padding: 5px;
-`;
-
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -123,27 +111,7 @@ class App extends React.Component {
                 <MapWrapper>
                   <Map />
                 </MapWrapper>
-
-                <Disclaimer>
-                  The boundaries and names shown and the designations used on
-                  this map do not imply the expression of any opinion whatsoever
-                  on the part of the World Health Organization concerning the
-                  legal status of any country, territory, city or area or of its
-                  authorities, or concerning the delimitation of its frontiers
-                  or boundaries. Dotted and dashed lines or grey areas on maps
-                  represent approximate border lines or areas for which there
-                  may not yet be full agreement. The borders of the map provided
-                  reflect the current political and geographic status as of the
-                  date of publication (2017). However, the technical health
-                  information is based on data accurate with respect to the year
-                  selected. The disconnect in this arrangement should be noted
-                  but no implications regarding political or terminological
-                  status should be drawn from this arrangement as it is purely a
-                  function of technical and graphical limitations. Data source:
-                  Global Malaria Programme. Map production: Global Malaria
-                  Programme. World Health Organization. WHO 2019. All rights
-                  reserved.
-                </Disclaimer>
+                <Disclaimer />
               </PageWrapper>
             </I18nextProvider>
           </DataProvider>

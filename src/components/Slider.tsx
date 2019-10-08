@@ -1,18 +1,16 @@
 import React from "react";
 import {
+  createStyles,
   makeStyles,
   Theme,
-  createStyles,
   withStyles
 } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import { State } from "../store/types";
-import { selectPreventionStudies } from "../malaria/prevention/reducer";
-import { selectFilters, selectTheme } from "../malaria/reducer";
-import { setFiltersAction } from "../malaria/actions";
 import { connect } from "react-redux";
 import { colors } from "./theme";
+import { setFiltersAction } from "../store/actions/base-actions";
+import { selectFilters } from "../store/reducers/base-reducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import { selectEndemicity } from "../../malaria/reducer";
-import { setThemeAction } from "../../malaria/actions";
+import { selectEndemicity } from "../../store/reducers/base-reducer";
+import { setThemeAction } from "../../store/actions/base-actions";
 
 const ENDEMICITY_LAYER_ID = "endemicity-layer";
 const ENDEMICITY_SOURCE_ID = "endemicity-source";

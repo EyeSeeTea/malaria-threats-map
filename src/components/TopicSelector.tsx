@@ -1,12 +1,17 @@
-import React, {Component} from "react";
-import {DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon} from "./Icons";
+import React, { Component } from "react";
+import {
+  DiagnosisIcon,
+  InvasiveIcon,
+  PreventionIcon,
+  TreatmentIcon
+} from "./Icons";
 import styled from "styled-components";
-import {Paper} from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
-import {State} from "../store/types";
-import {selectTheme} from "../malaria/reducer";
-import {setThemeAction} from "../malaria/actions";
-import {connect} from "react-redux";
+import { State } from "../store/types";
+import { connect } from "react-redux";
+import { setThemeAction } from "../store/actions/base-actions";
+import { selectTheme } from "../store/reducers/base-reducer";
 
 const ButtonGroup = styled.div`
   display: flex;

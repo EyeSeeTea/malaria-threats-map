@@ -1,14 +1,13 @@
 import React from "react";
 import LayersIcon from "@material-ui/icons/Layers";
 import { State } from "../store/types";
-import { selectEndemicity } from "../malaria/reducer";
+import { connect } from "react-redux";
+import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
+import { selectEndemicity } from "../store/reducers/base-reducer";
 import {
   setFiltersAction,
   toggleEndemicityLayerAction
-} from "../malaria/actions";
-import { connect } from "react-redux";
-import FilterIcon from "@material-ui/core/SvgIcon/SvgIcon";
-import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
+} from "../store/actions/base-actions";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

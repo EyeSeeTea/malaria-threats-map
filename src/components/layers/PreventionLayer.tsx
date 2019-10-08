@@ -1,17 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { State } from "../../store/types";
-import {
-  PreventionMapType,
-  selectFilters as selectPreventionFilters,
-  selectPreventionStudies
-} from "../../malaria/prevention/reducer";
+import { PreventionMapType, State } from "../../store/types";
 import { studiesToGeoJson } from "./layer-utils";
-import {
-  selectFilters,
-  selectRegion,
-  selectTheme
-} from "../../malaria/reducer";
 import setupEffects from "./effects";
 import * as R from "ramda";
 import resistanceStatusSymbols from "./prevention/ResistanceStatus/symbols";
@@ -30,6 +20,15 @@ import {
   filterByYearRange
 } from "./studies-filters";
 import { resolveMapTypeSymbols } from "./prevention/utils";
+import {
+  selectPreventionFilters,
+  selectPreventionStudies
+} from "../../store/reducers/prevention-reducer";
+import {
+  selectFilters,
+  selectRegion,
+  selectTheme
+} from "../../store/reducers/base-reducer";
 
 const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";

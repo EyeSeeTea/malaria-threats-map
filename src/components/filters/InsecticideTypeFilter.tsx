@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import IntegrationReactSelect from "../BasicSelect";
-import { selectInsecticideTypes } from "../../malaria/translations/reducer";
 import { Translation } from "../../types/Translation";
-import { selectFilters } from "../../malaria/prevention/reducer";
-import { setInsecticideTypes } from "../../malaria/prevention/actions";
+import { selectInsecticideTypes } from "../../store/reducers/translations-reducer";
+import { setInsecticideTypes } from "../../store/actions/prevention-actions";
+import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 
 const mapStateToProps = (state: State) => ({
   insecticideTypes: selectInsecticideTypes(state),
-  preventionFilters: selectFilters(state)
+  preventionFilters: selectPreventionFilters(state)
 });
 
 const mapDispatchToProps = {

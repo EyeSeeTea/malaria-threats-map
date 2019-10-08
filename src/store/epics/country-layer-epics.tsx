@@ -1,16 +1,16 @@
-import { ActionsObservable } from "redux-observable";
-import { ActionType } from "typesafe-actions";
-import { ActionTypeEnum } from "../actions";
-import { catchError, mergeMap, switchMap } from "rxjs/operators";
-import { MapServerConfig } from "../../malaria/constants";
+import {ActionsObservable} from "redux-observable";
+import {ActionType} from "typesafe-actions";
+import {ActionTypeEnum} from "../actions";
+import {catchError, mergeMap, switchMap} from "rxjs/operators";
 import * as ajax from "../../store/ajax";
-import { AjaxError } from "rxjs/ajax";
-import { of } from "rxjs";
+import {AjaxError} from "rxjs/ajax";
+import {of} from "rxjs";
 import {
-  fetchCountryLayerError,
-  fetchCountryLayerRequest,
-  fetchCountryLayerSuccess
+    fetchCountryLayerError,
+    fetchCountryLayerRequest,
+    fetchCountryLayerSuccess
 } from "../actions/country-layer-actions";
+import {MapServerConfig} from "../../constants/constants";
 
 export const getCountriesEpic = (
   action$: ActionsObservable<ActionType<typeof fetchCountryLayerRequest>>

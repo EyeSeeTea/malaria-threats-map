@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { State } from "../store/types";
 import { connect } from "react-redux";
+import i18next from "i18next";
+import * as R from "ramda";
 import {
   selectTranslations,
   selectTranslationsAreLoading
-} from "../malaria/translations/reducer";
-import { fetchTranslationsRequestAction } from "../malaria/translations/actions";
-import i18next from "i18next";
-import { fetchPreventionStudiesRequest } from "../malaria/prevention/actions";
-import { fetchDiagnosisStudiesRequest } from "../malaria/diagnosis/actions";
-import { fetchTreatmentStudiesRequest } from "../malaria/treatment/actions";
-import { fetchInvasiveStudiesRequest } from "../malaria/invasive/actions";
-import * as R from "ramda";
+} from "../store/reducers/translations-reducer";
+import { fetchTranslationsRequestAction } from "../store/actions/translations-actions";
+import { fetchPreventionStudiesRequest } from "../store/actions/prevention-actions";
+import { fetchDiagnosisStudiesRequest } from "../store/actions/diagnosis-actions";
+import { fetchInvasiveStudiesRequest } from "../store/actions/invasive-actions";
+import { fetchTreatmentStudiesRequest } from "../store/actions/treatment-actions";
 
 const mapStateToProps = (state: State) => ({
   translationsLoading: selectTranslationsAreLoading(state),
@@ -62,7 +62,7 @@ class DataProvider extends Component<Props> {
       i18next.addResourceBundle("en", "common", englishResources);
       i18next.addResourceBundle("es", "common", spanishResources);
       i18next.addResourceBundle("fr", "common", frenchResources);
-      console.log(R.groupBy(R.path(["FIELD"]), this.props.translations))
+      console.log(R.groupBy(R.path(["FIELD"]), this.props.translations));
     }
   }
 

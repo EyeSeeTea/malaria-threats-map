@@ -1,29 +1,9 @@
 import * as R from "ramda";
-import { ActionTypeEnum } from "../../store/actions";
-import { createReducer } from "../../store/reducer-utils";
+import { ActionTypeEnum } from "../actions";
+import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { State } from "../../store/types";
-import { PreventionResponse, PreventionStudy } from "../../types/Prevention";
-
-export enum PreventionMapType {
-  RESISTANCE_STATUS,
-  INTENSITY_STATUS,
-  RESISTANCE_MECHANISM,
-  LEVEL_OF_INVOLVEMENT
-}
-
-export interface PreventionFilters {
-  mapType: PreventionMapType;
-  insecticideClass: string;
-  insecticideTypes: string[];
-  type: string | null;
-  species: string[];
-}
-
-export interface PreventionState {
-  studies: PreventionStudy[];
-  filters: PreventionFilters;
-}
+import { PreventionMapType, PreventionState, State } from "../types";
+import { PreventionResponse } from "../../types/Prevention";
 
 const initialState: PreventionState = Object.freeze({
   studies: [],
@@ -114,7 +94,7 @@ export const selectPreventionStudies = createSelector(
   R.prop("studies")
 );
 
-export const selectFilters = createSelector(
+export const selectPreventionFilters = createSelector(
   selectPreventionState,
   R.prop("filters")
 );

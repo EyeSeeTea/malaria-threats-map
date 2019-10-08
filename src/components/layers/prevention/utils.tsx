@@ -1,8 +1,4 @@
 import React from "react";
-import {
-  PreventionFilters,
-  PreventionMapType
-} from "../../../malaria/prevention/reducer";
 import resistanceStatusSymbols from "./ResistanceStatus/symbols";
 import intensityStatusSymbols from "./IntensityStatus/symbols";
 import resistanceMechanismSymbols from "./ResistanceMechanisms/symbols";
@@ -11,6 +7,7 @@ import { default as ResistanceStatusLegend } from "./ResistanceStatus/legend";
 import { default as IntensityStatusLegend } from "./IntensityStatus/legend";
 import { default as ResistanceMechanismsLegend } from "./ResistanceMechanisms/legend";
 import { default as LevelOfInvolvementLegend } from "./Involvement/legend";
+import { PreventionFilters, PreventionMapType } from "../../../store/types";
 
 export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters) => {
   switch (preventionFilters.mapType) {

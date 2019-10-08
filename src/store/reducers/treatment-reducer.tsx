@@ -1,13 +1,9 @@
 import * as R from "ramda";
-import { ActionTypeEnum } from "../../store/actions";
-import { createReducer } from "../../store/reducer-utils";
+import { ActionTypeEnum } from "../actions";
+import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { State } from "../../store/types";
-import { TreatmentResponse, TreatmentStudy } from "../../types/Treatment";
-
-export interface TreatmentState {
-  studies: TreatmentStudy[];
-}
+import { State, TreatmentState } from "../types";
+import { TreatmentResponse } from "../../types/Treatment";
 
 const initialState: TreatmentState = Object.freeze({
   studies: []

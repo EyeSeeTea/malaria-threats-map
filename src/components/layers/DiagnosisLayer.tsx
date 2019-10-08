@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import { selectDiagnosisStudies } from "../../malaria/diagnosis/reducer";
 import { circleLayout, studiesToGeoJson } from "./layer-utils";
-import {selectFilters, selectTheme} from "../../malaria/reducer";
-import { Study } from "../../types/Malaria";
 import diagnosisSymbol from "./symbols/diagnosis";
 import setupEffects from "./effects";
+import { selectDiagnosisStudies } from "../../store/reducers/diagnosis-reducer";
+import { selectTheme, selectFilters } from "../../store/reducers/base-reducer";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -67,7 +66,6 @@ class DiagnosisLayer extends Component<Props> {
 
       setupEffects(this.props.map, DIAGNOSIS_SOURCE_ID, DIAGNOSIS_LAYER_ID);
       this.renderLayer();
-
     }
   }
 

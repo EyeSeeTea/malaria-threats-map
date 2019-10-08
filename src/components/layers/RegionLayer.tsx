@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import mapboxgl from "mapbox-gl";
-import { State } from "../../store/types";
-import {
-  RegionState,
-  selectEndemicity,
-  selectRegion
-} from "../../malaria/reducer";
-import { setThemeAction } from "../../malaria/actions";
+import { RegionState, State } from "../../store/types";
 import * as R from "ramda";
 import { fetchCountryLayerRequest } from "../../store/actions/country-layer-actions";
 import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
+import {
+  selectEndemicity,
+  selectRegion
+} from "../../store/reducers/base-reducer";
 
 const REGION_LAYER_ID = "regions-layer";
 const REGION_SOURCE_ID = "regions-source";

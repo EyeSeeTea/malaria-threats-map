@@ -6,19 +6,13 @@ import Layers from "./Layers";
 import mapboxgl from "mapbox-gl";
 
 import { State } from "../store/types";
-import { selectTheme } from "../malaria/reducer";
 import { connect } from "react-redux";
-import { selectPreventionStudies } from "../malaria/prevention/reducer";
-import { selectDiagnosisStudies } from "../malaria/diagnosis/reducer";
-import { selectTreatmentStudies } from "../malaria/treatment/reducer";
-import { selectInvasiveStudies } from "../malaria/invasive/reducer";
 import { Study } from "../types/Malaria";
 import PreventionLayer from "./layers/PreventionLayer";
 import DiagnosisLayer from "./layers/DiagnosisLayer";
 import TreatmentLayer from "./layers/TreatmentLayer";
 import InvasiveLayer from "./layers/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
-import { setThemeAction } from "../malaria/actions";
 import InitialDialog from "./InitialDialog";
 import Filters from "./Filters";
 import LanguageSelector from "./LanguageSelector";
@@ -29,7 +23,12 @@ import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";
 import CountrySelector from "./CountrySelector";
 import WhoLogo from "./WhoLogo";
-import RegionSelector from "./RegionSelector";
+import { selectTheme } from "../store/reducers/base-reducer";
+import { selectPreventionStudies } from "../store/reducers/prevention-reducer";
+import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
+import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
+import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
+import { setThemeAction } from "../store/actions/base-actions";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";

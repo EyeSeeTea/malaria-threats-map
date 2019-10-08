@@ -1,15 +1,9 @@
 import * as R from "ramda";
-import { ActionTypeEnum } from "../../store/actions";
-import { createReducer } from "../../store/reducer-utils";
+import { ActionTypeEnum } from "../actions";
+import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { State } from "../../store/types";
-import { Translation, TranslationResponse } from "../../types/Translation";
-
-export interface TranslationsState {
-  translations: Translation[];
-  loading: boolean;
-  fields: any;
-}
+import { State, TranslationsState } from "../types";
+import { TranslationResponse } from "../../types/Translation";
 
 const initialState: TranslationsState = Object.freeze({
   translations: [],
@@ -58,15 +52,9 @@ export const selectInsecticideTypes = createSelector(
   R.prop("INSECTICIDE_TYPE")
 );
 
-export const selectTypes = createSelector(
-  selectFields,
-  R.prop("TYPE")
-);
+export const selectTypes = createSelector(selectFields, R.prop("TYPE"));
 
-export const selectSpecies = createSelector(
-  selectFields,
-  R.prop("SPECIES")
-);
+export const selectSpecies = createSelector(selectFields, R.prop("SPECIES"));
 
 export const selectCountries = createSelector(
   selectTranslationsState,

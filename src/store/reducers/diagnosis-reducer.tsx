@@ -1,13 +1,9 @@
 import * as R from "ramda";
-import { ActionTypeEnum } from "../../store/actions";
-import { createReducer } from "../../store/reducer-utils";
+import { ActionTypeEnum } from "../actions";
+import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { State } from "../../store/types";
-import { DiagnosisResponse, DiagnosisStudy } from "../../types/Diagnosis";
-
-export interface DiagnosisState {
-  studies: DiagnosisStudy[];
-}
+import { DiagnosisState, State } from "../types";
+import { DiagnosisResponse } from "../../types/Diagnosis";
 
 const initialState: DiagnosisState = Object.freeze({
   studies: []

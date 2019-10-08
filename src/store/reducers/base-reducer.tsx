@@ -1,23 +1,10 @@
 import * as R from "ramda";
-import { ActionTypeEnum } from "../store/actions";
-import { createReducer } from "../store/reducer-utils";
 import { createSelector } from "reselect";
-import { State } from "../store/types";
-
-export interface RegionState {
-  country: string;
-}
-
-export interface MalariaState {
-  title: string;
-  theme: string;
-  endemicity: boolean;
-  filters: number[];
-  region: RegionState;
-}
+import { MalariaState, RegionState, State } from "../types";
+import { createReducer } from "../reducer-utils";
+import { ActionTypeEnum } from "../actions";
 
 const initialState: MalariaState = Object.freeze({
-  title: "Malaria Threats Map",
   theme: "prevention",
   endemicity: false,
   filters: [2010, 2018],
@@ -27,7 +14,6 @@ const initialState: MalariaState = Object.freeze({
 });
 
 export default createReducer<MalariaState>(initialState, {
-  [ActionTypeEnum.MalariaSetTitle]: (theme: string) => R.assoc("title", theme),
   [ActionTypeEnum.MalariaSetTheme]: (theme: string) => R.assoc("theme", theme),
   [ActionTypeEnum.MalariaSetRegion]: (region: RegionState) =>
     R.assoc("region", region),
@@ -39,14 +25,7 @@ export default createReducer<MalariaState>(initialState, {
 
 export const selectMalariaState = (state: State) => state.malaria;
 
-export const selectTitle = createSelector(
-  selectMalariaState,
-  R.prop("title")
-);
-export const selectTheme = createSelector(
-  selectMalariaState,
-  R.prop("theme")
-);
+export const selectTheme = createSelector(selectMalariaState, R.prop("theme"));
 export const selectEndemicity = createSelector(
   selectMalariaState,
   R.prop("endemicity")

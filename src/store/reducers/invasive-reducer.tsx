@@ -1,13 +1,9 @@
 import * as R from "ramda";
-import { ActionTypeEnum } from "../../store/actions";
-import { createReducer } from "../../store/reducer-utils";
+import { ActionTypeEnum } from "../actions";
+import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { State } from "../../store/types";
-import { InvasiveResponse, InvasiveStudy } from "../../types/Invasive";
-
-export interface InvasiveState {
-  studies: InvasiveStudy[];
-}
+import { InvasiveState, State } from "../types";
+import { InvasiveResponse } from "../../types/Invasive";
 
 const initialState: InvasiveState = Object.freeze({
   studies: []

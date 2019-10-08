@@ -5,11 +5,11 @@ import { Typography } from "@material-ui/core";
 
 import styled from "styled-components";
 import { State } from "../store/types";
-import { selectFilters, selectTheme } from "../malaria/reducer";
-import { selectFilters as selectPreventionFilters } from "../malaria/prevention/reducer";
-import { setPreventionMapType } from "../malaria/prevention/actions";
 import { connect } from "react-redux";
 import { resolveMapTypeLegend } from "./layers/prevention/utils";
+import { selectFilters, selectTheme } from "../store/reducers/base-reducer";
+import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
+import { setPreventionMapType } from "../store/actions/prevention-actions";
 
 export const LegendContainer = styled(Paper)`
   padding: 16px;

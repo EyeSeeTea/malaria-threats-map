@@ -1,17 +1,17 @@
 import { ActionsObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
-import { ActionTypeEnum } from "../../store/actions";
+import { ActionTypeEnum } from "../actions";
 import * as ajax from "../../store/ajax";
 import { of } from "rxjs";
+import { catchError, mergeMap, switchMap } from "rxjs/operators";
+import { AjaxError } from "rxjs/ajax";
+import { InvasiveResponse } from "../../types/Invasive";
 import {
   fetchInvasiveStudiesError,
   fetchInvasiveStudiesRequest,
   fetchInvasiveStudiesSuccess
-} from "./actions";
-import { catchError, mergeMap, switchMap } from "rxjs/operators";
-import { AjaxError } from "rxjs/ajax";
-import { InvasiveResponse } from "../../types/Invasive";
-import { MapServerConfig } from "../constants";
+} from "../actions/invasive-actions";
+import { MapServerConfig } from "../../constants/constants";
 
 interface Params {
   [key: string]: string | number | boolean;
@@ -21,10 +21,12 @@ export const getInvasiveStudiesEpic = (
   action$: ActionsObservable<ActionType<typeof fetchInvasiveStudiesRequest>>
 ) =>
   action$.ofType(ActionTypeEnum.FetchInvasiveStudiesRequest).pipe(
-    switchMap(action => {
+    switchMap(() => {
       const params: Params = {
         f: "json",
-        where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${MapServerConfig.years.to}`,
+        where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${
+          MapServerConfig.years.to
+        }`,
         returnGeometry: false,
         spatialRel: "esriSpatialRelIntersects",
         outFields: "OBJECTID,Latitude,Longitude,YEAR_START",

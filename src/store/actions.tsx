@@ -1,6 +1,3 @@
-import { ActionType } from "typesafe-actions";
-import * as malariaActions from "../malaria/actions";
-
 export enum ActionTypeEnum {
   MalariaSetTitle = "malaria/SET_TITLE",
   MalariaSetTheme = "malaria/SET_THEME",
@@ -37,5 +34,3 @@ export enum ActionTypeEnum {
   FetchCountryLayerSuccess = "layers/FETCH_COUNTRY_LAYER_SUCCESS",
   FetchCountryLayerError = "layers/FETCH_COUNTRY_LAYER_ERROR"
 }
-
-export type MalariaAction = ActionType<typeof malariaActions>;

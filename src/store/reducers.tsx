@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 
-import malariaReducer from "../malaria/reducer";
-import preventionReducer from "../malaria/prevention/reducer";
-import diagnosisReducer from "../malaria/diagnosis/reducer";
-import treatmentReducer from "../malaria/treatment/reducer";
-import invasiveReducer from "../malaria/invasive/reducer";
-import translationsReducer from "../malaria/translations/reducer";
+import malariaReducer from "./reducers/base-reducer";
+import preventionReducer from "./reducers/prevention-reducer";
+import diagnosisReducer from "./reducers/diagnosis-reducer";
+import treatmentReducer from "./reducers/treatment-reducer";
+import invasiveReducer from "./reducers/invasive-reducer";
+import translationsReducer from "./reducers/translations-reducer";
 import countryLayerReducer from "../store/reducers/country-layer-reducer";
 
 const rootReducer = () =>

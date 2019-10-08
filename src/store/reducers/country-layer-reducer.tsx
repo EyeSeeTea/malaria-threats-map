@@ -1,13 +1,8 @@
-import {createReducer} from "../reducer-utils";
-import {ActionTypeEnum} from "../actions";
+import { createReducer } from "../reducer-utils";
+import { ActionTypeEnum } from "../actions";
 import * as R from "ramda";
-import {State} from "../types";
-import {createSelector} from "reselect";
-
-export interface CountryLayerState {
-  layer: any | null;
-  loading: boolean;
-}
+import { CountryLayerState, State } from "../types";
+import { createSelector } from "reselect";
 
 const initialState: CountryLayerState = Object.freeze({
   layer: null,

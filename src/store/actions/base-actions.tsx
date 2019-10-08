@@ -1,6 +1,6 @@
 import { createAction } from "typesafe-actions";
-import { ActionTypeEnum } from "../store/actions";
-import { RegionState } from "./reducer";
+import { ActionTypeEnum } from "../actions";
+import { RegionState } from "../types";
 
 export const setTitleAction = createAction(
   ActionTypeEnum.MalariaSetTheme,

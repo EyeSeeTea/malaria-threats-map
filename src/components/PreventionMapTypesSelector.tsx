@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { State } from "../store/types";
-import {
-  PreventionMapType,
-  selectFilters
-} from "../malaria/prevention/reducer";
-import { setPreventionMapType } from "../malaria/prevention/actions";
+import { PreventionMapType, State } from "../store/types";
 import IntegrationReactSelect, { OptionType } from "./BasicSelect";
 import { ValueType } from "react-select/src/types";
+import { setPreventionMapType } from "../store/actions/prevention-actions";
+import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 
 const mapStateToProps = (state: State) => ({
-  filters: selectFilters(state)
+  filters: selectPreventionFilters(state)
 });
 
 const mapDispatchToProps = {

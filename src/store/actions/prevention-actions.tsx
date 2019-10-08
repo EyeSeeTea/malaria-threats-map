@@ -1,8 +1,8 @@
 import { createAction } from "typesafe-actions";
-import { ActionTypeEnum } from "../../store/actions";
+import { ActionTypeEnum } from "../actions";
 import { PreventionResponse } from "../../types/Prevention";
 import { AjaxError } from "rxjs/ajax";
-import { PreventionMapType } from "./reducer";
+import { PreventionMapType } from "../types";
 
 export const fetchPreventionStudiesRequest = createAction(
   ActionTypeEnum.FetchPreventionStudiesRequest,

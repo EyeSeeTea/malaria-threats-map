@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import { selectTreatmentStudies } from "../../malaria/treatment/reducer";
 import { circleLayout, studiesToGeoJson } from "./layer-utils";
-import { selectFilters, selectTheme } from "../../malaria/reducer";
 import treatmentSymbol from "./symbols/treatment";
 import setupEffects from "./effects";
+import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
+import { selectFilters, selectTheme } from "../../store/reducers/base-reducer";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
