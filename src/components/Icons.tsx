@@ -6,7 +6,7 @@ import invasiveIcon from "../assets/img/invasive.svg";
 import invasiveBaseIcon from "../assets/img/invasive-base.svg";
 import whoLogoBlueIcon from "../assets/img/who-logo-blue.svg";
 import styled, { css } from "styled-components";
-import { colors } from "./theme";
+import { colors } from "../constants/theme";
 
 const baseIcon = css`
   max-width: 48px;

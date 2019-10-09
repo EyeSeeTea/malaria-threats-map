@@ -1,5 +1,5 @@
 export enum ActionTypeEnum {
-  MalariaSetTitle = "malaria/SET_TITLE",
+  MalariaSetAny = "malaria/SET_ANY",
   MalariaSetTheme = "malaria/SET_THEME",
   MalariaSetRegion = "malaria/SET_REGION",
   MalariaSetFilters = "malaria/SET_FILTERS",

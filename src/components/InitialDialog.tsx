@@ -1,12 +1,13 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
-import {
-  PreventionCard,
-  DiagnosisCard,
-  TreatmentCard,
-  InvasiveCard
-} from "./Card";
+import SimpleCard from "./Card";
 import styled from "styled-components";
+import {
+  DiagnosisIcon,
+  InvasiveIcon,
+  PreventionIcon,
+  TreatmentIcon
+} from "./Icons";
 
 const Row = styled.div`
   flex: 1;
@@ -15,10 +16,6 @@ const Row = styled.div`
 
 export default function InitialDialog() {
   const [open, setOpen] = React.useState(true);
-
-  function handleClickOpen() {
-    setOpen(true);
-  }
 
   function handleClose() {
     setOpen(false);
@@ -37,10 +34,34 @@ export default function InitialDialog() {
       }}
     >
       <Row>
-        <PreventionCard />
-        <DiagnosisCard />
-        <TreatmentCard />
-        <InvasiveCard />
+        <SimpleCard
+          title="VECTOR INSECTICIDE RESISTANCE"
+          theme="prevention"
+          description="Resistance of malaria mosquitoes to insecticides used in core prevention tools of treated bed nets and indoor residual sprays threatens vector control effectiveness"
+          Icon={PreventionIcon}
+          onSelection={handleClose}
+        />
+        <SimpleCard
+          title="PARASITE pfhrp2/3 GENE DELETIONS"
+          theme="diagnosis"
+          description="Gene deletions among some malaria parasites cause false negative diagnostic test results, complicating case management and control"
+          Icon={DiagnosisIcon}
+          onSelection={handleClose}
+        />
+        <SimpleCard
+          title="PARASITE DRUG EFFICACY AND RESISTANCE"
+          theme="treatment"
+          description="Resistance of malaria parasites to artemisinin – the core compound of the best available antimalarial medicines – threatens antimalarial drug efficacy"
+          Icon={TreatmentIcon}
+          onSelection={handleClose}
+        />
+        <SimpleCard
+          title="INVASIVE VECTOR SPECIES"
+          theme="invasive"
+          description=""
+          Icon={InvasiveIcon}
+          onSelection={handleClose}
+        />
       </Row>
     </Dialog>
   );

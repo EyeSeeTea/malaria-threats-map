@@ -13,9 +13,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fab: {
       margin: theme.spacing(0.5, 0)
-    },
-    extendedIcon: {
-      marginRight: theme.spacing(1)
     }
   })
 );
@@ -26,15 +23,16 @@ function Layers({ toogleEndemicityLayer, endemicityLayer }: any) {
     toogleEndemicityLayer(!endemicityLayer);
   };
   return (
-    <Fab
-      variant="extended"
-      color="default"
-      onClick={handleToggle}
-      className={classes.fab}
-    >
-      <LayersIcon className={classes.extendedIcon} />
-      Layers
-    </Fab>
+    <div>
+      <Fab
+        size="small"
+        color="default"
+        onClick={handleToggle}
+        className={classes.fab}
+      >
+        <LayersIcon />
+      </Fab>
+    </div>
   );
 }
 

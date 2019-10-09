@@ -1,4 +1,4 @@
-import { colors } from "../../theme";
+import { colors } from "../../../constants/theme";
 
 export default {
   "circle-radius": [

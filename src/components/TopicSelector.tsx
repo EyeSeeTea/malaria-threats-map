@@ -46,7 +46,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-class TopicSelector extends Component<Props> {
+class ThemeSelector extends Component<Props> {
   render() {
     const { theme, setTheme } = this.props;
     return (
@@ -85,4 +85,4 @@ class TopicSelector extends Component<Props> {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TopicSelector);
+)(ThemeSelector);

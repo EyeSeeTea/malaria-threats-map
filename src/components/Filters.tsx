@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(0.5, 0)
     },
     extendedIcon: {
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(0.5)
     },
     paper: {
       backgroundColor: "#f3f3f3"
@@ -66,11 +66,12 @@ export default function Filters() {
     <div>
       <Fab
         variant="extended"
+        size="small"
         color="primary"
         onClick={handleClickOpen}
         className={classes.fab}
       >
-        <FilterIcon className={classes.extendedIcon} />
+        <FilterIcon className={classes.extendedIcon} fontSize="small" />
         Filters
       </Fab>
       <Dialog

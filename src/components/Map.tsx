@@ -1,9 +1,9 @@
 import React from "react";
-import style from "./style";
-import empty from "./style";
+import empty, { style } from "./style";
 import styled from "styled-components";
 import Layers from "./Layers";
 import mapboxgl from "mapbox-gl";
+import { ThemeProvider } from "@material-ui/styles";
 
 import { State } from "../store/types";
 import { connect } from "react-redux";
@@ -23,12 +23,16 @@ import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";
 import CountrySelector from "./CountrySelector";
 import WhoLogo from "./WhoLogo";
-import { selectTheme } from "../store/reducers/base-reducer";
+import { selectAny, selectTheme } from "../store/reducers/base-reducer";
 import { selectPreventionStudies } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
-import { setThemeAction } from "../store/actions/base-actions";
+import { setAnyAction, setThemeAction } from "../store/actions/base-actions";
+import Screenshot from "./Screenshot";
+import { getTheme } from "../constants/theme";
+
+var Animated_GIF = require("animated_gif");
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
@@ -63,6 +67,8 @@ const SearchContainer = styled(BaseContainer)`
   position: absolute;
   top: 0;
   left: 0;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Divider = styled.div`
@@ -75,6 +81,7 @@ const FilterWrapper = styled.div`
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
+  any: selectAny(state),
   preventionStudies: selectPreventionStudies(state),
   diagnosisStudies: selectDiagnosisStudies(state),
   treatmentStudies: selectTreatmentStudies(state),
@@ -82,7 +89,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  setTheme: setThemeAction
+  setTheme: setThemeAction,
+  setAny: setAnyAction
 };
 
 class Map extends React.Component<any> {
@@ -100,6 +108,7 @@ class Map extends React.Component<any> {
       pitch: 0
     }
   };
+  images: any[] = [];
 
   componentDidMount() {
     this.map = new mapboxgl.Map({
@@ -108,7 +117,8 @@ class Map extends React.Component<any> {
       center: [-16.629129, 28.291565],
       maxZoom: 7.99999,
       minZoom: 1,
-      zoom: 2
+      zoom: 2,
+      preserveDrawingBuffer: true
     });
     this.map.dragRotate.disable();
     this.map.touchZoomRotate.disableRotation();
@@ -157,12 +167,9 @@ class Map extends React.Component<any> {
     }
   }
 
-  _onViewportChange = (viewport: any) => this.setState({ viewport });
-  _onStyleChange = (mapStyle: any) => this.setState({ mapStyle });
-
   render() {
-    const { setTheme, theme } = this.props;
-    const { viewport, style } = this.state;
+    const { any, theme } = this.props;
+    const styles = getTheme(theme);
     return (
       <React.Fragment>
         <div
@@ -184,16 +191,16 @@ class Map extends React.Component<any> {
         <SearchContainer>
           <TopicSelector />
           <Divider />
-          {/*<SearchInput />*/}
           <PreventionMapTypesSelector />
           <Divider />
           <CountrySelector />
           <Divider />
           <Filters />
           <Layers />
+          {this.map && this.state.ready && <Screenshot map={this.map} />}
         </SearchContainer>
         <TopRightContainer>
-          <MalariaTable />
+          {/*<MalariaTable />*/}
           <LanguageSelector />
         </TopRightContainer>
         <BottomRightContainer>

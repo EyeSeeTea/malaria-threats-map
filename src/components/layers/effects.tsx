@@ -1,7 +1,6 @@
 import mapboxgl from "mapbox-gl";
 import ReactDOM from "react-dom";
 import * as React from "react";
-import SearchInput from "../SearchInput";
 import Chart from "../Chart";
 
 export default (map: any, source: string, layer: string) => {

@@ -20,6 +20,7 @@ export interface RegionState {
 
 export interface MalariaState {
   theme: string;
+  any: any;
   endemicity: boolean;
   filters: number[];
   region: RegionState;

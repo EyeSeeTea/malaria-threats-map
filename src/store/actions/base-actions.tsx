@@ -2,10 +2,10 @@ import { createAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import { RegionState } from "../types";
 
-export const setTitleAction = createAction(
-  ActionTypeEnum.MalariaSetTheme,
+export const setAnyAction = createAction(
+  ActionTypeEnum.MalariaSetAny,
   action => {
-    return (title: string) => action(title);
+    return (any: any) => action(any);
   }
 );
 

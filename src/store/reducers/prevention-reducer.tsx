@@ -2,7 +2,12 @@ import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { PreventionMapType, PreventionState, State } from "../types";
+import {
+  PreventionFilters,
+  PreventionMapType,
+  PreventionState,
+  State
+} from "../types";
 import { PreventionResponse } from "../../types/Prevention";
 
 const initialState: PreventionState = Object.freeze({
@@ -16,64 +21,36 @@ const initialState: PreventionState = Object.freeze({
   }
 });
 
-function updatePreventionMapType(mapType: PreventionMapType) {
+function updateFilter<T>(key: string, value: T, def?: T) {
   return (state: PreventionState) => {
     return {
       ...state,
       filters: {
         ...state.filters,
-        mapType: mapType || PreventionMapType.RESISTANCE_STATUS
+        [key]: value || def
       }
     };
   };
+}
+
+function updatePreventionMapType(mapType: PreventionMapType) {
+  return updateFilter("mapType", mapType, PreventionMapType.RESISTANCE_STATUS);
 }
 
 function updateInsecticideClass(insecticideClass: string) {
-  return (state: PreventionState) => {
-    return {
-      ...state,
-      filters: {
-        ...state.filters,
-        insecticideClass: insecticideClass || "PYRETHROIDS"
-      }
-    };
-  };
+  return updateFilter("insecticideClass", insecticideClass, "PYRETHROIDS");
 }
 
 function updateInsecticideTypes(insecticideTypes: string[]) {
-  return (state: PreventionState) => {
-    return {
-      ...state,
-      filters: {
-        ...state.filters,
-        insecticideTypes: insecticideTypes || []
-      }
-    };
-  };
+  return updateFilter("insecticideTypes", insecticideTypes, []);
 }
 
 function updateType(type: string) {
-  return (state: PreventionState) => {
-    return {
-      ...state,
-      filters: {
-        ...state.filters,
-        type
-      }
-    };
-  };
+  return updateFilter("type", type);
 }
 
 function updateSpecies(species: string[]) {
-  return (state: PreventionState) => {
-    return {
-      ...state,
-      filters: {
-        ...state.filters,
-        species: species || []
-      }
-    };
-  };
+  return updateFilter("species", species, []);
 }
 
 export default createReducer<PreventionState>(initialState, {

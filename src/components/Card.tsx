@@ -1,17 +1,21 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import {
-  DiagnosisIcon,
-  InvasiveIcon,
-  PreventionIcon,
-  TreatmentIcon
-} from "./Icons";
 import styled from "styled-components";
+import { setThemeAction } from "../store/actions/base-actions";
+import { connect } from "react-redux";
+import {
+  diagnosisTheme,
+  getTheme,
+  invasiveTheme,
+  preventionTheme,
+  treatmentTheme
+} from "../constants/theme";
 
 const useStyles = makeStyles({
   card: {
@@ -55,16 +59,33 @@ const StyledCardContent = styled(CardContent)`
   justify-content: space-evenly;
 `;
 
+const mapDispatchToProps = {
+  setTheme: setThemeAction
+};
+
+type OwnProp = {
+  title?: string;
+  description?: string;
+  theme?: string;
+  onSelection?: () => void;
+  Icon?: any;
+};
+
+type DispatchProps = typeof mapDispatchToProps;
+type Props = DispatchProps & OwnProp;
+
 export const SimpleCard = ({
   title,
   description,
-  Icon
-}: {
-  title?: string;
-  description?: string;
-  Icon?: any;
-}) => {
+  Icon,
+  theme,
+  setTheme,
+  onSelection
+}: Props) => {
   const classes = useStyles({});
+
+  const styles = getTheme(theme);
+
   return (
     <Card className={classes.card}>
       <Icon active style={{ maxWidth: "96px", marginTop: "24px" }} />
@@ -78,40 +99,25 @@ export const SimpleCard = ({
       </StyledCardContent>
       <CardActions>
         <ButtonContainer>
-          <Button variant="contained" color="default">
-            Theme Provider
-          </Button>
+          <ThemeProvider theme={styles}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                setTheme(theme);
+                onSelection();
+              }}
+            >
+              Select Theme
+            </Button>
+          </ThemeProvider>
         </ButtonContainer>
       </CardActions>
     </Card>
   );
 };
 
-export const PreventionCard = () => (
-  <SimpleCard
-    title="VECTOR INSECTICIDE RESISTANCE"
-    description="Resistance of malaria mosquitoes to insecticides used in core prevention tools of treated bed nets and indoor residual sprays threatens vector control effectiveness"
-    Icon={PreventionIcon}
-  />
-);
-export const DiagnosisCard = () => (
-  <SimpleCard
-    title="PARASITE pfhrp2/3 GENE DELETIONS"
-    description="Gene deletions among some malaria parasites cause false negative diagnostic test results, complicating case management and control"
-    Icon={DiagnosisIcon}
-  />
-);
-export const TreatmentCard = () => (
-  <SimpleCard
-    title="PARASITE DRUG EFFICACY AND RESISTANCE"
-    description="Resistance of malaria parasites to artemisinin – the core compound of the best available antimalarial medicines – threatens antimalarial drug efficacy"
-    Icon={TreatmentIcon}
-  />
-);
-export const InvasiveCard = () => (
-  <SimpleCard
-    title="INVASIVE VECTOR SPECIES"
-    description=""
-    Icon={InvasiveIcon}
-  />
-);
+export default connect(
+  null,
+  mapDispatchToProps
+)(SimpleCard);

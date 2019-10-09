@@ -102,8 +102,7 @@ const theme = createMuiTheme({
 
 class App extends React.Component {
   render() {
-    return (
-      <ThemeProvider theme={theme}>
+    return <ThemeProvider theme={theme}>
         <Provider store={store}>
           <DataProvider>
             <I18nextProvider i18n={i18next}>
@@ -116,8 +115,7 @@ class App extends React.Component {
             </I18nextProvider>
           </DataProvider>
         </Provider>
-      </ThemeProvider>
-    );
+      </ThemeProvider>;
   }
 }
 

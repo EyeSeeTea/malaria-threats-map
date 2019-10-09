@@ -8,9 +8,9 @@ import {
 import Slider from "@material-ui/core/Slider";
 import { State } from "../store/types";
 import { connect } from "react-redux";
-import { colors } from "./theme";
 import { setFiltersAction } from "../store/actions/base-actions";
 import { selectFilters } from "../store/reducers/base-reducer";
+import { colors } from "../constants/theme";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
