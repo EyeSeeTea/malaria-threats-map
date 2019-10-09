@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+import { connect, Provider } from "react-redux";
 import { PreventionMapType, State } from "../../store/types";
 import { studiesToGeoJson } from "./layer-utils";
 import setupEffects from "./effects";
@@ -29,6 +29,12 @@ import {
   selectRegion,
   selectTheme
 } from "../../store/reducers/base-reducer";
+import ReactDOM from "react-dom";
+import { store } from "../../App";
+import Chart from "../Chart";
+import mapboxgl from "mapbox-gl";
+import { I18nextProvider } from "react-i18next";
+import i18next from "i18next";
 
 const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -189,9 +195,41 @@ class PreventionLayer extends Component<Props> {
       this.props.map.addLayer(layer(resolveMapTypeSymbols(preventionFilters)));
 
       setupEffects(this.props.map, PREVENTION_SOURCE_ID, PREVENTION_LAYER_ID);
+      this.setupPopover();
       this.renderLayer();
     }
   }
+
+  onClickListener = (e: any, a: any) => {
+    const placeholder = document.createElement("div");
+    const { studies } = this.props;
+    const filteredStudies = this.filterStudies(studies).filter(
+      study => study.SITE_ID === e.features[0].properties.SITE_ID
+    );
+
+    ReactDOM.render(
+      <I18nextProvider i18n={i18next}>
+        <Provider store={store}>
+          <Chart studies={filteredStudies} />
+        </Provider>
+      </I18nextProvider>,
+      placeholder
+    );
+    const coordinates = e.features[0].geometry.coordinates.slice();
+    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+      coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+    }
+
+    new mapboxgl.Popup()
+      .setLngLat(coordinates)
+      .setDOMContent(placeholder)
+      .addTo(this.props.map);
+  };
+
+  setupPopover = () => {
+    this.props.map.off("click", PREVENTION_LAYER_ID, this.onClickListener);
+    this.props.map.on("click", PREVENTION_LAYER_ID, this.onClickListener);
+  };
 
   renderLayer = () => {
     if (this.props.map.getLayer(PREVENTION_LAYER_ID)) {

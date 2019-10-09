@@ -20,12 +20,11 @@ import {
   setInsecticideClass,
   setInsecticideTypes,
   setPreventionMapType,
-  setSpecies,
   setType
 } from "./store/actions/prevention-actions";
 import Disclaimer from "./components/Disclaimer";
 
-const { store } = createStore();
+export const { store } = createStore();
 
 ReduxQuerySync({
   store,
@@ -111,7 +110,7 @@ const theme = createMuiTheme({
     MuiButton: {
       contained: {
         backgroundColor: "white"
-      },
+      }
     }
   }
 });

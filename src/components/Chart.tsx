@@ -4,8 +4,13 @@ import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import { Typography } from "@material-ui/core";
 import { ConfirmationStatusColors } from "./layers/prevention/ResistanceStatus/symbols";
+import { connect } from "react-redux";
+import { State } from "../store/types";
+import { selectTheme } from "../store/reducers/base-reducer";
+import { PreventionStudy } from "../types/Prevention";
+import { useTranslation } from "react-i18next";
 
-const options: Highcharts.Options = {
+const options: (data: any) => Highcharts.Options = data => ({
   chart: {
     type: "column",
     height: 300,
@@ -56,16 +61,20 @@ const options: Highcharts.Options = {
       ]
     }
   },
+  tooltip: {
+    formatter: function() {
+      return `
+<B><i>${this.point.species}</i></B><br>
+Mortality (%): ${this.y}<br>
+Tested (n): ${this.point.number}
+`;
+    }
+  },
   series: [
     {
       type: "column",
       name: "Mortality",
-      data: [
-        ["2015, ALPHACYPERMETHRIN 0.05%", 88],
-        ["2015, DELTAMETHRIN 0.05%", 93],
-        ["2015, LAMBDA-CYHAOTHRIN 0.05%", 100],
-        ["2015, PERMETHRIN 0.05%", 100]
-      ]
+      data: data
     }
   ],
   legend: {
@@ -74,23 +83,45 @@ const options: Highcharts.Options = {
   credits: {
     enabled: false
   }
-};
+});
 
 const ChatContainer = styled.div`
   max-width: 500px;
 `;
 
-const Chart = () => {
+const mapStateToProps = (state: State) => ({
+  theme: selectTheme(state)
+});
+const mapDispatchToProps = {};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+type OwnProps = {
+  studies: PreventionStudy[];
+};
+type Props = DispatchProps & StateProps & OwnProps;
+
+const Chart = ({ theme, studies }: Props) => {
+  const { t } = useTranslation("common");
+  const data = studies.map(study => ({
+    name: `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${
+      study.INSECTICIDE_CONC
+    }`,
+    y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
+    species: study.SPECIES,
+    number: study.NUMBER
+  }));
   return (
     <ChatContainer>
-      <Typography variant="h6">
-        Remanso, Bolivia (Plurinational State of)
-      </Typography>
+      <Typography variant="h6">{`${t(studies[0].COUNTRY_NAME)}`}</Typography>
       <Typography variant="body1">
-        Discriminating concentratin bioassay, WHO test kit bioassay
+        {`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}
       </Typography>
-      <HighchartsReact highcharts={Highcharts} options={options} />
+      <HighchartsReact highcharts={Highcharts} options={options(data)} />
     </ChatContainer>
   );
 };
-export default Chart;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Chart);
