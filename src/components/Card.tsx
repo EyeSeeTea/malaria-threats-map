@@ -9,13 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import { setThemeAction } from "../store/actions/base-actions";
 import { connect } from "react-redux";
-import {
-  diagnosisTheme,
-  getTheme,
-  invasiveTheme,
-  preventionTheme,
-  treatmentTheme
-} from "../constants/theme";
+import { getTheme } from "../constants/theme";
 
 const useStyles = makeStyles({
   card: {
@@ -45,10 +39,6 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 16px;
-`;
-
-const FlexGrow = styled.div`
-  flex-grow: 1;
 `;
 
 const StyledCardContent = styled(CardContent)`

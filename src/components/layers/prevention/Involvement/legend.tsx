@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import React from "react";
 import {
   LegendContainer,
@@ -14,9 +13,7 @@ import {
 import { LevelOfInvolvementColors } from "./symbols";
 import { LEVEL_OF_INVOLVEMENT } from "./utils";
 
-export default function Legend({}) {
-  const { t } = useTranslation("common");
-
+export default function Legend() {
   return (
     <LegendContainer>
       <LegendTitleContainer>

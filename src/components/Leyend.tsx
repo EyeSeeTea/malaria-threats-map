@@ -1,6 +1,5 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
-import { useTranslation } from "react-i18next";
 import { Typography } from "@material-ui/core";
 
 import styled from "styled-components";
@@ -76,7 +75,6 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 function Legend({ filters, preventionFilters, theme }: Props) {
-  const { t } = useTranslation("common");
   switch (theme) {
     case "prevention":
       return resolveMapTypeLegend(preventionFilters);

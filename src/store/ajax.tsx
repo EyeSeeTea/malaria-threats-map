@@ -1,6 +1,6 @@
 import * as R from "ramda";
-import { catchError, map, mergeMap } from "rxjs/operators";
-import { ajax, AjaxResponse, AjaxError } from "rxjs/ajax";
+import { catchError, map } from "rxjs/operators";
+import { ajax, AjaxError, AjaxResponse } from "rxjs/ajax";
 
 const config = {
   apiBaseUrl:

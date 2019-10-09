@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectEndemicity } from "../../store/reducers/base-reducer";
-import { setThemeAction } from "../../store/actions/base-actions";
 
 const ENDEMICITY_LAYER_ID = "endemicity-layer";
 const ENDEMICITY_SOURCE_ID = "endemicity-source";
@@ -23,10 +22,6 @@ const layer: any = {
 const mapStateToProps = (state: State) => ({
   endemicity: selectEndemicity(state)
 });
-
-const mapDispatchToProps = {
-  setTheme: setThemeAction
-};
 
 class EndemicityLayer extends Component<any> {
   componentDidMount(): void {

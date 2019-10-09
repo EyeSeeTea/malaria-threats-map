@@ -8,8 +8,6 @@ export default (map: any, source: string, layer: string) => {
     const placeholder = document.createElement("div");
     ReactDOM.render(<Chart />, placeholder);
     const coordinates = e.features[0].geometry.coordinates.slice();
-    const description = e.features[0].properties["VILLAGE_NAME"];
-
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }

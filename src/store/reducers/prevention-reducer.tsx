@@ -2,12 +2,7 @@ import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import {
-  PreventionFilters,
-  PreventionMapType,
-  PreventionState,
-  State
-} from "../types";
+import { PreventionMapType, PreventionState, State } from "../types";
 import { PreventionResponse } from "../../types/Prevention";
 
 const initialState: PreventionState = Object.freeze({

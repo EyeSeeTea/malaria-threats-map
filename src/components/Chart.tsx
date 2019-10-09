@@ -1,6 +1,4 @@
 import * as React from "react";
-import { useTranslation } from "react-i18next";
-import { changeLanguage } from "../config/i18next";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
@@ -82,8 +80,7 @@ const ChatContainer = styled.div`
   max-width: 500px;
 `;
 
-const Chart = (props: any) => {
-  const { t }: any = useTranslation("common");
+const Chart = () => {
   return (
     <ChatContainer>
       <Typography variant="h6">

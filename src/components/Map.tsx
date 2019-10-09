@@ -3,11 +3,9 @@ import empty, { style } from "./style";
 import styled from "styled-components";
 import Layers from "./Layers";
 import mapboxgl from "mapbox-gl";
-import { ThemeProvider } from "@material-ui/styles";
 
 import { State } from "../store/types";
 import { connect } from "react-redux";
-import { Study } from "../types/Malaria";
 import PreventionLayer from "./layers/PreventionLayer";
 import DiagnosisLayer from "./layers/DiagnosisLayer";
 import TreatmentLayer from "./layers/TreatmentLayer";
@@ -17,7 +15,6 @@ import InitialDialog from "./InitialDialog";
 import Filters from "./Filters";
 import LanguageSelector from "./LanguageSelector";
 import Legend from "./Leyend";
-import MalariaTable from "./MalariaTable";
 import PreventionMapTypesSelector from "./PreventionMapTypesSelector";
 import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";
@@ -30,12 +27,12 @@ import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { setAnyAction, setThemeAction } from "../store/actions/base-actions";
 import Screenshot from "./Screenshot";
-import { getTheme } from "../constants/theme";
+import ReactMapboxGl from "react-mapbox-gl";
 
-var Animated_GIF = require("animated_gif");
-
-mapboxgl.accessToken =
-  "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
+ReactMapboxGl({
+  accessToken:
+    "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA"
+});
 
 const BaseContainer = styled.div`
   max-width: 600px;
@@ -73,10 +70,6 @@ const SearchContainer = styled(BaseContainer)`
 
 const Divider = styled.div`
   height: 10px;
-`;
-
-const FilterWrapper = styled.div`
-  margin-botton: 10px;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -146,18 +139,6 @@ class Map extends React.Component<any> {
     });
   }
 
-  geoJson = (studies: Study[]) => ({
-    type: "FeatureCollection",
-    features: studies.map(study => ({
-      type: "Feature",
-      properties: study,
-      geometry: {
-        type: "Point",
-        coordinates: [parseFloat(study.Longitude), parseFloat(study.Latitude)]
-      }
-    }))
-  });
-
   componentWillUnmount() {
     this.map.remove();
   }
@@ -168,8 +149,6 @@ class Map extends React.Component<any> {
   }
 
   render() {
-    const { any, theme } = this.props;
-    const styles = getTheme(theme);
     return (
       <React.Fragment>
         <div

@@ -49,7 +49,7 @@ type Props = DispatchProps & StateProps & OwnProps;
 
 class RegionLayer extends Component<Props> {
   componentDidMount(): void {
-    const { region, fetchCountryLayer } = this.props;
+    const { fetchCountryLayer } = this.props;
     fetchCountryLayer();
     const host = "https://who-cache.esriemcs.com";
     const query =
@@ -93,7 +93,7 @@ class RegionLayer extends Component<Props> {
     const { countryLayer } = this.props;
     if (!countryLayer) return;
     const feature = countryLayer.features.find(
-      (feature: any) => feature.properties.ADM0_NAME == country
+      (feature: any) => feature.properties.ADM0_NAME === country
     );
     if (!feature) return;
     const coordinates: any[] = R.chain((coords: any) => {

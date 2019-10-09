@@ -16,7 +16,7 @@ const baseIcon = css`
 type Props = { active: boolean };
 
 const TreatmentSVG = ({ active, ...rest }: Props) => (
-  <img {...rest} src={treatmentIcon} />
+  <img alt="" {...rest} src={treatmentIcon} />
 );
 
 export const TreatmentIcon = styled(TreatmentSVG)`
@@ -26,7 +26,7 @@ export const TreatmentIcon = styled(TreatmentSVG)`
 `;
 
 const DiagnosisSVG = ({ active, ...rest }: Props) => (
-  <img {...rest} src={diagnosisIcon} />
+  <img alt="" {...rest} src={diagnosisIcon} />
 );
 export const DiagnosisIcon = styled(DiagnosisSVG)`
   background-color: ${props =>
@@ -35,7 +35,7 @@ export const DiagnosisIcon = styled(DiagnosisSVG)`
 `;
 
 const PreventionSVG = ({ active, ...rest }: any) => (
-  <img {...rest} src={preventionIcon} />
+  <img alt="" {...rest} src={preventionIcon} />
 );
 export const PreventionIcon = styled(PreventionSVG)`
   background-color: ${props =>
@@ -44,7 +44,7 @@ export const PreventionIcon = styled(PreventionSVG)`
 `;
 
 const InvasiveSVG = ({ active, ...rest }: Props) => (
-  <img {...rest} src={active ? invasiveIcon : invasiveBaseIcon} />
+  <img alt="" {...rest} src={active ? invasiveIcon : invasiveBaseIcon} />
 );
 export const InvasiveIcon = styled(InvasiveSVG)`
   background-color: ${props =>
@@ -53,5 +53,9 @@ export const InvasiveIcon = styled(InvasiveSVG)`
 `;
 
 export const WhoLogoBlue = () => (
-  <img style={{ width: "150px", color: "white" }} src={whoLogoBlueIcon} />
+  <img
+    alt=""
+    style={{ width: "150px", color: "white" }}
+    src={whoLogoBlueIcon}
+  />
 );
