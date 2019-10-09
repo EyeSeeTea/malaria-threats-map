@@ -67,7 +67,7 @@ export default function Filters() {
       <Fab
         variant="extended"
         size="small"
-        color="primary"
+        color="default"
         onClick={handleClickOpen}
         className={classes.fab}
       >

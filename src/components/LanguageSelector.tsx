@@ -46,6 +46,7 @@ export default function LanguageSelector() {
   return (
     <div>
       <Button
+        variant="contained"
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}

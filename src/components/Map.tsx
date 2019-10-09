@@ -149,18 +149,8 @@ class Map extends React.Component<any> {
   }
 
   render() {
-    return (
-      <React.Fragment>
-        <div
-          ref={el => (this.mapContainer = el)}
-          style={{
-            position: "absolute",
-            bottom: 0,
-            top: 0,
-            right: 0,
-            left: 0
-          }}
-        />
+    return <React.Fragment>
+        <div ref={el => (this.mapContainer = el)} style={{ position: "absolute", bottom: 0, top: 0, right: 0, left: 0 }} />
         {this.map && this.state.ready && <PreventionLayer map={this.map} />}
         {this.map && this.state.ready && <DiagnosisLayer map={this.map} />}
         {this.map && this.state.ready && <TreatmentLayer map={this.map} />}
@@ -189,8 +179,7 @@ class Map extends React.Component<any> {
           <WhoLogo />
         </BottomLeftContainer>
         <InitialDialog />
-      </React.Fragment>
-    );
+      </React.Fragment>;
   }
 }
 

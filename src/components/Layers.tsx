@@ -26,7 +26,7 @@ function Layers({ toogleEndemicityLayer, endemicityLayer }: any) {
     <div>
       <Fab
         size="small"
-        color="default"
+        color={endemicityLayer ? "primary" : "default"}
         onClick={handleToggle}
         className={classes.fab}
       >

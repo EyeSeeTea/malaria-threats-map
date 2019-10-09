@@ -13,7 +13,8 @@ import { ThemeProvider } from "@material-ui/styles";
 import {
   setFiltersAction,
   setRegionAction,
-  setThemeAction
+  setThemeAction,
+  toggleEndemicityLayerAction
 } from "./store/actions/base-actions";
 import {
   setInsecticideClass,
@@ -51,10 +52,13 @@ ReduxQuerySync({
       selector: (state: State) => state.prevention.filters.type,
       action: (value: string) => setType(value)
     },
+    endemicity: {
+      selector: (state: State) => state.prevention.filters.type,
+      action: (value: string) => setType(value)
+    },
     species: {
-      selector: (state: State) => state.prevention.filters.species,
-      action: (value: string) =>
-        setSpecies(value ? value.split(",") : undefined)
+      selector: (state: State) => state.malaria.endemicity,
+      action: (value: string) => toggleEndemicityLayerAction(value === "true")
     },
     years: {
       selector: (state: State) => state.malaria.filters,
@@ -97,12 +101,25 @@ const theme = createMuiTheme({
     secondary: {
       main: "#d86422"
     }
+  },
+  overrides: {
+    MuiFab: {
+      root: {
+        backgroundColor: "white"
+      }
+    },
+    MuiButton: {
+      contained: {
+        backgroundColor: "white"
+      },
+    }
   }
 });
 
 class App extends React.Component {
   render() {
-    return <ThemeProvider theme={theme}>
+    return (
+      <ThemeProvider theme={theme}>
         <Provider store={store}>
           <DataProvider>
             <I18nextProvider i18n={i18next}>
@@ -115,7 +132,8 @@ class App extends React.Component {
             </I18nextProvider>
           </DataProvider>
         </Provider>
-      </ThemeProvider>;
+      </ThemeProvider>
+    );
   }
 }
 
