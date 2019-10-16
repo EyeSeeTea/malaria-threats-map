@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import ResistanceStatusFilters from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
 import IntensityStatusFilters from "./layers/prevention/IntensityStatus/IntensityStatusFilters";
 import ResistanceMechanismFilters from "./layers/prevention/ResistanceMechanisms/ResistanceMechanismFilters";
+import LevelOfInvolvementFilters from "./layers/prevention/Involvement/LevelOfInvolvementFilters";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -88,6 +89,8 @@ function Filters({ theme, preventionFilters }: Props) {
             return <IntensityStatusFilters />;
           case PreventionMapType.RESISTANCE_MECHANISM:
             return <ResistanceMechanismFilters />;
+          case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+            return <LevelOfInvolvementFilters />;
         }
         break;
     }
