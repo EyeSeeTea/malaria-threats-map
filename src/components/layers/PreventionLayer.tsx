@@ -173,6 +173,8 @@ class PreventionLayer extends Component<Props> {
       case PreventionMapType.LEVEL_OF_INVOLVEMENT:
         return [
           filterByLevelOfInvolvement,
+          filterByType(preventionFilters.type),
+          filterByTypeSynergist(preventionFilters.synergistTypes),
           filterByYearRange(filters),
           filterByCountry(region.country)
         ];
