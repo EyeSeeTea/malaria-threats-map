@@ -11,6 +11,8 @@ const initialState: PreventionState = Object.freeze({
     mapType: PreventionMapType.RESISTANCE_STATUS,
     insecticideClass: "PYRETHROIDS",
     insecticideTypes: [],
+    synergistTypes: [],
+    assayTypes: [],
     type: null,
     species: []
   }
@@ -43,9 +45,16 @@ function updateInsecticideTypes(insecticideTypes: string[]) {
 function updateType(type: string) {
   return updateFilter("type", type);
 }
+function updateSynergistTypes(synergistTypes: string[]) {
+  return updateFilter("synergistTypes", synergistTypes, []);
+}
 
 function updateSpecies(species: string[]) {
   return updateFilter("species", species, []);
+}
+
+function updateAssayTypes(assayTypes: string[]) {
+  return updateFilter("assayTypes", assayTypes, []);
 }
 
 export default createReducer<PreventionState>(initialState, {
@@ -55,6 +64,8 @@ export default createReducer<PreventionState>(initialState, {
   [ActionTypeEnum.SetPreventionMapType]: updatePreventionMapType,
   [ActionTypeEnum.SetInsecticideClass]: updateInsecticideClass,
   [ActionTypeEnum.SetInsecticideTypes]: updateInsecticideTypes,
+  [ActionTypeEnum.SetAssayTypes]: updateAssayTypes,
+  [ActionTypeEnum.SetSynergistTypes]: updateSynergistTypes,
   [ActionTypeEnum.SetType]: updateType,
   [ActionTypeEnum.SetSpecies]: updateSpecies
 });

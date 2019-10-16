@@ -51,6 +51,8 @@ export interface PreventionFilters {
   mapType: PreventionMapType;
   insecticideClass: string;
   insecticideTypes: string[];
+  synergistTypes: string[];
+  assayTypes: string[];
   type: string | null;
   species: string[];
 }

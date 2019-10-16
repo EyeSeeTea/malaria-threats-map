@@ -17,9 +17,12 @@ import {
   toggleEndemicityLayerAction
 } from "./store/actions/base-actions";
 import {
+  setAssayTypes,
   setInsecticideClass,
   setInsecticideTypes,
   setPreventionMapType,
+  setSpecies,
+  setSynergistTypes,
   setType
 } from "./store/actions/prevention-actions";
 import Disclaimer from "./components/Disclaimer";
@@ -47,15 +50,26 @@ ReduxQuerySync({
       action: (value: string) =>
         setInsecticideTypes(value ? value.split(",") : undefined)
     },
+    assayTypes: {
+      selector: (state: State) => state.prevention.filters.assayTypes,
+      action: (value: string) =>
+        setAssayTypes(value ? value.split(",") : undefined)
+    },
+    synergistTypes: {
+      selector: (state: State) => state.prevention.filters.synergistTypes,
+      action: (value: string) =>
+        setSynergistTypes(value ? value.split(",") : undefined)
+    },
     type: {
       selector: (state: State) => state.prevention.filters.type,
       action: (value: string) => setType(value)
     },
-    endemicity: {
-      selector: (state: State) => state.prevention.filters.type,
-      action: (value: string) => setType(value)
-    },
     species: {
+      selector: (state: State) => state.prevention.filters.species,
+      action: (value: string) =>
+        setSpecies(value ? value.split(",") : undefined)
+    },
+    endemicity: {
       selector: (state: State) => state.malaria.endemicity,
       action: (value: string) => toggleEndemicityLayerAction(value === "true")
     },

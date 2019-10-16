@@ -46,9 +46,23 @@ export const setInsecticideTypes = createAction(
   }
 );
 
+export const setAssayTypes = createAction(
+  ActionTypeEnum.SetAssayTypes,
+  action => {
+    return (assayTypes: string[]) => action(assayTypes);
+  }
+);
+
 export const setType = createAction(ActionTypeEnum.SetType, action => {
   return (type: string) => action(type);
 });
+
+export const setSynergistTypes = createAction(
+  ActionTypeEnum.SetSynergistTypes,
+  action => {
+    return (type: string[]) => action(type);
+  }
+);
 
 export const setSpecies = createAction(ActionTypeEnum.SetSpecies, action => {
   return (species: string[]) => action(species);

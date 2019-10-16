@@ -56,6 +56,18 @@ export const filterByType = (type: string) => (study: any) => {
   return !type || study.TYPE === type;
 };
 
+export const filterByTypeSynergist = (synergistTypes: string[]) => (
+  study: any
+) => {
+  return (
+    !synergistTypes.length || synergistTypes.includes(study.TYPE_SYNERGIST)
+  );
+};
+
 export const filterBySpecies = (species: string[]) => (study: any) => {
   return !species.length || species.includes(study.SPECIES);
+};
+
+export const filterByAssayTypes = (assayTypes: string[]) => (study: any) => {
+  return !assayTypes.length || assayTypes.includes(study.ASSAY_TYPE);
 };

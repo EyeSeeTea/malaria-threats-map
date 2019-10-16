@@ -191,10 +191,12 @@ function ValueContainer(props: ValueContainerProps<OptionType>) {
 }
 
 function MultiValue(props: MultiValueProps<OptionType>) {
+  const { t } = useTranslation("common");
+  const value = props.children ? t(props.children.toString()) : "";
   return (
     <Chip
       tabIndex={-1}
-      label={props.children}
+      label={value}
       className={clsx(props.selectProps.classes.chip, {
         [props.selectProps.classes.chipFocused]: props.isFocused
       })}

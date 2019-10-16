@@ -8,6 +8,7 @@ import resistanceStatusSymbols from "./prevention/ResistanceStatus/symbols";
 import { resolveResistanceStatus } from "./prevention/ResistanceStatus/utils";
 import { PreventionStudy } from "../../types/Prevention";
 import {
+  filterByAssayTypes,
   filterByCountry,
   filterByInsecticideClass,
   filterByInsecticideTypes,
@@ -17,6 +18,7 @@ import {
   filterByResistanceStatus,
   filterBySpecies,
   filterByType,
+  filterByTypeSynergist,
   filterByYearRange
 } from "./studies-filters";
 import { resolveMapTypeSymbols } from "./prevention/utils";
@@ -35,6 +37,7 @@ import Chart from "../Chart";
 import mapboxgl from "mapbox-gl";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
+import { isSynergyst } from "./prevention/ResistanceMechanisms/ResistanceMechanismFilters";
 
 const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -76,7 +79,9 @@ class PreventionLayer extends Component<Props> {
         insecticideClass,
         insecticideTypes,
         type,
-        species
+        species,
+        assayTypes,
+        synergistTypes
       },
       filters,
       region
@@ -96,6 +101,11 @@ class PreventionLayer extends Component<Props> {
     const typeChange = prevProps.preventionFilters.type !== type;
     const speciesChange =
       prevProps.preventionFilters.species.length !== species.length;
+    const assayTypesChange =
+      prevProps.preventionFilters.assayTypes.length !== assayTypes.length;
+    const synergistTypesChange =
+      prevProps.preventionFilters.synergistTypes.length !==
+      synergistTypes.length;
     if (
       mapTypeChange ||
       yearChange ||
@@ -103,7 +113,9 @@ class PreventionLayer extends Component<Props> {
       insecticideChange ||
       insecticideTypesChange ||
       typeChange ||
-      speciesChange
+      speciesChange ||
+      assayTypesChange ||
+      synergistTypesChange
     ) {
       this.filterSource();
       this.applyMapTypeSymbols();
@@ -147,11 +159,17 @@ class PreventionLayer extends Component<Props> {
           filterByCountry(region.country)
         ];
       case PreventionMapType.RESISTANCE_MECHANISM:
-        return [
+        const base = [
           filterByResistanceMechanism,
+          filterByType(preventionFilters.type),
+          filterBySpecies(preventionFilters.species),
+          filterByAssayTypes(preventionFilters.assayTypes),
           filterByYearRange(filters),
           filterByCountry(region.country)
         ];
+        return isSynergyst(preventionFilters)
+          ? [...base, filterByTypeSynergist(preventionFilters.synergistTypes)]
+          : base;
       case PreventionMapType.LEVEL_OF_INVOLVEMENT:
         return [
           filterByLevelOfInvolvement,

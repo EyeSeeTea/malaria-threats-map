@@ -52,7 +52,17 @@ export const selectInsecticideTypes = createSelector(
   R.prop("INSECTICIDE_TYPE")
 );
 
+export const selectAssayTypes = createSelector(
+  selectFields,
+  R.prop("ASSAY_TYPE")
+);
+
 export const selectTypes = createSelector(selectFields, R.prop("TYPE"));
+
+export const selectSynergistTypes = createSelector(
+  selectFields,
+  R.prop("SYNERGIST_TYPE")
+);
 
 export const selectSpecies = createSelector(selectFields, R.prop("SPECIES"));
 
