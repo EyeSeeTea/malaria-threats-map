@@ -21,3 +21,17 @@ export const fetchDiagnosisStudiesError = createAction(
     return (error: AjaxError) => action();
   }
 );
+
+export const setDiagnosisSurveyTypes = createAction(
+  ActionTypeEnum.SetSurveyTypes,
+  action => {
+    return (surveyTypes: string[]) => action(surveyTypes);
+  }
+);
+
+export const setDiagnosisPatientType = createAction(
+  ActionTypeEnum.SetPatientType,
+  action => {
+    return (patientType: string) => action(patientType);
+  }
+);

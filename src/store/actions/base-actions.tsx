@@ -36,3 +36,10 @@ export const toggleEndemicityLayerAction = createAction(
     return (visible: boolean) => action(visible);
   }
 );
+
+export const setInitialDialogOpen = createAction(
+  ActionTypeEnum.MalariaSetInitialDialogOpen,
+  action => {
+    return (initialDialogOpen: boolean) => action(initialDialogOpen);
+  }
+);

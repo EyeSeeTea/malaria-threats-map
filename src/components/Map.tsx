@@ -20,7 +20,11 @@ import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";
 import CountrySelector from "./CountrySelector";
 import WhoLogo from "./WhoLogo";
-import { selectAny, selectTheme } from "../store/reducers/base-reducer";
+import {
+  selectAny,
+  selectIsInitialDialogOpen,
+  selectTheme
+} from "../store/reducers/base-reducer";
 import { selectPreventionStudies } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
@@ -78,7 +82,8 @@ const mapStateToProps = (state: State) => ({
   preventionStudies: selectPreventionStudies(state),
   diagnosisStudies: selectDiagnosisStudies(state),
   treatmentStudies: selectTreatmentStudies(state),
-  invasiveStudies: selectInvasiveStudies(state)
+  invasiveStudies: selectInvasiveStudies(state),
+  initialDialogOpen: selectIsInitialDialogOpen(state)
 });
 
 const mapDispatchToProps = {
@@ -149,8 +154,13 @@ class Map extends React.Component<any> {
   }
 
   render() {
-    return <React.Fragment>
-        <div ref={el => (this.mapContainer = el)} style={{ position: "absolute", bottom: 0, top: 0, right: 0, left: 0 }} />
+    const { initialDialogOpen } = this.props;
+    return (
+      <React.Fragment>
+        <div
+          ref={el => (this.mapContainer = el)}
+          style={{ position: "absolute", bottom: 0, top: 0, right: 0, left: 0 }}
+        />
         {this.map && this.state.ready && <PreventionLayer map={this.map} />}
         {this.map && this.state.ready && <DiagnosisLayer map={this.map} />}
         {this.map && this.state.ready && <TreatmentLayer map={this.map} />}
@@ -158,7 +168,7 @@ class Map extends React.Component<any> {
         {this.map && this.state.ready && <EndemicityLayer map={this.map} />}
         {this.map && this.state.ready && <RegionLayer map={this.map} />}
         <SearchContainer>
-          <TopicSelector />
+          {!initialDialogOpen && <TopicSelector />}
           <Divider />
           <PreventionMapTypesSelector />
           <Divider />
@@ -179,7 +189,8 @@ class Map extends React.Component<any> {
           <WhoLogo />
         </BottomLeftContainer>
         <InitialDialog />
-      </React.Fragment>;
+      </React.Fragment>
+    );
   }
 }
 

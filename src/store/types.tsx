@@ -24,6 +24,7 @@ export interface MalariaState {
   endemicity: boolean;
   filters: number[];
   region: RegionState;
+  initialDialogOpen: boolean;
 }
 
 export interface TranslationsState {
@@ -34,6 +35,18 @@ export interface TranslationsState {
 
 export interface DiagnosisState {
   studies: DiagnosisStudy[];
+  filters: DiagnosisFilters;
+}
+
+export interface DiagnosisFilters {
+  mapType: DiagnosisMapType;
+  surveyTypes: string[];
+  patientType: string | null;
+}
+
+export enum DiagnosisMapType {
+  PFHRP2,
+  PFHRP2_PFHRP3
 }
 
 export interface InvasiveState {

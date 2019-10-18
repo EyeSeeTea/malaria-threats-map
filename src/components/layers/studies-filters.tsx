@@ -71,3 +71,11 @@ export const filterBySpecies = (species: string[]) => (study: any) => {
 export const filterByAssayTypes = (assayTypes: string[]) => (study: any) => {
   return !assayTypes.length || assayTypes.includes(study.ASSAY_TYPE);
 };
+
+export const filterBySurveyTypes = (surveyTypes: string[]) => (study: any) => {
+  return !surveyTypes.length || surveyTypes.includes(study.SURVEY_TYPE);
+};
+
+export const filterByPatientType = (patientType: string) => (study: any) => {
+  return !patientType || study.PATIENT_TYPE === patientType;
+};

@@ -8,22 +8,36 @@ import {
   PreventionIcon,
   TreatmentIcon
 } from "./Icons";
+import { State } from "../store/types";
+import { selectIsInitialDialogOpen } from "../store/reducers/base-reducer";
+import { setInitialDialogOpen } from "../store/actions/base-actions";
+import { connect } from "react-redux";
 
 const Row = styled.div`
   flex: 1;
   display: flex;
 `;
 
-export default function InitialDialog() {
-  const [open, setOpen] = React.useState(true);
+const mapStateToProps = (state: State) => ({
+  initialDialogOpen: selectIsInitialDialogOpen(state)
+});
 
+const mapDispatchToProps = {
+  setInitialDialogOpen: setInitialDialogOpen
+};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+type Props = DispatchProps & StateProps;
+
+function InitialDialog({ initialDialogOpen, setInitialDialogOpen }: Props) {
   function handleClose() {
-    setOpen(false);
+    setInitialDialogOpen(false);
   }
 
   return (
     <Dialog
-      open={open}
+      open={initialDialogOpen}
       maxWidth={"lg"}
       onClose={handleClose}
       PaperProps={{
@@ -66,3 +80,8 @@ export default function InitialDialog() {
     </Dialog>
   );
 }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InitialDialog);

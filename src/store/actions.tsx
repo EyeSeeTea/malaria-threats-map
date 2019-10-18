@@ -4,6 +4,7 @@ export enum ActionTypeEnum {
   MalariaSetRegion = "malaria/SET_REGION",
   MalariaSetFilters = "malaria/SET_FILTERS",
   MalariaToogleEndemicityLayer = "malaria/TOGGLE_ENDEMICITY_LAYER",
+  MalariaSetInitialDialogOpen = "malaria/SET_INITIAL_DIALOG_OPEN",
 
   FetchPreventionStudiesRequest = "prevention/FETCH_PREVENTION_STUDIES_REQUEST",
   FetchPreventionStudiesSuccess = "prevention/FETCH_PREVENTION_STUDIES_SUCCESS",
@@ -20,6 +21,9 @@ export enum ActionTypeEnum {
   FetchDiagnosisStudiesRequest = "diagnosis/FETCH_DIAGNOSIS_STUDIES_REQUEST",
   FetchDiagnosisStudiesSuccess = "diagnosis/FETCH_DIAGNOSIS_STUDIES_SUCCESS",
   FetchDiagnosisStudiesError = "diagnosis/FETCH_DIAGNOSIS_STUDIES_ERROR",
+
+  SetSurveyTypes = "diagnosis/SET_DIAGNOSIS_SURVEY_TYPES",
+  SetPatientType = "diagnosis/SET_DIAGNOSIS_PATIENT_TYPE",
 
   FetchTreatmentStudiesRequest = "treatment/FETCH_TREATMENT_STUDIES_REQUEST",
   FetchTreatmentStudiesSuccess = "treatment/FETCH_TREATMENT_STUDIES_SUCCESS",

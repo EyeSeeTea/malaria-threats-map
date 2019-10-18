@@ -1955,6 +1955,14 @@ alphanum-sort@^1.0.0:
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
+animated_gif@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/animated_gif/-/animated_gif-1.0.2.tgz#b7fc9a4037e7448e3cdd76120ab05cc94e65b5d0"
+  integrity sha1-t/yaQDfnRI483XYSCrBcyU5ltdA=
+  dependencies:
+    node-dithering "0.0.1"
+    omggif "^1.0.8"
+
 ansi-colors@^3.0.0:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-3.2.4.tgz#e3a3da4bfbae6c86a9c285625de124a234026fbf"
@@ -7170,6 +7178,11 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
+node-dithering@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/node-dithering/-/node-dithering-0.0.1.tgz#935f33cd4894dc7f51978d2fb258032a3b5da21b"
+  integrity sha1-k18zzUiU3H9Rl40vslgDKjtdohs=
+
 node-forge@0.7.5:
   version "0.7.5"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.7.5.tgz#6c152c345ce11c52f465c2abd957e8639cd674df"
@@ -7437,6 +7450,11 @@ obuf@^1.0.0, obuf@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
   integrity sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==
+
+omggif@^1.0.8:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/omggif/-/omggif-1.0.10.tgz#ddaaf90d4a42f532e9e7cb3a95ecdd47f17c7b19"
+  integrity sha512-LMJTtvgc/nugXj0Vcrrs68Mn2D1r0zf630VNtqtpI1FEO7e+O9FP4gqs9AcnBaSEeoHIPm28u6qgPR0oyEpGSw==
 
 on-finished@~2.3.0:
   version "2.3.0"

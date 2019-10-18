@@ -5,10 +5,12 @@ import { Typography } from "@material-ui/core";
 import styled from "styled-components";
 import { State } from "../store/types";
 import { connect } from "react-redux";
-import { resolveMapTypeLegend } from "./layers/prevention/utils";
+import { resolveMapTypeLegend as resolvePreventionMapTypeLegend } from "./layers/prevention/utils";
+import { resolveMapTypeLegend as resolveDiagnosisMapTypeLegend } from "./layers/diagnosis/utils";
 import { selectFilters, selectTheme } from "../store/reducers/base-reducer";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
+import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 
 export const LegendContainer = styled(Paper)`
   padding: 16px;
@@ -63,7 +65,8 @@ export const LegendFooterTypography = styled(Typography)`
 const mapStateToProps = (state: State) => ({
   filters: selectFilters(state),
   theme: selectTheme(state),
-  preventionFilters: selectPreventionFilters(state)
+  preventionFilters: selectPreventionFilters(state),
+  diagnosisFilters: selectDiagnosisFilters(state)
 });
 
 const mapDispatchToProps = {
@@ -74,12 +77,12 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function Legend({ filters, preventionFilters, theme }: Props) {
+function Legend({ theme, preventionFilters, diagnosisFilters }: Props) {
   switch (theme) {
     case "prevention":
-      return resolveMapTypeLegend(preventionFilters);
+      return resolvePreventionMapTypeLegend(preventionFilters);
     case "diagnosis":
-      return resolveMapTypeLegend(preventionFilters);
+      return resolveDiagnosisMapTypeLegend(diagnosisFilters);
     default:
       return <span />;
   }

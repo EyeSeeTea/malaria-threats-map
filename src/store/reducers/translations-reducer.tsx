@@ -66,6 +66,10 @@ export const selectSynergistTypes = createSelector(
 
 export const selectSpecies = createSelector(selectFields, R.prop("SPECIES"));
 
+export const selectSurveyTypes = createSelector(selectFields, R.prop("SURVEY_TYPE"));
+
+export const selectPatientType = createSelector(selectFields, R.prop("PATIENT_TYPE"));
+
 export const selectCountries = createSelector(
   selectTranslationsState,
   state => {

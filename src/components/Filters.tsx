@@ -8,7 +8,7 @@ import FilterIcon from "@material-ui/icons/FilterList";
 import { AppBar, Fab, Toolbar, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
-import { PreventionMapType, State } from "../store/types";
+import { DiagnosisMapType, PreventionMapType, State } from "../store/types";
 import { selectFilters, selectTheme } from "../store/reducers/base-reducer";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
@@ -17,6 +17,8 @@ import ResistanceStatusFilters from "./layers/prevention/ResistanceStatus/Resist
 import IntensityStatusFilters from "./layers/prevention/IntensityStatus/IntensityStatusFilters";
 import ResistanceMechanismFilters from "./layers/prevention/ResistanceMechanisms/ResistanceMechanismFilters";
 import LevelOfInvolvementFilters from "./layers/prevention/Involvement/LevelOfInvolvementFilters";
+import Pfhrp2Filters from "./layers/diagnosis/PFHRP2/Pfhrp2Filters";
+import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,7 +58,8 @@ const Transition = React.forwardRef<unknown, TransitionProps>(
 const mapStateToProps = (state: State) => ({
   filters: selectFilters(state),
   theme: selectTheme(state),
-  preventionFilters: selectPreventionFilters(state)
+  preventionFilters: selectPreventionFilters(state),
+  diagnosisFilters: selectDiagnosisFilters(state)
 });
 
 const mapDispatchToProps = {
@@ -67,7 +70,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function Filters({ theme, preventionFilters }: Props) {
+function Filters({ theme, preventionFilters, diagnosisFilters }: Props) {
   const classes = useStyles({});
   const [open, setOpen] = React.useState(false);
 
@@ -92,7 +95,11 @@ function Filters({ theme, preventionFilters }: Props) {
           case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return <LevelOfInvolvementFilters />;
         }
-        break;
+      case "diagnosis":
+        switch (diagnosisFilters.mapType) {
+          case DiagnosisMapType.PFHRP2:
+            return <Pfhrp2Filters />;
+        }
     }
   }
 

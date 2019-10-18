@@ -26,6 +26,10 @@ import {
   setType
 } from "./store/actions/prevention-actions";
 import Disclaimer from "./components/Disclaimer";
+import {
+  setDiagnosisPatientType,
+  setDiagnosisSurveyTypes
+} from "./store/actions/diagnosis-actions";
 
 export const { store } = createStore();
 
@@ -68,6 +72,15 @@ ReduxQuerySync({
       selector: (state: State) => state.prevention.filters.species,
       action: (value: string) =>
         setSpecies(value ? value.split(",") : undefined)
+    },
+    surveyTypes: {
+      selector: (state: State) => state.diagnosis.filters.surveyTypes,
+      action: (value: string) =>
+        setDiagnosisSurveyTypes(value ? value.split(",") : undefined)
+    },
+    patientType: {
+      selector: (state: State) => state.diagnosis.filters.patientType,
+      action: (value: string) => setDiagnosisPatientType(value)
     },
     endemicity: {
       selector: (state: State) => state.malaria.endemicity,

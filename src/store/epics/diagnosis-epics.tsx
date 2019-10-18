@@ -29,7 +29,7 @@ export const getDiagnosisStudiesEpic = (
         }`,
         returnGeometry: false,
         spatialRel: "esriSpatialRelIntersects",
-        outFields: "OBJECTID,Latitude,Longitude,YEAR_START",
+        outFields: "*",
         resultOffset: 0,
         resultRecordCount: 25000
       };
