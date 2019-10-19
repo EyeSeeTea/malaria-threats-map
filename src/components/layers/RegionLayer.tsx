@@ -78,6 +78,14 @@ class RegionLayer extends Component<Props> {
       this.highlightToCountry(region.country);
       this.showLayer();
     } else {
+      const location = {
+        center: [-16.629129, 28.291565],
+        zoom: 2
+      };
+      this.props.map.flyTo(location, {
+        padding: 100
+      });
+      this.zoomToCountry(region.country);
       this.hideLayer();
     }
   };

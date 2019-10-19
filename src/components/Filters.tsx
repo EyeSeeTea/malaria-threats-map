@@ -19,6 +19,8 @@ import ResistanceMechanismFilters from "./layers/prevention/ResistanceMechanisms
 import LevelOfInvolvementFilters from "./layers/prevention/Involvement/LevelOfInvolvementFilters";
 import Pfhrp2Filters from "./layers/diagnosis/PFHRP2/Pfhrp2Filters";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
+import Pfhrp2Pfhrp3Filters from "./layers/diagnosis/Pfhrp2Pfhrp3/Pfhrp2Pfhrp3Filters";
+import PboDeploymentFilters from "./layers/prevention/PboDeployment/PboDeploymentFilters";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -94,12 +96,22 @@ function Filters({ theme, preventionFilters, diagnosisFilters }: Props) {
             return <ResistanceMechanismFilters />;
           case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return <LevelOfInvolvementFilters />;
+          case PreventionMapType.PBO_DEPLOYMENT:
+            return <PboDeploymentFilters />;
+          default:
+            return <div />;
         }
       case "diagnosis":
         switch (diagnosisFilters.mapType) {
           case DiagnosisMapType.PFHRP2:
             return <Pfhrp2Filters />;
+          case DiagnosisMapType.PFHRP2_PFHRP3:
+            return <Pfhrp2Pfhrp3Filters />;
+          default:
+            return <div />;
         }
+      default:
+        return <div />;
     }
   }
 

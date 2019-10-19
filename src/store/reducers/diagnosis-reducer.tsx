@@ -26,6 +26,10 @@ function updateFilter<T>(key: string, value: T, def?: T) {
   };
 }
 
+function updateMapType(mapType: DiagnosisMapType) {
+  return updateFilter("mapType", mapType, DiagnosisMapType.PFHRP2);
+}
+
 function updateSurveyTypes(surveyTypes: string[]) {
   return updateFilter("surveyTypes", surveyTypes, []);
 }
@@ -38,6 +42,7 @@ export default createReducer<DiagnosisState>(initialState, {
   [ActionTypeEnum.FetchDiagnosisStudiesSuccess]: (
     response: DiagnosisResponse
   ) => R.assoc("studies", response.features.map(feature => feature.attributes)),
+  [ActionTypeEnum.SetDiagnosisMapType]: updateMapType,
   [ActionTypeEnum.SetSurveyTypes]: updateSurveyTypes,
   [ActionTypeEnum.SetPatientType]: updatePatientType
 });

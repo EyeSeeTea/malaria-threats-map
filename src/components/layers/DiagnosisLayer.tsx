@@ -1,23 +1,35 @@
-import React, {Component} from "react";
-import {connect, Provider} from "react-redux";
-import {DiagnosisMapType, State} from "../../store/types";
-import {circleLayout, studiesToGeoJson} from "./layer-utils";
+import React, { Component } from "react";
+import { connect, Provider } from "react-redux";
+import { DiagnosisMapType, State } from "../../store/types";
+import { circleLayout, studiesToGeoJson } from "./layer-utils";
 import diagnosisSymbol from "./symbols/diagnosis";
 import setupEffects from "./effects";
-import {selectDiagnosisFilters, selectDiagnosisStudies} from "../../store/reducers/diagnosis-reducer";
-import {selectFilters, selectRegion, selectTheme} from "../../store/reducers/base-reducer";
+import {
+  selectDiagnosisFilters,
+  selectDiagnosisStudies
+} from "../../store/reducers/diagnosis-reducer";
+import {
+  selectFilters,
+  selectRegion,
+  selectTheme
+} from "../../store/reducers/base-reducer";
 import * as R from "ramda";
-import {resolveResistanceStatus} from "./prevention/ResistanceStatus/utils";
-import {filterByCountry, filterByPatientType, filterBySurveyTypes, filterByYearRange} from "./studies-filters";
-import {resolveMapTypeSymbols} from "./diagnosis/utils";
+import { resolveResistanceStatus } from "./prevention/ResistanceStatus/utils";
+import {
+  filterByCountry,
+  filterByPatientType,
+  filterBySurveyTypes,
+  filterByYearRange
+} from "./studies-filters";
+import { resolveMapTypeSymbols } from "./diagnosis/utils";
 import ReactDOM from "react-dom";
-import {I18nextProvider} from "react-i18next";
+import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
-import {store} from "../../App";
+import { store } from "../../App";
 import Chart from "../Chart";
 import mapboxgl from "mapbox-gl";
-import {DiagnosisStudy} from "../../types/Diagnosis";
-import {DIAGNOSIS_STATUS} from "./diagnosis/PFHRP2/utils";
+import { DiagnosisStudy } from "../../types/Diagnosis";
+import { DIAGNOSIS_STATUS } from "./diagnosis/PFHRP2/utils";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -92,8 +104,12 @@ class DiagnosisLayer extends Component<Props> {
       return {
         ...study,
         CONFIRMATION_STATUS: resolveResistanceStatus(percentage),
-        DIAGNOSIS_STATUS:
+        DIAGNOSIS_PFHRP2_STATUS:
           study.HRP2_POSITIVE > 0
+            ? DIAGNOSIS_STATUS.CONFIRMED
+            : DIAGNOSIS_STATUS.NOT_IDENTIFIED,
+        DIAGNOSIS_PFHRP2_PFHRP3_STATUS:
+          study.HRP2_HRP3_PROPORTION_DELETION > 0
             ? DIAGNOSIS_STATUS.CONFIRMED
             : DIAGNOSIS_STATUS.NOT_IDENTIFIED
       };
@@ -111,7 +127,12 @@ class DiagnosisLayer extends Component<Props> {
           filterByCountry(region.country)
         ];
       case DiagnosisMapType.PFHRP2_PFHRP3:
-        return [filterByYearRange(filters), filterByCountry(region.country)];
+        return [
+          filterBySurveyTypes(diagnosisFilters.surveyTypes),
+          filterByPatientType(diagnosisFilters.patientType),
+          filterByYearRange(filters),
+          filterByCountry(region.country)
+        ];
       default:
         return [];
     }
@@ -119,10 +140,7 @@ class DiagnosisLayer extends Component<Props> {
 
   filterStudies = (studies: DiagnosisStudy[]) => {
     const filters = this.buildFilters();
-    return filters.reduce(
-        (studies, filter) => studies.filter(filter),
-        studies
-    );
+    return filters.reduce((studies, filter) => studies.filter(filter), studies);
   };
 
   filterSource = () => {

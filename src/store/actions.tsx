@@ -18,6 +18,8 @@ export enum ActionTypeEnum {
   SetSpecies = "prevention/SET_SPECIES",
   SetAssayTypes = "prevention/SET_ASSAY_TYPES",
 
+  SetDiagnosisMapType = "prevention/SET_DIAGNOSIS_MAP_TYPE",
+
   FetchDiagnosisStudiesRequest = "diagnosis/FETCH_DIAGNOSIS_STUDIES_REQUEST",
   FetchDiagnosisStudiesSuccess = "diagnosis/FETCH_DIAGNOSIS_STUDIES_SUCCESS",
   FetchDiagnosisStudiesError = "diagnosis/FETCH_DIAGNOSIS_STUDIES_ERROR",

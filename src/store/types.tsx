@@ -57,7 +57,8 @@ export enum PreventionMapType {
   RESISTANCE_STATUS,
   INTENSITY_STATUS,
   RESISTANCE_MECHANISM,
-  LEVEL_OF_INVOLVEMENT
+  LEVEL_OF_INVOLVEMENT,
+  PBO_DEPLOYMENT
 }
 
 export interface PreventionFilters {

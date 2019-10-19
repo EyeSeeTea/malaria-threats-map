@@ -45,6 +45,7 @@ export const LegendSymbol = styled.span<{ color: string }>`
   background-color: ${props => props.color};
   border-radius: 99999px;
   width: 12px;
+  min-width: 12px;
   height: 12px;
   margin-right: 8px;
 `;

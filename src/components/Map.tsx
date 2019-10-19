@@ -15,7 +15,7 @@ import InitialDialog from "./InitialDialog";
 import Filters from "./Filters";
 import LanguageSelector from "./LanguageSelector";
 import Legend from "./Leyend";
-import PreventionMapTypesSelector from "./PreventionMapTypesSelector";
+import MapTypesSelector from "./MapTypesSelector";
 import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";
 import CountrySelector from "./CountrySelector";
@@ -32,6 +32,7 @@ import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { setAnyAction, setThemeAction } from "../store/actions/base-actions";
 import Screenshot from "./Screenshot";
 import ReactMapboxGl from "react-mapbox-gl";
+import { Fade } from "@material-ui/core";
 
 ReactMapboxGl({
   accessToken:
@@ -167,24 +168,28 @@ class Map extends React.Component<any> {
         {this.map && this.state.ready && <InvasiveLayer map={this.map} />}
         {this.map && this.state.ready && <EndemicityLayer map={this.map} />}
         {this.map && this.state.ready && <RegionLayer map={this.map} />}
-        <SearchContainer>
-          {!initialDialogOpen && <TopicSelector />}
-          <Divider />
-          <PreventionMapTypesSelector />
-          <Divider />
-          <CountrySelector />
-          <Divider />
-          <Filters />
-          <Layers />
-          {this.map && this.state.ready && <Screenshot map={this.map} />}
-        </SearchContainer>
+        <Fade in={!initialDialogOpen}>
+          <SearchContainer>
+            <TopicSelector />
+            <Divider />
+            <MapTypesSelector />
+            <Divider />
+            <CountrySelector />
+            <Divider />
+            <Filters />
+            <Layers />
+            {this.map && this.state.ready && <Screenshot map={this.map} />}
+          </SearchContainer>
+        </Fade>
         <TopRightContainer>
           {/*<MalariaTable />*/}
           <LanguageSelector />
-        </TopRightContainer>
-        <BottomRightContainer>
-          <Legend />
-        </BottomRightContainer>
+        </TopRightContainer>{" "}
+        <Fade in={!initialDialogOpen}>
+          <BottomRightContainer>
+            <Legend />
+          </BottomRightContainer>
+        </Fade>
         <BottomLeftContainer>
           <WhoLogo />
         </BottomLeftContainer>

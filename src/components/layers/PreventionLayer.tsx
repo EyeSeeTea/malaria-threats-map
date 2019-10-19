@@ -21,7 +21,7 @@ import {
   filterByTypeSynergist,
   filterByYearRange
 } from "./studies-filters";
-import { resolveMapTypeSymbols } from "./prevention/utils";
+import { resolveMapTypeSymbols, studySelector } from "./prevention/utils";
 import {
   selectPreventionFilters,
   selectPreventionStudies
@@ -127,8 +127,11 @@ class PreventionLayer extends Component<Props> {
   }
 
   setupGeoJsonData = (studies: any[]) => {
+    const { mapType } = this.props.preventionFilters;
     const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
-    const filteredStudies = R.values(groupedStudies).map(group => group[0]);
+    const filteredStudies = R.values(groupedStudies).map(group =>
+      studySelector(group, mapType)
+    );
 
     return filteredStudies.map(study => {
       const percentage = parseFloat(study["MORTALITY_ADJUSTED"]);
@@ -178,6 +181,8 @@ class PreventionLayer extends Component<Props> {
           filterByYearRange(filters),
           filterByCountry(region.country)
         ];
+      case PreventionMapType.PBO_DEPLOYMENT:
+        return [filterByCountry(region.country)];
       default:
         return [];
     }

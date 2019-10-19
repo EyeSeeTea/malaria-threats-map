@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1
     },
     inputPaper: {
-      padding: theme.spacing(1, 2)
+      padding: theme.spacing(0.5, 1.5)
     },
     input: {
       cursor: "pointer",
@@ -141,6 +141,7 @@ function Option(props: OptionProps<OptionType>) {
   const value = props.children ? t(props.children.toString()) : "";
   return (
     <MenuItem
+      dense
       ref={props.innerRef}
       selected={props.isFocused}
       component="div"

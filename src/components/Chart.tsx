@@ -104,16 +104,16 @@ type Props = DispatchProps & StateProps & OwnProps;
 const Chart = ({ theme, studies }: Props) => {
   const { t } = useTranslation("common");
   const data = studies.map(study => ({
-    name: `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${
-      study.INSECTICIDE_CONC
-    }`,
+    name: `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`,
     y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
     species: study.SPECIES,
     number: study.NUMBER
   }));
   return (
     <ChatContainer>
-      <Typography variant="h6">{`${t(studies[0].COUNTRY_NAME)}`}</Typography>
+      <Typography variant="h6">{`${studies[0].VILLAGE_NAME}, ${t(
+        studies[0].COUNTRY_NAME
+      )}`}</Typography>
       <Typography variant="body1">
         {`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}
       </Typography>
