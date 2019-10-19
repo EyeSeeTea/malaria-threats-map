@@ -19,7 +19,7 @@ function Screenshot({ map }: any) {
       .toDataURL("image/png", 1.0)
       .replace("image/png", "image/octet-stream");
     const link = document.createElement("a");
-    link.download = `MTM - ${new Date().toUTCString()}`;
+    link.download = `MTM - ${new Date().toUTCString()}.png`;
     link.href = image;
     link.click();
   };
