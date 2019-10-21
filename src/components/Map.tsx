@@ -183,10 +183,12 @@ class Map extends React.Component<any> {
             {this.map && this.state.ready && <Screenshot map={this.map} />}
           </SearchContainer>
         </Fade>
-        <TopRightContainer>
-          {/*<MalariaTable />*/}
-          <LanguageSelector />
-        </TopRightContainer>{" "}
+        <Fade in={!initialDialogOpen}>
+          <TopRightContainer>
+            {/*<MalariaTable />*/}
+            <LanguageSelector />
+          </TopRightContainer>
+        </Fade>
         <Fade in={!initialDialogOpen}>
           <BottomRightContainer>
             <Legend />

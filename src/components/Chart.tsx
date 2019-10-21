@@ -2,7 +2,7 @@ import * as React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Typography } from "@material-ui/core";
+import {Box, Typography} from "@material-ui/core";
 import { ConfirmationStatusColors } from "./layers/prevention/ResistanceStatus/symbols";
 import { connect } from "react-redux";
 import { State } from "../store/types";
@@ -111,10 +111,12 @@ const Chart = ({ theme, studies }: Props) => {
   }));
   return (
     <ChatContainer>
-      <Typography variant="h6">{`${studies[0].VILLAGE_NAME}, ${t(
-        studies[0].COUNTRY_NAME
-      )}`}</Typography>
-      <Typography variant="body1">
+      <Typography variant="subtitle1">
+        <Box fontWeight="fontWeightBold">{`${studies[0].VILLAGE_NAME}, ${t(
+          studies[0].COUNTRY_NAME
+        )}`}</Box>
+      </Typography>
+      <Typography variant="subtitle2">
         {`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}
       </Typography>
       <HighchartsReact highcharts={Highcharts} options={options(data)} />

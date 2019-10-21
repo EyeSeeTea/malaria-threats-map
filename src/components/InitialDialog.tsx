@@ -12,10 +12,18 @@ import { State } from "../store/types";
 import { selectIsInitialDialogOpen } from "../store/reducers/base-reducer";
 import { setInitialDialogOpen } from "../store/actions/base-actions";
 import { connect } from "react-redux";
-
+import LanguageSelector from "./LanguageSelector";
+const FlexGrow = styled.div`
+  flex-grow: 1;
+`;
 const Row = styled.div`
   flex: 1;
   display: flex;
+`;
+
+const Column = styled.div`
+  padding-left: 10px;
+  padding-right: 10px;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -47,6 +55,12 @@ function InitialDialog({ initialDialogOpen, setInitialDialogOpen }: Props) {
         }
       }}
     >
+      <Row>
+        <FlexGrow />
+        <Column>
+          <LanguageSelector />
+        </Column>
+      </Row>
       <Row>
         <SimpleCard
           title="VECTOR INSECTICIDE RESISTANCE"

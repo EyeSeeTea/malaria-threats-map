@@ -31,6 +31,7 @@ import {
   setDiagnosisPatientType,
   setDiagnosisSurveyTypes
 } from "./store/actions/diagnosis-actions";
+import LanguageSelector from "./components/LanguageSelector";
 
 export const { store } = createStore();
 

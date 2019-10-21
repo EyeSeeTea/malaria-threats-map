@@ -2,7 +2,7 @@ import * as React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Button, Typography } from "@material-ui/core";
+import { Box, Button, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -119,8 +119,10 @@ const ResistanceStatusCountryChart = ({
   };
   return (
     <ChatContainer>
-      <Typography variant="h6">{`${t(studies[0].COUNTRY_NAME)}`}</Typography>
-      <Typography variant="body2">
+      <Typography variant="subtitle1">
+        <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
+      </Typography>
+      <Typography variant="subtitle2">
         {`${nStudies} test(s) on Anopheles malaria vectors via discriminating concentration bioassay(s) with selected Pyrethroids between ${minYear} and ${maxYear}`}
       </Typography>
       <HighchartsReact highcharts={Highcharts} options={options(data)} />
@@ -128,7 +130,7 @@ const ResistanceStatusCountryChart = ({
         <FlexGrow />
         <Button
           variant="contained"
-          color="primary"
+          color="default"
           size="small"
           onClick={onClick}
         >
