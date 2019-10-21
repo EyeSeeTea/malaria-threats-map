@@ -124,7 +124,7 @@ const MapWrapper = styled.div`
   position: relative;
 `;
 
-const theme = createMuiTheme({
+export const theme = createMuiTheme({
   palette: {
     primary: {
       main: "#008dc9"

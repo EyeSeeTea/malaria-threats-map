@@ -33,13 +33,15 @@ import {
   selectTheme
 } from "../../store/reducers/base-reducer";
 import ReactDOM from "react-dom";
-import { store } from "../../App";
+import { store, theme } from "../../App";
 import Chart from "../Chart";
 import mapboxgl from "mapbox-gl";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import { isSynergyst } from "./prevention/ResistanceMechanisms/ResistanceMechanismFilters";
 import { selectCountries } from "../../store/reducers/country-layer-reducer";
+import ResistanceStatusCountryChart from "./prevention/ResistanceStatus/ResistanceStatusCountryChart";
+import { ThemeProvider } from "@material-ui/styles";
 
 const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -74,6 +76,7 @@ type OwnProps = {
 type Props = StateProps & OwnProps;
 
 class PreventionLayer extends Component<Props> {
+  popup: mapboxgl.Popup;
   componentDidMount() {
     this.mountLayer();
   }
@@ -126,6 +129,9 @@ class PreventionLayer extends Component<Props> {
       synergistTypesChange ||
       countryModeChange
     ) {
+      if (this.popup) {
+        this.popup.remove();
+      }
       this.filterSource();
       this.applyMapTypeSymbols();
     }
@@ -218,6 +224,7 @@ class PreventionLayer extends Component<Props> {
     const countryStudies = R.groupBy(R.path(["ISO2"]), studies);
     const countries = this.props.countries
       .map((country, index) => ({
+        ...country,
         OBJECTID: index,
         Latitude: country.CENTER_LAT,
         Longitude: country.CENTER_LON,
@@ -272,16 +279,30 @@ class PreventionLayer extends Component<Props> {
 
   onClickListener = (e: any, a: any) => {
     const placeholder = document.createElement("div");
-    const { studies } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(
-      study => study.SITE_ID === e.features[0].properties.SITE_ID
+    const {
+      studies,
+      countryMode,
+      preventionFilters: { mapType }
+    } = this.props;
+    const filteredStudies = this.filterStudies(studies).filter(study =>
+      countryMode
+        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+        : study.SITE_ID === e.features[0].properties.SITE_ID
     );
 
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>
-        <Provider store={store}>
-          <Chart studies={filteredStudies} />
-        </Provider>
+        <ThemeProvider theme={theme}>
+          <Provider store={store}>
+            {countryMode && (
+              <ResistanceStatusCountryChart studies={filteredStudies} />
+            )}
+            {!countryMode &&
+              mapType === PreventionMapType.RESISTANCE_STATUS && (
+                <Chart studies={filteredStudies} />
+              )}
+          </Provider>
+        </ThemeProvider>
       </I18nextProvider>,
       placeholder
     );
@@ -290,7 +311,7 @@ class PreventionLayer extends Component<Props> {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
 
-    new mapboxgl.Popup()
+    this.popup = new mapboxgl.Popup()
       .setLngLat(coordinates)
       .setDOMContent(placeholder)
       .addTo(this.props.map);
