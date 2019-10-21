@@ -11,7 +11,10 @@ import { PreventionStudy } from "../../../../types/Prevention";
 import * as R from "ramda";
 import { resolveResistanceStatus } from "./utils";
 import { ConfirmationStatusColors } from "./symbols";
-import { setRegionAction } from "../../../../store/actions/base-actions";
+import {
+  setCountryModeAction,
+  setRegionAction
+} from "../../../../store/actions/base-actions";
 import ZoomIcon from "@material-ui/icons/ZoomIn";
 
 const options: (data: any) => Highcharts.Options = data => ({
@@ -74,7 +77,8 @@ const mapStateToProps = (state: State) => ({
   theme: selectTheme(state)
 });
 const mapDispatchToProps = {
-  setRegion: setRegionAction
+  setRegion: setRegionAction,
+  setCountryMode: setCountryModeAction
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -84,7 +88,12 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const ResistanceStatusCountryChart = ({ theme, studies, setRegion }: Props) => {
+const ResistanceStatusCountryChart = ({
+  theme,
+  studies,
+  setRegion,
+  setCountryMode
+}: Props) => {
   const { t } = useTranslation("common");
   const nStudies = studies.length;
   const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
@@ -104,6 +113,10 @@ const ResistanceStatusCountryChart = ({ theme, studies, setRegion }: Props) => {
     y: studies.length,
     color: ConfirmationStatusColors[status][0]
   }));
+  const onClick = () => {
+    setRegion({ country: studies[0].COUNTRY_NAME });
+    setCountryMode(false);
+  };
   return (
     <ChatContainer>
       <Typography variant="h6">{`${t(studies[0].COUNTRY_NAME)}`}</Typography>
@@ -117,7 +130,7 @@ const ResistanceStatusCountryChart = ({ theme, studies, setRegion }: Props) => {
           variant="contained"
           color="primary"
           size="small"
-          onClick={() => setRegion({ country: studies[0].COUNTRY_NAME })}
+          onClick={onClick}
         >
           <ZoomIcon />
           Zoom
