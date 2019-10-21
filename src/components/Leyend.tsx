@@ -7,7 +7,11 @@ import { State } from "../store/types";
 import { connect } from "react-redux";
 import { resolveMapTypeLegend as resolvePreventionMapTypeLegend } from "./layers/prevention/utils";
 import { resolveMapTypeLegend as resolveDiagnosisMapTypeLegend } from "./layers/diagnosis/utils";
-import { selectFilters, selectTheme } from "../store/reducers/base-reducer";
+import {
+  selectCountryMode,
+  selectFilters,
+  selectTheme
+} from "../store/reducers/base-reducer";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
@@ -67,7 +71,8 @@ const mapStateToProps = (state: State) => ({
   filters: selectFilters(state),
   theme: selectTheme(state),
   preventionFilters: selectPreventionFilters(state),
-  diagnosisFilters: selectDiagnosisFilters(state)
+  diagnosisFilters: selectDiagnosisFilters(state),
+  countryMode: selectCountryMode(state)
 });
 
 const mapDispatchToProps = {
@@ -78,10 +83,15 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function Legend({ theme, preventionFilters, diagnosisFilters }: Props) {
+function Legend({
+  theme,
+  preventionFilters,
+  diagnosisFilters,
+  countryMode
+}: Props) {
   switch (theme) {
     case "prevention":
-      return resolvePreventionMapTypeLegend(preventionFilters);
+      return resolvePreventionMapTypeLegend(preventionFilters, countryMode);
     case "diagnosis":
       return resolveDiagnosisMapTypeLegend(diagnosisFilters);
     default:

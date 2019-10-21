@@ -6,13 +6,18 @@ import { createSelector } from "reselect";
 
 const initialState: CountryLayerState = Object.freeze({
   layer: null,
-  loading: false
+  loading: false,
+  countries: []
 });
 
 export default createReducer<CountryLayerState>(initialState, {
   [ActionTypeEnum.FetchCountryLayerRequest]: () => R.assoc("loading", true),
   [ActionTypeEnum.FetchCountryLayerSuccess]: (response: any) =>
-    R.mergeLeft({ layer: response, loading: false }),
+    R.mergeLeft({
+      layer: response,
+      loading: false,
+      countries: response.features.map((feature: any) => feature.properties)
+    }),
   [ActionTypeEnum.FetchCountryLayerError]: () => R.assoc("loading", false)
 });
 
@@ -21,6 +26,11 @@ export const selectCountryLayerState = (state: State) => state.countryLayer;
 export const selectCountryLayer = createSelector(
   selectCountryLayerState,
   R.prop("layer")
+);
+
+export const selectCountries = createSelector(
+  selectCountryLayerState,
+  R.prop("countries")
 );
 
 export const selectCountryLayerIsLoading = createSelector(

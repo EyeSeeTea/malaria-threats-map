@@ -11,6 +11,7 @@ import Map from "./components/Map";
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import {
+  setCountryModeAction,
   setFiltersAction,
   setRegionAction,
   setThemeAction,
@@ -85,6 +86,10 @@ ReduxQuerySync({
     endemicity: {
       selector: (state: State) => state.malaria.endemicity,
       action: (value: string) => toggleEndemicityLayerAction(value === "true")
+    },
+    countryMode: {
+      selector: (state: State) => state.malaria.countryMode,
+      action: (value: string) => setCountryModeAction(value === "true")
     },
     years: {
       selector: (state: State) => state.malaria.filters,

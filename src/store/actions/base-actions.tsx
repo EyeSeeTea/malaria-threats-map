@@ -37,6 +37,13 @@ export const toggleEndemicityLayerAction = createAction(
   }
 );
 
+export const setCountryModeAction = createAction(
+  ActionTypeEnum.MalariaSetCountryMode,
+  action => {
+    return (countryMode: boolean) => action(countryMode);
+  }
+);
+
 export const setInitialDialogOpen = createAction(
   ActionTypeEnum.MalariaSetInitialDialogOpen,
   action => {

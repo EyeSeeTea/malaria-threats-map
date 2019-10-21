@@ -8,6 +8,7 @@ const initialState: MalariaState = Object.freeze({
   theme: "prevention",
   any: null,
   endemicity: false,
+  countryMode: false,
   filters: [2010, 2018],
   region: {
     country: ""
@@ -24,6 +25,8 @@ export default createReducer<MalariaState>(initialState, {
     R.assoc("filters", filters || initialState.filters),
   [ActionTypeEnum.MalariaToogleEndemicityLayer]: (visible: boolean) =>
     R.assoc("endemicity", visible),
+  [ActionTypeEnum.MalariaSetCountryMode]: (countryMode: boolean) =>
+    R.assoc("countryMode", countryMode),
   [ActionTypeEnum.MalariaSetInitialDialogOpen]: (initialDialogOpen: boolean) =>
     R.assoc("initialDialogOpen", initialDialogOpen)
 });
@@ -41,6 +44,10 @@ export const selectAny = createSelector(
 export const selectEndemicity = createSelector(
   selectMalariaState,
   R.prop("endemicity")
+);
+export const selectCountryMode = createSelector(
+  selectMalariaState,
+  R.prop("countryMode")
 );
 export const selectFilters = createSelector(
   selectMalariaState,

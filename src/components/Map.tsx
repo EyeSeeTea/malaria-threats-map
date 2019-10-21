@@ -33,6 +33,7 @@ import { setAnyAction, setThemeAction } from "../store/actions/base-actions";
 import Screenshot from "./Screenshot";
 import ReactMapboxGl from "react-mapbox-gl";
 import { Fade } from "@material-ui/core";
+import Country from "./Country";
 
 ReactMapboxGl({
   accessToken:
@@ -178,6 +179,7 @@ class Map extends React.Component<any> {
             <Divider />
             <Filters />
             <Layers />
+            <Country />
             {this.map && this.state.ready && <Screenshot map={this.map} />}
           </SearchContainer>
         </Fade>

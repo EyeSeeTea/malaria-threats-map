@@ -22,6 +22,7 @@ export interface MalariaState {
   theme: string;
   any: any;
   endemicity: boolean;
+  countryMode: boolean;
   filters: number[];
   region: RegionState;
   initialDialogOpen: boolean;
@@ -83,4 +84,5 @@ export interface TreatmentState {
 export interface CountryLayerState {
   layer: any | null;
   loading: boolean;
+  countries: any[];
 }

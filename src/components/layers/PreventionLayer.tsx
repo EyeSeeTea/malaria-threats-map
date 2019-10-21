@@ -27,6 +27,7 @@ import {
   selectPreventionStudies
 } from "../../store/reducers/prevention-reducer";
 import {
+  selectCountryMode,
   selectFilters,
   selectRegion,
   selectTheme
@@ -38,12 +39,15 @@ import mapboxgl from "mapbox-gl";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import { isSynergyst } from "./prevention/ResistanceMechanisms/ResistanceMechanismFilters";
+import { selectCountries } from "../../store/reducers/country-layer-reducer";
 
 const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
 const PREVENTION_SOURCE_ID = "prevention-source";
 
-const circleLayout = { visibility: "visible" };
+const circleLayout = {
+  visibility: "visible"
+};
 
 const layer: any = (symbols: any) => ({
   id: PREVENTION_LAYER_ID,
@@ -58,7 +62,9 @@ const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
   filters: selectFilters(state),
   preventionFilters: selectPreventionFilters(state),
-  region: selectRegion(state)
+  region: selectRegion(state),
+  countries: selectCountries(state),
+  countryMode: selectCountryMode(state)
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -83,6 +89,7 @@ class PreventionLayer extends Component<Props> {
         assayTypes,
         synergistTypes
       },
+      countryMode,
       filters,
       region
     } = this.props;
@@ -106,6 +113,7 @@ class PreventionLayer extends Component<Props> {
     const synergistTypesChange =
       prevProps.preventionFilters.synergistTypes.length !==
       synergistTypes.length;
+    const countryModeChange = prevProps.countryMode !== countryMode;
     if (
       mapTypeChange ||
       yearChange ||
@@ -115,7 +123,8 @@ class PreventionLayer extends Component<Props> {
       typeChange ||
       speciesChange ||
       assayTypesChange ||
-      synergistTypesChange
+      synergistTypesChange ||
+      countryModeChange
     ) {
       this.filterSource();
       this.applyMapTypeSymbols();
@@ -194,30 +203,66 @@ class PreventionLayer extends Component<Props> {
   };
 
   filterSource = () => {
-    const { studies } = this.props;
+    const { studies, countryMode } = this.props;
     const source = this.props.map.getSource(PREVENTION_SOURCE_ID);
     if (source) {
       const filteredStudies = this.filterStudies(studies);
       const geoStudies = this.setupGeoJsonData(filteredStudies);
-      source.setData(studiesToGeoJson(geoStudies));
+      const countryStudies = this.getCountryStudies(filteredStudies);
+      const data = countryMode ? countryStudies : geoStudies;
+      source.setData(studiesToGeoJson(data));
     }
   };
 
+  getCountryStudies = (studies: any[] = []) => {
+    const countryStudies = R.groupBy(R.path(["ISO2"]), studies);
+    const countries = this.props.countries
+      .map((country, index) => ({
+        OBJECTID: index,
+        Latitude: country.CENTER_LAT,
+        Longitude: country.CENTER_LON,
+        STUDIES: (countryStudies[country.ISO_2_CODE] || []).length || 0
+      }))
+      .filter(study => study.STUDIES !== 0);
+
+    const sortedCountries = R.sortBy(country => country.STUDIES, countries);
+    if (sortedCountries.length === 0) return [];
+    const maxSize = sortedCountries[sortedCountries.length - 1].STUDIES;
+    const minSize = sortedCountries[0].STUDIES;
+
+    const ratio = (20 - 5) / (maxSize - minSize);
+
+    return countries.map(country => ({
+      ...country,
+      SIZE: 5 + ratio * (country.STUDIES - minSize),
+      SIZE_HOVER: 5 + ratio * (country.STUDIES - minSize)
+    }));
+  };
+
   mountLayer(prevProps?: Props) {
-    const { studies, preventionFilters } = this.props;
-    if (!prevProps || prevProps.studies.length !== studies.length) {
+    const { studies, preventionFilters, countryMode } = this.props;
+    if (
+      !prevProps ||
+      (prevProps.studies.length !== studies.length && studies.length)
+    ) {
       if (this.props.map.getSource(PREVENTION_SOURCE_ID)) {
         this.props.map.removeLayer(PREVENTION_LAYER_ID);
         this.props.map.removeSource(PREVENTION_SOURCE_ID);
       }
       const filteredStudies = this.filterStudies(studies);
+
       const geoStudies = this.setupGeoJsonData(filteredStudies);
+      const countryStudies = this.getCountryStudies(filteredStudies);
+
+      const data = countryMode ? countryStudies : geoStudies;
       const source: any = {
         type: "geojson",
-        data: studiesToGeoJson(geoStudies)
+        data: studiesToGeoJson(data)
       };
       this.props.map.addSource(PREVENTION_SOURCE_ID, source);
-      this.props.map.addLayer(layer(resolveMapTypeSymbols(preventionFilters)));
+      this.props.map.addLayer(
+        layer(resolveMapTypeSymbols(preventionFilters, countryMode))
+      );
 
       setupEffects(this.props.map, PREVENTION_SOURCE_ID, PREVENTION_LAYER_ID);
       this.setupPopover();
@@ -275,10 +320,18 @@ class PreventionLayer extends Component<Props> {
   };
 
   applyMapTypeSymbols = () => {
-    const { preventionFilters } = this.props;
+    const { preventionFilters, countryMode } = this.props;
     const layer = this.props.map.getLayer(PREVENTION_LAYER_ID);
-    const mapTypeSymbols = resolveMapTypeSymbols(preventionFilters);
+    const mapTypeSymbols = resolveMapTypeSymbols(
+      preventionFilters,
+      countryMode
+    );
     if (layer && mapTypeSymbols) {
+      this.props.map.setPaintProperty(
+        PREVENTION_LAYER_ID,
+        "circle-radius",
+        mapTypeSymbols["circle-radius"]
+      );
       this.props.map.setPaintProperty(
         PREVENTION_LAYER_ID,
         "circle-color",

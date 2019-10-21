@@ -20,7 +20,7 @@ export const getCountriesEpic = (
       const params: any = {
         f: "geojson",
         where: `1=1`,
-        outFields: "ADM0_SOVRN,ADM0_NAME,CENTER_LAT,CENTER_LON"
+        outFields: "ADM0_SOVRN,ADM0_NAME,CENTER_LAT,CENTER_LON,ISO_2_CODE"
       };
       const query: string = Object.keys(params)
         .map(key => `${key}=${params[key]}`)

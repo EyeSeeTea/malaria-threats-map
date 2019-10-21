@@ -19,8 +19,16 @@ import {
   filterByType,
   filterByYearRange
 } from "../studies-filters";
+import CountrySymbols from "./Countries/CountrySymbols";
+import PreventionCountryLegend from "./Countries/PreventionCountryLegend";
 
-export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters) => {
+export const resolveMapTypeSymbols = (
+  preventionFilters: PreventionFilters,
+  countryMode: boolean
+) => {
+  if (countryMode) {
+    return CountrySymbols;
+  }
   switch (preventionFilters.mapType) {
     case PreventionMapType.RESISTANCE_STATUS:
       return resistanceStatusSymbols;
@@ -37,7 +45,13 @@ export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters) => {
   }
 };
 
-export const resolveMapTypeLegend = (preventionFilters: PreventionFilters) => {
+export const resolveMapTypeLegend = (
+  preventionFilters: PreventionFilters,
+  countryMode: boolean
+) => {
+  if (countryMode) {
+    return <PreventionCountryLegend />;
+  }
   switch (preventionFilters.mapType) {
     case PreventionMapType.RESISTANCE_STATUS:
       return <ResistanceStatusLegend />;
