@@ -1,6 +1,7 @@
 import React from "react";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
+import html2canvas from "html2canvas";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,6 +27,16 @@ function Screenshot({ map }: any) {
   const classes = useStyles({});
 
   const handleClick = () => {
+    // html2canvas(document.querySelector("#capture")).then(canvas => {
+    //   const image = canvas
+    //     .toDataURL("image/png", 1.0)
+    //     .replace("image/png", "image/octet-stream");
+    //   const link = document.createElement("a");
+    //   const objurl = URL.createObjectURL(dataURLtoBlob(image));
+    //   link.download = `MTM - ${new Date().toUTCString()}.png`;
+    //   link.href = objurl;
+    //   link.click();
+    // });
     const image = map
       .getCanvas()
       .toDataURL("image/png", 1.0)

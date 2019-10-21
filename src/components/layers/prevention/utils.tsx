@@ -116,8 +116,90 @@ function meetsCriteria3(group: any[]) {
   if (filteredStudies.length === 0) return;
   return R.any(study => study.MECHANISM_STATUS === "DETECTED", filteredStudies);
 }
+
+const filterByMostRecentYear = (group: any[]) => {
+  const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), group);
+  // We filter all studies conducted that year.
+  return R.filter(
+    study =>
+      parseInt(study.YEAR_START) === parseInt(sortedStudies[0].YEAR_START),
+    group
+  );
+};
+
+function getByMostRecentYearAndMortalityAdjusted(group: any[]) {
+  const filteredStudies = filterByMostRecentYear(group);
+  // We sort remaining records by MORTALITY_ADJUSTED
+  const filteredSortedStudies = R.sortBy(
+    study => parseFloat(study.MORTALITY_ADJUSTED),
+    filteredStudies
+  );
+  return filteredSortedStudies[0];
+}
+
+const ResistanceIntensityOrder: { [value: string]: number } = {
+  NA: 0,
+  COULD_NOT_BE_RELIABLY_ASSESSED: 0,
+  SUSCEPTIBLE: 1,
+  LOW_INTENSITY: 2,
+  MODERATE_INTENSITY: 3,
+  MODERATE_TO_HIGH_INTENSITY: 4,
+  HIGH_INTENSITY: 5
+};
+
+function getByMostRecentYearAndResistanceIntensity(group: any[]) {
+  const filteredStudies = filterByMostRecentYear(group);
+  // We sort remaining records by RESISTANCE INTENSITY
+  const filteredSortedStudies = R.sortBy(
+    study => -ResistanceIntensityOrder[study.RESISTANCE_INTENSITY] || 0,
+    filteredStudies
+  );
+  return filteredSortedStudies[0];
+}
+
+const ResistanceMechanismOrder: { [value: string]: number } = {
+  NA: 0,
+  NOT_DETECTED: 0,
+  DETECTED: 1
+};
+
+function getByMostRecentYearAndResistanceMechanism(group: any[]) {
+  const filteredStudies = filterByMostRecentYear(group);
+  // We sort remaining records by RESISTANCE INTENSITY
+  const filteredSortedStudies = R.sortBy(
+    study => -ResistanceMechanismOrder[study.MECHANISM_STATUS] || 0,
+    filteredStudies
+  );
+  return filteredSortedStudies[0];
+}
+
+const InvolvementOrder: { [value: string]: number } = {
+  COULD_NOT_BE_RELIABLY_ASSESSED: 0,
+  NO_INVOLVEMENT: 0,
+  PARTIAL_INVOLVEMENT: 1,
+  FULL_INVOLVEMENT: 2
+};
+
+function getByMostRecentYearAndInvolvement(group: any[]) {
+  const filteredStudies = filterByMostRecentYear(group);
+  // We sort remaining records by RESISTANCE INTENSITY
+  const filteredSortedStudies = R.sortBy(
+    study => -InvolvementOrder[study.MECHANISM_PROXY] || 0,
+    filteredStudies
+  );
+  return filteredSortedStudies[0];
+}
+
 export const studySelector = (group: any[], mapType: PreventionMapType) => {
   switch (mapType) {
+    case PreventionMapType.RESISTANCE_STATUS:
+      return getByMostRecentYearAndMortalityAdjusted(group);
+    case PreventionMapType.INTENSITY_STATUS:
+      return getByMostRecentYearAndResistanceIntensity(group);
+    case PreventionMapType.RESISTANCE_MECHANISM:
+      return getByMostRecentYearAndResistanceMechanism(group);
+    case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+      return getByMostRecentYearAndInvolvement(group);
     case PreventionMapType.PBO_DEPLOYMENT:
       const criteria1 = meetsCriteria1(group);
       const criteria2 = meetsCriteria2(group);

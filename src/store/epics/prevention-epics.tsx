@@ -10,8 +10,11 @@ import { MapServerConfig } from "../../constants/constants";
 import {
   fetchPreventionStudiesError,
   fetchPreventionStudiesRequest,
-  fetchPreventionStudiesSuccess
+  fetchPreventionStudiesSuccess,
+  setPreventionMapType,
+  setType
 } from "../actions/prevention-actions";
+import { PreventionMapType } from "../types";
 
 interface Params {
   [key: string]: string | number | boolean;
@@ -24,9 +27,7 @@ export const getPreventionStudiesEpic = (
     switchMap(() => {
       const params: Params = {
         f: "json",
-        where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${
-          MapServerConfig.years.to
-        }`,
+        where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${MapServerConfig.years.to}`,
         returnGeometry: false,
         spatialRel: "esriSpatialRelIntersects",
         outFields: "*",
@@ -46,5 +47,17 @@ export const getPreventionStudiesEpic = (
             of(fetchPreventionStudiesError(error))
           )
         );
+    })
+  );
+
+export const setPreventionMapTypeEpic = (
+  action$: ActionsObservable<ActionType<typeof setPreventionMapType>>
+) =>
+  action$.ofType(ActionTypeEnum.SetPreventionMapType).pipe(
+    switchMap(action => {
+      if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
+        return of(setType("MONO_OXYGENASES"));
+      }
+      return of(setType(undefined));
     })
   );

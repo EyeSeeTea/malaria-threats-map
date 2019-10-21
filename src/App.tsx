@@ -155,7 +155,7 @@ class App extends React.Component {
           <DataProvider>
             <I18nextProvider i18n={i18next}>
               <PageWrapper>
-                <MapWrapper>
+                <MapWrapper id={"capture"}>
                   <Map />
                 </MapWrapper>
                 <Disclaimer />

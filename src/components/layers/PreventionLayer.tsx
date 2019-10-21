@@ -239,10 +239,26 @@ class PreventionLayer extends Component<Props> {
 
     const ratio = (20 - 5) / (maxSize - minSize);
 
+    const getSize = (nStudies: number) => {
+      if (nStudies > 50) {
+        return 15;
+      } else if (nStudies > 40) {
+        return 12.5;
+      } else if (nStudies > 30) {
+        return 10;
+      } else if (nStudies > 15) {
+        return 7.5;
+      } else if (nStudies >= 0) {
+        return 5;
+      }
+    };
+
     return countries.map(country => ({
       ...country,
-      SIZE: 5 + ratio * (country.STUDIES - minSize),
-      SIZE_HOVER: 5 + ratio * (country.STUDIES - minSize)
+      // SIZE: 5 + ratio * (country.STUDIES - minSize),
+      // SIZE_HOVER: 5 + ratio * (country.STUDIES - minSize)
+      SIZE: getSize(country.STUDIES),
+      SIZE_HOVER: getSize(country.STUDIES) - 1
     }));
   };
 
