@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function Layers({ countryMode, setCountryMode }: any) {
+function Layers({ countryMode, setCountryMode, disabled }: any) {
   const classes = useStyles({});
   const handleToggle = () => {
     setCountryMode(!countryMode);
@@ -27,6 +27,7 @@ function Layers({ countryMode, setCountryMode }: any) {
         color={countryMode ? "primary" : "default"}
         onClick={handleToggle}
         className={classes.fab}
+        disabled={disabled}
         aria-label={"Show studies per country"}
         title={"Show studies per country"}
       >

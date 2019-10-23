@@ -2,13 +2,13 @@ import * as React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import {Box, Typography} from "@material-ui/core";
-import { ConfirmationStatusColors } from "./layers/prevention/ResistanceStatus/symbols";
+import { Box, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
-import { State } from "../store/types";
-import { selectTheme } from "../store/reducers/base-reducer";
-import { PreventionStudy } from "../types/Prevention";
 import { useTranslation } from "react-i18next";
+import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { State } from "../../../../store/types";
+import { PreventionStudy } from "../../../../types/Prevention";
+import { ConfirmationStatusColors } from "./symbols";
 
 const options: (data: any) => Highcharts.Options = data => ({
   chart: {
@@ -101,10 +101,12 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const Chart = ({ theme, studies }: Props) => {
+const ResistanceStatusChart = ({ theme, studies }: Props) => {
   const { t } = useTranslation("common");
   const data = studies.map(study => ({
-    name: `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`,
+    name: `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${
+      study.INSECTICIDE_CONC
+    }`,
     y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
     species: study.SPECIES,
     number: study.NUMBER
@@ -126,4 +128,4 @@ const Chart = ({ theme, studies }: Props) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Chart);
+)(ResistanceStatusChart);

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Layers from "./Layers";
 import mapboxgl from "mapbox-gl";
 
-import { State } from "../store/types";
+import { PreventionMapType, State } from "../store/types";
 import { connect } from "react-redux";
 import PreventionLayer from "./layers/PreventionLayer";
 import DiagnosisLayer from "./layers/DiagnosisLayer";
@@ -25,7 +25,10 @@ import {
   selectIsInitialDialogOpen,
   selectTheme
 } from "../store/reducers/base-reducer";
-import { selectPreventionStudies } from "../store/reducers/prevention-reducer";
+import {
+  selectPreventionFilters,
+  selectPreventionStudies
+} from "../store/reducers/prevention-reducer";
 import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
@@ -85,7 +88,8 @@ const mapStateToProps = (state: State) => ({
   diagnosisStudies: selectDiagnosisStudies(state),
   treatmentStudies: selectTreatmentStudies(state),
   invasiveStudies: selectInvasiveStudies(state),
-  initialDialogOpen: selectIsInitialDialogOpen(state)
+  initialDialogOpen: selectIsInitialDialogOpen(state),
+  preventionFilters: selectPreventionFilters(state)
 });
 
 const mapDispatchToProps = {
@@ -157,6 +161,8 @@ class Map extends React.Component<any> {
 
   render() {
     const { initialDialogOpen } = this.props;
+    const countryTogglerDisabled =
+      this.props.preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
     return (
       <React.Fragment>
         <div
@@ -179,7 +185,7 @@ class Map extends React.Component<any> {
             <Divider />
             <Filters />
             <Layers />
-            <Country />
+            <Country disabled={countryTogglerDisabled} />
             {this.map && this.state.ready && <Screenshot map={this.map} />}
           </SearchContainer>
         </Fade>

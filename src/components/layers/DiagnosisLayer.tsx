@@ -1,35 +1,22 @@
-import React, { Component } from "react";
-import { connect, Provider } from "react-redux";
-import { DiagnosisMapType, State } from "../../store/types";
-import { circleLayout, studiesToGeoJson } from "./layer-utils";
+import React, {Component} from "react";
+import {connect, Provider} from "react-redux";
+import {DiagnosisMapType, State} from "../../store/types";
+import {circleLayout, studiesToGeoJson} from "./layer-utils";
 import diagnosisSymbol from "./symbols/diagnosis";
 import setupEffects from "./effects";
-import {
-  selectDiagnosisFilters,
-  selectDiagnosisStudies
-} from "../../store/reducers/diagnosis-reducer";
-import {
-  selectFilters,
-  selectRegion,
-  selectTheme
-} from "../../store/reducers/base-reducer";
+import {selectDiagnosisFilters, selectDiagnosisStudies} from "../../store/reducers/diagnosis-reducer";
+import {selectFilters, selectRegion, selectTheme} from "../../store/reducers/base-reducer";
 import * as R from "ramda";
-import { resolveResistanceStatus } from "./prevention/ResistanceStatus/utils";
-import {
-  filterByCountry,
-  filterByPatientType,
-  filterBySurveyTypes,
-  filterByYearRange
-} from "./studies-filters";
-import { resolveMapTypeSymbols } from "./diagnosis/utils";
+import {resolveResistanceStatus} from "./prevention/ResistanceStatus/utils";
+import {filterByCountry, filterByPatientType, filterBySurveyTypes, filterByYearRange} from "./studies-filters";
+import {resolveMapTypeSymbols} from "./diagnosis/utils";
 import ReactDOM from "react-dom";
-import { I18nextProvider } from "react-i18next";
+import {I18nextProvider} from "react-i18next";
 import i18next from "i18next";
-import { store } from "../../App";
-import Chart from "../Chart";
+import {store} from "../../App";
 import mapboxgl from "mapbox-gl";
-import { DiagnosisStudy } from "../../types/Diagnosis";
-import { DIAGNOSIS_STATUS } from "./diagnosis/PFHRP2/utils";
+import {DiagnosisStudy} from "../../types/Diagnosis";
+import {DIAGNOSIS_STATUS} from "./diagnosis/PFHRP2/utils";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -184,9 +171,7 @@ class DiagnosisLayer extends Component<Props> {
 
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>
-        <Provider store={store}>
-          <Chart studies={filteredStudies} />
-        </Provider>
+        <Provider store={store} />
       </I18nextProvider>,
       placeholder
     );

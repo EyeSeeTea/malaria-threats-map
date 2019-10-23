@@ -1,11 +1,12 @@
 import { INTENSITY_STATUS } from "./utils";
 
-export const IntensityStatusColors = {
+export const IntensityStatusColors: { [key: string]: string[] } = {
   [INTENSITY_STATUS.HIGH_INTENSITY]: ["#540307", "#0a0001"],
   [INTENSITY_STATUS.MODERATE_TO_HIGH_INTENSITY]: ["#81252a", "#461417"],
   [INTENSITY_STATUS.MODERATE_INTENSITY]: ["#ad5c61", "#7d3f43"],
   [INTENSITY_STATUS.LOW_INTENSITY]: ["#e7a98e", "#da794f"],
-  [INTENSITY_STATUS.SUSCEPTIBLE]: ["#869c66", "#5e6e47"]
+  [INTENSITY_STATUS.SUSCEPTIBLE]: ["#869c66", "#5e6e47"],
+  [INTENSITY_STATUS.UNKNOWN]: ["#d3d3d3", "#adadad"]
 };
 
 export default {

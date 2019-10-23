@@ -11,11 +11,21 @@ import { Checkbox, FormGroup, Paper } from "@material-ui/core";
 import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
 
-const WHITELISTED_ASSAY_TYPES = [
+export const ASSAY_TYPES = [
   "MOLECULAR_ASSAY",
   "BIOCHEMICAL_ASSAY",
   "SYNERGIST-INSECTICIDE_BIOASSAY"
 ];
+
+const ASSAY_TYPE_FILTER: { [key: string]: string[] } = {
+  MONO_OXYGENASES: ASSAY_TYPES,
+  ESTERASES: ASSAY_TYPES,
+  GSTS: ASSAY_TYPES,
+  KDR_L1014S: ["MOLECULAR_ASSAY"],
+  KDR_L1014F: ["MOLECULAR_ASSAY"],
+  "KDR_(MUTATION_UNSPECIFIED)": ["MOLECULAR_ASSAY"],
+  ACE1R: ["MOLECULAR_ASSAY", "BIOCHEMICAL_ASSAY"]
+};
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   & span {
@@ -67,7 +77,7 @@ function AssayTypeCheckboxFilter({
     }
   };
 
-  const types = WHITELISTED_ASSAY_TYPES.map(value =>
+  const types = ASSAY_TYPE_FILTER[preventionFilters.type].map(value =>
     (assayTypes as Translation[]).find(type => type.VALUE_ === value)
   );
 

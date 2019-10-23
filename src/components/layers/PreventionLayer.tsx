@@ -34,14 +34,17 @@ import {
 } from "../../store/reducers/base-reducer";
 import ReactDOM from "react-dom";
 import { store, theme } from "../../App";
-import Chart from "../Chart";
 import mapboxgl from "mapbox-gl";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import { isSynergyst } from "./prevention/ResistanceMechanisms/ResistanceMechanismFilters";
 import { selectCountries } from "../../store/reducers/country-layer-reducer";
-import ResistanceStatusCountryChart from "./prevention/ResistanceStatus/ResistanceStatusCountryChart";
 import { ThemeProvider } from "@material-ui/styles";
+import ResistanceStatusCountryChart from "./prevention/ResistanceStatus/ResistanceStatusCountryChart";
+import ResistanceStatusChart from "./prevention/ResistanceStatus/ResistanceStatusChart";
+import IntensityStatusCountryChart from "./prevention/IntensityStatus/IntensityStatusCountryChart";
+import ResistanceMechanismCountryChart from "./prevention/ResistanceMechanisms/ResistanceMechanismCountryChart";
+import ResistanceMechanismsChart from "./prevention/ResistanceMechanisms/ResistanceMechanismsChart";
 
 const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -300,22 +303,44 @@ class PreventionLayer extends Component<Props> {
       countryMode,
       preventionFilters: { mapType }
     } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(study =>
-      countryMode
-        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-        : study.SITE_ID === e.features[0].properties.SITE_ID
+    const filteredStudies = this.filterStudies(studies).filter(
+      study =>
+        countryMode
+          ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+          : study.SITE_ID === e.features[0].properties.SITE_ID
     );
 
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>
         <ThemeProvider theme={theme}>
           <Provider store={store}>
-            {countryMode && (
-              <ResistanceStatusCountryChart studies={filteredStudies} />
-            )}
+            {countryMode &&
+              mapType === PreventionMapType.RESISTANCE_STATUS && (
+                <ResistanceStatusCountryChart studies={filteredStudies} />
+              )}
+            {countryMode &&
+              mapType === PreventionMapType.INTENSITY_STATUS && (
+                <IntensityStatusCountryChart studies={filteredStudies} />
+              )}
+            {countryMode &&
+              mapType === PreventionMapType.RESISTANCE_MECHANISM && (
+                <ResistanceMechanismCountryChart studies={filteredStudies} />
+              )}
+            {countryMode &&
+              mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
+                <ResistanceMechanismCountryChart studies={filteredStudies} />
+              )}
             {!countryMode &&
               mapType === PreventionMapType.RESISTANCE_STATUS && (
-                <Chart studies={filteredStudies} />
+                <ResistanceStatusChart studies={filteredStudies} />
+              )}
+            {!countryMode &&
+              mapType === PreventionMapType.INTENSITY_STATUS && (
+                <ResistanceStatusChart studies={filteredStudies} />
+              )}
+            {!countryMode &&
+              mapType === PreventionMapType.RESISTANCE_MECHANISM && (
+                <ResistanceMechanismsChart studies={filteredStudies} />
               )}
           </Provider>
         </ThemeProvider>
