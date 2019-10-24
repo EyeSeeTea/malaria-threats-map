@@ -28,10 +28,10 @@ import {
 } from "./store/actions/prevention-actions";
 import Disclaimer from "./components/Disclaimer";
 import {
+  setDiagnosisDeletionType,
   setDiagnosisPatientType,
   setDiagnosisSurveyTypes
 } from "./store/actions/diagnosis-actions";
-import LanguageSelector from "./components/LanguageSelector";
 
 export const { store } = createStore();
 
@@ -83,6 +83,10 @@ ReduxQuerySync({
     patientType: {
       selector: (state: State) => state.diagnosis.filters.patientType,
       action: (value: string) => setDiagnosisPatientType(value)
+    },
+    deletionType: {
+      selector: (state: State) => state.diagnosis.filters.deletionType,
+      action: (value: string) => setDiagnosisDeletionType(value)
     },
     endemicity: {
       selector: (state: State) => state.malaria.endemicity,

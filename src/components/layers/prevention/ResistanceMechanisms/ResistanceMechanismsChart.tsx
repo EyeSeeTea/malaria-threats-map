@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import { PreventionStudy } from "../../../../types/Prevention";
-import { ConfirmationStatusColors } from "../ResistanceStatus/symbols";
 
 const options: (data: any) => Highcharts.Options = data => ({
   chart: {
@@ -89,7 +88,7 @@ const ResistanceMechanismsChart = ({ theme, studies }: Props) => {
       <HighchartsReact highcharts={Highcharts} options={options(data)} />
 
       <Typography variant="body2">Datasource:</Typography>
-      <Typography variant="caption" >
+      <Typography variant="caption">
         <Link href={studies[0].CITATION_URL} target="_blank">
           {studies[0].CITATION_LONG}
         </Link>

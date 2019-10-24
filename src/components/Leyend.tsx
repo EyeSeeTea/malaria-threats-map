@@ -93,7 +93,7 @@ function Legend({
     case "prevention":
       return resolvePreventionMapTypeLegend(preventionFilters, countryMode);
     case "diagnosis":
-      return resolveDiagnosisMapTypeLegend(diagnosisFilters);
+      return resolveDiagnosisMapTypeLegend(diagnosisFilters, countryMode);
     default:
       return <span />;
   }

@@ -42,8 +42,7 @@ const preventionSuggestions: OptionType[] = [
 ];
 
 const diagnosisSuggestions: OptionType[] = [
-  { label: "Pfhrp2", value: DiagnosisMapType.PFHRP2 },
-  { label: "Pfhrp2 / Pfhrp3", value: DiagnosisMapType.PFHRP2_PFHRP3 }
+  { label: "Gene Deletions", value: DiagnosisMapType.GENE_DELETIONS }
 ];
 
 class MapTypesSelector extends Component<Props> {

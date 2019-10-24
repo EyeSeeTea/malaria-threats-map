@@ -43,11 +43,11 @@ export interface DiagnosisFilters {
   mapType: DiagnosisMapType;
   surveyTypes: string[];
   patientType: string | null;
+  deletionType: string | null;
 }
 
 export enum DiagnosisMapType {
-  PFHRP2,
-  PFHRP2_PFHRP3
+  GENE_DELETIONS
 }
 
 export interface InvasiveState {

@@ -1,5 +1,4 @@
 import React from "react";
-import MapIcon from "@material-ui/icons/Map";
 import { State } from "../store/types";
 import { connect } from "react-redux";
 import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";

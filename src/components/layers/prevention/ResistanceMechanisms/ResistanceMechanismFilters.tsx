@@ -1,17 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import FormLabel from "@material-ui/core/FormLabel";
-import InsecticideClassFilter from "../../../filters/InsecticideClassFilter";
-import InsecticideTypeFilter from "../../../filters/InsecticideTypeFilter";
-import TypeFilter from "../../../filters/TypeFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
 import MechanismTypeFilter from "../../../filters/MechanismTypeFilter";
 import AssayTypeCheckboxFilter from "../../../filters/AssayTypeCheckboxFilter";
 import { PreventionFilters, State } from "../../../../store/types";
-import { selectAssayTypes } from "../../../../store/reducers/translations-reducer";
 import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
-import { setAssayTypes } from "../../../../store/actions/prevention-actions";
 import { connect } from "react-redux";
 import SynergistTypeFilter from "../../../filters/SynergistTypeFilter";
 

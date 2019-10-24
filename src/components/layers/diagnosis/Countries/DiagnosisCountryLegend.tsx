@@ -10,29 +10,21 @@ import {
   LegendTitleContainer,
   LegendTitleTypography
 } from "../../../Leyend";
-import { DIAGNOSIS_STATUS } from "./utils";
-import { DiagnosisStatusColors } from "./symbols";
+import { DiagnosisCountryColors } from "./DiagnosisCountrySymbols";
 
-export default function Legend() {
+export default function DiagnosisCountryLegend() {
   return (
     <LegendContainer>
       <LegendTitleContainer>
         <LegendTitleTypography color="textPrimary" gutterBottom>
-          Diagnosis Status
+          Vector Insecticide Resistance
         </LegendTitleTypography>
       </LegendTitleContainer>
+
       <LegendEntries>
         <LegendEntry>
-          <LegendSymbol
-            color={DiagnosisStatusColors[DIAGNOSIS_STATUS.CONFIRMED][0]}
-          />
-          <LegendText>{"Confirmed"}</LegendText>
-        </LegendEntry>
-        <LegendEntry>
-          <LegendSymbol
-            color={DiagnosisStatusColors[DIAGNOSIS_STATUS.NOT_IDENTIFIED][0]}
-          />
-          <LegendText>{"Not Identified"}</LegendText>
+          <LegendSymbol color={DiagnosisCountryColors.COUNTRIES[0]} />
+          <LegendText>{"Number of studies"}</LegendText>
         </LegendEntry>
       </LegendEntries>
       <LegendFooterContainer>

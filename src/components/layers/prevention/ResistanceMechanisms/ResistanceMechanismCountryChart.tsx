@@ -16,8 +16,6 @@ import {
 } from "../../../../store/actions/base-actions";
 import ZoomIcon from "@material-ui/icons/ZoomIn";
 import { sentenceCase } from "change-case";
-import { IntensityStatusColors } from "../IntensityStatus/symbols";
-import { INTENSITY_STATUS } from "../IntensityStatus/utils";
 import { RESISTANCE_MECHANISM } from "./utils";
 import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
 

@@ -1,7 +1,6 @@
 import React from "react";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
-import html2canvas from "html2canvas";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

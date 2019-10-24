@@ -10,7 +10,7 @@ import {
   LegendTitleContainer,
   LegendTitleTypography
 } from "../../../Leyend";
-import { PreventionCountryColors } from "./CountrySymbols";
+import { PreventionCountryColors } from "./PreventionCountrySymbols";
 
 export default function PreventionCountryLegend() {
   return (

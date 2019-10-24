@@ -1,5 +1,5 @@
 import { createAction } from "typesafe-actions";
-import { ActionTypeEnum } from "../../store/actions";
+import { ActionTypeEnum } from "../actions";
 import { TreatmentResponse } from "../../types/Treatment";
 import { AjaxError } from "rxjs/ajax";
 

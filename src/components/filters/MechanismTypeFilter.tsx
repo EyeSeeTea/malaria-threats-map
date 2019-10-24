@@ -11,11 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Paper } from "@material-ui/core";
 import { selectTypes } from "../../store/reducers/translations-reducer";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
-import {
-  setInsecticideClass,
-  setType
-} from "../../store/actions/prevention-actions";
-import * as R from "ramda";
+import { setType } from "../../store/actions/prevention-actions";
 
 const WHITELISTED_TYPES = [
   "MONO_OXYGENASES",

@@ -14,7 +14,7 @@ export default {
   ],
   "circle-color": [
     "match",
-    ["get", "DIAGNOSIS_PFHRP2_PFHRP3_STATUS"],
+    ["get", "DELETION_PERCENT"],
     DIAGNOSIS_STATUS.CONFIRMED,
     DiagnosisStatusColors[DIAGNOSIS_STATUS.CONFIRMED][0],
     DiagnosisStatusColors[DIAGNOSIS_STATUS.NOT_IDENTIFIED][0]
@@ -26,7 +26,7 @@ export default {
     "lightgrey",
     [
       "match",
-      ["get", "DIAGNOSIS_PFHRP2_PFHRP3_STATUS"],
+      ["get", "DELETION_PERCENT"],
       DIAGNOSIS_STATUS.CONFIRMED,
       DiagnosisStatusColors[DIAGNOSIS_STATUS.CONFIRMED][1],
       DiagnosisStatusColors[DIAGNOSIS_STATUS.NOT_IDENTIFIED][1]

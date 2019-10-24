@@ -17,9 +17,8 @@ import ResistanceStatusFilters from "./layers/prevention/ResistanceStatus/Resist
 import IntensityStatusFilters from "./layers/prevention/IntensityStatus/IntensityStatusFilters";
 import ResistanceMechanismFilters from "./layers/prevention/ResistanceMechanisms/ResistanceMechanismFilters";
 import LevelOfInvolvementFilters from "./layers/prevention/Involvement/LevelOfInvolvementFilters";
-import Pfhrp2Filters from "./layers/diagnosis/PFHRP2/Pfhrp2Filters";
+import GeneDeletionFilters from "./layers/diagnosis/GeneDeletions/GeneDeletionFilters";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
-import Pfhrp2Pfhrp3Filters from "./layers/diagnosis/Pfhrp2Pfhrp3/Pfhrp2Pfhrp3Filters";
 import PboDeploymentFilters from "./layers/prevention/PboDeployment/PboDeploymentFilters";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -46,9 +45,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const FiltersWrapper = styled.div`
   margin-top: 10px;
-`;
-const Divider = styled.div`
-  height: 10px;
 `;
 
 const Transition = React.forwardRef<unknown, TransitionProps>(
@@ -103,10 +99,8 @@ function Filters({ theme, preventionFilters, diagnosisFilters }: Props) {
         }
       case "diagnosis":
         switch (diagnosisFilters.mapType) {
-          case DiagnosisMapType.PFHRP2:
-            return <Pfhrp2Filters />;
-          case DiagnosisMapType.PFHRP2_PFHRP3:
-            return <Pfhrp2Pfhrp3Filters />;
+          case DiagnosisMapType.GENE_DELETIONS:
+            return <GeneDeletionFilters />;
           default:
             return <div />;
         }

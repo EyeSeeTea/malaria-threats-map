@@ -3,10 +3,7 @@ import { connect } from "react-redux";
 import { State } from "../../store/types";
 import IntegrationReactSelect from "../BasicSelect";
 import { Translation } from "../../types/Translation";
-import {
-  selectSynergistTypes,
-  selectTypes
-} from "../../store/reducers/translations-reducer";
+import { selectTypes } from "../../store/reducers/translations-reducer";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { setSynergistTypes } from "../../store/actions/prevention-actions";
 

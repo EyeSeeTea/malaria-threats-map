@@ -19,7 +19,7 @@ import {
   filterByType,
   filterByYearRange
 } from "../studies-filters";
-import CountrySymbols from "./Countries/CountrySymbols";
+import CountrySymbols from "./Countries/PreventionCountrySymbols";
 import PreventionCountryLegend from "./Countries/PreventionCountryLegend";
 
 export const resolveMapTypeSymbols = (
@@ -207,7 +207,7 @@ export const studySelector = (group: any[], mapType: PreventionMapType) => {
       const pboDeploymentStatus =
         criteria1 && criteria2 && criteria3
           ? PboDeploymentStatus.ELIGIBLE
-          : R.any(v => v == false, [criteria1, criteria2, criteria3])
+          : R.any(v => v === false, [criteria1, criteria2, criteria3])
           ? PboDeploymentStatus.NOT_ELIGIBLE
           : PboDeploymentStatus.NOT_ENOUGH_DATA;
       return {

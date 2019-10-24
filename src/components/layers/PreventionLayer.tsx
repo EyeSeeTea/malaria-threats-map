@@ -97,7 +97,8 @@ class PreventionLayer extends Component<Props> {
       },
       countryMode,
       filters,
-      region
+      region,
+      countries
     } = this.props;
     this.mountLayer(prevProps);
     this.renderLayer();
@@ -120,6 +121,7 @@ class PreventionLayer extends Component<Props> {
       prevProps.preventionFilters.synergistTypes.length !==
       synergistTypes.length;
     const countryModeChange = prevProps.countryMode !== countryMode;
+    const countriesChange = prevProps.countries.length !== countries.length;
     if (
       mapTypeChange ||
       yearChange ||
@@ -130,7 +132,8 @@ class PreventionLayer extends Component<Props> {
       speciesChange ||
       assayTypesChange ||
       synergistTypesChange ||
-      countryModeChange
+      countryModeChange ||
+      countriesChange
     ) {
       if (this.popup) {
         this.popup.remove();
@@ -237,10 +240,10 @@ class PreventionLayer extends Component<Props> {
 
     const sortedCountries = R.sortBy(country => country.STUDIES, countries);
     if (sortedCountries.length === 0) return [];
-    const maxSize = sortedCountries[sortedCountries.length - 1].STUDIES;
-    const minSize = sortedCountries[0].STUDIES;
-
-    const ratio = (20 - 5) / (maxSize - minSize);
+    // const maxSize = sortedCountries[sortedCountries.length - 1].STUDIES;
+    // const minSize = sortedCountries[0].STUDIES;
+    //
+    // const ratio = (20 - 5) / (maxSize - minSize);
 
     const getSize = (nStudies: number) => {
       if (nStudies > 50) {
@@ -303,25 +306,22 @@ class PreventionLayer extends Component<Props> {
       countryMode,
       preventionFilters: { mapType }
     } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(
-      study =>
-        countryMode
-          ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-          : study.SITE_ID === e.features[0].properties.SITE_ID
+    const filteredStudies = this.filterStudies(studies).filter(study =>
+      countryMode
+        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+        : study.SITE_ID === e.features[0].properties.SITE_ID
     );
 
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>
         <ThemeProvider theme={theme}>
           <Provider store={store}>
-            {countryMode &&
-              mapType === PreventionMapType.RESISTANCE_STATUS && (
-                <ResistanceStatusCountryChart studies={filteredStudies} />
-              )}
-            {countryMode &&
-              mapType === PreventionMapType.INTENSITY_STATUS && (
-                <IntensityStatusCountryChart studies={filteredStudies} />
-              )}
+            {countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
+              <ResistanceStatusCountryChart studies={filteredStudies} />
+            )}
+            {countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
+              <IntensityStatusCountryChart studies={filteredStudies} />
+            )}
             {countryMode &&
               mapType === PreventionMapType.RESISTANCE_MECHANISM && (
                 <ResistanceMechanismCountryChart studies={filteredStudies} />
@@ -334,10 +334,9 @@ class PreventionLayer extends Component<Props> {
               mapType === PreventionMapType.RESISTANCE_STATUS && (
                 <ResistanceStatusChart studies={filteredStudies} />
               )}
-            {!countryMode &&
-              mapType === PreventionMapType.INTENSITY_STATUS && (
-                <ResistanceStatusChart studies={filteredStudies} />
-              )}
+            {!countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
+              <ResistanceStatusChart studies={filteredStudies} />
+            )}
             {!countryMode &&
               mapType === PreventionMapType.RESISTANCE_MECHANISM && (
                 <ResistanceMechanismsChart studies={filteredStudies} />

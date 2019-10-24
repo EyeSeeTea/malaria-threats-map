@@ -1,4 +1,5 @@
 import { PreventionStudy } from "../../types/Prevention";
+import { DELETION_TYPES } from "../filters/DeletionTypeFilter";
 
 export const filterByYearRange = (years: number[]) => (
   study: PreventionStudy
@@ -78,4 +79,12 @@ export const filterBySurveyTypes = (surveyTypes: string[]) => (study: any) => {
 
 export const filterByPatientType = (patientType: string) => (study: any) => {
   return !patientType || study.PATIENT_TYPE === patientType;
+};
+
+export const filterByDeletionType = (deletionType: string) => (study: any) => {
+  return deletionType === DELETION_TYPES.HRP2_PROPORTION_DELETION.value
+    ? study.HRP2_PROPORTION_DELETION !== "NR" &&
+        study.HRP2_PROPORTION_DELETION !== null
+    : study.HRP2_HRP3_PROPORTION_DELETION !== "NR" &&
+        study.HRP2_HRP3_PROPORTION_DELETION !== null;
 };

@@ -12,9 +12,11 @@ import { fetchPreventionStudiesRequest } from "../store/actions/prevention-actio
 import { fetchDiagnosisStudiesRequest } from "../store/actions/diagnosis-actions";
 import { fetchInvasiveStudiesRequest } from "../store/actions/invasive-actions";
 import { fetchTreatmentStudiesRequest } from "../store/actions/treatment-actions";
+import { selectCountryLayerIsLoading } from "../store/reducers/country-layer-reducer";
 
 const mapStateToProps = (state: State) => ({
   translationsLoading: selectTranslationsAreLoading(state),
+  countriesLoading: selectCountryLayerIsLoading(state),
   translations: selectTranslations(state)
 });
 
