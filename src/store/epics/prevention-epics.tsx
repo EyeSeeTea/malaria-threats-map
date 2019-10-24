@@ -30,14 +30,12 @@ export const getPreventionStudiesEpic = (
     switchMap(() => {
       const params: Params = {
         f: "json",
-        where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${
-          MapServerConfig.years.to
-        }`,
+        where: `1=1`,
         returnGeometry: false,
         spatialRel: "esriSpatialRelIntersects",
         outFields: "*",
         resultOffset: 0,
-        resultRecordCount: 25000
+        resultRecordCount: 50000
       };
       const query: string = Object.keys(params)
         .map(key => `${key}=${params[key]}`)
