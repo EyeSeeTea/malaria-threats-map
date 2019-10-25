@@ -1,21 +1,39 @@
-import React, {Component} from "react";
-import {connect, Provider} from "react-redux";
-import {studiesToGeoJson} from "./layer-utils";
+import React, { Component } from "react";
+import { connect, Provider } from "react-redux";
+import { studiesToGeoJson } from "./layer-utils";
 import setupEffects from "./effects";
-import {selectTreatmentFilters, selectTreatmentStudies} from "../../store/reducers/treatment-reducer";
-import {selectCountryMode, selectFilters, selectRegion, selectTheme} from "../../store/reducers/base-reducer";
-import {selectCountries} from "../../store/reducers/country-layer-reducer";
+import {
+  selectTreatmentFilters,
+  selectTreatmentStudies
+} from "../../store/reducers/treatment-reducer";
+import {
+  selectCountryMode,
+  selectFilters,
+  selectRegion,
+  selectTheme
+} from "../../store/reducers/base-reducer";
+import { selectCountries } from "../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
-import {filterByResistanceStatus} from "./studies-filters";
-import {TreatmentStudy} from "../../types/Treatment";
+import {
+  filterByCountry,
+  filterByDimensionId,
+  filterByDrug,
+  filterByPlasmodiumSpecies,
+  filterByResistanceStatus,
+  filterByYearRange
+} from "./studies-filters";
+import { TreatmentStudy } from "../../types/Treatment";
 import ReactDOM from "react-dom";
-import {I18nextProvider} from "react-i18next";
+import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
-import {store, theme} from "../../App";
+import { store, theme } from "../../App";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
-import {State, TreatmentMapType} from "../../store/types";
-import {resolveMapTypeSymbols} from "./treatment/utils";
+import { State, TreatmentMapType } from "../../store/types";
+import { resolveMapTypeSymbols } from "./treatment/utils";
+import { resolveResistanceStatus } from "./prevention/ResistanceStatus/utils";
+import { TREATMENT_FAILURE_STATUS } from "./treatment/TreatmentFailure/utils";
+import { studySelector } from "./treatment/utils";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -57,7 +75,7 @@ class TreatmentLayer extends Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     const {
-      treatmentFilters: { mapType },
+      treatmentFilters: { mapType, plasmodiumSpecies, drug },
       countryMode,
       filters,
       region,
@@ -70,6 +88,9 @@ class TreatmentLayer extends Component<Props> {
       prevProps.filters[0] !== filters[0] ||
       prevProps.filters[1] !== filters[1];
     const countryChange = prevProps.region.country !== region.country;
+    const plasmodiumSpeciesChange =
+      prevProps.treatmentFilters.plasmodiumSpecies !== plasmodiumSpecies;
+    const drugChange = prevProps.treatmentFilters.drug !== drug;
     const countryModeChange = prevProps.countryMode !== countryMode;
     const countriesChange = prevProps.countries.length !== countries.length;
     if (
@@ -77,7 +98,9 @@ class TreatmentLayer extends Component<Props> {
       yearChange ||
       countryChange ||
       countryModeChange ||
-      countriesChange
+      countriesChange ||
+      plasmodiumSpeciesChange ||
+      drugChange
     ) {
       if (this.popup) {
         this.popup.remove();
@@ -94,17 +117,25 @@ class TreatmentLayer extends Component<Props> {
   setupGeoJsonData = (studies: any[]) => {
     const { mapType } = this.props.treatmentFilters;
     const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
-    const filteredStudies = R.values(groupedStudies).map(group => group[0]);
+    const filteredStudies = R.values(groupedStudies).map(group =>
+      studySelector(group, mapType)
+    );
     return filteredStudies;
   };
 
   buildFilters = () => {
     const { treatmentFilters, filters, region } = this.props;
     switch (treatmentFilters.mapType) {
-      case TreatmentMapType.RESISTANCE_STATUS:
-        return [];
+      case TreatmentMapType.TREATMENT_FAILURE:
+        return [
+          filterByDimensionId(256),
+          filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
+          filterByDrug(treatmentFilters.drug),
+          filterByYearRange(filters),
+          filterByCountry(region.country)
+        ];
       default:
-        return [filterByResistanceStatus];
+        return [];
     }
   };
 
@@ -145,14 +176,16 @@ class TreatmentLayer extends Component<Props> {
     // const ratio = (20 - 5) / (maxSize - minSize);
 
     const getSize = (nStudies: number) => {
-      if (nStudies > 50) {
+      if (nStudies > 10) {
         return 15;
-      } else if (nStudies > 40) {
-        return 12.5;
-      } else if (nStudies > 30) {
-        return 10;
-      } else if (nStudies > 15) {
-        return 7.5;
+      } else if (nStudies > 8) {
+        return 13;
+      } else if (nStudies > 6) {
+        return 11;
+      } else if (nStudies > 4) {
+        return 9;
+      } else if (nStudies > 2) {
+        return 7;
       } else if (nStudies >= 0) {
         return 5;
       }
@@ -204,11 +237,10 @@ class TreatmentLayer extends Component<Props> {
       countryMode,
       treatmentFilters: { mapType }
     } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(
-      study =>
-        countryMode
-          ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-          : study.SITE_ID === e.features[0].properties.SITE_ID
+    const filteredStudies = this.filterStudies(studies).filter(study =>
+      countryMode
+        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+        : study.SITE_ID === e.features[0].properties.SITE_ID
     );
 
     ReactDOM.render(
@@ -256,7 +288,10 @@ class TreatmentLayer extends Component<Props> {
   applyMapTypeSymbols = () => {
     const { treatmentFilters, countryMode } = this.props;
     const layer = this.props.map.getLayer(TREATMENT_LAYER_ID);
-    const mapTypeSymbols = resolveMapTypeSymbols(treatmentFilters, countryMode);
+    const mapTypeSymbols: { [key: string]: any } = resolveMapTypeSymbols(
+      treatmentFilters,
+      countryMode
+    );
     if (layer && mapTypeSymbols) {
       this.props.map.setPaintProperty(
         TREATMENT_LAYER_ID,

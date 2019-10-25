@@ -45,19 +45,28 @@ class DataProvider extends Component<Props> {
     if (this.props.translations.length !== prevProps.translations.length) {
       const englishResources = this.props.translations.reduce(
         (acc, translation) => {
-          return { ...acc, [translation.VALUE_]: translation.EN };
+          return {
+            ...acc,
+            [translation.VALUE_.replace(".", "_")]: translation.EN
+          };
         },
         {}
       );
       const spanishResources = this.props.translations.reduce(
         (acc, translation) => {
-          return { ...acc, [translation.VALUE_]: translation.ES };
+          return {
+            ...acc,
+            [translation.VALUE_.replace(".", "_")]: translation.ES
+          };
         },
         {}
       );
       const frenchResources = this.props.translations.reduce(
         (acc, translation) => {
-          return { ...acc, [translation.VALUE_]: translation.FR };
+          return {
+            ...acc,
+            [translation.VALUE_.replace(".", "_")]: translation.FR
+          };
         },
         {}
       );

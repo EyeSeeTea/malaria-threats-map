@@ -13,7 +13,7 @@ const initialState: MalariaState = Object.freeze({
   region: {
     country: ""
   },
-  initialDialogOpen: true
+  initialDialogOpen: false
 });
 
 export default createReducer<MalariaState>(initialState, {

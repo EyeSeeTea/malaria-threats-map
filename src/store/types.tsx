@@ -74,11 +74,15 @@ export interface PreventionState {
 }
 
 export enum TreatmentMapType {
-  RESISTANCE_STATUS
+  TREATMENT_FAILURE,
+  DELAYED_PARASITE_CLEARANCE,
+  MOLECULAR_MARKERS
 }
 
 export interface TreatmentFilters {
   mapType: TreatmentMapType;
+  plasmodiumSpecies: string;
+  drug: string;
 }
 
 export interface TreatmentState {

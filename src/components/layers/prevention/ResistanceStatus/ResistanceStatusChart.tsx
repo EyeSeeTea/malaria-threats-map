@@ -63,10 +63,11 @@ const options: (data: any) => Highcharts.Options = data => ({
   },
   tooltip: {
     formatter: function() {
+      const point = this.point as any;
       return `
-<B><i>${this.point.species}</i></B><br>
-Mortality (%): ${this.y}<br>
-Tested (n): ${this.point.number}
+<B><i>${point.species}</i></B><br>
+Mortality (%): ${point.y}<br>
+Tested (n): ${point.number}
 `;
     }
   },
@@ -104,9 +105,7 @@ type Props = DispatchProps & StateProps & OwnProps;
 const ResistanceStatusChart = ({ theme, studies }: Props) => {
   const { t } = useTranslation("common");
   const data = studies.map(study => ({
-    name: `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${
-      study.INSECTICIDE_CONC
-    }`,
+    name: `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`,
     y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
     species: study.SPECIES,
     number: study.NUMBER

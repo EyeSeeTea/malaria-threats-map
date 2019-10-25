@@ -203,7 +203,7 @@ class Map extends React.Component<any> {
         <BottomLeftContainer>
           <WhoLogo />
         </BottomLeftContainer>
-        <InitialDialog />
+        {/*<InitialDialog />*/}
       </React.Fragment>
     );
   }

@@ -8,7 +8,12 @@ import FilterIcon from "@material-ui/icons/FilterList";
 import { AppBar, Fab, Toolbar, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
-import { DiagnosisMapType, PreventionMapType, State } from "../store/types";
+import {
+  DiagnosisMapType,
+  PreventionMapType,
+  State,
+  TreatmentMapType
+} from "../store/types";
 import { selectFilters, selectTheme } from "../store/reducers/base-reducer";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
@@ -20,6 +25,8 @@ import LevelOfInvolvementFilters from "./layers/prevention/Involvement/LevelOfIn
 import GeneDeletionFilters from "./layers/diagnosis/GeneDeletions/GeneDeletionFilters";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import PboDeploymentFilters from "./layers/prevention/PboDeployment/PboDeploymentFilters";
+import TreatmentFailureFilters from "./layers/treatment/TreatmentFailure/TreatmentFailureFilters";
+import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -57,7 +64,8 @@ const mapStateToProps = (state: State) => ({
   filters: selectFilters(state),
   theme: selectTheme(state),
   preventionFilters: selectPreventionFilters(state),
-  diagnosisFilters: selectDiagnosisFilters(state)
+  diagnosisFilters: selectDiagnosisFilters(state),
+  treatmentFilters: selectTreatmentFilters(state)
 });
 
 const mapDispatchToProps = {
@@ -68,7 +76,12 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function Filters({ theme, preventionFilters, diagnosisFilters }: Props) {
+function Filters({
+  theme,
+  preventionFilters,
+  diagnosisFilters,
+  treatmentFilters
+}: Props) {
   const classes = useStyles({});
   const [open, setOpen] = React.useState(false);
 
@@ -104,6 +117,13 @@ function Filters({ theme, preventionFilters, diagnosisFilters }: Props) {
           default:
             return <div />;
         }
+      case "treatment":
+        switch (treatmentFilters.mapType) {
+          case TreatmentMapType.TREATMENT_FAILURE:
+            return <TreatmentFailureFilters />;
+          default:
+            return <div />;
+        }
       default:
         return <div />;
     }
@@ -114,7 +134,7 @@ function Filters({ theme, preventionFilters, diagnosisFilters }: Props) {
       <Fab
         variant="extended"
         size="small"
-        color="default"
+        color="primary"
         onClick={handleClickOpen}
         className={classes.fab}
       >

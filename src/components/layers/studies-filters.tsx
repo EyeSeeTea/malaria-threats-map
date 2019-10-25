@@ -88,3 +88,17 @@ export const filterByDeletionType = (deletionType: string) => (study: any) => {
     : study.HRP2_HRP3_PROPORTION_DELETION !== "NR" &&
         study.HRP2_HRP3_PROPORTION_DELETION !== null;
 };
+
+export const filterByDimensionId = (dimensionId: number) => (study: any) => {
+  return study.DimensionID === dimensionId;
+};
+
+export const filterByPlasmodiumSpecies = (plasmodiumSpecies: string) => (
+  study: any
+) => {
+  return study.PLASMODIUM_SPECIES === plasmodiumSpecies;
+};
+
+export const filterByDrug = (drug: string) => (study: any) => {
+  return study.DRUG_NAME === drug;
+};

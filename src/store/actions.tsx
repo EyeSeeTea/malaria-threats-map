@@ -33,6 +33,10 @@ export enum ActionTypeEnum {
   FetchTreatmentStudiesSuccess = "treatment/FETCH_TREATMENT_STUDIES_SUCCESS",
   FetchTreatmentStudiesError = "treatment/FETCH_TREATMENT_STUDIES_ERROR",
 
+  SetTreatmentMapType = "treatment/SET_TREATMENT_MAP_TYPE",
+  SetPlasmodiumSpecies = "treatment/SET_TREATMENT_PLASMODIUM_SPECIES",
+  SetDrug = "treatment/SET_TREATMENT_DRUG",
+
   FetchInvasiveStudiesRequest = "invasive/FETCH_INVASIVE_STUDIES_REQUEST",
   FetchInvasiveStudiesSuccess = "invasive/FETCH_INVASIVE_STUDIES_SUCCESS",
   FetchInvasiveStudiesError = "invasive/FETCH_INVASIVE_STUDIES_ERROR",

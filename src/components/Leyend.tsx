@@ -7,6 +7,7 @@ import { State } from "../store/types";
 import { connect } from "react-redux";
 import { resolveMapTypeLegend as resolvePreventionMapTypeLegend } from "./layers/prevention/utils";
 import { resolveMapTypeLegend as resolveDiagnosisMapTypeLegend } from "./layers/diagnosis/utils";
+import { resolveMapTypeLegend as resolveTreatmentMapTypeLegend } from "./layers/treatment/utils";
 import {
   selectCountryMode,
   selectFilters,
@@ -15,6 +16,7 @@ import {
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
+import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 
 export const LegendContainer = styled(Paper)`
   padding: 16px;
@@ -72,6 +74,7 @@ const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
   preventionFilters: selectPreventionFilters(state),
   diagnosisFilters: selectDiagnosisFilters(state),
+  treatmentFilters: selectTreatmentFilters(state),
   countryMode: selectCountryMode(state)
 });
 
@@ -87,6 +90,7 @@ function Legend({
   theme,
   preventionFilters,
   diagnosisFilters,
+  treatmentFilters,
   countryMode
 }: Props) {
   switch (theme) {
@@ -94,6 +98,8 @@ function Legend({
       return resolvePreventionMapTypeLegend(preventionFilters, countryMode);
     case "diagnosis":
       return resolveDiagnosisMapTypeLegend(diagnosisFilters, countryMode);
+    case "treatment":
+      return resolveTreatmentMapTypeLegend(treatmentFilters, countryMode);
     default:
       return <span />;
   }

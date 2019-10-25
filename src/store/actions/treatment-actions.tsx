@@ -2,6 +2,7 @@ import { createAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import { TreatmentResponse } from "../../types/Treatment";
 import { AjaxError } from "rxjs/ajax";
+import { TreatmentMapType } from "../types";
 
 export const fetchTreatmentStudiesRequest = createAction(
   ActionTypeEnum.FetchTreatmentStudiesRequest,
@@ -21,3 +22,21 @@ export const fetchTreatmentStudiesError = createAction(
     return (error: AjaxError) => action();
   }
 );
+
+export const setTreatmentMapType = createAction(
+  ActionTypeEnum.SetTreatmentMapType,
+  action => {
+    return (mapType: TreatmentMapType) => action(mapType);
+  }
+);
+
+export const setTreatmentPlasmodiumSpecies = createAction(
+  ActionTypeEnum.SetPlasmodiumSpecies,
+  action => {
+    return (plasmodiumSpecies: string) => action(plasmodiumSpecies);
+  }
+);
+
+export const setTreatmentDrug = createAction(ActionTypeEnum.SetDrug, action => {
+  return (drug: string) => action(drug);
+});

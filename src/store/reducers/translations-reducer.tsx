@@ -57,18 +57,30 @@ export const selectAssayTypes = createSelector(
   R.prop("ASSAY_TYPE")
 );
 
-export const selectTypes = createSelector(selectFields, R.prop("TYPE"));
+export const selectTypes = createSelector(
+  selectFields,
+  R.prop("TYPE")
+);
 
 export const selectSynergistTypes = createSelector(
   selectFields,
   R.prop("SYNERGIST_TYPE")
 );
 
-export const selectSpecies = createSelector(selectFields, R.prop("SPECIES"));
+export const selectSpecies = createSelector(
+  selectFields,
+  R.prop("SPECIES")
+);
 
-export const selectSurveyTypes = createSelector(selectFields, R.prop("SURVEY_TYPE"));
+export const selectSurveyTypes = createSelector(
+  selectFields,
+  R.prop("SURVEY_TYPE")
+);
 
-export const selectPatientType = createSelector(selectFields, R.prop("PATIENT_TYPE"));
+export const selectPatientType = createSelector(
+  selectFields,
+  R.prop("PATIENT_TYPE")
+);
 
 export const selectCountries = createSelector(
   selectTranslationsState,
@@ -76,4 +88,14 @@ export const selectCountries = createSelector(
     const { COUNTRY_NAME } = R.groupBy(R.path(["FIELD"]), state.translations);
     return COUNTRY_NAME;
   }
+);
+
+export const selectPlasmodiumSpecies = createSelector(
+  selectFields,
+  R.prop("PLASMODIUM_SPECIES")
+);
+
+export const selectDrugs = createSelector(
+  selectFields,
+  R.prop("DRUG_NAME")
 );

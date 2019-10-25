@@ -32,6 +32,10 @@ import {
   setDiagnosisPatientType,
   setDiagnosisSurveyTypes
 } from "./store/actions/diagnosis-actions";
+import {
+  setTreatmentDrug,
+  setTreatmentPlasmodiumSpecies
+} from "./store/actions/treatment-actions";
 
 export const { store } = createStore();
 
@@ -87,6 +91,14 @@ ReduxQuerySync({
     deletionType: {
       selector: (state: State) => state.diagnosis.filters.deletionType,
       action: (value: string) => setDiagnosisDeletionType(value)
+    },
+    plasmodiumSpecies: {
+      selector: (state: State) => state.treatment.filters.plasmodiumSpecies,
+      action: (value: string) => setTreatmentPlasmodiumSpecies(value)
+    },
+    drug: {
+      selector: (state: State) => state.treatment.filters.drug,
+      action: (value: string) => setTreatmentDrug(value)
     },
     endemicity: {
       selector: (state: State) => state.malaria.endemicity,
