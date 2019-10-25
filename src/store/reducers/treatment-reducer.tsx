@@ -2,11 +2,14 @@ import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { State, TreatmentState } from "../types";
+import { State, TreatmentMapType, TreatmentState } from "../types";
 import { TreatmentResponse } from "../../types/Treatment";
 
 const initialState: TreatmentState = Object.freeze({
-  studies: []
+  studies: [],
+  filters: {
+    mapType: TreatmentMapType.RESISTANCE_STATUS
+  }
 });
 
 export default createReducer<TreatmentState>(initialState, {
@@ -20,4 +23,9 @@ export const selectTreatmentState = (state: State) => state.treatment;
 export const selectTreatmentStudies = createSelector(
   selectTreatmentState,
   R.prop("studies")
+);
+
+export const selectTreatmentFilters = createSelector(
+  selectTreatmentState,
+  R.prop("filters")
 );

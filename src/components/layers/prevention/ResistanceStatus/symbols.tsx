@@ -1,7 +1,7 @@
 export const ConfirmationStatusColors: { [key: string]: string[] } = {
   Confirmed: ["#D43501", "#882201"],
   Possible: ["#FF9502", "#b56900"],
-  Susceptible: ["#869C66", "#5e6e47"]
+  Susceptible: ["#32b626", "#26851a"]
 };
 
 export default {

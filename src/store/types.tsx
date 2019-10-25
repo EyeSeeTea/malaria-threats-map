@@ -50,10 +50,6 @@ export enum DiagnosisMapType {
   GENE_DELETIONS
 }
 
-export interface InvasiveState {
-  studies: InvasiveStudy[];
-}
-
 export enum PreventionMapType {
   RESISTANCE_STATUS,
   INTENSITY_STATUS,
@@ -77,8 +73,30 @@ export interface PreventionState {
   filters: PreventionFilters;
 }
 
+export enum TreatmentMapType {
+  RESISTANCE_STATUS
+}
+
+export interface TreatmentFilters {
+  mapType: TreatmentMapType;
+}
+
 export interface TreatmentState {
   studies: TreatmentStudy[];
+  filters: TreatmentFilters;
+}
+
+export enum InvasiveMapType {
+  RESISTANCE_STATUS
+}
+
+export interface InvasiveFilters {
+  mapType: InvasiveMapType;
+}
+
+export interface InvasiveState {
+  studies: InvasiveStudy[];
+  filters: InvasiveFilters;
 }
 
 export interface CountryLayerState {

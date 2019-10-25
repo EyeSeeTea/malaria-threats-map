@@ -29,9 +29,9 @@ export const getInvasiveStudiesEpic = (
         }`,
         returnGeometry: false,
         spatialRel: "esriSpatialRelIntersects",
-        outFields: "OBJECTID,Latitude,Longitude,YEAR_START",
+        outFields: "*",
         resultOffset: 0,
-        resultRecordCount: 25000
+        resultRecordCount: 50000
       };
       const query: string = Object.keys(params)
         .map(key => `${key}=${params[key]}`)

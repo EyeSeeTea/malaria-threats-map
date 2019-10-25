@@ -306,22 +306,25 @@ class PreventionLayer extends Component<Props> {
       countryMode,
       preventionFilters: { mapType }
     } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(study =>
-      countryMode
-        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-        : study.SITE_ID === e.features[0].properties.SITE_ID
+    const filteredStudies = this.filterStudies(studies).filter(
+      study =>
+        countryMode
+          ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+          : study.SITE_ID === e.features[0].properties.SITE_ID
     );
 
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>
         <ThemeProvider theme={theme}>
           <Provider store={store}>
-            {countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
-              <ResistanceStatusCountryChart studies={filteredStudies} />
-            )}
-            {countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
-              <IntensityStatusCountryChart studies={filteredStudies} />
-            )}
+            {countryMode &&
+              mapType === PreventionMapType.RESISTANCE_STATUS && (
+                <ResistanceStatusCountryChart studies={filteredStudies} />
+              )}
+            {countryMode &&
+              mapType === PreventionMapType.INTENSITY_STATUS && (
+                <IntensityStatusCountryChart studies={filteredStudies} />
+              )}
             {countryMode &&
               mapType === PreventionMapType.RESISTANCE_MECHANISM && (
                 <ResistanceMechanismCountryChart studies={filteredStudies} />
@@ -334,9 +337,10 @@ class PreventionLayer extends Component<Props> {
               mapType === PreventionMapType.RESISTANCE_STATUS && (
                 <ResistanceStatusChart studies={filteredStudies} />
               )}
-            {!countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
-              <ResistanceStatusChart studies={filteredStudies} />
-            )}
+            {!countryMode &&
+              mapType === PreventionMapType.INTENSITY_STATUS && (
+                <ResistanceStatusChart studies={filteredStudies} />
+              )}
             {!countryMode &&
               mapType === PreventionMapType.RESISTANCE_MECHANISM && (
                 <ResistanceMechanismsChart studies={filteredStudies} />
