@@ -1,7 +1,8 @@
 import { createAction } from "typesafe-actions";
-import { ActionTypeEnum } from "../../store/actions";
+import { ActionTypeEnum } from "../actions";
 import { InvasiveResponse } from "../../types/Invasive";
 import { AjaxError } from "rxjs/ajax";
+import { InvasiveMapType } from "../types";
 
 export const fetchInvasiveStudiesRequest = createAction(
   ActionTypeEnum.FetchInvasiveStudiesRequest,
@@ -19,5 +20,19 @@ export const fetchInvasiveStudiesError = createAction(
   ActionTypeEnum.FetchInvasiveStudiesError,
   action => {
     return (error: AjaxError) => action();
+  }
+);
+
+export const setInvasiveMapType = createAction(
+  ActionTypeEnum.SetInvasiveMapType,
+  action => {
+    return (mapType: InvasiveMapType) => action(mapType);
+  }
+);
+
+export const setInvasiveVectorSpecies = createAction(
+  ActionTypeEnum.SetInvasiveVectorSpecies,
+  action => {
+    return (vectorSpecies: string[]) => action(vectorSpecies);
   }
 );

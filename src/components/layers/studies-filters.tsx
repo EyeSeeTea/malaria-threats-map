@@ -1,12 +1,15 @@
 import { PreventionStudy } from "../../types/Prevention";
 import { DELETION_TYPES } from "../filters/DeletionTypeFilter";
+import { VectorSpeciesKey } from "../filters/VectorSpeciesFilter";
 
-export const filterByYearRange = (years: number[]) => (
-  study: PreventionStudy
-) => {
+export const filterByYearRange = (
+  years: number[],
+  allowEmpty: boolean = false
+) => (study: PreventionStudy) => {
   return (
-    parseInt(study.YEAR_START) >= years[0] &&
-    parseInt(study.YEAR_START) <= years[1]
+    (allowEmpty && !study.YEAR_START) ||
+    (parseInt(study.YEAR_START) >= years[0] &&
+      parseInt(study.YEAR_START) <= years[1])
   );
 };
 
@@ -101,4 +104,13 @@ export const filterByPlasmodiumSpecies = (plasmodiumSpecies: string) => (
 
 export const filterByDrug = (drug: string) => (study: any) => {
   return study.DRUG_NAME === drug;
+};
+
+export const filterByVectorSpecies = (species: string[]) => (study: any) => {
+  return (
+    !species.length ||
+    species
+      .map(specie => VectorSpeciesKey[specie])
+      .includes(study.VECTOR_SPECIES)
+  );
 };

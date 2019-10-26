@@ -47,7 +47,7 @@ class DataProvider extends Component<Props> {
         (acc, translation) => {
           return {
             ...acc,
-            [translation.VALUE_.replace(".", "_")]: translation.EN
+            [translation.VALUE_.replace(".", "%2E")]: translation.EN
           };
         },
         {}
@@ -56,7 +56,7 @@ class DataProvider extends Component<Props> {
         (acc, translation) => {
           return {
             ...acc,
-            [translation.VALUE_.replace(".", "_")]: translation.ES
+            [translation.VALUE_.replace(".", "%2E")]: translation.ES
           };
         },
         {}
@@ -65,7 +65,7 @@ class DataProvider extends Component<Props> {
         (acc, translation) => {
           return {
             ...acc,
-            [translation.VALUE_.replace(".", "_")]: translation.FR
+            [translation.VALUE_.replace(".", "%2E")]: translation.FR
           };
         },
         {}

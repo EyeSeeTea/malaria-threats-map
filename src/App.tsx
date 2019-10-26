@@ -36,6 +36,7 @@ import {
   setTreatmentDrug,
   setTreatmentPlasmodiumSpecies
 } from "./store/actions/treatment-actions";
+import { setInvasiveVectorSpecies } from "./store/actions/invasive-actions";
 
 export const { store } = createStore();
 
@@ -78,6 +79,11 @@ ReduxQuerySync({
       selector: (state: State) => state.prevention.filters.species,
       action: (value: string) =>
         setSpecies(value ? value.split(",") : undefined)
+    },
+    vectorSpecies: {
+      selector: (state: State) => state.invasive.filters.vectorSpecies,
+      action: (value: string) =>
+        setInvasiveVectorSpecies(value ? value.split(",") : undefined)
     },
     surveyTypes: {
       selector: (state: State) => state.diagnosis.filters.surveyTypes,

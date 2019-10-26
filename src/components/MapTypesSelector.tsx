@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   DiagnosisMapType,
+  InvasiveMapType,
   PreventionMapType,
   State,
   TreatmentMapType
@@ -15,18 +16,22 @@ import { setDiagnosisMapType } from "../store/actions/diagnosis-actions";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 import { setTreatmentMapType } from "../store/actions/treatment-actions";
+import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
+import { setInvasiveMapType } from "../store/actions/invasive-actions";
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
   preventionFilters: selectPreventionFilters(state),
   diagnosisFilters: selectDiagnosisFilters(state),
-  treatmentFilters: selectTreatmentFilters(state)
+  treatmentFilters: selectTreatmentFilters(state),
+  invasiveFilters: selectInvasiveFilters(state)
 });
 
 const mapDispatchToProps = {
   setPreventionMapType: setPreventionMapType,
   setDiagnosisMapType: setDiagnosisMapType,
-  setTreatmentMapType: setTreatmentMapType
+  setTreatmentMapType: setTreatmentMapType,
+  setInvasiveMapType: setInvasiveMapType
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -58,6 +63,10 @@ const treatmentSuggestions: OptionType[] = [
   { label: "Treatment Failure", value: TreatmentMapType.TREATMENT_FAILURE }
 ];
 
+const invasiveSuggestions: OptionType[] = [
+  { label: "Vector Ocurrance", value: InvasiveMapType.VECTOR_OCCURANCE }
+];
+
 class MapTypesSelector extends Component<Props> {
   onChange = (value: ValueType<OptionType>) => {
     const selection = value as OptionType;
@@ -70,6 +79,9 @@ class MapTypesSelector extends Component<Props> {
         break;
       case "treatment":
         this.props.setTreatmentMapType(selection.value);
+        break;
+      case "invasive":
+        this.props.setInvasiveMapType(selection.value);
         break;
       default:
         break;
@@ -90,6 +102,10 @@ class MapTypesSelector extends Component<Props> {
         return treatmentSuggestions.filter(
           s => s.value !== this.props.treatmentFilters.mapType
         );
+      case "invasive":
+        return invasiveSuggestions.filter(
+          s => s.value !== this.props.invasiveFilters.mapType
+        );
       default:
         break;
     }
@@ -108,6 +124,10 @@ class MapTypesSelector extends Component<Props> {
       case "treatment":
         return treatmentSuggestions.find(
           s => s.value === this.props.treatmentFilters.mapType
+        );
+      case "invasive":
+        return invasiveSuggestions.find(
+          s => s.value === this.props.invasiveFilters.mapType
         );
       default:
         break;

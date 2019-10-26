@@ -139,7 +139,7 @@ function Control(props: ControlProps<OptionType>) {
 function Option(props: OptionProps<OptionType>) {
   const { t } = useTranslation("common");
   const value = props.children
-    ? t(props.children.toString().replace(".", "_"))
+    ? t(props.children.toString().replace("%2E", "."))
     : "";
   return (
     <MenuItem
@@ -175,7 +175,7 @@ function Placeholder(props: MuiPlaceholderProps) {
 function SingleValue(props: SingleValueProps<OptionType>) {
   const { t } = useTranslation("common");
   const value = props.children
-    ? t(props.children.toString().replace(".", "_"))
+    ? t(props.children.toString().replace("%2E", "."))
     : "";
   return (
     <Typography
@@ -198,7 +198,7 @@ function ValueContainer(props: ValueContainerProps<OptionType>) {
 function MultiValue(props: MultiValueProps<OptionType>) {
   const { t } = useTranslation("common");
   const value = props.children
-    ? t(props.children.toString().replace(".", "_"))
+    ? t(props.children.toString().replace("%2E", "."))
     : "";
   return (
     <Chip

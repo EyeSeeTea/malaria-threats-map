@@ -10,6 +10,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import {
   DiagnosisMapType,
+  InvasiveMapType,
   PreventionMapType,
   State,
   TreatmentMapType
@@ -27,6 +28,8 @@ import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import PboDeploymentFilters from "./layers/prevention/PboDeployment/PboDeploymentFilters";
 import TreatmentFailureFilters from "./layers/treatment/TreatmentFailure/TreatmentFailureFilters";
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
+import VectorOccuranceFilters from "./layers/invasive/VectorOccurance/VectorOccuranceFilters";
+import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -65,7 +68,8 @@ const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
   preventionFilters: selectPreventionFilters(state),
   diagnosisFilters: selectDiagnosisFilters(state),
-  treatmentFilters: selectTreatmentFilters(state)
+  treatmentFilters: selectTreatmentFilters(state),
+  invasiveFilters: selectInvasiveFilters(state)
 });
 
 const mapDispatchToProps = {
@@ -80,7 +84,8 @@ function Filters({
   theme,
   preventionFilters,
   diagnosisFilters,
-  treatmentFilters
+  treatmentFilters,
+  invasiveFilters
 }: Props) {
   const classes = useStyles({});
   const [open, setOpen] = React.useState(false);
@@ -121,6 +126,13 @@ function Filters({
         switch (treatmentFilters.mapType) {
           case TreatmentMapType.TREATMENT_FAILURE:
             return <TreatmentFailureFilters />;
+          default:
+            return <div />;
+        }
+      case "invasive":
+        switch (invasiveFilters.mapType) {
+          case InvasiveMapType.VECTOR_OCCURANCE:
+            return <VectorOccuranceFilters />;
           default:
             return <div />;
         }

@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { resolveMapTypeLegend as resolvePreventionMapTypeLegend } from "./layers/prevention/utils";
 import { resolveMapTypeLegend as resolveDiagnosisMapTypeLegend } from "./layers/diagnosis/utils";
 import { resolveMapTypeLegend as resolveTreatmentMapTypeLegend } from "./layers/treatment/utils";
+import { resolveMapTypeLegend as resolveInvasiveMapTypeLegend } from "./layers/invasive/utils";
 import {
   selectCountryMode,
   selectFilters,
@@ -17,6 +18,7 @@ import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
+import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 
 export const LegendContainer = styled(Paper)`
   padding: 16px;
@@ -75,6 +77,7 @@ const mapStateToProps = (state: State) => ({
   preventionFilters: selectPreventionFilters(state),
   diagnosisFilters: selectDiagnosisFilters(state),
   treatmentFilters: selectTreatmentFilters(state),
+  invasiveFilters: selectInvasiveFilters(state),
   countryMode: selectCountryMode(state)
 });
 
@@ -91,6 +94,7 @@ function Legend({
   preventionFilters,
   diagnosisFilters,
   treatmentFilters,
+  invasiveFilters,
   countryMode
 }: Props) {
   switch (theme) {
@@ -100,6 +104,8 @@ function Legend({
       return resolveDiagnosisMapTypeLegend(diagnosisFilters, countryMode);
     case "treatment":
       return resolveTreatmentMapTypeLegend(treatmentFilters, countryMode);
+    case "invasive":
+      return resolveInvasiveMapTypeLegend(invasiveFilters, countryMode);
     default:
       return <span />;
   }

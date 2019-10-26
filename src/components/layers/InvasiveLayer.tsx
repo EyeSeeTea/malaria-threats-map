@@ -1,21 +1,33 @@
-import React, {Component} from "react";
-import {connect, Provider} from "react-redux";
-import {InvasiveMapType, State} from "../../store/types";
-import {studiesToGeoJson} from "./layer-utils";
+import React, { Component } from "react";
+import { connect, Provider } from "react-redux";
+import { InvasiveMapType, State } from "../../store/types";
+import { studiesToGeoJson } from "./layer-utils";
 import setupEffects from "./effects";
-import {selectCountryMode, selectFilters, selectRegion, selectTheme} from "../../store/reducers/base-reducer";
-import {selectCountries} from "../../store/reducers/country-layer-reducer";
+import {
+  selectCountryMode,
+  selectFilters,
+  selectRegion,
+  selectTheme
+} from "../../store/reducers/base-reducer";
+import { selectCountries } from "../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
-import {filterByResistanceStatus} from "./studies-filters";
-import {InvasiveStudy} from "../../types/Invasive";
-import {resolveMapTypeSymbols} from "./invasive/utils";
+import {
+  filterByCountry,
+  filterByVectorSpecies,
+  filterByYearRange
+} from "./studies-filters";
+import { InvasiveStudy } from "../../types/Invasive";
+import { resolveMapTypeSymbols, studySelector } from "./invasive/utils";
 import ReactDOM from "react-dom";
-import {I18nextProvider} from "react-i18next";
+import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
-import {store, theme} from "../../App";
+import { store, theme } from "../../App";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
-import {selectInvasiveFilters, selectInvasiveStudies} from "../../store/reducers/invasive-reducer";
+import {
+  selectInvasiveFilters,
+  selectInvasiveStudies
+} from "../../store/reducers/invasive-reducer";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
@@ -37,7 +49,7 @@ const mapStateToProps = (state: State) => ({
   studies: selectInvasiveStudies(state),
   theme: selectTheme(state),
   filters: selectFilters(state),
-  treatmentFilters: selectInvasiveFilters(state),
+  invasiveFilters: selectInvasiveFilters(state),
   region: selectRegion(state),
   countries: selectCountries(state),
   countryMode: selectCountryMode(state)
@@ -57,7 +69,7 @@ class InvasiveLayer extends Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     const {
-      treatmentFilters: { mapType },
+      invasiveFilters: { mapType, vectorSpecies },
       countryMode,
       filters,
       region,
@@ -65,19 +77,22 @@ class InvasiveLayer extends Component<Props> {
     } = this.props;
     this.mountLayer(prevProps);
     this.renderLayer();
-    const mapTypeChange = prevProps.treatmentFilters.mapType !== mapType;
+    const mapTypeChange = prevProps.invasiveFilters.mapType !== mapType;
     const yearChange =
       prevProps.filters[0] !== filters[0] ||
       prevProps.filters[1] !== filters[1];
     const countryChange = prevProps.region.country !== region.country;
     const countryModeChange = prevProps.countryMode !== countryMode;
     const countriesChange = prevProps.countries.length !== countries.length;
+    const speciesChange =
+      prevProps.invasiveFilters.vectorSpecies.length !== vectorSpecies.length;
     if (
       mapTypeChange ||
       yearChange ||
       countryChange ||
       countryModeChange ||
-      countriesChange
+      countriesChange ||
+      speciesChange
     ) {
       if (this.popup) {
         this.popup.remove();
@@ -92,19 +107,25 @@ class InvasiveLayer extends Component<Props> {
   }
 
   setupGeoJsonData = (studies: any[]) => {
-    const { mapType } = this.props.treatmentFilters;
+    const { mapType } = this.props.invasiveFilters;
     const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
-    const filteredStudies = R.values(groupedStudies).map(group => group[0]);
+    const filteredStudies = R.values(groupedStudies).map(group =>
+      studySelector(group, mapType)
+    );
     return filteredStudies;
   };
 
   buildFilters = () => {
-    const { treatmentFilters, filters, region } = this.props;
-    switch (treatmentFilters.mapType) {
-      case InvasiveMapType.RESISTANCE_STATUS:
-        return [];
+    const { invasiveFilters, filters, region } = this.props;
+    switch (invasiveFilters.mapType) {
+      case InvasiveMapType.VECTOR_OCCURANCE:
+        return [
+          filterByVectorSpecies(invasiveFilters.vectorSpecies),
+          filterByYearRange(filters, true),
+          filterByCountry(region.country)
+        ];
       default:
-        return [filterByResistanceStatus];
+        return [filterByCountry(region.country)];
     }
   };
 
@@ -168,7 +189,7 @@ class InvasiveLayer extends Component<Props> {
   };
 
   mountLayer(prevProps?: Props) {
-    const { studies, treatmentFilters, countryMode } = this.props;
+    const { studies, countryMode } = this.props;
     if (
       !prevProps ||
       (prevProps.studies.length !== studies.length && studies.length)
@@ -187,9 +208,7 @@ class InvasiveLayer extends Component<Props> {
         data: studiesToGeoJson(data)
       };
       this.props.map.addSource(INVASIVE_SOURCE_ID, source);
-      this.props.map.addLayer(
-        layer(resolveMapTypeSymbols(treatmentFilters, countryMode))
-      );
+      this.props.map.addLayer(layer(resolveMapTypeSymbols()));
 
       setupEffects(this.props.map, INVASIVE_SOURCE_ID, INVASIVE_LAYER_ID);
       this.setupPopover();
@@ -199,17 +218,13 @@ class InvasiveLayer extends Component<Props> {
 
   onClickListener = (e: any, a: any) => {
     const placeholder = document.createElement("div");
-    const {
-      studies,
-      countryMode,
-      treatmentFilters: { mapType }
-    } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(
-      study =>
-        countryMode
-          ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-          : study.SITE_ID === e.features[0].properties.SITE_ID
-    );
+    // const { studies, countryMode, invasiveFilters } = this.props;
+    // const filteredStudies = this.filterStudies(studies).filter(
+    //   study =>
+    //     countryMode
+    //       ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+    //       : study.SITE_ID === e.features[0].properties.SITE_ID
+    // );
 
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>
@@ -254,9 +269,8 @@ class InvasiveLayer extends Component<Props> {
   };
 
   applyMapTypeSymbols = () => {
-    const { treatmentFilters, countryMode } = this.props;
     const layer = this.props.map.getLayer(INVASIVE_LAYER_ID);
-    const mapTypeSymbols = resolveMapTypeSymbols(treatmentFilters, countryMode);
+    const mapTypeSymbols = resolveMapTypeSymbols();
     if (layer && mapTypeSymbols) {
       this.props.map.setPaintProperty(
         INVASIVE_LAYER_ID,

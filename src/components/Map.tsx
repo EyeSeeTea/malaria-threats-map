@@ -11,7 +11,7 @@ import DiagnosisLayer from "./layers/DiagnosisLayer";
 import TreatmentLayer from "./layers/TreatmentLayer";
 import InvasiveLayer from "./layers/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
-import InitialDialog from "./InitialDialog";
+// import InitialDialog from "./InitialDialog";
 import Filters from "./Filters";
 import LanguageSelector from "./LanguageSelector";
 import Legend from "./Leyend";
@@ -162,7 +162,10 @@ class Map extends React.Component<any> {
   render() {
     const { initialDialogOpen } = this.props;
     const countryTogglerDisabled =
-      this.props.preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
+      (this.props.theme === "prevention" &&
+        this.props.preventionFilters.mapType ===
+          PreventionMapType.PBO_DEPLOYMENT) ||
+      this.props.theme === "invasive";
     return (
       <React.Fragment>
         <div

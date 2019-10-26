@@ -12,7 +12,7 @@ function range(start: number, end: number) {
     .fill(1)
     .map((_, idx) => start + idx);
 }
-const marks = range(1998, 2019).map(
+const marks = range(1988, 2019).map(
   year =>
     year % 5 === 0
       ? {
@@ -69,7 +69,7 @@ const YearRangeSelector = ({ filters, setFilters }: Props) => {
         getAriaValueText={valuetext}
         marks={marks}
         step={1}
-        min={1998}
+        min={1988}
         max={2019}
       />
     </div>

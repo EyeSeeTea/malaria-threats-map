@@ -91,11 +91,12 @@ export interface TreatmentState {
 }
 
 export enum InvasiveMapType {
-  RESISTANCE_STATUS
+  VECTOR_OCCURANCE
 }
 
 export interface InvasiveFilters {
   mapType: InvasiveMapType;
+  vectorSpecies: string[];
 }
 
 export interface InvasiveState {

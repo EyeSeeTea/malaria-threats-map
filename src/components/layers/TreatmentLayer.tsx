@@ -20,7 +20,6 @@ import {
   filterByDimensionId,
   filterByDrug,
   filterByPlasmodiumSpecies,
-  filterByResistanceStatus,
   filterByYearRange
 } from "./studies-filters";
 import { TreatmentStudy } from "../../types/Treatment";
@@ -30,10 +29,7 @@ import i18next from "i18next";
 import { store, theme } from "../../App";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import { State, TreatmentMapType } from "../../store/types";
-import { resolveMapTypeSymbols } from "./treatment/utils";
-import { resolveResistanceStatus } from "./prevention/ResistanceStatus/utils";
-import { TREATMENT_FAILURE_STATUS } from "./treatment/TreatmentFailure/utils";
-import { studySelector } from "./treatment/utils";
+import { resolveMapTypeSymbols, studySelector } from "./treatment/utils";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -170,10 +166,6 @@ class TreatmentLayer extends Component<Props> {
 
     const sortedCountries = R.sortBy(country => country.STUDIES, countries);
     if (sortedCountries.length === 0) return [];
-    // const maxSize = sortedCountries[sortedCountries.length - 1].STUDIES;
-    // const minSize = sortedCountries[0].STUDIES;
-    //
-    // const ratio = (20 - 5) / (maxSize - minSize);
 
     const getSize = (nStudies: number) => {
       if (nStudies > 10) {
@@ -193,8 +185,6 @@ class TreatmentLayer extends Component<Props> {
 
     return countries.map(country => ({
       ...country,
-      // SIZE: 5 + ratio * (country.STUDIES - minSize),
-      // SIZE_HOVER: 5 + ratio * (country.STUDIES - minSize)
       SIZE: getSize(country.STUDIES),
       SIZE_HOVER: getSize(country.STUDIES) - 1
     }));
@@ -232,16 +222,17 @@ class TreatmentLayer extends Component<Props> {
 
   onClickListener = (e: any, a: any) => {
     const placeholder = document.createElement("div");
-    const {
-      studies,
-      countryMode,
-      treatmentFilters: { mapType }
-    } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(study =>
-      countryMode
-        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-        : study.SITE_ID === e.features[0].properties.SITE_ID
-    );
+    // const {
+    //   studies,
+    //   countryMode,
+    //   treatmentFilters: { mapType }
+    // } = this.props;
+    // const filteredStudies = this.filterStudies(studies).filter(
+    //   study =>
+    //     countryMode
+    //       ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+    //       : study.SITE_ID === e.features[0].properties.SITE_ID
+    // );
 
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>

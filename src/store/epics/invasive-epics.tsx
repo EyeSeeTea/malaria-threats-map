@@ -24,9 +24,7 @@ export const getInvasiveStudiesEpic = (
     switchMap(() => {
       const params: Params = {
         f: "json",
-        where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${
-          MapServerConfig.years.to
-        }`,
+        where: `1=1`,
         returnGeometry: false,
         spatialRel: "esriSpatialRelIntersects",
         outFields: "*",
