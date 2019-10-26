@@ -8,7 +8,7 @@ export interface TreatmentResponse {
 }
 
 export interface TreatmentFeature {
-  attributes: TreatmentStudy[];
+  attributes: TreatmentStudy;
 }
 
 export interface FieldAlias {
@@ -20,7 +20,7 @@ export interface TreatmentStudy extends Study {
   CITATION_LONG: string;
   CITATION_URL: string;
   COUNTRY_NAME: string;
-  Code: string;
+  Code: number;
   INSECTICIDE_CLASS: string;
   INSECTICIDE_CONC: string;
   INSECTICIDE_INTENSITY: string;
@@ -56,6 +56,8 @@ export interface TreatmentStudy extends Study {
   VILLAGE_NAME: string;
   YEAR_END: string;
   YEAR_START: string;
+  DimensionID: number;
+  K13_CODE: number;
 }
 
 export interface Field {

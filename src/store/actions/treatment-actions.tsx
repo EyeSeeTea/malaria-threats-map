@@ -40,3 +40,10 @@ export const setTreatmentPlasmodiumSpecies = createAction(
 export const setTreatmentDrug = createAction(ActionTypeEnum.SetDrug, action => {
   return (drug: string) => action(drug);
 });
+
+export const setMolecularMarker = createAction(
+  ActionTypeEnum.SetMolecularMarker,
+  action => {
+    return (molecularMarker: number) => action(molecularMarker);
+  }
+);

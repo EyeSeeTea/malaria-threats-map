@@ -19,6 +19,8 @@ import {
   filterByCountry,
   filterByDimensionId,
   filterByDrug,
+  filterByMolecularMarker,
+  filterByMolecularMarkerStudy,
   filterByPlasmodiumSpecies,
   filterByYearRange
 } from "./studies-filters";
@@ -71,7 +73,7 @@ class TreatmentLayer extends Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     const {
-      treatmentFilters: { mapType, plasmodiumSpecies, drug },
+      treatmentFilters: { mapType, plasmodiumSpecies, drug, molecularMarker },
       countryMode,
       filters,
       region,
@@ -87,6 +89,8 @@ class TreatmentLayer extends Component<Props> {
     const plasmodiumSpeciesChange =
       prevProps.treatmentFilters.plasmodiumSpecies !== plasmodiumSpecies;
     const drugChange = prevProps.treatmentFilters.drug !== drug;
+    const molecularMarkerChange =
+      prevProps.treatmentFilters.molecularMarker !== molecularMarker;
     const countryModeChange = prevProps.countryMode !== countryMode;
     const countriesChange = prevProps.countries.length !== countries.length;
     if (
@@ -96,7 +100,8 @@ class TreatmentLayer extends Component<Props> {
       countryModeChange ||
       countriesChange ||
       plasmodiumSpeciesChange ||
-      drugChange
+      drugChange ||
+      molecularMarkerChange
     ) {
       if (this.popup) {
         this.popup.remove();
@@ -127,6 +132,21 @@ class TreatmentLayer extends Component<Props> {
           filterByDimensionId(256),
           filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
           filterByDrug(treatmentFilters.drug),
+          filterByYearRange(filters),
+          filterByCountry(region.country)
+        ];
+      case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
+        return [
+          filterByDimensionId(256),
+          filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
+          filterByDrug(treatmentFilters.drug),
+          filterByYearRange(filters),
+          filterByCountry(region.country)
+        ];
+      case TreatmentMapType.MOLECULAR_MARKERS:
+        return [
+          filterByMolecularMarkerStudy(),
+          filterByMolecularMarker(treatmentFilters.molecularMarker),
           filterByYearRange(filters),
           filterByCountry(region.country)
         ];

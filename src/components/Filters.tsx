@@ -30,6 +30,8 @@ import TreatmentFailureFilters from "./layers/treatment/TreatmentFailure/Treatme
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 import VectorOccuranceFilters from "./layers/invasive/VectorOccurance/VectorOccuranceFilters";
 import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
+import DelayedParasiteClearanceFilters from "./layers/treatment/DelayedParasiteClearance/DelayedParasiteClearanceFilters";
+import MolecularMarkerFilters from "./layers/treatment/MolecularMarkers/MolecularMarkerFilters";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -126,6 +128,10 @@ function Filters({
         switch (treatmentFilters.mapType) {
           case TreatmentMapType.TREATMENT_FAILURE:
             return <TreatmentFailureFilters />;
+          case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
+            return <DelayedParasiteClearanceFilters />;
+          case TreatmentMapType.MOLECULAR_MARKERS:
+            return <MolecularMarkerFilters />;
           default:
             return <div />;
         }

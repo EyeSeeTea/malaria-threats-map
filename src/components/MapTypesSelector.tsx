@@ -60,7 +60,12 @@ const diagnosisSuggestions: OptionType[] = [
 ];
 
 const treatmentSuggestions: OptionType[] = [
-  { label: "Treatment Failure", value: TreatmentMapType.TREATMENT_FAILURE }
+  { label: "Treatment Failure", value: TreatmentMapType.TREATMENT_FAILURE },
+  {
+    label: "Delayed parasite clearance",
+    value: TreatmentMapType.DELAYED_PARASITE_CLEARANCE
+  },
+  { label: "Molecular markers", value: TreatmentMapType.MOLECULAR_MARKERS }
 ];
 
 const invasiveSuggestions: OptionType[] = [

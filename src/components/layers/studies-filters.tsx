@@ -1,11 +1,10 @@
-import { PreventionStudy } from "../../types/Prevention";
 import { DELETION_TYPES } from "../filters/DeletionTypeFilter";
 import { VectorSpeciesKey } from "../filters/VectorSpeciesFilter";
 
 export const filterByYearRange = (
   years: number[],
   allowEmpty: boolean = false
-) => (study: PreventionStudy) => {
+) => (study: any) => {
   return (
     (allowEmpty && !study.YEAR_START) ||
     (parseInt(study.YEAR_START) >= years[0] &&
@@ -113,4 +112,14 @@ export const filterByVectorSpecies = (species: string[]) => (study: any) => {
       .map(specie => VectorSpeciesKey[specie])
       .includes(study.VECTOR_SPECIES)
   );
+};
+
+export const filterByMolecularMarkerStudy = () => (study: any) => {
+  return study.DimensionID === 255 || study.DimensionID === 257;
+};
+
+export const filterByMolecularMarker = (molecularMarker: number) => (
+  study: any
+) => {
+  return study.MM_TYPE === molecularMarker.toString();
 };

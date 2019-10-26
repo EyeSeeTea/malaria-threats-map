@@ -19,7 +19,6 @@ import {
 } from "./store/actions/base-actions";
 import {
   setAssayTypes,
-  setInsecticideClass,
   setInsecticideTypes,
   setPreventionMapType,
   setSpecies,
@@ -29,14 +28,20 @@ import {
 import Disclaimer from "./components/Disclaimer";
 import {
   setDiagnosisDeletionType,
+  setDiagnosisMapType,
   setDiagnosisPatientType,
   setDiagnosisSurveyTypes
 } from "./store/actions/diagnosis-actions";
 import {
+  setMolecularMarker,
   setTreatmentDrug,
+  setTreatmentMapType,
   setTreatmentPlasmodiumSpecies
 } from "./store/actions/treatment-actions";
-import { setInvasiveVectorSpecies } from "./store/actions/invasive-actions";
+import {
+  setInvasiveMapType,
+  setInvasiveVectorSpecies
+} from "./store/actions/invasive-actions";
 
 export const { store } = createStore();
 
@@ -48,13 +53,42 @@ ReduxQuerySync({
       action: (value: string) => setThemeAction(value || "prevention")
     },
     mapType: {
-      selector: (state: State) => state.prevention.filters.mapType,
-      action: (value: string) =>
-        setPreventionMapType(value ? parseInt(value) : 0)
-    },
-    insecticideClass: {
-      selector: (state: State) => state.prevention.filters.insecticideClass,
-      action: (value: string) => setInsecticideClass(value)
+      selector: (state: State) => {
+        switch (state.malaria.theme) {
+          case "prevention":
+            return `prevention:${state.prevention.filters.mapType}`;
+          case "diagnosis":
+            return `diagnosis:${state.diagnosis.filters.mapType}`;
+          case "treatment":
+            return `treatment:${state.treatment.filters.mapType}`;
+          case "invasive":
+            return `invasive:${state.invasive.filters.mapType}`;
+          default:
+            return `prevention:0`;
+        }
+      },
+      action: (value: string) => {
+        if (!value) {
+          return setPreventionMapType(0);
+        }
+        const pair = value.split(":");
+        const mapType: number = parseInt(pair[1]);
+        if (isNaN(mapType)) {
+          return setPreventionMapType(mapType);
+        }
+        switch (pair[0]) {
+          case "prevention":
+            return setPreventionMapType(mapType);
+          case "diagnosis":
+            return setDiagnosisMapType(mapType);
+          case "treatment":
+            return setTreatmentMapType(mapType);
+          case "invasive":
+            return setInvasiveMapType(mapType);
+          default:
+            return setPreventionMapType(mapType);
+        }
+      }
     },
     insecticideTypes: {
       selector: (state: State) => state.prevention.filters.insecticideTypes,
@@ -105,6 +139,10 @@ ReduxQuerySync({
     drug: {
       selector: (state: State) => state.treatment.filters.drug,
       action: (value: string) => setTreatmentDrug(value)
+    },
+    mmType: {
+      selector: (state: State) => state.treatment.filters.molecularMarker,
+      action: (value: string) => setMolecularMarker(parseInt(value))
     },
     endemicity: {
       selector: (state: State) => state.malaria.endemicity,

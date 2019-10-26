@@ -83,6 +83,7 @@ export interface TreatmentFilters {
   mapType: TreatmentMapType;
   plasmodiumSpecies: string;
   drug: string;
+  molecularMarker: number;
 }
 
 export interface TreatmentState {
