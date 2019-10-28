@@ -22,7 +22,6 @@ import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 
 export const LegendContainer = styled(Paper)`
   padding: 16px;
-  margin-bottom: 8px;
   display: flex;
   flex-direction: column;
   width: 175px;
@@ -89,7 +88,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function Legend({
+function Leyend({
   theme,
   preventionFilters,
   diagnosisFilters,
@@ -114,4 +113,4 @@ function Legend({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Legend);
+)(Leyend);

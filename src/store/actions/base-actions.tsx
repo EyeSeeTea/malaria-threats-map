@@ -50,3 +50,10 @@ export const setInitialDialogOpen = createAction(
     return (initialDialogOpen: boolean) => action(initialDialogOpen);
   }
 );
+
+export const setFiltersOpen = createAction(
+  ActionTypeEnum.SetFiltersOpen,
+  action => {
+    return (filtersOpen: boolean) => action(filtersOpen);
+  }
+);

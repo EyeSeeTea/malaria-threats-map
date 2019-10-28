@@ -44,42 +44,42 @@ export const selectFields = createSelector(
 
 export const selectInsecticideClasses = createSelector(
   selectFields,
-  R.prop("INSECTICIDE_CLASS")
+  R.propOr([], "INSECTICIDE_CLASS")
 );
 
 export const selectInsecticideTypes = createSelector(
   selectFields,
-  R.prop("INSECTICIDE_TYPE")
+  R.propOr([], "INSECTICIDE_TYPE")
 );
 
 export const selectAssayTypes = createSelector(
   selectFields,
-  R.prop("ASSAY_TYPE")
+  R.propOr([], "ASSAY_TYPE")
 );
 
 export const selectTypes = createSelector(
   selectFields,
-  R.prop("TYPE")
+  R.propOr([], "TYPE")
 );
 
 export const selectSynergistTypes = createSelector(
   selectFields,
-  R.prop("SYNERGIST_TYPE")
+  R.propOr([], "SYNERGIST_TYPE")
 );
 
 export const selectSpecies = createSelector(
   selectFields,
-  R.prop("SPECIES")
+  R.propOr([], "SPECIES")
 );
 
 export const selectSurveyTypes = createSelector(
   selectFields,
-  R.prop("SURVEY_TYPE")
+  R.propOr([], "SURVEY_TYPE")
 );
 
 export const selectPatientType = createSelector(
   selectFields,
-  R.prop("PATIENT_TYPE")
+  R.propOr([], "PATIENT_TYPE")
 );
 
 export const selectCountries = createSelector(
@@ -92,10 +92,10 @@ export const selectCountries = createSelector(
 
 export const selectPlasmodiumSpecies = createSelector(
   selectFields,
-  R.prop("PLASMODIUM_SPECIES")
+  R.propOr([], "PLASMODIUM_SPECIES")
 );
 
 export const selectDrugs = createSelector(
   selectFields,
-  R.prop("DRUG_NAME")
+  R.propOr([], "DRUG_NAME")
 );

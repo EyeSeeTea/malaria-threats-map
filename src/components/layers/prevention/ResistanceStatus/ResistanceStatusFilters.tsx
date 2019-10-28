@@ -7,10 +7,10 @@ import TypeFilter from "../../../filters/TypeFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
 
-const FilterWrapper = styled.div`
+export const FilterWrapper = styled.div`
   margin: 10px 20px;
 `;
-const Divider = styled.div`
+export const Divider = styled.div`
   height: 10px;
 `;
 
@@ -28,7 +28,7 @@ export default function ResistanceStatusFilters() {
         <InsecticideTypeFilter />
       </FilterWrapper>
       <FilterWrapper>
-        <FormLabel component="legend">Type</FormLabel>
+        <FormLabel component="legend">Test Type</FormLabel>
         <Divider />
         <TypeFilter />
       </FilterWrapper>

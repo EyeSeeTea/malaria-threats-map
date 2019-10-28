@@ -26,6 +26,7 @@ export interface MalariaState {
   filters: number[];
   region: RegionState;
   initialDialogOpen: boolean;
+  filtersOpen: boolean;
 }
 
 export interface TranslationsState {

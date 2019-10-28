@@ -6,6 +6,7 @@ export enum ActionTypeEnum {
   MalariaToogleEndemicityLayer = "malaria/TOGGLE_ENDEMICITY_LAYER",
   MalariaSetCountryMode = "malaria/SET_COUNTRY_MODE",
   MalariaSetInitialDialogOpen = "malaria/SET_INITIAL_DIALOG_OPEN",
+  SetFiltersOpen = "malaria/SET_FILTERS_OPEN",
 
   FetchPreventionStudiesRequest = "prevention/FETCH_PREVENTION_STUDIES_REQUEST",
   FetchPreventionStudiesSuccess = "prevention/FETCH_PREVENTION_STUDIES_SUCCESS",

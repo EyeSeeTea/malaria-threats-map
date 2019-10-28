@@ -15,7 +15,11 @@ import {
   State,
   TreatmentMapType
 } from "../store/types";
-import { selectFilters, selectTheme } from "../store/reducers/base-reducer";
+import {
+  selectAreFiltersOpen,
+  selectFilters,
+  selectTheme
+} from "../store/reducers/base-reducer";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
 import { connect } from "react-redux";
@@ -32,6 +36,7 @@ import VectorOccuranceFilters from "./layers/invasive/VectorOccurance/VectorOccu
 import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 import DelayedParasiteClearanceFilters from "./layers/treatment/DelayedParasiteClearance/DelayedParasiteClearanceFilters";
 import MolecularMarkerFilters from "./layers/treatment/MolecularMarkers/MolecularMarkerFilters";
+import { setFiltersOpen } from "../store/actions/base-actions";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -71,11 +76,13 @@ const mapStateToProps = (state: State) => ({
   preventionFilters: selectPreventionFilters(state),
   diagnosisFilters: selectDiagnosisFilters(state),
   treatmentFilters: selectTreatmentFilters(state),
-  invasiveFilters: selectInvasiveFilters(state)
+  invasiveFilters: selectInvasiveFilters(state),
+  filtersOpen: selectAreFiltersOpen(state)
 });
 
 const mapDispatchToProps = {
-  setPreventionMapType: setPreventionMapType
+  setPreventionMapType: setPreventionMapType,
+  setFiltersOpen: setFiltersOpen
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -87,13 +94,15 @@ function Filters({
   preventionFilters,
   diagnosisFilters,
   treatmentFilters,
-  invasiveFilters
+  invasiveFilters,
+  filtersOpen,
+  setFiltersOpen
 }: Props) {
   const classes = useStyles({});
   const [open, setOpen] = React.useState(false);
 
   function handleClickOpen() {
-    setOpen(true);
+    setFiltersOpen(!filtersOpen);
   }
 
   function handleClose() {

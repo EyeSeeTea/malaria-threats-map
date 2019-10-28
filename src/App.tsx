@@ -8,7 +8,7 @@ import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
 import { State } from "./store/types";
 import Map from "./components/Map";
-import { createMuiTheme } from "@material-ui/core";
+import { createMuiTheme, Hidden } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import {
   setCountryModeAction,
@@ -42,6 +42,9 @@ import {
   setInvasiveMapType,
   setInvasiveVectorSpecies
 } from "./store/actions/invasive-actions";
+import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
+import LeyendPopover from "./components/LegendPopover";
+import Leyend from "./components/Leyend";
 
 export const { store } = createStore();
 
@@ -170,21 +173,6 @@ ReduxQuerySync({
   initialTruth: "location"
 });
 
-const PageWrapper = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-`;
-
-const MapWrapper = styled.div`
-  flex: 1;
-  position: relative;
-`;
-
 export const theme = createMuiTheme({
   palette: {
     primary: {
@@ -215,12 +203,12 @@ class App extends React.Component {
         <Provider store={store}>
           <DataProvider>
             <I18nextProvider i18n={i18next}>
-              <PageWrapper>
-                <MapWrapper id={"capture"}>
-                  <Map />
-                </MapWrapper>
-                <Disclaimer />
-              </PageWrapper>
+              <Hidden smUp>
+                <PersistentDrawerLeft drawerWidth={325} />
+              </Hidden>
+              <Hidden xsDown>
+                <PersistentDrawerLeft />
+              </Hidden>
             </I18nextProvider>
           </DataProvider>
         </Provider>

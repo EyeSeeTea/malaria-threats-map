@@ -14,11 +14,9 @@ import EndemicityLayer from "./layers/EndemicityLayer";
 // import InitialDialog from "./InitialDialog";
 import Filters from "./Filters";
 import LanguageSelector from "./LanguageSelector";
-import Legend from "./Leyend";
 import MapTypesSelector from "./MapTypesSelector";
 import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";
-import CountrySelector from "./CountrySelector";
 import WhoLogo from "./WhoLogo";
 import {
   selectAny,
@@ -35,8 +33,10 @@ import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { setAnyAction, setThemeAction } from "../store/actions/base-actions";
 import Screenshot from "./Screenshot";
 import ReactMapboxGl from "react-mapbox-gl";
-import { Fade } from "@material-ui/core";
+import { Fade, Hidden } from "@material-ui/core";
 import Country from "./Country";
+import LeyendPopover from "./LegendPopover";
+import Leyend from "./Leyend";
 
 ReactMapboxGl({
   accessToken:
@@ -184,8 +184,6 @@ class Map extends React.Component<any> {
             <Divider />
             <MapTypesSelector />
             <Divider />
-            <CountrySelector />
-            <Divider />
             <Filters />
             <Layers />
             <Country disabled={countryTogglerDisabled} />
@@ -200,7 +198,12 @@ class Map extends React.Component<any> {
         </Fade>
         <Fade in={!initialDialogOpen}>
           <BottomRightContainer>
-            <Legend />
+            <Hidden smUp>
+              <LeyendPopover />
+            </Hidden>
+            <Hidden xsDown>
+              <Leyend />
+            </Hidden>
           </BottomRightContainer>
         </Fade>
         <BottomLeftContainer>
