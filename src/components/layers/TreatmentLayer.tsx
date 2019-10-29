@@ -30,8 +30,10 @@ import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import { store, theme } from "../../App";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
-import { State, TreatmentMapType } from "../../store/types";
+import { PreventionMapType, State, TreatmentMapType } from "../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./treatment/utils";
+import ResistanceStatusCountryChart from "./prevention/ResistanceStatus/ResistanceStatusCountryChart";
+import MolecularMarkersChart from "./treatment/MolecularMarkers/MolecularMarkersChart";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -242,22 +244,25 @@ class TreatmentLayer extends Component<Props> {
 
   onClickListener = (e: any, a: any) => {
     const placeholder = document.createElement("div");
-    // const {
-    //   studies,
-    //   countryMode,
-    //   treatmentFilters: { mapType }
-    // } = this.props;
-    // const filteredStudies = this.filterStudies(studies).filter(
-    //   study =>
-    //     countryMode
-    //       ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-    //       : study.SITE_ID === e.features[0].properties.SITE_ID
-    // );
+    const {
+      studies,
+      countryMode,
+      treatmentFilters: { mapType }
+    } = this.props;
+    const filteredStudies = this.filterStudies(studies).filter(study =>
+      countryMode
+        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+        : study.SITE_ID === e.features[0].properties.SITE_ID
+    );
 
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>
         <ThemeProvider theme={theme}>
-          <Provider store={store} />
+          <Provider store={store}>
+            {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
+              <MolecularMarkersChart studies={filteredStudies} />
+            )}
+          </Provider>
         </ThemeProvider>
       </I18nextProvider>,
       placeholder

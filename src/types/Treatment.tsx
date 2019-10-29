@@ -58,6 +58,11 @@ export interface TreatmentStudy extends Study {
   YEAR_START: string;
   DimensionID: number;
   K13_CODE: number;
+  SITE_NAME: string;
+  PROVINCE: string;
+  groupStudies: TreatmentStudy[];
+  PROPORTION: number;
+  GENOTYPE: string;
 }
 
 export interface Field {
