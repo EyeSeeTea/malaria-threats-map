@@ -34,6 +34,7 @@ import { PreventionMapType, State, TreatmentMapType } from "../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./treatment/utils";
 import ResistanceStatusCountryChart from "./prevention/ResistanceStatus/ResistanceStatusCountryChart";
 import MolecularMarkersChart from "./treatment/MolecularMarkers/MolecularMarkersChart";
+import TreatmentFailureChart from "./treatment/TreatmentFailure/TreatmentFailureChart";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -261,6 +262,9 @@ class TreatmentLayer extends Component<Props> {
           <Provider store={store}>
             {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
               <MolecularMarkersChart studies={filteredStudies} />
+            )}
+            {!countryMode && mapType === TreatmentMapType.TREATMENT_FAILURE && (
+              <TreatmentFailureChart studies={filteredStudies} />
             )}
           </Provider>
         </ThemeProvider>
