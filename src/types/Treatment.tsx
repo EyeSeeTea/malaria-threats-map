@@ -26,6 +26,8 @@ export interface TreatmentStudy extends Study {
   INSECTICIDE_INTENSITY: string;
   INSECTICIDE_TYPE: string;
   INSTITUTE: string;
+  INSTITUTION: string;
+  INSTITUTION_CITY: string;
   INVESTIGATION_TYPE: string;
   ISO2: string;
   MALARIA_ENDEMIC: number;

@@ -87,10 +87,11 @@ const ResistanceMechanismsChart = ({ theme, studies }: Props) => {
       </Typography>
       <HighchartsReact highcharts={Highcharts} options={options(data)} />
 
-      <Typography variant="body2">Datasource:</Typography>
+      <Typography variant="body2">Source:</Typography>
       <Typography variant="caption">
         <Link href={studies[0].CITATION_URL} target="_blank">
           {studies[0].CITATION_LONG}
+          color={"textSecondary"}
         </Link>
       </Typography>
     </ChatContainer>

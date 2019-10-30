@@ -9,7 +9,9 @@ import { TreatmentResponse } from "../../types/Treatment";
 import {
   fetchTreatmentStudiesError,
   fetchTreatmentStudiesRequest,
-  fetchTreatmentStudiesSuccess
+  fetchTreatmentStudiesSuccess,
+  setMolecularMarker,
+  setTreatmentMapType
 } from "../actions/treatment-actions";
 import { MapServerConfig } from "../../constants/constants";
 
@@ -24,9 +26,7 @@ export const getTreatmentStudiesEpic = (
     switchMap(() => {
       const params: Params = {
         f: "json",
-        where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${
-          MapServerConfig.years.to
-        }`,
+        where: `YEAR_START >= ${MapServerConfig.years.from} AND YEAR_START <= ${MapServerConfig.years.to}`,
         returnGeometry: false,
         spatialRel: "esriSpatialRelIntersects",
         outFields: "*",
@@ -46,5 +46,17 @@ export const getTreatmentStudiesEpic = (
             of(fetchTreatmentStudiesError(error))
           )
         );
+    })
+  );
+
+export const setTreatmentThemeEpic = (
+  action$: ActionsObservable<ActionType<typeof setTreatmentMapType>>
+) =>
+  action$.ofType(ActionTypeEnum.SetTreatmentMapType).pipe(
+    switchMap(action => {
+      if (action.payload === 2) {
+        return of(setMolecularMarker(0));
+      }
+      return of();
     })
   );

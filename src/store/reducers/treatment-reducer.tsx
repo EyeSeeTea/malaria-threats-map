@@ -11,7 +11,7 @@ const initialState: TreatmentState = Object.freeze({
     mapType: TreatmentMapType.TREATMENT_FAILURE,
     plasmodiumSpecies: "P._FALCIPARUM",
     drug: "DRUG_AL",
-    molecularMarker: 0
+    molecularMarker: 1
   }
 });
 
@@ -40,7 +40,7 @@ function updateDrug(drug: string) {
 }
 
 function updateMolecularMarker(molecularMarker: number) {
-  return updateFilter("molecularMarker", molecularMarker, 0);
+  return updateFilter("molecularMarker", molecularMarker, 1);
 }
 function groupStudies(response: TreatmentResponse) {
   const allStudies: TreatmentStudy[] = response.features.map(

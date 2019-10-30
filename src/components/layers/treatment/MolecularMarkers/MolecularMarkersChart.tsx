@@ -2,15 +2,17 @@ import * as React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, Typography } from "@material-ui/core";
+import { Box, IconButton, Link, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
-import { PreventionStudy } from "../../../../types/Prevention";
-import { ConfirmationStatusColors } from "../../prevention/ResistanceStatus/symbols";
 import { TreatmentStudy } from "../../../../types/Treatment";
 import * as R from "ramda";
+import { MutationColors } from "./utils";
+import ArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
+import ArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
+import { useState } from "react";
 
 const options: (data: any) => Highcharts.Options = data => ({
   chart: {
@@ -27,7 +29,7 @@ const options: (data: any) => Highcharts.Options = data => ({
     text: ""
   },
   subtitle: {
-    text: "<b>Resistance status</b> (# of tests)"
+    text: ""
   },
   tooltip: {
     pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
@@ -67,7 +69,10 @@ const options: (data: any) => Highcharts.Options = data => ({
 const options2: (data: any) => Highcharts.Options = data => ({
   chart: {
     type: "column",
-    height: 250
+    height: 250,
+    style: {
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;'
+    }
   },
   title: {
     text: ""
@@ -79,7 +84,7 @@ const options2: (data: any) => Highcharts.Options = data => ({
     min: 0,
     max: 100,
     title: {
-      text: "Total fruit consumption"
+      text: "Percentage"
     },
     stackLabels: {
       style: {
@@ -122,6 +127,11 @@ const Flex = styled.div`
   display: flex;
 `;
 
+const FlexReverse = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 const FlexCol = styled.div<{ flex?: number }>`
   flex: ${props => props.flex || 1};
 `;
@@ -140,6 +150,7 @@ type Props = DispatchProps & StateProps & OwnProps;
 
 const MolecularMarkersChart = ({ theme, studies }: Props) => {
   const { t } = useTranslation("common");
+  const [study, setStudy] = useState(0);
   const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
   const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
   const maxYear = parseInt(sortedStudies[0].YEAR_START);
@@ -156,6 +167,7 @@ const MolecularMarkersChart = ({ theme, studies }: Props) => {
     return {
       type: "column",
       name: genotype,
+      color: MutationColors[genotype] ? MutationColors[genotype].color : "000",
       data: years.map(year => {
         const yearFilters = studies.filter(
           study => year === parseInt(study.YEAR_START)
@@ -169,24 +181,47 @@ const MolecularMarkersChart = ({ theme, studies }: Props) => {
       })
     };
   });
-  console.log(series);
-  const data = sortedStudies[sortedStudies.length - 1].groupStudies.map(
-    study => ({
-      name: `${study.GENOTYPE}`,
-      y: Math.round(study.PROPORTION * 100),
-      species: study.SPECIES,
-      number: study.NUMBER
-    })
-  );
+  const data = sortedStudies[study].groupStudies.map(study => ({
+    name: `${study.GENOTYPE}`,
+    y: Math.round(study.PROPORTION * 100),
+    color: MutationColors[study.GENOTYPE]
+      ? MutationColors[study.GENOTYPE].color
+      : "000"
+  }));
+  const titleItems = [
+    studies[study].SITE_NAME,
+    studies[study].PROVINCE,
+    t(studies[study].COUNTRY_NAME)
+  ];
+  const title = titleItems.filter(Boolean).join(", ");
   return (
     <ChatContainer>
+      {sortedStudies.length > 1 && (
+        <FlexReverse>
+          <IconButton
+            aria-label="left"
+            size="small"
+            onClick={() =>
+              setStudy(study === 0 ? sortedStudies.length - 1 : study - 1)
+            }
+          >
+            <ArrowLeftIcon fontSize="small" />
+          </IconButton>
+          <IconButton
+            aria-label="right"
+            size="small"
+            onClick={() => setStudy((study + 1) % sortedStudies.length)}
+          >
+            <ArrowRightIcon fontSize="small" />
+          </IconButton>
+        </FlexReverse>
+      )}
       <Typography variant="subtitle1">
-        <Box fontWeight="fontWeightBold">{`${studies[0].SITE_NAME}, ${
-          studies[0].PROVINCE
-        }, ${t(studies[0].COUNTRY_NAME)} (${minYear}-${maxYear})`}</Box>
+        <Box fontWeight="fontWeightBold">{`${title} (${minYear}-${maxYear})`}</Box>
       </Typography>
-      <Typography variant="subtitle2">
-        {`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}
+      <Typography variant="body2">
+        In this 2010 study, the following Pfkelch13 mutations were observed
+        among 6 samples:
       </Typography>
       <Flex>
         <FlexCol>
@@ -196,6 +231,15 @@ const MolecularMarkersChart = ({ theme, studies }: Props) => {
           <HighchartsReact highcharts={Highcharts} options={options2(series)} />
         </FlexCol>
       </Flex>
+      <Typography variant="caption">
+        <Link
+          href={studies[study].CITATION_URL}
+          target="_blank"
+          color={"textSecondary"}
+        >
+          {`${studies[study].INSTITUTION}, ${studies[study].INSTITUTION_CITY}`}
+        </Link>
+      </Typography>
     </ChatContainer>
   );
 };
