@@ -1,5 +1,5 @@
-import 'react-app-polyfill/ie11';
-import 'react-app-polyfill/stable';
+import "react-app-polyfill/ie11";
+import "react-app-polyfill/stable";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -7,6 +7,13 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "./config/i18next";
+import ReactGA from "react-ga";
+ReactGA.initialize("UA-151634352-1", {
+  debug: true,
+  gaOptions: {
+    userId: "123"
+  }
+});
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

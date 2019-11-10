@@ -16,6 +16,18 @@ export const setThemeAction = createAction(
   }
 );
 
+export interface GAEvent {
+  category: string;
+  action: string;
+}
+
+export const logEventAction = createAction(
+  ActionTypeEnum.MalariaLogEvent,
+  action => {
+    return (event: GAEvent) => action(event);
+  }
+);
+
 export const setRegionAction = createAction(
   ActionTypeEnum.MalariaSetRegion,
   action => {

@@ -71,8 +71,8 @@ function MolecularMarkerFilter({
 }: Props) {
   const classes = useStyles({});
 
-  function handleChange(event: React.ChangeEvent<unknown>) {
-    setMolecularMarker(parseInt((event.target as HTMLInputElement).value));
+  function handleChange(value: string) {
+    setMolecularMarker(parseInt(value));
   }
 
   const { t } = useTranslation("common");
@@ -80,8 +80,8 @@ function MolecularMarkerFilter({
   return (
     <Paper className={classes.group}>
       <RadioGroup
-        value={treatmentFilters.molecularMarker}
-        onChange={handleChange}
+        value={treatmentFilters.molecularMarker.toString()}
+        onChange={(event, value) => handleChange(value)}
       >
         {suggestions.map((suggestion: any) => (
           <StyledFormControlLabel
