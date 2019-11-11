@@ -27,9 +27,9 @@ class PlasmodiumSpeciesFilter extends Component<Props, any> {
 
   render() {
     const suggestions: any[] = (this.props
-      .plasmodiumSpecies as Translation[]).map((country: Translation) => ({
-      label: country.VALUE_,
-      value: country.VALUE_
+      .plasmodiumSpecies as Translation[]).map((option: Translation) => ({
+      label: option.VALUE_.replace(".", "%2E"),
+      value: option.VALUE_
     }));
     const selection = suggestions.find(
       suggestion =>

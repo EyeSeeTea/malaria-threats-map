@@ -138,9 +138,7 @@ function Control(props: ControlProps<OptionType>) {
 
 function Option(props: OptionProps<OptionType>) {
   const { t } = useTranslation("common");
-  const value = props.children
-    ? t(props.children.toString().replace("%2E", "."))
-    : "";
+  const value = props.children ? t(props.children.toString()) : "";
   return (
     <MenuItem
       dense
@@ -174,9 +172,7 @@ function Placeholder(props: MuiPlaceholderProps) {
 
 function SingleValue(props: SingleValueProps<OptionType>) {
   const { t } = useTranslation("common");
-  const value = props.children
-    ? t(props.children.toString().replace("%2E", "."))
-    : "";
+  const value = props.children ? t(props.children.toString()) : "";
   return (
     <Typography
       className={props.selectProps.classes.singleValue}
@@ -197,9 +193,7 @@ function ValueContainer(props: ValueContainerProps<OptionType>) {
 
 function MultiValue(props: MultiValueProps<OptionType>) {
   const { t } = useTranslation("common");
-  const value = props.children
-    ? t(props.children.toString().replace("%2E", "."))
-    : "";
+  const value = props.children ? t(props.children.toString()) : "";
   return (
     <Chip
       tabIndex={-1}

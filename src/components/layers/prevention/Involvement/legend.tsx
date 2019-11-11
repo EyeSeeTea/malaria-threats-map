@@ -18,7 +18,7 @@ export default function Legend() {
     <LegendContainer>
       <LegendTitleContainer>
         <LegendTitleTypography color="textPrimary" gutterBottom>
-          Level of Involvement
+          Synergist involvement
         </LegendTitleTypography>
       </LegendTitleContainer>
       <LegendEntries>

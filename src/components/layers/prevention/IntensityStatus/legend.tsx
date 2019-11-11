@@ -18,7 +18,7 @@ export default function Legend() {
     <LegendContainer>
       <LegendTitleContainer>
         <LegendTitleTypography color="textPrimary" gutterBottom>
-          Intensity Status
+          Resistance Intensity
         </LegendTitleTypography>
       </LegendTitleContainer>
       <LegendEntries>

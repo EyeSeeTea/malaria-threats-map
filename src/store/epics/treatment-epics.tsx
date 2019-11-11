@@ -11,7 +11,9 @@ import {
   fetchTreatmentStudiesRequest,
   fetchTreatmentStudiesSuccess,
   setMolecularMarker,
-  setTreatmentMapType
+  setTreatmentDrug,
+  setTreatmentMapType,
+  setTreatmentPlasmodiumSpecies
 } from "../actions/treatment-actions";
 import { MapServerConfig } from "../../constants/constants";
 
@@ -56,6 +58,20 @@ export const setTreatmentThemeEpic = (
     switchMap(action => {
       if (action.payload === 2) {
         return of(setMolecularMarker(0));
+      }
+      return of();
+    })
+  );
+
+export const setPlasmodiumSpeciesEpic = (
+  action$: ActionsObservable<ActionType<typeof setTreatmentPlasmodiumSpecies>>
+) =>
+  action$.ofType(ActionTypeEnum.SetPlasmodiumSpecies).pipe(
+    switchMap(action => {
+      if (action.payload === "P._FALCIPARUM") {
+        return of(setTreatmentDrug("DRUG_AL"));
+      } else if (action.payload === "P._VIVAX") {
+        return of(setTreatmentDrug("DRUG_CQ"));
       }
       return of();
     })

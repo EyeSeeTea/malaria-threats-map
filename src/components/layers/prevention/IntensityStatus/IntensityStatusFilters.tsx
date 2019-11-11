@@ -37,7 +37,7 @@ export default function IntensityStatusFilters() {
         <Divider />
         <SpeciesFilter />
       </FilterWrapper>
-      <YearRangeSelector />
+      <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
     </div>
   );
 }

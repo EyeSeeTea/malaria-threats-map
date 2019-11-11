@@ -205,7 +205,13 @@ class PreventionLayer extends Component<Props> {
           filterByCountry(region.country)
         ];
       case PreventionMapType.PBO_DEPLOYMENT:
-        return [filterByCountry(region.country)];
+        return [
+          filterByInsecticideClass(preventionFilters.insecticideClass),
+          filterByInsecticideTypes(preventionFilters.insecticideTypes),
+          filterBySpecies(preventionFilters.species),
+          filterByYearRange(filters),
+          filterByCountry(region.country)
+        ];
       default:
         return [];
     }

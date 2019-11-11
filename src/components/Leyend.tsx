@@ -21,7 +21,7 @@ import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 
 export const LegendContainer = styled(Paper)`
-  padding: 16px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
   width: 175px;
@@ -55,6 +55,8 @@ export const LegendSymbol = styled.span<{ color: string }>`
   min-width: 12px;
   height: 12px;
   margin-right: 8px;
+  align-self: flex-start;
+  margin-top: 6px;
 `;
 export const LegendText = styled.span`
   line-height: 24px;

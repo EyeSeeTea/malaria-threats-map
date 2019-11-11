@@ -12,16 +12,15 @@ function range(start: number, end: number) {
     .fill(1)
     .map((_, idx) => start + idx);
 }
-const marks = range(1988, 2019).map(
-  year =>
-    year % 5 === 0
-      ? {
-          value: year,
-          label: year.toString()
-        }
-      : {
-          value: year
-        }
+const marks = range(1988, 2019).map(year =>
+  year % 5 === 0
+    ? {
+        value: year,
+        label: year.toString()
+      }
+    : {
+        value: year
+      }
 );
 
 const useStyles = makeStyles({
@@ -48,9 +47,18 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type OwnProps = {
+  minYear?: number;
+  maxYear?: number;
+};
+type Props = OwnProps & DispatchProps & StateProps;
 
-const YearRangeSelector = ({ filters, setFilters }: Props) => {
+const YearRangeSelector = ({
+  filters,
+  setFilters,
+  minYear = 1988,
+  maxYear = 2019
+}: Props) => {
   const classes = useStyles({});
 
   const handleChange = (event: any, newValue: number | number[]) => {
@@ -69,8 +77,8 @@ const YearRangeSelector = ({ filters, setFilters }: Props) => {
         getAriaValueText={valuetext}
         marks={marks}
         step={1}
-        min={1988}
-        max={2019}
+        min={minYear}
+        max={maxYear}
       />
     </div>
   );

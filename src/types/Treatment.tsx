@@ -46,6 +46,7 @@ export interface TreatmentStudy extends Study {
   MONTH_START: string;
   MORTALITY_ADJUSTED: string;
   NUMBER: string;
+  PLASMODIUM_SPECIES: string;
   PROXY_TYPE: string;
   REGION_FULL: string;
   RESISTANCE_FREQUENCY: string;

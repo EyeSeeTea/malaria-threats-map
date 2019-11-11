@@ -104,7 +104,6 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
   const studies = groupedStudies[study];
 
   const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
-  console.log(sortedStudies);
   const data = sortedStudies.map(study => {
     const base = `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
     const syn =

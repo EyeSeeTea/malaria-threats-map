@@ -40,13 +40,13 @@ type Props = DispatchProps & StateProps;
 
 const preventionSuggestions: OptionType[] = [
   { label: "Resistance Status", value: PreventionMapType.RESISTANCE_STATUS },
-  { label: "Intensity Status", value: PreventionMapType.INTENSITY_STATUS },
+  { label: "Resistance Intensity", value: PreventionMapType.INTENSITY_STATUS },
   {
     label: "Resistance Mechanism",
     value: PreventionMapType.RESISTANCE_MECHANISM
   },
   {
-    label: "Level of Involvement",
+    label: "Synergist involvement",
     value: PreventionMapType.LEVEL_OF_INVOLVEMENT
   },
   {
