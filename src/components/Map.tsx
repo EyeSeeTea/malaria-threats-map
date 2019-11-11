@@ -37,6 +37,7 @@ import { Fade, Hidden } from "@material-ui/core";
 import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
 import Leyend from "./Leyend";
+import StoryModeSelector from "./StoryModeSelector";
 
 ReactMapboxGl({
   accessToken:
@@ -187,6 +188,7 @@ class Map extends React.Component<any> {
             <Filters />
             <Layers />
             <Country disabled={countryTogglerDisabled} />
+            <StoryModeSelector />
             {this.map && this.state.ready && <Screenshot map={this.map} />}
           </SearchContainer>
         </Fade>

@@ -56,6 +56,13 @@ export const setCountryModeAction = createAction(
   }
 );
 
+export const setStoryModeAction = createAction(
+  ActionTypeEnum.MalariaSetStoryMode,
+  action => {
+    return (storyMode: boolean) => action(storyMode);
+  }
+);
+
 export const setInitialDialogOpen = createAction(
   ActionTypeEnum.MalariaSetInitialDialogOpen,
   action => {

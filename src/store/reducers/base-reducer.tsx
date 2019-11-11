@@ -1,14 +1,15 @@
 import * as R from "ramda";
-import { createSelector } from "reselect";
-import { MalariaState, RegionState, State } from "../types";
-import { createReducer } from "../reducer-utils";
-import { ActionTypeEnum } from "../actions";
+import {createSelector} from "reselect";
+import {MalariaState, RegionState, State} from "../types";
+import {createReducer} from "../reducer-utils";
+import {ActionTypeEnum} from "../actions";
 
 const initialState: MalariaState = Object.freeze({
   theme: "prevention",
   any: null,
   endemicity: false,
   countryMode: false,
+  storyMode: false,
   filters: [2010, 2018],
   region: {
     country: ""
@@ -28,6 +29,8 @@ export default createReducer<MalariaState>(initialState, {
     R.assoc("endemicity", visible),
   [ActionTypeEnum.MalariaSetCountryMode]: (countryMode: boolean) =>
     R.assoc("countryMode", countryMode),
+  [ActionTypeEnum.MalariaSetStoryMode]: (storyMode: boolean) =>
+      R.assoc("storyMode", storyMode),
   [ActionTypeEnum.MalariaSetInitialDialogOpen]: (initialDialogOpen: boolean) =>
     R.assoc("initialDialogOpen", initialDialogOpen),
   [ActionTypeEnum.SetFiltersOpen]: (filtersOpen: boolean) =>
@@ -39,6 +42,10 @@ export const selectMalariaState = (state: State) => state.malaria;
 export const selectTheme = createSelector(
   selectMalariaState,
   R.prop("theme")
+);
+export const selectStoryMode = createSelector(
+  selectMalariaState,
+  R.prop("storyMode")
 );
 export const selectAny = createSelector(
   selectMalariaState,

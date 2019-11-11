@@ -11,7 +11,9 @@ import { ThemeProvider } from "@material-ui/styles";
 import {
   setCountryModeAction,
   setFiltersAction,
+  setFiltersOpen,
   setRegionAction,
+  setStoryModeAction,
   setThemeAction,
   toggleEndemicityLayerAction
 } from "./store/actions/base-actions";
@@ -149,6 +151,14 @@ ReduxQuerySync({
     countryMode: {
       selector: (state: State) => state.malaria.countryMode,
       action: (value: string) => setCountryModeAction(value === "true")
+    },
+    storyMode: {
+      selector: (state: State) => state.malaria.storyMode,
+      action: (value: string) => setStoryModeAction(value === "true")
+    },
+    filterOpen: {
+      selector: (state: State) => state.malaria.filtersOpen,
+      action: (value: string) => setFiltersOpen(value === "true")
     },
     years: {
       selector: (state: State) => state.malaria.filters,

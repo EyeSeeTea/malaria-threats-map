@@ -23,6 +23,7 @@ export interface MalariaState {
   any: any;
   endemicity: boolean;
   countryMode: boolean;
+  storyMode: boolean;
   filters: number[];
   region: RegionState;
   initialDialogOpen: boolean;

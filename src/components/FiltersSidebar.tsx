@@ -1,13 +1,20 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Dialog from "@material-ui/core/Dialog";
+import AppBar from "@material-ui/core/AppBar/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import Slide from "@material-ui/core/Slide";
-import { TransitionProps } from "@material-ui/core/transitions";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import { GlobeIcon } from "./Icons";
 import FilterIcon from "@material-ui/icons/FilterList";
-import { AppBar, Fab, Toolbar, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
+import CountrySelector from "./CountrySelector";
+import ResistanceStatusFilters, {
+  Divider,
+  FilterWrapper
+} from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
+import FormLabel from "@material-ui/core/FormLabel";
 import styled from "styled-components";
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import {
   DiagnosisMapType,
   InvasiveMapType,
@@ -15,99 +22,75 @@ import {
   State,
   TreatmentMapType
 } from "../store/types";
-import {
-  selectAreFiltersOpen,
-  selectFilters,
-  selectTheme
-} from "../store/reducers/base-reducer";
+import { selectTheme } from "../store/reducers/base-reducer";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
-import { setPreventionMapType } from "../store/actions/prevention-actions";
+import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
+import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
+import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
+import { setFiltersOpen } from "../store/actions/base-actions";
 import { connect } from "react-redux";
-import ResistanceStatusFilters from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
 import IntensityStatusFilters from "./layers/prevention/IntensityStatus/IntensityStatusFilters";
 import ResistanceMechanismFilters from "./layers/prevention/ResistanceMechanisms/ResistanceMechanismFilters";
 import LevelOfInvolvementFilters from "./layers/prevention/Involvement/LevelOfInvolvementFilters";
-import GeneDeletionFilters from "./layers/diagnosis/GeneDeletions/GeneDeletionFilters";
-import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import PboDeploymentFilters from "./layers/prevention/PboDeployment/PboDeploymentFilters";
+import GeneDeletionFilters from "./layers/diagnosis/GeneDeletions/GeneDeletionFilters";
 import TreatmentFailureFilters from "./layers/treatment/TreatmentFailure/TreatmentFailureFilters";
-import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
-import VectorOccuranceFilters from "./layers/invasive/VectorOccurance/VectorOccuranceFilters";
-import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 import DelayedParasiteClearanceFilters from "./layers/treatment/DelayedParasiteClearance/DelayedParasiteClearanceFilters";
 import MolecularMarkerFilters from "./layers/treatment/MolecularMarkers/MolecularMarkerFilters";
-import { setFiltersOpen } from "../store/actions/base-actions";
+import VectorOccuranceFilters from "./layers/invasive/VectorOccurance/VectorOccuranceFilters";
 
+const FiltersWrapper = styled.div`
+  margin-top: 20px;
+`;
+
+const FlexGrow = styled.div`
+  flex-grow: 1;
+`;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
-      backgroundColor: "#008dc9",
-      position: "relative"
+      transition: theme.transitions.create(["margin", "width"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen
+      })
     },
-    title: {
-      marginLeft: theme.spacing(2),
-      flex: 1
-    },
-    fab: {
-      margin: theme.spacing(0.5, 0)
-    },
-    extendedIcon: {
-      marginRight: theme.spacing(0.5)
-    },
-    paper: {
-      backgroundColor: "#f3f3f3"
+    tab: {
+      minWidth: 0
     }
   })
 );
-
-const FiltersWrapper = styled.div`
-  margin-top: 10px;
-`;
-
-const Transition = React.forwardRef<unknown, TransitionProps>(
-  function Transition(props: any, ref: any) {
-    return <Slide direction="right" ref={ref} {...props} />;
-  }
-);
-
 const mapStateToProps = (state: State) => ({
-  filters: selectFilters(state),
   theme: selectTheme(state),
   preventionFilters: selectPreventionFilters(state),
   diagnosisFilters: selectDiagnosisFilters(state),
   treatmentFilters: selectTreatmentFilters(state),
-  invasiveFilters: selectInvasiveFilters(state),
-  filtersOpen: selectAreFiltersOpen(state)
+  invasiveFilters: selectInvasiveFilters(state)
 });
-
 const mapDispatchToProps = {
-  setPreventionMapType: setPreventionMapType,
   setFiltersOpen: setFiltersOpen
 };
-
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function Filters({
+const FiltersSidebar = ({
   theme,
+  setFiltersOpen,
   preventionFilters,
   diagnosisFilters,
   treatmentFilters,
-  invasiveFilters,
-  filtersOpen,
-  setFiltersOpen
-}: Props) {
+  invasiveFilters
+}: Props) => {
   const classes = useStyles({});
-  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(0);
 
-  function handleClickOpen() {
-    setFiltersOpen(!filtersOpen);
-  }
+  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setValue(newValue);
+  };
 
-  function handleClose() {
-    setOpen(false);
-  }
+  const handleClose = () => {
+    setFiltersOpen(false);
+  };
 
   function resolveFilters() {
     switch (theme) {
@@ -158,58 +141,49 @@ function Filters({
 
   return (
     <div>
-      <Fab
-        variant="extended"
-        size="small"
-        color={filtersOpen ? "primary" : "default"}
-        onClick={handleClickOpen}
-        className={classes.fab}
-      >
-        <FilterIcon className={classes.extendedIcon} fontSize="small" />
-        Filters
-      </Fab>
-      <Dialog
-        fullScreen
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-        BackdropProps={{
-          style: {
-            backgroundColor: "transparent"
-          }
-        }}
-        PaperProps={{
-          className: classes.paper
-        }}
-        style={{
-          position: "absolute",
-          left: 0,
-          maxWidth: "400px"
-        }}
-      >
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <FilterIcon />
-            <Typography variant="h6" className={classes.title}>
-              Filters
-            </Typography>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <FiltersWrapper>{resolveFilters()}</FiltersWrapper>
-      </Dialog>
+      <AppBar position="static" className={classes.appBar}>
+        <Toolbar variant="dense">
+          <FlexGrow />
+          <IconButton
+            edge="start"
+            color="inherit"
+            onClick={handleClose}
+            size={"small"}
+            aria-label="close"
+          >
+            <CloseIcon fontSize={"small"} />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <AppBar position="static" color="inherit">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="fullWidth"
+          aria-label="full width tabs example"
+        >
+          <Tab className={classes.tab} icon={<FilterIcon />} label="Filters" />
+          <Tab className={classes.tab} icon={<GlobeIcon />} label="Regions" />
+        </Tabs>
+      </AppBar>
+      <FiltersWrapper>
+        {value === 0 ? (
+          resolveFilters()
+        ) : (
+          <FilterWrapper>
+            <FormLabel component="legend">Country</FormLabel>
+            <Divider />
+            <CountrySelector />
+          </FilterWrapper>
+        )}
+      </FiltersWrapper>
     </div>
   );
-}
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Filters);
+)(FiltersSidebar);
