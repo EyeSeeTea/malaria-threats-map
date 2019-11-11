@@ -29,10 +29,11 @@ export const filterByResistanceMechanism = (study: any) => {
 };
 export const filterByLevelOfInvolvement = (study: any) => {
   return (
-    study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY" &&
-    study.MECHANISM_PROXY !== "CANNOT_BE_RELIABLY_ASSESSED" &&
-    study.MECHANISM_PROXY !== "NEGATIVE_INVOLVEMENT" &&
-    study.MECHANISM_PROXY !== "NA"
+    study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY"
+    // &&
+    // study.MECHANISM_PROXY !== "CANNOT_BE_RELIABLY_ASSESSED" &&
+    // study.MECHANISM_PROXY !== "NEGATIVE_INVOLVEMENT" &&
+    // study.MECHANISM_PROXY !== "NA"
   );
 };
 

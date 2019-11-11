@@ -24,6 +24,7 @@ export const setThemeEpic = (
       ];
       switch (action.payload) {
         case "invasive":
+          return of(...[setCountryModeAction(false), ...base]);
         case "prevention":
           if (
             state.prevention.filters.mapType ===

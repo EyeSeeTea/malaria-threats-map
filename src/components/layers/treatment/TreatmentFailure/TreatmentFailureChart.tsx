@@ -1,18 +1,16 @@
 import * as React from "react";
+import { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, IconButton, Link, Typography } from "@material-ui/core";
+import { Box, Link, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import { TreatmentStudy } from "../../../../types/Treatment";
 import * as R from "ramda";
-import ArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
-import ArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
-import { useState } from "react";
-import { MutationColors } from "../MolecularMarkers/utils";
+import Pagination from "../../../charts/Pagination";
 
 const options: (data: any, categories: any[]) => Highcharts.Options = (
   data,
@@ -31,12 +29,14 @@ const options: (data: any, categories: any[]) => Highcharts.Options = (
     text: ""
   },
   tooltip: {
-    pointFormat: "{series.name}: <b>{point.y:.1f}%</b>"
+    pointFormat: "{series.name}: <b>{point.y:.2f}%</b>"
   },
   xAxis: { categories },
   yAxis: {
     min: 0,
-    max: 100
+    title: {
+      text: "Percentage (%)"
+    }
   },
   plotOptions: {
     series: {
@@ -66,11 +66,6 @@ const Flex = styled.div`
   display: flex;
 `;
 
-const FlexReverse = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
 const FlexCol = styled.div<{ flex?: number }>`
   flex: ${props => props.flex || 1};
 `;
@@ -95,14 +90,15 @@ type Props = DispatchProps & StateProps & OwnProps;
 const TreatmentFailureChart = ({ theme, studies }: Props) => {
   const { t } = useTranslation("common");
   const [study, setStudy] = useState(0);
-  const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
+  const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
   const years = R.uniq(sortedStudies.map(study => study.YEAR_START)).sort();
-  const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
-  const maxYear = parseInt(sortedStudies[0].YEAR_START);
+  const maxYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
+  const minYear = parseInt(sortedStudies[0].YEAR_START);
 
   const keys = [
     { name: "POSITIVE_DAY_3", color: "#00994C" },
-    { name: "TREATMENT_FAILURE_PP", color: "#BE4B48" }
+    { name: "TREATMENT_FAILURE_PP", color: "#BE4B48" },
+    { name: "TREATMENT_FAILURE_KM", color: "#4b48be" }
   ];
 
   const series = keys.map(key => {
@@ -122,72 +118,89 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
     };
   });
 
+  const siteDuration =
+    minYear !== maxYear ? `from ${minYear} to ${maxYear}` : `in ${minYear}`;
+
   const titleItems = [
     studies[study].SITE_NAME,
     studies[study].PROVINCE,
     t(studies[study].COUNTRY_NAME)
   ];
   const title = titleItems.filter(Boolean).join(", ");
+
+  const {
+    YEAR_START,
+    YEAR_END,
+    DRUG_NAME,
+    N,
+    FOLLOW_UP,
+    CONFIRMED_RESIST_PV,
+    POSITIVE_DAY_3,
+    TREATMENT_FAILURE_KM,
+    TREATMENT_FAILURE_PP
+  } = sortedStudies[study];
+
+  const duration =
+    parseInt(YEAR_START) !== parseInt(YEAR_END)
+      ? `from ${YEAR_START} to ${YEAR_END}`
+      : YEAR_START;
+
+  const formatValue = (value: string) =>
+    Number.isNaN(parseFloat(value))
+      ? "N/A"
+      : `${(parseFloat(value) * 100).toFixed(2)}%`;
   return (
     <ChatContainer>
-      {sortedStudies.length > 1 && (
-        <FlexReverse>
-          <IconButton
-            aria-label="left"
-            size="small"
-            onClick={() =>
-              setStudy(study === 0 ? sortedStudies.length - 1 : study - 1)
-            }
-          >
-            <ArrowLeftIcon fontSize="small" />
-          </IconButton>
-          <IconButton
-            aria-label="right"
-            size="small"
-            onClick={() => setStudy((study + 1) % sortedStudies.length)}
-          >
-            <ArrowRightIcon fontSize="small" />
-          </IconButton>
-        </FlexReverse>
-      )}
+      <Pagination studies={studies} study={study} setStudy={setStudy} />
       <Typography variant="subtitle1">
-        <Box fontWeight="fontWeightBold">{`${title} (${minYear}-${maxYear})`}</Box>
+        <Box fontWeight="fontWeightBold">{`${title}`}</Box>
       </Typography>
       <Typography variant="body2">
-        In this 2010 study, the following Pfkelch13 mutations were observed
-        among 6 samples:
+        {`${t(DRUG_NAME)}: ${studies.length} study(s) ${siteDuration}`}
       </Typography>
       <Flex>
         <FlexCol>
           <Margin>
             <Flex>
               <Typography variant="body2">
-                <b>Study year:&nbsp;</b>from 2014 to 2016
+                <b>Study year(s):&nbsp;</b>
+                {duration}
               </Typography>
             </Flex>
             <Flex>
               <Typography variant="body2">
-                <b>Number of patients:&nbsp;</b>50
+                <b>Number of patients:&nbsp;</b>
+                {N}
               </Typography>
             </Flex>
             <Flex>
               <Typography variant="body2">
-                <b>Follow-up:&nbsp;</b>28 days
+                <b>Follow-up:&nbsp;</b>
+                {FOLLOW_UP} days
               </Typography>
             </Flex>
             <Flex>
               <Typography variant="body2">
-                <b>Patients with confirmed resistance:&nbsp;</b>N/A
+                <b>Patients with confirmed resistance:&nbsp;</b>
+                {formatValue(CONFIRMED_RESIST_PV)}
               </Typography>
             </Flex>
             <Flex>
               <Typography variant="body2">
-                <b>Patients with treatment failure, per protocol:&nbsp;</b>2.0%
+                <b>Positive after day 3:&nbsp;</b>
+                {formatValue(POSITIVE_DAY_3)}
               </Typography>
             </Flex>
             <Flex>
               <Typography variant="body2">
-                <b>Patients with treatment failure, Kaplan-Meier:&nbsp;</b>N/A
+                <b>Patients with treatment failure, per protocol:&nbsp;</b>
+                {formatValue(TREATMENT_FAILURE_PP)}
+              </Typography>
+            </Flex>
+            <Flex>
+              <Typography variant="body2">
+                <b>Patients with treatment failure, Kaplan-Meier:&nbsp;</b>
+                {formatValue(TREATMENT_FAILURE_KM)}
               </Typography>
             </Flex>
           </Margin>

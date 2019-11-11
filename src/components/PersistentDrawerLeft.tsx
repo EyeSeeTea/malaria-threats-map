@@ -170,26 +170,13 @@ function PersistentDrawerLeft({
   diagnosisFilters,
   treatmentFilters,
   invasiveFilters,
-  setFiltersOpen,
   drawerWidth = 400
 }: Props) {
   const classes = useStyles({ drawerWidth });
-
-  const handleDrawerOpen = () => {
-    setFiltersOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setFiltersOpen(false);
-  };
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
-  };
-
-  const handleChangeIndex = (index: number) => {
-    setValue(index);
   };
 
   function resolveFilters() {

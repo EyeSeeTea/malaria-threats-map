@@ -2,21 +2,20 @@ import * as React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, Link, Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import { PreventionStudy } from "../../../../types/Prevention";
+import Citation from "../../../charts/Citation";
+import * as R from "ramda";
+import { ResistanceMechanismColors } from "./symbols";
+import { RESISTANCE_MECHANISM } from "./utils";
+import { baseChart } from "../../../charts/chart-utils";
 
 const options: (data: any) => Highcharts.Options = data => ({
-  chart: {
-    type: "column",
-    height: 300,
-    style: {
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;'
-    }
-  },
+  ...baseChart,
   title: {
     text: "Number of mechanism assays"
   },
@@ -36,24 +35,7 @@ const options: (data: any) => Highcharts.Options = data => ({
       }
     }
   },
-  series: [
-    {
-      type: "column",
-      name: "Mortality",
-      data: [{ name: "2018", y: 2 }, { name: "2019", y: 3 }]
-    },
-    {
-      type: "column",
-      name: "Mortality 2",
-      data: [{ name: "2018", y: 1 }, { name: "2019", y: 2 }]
-    }
-  ],
-  legend: {
-    enabled: false
-  },
-  credits: {
-    enabled: false
-  }
+  series: data
 });
 
 const ChatContainer = styled.div`
@@ -74,7 +56,47 @@ type Props = DispatchProps & StateProps & OwnProps;
 
 const ResistanceMechanismsChart = ({ theme, studies }: Props) => {
   const { t } = useTranslation("common");
-  const data = studies.map(study => ({}));
+  const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
+  const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
+  const maxYear = parseInt(sortedStudies[0].YEAR_START);
+  const years: number[] = [];
+  for (let i = minYear; i <= maxYear; i++) {
+    years.push(i);
+  }
+  const detected = years.map(year => {
+    const yearStudies = studies.filter(
+      study => parseInt(study.YEAR_START) === year
+    );
+    return {
+      name: year,
+      y: yearStudies.filter(study => study.MECHANISM_STATUS === "DETECTED")
+        .length
+    };
+  });
+  const notDetected = years.map(year => {
+    const yearStudies = studies.filter(
+      study => parseInt(study.YEAR_START) === year
+    );
+    return {
+      name: year,
+      y: yearStudies.filter(study => study.MECHANISM_STATUS !== "DETECTED")
+        .length
+    };
+  });
+  const data = [
+    {
+      type: "column",
+      name: "Confirmed",
+      color: ResistanceMechanismColors[RESISTANCE_MECHANISM.CONFIRMED][0],
+      data: detected
+    },
+    {
+      type: "column",
+      color: ResistanceMechanismColors[RESISTANCE_MECHANISM.NOT_CONFIRMED][0],
+      name: "Not confirmed",
+      data: notDetected
+    }
+  ];
   return (
     <ChatContainer>
       <Typography variant="subtitle1">
@@ -86,14 +108,7 @@ const ResistanceMechanismsChart = ({ theme, studies }: Props) => {
         {`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}
       </Typography>
       <HighchartsReact highcharts={Highcharts} options={options(data)} />
-
-      <Typography variant="body2">Source:</Typography>
-      <Typography variant="caption">
-        <Link href={studies[0].CITATION_URL} target="_blank">
-          {studies[0].CITATION_LONG}
-          color={"textSecondary"}
-        </Link>
-      </Typography>
+      <Citation study={studies[0]} />
     </ChatContainer>
   );
 };

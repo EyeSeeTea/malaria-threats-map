@@ -23,7 +23,7 @@ import {
   filterBySurveyTypes,
   filterByYearRange
 } from "./studies-filters";
-import { resolveMapTypeSymbols } from "./diagnosis/utils";
+import { resolveMapTypeSymbols, studySelector } from "./diagnosis/utils";
 import ReactDOM from "react-dom";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
@@ -31,8 +31,9 @@ import { store } from "../../App";
 import mapboxgl from "mapbox-gl";
 import { DiagnosisStudy } from "../../types/Diagnosis";
 import { DIAGNOSIS_STATUS } from "./diagnosis/GeneDeletions/utils";
-import { studySelector } from "./diagnosis/utils";
 import { selectCountries } from "../../store/reducers/country-layer-reducer";
+import GeneDeletionCountryChart from "./diagnosis/GeneDeletions/GeneDeletionCountryChart";
+import GeneDeletionChart from "./diagnosis/GeneDeletions/GeneDeletionChart";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -241,14 +242,27 @@ class DiagnosisLayer extends Component<Props> {
 
   onClickListener = (e: any, a: any) => {
     const placeholder = document.createElement("div");
-    // const { studies } = this.props;
-    // const filteredStudies = this.filterStudies(studies).filter(
-    //   study => study.SITE_ID === e.features[0].properties.SITE_ID
-    // );
+    const {
+      studies,
+      countryMode,
+      diagnosisFilters: { mapType }
+    } = this.props;
+    const filteredStudies = this.filterStudies(studies).filter(study =>
+      countryMode
+        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+        : study.SITE_ID === e.features[0].properties.SITE_ID
+    );
 
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>
-        <Provider store={store} />
+        <Provider store={store}>
+          {!countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
+            <GeneDeletionChart studies={filteredStudies} />
+          )}
+          {countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
+            <GeneDeletionCountryChart studies={filteredStudies} />
+          )}
+        </Provider>
       </I18nextProvider>,
       placeholder
     );

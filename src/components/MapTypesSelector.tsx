@@ -96,21 +96,13 @@ class MapTypesSelector extends Component<Props> {
   getSuggestions = () => {
     switch (this.props.theme) {
       case "prevention":
-        return preventionSuggestions.filter(
-          s => s.value !== this.props.preventionFilters.mapType
-        );
+        return preventionSuggestions;
       case "diagnosis":
-        return diagnosisSuggestions.filter(
-          s => s.value !== this.props.diagnosisFilters.mapType
-        );
+        return diagnosisSuggestions;
       case "treatment":
-        return treatmentSuggestions.filter(
-          s => s.value !== this.props.treatmentFilters.mapType
-        );
+        return treatmentSuggestions;
       case "invasive":
-        return invasiveSuggestions.filter(
-          s => s.value !== this.props.invasiveFilters.mapType
-        );
+        return invasiveSuggestions;
       default:
         break;
     }

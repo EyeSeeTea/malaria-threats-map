@@ -9,19 +9,14 @@ import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import { PreventionStudy } from "../../../../types/Prevention";
-import { ConfirmationStatusColors } from "./symbols";
 import * as R from "ramda";
 import Citation from "../../../charts/Citation";
 import Pagination from "../../../charts/Pagination";
+import { ConfirmationStatusColors } from "../ResistanceStatus/symbols";
+import { baseChart } from "../../../charts/chart-utils";
 
 const options: (data: any) => Highcharts.Options = data => ({
-  chart: {
-    type: "column",
-    height: 300,
-    style: {
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;'
-    }
-  },
+  ...baseChart,
   title: {
     text: "% mosquito mortality"
   },
@@ -81,13 +76,7 @@ Tested (n): ${point.number}
       name: "Mortality",
       data: data
     }
-  ],
-  legend: {
-    enabled: false
-  },
-  credits: {
-    enabled: false
-  }
+  ]
 });
 
 const ChatContainer = styled.div`
@@ -106,28 +95,30 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
+const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
   const { t } = useTranslation("common");
   const [study, setStudy] = useState(0);
   const groupedStudies = R.values(
     R.groupBy(R.prop("CITATION_URL"), baseStudies)
   );
   const studies = groupedStudies[study];
-  const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
-  const cleanedStudies = R.groupBy((study: PreventionStudy) => {
-    return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
-  }, sortedStudies);
-  const simplifiedStudies = R.values(cleanedStudies).map(
-    (groupStudies: PreventionStudy[]) =>
-      R.sortBy(study => -parseInt(study.MORTALITY_ADJUSTED), groupStudies)[0]
-  );
-  const data = simplifiedStudies.map(study => ({
-    name: `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`,
-    y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
-    species: study.SPECIES,
-    number: study.NUMBER
-  }));
-  const studyObject = simplifiedStudies[study];
+
+  const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
+  console.log(sortedStudies);
+  const data = sortedStudies.map(study => {
+    const base = `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
+    const syn =
+      study.SYNERGIST_TYPE === "NO"
+        ? `No synergist`
+        : `${study.SYNERGIST_TYPE} ${study.SYNERGIST_CONC}`;
+    return {
+      name: `${base}, ${syn}`,
+      y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
+      species: study.SPECIES,
+      number: study.NUMBER
+    };
+  });
+  const studyObject = sortedStudies[study];
   return (
     <ChatContainer>
       {groupedStudies.length > 1 && (
@@ -153,4 +144,4 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ResistanceStatusChart);
+)(LevelOfInvolvementChart);

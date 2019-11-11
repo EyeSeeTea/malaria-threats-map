@@ -17,9 +17,8 @@ export interface FieldAlias {
 
 export interface DiagnosisStudy extends Study {
   ASSAY_TYPE: string;
-  CITATION_LONG: string;
-  CITATION_URL: string;
   COUNTRY_NAME: string;
+  SITE_NAME: string;
   Code: string;
   INSECTICIDE_CLASS: string;
   INSECTICIDE_CONC: string;
@@ -56,6 +55,12 @@ export interface DiagnosisStudy extends Study {
   VILLAGE_NAME: string;
   YEAR_END: string;
   YEAR_START: string;
+  HRP2_TESTED: string;
+  HRP2_PROPORTION_DELETION: string;
+  HRP3_TESTED: string;
+  HRP3_PROPORTION_DELETION: string;
+  HRP2_HRP3_TESTED: string;
+  HRP2_HRP3_PROPORTION_DELETION: string;
 }
 
 export interface Field {

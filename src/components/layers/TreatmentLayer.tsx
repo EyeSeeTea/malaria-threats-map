@@ -30,9 +30,8 @@ import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import { store, theme } from "../../App";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
-import { PreventionMapType, State, TreatmentMapType } from "../../store/types";
+import { State, TreatmentMapType } from "../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./treatment/utils";
-import ResistanceStatusCountryChart from "./prevention/ResistanceStatus/ResistanceStatusCountryChart";
 import MolecularMarkersChart from "./treatment/MolecularMarkers/MolecularMarkersChart";
 import TreatmentFailureChart from "./treatment/TreatmentFailure/TreatmentFailureChart";
 
@@ -263,6 +262,10 @@ class TreatmentLayer extends Component<Props> {
             {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
               <MolecularMarkersChart studies={filteredStudies} />
             )}
+            {!countryMode &&
+              mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE && (
+                <TreatmentFailureChart studies={filteredStudies} />
+              )}
             {!countryMode && mapType === TreatmentMapType.TREATMENT_FAILURE && (
               <TreatmentFailureChart studies={filteredStudies} />
             )}

@@ -17,8 +17,7 @@ export interface FieldAlias {
 
 export interface InvasiveStudy extends Study {
   ASSAY_TYPE: string;
-  CITATION_LONG: string;
-  CITATION_URL: string;
+  INSTITUTE_CURATION: string;
   COUNTRY_NAME: string;
   Code: string;
   INSECTICIDE_CLASS: string;
@@ -56,6 +55,8 @@ export interface InvasiveStudy extends Study {
   VILLAGE_NAME: string;
   YEAR_END: string;
   YEAR_START: string;
+  SAMPLING_METHOD: string;
+  ID_METHOD: string;
 }
 
 export interface Field {

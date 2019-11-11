@@ -1,13 +1,11 @@
 import React from "react";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
-import styled from "styled-components";
 import { Provider } from "react-redux";
 import createStore from "./store";
 import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
 import { State } from "./store/types";
-import Map from "./components/Map";
 import { createMuiTheme, Hidden } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import {
@@ -25,7 +23,6 @@ import {
   setSynergistTypes,
   setType
 } from "./store/actions/prevention-actions";
-import Disclaimer from "./components/Disclaimer";
 import {
   setDiagnosisDeletionType,
   setDiagnosisMapType,
@@ -43,8 +40,6 @@ import {
   setInvasiveVectorSpecies
 } from "./store/actions/invasive-actions";
 import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
-import LeyendPopover from "./components/LegendPopover";
-import Leyend from "./components/Leyend";
 
 export const { store } = createStore();
 

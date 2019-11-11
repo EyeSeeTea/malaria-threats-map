@@ -2,7 +2,7 @@ import React from "react";
 import Popover from "@material-ui/core/Popover";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Legend from "./Leyend";
-import { Button, Fab } from "@material-ui/core";
+import { Fab } from "@material-ui/core";
 import ListIcon from "@material-ui/icons/List";
 
 const useStyles = makeStyles((theme: Theme) =>

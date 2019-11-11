@@ -28,6 +28,7 @@ import {
   selectInvasiveFilters,
   selectInvasiveStudies
 } from "../../store/reducers/invasive-reducer";
+import VectorOccurrenceChart from "./invasive/VectorOccurance/VectorOccurranceChart";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
@@ -218,18 +219,23 @@ class InvasiveLayer extends Component<Props> {
 
   onClickListener = (e: any, a: any) => {
     const placeholder = document.createElement("div");
-    // const { studies, countryMode, invasiveFilters } = this.props;
-    // const filteredStudies = this.filterStudies(studies).filter(
-    //   study =>
-    //     countryMode
-    //       ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-    //       : study.SITE_ID === e.features[0].properties.SITE_ID
-    // );
+    const {
+      studies,
+      countryMode,
+      invasiveFilters: { mapType }
+    } = this.props;
+    const filteredStudies = this.filterStudies(studies).filter(
+      study => study.SITE_ID === e.features[0].properties.SITE_ID
+    );
 
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>
         <ThemeProvider theme={theme}>
-          <Provider store={store} />
+          <Provider store={store}>
+            {!countryMode && mapType === InvasiveMapType.VECTOR_OCCURANCE && (
+              <VectorOccurrenceChart studies={filteredStudies} />
+            )}
+          </Provider>
         </ThemeProvider>
       </I18nextProvider>,
       placeholder

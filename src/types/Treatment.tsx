@@ -21,6 +21,13 @@ export interface TreatmentStudy extends Study {
   CITATION_URL: string;
   COUNTRY_NAME: string;
   Code: number;
+  DRUG_NAME: string;
+  N: string;
+  CONFIRMED_RESIST_PV: string;
+  POSITIVE_DAY_3: string;
+  TREATMENT_FAILURE_KM: string;
+  TREATMENT_FAILURE_PP: string;
+  FOLLOW_UP: string;
   INSECTICIDE_CLASS: string;
   INSECTICIDE_CONC: string;
   INSECTICIDE_INTENSITY: string;
