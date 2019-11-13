@@ -1,5 +1,6 @@
 import { DELETION_TYPES } from "../filters/DeletionTypeFilter";
 import { VectorSpeciesKey } from "../filters/VectorSpeciesFilter";
+import { RegionState } from "../../store/types";
 
 export const filterByYearRange = (
   years: number[],
@@ -37,8 +38,15 @@ export const filterByLevelOfInvolvement = (study: any) => {
   );
 };
 
-export const filterByCountry = (country: string) => (study: any) => {
-  return !country || study.COUNTRY_NAME === country;
+export const filterByRegion = (region: RegionState) => (study: any) => {
+  if (region.country) {
+    return study.COUNTRY_NAME === region.country;
+  } else if (region.region) {
+    return study.REGION_FULL === region.region;
+  } else if (region.subRegion) {
+    return study.SUBREGION === region.subRegion;
+  }
+  return true;
 };
 
 export const filterByInsecticideClass = (insecticideClass: string) => (

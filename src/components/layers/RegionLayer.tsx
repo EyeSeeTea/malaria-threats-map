@@ -53,7 +53,7 @@ class RegionLayer extends Component<Props> {
     fetchCountryLayer();
     const host = "https://who-cache.esriemcs.com";
     const query =
-      "where=1%3D1&f=geojson&geometryPrecision=2.5&outFields=ADM0_SOVRN,ADM0_NAME,CENTER_LAT,CENTER_LON";
+      "where=1%3D1&f=geojson&geometryPrecision=2.5&outFields=ADM0_SOVRN,ADM0_NAME,SUBREGION,REGION_FULL,CENTER_LAT,CENTER_LON";
     const source: any = {
       type: "geojson",
       data: `${host}/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer/3/query?${query}`
@@ -64,7 +64,7 @@ class RegionLayer extends Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     const { region, countryLayer } = this.props;
-    if (prevProps.region.country !== region.country) {
+    if (prevProps.region !== region) {
       this.applyCountryUpdates(region);
     }
     if (prevProps.countryLayer !== countryLayer) {
@@ -76,6 +76,14 @@ class RegionLayer extends Component<Props> {
     if (region.country) {
       this.zoomToCountry(region.country);
       this.highlightToCountry(region.country);
+      this.showLayer();
+    } else if (region.subRegion) {
+      this.zoomToSubRegion(region.subRegion);
+      this.highlightToSubRegion(region.subRegion);
+      this.showLayer();
+    } else if (region.region) {
+      this.zoomToRegion(region.region);
+      this.highlightToRegion(region.region);
       this.showLayer();
     } else {
       const location = {
@@ -97,6 +105,20 @@ class RegionLayer extends Component<Props> {
     ]);
   };
 
+  highlightToRegion = (region: string) => {
+    this.props.map.setFilter(REGION_LAYER_ID, [
+      "all",
+      ["!=", "REGION_FULL", region]
+    ]);
+  };
+
+  highlightToSubRegion = (subRegion: string) => {
+    this.props.map.setFilter(REGION_LAYER_ID, [
+      "all",
+      ["!=", "SUBREGION", subRegion]
+    ]);
+  };
+
   zoomToCountry = (country: string) => {
     const { countryLayer } = this.props;
     if (!countryLayer) return;
@@ -107,6 +129,54 @@ class RegionLayer extends Component<Props> {
     const coordinates: any[] = R.chain((coords: any) => {
       return coords[0].length === 2 ? coords : coords[0];
     }, feature.geometry.coordinates);
+    const bounds = coordinates.reduce((bounds: any, coord: any) => {
+      return bounds.extend(coord);
+    }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+    this.props.map.fitBounds(bounds, {
+      padding: 100
+    });
+  };
+
+  zoomToRegion = (region: string) => {
+    const { countryLayer } = this.props;
+    if (!countryLayer) return;
+    const features = countryLayer.features.filter((feature: any) => {
+      return (
+        feature.properties.REGION_FULL === region ||
+        feature.properties.REGION_FULL === region.replace(/_/g, " ")
+      );
+    });
+    if (!features.length) return;
+    const coordinates: any[] = features.reduce((acc: any[], feature: any) => {
+      const featureCoords = R.chain((coords: any) => {
+        return coords[0].length === 2 ? coords : coords[0];
+      }, feature.geometry.coordinates);
+      return [...acc, ...featureCoords];
+    }, []);
+    const bounds = coordinates.reduce((bounds: any, coord: any) => {
+      return bounds.extend(coord);
+    }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+    this.props.map.fitBounds(bounds, {
+      padding: 100
+    });
+  };
+
+  zoomToSubRegion = (subRegion: string) => {
+    const { countryLayer } = this.props;
+    if (!countryLayer) return;
+    const features = countryLayer.features.filter((feature: any) => {
+      return (
+        feature.properties.SUBREGION === subRegion ||
+        feature.properties.SUBREGION === subRegion.replace(/_/g, " ")
+      );
+    });
+    if (!features.length) return;
+    const coordinates: any[] = features.reduce((acc: any[], feature: any) => {
+      const featureCoords = R.chain((coords: any) => {
+        return coords[0].length === 2 ? coords : coords[0];
+      }, feature.geometry.coordinates);
+      return [...acc, ...featureCoords];
+    }, []);
     const bounds = coordinates.reduce((bounds: any, coord: any) => {
       return bounds.extend(coord);
     }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));

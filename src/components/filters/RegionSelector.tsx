@@ -1,0 +1,50 @@
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { setRegionAction } from "../../store/actions/base-actions";
+import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
+import { selectRegion } from "../../store/reducers/base-reducer";
+import { State } from "../../store/types";
+import { Translation } from "../../types/Translation";
+import IntegrationReactSelect from "../BasicSelect";
+import { selectRegions } from "../../store/reducers/translations-reducer";
+
+const mapStateToProps = (state: State) => ({
+  region: selectRegion(state),
+  countryLayer: selectCountryLayer(state),
+  regions: selectRegions(state)
+});
+
+const mapDispatchToProps = {
+  setRegion: setRegionAction
+};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+type Props = DispatchProps & StateProps;
+
+class RegionSelector extends Component<Props> {
+  onChange = (selection: any) => {
+    this.props.setRegion({ region: selection ? selection.value : undefined });
+  };
+  render() {
+    const { region, regions = [] } = this.props;
+    const suggestions: any[] = (regions as Translation[]).map(region => ({
+      label: region.VALUE_,
+      value: region.VALUE_
+    }));
+    return (
+      <IntegrationReactSelect
+        isClearable
+        placeholder={"Select Region"}
+        suggestions={suggestions}
+        onChange={this.onChange}
+        value={suggestions.find((s: any) => s.value === region.region) || null}
+      />
+    );
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RegionSelector);

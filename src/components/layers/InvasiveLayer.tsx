@@ -13,7 +13,7 @@ import { selectCountries } from "../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
 import {
-  filterByCountry,
+  filterByRegion,
   filterByVectorSpecies,
   filterByYearRange
 } from "./studies-filters";
@@ -82,7 +82,7 @@ class InvasiveLayer extends Component<Props> {
     const yearChange =
       prevProps.filters[0] !== filters[0] ||
       prevProps.filters[1] !== filters[1];
-    const countryChange = prevProps.region.country !== region.country;
+    const countryChange = prevProps.region !== region;
     const countryModeChange = prevProps.countryMode !== countryMode;
     const countriesChange = prevProps.countries.length !== countries.length;
     const speciesChange =
@@ -123,10 +123,10 @@ class InvasiveLayer extends Component<Props> {
         return [
           filterByVectorSpecies(invasiveFilters.vectorSpecies),
           filterByYearRange(filters, true),
-          filterByCountry(region.country)
+          filterByRegion(region)
         ];
       default:
-        return [filterByCountry(region.country)];
+        return [filterByRegion(region)];
     }
   };
 
@@ -232,9 +232,10 @@ class InvasiveLayer extends Component<Props> {
       <I18nextProvider i18n={i18next}>
         <ThemeProvider theme={theme}>
           <Provider store={store}>
-            {!countryMode && mapType === InvasiveMapType.VECTOR_OCCURANCE && (
-              <VectorOccurrenceChart studies={filteredStudies} />
-            )}
+            {!countryMode &&
+              mapType === InvasiveMapType.VECTOR_OCCURANCE && (
+                <VectorOccurrenceChart studies={filteredStudies} />
+              )}
           </Provider>
         </ThemeProvider>
       </I18nextProvider>,

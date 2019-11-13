@@ -15,7 +15,9 @@ export interface State {
 }
 
 export interface RegionState {
-  country: string;
+  country?: string;
+  region?: string;
+  subRegion?: string;
 }
 
 export interface MalariaState {

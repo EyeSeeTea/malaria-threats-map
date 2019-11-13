@@ -57,10 +57,7 @@ export const selectAssayTypes = createSelector(
   R.propOr([], "ASSAY_TYPE")
 );
 
-export const selectTypes = createSelector(
-  selectFields,
-  R.propOr([], "TYPE")
-);
+export const selectTypes = createSelector(selectFields, R.propOr([], "TYPE"));
 
 export const selectSynergistTypes = createSelector(
   selectFields,
@@ -98,4 +95,13 @@ export const selectPlasmodiumSpecies = createSelector(
 export const selectDrugs = createSelector(
   selectFields,
   R.propOr([], "DRUG_NAME")
+);
+
+export const selectSubRegions = createSelector(
+  selectFields,
+  R.propOr([], "SUBREGION")
+);
+export const selectRegions = createSelector(
+  selectFields,
+  R.propOr([], "REGION_FULL")
 );

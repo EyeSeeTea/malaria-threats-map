@@ -17,9 +17,9 @@ import {
 import * as R from "ramda";
 import { resolveResistanceStatus } from "./prevention/ResistanceStatus/utils";
 import {
-  filterByCountry,
   filterByDeletionType,
   filterByPatientType,
+  filterByRegion,
   filterBySurveyTypes,
   filterByYearRange
 } from "./studies-filters";
@@ -146,7 +146,7 @@ class DiagnosisLayer extends Component<Props> {
           filterBySurveyTypes(diagnosisFilters.surveyTypes),
           filterByPatientType(diagnosisFilters.patientType),
           filterByYearRange(filters),
-          filterByCountry(region.country)
+          filterByRegion(region)
         ];
       default:
         return [];
@@ -247,21 +247,24 @@ class DiagnosisLayer extends Component<Props> {
       countryMode,
       diagnosisFilters: { mapType }
     } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(study =>
-      countryMode
-        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-        : study.SITE_ID === e.features[0].properties.SITE_ID
+    const filteredStudies = this.filterStudies(studies).filter(
+      study =>
+        countryMode
+          ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+          : study.SITE_ID === e.features[0].properties.SITE_ID
     );
 
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>
         <Provider store={store}>
-          {!countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
-            <GeneDeletionChart studies={filteredStudies} />
-          )}
-          {countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
-            <GeneDeletionCountryChart studies={filteredStudies} />
-          )}
+          {!countryMode &&
+            mapType === DiagnosisMapType.GENE_DELETIONS && (
+              <GeneDeletionChart studies={filteredStudies} />
+            )}
+          {countryMode &&
+            mapType === DiagnosisMapType.GENE_DELETIONS && (
+              <GeneDeletionCountryChart studies={filteredStudies} />
+            )}
         </Provider>
       </I18nextProvider>,
       placeholder

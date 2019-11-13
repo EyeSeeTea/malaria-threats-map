@@ -9,11 +9,11 @@ import { resolveResistanceStatus } from "./prevention/ResistanceStatus/utils";
 import { PreventionStudy } from "../../types/Prevention";
 import {
   filterByAssayTypes,
-  filterByCountry,
   filterByInsecticideClass,
   filterByInsecticideTypes,
   filterByIntensityStatus,
   filterByLevelOfInvolvement,
+  filterByRegion,
   filterByResistanceMechanism,
   filterByResistanceStatus,
   filterBySpecies,
@@ -108,7 +108,7 @@ class PreventionLayer extends Component<Props> {
     const yearChange =
       prevProps.filters[0] !== filters[0] ||
       prevProps.filters[1] !== filters[1];
-    const countryChange = prevProps.region.country !== region.country;
+    const countryChange = prevProps.region !== region;
     const insecticideChange =
       prevProps.preventionFilters.insecticideClass !== insecticideClass;
     const insecticideTypesChange =
@@ -176,13 +176,13 @@ class PreventionLayer extends Component<Props> {
           filterByType(preventionFilters.type),
           filterBySpecies(preventionFilters.species),
           filterByYearRange(filters),
-          filterByCountry(region.country)
+          filterByRegion(region)
         ];
       case PreventionMapType.INTENSITY_STATUS:
         return [
           filterByIntensityStatus,
           filterByYearRange(filters),
-          filterByCountry(region.country)
+          filterByRegion(region)
         ];
       case PreventionMapType.RESISTANCE_MECHANISM:
         const base = [
@@ -191,7 +191,7 @@ class PreventionLayer extends Component<Props> {
           filterBySpecies(preventionFilters.species),
           filterByAssayTypes(preventionFilters.assayTypes),
           filterByYearRange(filters),
-          filterByCountry(region.country)
+          filterByRegion(region)
         ];
         return isSynergyst(preventionFilters)
           ? [...base, filterByTypeSynergist(preventionFilters.synergistTypes)]
@@ -202,7 +202,7 @@ class PreventionLayer extends Component<Props> {
           filterByType(preventionFilters.type),
           filterByTypeSynergist(preventionFilters.synergistTypes),
           filterByYearRange(filters),
-          filterByCountry(region.country)
+          filterByRegion(region)
         ];
       case PreventionMapType.PBO_DEPLOYMENT:
         return [
@@ -210,7 +210,7 @@ class PreventionLayer extends Component<Props> {
           filterByInsecticideTypes(preventionFilters.insecticideTypes),
           filterBySpecies(preventionFilters.species),
           filterByYearRange(filters),
-          filterByCountry(region.country)
+          filterByRegion(region)
         ];
       default:
         return [];
@@ -287,7 +287,6 @@ class PreventionLayer extends Component<Props> {
         this.props.map.removeSource(PREVENTION_SOURCE_ID);
       }
       const filteredStudies = this.filterStudies(studies);
-
       const geoStudies = this.setupGeoJsonData(filteredStudies);
       const countryStudies = this.getCountryStudies(filteredStudies);
 
@@ -314,10 +313,11 @@ class PreventionLayer extends Component<Props> {
       countryMode,
       preventionFilters: { mapType }
     } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(study =>
-      countryMode
-        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-        : study.SITE_ID === e.features[0].properties.SITE_ID
+    const filteredStudies = this.filterStudies(studies).filter(
+      study =>
+        countryMode
+          ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+          : study.SITE_ID === e.features[0].properties.SITE_ID
     );
     if (!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT) {
       return;
@@ -326,12 +326,14 @@ class PreventionLayer extends Component<Props> {
       <I18nextProvider i18n={i18next}>
         <ThemeProvider theme={theme}>
           <Provider store={store}>
-            {countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
-              <ResistanceStatusCountryChart studies={filteredStudies} />
-            )}
-            {countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
-              <IntensityStatusCountryChart studies={filteredStudies} />
-            )}
+            {countryMode &&
+              mapType === PreventionMapType.RESISTANCE_STATUS && (
+                <ResistanceStatusCountryChart studies={filteredStudies} />
+              )}
+            {countryMode &&
+              mapType === PreventionMapType.INTENSITY_STATUS && (
+                <IntensityStatusCountryChart studies={filteredStudies} />
+              )}
             {countryMode &&
               mapType === PreventionMapType.RESISTANCE_MECHANISM && (
                 <ResistanceMechanismCountryChart studies={filteredStudies} />
@@ -344,9 +346,10 @@ class PreventionLayer extends Component<Props> {
               mapType === PreventionMapType.RESISTANCE_STATUS && (
                 <ResistanceStatusChart studies={filteredStudies} />
               )}
-            {!countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
-              <IntensityStatusChart studies={filteredStudies} />
-            )}
+            {!countryMode &&
+              mapType === PreventionMapType.INTENSITY_STATUS && (
+                <IntensityStatusChart studies={filteredStudies} />
+              )}
             {!countryMode &&
               mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
                 <LevelOfInvolvementChart studies={filteredStudies} />

@@ -16,12 +16,12 @@ import { selectCountries } from "../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
 import {
-  filterByCountry,
   filterByDimensionId,
   filterByDrug,
   filterByMolecularMarker,
   filterByMolecularMarkerStudy,
   filterByPlasmodiumSpecies,
+  filterByRegion,
   filterByYearRange
 } from "./studies-filters";
 import { TreatmentStudy } from "../../types/Treatment";
@@ -136,7 +136,7 @@ class TreatmentLayer extends Component<Props> {
           filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
           filterByDrug(treatmentFilters.drug),
           filterByYearRange(filters),
-          filterByCountry(region.country)
+          filterByRegion(region)
         ];
       case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
         return [
@@ -144,14 +144,14 @@ class TreatmentLayer extends Component<Props> {
           filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
           filterByDrug(treatmentFilters.drug),
           filterByYearRange(filters),
-          filterByCountry(region.country)
+          filterByRegion(region)
         ];
       case TreatmentMapType.MOLECULAR_MARKERS:
         return [
           filterByMolecularMarkerStudy(),
           filterByMolecularMarker(treatmentFilters.molecularMarker),
           filterByYearRange(filters),
-          filterByCountry(region.country)
+          filterByRegion(region)
         ];
       default:
         return [];
@@ -250,29 +250,33 @@ class TreatmentLayer extends Component<Props> {
       countryMode,
       treatmentFilters: { mapType }
     } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(study =>
-      countryMode
-        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-        : study.SITE_ID === e.features[0].properties.SITE_ID
+    const filteredStudies = this.filterStudies(studies).filter(
+      study =>
+        countryMode
+          ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+          : study.SITE_ID === e.features[0].properties.SITE_ID
     );
 
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>
         <ThemeProvider theme={theme}>
           <Provider store={store}>
-            {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
-              <MolecularMarkersChart studies={filteredStudies} />
-            )}
+            {!countryMode &&
+              mapType === TreatmentMapType.MOLECULAR_MARKERS && (
+                <MolecularMarkersChart studies={filteredStudies} />
+              )}
             {!countryMode &&
               mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE && (
                 <TreatmentFailureChart studies={filteredStudies} />
               )}
-            {!countryMode && mapType === TreatmentMapType.TREATMENT_FAILURE && (
-              <TreatmentFailureChart studies={filteredStudies} />
-            )}
-            {countryMode && mapType === TreatmentMapType.TREATMENT_FAILURE && (
-              <TreatmentFailureCountryChart studies={filteredStudies} />
-            )}
+            {!countryMode &&
+              mapType === TreatmentMapType.TREATMENT_FAILURE && (
+                <TreatmentFailureChart studies={filteredStudies} />
+              )}
+            {countryMode &&
+              mapType === TreatmentMapType.TREATMENT_FAILURE && (
+                <TreatmentFailureCountryChart studies={filteredStudies} />
+              )}
           </Provider>
         </ThemeProvider>
       </I18nextProvider>,

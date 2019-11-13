@@ -7,7 +7,7 @@ import Tab from "@material-ui/core/Tab";
 import { GlobeIcon } from "./Icons";
 import FilterIcon from "@material-ui/icons/FilterList";
 import CloseIcon from "@material-ui/icons/Close";
-import CountrySelector from "./CountrySelector";
+import CountrySelector from "./filters/CountrySelector";
 import ResistanceStatusFilters, {
   Divider,
   FilterWrapper
@@ -38,6 +38,8 @@ import TreatmentFailureFilters from "./layers/treatment/TreatmentFailure/Treatme
 import DelayedParasiteClearanceFilters from "./layers/treatment/DelayedParasiteClearance/DelayedParasiteClearanceFilters";
 import MolecularMarkerFilters from "./layers/treatment/MolecularMarkers/MolecularMarkerFilters";
 import VectorOccuranceFilters from "./layers/invasive/VectorOccurance/VectorOccuranceFilters";
+import RegionSelector from "./filters/RegionSelector";
+import SubRegionSelector from "./filters/SubRegionSelector";
 
 const FiltersWrapper = styled.div`
   margin-top: 20px;
@@ -172,11 +174,23 @@ const FiltersSidebar = ({
         {value === 0 ? (
           resolveFilters()
         ) : (
-          <FilterWrapper>
-            <FormLabel component="legend">Country</FormLabel>
-            <Divider />
-            <CountrySelector />
-          </FilterWrapper>
+          <div>
+            <FilterWrapper>
+              <FormLabel component="legend">Country</FormLabel>
+              <Divider />
+              <CountrySelector />
+            </FilterWrapper>
+            <FilterWrapper>
+              <FormLabel component="legend">Region</FormLabel>
+              <Divider />
+              <RegionSelector />
+            </FilterWrapper>
+            <FilterWrapper>
+              <FormLabel component="legend">Subregion</FormLabel>
+              <Divider />
+              <SubRegionSelector />
+            </FilterWrapper>
+          </div>
         )}
       </FiltersWrapper>
     </div>

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { State } from "../store/types";
-import IntegrationReactSelect from "./BasicSelect";
-import { selectCountryLayer } from "../store/reducers/country-layer-reducer";
-import { Translation } from "../types/Translation";
-import { selectCountries } from "../store/reducers/translations-reducer";
-import { selectRegion } from "../store/reducers/base-reducer";
-import { setRegionAction } from "../store/actions/base-actions";
+import { setRegionAction } from "../../store/actions/base-actions";
+import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
+import { selectRegion } from "../../store/reducers/base-reducer";
+import { State } from "../../store/types";
+import { Translation } from "../../types/Translation";
+import IntegrationReactSelect from "../BasicSelect";
+import { selectCountries } from "../../store/reducers/translations-reducer";
 
 const mapStateToProps = (state: State) => ({
   region: selectRegion(state),
@@ -38,7 +38,7 @@ class CountrySelector extends Component<Props> {
         placeholder={"Select Country"}
         suggestions={suggestions}
         onChange={this.onChange}
-        value={suggestions.find((s: any) => s.value === region.country)}
+        value={suggestions.find((s: any) => s.value === region.country) || null}
       />
     );
   }
