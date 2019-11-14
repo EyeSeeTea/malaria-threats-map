@@ -76,3 +76,10 @@ export const setFiltersOpen = createAction(
     return (filtersOpen: boolean) => action(filtersOpen);
   }
 );
+
+export const setFiltersMode = createAction(
+  ActionTypeEnum.SetFiltersMode,
+  action => {
+    return (filtersMode: string) => action(filtersMode);
+  }
+);

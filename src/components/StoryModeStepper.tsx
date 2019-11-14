@@ -4,7 +4,6 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import { Paper } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,9 +11,15 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import { State } from "../store/types";
-import { selectFilters } from "../store/reducers/base-reducer";
+import { selectFilters, selectTheme } from "../store/reducers/base-reducer";
 import { setStoryModeAction } from "../store/actions/base-actions";
 import { connect } from "react-redux";
+import PreventionSteps from "./story/prevention/PreventionSteps";
+import DiagnosisSteps from "./story/diagnosis/DiagnosisSteps";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
+import TreatmentSteps from "./story/treatment/TreatmentSteps";
+import InvasiveSteps from "./story/invasive/InvasiveSteps";
 
 const FlexGrow = styled.div`
   flex-grow: 1;
@@ -48,9 +53,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function getSteps() {
-  return ["Select campaign settings", "Create an ad group", "Create an ad"];
+  return ["", "", "", ""];
 }
 const mapStateToProps = (state: State) => ({
+  theme: selectTheme(state),
   filters: selectFilters(state)
 });
 
@@ -62,15 +68,23 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function StoryModeStepper({ setStoryMode }: Props) {
+type Steps = { [value: string]: any[] };
+
+const stepsMap = (language: string) => ({
+  prevention: (PreventionSteps as Steps)[language],
+  diagnosis: (DiagnosisSteps as Steps)[language],
+  treatment: (TreatmentSteps as Steps)[language],
+  invasive: (InvasiveSteps as Steps)[language]
+});
+
+function StoryModeStepper({ theme, setStoryMode }: Props) {
   const classes = useStyles({});
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const steps = getSteps();
 
-  const isStepOptional = (step: number) => {
-    return step === 1;
-  };
+  useTranslation("common");
+  const language = i18next.language || window.localStorage.i18nextLng;
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
@@ -95,6 +109,10 @@ function StoryModeStepper({ setStoryMode }: Props) {
     setStoryMode(false);
   };
 
+  const themeMap = stepsMap(language) as Steps;
+  const selectedSteps = themeMap[theme];
+  const SelectedStep = selectedSteps[activeStep];
+
   return (
     <div className={classes.root}>
       <AppBar className={classes.appBar}>
@@ -112,19 +130,18 @@ function StoryModeStepper({ setStoryMode }: Props) {
         </Toolbar>
       </AppBar>
       <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
+        {selectedSteps.map((step: any, index: number) => {
           const stepProps: { completed?: boolean } = {};
           const labelProps: { optional?: React.ReactNode } = {};
-          if (isStepOptional(index)) {
-            // labelProps.optional = (
-            //   <Typography variant="caption">Optional</Typography>
-            // );
-          }
           if (isStepSkipped(index)) {
             stepProps.completed = false;
           }
           return (
-            <Step key={label} {...stepProps}>
+            <Step
+              key={index}
+              {...stepProps}
+              onClick={() => setActiveStep(index)}
+            >
               <StepLabel {...labelProps}>{""}</StepLabel>
             </Step>
           );
@@ -133,34 +150,7 @@ function StoryModeStepper({ setStoryMode }: Props) {
       <div>
         <div>
           <Paper className={classes.paper}>
-            <Typography variant={"h6"} className={classes.title}>
-              <b>
-                Malaria parasites repeatedly develop resistance to antimalarial
-                treatment
-              </b>
-            </Typography>
-            <br />
-            <Typography variant={"body2"}>
-              <b>
-                For decades, drug resistance has been one of the main obstacles
-                in the fight against malaria.
-              </b>
-            </Typography>
-            <br />
-            <Typography variant={"body2"}>
-              Continuous global monitoring and reporting of drug efficacy and
-              parasite resistance is critical to ensure patients receive
-              effective treatment. WHO supports national malaria control
-              programmes to monitor antimalarial treatment efficacy and to track
-              the genetic changes linked to drug resistance in malaria
-              parasites.
-            </Typography>
-            <Typography variant={"body2"}>
-              The critical role of monitoring drug efficacy has been observed
-              worldwide. Resistance has been a persistent challenge in the
-              Greater Mekong Subregion. The region has been very active in
-              monitoring drug efficacy.
-            </Typography>
+            {SelectedStep ? <SelectedStep /> : <div />}
           </Paper>
           <div className={classes.buttons}>
             <Button

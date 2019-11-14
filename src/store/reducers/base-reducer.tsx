@@ -17,7 +17,8 @@ const initialState: MalariaState = Object.freeze({
     subRegion: ""
   },
   initialDialogOpen: false,
-  filtersOpen: false
+  filtersOpen: false,
+  filtersMode: "filters"
 });
 
 export default createReducer<MalariaState>(initialState, {
@@ -38,7 +39,9 @@ export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.MalariaSetInitialDialogOpen]: (initialDialogOpen: boolean) =>
     R.assoc("initialDialogOpen", initialDialogOpen),
   [ActionTypeEnum.SetFiltersOpen]: (filtersOpen: boolean) =>
-    R.assoc("filtersOpen", filtersOpen)
+    R.assoc("filtersOpen", filtersOpen),
+  [ActionTypeEnum.SetFiltersMode]: (filtersMode: string) =>
+    R.assoc("filtersMode", filtersMode)
 });
 
 export const selectMalariaState = (state: State) => state.malaria;
@@ -69,8 +72,11 @@ export const selectIsInitialDialogOpen = createSelector(
   selectMalariaState,
   R.prop("initialDialogOpen")
 );
-
 export const selectAreFiltersOpen = createSelector(
   selectMalariaState,
   R.prop("filtersOpen")
+);
+export const selectFiltersMode = createSelector(
+  selectMalariaState,
+  R.prop("filtersMode")
 );

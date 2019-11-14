@@ -11,6 +11,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import {
   setCountryModeAction,
   setFiltersAction,
+  setFiltersMode,
   setFiltersOpen,
   setRegionAction,
   setStoryModeAction,
@@ -160,6 +161,10 @@ ReduxQuerySync({
       selector: (state: State) => state.malaria.filtersOpen,
       action: (value: string) => setFiltersOpen(value === "true")
     },
+    filtersMode: {
+      selector: (state: State) => state.malaria.filtersMode,
+      action: (value: string) => setFiltersMode(value)
+    },
     years: {
       selector: (state: State) => state.malaria.filters,
       action: (value: string) =>
@@ -167,12 +172,31 @@ ReduxQuerySync({
           value ? value.split(",").map(value => parseInt(value)) : undefined
         )
     },
-    country: {
-      selector: (state: State) => state.malaria.region.country,
-      action: (value: string) =>
-        setRegionAction({
-          country: value
-        })
+    region: {
+      selector: (state: State) => {
+        if (state.malaria.region.country) {
+          return `country:${state.malaria.region.country}`;
+        }
+        if (state.malaria.region.region) {
+          return `region:${state.malaria.region.region}`;
+        }
+        if (state.malaria.region.subRegion) {
+          return `subRegion:${state.malaria.region.subRegion}`;
+        }
+      },
+      action: (value: string) => {
+        const terms = value.split(":");
+        switch (terms[0]) {
+          case "country":
+            return setRegionAction({ country: terms[1] });
+          case "region":
+            return setRegionAction({ region: terms[1] });
+          case "subRegion":
+            return setRegionAction({ subRegion: terms[1] });
+          default:
+            return setRegionAction({ subRegion: terms[1] });
+        }
+      }
     }
   },
   initialTruth: "location"

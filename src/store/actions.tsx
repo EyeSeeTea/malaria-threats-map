@@ -9,6 +9,7 @@ export enum ActionTypeEnum {
   MalariaSetStoryMode = "malaria/SET_STORY_MODE",
   MalariaSetInitialDialogOpen = "malaria/SET_INITIAL_DIALOG_OPEN",
   SetFiltersOpen = "malaria/SET_FILTERS_OPEN",
+  SetFiltersMode = "malaria/SET_FILTERS_MODE",
 
   FetchPreventionStudiesRequest = "prevention/FETCH_PREVENTION_STUDIES_REQUEST",
   FetchPreventionStudiesSuccess = "prevention/FETCH_PREVENTION_STUDIES_SUCCESS",

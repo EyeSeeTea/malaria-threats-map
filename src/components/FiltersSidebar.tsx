@@ -22,12 +22,12 @@ import {
   State,
   TreatmentMapType
 } from "../store/types";
-import { selectTheme } from "../store/reducers/base-reducer";
+import { selectFiltersMode, selectTheme } from "../store/reducers/base-reducer";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
-import { setFiltersOpen } from "../store/actions/base-actions";
+import { setFiltersMode, setFiltersOpen } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 import IntensityStatusFilters from "./layers/prevention/IntensityStatus/IntensityStatusFilters";
 import ResistanceMechanismFilters from "./layers/prevention/ResistanceMechanisms/ResistanceMechanismFilters";
@@ -63,36 +63,43 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
+  filtersMode: selectFiltersMode(state),
   preventionFilters: selectPreventionFilters(state),
   diagnosisFilters: selectDiagnosisFilters(state),
   treatmentFilters: selectTreatmentFilters(state),
   invasiveFilters: selectInvasiveFilters(state)
 });
 const mapDispatchToProps = {
-  setFiltersOpen: setFiltersOpen
+  setFiltersOpen: setFiltersOpen,
+  setFiltersMode: setFiltersMode
 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
+const tabs = ["filters", "regions"];
+
 const FiltersSidebar = ({
   theme,
+  filtersMode,
   setFiltersOpen,
+  setFiltersMode,
   preventionFilters,
   diagnosisFilters,
   treatmentFilters,
   invasiveFilters
 }: Props) => {
   const classes = useStyles({});
-  const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
+    setFiltersMode(tabs[newValue]);
   };
 
   const handleClose = () => {
     setFiltersOpen(false);
   };
+
+  const value = tabs.indexOf(filtersMode);
 
   function resolveFilters() {
     switch (theme) {
