@@ -1,6 +1,6 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import Typography from "@material-ui/core/Typography";
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() =>
   createStyles({

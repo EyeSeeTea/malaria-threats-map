@@ -1,6 +1,6 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import Typography from "@material-ui/core/Typography";
-import { createStyles, Link, makeStyles, Theme } from "@material-ui/core";
+import { createStyles, Link, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -66,7 +66,7 @@ export default () => {
         </Link>
         .
       </Typography>
-        <br />
+      <br />
       <Typography variant={"body2"}>
         <Link
           href="https://www.who.int/malaria/publications/atoz/9789241565578/"
