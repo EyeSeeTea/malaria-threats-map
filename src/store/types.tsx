@@ -26,6 +26,7 @@ export interface MalariaState {
   endemicity: boolean;
   countryMode: boolean;
   storyMode: boolean;
+  storyModeStep: number;
   filters: number[];
   region: RegionState;
   initialDialogOpen: boolean;

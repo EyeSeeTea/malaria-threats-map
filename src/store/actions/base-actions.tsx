@@ -63,6 +63,13 @@ export const setStoryModeAction = createAction(
   }
 );
 
+export const setStoryModeStepAction = createAction(
+  ActionTypeEnum.MalariaSetStoryModeStep,
+  action => {
+    return (storyModeStep: number) => action(storyModeStep);
+  }
+);
+
 export const setInitialDialogOpen = createAction(
   ActionTypeEnum.MalariaSetInitialDialogOpen,
   action => {

@@ -10,6 +10,7 @@ const initialState: MalariaState = Object.freeze({
   endemicity: false,
   countryMode: false,
   storyMode: false,
+  storyModeStep: 0,
   filters: [2010, 2018],
   region: {
     country: "",
@@ -36,6 +37,8 @@ export default createReducer<MalariaState>(initialState, {
     R.assoc("countryMode", countryMode),
   [ActionTypeEnum.MalariaSetStoryMode]: (storyMode: boolean) =>
     R.assoc("storyMode", storyMode),
+  [ActionTypeEnum.MalariaSetStoryModeStep]: (storyModeStep: number) =>
+    R.assoc("storyModeStep", storyModeStep || 0),
   [ActionTypeEnum.MalariaSetInitialDialogOpen]: (initialDialogOpen: boolean) =>
     R.assoc("initialDialogOpen", initialDialogOpen),
   [ActionTypeEnum.SetFiltersOpen]: (filtersOpen: boolean) =>
@@ -46,12 +49,18 @@ export default createReducer<MalariaState>(initialState, {
 
 export const selectMalariaState = (state: State) => state.malaria;
 
-export const selectTheme = createSelector(selectMalariaState, R.prop("theme"));
+export const selectTheme = createSelector(
+  selectMalariaState,
+  R.prop("theme")
+);
 export const selectStoryMode = createSelector(
   selectMalariaState,
   R.prop("storyMode")
 );
-export const selectAny = createSelector(selectMalariaState, R.prop("any"));
+export const selectAny = createSelector(
+  selectMalariaState,
+  R.prop("any")
+);
 export const selectEndemicity = createSelector(
   selectMalariaState,
   R.prop("endemicity")
@@ -79,4 +88,8 @@ export const selectAreFiltersOpen = createSelector(
 export const selectFiltersMode = createSelector(
   selectMalariaState,
   R.prop("filtersMode")
+);
+export const selectStoryModeStep = createSelector(
+  selectMalariaState,
+  R.prop("storyModeStep")
 );

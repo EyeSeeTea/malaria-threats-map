@@ -75,7 +75,7 @@ export default () => {
         >
           <img
             src="https://www.who.int/malaria/publications/atoz/978921565578-eng.jpg"
-            alt="supporting Image"
+            alt="supporting"
           />
         </Link>
       </Typography>

@@ -11,8 +11,15 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import { State } from "../store/types";
-import { selectFilters, selectTheme } from "../store/reducers/base-reducer";
-import { setStoryModeAction } from "../store/actions/base-actions";
+import {
+  selectFilters,
+  selectStoryModeStep,
+  selectTheme
+} from "../store/reducers/base-reducer";
+import {
+  setStoryModeAction,
+  setStoryModeStepAction
+} from "../store/actions/base-actions";
 import { connect } from "react-redux";
 import PreventionSteps from "./story/prevention/PreventionSteps";
 import DiagnosisSteps from "./story/diagnosis/DiagnosisSteps";
@@ -25,6 +32,13 @@ const FlexGrow = styled.div`
   flex-grow: 1;
 `;
 
+const StyledStepLabel = styled(StepLabel)`
+  cursor: pointer;
+`;
+
+const StyledStep = styled(Step)`
+  cursor: pointer;
+`;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {},
@@ -57,11 +71,13 @@ function getSteps() {
 }
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
-  filters: selectFilters(state)
+  filters: selectFilters(state),
+  storyModeStep: selectStoryModeStep(state)
 });
 
 const mapDispatchToProps = {
-  setStoryMode: setStoryModeAction
+  setStoryMode: setStoryModeAction,
+  setStoryModeStep: setStoryModeStepAction
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -77,32 +93,24 @@ const stepsMap = (language: string) => ({
   invasive: (InvasiveSteps as Steps)[language]
 });
 
-function StoryModeStepper({ theme, setStoryMode }: Props) {
+function StoryModeStepper({
+  theme,
+  setStoryMode,
+  setStoryModeStep,
+  storyModeStep
+}: Props) {
   const classes = useStyles({});
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set<number>());
   const steps = getSteps();
 
   useTranslation("common");
   const language = i18next.language || window.localStorage.i18nextLng;
 
-  const isStepSkipped = (step: number) => {
-    return skipped.has(step);
-  };
-
   const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
-    setSkipped(newSkipped);
+    setStoryModeStep(storyModeStep + 1);
   };
 
   const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
+    setStoryModeStep(storyModeStep - 1);
   };
 
   const handleClose = () => {
@@ -111,7 +119,7 @@ function StoryModeStepper({ theme, setStoryMode }: Props) {
 
   const themeMap = stepsMap(language) as Steps;
   const selectedSteps = themeMap[theme];
-  const SelectedStep = selectedSteps[activeStep];
+  const SelectedStep = selectedSteps[storyModeStep];
 
   return (
     <div className={classes.root}>
@@ -129,21 +137,18 @@ function StoryModeStepper({ theme, setStoryMode }: Props) {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Stepper activeStep={activeStep}>
+      <Stepper activeStep={storyModeStep}>
         {selectedSteps.map((step: any, index: number) => {
           const stepProps: { completed?: boolean } = {};
           const labelProps: { optional?: React.ReactNode } = {};
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
           return (
-            <Step
+            <StyledStep
               key={index}
               {...stepProps}
-              onClick={() => setActiveStep(index)}
+              onClick={() => setStoryModeStep(index)}
             >
-              <StepLabel {...labelProps}>{""}</StepLabel>
-            </Step>
+              <StyledStepLabel {...labelProps}>{""}</StyledStepLabel>
+            </StyledStep>
           );
         })}
       </Stepper>
@@ -157,7 +162,7 @@ function StoryModeStepper({ theme, setStoryMode }: Props) {
               variant="contained"
               color="default"
               onClick={handleBack}
-              disabled={activeStep === 0}
+              disabled={storyModeStep === 0}
               className={classes.button}
             >
               Back
@@ -166,7 +171,7 @@ function StoryModeStepper({ theme, setStoryMode }: Props) {
               variant="contained"
               color="primary"
               onClick={handleNext}
-              disabled={activeStep === steps.length - 1}
+              disabled={storyModeStep === steps.length - 1}
               className={classes.button}
             >
               Next

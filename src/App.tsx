@@ -15,6 +15,7 @@ import {
   setFiltersOpen,
   setRegionAction,
   setStoryModeAction,
+  setStoryModeStepAction,
   setThemeAction,
   toggleEndemicityLayerAction
 } from "./store/actions/base-actions";
@@ -156,6 +157,10 @@ ReduxQuerySync({
     storyMode: {
       selector: (state: State) => state.malaria.storyMode,
       action: (value: string) => setStoryModeAction(value === "true")
+    },
+    storyModeStep: {
+      selector: (state: State) => state.malaria.storyModeStep,
+      action: (value: string) => setStoryModeStepAction(parseInt(value))
     },
     filterOpen: {
       selector: (state: State) => state.malaria.filtersOpen,

@@ -7,6 +7,9 @@ import {
   logEventAction,
   setCountryModeAction,
   setInitialDialogOpen,
+  setRegionAction,
+  setStoryModeAction,
+  setStoryModeStepAction,
   setThemeAction
 } from "../actions/base-actions";
 import { PreventionMapType, State } from "../types";
@@ -20,7 +23,8 @@ export const setThemeEpic = (
     withLatestFrom(state$),
     switchMap(([action, state]) => {
       const base = [
-        logEventAction({ category: "theme", action: action.payload })
+        logEventAction({ category: "theme", action: action.payload }),
+        setStoryModeStepAction(0)
       ];
       switch (action.payload) {
         case "invasive":
@@ -50,3 +54,93 @@ export const logEvent = (
       return of(setInitialDialogOpen(false));
     })
   );
+
+export const setStoryModeStepEpic = (
+  action$: ActionsObservable<
+    ActionType<
+      | typeof setStoryModeStepAction
+      | typeof setStoryModeAction
+      | typeof setThemeAction
+    >
+  >,
+  state$: StateObservable<State>
+) =>
+  action$
+    .ofType(
+      ActionTypeEnum.MalariaSetStoryModeStep,
+      ActionTypeEnum.MalariaSetStoryMode,
+      ActionTypeEnum.MalariaSetTheme
+    )
+    .pipe(
+      withLatestFrom(state$),
+      switchMap(([action, state]) => {
+        const theme = state.malaria.theme;
+        if (!state.malaria.storyMode) {
+          return of();
+        }
+        switch (theme) {
+          case "prevention":
+            switch (action.payload) {
+              case 0:
+                return of(setCountryModeAction(true), setRegionAction({}));
+              case 1:
+                return of(setCountryModeAction(false), setRegionAction({}));
+              case 2:
+                return of(
+                  setCountryModeAction(false),
+                  setRegionAction({ region: "SOUTH-EAST_ASIA" })
+                );
+              case 3:
+                return of(
+                  setCountryModeAction(false),
+                  setRegionAction({ region: "AFRICA" })
+                );
+              default:
+                return of();
+            }
+          case "diagnosis":
+            switch (action.payload) {
+              case 0:
+                return of(
+                  setCountryModeAction(false),
+                  setRegionAction({ country: "PERU" })
+                );
+              case 1:
+                return of(
+                  setCountryModeAction(false),
+                  setRegionAction({ region: "AFRICA" })
+                );
+              case 2:
+                return of(setCountryModeAction(true), setRegionAction({}));
+              default:
+                return of();
+            }
+          case "treatment":
+            switch (action.payload) {
+              case 0:
+                return of(setCountryModeAction(true), setRegionAction({}));
+              case 1:
+                return of(setCountryModeAction(true), setRegionAction({}));
+              case 2:
+                return of(setCountryModeAction(true), setRegionAction({}));
+              case 3:
+                return of(setCountryModeAction(false), setRegionAction({}));
+              default:
+                return of();
+            }
+          case "invasive":
+            switch (action.payload) {
+              case 0:
+                return of(setCountryModeAction(false), setRegionAction({}));
+              case 1:
+                return of(setCountryModeAction(false), setRegionAction({}));
+              case 2:
+                return of(setCountryModeAction(false), setRegionAction({}));
+              default:
+                return of();
+            }
+          default:
+            return of();
+        }
+      })
+    );
