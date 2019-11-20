@@ -36,7 +36,7 @@ import ReactMapboxGl from "react-mapbox-gl";
 import { Fade, Hidden } from "@material-ui/core";
 import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
-import Leyend from "./Leyend";
+import Leyend, { LegendContainer } from "./Leyend";
 import StoryModeSelector from "./StoryModeSelector";
 
 ReactMapboxGl({
@@ -199,7 +199,7 @@ class Map extends React.Component<any> {
           </TopRightContainer>
         </Fade>
         <Fade in={!initialDialogOpen}>
-          <BottomRightContainer>
+          <BottomRightContainer id={"legend"}>
             <Hidden smUp>
               <LeyendPopover />
             </Hidden>

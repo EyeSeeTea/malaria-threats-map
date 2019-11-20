@@ -1,11 +1,11 @@
 export const MapServerConfig = {
   layers: {
-    prevention: 8,
-    diagnosis: 10,
-    treatment: 9,
-    invasive: 14,
-    translations: 11,
-    countries: 6
+    prevention: 5,
+    diagnosis: 7,
+    treatment: 6,
+    invasive: 10,
+    translations: 8,
+    countries: 3
   },
   years: {
     from: 1998,
