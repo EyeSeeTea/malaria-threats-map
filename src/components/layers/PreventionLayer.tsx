@@ -47,6 +47,7 @@ import ResistanceMechanismCountryChart from "./prevention/ResistanceMechanisms/R
 import ResistanceMechanismsChart from "./prevention/ResistanceMechanisms/ResistanceMechanismsChart";
 import IntensityStatusChart from "./prevention/IntensityStatus/IntensityStatusChart";
 import LevelOfInvolvementChart from "./prevention/Involvement/LevelOfInvolvementChart";
+import { setFilteredStudiesAction } from "../../store/actions/prevention-actions";
 
 const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -74,11 +75,17 @@ const mapStateToProps = (state: State) => ({
   countryMode: selectCountryMode(state)
 });
 
+const mapDispatchToProps = {
+  setFilteredStudies: setFilteredStudiesAction
+};
+
 type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
 type OwnProps = {
   map: any;
 };
-type Props = StateProps & OwnProps;
+type Props = StateProps & DispatchProps & OwnProps;
 
 class PreventionLayer extends Component<Props> {
   popup: mapboxgl.Popup;
@@ -227,6 +234,7 @@ class PreventionLayer extends Component<Props> {
     const source = this.props.map.getSource(PREVENTION_SOURCE_ID);
     if (source) {
       const filteredStudies = this.filterStudies(studies);
+      this.props.setFilteredStudies(filteredStudies);
       const geoStudies = this.setupGeoJsonData(filteredStudies);
       const countryStudies = this.getCountryStudies(filteredStudies);
       const data = countryMode ? countryStudies : geoStudies;
@@ -287,6 +295,7 @@ class PreventionLayer extends Component<Props> {
         this.props.map.removeSource(PREVENTION_SOURCE_ID);
       }
       const filteredStudies = this.filterStudies(studies);
+      this.props.setFilteredStudies(filteredStudies);
       const geoStudies = this.setupGeoJsonData(filteredStudies);
       const countryStudies = this.getCountryStudies(filteredStudies);
 
@@ -313,11 +322,10 @@ class PreventionLayer extends Component<Props> {
       countryMode,
       preventionFilters: { mapType }
     } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(
-      study =>
-        countryMode
-          ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-          : study.SITE_ID === e.features[0].properties.SITE_ID
+    const filteredStudies = this.filterStudies(studies).filter(study =>
+      countryMode
+        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+        : study.SITE_ID === e.features[0].properties.SITE_ID
     );
     if (!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT) {
       return;
@@ -326,14 +334,12 @@ class PreventionLayer extends Component<Props> {
       <I18nextProvider i18n={i18next}>
         <ThemeProvider theme={theme}>
           <Provider store={store}>
-            {countryMode &&
-              mapType === PreventionMapType.RESISTANCE_STATUS && (
-                <ResistanceStatusCountryChart studies={filteredStudies} />
-              )}
-            {countryMode &&
-              mapType === PreventionMapType.INTENSITY_STATUS && (
-                <IntensityStatusCountryChart studies={filteredStudies} />
-              )}
+            {countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
+              <ResistanceStatusCountryChart studies={filteredStudies} />
+            )}
+            {countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
+              <IntensityStatusCountryChart studies={filteredStudies} />
+            )}
             {countryMode &&
               mapType === PreventionMapType.RESISTANCE_MECHANISM && (
                 <ResistanceMechanismCountryChart studies={filteredStudies} />
@@ -346,10 +352,9 @@ class PreventionLayer extends Component<Props> {
               mapType === PreventionMapType.RESISTANCE_STATUS && (
                 <ResistanceStatusChart studies={filteredStudies} />
               )}
-            {!countryMode &&
-              mapType === PreventionMapType.INTENSITY_STATUS && (
-                <IntensityStatusChart studies={filteredStudies} />
-              )}
+            {!countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
+              <IntensityStatusChart studies={filteredStudies} />
+            )}
             {!countryMode &&
               mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
                 <LevelOfInvolvementChart studies={filteredStudies} />
@@ -429,5 +434,5 @@ class PreventionLayer extends Component<Props> {
 }
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(PreventionLayer);

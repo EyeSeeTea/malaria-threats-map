@@ -101,6 +101,11 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
     { name: "TREATMENT_FAILURE_KM", color: "#4b48be" }
   ];
 
+  const exists = (value: string) => {
+    const trimmed = value.trim();
+    return trimmed !== "N/A" && trimmed !== "NA" && trimmed !== null;
+  };
+
   const series = keys.map(key => {
     return {
       name: key.name,
@@ -179,30 +184,38 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
                 {FOLLOW_UP} days
               </Typography>
             </Flex>
-            <Flex>
-              <Typography variant="body2">
-                <b>Patients with confirmed resistance:&nbsp;</b>
-                {formatValue(CONFIRMED_RESIST_PV)}
-              </Typography>
-            </Flex>
-            <Flex>
-              <Typography variant="body2">
-                <b>Positive after day 3:&nbsp;</b>
-                {formatValue(POSITIVE_DAY_3)}
-              </Typography>
-            </Flex>
-            <Flex>
-              <Typography variant="body2">
-                <b>Patients with treatment failure, per protocol:&nbsp;</b>
-                {formatValue(TREATMENT_FAILURE_PP)}
-              </Typography>
-            </Flex>
-            <Flex>
-              <Typography variant="body2">
-                <b>Patients with treatment failure, Kaplan-Meier:&nbsp;</b>
-                {formatValue(TREATMENT_FAILURE_KM)}
-              </Typography>
-            </Flex>
+            {exists(CONFIRMED_RESIST_PV) && (
+              <Flex>
+                <Typography variant="body2">
+                  <b>Patients with confirmed resistance:&nbsp;</b>
+                  {formatValue(CONFIRMED_RESIST_PV)}
+                </Typography>
+              </Flex>
+            )}
+            {exists(POSITIVE_DAY_3) && (
+              <Flex>
+                <Typography variant="body2">
+                  <b>Positive after day 3:&nbsp;</b>
+                  {formatValue(POSITIVE_DAY_3)}
+                </Typography>
+              </Flex>
+            )}
+            {exists(TREATMENT_FAILURE_PP) && (
+              <Flex>
+                <Typography variant="body2">
+                  <b>Patients with treatment failure, per protocol:&nbsp;</b>
+                  {formatValue(TREATMENT_FAILURE_PP)}
+                </Typography>
+              </Flex>
+            )}
+            {exists(TREATMENT_FAILURE_KM) && (
+              <Flex>
+                <Typography variant="body2">
+                  <b>Patients with treatment failure, Kaplan-Meier:&nbsp;</b>
+                  {formatValue(TREATMENT_FAILURE_KM)}
+                </Typography>
+              </Flex>
+            )}
           </Margin>
         </FlexCol>
         <FlexCol>

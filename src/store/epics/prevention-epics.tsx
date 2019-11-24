@@ -12,7 +12,10 @@ import {
   fetchPreventionStudiesRequest,
   fetchPreventionStudiesSuccess,
   setAssayTypes,
+  setInsecticideClass,
+  setInsecticideTypes,
   setPreventionMapType,
+  setSpecies,
   setType
 } from "../actions/prevention-actions";
 import { PreventionMapType } from "../types";
@@ -80,5 +83,14 @@ export const setPreventionTypeEpic = (
       } else {
         return of(setAssayTypes(ASSAY_TYPES));
       }
+    })
+  );
+
+export const setPreventionInsecticideClassEpic = (
+  action$: ActionsObservable<ActionType<typeof setInsecticideClass>>
+) =>
+  action$.ofType(ActionTypeEnum.SetInsecticideClass).pipe(
+    switchMap(action => {
+      return of(setInsecticideTypes([]), setType(undefined), setSpecies([]));
     })
   );

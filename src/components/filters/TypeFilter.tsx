@@ -4,11 +4,20 @@ import { State } from "../../store/types";
 import IntegrationReactSelect from "../BasicSelect";
 import { Translation } from "../../types/Translation";
 import { selectTypes } from "../../store/reducers/translations-reducer";
-import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
+import {
+  selectPreventionFilters,
+  selectPreventionStudies
+} from "../../store/reducers/prevention-reducer";
 import { setType } from "../../store/actions/prevention-actions";
+import * as R from "ramda";
+import {
+  filterByInsecticideClass,
+  filterByInsecticideTypes
+} from "../layers/studies-filters";
 
 const mapStateToProps = (state: State) => ({
   types: selectTypes(state),
+  studies: selectPreventionStudies(state),
   preventionFilters: selectPreventionFilters(state)
 });
 
@@ -26,16 +35,25 @@ class TypeFilter extends Component<Props, any> {
   };
 
   render() {
-    const suggestions: any[] = (this.props.types as Translation[])
-      .filter(translation =>
-        ["WHO_TEST_KIT_ADULTS", "CDC_BOTTLE_ADULTS"].includes(
-          translation.VALUE_
-        )
-      )
-      .map((country: Translation) => ({
-        label: country.VALUE_,
-        value: country.VALUE_
-      }));
+    const { preventionFilters, studies } = this.props;
+    const { insecticideClass, insecticideTypes } = preventionFilters;
+
+    const filters = [
+      filterByInsecticideClass(insecticideClass),
+      filterByInsecticideTypes(insecticideTypes)
+    ];
+
+    const filteredStudies = filters.reduce(
+      (studies, filter) => studies.filter(filter),
+      studies
+    );
+
+    const uniques = R.uniq(R.map(R.prop("TYPE"), filteredStudies));
+
+    const suggestions: any[] = uniques.map((type: string) => ({
+      label: type,
+      value: type
+    }));
     const selection = suggestions.find(
       suggestion => this.props.preventionFilters.type === suggestion.value
     );

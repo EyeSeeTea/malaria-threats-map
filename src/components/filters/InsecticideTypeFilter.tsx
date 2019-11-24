@@ -5,11 +5,18 @@ import IntegrationReactSelect from "../BasicSelect";
 import { Translation } from "../../types/Translation";
 import { selectInsecticideTypes } from "../../store/reducers/translations-reducer";
 import { setInsecticideTypes } from "../../store/actions/prevention-actions";
-import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
+import {
+  selectFilteredPreventionStudies,
+  selectPreventionFilters,
+  selectPreventionStudies
+} from "../../store/reducers/prevention-reducer";
+import * as R from "ramda";
 
 const mapStateToProps = (state: State) => ({
   insecticideTypes: selectInsecticideTypes(state),
-  preventionFilters: selectPreventionFilters(state)
+  preventionFilters: selectPreventionFilters(state),
+  studies: selectPreventionStudies(state),
+  filteredStudies: selectFilteredPreventionStudies(state)
 });
 
 const mapDispatchToProps = {
@@ -28,10 +35,21 @@ class InsecticideTypeFilter extends Component<Props, any> {
   };
 
   render() {
-    const suggestions: any[] = (this.props
-      .insecticideTypes as Translation[]).map((country: Translation) => ({
-      label: country.VALUE_,
-      value: country.VALUE_
+    const { preventionFilters, studies } = this.props;
+    const { insecticideClass } = preventionFilters;
+
+    const filters = [R.propEq("INSECTICIDE_CLASS", insecticideClass)];
+
+    const filteredStudies = filters.reduce(
+      (studies, filter) => studies.filter(filter),
+      studies
+    );
+
+    const uniques = R.uniq(R.map(R.prop("INSECTICIDE_TYPE"), filteredStudies));
+
+    const suggestions: any[] = uniques.map((type: string) => ({
+      label: type,
+      value: type
     }));
     const selection = suggestions.filter(suggestion =>
       this.props.preventionFilters.insecticideTypes.includes(suggestion.value)

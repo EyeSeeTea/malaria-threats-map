@@ -3,10 +3,11 @@ import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
 import { PreventionMapType, PreventionState, State } from "../types";
-import { PreventionResponse } from "../../types/Prevention";
+import { PreventionResponse, PreventionStudy } from "../../types/Prevention";
 
 const initialState: PreventionState = Object.freeze({
   studies: [],
+  filteredStudies: [],
   filters: {
     mapType: PreventionMapType.RESISTANCE_STATUS,
     insecticideClass: "PYRETHROIDS",
@@ -67,7 +68,9 @@ export default createReducer<PreventionState>(initialState, {
   [ActionTypeEnum.SetAssayTypes]: updateAssayTypes,
   [ActionTypeEnum.SetSynergistTypes]: updateSynergistTypes,
   [ActionTypeEnum.SetType]: updateType,
-  [ActionTypeEnum.SetSpecies]: updateSpecies
+  [ActionTypeEnum.SetSpecies]: updateSpecies,
+  [ActionTypeEnum.SetFilteredStudies]: (filteredStudies: PreventionStudy[]) =>
+    R.assoc("filteredStudies", filteredStudies)
 });
 
 export const selectPreventionState = (state: State) => state.prevention;
@@ -75,6 +78,11 @@ export const selectPreventionState = (state: State) => state.prevention;
 export const selectPreventionStudies = createSelector(
   selectPreventionState,
   R.prop("studies")
+);
+
+export const selectFilteredPreventionStudies = createSelector(
+  selectPreventionState,
+  R.prop("filteredStudies")
 );
 
 export const selectPreventionFilters = createSelector(

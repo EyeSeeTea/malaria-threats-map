@@ -1,6 +1,6 @@
 import { createAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import { PreventionResponse } from "../../types/Prevention";
+import { PreventionResponse, PreventionStudy } from "../../types/Prevention";
 import { AjaxError } from "rxjs/ajax";
 import { PreventionMapType } from "../types";
 
@@ -67,3 +67,10 @@ export const setSynergistTypes = createAction(
 export const setSpecies = createAction(ActionTypeEnum.SetSpecies, action => {
   return (species: string[]) => action(species);
 });
+
+export const setFilteredStudiesAction = createAction(
+  ActionTypeEnum.SetFilteredStudies,
+  action => {
+    return (filteredStudies: PreventionStudy[]) => action(filteredStudies);
+  }
+);

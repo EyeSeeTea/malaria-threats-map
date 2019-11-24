@@ -76,6 +76,7 @@ export interface PreventionFilters {
 
 export interface PreventionState {
   studies: PreventionStudy[];
+  filteredStudies: PreventionStudy[];
   filters: PreventionFilters;
 }
 

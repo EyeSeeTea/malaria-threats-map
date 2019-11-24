@@ -23,6 +23,7 @@ export enum ActionTypeEnum {
   SetSynergistTypes = "prevention/SET_SYNERGIST_TYPES",
   SetSpecies = "prevention/SET_SPECIES",
   SetAssayTypes = "prevention/SET_ASSAY_TYPES",
+  SetFilteredStudies = "prevention/SET_FILTER_STUDIES",
 
   SetDiagnosisMapType = "prevention/SET_DIAGNOSIS_MAP_TYPE",
 

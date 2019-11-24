@@ -10,7 +10,10 @@ import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
 import { Paper } from "@material-ui/core";
 import { selectInsecticideClasses } from "../../store/reducers/translations-reducer";
-import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
+import {
+  selectFilteredPreventionStudies,
+  selectPreventionFilters
+} from "../../store/reducers/prevention-reducer";
 import { setInsecticideClass } from "../../store/actions/prevention-actions";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
@@ -38,7 +41,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const mapStateToProps = (state: State) => ({
   insecticideClasses: selectInsecticideClasses(state),
-  preventionFilters: selectPreventionFilters(state)
+  preventionFilters: selectPreventionFilters(state),
+  filteredStudies: selectFilteredPreventionStudies(state)
 });
 
 const mapDispatchToProps = {
