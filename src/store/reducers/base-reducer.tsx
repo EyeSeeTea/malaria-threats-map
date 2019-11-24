@@ -44,7 +44,7 @@ export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.SetFiltersOpen]: (filtersOpen: boolean) =>
     R.assoc("filtersOpen", filtersOpen),
   [ActionTypeEnum.SetFiltersMode]: (filtersMode: string) =>
-    R.assoc("filtersMode", filtersMode)
+    R.assoc("filtersMode", filtersMode || "filters")
 });
 
 export const selectMalariaState = (state: State) => state.malaria;
