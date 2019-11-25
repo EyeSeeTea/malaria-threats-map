@@ -307,6 +307,11 @@ class DiagnosisLayer extends Component<Props> {
     if (layer && mapTypeSymbols) {
       this.props.map.setPaintProperty(
         DIAGNOSIS_LAYER_ID,
+        "circle-radius",
+        mapTypeSymbols["circle-radius"]
+      );
+      this.props.map.setPaintProperty(
+        DIAGNOSIS_LAYER_ID,
         "circle-color",
         mapTypeSymbols["circle-color"]
       );

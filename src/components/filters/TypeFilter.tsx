@@ -85,14 +85,10 @@ class TypeFilter extends Component<Props, any> {
       ]
     };
 
-    console.log(studies);
-
     const filteredStudies: PreventionStudy[] = filtersMap[mapType].reduce(
       (studies, filter) => studies.filter(filter),
       studies
     );
-
-    console.log(filteredStudies);
 
     const uniques = R.uniq(R.map(R.prop("TYPE"), filteredStudies));
 
