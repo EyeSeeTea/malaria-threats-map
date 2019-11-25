@@ -8,7 +8,7 @@ export interface PreventionResponse {
 }
 
 export interface PreventionFeature {
-  attributes: PreventionStudy[];
+  attributes: PreventionStudy;
 }
 
 export interface FieldAlias {
@@ -56,6 +56,7 @@ export interface PreventionStudy extends Study {
   VILLAGE_NAME: string;
   YEAR_END: string;
   YEAR_START: string;
+  STUDY_PAIRING_CODE: string;
 }
 
 export interface Field {

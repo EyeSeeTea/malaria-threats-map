@@ -5,14 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Slide from "@material-ui/core/Slide";
 import { TransitionProps } from "@material-ui/core/transitions";
 import FilterIcon from "@material-ui/icons/FilterList";
-import {
-  AppBar,
-  Badge,
-  Fab,
-  Paper,
-  Toolbar,
-  Typography
-} from "@material-ui/core";
+import { AppBar, Fab, Paper, Toolbar, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import {
@@ -68,6 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flex: 1
     },
     fab: {
+      pointerEvents: "all",
       margin: theme.spacing(0.5, 0)
     },
     extendedIcon: {
@@ -270,13 +264,13 @@ function Filters({
         {!filteredStudies.length ? (
           <WarningSnackbar>
             <Typography variant="body2">
-              There are no studies available with the specified criteria
+              There are no records available with the specified criteria
             </Typography>
           </WarningSnackbar>
         ) : (
           <SuccessSnackbar>
             <Typography variant="body2">
-              There are {filteredStudies.length} studies found with specified
+              There are {filteredStudies.length} records found with specified
               criteria
             </Typography>
           </SuccessSnackbar>

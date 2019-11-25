@@ -71,6 +71,7 @@ const BottomLeftContainer = styled(BaseContainer)`
 `;
 
 const SearchContainer = styled(BaseContainer)`
+  pointer-events: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -181,8 +182,10 @@ class Map extends React.Component<any> {
         {this.map && this.state.ready && <RegionLayer map={this.map} />}
         <Fade in={!initialDialogOpen}>
           <SearchContainer>
-            <TopicSelector />
-            <Divider />
+            <Hidden xsDown>
+              <TopicSelector />
+              <Divider />
+            </Hidden>
             <MapTypesSelector />
             <Divider />
             <Filters />
@@ -194,8 +197,10 @@ class Map extends React.Component<any> {
         </Fade>
         <Fade in={!initialDialogOpen}>
           <TopRightContainer>
-            {/*<MalariaTable />*/}
-            <LanguageSelector />
+            <Hidden xsDown>
+              {/*<MalariaTable />*/}
+              <LanguageSelector />
+            </Hidden>
           </TopRightContainer>
         </Fade>
         <Fade in={!initialDialogOpen}>
@@ -209,7 +214,12 @@ class Map extends React.Component<any> {
           </BottomRightContainer>
         </Fade>
         <BottomLeftContainer>
-          <WhoLogo />
+          <Hidden smUp>
+            <WhoLogo width={100} />
+          </Hidden>
+          <Hidden xsDown>
+            <WhoLogo />
+          </Hidden>
         </BottomLeftContainer>
         {/*<InitialDialog />*/}
       </React.Fragment>

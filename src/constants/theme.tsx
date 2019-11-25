@@ -1,6 +1,6 @@
 import { createMuiTheme } from "@material-ui/core";
 
-export const colors = {
+export const colors: { [value: string]: any } = {
   prevention: {
     N: "#5abe86",
     D1: "#3a926f"

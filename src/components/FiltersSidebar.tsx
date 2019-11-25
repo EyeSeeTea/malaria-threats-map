@@ -216,13 +216,13 @@ const FiltersSidebar = ({
       {!filteredStudies.length ? (
         <WarningSnackbar>
           <Typography variant="body2">
-            There are no studies available with the specified criteria
+            There are no records available with the specified criteria
           </Typography>
         </WarningSnackbar>
       ) : (
         <SuccessSnackbar>
           <Typography variant="body2">
-            There are {filteredStudies.length} studies found with specified
+            There are {filteredStudies.length} records found with specified
             criteria
           </Typography>
         </SuccessSnackbar>

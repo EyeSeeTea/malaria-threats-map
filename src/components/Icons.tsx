@@ -9,14 +9,14 @@ import styled, { css } from "styled-components";
 import { colors } from "../constants/theme";
 import { SvgIcon } from "@material-ui/core";
 
-const baseIcon = css`
-  max-width: 48px;
+type Props = { active?: boolean; size?: number };
+
+const baseIcon = css<Props>`
+  max-width: ${props => props.size || 48}px;
   border-radius: 50%;
 `;
 
-type Props = { active: boolean };
-
-const TreatmentSVG = ({ active, ...rest }: Props) => (
+const TreatmentSVG = ({ active = false, size = 48, ...rest }: Props) => (
   <img alt="" {...rest} src={treatmentIcon} />
 );
 

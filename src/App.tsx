@@ -45,6 +45,7 @@ import {
   setInvasiveVectorSpecies
 } from "./store/actions/invasive-actions";
 import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
+import {grey, red} from "@material-ui/core/colors";
 
 export const { store } = createStore();
 
@@ -243,7 +244,7 @@ class App extends React.Component {
           <DataProvider>
             <I18nextProvider i18n={i18next}>
               <Hidden smUp>
-                <PersistentDrawerLeft drawerWidth={325} />
+                <PersistentDrawerLeft drawerWidth={'100%'} />
               </Hidden>
               <Hidden xsDown>
                 <PersistentDrawerLeft />

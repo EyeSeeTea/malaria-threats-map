@@ -4,6 +4,7 @@ import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
 import { PreventionMapType, PreventionState, State } from "../types";
 import { PreventionResponse, PreventionStudy } from "../../types/Prevention";
+import { TreatmentStudy } from "../../types/Treatment";
 
 const initialState: PreventionState = Object.freeze({
   studies: [],
@@ -69,8 +70,9 @@ export default createReducer<PreventionState>(initialState, {
   [ActionTypeEnum.SetSynergistTypes]: updateSynergistTypes,
   [ActionTypeEnum.SetType]: updateType,
   [ActionTypeEnum.SetSpecies]: updateSpecies,
-  [ActionTypeEnum.SetPreventionFilteredStudies]: (filteredStudies: PreventionStudy[]) =>
-    R.assoc("filteredStudies", filteredStudies)
+  [ActionTypeEnum.SetPreventionFilteredStudies]: (
+    filteredStudies: PreventionStudy[]
+  ) => R.assoc("filteredStudies", filteredStudies)
 });
 
 export const selectPreventionState = (state: State) => state.prevention;

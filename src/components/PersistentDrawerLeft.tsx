@@ -16,19 +16,34 @@ import {
 } from "../store/reducers/base-reducer";
 import {
   setFiltersOpen,
-  setStoryModeAction
+  setStoryModeAction,
+  setThemeAction
 } from "../store/actions/base-actions";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
-import { Hidden } from "@material-ui/core";
+import {
+  AppBar,
+  Hidden,
+  IconButton,
+  Tab,
+  Tabs,
+  Toolbar
+} from "@material-ui/core";
 import StoryModeStepper from "./StoryModeStepper";
 import FiltersSidebar from "./FiltersSidebar";
+import MenuIcon from "@material-ui/icons/Menu";
+import {
+  DiagnosisIcon,
+  InvasiveIcon,
+  PreventionIcon,
+  TreatmentIcon
+} from "./Icons";
 
 interface ThemeProps {
-  drawerWidth: number;
+  drawerWidth: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -48,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
       })
     },
     appBarShift: {
-      width: (props: ThemeProps) => `calc(100% - ${props.drawerWidth}px)`,
+      width: (props: ThemeProps) => `calc(100% - ${props.drawerWidth})`,
       marginLeft: (props: ThemeProps) => props.drawerWidth,
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.easeOut,
@@ -119,6 +134,10 @@ const MapWrapper = styled.div`
   left: 0;
 `;
 
+const StyledTab = styled(Tab)`
+  font-size: 85% !important;
+`;
+
 const mapStateToProps = (state: State) => ({
   filtersOpen: selectAreFiltersOpen(state),
   filters: selectFilters(state),
@@ -132,10 +151,11 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
   setPreventionMapType: setPreventionMapType,
   setFiltersOpen: setFiltersOpen,
-  setStoryMode: setStoryModeAction
+  setStoryMode: setStoryModeAction,
+  setTheme: setThemeAction
 };
 type OwnProps = {
-  drawerWidth?: number;
+  drawerWidth?: string;
 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
@@ -144,11 +164,34 @@ type Props = DispatchProps & StateProps & OwnProps;
 function PersistentDrawerLeft({
   storyMode,
   filtersOpen,
-  drawerWidth = 400
+  drawerWidth = "400px",
+  setTheme,
+  theme
 }: Props) {
   const classes = useStyles({ drawerWidth });
 
   const isOpen = filtersOpen || storyMode;
+
+  const themes = ["prevention", "diagnosis", "treatment", "invasive"];
+
+  const onChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    switch (newValue) {
+      case 0:
+        setTheme("prevention");
+        break;
+      case 1:
+        setTheme("diagnosis");
+        break;
+      case 2:
+        setTheme("treatment");
+        break;
+      case 3:
+        setTheme("invasive");
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -179,9 +222,60 @@ function PersistentDrawerLeft({
       >
         <div className={classes.drawerHeader} />
         <PageWrapper>
+          <Hidden smUp>
+            <AppBar position="static">
+              <Toolbar variant="dense">
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="menu"
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
+          </Hidden>
           <MapWrapper>
             <Map />
           </MapWrapper>
+          <Hidden smUp>
+            <AppBar position="static" color="default">
+              <Tabs
+                value={themes.indexOf(theme)}
+                onChange={onChange}
+                indicatorColor="primary"
+                textColor="primary"
+                variant="fullWidth"
+                aria-label="full width tabs example"
+              >
+                <StyledTab
+                  label="Prevention"
+                  icon={
+                    <PreventionIcon active={theme === "prevention"} size={36} />
+                  }
+                />
+                <StyledTab
+                  label="Diagnosis"
+                  icon={
+                    <DiagnosisIcon active={theme === "diagnosis"} size={36} />
+                  }
+                />
+                <StyledTab
+                  label="Treatment"
+                  icon={
+                    <TreatmentIcon active={theme === "treatment"} size={36} />
+                  }
+                />
+                <StyledTab
+                  label="Invasive"
+                  icon={
+                    <InvasiveIcon active={theme === "invasive"} size={36} />
+                  }
+                />
+              </Tabs>
+            </AppBar>
+          </Hidden>
           <Hidden xsDown>
             <Disclaimer />
           </Hidden>

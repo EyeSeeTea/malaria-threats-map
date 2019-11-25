@@ -7,6 +7,7 @@ import html2canvas from "html2canvas";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fab: {
+      pointerEvents: "all",
       margin: theme.spacing(0.5, 0)
     }
   })

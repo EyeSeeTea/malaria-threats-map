@@ -22,6 +22,7 @@ const ButtonGroup = styled.div`
 const StyledPaper = styled(Paper)`
   min-width: 275px;
   padding: 8px;
+  pointer-events: all;
 `;
 
 const ThemeButton = styled.div`

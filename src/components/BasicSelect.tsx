@@ -32,6 +32,7 @@ export interface OptionType {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      pointerEvents: "all",
       flexGrow: 1
     },
     inputPaper: {

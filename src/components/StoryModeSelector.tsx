@@ -9,6 +9,7 @@ import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fab: {
+      pointerEvents: "all",
       margin: theme.spacing(0.5, 0)
     }
   })
@@ -19,6 +20,7 @@ function StoryModeSelector({ storyMode, setStoryMode }: any) {
   const handleToggle = () => {
     setStoryMode(!storyMode);
   };
+  window.dispatchEvent(new Event("resize"));
   return (
     <div>
       <Fab
