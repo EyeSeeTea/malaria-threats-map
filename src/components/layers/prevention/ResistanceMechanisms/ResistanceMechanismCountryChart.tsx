@@ -99,11 +99,14 @@ const ResistanceMechanismCountryChart = ({
   setCountryMode
 }: Props) => {
   const { t } = useTranslation("common");
-  const nStudies = studies.length;
   const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
   const maxYear = sortedStudies[sortedStudies.length - 1].YEAR_START;
   const minYear = sortedStudies[0].YEAR_START;
-  const richStudies = sortedStudies.map(study => {
+  const filteredStudies = sortedStudies.filter(
+    study => study.MECHANISM_STATUS !== "NA"
+  );
+  const nStudies = filteredStudies.length;
+  const richStudies = filteredStudies.map(study => {
     return {
       ...study
     };
@@ -137,12 +140,7 @@ const ResistanceMechanismCountryChart = ({
       <HighchartsReact highcharts={Highcharts} options={options(data)} />
       <Actions>
         <FlexGrow />
-        <Button
-          variant="contained"
-          color="default"
-          size="small"
-          onClick={onClick}
-        >
+        <Button variant="text" color="default" size="small" onClick={onClick}>
           <ZoomIcon />
           Zoom
         </Button>
