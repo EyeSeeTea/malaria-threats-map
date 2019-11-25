@@ -69,7 +69,7 @@ export default createReducer<PreventionState>(initialState, {
   [ActionTypeEnum.SetSynergistTypes]: updateSynergistTypes,
   [ActionTypeEnum.SetType]: updateType,
   [ActionTypeEnum.SetSpecies]: updateSpecies,
-  [ActionTypeEnum.SetFilteredStudies]: (filteredStudies: PreventionStudy[]) =>
+  [ActionTypeEnum.SetPreventionFilteredStudies]: (filteredStudies: PreventionStudy[]) =>
     R.assoc("filteredStudies", filteredStudies)
 });
 

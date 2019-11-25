@@ -7,20 +7,7 @@ import * as R from "ramda";
 import resistanceStatusSymbols from "./prevention/ResistanceStatus/symbols";
 import { resolveResistanceStatus } from "./prevention/ResistanceStatus/utils";
 import { PreventionStudy } from "../../types/Prevention";
-import {
-  filterByAssayTypes,
-  filterByInsecticideClass,
-  filterByInsecticideTypes,
-  filterByIntensityStatus,
-  filterByLevelOfInvolvement,
-  filterByRegion,
-  filterByResistanceMechanism,
-  filterByResistanceStatus,
-  filterBySpecies,
-  filterByType,
-  filterByTypeSynergist,
-  filterByYearRange
-} from "./studies-filters";
+import { buildPreventionFilters } from "./studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./prevention/utils";
 import {
   selectPreventionFilters,
@@ -37,7 +24,6 @@ import { store, theme } from "../../App";
 import mapboxgl from "mapbox-gl";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
-import { isSynergyst } from "./prevention/ResistanceMechanisms/ResistanceMechanismFilters";
 import { selectCountries } from "../../store/reducers/country-layer-reducer";
 import { ThemeProvider } from "@material-ui/styles";
 import ResistanceStatusCountryChart from "./prevention/ResistanceStatus/ResistanceStatusCountryChart";
@@ -174,54 +160,7 @@ class PreventionLayer extends Component<Props> {
 
   buildFilters = () => {
     const { preventionFilters, filters, region } = this.props;
-    switch (preventionFilters.mapType) {
-      case PreventionMapType.RESISTANCE_STATUS:
-        return [
-          filterByResistanceStatus,
-          filterByInsecticideClass(preventionFilters.insecticideClass),
-          filterByInsecticideTypes(preventionFilters.insecticideTypes),
-          filterByType(preventionFilters.type),
-          filterBySpecies(preventionFilters.species),
-          filterByYearRange(filters),
-          filterByRegion(region)
-        ];
-      case PreventionMapType.INTENSITY_STATUS:
-        return [
-          filterByIntensityStatus,
-          filterByYearRange(filters),
-          filterByRegion(region)
-        ];
-      case PreventionMapType.RESISTANCE_MECHANISM:
-        const base = [
-          filterByResistanceMechanism,
-          filterByType(preventionFilters.type),
-          filterBySpecies(preventionFilters.species),
-          filterByAssayTypes(preventionFilters.assayTypes),
-          filterByYearRange(filters),
-          filterByRegion(region)
-        ];
-        return isSynergyst(preventionFilters)
-          ? [...base, filterByTypeSynergist(preventionFilters.synergistTypes)]
-          : base;
-      case PreventionMapType.LEVEL_OF_INVOLVEMENT:
-        return [
-          filterByLevelOfInvolvement,
-          filterByType(preventionFilters.type),
-          filterByTypeSynergist(preventionFilters.synergistTypes),
-          filterByYearRange(filters),
-          filterByRegion(region)
-        ];
-      case PreventionMapType.PBO_DEPLOYMENT:
-        return [
-          filterByInsecticideClass(preventionFilters.insecticideClass),
-          filterByInsecticideTypes(preventionFilters.insecticideTypes),
-          filterBySpecies(preventionFilters.species),
-          filterByYearRange(filters),
-          filterByRegion(region)
-        ];
-      default:
-        return [];
-    }
+    return buildPreventionFilters(preventionFilters, filters, region);
   };
 
   filterStudies = (studies: PreventionStudy[]) => {

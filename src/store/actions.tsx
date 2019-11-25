@@ -23,7 +23,7 @@ export enum ActionTypeEnum {
   SetSynergistTypes = "prevention/SET_SYNERGIST_TYPES",
   SetSpecies = "prevention/SET_SPECIES",
   SetAssayTypes = "prevention/SET_ASSAY_TYPES",
-  SetFilteredStudies = "prevention/SET_FILTER_STUDIES",
+  SetPreventionFilteredStudies = "prevention/SET_FILTER_STUDIES",
 
   SetDiagnosisMapType = "prevention/SET_DIAGNOSIS_MAP_TYPE",
 
@@ -34,6 +34,7 @@ export enum ActionTypeEnum {
   SetSurveyTypes = "diagnosis/SET_DIAGNOSIS_SURVEY_TYPES",
   SetPatientType = "diagnosis/SET_DIAGNOSIS_PATIENT_TYPE",
   SetDeletionType = "diagnosis/SET_DIAGNOSIS_DELETION_TYPE",
+  SetDiagnosisFilteredStudies = "diagnosis/SET_FILTER_STUDIES",
 
   FetchTreatmentStudiesRequest = "treatment/FETCH_TREATMENT_STUDIES_REQUEST",
   FetchTreatmentStudiesSuccess = "treatment/FETCH_TREATMENT_STUDIES_SUCCESS",
@@ -43,6 +44,7 @@ export enum ActionTypeEnum {
   SetPlasmodiumSpecies = "treatment/SET_TREATMENT_PLASMODIUM_SPECIES",
   SetDrug = "treatment/SET_TREATMENT_DRUG",
   SetMolecularMarker = "treatment/SET_MOLECULAR_MARKER",
+  SetTreatmentFilteredStudies = "treatment/SET_FILTER_STUDIES",
 
   FetchInvasiveStudiesRequest = "invasive/FETCH_INVASIVE_STUDIES_REQUEST",
   FetchInvasiveStudiesSuccess = "invasive/FETCH_INVASIVE_STUDIES_SUCCESS",
@@ -50,6 +52,7 @@ export enum ActionTypeEnum {
 
   SetInvasiveMapType = "invasive/SET_INVASIVE_MAP_TYPE",
   SetInvasiveVectorSpecies = "invasive/SET_INVASIVE_VECTOR_SPECIES",
+  SetInvasiveFilteredStudies = "invasive/SET_FILTER_STUDIES",
 
   FetchTranslationsRequest = "translations/FETCH_TRANSLATIONS_REQUEST",
   FetchTranslationsSuccess = "translations/FETCH_TRANSLATIONS_SUCCESS",

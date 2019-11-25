@@ -1,8 +1,9 @@
 import { createAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import { DiagnosisResponse } from "../../types/Diagnosis";
+import { DiagnosisResponse, DiagnosisStudy } from "../../types/Diagnosis";
 import { AjaxError } from "rxjs/ajax";
 import { DiagnosisMapType } from "../types";
+import { PreventionStudy } from "../../types/Prevention";
 
 export const fetchDiagnosisStudiesRequest = createAction(
   ActionTypeEnum.FetchDiagnosisStudiesRequest,
@@ -48,5 +49,12 @@ export const setDiagnosisDeletionType = createAction(
   ActionTypeEnum.SetDeletionType,
   action => {
     return (deletionType: string) => action(deletionType);
+  }
+);
+
+export const setDiagnosisFilteredStudiesAction = createAction(
+  ActionTypeEnum.SetDiagnosisFilteredStudies,
+  action => {
+    return (filteredStudies: DiagnosisStudy[]) => action(filteredStudies);
   }
 );

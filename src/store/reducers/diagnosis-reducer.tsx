@@ -3,11 +3,12 @@ import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
 import { DiagnosisMapType, DiagnosisState, State } from "../types";
-import { DiagnosisResponse } from "../../types/Diagnosis";
+import { DiagnosisResponse, DiagnosisStudy } from "../../types/Diagnosis";
 import { DELETION_TYPES } from "../../components/filters/DeletionTypeFilter";
 
 const initialState: DiagnosisState = Object.freeze({
   studies: [],
+  filteredStudies: [],
   filters: {
     mapType: DiagnosisMapType.GENE_DELETIONS,
     deletionType: DELETION_TYPES.HRP2_PROPORTION_DELETION.value,
@@ -55,7 +56,10 @@ export default createReducer<DiagnosisState>(initialState, {
   [ActionTypeEnum.SetDiagnosisMapType]: updateMapType,
   [ActionTypeEnum.SetSurveyTypes]: updateSurveyTypes,
   [ActionTypeEnum.SetPatientType]: updatePatientType,
-  [ActionTypeEnum.SetDeletionType]: updateDeletionType
+  [ActionTypeEnum.SetDeletionType]: updateDeletionType,
+  [ActionTypeEnum.SetDiagnosisFilteredStudies]: (
+    filteredStudies: DiagnosisStudy[]
+  ) => R.assoc("filteredStudies", filteredStudies)
 });
 
 export const selectDiagnosisState = (state: State) => state.diagnosis;
@@ -63,6 +67,11 @@ export const selectDiagnosisState = (state: State) => state.diagnosis;
 export const selectDiagnosisStudies = createSelector(
   selectDiagnosisState,
   R.prop("studies")
+);
+
+export const selectFilteredDiagnosisStudies = createSelector(
+  selectDiagnosisState,
+  R.prop("filteredStudies")
 );
 
 export const selectDiagnosisFilters = createSelector(

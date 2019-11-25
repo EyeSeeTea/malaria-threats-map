@@ -4,9 +4,11 @@ import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
 import { State, TreatmentMapType, TreatmentState } from "../types";
 import { TreatmentResponse, TreatmentStudy } from "../../types/Treatment";
+import { PreventionStudy } from "../../types/Prevention";
 
 const initialState: TreatmentState = Object.freeze({
   studies: [],
+  filteredStudies: [],
   filters: {
     mapType: TreatmentMapType.TREATMENT_FAILURE,
     plasmodiumSpecies: "P._FALCIPARUM",
@@ -67,7 +69,10 @@ export default createReducer<TreatmentState>(initialState, {
   [ActionTypeEnum.SetTreatmentMapType]: updateMapType,
   [ActionTypeEnum.SetPlasmodiumSpecies]: updatePlasmodiumSpecies,
   [ActionTypeEnum.SetDrug]: updateDrug,
-  [ActionTypeEnum.SetMolecularMarker]: updateMolecularMarker
+  [ActionTypeEnum.SetMolecularMarker]: updateMolecularMarker,
+  [ActionTypeEnum.SetTreatmentFilteredStudies]: (
+    filteredStudies: TreatmentStudy[]
+  ) => R.assoc("filteredStudies", filteredStudies)
 });
 
 export const selectTreatmentState = (state: State) => state.treatment;
@@ -75,6 +80,11 @@ export const selectTreatmentState = (state: State) => state.treatment;
 export const selectTreatmentStudies = createSelector(
   selectTreatmentState,
   R.prop("studies")
+);
+
+export const selectFilteredTreatmentStudies = createSelector(
+  selectTreatmentState,
+  R.prop("filteredStudies")
 );
 
 export const selectTreatmentFilters = createSelector(

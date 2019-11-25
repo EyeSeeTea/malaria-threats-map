@@ -6,6 +6,9 @@ import InsecticideTypeFilter from "../../../filters/InsecticideTypeFilter";
 import TypeFilter from "../../../filters/TypeFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
+import { State } from "../../../../store/types";
+import { connect } from "react-redux";
+import { selectFilteredPreventionStudies } from "../../../../store/reducers/prevention-reducer";
 
 export const FilterWrapper = styled.div`
   margin: 10px 20px;
@@ -14,7 +17,17 @@ export const Divider = styled.div`
   height: 10px;
 `;
 
-export default function ResistanceStatusFilters() {
+const mapStateToProps = (state: State) => ({
+  studies: selectFilteredPreventionStudies(state)
+});
+
+const mapDispatchToProps = {};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+type Props = DispatchProps & StateProps;
+
+function ResistanceStatusFilters({ studies }: Props) {
   return (
     <div>
       <FilterWrapper>
@@ -37,7 +50,12 @@ export default function ResistanceStatusFilters() {
         <Divider />
         <SpeciesFilter />
       </FilterWrapper>
-      <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()}/>
+      <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
     </div>
   );
 }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ResistanceStatusFilters);

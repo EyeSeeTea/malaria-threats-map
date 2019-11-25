@@ -1,6 +1,13 @@
 import { DELETION_TYPES } from "../filters/DeletionTypeFilter";
 import { VectorSpeciesKey } from "../filters/VectorSpeciesFilter";
-import { RegionState } from "../../store/types";
+import {
+  DiagnosisFilters,
+  DiagnosisMapType,
+  PreventionFilters,
+  PreventionMapType,
+  RegionState
+} from "../../store/types";
+import { isSynergyst } from "./prevention/ResistanceMechanisms/ResistanceMechanismFilters";
 
 export const filterByYearRange = (
   years: number[],
@@ -131,4 +138,83 @@ export const filterByMolecularMarker = (molecularMarker: number) => (
   study: any
 ) => {
   return study.MM_TYPE === molecularMarker.toString();
+};
+
+export const buildPreventionFilters = (
+  preventionFilters: PreventionFilters,
+  filters: number[],
+  region: RegionState
+) => {
+  switch (preventionFilters.mapType) {
+    case PreventionMapType.RESISTANCE_STATUS:
+      return [
+        filterByResistanceStatus,
+        filterByInsecticideClass(preventionFilters.insecticideClass),
+        filterByInsecticideTypes(preventionFilters.insecticideTypes),
+        filterByType(preventionFilters.type),
+        filterBySpecies(preventionFilters.species),
+        filterByYearRange(filters),
+        filterByRegion(region)
+      ];
+    case PreventionMapType.INTENSITY_STATUS:
+      return [
+        filterByIntensityStatus,
+        filterByInsecticideClass(preventionFilters.insecticideClass),
+        filterByInsecticideTypes(preventionFilters.insecticideTypes),
+        filterByType(preventionFilters.type),
+        filterBySpecies(preventionFilters.species),
+        filterByYearRange(filters),
+        filterByRegion(region)
+      ];
+    case PreventionMapType.RESISTANCE_MECHANISM:
+      const base = [
+        filterByResistanceMechanism,
+        filterByType(preventionFilters.type),
+        filterBySpecies(preventionFilters.species),
+        filterByAssayTypes(preventionFilters.assayTypes),
+        filterByYearRange(filters),
+        filterByRegion(region)
+      ];
+      return isSynergyst(preventionFilters)
+        ? [...base, filterByTypeSynergist(preventionFilters.synergistTypes)]
+        : base;
+    case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+      return [
+        filterByLevelOfInvolvement,
+        filterByType(preventionFilters.type),
+        filterBySpecies(preventionFilters.species),
+        filterByTypeSynergist(preventionFilters.synergistTypes),
+        filterByYearRange(filters),
+        filterByRegion(region)
+      ];
+    case PreventionMapType.PBO_DEPLOYMENT:
+      return [
+        filterByInsecticideClass(preventionFilters.insecticideClass),
+        filterByInsecticideTypes(preventionFilters.insecticideTypes),
+        filterBySpecies(preventionFilters.species),
+        filterByYearRange(filters),
+        filterByRegion(region)
+      ];
+    default:
+      return [];
+  }
+};
+
+export const buildDiagnosisFilters = (
+  diagnosisFilters: DiagnosisFilters,
+  filters: number[],
+  region: RegionState
+) => {
+  switch (diagnosisFilters.mapType) {
+    case DiagnosisMapType.GENE_DELETIONS:
+      return [
+        filterByDeletionType(diagnosisFilters.deletionType),
+        filterBySurveyTypes(diagnosisFilters.surveyTypes),
+        filterByPatientType(diagnosisFilters.patientType),
+        filterByYearRange(filters),
+        filterByRegion(region)
+      ];
+    default:
+      return [];
+  }
 };

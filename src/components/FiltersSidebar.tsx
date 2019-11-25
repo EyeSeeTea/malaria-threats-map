@@ -14,7 +14,7 @@ import ResistanceStatusFilters, {
 } from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
 import FormLabel from "@material-ui/core/FormLabel";
 import styled from "styled-components";
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import {
   DiagnosisMapType,
   InvasiveMapType,
@@ -23,10 +23,22 @@ import {
   TreatmentMapType
 } from "../store/types";
 import { selectFiltersMode, selectTheme } from "../store/reducers/base-reducer";
-import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
-import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
-import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
-import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
+import {
+  selectFilteredPreventionStudies,
+  selectPreventionFilters
+} from "../store/reducers/prevention-reducer";
+import {
+  selectDiagnosisFilters,
+  selectFilteredDiagnosisStudies
+} from "../store/reducers/diagnosis-reducer";
+import {
+  selectFilteredTreatmentStudies,
+  selectTreatmentFilters
+} from "../store/reducers/treatment-reducer";
+import {
+  selectFilteredInvasiveStudies,
+  selectInvasiveFilters
+} from "../store/reducers/invasive-reducer";
 import { setFiltersMode, setFiltersOpen } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 import IntensityStatusFilters from "./layers/prevention/IntensityStatus/IntensityStatusFilters";
@@ -40,6 +52,7 @@ import MolecularMarkerFilters from "./layers/treatment/MolecularMarkers/Molecula
 import VectorOccuranceFilters from "./layers/invasive/VectorOccurance/VectorOccuranceFilters";
 import RegionSelector from "./filters/RegionSelector";
 import SubRegionSelector from "./filters/SubRegionSelector";
+import { SuccessSnackbar, WarningSnackbar } from "./Filters";
 
 const FiltersWrapper = styled.div`
   margin-top: 20px;
@@ -63,6 +76,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
+  filteredPreventionStudies: selectFilteredPreventionStudies(state),
+  filteredDiagnosisStudies: selectFilteredDiagnosisStudies(state),
+  filteredTreatmentStudies: selectFilteredTreatmentStudies(state),
+  filteredInvasiveStudies: selectFilteredInvasiveStudies(state),
   filtersMode: selectFiltersMode(state),
   preventionFilters: selectPreventionFilters(state),
   diagnosisFilters: selectDiagnosisFilters(state),
@@ -81,6 +98,10 @@ const tabs = ["filters", "regions"];
 
 const FiltersSidebar = ({
   theme,
+  filteredPreventionStudies,
+  filteredDiagnosisStudies,
+  filteredTreatmentStudies,
+  filteredInvasiveStudies,
   filtersMode,
   setFiltersOpen,
   setFiltersMode,
@@ -90,6 +111,21 @@ const FiltersSidebar = ({
   invasiveFilters
 }: Props) => {
   const classes = useStyles({});
+
+  const filteredStudies = (() => {
+    switch (theme) {
+      case "prevention":
+        return filteredPreventionStudies;
+      case "diagnosis":
+        return filteredDiagnosisStudies;
+      case "treatment":
+        return filteredTreatmentStudies;
+      case "invasive":
+        return filteredInvasiveStudies;
+      default:
+        return [];
+    }
+  })();
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setFiltersMode(tabs[newValue]);
@@ -177,9 +213,23 @@ const FiltersSidebar = ({
           <Tab className={classes.tab} icon={<GlobeIcon />} label="Regions" />
         </Tabs>
       </AppBar>
+      {!filteredStudies.length ? (
+        <WarningSnackbar>
+          <Typography variant="body2">
+            There are no studies available with the specified criteria
+          </Typography>
+        </WarningSnackbar>
+      ) : (
+        <SuccessSnackbar>
+          <Typography variant="body2">
+            There are {filteredStudies.length} studies found with specified
+            criteria
+          </Typography>
+        </SuccessSnackbar>
+      )}
       <FiltersWrapper>
         {value === 0 ? (
-          resolveFilters()
+          <>{resolveFilters()}</>
         ) : (
           <div>
             <FilterWrapper>

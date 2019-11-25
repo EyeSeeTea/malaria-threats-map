@@ -21,6 +21,7 @@ import {
 } from "./store/actions/base-actions";
 import {
   setAssayTypes,
+  setInsecticideClass,
   setInsecticideTypes,
   setPreventionMapType,
   setSpecies,
@@ -91,6 +92,10 @@ ReduxQuerySync({
             return setPreventionMapType(mapType);
         }
       }
+    },
+    insecticideClass: {
+      selector: (state: State) => state.prevention.filters.insecticideClass,
+      action: (value: string) => setInsecticideClass(value)
     },
     insecticideTypes: {
       selector: (state: State) => state.prevention.filters.insecticideTypes,

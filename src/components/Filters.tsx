@@ -5,7 +5,14 @@ import IconButton from "@material-ui/core/IconButton";
 import Slide from "@material-ui/core/Slide";
 import { TransitionProps } from "@material-ui/core/transitions";
 import FilterIcon from "@material-ui/icons/FilterList";
-import { AppBar, Fab, Toolbar, Typography } from "@material-ui/core";
+import {
+  AppBar,
+  Badge,
+  Fab,
+  Paper,
+  Toolbar,
+  Typography
+} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import {
@@ -20,7 +27,10 @@ import {
   selectFilters,
   selectTheme
 } from "../store/reducers/base-reducer";
-import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
+import {
+  selectFilteredPreventionStudies,
+  selectPreventionFilters
+} from "../store/reducers/prevention-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
 import { connect } from "react-redux";
 import ResistanceStatusFilters from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
@@ -28,12 +38,21 @@ import IntensityStatusFilters from "./layers/prevention/IntensityStatus/Intensit
 import ResistanceMechanismFilters from "./layers/prevention/ResistanceMechanisms/ResistanceMechanismFilters";
 import LevelOfInvolvementFilters from "./layers/prevention/Involvement/LevelOfInvolvementFilters";
 import GeneDeletionFilters from "./layers/diagnosis/GeneDeletions/GeneDeletionFilters";
-import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
+import {
+  selectDiagnosisFilters,
+  selectFilteredDiagnosisStudies
+} from "../store/reducers/diagnosis-reducer";
 import PboDeploymentFilters from "./layers/prevention/PboDeployment/PboDeploymentFilters";
 import TreatmentFailureFilters from "./layers/treatment/TreatmentFailure/TreatmentFailureFilters";
-import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
+import {
+  selectFilteredTreatmentStudies,
+  selectTreatmentFilters
+} from "../store/reducers/treatment-reducer";
 import VectorOccuranceFilters from "./layers/invasive/VectorOccurance/VectorOccuranceFilters";
-import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
+import {
+  selectFilteredInvasiveStudies,
+  selectInvasiveFilters
+} from "../store/reducers/invasive-reducer";
 import DelayedParasiteClearanceFilters from "./layers/treatment/DelayedParasiteClearance/DelayedParasiteClearanceFilters";
 import MolecularMarkerFilters from "./layers/treatment/MolecularMarkers/MolecularMarkerFilters";
 import { setFiltersOpen } from "../store/actions/base-actions";
@@ -64,6 +83,24 @@ const FiltersWrapper = styled.div`
   margin-top: 10px;
 `;
 
+export const Snackbar = styled(Paper)`
+  margin: 16px;
+  padding: 16px;
+  color: #fff !important;
+`;
+
+export const WarningSnackbar = styled(Snackbar)`
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(255, 152, 0, 0.4) !important;
+  background-color: #ffa21a !important;
+`;
+
+export const SuccessSnackbar = styled(Snackbar)`
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(76, 175, 80, 0.4) !important;
+  background-color: #5cb860 !important;
+`;
+
 const Transition = React.forwardRef<unknown, TransitionProps>(
   function Transition(props: any, ref: any) {
     return <Slide direction="right" ref={ref} {...props} />;
@@ -73,6 +110,10 @@ const Transition = React.forwardRef<unknown, TransitionProps>(
 const mapStateToProps = (state: State) => ({
   filters: selectFilters(state),
   theme: selectTheme(state),
+  filteredPreventionStudies: selectFilteredPreventionStudies(state),
+  filteredDiagnosisStudies: selectFilteredDiagnosisStudies(state),
+  filteredTreatmentStudies: selectFilteredTreatmentStudies(state),
+  filteredInvasiveStudies: selectFilteredInvasiveStudies(state),
   preventionFilters: selectPreventionFilters(state),
   diagnosisFilters: selectDiagnosisFilters(state),
   treatmentFilters: selectTreatmentFilters(state),
@@ -91,6 +132,10 @@ type Props = DispatchProps & StateProps;
 
 function Filters({
   theme,
+  filteredPreventionStudies,
+  filteredDiagnosisStudies,
+  filteredTreatmentStudies,
+  filteredInvasiveStudies,
   preventionFilters,
   diagnosisFilters,
   treatmentFilters,
@@ -100,6 +145,20 @@ function Filters({
 }: Props) {
   const classes = useStyles({});
   const [open, setOpen] = React.useState(false);
+  const filteredStudies = (() => {
+    switch (theme) {
+      case "prevention":
+        return filteredPreventionStudies;
+      case "diagnosis":
+        return filteredDiagnosisStudies;
+      case "treatment":
+        return filteredTreatmentStudies;
+      case "invasive":
+        return filteredInvasiveStudies;
+      default:
+        return [];
+    }
+  })();
 
   function handleClickOpen() {
     setFiltersOpen(!filtersOpen);
@@ -155,7 +214,7 @@ function Filters({
         return <div />;
     }
   }
-
+  window.dispatchEvent(new Event("resize"));
   return (
     <div>
       <Fab
@@ -203,6 +262,25 @@ function Filters({
             </IconButton>
           </Toolbar>
         </AppBar>
+        <WarningSnackbar>
+          <Typography variant="body2">
+            There are no studies available with the specified criteria
+          </Typography>
+        </WarningSnackbar>
+        {!filteredStudies.length ? (
+          <WarningSnackbar>
+            <Typography variant="body2">
+              There are no studies available with the specified criteria
+            </Typography>
+          </WarningSnackbar>
+        ) : (
+          <SuccessSnackbar>
+            <Typography variant="body2">
+              There are {filteredStudies.length} studies found with specified
+              criteria
+            </Typography>
+          </SuccessSnackbar>
+        )}
         <FiltersWrapper>{resolveFilters()}</FiltersWrapper>
       </Dialog>
     </div>

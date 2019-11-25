@@ -17,6 +17,7 @@ import {
 import * as R from "ramda";
 import { resolveResistanceStatus } from "./prevention/ResistanceStatus/utils";
 import {
+  buildDiagnosisFilters,
   filterByDeletionType,
   filterByPatientType,
   filterByRegion,
@@ -34,6 +35,8 @@ import { DIAGNOSIS_STATUS } from "./diagnosis/GeneDeletions/utils";
 import { selectCountries } from "../../store/reducers/country-layer-reducer";
 import GeneDeletionCountryChart from "./diagnosis/GeneDeletions/GeneDeletionCountryChart";
 import GeneDeletionChart from "./diagnosis/GeneDeletions/GeneDeletionChart";
+import { setFilteredStudiesAction } from "../../store/actions/prevention-actions";
+import { setDiagnosisFilteredStudiesAction } from "../../store/actions/diagnosis-actions";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -57,11 +60,17 @@ const mapStateToProps = (state: State) => ({
   countryMode: selectCountryMode(state)
 });
 
+const mapDispatchToProps = {
+  setFilteredStudies: setDiagnosisFilteredStudiesAction
+};
+
 type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
 type OwnProps = {
   map: any;
 };
-type Props = StateProps & OwnProps;
+type Props = StateProps & DispatchProps & OwnProps;
 
 class DiagnosisLayer extends Component<Props> {
   componentDidMount() {
@@ -139,18 +148,7 @@ class DiagnosisLayer extends Component<Props> {
 
   buildFilters = () => {
     const { diagnosisFilters, filters, region } = this.props;
-    switch (diagnosisFilters.mapType) {
-      case DiagnosisMapType.GENE_DELETIONS:
-        return [
-          filterByDeletionType(diagnosisFilters.deletionType),
-          filterBySurveyTypes(diagnosisFilters.surveyTypes),
-          filterByPatientType(diagnosisFilters.patientType),
-          filterByYearRange(filters),
-          filterByRegion(region)
-        ];
-      default:
-        return [];
-    }
+    return buildDiagnosisFilters(diagnosisFilters, filters, region);
   };
 
   filterStudies = (studies: DiagnosisStudy[]) => {
@@ -163,6 +161,7 @@ class DiagnosisLayer extends Component<Props> {
     const source = this.props.map.getSource(DIAGNOSIS_SOURCE_ID);
     if (source) {
       const filteredStudies = this.filterStudies(studies);
+      this.props.setFilteredStudies(filteredStudies);
       const geoStudies = this.setupGeoJsonData(filteredStudies);
       const countryStudies = this.getCountryStudies(filteredStudies);
       const data = countryMode ? countryStudies : geoStudies;
@@ -220,6 +219,7 @@ class DiagnosisLayer extends Component<Props> {
         this.props.map.removeSource(DIAGNOSIS_SOURCE_ID);
       }
       const filteredStudies = this.filterStudies(studies);
+      this.props.setFilteredStudies(filteredStudies);
       const geoStudies = this.setupGeoJsonData(filteredStudies);
       const countryStudies = this.getCountryStudies(filteredStudies);
 
@@ -247,24 +247,21 @@ class DiagnosisLayer extends Component<Props> {
       countryMode,
       diagnosisFilters: { mapType }
     } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(
-      study =>
-        countryMode
-          ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-          : study.SITE_ID === e.features[0].properties.SITE_ID
+    const filteredStudies = this.filterStudies(studies).filter(study =>
+      countryMode
+        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+        : study.SITE_ID === e.features[0].properties.SITE_ID
     );
 
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>
         <Provider store={store}>
-          {!countryMode &&
-            mapType === DiagnosisMapType.GENE_DELETIONS && (
-              <GeneDeletionChart studies={filteredStudies} />
-            )}
-          {countryMode &&
-            mapType === DiagnosisMapType.GENE_DELETIONS && (
-              <GeneDeletionCountryChart studies={filteredStudies} />
-            )}
+          {!countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
+            <GeneDeletionChart studies={filteredStudies} />
+          )}
+          {countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
+            <GeneDeletionCountryChart studies={filteredStudies} />
+          )}
         </Provider>
       </I18nextProvider>,
       placeholder
@@ -327,5 +324,5 @@ class DiagnosisLayer extends Component<Props> {
 }
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(DiagnosisLayer);

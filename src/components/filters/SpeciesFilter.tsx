@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { State } from "../../store/types";
+import { PreventionMapType, State } from "../../store/types";
 import IntegrationReactSelect from "../BasicSelect";
-import { Translation } from "../../types/Translation";
 import { selectSpecies } from "../../store/reducers/translations-reducer";
 import {
   selectPreventionFilters,
@@ -10,15 +9,29 @@ import {
 } from "../../store/reducers/prevention-reducer";
 import { setSpecies } from "../../store/actions/prevention-actions";
 import {
+  buildPreventionFilters,
+  filterByAssayTypes,
   filterByInsecticideClass,
   filterByInsecticideTypes,
-  filterByType
+  filterByIntensityStatus,
+  filterByLevelOfInvolvement,
+  filterByRegion,
+  filterByResistanceMechanism,
+  filterByResistanceStatus,
+  filterBySpecies,
+  filterByType,
+  filterByTypeSynergist,
+  filterByYearRange
 } from "../layers/studies-filters";
 import * as R from "ramda";
+import { PreventionStudy } from "../../types/Prevention";
+import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 
 const mapStateToProps = (state: State) => ({
   species: selectSpecies(state),
   studies: selectPreventionStudies(state),
+  yearFilter: selectFilters(state),
+  region: selectRegion(state),
   preventionFilters: selectPreventionFilters(state)
 });
 
@@ -36,16 +49,48 @@ class SpeciesFilter extends Component<Props, any> {
   };
 
   render() {
-    const { preventionFilters, studies } = this.props;
-    const { insecticideClass, insecticideTypes, type } = preventionFilters;
+    const { preventionFilters, studies, yearFilter, region } = this.props;
+    const { mapType } = preventionFilters;
 
-    const filters = [
-      filterByInsecticideClass(insecticideClass),
-      filterByInsecticideTypes(insecticideTypes),
-      filterByType(type)
-    ];
-
-    const filteredStudies = filters.reduce(
+    const filtersMap: { [mapType: string]: any[] } = {
+      [PreventionMapType.INTENSITY_STATUS]: [
+        filterByIntensityStatus,
+        filterByInsecticideClass(preventionFilters.insecticideClass),
+        filterByInsecticideTypes(preventionFilters.insecticideTypes),
+        filterByType(preventionFilters.type),
+        filterByYearRange(yearFilter),
+        filterByRegion(region)
+      ],
+      [PreventionMapType.RESISTANCE_STATUS]: [
+        filterByResistanceStatus,
+        filterByInsecticideClass(preventionFilters.insecticideClass),
+        filterByInsecticideTypes(preventionFilters.insecticideTypes),
+        filterByType(preventionFilters.type),
+        filterByYearRange(yearFilter),
+        filterByRegion(region)
+      ],
+      [PreventionMapType.RESISTANCE_MECHANISM]: [
+        filterByResistanceMechanism,
+        filterByType(preventionFilters.type),
+        filterByAssayTypes(preventionFilters.assayTypes),
+        filterByYearRange(yearFilter),
+        filterByRegion(region)
+      ],
+      [PreventionMapType.LEVEL_OF_INVOLVEMENT]: [
+        filterByLevelOfInvolvement,
+        filterByType(preventionFilters.type),
+        filterByTypeSynergist(preventionFilters.synergistTypes),
+        filterByYearRange(yearFilter),
+        filterByRegion(region)
+      ],
+      [PreventionMapType.PBO_DEPLOYMENT]: [
+        filterByInsecticideClass(preventionFilters.insecticideClass),
+        filterByInsecticideTypes(preventionFilters.insecticideTypes),
+        filterByYearRange(yearFilter),
+        filterByRegion(region)
+      ]
+    };
+    const filteredStudies: PreventionStudy[] = filtersMap[mapType].reduce(
       (studies, filter) => studies.filter(filter),
       studies
     );

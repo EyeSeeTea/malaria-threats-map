@@ -29,6 +29,7 @@ import {
   selectInvasiveStudies
 } from "../../store/reducers/invasive-reducer";
 import VectorOccurrenceChart from "./invasive/VectorOccurance/VectorOccurranceChart";
+import { setFilteredStudiesAction } from "../../store/actions/invasive-actions";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
@@ -56,11 +57,17 @@ const mapStateToProps = (state: State) => ({
   countryMode: selectCountryMode(state)
 });
 
+const mapDispatchToProps = {
+  setFilteredStudies: setFilteredStudiesAction
+};
+
 type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
 type OwnProps = {
   map: any;
 };
-type Props = StateProps & OwnProps;
+type Props = StateProps & OwnProps & DispatchProps;
 
 class InvasiveLayer extends Component<Props> {
   popup: mapboxgl.Popup;
@@ -140,6 +147,7 @@ class InvasiveLayer extends Component<Props> {
     const source = this.props.map.getSource(INVASIVE_SOURCE_ID);
     if (source) {
       const filteredStudies = this.filterStudies(studies);
+      this.props.setFilteredStudies(filteredStudies);
       const geoStudies = this.setupGeoJsonData(filteredStudies);
       const countryStudies = this.getCountryStudies(filteredStudies);
       const data = countryMode ? countryStudies : geoStudies;
@@ -200,6 +208,7 @@ class InvasiveLayer extends Component<Props> {
         this.props.map.removeSource(INVASIVE_SOURCE_ID);
       }
       const filteredStudies = this.filterStudies(studies);
+      this.props.setFilteredStudies(filteredStudies);
       const geoStudies = this.setupGeoJsonData(filteredStudies);
       const countryStudies = this.getCountryStudies(filteredStudies);
 
@@ -232,10 +241,9 @@ class InvasiveLayer extends Component<Props> {
       <I18nextProvider i18n={i18next}>
         <ThemeProvider theme={theme}>
           <Provider store={store}>
-            {!countryMode &&
-              mapType === InvasiveMapType.VECTOR_OCCURANCE && (
-                <VectorOccurrenceChart studies={filteredStudies} />
-              )}
+            {!countryMode && mapType === InvasiveMapType.VECTOR_OCCURANCE && (
+              <VectorOccurrenceChart studies={filteredStudies} />
+            )}
           </Provider>
         </ThemeProvider>
       </I18nextProvider>,
@@ -303,5 +311,5 @@ class InvasiveLayer extends Component<Props> {
 }
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(InvasiveLayer);

@@ -42,6 +42,7 @@ export interface TranslationsState {
 
 export interface DiagnosisState {
   studies: DiagnosisStudy[];
+  filteredStudies: DiagnosisStudy[];
   filters: DiagnosisFilters;
 }
 
@@ -95,6 +96,7 @@ export interface TreatmentFilters {
 
 export interface TreatmentState {
   studies: TreatmentStudy[];
+  filteredStudies: TreatmentStudy[];
   filters: TreatmentFilters;
 }
 
@@ -109,6 +111,7 @@ export interface InvasiveFilters {
 
 export interface InvasiveState {
   studies: InvasiveStudy[];
+  filteredStudies: InvasiveStudy[];
   filters: InvasiveFilters;
 }
 

@@ -28,7 +28,7 @@ class EndemicityLayer extends Component<any> {
     const source: any = {
       type: "geojson",
       data:
-        "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer/6/query?where=ENDEMICITY%3D0&f=geojson&geometryPrecision=2.5"
+        "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer/1/query?where=ENDEMICITY%3D0&f=geojson&geometryPrecision=2.5"
     };
     this.props.map.addSource(ENDEMICITY_SOURCE_ID, source);
     this.props.map.addLayer(layer);

@@ -35,6 +35,7 @@ import { resolveMapTypeSymbols, studySelector } from "./treatment/utils";
 import MolecularMarkersChart from "./treatment/MolecularMarkers/MolecularMarkersChart";
 import TreatmentFailureChart from "./treatment/TreatmentFailure/TreatmentFailureChart";
 import TreatmentFailureCountryChart from "./treatment/TreatmentFailure/TreatmentFailureCountryChart";
+import { setFilteredStudiesAction } from "../../store/actions/treatment-actions";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -61,12 +62,17 @@ const mapStateToProps = (state: State) => ({
   countries: selectCountries(state),
   countryMode: selectCountryMode(state)
 });
+const mapDispatchToProps = {
+  setFilteredStudies: setFilteredStudiesAction
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
 type OwnProps = {
   map: any;
 };
-type Props = StateProps & OwnProps;
+type Props = StateProps & OwnProps & DispatchProps;
 
 class TreatmentLayer extends Component<Props> {
   popup: mapboxgl.Popup;
@@ -168,6 +174,7 @@ class TreatmentLayer extends Component<Props> {
     const source = this.props.map.getSource(TREATMENT_SOURCE_ID);
     if (source) {
       const filteredStudies = this.filterStudies(studies);
+      this.props.setFilteredStudies(filteredStudies);
       const geoStudies = this.setupGeoJsonData(filteredStudies);
       const countryStudies = this.getCountryStudies(filteredStudies);
       const data = countryMode ? countryStudies : geoStudies;
@@ -224,6 +231,7 @@ class TreatmentLayer extends Component<Props> {
         this.props.map.removeSource(TREATMENT_SOURCE_ID);
       }
       const filteredStudies = this.filterStudies(studies);
+      this.props.setFilteredStudies(filteredStudies);
       const geoStudies = this.setupGeoJsonData(filteredStudies);
       const countryStudies = this.getCountryStudies(filteredStudies);
 
@@ -250,33 +258,29 @@ class TreatmentLayer extends Component<Props> {
       countryMode,
       treatmentFilters: { mapType }
     } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(
-      study =>
-        countryMode
-          ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-          : study.SITE_ID === e.features[0].properties.SITE_ID
+    const filteredStudies = this.filterStudies(studies).filter(study =>
+      countryMode
+        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
+        : study.SITE_ID === e.features[0].properties.SITE_ID
     );
 
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>
         <ThemeProvider theme={theme}>
           <Provider store={store}>
-            {!countryMode &&
-              mapType === TreatmentMapType.MOLECULAR_MARKERS && (
-                <MolecularMarkersChart studies={filteredStudies} />
-              )}
+            {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
+              <MolecularMarkersChart studies={filteredStudies} />
+            )}
             {!countryMode &&
               mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE && (
                 <TreatmentFailureChart studies={filteredStudies} />
               )}
-            {!countryMode &&
-              mapType === TreatmentMapType.TREATMENT_FAILURE && (
-                <TreatmentFailureChart studies={filteredStudies} />
-              )}
-            {countryMode &&
-              mapType === TreatmentMapType.TREATMENT_FAILURE && (
-                <TreatmentFailureCountryChart studies={filteredStudies} />
-              )}
+            {!countryMode && mapType === TreatmentMapType.TREATMENT_FAILURE && (
+              <TreatmentFailureChart studies={filteredStudies} />
+            )}
+            {countryMode && mapType === TreatmentMapType.TREATMENT_FAILURE && (
+              <TreatmentFailureCountryChart studies={filteredStudies} />
+            )}
           </Provider>
         </ThemeProvider>
       </I18nextProvider>,
@@ -348,5 +352,5 @@ class TreatmentLayer extends Component<Props> {
 }
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(TreatmentLayer);

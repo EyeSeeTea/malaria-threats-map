@@ -1,9 +1,9 @@
 import { ActionsObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
-import { ActionTypeEnum } from "../../store/actions";
+import { ActionTypeEnum } from "../actions";
 import * as ajax from "../../store/ajax";
 import { of } from "rxjs";
-import { catchError, mergeMap, switchMap } from "rxjs/operators";
+import { catchError, mergeMap, switchMap, skip } from "rxjs/operators";
 import { AjaxError } from "rxjs/ajax";
 import { PreventionResponse } from "../../types/Prevention";
 import { MapServerConfig } from "../../constants/constants";
@@ -63,6 +63,8 @@ export const setPreventionMapTypeEpic = (
     switchMap(action => {
       if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
         return of(setType("MONO_OXYGENASES"));
+      } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
+        return of(setType("MONO_OXYGENASES"));
       } else if (action.payload === PreventionMapType.PBO_DEPLOYMENT) {
         return of(setCountryModeAction(false));
       }
@@ -89,8 +91,35 @@ export const setPreventionTypeEpic = (
 export const setPreventionInsecticideClassEpic = (
   action$: ActionsObservable<ActionType<typeof setInsecticideClass>>
 ) =>
-  action$.ofType(ActionTypeEnum.SetInsecticideClass).pipe(
-    switchMap(action => {
-      return of(setInsecticideTypes([]), setType(undefined), setSpecies([]));
-    })
-  );
+  action$
+    .ofType(ActionTypeEnum.SetInsecticideClass)
+    .pipe(skip(1))
+    .pipe(
+      switchMap(action => {
+        return of(setInsecticideTypes([]), setType(undefined), setSpecies([]));
+      })
+    );
+
+export const setPreventionInsecticideTypeEpic = (
+  action$: ActionsObservable<ActionType<typeof setInsecticideTypes>>
+) =>
+  action$
+    .ofType(ActionTypeEnum.SetInsecticideTypes)
+    .pipe(skip(1))
+    .pipe(
+      switchMap(action => {
+        return of(setType(undefined), setSpecies([]));
+      })
+    );
+
+export const setPreventionTypeResetEpic = (
+  action$: ActionsObservable<ActionType<typeof setType>>
+) =>
+  action$
+    .ofType(ActionTypeEnum.SetType)
+    .pipe(skip(1))
+    .pipe(
+      switchMap(action => {
+        return of(setSpecies([]));
+      })
+    );
