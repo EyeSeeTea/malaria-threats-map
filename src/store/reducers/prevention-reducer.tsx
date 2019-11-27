@@ -4,7 +4,6 @@ import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
 import { PreventionMapType, PreventionState, State } from "../types";
 import { PreventionResponse, PreventionStudy } from "../../types/Prevention";
-import { TreatmentStudy } from "../../types/Treatment";
 
 const initialState: PreventionState = Object.freeze({
   studies: [],

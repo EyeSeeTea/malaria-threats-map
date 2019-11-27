@@ -1,9 +1,8 @@
 import { createAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import {InvasiveResponse, InvasiveStudy} from "../../types/Invasive";
+import { InvasiveResponse, InvasiveStudy } from "../../types/Invasive";
 import { AjaxError } from "rxjs/ajax";
 import { InvasiveMapType } from "../types";
-import {PreventionStudy} from "../../types/Prevention";
 
 export const fetchInvasiveStudiesRequest = createAction(
   ActionTypeEnum.FetchInvasiveStudiesRequest,
@@ -38,9 +37,9 @@ export const setInvasiveVectorSpecies = createAction(
   }
 );
 
-export const setFilteredStudiesAction = createAction(
-    ActionTypeEnum.SetInvasiveFilteredStudies,
-    action => {
-        return (filteredStudies: InvasiveStudy[]) => action(filteredStudies);
-    }
+export const setInvasiveFilteredStudiesAction = createAction(
+  ActionTypeEnum.SetInvasiveFilteredStudies,
+  action => {
+    return (filteredStudies: InvasiveStudy[]) => action(filteredStudies);
+  }
 );

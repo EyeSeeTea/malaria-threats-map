@@ -9,7 +9,6 @@ import {
 } from "../../store/reducers/prevention-reducer";
 import { setSpecies } from "../../store/actions/prevention-actions";
 import {
-  buildPreventionFilters,
   filterByAssayTypes,
   filterByInsecticideClass,
   filterByInsecticideTypes,
@@ -18,7 +17,6 @@ import {
   filterByRegion,
   filterByResistanceMechanism,
   filterByResistanceStatus,
-  filterBySpecies,
   filterByType,
   filterByTypeSynergist,
   filterByYearRange

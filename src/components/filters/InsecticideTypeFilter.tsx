@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import IntegrationReactSelect from "../BasicSelect";
-import { Translation } from "../../types/Translation";
 import { selectInsecticideTypes } from "../../store/reducers/translations-reducer";
 import { setInsecticideTypes } from "../../store/actions/prevention-actions";
 import {

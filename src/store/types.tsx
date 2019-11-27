@@ -32,6 +32,7 @@ export interface MalariaState {
   initialDialogOpen: boolean;
   filtersOpen: boolean;
   filtersMode: string;
+  selection: SiteSelection | null;
 }
 
 export interface TranslationsState {
@@ -119,4 +120,10 @@ export interface CountryLayerState {
   layer: any | null;
   loading: boolean;
   countries: any[];
+}
+
+export interface SiteSelection {
+  ISO_2_CODE: string;
+  SITE_ID: string;
+  coordinates: [number, number];
 }

@@ -1,6 +1,6 @@
 import * as R from "ramda";
 import { createSelector } from "reselect";
-import { MalariaState, RegionState, State } from "../types";
+import { MalariaState, RegionState, SiteSelection, State } from "../types";
 import { createReducer } from "../reducer-utils";
 import { ActionTypeEnum } from "../actions";
 
@@ -19,7 +19,8 @@ const initialState: MalariaState = Object.freeze({
   },
   initialDialogOpen: false,
   filtersOpen: false,
-  filtersMode: "filters"
+  filtersMode: "filters",
+  selection: null
 });
 
 export default createReducer<MalariaState>(initialState, {
@@ -44,7 +45,9 @@ export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.SetFiltersOpen]: (filtersOpen: boolean) =>
     R.assoc("filtersOpen", filtersOpen),
   [ActionTypeEnum.SetFiltersMode]: (filtersMode: string) =>
-    R.assoc("filtersMode", filtersMode || "filters")
+    R.assoc("filtersMode", filtersMode || "filters"),
+  [ActionTypeEnum.SetSelection]: (selection: SiteSelection) =>
+    R.assoc("selection", selection || null)
 });
 
 export const selectMalariaState = (state: State) => state.malaria;
@@ -92,4 +95,8 @@ export const selectFiltersMode = createSelector(
 export const selectStoryModeStep = createSelector(
   selectMalariaState,
   R.prop("storyModeStep")
+);
+export const selectSelection = createSelector(
+  selectMalariaState,
+  R.prop("selection")
 );

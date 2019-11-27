@@ -44,7 +44,7 @@ function Screenshot({ map }: any) {
         destCanvas.height = height;
 
         //call its drawImage() function passing it the source canvas directly
-        const baseCanvasImage = canvas.toDataURL("image/octet-stream", 1.0);
+        // const baseCanvasImage = canvas.toDataURL("image/octet-stream", 1.0);
         destCtx.drawImage(canvas, 0, 0);
         destCtx.drawImage(legend, width / 2, height / 2);
         destCtx.drawImage(imageObj1, 20, height - 70, 150, 50);

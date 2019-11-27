@@ -6,10 +6,10 @@ import mapboxgl from "mapbox-gl";
 
 import { PreventionMapType, State } from "../store/types";
 import { connect } from "react-redux";
-import PreventionLayer from "./layers/PreventionLayer";
-import DiagnosisLayer from "./layers/DiagnosisLayer";
-import TreatmentLayer from "./layers/TreatmentLayer";
-import InvasiveLayer from "./layers/InvasiveLayer";
+import PreventionLayer from "./layers/prevention/PreventionLayer";
+import DiagnosisLayer from "./layers/diagnosis/DiagnosisLayer";
+import TreatmentLayer from "./layers/treatment/TreatmentLayer";
+import InvasiveLayer from "./layers/invasive/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
 // import InitialDialog from "./InitialDialog";
 import Filters from "./Filters";
@@ -36,7 +36,7 @@ import ReactMapboxGl from "react-mapbox-gl";
 import { Fade, Hidden } from "@material-ui/core";
 import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
-import Leyend, { LegendContainer } from "./Leyend";
+import Leyend from "./Leyend";
 import StoryModeSelector from "./StoryModeSelector";
 
 ReactMapboxGl({

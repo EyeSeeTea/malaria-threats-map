@@ -3,7 +3,6 @@ import { ActionTypeEnum } from "../actions";
 import { DiagnosisResponse, DiagnosisStudy } from "../../types/Diagnosis";
 import { AjaxError } from "rxjs/ajax";
 import { DiagnosisMapType } from "../types";
-import { PreventionStudy } from "../../types/Prevention";
 
 export const fetchDiagnosisStudiesRequest = createAction(
   ActionTypeEnum.FetchDiagnosisStudiesRequest,

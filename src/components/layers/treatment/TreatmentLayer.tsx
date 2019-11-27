@@ -1,18 +1,19 @@
 import React, { Component } from "react";
-import { connect, Provider } from "react-redux";
-import { studiesToGeoJson } from "./layer-utils";
-import setupEffects from "./effects";
+import { connect } from "react-redux";
+import { studiesToGeoJson } from "../layer-utils";
+import setupEffects from "../effects";
 import {
   selectTreatmentFilters,
   selectTreatmentStudies
-} from "../../store/reducers/treatment-reducer";
+} from "../../../store/reducers/treatment-reducer";
 import {
   selectCountryMode,
   selectFilters,
   selectRegion,
+  selectSelection,
   selectTheme
-} from "../../store/reducers/base-reducer";
-import { selectCountries } from "../../store/reducers/country-layer-reducer";
+} from "../../../store/reducers/base-reducer";
+import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
 import {
@@ -23,19 +24,16 @@ import {
   filterByPlasmodiumSpecies,
   filterByRegion,
   filterByYearRange
-} from "./studies-filters";
-import { TreatmentStudy } from "../../types/Treatment";
-import ReactDOM from "react-dom";
-import { I18nextProvider } from "react-i18next";
-import i18next from "i18next";
-import { store, theme } from "../../App";
-import ThemeProvider from "@material-ui/styles/ThemeProvider";
-import { State, TreatmentMapType } from "../../store/types";
-import { resolveMapTypeSymbols, studySelector } from "./treatment/utils";
-import MolecularMarkersChart from "./treatment/MolecularMarkers/MolecularMarkersChart";
-import TreatmentFailureChart from "./treatment/TreatmentFailure/TreatmentFailureChart";
-import TreatmentFailureCountryChart from "./treatment/TreatmentFailure/TreatmentFailureCountryChart";
-import { setFilteredStudiesAction } from "../../store/actions/treatment-actions";
+} from "../studies-filters";
+import { TreatmentStudy } from "../../../types/Treatment";
+import { State, TreatmentMapType } from "../../../store/types";
+import { resolveMapTypeSymbols, studySelector } from "./utils";
+import { setFilteredStudiesAction } from "../../../store/actions/treatment-actions";
+import { setSelection } from "../../../store/actions/base-actions";
+import { Hidden } from "@material-ui/core";
+import ChartModal from "../../ChartModal";
+import TreatmentSitePopover from "./TreatmentSitePopover";
+import TreatmentSelectionChart from "./TreatmentSelectionChart";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -60,10 +58,12 @@ const mapStateToProps = (state: State) => ({
   treatmentFilters: selectTreatmentFilters(state),
   region: selectRegion(state),
   countries: selectCountries(state),
-  countryMode: selectCountryMode(state)
+  countryMode: selectCountryMode(state),
+  selection: selectSelection(state)
 });
 const mapDispatchToProps = {
-  setFilteredStudies: setFilteredStudiesAction
+  setFilteredStudies: setFilteredStudiesAction,
+  setSelection: setSelection
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -252,49 +252,15 @@ class TreatmentLayer extends Component<Props> {
   }
 
   onClickListener = (e: any, a: any) => {
-    const placeholder = document.createElement("div");
-    const {
-      studies,
-      countryMode,
-      treatmentFilters: { mapType }
-    } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(study =>
-      countryMode
-        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-        : study.SITE_ID === e.features[0].properties.SITE_ID
-    );
-
-    ReactDOM.render(
-      <I18nextProvider i18n={i18next}>
-        <ThemeProvider theme={theme}>
-          <Provider store={store}>
-            {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
-              <MolecularMarkersChart studies={filteredStudies} />
-            )}
-            {!countryMode &&
-              mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE && (
-                <TreatmentFailureChart studies={filteredStudies} />
-              )}
-            {!countryMode && mapType === TreatmentMapType.TREATMENT_FAILURE && (
-              <TreatmentFailureChart studies={filteredStudies} />
-            )}
-            {countryMode && mapType === TreatmentMapType.TREATMENT_FAILURE && (
-              <TreatmentFailureCountryChart studies={filteredStudies} />
-            )}
-          </Provider>
-        </ThemeProvider>
-      </I18nextProvider>,
-      placeholder
-    );
     const coordinates = e.features[0].geometry.coordinates.slice();
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
-
-    this.popup = new mapboxgl.Popup()
-      .setLngLat(coordinates)
-      .setDOMContent(placeholder)
-      .addTo(this.props.map);
+    this.props.setSelection({
+      ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
+      SITE_ID: e.features[0].properties.SITE_ID,
+      coordinates: coordinates
+    });
   };
 
   setupPopover = () => {
@@ -347,7 +313,33 @@ class TreatmentLayer extends Component<Props> {
   };
 
   render() {
-    return <div />;
+    const { studies, countryMode, selection } = this.props;
+    if (selection === null) {
+      return <div />;
+    }
+    const filteredStudies = this.filterStudies(studies).filter(study =>
+      countryMode
+        ? study.ISO2 === selection.ISO_2_CODE
+        : study.SITE_ID === selection.SITE_ID
+    );
+    if (filteredStudies.length === 0) {
+      return <div />;
+    }
+    return (
+      <>
+        <Hidden xsDown>
+          <TreatmentSitePopover
+            map={this.props.map}
+            studies={filteredStudies}
+          />
+        </Hidden>
+        <Hidden smUp>
+          <ChartModal selection={selection}>
+            <TreatmentSelectionChart studies={filteredStudies} />
+          </ChartModal>
+        </Hidden>
+      </>
+    );
   }
 }
 export default connect(

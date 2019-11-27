@@ -68,7 +68,7 @@ export const setSpecies = createAction(ActionTypeEnum.SetSpecies, action => {
   return (species: string[]) => action(species);
 });
 
-export const setFilteredStudiesAction = createAction(
+export const setPreventionFilteredStudiesAction = createAction(
   ActionTypeEnum.SetPreventionFilteredStudies,
   action => {
     return (filteredStudies: PreventionStudy[]) => action(filteredStudies);

@@ -1,39 +1,33 @@
 import React, { Component } from "react";
-import { connect, Provider } from "react-redux";
-import { PreventionMapType, State } from "../../store/types";
-import { studiesToGeoJson } from "./layer-utils";
-import setupEffects from "./effects";
+import { connect } from "react-redux";
+import { PreventionMapType, State } from "../../../store/types";
+import { studiesToGeoJson } from "../layer-utils";
+import setupEffects from "../effects";
 import * as R from "ramda";
-import resistanceStatusSymbols from "./prevention/ResistanceStatus/symbols";
-import { resolveResistanceStatus } from "./prevention/ResistanceStatus/utils";
-import { PreventionStudy } from "../../types/Prevention";
-import { buildPreventionFilters } from "./studies-filters";
-import { resolveMapTypeSymbols, studySelector } from "./prevention/utils";
+import resistanceStatusSymbols from "./ResistanceStatus/symbols";
+import { resolveResistanceStatus } from "./ResistanceStatus/utils";
+import { PreventionStudy } from "../../../types/Prevention";
+import { buildPreventionFilters } from "../studies-filters";
+import { resolveMapTypeSymbols, studySelector } from "./utils";
 import {
   selectPreventionFilters,
   selectPreventionStudies
-} from "../../store/reducers/prevention-reducer";
+} from "../../../store/reducers/prevention-reducer";
 import {
   selectCountryMode,
   selectFilters,
   selectRegion,
+  selectSelection,
   selectTheme
-} from "../../store/reducers/base-reducer";
-import ReactDOM from "react-dom";
-import { store, theme } from "../../App";
+} from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
-import { I18nextProvider } from "react-i18next";
-import i18next from "i18next";
-import { selectCountries } from "../../store/reducers/country-layer-reducer";
-import { ThemeProvider } from "@material-ui/styles";
-import ResistanceStatusCountryChart from "./prevention/ResistanceStatus/ResistanceStatusCountryChart";
-import ResistanceStatusChart from "./prevention/ResistanceStatus/ResistanceStatusChart";
-import IntensityStatusCountryChart from "./prevention/IntensityStatus/IntensityStatusCountryChart";
-import ResistanceMechanismCountryChart from "./prevention/ResistanceMechanisms/ResistanceMechanismCountryChart";
-import ResistanceMechanismsChart from "./prevention/ResistanceMechanisms/ResistanceMechanismsChart";
-import IntensityStatusChart from "./prevention/IntensityStatus/IntensityStatusChart";
-import LevelOfInvolvementChart from "./prevention/Involvement/LevelOfInvolvementChart";
-import { setFilteredStudiesAction } from "../../store/actions/prevention-actions";
+import { selectCountries } from "../../../store/reducers/country-layer-reducer";
+import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
+import { Hidden } from "@material-ui/core";
+import { setSelection } from "../../../store/actions/base-actions";
+import PreventionSitePopover from "./PreventionSitePopover";
+import PreventionSelectionChart from "./PreventionSelectionChart";
+import ChartModal from "../../ChartModal";
 
 const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -58,11 +52,13 @@ const mapStateToProps = (state: State) => ({
   preventionFilters: selectPreventionFilters(state),
   region: selectRegion(state),
   countries: selectCountries(state),
-  countryMode: selectCountryMode(state)
+  countryMode: selectCountryMode(state),
+  selection: selectSelection(state)
 });
 
 const mapDispatchToProps = {
-  setFilteredStudies: setFilteredStudiesAction
+  setFilteredStudies: setPreventionFilteredStudiesAction,
+  setSelection: setSelection
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -255,67 +251,22 @@ class PreventionLayer extends Component<Props> {
   }
 
   onClickListener = (e: any, a: any) => {
-    const placeholder = document.createElement("div");
     const {
-      studies,
       countryMode,
       preventionFilters: { mapType }
     } = this.props;
-    const filteredStudies = this.filterStudies(studies).filter(study =>
-      countryMode
-        ? study.ISO2 === e.features[0].properties.ISO_2_CODE
-        : study.SITE_ID === e.features[0].properties.SITE_ID
-    );
     if (!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT) {
       return;
     }
-    ReactDOM.render(
-      <I18nextProvider i18n={i18next}>
-        <ThemeProvider theme={theme}>
-          <Provider store={store}>
-            {countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
-              <ResistanceStatusCountryChart studies={filteredStudies} />
-            )}
-            {countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
-              <IntensityStatusCountryChart studies={filteredStudies} />
-            )}
-            {countryMode &&
-              mapType === PreventionMapType.RESISTANCE_MECHANISM && (
-                <ResistanceMechanismCountryChart studies={filteredStudies} />
-              )}
-            {countryMode &&
-              mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
-                <ResistanceMechanismCountryChart studies={filteredStudies} />
-              )}
-            {!countryMode &&
-              mapType === PreventionMapType.RESISTANCE_STATUS && (
-                <ResistanceStatusChart studies={filteredStudies} />
-              )}
-            {!countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
-              <IntensityStatusChart studies={filteredStudies} />
-            )}
-            {!countryMode &&
-              mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
-                <LevelOfInvolvementChart studies={filteredStudies} />
-              )}
-            {!countryMode &&
-              mapType === PreventionMapType.RESISTANCE_MECHANISM && (
-                <ResistanceMechanismsChart studies={filteredStudies} />
-              )}
-          </Provider>
-        </ThemeProvider>
-      </I18nextProvider>,
-      placeholder
-    );
     const coordinates = e.features[0].geometry.coordinates.slice();
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
-
-    this.popup = new mapboxgl.Popup()
-      .setLngLat(coordinates)
-      .setDOMContent(placeholder)
-      .addTo(this.props.map);
+    this.props.setSelection({
+      ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
+      SITE_ID: e.features[0].properties.SITE_ID,
+      coordinates: coordinates
+    });
   };
 
   setupPopover = () => {
@@ -368,7 +319,33 @@ class PreventionLayer extends Component<Props> {
   };
 
   render() {
-    return <div />;
+    const { studies, countryMode, selection } = this.props;
+    if (selection === null) {
+      return <div />;
+    }
+    const filteredStudies = this.filterStudies(studies).filter(study =>
+      countryMode
+        ? study.ISO2 === selection.ISO_2_CODE
+        : study.SITE_ID === selection.SITE_ID
+    );
+    if (filteredStudies.length === 0) {
+      return <div />;
+    }
+    return (
+      <>
+        <Hidden xsDown>
+          <PreventionSitePopover
+            map={this.props.map}
+            studies={filteredStudies}
+          />
+        </Hidden>
+        <Hidden smUp>
+          <ChartModal selection={selection}>
+            <PreventionSelectionChart studies={filteredStudies} />
+          </ChartModal>
+        </Hidden>
+      </>
+    );
   }
 }
 export default connect(

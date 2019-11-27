@@ -3,7 +3,7 @@ import { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, Link, Typography } from "@material-ui/core";
+import { Box, Link, Typography, Hidden } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -18,6 +18,7 @@ const options: (data: any, categories: any[]) => Highcharts.Options = (
 ) => ({
   chart: {
     height: 250,
+    width: 300,
     style: {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;'
     }
@@ -154,6 +155,64 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
     Number.isNaN(parseFloat(value))
       ? "N/A"
       : `${(parseFloat(value) * 100).toFixed(2)}%`;
+
+  function renderInfo() {
+    return (
+      <Margin>
+        <Flex>
+          <Typography variant="body2">
+            <b>Study year(s):&nbsp;</b>
+            {duration}
+          </Typography>
+        </Flex>
+        <Flex>
+          <Typography variant="body2">
+            <b>Number of patients:&nbsp;</b>
+            {N}
+          </Typography>
+        </Flex>
+        <Flex>
+          <Typography variant="body2">
+            <b>Follow-up:&nbsp;</b>
+            {FOLLOW_UP} days
+          </Typography>
+        </Flex>
+        {exists(CONFIRMED_RESIST_PV) && (
+          <Flex>
+            <Typography variant="body2">
+              <b>Patients with confirmed resistance:&nbsp;</b>
+              {formatValue(CONFIRMED_RESIST_PV)}
+            </Typography>
+          </Flex>
+        )}
+        {exists(POSITIVE_DAY_3) && (
+          <Flex>
+            <Typography variant="body2">
+              <b>Positive after day 3:&nbsp;</b>
+              {formatValue(POSITIVE_DAY_3)}
+            </Typography>
+          </Flex>
+        )}
+        {exists(TREATMENT_FAILURE_PP) && (
+          <Flex>
+            <Typography variant="body2">
+              <b>Patients with treatment failure, per protocol:&nbsp;</b>
+              {formatValue(TREATMENT_FAILURE_PP)}
+            </Typography>
+          </Flex>
+        )}
+        {exists(TREATMENT_FAILURE_KM) && (
+          <Flex>
+            <Typography variant="body2">
+              <b>Patients with treatment failure, Kaplan-Meier:&nbsp;</b>
+              {formatValue(TREATMENT_FAILURE_KM)}
+            </Typography>
+          </Flex>
+        )}
+      </Margin>
+    );
+  }
+
   return (
     <ChatContainer>
       <Pagination studies={studies} study={study} setStudy={setStudy} />
@@ -163,68 +222,24 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
       <Typography variant="body2">
         {`${t(DRUG_NAME)}: ${studies.length} study(s) ${siteDuration}`}
       </Typography>
-      <Flex>
-        <FlexCol>
-          <Margin>
-            <Flex>
-              <Typography variant="body2">
-                <b>Study year(s):&nbsp;</b>
-                {duration}
-              </Typography>
-            </Flex>
-            <Flex>
-              <Typography variant="body2">
-                <b>Number of patients:&nbsp;</b>
-                {N}
-              </Typography>
-            </Flex>
-            <Flex>
-              <Typography variant="body2">
-                <b>Follow-up:&nbsp;</b>
-                {FOLLOW_UP} days
-              </Typography>
-            </Flex>
-            {exists(CONFIRMED_RESIST_PV) && (
-              <Flex>
-                <Typography variant="body2">
-                  <b>Patients with confirmed resistance:&nbsp;</b>
-                  {formatValue(CONFIRMED_RESIST_PV)}
-                </Typography>
-              </Flex>
-            )}
-            {exists(POSITIVE_DAY_3) && (
-              <Flex>
-                <Typography variant="body2">
-                  <b>Positive after day 3:&nbsp;</b>
-                  {formatValue(POSITIVE_DAY_3)}
-                </Typography>
-              </Flex>
-            )}
-            {exists(TREATMENT_FAILURE_PP) && (
-              <Flex>
-                <Typography variant="body2">
-                  <b>Patients with treatment failure, per protocol:&nbsp;</b>
-                  {formatValue(TREATMENT_FAILURE_PP)}
-                </Typography>
-              </Flex>
-            )}
-            {exists(TREATMENT_FAILURE_KM) && (
-              <Flex>
-                <Typography variant="body2">
-                  <b>Patients with treatment failure, Kaplan-Meier:&nbsp;</b>
-                  {formatValue(TREATMENT_FAILURE_KM)}
-                </Typography>
-              </Flex>
-            )}
-          </Margin>
-        </FlexCol>
-        <FlexCol>
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={options(series, years)}
-          />
-        </FlexCol>
-      </Flex>
+      <Hidden smUp>
+        {renderInfo()}
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={options(series, years)}
+        />
+      </Hidden>
+      <Hidden xsDown>
+        <Flex>
+          <FlexCol>{renderInfo()}</FlexCol>
+          <FlexCol>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={options(series, years)}
+            />
+          </FlexCol>
+        </Flex>
+      </Hidden>
       <Typography variant="caption">
         <Link
           href={studies[study].CITATION_URL}

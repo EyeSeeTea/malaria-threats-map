@@ -1,6 +1,6 @@
 import { createAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import { RegionState } from "../types";
+import { RegionState, SiteSelection } from "../types";
 
 export const setAnyAction = createAction(
   ActionTypeEnum.MalariaSetAny,
@@ -88,5 +88,12 @@ export const setFiltersMode = createAction(
   ActionTypeEnum.SetFiltersMode,
   action => {
     return (filtersMode: string) => action(filtersMode);
+  }
+);
+
+export const setSelection = createAction(
+  ActionTypeEnum.SetSelection,
+  action => {
+    return (selection: SiteSelection) => action(selection);
   }
 );

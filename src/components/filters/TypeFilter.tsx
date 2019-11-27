@@ -18,7 +18,6 @@ import {
   filterByRegion,
   filterByResistanceMechanism,
   filterByResistanceStatus,
-  filterByType,
   filterByTypeSynergist,
   filterByYearRange
 } from "../layers/studies-filters";
