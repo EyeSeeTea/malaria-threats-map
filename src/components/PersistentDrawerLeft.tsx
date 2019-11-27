@@ -34,7 +34,7 @@ import {
 } from "@material-ui/core";
 import StoryModeStepper from "./StoryModeStepper";
 import FiltersSidebar from "./FiltersSidebar";
-import MenuIcon from "@material-ui/icons/Menu";
+import FilterIcon from "@material-ui/icons/FilterList";
 import {
   DiagnosisIcon,
   InvasiveIcon,
@@ -42,6 +42,9 @@ import {
   TreatmentIcon
 } from "./Icons";
 import { colors } from "../constants/theme";
+import SettingsIcon from "@material-ui/icons/Settings";
+import { useTranslation } from "react-i18next";
+import MapTypesSelector from "./MapTypesSelector";
 
 interface ThemeProps {
   drawerWidth: string;
@@ -111,6 +114,21 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     tab: {
       minWidth: 0
+    },
+    iconButton: {
+      padding: 10,
+      margin: theme.spacing(0, 1)
+    },
+    input: {
+      flex: 1
+    },
+    divider: {
+      width: 1,
+      height: 28,
+      margin: 4
+    },
+    toolbar: {
+      padding: 0
     }
   })
 );
@@ -166,10 +184,12 @@ type Props = DispatchProps & StateProps & OwnProps;
 function PersistentDrawerLeft({
   storyMode,
   filtersOpen,
+  setFiltersOpen,
   drawerWidth = "400px",
   setTheme,
   theme
 }: Props) {
+  const { t } = useTranslation("common");
   const classes = useStyles({ drawerWidth });
 
   const isOpen = filtersOpen || storyMode;
@@ -196,7 +216,7 @@ function PersistentDrawerLeft({
   };
 
   return (
-    <div className={classes.root}>
+    <div className={`${classes.root}`}>
       <CssBaseline />
       <Drawer
         className={classes.drawer}
@@ -225,15 +245,22 @@ function PersistentDrawerLeft({
         <div className={classes.drawerHeader} />
         <PageWrapper>
           <Hidden smUp>
-            <AppBar position="static">
-              <Toolbar variant="dense">
+            <AppBar position="static" color="default">
+              <Toolbar className={classes.toolbar}>
                 <IconButton
-                  edge="start"
-                  className={classes.menuButton}
-                  color="inherit"
+                  className={classes.iconButton}
                   aria-label="menu"
+                  onClick={() => setFiltersOpen(true)}
                 >
-                  <MenuIcon />
+                  <FilterIcon />
+                </IconButton>
+                <MapTypesSelector />
+                <IconButton
+                  color="default"
+                  className={classes.iconButton}
+                  aria-label="settings"
+                >
+                  <SettingsIcon />
                 </IconButton>
               </Toolbar>
             </AppBar>

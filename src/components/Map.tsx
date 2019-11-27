@@ -185,10 +185,10 @@ class Map extends React.Component<any> {
             <Hidden xsDown>
               <TopicSelector />
               <Divider />
+              <MapTypesSelector />
+              <Divider />
+              <Filters />
             </Hidden>
-            <MapTypesSelector />
-            <Divider />
-            <Filters />
             <Layers />
             <Country disabled={countryTogglerDisabled} />
             <StoryModeSelector />
