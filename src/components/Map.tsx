@@ -192,7 +192,13 @@ class Map extends React.Component<any> {
             <Layers />
             <Country disabled={countryTogglerDisabled} />
             <StoryModeSelector />
-            {this.map && this.state.ready && <Screenshot map={this.map} />}
+            <Hidden xsDown>
+              {this.map && this.state.ready ? (
+                <Screenshot map={this.map} />
+              ) : (
+                <div />
+              )}
+            </Hidden>
           </SearchContainer>
         </Fade>
         <Fade in={!initialDialogOpen}>
@@ -215,7 +221,7 @@ class Map extends React.Component<any> {
         </Fade>
         <BottomLeftContainer>
           <Hidden smUp>
-            <WhoLogo width={100} />
+            <WhoLogo width={150} />
           </Hidden>
           <Hidden xsDown>
             <WhoLogo />

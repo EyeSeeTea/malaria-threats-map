@@ -97,3 +97,10 @@ export const setSelection = createAction(
     return (selection: SiteSelection) => action(selection);
   }
 );
+
+export const setMobileOptionsOpen = createAction(
+  ActionTypeEnum.SetMobileOptionsOpen,
+  action => {
+    return (mobileOptionsOpen: boolean) => action(mobileOptionsOpen);
+  }
+);

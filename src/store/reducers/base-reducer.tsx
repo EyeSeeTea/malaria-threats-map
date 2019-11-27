@@ -20,7 +20,8 @@ const initialState: MalariaState = Object.freeze({
   initialDialogOpen: false,
   filtersOpen: false,
   filtersMode: "filters",
-  selection: null
+  selection: null,
+  mobileOptionsOpen: false
 });
 
 export default createReducer<MalariaState>(initialState, {
@@ -47,7 +48,9 @@ export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.SetFiltersMode]: (filtersMode: string) =>
     R.assoc("filtersMode", filtersMode || "filters"),
   [ActionTypeEnum.SetSelection]: (selection: SiteSelection) =>
-    R.assoc("selection", selection || null)
+    R.assoc("selection", selection || null),
+  [ActionTypeEnum.SetMobileOptionsOpen]: (mobileOptionsOpen: boolean) =>
+      R.assoc("mobileOptionsOpen", mobileOptionsOpen)
 });
 
 export const selectMalariaState = (state: State) => state.malaria;
@@ -97,6 +100,10 @@ export const selectStoryModeStep = createSelector(
   R.prop("storyModeStep")
 );
 export const selectSelection = createSelector(
-  selectMalariaState,
-  R.prop("selection")
+    selectMalariaState,
+    R.prop("selection")
+);
+export const selectAreMobileOptionsOpen = createSelector(
+    selectMalariaState,
+    R.prop("mobileOptionsOpen")
 );

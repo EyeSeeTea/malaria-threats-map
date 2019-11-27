@@ -33,6 +33,7 @@ export interface MalariaState {
   filtersOpen: boolean;
   filtersMode: string;
   selection: SiteSelection | null;
+  mobileOptionsOpen: boolean;
 }
 
 export interface TranslationsState {

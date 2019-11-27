@@ -16,6 +16,7 @@ import {
 } from "../store/reducers/base-reducer";
 import {
   setFiltersOpen,
+  setMobileOptionsOpen,
   setStoryModeAction,
   setThemeAction
 } from "../store/actions/base-actions";
@@ -43,8 +44,8 @@ import {
 } from "./Icons";
 import { colors } from "../constants/theme";
 import SettingsIcon from "@material-ui/icons/Settings";
-import { useTranslation } from "react-i18next";
 import MapTypesSelector from "./MapTypesSelector";
+import MobileOptions from "./MobileOptions";
 
 interface ThemeProps {
   drawerWidth: string;
@@ -155,7 +156,7 @@ const MapWrapper = styled.div`
 
 const StyledTab = styled(Tab)`
   color: ${props => props.color || "inherit"} !important;
-  font-size: 85% !important;
+  font-size: 75% !important;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -169,6 +170,7 @@ const mapStateToProps = (state: State) => ({
   invasiveFilters: selectInvasiveFilters(state)
 });
 const mapDispatchToProps = {
+  setMobileOptionsOpen: setMobileOptionsOpen,
   setPreventionMapType: setPreventionMapType,
   setFiltersOpen: setFiltersOpen,
   setStoryMode: setStoryModeAction,
@@ -182,6 +184,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
 function PersistentDrawerLeft({
+  setMobileOptionsOpen,
   storyMode,
   filtersOpen,
   setFiltersOpen,
@@ -189,7 +192,6 @@ function PersistentDrawerLeft({
   setTheme,
   theme
 }: Props) {
-  const { t } = useTranslation("common");
   const classes = useStyles({ drawerWidth });
 
   const isOpen = filtersOpen || storyMode;
@@ -259,6 +261,7 @@ function PersistentDrawerLeft({
                   color="default"
                   className={classes.iconButton}
                   aria-label="settings"
+                  onClick={() => setMobileOptionsOpen(true)}
                 >
                   <SettingsIcon />
                 </IconButton>
@@ -315,6 +318,7 @@ function PersistentDrawerLeft({
                 />
               </Tabs>
             </AppBar>
+              <MobileOptions />
           </Hidden>
           <Hidden xsDown>
             <Disclaimer />
