@@ -119,7 +119,7 @@ class Map extends React.Component<any> {
   componentDidMount() {
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: empty,
+      style: style,
       center: [-16.629129, 28.291565],
       maxZoom: 7.99999,
       minZoom: 1,
@@ -130,30 +130,13 @@ class Map extends React.Component<any> {
     this.map.touchZoomRotate.disableRotation();
 
     this.map.on("load", () => {
-      this.map.addSource("raster-tiles", {
-        type: "raster",
-        tiles: [
-          "https://maps.who.int/arcgis/rest/services/Basemap/WHO_West_Africa_background_7/MapServer/tile/{z}/{y}/{x}?blankTile=false"
-        ],
-        tileSize: 256,
-        attribution: ""
-      });
-
-      this.map.addLayer({
-        id: "simple-tiles",
-        type: "raster",
-        source: "raster-tiles",
-        minzoom: 1,
-        maxzoom: 8
-      });
-
       this.setState({ ready: true });
       this.map.on("zoom", () => {});
     });
   }
 
   componentWillUnmount() {
-    this.map.remove();
+    // this.map.remove();
   }
 
   componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void {

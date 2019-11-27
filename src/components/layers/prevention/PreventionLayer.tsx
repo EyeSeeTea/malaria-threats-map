@@ -275,6 +275,9 @@ class PreventionLayer extends Component<Props> {
   };
 
   renderLayer = () => {
+    if (!this.props.map) {
+      return;
+    }
     if (this.props.map.getLayer(PREVENTION_LAYER_ID)) {
       if (this.props.theme === PREVENTION) {
         this.props.map.setLayoutProperty(
@@ -323,10 +326,11 @@ class PreventionLayer extends Component<Props> {
     if (selection === null) {
       return <div />;
     }
-    const filteredStudies = this.filterStudies(studies).filter(study =>
-      countryMode
-        ? study.ISO2 === selection.ISO_2_CODE
-        : study.SITE_ID === selection.SITE_ID
+    const filteredStudies = this.filterStudies(studies).filter(
+      study =>
+        countryMode
+          ? study.ISO2 === selection.ISO_2_CODE
+          : study.SITE_ID === selection.SITE_ID
     );
     if (filteredStudies.length === 0) {
       return <div />;
