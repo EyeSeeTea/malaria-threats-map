@@ -1,8 +1,8 @@
 import React from "react";
-import empty, { style } from "./style";
+import { style } from "./style";
 import styled from "styled-components";
 import Layers from "./Layers";
-import mapboxgl from "mapbox-gl";
+import mapboxgl, { LngLat } from "mapbox-gl";
 
 import { PreventionMapType, State } from "../store/types";
 import { connect } from "react-redux";
@@ -21,7 +21,10 @@ import WhoLogo from "./WhoLogo";
 import {
   selectAny,
   selectIsInitialDialogOpen,
-  selectTheme
+  selectSetZoom,
+  selectTheme,
+  selectSetBounds,
+  selectRegion
 } from "../store/reducers/base-reducer";
 import {
   selectPreventionFilters,
@@ -30,7 +33,12 @@ import {
 import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
-import { setAnyAction, setThemeAction } from "../store/actions/base-actions";
+import {
+  setAnyAction,
+  setThemeAction,
+  updateBoundsAction,
+  updateZoomAction
+} from "../store/actions/base-actions";
 import Screenshot from "./Screenshot";
 import ReactMapboxGl from "react-mapbox-gl";
 import { Fade, Hidden } from "@material-ui/core";
@@ -38,6 +46,7 @@ import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
 import Leyend from "./Leyend";
 import StoryModeSelector from "./StoryModeSelector";
+import * as R from "ramda";
 
 ReactMapboxGl({
   accessToken:
@@ -86,6 +95,9 @@ const Divider = styled.div`
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
   any: selectAny(state),
+  setZoom: selectSetZoom(state),
+  setBounds: selectSetBounds(state),
+  region: selectRegion(state),
   preventionStudies: selectPreventionStudies(state),
   diagnosisStudies: selectDiagnosisStudies(state),
   treatmentStudies: selectTreatmentStudies(state),
@@ -96,11 +108,29 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
   setTheme: setThemeAction,
-  setAny: setAnyAction
+  setAny: setAnyAction,
+  updateZoom: updateZoomAction,
+  updateBounds: updateBoundsAction
+};
+
+export const debounce = <F extends (...args: any[]) => any>(
+  func: F,
+  waitFor: number
+) => {
+  let timeout: number;
+
+  return (...args: Parameters<F>): Promise<ReturnType<F>> =>
+    new Promise(resolve => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+
+      timeout = setTimeout(() => resolve(func(...args)), waitFor);
+    });
 };
 
 class Map extends React.Component<any> {
-  map: any;
+  map: mapboxgl.Map;
   mapContainer: any;
   state = {
     ready: false,
@@ -120,10 +150,8 @@ class Map extends React.Component<any> {
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: style,
-      center: [-16.629129, 28.291565],
       maxZoom: 7.99999,
       minZoom: 1,
-      zoom: 2,
       preserveDrawingBuffer: true
     });
     this.map.dragRotate.disable();
@@ -131,12 +159,23 @@ class Map extends React.Component<any> {
 
     this.map.on("load", () => {
       this.setState({ ready: true });
-      this.map.on("zoom", () => {});
+      if (
+        this.props.setBounds &&
+        this.props.setBounds.length === 2 &&
+        !this.props.region.country &&
+        !this.props.region.subRegion &&
+        !this.props.region.region
+      ) {
+        const [[b0, b1], [b2, b3]] = this.props.setBounds;
+        this.map.fitBounds([b0, b1, b2, b3], {
+          padding: 100
+        });
+      }
     });
-  }
-
-  componentWillUnmount() {
-    // this.map.remove();
+    this.map.on("moveend", () => {
+      const cc = this.map.getBounds().toArray();
+      this.props.updateBounds(cc);
+    });
   }
 
   componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void {

@@ -9,6 +9,7 @@ import { State } from "./store/types";
 import { createMuiTheme, Hidden } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import {
+  setBoundsAction,
   setCountryModeAction,
   setFiltersAction,
   setFiltersMode,
@@ -17,6 +18,7 @@ import {
   setStoryModeAction,
   setStoryModeStepAction,
   setThemeAction,
+  setZoomAction,
   toggleEndemicityLayerAction
 } from "./store/actions/base-actions";
 import {
@@ -91,6 +93,13 @@ ReduxQuerySync({
           default:
             return setPreventionMapType(mapType);
         }
+      }
+    },
+    bounds: {
+      selector: (state: State) => JSON.stringify(state.malaria.bounds),
+      action: (value: string) => {
+        console.log(value);
+        return setBoundsAction(value ? JSON.parse(value) : undefined);
       }
     },
     insecticideClass: {

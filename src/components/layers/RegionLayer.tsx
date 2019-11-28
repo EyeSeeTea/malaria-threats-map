@@ -57,7 +57,9 @@ class RegionLayer extends Component<Props> {
       "where=1%3D1&f=geojson&geometryPrecision=2.5&outFields=ADM0_SOVRN,ADM0_NAME,SUBREGION,REGION_FULL,CENTER_LAT,CENTER_LON";
     const source: any = {
       type: "geojson",
-      data: `${host}/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer/${MapServerConfig.layers.countries}/query?${query}`
+      data: `${host}/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer/${
+        MapServerConfig.layers.countries
+      }/query?${query}`
     };
     this.props.map.addSource(REGION_SOURCE_ID, source);
     this.props.map.addLayer(layer);
@@ -87,14 +89,14 @@ class RegionLayer extends Component<Props> {
       this.highlightToRegion(region.region);
       this.showLayer();
     } else {
-      const location = {
-        center: [-16.629129, 28.291565],
-        zoom: 2
-      };
-      this.props.map.flyTo(location, {
-        padding: 100
-      });
-      this.zoomToCountry(region.country);
+      // const location = {
+      //   center: [-16.629129, 28.291565],
+      //   zoom: 2
+      // };
+      // this.props.map.flyTo(location, {
+      //   padding: 100
+      // });
+      // this.zoomToCountry(region.country);
       this.hideLayer();
     }
   };

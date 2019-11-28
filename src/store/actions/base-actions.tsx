@@ -31,7 +31,7 @@ export const logEventAction = createAction(
 export const setRegionAction = createAction(
   ActionTypeEnum.MalariaSetRegion,
   action => {
-    return (region: RegionState) => action(region);
+    return (region: RegionState | null) => action(region);
   }
 );
 
@@ -102,5 +102,30 @@ export const setMobileOptionsOpen = createAction(
   ActionTypeEnum.SetMobileOptionsOpen,
   action => {
     return (mobileOptionsOpen: boolean) => action(mobileOptionsOpen);
+  }
+);
+
+export const updateZoomAction = createAction(
+  ActionTypeEnum.UpdateZoom,
+  action => {
+    return (zoom: number) => action(zoom);
+  }
+);
+
+export const setZoomAction = createAction(ActionTypeEnum.SetZoom, action => {
+  return (zoom: number) => action(zoom);
+});
+
+export const updateBoundsAction = createAction(
+  ActionTypeEnum.UpdateBounds,
+  action => {
+    return (bounds: Array<Array<number>>) => action(bounds);
+  }
+);
+
+export const setBoundsAction = createAction(
+  ActionTypeEnum.SetBounds,
+  action => {
+    return (bounds: Array<Array<number>>) => action(bounds);
   }
 );

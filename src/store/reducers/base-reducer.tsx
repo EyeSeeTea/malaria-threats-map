@@ -21,15 +21,19 @@ const initialState: MalariaState = Object.freeze({
   filtersOpen: false,
   filtersMode: "filters",
   selection: null,
-  mobileOptionsOpen: false
+  mobileOptionsOpen: false,
+  zoom: 2,
+  setZoom: null,
+  bounds: [[]],
+  setBounds: [[]]
 });
 
 export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.MalariaSetTheme]: (theme: string) => R.assoc("theme", theme),
   [ActionTypeEnum.MalariaSetAny]: (any: any) => R.assoc("any", any),
-  [ActionTypeEnum.MalariaSetRegion]: (region: RegionState) => state => ({
+  [ActionTypeEnum.MalariaSetRegion]: (region: RegionState | null) => state => ({
     ...state,
-    region: { ...initialState.region, ...region }
+    region: region ? { ...initialState.region, ...region } : null
   }),
   [ActionTypeEnum.MalariaSetFilters]: (filters: number[] | undefined) =>
     R.assoc("filters", filters || initialState.filters),
@@ -50,23 +54,23 @@ export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.SetSelection]: (selection: SiteSelection) =>
     R.assoc("selection", selection || null),
   [ActionTypeEnum.SetMobileOptionsOpen]: (mobileOptionsOpen: boolean) =>
-      R.assoc("mobileOptionsOpen", mobileOptionsOpen)
+    R.assoc("mobileOptionsOpen", mobileOptionsOpen),
+  [ActionTypeEnum.UpdateZoom]: (zoom: number) => R.assoc("zoom", zoom),
+  [ActionTypeEnum.SetZoom]: (zoom: number) => R.assoc("setZoom", zoom),
+  [ActionTypeEnum.UpdateBounds]: (bounds: Array<Array<number>>) =>
+    R.assoc("bounds", bounds),
+  [ActionTypeEnum.SetBounds]: (bounds: Array<Array<number>>) =>
+    R.assoc("setBounds", bounds)
 });
 
 export const selectMalariaState = (state: State) => state.malaria;
 
-export const selectTheme = createSelector(
-  selectMalariaState,
-  R.prop("theme")
-);
+export const selectTheme = createSelector(selectMalariaState, R.prop("theme"));
 export const selectStoryMode = createSelector(
   selectMalariaState,
   R.prop("storyMode")
 );
-export const selectAny = createSelector(
-  selectMalariaState,
-  R.prop("any")
-);
+export const selectAny = createSelector(selectMalariaState, R.prop("any"));
 export const selectEndemicity = createSelector(
   selectMalariaState,
   R.prop("endemicity")
@@ -100,10 +104,23 @@ export const selectStoryModeStep = createSelector(
   R.prop("storyModeStep")
 );
 export const selectSelection = createSelector(
-    selectMalariaState,
-    R.prop("selection")
+  selectMalariaState,
+  R.prop("selection")
 );
 export const selectAreMobileOptionsOpen = createSelector(
-    selectMalariaState,
-    R.prop("mobileOptionsOpen")
+  selectMalariaState,
+  R.prop("mobileOptionsOpen")
+);
+export const selectZoom = createSelector(selectMalariaState, R.prop("zoom"));
+export const selectSetZoom = createSelector(
+  selectMalariaState,
+  R.prop("setZoom")
+);
+export const selectBounds = createSelector(
+  selectMalariaState,
+  R.prop("bounds")
+);
+export const selectSetBounds = createSelector(
+  selectMalariaState,
+  R.prop("setBounds")
 );

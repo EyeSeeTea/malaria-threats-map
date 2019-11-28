@@ -13,6 +13,10 @@ export enum ActionTypeEnum {
   SetFiltersMode = "malaria/SET_FILTERS_MODE",
   SetSelection = "malaria/SET_SELECTION",
   SetMobileOptionsOpen = "malaria/SET_MOBILE_OPTIONS_OPEN",
+  UpdateZoom = "malaria/UPDATE_ZOOM",
+  SetZoom = "malaria/SET_ZOOM",
+  UpdateBounds = "malaria/UPDATE_BOUNDS",
+  SetBounds = "malaria/SET_BOUNDS",
 
   FetchPreventionStudiesRequest = "prevention/FETCH_PREVENTION_STUDIES_REQUEST",
   FetchPreventionStudiesSuccess = "prevention/FETCH_PREVENTION_STUDIES_SUCCESS",

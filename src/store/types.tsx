@@ -34,6 +34,10 @@ export interface MalariaState {
   filtersMode: string;
   selection: SiteSelection | null;
   mobileOptionsOpen: boolean;
+  zoom: number;
+  setZoom: number | null;
+  bounds: Array<Array<number>>;
+  setBounds: Array<Array<number>>;
 }
 
 export interface TranslationsState {
