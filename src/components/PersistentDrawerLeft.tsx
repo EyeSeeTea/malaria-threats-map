@@ -46,6 +46,7 @@ import { colors } from "../constants/theme";
 import SettingsIcon from "@material-ui/icons/Settings";
 import MapTypesSelector from "./MapTypesSelector";
 import MobileOptions from "./MobileOptions";
+import Tour from "reactour";
 
 interface ThemeProps {
   drawerWidth: string;
@@ -318,7 +319,7 @@ function PersistentDrawerLeft({
                 />
               </Tabs>
             </AppBar>
-              <MobileOptions />
+            <MobileOptions />
           </Hidden>
           <Hidden xsDown>
             <Disclaimer />

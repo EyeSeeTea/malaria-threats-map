@@ -47,6 +47,7 @@ import LeyendPopover from "./LegendPopover";
 import Leyend from "./Leyend";
 import StoryModeSelector from "./StoryModeSelector";
 import * as R from "ramda";
+import Tour from "reactour";
 
 ReactMapboxGl({
   accessToken:
@@ -205,7 +206,23 @@ class Map extends React.Component<any> {
         <Fade in={!initialDialogOpen}>
           <SearchContainer>
             <Hidden xsDown>
-              <TopicSelector />
+              <Tour
+                steps={[
+                  {
+                    selector: "#first-step",
+                    content: "This is my first Step"
+                  },
+                  {
+                    selector: "#legend",
+                    content: "This is my Legend"
+                  }
+                ]}
+                isOpen={false}
+                onRequestClose={() => {}}
+              />
+              <div id="first-step">
+                <TopicSelector />
+              </div>
               <Divider />
               <MapTypesSelector />
               <Divider />

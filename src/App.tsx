@@ -47,6 +47,7 @@ import {
   setInvasiveVectorSpecies
 } from "./store/actions/invasive-actions";
 import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
+import Tour from "reactour";
 
 export const { store } = createStore();
 
