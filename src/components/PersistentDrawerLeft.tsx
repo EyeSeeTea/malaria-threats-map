@@ -240,7 +240,7 @@ function PersistentDrawerLeft({
           </>
         )}
       </Drawer>
-      <main
+      <div
         className={clsx(classes.content, {
           [classes.contentShift]: isOpen
         })}
@@ -325,7 +325,7 @@ function PersistentDrawerLeft({
             <Disclaimer />
           </Hidden>
         </PageWrapper>
-      </main>
+      </div>
     </div>
   );
 }

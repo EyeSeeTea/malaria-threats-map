@@ -151,8 +151,10 @@ class Map extends React.Component<any> {
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: style,
+      center: [-16.629129, 28.291565],
       maxZoom: 7.99999,
       minZoom: 1,
+      zoom: 2,
       preserveDrawingBuffer: true
     });
     this.map.dragRotate.disable();

@@ -5,6 +5,7 @@ import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
 import { selectStoryMode } from "../store/reducers/base-reducer";
 import { setStoryModeAction } from "../store/actions/base-actions";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+import { dispatchCustomEvent } from "../utils/dom-utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,7 +21,7 @@ function StoryModeSelector({ storyMode, setStoryMode }: any) {
   const handleToggle = () => {
     setStoryMode(!storyMode);
   };
-  window.dispatchEvent(new Event("resize"));
+  dispatchCustomEvent("resize");
   return (
     <div>
       <Fab

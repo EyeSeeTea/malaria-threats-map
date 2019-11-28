@@ -43,7 +43,7 @@ export default function LanguageSelector() {
     setAnchorEl(null);
   }
 
-  return (
+  return language ? (
     <div>
       <Button
         variant="contained"
@@ -58,7 +58,7 @@ export default function LanguageSelector() {
         id="simple-menu"
         anchorEl={anchorEl}
         keepMounted
-        open={Boolean(anchorEl)}
+        open={!!anchorEl}
         onClose={handleClose}
       >
         {LANGUAGES.map(language => (
@@ -71,5 +71,7 @@ export default function LanguageSelector() {
         ))}
       </Menu>
     </div>
+  ) : (
+    <div />
   );
 }
