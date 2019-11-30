@@ -129,3 +129,17 @@ export const setBoundsAction = createAction(
     return (bounds: Array<Array<number>>) => action(bounds);
   }
 );
+
+export const setTourOpenAction = createAction(
+  ActionTypeEnum.SetTourOpen,
+  action => {
+    return (open: boolean) => action(open);
+  }
+);
+
+export const setTourStepAction = createAction(
+  ActionTypeEnum.SetTourStep,
+  action => {
+    return (step: number) => action(step);
+  }
+);

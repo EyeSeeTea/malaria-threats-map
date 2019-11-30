@@ -45,6 +45,7 @@ function InitialDialog({ initialDialogOpen, setInitialDialogOpen }: Props) {
 
   return (
     <Dialog
+      id="initial-dialog"
       open={initialDialogOpen}
       maxWidth={"lg"}
       onClose={handleClose}

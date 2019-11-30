@@ -18,6 +18,7 @@ import {
   setStoryModeAction,
   setStoryModeStepAction,
   setThemeAction,
+  setTourOpenAction,
   setZoomAction,
   toggleEndemicityLayerAction
 } from "./store/actions/base-actions";

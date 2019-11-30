@@ -11,7 +11,8 @@ import DiagnosisLayer from "./layers/diagnosis/DiagnosisLayer";
 import TreatmentLayer from "./layers/treatment/TreatmentLayer";
 import InvasiveLayer from "./layers/invasive/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
-// import InitialDialog from "./InitialDialog";
+import Joyride from "react-joyride";
+import InitialDialog from "./InitialDialog";
 import Filters from "./Filters";
 import LanguageSelector from "./LanguageSelector";
 import MapTypesSelector from "./MapTypesSelector";
@@ -48,6 +49,8 @@ import Leyend from "./Leyend";
 import StoryModeSelector from "./StoryModeSelector";
 import * as R from "ramda";
 import Tour from "reactour";
+import MalariaTour from "./tour/MalariaTour";
+import LanguageSelectorSelect from "./LanguageSelectorSelect";
 
 ReactMapboxGl({
   accessToken:
@@ -208,27 +211,12 @@ class Map extends React.Component<any> {
         <Fade in={!initialDialogOpen}>
           <SearchContainer>
             <Hidden xsDown>
-              <Tour
-                steps={[
-                  {
-                    selector: "#first-step",
-                    content: "This is my first Step"
-                  },
-                  {
-                    selector: "#legend",
-                    content: "This is my Legend"
-                  }
-                ]}
-                isOpen={false}
-                onRequestClose={() => {}}
-              />
-              <div id="first-step">
-                <TopicSelector />
-              </div>
+              <TopicSelector />
               <Divider />
               <MapTypesSelector />
               <Divider />
               <Filters />
+              <MalariaTour />
             </Hidden>
             <Layers />
             <Country disabled={countryTogglerDisabled} />
@@ -246,7 +234,7 @@ class Map extends React.Component<any> {
           <TopRightContainer>
             <Hidden xsDown>
               {/*<MalariaTable />*/}
-              <LanguageSelector />
+              <LanguageSelectorSelect />
             </Hidden>
           </TopRightContainer>
         </Fade>

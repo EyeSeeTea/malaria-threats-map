@@ -38,6 +38,7 @@ export interface MalariaState {
   setZoom: number | null;
   bounds: Array<Array<number>>;
   setBounds: Array<Array<number>>;
+  tour: TourState;
 }
 
 export interface TranslationsState {
@@ -131,4 +132,9 @@ export interface SiteSelection {
   ISO_2_CODE: string;
   SITE_ID: string;
   coordinates: [number, number];
+}
+
+export interface TourState {
+  open: boolean;
+  step: number;
 }

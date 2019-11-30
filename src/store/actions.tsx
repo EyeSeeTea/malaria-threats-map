@@ -17,6 +17,8 @@ export enum ActionTypeEnum {
   SetZoom = "malaria/SET_ZOOM",
   UpdateBounds = "malaria/UPDATE_BOUNDS",
   SetBounds = "malaria/SET_BOUNDS",
+  SetTourOpen = "malaria/SET_TOUR_OPEN",
+  SetTourStep = "malaria/SET_TOUR_STEP",
 
   FetchPreventionStudiesRequest = "prevention/FETCH_PREVENTION_STUDIES_REQUEST",
   FetchPreventionStudiesSuccess = "prevention/FETCH_PREVENTION_STUDIES_SUCCESS",

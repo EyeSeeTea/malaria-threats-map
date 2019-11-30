@@ -25,7 +25,11 @@ const initialState: MalariaState = Object.freeze({
   zoom: 2,
   setZoom: null,
   bounds: [[]],
-  setBounds: [[]]
+  setBounds: [[]],
+  tour: {
+    open: true,
+    step: 0
+  }
 });
 
 export default createReducer<MalariaState>(initialState, {
@@ -60,17 +64,31 @@ export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.UpdateBounds]: (bounds: Array<Array<number>>) =>
     R.assoc("bounds", bounds),
   [ActionTypeEnum.SetBounds]: (bounds: Array<Array<number>>) =>
-    R.assoc("setBounds", bounds)
+    R.assoc("setBounds", bounds),
+  [ActionTypeEnum.SetTourOpen]: (open: boolean) => state => ({
+    ...state,
+    tour: { ...initialState.tour, open }
+  }),
+  [ActionTypeEnum.SetTourStep]: (step: number) => state => ({
+    ...state,
+    tour: { ...initialState.tour, step }
+  })
 });
 
 export const selectMalariaState = (state: State) => state.malaria;
 
-export const selectTheme = createSelector(selectMalariaState, R.prop("theme"));
+export const selectTheme = createSelector(
+  selectMalariaState,
+  R.prop("theme")
+);
 export const selectStoryMode = createSelector(
   selectMalariaState,
   R.prop("storyMode")
 );
-export const selectAny = createSelector(selectMalariaState, R.prop("any"));
+export const selectAny = createSelector(
+  selectMalariaState,
+  R.prop("any")
+);
 export const selectEndemicity = createSelector(
   selectMalariaState,
   R.prop("endemicity")
@@ -111,7 +129,10 @@ export const selectAreMobileOptionsOpen = createSelector(
   selectMalariaState,
   R.prop("mobileOptionsOpen")
 );
-export const selectZoom = createSelector(selectMalariaState, R.prop("zoom"));
+export const selectZoom = createSelector(
+  selectMalariaState,
+  R.prop("zoom")
+);
 export const selectSetZoom = createSelector(
   selectMalariaState,
   R.prop("setZoom")
@@ -123,4 +144,8 @@ export const selectBounds = createSelector(
 export const selectSetBounds = createSelector(
   selectMalariaState,
   R.prop("setBounds")
+);
+export const selectTour = createSelector(
+  selectMalariaState,
+  R.prop("tour")
 );
