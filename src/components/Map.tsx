@@ -254,7 +254,9 @@ class Map extends React.Component<any> {
             <WhoLogo />
           </Hidden>
         </BottomLeftContainer>
-        <InitialDialog />
+        <Hidden xsDown>
+          <InitialDialog />
+        </Hidden>
       </React.Fragment>
     );
   }
