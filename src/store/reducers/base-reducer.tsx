@@ -17,7 +17,7 @@ const initialState: MalariaState = Object.freeze({
     region: "",
     subRegion: ""
   },
-  initialDialogOpen: false,
+  initialDialogOpen: true,
   filtersOpen: false,
   filtersMode: "filters",
   selection: null,

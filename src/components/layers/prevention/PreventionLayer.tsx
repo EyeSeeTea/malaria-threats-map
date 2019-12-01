@@ -262,11 +262,13 @@ class PreventionLayer extends Component<Props> {
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
-    this.props.setSelection({
+    const selection = {
       ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
       SITE_ID: e.features[0].properties.SITE_ID,
       coordinates: coordinates
-    });
+    };
+    console.log(selection);
+    this.props.setSelection(selection);
   };
 
   setupPopover = () => {
@@ -326,23 +328,24 @@ class PreventionLayer extends Component<Props> {
     if (selection === null) {
       return <div />;
     }
-    const filteredStudies = this.filterStudies(studies).filter(
-      study =>
-        countryMode
-          ? study.ISO2 === selection.ISO_2_CODE
-          : study.SITE_ID === selection.SITE_ID
+    const filteredStudies = this.filterStudies(studies).filter(study =>
+      countryMode
+        ? study.ISO2 === selection.ISO_2_CODE
+        : study.SITE_ID === selection.SITE_ID
     );
     if (filteredStudies.length === 0) {
       return <div />;
     }
     return (
       <>
-        <Hidden xsDown>
-          <PreventionSitePopover
-            map={this.props.map}
-            studies={filteredStudies}
-          />
-        </Hidden>
+        {this.props.theme === "prevention" && (
+          <Hidden xsDown>
+            <PreventionSitePopover
+              map={this.props.map}
+              studies={filteredStudies}
+            />
+          </Hidden>
+        )}
         <Hidden smUp>
           <ChartModal selection={selection}>
             <PreventionSelectionChart studies={filteredStudies} />

@@ -8,6 +8,7 @@ import {
   setCountryModeAction,
   setInitialDialogOpen,
   setRegionAction,
+  setSelection,
   setStoryModeAction,
   setStoryModeStepAction,
   setThemeAction
@@ -24,6 +25,7 @@ export const setThemeEpic = (
     switchMap(([action, state]) => {
       const base = [
         logEventAction({ category: "theme", action: action.payload }),
+        setSelection(null),
         setStoryModeStepAction(0)
       ];
       switch (action.payload) {

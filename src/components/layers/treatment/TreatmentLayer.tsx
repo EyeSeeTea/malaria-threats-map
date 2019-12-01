@@ -327,12 +327,14 @@ class TreatmentLayer extends Component<Props> {
     }
     return (
       <>
-        <Hidden xsDown>
-          <TreatmentSitePopover
-            map={this.props.map}
-            studies={filteredStudies}
-          />
-        </Hidden>
+        {this.props.theme === "treatment" && (
+          <Hidden xsDown>
+            <TreatmentSitePopover
+              map={this.props.map}
+              studies={filteredStudies}
+            />
+          </Hidden>
+        )}
         <Hidden smUp>
           <ChartModal selection={selection}>
             <TreatmentSelectionChart studies={filteredStudies} />

@@ -23,6 +23,7 @@ function Layers({ countryMode, setCountryMode, disabled }: any) {
   return (
     <div>
       <Fab
+        id="country-button"
         size="small"
         color={countryMode ? "primary" : "default"}
         onClick={handleToggle}

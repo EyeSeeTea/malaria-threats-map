@@ -10,7 +10,8 @@ import ResistanceMechanismsChart from "./ResistanceMechanisms/ResistanceMechanis
 import { selectPreventionFilters } from "../../../store/reducers/prevention-reducer";
 import {
   selectCountryMode,
-  selectSelection
+  selectSelection,
+  selectTheme
 } from "../../../store/reducers/base-reducer";
 import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
 import { setSelection } from "../../../store/actions/base-actions";
@@ -18,6 +19,7 @@ import { connect } from "react-redux";
 import { PreventionStudy } from "../../../types/Prevention";
 
 const mapStateToProps = (state: State) => ({
+  theme: selectTheme(state),
   preventionFilters: selectPreventionFilters(state),
   countryMode: selectCountryMode(state),
   selection: selectSelection(state)
@@ -39,21 +41,25 @@ type Props = StateProps & DispatchProps & OwnProps;
 class PreventionSelectionChart extends Component<Props> {
   render() {
     const {
+      theme,
       studies,
       countryMode,
       selection,
       preventionFilters: { mapType }
     } = this.props;
+    if (!selection) {
+      return <div />;
+    }
     const filteredStudies = studies.filter(study =>
       countryMode
         ? study.ISO2 === selection.ISO_2_CODE
         : study.SITE_ID === selection.SITE_ID
     );
-    if (!filteredStudies.length) {
+    if (!filteredStudies.length || theme !== "prevention") {
       return <div />;
     }
     return (
-      <>
+      <div id="fifth-duo">
         {countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
           <ResistanceStatusCountryChart studies={filteredStudies} />
         )}
@@ -78,7 +84,7 @@ class PreventionSelectionChart extends Component<Props> {
         {!countryMode && mapType === PreventionMapType.RESISTANCE_MECHANISM && (
           <ResistanceMechanismsChart studies={filteredStudies} />
         )}
-      </>
+      </div>
     );
   }
 }

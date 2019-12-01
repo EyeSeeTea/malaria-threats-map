@@ -11,6 +11,7 @@ import { State } from "../store/types";
 import {
   selectAreFiltersOpen,
   selectFilters,
+  selectIsInitialDialogOpen,
   selectStoryMode,
   selectTheme
 } from "../store/reducers/base-reducer";
@@ -36,6 +37,7 @@ import {
 import StoryModeStepper from "./StoryModeStepper";
 import FiltersSidebar from "./FiltersSidebar";
 import FilterIcon from "@material-ui/icons/FilterList";
+import LanguageIcon from "@material-ui/icons/Language";
 import {
   DiagnosisIcon,
   InvasiveIcon,
@@ -168,7 +170,8 @@ const mapStateToProps = (state: State) => ({
   preventionFilters: selectPreventionFilters(state),
   diagnosisFilters: selectDiagnosisFilters(state),
   treatmentFilters: selectTreatmentFilters(state),
-  invasiveFilters: selectInvasiveFilters(state)
+  invasiveFilters: selectInvasiveFilters(state),
+  initialDialogOpen: selectIsInitialDialogOpen(state)
 });
 const mapDispatchToProps = {
   setMobileOptionsOpen: setMobileOptionsOpen,
@@ -189,12 +192,12 @@ function PersistentDrawerLeft({
   storyMode,
   filtersOpen,
   setFiltersOpen,
+  initialDialogOpen,
   drawerWidth = "400px",
   setTheme,
   theme
 }: Props) {
   const classes = useStyles({ drawerWidth });
-
   const isOpen = filtersOpen || storyMode;
 
   const themes = ["prevention", "diagnosis", "treatment", "invasive"];
@@ -264,7 +267,7 @@ function PersistentDrawerLeft({
                   aria-label="settings"
                   onClick={() => setMobileOptionsOpen(true)}
                 >
-                  <SettingsIcon />
+                  <LanguageIcon />
                 </IconButton>
               </Toolbar>
             </AppBar>

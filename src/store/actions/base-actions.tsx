@@ -94,7 +94,7 @@ export const setFiltersMode = createAction(
 export const setSelection = createAction(
   ActionTypeEnum.SetSelection,
   action => {
-    return (selection: SiteSelection) => action(selection);
+    return (selection: SiteSelection | null) => action(selection);
   }
 );
 

@@ -17,6 +17,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import LanguageSelector from "./LanguageSelector";
 import { Typography } from "@material-ui/core";
+import LanguageSelectorSelect from "./LanguageSelectorSelect";
 
 const FlexGrow = styled.div`
   flex-grow: 1;
@@ -87,7 +88,7 @@ function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
           <ListItem button>
             <ListItemText primary="Select Language" />
             <FlexGrow />
-            <LanguageSelector />
+            <LanguageSelectorSelect />
           </ListItem>
         </List>
       </Dialog>

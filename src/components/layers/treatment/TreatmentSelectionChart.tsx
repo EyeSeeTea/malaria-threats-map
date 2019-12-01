@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { State, TreatmentMapType } from "../../../store/types";
 import {
   selectCountryMode,
-  selectSelection
+  selectSelection,
+  selectTheme
 } from "../../../store/reducers/base-reducer";
 import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
 import { setSelection } from "../../../store/actions/base-actions";
@@ -14,6 +15,7 @@ import { TreatmentStudy } from "../../../types/Treatment";
 import { selectTreatmentFilters } from "../../../store/reducers/treatment-reducer";
 
 const mapStateToProps = (state: State) => ({
+  theme: selectTheme(state),
   treatmentFilters: selectTreatmentFilters(state),
   countryMode: selectCountryMode(state),
   selection: selectSelection(state)
@@ -32,20 +34,24 @@ type OwnProps = {
 };
 type Props = StateProps & DispatchProps & OwnProps;
 
-class PreventionSelectionChart extends Component<Props> {
+class TreatmentSelectionChart extends Component<Props> {
   render() {
     const {
+      theme,
       studies,
       countryMode,
       selection,
       treatmentFilters: { mapType }
     } = this.props;
+    if (!selection) {
+      return <div />;
+    }
     const filteredStudies = studies.filter(study =>
       countryMode
         ? study.ISO2 === selection.ISO_2_CODE
         : study.SITE_ID === selection.SITE_ID
     );
-    if (!filteredStudies.length) {
+    if (!filteredStudies.length || theme !== "treatment") {
       return <div />;
     }
     return (
@@ -71,4 +77,4 @@ class PreventionSelectionChart extends Component<Props> {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PreventionSelectionChart);
+)(TreatmentSelectionChart);

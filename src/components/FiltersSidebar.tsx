@@ -14,7 +14,13 @@ import ResistanceStatusFilters, {
 } from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
 import FormLabel from "@material-ui/core/FormLabel";
 import styled from "styled-components";
-import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
+import {
+  createStyles,
+  Hidden,
+  makeStyles,
+  Theme,
+  Typography
+} from "@material-ui/core";
 import {
   DiagnosisMapType,
   InvasiveMapType,
@@ -185,7 +191,7 @@ const FiltersSidebar = ({
   }
 
   return (
-    <div>
+    <div id="sidebar">
       <AppBar position="static" className={classes.appBar}>
         <Toolbar variant="dense">
           <FlexGrow />
@@ -209,8 +215,18 @@ const FiltersSidebar = ({
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab className={classes.tab} icon={<FilterIcon />} label="Filters" />
-          <Tab className={classes.tab} icon={<GlobeIcon />} label="Regions" />
+          <Tab
+            className={classes.tab}
+            icon={<FilterIcon />}
+            label="Filters"
+            id={"filters-tab"}
+          />
+          <Tab
+            className={classes.tab}
+            icon={<GlobeIcon />}
+            label="Regions"
+            id={"regions-tab"}
+          />
         </Tabs>
       </AppBar>
       {!filteredStudies.length ? (

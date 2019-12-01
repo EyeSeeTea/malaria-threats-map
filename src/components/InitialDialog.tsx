@@ -13,6 +13,7 @@ import { selectIsInitialDialogOpen } from "../store/reducers/base-reducer";
 import { setInitialDialogOpen } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 import LanguageSelector from "./LanguageSelector";
+import LanguageSelectorSelect from "./LanguageSelectorSelect";
 const FlexGrow = styled.div`
   flex-grow: 1;
 `;
@@ -45,7 +46,6 @@ function InitialDialog({ initialDialogOpen, setInitialDialogOpen }: Props) {
 
   return (
     <Dialog
-      id="initial-dialog"
       open={initialDialogOpen}
       maxWidth={"lg"}
       onClose={handleClose}
@@ -59,10 +59,10 @@ function InitialDialog({ initialDialogOpen, setInitialDialogOpen }: Props) {
       <Row>
         <FlexGrow />
         <Column>
-          <LanguageSelector />
+          <LanguageSelectorSelect />
         </Column>
       </Row>
-      <Row>
+      <Row id="dialog">
         <SimpleCard
           title="VECTOR INSECTICIDE RESISTANCE"
           theme="prevention"

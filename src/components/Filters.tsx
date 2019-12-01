@@ -1,34 +1,55 @@
 import React from "react";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import IconButton from "@material-ui/core/IconButton";
 import Slide from "@material-ui/core/Slide";
-import {TransitionProps} from "@material-ui/core/transitions";
+import { TransitionProps } from "@material-ui/core/transitions";
 import FilterIcon from "@material-ui/icons/FilterList";
-import {AppBar, Fab, Paper, Toolbar, Typography} from "@material-ui/core";
+import { AppBar, Fab, Paper, Toolbar, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
-import {DiagnosisMapType, InvasiveMapType, PreventionMapType, State, TreatmentMapType} from "../store/types";
-import {selectAreFiltersOpen, selectFilters, selectTheme} from "../store/reducers/base-reducer";
-import {selectFilteredPreventionStudies, selectPreventionFilters} from "../store/reducers/prevention-reducer";
-import {setPreventionMapType} from "../store/actions/prevention-actions";
-import {connect} from "react-redux";
+import {
+  DiagnosisMapType,
+  InvasiveMapType,
+  PreventionMapType,
+  State,
+  TreatmentMapType
+} from "../store/types";
+import {
+  selectAreFiltersOpen,
+  selectFilters,
+  selectTheme
+} from "../store/reducers/base-reducer";
+import {
+  selectFilteredPreventionStudies,
+  selectPreventionFilters
+} from "../store/reducers/prevention-reducer";
+import { setPreventionMapType } from "../store/actions/prevention-actions";
+import { connect } from "react-redux";
 import ResistanceStatusFilters from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
 import IntensityStatusFilters from "./layers/prevention/IntensityStatus/IntensityStatusFilters";
 import ResistanceMechanismFilters from "./layers/prevention/ResistanceMechanisms/ResistanceMechanismFilters";
 import LevelOfInvolvementFilters from "./layers/prevention/Involvement/LevelOfInvolvementFilters";
 import GeneDeletionFilters from "./layers/diagnosis/GeneDeletions/GeneDeletionFilters";
-import {selectDiagnosisFilters, selectFilteredDiagnosisStudies} from "../store/reducers/diagnosis-reducer";
+import {
+  selectDiagnosisFilters,
+  selectFilteredDiagnosisStudies
+} from "../store/reducers/diagnosis-reducer";
 import PboDeploymentFilters from "./layers/prevention/PboDeployment/PboDeploymentFilters";
 import TreatmentFailureFilters from "./layers/treatment/TreatmentFailure/TreatmentFailureFilters";
-import {selectFilteredTreatmentStudies, selectTreatmentFilters} from "../store/reducers/treatment-reducer";
+import {
+  selectFilteredTreatmentStudies,
+  selectTreatmentFilters
+} from "../store/reducers/treatment-reducer";
 import VectorOccuranceFilters from "./layers/invasive/VectorOccurance/VectorOccuranceFilters";
-import {selectFilteredInvasiveStudies, selectInvasiveFilters} from "../store/reducers/invasive-reducer";
-import DelayedParasiteClearanceFilters
-  from "./layers/treatment/DelayedParasiteClearance/DelayedParasiteClearanceFilters";
+import {
+  selectFilteredInvasiveStudies,
+  selectInvasiveFilters
+} from "../store/reducers/invasive-reducer";
+import DelayedParasiteClearanceFilters from "./layers/treatment/DelayedParasiteClearance/DelayedParasiteClearanceFilters";
 import MolecularMarkerFilters from "./layers/treatment/MolecularMarkers/MolecularMarkerFilters";
-import {setFiltersOpen} from "../store/actions/base-actions";
-import {dispatchCustomEvent} from "../utils/dom-utils";
+import { setFiltersOpen } from "../store/actions/base-actions";
+import { dispatchCustomEvent } from "../utils/dom-utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -192,6 +213,7 @@ function Filters({
   return (
     <div>
       <Fab
+        id="filters"
         variant="extended"
         size="small"
         color={filtersOpen ? "primary" : "default"}

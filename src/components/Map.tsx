@@ -211,7 +211,9 @@ class Map extends React.Component<any> {
         <Fade in={!initialDialogOpen}>
           <SearchContainer>
             <Hidden xsDown>
-              <TopicSelector />
+              <div id={"third"}>
+                <TopicSelector />
+              </div>
               <Divider />
               <MapTypesSelector />
               <Divider />
@@ -234,7 +236,7 @@ class Map extends React.Component<any> {
           <TopRightContainer>
             <Hidden xsDown>
               {/*<MalariaTable />*/}
-              <LanguageSelectorSelect />
+              {!initialDialogOpen && <LanguageSelectorSelect />}
             </Hidden>
           </TopRightContainer>
         </Fade>
@@ -256,7 +258,7 @@ class Map extends React.Component<any> {
             <WhoLogo />
           </Hidden>
         </BottomLeftContainer>
-        {/*<InitialDialog />*/}
+        <InitialDialog />
       </React.Fragment>
     );
   }

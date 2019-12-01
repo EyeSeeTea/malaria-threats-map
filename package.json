@@ -39,6 +39,7 @@
     "react-redux": "^7.1.0",
     "react-scripts": "3.0.1",
     "react-select": "^3.0.4",
+    "react-swipeable": "^5.5.0",
     "reactour": "^1.15.5",
     "redux": "^4.0.4",
     "redux-observable": "^1.1.0",

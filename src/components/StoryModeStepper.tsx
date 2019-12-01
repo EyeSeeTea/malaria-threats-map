@@ -27,6 +27,7 @@ import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import TreatmentSteps from "./story/treatment/TreatmentSteps";
 import InvasiveSteps from "./story/invasive/InvasiveSteps";
+import { EventData, Swipeable } from "react-swipeable";
 
 const FlexGrow = styled.div`
   flex-grow: 1;
@@ -113,6 +114,14 @@ function StoryModeStepper({
     setStoryModeStep(storyModeStep - 1);
   };
 
+  const handleSwipe = (swipe: EventData) => {
+    if (swipe.dir === "Left" && storyModeStep > 0) {
+      handleBack();
+    } else if (swipe.dir === "Right" && storyModeStep < steps.length - 1) {
+      handleNext();
+    }
+  };
+
   const handleClose = () => {
     setStoryMode(false);
   };
@@ -122,64 +131,75 @@ function StoryModeStepper({
   const SelectedStep = selectedSteps[storyModeStep];
 
   return (
-    <div className={classes.root}>
-      <AppBar className={classes.appBar}>
-        <Toolbar variant="dense">
-          <FlexGrow />
-          <IconButton
-            edge="start"
-            color="inherit"
-            onClick={handleClose}
-            size={"small"}
-            aria-label="close"
-          >
-            <CloseIcon fontSize={"small"} />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Stepper activeStep={storyModeStep}>
-        {selectedSteps.map((step: any, index: number) => {
-          const stepProps: { completed?: boolean } = {};
-          const labelProps: { optional?: React.ReactNode } = {};
-          return (
-            <StyledStep
-              key={index}
-              {...stepProps}
-              onClick={() => setStoryModeStep(index)}
+    <Swipeable
+      onSwiped={eventData => handleSwipe(eventData)}
+      {...{
+        delta: 10, // min distance(px) before a swipe starts
+        preventDefaultTouchmoveEvent: false, // preventDefault on touchmove, *See Details*
+        trackTouch: true, // track touch input
+        trackMouse: false, // track mouse input
+        rotationAngle: 0 // set a rotation angle
+      }}
+    >
+      <div className={classes.root}>
+        <AppBar className={classes.appBar}>
+          <Toolbar variant="dense">
+            <FlexGrow />
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              size={"small"}
+              aria-label="close"
             >
-              <StyledStepLabel {...labelProps}>{""}</StyledStepLabel>
-            </StyledStep>
-          );
-        })}
-      </Stepper>
-      <div>
+              <CloseIcon fontSize={"small"} />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Stepper activeStep={storyModeStep}>
+          {selectedSteps.map((step: any, index: number) => {
+            const stepProps: { completed?: boolean } = {};
+            const labelProps: { optional?: React.ReactNode } = {};
+            return (
+              <StyledStep
+                key={index}
+                {...stepProps}
+                onClick={() => setStoryModeStep(index)}
+              >
+                <StyledStepLabel {...labelProps}>{""}</StyledStepLabel>
+              </StyledStep>
+            );
+          })}
+        </Stepper>
         <div>
-          <Paper className={classes.paper}>
-            {SelectedStep ? <SelectedStep /> : <div />}
-          </Paper>
-          <div className={classes.buttons}>
-            <Button
-              variant="contained"
-              color="default"
-              onClick={handleBack}
-              disabled={storyModeStep === 0}
-              className={classes.button}
-            >
-              Back
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleNext}
-              disabled={storyModeStep === steps.length - 1}
-              className={classes.button}
-            >
-              Next
-            </Button>
+          <div>
+            <Paper className={classes.paper}>
+              {SelectedStep ? <SelectedStep /> : <div />}
+            </Paper>
+            <div className={classes.buttons}>
+              <Button
+                variant="contained"
+                color="default"
+                onClick={handleBack}
+                disabled={storyModeStep === 0}
+                className={classes.button}
+              >
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleNext}
+                disabled={storyModeStep === steps.length - 1}
+                className={classes.button}
+              >
+                Next
+              </Button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Swipeable>
   );
 }
 

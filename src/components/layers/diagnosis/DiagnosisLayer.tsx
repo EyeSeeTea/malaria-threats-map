@@ -306,12 +306,14 @@ class DiagnosisLayer extends Component<Props> {
     }
     return (
       <>
-        <Hidden xsDown>
-          <DiagnosisSitePopover
-            map={this.props.map}
-            studies={filteredStudies}
-          />
-        </Hidden>
+        {this.props.theme === "diagnosis" && (
+          <Hidden xsDown>
+            <DiagnosisSitePopover
+              map={this.props.map}
+              studies={filteredStudies}
+            />
+          </Hidden>
+        )}
         <Hidden smUp>
           <ChartModal selection={selection}>
             <DiagnosisSelectionChart studies={filteredStudies} />

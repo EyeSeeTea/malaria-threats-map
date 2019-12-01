@@ -38,6 +38,9 @@ class PreventionSitePopover extends Component<Props> {
   componentDidMount(): void {
     const placeholder = document.createElement("div");
     const { selection, studies } = this.props;
+    if (!selection) {
+      return;
+    }
     ReactDOM.render(
       <I18nextProvider i18n={i18next}>
         <ThemeProvider theme={theme}>
