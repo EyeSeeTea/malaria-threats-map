@@ -266,8 +266,8 @@ class PreventionLayer extends Component<Props> {
       ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
       SITE_ID: e.features[0].properties.SITE_ID,
       coordinates: coordinates
-    };
-    console.log(selection);
+    }
+    console.log(selection)
     this.props.setSelection(selection);
   };
 

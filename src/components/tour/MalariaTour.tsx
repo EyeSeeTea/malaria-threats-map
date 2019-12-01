@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import Tour, { ReactourStep } from "reactour";
+import React, { PureComponent } from "react";
+import Tour, { ReactourStep, ReactourStepContentArgs } from "reactour";
 import { SiteSelection, State } from "../../store/types";
-import { selectTour } from "../../store/reducers/base-reducer";
+import { selectTheme, selectTour } from "../../store/reducers/base-reducer";
 import { connect } from "react-redux";
 import {
   setBoundsAction,
@@ -15,10 +15,20 @@ import {
   setTourStepAction
 } from "../../store/actions/base-actions";
 import { setFilteredStudiesAction } from "../../store/actions/treatment-actions";
-import { IconButton, makeStyles, withStyles } from "@material-ui/core";
+import { Button, IconButton, withStyles } from "@material-ui/core";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import styled from "styled-components";
+import Step1 from "./steps/Step1";
+import Step2 from "./steps/Step2";
+import Step3 from "./steps/Step3";
+import Step4 from "./steps/Step4";
+import Step5 from "./steps/Step5";
+import Step6 from "./steps/Step6";
+import Step7 from "./steps/Step7";
+import Step8 from "./steps/Step8";
+import Step9 from "./steps/Step9";
+import { dispatchCustomEvent } from "../../utils/dom-utils";
 
 const styles = {
   root: {
@@ -26,24 +36,14 @@ const styles = {
   }
 };
 
-const TextContainer = styled.div`
-  font-size: 120%;
-  & p {
-    margin-bottom: 0;
-  }
-`;
-
 const Flex = styled.div`
+  margin-top: 10px;
   display: flex;
+  align-items: center;
 `;
 
-const Actions = styled.div`
-  text-align: center;
-`;
-
-const CloseWrapper = styled.div`
-  text-align: right;
-  height: 4px;
+const FlexGrow = styled.div`
+  flex-grow: 1;
 `;
 
 const Stepper = styled.span`
@@ -51,29 +51,50 @@ const Stepper = styled.span`
   margin: 0 8px;
   color: rgba(0, 0, 0, 0.54);
 `;
-const footer = ({ goTo, inDOM }: any, options = {}) => (
-  <Actions>
+
+export interface StepProps extends ReactourStepContentArgs {
+  step: number;
+  setTourOpen?: (tourOpen: boolean) => void;
+  back?: number;
+  current?: number;
+  total?: number;
+}
+
+export const Footer = (options: StepProps) => (
+  <Flex>
     <IconButton
       component="div"
-      tabIndex={0}
-      style={{ padding: "6px" }}
-      onClick={() => goTo(0)}
+      tabIndex={-1}
+      onClick={() =>
+        options.goTo(options.back ? options.back : options.step - 1)
+      }
+      size="small"
     >
       <KeyboardArrowLeft />
     </IconButton>
-    <Stepper>...</Stepper>
+    <Stepper>{`${options.current} / ${options.total}`}</Stepper>
     <IconButton
       component="div"
-      tabIndex={0}
-      style={{ padding: "6px" }}
-      onClick={() => goTo(0)}
+      tabIndex={-1}
+      onClick={() => options.goTo(options.step + 1)}
+      size="small"
     >
       <KeyboardArrowRight />
     </IconButton>
-  </Actions>
+    <FlexGrow />
+    <Button
+      variant={"text"}
+      tabIndex={-1}
+      onClick={() => options.setTourOpen(false)}
+      size="small"
+    >
+      Close
+    </Button>
+  </Flex>
 );
 
 const mapStateToProps = (state: State) => ({
+  theme: selectTheme(state),
   tour: selectTour(state)
 });
 const mapDispatchToProps = {
@@ -94,21 +115,22 @@ type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {};
 type Props = DispatchProps & StateProps & OwnProps;
 
-class MalariaTour extends Component<any> {
+class MalariaTour extends PureComponent<any> {
+  state = {
+    step: 0
+  };
+
+  setStep = (step: number) => {
+    dispatchCustomEvent("resize");
+    this.props.setTourStep(step);
+  };
+
   toggleFilters = (value: boolean) => {
     this.props.setFiltersOpen(value);
   };
 
   setSelection = (selection: SiteSelection | null) => {
     this.props.setSelection(selection);
-  };
-
-  setBounds = () => {
-    this.setSelection({
-      SITE_ID: "S14.755100_5.774900",
-      ISO_2_CODE: "",
-      coordinates: [5.8062744140625, 15.900583912097915]
-    });
   };
 
   setFiltersMode = (mode: string) => {
@@ -125,11 +147,10 @@ class MalariaTour extends Component<any> {
 
   render() {
     const {
+      theme,
       tour,
       setTourOpen,
-      setTourStep,
       setInitialDialogOpen,
-      setBounds,
       classes
     } = this.props;
 
@@ -142,137 +163,147 @@ class MalariaTour extends Component<any> {
       elements.forEach(el => (el.tabIndex = "-1"));
     }, 100);
 
+    const baseProps = {
+      setTourOpen: () => setTourOpen(false)
+    };
+
     const steps: ReactourStep[] = [
       {
         selector: "#dialog",
         content: options => {
           setInitialDialogOpen(true);
           this.toggleFilters(false);
-          return (
-            <div>
-              Initial Dialog
-              {footer(options)}
-            </div>
-          );
+          return <Step1 {...options} {...baseProps} step={0} />;
         }
-        // @ts-ignore
       },
       {
         selector: "#language",
-        content: ({ goTo, inDOM }) => {
+        content: options => {
           setInitialDialogOpen(true);
           this.toggleFilters(false);
-          return <div>Language</div>;
+          return <Step2 {...options} {...baseProps} step={1} />;
         },
         // @ts-ignore
         observe: "#language"
       },
       {
         selector: "#dialog",
-        content: ({ goTo, inDOM }) => {
+        content: options => {
           setInitialDialogOpen(true);
           this.toggleFilters(false);
-          return <div>Initial Dialog</div>;
+          return <Step3 {...options} {...baseProps} step={2} />;
         }
-        // @ts-ignore
-      },
-      {
-        selector: "#third",
-        content: ({ goTo, inDOM }) => {
-          setInitialDialogOpen(false);
-          this.toggleFilters(false);
-          return <div>This is my third</div>;
-        },
-        // @ts-ignore
-        observe: "#third"
       },
       {
         selector: "#filters",
-        content: ({ goTo, inDOM }) => {
+        content: options => {
           setInitialDialogOpen(false);
           this.toggleFilters(false);
-          return <div>Filters</div>;
+          return <Step4 {...options} {...baseProps} step={3} />;
         },
         // @ts-ignore
         observe: "#filters"
       },
       {
         selector: "#sidebar",
-        content: ({ goTo, inDOM }) => {
+        content: ({ goTo }) => {
           setInitialDialogOpen(false);
           this.toggleFilters(true);
-          setTimeout(() => goTo(6), 200);
-          return <div>Sidebar</div>;
-        }
-      },
-      {
-        selector: "#regions-tab",
-        content: ({ goTo, inDOM }) => {
           this.setFiltersMode("regions");
-          return <div>Sidebar</div>;
+          setTimeout(() => goTo(5), 200);
+          return <div />;
         }
       },
       {
         selector: "#sidebar",
-        content: ({ goTo, inDOM }) => {
+        content: options => {
+          setInitialDialogOpen(false);
+          this.toggleFilters(true);
+          return <Step5 {...options} {...baseProps} step={5} back={2} />;
+        }
+      },
+      {
+        selector: "#sidebar",
+        content: ({ goTo }) => {
           this.setFiltersMode("filters");
-          setTimeout(() => goTo(8), 200);
-          return <div>Language</div>;
+          setTimeout(() => goTo(7), 200);
+          return <div />;
         }
       },
       {
         selector: "#sidebar",
-        content: ({ goTo, inDOM }) => {
-          return <div>Language</div>;
+        content: options => {
+          return <Step6 {...options} {...baseProps} step={7} back={4} />;
         }
       },
       {
         selector: "#fifth-duo",
-        content: ({ goTo, inDOM }) => {
+        content: ({ goTo }) => {
           this.setCountryMode(false);
-          this.setRegion("NIGER");
-          this.setBounds();
-          setTimeout(() => goTo(10), 100);
-          return <div></div>;
+          const selection = (() => {
+            switch (theme) {
+              case "prevention":
+                return {
+                  SITE_ID: "S14.755100_5.774900",
+                  ISO_2_CODE: "",
+                  coordinates: [5.8062744140625, 15.900583912097915]
+                };
+              case "treatment":
+                return {
+                  ISO_2_CODE: "",
+                  SITE_ID: "S12.036389_24.876944",
+                  coordinates: [24.87579345703125, 12.036634374014696]
+                };
+              case "diagnosis":
+                return {
+                  ISO_2_CODE: "",
+                  SITE_ID: "S15.642516_32.455489",
+                  coordinates: [32.45635986328125, 15.6415517493066]
+                };
+              default:
+                return null;
+            }
+          })();
+          this.setSelection(selection as SiteSelection);
+          setTimeout(() => goTo(9), 200);
+          return <div />;
         }
       },
       {
         selector: ".mapboxgl-popup",
-        content: ({ goTo, inDOM }) => {
-          return <div>Popup</div>;
+        content: options => {
+          return <Step7 {...options} {...baseProps} step={9} back={6} />;
         },
         // @ts-ignore
         observe: ".mapboxgl-popup"
       },
       {
         selector: "#country-button",
-        content: ({ goTo, inDOM }) => {
-          // this.setFiltered();
+        content: options => {
           this.setSelection(null);
           this.setCountryMode(true);
-          return <div>Country Button</div>;
+          return <Step8 {...options} {...baseProps} step={10} back={8} />;
         }
       },
       {
         selector: "#country-button",
-        content: ({ goTo, inDOM }) => {
+        content: ({ goTo }) => {
           this.setSelection({
-            ISO_2_CODE: "NE",
+            ISO_2_CODE: "SD",
             SITE_ID: "",
-            coordinates: [9.3988037109375, 17.426649169725707]
+            coordinates: [30.003662109375, 16.048453014179174]
           });
-          setTimeout(() => goTo(13), 100);
-          return <div></div>;
+          setTimeout(() => goTo(12), 200);
+          return <div />;
         }
       },
       {
         selector: ".mapboxgl-popup",
-        content: ({ goTo, inDOM }) => {
-          return <div>Popup</div>;
+        content: options => {
+          return <Step9 {...options} {...baseProps} step={12} back={10} />;
         }
       }
     ];
-
     return (
       <Tour
         className={classes.root}
@@ -280,10 +311,14 @@ class MalariaTour extends Component<any> {
         isOpen={tour.open}
         onRequestClose={() => setTourOpen(!tour.open)}
         disableDotsNavigation={true}
+        disableKeyboardNavigation={true}
+        disableInteraction={![1, 2].includes(tour.step)}
         showNavigation={false}
         showButtons={false}
         showNumber={false}
         showCloseButton={false}
+        getCurrentStep={this.setStep}
+        goToStep={tour.step}
       />
     );
   }

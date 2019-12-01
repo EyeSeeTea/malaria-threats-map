@@ -2,7 +2,7 @@ import React from "react";
 import { style } from "./style";
 import styled from "styled-components";
 import Layers from "./Layers";
-import mapboxgl, { LngLat } from "mapbox-gl";
+import mapboxgl from "mapbox-gl";
 
 import { PreventionMapType, State } from "../store/types";
 import { connect } from "react-redux";
@@ -11,10 +11,8 @@ import DiagnosisLayer from "./layers/diagnosis/DiagnosisLayer";
 import TreatmentLayer from "./layers/treatment/TreatmentLayer";
 import InvasiveLayer from "./layers/invasive/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
-import Joyride from "react-joyride";
 import InitialDialog from "./InitialDialog";
 import Filters from "./Filters";
-import LanguageSelector from "./LanguageSelector";
 import MapTypesSelector from "./MapTypesSelector";
 import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";
@@ -22,10 +20,10 @@ import WhoLogo from "./WhoLogo";
 import {
   selectAny,
   selectIsInitialDialogOpen,
-  selectSetZoom,
-  selectTheme,
+  selectRegion,
   selectSetBounds,
-  selectRegion
+  selectSetZoom,
+  selectTheme
 } from "../store/reducers/base-reducer";
 import {
   selectPreventionFilters,
@@ -47,8 +45,6 @@ import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
 import Leyend from "./Leyend";
 import StoryModeSelector from "./StoryModeSelector";
-import * as R from "ramda";
-import Tour from "reactour";
 import MalariaTour from "./tour/MalariaTour";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
 

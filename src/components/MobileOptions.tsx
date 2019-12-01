@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
@@ -9,14 +9,13 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
-import { TransitionProps } from "@material-ui/core/transitions";
-import { State } from "../store/types";
-import { selectAreMobileOptionsOpen } from "../store/reducers/base-reducer";
-import { setMobileOptionsOpen } from "../store/actions/base-actions";
-import { connect } from "react-redux";
+import {TransitionProps} from "@material-ui/core/transitions";
+import {State} from "../store/types";
+import {selectAreMobileOptionsOpen} from "../store/reducers/base-reducer";
+import {setMobileOptionsOpen} from "../store/actions/base-actions";
+import {connect} from "react-redux";
 import styled from "styled-components";
-import LanguageSelector from "./LanguageSelector";
-import { Typography } from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
 
 const FlexGrow = styled.div`

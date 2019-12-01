@@ -18,8 +18,6 @@ import {
   setStoryModeAction,
   setStoryModeStepAction,
   setThemeAction,
-  setTourOpenAction,
-  setZoomAction,
   toggleEndemicityLayerAction
 } from "./store/actions/base-actions";
 import {
@@ -48,7 +46,6 @@ import {
   setInvasiveVectorSpecies
 } from "./store/actions/invasive-actions";
 import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
-import Tour from "reactour";
 
 export const { store } = createStore();
 
@@ -99,10 +96,8 @@ ReduxQuerySync({
     },
     bounds: {
       selector: (state: State) => JSON.stringify(state.malaria.bounds),
-      action: (value: string) => {
-        console.log(value);
-        return setBoundsAction(value ? JSON.parse(value) : undefined);
-      }
+      action: (value: string) =>
+        setBoundsAction(value ? JSON.parse(value) : undefined)
     },
     insecticideClass: {
       selector: (state: State) => state.prevention.filters.insecticideClass,

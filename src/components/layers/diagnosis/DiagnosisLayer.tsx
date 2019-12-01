@@ -238,11 +238,13 @@ class DiagnosisLayer extends Component<Props> {
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
-    this.props.setSelection({
+    const selection = {
       ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
       SITE_ID: e.features[0].properties.SITE_ID,
       coordinates: coordinates
-    });
+    }
+    console.log(selection)
+    this.props.setSelection(selection);
   };
 
   setupPopover = () => {

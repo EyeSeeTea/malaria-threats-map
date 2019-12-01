@@ -14,13 +14,7 @@ import ResistanceStatusFilters, {
 } from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
 import FormLabel from "@material-ui/core/FormLabel";
 import styled from "styled-components";
-import {
-  createStyles,
-  Hidden,
-  makeStyles,
-  Theme,
-  Typography
-} from "@material-ui/core";
+import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import {
   DiagnosisMapType,
   InvasiveMapType,

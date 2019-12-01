@@ -9,11 +9,17 @@ import {
   TreatmentIcon
 } from "./Icons";
 import { State } from "../store/types";
-import { selectIsInitialDialogOpen } from "../store/reducers/base-reducer";
-import { setInitialDialogOpen } from "../store/actions/base-actions";
+import {
+  selectIsInitialDialogOpen,
+  selectTour
+} from "../store/reducers/base-reducer";
+import {
+  setInitialDialogOpen,
+  setTourStepAction
+} from "../store/actions/base-actions";
 import { connect } from "react-redux";
-import LanguageSelector from "./LanguageSelector";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
+
 const FlexGrow = styled.div`
   flex-grow: 1;
 `;
@@ -28,10 +34,12 @@ const Column = styled.div`
 `;
 
 const mapStateToProps = (state: State) => ({
+  tour: selectTour(state),
   initialDialogOpen: selectIsInitialDialogOpen(state)
 });
 
 const mapDispatchToProps = {
+  setTourStep: setTourStepAction,
   setInitialDialogOpen: setInitialDialogOpen
 };
 
@@ -39,8 +47,16 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function InitialDialog({ initialDialogOpen, setInitialDialogOpen }: Props) {
+function InitialDialog({
+  initialDialogOpen,
+  setInitialDialogOpen,
+  tour,
+  setTourStep
+}: Props) {
   function handleClose() {
+    if (tour.open) {
+      setTourStep(tour.step + 1);
+    }
     setInitialDialogOpen(false);
   }
 
