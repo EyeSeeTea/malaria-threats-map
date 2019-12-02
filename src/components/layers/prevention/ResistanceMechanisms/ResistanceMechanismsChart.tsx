@@ -2,7 +2,7 @@ import * as React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Hidden, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -38,8 +38,8 @@ const options: (data: any) => Highcharts.Options = data => ({
   series: data
 });
 
-const ChatContainer = styled.div`
-  width: 500px;
+const ChatContainer = styled.div<{ width?: string }>`
+  width: ${props => props.width || "100%"};
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -97,8 +97,8 @@ const ResistanceMechanismsChart = ({ theme, studies }: Props) => {
       data: notDetected
     }
   ];
-  return (
-    <ChatContainer>
+  const content = () => (
+    <>
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${studies[0].VILLAGE_NAME}, ${t(
           studies[0].COUNTRY_NAME
@@ -109,7 +109,17 @@ const ResistanceMechanismsChart = ({ theme, studies }: Props) => {
       </Typography>
       <HighchartsReact highcharts={Highcharts} options={options(data)} />
       <Citation study={studies[0]} />
-    </ChatContainer>
+    </>
+  );
+  return (
+    <>
+      <Hidden smUp>
+        <ChatContainer width={"100%"}>{content()}</ChatContainer>
+      </Hidden>
+      <Hidden xsDown>
+        <ChatContainer width={"500px"}>{content()}</ChatContainer>
+      </Hidden>
+    </>
   );
 };
 export default connect(

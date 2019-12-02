@@ -3,7 +3,7 @@ import { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Hidden, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -79,8 +79,8 @@ Tested (n): ${point.number}
   ]
 });
 
-const ChatContainer = styled.div`
-  width: 500px;
+const ChatContainer = styled.div<{ width?: string }>`
+  width: ${props => props.width || "100%"};
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -118,8 +118,9 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
     };
   });
   const studyObject = sortedStudies[study];
-  return (
-    <ChatContainer>
+
+  const content = () => (
+    <>
       {groupedStudies.length > 1 && (
         <Pagination
           studies={groupedStudies}
@@ -137,7 +138,17 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
       </Typography>
       <HighchartsReact highcharts={Highcharts} options={options(data)} />
       <Citation study={studyObject} />
-    </ChatContainer>
+    </>
+  );
+  return (
+    <>
+      <Hidden smUp>
+        <ChatContainer width={"100%"}>{content()}</ChatContainer>
+      </Hidden>
+      <Hidden xsDown>
+        <ChatContainer width={"500px"}>{content()}</ChatContainer>
+      </Hidden>
+    </>
   );
 };
 export default connect(
