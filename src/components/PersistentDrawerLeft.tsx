@@ -1,32 +1,50 @@
 import React from "react";
 import clsx from "clsx";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Map from "./Map";
 import Disclaimer from "./Disclaimer";
 import styled from "styled-components";
-import {connect} from "react-redux";
-import {State} from "../store/types";
+import { connect } from "react-redux";
+import { State } from "../store/types";
 import {
-    selectAreFiltersOpen,
-    selectFilters,
-    selectIsInitialDialogOpen,
-    selectStoryMode,
-    selectTheme
+  selectAreFiltersOpen,
+  selectFilters,
+  selectIsInitialDialogOpen,
+  selectStoryMode,
+  selectTheme
 } from "../store/reducers/base-reducer";
-import {setFiltersOpen, setMobileOptionsOpen, setStoryModeAction, setThemeAction} from "../store/actions/base-actions";
-import {selectPreventionFilters} from "../store/reducers/prevention-reducer";
-import {selectDiagnosisFilters} from "../store/reducers/diagnosis-reducer";
-import {selectTreatmentFilters} from "../store/reducers/treatment-reducer";
-import {selectInvasiveFilters} from "../store/reducers/invasive-reducer";
-import {setPreventionMapType} from "../store/actions/prevention-actions";
-import {AppBar, Hidden, IconButton, Tab, Tabs, Toolbar} from "@material-ui/core";
+import {
+  setFiltersOpen,
+  setMobileOptionsOpen,
+  setStoryModeAction,
+  setThemeAction
+} from "../store/actions/base-actions";
+import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
+import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
+import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
+import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
+import { setPreventionMapType } from "../store/actions/prevention-actions";
+import {
+  AppBar,
+  Hidden,
+  IconButton,
+  Tab,
+  Tabs,
+  Toolbar
+} from "@material-ui/core";
 import StoryModeStepper from "./StoryModeStepper";
 import FiltersSidebar from "./FiltersSidebar";
-import LanguageIcon from "@material-ui/icons/Language";
-import {DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon, FilterIcon} from "./Icons";
-import {colors} from "../constants/theme";
+import SettingsIcon from "@material-ui/icons/Settings";
+import {
+  DiagnosisIcon,
+  FilterIcon,
+  InvasiveIcon,
+  PreventionIcon,
+  TreatmentIcon
+} from "./Icons";
+import { colors } from "../constants/theme";
 import MapTypesSelector from "./MapTypesSelector";
 import MobileOptions from "./MobileOptions";
 
@@ -245,7 +263,7 @@ function PersistentDrawerLeft({
                   aria-label="settings"
                   onClick={() => setMobileOptionsOpen(true)}
                 >
-                  <LanguageIcon />
+                  <SettingsIcon />
                 </IconButton>
               </Toolbar>
             </AppBar>

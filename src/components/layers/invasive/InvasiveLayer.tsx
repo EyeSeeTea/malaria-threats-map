@@ -1,7 +1,7 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {InvasiveMapType, State} from "../../../store/types";
-import {studiesToGeoJson} from "../layer-utils";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { InvasiveMapType, State } from "../../../store/types";
+import { studiesToGeoJson } from "../layer-utils";
 import setupEffects from "../effects";
 import {
   selectCountryMode,
@@ -10,19 +10,26 @@ import {
   selectSelection,
   selectTheme
 } from "../../../store/reducers/base-reducer";
-import {selectCountries} from "../../../store/reducers/country-layer-reducer";
+import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
-import {filterByRegion, filterByVectorSpecies, filterByYearRange} from "../studies-filters";
-import {InvasiveStudy} from "../../../types/Invasive";
-import {resolveMapTypeSymbols, studySelector} from "./utils";
-import {selectInvasiveFilters, selectInvasiveStudies} from "../../../store/reducers/invasive-reducer";
-import {setInvasiveFilteredStudiesAction} from "../../../store/actions/invasive-actions";
-import {Hidden} from "@material-ui/core";
+import {
+  filterByRegion,
+  filterByVectorSpecies,
+  filterByYearRange
+} from "../studies-filters";
+import { InvasiveStudy } from "../../../types/Invasive";
+import { resolveMapTypeSymbols, studySelector } from "./utils";
+import {
+  selectInvasiveFilters,
+  selectInvasiveStudies
+} from "../../../store/reducers/invasive-reducer";
+import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
+import { Hidden } from "@material-ui/core";
 import InvasiveSitePopover from "./InvasiveSitePopover";
 import ChartModal from "../../ChartModal";
 import InvasiveSelectionChart from "./InvasiveSelectionChart";
-import {setSelection} from "../../../store/actions/base-actions";
+import { setSelection } from "../../../store/actions/base-actions";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
@@ -230,8 +237,8 @@ class InvasiveLayer extends Component<Props> {
       ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
       SITE_ID: e.features[0].properties.SITE_ID,
       coordinates: coordinates
-    }
-    console.log(selection)
+    };
+    console.log(selection);
     this.props.setSelection(selection);
   };
 
@@ -294,21 +301,21 @@ class InvasiveLayer extends Component<Props> {
       return <div />;
     }
     return (
-      <>
-        {this.props.theme === "invasive" && (
+      this.props.theme === "invasive" && (
+        <>
           <Hidden xsDown>
             <InvasiveSitePopover
               map={this.props.map}
               studies={filteredStudies}
             />
           </Hidden>
-        )}
-        <Hidden smUp>
-          <ChartModal selection={selection}>
-            <InvasiveSelectionChart studies={filteredStudies} />
-          </ChartModal>
-        </Hidden>
-      </>
+          <Hidden smUp>
+            <ChartModal selection={selection}>
+              <InvasiveSelectionChart studies={filteredStudies} />
+            </ChartModal>
+          </Hidden>
+        </>
+      )
     );
   }
 }

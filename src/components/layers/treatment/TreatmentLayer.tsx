@@ -32,8 +32,8 @@ import { setFilteredStudiesAction } from "../../../store/actions/treatment-actio
 import { setSelection } from "../../../store/actions/base-actions";
 import { Hidden } from "@material-ui/core";
 import ChartModal from "../../ChartModal";
-import TreatmentSitePopover from "./TreatmentSitePopover";
 import TreatmentSelectionChart from "./TreatmentSelectionChart";
+import TreatmentSitePopover from "./TreatmentSitePopover";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -260,8 +260,8 @@ class TreatmentLayer extends Component<Props> {
       ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
       SITE_ID: e.features[0].properties.SITE_ID,
       coordinates: coordinates
-    }
-    console.log(selection)
+    };
+    console.log(selection);
     this.props.setSelection(selection);
   };
 
@@ -328,21 +328,21 @@ class TreatmentLayer extends Component<Props> {
       return <div />;
     }
     return (
-      <>
-        {this.props.theme === "treatment" && (
+      this.props.theme === "treatment" && (
+        <>
           <Hidden xsDown>
             <TreatmentSitePopover
               map={this.props.map}
               studies={filteredStudies}
             />
           </Hidden>
-        )}
-        <Hidden smUp>
-          <ChartModal selection={selection}>
-            <TreatmentSelectionChart studies={filteredStudies} />
-          </ChartModal>
-        </Hidden>
-      </>
+          <Hidden smUp>
+            <ChartModal selection={selection}>
+              <TreatmentSelectionChart studies={filteredStudies} />
+            </ChartModal>
+          </Hidden>
+        </>
+      )
     );
   }
 }

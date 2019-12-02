@@ -242,8 +242,8 @@ class DiagnosisLayer extends Component<Props> {
       ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
       SITE_ID: e.features[0].properties.SITE_ID,
       coordinates: coordinates
-    }
-    console.log(selection)
+    };
+    console.log(selection);
     this.props.setSelection(selection);
   };
 
@@ -307,21 +307,21 @@ class DiagnosisLayer extends Component<Props> {
       return <div />;
     }
     return (
-      <>
-        {this.props.theme === "diagnosis" && (
+      this.props.theme === "diagnosis" && (
+        <>
           <Hidden xsDown>
             <DiagnosisSitePopover
               map={this.props.map}
               studies={filteredStudies}
             />
           </Hidden>
-        )}
-        <Hidden smUp>
-          <ChartModal selection={selection}>
-            <DiagnosisSelectionChart studies={filteredStudies} />
-          </ChartModal>
-        </Hidden>
-      </>
+          <Hidden smUp>
+            <ChartModal selection={selection}>
+              <DiagnosisSelectionChart studies={filteredStudies} />
+            </ChartModal>
+          </Hidden>
+        </>
+      )
     );
   }
 }

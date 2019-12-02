@@ -1,18 +1,15 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { PreventionMapType, State } from "../../../store/types";
-import { studiesToGeoJson } from "../layer-utils";
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import {PreventionMapType, State} from "../../../store/types";
+import {studiesToGeoJson} from "../layer-utils";
 import setupEffects from "../effects";
 import * as R from "ramda";
 import resistanceStatusSymbols from "./ResistanceStatus/symbols";
-import { resolveResistanceStatus } from "./ResistanceStatus/utils";
-import { PreventionStudy } from "../../../types/Prevention";
-import { buildPreventionFilters } from "../studies-filters";
-import { resolveMapTypeSymbols, studySelector } from "./utils";
-import {
-  selectPreventionFilters,
-  selectPreventionStudies
-} from "../../../store/reducers/prevention-reducer";
+import {resolveResistanceStatus} from "./ResistanceStatus/utils";
+import {PreventionStudy} from "../../../types/Prevention";
+import {buildPreventionFilters} from "../studies-filters";
+import {resolveMapTypeSymbols, studySelector} from "./utils";
+import {selectPreventionFilters, selectPreventionStudies} from "../../../store/reducers/prevention-reducer";
 import {
   selectCountryMode,
   selectFilters,
@@ -21,10 +18,10 @@ import {
   selectTheme
 } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
-import { selectCountries } from "../../../store/reducers/country-layer-reducer";
-import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
-import { Hidden } from "@material-ui/core";
-import { setSelection } from "../../../store/actions/base-actions";
+import {selectCountries} from "../../../store/reducers/country-layer-reducer";
+import {setPreventionFilteredStudiesAction} from "../../../store/actions/prevention-actions";
+import {Hidden} from "@material-ui/core";
+import {setSelection} from "../../../store/actions/base-actions";
 import PreventionSitePopover from "./PreventionSitePopover";
 import PreventionSelectionChart from "./PreventionSelectionChart";
 import ChartModal from "../../ChartModal";
@@ -266,8 +263,8 @@ class PreventionLayer extends Component<Props> {
       ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
       SITE_ID: e.features[0].properties.SITE_ID,
       coordinates: coordinates
-    }
-    console.log(selection)
+    };
+    console.log(selection);
     this.props.setSelection(selection);
   };
 
@@ -337,21 +334,21 @@ class PreventionLayer extends Component<Props> {
       return <div />;
     }
     return (
-      <>
-        {this.props.theme === "prevention" && (
+      this.props.theme === "prevention" && (
+        <>
           <Hidden xsDown>
             <PreventionSitePopover
               map={this.props.map}
               studies={filteredStudies}
             />
           </Hidden>
-        )}
-        <Hidden smUp>
-          <ChartModal selection={selection}>
-            <PreventionSelectionChart studies={filteredStudies} />
-          </ChartModal>
-        </Hidden>
-      </>
+          <Hidden smUp>
+            <ChartModal selection={selection}>
+              <PreventionSelectionChart studies={filteredStudies} />
+            </ChartModal>
+          </Hidden>
+        </>
+      )
     );
   }
 }
