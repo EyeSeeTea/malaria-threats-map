@@ -13,11 +13,6 @@ export default function PboDeploymentFilters() {
   return (
     <div>
       <FilterWrapper>
-        <FormLabel component="legend">Insecticide Class</FormLabel>
-        <Divider />
-        <InsecticideClassFilter />
-      </FilterWrapper>
-      <FilterWrapper>
         <FormLabel component="legend">Insecticide Type</FormLabel>
         <Divider />
         <InsecticideTypeFilter />
