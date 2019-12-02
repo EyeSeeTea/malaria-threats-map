@@ -181,7 +181,8 @@ class Map extends React.Component<any> {
   }
 
   componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void {
-    if (this.state.theme !== prevState.theme) {
+    if (this.props.map) {
+      this.props.map.fire("click", { lngLat: [0, 0] });
     }
   }
 
