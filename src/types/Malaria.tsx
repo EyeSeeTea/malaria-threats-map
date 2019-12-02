@@ -5,4 +5,6 @@ export interface Study {
   CITATION: string;
   Latitude: string;
   Longitude: string;
+  INSTITUTION?: string;
+  INSTITUTION_CITY?: string;
 }

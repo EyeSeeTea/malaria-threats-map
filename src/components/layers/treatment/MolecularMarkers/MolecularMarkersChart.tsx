@@ -1,8 +1,9 @@
 import * as React from "react";
+import { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, IconButton, Link, Typography } from "@material-ui/core";
+import { Box, Hidden, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -10,9 +11,11 @@ import { State } from "../../../../store/types";
 import { TreatmentStudy } from "../../../../types/Treatment";
 import * as R from "ramda";
 import { MutationColors } from "./utils";
-import ArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
-import ArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
-import { useState } from "react";
+import Pagination from "../../../charts/Pagination";
+import { MOLECULAR_MARKERS } from "../../../filters/MolecularMarkerFilter";
+import { selectTreatmentFilters } from "../../../../store/reducers/treatment-reducer";
+import Citation from "../../../charts/Citation";
+import { formatYears } from "../../../../utils/string-utils";
 
 const options: (data: any) => Highcharts.Options = data => ({
   chart: {
@@ -119,6 +122,54 @@ const options2: (data: any) => Highcharts.Options = data => ({
   }
 });
 
+const options3: (data: any, categories: any[]) => Highcharts.Options = (
+  data,
+  categories
+) => ({
+  chart: {
+    height: 250,
+    width: 300,
+    style: {
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;'
+    }
+  },
+  title: {
+    text: ""
+  },
+  subtitle: {
+    text: ""
+  },
+  tooltip: {
+    pointFormat: "{series.name}: <b>{point.y:.2f}%</b>"
+  },
+  xAxis: { categories },
+  yAxis: {
+    min: 0,
+    max: 100,
+    title: {
+      text: "Percentage (%)"
+    }
+  },
+  plotOptions: {
+    series: {
+      label: {
+        connectorAllowed: false
+      }
+    }
+  },
+  series: data,
+  legend: {
+    itemStyle: {
+      fontSize: "9px"
+    },
+    enabled: true,
+    maxHeight: 70
+  },
+  credits: {
+    enabled: false
+  }
+});
+
 const ChatContainer = styled.div`
   max-width: 500px;
 `;
@@ -127,17 +178,18 @@ const Flex = styled.div`
   display: flex;
 `;
 
-const FlexReverse = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
 const FlexCol = styled.div<{ flex?: number }>`
   flex: ${props => props.flex || 1};
 `;
 
+const Margin = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state)
+  theme: selectTheme(state),
+  treatmentFilters: selectTreatmentFilters(state)
 });
 const mapDispatchToProps = {};
 
@@ -148,10 +200,13 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const MolecularMarkersChart = ({ theme, studies }: Props) => {
+const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
   const { t } = useTranslation("common");
-  const [study, setStudy] = useState(0);
+  const [studyIndex, setStudy] = useState(0);
   const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
+  const sortedYears = R.uniq(
+    sortedStudies.map(study => study.YEAR_START)
+  ).sort();
   const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
   const maxYear = parseInt(sortedStudies[0].YEAR_START);
   const groupStudies = R.flatten(
@@ -181,7 +236,7 @@ const MolecularMarkersChart = ({ theme, studies }: Props) => {
       })
     };
   });
-  const data = sortedStudies[study].groupStudies.map(study => ({
+  const data = sortedStudies[studyIndex].groupStudies.map(study => ({
     name: `${study.GENOTYPE}`,
     y: Math.round(study.PROPORTION * 100),
     color: MutationColors[study.GENOTYPE]
@@ -189,57 +244,170 @@ const MolecularMarkersChart = ({ theme, studies }: Props) => {
       : "000"
   }));
   const titleItems = [
-    studies[study].SITE_NAME,
-    studies[study].PROVINCE,
-    t(studies[study].COUNTRY_NAME)
+    studies[studyIndex].SITE_NAME,
+    studies[studyIndex].PROVINCE,
+    t(studies[studyIndex].COUNTRY_NAME)
   ];
   const title = titleItems.filter(Boolean).join(", ");
+  const molecularMarker = t(
+    MOLECULAR_MARKERS.find(
+      (m: any) => m.value === treatmentFilters.molecularMarker
+    ).label
+  );
+  const study = sortedStudies[sortedStudies.length - studyIndex - 1];
+
+  const pfkelch13 = () => {
+    return (
+      <>
+        <Pagination studies={studies} study={studyIndex} setStudy={setStudy} />
+        <Typography variant="subtitle1">
+          <Box fontWeight="fontWeightBold">{`${title} (${minYear}-${maxYear})`}</Box>
+        </Typography>
+        <Typography variant="body2">
+          In this {study.YEAR_START} study, the following{" "}
+          <i>{molecularMarker}</i> mutations were observed among {study.N}{" "}
+          samples:
+        </Typography>
+        <Flex>
+          <FlexCol>
+            <HighchartsReact highcharts={Highcharts} options={options(data)} />
+          </FlexCol>
+          <FlexCol flex={2}>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={options2(series)}
+            />
+          </FlexCol>
+        </Flex>
+        <Citation study={study} />
+      </>
+    );
+  };
+
+  const {
+    YEAR_START,
+    YEAR_END,
+    PROP_RELATED,
+    N,
+    groupStudies: subStudies
+  } = study;
+
+  const mcStudy = subStudies.find(s => s.GENOTYPE === "MC");
+  const wtStudy = subStudies.find(s => s.GENOTYPE === "WT");
+
+  const duration =
+    parseInt(YEAR_START) !== parseInt(YEAR_END)
+      ? `from ${YEAR_START} to ${YEAR_END}`
+      : YEAR_START;
+
+  const formatValue = (value: number) =>
+    Number.isNaN(value) ? "N/A" : `${(value * 100).toFixed(2)}%`;
+
+  const pfcrt = () => {
+    return (
+      <Margin>
+        <Flex>
+          <Typography variant="body2">
+            <b>Study year(s):&nbsp;</b>
+            {duration}
+          </Typography>
+        </Flex>
+        <Flex>
+          <Typography variant="body2">
+            <b>Number of samples:&nbsp;</b>
+            {N}
+          </Typography>
+        </Flex>
+        {treatmentFilters.molecularMarker === 2 && (
+          <Flex>
+            <Typography variant="body2">
+              <b>Samples with mutations detected:&nbsp;</b>
+              {formatValue(PROP_RELATED)}
+            </Typography>
+          </Flex>
+        )}
+        {wtStudy && (
+          <Flex>
+            <Typography variant="body2">
+              <b>Samples with wildtype:&nbsp;</b>
+              {formatValue(wtStudy.PROPORTION)}
+            </Typography>
+          </Flex>
+        )}
+        {mcStudy && (
+          <Flex>
+            <Typography variant="body2">
+              <b>Samples with multiple copy numbers:&nbsp;</b>
+              {formatValue(mcStudy.PROPORTION)}
+            </Typography>
+          </Flex>
+        )}
+      </Margin>
+    );
+  };
+
+  const keys = [{ name: "PROP_RELATED", color: "#00994C" }];
+
+  const series3 = keys.map(key => {
+    return {
+      name: key.name,
+      color: key.color,
+      data: sortedYears.map(year => {
+        const yearFilters: any = studies.filter(
+          study => parseInt(year) === parseInt(study.YEAR_START)
+        )[0];
+        return yearFilters
+          ? parseFloat(
+              (parseFloat(yearFilters[key.name] || "0") * 100).toFixed(2)
+            )
+          : 0;
+      })
+    };
+  });
+
+  console.log(study);
+
   return (
     <ChatContainer>
-      {sortedStudies.length > 1 && (
-        <FlexReverse>
-          <IconButton
-            aria-label="left"
-            size="small"
-            onClick={() =>
-              setStudy(study === 0 ? sortedStudies.length - 1 : study - 1)
-            }
-          >
-            <ArrowLeftIcon fontSize="small" />
-          </IconButton>
-          <IconButton
-            aria-label="right"
-            size="small"
-            onClick={() => setStudy((study + 1) % sortedStudies.length)}
-          >
-            <ArrowRightIcon fontSize="small" />
-          </IconButton>
-        </FlexReverse>
+      {treatmentFilters.molecularMarker === 1 ? (
+        pfkelch13()
+      ) : (
+        <>
+          <Pagination
+            studies={studies}
+            study={studyIndex}
+            setStudy={setStudy}
+          />
+          <Typography variant="subtitle1">
+            <Box fontWeight="fontWeightBold">{`${title}`}</Box>
+          </Typography>
+          <Typography variant="subtitle2">
+            <Box>{`${studies.length} studies ${formatYears(
+              `${minYear}`,
+              `${maxYear}`
+            )}`}</Box>
+          </Typography>
+          <Hidden smUp>
+            {pfcrt()}
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={options3(series3, sortedYears)}
+            />
+          </Hidden>
+          <Hidden xsDown>
+            <Flex>
+              <FlexCol>{pfcrt()}</FlexCol>
+              <FlexCol>
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={options3(series3, sortedYears)}
+                />
+              </FlexCol>
+            </Flex>
+          </Hidden>
+          <Citation study={study} />
+        </>
       )}
-      <Typography variant="subtitle1">
-        <Box fontWeight="fontWeightBold">{`${title} (${minYear}-${maxYear})`}</Box>
-      </Typography>
-      <Typography variant="body2">
-        In this 2010 study, the following Pfkelch13 mutations were observed
-        among 6 samples:
-      </Typography>
-      <Flex>
-        <FlexCol>
-          <HighchartsReact highcharts={Highcharts} options={options(data)} />
-        </FlexCol>
-        <FlexCol flex={2}>
-          <HighchartsReact highcharts={Highcharts} options={options2(series)} />
-        </FlexCol>
-      </Flex>
-      <Typography variant="caption">
-        <Link
-          href={studies[study].CITATION_URL}
-          target="_blank"
-          color={"textSecondary"}
-        >
-          {`${studies[study].INSTITUTION}, ${studies[study].INSTITUTION_CITY}`}
-        </Link>
-      </Typography>
     </ChatContainer>
   );
 };

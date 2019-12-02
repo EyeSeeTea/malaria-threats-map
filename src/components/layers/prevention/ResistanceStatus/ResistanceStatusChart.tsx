@@ -91,7 +91,7 @@ Tested (n): ${point.number}
 });
 
 const ChatContainer = styled.div`
-  max-width: 500px;
+  width: 500px;
 `;
 
 const mapStateToProps = (state: State) => ({

@@ -73,6 +73,7 @@ export interface TreatmentStudy extends Study {
   groupStudies: TreatmentStudy[];
   PROPORTION: number;
   GENOTYPE: string;
+  PROP_RELATED: number;
 }
 
 export interface Field {

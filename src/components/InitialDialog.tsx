@@ -103,7 +103,7 @@ function InitialDialog({
         <SimpleCard
           title="INVASIVE VECTOR SPECIES"
           theme="invasive"
-          description=""
+          description="The spread of anopheline mosquito vector species and their establishment in ecosystems to which they are not native poses a potential threat to the control and elimination of malaria."
           Icon={InvasiveIcon}
           onSelection={handleClose}
         />

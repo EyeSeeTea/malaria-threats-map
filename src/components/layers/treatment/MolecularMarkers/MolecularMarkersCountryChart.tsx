@@ -17,7 +17,7 @@ import { selectTreatmentFilters } from "../../../../store/reducers/treatment-red
 import { MOLECULAR_MARKERS } from "../../../filters/MolecularMarkerFilter";
 
 const ChatContainer = styled.div`
-  max-width: 500px;
+  min-width: 500px;
 `;
 
 const Actions = styled.div`
@@ -59,17 +59,21 @@ const MolecularMarkersCountryChart = ({
     setRegion({ country: studies[0].COUNTRY_NAME });
     setCountryMode(false);
   };
+  const molecularMarker = t(
+    MOLECULAR_MARKERS.find(
+      (m: any) => m.value === treatmentFilters.molecularMarker
+    ).label
+  );
   return (
     <ChatContainer>
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        {`${nStudies} molecular marker studies conducted on ${t(
-          MOLECULAR_MARKERS.find(
-            (m: any) => m.value === treatmentFilters.molecularMarker
-          ).label
-        )} ${formatYears(minYear, maxYear)}`}
+        {`${nStudies} molecular marker studies conducted on ${molecularMarker} ${formatYears(
+          minYear,
+          maxYear
+        )}`}
       </Typography>
       <Actions>
         <FlexGrow />

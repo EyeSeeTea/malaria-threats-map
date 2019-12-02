@@ -14,6 +14,7 @@ import {
 import TreatmentSelectionChart from "./TreatmentSelectionChart";
 import { selectTreatmentFilters } from "../../../store/reducers/treatment-reducer";
 import { TreatmentStudy } from "../../../types/Treatment";
+import { dispatchCustomEvent } from "../../../utils/dom-utils";
 
 const mapStateToProps = (state: State) => ({
   treatmentFilters: selectTreatmentFilters(state),
@@ -53,6 +54,8 @@ class PreventionSitePopover extends Component<Props> {
       .setLngLat(selection.coordinates)
       .setDOMContent(placeholder)
       .addTo(this.props.map);
+
+    setTimeout(() => dispatchCustomEvent("resize"), 100);
   }
 
   componentDidUpdate(

@@ -39,7 +39,7 @@ const options: (data: any) => Highcharts.Options = data => ({
 });
 
 const ChatContainer = styled.div`
-  max-width: 500px;
+  width: 500px;
 `;
 
 const mapStateToProps = (state: State) => ({

@@ -86,7 +86,7 @@ function MolecularMarkerFilter({
         {MOLECULAR_MARKERS.map((suggestion: any) => (
           <StyledFormControlLabel
             key={suggestion.value}
-            value={suggestion.value}
+            value={suggestion.value.toString()}
             control={<Radio color="primary" />}
             label={t(suggestion.label)}
           />

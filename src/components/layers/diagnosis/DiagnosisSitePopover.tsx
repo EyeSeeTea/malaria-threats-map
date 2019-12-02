@@ -14,6 +14,7 @@ import {
 import { selectInvasiveFilters } from "../../../store/reducers/invasive-reducer";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
 import { DiagnosisStudy } from "../../../types/Diagnosis";
+import { dispatchCustomEvent } from "../../../utils/dom-utils";
 
 const mapStateToProps = (state: State) => ({
   invasiveFilters: selectInvasiveFilters(state),
@@ -50,6 +51,8 @@ class DiagnosisSitePopover extends Component<Props> {
       .setLngLat(selection.coordinates)
       .setDOMContent(placeholder)
       .addTo(this.props.map);
+
+    setTimeout(() => dispatchCustomEvent("resize"), 100);
   }
 
   componentDidUpdate(

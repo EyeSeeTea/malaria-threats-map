@@ -12,13 +12,17 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import { formatList, formatYears } from "../../../../utils/string-utils";
+import * as R from "ramda";
+import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
 
 const ChatContainer = styled.div`
   max-width: 500px;
 `;
 
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state)
+  theme: selectTheme(state),
+  diagnosisFilters: selectDiagnosisFilters(state)
 });
 const mapDispatchToProps = {};
 
@@ -37,10 +41,17 @@ const useStyles = makeStyles({
   }
 });
 
-const GeneDeletionChart = ({ studies }: Props) => {
+const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
   const { t } = useTranslation("common");
   const classes = useStyles({});
+  const nStudies = studies.length;
+  const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
+  const maxYear = sortedStudies[sortedStudies.length - 1].YEAR_START;
+  const minYear = sortedStudies[0].YEAR_START;
   const studyObject = studies[0];
+  const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(
+    type => t(type)
+  );
   const formatPercentage = (value: string) =>
     `${(parseFloat(value) * 100).toFixed(1)}%`;
   return (
@@ -51,41 +62,56 @@ const GeneDeletionChart = ({ studies }: Props) => {
         )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        {`${studies.length} survey(s)`}
+        {nStudies} survey(s) <i>P. falciparum</i> for{" "}
+        {t(diagnosisFilters.deletionType).toLowerCase()} by{" "}
+        {formatList(surveyTypes)} {formatYears(minYear, maxYear)}
       </Typography>
       <div className={classes.root}>
+        <Typography variant={"caption"}>
+          Deletions confirmed (% of samples)
+        </Typography>
         <Table aria-label="simple table" size="small">
           <TableHead>
             <TableRow>
               <TableCell align={"center"}>Deletion type</TableCell>
               <TableCell align={"center"}>No. tested</TableCell>
               <TableCell align={"center"}>
-                Percentage deletion(s) in ${studyObject.YEAR_START}
+                Percentage deletion(s) in {studyObject.YEAR_START}
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
               <TableCell align={"center"}>HRP2</TableCell>
-              <TableCell align={"center"}>{studyObject.HRP2_TESTED}</TableCell>
               <TableCell align={"center"}>
-                {formatPercentage(studyObject.HRP2_PROPORTION_DELETION)}
+                {studyObject.HRP2_TESTED || "N/A"}
+              </TableCell>
+              <TableCell align={"center"}>
+                {!Number.isNaN(parseFloat(studyObject.HRP2_PROPORTION_DELETION))
+                  ? formatPercentage(studyObject.HRP2_PROPORTION_DELETION)
+                  : "N/A"}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell align={"center"}>HRP3</TableCell>
-              <TableCell align={"center"}>{studyObject.HRP3_TESTED}</TableCell>
               <TableCell align={"center"}>
-                {formatPercentage(studyObject.HRP3_PROPORTION_DELETION)}
+                {studyObject.HRP3_TESTED || "N/A"}
+              </TableCell>
+              <TableCell align={"center"}>
+                {!Number.isNaN(parseFloat(studyObject.HRP3_PROPORTION_DELETION))
+                  ? formatPercentage(studyObject.HRP3_PROPORTION_DELETION)
+                  : "N/A"}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell align={"center"}>HRP2 & 3</TableCell>
               <TableCell align={"center"}>
-                {studyObject.HRP2_HRP3_TESTED}
+                {studyObject.HRP2_HRP3_TESTED || "N/A"}
               </TableCell>
               <TableCell align={"center"}>
-                {formatPercentage(studyObject.HRP2_HRP3_PROPORTION_DELETION)}
+                {!Number.isNaN(parseFloat(studyObject.HRP2_HRP3_TESTED))
+                  ? formatPercentage(studyObject.HRP2_HRP3_PROPORTION_DELETION)
+                  : "N/A"}
               </TableCell>
             </TableRow>
           </TableBody>
