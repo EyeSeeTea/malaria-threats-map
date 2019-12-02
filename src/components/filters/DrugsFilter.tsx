@@ -4,8 +4,8 @@ import { State } from "../../store/types";
 import IntegrationReactSelect from "../BasicSelect";
 import { selectDrugs } from "../../store/reducers/translations-reducer";
 import {
-  selectFilteredTreatmentStudies,
-  selectTreatmentFilters
+  selectTreatmentFilters,
+  selectTreatmentStudies
 } from "../../store/reducers/treatment-reducer";
 import { setTreatmentDrug } from "../../store/actions/treatment-actions";
 import {
@@ -20,7 +20,7 @@ import { TreatmentStudy } from "../../types/Treatment";
 
 const mapStateToProps = (state: State) => ({
   drugs: selectDrugs(state),
-  studies: selectFilteredTreatmentStudies(state),
+  studies: selectTreatmentStudies(state),
   yearFilter: selectFilters(state),
   treatmentFilters: selectTreatmentFilters(state),
   region: selectRegion(state)
@@ -54,7 +54,9 @@ class DrugsFilter extends Component<Props, any> {
       studies
     );
 
-    const uniques = R.uniq(R.map(R.prop("DRUG_NAME"), filteredStudies));
+    const uniques = R.uniq(R.map(R.prop("DRUG_NAME"), filteredStudies)).map(
+      value => value.replace(".", "%2E")
+    );
 
     const suggestions: any[] = uniques.map((drug: string) => ({
       label: drug,

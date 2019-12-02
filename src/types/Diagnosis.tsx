@@ -62,6 +62,7 @@ export interface DiagnosisStudy extends Study {
   HRP2_HRP3_TESTED: string;
   HRP2_HRP3_PROPORTION_DELETION: string;
   PATIENT_TYPE: string;
+  SURVEY_TYPE: string;
 }
 
 export interface Field {

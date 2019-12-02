@@ -11,7 +11,7 @@ import { Paper } from "@material-ui/core";
 import { setMolecularMarker } from "../../store/actions/treatment-actions";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
 
-const suggestions = [
+export const MOLECULAR_MARKERS = [
   {
     label: "Pfkelch13",
     value: 1
@@ -83,7 +83,7 @@ function MolecularMarkerFilter({
         value={treatmentFilters.molecularMarker.toString()}
         onChange={(event, value) => handleChange(value)}
       >
-        {suggestions.map((suggestion: any) => (
+        {MOLECULAR_MARKERS.map((suggestion: any) => (
           <StyledFormControlLabel
             key={suggestion.value}
             value={suggestion.value}

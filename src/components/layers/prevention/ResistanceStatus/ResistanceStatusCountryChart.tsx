@@ -16,6 +16,7 @@ import {
   setRegionAction
 } from "../../../../store/actions/base-actions";
 import ZoomIcon from "@material-ui/icons/ZoomIn";
+import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
 
 const options: (data: any) => Highcharts.Options = data => ({
   chart: {
@@ -74,7 +75,8 @@ const FlexGrow = styled.div`
 `;
 
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state)
+  theme: selectTheme(state),
+  preventionFilters: selectPreventionFilters(state)
 });
 const mapDispatchToProps = {
   setRegion: setRegionAction,
@@ -89,10 +91,10 @@ type OwnProps = {
 type Props = DispatchProps & StateProps & OwnProps;
 
 const ResistanceStatusCountryChart = ({
-  theme,
   studies,
   setRegion,
-  setCountryMode
+  setCountryMode,
+  preventionFilters
 }: Props) => {
   const { t } = useTranslation("common");
   const nStudies = studies.length;
@@ -123,7 +125,10 @@ const ResistanceStatusCountryChart = ({
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        {`${nStudies} test(s) on Anopheles malaria vectors via discriminating concentration bioassay(s) with selected Pyrethroids between ${minYear} and ${maxYear}`}
+        {nStudies} test(s) on <i>Anopheles</i> malaria vectors via
+        discriminating concentration bioassay(s) with selected{" "}
+        {t(preventionFilters.insecticideClass)}
+        between {minYear} and {maxYear}
       </Typography>
       <HighchartsReact highcharts={Highcharts} options={options(data)} />
       <Actions>

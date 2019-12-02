@@ -24,7 +24,7 @@ export default function DiagnosisCountryLegend() {
       <LegendEntries>
         <LegendEntry>
           <LegendSymbol color={DiagnosisCountryColors.COUNTRIES[0]} />
-          <LegendText>{"Number of studies"}</LegendText>
+          <LegendText>{"Number of surveys"}</LegendText>
         </LegendEntry>
       </LegendEntries>
       <LegendFooterContainer>

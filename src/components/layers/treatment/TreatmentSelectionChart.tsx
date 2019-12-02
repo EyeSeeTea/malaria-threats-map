@@ -13,6 +13,7 @@ import TreatmentFailureChart from "./TreatmentFailure/TreatmentFailureChart";
 import TreatmentFailureCountryChart from "./TreatmentFailure/TreatmentFailureCountryChart";
 import { TreatmentStudy } from "../../../types/Treatment";
 import { selectTreatmentFilters } from "../../../store/reducers/treatment-reducer";
+import MolecularMarkersCountryChart from "./MolecularMarkers/MolecularMarkersCountryChart";
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
@@ -68,6 +69,13 @@ class TreatmentSelectionChart extends Component<Props> {
         )}
         {countryMode && mapType === TreatmentMapType.TREATMENT_FAILURE && (
           <TreatmentFailureCountryChart studies={filteredStudies} />
+        )}
+        {countryMode &&
+          mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE && (
+            <TreatmentFailureCountryChart studies={filteredStudies} />
+          )}
+        {countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
+          <MolecularMarkersCountryChart studies={filteredStudies} />
         )}
       </>
     );

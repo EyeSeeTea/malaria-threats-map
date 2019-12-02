@@ -12,6 +12,8 @@ import {
 } from "../../../../store/actions/base-actions";
 import ZoomIcon from "@material-ui/icons/ZoomIn";
 import { DiagnosisStudy } from "../../../../types/Diagnosis";
+import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
+import { formatList, formatYears } from "../../../../utils/string-utils";
 
 const ChatContainer = styled.div`
   max-width: 500px;
@@ -26,7 +28,8 @@ const FlexGrow = styled.div`
 `;
 
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state)
+  theme: selectTheme(state),
+  diagnosisFilters: selectDiagnosisFilters(state)
 });
 const mapDispatchToProps = {
   setRegion: setRegionAction,
@@ -41,10 +44,10 @@ type OwnProps = {
 type Props = DispatchProps & StateProps & OwnProps;
 
 const GeneDeletionCountryChart = ({
-  theme,
   studies,
   setRegion,
-  setCountryMode
+  setCountryMode,
+  diagnosisFilters
 }: Props) => {
   const { t } = useTranslation("common");
   const nStudies = studies.length;
@@ -55,13 +58,21 @@ const GeneDeletionCountryChart = ({
     setRegion({ country: studies[0].COUNTRY_NAME });
     setCountryMode(false);
   };
+  const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(
+    type => t(type)
+  );
   return (
     <ChatContainer>
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        {`${nStudies} survey(s) P. falciparum for hrp2 by DHS, Convenience survey between ${minYear} and ${maxYear}`}
+        {`${nStudies} survey(s) P. falciparum for ${t(
+          diagnosisFilters.deletionType
+        ).toLowerCase()} by ${formatList(surveyTypes)} ${formatYears(
+          minYear,
+          maxYear
+        )}`}
       </Typography>
       <Actions>
         <FlexGrow />

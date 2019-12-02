@@ -20,7 +20,6 @@ export default function PreventionCountryLegend() {
           Vector Insecticide Resistance
         </LegendTitleTypography>
       </LegendTitleContainer>
-
       <LegendEntries>
         <LegendEntry>
           <LegendSymbol color={PreventionCountryColors.COUNTRIES[0]} />

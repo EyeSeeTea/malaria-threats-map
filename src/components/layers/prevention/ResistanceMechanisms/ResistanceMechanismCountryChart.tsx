@@ -31,7 +31,7 @@ const options: (data: any) => Highcharts.Options = data => ({
     }
   },
   title: {
-    text: "<b>Resistance status</b> (# of tests)"
+    text: "<b>Mechanism status</b> (# of tests)"
   },
   tooltip: {
     pointFormat: "{series.name}: <b>{point.y}</b>"
@@ -133,7 +133,7 @@ const ResistanceMechanismCountryChart = ({
       <Typography variant="subtitle2">
         {`${nStudies} test(s) on Anopheles malaria vectors via ${preventionFilters.assayTypes
           .map(type => sentenceCase(type))
-          .join(",")} with selected ${sentenceCase(
+          .join(", ")} with selected ${sentenceCase(
           studies[0].TYPE
         )} between ${minYear} and ${maxYear}`}
       </Typography>

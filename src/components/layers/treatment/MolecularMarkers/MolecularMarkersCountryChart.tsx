@@ -13,6 +13,8 @@ import {
 import ZoomIcon from "@material-ui/icons/ZoomIn";
 import { TreatmentStudy } from "../../../../types/Treatment";
 import { formatYears } from "../../../../utils/string-utils";
+import { selectTreatmentFilters } from "../../../../store/reducers/treatment-reducer";
+import { MOLECULAR_MARKERS } from "../../../filters/MolecularMarkerFilter";
 
 const ChatContainer = styled.div`
   max-width: 500px;
@@ -27,7 +29,8 @@ const FlexGrow = styled.div`
 `;
 
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state)
+  theme: selectTheme(state),
+  treatmentFilters: selectTreatmentFilters(state)
 });
 const mapDispatchToProps = {
   setRegion: setRegionAction,
@@ -41,10 +44,11 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const TreatmentFailureCountryChart = ({
+const MolecularMarkersCountryChart = ({
   studies,
   setRegion,
-  setCountryMode
+  setCountryMode,
+  treatmentFilters
 }: Props) => {
   const { t } = useTranslation("common");
   const nStudies = studies.length;
@@ -61,11 +65,11 @@ const TreatmentFailureCountryChart = ({
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        {`${nStudies} therapeutic efficacy studies conducted on the efficacy of ${t(
-          sortedStudies[0].DRUG_NAME
-        )} against ${t(
-          sortedStudies[0].PLASMODIUM_SPECIES.replace(".", "%2E")
-        )}  ${formatYears(minYear, maxYear)}`}
+        {`${nStudies} molecular marker studies conducted on ${t(
+          MOLECULAR_MARKERS.find(
+            (m: any) => m.value === treatmentFilters.molecularMarker
+          ).label
+        )} ${formatYears(minYear, maxYear)}`}
       </Typography>
       <Actions>
         <FlexGrow />
@@ -85,4 +89,4 @@ const TreatmentFailureCountryChart = ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TreatmentFailureCountryChart);
+)(MolecularMarkersCountryChart);
