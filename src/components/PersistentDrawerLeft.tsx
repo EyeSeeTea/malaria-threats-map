@@ -271,6 +271,10 @@ function PersistentDrawerLeft({
           <MapWrapper>
             <Map />
           </MapWrapper>
+
+          {/*<Hidden xsDown>*/}
+          {/*</Hidden>*/}
+          <Disclaimer />
           <Hidden smUp>
             <AppBar position="static" color="default">
               <Tabs
@@ -319,9 +323,6 @@ function PersistentDrawerLeft({
               </Tabs>
             </AppBar>
             <MobileOptions />
-          </Hidden>
-          <Hidden xsDown>
-            <Disclaimer />
           </Hidden>
         </PageWrapper>
       </div>

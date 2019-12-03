@@ -1,6 +1,5 @@
 import React from "react";
 import FormLabel from "@material-ui/core/FormLabel";
-import InsecticideClassFilter from "../../../filters/InsecticideClassFilter";
 import InsecticideTypeFilter from "../../../filters/InsecticideTypeFilter";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
