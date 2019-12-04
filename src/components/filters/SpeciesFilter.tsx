@@ -93,7 +93,7 @@ class SpeciesFilter extends Component<Props, any> {
       studies
     );
 
-    const uniques = R.uniq(R.map(R.prop("SPECIES"), filteredStudies));
+    const uniques = R.uniq(R.map(R.prop("SPECIES"), filteredStudies)).sort();
 
     const suggestions: any[] = uniques.map((specie: string) => ({
       label: specie,
