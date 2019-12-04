@@ -21,6 +21,7 @@ const ChatContainer = styled.div`
 
 const Actions = styled.div`
   display: flex;
+  margin-top: 20px;
 `;
 
 const FlexGrow = styled.div`

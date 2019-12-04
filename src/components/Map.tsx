@@ -181,8 +181,11 @@ class Map extends React.Component<any> {
   }
 
   componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void {
-    if (this.props.map) {
-      this.props.map.fire("click", { lngLat: [0, 0] });
+    if (this.props.setBounds !== prevProps.setBounds) {
+      const [[b0, b1], [b2, b3]] = this.props.setBounds;
+      this.map.fitBounds([b0, b1, b2, b3], {
+        padding: 100
+      });
     }
   }
 

@@ -16,11 +16,11 @@ import { setSelection } from "../store/actions/base-actions";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      margin: theme.spacing(1),
+      margin: theme.spacing(2),
       width: "100%"
     },
     content: {
-      padding: theme.spacing(1)
+      padding: theme.spacing(2)
     },
     closeIcon: {
       padding: theme.spacing(1)

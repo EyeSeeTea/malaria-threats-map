@@ -5,6 +5,7 @@ import { of } from "rxjs";
 import { switchMap, withLatestFrom } from "rxjs/operators";
 import {
   logEventAction,
+  setBoundsAction,
   setCountryModeAction,
   setInitialDialogOpen,
   setRegionAction,
@@ -133,11 +134,21 @@ export const setStoryModeStepEpic = (
           case "invasive":
             switch (action.payload) {
               case 0:
-                return of(setCountryModeAction(false), setRegionAction({}));
+                return of(
+                  setCountryModeAction(false),
+                  setRegionAction({}),
+                  setBoundsAction([
+                    [23.73159810368128, -5.628262912580524],
+                    [57.46049921128645, 22.484559914680688]
+                  ])
+                );
               case 1:
-                return of(setCountryModeAction(false), setRegionAction({}));
+                return of(
+                  setCountryModeAction(false),
+                  setRegionAction({ country: "PAKISTAN" })
+                );
               case 2:
-                return of(setCountryModeAction(false), setRegionAction({}));
+                return of(setCountryModeAction(false));
               default:
                 return of();
             }
