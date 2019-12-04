@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     valueContainer: {
-      display: "flex",
       flex: 1,
       alignItems: "center",
       overflow: "hidden"
