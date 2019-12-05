@@ -46,7 +46,8 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
   const classes = useStyles({});
   const nStudies = studies.length;
   const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
-  const maxYear = sortedStudies[sortedStudies.length - 1].YEAR_START;
+  const sortedStudies2 = R.sortBy(study => parseInt(study.YEAR_END), studies);
+  const maxYear = sortedStudies2[sortedStudies2.length - 1].YEAR_END;
   const minYear = sortedStudies[0].YEAR_START;
   const studyObject = studies[0];
   const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(

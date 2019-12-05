@@ -53,7 +53,8 @@ const GeneDeletionCountryChart = ({
   const { t } = useTranslation("common");
   const nStudies = studies.length;
   const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
-  const maxYear = sortedStudies[sortedStudies.length - 1].YEAR_START;
+  const sortedStudies2 = R.sortBy(study => parseInt(study.YEAR_END), studies);
+  const maxYear = sortedStudies2[sortedStudies2.length - 1].YEAR_END;
   const minYear = sortedStudies[0].YEAR_START;
   const onClick = () => {
     setRegion({ country: studies[0].COUNTRY_NAME });

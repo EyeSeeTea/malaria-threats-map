@@ -69,7 +69,10 @@ const options: (data: any) => Highcharts.Options = data => ({
     enabled: false
   }
 });
-const options2: (data: any) => Highcharts.Options = data => ({
+const options2: (data: any, categories: any[]) => Highcharts.Options = (
+  data,
+  categories
+) => ({
   chart: {
     type: "column",
     height: 250,
@@ -80,9 +83,7 @@ const options2: (data: any) => Highcharts.Options = data => ({
   title: {
     text: ""
   },
-  xAxis: {
-    categories: ["2010", "2011", "2012", "2013", "2014", "2015", "2016"]
-  },
+  xAxis: { categories },
   yAxis: {
     min: 0,
     max: 100,
@@ -236,13 +237,17 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
       })
     };
   });
-  const data = sortedStudies[studyIndex].groupStudies.map(study => ({
+
+  const data = sortedStudies[
+    sortedStudies.length - studyIndex - 1
+  ].groupStudies.map(study => ({
     name: `${study.GENOTYPE}`,
     y: Math.round(study.PROPORTION * 100),
     color: MutationColors[study.GENOTYPE]
       ? MutationColors[study.GENOTYPE].color
       : "000"
   }));
+
   const titleItems = [
     studies[studyIndex].SITE_NAME,
     studies[studyIndex].PROVINCE,
@@ -275,7 +280,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
           <FlexCol flex={2}>
             <HighchartsReact
               highcharts={Highcharts}
-              options={options2(series)}
+              options={options2(series, years)}
             />
           </FlexCol>
         </Flex>
@@ -365,8 +370,6 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
     };
   });
 
-  console.log(study);
-
   return (
     <ChatContainer>
       {treatmentFilters.molecularMarker === 1 ? (
@@ -398,10 +401,17 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
             <Flex>
               <FlexCol>{pfcrt()}</FlexCol>
               <FlexCol>
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={options3(series3, sortedYears)}
-                />
+                {treatmentFilters.molecularMarker === 2 ? (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={options3(series3, sortedYears)}
+                  />
+                ) : (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={options2(series, years)}
+                  />
+                )}
               </FlexCol>
             </Flex>
           </Hidden>

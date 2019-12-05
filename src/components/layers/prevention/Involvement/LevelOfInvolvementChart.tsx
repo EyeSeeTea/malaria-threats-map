@@ -12,7 +12,6 @@ import { PreventionStudy } from "../../../../types/Prevention";
 import * as R from "ramda";
 import Citation from "../../../charts/Citation";
 import Pagination from "../../../charts/Pagination";
-import { ConfirmationStatusColors } from "../ResistanceStatus/symbols";
 import { baseChart } from "../../../charts/chart-utils";
 
 const options: (data: any) => Highcharts.Options = data => ({
@@ -46,16 +45,12 @@ const options: (data: any) => Highcharts.Options = data => ({
     column: {
       zones: [
         {
-          value: 90.001,
-          color: ConfirmationStatusColors.Confirmed[0]
-        },
-        {
           value: 97.001,
-          color: ConfirmationStatusColors.Possible[0]
+          color: "#D3D3D3"
         },
         {
           value: 100.001,
-          color: ConfirmationStatusColors.Susceptible[0]
+          color: "#2f4f4f"
         }
       ]
     }

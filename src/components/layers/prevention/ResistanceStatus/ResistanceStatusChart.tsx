@@ -117,9 +117,12 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
   const cleanedStudies = R.groupBy((study: PreventionStudy) => {
     return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
   }, sortedStudies);
-  const simplifiedStudies = R.values(cleanedStudies).map(
-    (groupStudies: PreventionStudy[]) =>
-      R.sortBy(study => -parseInt(study.MORTALITY_ADJUSTED), groupStudies)[0]
+  const simplifiedStudies = R.sortBy(
+    R.prop("YEAR_START"),
+    R.values(cleanedStudies).map(
+      (groupStudies: PreventionStudy[]) =>
+        R.sortBy(study => -parseInt(study.MORTALITY_ADJUSTED), groupStudies)[0]
+    )
   );
   const data = simplifiedStudies.map(study => ({
     name: `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`,

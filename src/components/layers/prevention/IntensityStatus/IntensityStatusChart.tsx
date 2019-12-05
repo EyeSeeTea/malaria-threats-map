@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
@@ -8,9 +9,7 @@ import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import { PreventionStudy } from "../../../../types/Prevention";
-import { ConfirmationStatusColors } from "../ResistanceStatus/symbols";
 import Citation from "../../../charts/Citation";
-import { useState } from "react";
 import * as R from "ramda";
 import Pagination from "../../../charts/Pagination";
 
@@ -51,16 +50,12 @@ const options: (data: any) => Highcharts.Options = data => ({
     column: {
       zones: [
         {
-          value: 90.001,
-          color: ConfirmationStatusColors.Confirmed[0]
-        },
-        {
           value: 97.001,
-          color: ConfirmationStatusColors.Possible[0]
+          color: "#D3D3D3"
         },
         {
           value: 100.001,
-          color: ConfirmationStatusColors.Susceptible[0]
+          color: "#2f4f4f"
         }
       ]
     }

@@ -103,6 +103,9 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
   ];
 
   const exists = (value: string) => {
+    if (!value) {
+      return false;
+    }
     const trimmed = value.trim();
     return trimmed !== "N/A" && trimmed !== "NA" && trimmed !== null;
   };
