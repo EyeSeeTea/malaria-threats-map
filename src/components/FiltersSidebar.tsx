@@ -8,11 +8,7 @@ import { GlobeIcon } from "./Icons";
 import FilterIcon from "@material-ui/icons/FilterList";
 import CloseIcon from "@material-ui/icons/Close";
 import CountrySelector from "./filters/CountrySelector";
-import ResistanceStatusFilters, {
-  Divider,
-  FilterWrapper
-} from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
-import FormLabel from "@material-ui/core/FormLabel";
+import ResistanceStatusFilters from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
 import styled from "styled-components";
 import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import {
@@ -53,14 +49,14 @@ import VectorOccuranceFilters from "./layers/invasive/VectorOccurance/VectorOccu
 import RegionSelector from "./filters/RegionSelector";
 import SubRegionSelector from "./filters/SubRegionSelector";
 import { SuccessSnackbar, WarningSnackbar } from "./Filters";
+import { useTranslation } from "react-i18next";
+// @ts-ignore
+import JsxParser from "react-jsx-parser";
 
 const FiltersWrapper = styled.div`
   margin-top: 20px;
 `;
 
-const FlexGrow = styled.div`
-  flex-grow: 1;
-`;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
@@ -71,6 +67,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     tab: {
       minWidth: 0
+    },
+    title: {
+      flexGrow: 1
     }
   })
 );
@@ -184,11 +183,15 @@ const FiltersSidebar = ({
     }
   }
 
+  const { t } = useTranslation("common");
+
   return (
     <div id="sidebar">
       <AppBar position="static" className={classes.appBar}>
         <Toolbar variant="dense">
-          <FlexGrow />
+          <Typography variant="subtitle1" className={classes.title}>
+            <JsxParser jsx={t(`themes.${theme}`)} />
+          </Typography>
           <IconButton
             edge="start"
             color="inherit"
@@ -212,28 +215,25 @@ const FiltersSidebar = ({
           <Tab
             className={classes.tab}
             icon={<FilterIcon />}
-            label="Filters"
+            label={t(`filters.tabs.filters`)}
             id={"filters-tab"}
           />
           <Tab
             className={classes.tab}
             icon={<GlobeIcon />}
-            label="Regions"
+            label={t(`filters.tabs.regions`)}
             id={"regions-tab"}
           />
         </Tabs>
       </AppBar>
       {!filteredStudies.length ? (
         <WarningSnackbar>
-          <Typography variant="body2">
-            There are no records available with the specified criteria
-          </Typography>
+          <Typography variant="body2">{t(`filters.no_records`)}</Typography>
         </WarningSnackbar>
       ) : (
         <SuccessSnackbar>
           <Typography variant="body2">
-            There are {filteredStudies.length} records found with specified
-            criteria
+            {t(`filters.records`, { studies: filteredStudies.length })}
           </Typography>
         </SuccessSnackbar>
       )}
@@ -241,23 +241,11 @@ const FiltersSidebar = ({
         {value === 0 ? (
           <>{resolveFilters()}</>
         ) : (
-          <div>
-            <FilterWrapper>
-              <FormLabel component="legend">Country</FormLabel>
-              <Divider />
-              <CountrySelector />
-            </FilterWrapper>
-            <FilterWrapper>
-              <FormLabel component="legend">Region</FormLabel>
-              <Divider />
-              <RegionSelector />
-            </FilterWrapper>
-            <FilterWrapper>
-              <FormLabel component="legend">Subregion</FormLabel>
-              <Divider />
-              <SubRegionSelector />
-            </FilterWrapper>
-          </div>
+          <>
+            <CountrySelector />
+            <RegionSelector />
+            <SubRegionSelector />
+          </>
         )}
       </FiltersWrapper>
     </div>

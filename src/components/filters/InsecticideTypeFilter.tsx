@@ -10,6 +10,9 @@ import {
   selectPreventionStudies
 } from "../../store/reducers/prevention-reducer";
 import * as R from "ramda";
+import FormLabel from "@material-ui/core/FormLabel";
+import { Divider, FilterWrapper } from "./Filters";
+import T from "../../translations/T";
 
 const mapStateToProps = (state: State) => ({
   insecticideTypes: selectInsecticideTypes(state),
@@ -50,17 +53,25 @@ class InsecticideTypeFilter extends Component<Props, any> {
       label: type,
       value: type
     }));
+
     const selection = suggestions.filter(suggestion =>
       this.props.preventionFilters.insecticideTypes.includes(suggestion.value)
     );
+
     return (
-      <IntegrationReactSelect
-        isMulti
-        isClearable
-        suggestions={suggestions}
-        onChange={this.onChange}
-        value={selection}
-      />
+      <FilterWrapper>
+        <FormLabel component="legend">
+          <T i18nKey={"filters.insecticide_type"} />
+        </FormLabel>
+        <Divider />
+        <IntegrationReactSelect
+          isMulti
+          isClearable
+          suggestions={suggestions}
+          onChange={this.onChange}
+          value={selection}
+        />
+      </FilterWrapper>
     );
   }
 }

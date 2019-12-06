@@ -61,6 +61,7 @@ export const WhoLogoBlue = () => (
   />
 );
 
+// https://materialdesignicons.com/
 export function GlobeIcon(props: any) {
   return (
     <SvgIcon {...props} viewBox="0 0 24 24">
@@ -73,6 +74,14 @@ export function FilterIcon(props: any) {
   return (
     <SvgIcon {...props} viewBox="0 0 24 24">
       <path d="M11 11L16.76 3.62A1 1 0 0 0 16.59 2.22A1 1 0 0 0 16 2H2A1 1 0 0 0 1.38 2.22A1 1 0 0 0 1.21 3.62L7 11V16.87A1 1 0 0 0 7.29 17.7L9.29 19.7A1 1 0 0 0 10.7 19.7A1 1 0 0 0 11 18.87V11M13 16L18 21L23 16Z" />
+    </SvgIcon>
+  );
+}
+
+export function FilterIconSimple(props: any) {
+  return (
+    <SvgIcon {...props} viewBox="0 0 24 24">
+      <path d="M14,12V19.88C14.04,20.18 13.94,20.5 13.71,20.71C13.32,21.1 12.69,21.1 12.3,20.71L10.29,18.7C10.06,18.47 9.96,18.16 10,17.87V12H9.97L4.21,4.62C3.87,4.19 3.95,3.56 4.38,3.22C4.57,3.08 4.78,3 5,3V3H19V3C19.22,3 19.43,3.08 19.62,3.22C20.05,3.56 20.13,4.19 19.79,4.62L14.03,12H14Z" />
     </SvgIcon>
   );
 }

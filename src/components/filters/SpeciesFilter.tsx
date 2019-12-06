@@ -24,6 +24,9 @@ import {
 import * as R from "ramda";
 import { PreventionStudy } from "../../types/Prevention";
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
+import FormLabel from "@material-ui/core/FormLabel";
+import { Divider, FilterWrapper } from "./Filters";
+import T from "../../translations/T";
 
 const mapStateToProps = (state: State) => ({
   species: selectSpecies(state),
@@ -99,17 +102,25 @@ class SpeciesFilter extends Component<Props, any> {
       label: specie,
       value: specie
     }));
+
     const selection = suggestions.filter(suggestion =>
       this.props.preventionFilters.species.includes(suggestion.value)
     );
+
     return (
-      <IntegrationReactSelect
-        isMulti
-        isClearable
-        suggestions={suggestions}
-        onChange={this.onChange}
-        value={selection}
-      />
+      <FilterWrapper>
+        <FormLabel component="legend">
+          <T i18nKey={"filters.vector_species"} />
+        </FormLabel>
+        <Divider />
+        <IntegrationReactSelect
+          isMulti
+          isClearable
+          suggestions={suggestions}
+          onChange={this.onChange}
+          value={selection}
+        />
+      </FilterWrapper>
     );
   }
 }

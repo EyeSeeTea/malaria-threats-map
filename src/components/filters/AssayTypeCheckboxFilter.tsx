@@ -10,6 +10,8 @@ import { setAssayTypes } from "../../store/actions/prevention-actions";
 import { Checkbox, FormGroup, Paper } from "@material-ui/core";
 import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
+import { Divider, FilterWrapper } from "./Filters";
+import FormLabel from "@material-ui/core/FormLabel";
 
 export const ASSAY_TYPES = [
   "MOLECULAR_ASSAY",
@@ -84,23 +86,27 @@ function AssayTypeCheckboxFilter({
   const { t } = useTranslation("common");
 
   return (
-    <Paper className={classes.group}>
-      <FormGroup>
-        {types.map(type => (
-          <StyledFormControlLabel
-            key={type.VALUE_}
-            control={
-              <Checkbox
-                color="primary"
-                checked={preventionFilters.assayTypes.includes(type.VALUE_)}
-                onChange={handleChange(type.VALUE_)}
-              />
-            }
-            label={t(type.VALUE_)}
-          />
-        ))}
-      </FormGroup>
-    </Paper>
+    <FilterWrapper>
+      <FormLabel component="legend">{t(`filters.assay_type`)}</FormLabel>
+      <Divider />
+      <Paper className={classes.group}>
+        <FormGroup>
+          {types.map(type => (
+            <StyledFormControlLabel
+              key={type.VALUE_}
+              control={
+                <Checkbox
+                  color="primary"
+                  checked={preventionFilters.assayTypes.includes(type.VALUE_)}
+                  onChange={handleChange(type.VALUE_)}
+                />
+              }
+              label={t(type.VALUE_)}
+            />
+          ))}
+        </FormGroup>
+      </Paper>
+    </FilterWrapper>
   );
 }
 

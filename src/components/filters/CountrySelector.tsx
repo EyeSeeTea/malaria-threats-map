@@ -7,6 +7,9 @@ import { State } from "../../store/types";
 import { Translation } from "../../types/Translation";
 import IntegrationReactSelect from "../BasicSelect";
 import { selectCountries } from "../../store/reducers/translations-reducer";
+import FormLabel from "@material-ui/core/FormLabel";
+import { Divider, FilterWrapper } from "./Filters";
+import T from "../../translations/T";
 
 const mapStateToProps = (state: State) => ({
   region: selectRegion(state),
@@ -32,14 +35,23 @@ class CountrySelector extends Component<Props> {
       label: country.VALUE_,
       value: country.VALUE_
     }));
+
     return (
-      <IntegrationReactSelect
-        isClearable
-        placeholder={"Select Country"}
-        suggestions={suggestions}
-        onChange={this.onChange}
-        value={suggestions.find((s: any) => s.value === region.country) || null}
-      />
+      <FilterWrapper>
+        <FormLabel component="legend">
+          <T i18nKey={"filters.country"} />
+        </FormLabel>
+        <Divider />
+        <IntegrationReactSelect
+          isClearable
+          placeholder={"Select Country"}
+          suggestions={suggestions}
+          onChange={this.onChange}
+          value={
+            suggestions.find((s: any) => s.value === region.country) || null
+          }
+        />
+      </FilterWrapper>
     );
   }
 }

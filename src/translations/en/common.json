@@ -1,6 +1,28 @@
 {
-  "welcome": {
-    "title": "Welcome to {{framework}}",
-    "intro": "To get started, edit <1><0></0></1> and save to reload."
+  "themes": {
+    "prevention": "Vector insecticide resistance",
+    "diagnosis": "Parasite pfhrp2/3 gene deletions",
+    "treatment": "Parasite drug efficacy and resistance",
+    "invasive": "Invasive Vector Species"
+  },
+  "filters": {
+    "filters": "Filters",
+    "tabs": {
+      "filters": "Filters",
+      "regions": "Regions"
+    },
+    "no_records": "There are no records available with the specified criteria",
+    "records": "There are {{studies}} records found with specified criteria",
+    "insecticide_class": "Insecticide Class",
+    "insecticide_type": "Insecticide Type",
+    "test_type": "Test Type",
+    "vector_species": "Vector Species",
+    "mechanism_type": "Mechanism Type",
+    "assay_type": "Assay Type",
+    "synergist_type": "Synergist Type",
+    "years": "Years",
+    "country": "Country",
+    "region": "Region",
+    "sub_region": "Subregion"
   }
 }

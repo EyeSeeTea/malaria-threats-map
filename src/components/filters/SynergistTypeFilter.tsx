@@ -6,6 +6,9 @@ import { Translation } from "../../types/Translation";
 import { selectTypes } from "../../store/reducers/translations-reducer";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { setSynergistTypes } from "../../store/actions/prevention-actions";
+import { Divider, FilterWrapper } from "./Filters";
+import FormLabel from "@material-ui/core/FormLabel";
+import T from "../../translations/T";
 
 const mapStateToProps = (state: State) => ({
   synergistTypes: selectTypes(state),
@@ -42,13 +45,19 @@ class SynergistTypeFilter extends Component<Props, any> {
       this.props.preventionFilters.synergistTypes.includes(suggestion.value)
     );
     return (
-      <IntegrationReactSelect
-        isMulti
-        isClearable
-        suggestions={suggestions}
-        onChange={this.onChange}
-        value={selection}
-      />
+      <FilterWrapper>
+        <FormLabel component="legend">
+          <T i18nKey={`filters.synergist_type`} />
+        </FormLabel>
+        <Divider />
+        <IntegrationReactSelect
+          isMulti
+          isClearable
+          suggestions={suggestions}
+          onChange={this.onChange}
+          value={selection}
+        />
+      </FilterWrapper>
     );
   }
 }

@@ -1,61 +1,20 @@
 import React from "react";
-import styled from "styled-components";
-import FormLabel from "@material-ui/core/FormLabel";
 import InsecticideClassFilter from "../../../filters/InsecticideClassFilter";
 import InsecticideTypeFilter from "../../../filters/InsecticideTypeFilter";
 import TypeFilter from "../../../filters/TypeFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
-import { State } from "../../../../store/types";
-import { connect } from "react-redux";
-import { selectFilteredPreventionStudies } from "../../../../store/reducers/prevention-reducer";
 
-export const FilterWrapper = styled.div`
-  margin: 10px 20px;
-`;
-export const Divider = styled.div`
-  height: 10px;
-`;
-
-const mapStateToProps = (state: State) => ({
-  studies: selectFilteredPreventionStudies(state)
-});
-
-const mapDispatchToProps = {};
-
-type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
-
-function ResistanceStatusFilters({ studies }: Props) {
+function ResistanceStatusFilters() {
   return (
     <div>
-      <FilterWrapper>
-        <FormLabel component="legend">Insecticide Class</FormLabel>
-        <Divider />
-        <InsecticideClassFilter />
-      </FilterWrapper>
-      <FilterWrapper>
-        <FormLabel component="legend">Insecticide Type</FormLabel>
-        <Divider />
-        <InsecticideTypeFilter />
-      </FilterWrapper>
-      <FilterWrapper>
-        <FormLabel component="legend">Test Type</FormLabel>
-        <Divider />
-        <TypeFilter />
-      </FilterWrapper>
-      <FilterWrapper>
-        <FormLabel component="legend">Vector Species</FormLabel>
-        <Divider />
-        <SpeciesFilter />
-      </FilterWrapper>
+      <InsecticideClassFilter />
+      <InsecticideTypeFilter />
+      <TypeFilter />
+      <SpeciesFilter />
       <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
     </div>
   );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ResistanceStatusFilters);
+export default ResistanceStatusFilters;

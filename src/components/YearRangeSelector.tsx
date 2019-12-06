@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { State } from "../store/types";
 import { selectFilters } from "../store/reducers/base-reducer";
 import { setFiltersAction } from "../store/actions/base-actions";
+import { useTranslation } from "react-i18next";
 
 function range(start: number, end: number) {
   return Array(end - start + 1)
@@ -60,6 +61,7 @@ const YearRangeSelector = ({
   maxYear = 2019
 }: Props) => {
   const classes = useStyles({});
+  const { t } = useTranslation("common");
 
   const handleChange = (event: any, newValue: number | number[]) => {
     setFilters(newValue as number[]);
@@ -67,7 +69,7 @@ const YearRangeSelector = ({
 
   return (
     <div className={classes.root}>
-      <FormLabel component="legend">Years</FormLabel>
+      <FormLabel component="legend">{t(`filters.years`)}</FormLabel>
       <Slider
         className={classes.slider}
         value={filters}

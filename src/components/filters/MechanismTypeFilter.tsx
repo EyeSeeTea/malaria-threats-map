@@ -1,17 +1,19 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import styled from "styled-components";
-import { State } from "../../store/types";
-import { connect } from "react-redux";
-import { Translation } from "../../types/Translation";
-import { useTranslation } from "react-i18next";
-import { Paper } from "@material-ui/core";
-import { selectTypes } from "../../store/reducers/translations-reducer";
-import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
-import { setType } from "../../store/actions/prevention-actions";
+import {State} from "../../store/types";
+import {connect} from "react-redux";
+import {Translation} from "../../types/Translation";
+import {useTranslation} from "react-i18next";
+import {Paper} from "@material-ui/core";
+import {selectTypes} from "../../store/reducers/translations-reducer";
+import {selectPreventionFilters} from "../../store/reducers/prevention-reducer";
+import {setType} from "../../store/actions/prevention-actions";
+import {Divider, FilterWrapper} from "./Filters";
+import FormLabel from "@material-ui/core/FormLabel";
 
 const WHITELISTED_TYPES = [
   "MONO_OXYGENASES",
@@ -77,20 +79,24 @@ function MechanismTypeFilter({
   const { t } = useTranslation("common");
 
   return (
-    <Paper className={classes.group}>
-      <RadioGroup value={preventionFilters.type} onChange={handleChange}>
-        {filteredTypes
-          .filter(translation => translation.VALUE_ !== "NA")
-          .map((insecticideClass: Translation) => (
-            <StyledFormControlLabel
-              key={insecticideClass.VALUE_}
-              value={insecticideClass.VALUE_}
-              control={<Radio color="primary" />}
-              label={t(insecticideClass.VALUE_)}
-            />
-          ))}
-      </RadioGroup>
-    </Paper>
+    <FilterWrapper>
+      <FormLabel component="legend">{t(`filters.mechanism_type`)}</FormLabel>
+      <Divider />
+      <Paper className={classes.group}>
+        <RadioGroup value={preventionFilters.type} onChange={handleChange}>
+          {filteredTypes
+            .filter(translation => translation.VALUE_ !== "NA")
+            .map((insecticideClass: Translation) => (
+              <StyledFormControlLabel
+                key={insecticideClass.VALUE_}
+                value={insecticideClass.VALUE_}
+                control={<Radio color="primary" />}
+                label={t(insecticideClass.VALUE_)}
+              />
+            ))}
+        </RadioGroup>
+      </Paper>
+    </FilterWrapper>
   );
 }
 

@@ -23,6 +23,9 @@ import {
 } from "../layers/studies-filters";
 import { PreventionStudy } from "../../types/Prevention";
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
+import FormLabel from "@material-ui/core/FormLabel";
+import { Divider, FilterWrapper } from "./Filters";
+import T from "../../translations/T";
 
 const mapStateToProps = (state: State) => ({
   types: selectTypes(state),
@@ -95,16 +98,24 @@ class TypeFilter extends Component<Props, any> {
       label: type,
       value: type
     }));
+
     const selection = suggestions.find(
       suggestion => this.props.preventionFilters.type === suggestion.value
     );
+
     return (
-      <IntegrationReactSelect
-        isClearable
-        suggestions={suggestions}
-        onChange={this.onChange}
-        value={selection || null}
-      />
+      <FilterWrapper>
+        <FormLabel component="legend">
+          <T i18nKey={"filters.test_type"} />
+        </FormLabel>
+        <Divider />
+        <IntegrationReactSelect
+          isClearable
+          suggestions={suggestions}
+          onChange={this.onChange}
+          value={selection || null}
+        />
+      </FilterWrapper>
     );
   }
 }

@@ -155,6 +155,7 @@ const MapWrapper = styled.div`
 
 const StyledTab = styled(Tab)`
   color: ${props => props.color || "inherit"} !important;
+  padding: 16px !important;
   font-size: 75% !important;
 `;
 
@@ -291,7 +292,6 @@ function PersistentDrawerLeft({
                 }}
               >
                 <StyledTab
-                  label="Prevention"
                   color={
                     theme === "prevention" ? colors.prevention.N : undefined
                   }
@@ -300,21 +300,19 @@ function PersistentDrawerLeft({
                   }
                 />
                 <StyledTab
-                  label="Diagnosis"
                   color={theme === "diagnosis" ? colors.diagnosis.N : undefined}
                   icon={
                     <DiagnosisIcon active={theme === "diagnosis"} size={36} />
                   }
                 />
                 <StyledTab
-                  label="Treatment"
                   color={theme === "treatment" ? colors.treatment.N : undefined}
                   icon={
                     <TreatmentIcon active={theme === "treatment"} size={36} />
                   }
                 />
                 <StyledTab
-                  label="Invasive"
+                  label=""
                   color={theme === "invasive" ? colors.invasive.N : undefined}
                   icon={
                     <InvasiveIcon active={theme === "invasive"} size={36} />

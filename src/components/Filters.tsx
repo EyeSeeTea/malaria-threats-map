@@ -4,7 +4,6 @@ import Dialog from "@material-ui/core/Dialog";
 import IconButton from "@material-ui/core/IconButton";
 import Slide from "@material-ui/core/Slide";
 import { TransitionProps } from "@material-ui/core/transitions";
-import FilterIcon from "@material-ui/icons/FilterList";
 import { AppBar, Fab, Paper, Toolbar, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
@@ -50,6 +49,8 @@ import DelayedParasiteClearanceFilters from "./layers/treatment/DelayedParasiteC
 import MolecularMarkerFilters from "./layers/treatment/MolecularMarkers/MolecularMarkerFilters";
 import { setFiltersOpen } from "../store/actions/base-actions";
 import { dispatchCustomEvent } from "../utils/dom-utils";
+import { useTranslation } from "react-i18next";
+import { FilterIconSimple } from "./Icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -210,6 +211,9 @@ function Filters({
     }
   }
   dispatchCustomEvent("resize");
+
+  const { t } = useTranslation("common");
+
   return (
     <div>
       <Fab
@@ -220,8 +224,8 @@ function Filters({
         onClick={handleClickOpen}
         className={classes.fab}
       >
-        <FilterIcon className={classes.extendedIcon} fontSize="small" />
-        Filters
+        <FilterIconSimple className={classes.extendedIcon} fontSize="small" />
+        {t("filters.filters")}
       </Fab>
       <Dialog
         fullScreen
@@ -244,9 +248,9 @@ function Filters({
       >
         <AppBar className={classes.appBar}>
           <Toolbar>
-            <FilterIcon />
+            <FilterIconSimple />
             <Typography variant="h6" className={classes.title}>
-              Filters
+              {t("filters.filters")}
             </Typography>
             <IconButton
               edge="start"

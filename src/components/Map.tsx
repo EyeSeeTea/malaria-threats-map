@@ -218,7 +218,7 @@ class Map extends React.Component<any> {
               <MapTypesSelector />
               <Divider />
               <Filters />
-              <MalariaTour />
+              {/*<MalariaTour />*/}
             </Hidden>
             <Layers />
             <Country disabled={countryTogglerDisabled} />
@@ -258,9 +258,9 @@ class Map extends React.Component<any> {
             <WhoLogo />
           </Hidden>
         </BottomLeftContainer>
-        <Hidden xsDown>
-          <InitialDialog />
-        </Hidden>
+        {/*<Hidden xsDown>*/}
+        {/*  <InitialDialog />*/}
+        {/*</Hidden>*/}
       </React.Fragment>
     );
   }

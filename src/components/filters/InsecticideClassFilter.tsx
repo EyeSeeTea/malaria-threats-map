@@ -15,6 +15,8 @@ import {
   selectPreventionFilters
 } from "../../store/reducers/prevention-reducer";
 import { setInsecticideClass } from "../../store/actions/prevention-actions";
+import FormLabel from "@material-ui/core/FormLabel";
+import { Divider, FilterWrapper } from "./Filters";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   & span {
@@ -63,27 +65,30 @@ function InsecticideClassFilter({
   function handleChange(event: React.ChangeEvent<unknown>) {
     setInsecticideClass((event.target as HTMLInputElement).value);
   }
-
   const { t } = useTranslation("common");
 
   return (
-    <Paper className={classes.group}>
-      <RadioGroup
-        value={preventionFilters.insecticideClass}
-        onChange={handleChange}
-      >
-        {(insecticideClasses as Translation[])
-          .filter(translation => translation.VALUE_ !== "NA")
-          .map((insecticideClass: Translation) => (
-            <StyledFormControlLabel
-              key={insecticideClass.VALUE_}
-              value={insecticideClass.VALUE_}
-              control={<Radio color="primary" />}
-              label={t(insecticideClass.VALUE_)}
-            />
-          ))}
-      </RadioGroup>
-    </Paper>
+    <FilterWrapper>
+      <FormLabel component="legend">{t(`filters.insecticide_class`)}</FormLabel>
+      <Divider />
+      <Paper className={classes.group}>
+        <RadioGroup
+          value={preventionFilters.insecticideClass}
+          onChange={handleChange}
+        >
+          {(insecticideClasses as Translation[])
+            .filter(translation => translation.VALUE_ !== "NA")
+            .map((insecticideClass: Translation) => (
+              <StyledFormControlLabel
+                key={insecticideClass.VALUE_}
+                value={insecticideClass.VALUE_}
+                control={<Radio color="primary" />}
+                label={t(insecticideClass.VALUE_)}
+              />
+            ))}
+        </RadioGroup>
+      </Paper>
+    </FilterWrapper>
   );
 }
 

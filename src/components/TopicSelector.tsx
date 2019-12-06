@@ -12,6 +12,8 @@ import { State } from "../store/types";
 import { connect } from "react-redux";
 import { setThemeAction } from "../store/actions/base-actions";
 import { selectTheme } from "../store/reducers/base-reducer";
+// @ts-ignore
+import { Translation } from "react-i18next";
 
 const ButtonGroup = styled.div`
   display: flex;
@@ -51,34 +53,48 @@ class ThemeSelector extends Component<Props> {
   render() {
     const { theme, setTheme } = this.props;
     return (
-      <StyledPaper>
-        <ButtonGroup>
-          <ThemeButton>
-            <StyledIconButton onClick={() => setTheme("prevention")}>
-              <PreventionIcon active={theme === "prevention"} />
-            </StyledIconButton>
-            Prevention
-          </ThemeButton>
-          <ThemeButton>
-            <StyledIconButton onClick={() => setTheme("diagnosis")}>
-              <DiagnosisIcon active={theme === "diagnosis"} />
-            </StyledIconButton>
-            Diagnosis
-          </ThemeButton>
-          <ThemeButton>
-            <StyledIconButton onClick={() => setTheme("treatment")}>
-              <TreatmentIcon active={theme === "treatment"} />
-            </StyledIconButton>
-            Treatment
-          </ThemeButton>
-          <ThemeButton>
-            <StyledIconButton onClick={() => setTheme("invasive")}>
-              <InvasiveIcon active={theme === "invasive"} />
-            </StyledIconButton>
-            Invasive
-          </ThemeButton>
-        </ButtonGroup>
-      </StyledPaper>
+      <Translation ns={"common"}>
+        {t => {
+          return (
+            <StyledPaper>
+              <ButtonGroup>
+                <ThemeButton>
+                  <StyledIconButton
+                    title={t(`themes.prevention`)}
+                    onClick={() => setTheme("prevention")}
+                  >
+                    <PreventionIcon active={theme === "prevention"} />
+                  </StyledIconButton>
+                </ThemeButton>
+                <ThemeButton>
+                  <StyledIconButton
+                    title={t(`themes.diagnosis`)}
+                    onClick={() => setTheme("diagnosis")}
+                  >
+                    <DiagnosisIcon active={theme === "diagnosis"} />
+                  </StyledIconButton>
+                </ThemeButton>
+                <ThemeButton>
+                  <StyledIconButton
+                    title={t(`themes.treatment`)}
+                    onClick={() => setTheme("treatment")}
+                  >
+                    <TreatmentIcon active={theme === "treatment"} />
+                  </StyledIconButton>
+                </ThemeButton>
+                <ThemeButton>
+                  <StyledIconButton
+                    title={t(`themes.invasive`)}
+                    onClick={() => setTheme("invasive")}
+                  >
+                    <InvasiveIcon active={theme === "invasive"} />
+                  </StyledIconButton>
+                </ThemeButton>
+              </ButtonGroup>
+            </StyledPaper>
+          );
+        }}
+      </Translation>
     );
   }
 }
