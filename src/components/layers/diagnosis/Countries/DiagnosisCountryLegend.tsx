@@ -1,37 +1,31 @@
 import React from "react";
 import {
   LegendContainer,
-  LegendEntries,
-  LegendEntry,
-  LegendFooterContainer,
-  LegendFooterTypography,
-  LegendSymbol,
-  LegendText,
+  LegendFooter,
+  LegendLabels,
   LegendTitleContainer,
   LegendTitleTypography
 } from "../../../Leyend";
 import { DiagnosisCountryColors } from "./DiagnosisCountrySymbols";
+import { useTranslation } from "react-i18next";
 
 export default function DiagnosisCountryLegend() {
+  const { t } = useTranslation("common");
+  const labels = [
+    {
+      label: "legend.number_of_surveys",
+      color: DiagnosisCountryColors.COUNTRIES[0]
+    }
+  ];
   return (
     <LegendContainer>
       <LegendTitleContainer>
         <LegendTitleTypography color="textPrimary" gutterBottom>
-          Vector Insecticide Resistance
+          {t("themes.diagnosis")}
         </LegendTitleTypography>
       </LegendTitleContainer>
-
-      <LegendEntries>
-        <LegendEntry>
-          <LegendSymbol color={DiagnosisCountryColors.COUNTRIES[0]} />
-          <LegendText>{"Number of surveys"}</LegendText>
-        </LegendEntry>
-      </LegendEntries>
-      <LegendFooterContainer>
-        <LegendFooterTypography color="textSecondary">
-          Most recent data shown
-        </LegendFooterTypography>
-      </LegendFooterContainer>
+      <LegendLabels labels={labels} />
+      <LegendFooter />
     </LegendContainer>
   );
 }

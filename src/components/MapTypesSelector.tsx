@@ -39,37 +39,52 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const preventionSuggestions: OptionType[] = [
-  { label: "Resistance Status", value: PreventionMapType.RESISTANCE_STATUS },
-  { label: "Resistance Intensity", value: PreventionMapType.INTENSITY_STATUS },
   {
-    label: "Resistance Mechanism",
+    label: "prevention.resistance_status",
+    value: PreventionMapType.RESISTANCE_STATUS
+  },
+  {
+    label: "prevention.resistance_intensity",
+    value: PreventionMapType.INTENSITY_STATUS
+  },
+  {
+    label: "prevention.resistance_mechanism",
     value: PreventionMapType.RESISTANCE_MECHANISM
   },
   {
-    label: "Synergist involvement",
+    label: "prevention.synergist_involvement",
     value: PreventionMapType.LEVEL_OF_INVOLVEMENT
   },
   {
-    label: "PBO Deployment",
+    label: "prevention.pbo_deployment",
     value: PreventionMapType.PBO_DEPLOYMENT
   }
 ];
 
 const diagnosisSuggestions: OptionType[] = [
-  { label: "Gene Deletions", value: DiagnosisMapType.GENE_DELETIONS }
+  { label: "diagnosis.gene_deletions", value: DiagnosisMapType.GENE_DELETIONS }
 ];
 
 const treatmentSuggestions: OptionType[] = [
-  { label: "Treatment Failure", value: TreatmentMapType.TREATMENT_FAILURE },
   {
-    label: "Delayed parasite clearance",
+    label: "treatment.treatment_failure",
+    value: TreatmentMapType.TREATMENT_FAILURE
+  },
+  {
+    label: "treatment.delayed_parasite_clearance",
     value: TreatmentMapType.DELAYED_PARASITE_CLEARANCE
   },
-  { label: "Molecular markers", value: TreatmentMapType.MOLECULAR_MARKERS }
+  {
+    label: "treatment.molecular_markers",
+    value: TreatmentMapType.MOLECULAR_MARKERS
+  }
 ];
 
 const invasiveSuggestions: OptionType[] = [
-  { label: "Vector Ocurrance", value: InvasiveMapType.VECTOR_OCCURANCE }
+  {
+    label: "invasive.vector_occurrance",
+    value: InvasiveMapType.VECTOR_OCCURANCE
+  }
 ];
 
 class MapTypesSelector extends Component<Props> {

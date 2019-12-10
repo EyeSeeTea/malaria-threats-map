@@ -19,6 +19,7 @@ import { setPreventionMapType } from "../store/actions/prevention-actions";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
+import { useTranslation } from "react-i18next";
 
 export const LegendContainer = styled(Paper)`
   padding: 8px;
@@ -72,6 +73,37 @@ export const LegendTitleTypography = styled(Typography)`
 export const LegendFooterTypography = styled(Typography)`
   font-size: 0.7rem !important;
 `;
+
+export function LegendFooter() {
+  const { t } = useTranslation("common");
+  return (
+    <LegendFooterContainer>
+      <LegendFooterTypography color="textSecondary">
+        {t("legend.most_recent_data_shown")}
+      </LegendFooterTypography>
+    </LegendFooterContainer>
+  );
+}
+
+export interface LegendLabel {
+  label: string;
+  color: string;
+}
+
+export function LegendLabels({ labels }: { labels: LegendLabel[] }) {
+  const { t } = useTranslation("common");
+  return (
+    <LegendEntries>
+      {labels.map(label => (
+        <LegendEntry>
+          <LegendSymbol color={label.color} />
+          <LegendText>{t(label.label)}</LegendText>
+        </LegendEntry>
+      ))}
+    </LegendEntries>
+  );
+}
+
 const mapStateToProps = (state: State) => ({
   filters: selectFilters(state),
   theme: selectTheme(state),

@@ -1,65 +1,48 @@
 import React from "react";
 import {
   LegendContainer,
-  LegendEntries,
-  LegendEntry,
-  LegendFooterContainer,
-  LegendFooterTypography,
-  LegendSymbol,
-  LegendText,
+  LegendFooter,
+  LegendLabels,
   LegendTitleContainer,
   LegendTitleTypography
 } from "../../../Leyend";
 import { TREATMENT_FAILURE_STATUS } from "./utils";
 import { TreatmentFailureColors } from "./treatmentLayerSymbols";
+import { useTranslation } from "react-i18next";
 
 export default function TreatmentFailureLeyend() {
+  const { t } = useTranslation("common");
+  const labels = [
+    {
+      label: "treatment.legend.treatment_failure.high",
+      color: TreatmentFailureColors[TREATMENT_FAILURE_STATUS.HIGH][0]
+    },
+    {
+      label: "treatment.legend.treatment_failure.medium_high",
+      color: TreatmentFailureColors[TREATMENT_FAILURE_STATUS.MEDIUM_HIGH][0]
+    },
+    {
+      label: "treatment.legend.treatment_failure.medium",
+      color: TreatmentFailureColors[TREATMENT_FAILURE_STATUS.MEDIUM][0]
+    },
+    {
+      label: "treatment.legend.treatment_failure.low",
+      color: TreatmentFailureColors[TREATMENT_FAILURE_STATUS.LOW][0]
+    },
+    {
+      label: "treatment.legend.treatment_failure.unknown",
+      color: TreatmentFailureColors[TREATMENT_FAILURE_STATUS.UNKNOWN][0]
+    }
+  ];
   return (
     <LegendContainer>
       <LegendTitleContainer>
         <LegendTitleTypography color="textPrimary" gutterBottom>
-          Treatment Failure
+          {t("treatment.treatment_failure")}
         </LegendTitleTypography>
       </LegendTitleContainer>
-      <LegendEntries>
-        <LegendEntry>
-          <LegendSymbol
-            color={TreatmentFailureColors[TREATMENT_FAILURE_STATUS.HIGH][0]}
-          />
-          <LegendText>{"> 20%"}</LegendText>
-        </LegendEntry>
-        <LegendEntry>
-          <LegendSymbol
-            color={
-              TreatmentFailureColors[TREATMENT_FAILURE_STATUS.MEDIUM_HIGH][0]
-            }
-          />
-          <LegendText>{"10% - 20%"}</LegendText>
-        </LegendEntry>
-        <LegendEntry>
-          <LegendSymbol
-            color={TreatmentFailureColors[TREATMENT_FAILURE_STATUS.MEDIUM][0]}
-          />
-          <LegendText>{"5% - 10%"}</LegendText>
-        </LegendEntry>
-        <LegendEntry>
-          <LegendSymbol
-            color={TreatmentFailureColors[TREATMENT_FAILURE_STATUS.LOW][0]}
-          />
-          <LegendText>{"< 5%"}</LegendText>
-        </LegendEntry>
-        <LegendEntry>
-          <LegendSymbol
-            color={TreatmentFailureColors[TREATMENT_FAILURE_STATUS.UNKNOWN][0]}
-          />
-          <LegendText>{"Data not available"}</LegendText>
-        </LegendEntry>
-      </LegendEntries>
-      <LegendFooterContainer>
-        <LegendFooterTypography color="textSecondary">
-          Most recent data shown
-        </LegendFooterTypography>
-      </LegendFooterContainer>
+      <LegendLabels labels={labels} />
+      <LegendFooter />
     </LegendContainer>
   );
 }

@@ -1,47 +1,38 @@
 import React from "react";
 import {
   LegendContainer,
-  LegendEntries,
-  LegendEntry,
-  LegendFooterContainer,
-  LegendFooterTypography,
-  LegendSymbol,
-  LegendText,
+  LegendFooter,
+  LegendLabels,
   LegendTitleContainer,
-  LegendTitleTypography,
-  LegendTypography
+  LegendTitleTypography
 } from "../../../Leyend";
+import { useTranslation } from "react-i18next";
 
 export default function Legend() {
+  const { t } = useTranslation("common");
+  const labels = [
+    {
+      label: "prevention.legend.resistance_status.confirmed",
+      color: "#d43501"
+    },
+    {
+      label: "prevention.legend.resistance_status.possible",
+      color: "#ff9502"
+    },
+    {
+      label: "prevention.legend.resistance_status.susceptible",
+      color: "#869c66"
+    }
+  ];
   return (
     <LegendContainer>
       <LegendTitleContainer>
         <LegendTitleTypography color="textPrimary" gutterBottom>
-          Resistance Status
+          {t("prevention.resistance_status")}
         </LegendTitleTypography>
-        <LegendTypography color="textSecondary">
-          (% mosquito mortality)
-        </LegendTypography>
       </LegendTitleContainer>
-      <LegendEntries>
-        <LegendEntry>
-          <LegendSymbol color="#d43501" />
-          <LegendText>{"Confirmed (<90%)"}</LegendText>
-        </LegendEntry>
-        <LegendEntry>
-          <LegendSymbol color="#ff9502" />
-          <LegendText>{"Possible (90-97%)"}</LegendText>
-        </LegendEntry>
-        <LegendEntry>
-          <LegendSymbol color="#869c66" />
-          <LegendText>{"Susceptible (≥98%)"}</LegendText>
-        </LegendEntry>
-      </LegendEntries>
-      <LegendFooterContainer>
-        <LegendFooterTypography color="textSecondary">
-          Most recent data shown
-        </LegendFooterTypography>
-      </LegendFooterContainer>
+      <LegendLabels labels={labels} />
+      <LegendFooter />
     </LegendContainer>
   );
 }

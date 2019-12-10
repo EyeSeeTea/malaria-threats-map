@@ -1,12 +1,8 @@
 import React from "react";
 import {
   LegendContainer,
-  LegendEntries,
-  LegendEntry,
-  LegendFooterContainer,
-  LegendFooterTypography,
-  LegendSymbol,
-  LegendText,
+  LegendFooter,
+  LegendLabels,
   LegendTitleContainer,
   LegendTitleTypography
 } from "../../../Leyend";
@@ -14,40 +10,33 @@ import {
   PboDeploymentColors,
   PboDeploymentStatus
 } from "./PboDeploymentSymbols";
+import { useTranslation } from "react-i18next";
 
 export default function PboDeploymentLegend() {
+  const { t } = useTranslation("common");
+  const labels = [
+    {
+      label: "prevention.legend.pbo_deployment.eligible",
+      color: PboDeploymentColors[PboDeploymentStatus.ELIGIBLE][0]
+    },
+    {
+      label: "prevention.legend.pbo_deployment.not_eligible",
+      color: PboDeploymentColors[PboDeploymentStatus.NOT_ELIGIBLE][0]
+    },
+    {
+      label: "prevention.legend.pbo_deployment.not_enough_data",
+      color: PboDeploymentColors[PboDeploymentStatus.NOT_ENOUGH_DATA][0]
+    }
+  ];
   return (
     <LegendContainer>
       <LegendTitleContainer>
         <LegendTitleTypography color="textPrimary" gutterBottom>
-          PBO Deployment Status
+          {t("prevention.pbo_deployment")}
         </LegendTitleTypography>
       </LegendTitleContainer>
-      <LegendEntries>
-        <LegendEntry>
-          <LegendSymbol
-            color={PboDeploymentColors[PboDeploymentStatus.ELIGIBLE][0]}
-          />
-          <LegendText>{"All criteria met"}</LegendText>
-        </LegendEntry>
-        <LegendEntry>
-          <LegendSymbol
-            color={PboDeploymentColors[PboDeploymentStatus.NOT_ELIGIBLE][0]}
-          />
-          <LegendText>{"At least one criteria is not met"}</LegendText>
-        </LegendEntry>
-        <LegendEntry>
-          <LegendSymbol
-            color={PboDeploymentColors[PboDeploymentStatus.NOT_ENOUGH_DATA][0]}
-          />
-          <LegendText>{"More data needs to be collected to evaluate criteria"}</LegendText>
-        </LegendEntry>
-      </LegendEntries>
-      <LegendFooterContainer>
-        <LegendFooterTypography color="textSecondary">
-          Most recent data shown
-        </LegendFooterTypography>
-      </LegendFooterContainer>
+      <LegendLabels labels={labels} />
+      <LegendFooter />
     </LegendContainer>
   );
 }

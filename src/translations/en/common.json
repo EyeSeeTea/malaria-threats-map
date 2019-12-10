@@ -5,6 +5,87 @@
     "treatment": "Parasite drug efficacy and resistance",
     "invasive": "Invasive Vector Species"
   },
+  "prevention": {
+    "resistance_status": "Resistance Status",
+    "resistance_intensity": "Resistance Intensity",
+    "resistance_mechanism": "Resistance Mechanism",
+    "synergist_involvement": "Synergist Involvement",
+    "pbo_deployment": "PBO Deployment",
+    "legend": {
+      "resistance_intensity": {
+        "high_intensity": "High Intensity",
+        "moderate_to_high_intensity": "Moderate to High Intensity",
+        "moderate_intensity": "Moderate Intensity",
+        "low_intensity": "Low Intensity",
+        "susceptible": "Susceptible"
+      },
+      "resistance_status": {
+        "confirmed": "Confirmed (<90%)",
+        "possible": "Possible (90-97%)",
+        "susceptible": "Susceptible (≥98%)"
+      },
+      "resistance_mechanism": {
+        "confirmed": "Confirmed",
+        "not_confirmed": "Not Confirmed"
+      },
+      "synergist_involvement": {
+        "mosquito_mortality": "Mosquito mortality",
+        "full_involvement": "Full Involvement",
+        "partial_involvement": "Partial Involvement",
+        "no_involvement": "No Involvement"
+      },
+      "pbo_deployment": {
+        "eligible": "All criteria met",
+        "not_eligible": "At least one criteria is not met",
+        "not_enough_data": "More data needs to be collected to evaluate criteria"
+      }
+    }
+  },
+  "diagnosis": {
+    "gene_deletions": "Gene Deletions",
+    "legend": {
+      "gene_deletions": {
+        "confirmed": "Confirmed",
+        "not_identified": "Not Identified"
+      }
+    }
+  },
+  "treatment": {
+    "treatment_failure": "Treatment Failure",
+    "delayed_parasite_clearance": "Delayed Parasite Clearance",
+    "molecular_markers": "Molecular Markers",
+    "legend": {
+      "treatment_failure": {
+        "high": "> 20%",
+        "medium_high": "10% - 20%",
+        "medium": "5% - 10%",
+        "low": "< 5%",
+        "unknown": "Data not available"
+      },
+      "delayed_parasite_clearance": {
+        "high": "> 20%",
+        "medium_high": "10% - 20%",
+        "medium": "5% - 10%",
+        "low": "< 5%",
+        "unknown": "Data not available"
+      },
+      "molecular_markers": {
+        "high": "> 80%",
+        "medium_high": "51% - 80%",
+        "medium": "10% - 50%",
+        "low": "< 10%"
+      }
+    }
+  },
+  "invasive": {
+    "vector_occurrance": "Vector Ocurrance",
+    "legend": {
+      "vector_occurrance": {
+        "invasive": "Invasive",
+        "native": "Native"
+      }
+    }
+  },
   "filters": {
     "filters": "Filters",
     "tabs": {
@@ -24,5 +105,14 @@
     "country": "Country",
     "region": "Region",
     "sub_region": "Subregion"
+  },
+  "legend": {
+    "number_of_studies": "Number of studies",
+    "number_of_surveys": "Number of surveys",
+    "most_recent_data_shown": "Most recent data shown"
+  },
+  "copyright": {
+    "mobile": "Click here to read the disclaimer that applies to the above map",
+    "content": "The boundaries and names shown and the designations used on this map do not imply the expression of any opinion whatsoever on the part of the World Health Organization concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Dotted and dashed lines or grey areas on maps represent approximate border lines or areas for which there may not yet be full agreement. The borders of the map provided reflect the current political and geographic status as of the date of publication (2017). However, the technical health information is based on data accurate with respect to the year selected. The disconnect in this arrangement should be noted but no implications regarding political or terminological status should be drawn from this arrangement as it is purely a function of technical and graphical limitations. Data source: Global Malaria Programme. Map production: Global Malaria Programme. World Health Organization. WHO 2019. All rights reserved."
   }
 }

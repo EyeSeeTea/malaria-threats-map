@@ -9,7 +9,6 @@ import PboDeploymentSymbols, {
 import { default as ResistanceStatusLegend } from "./ResistanceStatus/legend";
 import { default as IntensityStatusLegend } from "./IntensityStatus/legend";
 import { default as ResistanceMechanismsLegend } from "./ResistanceMechanisms/legend";
-import { default as LevelOfInvolvementLegend } from "./Involvement/legend";
 import { PreventionFilters, PreventionMapType } from "../../../store/types";
 import PboDeploymentLegend from "./PboDeployment/PboDeploymentLegend";
 import * as R from "ramda";
@@ -21,6 +20,7 @@ import {
 } from "../studies-filters";
 import CountrySymbols from "./Countries/PreventionCountrySymbols";
 import PreventionCountryLegend from "./Countries/PreventionCountryLegend";
+import LevelOfInvolvementLegend from "./Involvement/LevelOfInvolvementLegend";
 
 export const resolveMapTypeSymbols = (
   preventionFilters: PreventionFilters,
