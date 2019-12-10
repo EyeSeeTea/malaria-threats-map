@@ -17,6 +17,9 @@ import {
 import * as R from "ramda";
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import { DiagnosisStudy } from "../../types/Diagnosis";
+import { Divider, FilterWrapper } from "./Filters";
+import FormLabel from "@material-ui/core/FormLabel";
+import T from "../../translations/T";
 
 const mapStateToProps = (state: State) => ({
   patientType: selectPatientType(state),
@@ -64,12 +67,18 @@ class PatientTypeFilter extends Component<Props, any> {
       suggestion => this.props.diagnosisFilters.patientType === suggestion.value
     );
     return (
-      <IntegrationReactSelect
-        isClearable
-        suggestions={suggestions}
-        onChange={this.onChange}
-        value={selection}
-      />
+      <FilterWrapper>
+        <FormLabel component="legend">
+          <T i18nKey={`filters.patient_type`} />
+        </FormLabel>
+        <Divider />
+        <IntegrationReactSelect
+          isClearable
+          suggestions={suggestions}
+          onChange={this.onChange}
+          value={selection}
+        />
+      </FilterWrapper>
     );
   }
 }

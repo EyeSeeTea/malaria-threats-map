@@ -4,6 +4,9 @@ import { State } from "../../store/types";
 import IntegrationReactSelect from "../BasicSelect";
 import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
 import { setDiagnosisDeletionType } from "../../store/actions/diagnosis-actions";
+import { Divider, FilterWrapper } from "./Filters";
+import FormLabel from "@material-ui/core/FormLabel";
+import T from "../../translations/T";
 
 const mapStateToProps = (state: State) => ({
   diagnosisFilters: selectDiagnosisFilters(state)
@@ -40,11 +43,17 @@ class DeletionTypeFilter extends Component<Props, any> {
         this.props.diagnosisFilters.deletionType === suggestion.value
     );
     return (
-      <IntegrationReactSelect
-        suggestions={suggestions}
-        onChange={this.onChange}
-        value={selection}
-      />
+      <FilterWrapper>
+        <FormLabel component="legend">
+          <T i18nKey={`filters.deletion_type`} />
+        </FormLabel>
+        <Divider />
+        <IntegrationReactSelect
+          suggestions={suggestions}
+          onChange={this.onChange}
+          value={selection}
+        />
+      </FilterWrapper>
     );
   }
 }

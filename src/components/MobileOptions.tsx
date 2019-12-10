@@ -1,5 +1,5 @@
 import React from "react";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
@@ -9,14 +9,15 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
-import {TransitionProps} from "@material-ui/core/transitions";
-import {State} from "../store/types";
-import {selectAreMobileOptionsOpen} from "../store/reducers/base-reducer";
-import {setMobileOptionsOpen} from "../store/actions/base-actions";
-import {connect} from "react-redux";
+import { TransitionProps } from "@material-ui/core/transitions";
+import { State } from "../store/types";
+import { selectAreMobileOptionsOpen } from "../store/reducers/base-reducer";
+import { setMobileOptionsOpen } from "../store/actions/base-actions";
+import { connect } from "react-redux";
 import styled from "styled-components";
-import {Typography} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
+import { useTranslation } from "react-i18next";
 
 const FlexGrow = styled.div`
   flex-grow: 1;
@@ -57,7 +58,7 @@ function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
   function handleClose() {
     setMobileOptionsOpen(false);
   }
-
+  const { t } = useTranslation("common");
   return (
     <>
       <Dialog
@@ -69,7 +70,7 @@ function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
         <AppBar className={classes.appBar}>
           <Toolbar variant="dense">
             <Typography variant="h6" className={classes.title}>
-              Options
+              {t("options.title")}
             </Typography>
             <FlexGrow />
             <IconButton
@@ -85,7 +86,7 @@ function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
         </AppBar>
         <List>
           <ListItem button>
-            <ListItemText primary="Select Language" />
+            <ListItemText primary={t("options.select_language")} />
             <FlexGrow />
             <LanguageSelectorSelect />
           </ListItem>

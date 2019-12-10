@@ -17,6 +17,9 @@ import {
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import * as R from "ramda";
 import { TreatmentStudy } from "../../types/Treatment";
+import { Divider, FilterWrapper } from "./Filters";
+import FormLabel from "@material-ui/core/FormLabel";
+import T from "../../translations/T";
 
 const mapStateToProps = (state: State) => ({
   drugs: selectDrugs(state),
@@ -67,11 +70,17 @@ class DrugsFilter extends Component<Props, any> {
       suggestion => this.props.treatmentFilters.drug === suggestion.value
     );
     return (
-      <IntegrationReactSelect
-        suggestions={suggestions}
-        onChange={this.onChange}
-        value={selection}
-      />
+      <FilterWrapper>
+        <FormLabel component="legend">
+          <T i18nKey={`filters.drug`} />
+        </FormLabel>
+        <Divider />
+        <IntegrationReactSelect
+          suggestions={suggestions}
+          onChange={this.onChange}
+          value={selection}
+        />
+      </FilterWrapper>
     );
   }
 }

@@ -98,9 +98,15 @@
     "insecticide_type": "Insecticide Type",
     "test_type": "Test Type",
     "vector_species": "Vector Species",
+    "plasmodium_species": "Plasmodium Species",
+    "drug": "Drug",
+    "molecular_marker": "Molecular Marker",
     "mechanism_type": "Mechanism Type",
     "assay_type": "Assay Type",
     "synergist_type": "Synergist Type",
+    "deletion_type": "Deletion Type",
+    "survey_type": "Survey Type",
+    "patient_type": "Patient Type",
     "years": "Years",
     "country": "Country",
     "region": "Region",
@@ -114,5 +120,9 @@
   "copyright": {
     "mobile": "Click here to read the disclaimer that applies to the above map",
     "content": "The boundaries and names shown and the designations used on this map do not imply the expression of any opinion whatsoever on the part of the World Health Organization concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Dotted and dashed lines or grey areas on maps represent approximate border lines or areas for which there may not yet be full agreement. The borders of the map provided reflect the current political and geographic status as of the date of publication (2017). However, the technical health information is based on data accurate with respect to the year selected. The disconnect in this arrangement should be noted but no implications regarding political or terminological status should be drawn from this arrangement as it is purely a function of technical and graphical limitations. Data source: Global Malaria Programme. Map production: Global Malaria Programme. World Health Organization. WHO 2019. All rights reserved."
+  },
+  "options": {
+    "title": "Options",
+    "select_language": "Select Language"
   }
 }

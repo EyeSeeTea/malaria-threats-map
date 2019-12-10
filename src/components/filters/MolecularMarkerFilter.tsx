@@ -10,6 +10,9 @@ import { useTranslation } from "react-i18next";
 import { Paper } from "@material-ui/core";
 import { setMolecularMarker } from "../../store/actions/treatment-actions";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
+import { Divider, FilterWrapper } from "./Filters";
+import FormLabel from "@material-ui/core/FormLabel";
+import T from "../../translations/T";
 
 export const MOLECULAR_MARKERS = [
   {
@@ -78,21 +81,27 @@ function MolecularMarkerFilter({
   const { t } = useTranslation("common");
 
   return (
-    <Paper className={classes.group}>
-      <RadioGroup
-        value={treatmentFilters.molecularMarker.toString()}
-        onChange={(event, value) => handleChange(value)}
-      >
-        {MOLECULAR_MARKERS.map((suggestion: any) => (
-          <StyledFormControlLabel
-            key={suggestion.value}
-            value={suggestion.value.toString()}
-            control={<Radio color="primary" />}
-            label={t(suggestion.label)}
-          />
-        ))}
-      </RadioGroup>
-    </Paper>
+    <FilterWrapper>
+      <FormLabel component="legend">
+        <T i18nKey={`filters.molecular_marker`} />
+      </FormLabel>
+      <Divider />
+      <Paper className={classes.group}>
+        <RadioGroup
+          value={treatmentFilters.molecularMarker.toString()}
+          onChange={(event, value) => handleChange(value)}
+        >
+          {MOLECULAR_MARKERS.map((suggestion: any) => (
+            <StyledFormControlLabel
+              key={suggestion.value}
+              value={suggestion.value.toString()}
+              control={<Radio color="primary" />}
+              label={t(suggestion.label)}
+            />
+          ))}
+        </RadioGroup>
+      </Paper>
+    </FilterWrapper>
   );
 }
 

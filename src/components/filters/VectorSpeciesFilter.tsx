@@ -4,6 +4,9 @@ import { State } from "../../store/types";
 import IntegrationReactSelect from "../BasicSelect";
 import { setInvasiveVectorSpecies } from "../../store/actions/invasive-actions";
 import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
+import FormLabel from "@material-ui/core/FormLabel";
+import T from "../../translations/T";
+import { Divider, FilterWrapper } from "./Filters";
 
 const mapStateToProps = (state: State) => ({
   invasiveFilters: selectInvasiveFilters(state)
@@ -50,13 +53,19 @@ class VectorSpeciesFilter extends Component<Props, any> {
       this.props.invasiveFilters.vectorSpecies.includes(suggestion.value)
     );
     return (
-      <IntegrationReactSelect
-        isMulti
-        isClearable
-        suggestions={suggestions}
-        onChange={this.onChange}
-        value={selection}
-      />
+      <FilterWrapper>
+        <FormLabel component="legend">
+          <T i18nKey={`filters.vector_species`} />
+        </FormLabel>
+        <Divider />
+        <IntegrationReactSelect
+          isMulti
+          isClearable
+          suggestions={suggestions}
+          onChange={this.onChange}
+          value={selection}
+        />
+      </FilterWrapper>
     );
   }
 }

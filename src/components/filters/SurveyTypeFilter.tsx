@@ -6,6 +6,9 @@ import { Translation } from "../../types/Translation";
 import { selectSurveyTypes } from "../../store/reducers/translations-reducer";
 import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
 import { setDiagnosisSurveyTypes } from "../../store/actions/diagnosis-actions";
+import { Divider, FilterWrapper } from "./Filters";
+import FormLabel from "@material-ui/core/FormLabel";
+import T from "../../translations/T";
 
 const mapStateToProps = (state: State) => ({
   surveyTypes: selectSurveyTypes(state),
@@ -38,13 +41,19 @@ class SurveyTypeFilter extends Component<Props, any> {
       this.props.diagnosisFilters.surveyTypes.includes(suggestion.value)
     );
     return (
-      <IntegrationReactSelect
-        isMulti
-        isClearable
-        suggestions={suggestions}
-        onChange={this.onChange}
-        value={selection}
-      />
+      <FilterWrapper>
+        <FormLabel component="legend">
+          <T i18nKey={`filters.survey_type`} />
+        </FormLabel>
+        <Divider />
+        <IntegrationReactSelect
+          isMulti
+          isClearable
+          suggestions={suggestions}
+          onChange={this.onChange}
+          value={selection}
+        />
+      </FilterWrapper>
     );
   }
 }

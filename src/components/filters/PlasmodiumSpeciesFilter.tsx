@@ -5,6 +5,9 @@ import IntegrationReactSelect from "../BasicSelect";
 import { selectPlasmodiumSpecies } from "../../store/reducers/translations-reducer";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
 import { setTreatmentPlasmodiumSpecies } from "../../store/actions/treatment-actions";
+import { Divider, FilterWrapper } from "./Filters";
+import FormLabel from "@material-ui/core/FormLabel";
+import T from "../../translations/T";
 
 const mapStateToProps = (state: State) => ({
   plasmodiumSpecies: selectPlasmodiumSpecies(state),
@@ -53,11 +56,17 @@ class PlasmodiumSpeciesFilter extends Component<Props, any> {
         this.props.treatmentFilters.plasmodiumSpecies === suggestion.value
     );
     return (
-      <IntegrationReactSelect
-        suggestions={suggestions}
-        onChange={this.onChange}
-        value={selection}
-      />
+      <FilterWrapper>
+        <FormLabel component="legend">
+          <T i18nKey={`filters.plasmodium_species`} />
+        </FormLabel>
+        <Divider />
+        <IntegrationReactSelect
+          suggestions={suggestions}
+          onChange={this.onChange}
+          value={selection}
+        />
+      </FilterWrapper>
     );
   }
 }
