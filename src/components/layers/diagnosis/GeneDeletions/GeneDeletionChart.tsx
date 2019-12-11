@@ -35,13 +35,33 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const useStyles = makeStyles({
+const StyledHeaderCell = styled(TableCell)`
+  font-size: 0.875rem !important;
+  line-height: 1.5rem !important;
+  color: rgba(0, 0, 0, 0.87) !important;
+  font-weight: 550 !important;
+`;
+
+const StyledBodyCell = styled(TableCell)`
+  font-size: 0.875rem !important;
+  color: rgba(0, 0, 0, 0.87) !important;
+  font-weight: 400 !important;
+`;
+
+const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
     overflowX: "auto",
     margin: "20px 0"
+  },
+  table: {
+    marginTop: 10
+  },
+  head: {
+    color: theme.palette.common.white,
+    backgroundColor: theme.palette.background.default
   }
-});
+}));
 
 const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
   const { t } = useTranslation("common");
@@ -78,54 +98,54 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
         <Typography variant={"caption"}>
           {t(`diagnosis.chart.gene_deletions.deletions_confirmed`)}
         </Typography>
-        <Table aria-label="simple table" size="small">
-          <TableHead>
+        <Table aria-label="simple table" size="small" className={classes.table}>
+          <TableHead className={classes.head}>
             <TableRow>
-              <TableCell align={"center"}>
+              <StyledHeaderCell align={"center"}>
                 {t(`diagnosis.chart.gene_deletions.deletion_type`)}
-              </TableCell>
-              <TableCell align={"center"}>
+              </StyledHeaderCell>
+              <StyledHeaderCell align={"center"}>
                 {t(`diagnosis.chart.gene_deletions.no_tested`)}
-              </TableCell>
-              <TableCell align={"center"}>
+              </StyledHeaderCell>
+              <StyledHeaderCell align={"center"}>
                 {t(`diagnosis.chart.gene_deletions.percentage`)}{" "}
                 {studyObject.YEAR_START}
-              </TableCell>
+              </StyledHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell align={"center"}>HRP2</TableCell>
-              <TableCell align={"center"}>
+              <StyledBodyCell align={"center"}>HRP2</StyledBodyCell>
+              <StyledBodyCell align={"center"}>
                 {studyObject.HRP2_TESTED || "N/A"}
-              </TableCell>
-              <TableCell align={"center"}>
+              </StyledBodyCell>
+              <StyledBodyCell align={"center"}>
                 {!Number.isNaN(parseFloat(studyObject.HRP2_PROPORTION_DELETION))
                   ? formatPercentage(studyObject.HRP2_PROPORTION_DELETION)
                   : "N/A"}
-              </TableCell>
+              </StyledBodyCell>
             </TableRow>
             <TableRow>
-              <TableCell align={"center"}>HRP3</TableCell>
-              <TableCell align={"center"}>
+              <StyledBodyCell align={"center"}>HRP3</StyledBodyCell>
+              <StyledBodyCell align={"center"}>
                 {studyObject.HRP3_TESTED || "N/A"}
-              </TableCell>
-              <TableCell align={"center"}>
+              </StyledBodyCell>
+              <StyledBodyCell align={"center"}>
                 {!Number.isNaN(parseFloat(studyObject.HRP3_PROPORTION_DELETION))
                   ? formatPercentage(studyObject.HRP3_PROPORTION_DELETION)
                   : "N/A"}
-              </TableCell>
+              </StyledBodyCell>
             </TableRow>
             <TableRow>
-              <TableCell align={"center"}>HRP2 & 3</TableCell>
-              <TableCell align={"center"}>
+              <StyledBodyCell align={"center"}>HRP2 & 3</StyledBodyCell>
+              <StyledBodyCell align={"center"}>
                 {studyObject.HRP2_HRP3_TESTED || "N/A"}
-              </TableCell>
-              <TableCell align={"center"}>
+              </StyledBodyCell>
+              <StyledBodyCell align={"center"}>
                 {!Number.isNaN(parseFloat(studyObject.HRP2_HRP3_TESTED))
                   ? formatPercentage(studyObject.HRP2_HRP3_PROPORTION_DELETION)
                   : "N/A"}
-              </TableCell>
+              </StyledBodyCell>
             </TableRow>
           </TableBody>
         </Table>
