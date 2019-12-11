@@ -2,7 +2,7 @@ import * as React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -14,12 +14,17 @@ import {
   setCountryModeAction,
   setRegionAction
 } from "../../../../store/actions/base-actions";
-import ZoomIcon from "@material-ui/icons/ZoomIn";
 import { INTENSITY_STATUS } from "./utils";
-import { sentenceCase } from "change-case";
 import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
+// @ts-ignore
+import JsxParser from "react-jsx-parser";
+import { formatYears } from "../../../../utils/string-utils";
+import { ZoomButton } from "../../../Chart";
 
-const options: (data: any) => Highcharts.Options = data => ({
+const options: (data: any, translations: any) => Highcharts.Options = (
+  data,
+  translations
+) => ({
   chart: {
     plotBackgroundColor: null,
     plotBorderWidth: null,
@@ -31,7 +36,7 @@ const options: (data: any) => Highcharts.Options = data => ({
     }
   },
   title: {
-    text: "<b>Resistance status</b> (# of tests)"
+    text: `<b>${translations.resistance_intensity}</b> (${translations.number_of_tests})`
   },
   tooltip: {
     pointFormat: "{series.name}: <b>{point.y}</b>"
@@ -50,7 +55,7 @@ const options: (data: any) => Highcharts.Options = data => ({
     {
       type: "pie",
       innerSize: "50%",
-      name: "Studies",
+      name: translations.studies,
       colorByPoint: true,
       data
     }
@@ -111,7 +116,7 @@ const IntensityStatusCountryChart = ({
     R.groupBy((study: any) => study.RESISTANCE_INTENSITY, richStudies)
   ).map(([status, studies]: any[]) => {
     return {
-      name: sentenceCase(status),
+      name: t(`prevention.chart.resistance_intensity.${status}`),
       y: studies.length,
       color: (IntensityStatusColors[status] ||
         IntensityStatusColors[INTENSITY_STATUS.UNKNOWN])[0]
@@ -121,28 +126,32 @@ const IntensityStatusCountryChart = ({
     setRegion({ country: studies[0].COUNTRY_NAME });
     setCountryMode(false);
   };
+  const translations = {
+    studies: t("chart.studies"),
+    resistance_intensity: t("prevention.resistance_intensity"),
+    number_of_tests: t("prevention.chart.resistance_intensity.number_of_tests")
+  };
   return (
     <ChatContainer>
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        {nStudies} test(s) on <i>Anopheles</i> malaria vectors via intensity
-        concentration bioassay(s) with selected{" "}
-        {t(preventionFilters.insecticideClass)} between {minYear} and {maxYear}
+        <JsxParser
+          jsx={t(`prevention.chart.resistance_intensity.content`, {
+            nStudies: nStudies,
+            insecticideClass: t(preventionFilters.insecticideClass),
+            years: formatYears(minYear, maxYear)
+          })}
+        />
       </Typography>
-      <HighchartsReact highcharts={Highcharts} options={options(data)} />
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={options(data, translations)}
+      />
       <Actions>
         <FlexGrow />
-        <Button
-          variant="contained"
-          color="default"
-          size="small"
-          onClick={onClick}
-        >
-          <ZoomIcon />
-          Zoom
-        </Button>
+        <ZoomButton onClick={onClick} />
       </Actions>
     </ChatContainer>
   );

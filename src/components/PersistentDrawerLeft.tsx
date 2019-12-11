@@ -230,15 +230,7 @@ function PersistentDrawerLeft({
           paper: classes.drawerPaper
         }}
       >
-        {storyMode ? (
-          <>
-            <StoryModeStepper />
-          </>
-        ) : (
-          <>
-            <FiltersSidebar />
-          </>
-        )}
+        {storyMode ? <StoryModeStepper /> : <FiltersSidebar />}
       </Drawer>
       <div
         className={clsx(classes.content, {
@@ -272,9 +264,6 @@ function PersistentDrawerLeft({
           <MapWrapper>
             <Map />
           </MapWrapper>
-
-          {/*<Hidden xsDown>*/}
-          {/*</Hidden>*/}
           <Disclaimer />
           <Hidden smUp>
             <AppBar position="static" color="default">

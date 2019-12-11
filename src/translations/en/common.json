@@ -11,6 +11,30 @@
     "resistance_mechanism": "Resistance Mechanism",
     "synergist_involvement": "Synergist Involvement",
     "pbo_deployment": "PBO Deployment",
+    "chart": {
+      "resistance_status": {
+        "content": "{{nStudies}} test(s) on <i>Anopheles</i> malaria vectors via discriminating concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
+        "number_of_tests": "# of tests",
+        "Confirmed": "Confirmed",
+        "Possible": "Possible",
+        "Susceptible": "Susceptible"
+      },
+      "resistance_intensity": {
+        "content": "{{nStudies}} test(s) on <i>Anopheles</i> malaria vectors via intensity concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
+        "number_of_tests": "# of tests",
+        "HIGH_INTENSITY": "High Intensity",
+        "MODERATE_TO_HIGH_INTENSITY": "Moderate to High Intensity",
+        "MODERATE_INTENSITY": "Moderate Intensity",
+        "LOW_INTENSITY": "Low Intensity",
+        "NA": "NA"
+      },
+      "resistance_mechanism": {
+        "content": "{{nStudies}} test(s) on <i>Anopheles</i> malaria vectors via {{insecticideClasses}} with selected {{type}} {{years}}",
+        "number_of_tests": "# of tests",
+        "DETECTED": "Confirmed",
+        "NOT_DETECTED": "Not confirmed"
+      }
+    },
     "legend": {
       "resistance_intensity": {
         "high_intensity": "High Intensity",
@@ -43,6 +67,11 @@
   },
   "diagnosis": {
     "gene_deletions": "Gene Deletions",
+    "chart": {
+      "gene_deletions": {
+        "content": "{{nStudies}} survey(s) <i>P. falciparum</i> for {{deletionType}} by {{surveyTypes}} {{years}}"
+      }
+    },
     "legend": {
       "gene_deletions": {
         "confirmed": "Confirmed",
@@ -54,6 +83,14 @@
     "treatment_failure": "Treatment Failure",
     "delayed_parasite_clearance": "Delayed Parasite Clearance",
     "molecular_markers": "Molecular Markers",
+    "chart": {
+      "treatment_failure": {
+        "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against {{plasmodiumSpecies}} {{years}}"
+      },
+      "molecular_markers": {
+        "content": "{{nStudies}} molecular marker studies conducted on {{molecularMarker}} {{years}}"
+      }
+    },
     "legend": {
       "treatment_failure": {
         "high": "> 20%",
@@ -116,6 +153,10 @@
     "number_of_studies": "Number of studies",
     "number_of_surveys": "Number of surveys",
     "most_recent_data_shown": "Most recent data shown"
+  },
+  "chart": {
+    "studies": "Studies",
+    "zoom": "Zoom"
   },
   "copyright": {
     "mobile": "Click here to read the disclaimer that applies to the above map",

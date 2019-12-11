@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -10,11 +10,13 @@ import {
   setCountryModeAction,
   setRegionAction
 } from "../../../../store/actions/base-actions";
-import ZoomIcon from "@material-ui/icons/ZoomIn";
 import { TreatmentStudy } from "../../../../types/Treatment";
 import { formatYears } from "../../../../utils/string-utils";
 import { selectTreatmentFilters } from "../../../../store/reducers/treatment-reducer";
 import { MOLECULAR_MARKERS } from "../../../filters/MolecularMarkerFilter";
+import { ZoomButton } from "../../../Chart";
+// @ts-ignore
+import JsxParser from "react-jsx-parser";
 
 const ChatContainer = styled.div`
   min-width: 500px;
@@ -70,22 +72,17 @@ const MolecularMarkersCountryChart = ({
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        {`${nStudies} molecular marker studies conducted on ${molecularMarker} ${formatYears(
-          minYear,
-          maxYear
-        )}`}
+        <JsxParser
+          jsx={t(`treatment.chart.molecular_markers.content`, {
+            nStudies: nStudies,
+            molecularMarker: t(molecularMarker),
+            years: formatYears(minYear, maxYear)
+          })}
+        />
       </Typography>
       <Actions>
         <FlexGrow />
-        <Button
-          variant="contained"
-          color="default"
-          size="small"
-          onClick={onClick}
-        >
-          <ZoomIcon />
-          Zoom
-        </Button>
+        <ZoomButton onClick={onClick} />
       </Actions>
     </ChatContainer>
   );

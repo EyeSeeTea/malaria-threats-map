@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -10,10 +10,12 @@ import {
   setCountryModeAction,
   setRegionAction
 } from "../../../../store/actions/base-actions";
-import ZoomIcon from "@material-ui/icons/ZoomIn";
 import { DiagnosisStudy } from "../../../../types/Diagnosis";
 import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
 import { formatList, formatYears } from "../../../../utils/string-utils";
+// @ts-ignore
+import JsxParser from "react-jsx-parser";
+import { ZoomButton } from "../../../Chart";
 
 const ChatContainer = styled.div`
   max-width: 500px;
@@ -69,24 +71,18 @@ const GeneDeletionCountryChart = ({
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        {`${nStudies} survey(s) P. falciparum for ${t(
-          diagnosisFilters.deletionType
-        ).toLowerCase()} by ${formatList(surveyTypes)} ${formatYears(
-          minYear,
-          maxYear
-        )}`}
+        <JsxParser
+          jsx={t(`diagnosis.chart.gene_deletions.content`, {
+            nStudies: nStudies,
+            deletionType: t(diagnosisFilters.deletionType).toLowerCase(),
+            surveyTypes: formatList(surveyTypes.map(st => t(st))),
+            years: formatYears(minYear, maxYear)
+          })}
+        />
       </Typography>
       <Actions>
         <FlexGrow />
-        <Button
-          variant="contained"
-          color="default"
-          size="small"
-          onClick={onClick}
-        >
-          <ZoomIcon />
-          Zoom
-        </Button>
+        <ZoomButton onClick={onClick} />
       </Actions>
     </ChatContainer>
   );

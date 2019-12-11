@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -10,9 +10,11 @@ import {
   setCountryModeAction,
   setRegionAction
 } from "../../../../store/actions/base-actions";
-import ZoomIcon from "@material-ui/icons/ZoomIn";
 import { TreatmentStudy } from "../../../../types/Treatment";
 import { formatYears } from "../../../../utils/string-utils";
+// @ts-ignore
+import JsxParser from "react-jsx-parser";
+import { ZoomButton } from "../../../Chart";
 
 const ChatContainer = styled.div`
   max-width: 500px;
@@ -61,23 +63,20 @@ const TreatmentFailureCountryChart = ({
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        {`${nStudies} therapeutic efficacy studies conducted on the efficacy of ${t(
-          sortedStudies[0].DRUG_NAME
-        )} against ${t(
-          sortedStudies[0].PLASMODIUM_SPECIES.replace(".", "%2E")
-        )}  ${formatYears(minYear, maxYear)}`}
+        <JsxParser
+          jsx={t(`treatment.chart.treatment_failure.content`, {
+            nStudies: nStudies,
+            drug: t(sortedStudies[0].DRUG_NAME),
+            plasmodiumSpecies: t(
+              sortedStudies[0].PLASMODIUM_SPECIES.replace(".", "%2E")
+            ),
+            years: formatYears(minYear, maxYear)
+          })}
+        />
       </Typography>
       <Actions>
         <FlexGrow />
-        <Button
-          variant="contained"
-          color="default"
-          size="small"
-          onClick={onClick}
-        >
-          <ZoomIcon />
-          Zoom
-        </Button>
+        <ZoomButton onClick={onClick} />
       </Actions>
     </ChatContainer>
   );
