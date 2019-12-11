@@ -14,7 +14,10 @@ import * as R from "ramda";
 import Citation from "../../../charts/Citation";
 import Pagination from "../../../charts/Pagination";
 
-const options: (data: any) => Highcharts.Options = data => ({
+const options: (data: any, translations: any) => Highcharts.Options = (
+  data,
+  translations
+) => ({
   chart: {
     type: "column",
     height: 300,
@@ -23,7 +26,7 @@ const options: (data: any) => Highcharts.Options = data => ({
     }
   },
   title: {
-    text: "% mosquito mortality"
+    text: translations.mosquito_mortality
   },
   xAxis: {
     type: "category"
@@ -32,7 +35,7 @@ const options: (data: any) => Highcharts.Options = data => ({
     min: 0,
     max: 100,
     title: {
-      text: "% mosquito mortality"
+      text: translations.mosquito_mortality
     },
     plotLines: [
       {
@@ -70,15 +73,15 @@ const options: (data: any) => Highcharts.Options = data => ({
       const point = this.point as any;
       return `
 <B><i>${point.species}</i></B><br>
-Mortality (%): ${point.y}<br>
-Tested (n): ${point.number}
+${translations.mortality} (%): ${point.y}<br>
+${translations.tested}: ${point.number}
 `;
     }
   },
   series: [
     {
       type: "column",
-      name: "Mortality",
+      name: translations.mortality,
       data: data
     }
   ],
@@ -125,13 +128,21 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     )
   );
   const data = simplifiedStudies.map(study => ({
-    name: `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`,
+    name: `${study.YEAR_START}, ${t(study.INSECTICIDE_TYPE)} ${t(
+      study.INSECTICIDE_CONC
+    )}`,
     y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
-    species: study.SPECIES,
+    species: t(study.SPECIES),
     number: study.NUMBER
   }));
   const studyObject = simplifiedStudies[study];
-
+  const translations = {
+    mortality: t("prevention.chart.resistance_status.mortality"),
+    mosquito_mortality: t(
+      "prevention.chart.resistance_status.mosquito_mortality"
+    ),
+    tested: t("prevention.chart.resistance_status.tested")
+  };
   const content = () => (
     <>
       {groupedStudies.length > 1 && (
@@ -149,7 +160,10 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
       <Typography variant="subtitle2">
         {`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}
       </Typography>
-      <HighchartsReact highcharts={Highcharts} options={options(data)} />
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={options(data, translations)}
+      />
       <Citation study={studyObject} />
     </>
   );

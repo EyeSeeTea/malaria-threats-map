@@ -15,6 +15,8 @@ import TableRow from "@material-ui/core/TableRow";
 import { formatList, formatYears } from "../../../../utils/string-utils";
 import * as R from "ramda";
 import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
+// @ts-ignore
+import JsxParser from "react-jsx-parser";
 
 const ChatContainer = styled.div`
   max-width: 500px;
@@ -63,21 +65,31 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
         )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        {nStudies} survey(s) <i>P. falciparum</i> for{" "}
-        {t(diagnosisFilters.deletionType).toLowerCase()} by{" "}
-        {formatList(surveyTypes)} {formatYears(minYear, maxYear)}
+        <JsxParser
+          jsx={t(`diagnosis.chart.gene_deletions.content`, {
+            nStudies: nStudies,
+            deletionType: t(diagnosisFilters.deletionType).toLowerCase(),
+            surveyTypes: formatList(surveyTypes.map(st => t(st))),
+            years: formatYears(minYear, maxYear)
+          })}
+        />
       </Typography>
       <div className={classes.root}>
         <Typography variant={"caption"}>
-          Deletions confirmed (% of samples)
+          {t(`diagnosis.chart.gene_deletions.deletions_confirmed`)}
         </Typography>
         <Table aria-label="simple table" size="small">
           <TableHead>
             <TableRow>
-              <TableCell align={"center"}>Deletion type</TableCell>
-              <TableCell align={"center"}>No. tested</TableCell>
               <TableCell align={"center"}>
-                Percentage deletion(s) in {studyObject.YEAR_START}
+                {t(`diagnosis.chart.gene_deletions.deletion_type`)}
+              </TableCell>
+              <TableCell align={"center"}>
+                {t(`diagnosis.chart.gene_deletions.no_tested`)}
+              </TableCell>
+              <TableCell align={"center"}>
+                {t(`diagnosis.chart.gene_deletions.percentage`)}{" "}
+                {studyObject.YEAR_START}
               </TableCell>
             </TableRow>
           </TableHead>

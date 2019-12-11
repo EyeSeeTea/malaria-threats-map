@@ -17,7 +17,10 @@
         "number_of_tests": "# of tests",
         "Confirmed": "Confirmed",
         "Possible": "Possible",
-        "Susceptible": "Susceptible"
+        "Susceptible": "Susceptible",
+        "mortality": "Mortality",
+        "tested": "Tested (n)",
+        "mosquito_mortality": "% mosquito mortality"
       },
       "resistance_intensity": {
         "content": "{{nStudies}} test(s) on <i>Anopheles</i> malaria vectors via intensity concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
@@ -69,7 +72,11 @@
     "gene_deletions": "Gene Deletions",
     "chart": {
       "gene_deletions": {
-        "content": "{{nStudies}} survey(s) <i>P. falciparum</i> for {{deletionType}} by {{surveyTypes}} {{years}}"
+        "content": "{{nStudies}} survey(s) <i>P. falciparum</i> for {{deletionType}} by {{surveyTypes}} {{years}}",
+        "deletions_confirmed": "Deletions confirmed (% of samples)",
+        "deletion_type": "Deletion type",
+        "no_tested": "No. tested",
+        "percentage": "Percentage deletion(s) in"
       }
     },
     "legend": {
