@@ -72,7 +72,7 @@ const options: (data: any, translations: any) => Highcharts.Options = (
     formatter: function() {
       const point = this.point as any;
       return `
-<B><i>${point.species}</i></B><br>
+<b><i>${point.species}</i></b><br>
 ${translations.mortality} (%): ${point.y}<br>
 ${translations.tested}: ${point.number}
 `;

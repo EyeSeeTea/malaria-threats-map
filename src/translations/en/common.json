@@ -29,7 +29,10 @@
         "MODERATE_TO_HIGH_INTENSITY": "Moderate to High Intensity",
         "MODERATE_INTENSITY": "Moderate Intensity",
         "LOW_INTENSITY": "Low Intensity",
-        "NA": "NA"
+        "NA": "NA",
+        "mortality": "Mortality",
+        "tested": "Tested (n)",
+        "mosquito_mortality": "% mosquito mortality"
       },
       "resistance_mechanism": {
         "content": "{{nStudies}} test(s) on <i>Anopheles</i> malaria vectors via {{insecticideClasses}} with selected {{type}} {{years}}",
