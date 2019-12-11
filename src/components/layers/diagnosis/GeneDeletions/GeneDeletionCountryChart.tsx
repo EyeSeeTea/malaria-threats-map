@@ -15,20 +15,7 @@ import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-red
 import { formatList, formatYears } from "../../../../utils/string-utils";
 // @ts-ignore
 import JsxParser from "react-jsx-parser";
-import { ZoomButton } from "../../../Chart";
-
-const ChatContainer = styled.div`
-  max-width: 500px;
-`;
-
-const Actions = styled.div`
-  display: flex;
-  margin-top: 20px;
-`;
-
-const FlexGrow = styled.div`
-  flex-grow: 1;
-`;
+import {Actions, ChartContainer, FlexGrow, ZoomButton} from "../../../Chart";
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
@@ -66,7 +53,7 @@ const GeneDeletionCountryChart = ({
     type => t(type)
   );
   return (
-    <ChatContainer>
+    <ChartContainer>
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
@@ -84,7 +71,7 @@ const GeneDeletionCountryChart = ({
         <FlexGrow />
         <ZoomButton onClick={onClick} />
       </Actions>
-    </ChatContainer>
+    </ChartContainer>
   );
 };
 export default connect(

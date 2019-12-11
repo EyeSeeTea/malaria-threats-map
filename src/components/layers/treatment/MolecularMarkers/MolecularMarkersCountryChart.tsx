@@ -1,5 +1,4 @@
 import * as React from "react";
-import styled from "styled-components";
 import { Box, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -14,21 +13,9 @@ import { TreatmentStudy } from "../../../../types/Treatment";
 import { formatYears } from "../../../../utils/string-utils";
 import { selectTreatmentFilters } from "../../../../store/reducers/treatment-reducer";
 import { MOLECULAR_MARKERS } from "../../../filters/MolecularMarkerFilter";
-import { ZoomButton } from "../../../Chart";
+import { Actions, ChartContainer, FlexGrow, ZoomButton } from "../../../Chart";
 // @ts-ignore
 import JsxParser from "react-jsx-parser";
-
-const ChatContainer = styled.div`
-  min-width: 500px;
-`;
-
-const Actions = styled.div`
-  display: flex;
-`;
-
-const FlexGrow = styled.div`
-  flex-grow: 1;
-`;
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
@@ -67,7 +54,7 @@ const MolecularMarkersCountryChart = ({
     ).label
   );
   return (
-    <ChatContainer>
+    <ChartContainer>
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
@@ -84,7 +71,7 @@ const MolecularMarkersCountryChart = ({
         <FlexGrow />
         <ZoomButton onClick={onClick} />
       </Actions>
-    </ChatContainer>
+    </ChartContainer>
   );
 };
 export default connect(

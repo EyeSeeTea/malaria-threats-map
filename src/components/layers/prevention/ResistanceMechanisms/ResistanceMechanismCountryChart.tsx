@@ -1,7 +1,6 @@
 import * as React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import styled from "styled-components";
 import { Box, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -19,7 +18,7 @@ import { selectPreventionFilters } from "../../../../store/reducers/prevention-r
 // @ts-ignore
 import JsxParser from "react-jsx-parser";
 import { formatYears } from "../../../../utils/string-utils";
-import { ZoomButton } from "../../../Chart";
+import { Actions, ChartContainer, FlexGrow, ZoomButton } from "../../../Chart";
 
 const options: (data: any, translations: any) => Highcharts.Options = (
   data,
@@ -67,18 +66,6 @@ const options: (data: any, translations: any) => Highcharts.Options = (
     enabled: false
   }
 });
-
-const ChatContainer = styled.div`
-  max-width: 500px;
-`;
-
-const Actions = styled.div`
-  display: flex;
-`;
-
-const FlexGrow = styled.div`
-  flex-grow: 1;
-`;
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
@@ -135,7 +122,7 @@ const ResistanceMechanismCountryChart = ({
     number_of_tests: t("prevention.chart.resistance_mechanism.number_of_tests")
   };
   return (
-    <ChatContainer>
+    <ChartContainer>
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
@@ -159,7 +146,7 @@ const ResistanceMechanismCountryChart = ({
         <FlexGrow />
         <ZoomButton onClick={onClick} />
       </Actions>
-    </ChatContainer>
+    </ChartContainer>
   );
 };
 export default connect(
