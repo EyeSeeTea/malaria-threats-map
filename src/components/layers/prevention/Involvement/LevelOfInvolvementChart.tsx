@@ -14,10 +14,13 @@ import Citation from "../../../charts/Citation";
 import Pagination from "../../../charts/Pagination";
 import { baseChart } from "../../../charts/chart-utils";
 
-const options: (data: any) => Highcharts.Options = data => ({
+const options: (data: any, translations: any) => Highcharts.Options = (
+  data,
+  translations
+) => ({
   ...baseChart,
   title: {
-    text: "% mosquito mortality"
+    text: translations.mosquito_mortality
   },
   xAxis: {
     type: "category"
@@ -26,7 +29,7 @@ const options: (data: any) => Highcharts.Options = data => ({
     min: 0,
     max: 100,
     title: {
-      text: "% mosquito mortality"
+      text: translations.mosquito_mortality
     },
     plotLines: [
       {
@@ -59,16 +62,16 @@ const options: (data: any) => Highcharts.Options = data => ({
     formatter: function() {
       const point = this.point as any;
       return `
-<B><i>${point.species}</i></B><br>
-Mortality (%): ${point.y}<br>
-Tested (n): ${point.number}
+<b><i>${point.species}</i></b><br>
+${translations.mortality} (%): ${point.y}<br>
+${translations.tested}: ${point.number}
 `;
     }
   },
   series: [
     {
       type: "column",
-      name: "Mortality",
+      name: translations.mortality,
       data: data
     }
   ]
@@ -100,11 +103,13 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
 
   const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
   const data = sortedStudies.map(study => {
-    const base = `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
+    const base = `${study.YEAR_START}, ${t(study.INSECTICIDE_TYPE)} ${t(
+      study.INSECTICIDE_CONC
+    )}`;
     const syn =
       study.SYNERGIST_TYPE === "NO"
-        ? `No synergist`
-        : `${study.SYNERGIST_TYPE} ${study.SYNERGIST_CONC}`;
+        ? t("prevention.chart.synergist_involvement.no_synergist")
+        : `${t(study.SYNERGIST_TYPE)} ${t(study.SYNERGIST_CONC)}`;
     return {
       name: `${base}, ${syn}`,
       y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
@@ -113,7 +118,13 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
     };
   });
   const studyObject = sortedStudies[study];
-
+  const translations = {
+    mortality: t("prevention.chart.synergist_involvement.mortality"),
+    mosquito_mortality: t(
+      "prevention.chart.synergist_involvement.mosquito_mortality"
+    ),
+    tested: t("prevention.chart.synergist_involvement.tested")
+  };
   const content = () => (
     <>
       {groupedStudies.length > 1 && (
@@ -131,7 +142,10 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
       <Typography variant="subtitle2">
         {`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}
       </Typography>
-      <HighchartsReact highcharts={Highcharts} options={options(data)} />
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={options(data, translations)}
+      />
       <Citation study={studyObject} />
     </>
   );

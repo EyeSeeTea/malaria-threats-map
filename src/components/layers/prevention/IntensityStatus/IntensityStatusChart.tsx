@@ -12,18 +12,13 @@ import { PreventionStudy } from "../../../../types/Prevention";
 import Citation from "../../../charts/Citation";
 import * as R from "ramda";
 import Pagination from "../../../charts/Pagination";
+import {baseChart} from "../../../charts/chart-utils";
 
 const options: (data: any, translations: any) => Highcharts.Options = (
   data,
   translations
 ) => ({
-  chart: {
-    type: "column",
-    height: 300,
-    style: {
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;'
-    }
-  },
+  ...baseChart,
   title: {
     text: translations.mosquito_mortality
   },

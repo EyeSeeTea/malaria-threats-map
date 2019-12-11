@@ -38,7 +38,15 @@
         "content": "{{nStudies}} test(s) on <i>Anopheles</i> malaria vectors via {{insecticideClasses}} with selected {{type}} {{years}}",
         "number_of_tests": "# of tests",
         "DETECTED": "Confirmed",
-        "NOT_DETECTED": "Not confirmed"
+        "NOT_DETECTED": "Not confirmed",
+        "title": "Number of mechanism assays",
+        "count": "Count"
+      },
+      "synergist_involvement": {
+        "mortality": "Mortality",
+        "tested": "Tested (n)",
+        "mosquito_mortality": "% mosquito mortality",
+        "no_synergist": "No synergist"
       }
     },
     "legend": {

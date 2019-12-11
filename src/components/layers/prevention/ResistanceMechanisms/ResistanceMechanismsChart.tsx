@@ -14,17 +14,20 @@ import { ResistanceMechanismColors } from "./symbols";
 import { RESISTANCE_MECHANISM } from "./utils";
 import { baseChart } from "../../../charts/chart-utils";
 
-const options: (data: any) => Highcharts.Options = data => ({
+const options: (data: any, translations: any) => Highcharts.Options = (
+  data,
+  translations
+) => ({
   ...baseChart,
   title: {
-    text: "Number of mechanism assays"
+    text: translations.title
   },
   xAxis: {
     type: "category"
   },
   yAxis: {
     title: {
-      text: "count"
+      text: translations.count
     }
   },
   plotOptions: {
@@ -54,7 +57,7 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const ResistanceMechanismsChart = ({ theme, studies }: Props) => {
+const ResistanceMechanismsChart = ({ studies }: Props) => {
   const { t } = useTranslation("common");
   const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
   const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
@@ -86,17 +89,21 @@ const ResistanceMechanismsChart = ({ theme, studies }: Props) => {
   const data = [
     {
       type: "column",
-      name: "Confirmed",
+      name: t("prevention.chart.resistance_mechanism.DETECTED"),
       color: ResistanceMechanismColors[RESISTANCE_MECHANISM.CONFIRMED][0],
       data: detected
     },
     {
       type: "column",
+      name: t("prevention.chart.resistance_mechanism.NOT_DETECTED"),
       color: ResistanceMechanismColors[RESISTANCE_MECHANISM.NOT_CONFIRMED][0],
-      name: "Not confirmed",
       data: notDetected
     }
   ];
+  const translations = {
+    count: t("prevention.chart.resistance_mechanism.count"),
+    title: t("prevention.chart.resistance_mechanism.title")
+  };
   const content = () => (
     <>
       <Typography variant="subtitle1">
@@ -107,7 +114,10 @@ const ResistanceMechanismsChart = ({ theme, studies }: Props) => {
       <Typography variant="subtitle2">
         {`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}
       </Typography>
-      <HighchartsReact highcharts={Highcharts} options={options(data)} />
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={options(data, translations)}
+      />
       <Citation study={studies[0]} />
     </>
   );
