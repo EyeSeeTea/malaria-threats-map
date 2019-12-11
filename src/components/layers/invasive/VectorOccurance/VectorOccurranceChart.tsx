@@ -11,10 +11,8 @@ import Citation from "../../../charts/Citation";
 import { getMonthFromNumber } from "./utils";
 import { lowerCase } from "change-case";
 import Pagination from "../../../charts/Pagination";
-
-const ChatContainer = styled.div`
-  max-width: 500px;
-`;
+import { useTranslation } from "react-i18next";
+import { ChartContainer } from "../../../Chart";
 
 const Flex = styled.div`
   display: flex;
@@ -37,8 +35,8 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const VectorOccurrenceChart = ({ theme, studies }: Props) => {
-  // const { t } = useTranslation("common");
+const VectorOccurrenceChart = ({ studies }: Props) => {
+  const { t } = useTranslation("common");
   const [study, setStudy] = useState(0);
   const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
 
@@ -65,8 +63,16 @@ const VectorOccurrenceChart = ({ theme, studies }: Props) => {
 
   const duration = (unique ? start : partial) || "";
 
+  const samplingPeriod = t("invasive.chart.vector_occurrance.sampling_period");
+  const samplingMethod = t("invasive.chart.vector_occurrance.sampling_method");
+  const studyIdentificationMethod = t(
+    "invasive.chart.vector_occurrance.study_identification_method"
+  );
+
+  console.log(t("invasive.chart.vector_ocurrance.species"));
+
   return (
-    <ChatContainer>
+    <ChartContainer>
       {sortedStudies.length > 1 && (
         <Pagination studies={studies} study={study} setStudy={setStudy} />
       )}
@@ -76,28 +82,29 @@ const VectorOccurrenceChart = ({ theme, studies }: Props) => {
       <Margin>
         <Flex>
           <Typography variant="body2">
-            <b>Species:&nbsp;</b>
+            <b>{t("invasive.chart.vector_occurrance.species")}:&nbsp;</b>
             {studyObject.SPECIES}
           </Typography>
         </Flex>
         <Flex>
           <Typography variant="body2">
-            <b>Sampling period:&nbsp;</b>
+            <b>{samplingPeriod}:&nbsp;</b>
             {duration}
           </Typography>
         </Flex>
         <Flex>
           <Typography variant="body2">
-            <b>Sampling method:&nbsp;</b>{" "}
-            {studyObject.SAMPLING_METHOD || "No available"}
+            <b>{samplingMethod}:&nbsp;</b>
+            {studyObject.SAMPLING_METHOD ||
+              t("invasive.chart.vector_occurrance.no_available")}
           </Typography>
         </Flex>
         <Flex>
           <Typography variant="body2">
-            <b>Species identification method:&nbsp;</b>
+            <b>{studyIdentificationMethod}:&nbsp;</b>
             {studyObject.ID_METHOD
               ? lowerCase(studyObject.ID_METHOD)
-              : "No available"}
+              : t("invasive.chart.vector_occurrance.no_available")}
           </Typography>
         </Flex>
       </Margin>
@@ -106,13 +113,13 @@ const VectorOccurrenceChart = ({ theme, studies }: Props) => {
       </Margin>
       <Margin>
         <Typography variant="body2">
-          <b>Acknowledgement for data collation:</b>
+          <b>{t("invasive.chart.vector_occurrance.data_collection")}:</b>
         </Typography>
         <Typography variant="body2">
           {studyObject.INSTITUTE_CURATION}
         </Typography>
       </Margin>
-    </ChatContainer>
+    </ChartContainer>
   );
 };
 export default connect(

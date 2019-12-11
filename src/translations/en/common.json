@@ -116,6 +116,16 @@
   },
   "invasive": {
     "vector_occurrance": "Vector Ocurrance",
+    "chart": {
+      "vector_occurrance": {
+        "species": "Species",
+        "sampling_period": "Sampling Period",
+        "sampling_method": "Sampling Method",
+        "study_identification_method": "Species identification method",
+        "data_collection": "Acknowledgement for data collation",
+        "no_available": "Not available"
+      }
+    },
     "legend": {
       "vector_occurrance": {
         "invasive": "Invasive",
@@ -165,5 +175,8 @@
   "options": {
     "title": "Options",
     "select_language": "Select Language"
+  },
+  "citation": {
+    "no_citation": "No citation data available"
   }
 }

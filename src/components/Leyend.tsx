@@ -95,7 +95,7 @@ export function LegendLabels({ labels }: { labels: LegendLabel[] }) {
   return (
     <LegendEntries>
       {labels.map(label => (
-        <LegendEntry>
+        <LegendEntry key={label.label}>
           <LegendSymbol color={label.color} />
           <LegendText>{t(label.label)}</LegendText>
         </LegendEntry>
