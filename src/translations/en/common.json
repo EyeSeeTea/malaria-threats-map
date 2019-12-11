@@ -103,7 +103,17 @@
     "molecular_markers": "Molecular Markers",
     "chart": {
       "treatment_failure": {
-        "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against {{plasmodiumSpecies}} {{years}}"
+        "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against {{plasmodiumSpecies}} {{years}}",
+        "percentage": "Percentage (%)",
+        "study_years": "Study year(s)",
+        "number_of_patients": "Number of patients",
+        "follow_up": "Follow-up",
+        "confirmed_resist_pv": "Patients with confirmed resistance",
+        "positive_day_3": "Positive after day 3",
+        "treatment_failure_pp": "Patients with treatment failure, per protocol",
+        "treatment_failure_km": "Patients with treatment failure, Kaplan-Meier",
+        "days": "days",
+        "studies": "study(s)"
       },
       "molecular_markers": {
         "content": "{{nStudies}} molecular marker studies conducted on {{molecularMarker}} {{years}}"
@@ -196,5 +206,6 @@
   },
   "citation": {
     "no_citation": "No citation data available"
-  }
+  },
+  "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier"
 }

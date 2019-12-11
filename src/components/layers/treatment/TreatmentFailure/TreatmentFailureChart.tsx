@@ -3,7 +3,7 @@ import { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, Link, Typography, Hidden } from "@material-ui/core";
+import { Box, Hidden, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -11,11 +11,13 @@ import { State } from "../../../../store/types";
 import { TreatmentStudy } from "../../../../types/Treatment";
 import * as R from "ramda";
 import Pagination from "../../../charts/Pagination";
+import Citation from "../../../charts/Citation";
 
-const options: (data: any, categories: any[]) => Highcharts.Options = (
-  data,
-  categories
-) => ({
+const options: (
+  data: any,
+  categories: any[],
+  translations: any
+) => Highcharts.Options = (data, categories, translations) => ({
   chart: {
     height: 250,
     width: 300,
@@ -36,7 +38,7 @@ const options: (data: any, categories: any[]) => Highcharts.Options = (
   yAxis: {
     min: 0,
     title: {
-      text: "Percentage (%)"
+      text: translations.percentage
     }
   },
   plotOptions: {
@@ -112,7 +114,7 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
 
   const series = keys.map(key => {
     return {
-      name: key.name,
+      name: t(key.name),
       color: key.color,
       data: years.map(year => {
         const yearFilters: any = studies.filter(
@@ -159,31 +161,52 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
       ? "N/A"
       : `${(parseFloat(value) * 100).toFixed(2)}%`;
 
+  const translations = {
+    percentage: t("treatment.chart.treatment_failure.percentage")
+  };
+  const studyYears = t("treatment.chart.treatment_failure.study_years");
+  const numberOfPatients = t(
+    "treatment.chart.treatment_failure.number_of_patients"
+  );
+  const followUp = t("treatment.chart.treatment_failure.follow_up");
+  const confirmedResistPv = t(
+    "treatment.chart.treatment_failure.confirmed_resist_pv"
+  );
+  const positiveDay3 = t("treatment.chart.treatment_failure.positive_day_3");
+  const treatmentFailurePp = t(
+    "treatment.chart.treatment_failure.treatment_failure_pp"
+  );
+  const treatmentFailureKm = t(
+    "treatment.chart.treatment_failure.treatment_failure_km"
+  );
+  const days = t("treatment.chart.treatment_failure.days");
+  const t_studies = t("treatment.chart.treatment_failure.studies");
+
   function renderInfo() {
     return (
       <Margin>
         <Flex>
           <Typography variant="body2">
-            <b>Study year(s):&nbsp;</b>
+            <b>{studyYears}:&nbsp;</b>
             {duration}
           </Typography>
         </Flex>
         <Flex>
           <Typography variant="body2">
-            <b>Number of patients:&nbsp;</b>
+            <b>{numberOfPatients}:&nbsp;</b>
             {N}
           </Typography>
         </Flex>
         <Flex>
           <Typography variant="body2">
-            <b>Follow-up:&nbsp;</b>
-            {FOLLOW_UP} days
+            <b>{followUp}:&nbsp;</b>
+            {FOLLOW_UP} {days}
           </Typography>
         </Flex>
         {exists(CONFIRMED_RESIST_PV) && (
           <Flex>
             <Typography variant="body2">
-              <b>Patients with confirmed resistance:&nbsp;</b>
+              <b>{confirmedResistPv}:&nbsp;</b>
               {formatValue(CONFIRMED_RESIST_PV)}
             </Typography>
           </Flex>
@@ -191,7 +214,7 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
         {exists(POSITIVE_DAY_3) && (
           <Flex>
             <Typography variant="body2">
-              <b>Positive after day 3:&nbsp;</b>
+              <b>{positiveDay3}:&nbsp;</b>
               {formatValue(POSITIVE_DAY_3)}
             </Typography>
           </Flex>
@@ -199,7 +222,7 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
         {exists(TREATMENT_FAILURE_PP) && (
           <Flex>
             <Typography variant="body2">
-              <b>Patients with treatment failure, per protocol:&nbsp;</b>
+              <b>{treatmentFailurePp}:&nbsp;</b>
               {formatValue(TREATMENT_FAILURE_PP)}
             </Typography>
           </Flex>
@@ -207,7 +230,7 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
         {exists(TREATMENT_FAILURE_KM) && (
           <Flex>
             <Typography variant="body2">
-              <b>Patients with treatment failure, Kaplan-Meier:&nbsp;</b>
+              <b>{treatmentFailureKm}:&nbsp;</b>
               {formatValue(TREATMENT_FAILURE_KM)}
             </Typography>
           </Flex>
@@ -223,13 +246,13 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
         <Box fontWeight="fontWeightBold">{`${title}`}</Box>
       </Typography>
       <Typography variant="body2">
-        {`${t(DRUG_NAME)}: ${studies.length} study(s) ${siteDuration}`}
+        {`${t(DRUG_NAME)}: ${studies.length} ${t_studies} ${siteDuration}`}
       </Typography>
       <Hidden smUp>
         {renderInfo()}
         <HighchartsReact
           highcharts={Highcharts}
-          options={options(series, years)}
+          options={options(series, years, translations)}
         />
       </Hidden>
       <Hidden xsDown>
@@ -238,20 +261,12 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
           <FlexCol>
             <HighchartsReact
               highcharts={Highcharts}
-              options={options(series, years)}
+              options={options(series, years, translations)}
             />
           </FlexCol>
         </Flex>
       </Hidden>
-      <Typography variant="caption">
-        <Link
-          href={studies[study].CITATION_URL}
-          target="_blank"
-          color={"textSecondary"}
-        >
-          {`${studies[study].INSTITUTION}, ${studies[study].INSTITUTION_CITY}`}
-        </Link>
-      </Typography>
+      <Citation study={studies[study]} />
     </ChatContainer>
   );
 };
