@@ -12,6 +12,7 @@ import { TreatmentStudy } from "../../../../types/Treatment";
 import * as R from "ramda";
 import Pagination from "../../../charts/Pagination";
 import Citation from "../../../charts/Citation";
+import { formatYears } from "../../../../utils/string-utils";
 
 const options: (
   data: any,
@@ -151,11 +152,7 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
     TREATMENT_FAILURE_PP
   } = sortedStudies[study];
 
-  const duration =
-    parseInt(YEAR_START) !== parseInt(YEAR_END)
-      ? `from ${YEAR_START} to ${YEAR_END}`
-      : YEAR_START;
-
+  const duration = formatYears(YEAR_START, YEAR_END);
   const formatValue = (value: string) =>
     Number.isNaN(parseFloat(value))
       ? "N/A"

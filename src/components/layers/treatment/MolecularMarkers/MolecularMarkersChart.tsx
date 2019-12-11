@@ -16,8 +16,13 @@ import { MOLECULAR_MARKERS } from "../../../filters/MolecularMarkerFilter";
 import { selectTreatmentFilters } from "../../../../store/reducers/treatment-reducer";
 import Citation from "../../../charts/Citation";
 import { formatYears } from "../../../../utils/string-utils";
+// @ts-ignore
+import JsxParser from "react-jsx-parser";
 
-const options: (data: any) => Highcharts.Options = data => ({
+const options: (data: any, translations: any) => Highcharts.Options = (
+  data,
+  translations
+) => ({
   chart: {
     plotBackgroundColor: null,
     plotBorderWidth: null,
@@ -51,7 +56,7 @@ const options: (data: any) => Highcharts.Options = data => ({
     {
       type: "pie",
       innerSize: "50%",
-      name: "Studies",
+      text: translations.studies,
       colorByPoint: true,
       data
     }
@@ -69,10 +74,11 @@ const options: (data: any) => Highcharts.Options = data => ({
     enabled: false
   }
 });
-const options2: (data: any, categories: any[]) => Highcharts.Options = (
-  data,
-  categories
-) => ({
+const options2: (
+  data: any,
+  categories: any[],
+  translations: any
+) => Highcharts.Options = (data, categories, translations) => ({
   chart: {
     type: "column",
     height: 250,
@@ -88,7 +94,7 @@ const options2: (data: any, categories: any[]) => Highcharts.Options = (
     min: 0,
     max: 100,
     title: {
-      text: "Percentage"
+      text: translations.percentage
     },
     stackLabels: {
       style: {
@@ -123,10 +129,11 @@ const options2: (data: any, categories: any[]) => Highcharts.Options = (
   }
 });
 
-const options3: (data: any, categories: any[]) => Highcharts.Options = (
-  data,
-  categories
-) => ({
+const options3: (
+  data: any,
+  categories: any[],
+  translations: any
+) => Highcharts.Options = (data, categories, translations) => ({
   chart: {
     height: 250,
     width: 300,
@@ -148,7 +155,7 @@ const options3: (data: any, categories: any[]) => Highcharts.Options = (
     min: 0,
     max: 100,
     title: {
-      text: "Percentage (%)"
+      text: translations.percentage
     }
   },
   plotOptions: {
@@ -260,6 +267,9 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
     ).label
   );
   const study = sortedStudies[sortedStudies.length - studyIndex - 1];
+  const translations = {
+    percentage: t("treatment.chart.molecular_markers.percentage")
+  };
 
   const pfkelch13 = () => {
     return (
@@ -269,18 +279,25 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
           <Box fontWeight="fontWeightBold">{`${title} (${minYear}-${maxYear})`}</Box>
         </Typography>
         <Typography variant="body2">
-          In this {study.YEAR_START} study, the following{" "}
-          <i>{molecularMarker}</i> mutations were observed among {study.N}{" "}
-          samples:
+          <JsxParser
+            jsx={t(`treatment.chart.molecular_markers.site_content`, {
+              nStudies: study.N,
+              molecularMarker: t(molecularMarker),
+              year: study.YEAR_START
+            })}
+          />
         </Typography>
         <Flex>
           <FlexCol>
-            <HighchartsReact highcharts={Highcharts} options={options(data)} />
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={options(data, translations)}
+            />
           </FlexCol>
           <FlexCol flex={2}>
             <HighchartsReact
               highcharts={Highcharts}
-              options={options2(series, years)}
+              options={options2(series, years, translations)}
             />
           </FlexCol>
         </Flex>
@@ -300,33 +317,39 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
   const mcStudy = subStudies.find(s => s.GENOTYPE === "MC");
   const wtStudy = subStudies.find(s => s.GENOTYPE === "WT");
 
-  const duration =
-    parseInt(YEAR_START) !== parseInt(YEAR_END)
-      ? `from ${YEAR_START} to ${YEAR_END}`
-      : YEAR_START;
+  const duration = formatYears(YEAR_START, YEAR_END);
 
   const formatValue = (value: number) =>
     Number.isNaN(value) ? "N/A" : `${(value * 100).toFixed(2)}%`;
+
+  const studyYears = t("treatment.chart.molecular_markers.study_years");
+  const t_studies = t("treatment.chart.molecular_markers.studies");
+  const nSamples = t("treatment.chart.molecular_markers.number_of_samples");
+  const mutationDetected = t(
+    "treatment.chart.molecular_markers.mutation_detected"
+  );
+  const t_wtStudy = t("treatment.chart.molecular_markers.wt_tudy");
+  const t_mcStudy = t("treatment.chart.molecular_markers.mc_study");
 
   const pfcrt = () => {
     return (
       <Margin>
         <Flex>
           <Typography variant="body2">
-            <b>Study year(s):&nbsp;</b>
+            <b>{studyYears}:&nbsp;</b>
             {duration}
           </Typography>
         </Flex>
         <Flex>
           <Typography variant="body2">
-            <b>Number of samples:&nbsp;</b>
+            <b>{nSamples}:&nbsp;</b>
             {N}
           </Typography>
         </Flex>
         {treatmentFilters.molecularMarker === 2 && (
           <Flex>
             <Typography variant="body2">
-              <b>Samples with mutations detected:&nbsp;</b>
+              <b>{mutationDetected}:&nbsp;</b>
               {formatValue(PROP_RELATED)}
             </Typography>
           </Flex>
@@ -334,7 +357,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
         {wtStudy && (
           <Flex>
             <Typography variant="body2">
-              <b>Samples with wildtype:&nbsp;</b>
+              <b>{t_wtStudy}:&nbsp;</b>
               {formatValue(wtStudy.PROPORTION)}
             </Typography>
           </Flex>
@@ -342,7 +365,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
         {mcStudy && (
           <Flex>
             <Typography variant="body2">
-              <b>Samples with multiple copy numbers:&nbsp;</b>
+              <b>{t_mcStudy}:&nbsp;</b>
               {formatValue(mcStudy.PROPORTION)}
             </Typography>
           </Flex>
@@ -355,7 +378,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
 
   const series3 = keys.map(key => {
     return {
-      name: key.name,
+      name: t(key.name),
       color: key.color,
       data: sortedYears.map(year => {
         const yearFilters: any = studies.filter(
@@ -385,7 +408,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
             <Box fontWeight="fontWeightBold">{`${title}`}</Box>
           </Typography>
           <Typography variant="subtitle2">
-            <Box>{`${studies.length} studies ${formatYears(
+            <Box>{`${studies.length} ${t_studies} ${formatYears(
               `${minYear}`,
               `${maxYear}`
             )}`}</Box>
@@ -394,7 +417,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
             {pfcrt()}
             <HighchartsReact
               highcharts={Highcharts}
-              options={options3(series3, sortedYears)}
+              options={options3(series3, sortedYears, translations)}
             />
           </Hidden>
           <Hidden xsDown>
@@ -404,12 +427,12 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
                 {treatmentFilters.molecularMarker === 2 ? (
                   <HighchartsReact
                     highcharts={Highcharts}
-                    options={options3(series3, sortedYears)}
+                    options={options3(series3, sortedYears, translations)}
                   />
                 ) : (
                   <HighchartsReact
                     highcharts={Highcharts}
-                    options={options2(series, years)}
+                    options={options2(series, years, translations)}
                   />
                 )}
               </FlexCol>

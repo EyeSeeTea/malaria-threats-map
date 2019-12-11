@@ -116,7 +116,15 @@
         "studies": "study(s)"
       },
       "molecular_markers": {
-        "content": "{{nStudies}} molecular marker studies conducted on {{molecularMarker}} {{years}}"
+        "content": "{{nStudies}} molecular marker studies conducted on {{molecularMarker}} {{years}}",
+        "site_content": "In this {{year}} study, the following <i>{{molecularMarker}}</i> mutations were observed among {{nStudies}} samples",
+        "percentage": "Percentage (%)",
+        "studies": "Studies",
+        "study_years": "Study year(s)",
+        "number_of_samples": "Number of samples",
+        "mutation_detected": "Samples with mutations detected",
+        "wt_tudy": "Samples with wildtype",
+        "mc_study": "Samples with multiple copy numbers"
       }
     },
     "legend": {
@@ -207,5 +215,6 @@
   "citation": {
     "no_citation": "No citation data available"
   },
-  "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier"
+  "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",
+  "PROP_RELATED": "Percentage %"
 }
