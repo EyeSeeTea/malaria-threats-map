@@ -30,19 +30,7 @@ const options: (data: any, translations: any) => Highcharts.Options = (
     max: 100,
     title: {
       text: translations.mosquito_mortality
-    },
-    plotLines: [
-      {
-        value: 90,
-        color: "#d43501",
-        dashStyle: "LongDashDot",
-        width: 2,
-        zIndex: 5,
-        label: {
-          text: ""
-        }
-      }
-    ]
+    }
   },
   plotOptions: {
     column: {

@@ -6,7 +6,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { GlobeIcon } from "./Icons";
 import FilterIcon from "@material-ui/icons/FilterList";
-import CloseIcon from "@material-ui/icons/Close";
+import CloseIcon from "@material-ui/icons/ArrowBack";
 import CountrySelector from "./filters/CountrySelector";
 import ResistanceStatusFilters from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
 import styled from "styled-components";

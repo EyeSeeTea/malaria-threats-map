@@ -10,7 +10,7 @@ export default function GeneDeletionFilters() {
       <DeletionTypeFilter />
       <SurveyTypeFilter />
       <PatientTypeFilter />
-      <YearRangeSelector />
+      <YearRangeSelector minYear={1998} maxYear={new Date().getFullYear()} />
     </>
   );
 }

@@ -120,6 +120,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
   const cleanedStudies = R.groupBy((study: PreventionStudy) => {
     return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
   }, sortedStudies);
+
   const simplifiedStudies = R.sortBy(
     R.prop("YEAR_START"),
     R.values(cleanedStudies).map(
@@ -135,7 +136,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     species: t(study.SPECIES),
     number: study.NUMBER
   }));
-  const studyObject = simplifiedStudies[study];
+  const studyObject = groupedStudies[study][0];
   const translations = {
     mortality: t("prevention.chart.resistance_status.mortality"),
     mosquito_mortality: t(

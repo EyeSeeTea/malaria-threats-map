@@ -7,7 +7,7 @@ import List from "@material-ui/core/List";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import Slide from "@material-ui/core/Slide";
 import { TransitionProps } from "@material-ui/core/transitions";
 import { State } from "../store/types";
@@ -80,7 +80,7 @@ function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
               size={"small"}
               aria-label="close"
             >
-              <CloseIcon fontSize={"small"} />
+              <ArrowDownwardIcon fontSize={"small"} />
             </IconButton>
           </Toolbar>
         </AppBar>
