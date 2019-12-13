@@ -15,6 +15,7 @@ import { selectInvasiveFilters } from "../../../store/reducers/invasive-reducer"
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
 import { DiagnosisStudy } from "../../../types/Diagnosis";
 import { dispatchCustomEvent } from "../../../utils/dom-utils";
+import { setSelection } from "../../../store/actions/base-actions";
 
 const mapStateToProps = (state: State) => ({
   invasiveFilters: selectInvasiveFilters(state),
@@ -22,13 +23,16 @@ const mapStateToProps = (state: State) => ({
   selection: selectSelection(state)
 });
 
+const mapDispatchToProps = {
+  setSelection: setSelection
+};
 type StateProps = ReturnType<typeof mapStateToProps>;
-
+type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
   studies: DiagnosisStudy[];
   map: any;
 };
-type Props = StateProps & OwnProps;
+type Props = StateProps & DispatchProps & OwnProps;
 
 class DiagnosisSitePopover extends Component<Props> {
   popup: mapboxgl.Popup;
@@ -67,6 +71,7 @@ class DiagnosisSitePopover extends Component<Props> {
   componentWillUnmount(): void {
     if (this.popup) {
       this.popup.remove();
+      this.props.setSelection(null);
     }
   }
 
@@ -77,5 +82,5 @@ class DiagnosisSitePopover extends Component<Props> {
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(DiagnosisSitePopover);

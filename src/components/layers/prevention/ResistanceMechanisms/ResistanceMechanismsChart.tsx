@@ -13,6 +13,16 @@ import * as R from "ramda";
 import { ResistanceMechanismColors } from "./symbols";
 import { RESISTANCE_MECHANISM } from "./utils";
 import { baseChart } from "../../../charts/chart-utils";
+import { TreatmentStudy } from "../../../../types/Treatment";
+import { MutationColors } from "../../treatment/MolecularMarkers/utils";
+
+const Flex = styled.div`
+  display: flex;
+`;
+
+const FlexCol = styled.div<{ flex?: number }>`
+  flex: ${props => props.flex || 1};
+`;
 
 const options: (data: any, translations: any) => Highcharts.Options = (
   data,
@@ -39,6 +49,39 @@ const options: (data: any, translations: any) => Highcharts.Options = (
     }
   },
   series: data
+});
+
+const options2: (
+  data: any,
+  categories: any[],
+  translations: any
+) => Highcharts.Options = (data, categories, translations) => ({
+  ...baseChart,
+  title: {
+    text: translations.title
+  },
+  xAxis: { categories },
+  yAxis: {
+    title: {
+      text: translations.count
+    }
+  },
+  plotOptions: {
+    column: {
+      stacking: "normal",
+      dataLabels: {
+        enabled: true
+      }
+    }
+  },
+  series: data,
+  legend: {
+    itemStyle: {
+      fontSize: "9px"
+    },
+    enabled: true,
+    maxHeight: 70
+  }
 });
 
 const ChatContainer = styled.div<{ width?: string }>`
@@ -100,10 +143,34 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
       data: notDetected
     }
   ];
+  const groups = R.groupBy(R.prop("SPECIES"), sortedStudies);
+  const series = Object.keys(groups).map((specie: string) => {
+    const studies: PreventionStudy[] = groups[specie];
+    return {
+      type: "column",
+      name: specie,
+      data: years.map(year => {
+        const yearFilters = studies.filter(
+          study => year === parseInt(study.YEAR_START)
+        )[0];
+        return {
+          name: `${year}`,
+          y: yearFilters
+            ? parseFloat(yearFilters.MECHANISM_FREQUENCY)
+            : undefined
+        };
+      })
+    };
+  });
   const translations = {
     count: t("prevention.chart.resistance_mechanism.count"),
     title: t("prevention.chart.resistance_mechanism.title")
   };
+  const translations2 = {
+    count: t("prevention.chart.resistance_mechanism.frequency"),
+    title: t("prevention.chart.resistance_mechanism.allelic")
+  };
+  console.log(studies[0]);
   const content = () => (
     <>
       <Typography variant="subtitle1">
@@ -114,10 +181,20 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
       <Typography variant="subtitle2">
         {`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}
       </Typography>
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options(data, translations)}
-      />
+      <Flex>
+        <FlexCol>
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={options(data, translations)}
+          />
+        </FlexCol>
+        <FlexCol>
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={options2(series, years, translations2)}
+          />
+        </FlexCol>
+      </Flex>
       <Citation study={studies[0]} />
     </>
   );

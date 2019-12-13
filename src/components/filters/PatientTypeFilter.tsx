@@ -4,7 +4,7 @@ import { State } from "../../store/types";
 import IntegrationReactSelect from "../BasicSelect";
 import { selectPatientType } from "../../store/reducers/translations-reducer";
 import {
-  selectDiagnosisFilters,
+  selectDiagnosisFilters, selectDiagnosisStudies,
   selectFilteredDiagnosisStudies
 } from "../../store/reducers/diagnosis-reducer";
 import { setDiagnosisPatientType } from "../../store/actions/diagnosis-actions";
@@ -23,7 +23,7 @@ import T from "../../translations/T";
 
 const mapStateToProps = (state: State) => ({
   patientType: selectPatientType(state),
-  studies: selectFilteredDiagnosisStudies(state),
+  studies: selectDiagnosisStudies(state),
   yearFilter: selectFilters(state),
   diagnosisFilters: selectDiagnosisFilters(state),
   region: selectRegion(state)

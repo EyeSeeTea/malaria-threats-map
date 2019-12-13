@@ -40,7 +40,9 @@
         "DETECTED": "Confirmed",
         "NOT_DETECTED": "Not confirmed",
         "title": "Number of mechanism assays",
-        "count": "Count"
+        "allelic": "Allelic frequency from molecular assay",
+        "count": "Count",
+        "frequency": "Frequency (%)"
       },
       "synergist_involvement": {
         "mortality": "Mortality",
@@ -92,8 +94,8 @@
     },
     "legend": {
       "gene_deletions": {
-        "confirmed": "Confirmed",
-        "not_identified": "Not Identified"
+        "confirmed": "Detected",
+        "not_identified": "Not Detected"
       }
     }
   },
@@ -186,7 +188,7 @@
     "molecular_marker": "Molecular Marker",
     "mechanism_type": "Mechanism Type",
     "assay_type": "Assay Type",
-    "synergist_type": "Synergist Type",
+    "synergist_type": "Test Type",
     "deletion_type": "Deletion Type",
     "survey_type": "Survey Type",
     "patient_type": "Patient Type",

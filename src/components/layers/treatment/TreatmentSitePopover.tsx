@@ -15,6 +15,7 @@ import TreatmentSelectionChart from "./TreatmentSelectionChart";
 import { selectTreatmentFilters } from "../../../store/reducers/treatment-reducer";
 import { TreatmentStudy } from "../../../types/Treatment";
 import { dispatchCustomEvent } from "../../../utils/dom-utils";
+import { setSelection } from "../../../store/actions/base-actions";
 
 const mapStateToProps = (state: State) => ({
   treatmentFilters: selectTreatmentFilters(state),
@@ -22,7 +23,9 @@ const mapStateToProps = (state: State) => ({
   selection: selectSelection(state)
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  setSelection: setSelection
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
@@ -70,6 +73,7 @@ class PreventionSitePopover extends Component<Props> {
   componentWillUnmount(): void {
     if (this.popup) {
       this.popup.remove();
+      this.props.setSelection(null);
     }
   }
 
