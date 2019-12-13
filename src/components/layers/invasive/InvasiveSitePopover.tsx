@@ -15,7 +15,7 @@ import InvasiveSelectionChart from "./InvasiveSelectionChart";
 import { selectInvasiveFilters } from "../../../store/reducers/invasive-reducer";
 import { InvasiveStudy } from "../../../types/Invasive";
 import { dispatchCustomEvent } from "../../../utils/dom-utils";
-import {setSelection} from "../../../store/actions/base-actions";
+import { setSelection } from "../../../store/actions/base-actions";
 
 const mapStateToProps = (state: State) => ({
   invasiveFilters: selectInvasiveFilters(state),
@@ -54,7 +54,10 @@ class PreventionSitePopover extends Component<Props> {
     this.popup = new mapboxgl.Popup()
       .setLngLat(selection.coordinates)
       .setDOMContent(placeholder)
-      .addTo(this.props.map);
+      .addTo(this.props.map)
+      .on("close", () => {
+        this.props.setSelection(null);
+      });
 
     setTimeout(() => dispatchCustomEvent("resize"), 100);
   }
@@ -71,7 +74,6 @@ class PreventionSitePopover extends Component<Props> {
   componentWillUnmount(): void {
     if (this.popup) {
       this.popup.remove();
-      this.props.setSelection(null);
     }
   }
 
@@ -82,5 +84,5 @@ class PreventionSitePopover extends Component<Props> {
 
 export default connect(
   mapStateToProps,
-    mapDispatchToProps
+  mapDispatchToProps
 )(PreventionSitePopover);

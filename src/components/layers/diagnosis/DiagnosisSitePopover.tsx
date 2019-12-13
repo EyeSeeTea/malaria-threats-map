@@ -54,7 +54,10 @@ class DiagnosisSitePopover extends Component<Props> {
     this.popup = new mapboxgl.Popup()
       .setLngLat(selection.coordinates)
       .setDOMContent(placeholder)
-      .addTo(this.props.map);
+      .addTo(this.props.map)
+      .on("close", () => {
+        this.props.setSelection(null);
+      });
 
     setTimeout(() => dispatchCustomEvent("resize"), 100);
   }

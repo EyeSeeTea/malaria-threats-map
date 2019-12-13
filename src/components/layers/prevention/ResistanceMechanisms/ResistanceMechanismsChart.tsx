@@ -13,8 +13,6 @@ import * as R from "ramda";
 import { ResistanceMechanismColors } from "./symbols";
 import { RESISTANCE_MECHANISM } from "./utils";
 import { baseChart } from "../../../charts/chart-utils";
-import { TreatmentStudy } from "../../../../types/Treatment";
-import { MutationColors } from "../../treatment/MolecularMarkers/utils";
 
 const Flex = styled.div`
   display: flex;
@@ -170,7 +168,6 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
     count: t("prevention.chart.resistance_mechanism.frequency"),
     title: t("prevention.chart.resistance_mechanism.allelic")
   };
-  console.log(studies[0]);
   const content = () => (
     <>
       <Typography variant="subtitle1">

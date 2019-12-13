@@ -16,6 +16,8 @@ import { PreventionStudy } from "../../../types/Prevention";
 import PreventionSelectionChart from "./PreventionSelectionChart";
 import { dispatchCustomEvent } from "../../../utils/dom-utils";
 import { setSelection } from "../../../store/actions/base-actions";
+import { on } from "cluster";
+import { debounce, debounceTimes, throttle } from "../../Map";
 
 const mapStateToProps = (state: State) => ({
   preventionFilters: selectPreventionFilters(state),
@@ -58,11 +60,13 @@ class PreventionSitePopover extends Component<Props> {
     this.popup = new mapboxgl.Popup()
       .setLngLat(selection.coordinates)
       .setDOMContent(placeholder)
-      .addTo(this.props.map);
+      .addTo(this.props.map)
+      .on("close", () => {
+        this.props.setSelection(null);
+      });
 
     setTimeout(() => dispatchCustomEvent("resize"), 100);
   }
-
   componentDidUpdate(
     prevProps: Readonly<Props>,
     prevState: Readonly<{}>,
@@ -75,7 +79,6 @@ class PreventionSitePopover extends Component<Props> {
   componentWillUnmount(): void {
     if (this.popup) {
       this.popup.remove();
-      this.props.setSelection(null);
     }
   }
 

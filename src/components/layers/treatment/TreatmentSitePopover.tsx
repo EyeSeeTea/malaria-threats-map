@@ -56,7 +56,10 @@ class PreventionSitePopover extends Component<Props> {
     this.popup = new mapboxgl.Popup()
       .setLngLat(selection.coordinates)
       .setDOMContent(placeholder)
-      .addTo(this.props.map);
+      .addTo(this.props.map)
+      .on("close", () => {
+        this.props.setSelection(null);
+      });
 
     setTimeout(() => dispatchCustomEvent("resize"), 100);
   }
@@ -73,7 +76,6 @@ class PreventionSitePopover extends Component<Props> {
   componentWillUnmount(): void {
     if (this.popup) {
       this.popup.remove();
-      this.props.setSelection(null);
     }
   }
 

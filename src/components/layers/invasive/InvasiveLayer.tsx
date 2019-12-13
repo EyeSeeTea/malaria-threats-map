@@ -239,7 +239,9 @@ class InvasiveLayer extends Component<Props> {
       coordinates: coordinates
     };
     console.log(selection);
-    this.props.setSelection(selection);
+    setTimeout(() => {
+      this.props.setSelection(selection);
+    }, 100);
   };
 
   setupPopover = () => {

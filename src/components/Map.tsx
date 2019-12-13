@@ -129,6 +129,34 @@ export const debounce = <F extends (...args: any[]) => any>(
     });
 };
 
+export const debounceTimes = <F extends (...args: any[]) => any>(
+  func: F,
+  times: number
+) => {
+  let counter: number = 0;
+  return (...args: Parameters<F>): Promise<ReturnType<F>> =>
+    new Promise(resolve => {
+      counter = counter + 1;
+      if (counter >= times) {
+        resolve(func(...args));
+      }
+    });
+};
+
+export const throttle = <F extends (...args: any[]) => any>(
+  f: F,
+  t: number
+) => {
+  let lastCall: any;
+  return (...args: Parameters<F>): ReturnType<F> => {
+    let previousCall = lastCall;
+    lastCall = Date.now();
+    if (previousCall === undefined || lastCall - previousCall > t) {
+      return f(args);
+    }
+  };
+};
+
 class Map extends React.Component<any> {
   map: mapboxgl.Map;
   mapContainer: any;
@@ -223,13 +251,13 @@ class Map extends React.Component<any> {
             <Layers />
             <Country disabled={countryTogglerDisabled} />
             <StoryModeSelector />
-            <Hidden xsDown>
-              {this.map && this.state.ready ? (
-                <Screenshot map={this.map} />
-              ) : (
-                <div />
-              )}
-            </Hidden>
+            {/*<Hidden xsDown>*/}
+            {/*  {this.map && this.state.ready ? (*/}
+            {/*    <Screenshot map={this.map} />*/}
+            {/*  ) : (*/}
+            {/*    <div />*/}
+            {/*  )}*/}
+            {/*</Hidden>*/}
           </SearchContainer>
         </Fade>
         <Fade in={!initialDialogOpen}>
