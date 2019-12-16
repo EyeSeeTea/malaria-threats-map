@@ -61,10 +61,9 @@ export const studySelector = (
   mapType: DiagnosisMapType,
   deletionType: string
 ) => {
-  switch (mapType) {
-    case DiagnosisMapType.GENE_DELETIONS:
-      return getByMostRecentYearAndDeletionType(group, deletionType);
-    default:
-      return group[0];
+  if (mapType === DiagnosisMapType.GENE_DELETIONS) {
+    return getByMostRecentYearAndDeletionType(group, deletionType);
+  } else {
+    return group[0];
   }
 };

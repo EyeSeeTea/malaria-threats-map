@@ -18,12 +18,7 @@ import {
   fetchDiagnosisStudiesSuccess,
   setDiagnosisMapType
 } from "../actions/diagnosis-actions";
-import {
-  setFiltersAction,
-  setStoryModeAction,
-  setStoryModeStepAction,
-  setThemeAction
-} from "../actions/base-actions";
+import { setFiltersAction, setThemeAction } from "../actions/base-actions";
 import { State } from "../types";
 
 interface Params {

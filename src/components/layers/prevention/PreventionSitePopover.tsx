@@ -16,8 +16,6 @@ import { PreventionStudy } from "../../../types/Prevention";
 import PreventionSelectionChart from "./PreventionSelectionChart";
 import { dispatchCustomEvent } from "../../../utils/dom-utils";
 import { setSelection } from "../../../store/actions/base-actions";
-import { on } from "cluster";
-import { debounce, debounceTimes, throttle } from "../../Map";
 
 const mapStateToProps = (state: State) => ({
   preventionFilters: selectPreventionFilters(state),

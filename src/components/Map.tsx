@@ -11,7 +11,6 @@ import DiagnosisLayer from "./layers/diagnosis/DiagnosisLayer";
 import TreatmentLayer from "./layers/treatment/TreatmentLayer";
 import InvasiveLayer from "./layers/invasive/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
-import InitialDialog from "./InitialDialog";
 import Filters from "./Filters";
 import MapTypesSelector from "./MapTypesSelector";
 import TopicSelector from "./TopicSelector";
@@ -38,14 +37,12 @@ import {
   updateBoundsAction,
   updateZoomAction
 } from "../store/actions/base-actions";
-import Screenshot from "./Screenshot";
 import ReactMapboxGl from "react-mapbox-gl";
 import { Fade, Hidden } from "@material-ui/core";
 import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
 import Leyend from "./Leyend";
 import StoryModeSelector from "./StoryModeSelector";
-import MalariaTour from "./tour/MalariaTour";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
 
 ReactMapboxGl({

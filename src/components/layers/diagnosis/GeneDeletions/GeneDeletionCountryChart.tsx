@@ -1,5 +1,4 @@
 import * as React from "react";
-import styled from "styled-components";
 import { Box, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -15,7 +14,7 @@ import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-red
 import { formatList, formatYears } from "../../../../utils/string-utils";
 // @ts-ignore
 import JsxParser from "react-jsx-parser";
-import {Actions, ChartContainer, FlexGrow, ZoomButton} from "../../../Chart";
+import { Actions, ChartContainer, FlexGrow, ZoomButton } from "../../../Chart";
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),

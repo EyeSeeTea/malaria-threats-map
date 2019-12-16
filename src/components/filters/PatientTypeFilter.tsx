@@ -4,8 +4,8 @@ import { State } from "../../store/types";
 import IntegrationReactSelect from "../BasicSelect";
 import { selectPatientType } from "../../store/reducers/translations-reducer";
 import {
-  selectDiagnosisFilters, selectDiagnosisStudies,
-  selectFilteredDiagnosisStudies
+  selectDiagnosisFilters,
+  selectDiagnosisStudies
 } from "../../store/reducers/diagnosis-reducer";
 import { setDiagnosisPatientType } from "../../store/actions/diagnosis-actions";
 import {

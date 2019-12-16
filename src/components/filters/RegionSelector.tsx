@@ -9,7 +9,6 @@ import IntegrationReactSelect from "../BasicSelect";
 import { selectRegions } from "../../store/reducers/translations-reducer";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Divider, FilterWrapper } from "./Filters";
-import { useTranslation } from "react-i18next";
 import T from "../../translations/T";
 
 const mapStateToProps = (state: State) => ({

@@ -1,24 +1,20 @@
 import { Typography } from "@material-ui/core";
 import React from "react";
 import { Footer, StepProps } from "../MalariaTour";
+import { useTranslation } from "react-i18next";
 
 export default function Step1(options: StepProps) {
+  const { t } = useTranslation("tour");
   return (
     <>
       <>
         <Typography variant="subtitle1">
-          <strong>Welcome to Malaria Threats Map!</strong>
+          <strong>{t("tour.steps.1.title")}</strong>
         </Typography>
-        <Typography variant="body2">
-          You are at a WHO official platform created to present the magnitude
-          and spread of three biological challenges for malaria control and
-          elimination.
-        </Typography>
-        <Typography variant="body2">
-          This wizard will show how to use the platform.
-        </Typography>
+        <Typography variant="body2">{t("tour.steps.1.p1")}</Typography>
+        <Typography variant="body2">{t("tour.steps.1.p2")}</Typography>
       </>
-      <Footer {...options} current={1} total={9}/>
+      <Footer {...options} current={1} total={9} />
     </>
   );
 }

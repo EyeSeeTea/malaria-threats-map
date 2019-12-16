@@ -1,13 +1,15 @@
 import { Typography } from "@material-ui/core";
 import React from "react";
 import { Footer, StepProps } from "../MalariaTour";
+import { useTranslation } from "react-i18next";
 
 export default function Step2(options: StepProps) {
+  const { t } = useTranslation("tour");
   return (
     <>
       <>
         <Typography variant="subtitle1">
-          <strong>Choose a language</strong>
+          <strong>{t("tour.steps.2.title")}</strong>
         </Typography>
       </>
       <Footer {...options} current={2} total={9} />
