@@ -5,6 +5,18 @@
     "treatment": "Parasite drug efficacy and resistance",
     "invasive": "Invasive Vector Species"
   },
+  "themes_caps": {
+    "prevention": "VECTOR INSECTICIDE RESISTANCE",
+    "diagnosis": "PARASITE pfhrp2/3 GENE DELETIONS",
+    "treatment": "PARASITE DRUG EFFICACY AND RESISTANCE",
+    "invasive": "INVASIVE VECTOR SPECIES"
+  },
+  "cards": {
+    "prevention": "Resistance of malaria mosquitoes to insecticides used in core prevention tools of treated bed nets and indoor residual sprays threatens vector control effectiveness",
+    "diagnosis": "Gene deletions among some malaria parasites cause false negative diagnostic test results, complicating case management and control",
+    "treatment": "Resistance of malaria parasites to artemisinin – the core compound of the best available antimalarial medicines – threatens antimalarial drug efficacy",
+    "invasive": "The spread of anopheline mosquito vector species and their establishment in ecosystems to which they are not native poses a potential threat to the control and elimination of malaria"
+  },
   "prevention": {
     "resistance_status": "Resistance Status",
     "resistance_intensity": "Resistance Intensity",

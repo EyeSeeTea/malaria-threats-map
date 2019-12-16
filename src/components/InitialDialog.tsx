@@ -19,6 +19,7 @@ import {
 } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
+import { useTranslation } from "react-i18next";
 
 const FlexGrow = styled.div`
   flex-grow: 1;
@@ -53,6 +54,7 @@ function InitialDialog({
   tour,
   setTourStep
 }: Props) {
+  const { t } = useTranslation("common");
   function handleClose() {
     if (tour.open) {
       setTourStep(tour.step + 1);
@@ -80,30 +82,30 @@ function InitialDialog({
       </Row>
       <Row id="dialog">
         <SimpleCard
-          title="VECTOR INSECTICIDE RESISTANCE"
+          title={t("themes_caps.prevention")}
           theme="prevention"
-          description="Resistance of malaria mosquitoes to insecticides used in core prevention tools of treated bed nets and indoor residual sprays threatens vector control effectiveness"
+          description={t("cards.prevention")}
           Icon={PreventionIcon}
           onSelection={handleClose}
         />
         <SimpleCard
-          title="PARASITE pfhrp2/3 GENE DELETIONS"
+          title={t("themes_caps.diagnosis")}
           theme="diagnosis"
-          description="Gene deletions among some malaria parasites cause false negative diagnostic test results, complicating case management and control"
+          description={t("cards.diagnosis")}
           Icon={DiagnosisIcon}
           onSelection={handleClose}
         />
         <SimpleCard
-          title="PARASITE DRUG EFFICACY AND RESISTANCE"
+          title={t("themes_caps.treatment")}
           theme="treatment"
-          description="Resistance of malaria parasites to artemisinin – the core compound of the best available antimalarial medicines – threatens antimalarial drug efficacy"
+          description={t("cards.treatment")}
           Icon={TreatmentIcon}
           onSelection={handleClose}
         />
         <SimpleCard
-          title="INVASIVE VECTOR SPECIES"
+          title={t("themes_caps.invasive")}
           theme="invasive"
-          description="The spread of anopheline mosquito vector species and their establishment in ecosystems to which they are not native poses a potential threat to the control and elimination of malaria."
+          description={t("cards.invasive")}
           Icon={InvasiveIcon}
           onSelection={handleClose}
         />
