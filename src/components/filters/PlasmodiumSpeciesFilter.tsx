@@ -22,7 +22,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const suggestions: any[] = [
+export const PLASMODIUM_SPECIES_SUGGESTIONS: any[] = [
   {
     label: "P. falciparum",
     value: "P._FALCIPARUM"
@@ -51,7 +51,7 @@ class PlasmodiumSpeciesFilter extends Component<Props, any> {
   };
 
   render() {
-    const selection = suggestions.find(
+    const selection = PLASMODIUM_SPECIES_SUGGESTIONS.find(
       suggestion =>
         this.props.treatmentFilters.plasmodiumSpecies === suggestion.value
     );
@@ -62,7 +62,7 @@ class PlasmodiumSpeciesFilter extends Component<Props, any> {
         </FormLabel>
         <Divider />
         <IntegrationReactSelect
-          suggestions={suggestions}
+          suggestions={PLASMODIUM_SPECIES_SUGGESTIONS}
           onChange={this.onChange}
           value={selection}
         />

@@ -145,14 +145,13 @@ class MalariaTour extends PureComponent<any> {
     this.props.setRegion({ country });
   };
 
+  onClose = () => {
+    this.props.setTourOpen(false);
+    localStorage.setItem("tour", "visited");
+  };
+
   render() {
-    const {
-      theme,
-      tour,
-      setTourOpen,
-      setInitialDialogOpen,
-      classes
-    } = this.props;
+    const { theme, tour, setInitialDialogOpen, classes } = this.props;
 
     // https://github.com/elrumordelaluz/reactour/issues/185
     setTimeout(() => {
@@ -164,7 +163,7 @@ class MalariaTour extends PureComponent<any> {
     }, 100);
 
     const baseProps = {
-      setTourOpen: () => setTourOpen(false)
+      setTourOpen: this.onClose
     };
 
     const steps: ReactourStep[] = [
@@ -244,9 +243,9 @@ class MalariaTour extends PureComponent<any> {
             switch (theme) {
               case "prevention":
                 return {
-                  SITE_ID: "S14.755100_5.774900",
                   ISO_2_CODE: "",
-                  coordinates: [5.8062744140625, 15.900583912097915]
+                  SITE_ID: "S-1.928852_18.266101",
+                  coordinates: [18.270263671875, -1.9332268264771102]
                 };
               case "treatment":
                 return {
@@ -264,8 +263,8 @@ class MalariaTour extends PureComponent<any> {
                 return null;
             }
           })();
-          this.setSelection(selection as SiteSelection);
-          setTimeout(() => goTo(9), 200);
+          setTimeout(() => this.setSelection(selection as SiteSelection), 200);
+          setTimeout(() => goTo(9), 300);
           return <div />;
         }
       },
@@ -273,9 +272,7 @@ class MalariaTour extends PureComponent<any> {
         selector: ".mapboxgl-popup",
         content: options => {
           return <Step7 {...options} {...baseProps} step={9} back={6} />;
-        },
-        // @ts-ignore
-        observe: ".mapboxgl-popup"
+        }
       },
       {
         selector: "#country-button",
@@ -288,12 +285,13 @@ class MalariaTour extends PureComponent<any> {
       {
         selector: "#country-button",
         content: ({ goTo }) => {
-          this.setSelection({
+          const selection = {
             ISO_2_CODE: "SD",
             SITE_ID: "",
             coordinates: [30.003662109375, 16.048453014179174]
-          });
-          setTimeout(() => goTo(12), 200);
+          };
+          setTimeout(() => this.setSelection(selection as SiteSelection), 200);
+          setTimeout(() => goTo(12), 300);
           return <div />;
         }
       },
@@ -309,7 +307,7 @@ class MalariaTour extends PureComponent<any> {
         className={classes.root}
         steps={steps}
         isOpen={tour.open}
-        onRequestClose={() => setTourOpen(!tour.open)}
+        onRequestClose={this.onClose}
         disableDotsNavigation={true}
         disableKeyboardNavigation={true}
         disableInteraction={![1, 2].includes(tour.step)}

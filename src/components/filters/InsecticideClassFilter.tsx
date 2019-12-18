@@ -55,6 +55,13 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
+const ORDER: string[] = [
+  "PYRETHROIDS",
+  "ORGANOCHLORINES",
+  "CARBAMATES",
+  "ORGANOPHOSPHATES"
+];
+
 function InsecticideClassFilter({
   insecticideClasses = [],
   preventionFilters,
@@ -78,6 +85,9 @@ function InsecticideClassFilter({
         >
           {(insecticideClasses as Translation[])
             .filter(translation => translation.VALUE_ !== "NA")
+            .sort((a, b) =>
+              ORDER.indexOf(a.VALUE_) - ORDER.indexOf(b.VALUE_) > 0 ? 1 : -1
+            )
             .map((insecticideClass: Translation) => (
               <StyledFormControlLabel
                 key={insecticideClass.VALUE_}

@@ -44,6 +44,8 @@ import LeyendPopover from "./LegendPopover";
 import Leyend from "./Leyend";
 import StoryModeSelector from "./StoryModeSelector";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
+import MalariaTour from "./tour/MalariaTour";
+import InitialDialog from "./InitialDialog";
 
 ReactMapboxGl({
   accessToken:
@@ -215,6 +217,7 @@ class Map extends React.Component<any> {
   }
 
   render() {
+    const tour = localStorage.getItem("tour");
     const { initialDialogOpen } = this.props;
     const countryTogglerDisabled =
       (this.props.theme === "prevention" &&
@@ -243,7 +246,7 @@ class Map extends React.Component<any> {
               <MapTypesSelector />
               <Divider />
               <Filters />
-              {/*<MalariaTour />*/}
+              {tour !== "visited" && <MalariaTour />}
             </Hidden>
             <Layers />
             <Country disabled={countryTogglerDisabled} />
@@ -283,9 +286,9 @@ class Map extends React.Component<any> {
             <WhoLogo />
           </Hidden>
         </BottomLeftContainer>
-        {/*<Hidden xsDown>*/}
-        {/*  <InitialDialog />*/}
-        {/*</Hidden>*/}
+        <Hidden xsDown>
+          <InitialDialog />
+        </Hidden>
       </React.Fragment>
     );
   }

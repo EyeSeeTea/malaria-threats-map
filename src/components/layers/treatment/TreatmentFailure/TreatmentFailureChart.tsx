@@ -13,6 +13,7 @@ import * as R from "ramda";
 import Pagination from "../../../charts/Pagination";
 import Citation from "../../../charts/Citation";
 import { formatYears } from "../../../../utils/string-utils";
+import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../filters/PlasmodiumSpeciesFilter";
 
 const options: (
   data: any,
@@ -139,10 +140,10 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
     t(studies[study].COUNTRY_NAME)
   ];
   const title = titleItems.filter(Boolean).join(", ");
-
   const {
     YEAR_START,
     YEAR_END,
+    PLASMODIUM_SPECIES,
     DRUG_NAME,
     N,
     FOLLOW_UP,
@@ -236,6 +237,10 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
     );
   }
 
+  const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.find(
+    (species: any) => species.value === PLASMODIUM_SPECIES
+  ).label;
+
   return (
     <ChatContainer>
       <Pagination studies={studies} study={study} setStudy={setStudy} />
@@ -243,7 +248,8 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
         <Box fontWeight="fontWeightBold">{`${title}`}</Box>
       </Typography>
       <Typography variant="body2">
-        {`${t(DRUG_NAME)}: ${studies.length} ${t_studies} ${siteDuration}`}
+        <i>{plasmodiumSpecies}</i>
+        {`, ${t(DRUG_NAME)}: ${studies.length} ${t_studies} ${siteDuration}`}
       </Typography>
       <Hidden smUp>
         {renderInfo()}

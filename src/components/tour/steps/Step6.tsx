@@ -8,7 +8,7 @@ export default function Step6(options: StepProps) {
   return (
     <>
       <>
-        <Typography variant="body2">{t("tour.steps.6.p1")}</Typography>
+        <Typography variant="body2">{t("steps.6.p1")}</Typography>
       </>
       <Footer {...options} current={6} total={9} />
     </>

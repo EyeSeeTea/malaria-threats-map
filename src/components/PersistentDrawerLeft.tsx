@@ -47,6 +47,7 @@ import {
 import { colors } from "../constants/theme";
 import MapTypesSelector from "./MapTypesSelector";
 import MobileOptions from "./MobileOptions";
+import InitialDisclaimer from "./InitialDisclaimer";
 
 interface ThemeProps {
   drawerWidth: string;
@@ -230,7 +231,11 @@ function PersistentDrawerLeft({
           paper: classes.drawerPaper
         }}
       >
-        {storyMode ? <StoryModeStepper /> : <FiltersSidebar />}
+        <>
+          {storyMode ? <StoryModeStepper /> : <FiltersSidebar />}
+
+          <InitialDisclaimer />
+        </>
       </Drawer>
       <div
         className={clsx(classes.content, {
