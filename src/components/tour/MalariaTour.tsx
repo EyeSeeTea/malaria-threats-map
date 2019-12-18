@@ -29,6 +29,11 @@ import Step7 from "./steps/Step7";
 import Step8 from "./steps/Step8";
 import Step9 from "./steps/Step9";
 import { dispatchCustomEvent } from "../../utils/dom-utils";
+import {
+  setInsecticideClass,
+  setInsecticideTypes,
+  setSpecies
+} from "../../store/actions/prevention-actions";
 
 const styles = {
   root: {
@@ -107,7 +112,10 @@ const mapDispatchToProps = {
   setSelection: setSelection,
   setFiltersMode: setFiltersMode,
   setCountryMode: setCountryModeAction,
-  setFilteredStudies: setFilteredStudiesAction
+  setFilteredStudies: setFilteredStudiesAction,
+  setInsecticideClass,
+  setInsecticideTypes,
+  setSpecies
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -143,6 +151,18 @@ class MalariaTour extends PureComponent<any> {
 
   setRegion = (country: string) => {
     this.props.setRegion({ country });
+  };
+
+  setInsecticideClass = (insecticideClass: string) => {
+    this.props.setInsecticideClass(insecticideClass);
+  };
+
+  setInsecticideTypes = (insecticideTypes: string[]) => {
+    this.props.setInsecticideTypes(insecticideTypes);
+  };
+
+  setSpecies = (species: string[]) => {
+    this.props.setSpecies(species);
   };
 
   onClose = () => {
@@ -236,6 +256,15 @@ class MalariaTour extends PureComponent<any> {
         }
       },
       {
+        selector: "#sidebar",
+        content: options => {
+          this.setInsecticideClass("CARBAMATES");
+          this.setInsecticideTypes(["PROPOXUR"]);
+          // this.setSpecies(["An.+arabiensis", "An.+coluzzii"]);
+          return <Step6 {...options} {...baseProps} step={8} back={7} />;
+        }
+      },
+      {
         selector: "#fifth-duo",
         content: ({ goTo }) => {
           this.setCountryMode(false);
@@ -264,14 +293,14 @@ class MalariaTour extends PureComponent<any> {
             }
           })();
           setTimeout(() => this.setSelection(selection as SiteSelection), 200);
-          setTimeout(() => goTo(9), 300);
+          setTimeout(() => goTo(10), 300);
           return <div />;
         }
       },
       {
         selector: ".mapboxgl-popup",
         content: options => {
-          return <Step7 {...options} {...baseProps} step={9} back={6} />;
+          return <Step7 {...options} {...baseProps} step={10} back={7} />;
         }
       },
       {
@@ -279,7 +308,7 @@ class MalariaTour extends PureComponent<any> {
         content: options => {
           this.setSelection(null);
           this.setCountryMode(true);
-          return <Step8 {...options} {...baseProps} step={10} back={8} />;
+          return <Step8 {...options} {...baseProps} step={11} back={9} />;
         }
       },
       {
@@ -291,14 +320,14 @@ class MalariaTour extends PureComponent<any> {
             coordinates: [30.003662109375, 16.048453014179174]
           };
           setTimeout(() => this.setSelection(selection as SiteSelection), 200);
-          setTimeout(() => goTo(12), 300);
+          setTimeout(() => goTo(13), 300);
           return <div />;
         }
       },
       {
         selector: ".mapboxgl-popup",
         content: options => {
-          return <Step9 {...options} {...baseProps} step={12} back={10} />;
+          return <Step9 {...options} {...baseProps} step={13} back={11} />;
         }
       }
     ];
