@@ -129,12 +129,14 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
   });
   const data = [
     {
+      maxPointWidth: 20,
       type: "column",
       name: t("prevention.chart.resistance_mechanism.DETECTED"),
       color: ResistanceMechanismColors[RESISTANCE_MECHANISM.CONFIRMED][0],
       data: detected
     },
     {
+      maxPointWidth: 20,
       type: "column",
       name: t("prevention.chart.resistance_mechanism.NOT_DETECTED"),
       color: ResistanceMechanismColors[RESISTANCE_MECHANISM.NOT_CONFIRMED][0],
@@ -145,6 +147,7 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
   const series = Object.keys(groups).map((specie: string) => {
     const studies: PreventionStudy[] = groups[specie];
     return {
+      maxPointWidth: 20,
       type: "column",
       name: specie,
       data: years.map(year => {

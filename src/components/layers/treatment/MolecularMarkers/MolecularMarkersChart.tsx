@@ -78,6 +78,7 @@ const options2: (
   translations: any
 ) => Highcharts.Options = (data, categories, translations) => ({
   chart: {
+    maxPointWidth: 20,
     type: "column",
     height: 250,
     style: {
@@ -226,6 +227,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
   const series = Object.keys(k13Groups).map((genotype: string) => {
     const studies: TreatmentStudy[] = k13Groups[genotype];
     return {
+      maxPointWidth: 20,
       type: "column",
       name: genotype,
       color: MutationColors[genotype] ? MutationColors[genotype].color : "000",

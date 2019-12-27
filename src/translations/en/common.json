@@ -110,7 +110,7 @@
     },
     "legend": {
       "gene_deletions": {
-        "confirmed": "Confirmado",
+        "confirmed": "Detected",
         "not_identified": "Not detected"
       }
     }

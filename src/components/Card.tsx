@@ -1,15 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import { setThemeAction } from "../store/actions/base-actions";
 import { connect } from "react-redux";
-import { getTheme } from "../constants/theme";
 
 const useStyles = makeStyles({
   card: {
@@ -19,7 +15,8 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
     flexDirection: "column",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    cursor: "pointer"
   },
   bullet: {
     display: "inline-block",
@@ -33,13 +30,6 @@ const useStyles = makeStyles({
     marginBottom: 12
   }
 });
-
-const ButtonContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 16px;
-`;
 
 const StyledCardContent = styled(CardContent)`
   flex: 1;
@@ -74,10 +64,14 @@ export const SimpleCard = ({
 }: Props) => {
   const classes = useStyles({});
 
-  const styles = getTheme(theme);
-
   return (
-    <Card className={classes.card}>
+    <Card
+      className={classes.card}
+      onClick={() => {
+        setTheme(theme);
+        onSelection();
+      }}
+    >
       <Icon active style={{ maxWidth: "96px", marginTop: "24px" }} />
       <StyledCardContent>
         <Typography className={classes.pos} variant="h6" component="h2">
@@ -87,22 +81,6 @@ export const SimpleCard = ({
           {description}
         </Typography>
       </StyledCardContent>
-      <CardActions>
-        <ButtonContainer>
-          <ThemeProvider theme={styles}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                setTheme(theme);
-                onSelection();
-              }}
-            >
-              Select Theme
-            </Button>
-          </ThemeProvider>
-        </ButtonContainer>
-      </CardActions>
     </Card>
   );
 };

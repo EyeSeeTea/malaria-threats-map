@@ -13,6 +13,7 @@ import { lowerCase } from "change-case";
 import Pagination from "../../../charts/Pagination";
 import { useTranslation } from "react-i18next";
 import { ChartContainer } from "../../../Chart";
+import Curation from "../../../Curation";
 
 const Flex = styled.div`
   display: flex;
@@ -111,14 +112,7 @@ const VectorOccurrenceChart = ({ studies }: Props) => {
       <Margin>
         <Citation study={studyObject} />
       </Margin>
-      <Margin>
-        <Typography variant="body2">
-          <b>{t("invasive.chart.vector_occurrance.data_collection")}:</b>
-        </Typography>
-        <Typography variant="body2">
-          {studyObject.INSTITUTE_CURATION}
-        </Typography>
-      </Margin>
+      <Curation study={studyObject} />
     </ChartContainer>
   );
 };

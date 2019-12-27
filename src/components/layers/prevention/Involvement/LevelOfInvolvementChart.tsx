@@ -58,6 +58,7 @@ ${translations.tested}: ${point.number}
   },
   series: [
     {
+      maxPointWidth: 20,
       type: "column",
       name: translations.mortality,
       data: data

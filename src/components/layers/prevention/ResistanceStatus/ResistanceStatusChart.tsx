@@ -19,6 +19,7 @@ const options: (data: any, translations: any) => Highcharts.Options = (
   translations
 ) => ({
   chart: {
+    maxPointWidth: 20,
     type: "column",
     height: 300,
     style: {
@@ -80,6 +81,7 @@ ${translations.tested}: ${point.number}
   },
   series: [
     {
+      maxPointWidth: 20,
       type: "column",
       name: translations.mortality,
       data: data

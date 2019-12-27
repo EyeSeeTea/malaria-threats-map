@@ -13,6 +13,7 @@ import Citation from "../../../charts/Citation";
 import * as R from "ramda";
 import Pagination from "../../../charts/Pagination";
 import {baseChart} from "../../../charts/chart-utils";
+import Curation from "../../../Curation";
 
 const options: (data: any, translations: any) => Highcharts.Options = (
   data,
@@ -58,6 +59,7 @@ ${translations.tested}: ${point.number}
   },
   series: [
     {
+      maxPointWidth: 20,
       type: "column",
       name: translations.mortality,
       data: data
@@ -73,6 +75,11 @@ ${translations.tested}: ${point.number}
 
 const ChatContainer = styled.div<{ width?: string }>`
   width: ${props => props.width || "100%"};
+`;
+
+const Margin = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -140,6 +147,7 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
         options={options(data, translations)}
       />
       <Citation study={studyObject} />
+      <Curation study={studyObject} />
     </>
   );
   return (
