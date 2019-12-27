@@ -12,8 +12,6 @@ import {
   Typography
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-// @ts-ignore
-import JsxParser from "react-jsx-parser";
 import { FlexGrow } from "./Chart";
 import styled from "styled-components";
 
@@ -71,13 +69,13 @@ const InitialDisclaimer = () => {
           </IconButton>
         </DialogActions>
         <DialogContent>
-          <JsxParser jsx={t("disclaimer.p1")} />
+          {t("disclaimer.p1")}
           <br />
-          <JsxParser jsx={t("disclaimer.p2")} />
+          {t("disclaimer.p2")}
           <br />
-          <JsxParser jsx={t("disclaimer.p3")} />
+          {t("disclaimer.p3")}
           <br />
-          <JsxParser jsx={t("disclaimer.p4")} />
+          {t("disclaimer.p4")}
         </DialogContent>
         <DialogActions />
       </Dialog>

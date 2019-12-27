@@ -12,8 +12,6 @@ import {
 } from "../../../../store/actions/base-actions";
 import { TreatmentStudy } from "../../../../types/Treatment";
 import { formatYears } from "../../../../utils/string-utils";
-// @ts-ignore
-import JsxParser from "react-jsx-parser";
 import { ZoomButton } from "../../../Chart";
 
 const ChatContainer = styled.div`
@@ -63,16 +61,14 @@ const TreatmentFailureCountryChart = ({
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        <JsxParser
-          jsx={t(`treatment.chart.treatment_failure.content`, {
-            nStudies: nStudies,
-            drug: t(sortedStudies[0].DRUG_NAME),
-            plasmodiumSpecies: t(
-              sortedStudies[0].PLASMODIUM_SPECIES.replace(".", "%2E")
-            ),
-            years: formatYears(minYear, maxYear)
-          })}
-        />
+        {t(`treatment.chart.treatment_failure.content`, {
+          nStudies: nStudies,
+          drug: t(sortedStudies[0].DRUG_NAME),
+          plasmodiumSpecies: t(
+            sortedStudies[0].PLASMODIUM_SPECIES.replace(".", "%2E")
+          ),
+          years: formatYears(minYear, maxYear)
+        })}
       </Typography>
       <Actions>
         <FlexGrow />

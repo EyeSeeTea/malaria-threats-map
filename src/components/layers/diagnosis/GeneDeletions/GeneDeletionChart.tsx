@@ -15,8 +15,6 @@ import TableRow from "@material-ui/core/TableRow";
 import { formatList, formatYears } from "../../../../utils/string-utils";
 import * as R from "ramda";
 import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
-// @ts-ignore
-import JsxParser from "react-jsx-parser";
 
 const ChatContainer = styled.div`
   max-width: 500px;
@@ -85,14 +83,12 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
         )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        <JsxParser
-          jsx={t(`diagnosis.chart.gene_deletions.content`, {
-            nStudies: nStudies,
-            deletionType: t(diagnosisFilters.deletionType).toLowerCase(),
-            surveyTypes: formatList(surveyTypes.map(st => t(st))),
-            years: formatYears(minYear, maxYear)
-          })}
-        />
+        {t(`diagnosis.chart.gene_deletions.content`, {
+          nStudies: nStudies,
+          deletionType: t(diagnosisFilters.deletionType).toLowerCase(),
+          surveyTypes: formatList(surveyTypes.map(st => t(st))),
+          years: formatYears(minYear, maxYear)
+        })}
       </Typography>
       <div className={classes.root}>
         <Typography variant={"caption"}>

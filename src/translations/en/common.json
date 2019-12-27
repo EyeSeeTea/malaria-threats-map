@@ -25,7 +25,8 @@
     "pbo_deployment": "PBO Deployment",
     "chart": {
       "resistance_status": {
-        "content": "{{nStudies}} test(s) on <i>Anopheles</i> malaria vectors via discriminating concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
+        "content_1": "{{nStudies}} test(s) on ",
+        "content_2": " malaria vectors via discriminating concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
         "number_of_tests": "# of tests",
         "Confirmed": "Confirmed",
         "Possible": "Possible",
@@ -35,7 +36,8 @@
         "mosquito_mortality": "% mosquito mortality"
       },
       "resistance_intensity": {
-        "content": "{{nStudies}} test(s) on <i>Anopheles</i> malaria vectors via intensity concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
+        "content_1": "{{nStudies}} test(s) on ",
+        "content_2": " malaria vectors via intensity concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
         "number_of_tests": "# of tests",
         "HIGH_INTENSITY": "High Intensity",
         "MODERATE_TO_HIGH_INTENSITY": "Moderate to High Intensity",
@@ -47,7 +49,8 @@
         "mosquito_mortality": "% mosquito mortality"
       },
       "resistance_mechanism": {
-        "content": "{{nStudies}} test(s) on <i>Anopheles</i> malaria vectors via {{insecticideClasses}} with selected {{type}} {{years}}",
+        "content_1": "{{nStudies}} test(s) on ",
+        "content_2": " malaria vectors via {{insecticideClasses}} with selected {{type}} {{years}}",
         "number_of_tests": "# of tests",
         "DETECTED": "Confirmed",
         "NOT_DETECTED": "Not confirmed",
@@ -97,7 +100,8 @@
     "gene_deletions": "Gene Deletions",
     "chart": {
       "gene_deletions": {
-        "content": "{{nStudies}} survey(s) <i>P. falciparum</i> for {{deletionType}} by {{surveyTypes}} {{years}}",
+        "content_1": "{{nStudies}} survey(s) ",
+        "content_2": " for {{deletionType}} by {{surveyTypes}} {{years}}",
         "deletions_confirmed": "Deletions confirmed (% of samples)",
         "deletion_type": "Deletion type",
         "no_tested": "No. tested",
@@ -131,7 +135,8 @@
       },
       "molecular_markers": {
         "content": "{{nStudies}} molecular marker studies conducted on {{molecularMarker}} {{years}}",
-        "site_content": "In this {{year}} study, the following <i>{{molecularMarker}}</i> mutations were observed among {{nStudies}} samples",
+        "site_content_1": "In this {{year}} study, the following ",
+        "site_content_2": " mutations were observed among {{nStudies}} samples",
         "percentage": "Percentage (%)",
         "studies": "Studies",
         "study_years": "Study year(s)",

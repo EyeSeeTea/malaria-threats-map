@@ -16,8 +16,6 @@ import { MOLECULAR_MARKERS } from "../../../filters/MolecularMarkerFilter";
 import { selectTreatmentFilters } from "../../../../store/reducers/treatment-reducer";
 import Citation from "../../../charts/Citation";
 import { formatYears } from "../../../../utils/string-utils";
-// @ts-ignore
-import JsxParser from "react-jsx-parser";
 
 const options: (data: any, translations: any) => Highcharts.Options = (
   data,
@@ -279,13 +277,14 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
           <Box fontWeight="fontWeightBold">{`${title} (${minYear}-${maxYear})`}</Box>
         </Typography>
         <Typography variant="body2">
-          <JsxParser
-            jsx={t(`treatment.chart.molecular_markers.site_content`, {
-              nStudies: study.N,
-              molecularMarker: t(molecularMarker),
-              year: study.YEAR_START
-            })}
-          />
+          {t(`treatment.chart.molecular_markers.site_content_1`, {
+            year: study.YEAR_START
+          })}{" "}
+          <i>{{ molecularMarker }}</i>{" "}
+          {t(`treatment.chart.molecular_markers.site_content_2`, {
+            nStudies: study.N,
+            molecularMarker: t(molecularMarker)
+          })}
         </Typography>
         <Flex>
           <FlexCol>

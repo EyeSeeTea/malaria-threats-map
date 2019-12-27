@@ -16,8 +16,6 @@ import {
 } from "../../../../store/actions/base-actions";
 import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
 import { formatYears } from "../../../../utils/string-utils";
-// @ts-ignore
-import JsxParser from "react-jsx-parser";
 import { Actions, ChartContainer, FlexGrow, ZoomButton } from "../../../Chart";
 
 const options: (data: any, translations: any) => Highcharts.Options = (
@@ -124,13 +122,14 @@ const ResistanceStatusCountryChart = ({
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        <JsxParser
-          jsx={t(`prevention.chart.resistance_status.content`, {
-            nStudies: nStudies,
-            insecticideClass: t(preventionFilters.insecticideClass),
-            years: formatYears(minYear, maxYear)
-          })}
-        />
+        {t(`prevention.chart.resistance_status.content_1`, {
+          nStudies: nStudies
+        })}
+        <i>Anopheles</i>
+        {t(`prevention.chart.resistance_status.content_2`, {
+          insecticideClass: t(preventionFilters.insecticideClass),
+          years: formatYears(minYear, maxYear)
+        })}
       </Typography>
       <HighchartsReact
         highcharts={Highcharts}

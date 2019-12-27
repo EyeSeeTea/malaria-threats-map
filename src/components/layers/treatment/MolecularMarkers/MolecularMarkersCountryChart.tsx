@@ -14,8 +14,6 @@ import { formatYears } from "../../../../utils/string-utils";
 import { selectTreatmentFilters } from "../../../../store/reducers/treatment-reducer";
 import { MOLECULAR_MARKERS } from "../../../filters/MolecularMarkerFilter";
 import { Actions, ChartContainer, FlexGrow, ZoomButton } from "../../../Chart";
-// @ts-ignore
-import JsxParser from "react-jsx-parser";
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
@@ -59,13 +57,11 @@ const MolecularMarkersCountryChart = ({
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        <JsxParser
-          jsx={t(`treatment.chart.molecular_markers.content`, {
-            nStudies: nStudies,
-            molecularMarker: t(molecularMarker),
-            years: formatYears(minYear, maxYear)
-          })}
-        />
+        {t(`treatment.chart.molecular_markers.content`, {
+          nStudies: nStudies,
+          molecularMarker: t(molecularMarker),
+          years: formatYears(minYear, maxYear)
+        })}
       </Typography>
       <Actions>
         <FlexGrow />

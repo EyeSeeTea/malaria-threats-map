@@ -15,8 +15,6 @@ import {
 } from "../../../../store/actions/base-actions";
 import { RESISTANCE_MECHANISM } from "./utils";
 import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
-// @ts-ignore
-import JsxParser from "react-jsx-parser";
 import { formatYears } from "../../../../utils/string-utils";
 import { Actions, ChartContainer, FlexGrow, ZoomButton } from "../../../Chart";
 
@@ -127,16 +125,17 @@ const ResistanceMechanismCountryChart = ({
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        <JsxParser
-          jsx={t(`prevention.chart.resistance_mechanism.content`, {
-            nStudies: nStudies,
-            insecticideClasses: preventionFilters.assayTypes
-              .map(type => t(type))
-              .join(", "),
-            type: t(preventionFilters.insecticideClass),
-            years: formatYears(minYear, maxYear)
-          })}
-        />
+        {t(`prevention.chart.resistance_mechanism.content_1`, {
+          nStudies: nStudies
+        })}
+        <i>Anopheles</i>
+        {t(`prevention.chart.resistance_mechanism.content_2`, {
+          insecticideClasses: preventionFilters.assayTypes
+            .map(type => t(type))
+            .join(", "),
+          type: t(preventionFilters.insecticideClass),
+          years: formatYears(minYear, maxYear)
+        })}
       </Typography>
       <HighchartsReact
         highcharts={Highcharts}

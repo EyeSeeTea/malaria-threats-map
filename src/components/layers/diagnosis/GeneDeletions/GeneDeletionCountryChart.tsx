@@ -12,8 +12,6 @@ import {
 import { DiagnosisStudy } from "../../../../types/Diagnosis";
 import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
 import { formatList, formatYears } from "../../../../utils/string-utils";
-// @ts-ignore
-import JsxParser from "react-jsx-parser";
 import { Actions, ChartContainer, FlexGrow, ZoomButton } from "../../../Chart";
 
 const mapStateToProps = (state: State) => ({
@@ -57,14 +55,15 @@ const GeneDeletionCountryChart = ({
         <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        <JsxParser
-          jsx={t(`diagnosis.chart.gene_deletions.content`, {
-            nStudies: nStudies,
-            deletionType: t(diagnosisFilters.deletionType).toLowerCase(),
-            surveyTypes: formatList(surveyTypes.map(st => t(st))),
-            years: formatYears(minYear, maxYear)
-          })}
-        />
+        {t(`diagnosis.chart.gene_deletions.content_1`, {
+          nStudies: nStudies
+        })}{" "}
+        <i>P. falciparum</i>{" "}
+        {t(`diagnosis.chart.gene_deletions.content_2`, {
+          deletionType: t(diagnosisFilters.deletionType).toLowerCase(),
+          surveyTypes: formatList(surveyTypes.map(st => t(st))),
+          years: formatYears(minYear, maxYear)
+        })}
       </Typography>
       <Actions>
         <FlexGrow />

@@ -50,8 +50,6 @@ import RegionSelector from "./filters/RegionSelector";
 import SubRegionSelector from "./filters/SubRegionSelector";
 import { SuccessSnackbar, WarningSnackbar } from "./Filters";
 import { useTranslation } from "react-i18next";
-// @ts-ignore
-import JsxParser from "react-jsx-parser";
 
 const FiltersWrapper = styled.div`
   margin-top: 20px;
@@ -190,7 +188,7 @@ const FiltersSidebar = ({
       <AppBar position="static" className={classes.appBar}>
         <Toolbar variant="dense">
           <Typography variant="subtitle1" className={classes.title}>
-            <JsxParser jsx={t(`themes.${theme}`)} />
+            {t(`themes.${theme}`)}
           </Typography>
           <IconButton
             edge="start"

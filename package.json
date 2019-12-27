@@ -34,7 +34,6 @@
     "react-ga": "^2.7.0",
     "react-i18next": "^10.11.4",
     "react-joyride": "^2.1.1",
-    "react-jsx-parser": "^1.21.0",
     "react-map-gl": "^5.0.7",
     "react-mapbox-gl": "^4.6.0",
     "react-redux": "^7.1.0",
