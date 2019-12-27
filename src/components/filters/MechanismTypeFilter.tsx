@@ -1,19 +1,30 @@
 import React from "react";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import styled from "styled-components";
-import {State} from "../../store/types";
-import {connect} from "react-redux";
-import {Translation} from "../../types/Translation";
-import {useTranslation} from "react-i18next";
-import {Paper} from "@material-ui/core";
-import {selectTypes} from "../../store/reducers/translations-reducer";
-import {selectPreventionFilters} from "../../store/reducers/prevention-reducer";
-import {setType} from "../../store/actions/prevention-actions";
-import {Divider, FilterWrapper} from "./Filters";
+import { State } from "../../store/types";
+import { connect } from "react-redux";
+import { Translation } from "../../types/Translation";
+import { useTranslation } from "react-i18next";
+import { Paper } from "@material-ui/core";
+import { selectTypes } from "../../store/reducers/translations-reducer";
+import {
+  selectPreventionFilters,
+  selectPreventionStudies
+} from "../../store/reducers/prevention-reducer";
+import { setType } from "../../store/actions/prevention-actions";
+import { Divider, FilterWrapper } from "./Filters";
 import FormLabel from "@material-ui/core/FormLabel";
+import {
+  filterByLevelOfInvolvement,
+  filterByRegion,
+  filterByYearRange
+} from "../layers/studies-filters";
+import * as R from "ramda";
+import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
+import { PreventionStudy } from "../../types/Prevention";
 
 const WHITELISTED_TYPES = [
   "MONO_OXYGENASES",
@@ -49,22 +60,33 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const mapStateToProps = (state: State) => ({
+  studies: selectPreventionStudies(state),
   types: selectTypes(state),
-  preventionFilters: selectPreventionFilters(state)
+  preventionFilters: selectPreventionFilters(state),
+  yearFilter: selectFilters(state),
+  region: selectRegion(state)
 });
 
 const mapDispatchToProps = {
   setType: setType
 };
 
+type OwnProps = {
+  fromDb?: boolean;
+};
+
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type Props = DispatchProps & StateProps & OwnProps;
 
 function MechanismTypeFilter({
+  studies,
   types = [],
   preventionFilters,
-  setType
+  setType,
+  fromDb,
+  yearFilter,
+  region
 }: Props) {
   const classes = useStyles({});
 
@@ -72,9 +94,31 @@ function MechanismTypeFilter({
     setType((event.target as HTMLInputElement).value);
   }
 
-  const filteredTypes = WHITELISTED_TYPES.map(value =>
-    (types as Translation[]).find(type => type.VALUE_ === value)
+  const filters = [
+    filterByLevelOfInvolvement,
+    filterByYearRange(yearFilter),
+    filterByRegion(region)
+  ];
+
+  const filteredStudies: PreventionStudy[] = filters.reduce(
+    (studies, filter) => studies.filter(filter),
+    studies
   );
+
+  const uniques = R.map(
+    unique => ({ VALUE_: unique }),
+    R.uniq(R.map(R.prop("TYPE"), filteredStudies))
+  );
+
+  const suggestions: Translation[] = (fromDb
+    ? uniques
+    : types) as Translation[];
+
+  const filteredTypes = fromDb
+    ? suggestions
+    : WHITELISTED_TYPES.map(value =>
+        suggestions.find((type: any) => type.VALUE_ === value)
+      );
 
   const { t } = useTranslation("common");
 

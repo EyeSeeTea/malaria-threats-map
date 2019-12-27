@@ -7,7 +7,7 @@ import SynergistTypeFilter from "../../../filters/SynergistTypeFilter";
 export default function LevelOfInvolvementFilters() {
   return (
     <div>
-      <MechanismTypeFilter />
+      <MechanismTypeFilter fromDb/>
       <SpeciesFilter />
       <SynergistTypeFilter />
       <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
