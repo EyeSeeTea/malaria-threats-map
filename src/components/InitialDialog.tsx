@@ -20,6 +20,7 @@ import {
 import { connect } from "react-redux";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
 import { useTranslation } from "react-i18next";
+import { Typography } from "@material-ui/core";
 
 const FlexGrow = styled.div`
   flex-grow: 1;
@@ -29,9 +30,17 @@ const Row = styled.div`
   display: flex;
 `;
 
+const CenteredRow = styled(Row)`
+  align-items: center;
+`;
+
 const Column = styled.div`
   padding-left: 10px;
   padding-right: 10px;
+`;
+
+const WhiteColumn = styled(Column)`
+  color: white;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -74,12 +83,18 @@ function InitialDialog({
         }
       }}
     >
-      <Row>
+      <CenteredRow>
+        <WhiteColumn>
+          <Typography variant="h2" color={"inherit"}>
+            {t("title.title")}
+          </Typography>
+          <Typography variant="h6">{t("title.subtitle")}</Typography>
+        </WhiteColumn>
         <FlexGrow />
         <Column>
           <LanguageSelectorSelect />
         </Column>
-      </Row>
+      </CenteredRow>
       <Row id="dialog">
         <SimpleCard
           title={t("themes_caps.prevention")}

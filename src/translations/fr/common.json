@@ -1,4 +1,8 @@
 {
+  "title": {
+    "title": "Carte des menaces du paludisme",
+    "subtitle": "Suivi des défis biologiques au contrôle et à l'élimination du paludisme"
+  },
   "themes": {
     "prevention": "Résistance aux insecticides",
     "diagnosis": "Délétion de pfhrp2/3 gènes parasites",

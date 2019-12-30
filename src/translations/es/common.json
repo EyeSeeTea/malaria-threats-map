@@ -1,4 +1,8 @@
 {
+  "title": {
+    "title": "Mapa de los desafíos de la malaria",
+    "subtitle": "Seguimiento de los desafíos biológicos para el control y la eliminación del paludismo"
+  },
   "themes": {
     "prevention": "Resistencia a insecticidas en los vectores de malaria",
     "diagnosis": "Deleción del pfhrp2/3 gen del parásito",

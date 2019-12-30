@@ -7,7 +7,6 @@ import {
   logEventAction,
   setBoundsAction,
   setCountryModeAction,
-  setInitialDialogOpen,
   setRegionAction,
   setSelection,
   setStoryModeAction,
@@ -54,7 +53,7 @@ export const logEvent = (
     withLatestFrom(state$),
     switchMap(([action, state]) => {
       ReactGA.event(action.payload);
-      return of(setInitialDialogOpen(false));
+      return of();
     })
   );
 

@@ -12,7 +12,7 @@ import { PreventionStudy } from "../../../../types/Prevention";
 import Citation from "../../../charts/Citation";
 import * as R from "ramda";
 import Pagination from "../../../charts/Pagination";
-import {baseChart} from "../../../charts/chart-utils";
+import { baseChart } from "../../../charts/chart-utils";
 import Curation from "../../../Curation";
 
 const options: (data: any, translations: any) => Highcharts.Options = (
@@ -75,11 +75,6 @@ ${translations.tested}: ${point.number}
 
 const ChatContainer = styled.div<{ width?: string }>`
   width: ${props => props.width || "100%"};
-`;
-
-const Margin = styled.div`
-  margin-top: 10px;
-  margin-bottom: 10px;
 `;
 
 const mapStateToProps = (state: State) => ({

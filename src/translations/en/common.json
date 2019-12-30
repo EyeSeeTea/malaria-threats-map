@@ -1,4 +1,8 @@
 {
+  "title": {
+    "title": "Malaria Threats Map",
+    "subtitle": "Tracking biological challenges to malaria control and elimination"
+  },
   "themes": {
     "prevention": "Vector insecticide resistance",
     "diagnosis": "Parasite pfhrp2/3 gene deletions",
