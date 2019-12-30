@@ -96,7 +96,11 @@
       "pbo_deployment": {
         "eligible": "All criteria met",
         "not_eligible": "At least one criteria is not met",
-        "not_enough_data": "More data needs to be collected to evaluate criteria"
+        "not_enough_data": "More data needs to be collected to evaluate criteria",
+        "link": "https://www.who.int/malaria/publications/atoz/use-of-pbo-treated-llins/en/",
+        "link_text": "Conditions for deployment of mosquito nets treated with a pyrethroid and piperonyl butoxide",
+        "link_content_1": "More information on the WHO recommendations for the deployment of Pyrethroid-PBO nets can be found in ",
+        "link_content_2": ". These recommendations will be updated as new evidence becomes available."
       }
     }
   },

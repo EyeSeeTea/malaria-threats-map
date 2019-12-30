@@ -82,19 +82,20 @@ const FiltersWrapper = styled.div`
 export const Snackbar = styled(Paper)`
   margin: 16px;
   padding: 16px;
-  color: #fff !important;
 `;
 
 export const WarningSnackbar = styled(Snackbar)`
   box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
     0 7px 10px -5px rgba(255, 152, 0, 0.4) !important;
   background-color: #ffa21a !important;
+  color: #fff !important;
 `;
 
 export const SuccessSnackbar = styled(Snackbar)`
   box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
     0 7px 10px -5px rgba(76, 175, 80, 0.4) !important;
   background-color: #5cb860 !important;
+  color: #fff !important;
 `;
 
 const Transition = React.forwardRef<unknown, TransitionProps>(

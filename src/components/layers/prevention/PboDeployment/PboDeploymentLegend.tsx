@@ -1,7 +1,6 @@
 import React from "react";
 import {
   LegendContainer,
-  LegendFooter,
   LegendLabels,
   LegendTitleContainer,
   LegendTitleTypography
@@ -36,7 +35,6 @@ export default function PboDeploymentLegend() {
         </LegendTitleTypography>
       </LegendTitleContainer>
       <LegendLabels labels={labels} />
-      <LegendFooter />
     </LegendContainer>
   );
 }
