@@ -22,11 +22,13 @@
     "invasive": "La propagación de las especies de vectores anofelinos, y su establecimiento en ecosistemas donde no son nativos, plantea una potencial amenaza para el control y la eliminación de la malaria."
   },
   "prevention": {
-    "resistance_status": "Estado de la resistencia",
-    "resistance_intensity": "Intensidad de la resistencia",
-    "resistance_mechanism": "Estado del mecanismo",
-    "synergist_involvement": "Synergist Involvement",
-    "pbo_deployment": "PBO Deployment",
+    "resistance_status": "Estado de la resistancia a insecticidas",
+    "resistance_intensity": "Intensidad de resistencia a insecticidas",
+    "resistance_mechanism": "Mecanismos de resistencia a insecticidas",
+    "synergist_involvement": "Implicación de los mecanismos metabólicos",
+    "synergist_involvement_legend": "Implicación del mecanismo metabólico",
+    "pbo_deployment": "Despliegue de mosquiteros PBO-piretroide",
+    "pbo_deployment_legend": "Cumplimiento de los criterios recomendados por la OMS para el despliegue de mosquiteros con PBO y piretroide",
     "chart": {
       "resistance_status": {
         "content_1": "{{nStudies}} pruebas con vectores ",
@@ -72,15 +74,15 @@
     },
     "legend": {
       "resistance_intensity": {
-        "high_intensity": "Alta intensidad",
-        "moderate_to_high_intensity": "Moderada a alta intensidad",
-        "moderate_intensity": "Moderada intensidad",
-        "low_intensity": "Baja intensidad",
+        "high_intensity": "Alta",
+        "moderate_to_high_intensity": "Moderada a alta",
+        "moderate_intensity": "Moderada",
+        "low_intensity": "Baja",
         "susceptible": "Susceptible"
       },
       "resistance_status": {
-        "confirmed": "Confirmado (<90%)",
-        "possible": "Posible (90-97%)",
+        "confirmed": "Confirmado (0 to <90%)",
+        "possible": "Posible (90 to <98%)",
         "susceptible": "Susceptible (≥98%)"
       },
       "resistance_mechanism": {
@@ -105,7 +107,7 @@
     }
   },
   "diagnosis": {
-    "gene_deletions": "Deleciones del gen del parásito",
+    "gene_deletions": "Deleciones del gen pfhrp2/3",
     "chart": {
       "gene_deletions": {
         "content_1": "{{nStudies}} encuesta(s) ",
@@ -125,8 +127,8 @@
   },
   "treatment": {
     "treatment_failure": "Fracaso del tratamiento",
-    "delayed_parasite_clearance": "Delayed Parasite Clearance",
-    "molecular_markers": "Marcadores moleculares",
+    "delayed_parasite_clearance": "Delayed parasite clearance",
+    "molecular_markers": "Marcadores moleculares de resistencia a los medicamentos",
     "chart": {
       "treatment_failure": {
         "content": "{{nStudies}} estudios de eficacia terapéutica efectuados en la eficacia {{drug}} contra {{plasmodiumSpecies}} {{years}}",

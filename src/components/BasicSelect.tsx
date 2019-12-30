@@ -150,8 +150,11 @@ function Option(props: OptionProps<OptionType>) {
         fontWeight: props.isSelected ? 500 : 400
       }}
       {...props.innerProps}
+      title={value}
     >
-      {value}
+      <Typography variant="inherit" noWrap>
+        {value}
+      </Typography>
     </MenuItem>
   );
 }

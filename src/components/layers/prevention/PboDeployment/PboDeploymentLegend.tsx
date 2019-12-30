@@ -31,7 +31,7 @@ export default function PboDeploymentLegend() {
     <LegendContainer>
       <LegendTitleContainer>
         <LegendTitleTypography color="textPrimary" gutterBottom>
-          {t("prevention.pbo_deployment")}
+          {t("prevention.pbo_deployment_legend")}
         </LegendTitleTypography>
       </LegendTitleContainer>
       <LegendLabels labels={labels} />

@@ -31,7 +31,7 @@ export default function LevelOfInvolvementLegend() {
     <LegendContainer>
       <LegendTitleContainer>
         <LegendTitleTypography color="textPrimary" gutterBottom>
-          {t("prevention.synergist_involvement")}
+          {t("prevention.synergist_involvement_legend")}
         </LegendTitleTypography>
       </LegendTitleContainer>
       <LegendLabels labels={labels} />

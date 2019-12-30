@@ -22,11 +22,13 @@
     "invasive": "The spread of anopheline mosquito vector species and their establishment in ecosystems to which they are not native poses a potential threat to the control and elimination of malaria"
   },
   "prevention": {
-    "resistance_status": "Resistance Status",
-    "resistance_intensity": "Resistance Intensity",
-    "resistance_mechanism": "Resistance Mechanism",
-    "synergist_involvement": "Synergist Involvement",
-    "pbo_deployment": "PBO Deployment",
+    "resistance_status": "Insecticide resistance status",
+    "resistance_intensity": "Insecticide resistance intensity",
+    "resistance_mechanism": "Resistance mechanisms detection",
+    "synergist_involvement": "Metabolic mechanisms involvement",
+    "synergist_involvement_legend": "Involvement of metabolic mechanisms",
+    "pbo_deployment": "Pyrethroid-PBO nets deployment",
+    "pbo_deployment_legend": "Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment",
     "chart": {
       "resistance_status": {
         "content_1": "{{nStudies}} test(s) on ",
@@ -72,15 +74,15 @@
     },
     "legend": {
       "resistance_intensity": {
-        "high_intensity": "High Intensity",
-        "moderate_to_high_intensity": "Moderate to High Intensity",
-        "moderate_intensity": "Moderate Intensity",
-        "low_intensity": "Low Intensity",
+        "high_intensity": "High",
+        "moderate_to_high_intensity": "Moderate to high",
+        "moderate_intensity": "Moderate",
+        "low_intensity": "Low",
         "susceptible": "Susceptible"
       },
       "resistance_status": {
-        "confirmed": "Confirmed (<90%)",
-        "possible": "Possible (90-97%)",
+        "confirmed": "Confirmed (0 to <90%)",
+        "possible": "Possible (90 to <98%)",
         "susceptible": "Susceptible (≥98%)"
       },
       "resistance_mechanism": {
@@ -105,7 +107,7 @@
     }
   },
   "diagnosis": {
-    "gene_deletions": "Gene Deletions",
+    "gene_deletions": "pfhrp2/3 gene deletions",
     "chart": {
       "gene_deletions": {
         "content_1": "{{nStudies}} survey(s) ",
@@ -124,9 +126,9 @@
     }
   },
   "treatment": {
-    "treatment_failure": "Treatment Failure",
-    "delayed_parasite_clearance": "Delayed Parasite Clearance",
-    "molecular_markers": "Molecular Markers",
+    "treatment_failure": "Treatment failure",
+    "delayed_parasite_clearance": "Delayed parasite clearance",
+    "molecular_markers": "Molecular markers of drug resistance",
     "chart": {
       "treatment_failure": {
         "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against {{plasmodiumSpecies}} {{years}}",
@@ -178,12 +180,12 @@
     }
   },
   "invasive": {
-    "vector_occurrance": "Vector Ocurrance",
+    "vector_occurrance": "Vector ocurrance",
     "chart": {
       "vector_occurrance": {
         "species": "Species",
-        "sampling_period": "Sampling Period",
-        "sampling_method": "Sampling Method",
+        "sampling_period": "Sampling period",
+        "sampling_method": "Sampling method",
         "study_identification_method": "Species identification method",
         "data_collection": "Acknowledgement for data collection",
         "no_available": "Not available"
@@ -204,19 +206,19 @@
     },
     "no_records": "There are no records available with the specified criteria",
     "records": "There are {{studies}} records found with specified criteria",
-    "insecticide_class": "Insecticide Class",
-    "insecticide_type": "Insecticide Type",
-    "test_type": "Test Type",
-    "vector_species": "Vector Species",
-    "plasmodium_species": "Plasmodium Species",
+    "insecticide_class": "Insecticide class",
+    "insecticide_type": "Insecticide type",
+    "test_type": "Test type",
+    "vector_species": "Vector species",
+    "plasmodium_species": "Plasmodium species",
     "drug": "Drug",
-    "molecular_marker": "Molecular Marker",
-    "mechanism_type": "Mechanism Type",
-    "assay_type": "Assay Type",
-    "synergist_type": "Test Type",
-    "deletion_type": "Deletion Type",
-    "survey_type": "Survey Type",
-    "patient_type": "Patient Type",
+    "molecular_marker": "Molecular marker",
+    "mechanism_type": "Mechanism type",
+    "assay_type": "Assay type",
+    "synergist_type": "Test type",
+    "deletion_type": "Deletion type",
+    "survey_type": "Survey type",
+    "patient_type": "Patient type",
     "years": "Years",
     "country": "Country",
     "region": "Region",

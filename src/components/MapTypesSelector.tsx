@@ -18,6 +18,7 @@ import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 import { setTreatmentMapType } from "../store/actions/treatment-actions";
 import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 import { setInvasiveMapType } from "../store/actions/invasive-actions";
+import styled from "styled-components";
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
@@ -37,6 +38,10 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
+
+const Wrapper = styled.div`
+  min-width: 275px;
+`;
 
 const preventionSuggestions: OptionType[] = [
   {
@@ -148,11 +153,13 @@ class MapTypesSelector extends Component<Props> {
 
   render() {
     return (
-      <IntegrationReactSelect
-        suggestions={this.getSuggestions()}
-        onChange={this.onChange}
-        value={this.getSelection()}
-      />
+      <Wrapper>
+        <IntegrationReactSelect
+          suggestions={this.getSuggestions()}
+          onChange={this.onChange}
+          value={this.getSelection()}
+        />
+      </Wrapper>
     );
   }
 }

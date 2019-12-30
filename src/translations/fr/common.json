@@ -22,11 +22,13 @@
     "invasive": "La propagation des espèces d’anophèles vectrices, et leur établissement dans des écosystèmes dont ils ne sont pas indigènes, constitue une menace potentielle pour la lutte et l'éradication du paludisme."
   },
   "prevention": {
-    "resistance_status": "Statut de résistance",
-    "resistance_intensity": "Intensité de la résistance",
-    "resistance_mechanism": "Mécanismes de résistance",
-    "synergist_involvement": "Mécanismes métaboliques",
-    "pbo_deployment": "PBO Déploiement",
+    "resistance_status": "État de résistance aux insecticides",
+    "resistance_intensity": "Intensité de la résistance aux insecticides",
+    "resistance_mechanism": "Mécanismes de résistance aux insecticides",
+    "synergist_involvement": "Implication des mécanismes métaboliques",
+    "synergist_involvement_legend": "Implication du mécanisme métabolique",
+    "pbo_deployment": "Déploiement de moustiquaires  PBO-pyréthroïde",
+    "pbo_deployment_legend": "Conformité aux critères recommandés par l'OMS pour le  déploiementde moustiquaires avec PBO et pyréthroïde",
     "chart": {
       "resistance_status": {
         "content_1": "{{nStudies}} test(s) sur les vecteurs ",
@@ -79,8 +81,8 @@
         "susceptible": "Sensible"
       },
       "resistance_status": {
-        "confirmed": "Confirmée (<90%)",
-        "possible": "Suspectée (90-97%)",
+        "confirmed": "Confirmée (0 to <90%)",
+        "possible": "Suspectée (90 to <98%)",
         "susceptible": "Sensible (≥98%)"
       },
       "resistance_mechanism": {
@@ -105,7 +107,7 @@
     }
   },
   "diagnosis": {
-    "gene_deletions": "Délétions de gènes parasites",
+    "gene_deletions": "Délétions du gène pfhrp2/3",
     "chart": {
       "gene_deletions": {
         "content_1": "{{nStudies}} enquête(s) ",
@@ -125,8 +127,8 @@
   },
   "treatment": {
     "treatment_failure": "Échec du traitement",
-    "delayed_parasite_clearance": "Delayed Parasite Clearance",
-    "molecular_markers": "Marqueurs moléculaires",
+    "delayed_parasite_clearance": "Delayed parasite clearance",
+    "molecular_markers": "Marqueurs moléculaires de la résistance aux médicaments",
     "chart": {
       "treatment_failure": {
         "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre {{plasmodiumSpecies}} {{years}}",
@@ -208,7 +210,7 @@
     "insecticide_type": "Type d'insecticide",
     "test_type": "Type de test",
     "vector_species": "Espèces vectorielles",
-    "plasmodium_species": "Espèces de Plasmodium",
+    "plasmodium_species": "Espèces de plasmodium",
     "drug": "Médicament",
     "molecular_marker": "Marqueur moléculaire",
     "mechanism_type": "Type de mécanisme",

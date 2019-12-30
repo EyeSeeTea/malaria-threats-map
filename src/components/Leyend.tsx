@@ -25,7 +25,7 @@ export const LegendContainer = styled(Paper)`
   padding: 8px;
   display: flex;
   flex-direction: column;
-  width: 175px;
+  width: 200px;
   font-size: 12px;
 `;
 

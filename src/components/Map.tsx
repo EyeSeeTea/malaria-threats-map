@@ -85,6 +85,7 @@ const SearchContainer = styled(BaseContainer)`
   left: 0;
   display: flex;
   flex-direction: column;
+  align-items: start;
 `;
 
 const Divider = styled.div`

@@ -55,11 +55,11 @@ const options: (data: any, translations: any) => Highcharts.Options = (
     column: {
       zones: [
         {
-          value: 90.001,
+          value: 90,
           color: ConfirmationStatusColors.Confirmed[0]
         },
         {
-          value: 97.001,
+          value: 98,
           color: ConfirmationStatusColors.Possible[0]
         },
         {
