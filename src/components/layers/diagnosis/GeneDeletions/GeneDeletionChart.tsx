@@ -83,9 +83,11 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
         )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
-        {t(`diagnosis.chart.gene_deletions.content`, {
-          nStudies: nStudies,
-          deletionType: t(diagnosisFilters.deletionType).toLowerCase(),
+        {t(`diagnosis.chart.gene_deletions.content_1`, {
+          nStudies: nStudies
+        })}
+        <i>{t(diagnosisFilters.deletionType).toLowerCase()}</i>
+        {t(`diagnosis.chart.gene_deletions.content_2`, {
           surveyTypes: formatList(surveyTypes.map(st => t(st))),
           years: formatYears(minYear, maxYear)
         })}

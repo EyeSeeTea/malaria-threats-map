@@ -210,20 +210,16 @@ type Props = DispatchProps & StateProps & OwnProps;
 const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
   const { t } = useTranslation("common");
   const [studyIndex, setStudy] = useState(0);
+  console.log(studies);
   const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
-  const sortedYears = R.uniq(
-    sortedStudies.map(study => study.YEAR_START)
-  ).sort();
+  const years = sortedStudies.map(study => parseInt(study.YEAR_START)).sort();
   const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
   const maxYear = parseInt(sortedStudies[0].YEAR_START);
   const groupStudies = R.flatten(
     sortedStudies.map(study => study.groupStudies)
   );
-  const years: number[] = [];
-  for (let i = minYear; i <= maxYear; i++) {
-    years.push(i);
-  }
   const k13Groups = R.groupBy(R.prop("GENOTYPE"), groupStudies);
+  const yearsMap = {};
   const series = Object.keys(k13Groups).map((genotype: string) => {
     const studies: TreatmentStudy[] = k13Groups[genotype];
     return {
@@ -231,15 +227,11 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
       type: "column",
       name: genotype,
       color: MutationColors[genotype] ? MutationColors[genotype].color : "000",
-      data: years.map(year => {
-        const yearFilters = studies.filter(
-          study => year === parseInt(study.YEAR_START)
-        )[0];
+      data: R.reverse(sortedStudies).map(k13Study => {
+        console.log(studies);
+        const study = studies.find(study => k13Study.Code === study.K13_CODE);
         return {
-          name: `${year}`,
-          y: yearFilters
-            ? parseFloat((yearFilters.PROPORTION * 100).toFixed(2))
-            : undefined
+          y: study ? parseFloat((study.PROPORTION * 100).toFixed(1)) : undefined
         };
       })
     };
@@ -282,7 +274,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
           {t(`treatment.chart.molecular_markers.site_content_1`, {
             year: study.YEAR_START
           })}{" "}
-          <i>{{ molecularMarker }}</i>{" "}
+          <i>{molecularMarker}</i>{" "}
           {t(`treatment.chart.molecular_markers.site_content_2`, {
             nStudies: study.N,
             molecularMarker: t(molecularMarker)
@@ -321,7 +313,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
   const duration = formatYears(YEAR_START, YEAR_END);
 
   const formatValue = (value: number) =>
-    Number.isNaN(value) ? "N/A" : `${(value * 100).toFixed(2)}%`;
+    Number.isNaN(value) ? "N/A" : `${(value * 100).toFixed(1)}%`;
 
   const studyYears = t("treatment.chart.molecular_markers.study_years");
   const t_studies = t("treatment.chart.molecular_markers.studies");
@@ -381,13 +373,13 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
     return {
       name: t(key.name),
       color: key.color,
-      data: sortedYears.map(year => {
+      data: years.map(year => {
         const yearFilters: any = studies.filter(
-          study => parseInt(year) === parseInt(study.YEAR_START)
+          study => year === parseInt(study.YEAR_START)
         )[0];
         return yearFilters
           ? parseFloat(
-              (parseFloat(yearFilters[key.name] || "0") * 100).toFixed(2)
+              (parseFloat(yearFilters[key.name] || "0") * 100).toFixed(1)
             )
           : 0;
       })
@@ -418,7 +410,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
             {pfcrt()}
             <HighchartsReact
               highcharts={Highcharts}
-              options={options3(series3, sortedYears, translations)}
+              options={options3(series3, years, translations)}
             />
           </Hidden>
           <Hidden xsDown>
@@ -428,7 +420,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
                 {treatmentFilters.molecularMarker === 2 ? (
                   <HighchartsReact
                     highcharts={Highcharts}
-                    options={options3(series3, sortedYears, translations)}
+                    options={options3(series3, years, translations)}
                   />
                 ) : (
                   <HighchartsReact

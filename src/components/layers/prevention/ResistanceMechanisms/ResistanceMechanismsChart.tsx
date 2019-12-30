@@ -13,6 +13,7 @@ import * as R from "ramda";
 import { ResistanceMechanismColors } from "./symbols";
 import { RESISTANCE_MECHANISM } from "./utils";
 import { baseChart } from "../../../charts/chart-utils";
+import { isNotNull } from "../../../../utils/number-utils";
 
 const Flex = styled.div`
   display: flex;
@@ -37,6 +38,10 @@ const options: (data: any, translations: any) => Highcharts.Options = (
     title: {
       text: translations.count
     }
+  },
+  tooltip: {
+    pointFormat:
+      "<b>{point.names}</b><br/>{series.name}: <b>{point.percentage:.1f}%</b>"
   },
   plotOptions: {
     column: {
@@ -71,6 +76,9 @@ const options2: (
         enabled: true
       }
     }
+  },
+  tooltip: {
+    pointFormat: "{series.name}: <b>{point.y}%</b>"
   },
   series: data,
   legend: {
@@ -111,20 +119,26 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
     const yearStudies = studies.filter(
       study => parseInt(study.YEAR_START) === year
     );
+    const d = yearStudies.filter(
+      study => study.MECHANISM_STATUS === "DETECTED"
+    );
     return {
       name: year,
-      y: yearStudies.filter(study => study.MECHANISM_STATUS === "DETECTED")
-        .length
+      y: d.length,
+      names: R.uniq(d.map(s => s.SPECIES)).join(", ")
     };
   });
   const notDetected = years.map(year => {
     const yearStudies = studies.filter(
       study => parseInt(study.YEAR_START) === year
     );
+    const nD = yearStudies.filter(
+      study => study.MECHANISM_STATUS !== "DETECTED"
+    );
     return {
       name: year,
-      y: yearStudies.filter(study => study.MECHANISM_STATUS !== "DETECTED")
-        .length
+      y: nD.length,
+      names: R.uniq(nD.map(s => s.SPECIES)).join(", ")
     };
   });
   const data = [
@@ -151,14 +165,12 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
       type: "column",
       name: specie,
       data: years.map(year => {
-        const yearFilters = studies.filter(
-          study => year === parseInt(study.YEAR_START)
-        )[0];
+        const study = studies
+          .filter(s => isNotNull(s.MECHANISM_FREQUENCY))
+          .filter(study => year === parseInt(study.YEAR_START))[0];
         return {
           name: `${year}`,
-          y: yearFilters
-            ? parseFloat(yearFilters.MECHANISM_FREQUENCY)
-            : undefined
+          y: study ? parseFloat(study.MECHANISM_FREQUENCY) : undefined
         };
       })
     };
@@ -171,6 +183,11 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
     count: t("prevention.chart.resistance_mechanism.frequency"),
     title: t("prevention.chart.resistance_mechanism.allelic")
   };
+
+  const showAllelic = R.any(
+    serie => R.any(data => data.y !== undefined, serie.data),
+    series
+  );
   const content = () => (
     <>
       <Typography variant="subtitle1">
@@ -188,12 +205,14 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
             options={options(data, translations)}
           />
         </FlexCol>
-        <FlexCol>
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={options2(series, years, translations2)}
-          />
-        </FlexCol>
+        {showAllelic && (
+          <FlexCol>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={options2(series, years, translations2)}
+            />
+          </FlexCol>
+        )}
       </Flex>
       <Citation study={studies[0]} />
     </>

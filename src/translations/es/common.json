@@ -84,8 +84,8 @@
         "susceptible": "Susceptible (≥98%)"
       },
       "resistance_mechanism": {
-        "confirmed": "Confirmado",
-        "not_confirmed": "No confirmado"
+        "confirmed": "Detectado",
+        "not_confirmed": "No detectado"
       },
       "synergist_involvement": {
         "mosquito_mortality": "Mortalidad por mosquito",
@@ -243,7 +243,7 @@
     "select_language": "Seleccione idioma"
   },
   "citation": {
-    "no_citation": "No citación dispoibles"
+    "no_citation": "No citación disponible"
   },
   "TREATMENT_FAILURE_KM": "% de pacientes con fracaso del tratamiento, Kaplan-Meier",
   "PROP_RELATED": "Porcentaje %"

@@ -4,8 +4,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { GlobeIcon } from "./Icons";
-import FilterIcon from "@material-ui/icons/FilterList";
+import { FilterIconSimple, GlobeIcon } from "./Icons";
 import CloseIcon from "@material-ui/icons/ArrowBack";
 import CountrySelector from "./filters/CountrySelector";
 import ResistanceStatusFilters from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
@@ -212,7 +211,7 @@ const FiltersSidebar = ({
         >
           <Tab
             className={classes.tab}
-            icon={<FilterIcon />}
+            icon={<FilterIconSimple />}
             label={t(`filters.tabs.filters`)}
             id={"filters-tab"}
           />

@@ -84,8 +84,8 @@
         "susceptible": "Susceptible (≥98%)"
       },
       "resistance_mechanism": {
-        "confirmed": "Confirmed",
-        "not_confirmed": "Not Confirmed"
+        "confirmed": "Detected",
+        "not_confirmed": "Not detected"
       },
       "synergist_involvement": {
         "mosquito_mortality": "Mosquito mortality",
