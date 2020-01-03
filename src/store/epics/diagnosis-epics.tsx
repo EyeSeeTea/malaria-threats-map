@@ -6,6 +6,7 @@ import { of } from "rxjs";
 import {
   catchError,
   mergeMap,
+  skip,
   switchMap,
   withLatestFrom
 } from "rxjs/operators";
@@ -16,10 +17,19 @@ import {
   fetchDiagnosisStudiesError,
   fetchDiagnosisStudiesRequest,
   fetchDiagnosisStudiesSuccess,
-  setDiagnosisMapType
+  setDiagnosisDeletionType,
+  setDiagnosisMapType,
+  setDiagnosisPatientType,
+  setDiagnosisSurveyTypes
 } from "../actions/diagnosis-actions";
-import { setFiltersAction, setThemeAction } from "../actions/base-actions";
-import { State } from "../types";
+import {
+  logEventAction,
+  setCountryModeAction,
+  setFiltersAction,
+  setThemeAction
+} from "../actions/base-actions";
+import { DiagnosisMapType, PreventionMapType, State } from "../types";
+import { setSpecies, setType } from "../actions/prevention-actions";
 
 interface Params {
   [key: string]: string | number | boolean;
@@ -71,5 +81,77 @@ export const setStoryModeStepEpic = (
         } else {
           return of();
         }
+      })
+    );
+
+export const setDiagnosisMapTypeEpic = (
+  action$: ActionsObservable<ActionType<typeof setDiagnosisMapType>>
+) =>
+  action$.ofType(ActionTypeEnum.SetDiagnosisMapType).pipe(
+    switchMap(action => {
+      const log = (type: string) =>
+        logEventAction({
+          category: "Diagnosis Map Type",
+          action: type
+        });
+      if (action.payload === DiagnosisMapType.GENE_DELETIONS) {
+        return of(log("pfhrp2/3 gene deletions"));
+      }
+      return of();
+    })
+  );
+
+export const setDiagnosisSurveyTypesEpic = (
+  action$: ActionsObservable<ActionType<typeof setDiagnosisSurveyTypes>>
+) =>
+  action$
+    .ofType(ActionTypeEnum.SetSurveyTypes)
+    .pipe(skip(1))
+    .pipe(
+      switchMap(action => {
+        const actions: any[] = [];
+        action.payload.forEach(surveyType =>
+          actions.push(
+            logEventAction({
+              category: "Survey Type",
+              action: surveyType
+            })
+          )
+        );
+        return of(...actions);
+      })
+    );
+
+export const setDiagnosisPatientTypeEpic = (
+  action$: ActionsObservable<ActionType<typeof setDiagnosisPatientType>>
+) =>
+  action$
+    .ofType(ActionTypeEnum.SetPatientType)
+    .pipe(skip(1))
+    .pipe(
+      switchMap(action => {
+        return of(
+          logEventAction({
+            category: "Patient Type",
+            action: action.payload
+          })
+        );
+      })
+    );
+
+export const setDiagnosisDeletionTypeEpic = (
+  action$: ActionsObservable<ActionType<typeof setDiagnosisDeletionType>>
+) =>
+  action$
+    .ofType(ActionTypeEnum.SetDeletionType)
+    .pipe(skip(1))
+    .pipe(
+      switchMap(action => {
+        return of(
+          logEventAction({
+            category: "Deletion Type",
+            action: action.payload
+          })
+        );
       })
     );

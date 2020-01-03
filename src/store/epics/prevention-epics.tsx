@@ -16,10 +16,11 @@ import {
   setInsecticideTypes,
   setPreventionMapType,
   setSpecies,
+  setSynergistTypes,
   setType
 } from "../actions/prevention-actions";
 import { PreventionMapType } from "../types";
-import { setCountryModeAction } from "../actions/base-actions";
+import { logEventAction, setCountryModeAction } from "../actions/base-actions";
 import { ASSAY_TYPES } from "../../components/filters/AssayTypeCheckboxFilter";
 
 interface Params {
@@ -61,12 +62,30 @@ export const setPreventionMapTypeEpic = (
 ) =>
   action$.ofType(ActionTypeEnum.SetPreventionMapType).pipe(
     switchMap(action => {
+      const log = (type: string) =>
+        logEventAction({
+          category: "Prevention Map Type",
+          action: type
+        });
       if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
-        return of(setType("MONO_OXYGENASES"));
+        return of(
+          setType("MONO_OXYGENASES"),
+          log("Resistance mechanisms detection")
+        );
+      } else if (action.payload === PreventionMapType.INTENSITY_STATUS) {
+        return of(log("Insecticide resistance intensity"));
+      } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
+        return of(log("Insecticide resistance status"));
       } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
-        return of(setType("MONO_OXYGENASES"));
+        return of(
+          setType("MONO_OXYGENASES"),
+          log("Metabolic mechanisms involvement")
+        );
       } else if (action.payload === PreventionMapType.PBO_DEPLOYMENT) {
-        return of(setCountryModeAction(false));
+        return of(
+          setCountryModeAction(false),
+          log("Pyrethroid-PBO nets deployment")
+        );
       }
       return of(setType(undefined));
     })
@@ -96,7 +115,15 @@ export const setPreventionInsecticideClassEpic = (
     .pipe(skip(1))
     .pipe(
       switchMap(action => {
-        return of(setInsecticideTypes([]), setType(undefined), setSpecies([]));
+        return of(
+          setInsecticideTypes([]),
+          setType(undefined),
+          setSpecies([]),
+          logEventAction({
+            category: "Insecticide Class",
+            action: action.payload
+          })
+        );
       })
     );
 
@@ -108,7 +135,16 @@ export const setPreventionInsecticideTypeEpic = (
     .pipe(skip(1))
     .pipe(
       switchMap(action => {
-        return of(setType(undefined), setSpecies([]));
+        const actions: any[] = [setType(undefined), setSpecies([])];
+        action.payload.forEach(type =>
+          actions.push(
+            logEventAction({
+              category: "Insecticide Type",
+              action: type
+            })
+          )
+        );
+        return of(...actions);
       })
     );
 
@@ -120,6 +156,75 @@ export const setPreventionTypeResetEpic = (
     .pipe(skip(1))
     .pipe(
       switchMap(action => {
-        return of(setSpecies([]));
+        return of(
+          setSpecies([]),
+          logEventAction({
+            category: "Type",
+            action: action.payload
+          })
+        );
+      })
+    );
+
+export const setPreventionSynergistTypesEpic = (
+  action$: ActionsObservable<ActionType<typeof setSynergistTypes>>
+) =>
+  action$
+    .ofType(ActionTypeEnum.SetSynergistTypes)
+    .pipe(skip(1))
+    .pipe(
+      switchMap(action => {
+        const actions: any[] = [];
+        action.payload.forEach(type =>
+          actions.push(
+            logEventAction({
+              category: "Synergist Type",
+              action: type
+            })
+          )
+        );
+        return of(...actions);
+      })
+    );
+
+export const setPreventionSpeciesEpic = (
+  action$: ActionsObservable<ActionType<typeof setSpecies>>
+) =>
+  action$
+    .ofType(ActionTypeEnum.SetSpecies)
+    .pipe(skip(1))
+    .pipe(
+      switchMap(action => {
+        const actions: any[] = [];
+        action.payload.forEach(species =>
+          actions.push(
+            logEventAction({
+              category: "Species",
+              action: species
+            })
+          )
+        );
+        return of(...actions);
+      })
+    );
+
+export const setPreventionAssayTypesEpic = (
+  action$: ActionsObservable<ActionType<typeof setAssayTypes>>
+) =>
+  action$
+    .ofType(ActionTypeEnum.SetAssayTypes)
+    .pipe(skip(1))
+    .pipe(
+      switchMap(action => {
+        const actions: any[] = [];
+        action.payload.forEach(assayType =>
+          actions.push(
+            logEventAction({
+              category: "Assay Type",
+              action: assayType
+            })
+          )
+        );
+        return of(...actions);
       })
     );
