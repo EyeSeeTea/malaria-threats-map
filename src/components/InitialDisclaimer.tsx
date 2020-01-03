@@ -69,13 +69,22 @@ const InitialDisclaimer = () => {
           </IconButton>
         </DialogActions>
         <DialogContent>
-          {t("disclaimer.p1")}
+          {t("disclaimer.p1a")}
+          <a href={t("disclaimer.p1aLink")} target="_blank">
+            {t("disclaimer.p1aLinkText")}
+          </a>
+          {t("disclaimer.p1b")}
           <br />
           {t("disclaimer.p2")}
           <br />
-          {t("disclaimer.p3")}
+          {t("disclaimer.p3a")}
+          <a href={t("disclaimer.p3aLink")} target="_blank">
+            {t("disclaimer.p3aLinkText")}
+          </a>
+          {t("disclaimer.p3b")}
           <br />
-          {t("disclaimer.p4")}
+          {t("disclaimer.p4a")}
+          <a href={t("disclaimer.p4aLink")}>{t("disclaimer.p4aLinkText")}</a>
         </DialogContent>
         <DialogActions />
       </Dialog>

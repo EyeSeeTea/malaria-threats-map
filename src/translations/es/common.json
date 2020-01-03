@@ -239,10 +239,18 @@
   },
   "disclaimer": {
     "title": "Aviso Legal",
-    "p1": "Fuente de datos: Programa Mundial sobre el Paludismo. Elaboración de mapas: Programa Mundial sobre el Paludismo. Organización Mundial de la Salud.<a href='https://www.who.int/about/copyright/' target='_blank'>© WHO 2019</a>. Todos los privilegios reservados.",
+    "p1a": "Fuente de datos: Programa Mundial sobre el Paludismo. Elaboración de mapas: Programa Mundial sobre el Paludismo. Organización Mundial de la Salud. ",
+    "p1aLink": "https://www.who.int/about/copyright/",
+    "p1aLinkText": "© WHO 2019",
+    "p1b": " Todos los privilegios reservados.",
     "p2": "A menos que se especifique lo contrario, la información contenida en esta solicitud ha sido puesta a disposición del Programa Mundial sobre Paludismo de la Organización Mundial de la Salud (OMS) por los Ministerios de Salud o sus asociados en el desarrollo, o mediante la extracción por parte de la OMS o de socios contractuales de publicaciones en revistas internacionales acreditadas como revistas científicas. Por consiguiente, la OMS no garantiza la validez, exactitud o integridad de esta información.",
-    "p3": "Las imágenes y archivos generados a partir de esta aplicación deben usarse sólo con referencia al subconjunto mostrado de acuerdo con los filtros de datos aplicados. Fuente: Mapa de los desafíos de la malaria: seguimiento de los desafíos biológicos para el control y la eliminación de la malaria (<a href='www.who.int/malaria/maps/threats/' target='_blank'>www.who.int/malaria/maps/threats/</a>); fecha de creación.",
-    "p4": "Para obtener más información, póngase en contacto con: <a href='mailto:gmp-maps@who.int'>gmp-maps@who.int</a>"
+    "p3a": "Las imágenes y archivos generados a partir de esta aplicación deben usarse sólo con referencia al subconjunto mostrado de acuerdo con los filtros de datos aplicados. Fuente: Mapa de los desafíos de la malaria: seguimiento de los desafíos biológicos para el control y la eliminación de la malaria (",
+    "p3aLink": "https://www.who.int/malaria/maps/threats/",
+    "p3aLinkText": "https://www.who.int/malaria/maps/threats/",
+    "p3b": "); fecha de creación.",
+    "p4a": "Para obtener más información, póngase en contacto con: ",
+    "p4aLink": "mailto:gmp-maps@who.int",
+    "p4aLinkText": "gmp-maps@who.int"
   },
   "options": {
     "title": "Opciones",
