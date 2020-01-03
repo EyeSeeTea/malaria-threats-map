@@ -30,7 +30,13 @@ const options: (data: any, translations: any) => Highcharts.Options = (
     text: translations.mosquito_mortality
   },
   xAxis: {
-    type: "category"
+    type: "category",
+    labels: {
+      rotation: -45,
+      style: {
+        whiteSpace: "nowrap"
+      }
+    }
   },
   yAxis: {
     min: 0,
