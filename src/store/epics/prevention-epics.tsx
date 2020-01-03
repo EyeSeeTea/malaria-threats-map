@@ -196,7 +196,7 @@ export const setPreventionSpeciesEpic = (
     .pipe(
       switchMap(action => {
         const actions: any[] = [];
-        action.payload.forEach(species =>
+        (action.payload || []).forEach(species =>
           actions.push(
             logEventAction({
               category: "Species",
