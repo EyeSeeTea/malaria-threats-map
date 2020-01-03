@@ -241,6 +241,7 @@ export default function IntegrationReactSelect({
   onChange,
   ...rest
 }: any) {
+  const { t } = useTranslation("common");
   const classes = useStyles({});
   const theme = useTheme();
 
@@ -263,6 +264,7 @@ export default function IntegrationReactSelect({
         components={components}
         value={value}
         onChange={onChange}
+        placeholder={t("options.select") + "..."}
         {...rest}
       />
     </div>

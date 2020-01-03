@@ -254,7 +254,8 @@
   },
   "options": {
     "title": "Options",
-    "select_language": "Select Language"
+    "select_language": "Select Language",
+    "select": "Select"
   },
   "citation": {
     "no_citation": "No citation data available"

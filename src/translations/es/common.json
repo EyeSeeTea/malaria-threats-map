@@ -254,7 +254,8 @@
   },
   "options": {
     "title": "Opciones",
-    "select_language": "Seleccione idioma"
+    "select_language": "Seleccione idioma",
+    "select": "Seleccione"
   },
   "citation": {
     "no_citation": "No citación disponible"
