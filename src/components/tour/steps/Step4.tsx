@@ -10,7 +10,7 @@ export default function Step4(options: StepProps) {
       <>
         <Typography variant="body2">{t("steps.4.p1")}</Typography>
       </>
-      <Footer {...options} current={4} total={9} />
+      <Footer {...options} current={4} total={10} />
     </>
   );
 }

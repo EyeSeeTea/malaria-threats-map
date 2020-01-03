@@ -14,7 +14,7 @@ export default function Step1(options: StepProps) {
         <Typography variant="body2">{t("steps.1.p1")}</Typography>
         <Typography variant="body2">{t("steps.1.p2")}</Typography>
       </>
-      <Footer {...options} current={1} total={9} />
+      <Footer {...options} current={1} total={10} />
     </>
   );
 }

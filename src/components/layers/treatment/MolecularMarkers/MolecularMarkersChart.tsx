@@ -219,7 +219,6 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
     sortedStudies.map(study => study.groupStudies)
   );
   const k13Groups = R.groupBy(R.prop("GENOTYPE"), groupStudies);
-  const yearsMap = {};
   const series = Object.keys(k13Groups).map((genotype: string) => {
     const studies: TreatmentStudy[] = k13Groups[genotype];
     return {

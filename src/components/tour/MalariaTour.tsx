@@ -34,6 +34,7 @@ import {
   setInsecticideTypes,
   setSpecies
 } from "../../store/actions/prevention-actions";
+import Step6b from "./steps/Step6b";
 
 const styles = {
   root: {
@@ -167,6 +168,9 @@ class MalariaTour extends PureComponent<any> {
 
   onClose = () => {
     this.props.setTourOpen(false);
+    this.setInsecticideClass("PYRETHROIDS");
+    this.setInsecticideTypes([]);
+    this.setSelection(null);
     localStorage.setItem("tour", "visited");
   };
 
@@ -188,7 +192,7 @@ class MalariaTour extends PureComponent<any> {
 
     const steps: ReactourStep[] = [
       {
-        selector: "#dialog",
+        selector: "#title",
         content: options => {
           setInitialDialogOpen(true);
           this.toggleFilters(false);
@@ -252,6 +256,9 @@ class MalariaTour extends PureComponent<any> {
       {
         selector: "#sidebar",
         content: options => {
+          this.setInsecticideClass("PYRETHROIDS");
+          this.setInsecticideTypes([]);
+          this.setSelection(null);
           return <Step6 {...options} {...baseProps} step={7} back={4} />;
         }
       },
@@ -260,8 +267,9 @@ class MalariaTour extends PureComponent<any> {
         content: options => {
           this.setInsecticideClass("CARBAMATES");
           this.setInsecticideTypes(["PROPOXUR"]);
+          this.setSelection(null);
           // this.setSpecies(["An.+arabiensis", "An.+coluzzii"]);
-          return <Step6 {...options} {...baseProps} step={8} back={7} />;
+          return <Step6b {...options} {...baseProps} step={8} back={7} />;
         }
       },
       {
@@ -273,8 +281,8 @@ class MalariaTour extends PureComponent<any> {
               case "prevention":
                 return {
                   ISO_2_CODE: "",
-                  SITE_ID: "S-1.928852_18.266101",
-                  coordinates: [18.270263671875, -1.9332268264771102]
+                  SITE_ID: "S8.600000_16.433300",
+                  coordinates: [16.435546875, 8.597315884206026]
                 };
               case "treatment":
                 return {

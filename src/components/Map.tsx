@@ -218,7 +218,6 @@ class Map extends React.Component<any> {
   }
 
   render() {
-    const tour = localStorage.getItem("tour");
     const { initialDialogOpen } = this.props;
     const countryTogglerDisabled =
       (this.props.theme === "prevention" &&
@@ -247,7 +246,7 @@ class Map extends React.Component<any> {
               <MapTypesSelector />
               <Divider />
               <Filters />
-              {tour !== "visited" && <MalariaTour />}
+              <MalariaTour />
             </Hidden>
             <Layers />
             <Country disabled={countryTogglerDisabled} />

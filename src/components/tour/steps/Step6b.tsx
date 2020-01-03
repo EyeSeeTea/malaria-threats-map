@@ -3,16 +3,14 @@ import React from "react";
 import { Footer, StepProps } from "../MalariaTour";
 import { useTranslation } from "react-i18next";
 
-export default function Step2(options: StepProps) {
+export default function Step6b(options: StepProps) {
   const { t } = useTranslation("tour");
   return (
     <>
       <>
-        <Typography variant="subtitle1">
-          <strong>{t("steps.2.title")}</strong>
-        </Typography>
+        <Typography variant="body2">{t("steps.6.p1")}</Typography>
       </>
-      <Footer {...options} current={2} total={10} />
+      <Footer {...options} current={7} total={10} />
     </>
   );
 }

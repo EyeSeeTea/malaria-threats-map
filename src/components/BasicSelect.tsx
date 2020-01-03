@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       pointerEvents: "all",
-      flexGrow: 1
+      flexGrow: 1,
+      minWidth: 150
     },
     inputPaper: {
       padding: theme.spacing(0.5, 1.5)

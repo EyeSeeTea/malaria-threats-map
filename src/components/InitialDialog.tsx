@@ -26,7 +26,6 @@ const FlexGrow = styled.div`
   flex-grow: 1;
 `;
 const Row = styled.div`
-  flex: 1;
   display: flex;
 `;
 
@@ -37,6 +36,10 @@ const CenteredRow = styled(Row)`
 const Column = styled.div`
   padding-left: 10px;
   padding-right: 10px;
+`;
+
+const LanguageWrapper = styled.div`
+  max-width: 200px;
 `;
 
 const WhiteColumn = styled(Column)`
@@ -83,7 +86,7 @@ function InitialDialog({
         }
       }}
     >
-      <CenteredRow>
+      <CenteredRow id="title">
         <WhiteColumn>
           <Typography variant="h2" color={"inherit"}>
             {t("title.title")}
@@ -91,9 +94,9 @@ function InitialDialog({
           <Typography variant="h6">{t("title.subtitle")}</Typography>
         </WhiteColumn>
         <FlexGrow />
-        <Column>
+        <LanguageWrapper>
           <LanguageSelectorSelect />
-        </Column>
+        </LanguageWrapper>
       </CenteredRow>
       <Row id="dialog">
         <SimpleCard

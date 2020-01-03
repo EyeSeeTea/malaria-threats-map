@@ -27,16 +27,21 @@ const useStyles = makeStyles({
     fontSize: 14
   },
   pos: {
-    marginBottom: 12
+    marginBottom: 12,
+    width: "100%"
+  },
+  desc: {
+    width: "100%"
   }
 });
 
+// Fix for IE11
 const StyledCardContent = styled(CardContent)`
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  width: calc(100% - 1px);
 `;
 
 const mapDispatchToProps = {
@@ -77,7 +82,7 @@ export const SimpleCard = ({
         <Typography className={classes.pos} variant="h6" component="h2">
           {title}
         </Typography>
-        <Typography variant="body2" component="p">
+        <Typography className={classes.desc} variant="body2" component="p">
           {description}
         </Typography>
       </StyledCardContent>
