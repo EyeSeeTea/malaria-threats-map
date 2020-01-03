@@ -339,11 +339,12 @@ class MalariaTour extends PureComponent<any> {
         }
       }
     ];
+    const isOpen = tour.open && localStorage.getItem("tour") !== "visited";
     return (
       <Tour
         className={classes.root}
         steps={steps}
-        isOpen={tour.open}
+        isOpen={isOpen}
         onRequestClose={this.onClose}
         disableDotsNavigation={true}
         disableKeyboardNavigation={true}
