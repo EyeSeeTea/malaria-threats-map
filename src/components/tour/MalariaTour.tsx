@@ -12,6 +12,7 @@ import {
   setInitialDialogOpen,
   setRegionAction,
   setSelection,
+  setThemeAction,
   setTourOpenAction,
   setTourStepAction
 } from "../../store/actions/base-actions";
@@ -105,6 +106,7 @@ const mapStateToProps = (state: State) => ({
   tour: selectTour(state)
 });
 const mapDispatchToProps = {
+  setTheme: setThemeAction,
   setTourOpen: setTourOpenAction,
   setTourStep: setTourStepAction,
   setInitialDialogOpen: setInitialDialogOpen,
@@ -133,6 +135,10 @@ class MalariaTour extends PureComponent<Props> {
   setStep = (step: number) => {
     dispatchCustomEvent("resize");
     this.props.setTourStep(step);
+  };
+
+  setTheme = (theme: string) => {
+    this.props.setTheme(theme);
   };
 
   toggleFilters = (value: boolean) => {
@@ -228,6 +234,7 @@ class MalariaTour extends PureComponent<Props> {
         selector: "#filters",
         content: options => {
           setInitialDialogOpen(false);
+          this.setTheme("prevention");
           this.toggleFilters(false);
           return <Step4 {...options} {...baseProps} step={3} />;
         },
