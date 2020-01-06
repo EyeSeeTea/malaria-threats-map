@@ -156,3 +156,23 @@ export const setStoryModeStepEpic = (
         }
       })
     );
+
+export const setStoryModeLogEventStepEpic = (
+  action$: ActionsObservable<ActionType<typeof setStoryModeAction>>,
+  state$: StateObservable<State>
+) =>
+  action$.ofType(ActionTypeEnum.MalariaSetStoryMode).pipe(
+    withLatestFrom(state$),
+    switchMap(([_, state]) => {
+      if (state.malaria.storyMode) {
+        return of(
+          logEventAction({
+            category: "Story Mode",
+            action: "true"
+          })
+        );
+      } else {
+        return of();
+      }
+    })
+  );

@@ -24,12 +24,10 @@ import {
 } from "../actions/diagnosis-actions";
 import {
   logEventAction,
-  setCountryModeAction,
   setFiltersAction,
   setThemeAction
 } from "../actions/base-actions";
-import { DiagnosisMapType, PreventionMapType, State } from "../types";
-import { setSpecies, setType } from "../actions/prevention-actions";
+import { DiagnosisMapType, State } from "../types";
 
 interface Params {
   [key: string]: string | number | boolean;

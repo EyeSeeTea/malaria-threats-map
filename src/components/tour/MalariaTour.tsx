@@ -4,6 +4,7 @@ import { SiteSelection, State } from "../../store/types";
 import { selectTheme, selectTour } from "../../store/reducers/base-reducer";
 import { connect } from "react-redux";
 import {
+  logEventAction,
   setBoundsAction,
   setCountryModeAction,
   setFiltersMode,
@@ -121,10 +122,10 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type OwnProps = {};
+type OwnProps = { classes?: { [key: string]: string } };
 type Props = DispatchProps & StateProps & OwnProps;
 
-class MalariaTour extends PureComponent<any> {
+class MalariaTour extends PureComponent<Props> {
   state = {
     step: 0
   };
@@ -171,6 +172,12 @@ class MalariaTour extends PureComponent<any> {
     this.setInsecticideClass("PYRETHROIDS");
     this.setInsecticideTypes([]);
     this.setSelection(null);
+    this.setCountryMode(false);
+    this.toggleFilters(false);
+    logEventAction({
+      category: "Malaria Tour Close Event",
+      action: `${this.props.tour.step}`
+    });
     localStorage.setItem("tour", "visited");
   };
 
@@ -348,7 +355,7 @@ class MalariaTour extends PureComponent<any> {
         onRequestClose={this.onClose}
         disableDotsNavigation={true}
         disableKeyboardNavigation={true}
-        disableInteraction={![1, 2].includes(tour.step)}
+        disableInteraction={![1].includes(tour.step)}
         showNavigation={false}
         showButtons={false}
         showNumber={false}

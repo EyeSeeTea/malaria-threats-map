@@ -70,7 +70,11 @@ const InitialDisclaimer = () => {
         </DialogActions>
         <DialogContent>
           {t("disclaimer.p1a")}
-          <a href={t("disclaimer.p1aLink")} target="_blank">
+          <a
+            href={t("disclaimer.p1aLink")}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {t("disclaimer.p1aLinkText")}
           </a>
           {t("disclaimer.p1b")}
@@ -78,7 +82,11 @@ const InitialDisclaimer = () => {
           {t("disclaimer.p2")}
           <br />
           {t("disclaimer.p3a")}
-          <a href={t("disclaimer.p3aLink")} target="_blank">
+          <a
+            href={t("disclaimer.p3aLink")}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {t("disclaimer.p3aLinkText")}
           </a>
           {t("disclaimer.p3b")}

@@ -16,12 +16,8 @@ import {
   setTreatmentPlasmodiumSpecies
 } from "../actions/treatment-actions";
 import { MapServerConfig } from "../../constants/constants";
-import {
-  setDiagnosisDeletionType,
-  setDiagnosisMapType
-} from "../actions/diagnosis-actions";
 import { logEventAction } from "../actions/base-actions";
-import { DiagnosisMapType, TreatmentMapType } from "../types";
+import { TreatmentMapType } from "../types";
 import { MOLECULAR_MARKERS } from "../../components/filters/MolecularMarkerFilter";
 
 interface Params {

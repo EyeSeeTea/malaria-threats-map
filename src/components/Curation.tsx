@@ -23,7 +23,9 @@ const Curation = ({ study }: Props) => {
       <Typography variant="body2">
         <b>{t("invasive.chart.vector_occurrance.data_collection")}:</b>
       </Typography>
-      <Typography variant="body2">{study.INSTITUTE_CURATION}</Typography>
+      <Typography variant="body2">
+        {study.INSTITUTE_CURATION || study.CURATION}
+      </Typography>
     </Margin>
   ) : (
     <div />
