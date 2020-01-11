@@ -26,7 +26,7 @@ const marks = range(1988, 2019).map(year =>
 
 const useStyles = makeStyles({
   root: {
-    margin: 24
+    margin: '0px 24px'
   },
   slider: {
     marginBottom: 20,

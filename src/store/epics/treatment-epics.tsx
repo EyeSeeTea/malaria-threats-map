@@ -111,12 +111,15 @@ export const setTreatmentPlasmodiumSpeciesEpic = (
     .pipe(skip(1))
     .pipe(
       switchMap(action => {
-        return of(
-          logEventAction({
-            category: "Plasmodium Species",
-            action: action.payload
-          })
-        );
+        const logEvent = logEventAction({
+          category: "Plasmodium Species",
+          action: action.payload
+        });
+        if (["P._FALCIPARUM", "P._KNOWLESI", "P._OVALE"].includes(action.payload)) {
+          return of(setTreatmentDrug("DRUG_AL"), logEvent);
+        } else {
+          return of(setTreatmentDrug("DRUG_CQ"), logEvent);
+        }
       })
     );
 
