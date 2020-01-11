@@ -12,6 +12,18 @@ export const formatList = (list: string[]) => {
         list[list.length - 1]
       );
     }
+  } else if (lng === "fr") {
+    if (list.length === 0) {
+      return "";
+    } else if (list.length === 1) {
+      return list[0];
+    } else {
+      return (
+        list.slice(0, list.length - 1).join(", ") +
+        " et " +
+        list[list.length - 1]
+      );
+    }
   } else {
     if (list.length === 0) {
       return "";
@@ -39,7 +51,7 @@ export const formatYears = (from: string, to: string) => {
     } else if (from === to) {
       return `en ${to}`;
     } else {
-      return `entre ${from} y ${to}`;
+      return `entre ${from} et ${to}`;
     }
   } else {
     if (!from && !to) {

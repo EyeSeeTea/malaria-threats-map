@@ -114,7 +114,7 @@
         "content_2": " par {{surveyTypes}} {{years}}",
         "deletions_confirmed": "Délétions confirmées (% d'échantillons)",
         "deletion_type": "Type de délétion",
-        "no_tested": "No. testé",
+        "no_tested": "Nombre d'échantillons testés",
         "percentage": "Pourcentage de délétion en "
       }
     },
