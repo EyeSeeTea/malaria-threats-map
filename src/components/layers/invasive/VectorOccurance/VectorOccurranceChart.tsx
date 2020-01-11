@@ -14,7 +14,7 @@ import Pagination from "../../../charts/Pagination";
 import { useTranslation } from "react-i18next";
 import { ChartContainer } from "../../../Chart";
 import Curation from "../../../Curation";
-import { isNotNull, isNull } from "../../../../utils/number-utils";
+import { isNotNull } from "../../../../utils/number-utils";
 
 const Flex = styled.div`
   display: flex;

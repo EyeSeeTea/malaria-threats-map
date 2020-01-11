@@ -64,7 +64,7 @@ const options: (
 });
 
 const ChatContainer = styled.div`
-  max-width: 600px;
+  width: 600px;
 `;
 
 const Flex = styled.div`
