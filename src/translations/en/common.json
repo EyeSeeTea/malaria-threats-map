@@ -187,7 +187,7 @@
         "sampling_period": "Sampling period",
         "sampling_method": "Sampling method",
         "study_identification_method": "Species identification method",
-        "data_collection": "Acknowledgement for data collection",
+        "data_collection": "Acknowledgement for data curation",
         "no_available": "Not available"
       }
     },
