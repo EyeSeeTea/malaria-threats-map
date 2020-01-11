@@ -90,7 +90,7 @@ class DiagnosisLayer extends Component<Props> {
       prevProps.diagnosisFilters.patientType !== patientType;
     const deletionTypeChange =
       prevProps.diagnosisFilters.deletionType !== deletionType;
-    const countryChange = prevProps.region.country !== region.country;
+    const countryChange = prevProps.region !== region;
     const countryModeChange = prevProps.countryMode !== countryMode;
     const countriesChange = prevProps.countries.length !== countries.length;
     if (

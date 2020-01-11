@@ -94,7 +94,7 @@ class TreatmentLayer extends Component<Props> {
     const yearChange =
       prevProps.filters[0] !== filters[0] ||
       prevProps.filters[1] !== filters[1];
-    const countryChange = prevProps.region.country !== region.country;
+    const countryChange = prevProps.region !== region;
     const plasmodiumSpeciesChange =
       prevProps.treatmentFilters.plasmodiumSpecies !== plasmodiumSpecies;
     const drugChange = prevProps.treatmentFilters.drug !== drug;
