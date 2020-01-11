@@ -33,7 +33,7 @@
       "resistance_status": {
         "content_1": "{{nStudies}} pruebas con vectores ",
         "content_2": " por pruebas de susceptibilidad a la concentración discriminante(s) con {{insecticideClass}} {{years}}",
-        "number_of_tests": "# de pruebas",
+        "number_of_tests": "Número de pruebas",
         "Confirmed": "Confirmado",
         "Possible": "Posible",
         "Susceptible": "Susceptible",
@@ -44,7 +44,7 @@
       "resistance_intensity": {
         "content_1": "{{nStudies}} pruebas con vectores ",
         "content_2": " por pruebas de intensidad de la resistencia(s) con {{insecticideClass}} {{years}}",
-        "number_of_tests": "# de pruebas",
+        "number_of_tests": "Número de pruebas",
         "HIGH_INTENSITY": "Intensidad alta",
         "MODERATE_TO_HIGH_INTENSITY": "Intensidad alta a moderada",
         "MODERATE_INTENSITY": "Intesidad moderada",
@@ -57,12 +57,12 @@
       "resistance_mechanism": {
         "content_1": "{{nStudies}} pruebas con vectores ",
         "content_2": " por pruebas {{insecticideClasses}} con {{type}} {{years}}",
-        "number_of_tests": "# de pruebas",
+        "number_of_tests": "Número de pruebas",
         "DETECTED": "Detectado",
         "NOT_DETECTED": "No detectado",
         "title": "Número de pruebas de mecanismos",
         "allelic": "Frecuencias alélicas de pruebas moleculares",
-        "count": "# de pruebas",
+        "count": "Número de pruebas",
         "frequency": "Frecuencia (%)"
       },
       "synergist_involvement": {
