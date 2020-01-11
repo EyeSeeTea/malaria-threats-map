@@ -8,6 +8,7 @@ import { DELETION_TYPES } from "../../components/filters/DeletionTypeFilter";
 
 const initialState: DiagnosisState = Object.freeze({
   studies: [],
+  loading: false,
   filteredStudies: [],
   filters: {
     mapType: DiagnosisMapType.GENE_DELETIONS,
@@ -50,9 +51,21 @@ function updateDeletionType(deletionType: string) {
 }
 
 export default createReducer<DiagnosisState>(initialState, {
+  [ActionTypeEnum.FetchDiagnosisStudiesRequest]: () => state => ({
+    ...state,
+    loading: true
+  }),
   [ActionTypeEnum.FetchDiagnosisStudiesSuccess]: (
     response: DiagnosisResponse
-  ) => R.assoc("studies", response.features.map(feature => feature.attributes)),
+  ) => state => ({
+    ...state,
+    loading: false,
+    studies: response.features.map(feature => feature.attributes)
+  }),
+  [ActionTypeEnum.FetchDiagnosisStudiesError]: () => state => ({
+    ...state,
+    loading: false
+  }),
   [ActionTypeEnum.SetDiagnosisMapType]: updateMapType,
   [ActionTypeEnum.SetSurveyTypes]: updateSurveyTypes,
   [ActionTypeEnum.SetPatientType]: updatePatientType,
@@ -67,6 +80,11 @@ export const selectDiagnosisState = (state: State) => state.diagnosis;
 export const selectDiagnosisStudies = createSelector(
   selectDiagnosisState,
   R.prop("studies")
+);
+
+export const selectDiagnosisStudiesLoading = createSelector(
+  selectDiagnosisState,
+  R.prop("loading")
 );
 
 export const selectFilteredDiagnosisStudies = createSelector(

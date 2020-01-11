@@ -7,6 +7,7 @@ import { PreventionResponse, PreventionStudy } from "../../types/Prevention";
 
 const initialState: PreventionState = Object.freeze({
   studies: [],
+  loading: false,
   filteredStudies: [],
   filters: {
     mapType: PreventionMapType.RESISTANCE_STATUS,
@@ -59,9 +60,21 @@ function updateAssayTypes(assayTypes: string[]) {
 }
 
 export default createReducer<PreventionState>(initialState, {
+  [ActionTypeEnum.FetchPreventionStudiesRequest]: () => state => ({
+    ...state,
+    loading: true
+  }),
   [ActionTypeEnum.FetchPreventionStudiesSuccess]: (
     response: PreventionResponse
-  ) => R.assoc("studies", response.features.map(feature => feature.attributes)),
+  ) => state => ({
+    ...state,
+    loading: false,
+    studies: response.features.map(feature => feature.attributes)
+  }),
+  [ActionTypeEnum.FetchPreventionStudiesError]: () => state => ({
+    ...state,
+    loading: false
+  }),
   [ActionTypeEnum.SetPreventionMapType]: updatePreventionMapType,
   [ActionTypeEnum.SetInsecticideClass]: updateInsecticideClass,
   [ActionTypeEnum.SetInsecticideTypes]: updateInsecticideTypes,
@@ -79,6 +92,11 @@ export const selectPreventionState = (state: State) => state.prevention;
 export const selectPreventionStudies = createSelector(
   selectPreventionState,
   R.prop("studies")
+);
+
+export const selectPreventionStudiesLoading = createSelector(
+  selectPreventionState,
+  R.prop("loading")
 );
 
 export const selectFilteredPreventionStudies = createSelector(

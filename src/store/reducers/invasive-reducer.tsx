@@ -8,6 +8,7 @@ import { PreventionStudy } from "../../types/Prevention";
 
 const initialState: InvasiveState = Object.freeze({
   studies: [],
+  loading: false,
   filteredStudies: [],
   filters: {
     mapType: InvasiveMapType.VECTOR_OCCURANCE,
@@ -32,8 +33,21 @@ function updateFilter<T>(key: string, value: T, def?: T) {
 }
 
 export default createReducer<InvasiveState>(initialState, {
-  [ActionTypeEnum.FetchInvasiveStudiesSuccess]: (response: InvasiveResponse) =>
-    R.assoc("studies", response.features.map(feature => feature.attributes)),
+  [ActionTypeEnum.FetchInvasiveStudiesRequest]: () => state => ({
+    ...state,
+    loading: true
+  }),
+  [ActionTypeEnum.FetchInvasiveStudiesSuccess]: (
+    response: InvasiveResponse
+  ) => state => ({
+    ...state,
+    loading: false,
+    studies: response.features.map(feature => feature.attributes)
+  }),
+  [ActionTypeEnum.FetchInvasiveStudiesError]: () => state => ({
+    ...state,
+    loading: false
+  }),
   [ActionTypeEnum.SetInvasiveVectorSpecies]: updateSpecies,
   [ActionTypeEnum.SetInvasiveFilteredStudies]: (
     filteredStudies: PreventionStudy[]
@@ -45,6 +59,11 @@ export const selectInvasiveState = (state: State) => state.invasive;
 export const selectInvasiveStudies = createSelector(
   selectInvasiveState,
   R.prop("studies")
+);
+
+export const selectInvasiveStudiesLoading = createSelector(
+  selectInvasiveState,
+  R.prop("loading")
 );
 
 export const selectFilteredInvasiveStudies = createSelector(

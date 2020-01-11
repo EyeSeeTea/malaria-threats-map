@@ -8,7 +8,7 @@ export interface DiagnosisResponse {
 }
 
 export interface DiagnosisFeature {
-  attributes: DiagnosisStudy[];
+  attributes: DiagnosisStudy;
 }
 
 export interface FieldAlias {

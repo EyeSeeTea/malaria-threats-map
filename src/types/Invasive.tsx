@@ -8,7 +8,7 @@ export interface InvasiveResponse {
 }
 
 export interface InvasiveFeature {
-  attributes: InvasiveStudy[];
+  attributes: InvasiveStudy;
 }
 
 export interface FieldAlias {

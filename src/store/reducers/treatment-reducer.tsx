@@ -7,6 +7,7 @@ import { TreatmentResponse, TreatmentStudy } from "../../types/Treatment";
 
 const initialState: TreatmentState = Object.freeze({
   studies: [],
+  loading: false,
   filteredStudies: [],
   filters: {
     mapType: TreatmentMapType.TREATMENT_FAILURE,
@@ -50,21 +51,31 @@ function groupStudies(response: TreatmentResponse) {
   const filtered255Studies = allStudies.filter(
     study => study.DimensionID === 255 || study.DimensionID === 256
   );
-  const studies = filtered255Studies.map(study => ({
+  return filtered255Studies.map(study => ({
     ...study,
     groupStudies: allStudies.filter(
       relatedStudy =>
         relatedStudy.DimensionID === 257 && relatedStudy.K13_CODE === study.Code
     )
   }));
-  return (state: TreatmentState) => ({
-    ...state,
-    studies
-  });
 }
 
 export default createReducer<TreatmentState>(initialState, {
-  [ActionTypeEnum.FetchTreatmentStudiesSuccess]: groupStudies,
+  [ActionTypeEnum.FetchTreatmentStudiesRequest]: () => state => ({
+    ...state,
+    loading: true
+  }),
+  [ActionTypeEnum.FetchTreatmentStudiesSuccess]: (
+    response: TreatmentResponse
+  ) => state => ({
+    ...state,
+    loading: false,
+    studies: groupStudies(response)
+  }),
+  [ActionTypeEnum.FetchTreatmentStudiesError]: () => state => ({
+    ...state,
+    loading: false
+  }),
   [ActionTypeEnum.SetTreatmentMapType]: updateMapType,
   [ActionTypeEnum.SetPlasmodiumSpecies]: updatePlasmodiumSpecies,
   [ActionTypeEnum.SetDrug]: updateDrug,
@@ -79,6 +90,11 @@ export const selectTreatmentState = (state: State) => state.treatment;
 export const selectTreatmentStudies = createSelector(
   selectTreatmentState,
   R.prop("studies")
+);
+
+export const selectTreatmentStudiesLoading = createSelector(
+  selectTreatmentState,
+  R.prop("loading")
 );
 
 export const selectFilteredTreatmentStudies = createSelector(

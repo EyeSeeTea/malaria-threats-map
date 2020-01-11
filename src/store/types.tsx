@@ -49,6 +49,7 @@ export interface TranslationsState {
 
 export interface DiagnosisState {
   studies: DiagnosisStudy[];
+  loading: boolean;
   filteredStudies: DiagnosisStudy[];
   filters: DiagnosisFilters;
 }
@@ -84,6 +85,7 @@ export interface PreventionFilters {
 
 export interface PreventionState {
   studies: PreventionStudy[];
+  loading: boolean;
   filteredStudies: PreventionStudy[];
   filters: PreventionFilters;
 }
@@ -103,6 +105,7 @@ export interface TreatmentFilters {
 
 export interface TreatmentState {
   studies: TreatmentStudy[];
+  loading: boolean;
   filteredStudies: TreatmentStudy[];
   filters: TreatmentFilters;
 }
@@ -118,6 +121,7 @@ export interface InvasiveFilters {
 
 export interface InvasiveState {
   studies: InvasiveStudy[];
+  loading: boolean;
   filteredStudies: InvasiveStudy[];
   filters: InvasiveFilters;
 }

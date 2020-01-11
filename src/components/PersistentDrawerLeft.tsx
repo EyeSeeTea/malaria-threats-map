@@ -48,6 +48,7 @@ import { colors } from "../constants/theme";
 import MapTypesSelector from "./MapTypesSelector";
 import MobileOptions from "./MobileOptions";
 import InitialDisclaimer from "./InitialDisclaimer";
+import Loader from "./Loader";
 
 interface ThemeProps {
   drawerWidth: string;
@@ -221,6 +222,7 @@ function PersistentDrawerLeft({
 
   return (
     <div className={`${classes.root}`}>
+      <Loader />
       <CssBaseline />
       <Drawer
         className={classes.drawer}
