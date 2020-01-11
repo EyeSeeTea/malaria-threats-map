@@ -30,7 +30,7 @@ const suggestions = [
     value: "AN_STEPHENSI_MYSORENSIS"
   },
   {
-    label: "An. stephensi type form",
+    label: "An. stephensi intermediate form",
     value: "AN_STEPHENSI_INTERMEDIATE_FORM"
   }
 ];
