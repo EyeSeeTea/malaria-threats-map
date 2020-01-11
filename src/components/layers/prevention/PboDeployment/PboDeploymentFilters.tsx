@@ -12,7 +12,7 @@ export default function PboDeploymentFilters() {
     <div>
       <InsecticideTypeFilter />
       <SpeciesFilter />
-      <YearRangeSelector />
+      <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
       <Snackbar>
         {t("prevention.legend.pbo_deployment.link_content_1")}
         <Link href={t("prevention.legend.pbo_deployment.link")} target="_blank">

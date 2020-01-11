@@ -8,7 +8,7 @@ export default function TreatmentFailureFilters() {
     <>
       <PlasmodiumSpeciesFilter />
       <DrugsFilter />
-      <YearRangeSelector />
+      <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
     </>
   );
 }

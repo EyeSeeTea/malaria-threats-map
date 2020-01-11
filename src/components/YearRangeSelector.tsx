@@ -13,7 +13,7 @@ function range(start: number, end: number) {
     .fill(1)
     .map((_, idx) => start + idx);
 }
-const marks = range(1988, 2019).map(year =>
+const marks = range(1985, new Date().getFullYear()).map(year =>
   year % 5 === 0
     ? {
         value: year,

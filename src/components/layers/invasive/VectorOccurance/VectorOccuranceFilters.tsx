@@ -10,7 +10,7 @@ export default function VectorOccuranceFilters() {
   return (
     <>
       <VectorSpeciesFilter />
-      <YearRangeSelector />
+      <YearRangeSelector minYear={1985} maxYear={new Date().getFullYear()} />
       <Snackbar>
         {t("invasive.legend.vector_occurrance.link_content_1")}
         <Link

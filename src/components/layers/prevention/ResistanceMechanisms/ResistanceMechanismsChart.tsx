@@ -185,7 +185,7 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
   };
 
   const series = R.filter(
-    serie => R.all(data => !!data.y, serie.data),
+    serie => R.any(data => !!data.y, serie.data),
     baseSeries
   );
 

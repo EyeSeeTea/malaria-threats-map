@@ -8,7 +8,7 @@ export default function DelayedParasiteClearanceFilters() {
     <>
       <PlasmodiumSpeciesFilter />
       <DrugsFilter />
-      <YearRangeSelector />
+      <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
     </>
   );
 }
