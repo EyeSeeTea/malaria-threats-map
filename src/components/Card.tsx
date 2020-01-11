@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     margin: 8,
     maxWidth: 300,
     textAlign: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     flexDirection: "column",
     display: "flex",
     alignItems: "center",

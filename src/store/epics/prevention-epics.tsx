@@ -1,9 +1,15 @@
-import { ActionsObservable } from "redux-observable";
+import { ActionsObservable, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import * as ajax from "../../store/ajax";
 import { of } from "rxjs";
-import { catchError, mergeMap, switchMap, skip } from "rxjs/operators";
+import {
+  catchError,
+  mergeMap,
+  switchMap,
+  skip,
+  withLatestFrom
+} from "rxjs/operators";
 import { AjaxError } from "rxjs/ajax";
 import { PreventionResponse } from "../../types/Prevention";
 import { MapServerConfig } from "../../constants/constants";
@@ -19,7 +25,7 @@ import {
   setSynergistTypes,
   setType
 } from "../actions/prevention-actions";
-import { PreventionMapType } from "../types";
+import { PreventionMapType, State } from "../types";
 import { logEventAction, setCountryModeAction } from "../actions/base-actions";
 import { ASSAY_TYPES } from "../../components/filters/AssayTypeCheckboxFilter";
 
@@ -83,6 +89,7 @@ export const setPreventionMapTypeEpic = (
         );
       } else if (action.payload === PreventionMapType.PBO_DEPLOYMENT) {
         return of(
+          setType(undefined),
           setCountryModeAction(false),
           log("Pyrethroid-PBO nets deployment")
         );
@@ -108,16 +115,18 @@ export const setPreventionTypeEpic = (
   );
 
 export const setPreventionInsecticideClassEpic = (
-  action$: ActionsObservable<ActionType<typeof setInsecticideClass>>
+  action$: ActionsObservable<ActionType<typeof setInsecticideClass>>,
+  state$: StateObservable<State>
 ) =>
   action$
     .ofType(ActionTypeEnum.SetInsecticideClass)
     .pipe(skip(1))
     .pipe(
-      switchMap(action => {
+      withLatestFrom(state$),
+      switchMap(([action, state]) => {
         return of(
           setInsecticideTypes([]),
-          setType(undefined),
+          setType(state.prevention.filters.type || "MONO_OXYGENASES"),
           setSpecies([]),
           logEventAction({
             category: "Insecticide Class",

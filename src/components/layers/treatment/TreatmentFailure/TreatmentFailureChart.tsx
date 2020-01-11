@@ -131,8 +131,7 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
     };
   });
 
-  const siteDuration =
-    minYear !== maxYear ? `from ${minYear} to ${maxYear}` : `in ${minYear}`;
+  const siteDuration = formatYears(`${minYear}`, `${maxYear}`);
 
   const titleItems = [
     studies[study].SITE_NAME,

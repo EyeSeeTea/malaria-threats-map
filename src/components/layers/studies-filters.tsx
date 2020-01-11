@@ -59,7 +59,7 @@ export const filterByRegion = (region: RegionState) => (study: any) => {
 export const filterByInsecticideClass = (insecticideClass: string) => (
   study: any
 ) => {
-  return study.INSECTICIDE_CLASS === insecticideClass;
+  return !study.INSECTICIDE_CLASS || study.INSECTICIDE_CLASS === insecticideClass;
 };
 
 export const filterByInsecticideTypes = (insecticideTypes: string[]) => (
@@ -189,7 +189,6 @@ export const buildPreventionFilters = (
       ];
     case PreventionMapType.PBO_DEPLOYMENT:
       return [
-        filterByInsecticideClass(preventionFilters.insecticideClass),
         filterByInsecticideTypes(preventionFilters.insecticideTypes),
         filterBySpecies(preventionFilters.species),
         filterByYearRange(filters),

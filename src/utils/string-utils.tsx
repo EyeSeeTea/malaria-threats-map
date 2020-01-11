@@ -39,7 +39,7 @@ export const formatYears = (from: string, to: string) => {
     } else if (from === to) {
       return `en ${to}`;
     } else {
-      return `desde ${from} a ${to}`;
+      return `entre ${from} y ${to}`;
     }
   } else {
     if (!from && !to) {

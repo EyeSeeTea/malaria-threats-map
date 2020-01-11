@@ -88,7 +88,7 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
         })}
         <i>{t(diagnosisFilters.deletionType).toLowerCase()}</i>
         {t(`diagnosis.chart.gene_deletions.content_2`, {
-          surveyTypes: formatList(surveyTypes.map(st => t(st))),
+          surveyTypes: formatList(surveyTypes.map(st => t(st) === "DHS" ? t(st) : t(st).toLowerCase())),
           years: formatYears(minYear, maxYear)
         })}
       </Typography>

@@ -13,6 +13,7 @@ import * as R from "ramda";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Divider, FilterWrapper } from "./Filters";
 import T from "../../translations/T";
+import {filterByInsecticideClass} from "../layers/studies-filters";
 
 const mapStateToProps = (state: State) => ({
   insecticideTypes: selectInsecticideTypes(state),
@@ -40,7 +41,7 @@ class InsecticideTypeFilter extends Component<Props, any> {
     const { preventionFilters, studies } = this.props;
     const { insecticideClass } = preventionFilters;
 
-    const filters = [R.propEq("INSECTICIDE_CLASS", insecticideClass)];
+    const filters = [filterByInsecticideClass(insecticideClass)];
 
     const filteredStudies = filters.reduce(
       (studies, filter) => studies.filter(filter),

@@ -29,7 +29,7 @@ const options: (data: any, translations: any) => Highcharts.Options = (
     min: 0,
     max: 100,
     title: {
-      text: translations.mosquito_mortality
+      text: translations.mortality
     }
   },
   plotOptions: {

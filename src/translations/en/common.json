@@ -111,7 +111,7 @@
     "chart": {
       "gene_deletions": {
         "content_1": "{{nStudies}} survey(s) ",
-        "content_2": " for {{deletionType}} by {{surveyTypes}} {{years}}",
+        "content_2": " by {{surveyTypes}} {{years}}",
         "deletions_confirmed": "Deletions confirmed (% of samples)",
         "deletion_type": "Deletion type",
         "no_tested": "No. tested",
