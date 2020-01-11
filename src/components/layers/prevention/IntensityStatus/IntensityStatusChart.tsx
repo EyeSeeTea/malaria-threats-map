@@ -35,6 +35,9 @@ const options: (data: any, translations: any) => Highcharts.Options = (
   },
   plotOptions: {
     column: {
+      dataLabels: {
+        enabled: true
+      },
       zones: [
         {
           value: 97.001,
@@ -107,7 +110,7 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
   const data = simplifiedStudies.map(study => ({
     name: `${study.YEAR_START}, ${t(study.INSECTICIDE_TYPE)} ${t(
       study.INSECTICIDE_INTENSITY
-    )}x`,
+    )}`,
     y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
     species: study.SPECIES,
     number: study.NUMBER

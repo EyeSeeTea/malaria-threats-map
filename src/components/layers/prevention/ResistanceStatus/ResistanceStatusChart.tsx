@@ -59,6 +59,9 @@ const options: (data: any, translations: any) => Highcharts.Options = (
   },
   plotOptions: {
     column: {
+      dataLabels: {
+        enabled: true
+      },
       zones: [
         {
           value: 90,
