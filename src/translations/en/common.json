@@ -180,7 +180,7 @@
     }
   },
   "invasive": {
-    "vector_occurrance": "Vector ocurrance",
+    "vector_occurrance": "Vector occurrence",
     "chart": {
       "vector_occurrance": {
         "species": "Species",
