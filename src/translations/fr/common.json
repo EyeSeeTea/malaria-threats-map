@@ -60,7 +60,7 @@
         "number_of_tests": "# de tests",
         "DETECTED": "Détecté",
         "NOT_DETECTED": "Non détecté",
-        "title": "Number of mechanism assays",
+        "title": "Nombre d'essais de mécanismes",
         "allelic": "Fréquence allélique à partir d'analyse moléculaire",
         "count": "Nombre",
         "frequency": "Fréquence (%)"
@@ -68,7 +68,7 @@
       "synergist_involvement": {
         "mortality": "Mortalité",
         "tested": "Études (n)",
-        "mosquito_mortality": "% % mortalité de moustique",
+        "mosquito_mortality": "% mortalité de moustique",
         "no_synergist": "Pas de synergistes"
       }
     },
