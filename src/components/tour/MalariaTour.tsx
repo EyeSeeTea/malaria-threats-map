@@ -129,8 +129,13 @@ type Props = DispatchProps & StateProps & OwnProps;
 
 class MalariaTour extends PureComponent<Props> {
   state = {
-    step: 0
+    step: 0,
+    visible: false
   };
+
+  componentDidMount(): void {
+    setTimeout(() => this.setState(state => ({ visible: true })), 200);
+  }
 
   setStep = (step: number) => {
     dispatchCustomEvent("resize");
@@ -210,7 +215,9 @@ class MalariaTour extends PureComponent<Props> {
           setInitialDialogOpen(true);
           this.toggleFilters(false);
           return <Step1 {...options} {...baseProps} step={0} />;
-        }
+        },
+        // @ts-ignore
+        observe: "#title"
       },
       {
         selector: "#language",
@@ -355,21 +362,23 @@ class MalariaTour extends PureComponent<Props> {
     ];
     const isOpen = tour.open && localStorage.getItem("tour") !== "visited";
     return (
-      <Tour
-        className={classes.root}
-        steps={steps}
-        isOpen={isOpen}
-        onRequestClose={this.onClose}
-        disableDotsNavigation={true}
-        disableKeyboardNavigation={true}
-        disableInteraction={![1].includes(tour.step)}
-        showNavigation={false}
-        showButtons={false}
-        showNumber={false}
-        showCloseButton={false}
-        getCurrentStep={this.setStep}
-        goToStep={tour.step}
-      />
+      this.state.visible && (
+        <Tour
+          className={classes.root}
+          steps={steps}
+          isOpen={isOpen}
+          onRequestClose={this.onClose}
+          disableDotsNavigation={true}
+          disableKeyboardNavigation={true}
+          disableInteraction={![1].includes(tour.step)}
+          showNavigation={false}
+          showButtons={false}
+          showNumber={false}
+          showCloseButton={false}
+          getCurrentStep={this.setStep}
+          goToStep={tour.step}
+        />
+      )
     );
   }
 }

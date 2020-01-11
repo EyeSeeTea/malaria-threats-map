@@ -31,6 +31,7 @@ const Row = styled.div`
 
 const CenteredRow = styled(Row)`
   align-items: center;
+  min-width: 20px;
 `;
 
 const Column = styled.div`
@@ -86,8 +87,8 @@ function InitialDialog({
         }
       }}
     >
-      <CenteredRow id="title">
-        <WhiteColumn>
+      <CenteredRow>
+        <WhiteColumn  id="title">
           <Typography variant="h2" color={"inherit"}>
             {t("title.title")}
           </Typography>
