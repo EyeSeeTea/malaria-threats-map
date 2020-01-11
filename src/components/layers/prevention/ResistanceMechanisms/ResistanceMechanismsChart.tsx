@@ -41,7 +41,7 @@ const options: (data: any, translations: any) => Highcharts.Options = (
   },
   tooltip: {
     pointFormat:
-      "<b>{point.names}</b><br/>{series.name}: <b>{point.percentage:.1f}%</b>"
+      "<b>{point.names}</b>"
   },
   plotOptions: {
     column: {

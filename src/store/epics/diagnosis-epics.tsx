@@ -108,7 +108,7 @@ export const setDiagnosisSurveyTypesEpic = (
     .pipe(
       switchMap(action => {
         const actions: any[] = [];
-        action.payload.forEach(surveyType =>
+        (action.payload || []).forEach(surveyType =>
           actions.push(
             logEventAction({
               category: "Survey Type",

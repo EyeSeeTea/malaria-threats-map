@@ -79,9 +79,9 @@ export const setPreventionMapTypeEpic = (
           log("Resistance mechanisms detection")
         );
       } else if (action.payload === PreventionMapType.INTENSITY_STATUS) {
-        return of(log("Insecticide resistance intensity"));
+        return of(setType(undefined), log("Insecticide resistance intensity"));
       } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
-        return of(log("Insecticide resistance status"));
+        return of(setType(undefined), log("Insecticide resistance status"));
       } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
         return of(
           setType("MONO_OXYGENASES"),
@@ -145,7 +145,7 @@ export const setPreventionInsecticideTypeEpic = (
     .pipe(
       switchMap(action => {
         const actions: any[] = [setType(undefined), setSpecies([])];
-        action.payload.forEach(type =>
+        (action.payload || []).forEach(type =>
           actions.push(
             logEventAction({
               category: "Insecticide Type",
@@ -184,7 +184,7 @@ export const setPreventionSynergistTypesEpic = (
     .pipe(
       switchMap(action => {
         const actions: any[] = [];
-        action.payload.forEach(type =>
+        (action.payload || []).forEach(type =>
           actions.push(
             logEventAction({
               category: "Synergist Type",
@@ -226,7 +226,7 @@ export const setPreventionAssayTypesEpic = (
     .pipe(
       switchMap(action => {
         const actions: any[] = [];
-        action.payload.forEach(assayType =>
+        (action.payload || []).forEach(assayType =>
           actions.push(
             logEventAction({
               category: "Assay Type",
