@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Wrapper = styled.div`
+  margin-top: 16px;
   padding: 0 16px;
 `;
 

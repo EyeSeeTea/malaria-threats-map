@@ -130,6 +130,10 @@ function StoryModeStepper({
   const selectedSteps = themeMap[theme];
   const SelectedStep = selectedSteps[storyModeStep];
 
+  if (storyModeStep < 0 || storyModeStep > selectedSteps.length - 1) {
+    setStoryModeStep(0);
+  }
+
   return (
     <Swipeable
       onSwiped={eventData => handleSwipe(eventData)}
@@ -177,24 +181,28 @@ function StoryModeStepper({
               {SelectedStep ? <SelectedStep /> : <div />}
             </Paper>
             <div className={classes.buttons}>
-              <Button
-                variant="contained"
-                color="default"
-                onClick={handleBack}
-                disabled={storyModeStep === 0}
-                className={classes.button}
-              >
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                disabled={storyModeStep === steps.length - 1}
-                className={classes.button}
-              >
-                Next
-              </Button>
+              {storyModeStep > 0 && (
+                <Button
+                  variant="contained"
+                  color="default"
+                  onClick={handleBack}
+                  disabled={storyModeStep === 0}
+                  className={classes.button}
+                >
+                  Back
+                </Button>
+              )}
+              {storyModeStep < selectedSteps.length - 1 && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                  disabled={storyModeStep === steps.length - 1}
+                  className={classes.button}
+                >
+                  Next
+                </Button>
+              )}
             </div>
           </div>
         </div>

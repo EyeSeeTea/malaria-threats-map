@@ -15,6 +15,9 @@ import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      marginTop: theme.spacing(1)
+    },
     paper: {
       margin: theme.spacing(1),
       width: "100%"
@@ -51,7 +54,7 @@ const Disclaimer = () => {
   const renderDisclaimer = () => <>{t("copyright.content")}</>;
 
   return (
-    <>
+    <div>
       <Hidden smUp>
         <DisclaimerTextButton onClick={handleClickOpen}>
           {t("copyright.mobile")}
@@ -76,7 +79,7 @@ const Disclaimer = () => {
       <Hidden xsDown>
         <DisclaimerText>{renderDisclaimer()}</DisclaimerText>
       </Hidden>
-    </>
+    </div>
   );
 };
 
