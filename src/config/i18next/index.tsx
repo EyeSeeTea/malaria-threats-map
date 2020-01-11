@@ -5,6 +5,7 @@ import common_fr from "../../translations/fr/common.json";
 import tour_en from "../../translations/en/tour.json";
 import tour_es from "../../translations/es/tour.json";
 import tour_fr from "../../translations/fr/tour.json";
+import { dispatchCustomEvent } from "../../utils/dom-utils";
 
 export const lng = localStorage.getItem("language") || "en";
 
@@ -28,7 +29,8 @@ i18next.init({
 });
 
 export const changeLanguage = (lng: string) => {
-  i18next.changeLanguage(lng, err => {
+  setTimeout(() => dispatchCustomEvent("resize"));
+  return i18next.changeLanguage(lng, err => {
     if (err) {
       return console.log("something went wrong loading", err);
     } else {
