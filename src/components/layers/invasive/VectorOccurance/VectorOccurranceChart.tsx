@@ -14,6 +14,7 @@ import Pagination from "../../../charts/Pagination";
 import { useTranslation } from "react-i18next";
 import { ChartContainer } from "../../../Chart";
 import Curation from "../../../Curation";
+import { isNotNull, isNull } from "../../../../utils/number-utils";
 
 const Flex = styled.div`
   display: flex;
@@ -70,8 +71,6 @@ const VectorOccurrenceChart = ({ studies }: Props) => {
     "invasive.chart.vector_occurrance.study_identification_method"
   );
 
-  console.log(t("invasive.chart.vector_ocurrance.species"));
-
   return (
     <ChartContainer>
       {sortedStudies.length > 1 && (
@@ -81,18 +80,27 @@ const VectorOccurrenceChart = ({ studies }: Props) => {
         <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}`}</Box>
       </Typography>
       <Margin>
-        <Flex>
-          <Typography variant="body2">
-            <b>{t("invasive.chart.vector_occurrance.species")}:&nbsp;</b>
-            {studyObject.SPECIES}
-          </Typography>
-        </Flex>
-        <Flex>
-          <Typography variant="body2">
-            <b>{samplingPeriod}:&nbsp;</b>
-            {duration}
-          </Typography>
-        </Flex>
+        {(isNotNull(studyObject.VECTOR_SPECIES) ||
+          isNotNull(studyObject.VECTOR_SPECIES_COMPLEX)) && (
+          <Flex>
+            <Typography variant="body2">
+              <b>{t("invasive.chart.vector_occurrance.species")}:&nbsp;</b>
+              {isNotNull(studyObject.VECTOR_SPECIES)
+                ? studyObject.VECTOR_SPECIES
+                : isNotNull(studyObject.VECTOR_SPECIES_COMPLEX)
+                ? studyObject.VECTOR_SPECIES_COMPLEX
+                : ""}
+            </Typography>
+          </Flex>
+        )}
+        {duration && (
+          <Flex>
+            <Typography variant="body2">
+              <b>{samplingPeriod}:&nbsp;</b>
+              {duration}
+            </Typography>
+          </Flex>
+        )}
         <Flex>
           <Typography variant="body2">
             <b>{samplingMethod}:&nbsp;</b>

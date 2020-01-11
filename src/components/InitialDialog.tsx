@@ -87,8 +87,8 @@ function InitialDialog({
         }
       }}
     >
-      <CenteredRow>
-        <WhiteColumn  id="title">
+      <CenteredRow id="title">
+        <WhiteColumn>
           <Typography variant="h2" color={"inherit"}>
             {t("title.title")}
           </Typography>

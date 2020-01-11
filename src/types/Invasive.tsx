@@ -57,6 +57,8 @@ export interface InvasiveStudy extends Study {
   YEAR_START: string;
   SAMPLING_METHOD: string;
   ID_METHOD: string;
+  VECTOR_SPECIES: string;
+  VECTOR_SPECIES_COMPLEX: string;
 }
 
 export interface Field {
