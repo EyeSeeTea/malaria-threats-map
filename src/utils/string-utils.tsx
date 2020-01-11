@@ -51,6 +51,18 @@ export const formatYears = (from: string, to: string) => {
     } else if (from === to) {
       return `en ${to}`;
     } else {
+      return `entre ${from} y ${to}`;
+    }
+  } else if (lng === "fr") {
+    if (!from && !to) {
+      return "";
+    } else if (from && !to) {
+      return `dans ${from}`;
+    } else if (!from && to) {
+      return `dans ${to}`;
+    } else if (from === to) {
+      return `dans ${to}`;
+    } else {
       return `entre ${from} et ${to}`;
     }
   } else {
@@ -62,6 +74,47 @@ export const formatYears = (from: string, to: string) => {
       return `in ${to}`;
     } else if (from === to) {
       return `in ${to}`;
+    } else {
+      return `from ${from} to ${to}`;
+    }
+  }
+};
+
+export const formatYears2 = (from: string, to: string) => {
+  const lng = localStorage.getItem("language");
+  if (lng === "es") {
+    if (!from && !to) {
+      return "";
+    } else if (from && !to) {
+      return `${from}`;
+    } else if (!from && to) {
+      return `${to}`;
+    } else if (from === to) {
+      return `${to}`;
+    } else {
+      return `entre ${from} y ${to}`;
+    }
+  } else if (lng === "fr") {
+    if (!from && !to) {
+      return "";
+    } else if (from && !to) {
+      return `${from}`;
+    } else if (!from && to) {
+      return `${to}`;
+    } else if (from === to) {
+      return `${to}`;
+    } else {
+      return `entre ${from} et ${to}`;
+    }
+  } else {
+    if (!from && !to) {
+      return "";
+    } else if (from && !to) {
+      return `${from}`;
+    } else if (!from && to) {
+      return `${to}`;
+    } else if (from === to) {
+      return `${to}`;
     } else {
       return `from ${from} to ${to}`;
     }

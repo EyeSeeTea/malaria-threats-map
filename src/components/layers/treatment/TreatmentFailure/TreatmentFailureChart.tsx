@@ -12,7 +12,7 @@ import { TreatmentStudy } from "../../../../types/Treatment";
 import * as R from "ramda";
 import Pagination from "../../../charts/Pagination";
 import Citation from "../../../charts/Citation";
-import { formatYears } from "../../../../utils/string-utils";
+import { formatYears, formatYears2 } from "../../../../utils/string-utils";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../filters/PlasmodiumSpeciesFilter";
 
 const options: (
@@ -152,7 +152,7 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
     TREATMENT_FAILURE_PP
   } = sortedStudies[study];
 
-  const duration = formatYears(YEAR_START, YEAR_END);
+  const duration = formatYears2(YEAR_START, YEAR_END);
   const formatValue = (value: string) =>
     Number.isNaN(parseFloat(value))
       ? "N/A"

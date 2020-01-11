@@ -127,7 +127,7 @@
   },
   "treatment": {
     "treatment_failure": "Échec du traitement",
-    "delayed_parasite_clearance": "Delayed parasite clearance",
+    "delayed_parasite_clearance": "Retard dans l'élimination des parasites",
     "molecular_markers": "Marqueurs moléculaires de la résistance aux médicaments",
     "chart": {
       "treatment_failure": {
@@ -135,10 +135,10 @@
         "percentage": "Pourcentage (%)",
         "study_years": "Années d'étude(s)",
         "number_of_patients": "Nombre de patients",
-        "follow_up": "Follow-up",
+        "follow_up": "Suivi",
         "confirmed_resist_pv": "Patients avec une résistance confirmée",
-        "positive_day_3": "Positive after day 3",
-        "treatment_failure_pp": "Patients avec un échec thérapeutique, per protocol",
+        "positive_day_3": "Positif après le 3ème jour",
+        "treatment_failure_pp": "Patients avec un échec thérapeutique, selon le protocole",
         "treatment_failure_km": "Patients avec un échec thérapeutique, Kaplan-Meier",
         "days": "journées",
         "studies": "Étude(s)"
