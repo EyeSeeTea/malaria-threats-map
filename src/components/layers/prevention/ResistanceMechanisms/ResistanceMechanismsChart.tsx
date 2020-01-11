@@ -158,7 +158,7 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
     }
   ];
   const groups = R.groupBy(R.prop("SPECIES"), sortedStudies);
-  const series = Object.keys(groups).map((specie: string) => {
+  const baseSeries = Object.keys(groups).map((specie: string) => {
     const studies: PreventionStudy[] = groups[specie];
     return {
       maxPointWidth: 20,
@@ -184,10 +184,16 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
     title: t("prevention.chart.resistance_mechanism.allelic")
   };
 
+  const series = R.filter(
+    serie => R.all(data => !!data.y, serie.data),
+    baseSeries
+  );
+
   const showAllelic = R.any(
     serie => R.any(data => data.y !== undefined, serie.data),
     series
   );
+
   const content = () => (
     <>
       <Typography variant="subtitle1">
