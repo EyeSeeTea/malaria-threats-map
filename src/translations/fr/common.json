@@ -1,7 +1,7 @@
 {
   "title": {
     "title": "Carte des menaces du paludisme",
-    "subtitle": "Suivi des défis biologiques au contrôle et à l'élimination du paludisme"
+    "subtitle": "Suivi des défis biologiques liés à la lutte et à l'élimination du paludisme"
   },
   "themes": {
     "prevention": "Résistance aux insecticides",
@@ -16,9 +16,9 @@
     "invasive": "ESPÈCES VECTORIELLES INVASIVES"
   },
   "cards": {
-    "prevention": "La résistance des vecteurs du paludisme aux insecticides utilisés dans les outils de prévention tels les moustiquaires imprégnées et des pulvérisations intradomiciliaires, menace l'efficacité de la lutte antivectorielle",
-    "diagnosis": "Les délétions de gènes chez certains parasites du paludisme provoquent des résultats de tests diagnostiques faussement négatifs, compliquant la gestion et le contrôle des cas",
-    "treatment": "La résistance des parasites à l'artémisinine - le composé central des meilleurs médicaments antipaludiques disponibles - menace l'efficacité des médicaments antipaludiques",
+    "prevention": "La résistance des vecteurs du paludisme aux insecticides utilisés dans les moyens de prévention tels que les moustiquaires imprégnées et les pulvérisations d'insecticides à effet rémanent à l'intérieur des habitations, menace l'efficacité de  la lutte antivectorielle",
+    "diagnosis": "Les délétions de gènes chez certains parasites du paludisme conduisent à des faux négatifs aux tests de diagnostiques, compliquant la gestion et le traitement des cas",
+    "treatment": "La résistance des parasites à l'artémisinine - le principal composé des meilleurs médicaments antipaludiques disponibles - menace l'efficacité desdits antipaludiques",
     "invasive": "La propagation des espèces d’anophèles vectrices, et leur établissement dans des écosystèmes dont ils ne sont pas indigènes, constitue une menace potentielle pour la lutte et l'éradication du paludisme."
   },
   "prevention": {
