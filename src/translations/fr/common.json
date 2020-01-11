@@ -194,7 +194,10 @@
     "legend": {
       "vector_occurrance": {
         "invasive": "Envahissante",
-        "native": "Autochtone"
+        "native": "Autochtone",
+        "link": "https://www.dropbox.com/s/elzcyv9aoniq8ef/WHOGMP-invasive-species-reporting-form.xlsm?dl=0",
+        "link_text": "formulaire de rapport",
+        "link_content_1": "Si vous avez détecté une espèce invasive vecteur Anopheles, veuillez nous en informer via le "
       }
     }
   },
