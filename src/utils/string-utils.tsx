@@ -51,7 +51,7 @@ export const formatYears = (from: string, to: string) => {
     } else if (from === to) {
       return `in ${to}`;
     } else {
-      return `between ${from} and ${to}`;
+      return `from ${from} to ${to}`;
     }
   }
 };
