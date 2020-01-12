@@ -1,19 +1,17 @@
+import config from "../config/config";
+
 export const style: any = {
   version: 8,
   sources: {
     "raster-tiles": {
       type: "raster",
-      tiles: [
-        "http://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC/MapServer/tile/{z}/{y}/{x}?blankTile=false"
-      ],
+      tiles: [`${config.mapTilesBaseUrl}/tile/{z}/{y}/{x}?blankTile=false`],
       tileSize: 256,
       attribution: ""
     },
     "raster-labels": {
       type: "raster",
-      tiles: [
-        "http://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_LABEL/MapServer/tile/{z}/{y}/{x}?blankTile=false"
-      ],
+      tiles: [`${config.mapLabelsBaseUrl}/tile/{z}/{y}/{x}?blankTile=false`],
       tileSize: 256,
       attribution: ""
     }
