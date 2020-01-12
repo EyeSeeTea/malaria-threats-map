@@ -15,7 +15,8 @@ import { formatYears } from "../../../../utils/string-utils";
 import { ZoomButton } from "../../../Chart";
 
 const ChatContainer = styled.div`
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
 `;
 
 const Actions = styled.div`

@@ -64,7 +64,13 @@ const options: (
 });
 
 const ChatContainer = styled.div`
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
+  @media all and (-ms-high-contrast: none) {
+    & {
+      width: 600px;
+    }
+  }
 `;
 
 const Flex = styled.div`

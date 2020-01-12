@@ -9,7 +9,8 @@ const Wrapper = styled.div`
 `;
 
 export const ChartContainer = styled.div`
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
 `;
 
 export const Actions = styled.div`

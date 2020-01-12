@@ -178,7 +178,8 @@ const options3: (
 });
 
 const ChatContainer = styled.div`
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
 `;
 
 const Flex = styled.div`
@@ -277,20 +278,33 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
             molecularMarker: t(molecularMarker)
           })}
         </Typography>
-        <Flex>
-          <FlexCol>
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={options(data, translations)}
-            />
-          </FlexCol>
-          <FlexCol flex={2}>
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={options2(series, years, translations)}
-            />
-          </FlexCol>
-        </Flex>
+        <Hidden smUp>
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={options(data, translations)}
+          />
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={options2(series, years, translations)}
+          />
+        </Hidden>
+        <Hidden xsDown>
+          <Flex>
+            <FlexCol>
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={options(data, translations)}
+              />
+            </FlexCol>
+            <FlexCol flex={2}>
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={options2(series, years, translations)}
+              />
+            </FlexCol>
+          </Flex>
+        </Hidden>
+
         <Citation study={study} />
       </>
     );

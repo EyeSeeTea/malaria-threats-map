@@ -17,7 +17,8 @@ import * as R from "ramda";
 import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
 
 const ChatContainer = styled.div`
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
 `;
 
 const mapStateToProps = (state: State) => ({

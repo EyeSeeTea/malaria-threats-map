@@ -75,5 +75,8 @@
       "last 1 safari version",
       "ie 11"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^6.0.3"
   }
 }

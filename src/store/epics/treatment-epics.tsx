@@ -115,7 +115,9 @@ export const setTreatmentPlasmodiumSpeciesEpic = (
           category: "Plasmodium Species",
           action: action.payload
         });
-        if (["P._FALCIPARUM", "P._KNOWLESI", "P._OVALE"].includes(action.payload)) {
+        if (
+          ["P._FALCIPARUM", "P._KNOWLESI", "P._OVALE"].includes(action.payload)
+        ) {
           return of(setTreatmentDrug("DRUG_AL"), logEvent);
         } else {
           return of(setTreatmentDrug("DRUG_CQ"), logEvent);
@@ -148,11 +150,16 @@ export const setMolecularMarkerEpic = (
     .pipe(skip(1))
     .pipe(
       switchMap(action => {
+        const selection = MOLECULAR_MARKERS.find(
+          mm => mm.value === action.payload
+        );
+        if (!selection) {
+          return of();
+        }
         return of(
           logEventAction({
             category: "Molecular marker",
-            action: MOLECULAR_MARKERS.find(mm => mm.value === action.payload)
-              .label
+            action: selection.label
           })
         );
       })
