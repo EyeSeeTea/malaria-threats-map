@@ -49,6 +49,7 @@ import RegionSelector from "./filters/RegionSelector";
 import SubRegionSelector from "./filters/SubRegionSelector";
 import { SuccessSnackbar, WarningSnackbar } from "./Filters";
 import { useTranslation } from "react-i18next";
+import config from "../config/config";
 
 const FiltersWrapper = styled.div`
   margin-top: 20px;
@@ -223,16 +224,20 @@ const FiltersSidebar = ({
           />
         </Tabs>
       </AppBar>
-      {!filteredStudies.length ? (
-        <WarningSnackbar>
-          <Typography variant="body2">{t(`filters.no_records`)}</Typography>
-        </WarningSnackbar>
-      ) : (
-        <SuccessSnackbar>
-          <Typography variant="body2">
-            {t(`filters.records`, { studies: filteredStudies.length })}
-          </Typography>
-        </SuccessSnackbar>
+      {config.env === "local" && (
+        <>
+          {!filteredStudies.length ? (
+            <WarningSnackbar>
+              <Typography variant="body2">{t(`filters.no_records`)}</Typography>
+            </WarningSnackbar>
+          ) : (
+            <SuccessSnackbar>
+              <Typography variant="body2">
+                {t(`filters.records`, { studies: filteredStudies.length })}
+              </Typography>
+            </SuccessSnackbar>
+          )}
+        </>
       )}
       <FiltersWrapper>
         {value === 0 ? (

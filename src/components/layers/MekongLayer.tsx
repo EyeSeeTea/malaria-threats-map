@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import { selectEndemicity } from "../../store/reducers/base-reducer";
+import { selectRegion } from "../../store/reducers/base-reducer";
+import config from "../../config/config";
 
-const ENDEMICITY_LAYER_ID = "endemicity-layer";
-const ENDEMICITY_SOURCE_ID = "endemicity-source";
+const MEKONG_LAYER_ID = "mekong-layer";
+const MEKONG_SOURCE_ID = "mekong-source";
 
 const layer: any = {
-  id: ENDEMICITY_LAYER_ID,
+  id: MEKONG_LAYER_ID,
   type: "fill",
   paint: {
     "fill-color": "rgba(0,0,0,0.4)",
@@ -16,23 +17,23 @@ const layer: any = {
   },
   minZoom: 0,
   maxZoom: 20,
-  source: ENDEMICITY_SOURCE_ID
+  source: MEKONG_SOURCE_ID
 };
 
 const mapStateToProps = (state: State) => ({
-  endemicity: selectEndemicity(state)
+  region: selectRegion(state)
 });
 
-class EndemicityLayer extends Component<any> {
+class MekongLayer extends Component<any> {
   componentDidMount(): void {
+    const { region } = this.props;
     const source: any = {
       type: "geojson",
-      data:
-        "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer/1/query?where=ENDEMICITY%3D0&f=geojson&geometryPrecision=2.5"
+      data: `${config.mapServerUrl}/4/query?where=NAME_1<>'Yunnan'&f=geojson`
     };
-    this.props.map.addSource(ENDEMICITY_SOURCE_ID, source);
+    this.props.map.addSource(MEKONG_SOURCE_ID, source);
     this.props.map.addLayer(layer);
-    if (this.props.endemicity) {
+    if (region && region.subRegion === "GREATER_MEKONG") {
       this.showLayer();
     } else {
       this.hideLayer();
@@ -40,7 +41,8 @@ class EndemicityLayer extends Component<any> {
   }
 
   componentDidUpdate() {
-    if (this.props.endemicity) {
+    const { region } = this.props;
+    if (region && region.subRegion === "GREATER_MEKONG") {
       this.showLayer();
     } else {
       this.hideLayer();
@@ -52,9 +54,9 @@ class EndemicityLayer extends Component<any> {
   }
 
   showLayer = () => {
-    if (this.props.map.getLayer(ENDEMICITY_LAYER_ID)) {
+    if (this.props.map.getLayer(MEKONG_LAYER_ID)) {
       this.props.map.setLayoutProperty(
-        ENDEMICITY_LAYER_ID,
+        MEKONG_LAYER_ID,
         "visibility",
         "visible"
       );
@@ -62,12 +64,8 @@ class EndemicityLayer extends Component<any> {
   };
 
   hideLayer = () => {
-    if (this.props.map.getLayer(ENDEMICITY_LAYER_ID)) {
-      this.props.map.setLayoutProperty(
-        ENDEMICITY_LAYER_ID,
-        "visibility",
-        "none"
-      );
+    if (this.props.map.getLayer(MEKONG_LAYER_ID)) {
+      this.props.map.setLayoutProperty(MEKONG_LAYER_ID, "visibility", "none");
     }
   };
 
@@ -79,4 +77,4 @@ class EndemicityLayer extends Component<any> {
 export default connect(
   mapStateToProps,
   null
-)(EndemicityLayer);
+)(MekongLayer);

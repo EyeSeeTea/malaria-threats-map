@@ -46,6 +46,7 @@ import StoryModeSelector from "./StoryModeSelector";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
 import MalariaTour from "./tour/MalariaTour";
 import InitialDialog from "./InitialDialog";
+import MekongLayer from "./layers/MekongLayer";
 
 ReactMapboxGl({
   accessToken:
@@ -236,6 +237,7 @@ class Map extends React.Component<any> {
         {this.map && this.state.ready && <InvasiveLayer map={this.map} />}
         {this.map && this.state.ready && <EndemicityLayer map={this.map} />}
         {this.map && this.state.ready && <RegionLayer map={this.map} />}
+        {this.map && this.state.ready && <MekongLayer map={this.map} />}
         <Fade in={!initialDialogOpen}>
           <SearchContainer>
             <Hidden xsDown>

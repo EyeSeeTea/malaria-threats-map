@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectEndemicity } from "../../store/reducers/base-reducer";
+import config from "../../config/config";
 
 const ENDEMICITY_LAYER_ID = "endemicity-layer";
 const ENDEMICITY_SOURCE_ID = "endemicity-source";
@@ -27,8 +28,7 @@ class EndemicityLayer extends Component<any> {
   componentDidMount(): void {
     const source: any = {
       type: "geojson",
-      data:
-        "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer/1/query?where=ENDEMICITY%3D0&f=geojson&geometryPrecision=2.5"
+      data: `${config.mapServerUrl}/1/query?where=ENDEMICITY%3D0&f=geojson&geometryPrecision=2.5`
     };
     this.props.map.addSource(ENDEMICITY_SOURCE_ID, source);
     this.props.map.addLayer(layer);

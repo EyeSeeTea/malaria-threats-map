@@ -4,9 +4,17 @@ export const style: any = {
     "raster-tiles": {
       type: "raster",
       tiles: [
-        "https://maps.who.int/arcgis/rest/services/Basemap/WHO_West_Africa_background_7/MapServer/tile/{z}/{y}/{x}?blankTile=false"
+        "http://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC/MapServer/tile/{z}/{y}/{x}?blankTile=false"
       ],
-      tileSize: 128,
+      tileSize: 256,
+      attribution: ""
+    },
+    "raster-labels": {
+      type: "raster",
+      tiles: [
+        "http://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_LABEL/MapServer/tile/{z}/{y}/{x}?blankTile=false"
+      ],
+      tileSize: 256,
       attribution: ""
     }
   },
@@ -15,6 +23,13 @@ export const style: any = {
       id: "simple-tiles",
       type: "raster",
       source: "raster-tiles",
+      minzoom: 1,
+      maxzoom: 8
+    },
+    {
+      id: "simple-labels",
+      type: "raster",
+      source: "raster-labels",
       minzoom: 1,
       maxzoom: 8
     }

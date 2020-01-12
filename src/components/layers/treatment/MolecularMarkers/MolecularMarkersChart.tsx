@@ -210,7 +210,6 @@ type Props = DispatchProps & StateProps & OwnProps;
 const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
   const { t } = useTranslation("common");
   const [studyIndex, setStudy] = useState(0);
-  console.log(studies);
   const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
   const years = sortedStudies.map(study => parseInt(study.YEAR_START)).sort();
   const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
@@ -227,7 +226,6 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
       name: genotype,
       color: MutationColors[genotype] ? MutationColors[genotype].color : "000",
       data: R.reverse(sortedStudies).map(k13Study => {
-        console.log(studies);
         const study = studies.find(study => k13Study.Code === study.K13_CODE);
         return {
           y: study ? parseFloat((study.PROPORTION * 100).toFixed(1)) : undefined

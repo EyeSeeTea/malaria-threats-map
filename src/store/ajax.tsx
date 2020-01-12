@@ -1,11 +1,7 @@
 import * as R from "ramda";
 import { catchError, map } from "rxjs/operators";
 import { ajax, AjaxError, AjaxResponse } from "rxjs/ajax";
-
-const config = {
-  apiBaseUrl:
-    "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer"
-};
+import config from "../config/config";
 
 interface AjaxOptions {
   method: string;
@@ -39,7 +35,7 @@ const handleUnauthorized = async (error: AjaxError) => {
 
 const buildAjaxOptions = ({ method, path }: AjaxOptions) => ({
   method,
-  url: `${config.apiBaseUrl}${path}`
+  url: `${config.mapServerUrl}${path}`
 });
 
 const makeRequestAndHandleUnauthorized = (config: AjaxOptions) =>

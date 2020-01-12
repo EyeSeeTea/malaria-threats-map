@@ -8,11 +8,12 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "./config/i18next";
 import ReactGA from "react-ga";
-ReactGA.initialize("UA-151634352-1", {
-  debug: true,
-  gaOptions: {
-    userId: "123"
-  }
+import config from "./config/config";
+
+const gaAppId = config.gaAppId;
+
+ReactGA.initialize(gaAppId, {
+  debug: true
 });
 
 ReactDOM.render(<App />, document.getElementById("root"));

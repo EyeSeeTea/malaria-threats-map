@@ -10,6 +10,7 @@ import {
   selectRegion
 } from "../../store/reducers/base-reducer";
 import { MapServerConfig } from "../../constants/constants";
+import config from "../../config/config";
 
 const REGION_LAYER_ID = "regions-layer";
 const REGION_SOURCE_ID = "regions-source";
@@ -52,14 +53,11 @@ class RegionLayer extends Component<Props> {
   componentDidMount(): void {
     const { fetchCountryLayer } = this.props;
     fetchCountryLayer();
-    const host = "https://who-cache.esriemcs.com";
     const query =
       "where=1%3D1&f=geojson&geometryPrecision=2.5&outFields=ADM0_SOVRN,ADM0_NAME,SUBREGION,REGION_FULL,CENTER_LAT,CENTER_LON";
     const source: any = {
       type: "geojson",
-      data: `${host}/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer/${
-        MapServerConfig.layers.countries
-      }/query?${query}`
+      data: `${config.mapServerUrl}/${MapServerConfig.layers.countries}/query?${query}`
     };
     this.props.map.addSource(REGION_SOURCE_ID, source);
     this.props.map.addLayer(layer);
