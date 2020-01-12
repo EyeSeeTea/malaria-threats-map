@@ -1,7 +1,7 @@
 import * as R from "ramda";
 import { catchError, map } from "rxjs/operators";
 import { ajax, AjaxError, AjaxResponse } from "rxjs/ajax";
-import config from "../config/config";
+import config from "../config";
 
 interface AjaxOptions {
   method: string;

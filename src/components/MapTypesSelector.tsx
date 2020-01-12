@@ -40,7 +40,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const Wrapper = styled.div`
-  min-width: 275px;
+  min-width: 250px;
 `;
 
 const preventionSuggestions: OptionType[] = [

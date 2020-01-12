@@ -1,4 +1,4 @@
-import config from "../config/config";
+import config from "../config";
 
 export const style: any = {
   version: 8,
@@ -21,13 +21,6 @@ export const style: any = {
       id: "simple-tiles",
       type: "raster",
       source: "raster-tiles",
-      minzoom: 1,
-      maxzoom: 8
-    },
-    {
-      id: "simple-labels",
-      type: "raster",
-      source: "raster-labels",
       minzoom: 1,
       maxzoom: 8
     }

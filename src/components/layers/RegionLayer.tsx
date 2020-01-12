@@ -10,7 +10,7 @@ import {
   selectRegion
 } from "../../store/reducers/base-reducer";
 import { MapServerConfig } from "../../constants/constants";
-import config from "../../config/config";
+import config from "../../config";
 
 const REGION_LAYER_ID = "regions-layer";
 const REGION_SOURCE_ID = "regions-source";

@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     valueContainer: {
       display: "flex",
-      flexWrap: "wrap",
       flex: 1,
       alignItems: "center",
       overflow: "hidden"

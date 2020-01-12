@@ -8,7 +8,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "./config/i18next";
 import ReactGA from "react-ga";
-import config from "./config/config";
+import config from "./config";
 
 const gaAppId = config.gaAppId;
 

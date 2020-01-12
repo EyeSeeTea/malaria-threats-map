@@ -49,7 +49,7 @@ import RegionSelector from "./filters/RegionSelector";
 import SubRegionSelector from "./filters/SubRegionSelector";
 import { SuccessSnackbar, WarningSnackbar } from "./Filters";
 import { useTranslation } from "react-i18next";
-import config from "../config/config";
+import config from "../config";
 
 const FiltersWrapper = styled.div`
   margin-top: 20px;

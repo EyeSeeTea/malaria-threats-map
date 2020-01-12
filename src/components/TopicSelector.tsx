@@ -22,7 +22,7 @@ const ButtonGroup = styled.div`
 `;
 
 const StyledPaper = styled(Paper)`
-  min-width: 275px;
+  min-width: 250px;
   padding: 8px;
   pointer-events: all;
 `;

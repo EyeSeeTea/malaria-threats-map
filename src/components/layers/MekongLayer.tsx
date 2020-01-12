@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectRegion } from "../../store/reducers/base-reducer";
-import config from "../../config/config";
+import config from "../../config";
 
 const MEKONG_LAYER_ID = "mekong-layer";
 const MEKONG_SOURCE_ID = "mekong-source";
