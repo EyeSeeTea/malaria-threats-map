@@ -52,7 +52,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flex: 1,
       alignItems: "center",
-      overflow: "hidden"
+      overflow: "hidden",
+      flexWrap: (props: { isMulti?: boolean }) =>
+        props.isMulti ? "wrap" : "nowrap"
     },
     chip: {
       margin: theme.spacing(0.5, 0.25)
@@ -241,7 +243,7 @@ export default function IntegrationReactSelect({
   ...rest
 }: any) {
   const { t } = useTranslation("common");
-  const classes = useStyles({});
+  const classes = useStyles(rest);
   const theme = useTheme();
 
   const selectStyles = {
