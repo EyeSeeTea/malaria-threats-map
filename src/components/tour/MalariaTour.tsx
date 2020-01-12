@@ -38,6 +38,8 @@ import {
 } from "../../store/actions/prevention-actions";
 import Step6b from "./steps/Step6b";
 
+const query = window.location.search.substring(1);
+
 const styles = {
   root: {
     padding: 10
@@ -360,7 +362,9 @@ class MalariaTour extends PureComponent<Props> {
         }
       }
     ];
-    const isOpen = tour.open && localStorage.getItem("tour") !== "visited";
+    const isOpen =
+      tour.open && localStorage.getItem("tour") !== "visited" && !query;
+
     return (
       this.state.visible && (
         <Tour
