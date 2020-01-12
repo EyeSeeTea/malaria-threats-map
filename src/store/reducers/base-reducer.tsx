@@ -4,6 +4,8 @@ import { MalariaState, RegionState, SiteSelection, State } from "../types";
 import { createReducer } from "../reducer-utils";
 import { ActionTypeEnum } from "../actions";
 
+const query = window.location.search.substring(1)
+
 const initialState: MalariaState = Object.freeze({
   theme: "prevention",
   any: null,
@@ -17,7 +19,7 @@ const initialState: MalariaState = Object.freeze({
     region: "",
     subRegion: ""
   },
-  initialDialogOpen: true,
+  initialDialogOpen: !query,
   filtersOpen: false,
   filtersMode: "filters",
   selection: null,
