@@ -121,7 +121,7 @@
     "legend": {
       "gene_deletions": {
         "confirmed": "Confirmée",
-        "not_identified": "Non identifé"
+        "not_identified": "Non identifiée"
       }
     }
   },
@@ -195,7 +195,7 @@
       "vector_occurrance": {
         "invasive": "Envahissante",
         "native": "Autochtone",
-        "link": "https://www.dropbox.com/s/elzcyv9aoniq8ef/WHOGMP-invasive-species-reporting-form.xlsm?dl=0",
+        "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
         "link_text": "formulaire de rapport",
         "link_content_1": "Si vous avez détecté une espèce invasive vecteur Anopheles, veuillez nous en informer via le "
       }

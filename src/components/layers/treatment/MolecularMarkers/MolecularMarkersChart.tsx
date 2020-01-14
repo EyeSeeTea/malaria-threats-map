@@ -15,7 +15,7 @@ import Pagination from "../../../charts/Pagination";
 import { MOLECULAR_MARKERS } from "../../../filters/MolecularMarkerFilter";
 import { selectTreatmentFilters } from "../../../../store/reducers/treatment-reducer";
 import Citation from "../../../charts/Citation";
-import { formatYears } from "../../../../utils/string-utils";
+import { formatYears, formatYears2 } from "../../../../utils/string-utils";
 
 const options: (data: any, translations: any) => Highcharts.Options = (
   data,
@@ -321,7 +321,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
   const mcStudy = subStudies.find(s => s.GENOTYPE === "MC");
   const wtStudy = subStudies.find(s => s.GENOTYPE === "WT");
 
-  const duration = formatYears(YEAR_START, YEAR_END);
+  const duration = formatYears2(YEAR_START, YEAR_END);
 
   const formatValue = (value: number) =>
     Number.isNaN(value) ? "N/A" : `${(value * 100).toFixed(1)}%`;
@@ -340,20 +340,29 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
       <Margin>
         <Flex>
           <Typography variant="body2">
-            <b>{studyYears}:&nbsp;</b>
+            <b>
+              {studyYears}
+              :&nbsp;
+            </b>
             {duration}
           </Typography>
         </Flex>
         <Flex>
           <Typography variant="body2">
-            <b>{nSamples}:&nbsp;</b>
+            <b>
+              {nSamples}
+              :&nbsp;
+            </b>
             {N}
           </Typography>
         </Flex>
         {treatmentFilters.molecularMarker === 2 && (
           <Flex>
             <Typography variant="body2">
-              <b>{mutationDetected}:&nbsp;</b>
+              <b>
+                {mutationDetected}
+                :&nbsp;
+              </b>
               {formatValue(PROP_RELATED)}
             </Typography>
           </Flex>
@@ -361,7 +370,10 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
         {wtStudy && (
           <Flex>
             <Typography variant="body2">
-              <b>{t_wtStudy}:&nbsp;</b>
+              <b>
+                {t_wtStudy}
+                :&nbsp;
+              </b>
               {formatValue(wtStudy.PROPORTION)}
             </Typography>
           </Flex>
@@ -369,7 +381,10 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
         {mcStudy && (
           <Flex>
             <Typography variant="body2">
-              <b>{t_mcStudy}:&nbsp;</b>
+              <b>
+                {t_mcStudy}
+                :&nbsp;
+              </b>
               {formatValue(mcStudy.PROPORTION)}
             </Typography>
           </Flex>
