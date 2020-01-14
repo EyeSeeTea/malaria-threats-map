@@ -26,3 +26,7 @@ code {
 .mapboxgl-popup-close-button {
   visibility: hidden;
 }
+
+.highcharts-tooltip {
+  max-width: 140px !important;
+}

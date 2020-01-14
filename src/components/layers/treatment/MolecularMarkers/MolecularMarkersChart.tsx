@@ -38,7 +38,10 @@ const options: (data: any, translations: any) => Highcharts.Options = (
     text: ""
   },
   tooltip: {
-    pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
+    pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+    style: {
+      width: 150
+    }
   },
   plotOptions: {
     pie: {
@@ -108,7 +111,10 @@ const options2: (
   },
   tooltip: {
     headerFormat: "<b>{point.x}</b><br/>",
-    pointFormat: "{series.name}: {point.y}<br/>Total: {point.stackTotal}"
+    pointFormat: "{series.name}: {point.y}<br/>Total: {point.stackTotal}",
+    style: {
+      width: 150
+    }
   },
   plotOptions: {
     column: {
@@ -147,7 +153,10 @@ const options3: (
     text: ""
   },
   tooltip: {
-    pointFormat: "{series.name}: <b>{point.y:.2f}%</b>"
+    pointFormat: "{series.name}: <b>{point.y:.2f}%</b>",
+    style: {
+      width: 150
+    }
   },
   xAxis: { categories },
   yAxis: {

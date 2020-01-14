@@ -34,7 +34,10 @@ const options: (
     text: ""
   },
   tooltip: {
-    pointFormat: "{series.name}: <b>{point.y:.2f}%</b>"
+    pointFormat: "{series.name}: <b>{point.y:.2f}%</b>",
+    style: {
+      width: 150
+    }
   },
   xAxis: { categories },
   yAxis: {
@@ -190,26 +193,38 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
       <Margin>
         <Flex>
           <Typography variant="body2">
-            <b>{studyYears}:&nbsp;</b>
+            <b>
+              {studyYears}
+              :&nbsp;
+            </b>
             {duration}
           </Typography>
         </Flex>
         <Flex>
           <Typography variant="body2">
-            <b>{numberOfPatients}:&nbsp;</b>
+            <b>
+              {numberOfPatients}
+              :&nbsp;
+            </b>
             {N}
           </Typography>
         </Flex>
         <Flex>
           <Typography variant="body2">
-            <b>{followUp}:&nbsp;</b>
+            <b>
+              {followUp}
+              :&nbsp;
+            </b>
             {FOLLOW_UP} {days}
           </Typography>
         </Flex>
         {exists(CONFIRMED_RESIST_PV) && (
           <Flex>
             <Typography variant="body2">
-              <b>{confirmedResistPv}:&nbsp;</b>
+              <b>
+                {confirmedResistPv}
+                :&nbsp;
+              </b>
               {formatValue(CONFIRMED_RESIST_PV)}
             </Typography>
           </Flex>
@@ -217,7 +232,10 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
         {exists(POSITIVE_DAY_3) && (
           <Flex>
             <Typography variant="body2">
-              <b>{positiveDay3}:&nbsp;</b>
+              <b>
+                {positiveDay3}
+                :&nbsp;
+              </b>
               {formatValue(POSITIVE_DAY_3)}
             </Typography>
           </Flex>
@@ -225,7 +243,10 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
         {exists(TREATMENT_FAILURE_PP) && (
           <Flex>
             <Typography variant="body2">
-              <b>{treatmentFailurePp}:&nbsp;</b>
+              <b>
+                {treatmentFailurePp}
+                :&nbsp;
+              </b>
               {formatValue(TREATMENT_FAILURE_PP)}
             </Typography>
           </Flex>
@@ -233,7 +254,10 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
         {exists(TREATMENT_FAILURE_KM) && (
           <Flex>
             <Typography variant="body2">
-              <b>{treatmentFailureKm}:&nbsp;</b>
+              <b>
+                {treatmentFailureKm}
+                :&nbsp;
+              </b>
               {formatValue(TREATMENT_FAILURE_KM)}
             </Typography>
           </Flex>
