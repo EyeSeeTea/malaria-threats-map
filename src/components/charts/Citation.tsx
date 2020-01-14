@@ -8,7 +8,14 @@ type OwnProps = {
 };
 type Props = OwnProps;
 
-const isNull = (value: string) => value === "NA" || value === null || !value;
+const isNull = (value: string) =>
+  value === null || !value || value.trim() === "NA" || value.trim() === "NR";
+
+const valueOrUndefined = (value: string) =>
+  value === null || !value || value.trim() === "NA" || value.trim() === "NR"
+    ? undefined
+    : value.trim();
+
 // TODO: Translations
 const Citation = ({ study }: Props) => {
   const { t } = useTranslation("common");
@@ -16,7 +23,10 @@ const Citation = ({ study }: Props) => {
     <>
       <Typography variant="caption">
         <Link href={study.CITATION_URL} target="_blank" color={"textSecondary"}>
-          {study.CITATION_LONG || study.CITATION || study.INSTITUTION}
+          {valueOrUndefined(study.CITATION_LONG) ||
+            valueOrUndefined(study.CITATION) ||
+            valueOrUndefined(study.INSTITUTION) ||
+            valueOrUndefined(study.CITATION_URL)}
           {study.INSTITUTION_CITY ? `, ${study.INSTITUTION_CITY}` : ``}
         </Link>
       </Typography>
