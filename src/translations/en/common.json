@@ -37,8 +37,8 @@
         "Confirmed": "Confirmed",
         "Possible": "Possible",
         "Susceptible": "Susceptible",
-        "mortality": "Mortality",
-        "tested": "Tested (n)",
+        "mortality": "mortality (%)",
+        "tested": "tested (n)",
         "mosquito_mortality": "% mosquito mortality"
       },
       "resistance_intensity": {
@@ -50,7 +50,7 @@
         "MODERATE_INTENSITY": "Moderate Intensity",
         "LOW_INTENSITY": "Low Intensity",
         "NA": "NA",
-        "mortality": "Mortality",
+        "mortality": "mortality (%)",
         "tested": "Tested (n)",
         "mosquito_mortality": "% mosquito mortality"
       },
@@ -66,7 +66,7 @@
         "frequency": "Frequency (%)"
       },
       "synergist_involvement": {
-        "mortality": "Mortality",
+        "mortality": "mortality (%)",
         "tested": "Tested (n)",
         "mosquito_mortality": "% mosquito mortality",
         "no_synergist": "No synergist"
@@ -90,7 +90,7 @@
         "not_confirmed": "Not detected"
       },
       "synergist_involvement": {
-        "mosquito_mortality": "Mosquito mortality",
+        "mosquito_mortality": "mortality (%)",
         "full_involvement": "Full Involvement",
         "partial_involvement": "Partial Involvement",
         "no_involvement": "No Involvement"
