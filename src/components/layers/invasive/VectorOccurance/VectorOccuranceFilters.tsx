@@ -14,7 +14,7 @@ export default function VectorOccuranceFilters() {
       <Snackbar>
         {t("invasive.legend.vector_occurrance.link_content_1")}
         <Link
-          href={t("prevention.legend.vector_ocurrence.link")}
+          href={t("invasive.legend.vector_occurrance.link")}
           target="_blank"
         >
           {t("invasive.legend.vector_occurrance.link_text")}
