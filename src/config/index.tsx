@@ -16,12 +16,12 @@ const configurations: { [key: string]: ConfigProps } = {
       "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_UAT/MapServer",
     mapLabelsBaseUrl:
       "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_LABEL_UAT/MapServer",
-    gaAppId: "UA-151634352-1",
+    gaAppId: "",
     env: "local"
   },
   staging: {
     mapServerUrl:
-      "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer",
+      "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP/MapServer",
     mapTilesBaseUrl:
       "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_UAT/MapServer",
     mapLabelsBaseUrl:
@@ -36,7 +36,7 @@ const configurations: { [key: string]: ConfigProps } = {
       "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC/MapServer",
     mapLabelsBaseUrl:
       "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_LABEL/MapServer",
-    gaAppId: "",
+    gaAppId: "UA-140410266-1",
     env: "prod"
   }
 };
