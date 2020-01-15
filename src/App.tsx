@@ -94,11 +94,6 @@ ReduxQuerySync({
         }
       }
     },
-    bounds: {
-      selector: (state: State) => JSON.stringify(state.malaria.bounds),
-      action: (value: string) =>
-        setBoundsAction(value ? JSON.parse(value) : undefined)
-    },
     insecticideClass: {
       selector: (state: State) => state.prevention.filters.insecticideClass,
       action: (value: string) => setInsecticideClass(value)
@@ -212,6 +207,11 @@ ReduxQuerySync({
           default:
             return setRegionAction({ subRegion: terms[1] });
         }
+      },
+      bounds: {
+        selector: (state: State) => JSON.stringify(state.malaria.bounds),
+        action: (value: string) =>
+          setBoundsAction(value ? JSON.parse(value) : undefined)
       }
     }
   },
