@@ -11,7 +11,7 @@ type ConfigProps = {
 const configurations: { [key: string]: ConfigProps } = {
   local: {
     mapServerUrl:
-      "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer",
+      "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP/MapServer",
     mapTilesBaseUrl:
       "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_UAT/MapServer",
     mapLabelsBaseUrl:

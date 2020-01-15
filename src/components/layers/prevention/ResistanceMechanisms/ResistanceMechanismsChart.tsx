@@ -40,8 +40,7 @@ const options: (data: any, translations: any) => Highcharts.Options = (
     }
   },
   tooltip: {
-    pointFormat:
-      "<b>{point.names}</b>"
+    pointFormat: "<b>{point.names}</b>"
   },
   plotOptions: {
     column: {
@@ -71,7 +70,6 @@ const options2: (
   },
   plotOptions: {
     column: {
-      stacking: "normal",
       dataLabels: {
         enabled: true
       }
