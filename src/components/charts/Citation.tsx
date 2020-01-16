@@ -12,9 +12,7 @@ const isNull = (value: string) =>
   value === null || !value || value.trim() === "NA" || value.trim() === "NR";
 
 const valueOrUndefined = (value: string) =>
-  value === null || !value || value.trim() === "NA" || value.trim() === "NR"
-    ? undefined
-    : value.trim();
+  isNull(value) ? undefined : value.trim();
 
 // TODO: Translations
 const Citation = ({ study }: Props) => {
