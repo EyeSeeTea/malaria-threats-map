@@ -7,7 +7,11 @@ import tour_es from "../../translations/es/tour.json";
 import tour_fr from "../../translations/fr/tour.json";
 import { dispatchCustomEvent } from "../../utils/dom-utils";
 
-export const lng = localStorage.getItem("language") || "en";
+const ALLOWED_LANGUAGES = ["en", "fr", "es"];
+const storageLng = localStorage.getItem("language");
+
+export const lng = ALLOWED_LANGUAGES.includes(storageLng) ? storageLng : "en";
+localStorage.setItem("language", lng);
 
 i18next.init({
   interpolation: { escapeValue: false },
