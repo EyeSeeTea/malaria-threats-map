@@ -24,6 +24,8 @@ const mapStateToProps = (state: State) => ({
   region: selectRegion(state)
 });
 
+const mekong = config.mekong;
+
 class MekongLayer extends Component<any> {
   componentDidMount(): void {
     const { region } = this.props;
@@ -64,7 +66,7 @@ class MekongLayer extends Component<any> {
   };
 
   hideLayer = () => {
-    if (this.props.map.getLayer(MEKONG_LAYER_ID)) {
+    if (this.props.map.getLayer(MEKONG_LAYER_ID) && !mekong) {
       this.props.map.setLayoutProperty(MEKONG_LAYER_ID, "visibility", "none");
     }
   };

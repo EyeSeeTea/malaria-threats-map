@@ -46,15 +46,19 @@ import {
   setInvasiveVectorSpecies
 } from "./store/actions/invasive-actions";
 import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
+import config from "./config";
 
 export const { store } = createStore();
+
+const mekong = config.mekong;
 
 ReduxQuerySync({
   store,
   params: {
     theme: {
       selector: (state: State) => state.malaria.theme,
-      action: (value: string) => setThemeAction(value || "prevention")
+      action: (value: string) =>
+        setThemeAction(mekong ? "treatment" : value || "prevention")
     },
     mapType: {
       selector: (state: State) => {
@@ -93,6 +97,11 @@ ReduxQuerySync({
             return setPreventionMapType(mapType);
         }
       }
+    },
+    bounds: {
+      selector: (state: State) => JSON.stringify(state.malaria.bounds),
+      action: (value: string) =>
+        setBoundsAction(value ? JSON.parse(value) : undefined)
     },
     insecticideClass: {
       selector: (state: State) => state.prevention.filters.insecticideClass,
@@ -158,11 +167,13 @@ ReduxQuerySync({
     },
     countryMode: {
       selector: (state: State) => state.malaria.countryMode,
-      action: (value: string) => setCountryModeAction(value === "true")
+      action: (value: string) =>
+        setCountryModeAction(mekong ? false : value === "true")
     },
     storyMode: {
       selector: (state: State) => state.malaria.storyMode,
-      action: (value: string) => setStoryModeAction(value === "true")
+      action: (value: string) =>
+        setStoryModeAction(mekong ? false : value === "true")
     },
     storyModeStep: {
       selector: (state: State) => state.malaria.storyModeStep,
@@ -174,7 +185,7 @@ ReduxQuerySync({
     },
     filtersMode: {
       selector: (state: State) => state.malaria.filtersMode,
-      action: (value: string) => setFiltersMode(value)
+      action: (value: string) => setFiltersMode(mekong ? "filters" : value)
     },
     years: {
       selector: (state: State) => state.malaria.filters,
@@ -207,11 +218,6 @@ ReduxQuerySync({
           default:
             return setRegionAction({ subRegion: terms[1] });
         }
-      },
-      bounds: {
-        selector: (state: State) => JSON.stringify(state.malaria.bounds),
-        action: (value: string) =>
-          setBoundsAction(value ? JSON.parse(value) : undefined)
       }
     }
   },
