@@ -5,9 +5,16 @@ import common_fr from "../../translations/fr/common.json";
 import tour_en from "../../translations/en/tour.json";
 import tour_es from "../../translations/es/tour.json";
 import tour_fr from "../../translations/fr/tour.json";
+import mekong_en from "../../translations/en/mekong.json";
+import mekong_es from "../../translations/es/mekong.json";
+import mekong_fr from "../../translations/fr/mekong.json";
 import { dispatchCustomEvent } from "../../utils/dom-utils";
 
-export const lng = localStorage.getItem("language") || "en";
+const ALLOWED_LANGUAGES = ["en", "fr", "es"];
+const storageLng = localStorage.getItem("language");
+
+export const lng = ALLOWED_LANGUAGES.includes(storageLng) ? storageLng : "en";
+localStorage.setItem("language", lng);
 
 i18next.init({
   interpolation: { escapeValue: false },
@@ -15,15 +22,18 @@ i18next.init({
   resources: {
     en: {
       common: common_en,
-      tour: tour_en
+      tour: tour_en,
+      mekong: mekong_en
     },
     es: {
       common: common_es,
-      tour: tour_es
+      tour: tour_es,
+      mekong: mekong_es
     },
     fr: {
       common: common_fr,
-      tour: tour_fr
+      tour: tour_fr,
+      mekong: mekong_fr
     }
   }
 });

@@ -216,12 +216,14 @@ const FiltersSidebar = ({
             label={t(`filters.tabs.filters`)}
             id={"filters-tab"}
           />
-          <Tab
-            className={classes.tab}
-            icon={<GlobeIcon />}
-            label={t(`filters.tabs.regions`)}
-            id={"regions-tab"}
-          />
+          {!config.mekong && (
+            <Tab
+              className={classes.tab}
+              icon={<GlobeIcon />}
+              label={t(`filters.tabs.regions`)}
+              id={"regions-tab"}
+            />
+          )}
         </Tabs>
       </AppBar>
       {config.env === "local" && (

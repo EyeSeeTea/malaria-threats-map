@@ -14,7 +14,7 @@ import EndemicityLayer from "./layers/EndemicityLayer";
 import Filters from "./Filters";
 import MapTypesSelector from "./MapTypesSelector";
 import TopicSelector from "./TopicSelector";
-import RegionLayer from "./layers/RegionLayer";
+import RegionLayer, { MEKONG_BOUNDS } from "./layers/RegionLayer";
 import WhoLogo from "./WhoLogo";
 import {
   selectAny,
@@ -33,6 +33,7 @@ import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import {
   setAnyAction,
+  setRegionAction,
   setThemeAction,
   updateBoundsAction,
   updateZoomAction
@@ -47,6 +48,7 @@ import LanguageSelectorSelect from "./LanguageSelectorSelect";
 import MalariaTour from "./tour/MalariaTour";
 import InitialDialog from "./InitialDialog";
 import MekongLayer from "./layers/MekongLayer";
+import config from "../config";
 
 ReactMapboxGl({
   accessToken:
@@ -110,6 +112,7 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
   setTheme: setThemeAction,
   setAny: setAnyAction,
+  setRegion: setRegionAction,
   updateZoom: updateZoomAction,
   updateBounds: updateBoundsAction
 };
@@ -158,6 +161,8 @@ export const throttle = <F extends (...args: any[]) => any>(
   };
 };
 
+const mekong = config.mekong;
+
 class Map extends React.Component<any> {
   map: mapboxgl.Map;
   mapContainer: any;
@@ -183,6 +188,7 @@ class Map extends React.Component<any> {
       maxZoom: 7.99999,
       minZoom: 1,
       zoom: 2,
+      maxBounds: mekong ? MEKONG_BOUNDS : undefined,
       preserveDrawingBuffer: true
     });
     this.map.dragRotate.disable();
@@ -198,15 +204,24 @@ class Map extends React.Component<any> {
         !this.props.region.region
       ) {
         const [[b0, b1], [b2, b3]] = this.props.setBounds;
-        this.map.fitBounds([b0, b1, b2, b3], {
-          padding: 100
-        });
+        if (!mekong) {
+          this.map.fitBounds([b0, b1, b2, b3], {
+            padding: 100
+          });
+        }
       }
     });
     this.map.on("moveend", () => {
       const cc = this.map.getBounds().toArray();
       this.props.updateBounds(cc);
     });
+
+    if (mekong) {
+      this.props.setTheme("treatment");
+      this.props.setRegion({
+        subRegion: "GREATER_MEKONG"
+      });
+    }
   }
 
   componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void {
@@ -241,18 +256,22 @@ class Map extends React.Component<any> {
         <Fade in={!initialDialogOpen}>
           <SearchContainer>
             <Hidden xsDown>
-              <div id={"third"}>
-                <TopicSelector />
-              </div>
-              <Divider />
+              {!mekong && (
+                <>
+                  <div id={"third"}>
+                    <TopicSelector />
+                  </div>
+                  <Divider />
+                </>
+              )}
               <MapTypesSelector />
               <Divider />
               <Filters />
-              <MalariaTour />
+              {!mekong && <MalariaTour />}
             </Hidden>
-            <Layers />
-            <Country disabled={countryTogglerDisabled} />
-            <StoryModeSelector />
+            {!mekong && <Layers />}
+            {!mekong && <Country disabled={countryTogglerDisabled} />}
+            {!mekong && <StoryModeSelector />}
             {/*<Hidden xsDown>*/}
             {/*  {this.map && this.state.ready ? (*/}
             {/*    <Screenshot map={this.map} />*/}

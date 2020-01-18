@@ -45,6 +45,13 @@ interface OwnProps {
   map: any;
 }
 
+export const MEKONG_BOUNDS: [number, number, number, number] = [
+  71.67568318434894,
+  -10.1059286413618565,
+  129.04037704012393,
+  38.602914952002706
+];
+
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
@@ -164,6 +171,14 @@ class RegionLayer extends Component<Props> {
 
   zoomToSubRegion = (subRegion: string) => {
     const { countryLayer } = this.props;
+    if (subRegion === "GREATER_MEKONG") {
+      if (!config.mekong) {
+        this.props.map.fitBounds(MEKONG_BOUNDS, {
+          padding: 100
+        });
+      }
+      return;
+    }
     if (!countryLayer) return;
     const features = countryLayer.features.filter((feature: any) => {
       return (
