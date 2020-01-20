@@ -7,6 +7,7 @@
     "@material-ui/core": "^4.8.3",
     "@material-ui/icons": "^4.2.1",
     "@types/classnames": "^2.2.9",
+    "@types/file-saver": "^2.0.1",
     "@types/history": "^4.7.2",
     "@types/jest": "24.0.15",
     "@types/mapbox-gl": "^0.51.11",
@@ -23,6 +24,7 @@
     "animated_gif": "^1.0.2",
     "change-case": "^3.1.0",
     "classnames": "^2.2.6",
+    "file-saver": "^2.0.2",
     "highcharts": "^7.1.2",
     "highcharts-react-official": "^2.2.2",
     "history": "^4.9.0",
@@ -48,7 +50,8 @@
     "styled-components": "^4.3.2",
     "typesafe-actions": "^4.4.2",
     "typescript": "3.5.3",
-    "url-search-params": "^1.1.0"
+    "url-search-params": "^1.1.0",
+    "xlsx": "^0.15.4"
   },
   "scripts": {
     "start": "cross-env-shell REACT_APP_ENV=local react-scripts start",

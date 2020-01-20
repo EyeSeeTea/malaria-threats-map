@@ -263,6 +263,18 @@
   "citation": {
     "no_citation": "No citation data available"
   },
+  "data_download": {
+    "title": "Data download",
+    "step1": {
+      "title": "Tell us about you"
+    },
+    "step2": {
+      "title": "Tell us about your use case"
+    },
+    "step3": {
+      "title": "Filter the data"
+    }
+  },
   "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",
   "PROP_RELATED": "Percentage %"
 }

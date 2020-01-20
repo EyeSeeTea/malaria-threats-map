@@ -49,6 +49,7 @@ import MalariaTour from "./tour/MalariaTour";
 import InitialDialog from "./InitialDialog";
 import MekongLayer from "./layers/MekongLayer";
 import config from "../config";
+import DataDownload from "./DataDownload";
 
 ReactMapboxGl({
   accessToken:
@@ -272,6 +273,7 @@ class Map extends React.Component<any> {
             {!mekong && <Layers />}
             {!mekong && <Country disabled={countryTogglerDisabled} />}
             {!mekong && <StoryModeSelector />}
+            {!mekong && <DataDownload />}
             {/*<Hidden xsDown>*/}
             {/*  {this.map && this.state.ready ? (*/}
             {/*    <Screenshot map={this.map} />*/}

@@ -31,7 +31,8 @@ const initialState: MalariaState = Object.freeze({
   tour: {
     open: true,
     step: 0
-  }
+  },
+  dataDownloadOpen: false
 });
 
 export default createReducer<MalariaState>(initialState, {
@@ -74,7 +75,9 @@ export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.SetTourStep]: (step: number) => state => ({
     ...state,
     tour: { ...initialState.tour, step }
-  })
+  }),
+  [ActionTypeEnum.SetDataDownloadOpen]: (dataDownloadOpen: boolean) =>
+    R.assoc("dataDownloadOpen", dataDownloadOpen)
 });
 
 export const selectMalariaState = (state: State) => state.malaria;
@@ -150,4 +153,8 @@ export const selectSetBounds = createSelector(
 export const selectTour = createSelector(
   selectMalariaState,
   R.prop("tour")
+);
+export const selectIsDataDownloadOpen = createSelector(
+  selectMalariaState,
+  R.prop("dataDownloadOpen")
 );

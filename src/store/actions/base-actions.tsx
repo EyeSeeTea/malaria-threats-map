@@ -143,3 +143,10 @@ export const setTourStepAction = createAction(
     return (step: number) => action(step);
   }
 );
+
+export const setDataDownloadOpenAction = createAction(
+  ActionTypeEnum.SetDataDownloadOpen,
+  action => {
+    return (dataDownloadOpen: boolean) => action(dataDownloadOpen);
+  }
+);
