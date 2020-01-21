@@ -7,5 +7,5 @@ aws s3 cp build s3://who-mekong/ ^
     --recursive
 
 aws cloudfront create-invalidation ^
-    --distribution-id E2DJQLPBN1Z77H ^
+    --distribution-id E2H1M5SL299FLR ^
     --paths /*
