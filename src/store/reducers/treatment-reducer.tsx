@@ -4,7 +4,6 @@ import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
 import { State, TreatmentMapType, TreatmentState } from "../types";
 import { TreatmentResponse, TreatmentStudy } from "../../types/Treatment";
-import { selectDiagnosisState } from "./diagnosis-reducer";
 
 const initialState: TreatmentState = Object.freeze({
   studies: [],

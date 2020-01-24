@@ -5,7 +5,6 @@ import { createSelector } from "reselect";
 import { InvasiveMapType, InvasiveState, State } from "../types";
 import { InvasiveResponse } from "../../types/Invasive";
 import { PreventionStudy } from "../../types/Prevention";
-import {selectPreventionState} from "./prevention-reducer";
 
 const initialState: InvasiveState = Object.freeze({
   studies: [],
@@ -70,8 +69,8 @@ export const selectInvasiveStudiesLoading = createSelector(
 );
 
 export const selectInvasiveStudiesError = createSelector(
-    selectInvasiveState,
-    R.prop("error")
+  selectInvasiveState,
+  R.prop("error")
 );
 
 export const selectFilteredInvasiveStudies = createSelector(

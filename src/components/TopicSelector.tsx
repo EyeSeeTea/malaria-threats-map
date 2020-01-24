@@ -94,7 +94,7 @@ class ThemeSelector extends Component<Props> {
                     <DiagnosisIcon active={theme === "diagnosis"} />
                   </StyledIconButton>
                 </ThemeButton>
-                <ThemeButton disabled={!!preventionError}>
+                <ThemeButton disabled={!!treatmentError}>
                   <StyledIconButton
                     title={t(`themes.treatment`)}
                     onClick={() => setTheme("treatment")}

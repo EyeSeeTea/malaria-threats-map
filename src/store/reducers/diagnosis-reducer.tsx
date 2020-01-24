@@ -5,7 +5,6 @@ import { createSelector } from "reselect";
 import { DiagnosisMapType, DiagnosisState, State } from "../types";
 import { DiagnosisResponse, DiagnosisStudy } from "../../types/Diagnosis";
 import { DELETION_TYPES } from "../../components/filters/DeletionTypeFilter";
-import { selectInvasiveState } from "./invasive-reducer";
 
 const initialState: DiagnosisState = Object.freeze({
   studies: [],
