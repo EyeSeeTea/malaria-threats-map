@@ -50,7 +50,6 @@ export const getPreventionStudiesEpic = (
         f: "json",
         where: `1%3D1`,
         outFields: "*",
-        resultRecordCount: 10
       };
       const query: string = Object.keys(params)
         .map(key => `${key}=${params[key]}`)

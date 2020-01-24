@@ -24,12 +24,8 @@ export const getTreatmentStudiesEpic = (
     switchMap(() => {
       const params: Params = {
         f: "json",
-        where: "1=1",
-        returnGeometry: false,
-        spatialRel: "esriSpatialRelIntersects",
-        outFields: "*",
-        resultOffset: 0,
-        resultRecordCount: 25000
+        where: "1%3D1",
+        outFields: "*"
       };
       const query: string = Object.keys(params)
         .map(key => `${key}=${params[key]}`)

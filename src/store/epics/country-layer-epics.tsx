@@ -19,7 +19,7 @@ export const getCountriesEpic = (
     switchMap(action => {
       const params: any = {
         f: "geojson",
-        where: `1=1`,
+        where: `1%3D1`,
         outFields:
           "OBJECTID,ADM0_SOVRN,ADM0_NAME,SUBREGION,REGION_FULL,CENTER_LAT,CENTER_LON,ISO_2_CODE"
       };
