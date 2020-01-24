@@ -71,6 +71,7 @@ const options2: (
   plotOptions: {
     column: {
       dataLabels: {
+        format: "{point.y}%",
         enabled: true
       }
     }

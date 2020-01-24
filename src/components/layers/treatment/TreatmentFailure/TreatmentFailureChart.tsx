@@ -48,6 +48,10 @@ const options: (
   },
   plotOptions: {
     series: {
+      dataLabels: {
+        enabled: true,
+        format: "{point.y}%"
+      },
       label: {
         connectorAllowed: false
       }
