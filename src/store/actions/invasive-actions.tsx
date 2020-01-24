@@ -19,7 +19,7 @@ export const fetchInvasiveStudiesSuccess = createAction(
 export const fetchInvasiveStudiesError = createAction(
   ActionTypeEnum.FetchInvasiveStudiesError,
   action => {
-    return (error: AjaxError) => action();
+    return (error: AjaxError | string) => action();
   }
 );
 

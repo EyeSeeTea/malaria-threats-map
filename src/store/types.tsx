@@ -3,6 +3,7 @@ import { DiagnosisStudy } from "../types/Diagnosis";
 import { InvasiveStudy } from "../types/Invasive";
 import { PreventionStudy } from "../types/Prevention";
 import { TreatmentStudy } from "../types/Treatment";
+import { NotificationsState } from "../types/Notifications";
 
 export interface State {
   malaria: MalariaState;
@@ -12,6 +13,7 @@ export interface State {
   invasive: InvasiveState;
   translations: TranslationsState;
   countryLayer: CountryLayerState;
+  notifications: NotificationsState;
 }
 
 export interface RegionState {
@@ -50,6 +52,7 @@ export interface TranslationsState {
 
 export interface DiagnosisState {
   studies: DiagnosisStudy[];
+  error: string | null;
   loading: boolean;
   filteredStudies: DiagnosisStudy[];
   filters: DiagnosisFilters;
@@ -86,6 +89,7 @@ export interface PreventionFilters {
 
 export interface PreventionState {
   studies: PreventionStudy[];
+  error: string | null;
   loading: boolean;
   filteredStudies: PreventionStudy[];
   filters: PreventionFilters;
@@ -106,6 +110,7 @@ export interface TreatmentFilters {
 
 export interface TreatmentState {
   studies: TreatmentStudy[];
+  error: string | null;
   loading: boolean;
   filteredStudies: TreatmentStudy[];
   filters: TreatmentFilters;
@@ -122,6 +127,7 @@ export interface InvasiveFilters {
 
 export interface InvasiveState {
   studies: InvasiveStudy[];
+  error: string | null;
   loading: boolean;
   filteredStudies: InvasiveStudy[];
   filters: InvasiveFilters;

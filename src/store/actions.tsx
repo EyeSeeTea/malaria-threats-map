@@ -69,5 +69,8 @@ export enum ActionTypeEnum {
 
   FetchCountryLayerRequest = "layers/FETCH_COUNTRY_LAYER_REQUEST",
   FetchCountryLayerSuccess = "layers/FETCH_COUNTRY_LAYER_SUCCESS",
-  FetchCountryLayerError = "layers/FETCH_COUNTRY_LAYER_ERROR"
+  FetchCountryLayerError = "layers/FETCH_COUNTRY_LAYER_ERROR",
+
+  AddNotification = "notifications/ADD_NOTIFICATION",
+  DismissNotification = "notifications/DISMISS_NOTIFICATION"
 }

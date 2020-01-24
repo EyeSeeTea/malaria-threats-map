@@ -5,9 +5,11 @@ import { createSelector } from "reselect";
 import { DiagnosisMapType, DiagnosisState, State } from "../types";
 import { DiagnosisResponse, DiagnosisStudy } from "../../types/Diagnosis";
 import { DELETION_TYPES } from "../../components/filters/DeletionTypeFilter";
+import { selectInvasiveState } from "./invasive-reducer";
 
 const initialState: DiagnosisState = Object.freeze({
   studies: [],
+  error: null,
   loading: false,
   filteredStudies: [],
   filters: {
@@ -64,6 +66,7 @@ export default createReducer<DiagnosisState>(initialState, {
   }),
   [ActionTypeEnum.FetchDiagnosisStudiesError]: () => state => ({
     ...state,
+    error: "There was a problem loading studies",
     loading: false
   }),
   [ActionTypeEnum.SetDiagnosisMapType]: updateMapType,
@@ -85,6 +88,11 @@ export const selectDiagnosisStudies = createSelector(
 export const selectDiagnosisStudiesLoading = createSelector(
   selectDiagnosisState,
   R.prop("loading")
+);
+
+export const selectDiagnosisStudiesError = createSelector(
+  selectDiagnosisState,
+  R.prop("error")
 );
 
 export const selectFilteredDiagnosisStudies = createSelector(

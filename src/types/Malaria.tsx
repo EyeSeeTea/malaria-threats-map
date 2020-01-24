@@ -10,3 +10,11 @@ export interface Study {
   INSTITUTION?: string;
   INSTITUTION_CITY?: string;
 }
+
+export interface ErrorResponse {
+  error: {
+    code: number;
+    message: string;
+    details: string[];
+  };
+}

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { State } from "../store/types";
 import { connect } from "react-redux";
 import i18next from "i18next";
@@ -78,8 +78,7 @@ class DataProvider extends Component<Props> {
   }
 
   render() {
-    const { translationsLoading } = this.props;
-    return translationsLoading ? <div /> : this.props.children;
+    return this.props.children;
   }
 }
 

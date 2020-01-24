@@ -5,9 +5,11 @@ import { createSelector } from "reselect";
 import { InvasiveMapType, InvasiveState, State } from "../types";
 import { InvasiveResponse } from "../../types/Invasive";
 import { PreventionStudy } from "../../types/Prevention";
+import {selectPreventionState} from "./prevention-reducer";
 
 const initialState: InvasiveState = Object.freeze({
   studies: [],
+  error: null,
   loading: false,
   filteredStudies: [],
   filters: {
@@ -46,6 +48,7 @@ export default createReducer<InvasiveState>(initialState, {
   }),
   [ActionTypeEnum.FetchInvasiveStudiesError]: () => state => ({
     ...state,
+    error: "There was a problem loading studies",
     loading: false
   }),
   [ActionTypeEnum.SetInvasiveVectorSpecies]: updateSpecies,
@@ -64,6 +67,11 @@ export const selectInvasiveStudies = createSelector(
 export const selectInvasiveStudiesLoading = createSelector(
   selectInvasiveState,
   R.prop("loading")
+);
+
+export const selectInvasiveStudiesError = createSelector(
+    selectInvasiveState,
+    R.prop("error")
 );
 
 export const selectFilteredInvasiveStudies = createSelector(

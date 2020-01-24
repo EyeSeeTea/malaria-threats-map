@@ -9,28 +9,37 @@ type ConfigProps = {
   mekong: boolean;
 };
 
+const WHO_MALARIA_THREATS_MAP_STAGING =
+  "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer";
+const WHO_MALARIA_THREATS_MAP =
+  "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP/MapServer";
+
+const BASEMAP_NONIC_UAT =
+  "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_UAT/MapServer";
+const BASEMAP_NONIC_LABEL_UAT =
+  "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_LABEL_UAT/MapServer";
+
+const BASEMAP_NONIC =
+  "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC/MapServer";
+const BASEMAP_NONIC_LABEL =
+  "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_LABEL/MapServer";
+
 const stagingMapServer = {
-  mapServerUrl:
-    "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer"
+  mapServerUrl: WHO_MALARIA_THREATS_MAP_STAGING
 };
 
 const prodMapServer = {
-  mapServerUrl:
-    "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP/MapServer"
+  mapServerUrl: WHO_MALARIA_THREATS_MAP
 };
 
 const stagingMapTile = {
-  mapTilesBaseUrl:
-    "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_UAT/MapServer",
-  mapLabelsBaseUrl:
-    "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_LABEL_UAT/MapServer"
+  mapTilesBaseUrl: BASEMAP_NONIC_UAT,
+  mapLabelsBaseUrl: BASEMAP_NONIC_LABEL_UAT
 };
 
 const prodMapTile = {
-  mapTilesBaseUrl:
-    "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC/MapServer",
-  mapLabelsBaseUrl:
-    "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_LABEL/MapServer"
+  mapTilesBaseUrl: BASEMAP_NONIC,
+  mapLabelsBaseUrl: BASEMAP_NONIC_LABEL
 };
 
 const configurations: { [key: string]: ConfigProps } = {

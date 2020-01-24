@@ -4,9 +4,11 @@ import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
 import { State, TreatmentMapType, TreatmentState } from "../types";
 import { TreatmentResponse, TreatmentStudy } from "../../types/Treatment";
+import { selectDiagnosisState } from "./diagnosis-reducer";
 
 const initialState: TreatmentState = Object.freeze({
   studies: [],
+  error: null,
   loading: false,
   filteredStudies: [],
   filters: {
@@ -74,6 +76,7 @@ export default createReducer<TreatmentState>(initialState, {
   }),
   [ActionTypeEnum.FetchTreatmentStudiesError]: () => state => ({
     ...state,
+    error: "There was a problem loading studies",
     loading: false
   }),
   [ActionTypeEnum.SetTreatmentMapType]: updateMapType,
@@ -95,6 +98,11 @@ export const selectTreatmentStudies = createSelector(
 export const selectTreatmentStudiesLoading = createSelector(
   selectTreatmentState,
   R.prop("loading")
+);
+
+export const selectTreatmentStudiesError = createSelector(
+  selectTreatmentState,
+  R.prop("error")
 );
 
 export const selectFilteredTreatmentStudies = createSelector(

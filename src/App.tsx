@@ -8,6 +8,7 @@ import ReduxQuerySync from "./store/query-middleware";
 import { State } from "./store/types";
 import { createMuiTheme, Hidden } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
+
 import {
   setBoundsAction,
   setCountryModeAction,
@@ -47,6 +48,7 @@ import {
 } from "./store/actions/invasive-actions";
 import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
 import config from "./config";
+import Notifier from "./components/Notifier";
 
 export const { store } = createStore();
 
@@ -260,6 +262,7 @@ class App extends React.Component {
               <Hidden xsDown>
                 <PersistentDrawerLeft />
               </Hidden>
+              <Notifier />
             </I18nextProvider>
           </DataProvider>
         </Provider>

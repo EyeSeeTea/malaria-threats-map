@@ -6,8 +6,8 @@ import { of } from "rxjs";
 import {
   catchError,
   mergeMap,
-  switchMap,
   skip,
+  switchMap,
   withLatestFrom
 } from "rxjs/operators";
 import { AjaxError } from "rxjs/ajax";
@@ -26,12 +26,20 @@ import {
   setType
 } from "../actions/prevention-actions";
 import { PreventionMapType, State } from "../types";
-import { logEventAction, setCountryModeAction } from "../actions/base-actions";
+import {
+  logEventAction,
+  setCountryModeAction,
+  setThemeAction
+} from "../actions/base-actions";
 import { ASSAY_TYPES } from "../../components/filters/AssayTypeCheckboxFilter";
+import { ErrorResponse } from "../../types/Malaria";
+import { addNotificationAction } from "../actions/notifier-actions";
 
 interface Params {
   [key: string]: string | number | boolean;
 }
+
+type Response = PreventionResponse & ErrorResponse;
 
 export const getPreventionStudiesEpic = (
   action$: ActionsObservable<ActionType<typeof fetchPreventionStudiesRequest>>
@@ -40,12 +48,9 @@ export const getPreventionStudiesEpic = (
     switchMap(() => {
       const params: Params = {
         f: "json",
-        where: `1=1`,
-        returnGeometry: false,
-        spatialRel: "esriSpatialRelIntersects",
+        where: `1%3D1`,
         outFields: "*",
-        resultOffset: 0,
-        resultRecordCount: 50000
+        resultRecordCount: 10
       };
       const query: string = Object.keys(params)
         .map(key => `${key}=${params[key]}`)
@@ -53,11 +58,23 @@ export const getPreventionStudiesEpic = (
       return ajax
         .get(`/${MapServerConfig.layers.prevention}/query?${query}`)
         .pipe(
-          mergeMap((response: PreventionResponse) => {
-            return of(fetchPreventionStudiesSuccess(response));
+          mergeMap((response: Response) => {
+            if (response.error) {
+              return of(
+                addNotificationAction(response.error.message),
+                fetchPreventionStudiesError(response.error.message),
+                setThemeAction("diagnosis")
+              );
+            } else {
+              return of(fetchPreventionStudiesSuccess(response));
+            }
           }),
           catchError((error: AjaxError) =>
-            of(fetchPreventionStudiesError(error))
+            of(
+              addNotificationAction(error.message),
+              fetchPreventionStudiesError(error),
+              setThemeAction("diagnosis")
+            )
           )
         );
     })

@@ -21,7 +21,7 @@ export const fetchPreventionStudiesSuccess = createAction(
 export const fetchPreventionStudiesError = createAction(
   ActionTypeEnum.FetchPreventionStudiesError,
   action => {
-    return (error: AjaxError) => action();
+    return (error: AjaxError | string) => action();
   }
 );
 

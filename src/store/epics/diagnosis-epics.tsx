@@ -28,10 +28,14 @@ import {
   setThemeAction
 } from "../actions/base-actions";
 import { DiagnosisMapType, State } from "../types";
+import { addNotificationAction } from "../actions/notifier-actions";
+import { ErrorResponse } from "../../types/Malaria";
 
 interface Params {
   [key: string]: string | number | boolean;
 }
+
+type Response = DiagnosisResponse & ErrorResponse;
 
 export const getDiagnosisStudiesEpic = (
   action$: ActionsObservable<ActionType<typeof fetchDiagnosisStudiesRequest>>
@@ -53,11 +57,21 @@ export const getDiagnosisStudiesEpic = (
       return ajax
         .get(`/${MapServerConfig.layers.diagnosis}/query?${query}`)
         .pipe(
-          mergeMap((response: DiagnosisResponse) => {
-            return of(fetchDiagnosisStudiesSuccess(response));
+          mergeMap((response: Response) => {
+            if (response.error) {
+              return of(
+                addNotificationAction(response.error.message),
+                fetchDiagnosisStudiesError(response.error.message)
+              );
+            } else {
+              return of(fetchDiagnosisStudiesSuccess(response));
+            }
           }),
           catchError((error: AjaxError) =>
-            of(fetchDiagnosisStudiesError(error))
+            of(
+              addNotificationAction(error.message),
+              fetchDiagnosisStudiesError(error)
+            )
           )
         );
     })

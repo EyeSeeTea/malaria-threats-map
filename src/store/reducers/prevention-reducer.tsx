@@ -7,6 +7,7 @@ import { PreventionResponse, PreventionStudy } from "../../types/Prevention";
 
 const initialState: PreventionState = Object.freeze({
   studies: [],
+  error: null,
   loading: false,
   filteredStudies: [],
   filters: {
@@ -73,6 +74,7 @@ export default createReducer<PreventionState>(initialState, {
   }),
   [ActionTypeEnum.FetchPreventionStudiesError]: () => state => ({
     ...state,
+    error: "There was a problem loading studies",
     loading: false
   }),
   [ActionTypeEnum.SetPreventionMapType]: updatePreventionMapType,
@@ -97,6 +99,11 @@ export const selectPreventionStudies = createSelector(
 export const selectPreventionStudiesLoading = createSelector(
   selectPreventionState,
   R.prop("loading")
+);
+
+export const selectPreventionStudiesError = createSelector(
+  selectPreventionState,
+  R.prop("error")
 );
 
 export const selectFilteredPreventionStudies = createSelector(

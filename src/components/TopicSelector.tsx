@@ -14,6 +14,10 @@ import { setThemeAction } from "../store/actions/base-actions";
 import { selectTheme } from "../store/reducers/base-reducer";
 // @ts-ignore
 import { Translation } from "react-i18next";
+import { selectPreventionStudiesError } from "../store/reducers/prevention-reducer";
+import { selectDiagnosisStudiesError } from "../store/reducers/diagnosis-reducer";
+import { selectTreatmentStudiesError } from "../store/reducers/treatment-reducer";
+import { selectInvasiveStudiesError } from "../store/reducers/invasive-reducer";
 
 const ButtonGroup = styled.div`
   display: flex;
@@ -27,10 +31,12 @@ const StyledPaper = styled(Paper)`
   pointer-events: all;
 `;
 
-const ThemeButton = styled.div`
+const ThemeButton = styled.div<{ disabled?: boolean }>`
   display: flex;
   flex-direction: column;
   text-align: center;
+  cursor: ${props => (props.disabled ? "not-allowed" : "")};
+  opacity: ${props => (props.disabled ? 0.7 : 1)};
 `;
 
 const StyledIconButton = styled(IconButton)`
@@ -38,7 +44,11 @@ const StyledIconButton = styled(IconButton)`
 `;
 
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state)
+  theme: selectTheme(state),
+  preventionError: selectPreventionStudiesError(state),
+  diagnosisError: selectDiagnosisStudiesError(state),
+  treatmentError: selectTreatmentStudiesError(state),
+  invasiveError: selectInvasiveStudiesError(state)
 });
 
 const mapDispatchToProps = {
@@ -51,22 +61,32 @@ type Props = DispatchProps & StateProps;
 
 class ThemeSelector extends Component<Props> {
   render() {
-    const { theme, setTheme } = this.props;
+    const {
+      theme,
+      setTheme,
+      preventionError,
+      diagnosisError,
+      treatmentError,
+      invasiveError
+    } = this.props;
     return (
       <Translation ns={"common"}>
         {t => {
           return (
             <StyledPaper>
               <ButtonGroup>
-                <ThemeButton>
+                <ThemeButton disabled={!!preventionError}>
                   <StyledIconButton
                     title={t(`themes.prevention`)}
                     onClick={() => setTheme("prevention")}
+                    disabled={!!preventionError}
                   >
-                    <PreventionIcon active={theme === "prevention"} />
+                    <PreventionIcon
+                      active={theme === "prevention" && !preventionError}
+                    />
                   </StyledIconButton>
                 </ThemeButton>
-                <ThemeButton>
+                <ThemeButton disabled={!!diagnosisError}>
                   <StyledIconButton
                     title={t(`themes.diagnosis`)}
                     onClick={() => setTheme("diagnosis")}
@@ -74,7 +94,7 @@ class ThemeSelector extends Component<Props> {
                     <DiagnosisIcon active={theme === "diagnosis"} />
                   </StyledIconButton>
                 </ThemeButton>
-                <ThemeButton>
+                <ThemeButton disabled={!!preventionError}>
                   <StyledIconButton
                     title={t(`themes.treatment`)}
                     onClick={() => setTheme("treatment")}
@@ -82,7 +102,7 @@ class ThemeSelector extends Component<Props> {
                     <TreatmentIcon active={theme === "treatment"} />
                   </StyledIconButton>
                 </ThemeButton>
-                <ThemeButton>
+                <ThemeButton disabled={!!invasiveError}>
                   <StyledIconButton
                     title={t(`themes.invasive`)}
                     onClick={() => setTheme("invasive")}

@@ -16,10 +16,14 @@ import {
 import { MapServerConfig } from "../../constants/constants";
 import { logEventAction } from "../actions/base-actions";
 import { InvasiveMapType } from "../types";
+import { addNotificationAction } from "../actions/notifier-actions";
+import { ErrorResponse } from "../../types/Malaria";
 
 interface Params {
   [key: string]: string | number | boolean;
 }
+
+type Response = InvasiveResponse & ErrorResponse;
 
 export const getInvasiveStudiesEpic = (
   action$: ActionsObservable<ActionType<typeof fetchInvasiveStudiesRequest>>
@@ -41,10 +45,22 @@ export const getInvasiveStudiesEpic = (
       return ajax
         .get(`/${MapServerConfig.layers.invasive}/query?${query}`)
         .pipe(
-          mergeMap((response: InvasiveResponse) => {
-            return of(fetchInvasiveStudiesSuccess(response));
+          mergeMap((response: Response) => {
+            if (response.error) {
+              return of(
+                addNotificationAction(response.error.message),
+                fetchInvasiveStudiesError(response.error.message)
+              );
+            } else {
+              return of(fetchInvasiveStudiesSuccess(response));
+            }
           }),
-          catchError((error: AjaxError) => of(fetchInvasiveStudiesError(error)))
+          catchError((error: AjaxError) =>
+            of(
+              addNotificationAction(error.message),
+              fetchInvasiveStudiesError(error)
+            )
+          )
         );
     })
   );

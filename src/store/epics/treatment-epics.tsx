@@ -19,10 +19,14 @@ import { MapServerConfig } from "../../constants/constants";
 import { logEventAction } from "../actions/base-actions";
 import { TreatmentMapType } from "../types";
 import { MOLECULAR_MARKERS } from "../../components/filters/MolecularMarkerFilter";
+import { addNotificationAction } from "../actions/notifier-actions";
+import { ErrorResponse } from "../../types/Malaria";
 
 interface Params {
   [key: string]: string | number | boolean;
 }
+
+type Response = TreatmentResponse & ErrorResponse;
 
 export const getTreatmentStudiesEpic = (
   action$: ActionsObservable<ActionType<typeof fetchTreatmentStudiesRequest>>
@@ -44,11 +48,21 @@ export const getTreatmentStudiesEpic = (
       return ajax
         .get(`/${MapServerConfig.layers.treatment}/query?${query}`)
         .pipe(
-          mergeMap((response: TreatmentResponse) => {
-            return of(fetchTreatmentStudiesSuccess(response));
+          mergeMap((response: Response) => {
+            if (response.error) {
+              return of(
+                addNotificationAction(response.error.message),
+                fetchTreatmentStudiesError(response.error.message)
+              );
+            } else {
+              return of(fetchTreatmentStudiesSuccess(response));
+            }
           }),
           catchError((error: AjaxError) =>
-            of(fetchTreatmentStudiesError(error))
+            of(
+              addNotificationAction(error.message),
+              fetchTreatmentStudiesError(error)
+            )
           )
         );
     })

@@ -19,7 +19,7 @@ export const fetchDiagnosisStudiesSuccess = createAction(
 export const fetchDiagnosisStudiesError = createAction(
   ActionTypeEnum.FetchDiagnosisStudiesError,
   action => {
-    return (error: AjaxError) => action();
+    return (error: AjaxError | string) => action();
   }
 );
 

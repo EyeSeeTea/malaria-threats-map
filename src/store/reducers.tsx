@@ -7,6 +7,7 @@ import treatmentReducer from "./reducers/treatment-reducer";
 import invasiveReducer from "./reducers/invasive-reducer";
 import translationsReducer from "./reducers/translations-reducer";
 import countryLayerReducer from "../store/reducers/country-layer-reducer";
+import notificationsReducer from "../store/reducers/notifier-reducer";
 
 const rootReducer = () =>
   combineReducers({
@@ -16,7 +17,8 @@ const rootReducer = () =>
     treatment: treatmentReducer,
     invasive: invasiveReducer,
     translations: translationsReducer,
-    countryLayer: countryLayerReducer
+    countryLayer: countryLayerReducer,
+    notifications: notificationsReducer
   } as any);
 
 export default rootReducer;

@@ -1,8 +1,8 @@
-import {createAction} from "typesafe-actions";
-import {ActionTypeEnum} from "../actions";
-import {TreatmentResponse, TreatmentStudy} from "../../types/Treatment";
-import {AjaxError} from "rxjs/ajax";
-import {TreatmentMapType} from "../types";
+import { createAction } from "typesafe-actions";
+import { ActionTypeEnum } from "../actions";
+import { TreatmentResponse, TreatmentStudy } from "../../types/Treatment";
+import { AjaxError } from "rxjs/ajax";
+import { TreatmentMapType } from "../types";
 
 export const fetchTreatmentStudiesRequest = createAction(
   ActionTypeEnum.FetchTreatmentStudiesRequest,
@@ -19,7 +19,7 @@ export const fetchTreatmentStudiesSuccess = createAction(
 export const fetchTreatmentStudiesError = createAction(
   ActionTypeEnum.FetchTreatmentStudiesError,
   action => {
-    return (error: AjaxError) => action();
+    return (error: AjaxError | string) => action();
   }
 );
 
@@ -49,8 +49,8 @@ export const setMolecularMarker = createAction(
 );
 
 export const setFilteredStudiesAction = createAction(
-    ActionTypeEnum.SetTreatmentFilteredStudies,
-    action => {
-        return (filteredStudies: TreatmentStudy[]) => action(filteredStudies);
-    }
+  ActionTypeEnum.SetTreatmentFilteredStudies,
+  action => {
+    return (filteredStudies: TreatmentStudy[]) => action(filteredStudies);
+  }
 );
