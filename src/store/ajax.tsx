@@ -36,7 +36,7 @@ const handleUnauthorized = async (error: AjaxError) => {
 const buildAjaxOptions = ({ method, path }: AjaxOptions) => ({
   method,
   url: `${config.mapServerUrl}${path}`,
-  timeout: 5000
+  timeout: 1000
 });
 
 const makeRequestAndHandleUnauthorized = (config: AjaxOptions) =>

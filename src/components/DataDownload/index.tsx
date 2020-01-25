@@ -3,15 +3,18 @@ import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
 import {
+  AppBar,
   Button,
+  Container,
   createStyles,
   DialogActions,
   Fab,
   makeStyles,
-  Theme
+  Theme,
+  Toolbar,
+  Typography
 } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepButton from "@material-ui/core/StepButton";
@@ -19,12 +22,25 @@ import { selectIsDataDownloadOpen } from "../../store/reducers/base-reducer";
 import { setDataDownloadOpenAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
 import { selectFilteredTreatmentStudies } from "../../store/reducers/treatment-reducer";
-import * as FileSaver from "file-saver";
-import * as XLSX from "xlsx";
-import * as R from "ramda";
+import UserForm from "./UserForm";
+import UseForm from "./UseForm";
+import Welcome from "./Welcome";
+import Filters from "./Filters";
+import { exportToCSV } from "./download";
+import { FlexGrow } from "../Chart";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  margin: 16px 0;
+`;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    title: {
+      marginLeft: theme.spacing(2),
+      flex: 1,
+      whiteSpace: "nowrap"
+    },
     fab: {
       pointerEvents: "all",
       margin: theme.spacing(0.5, 0)
@@ -41,6 +57,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     formControlLabel: {
       marginTop: theme.spacing(1)
+    },
+    button: {
+      marginRight: theme.spacing(1)
+    },
+    appBar: {
+      position: "relative"
     }
   })
 );
@@ -60,6 +82,7 @@ type Props = DispatchProps & StateProps & OwnProps;
 
 function getSteps() {
   return [
+    "data_download.step0.title",
     "data_download.step1.title",
     "data_download.step2.title",
     "data_download.step3.title"
@@ -69,28 +92,37 @@ function getSteps() {
 function Index({ isDataDownloadOpen, setDataDownloadOpen, studies }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
+  const [activeStep, setActiveStep] = React.useState(0);
   const handleToggle = () => {
     setDataDownloadOpen(!isDataDownloadOpen);
   };
   const steps = getSteps();
 
-  const fileType =
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-  const fileExtension = ".xlsx";
-
-  const exportToCSV = (csvData: any[], fileName: string) => {
-    const primary = XLSX.utils.json_to_sheet(studies);
-    const molecular = XLSX.utils.json_to_sheet(
-      R.flatten(studies.map(s => s.groupStudies))
-    );
-    const wb = {
-      Sheets: { K13: primary, Molecular: molecular },
-      SheetNames: ["K13", "Molecular"]
-    };
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const data = new Blob([excelBuffer], { type: fileType });
-    FileSaver.saveAs(data, fileName + fileExtension);
+  const handleNext = () => {
+    setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
+
+  const handleBack = () => {
+    setActiveStep(prevActiveStep => prevActiveStep - 1);
+  };
+
+  const renderStep = () => {
+    switch (activeStep) {
+      case 0:
+        return <Welcome />;
+      case 1:
+        return <UserForm />;
+      case 2:
+        return <UseForm />;
+      case 3:
+        return <Filters />;
+      default:
+        return <div />;
+    }
+  };
+
+  const isLastStep = activeStep === steps.length - 1;
+  const isFormValid = true;
 
   return (
     <div>
@@ -104,35 +136,67 @@ function Index({ isDataDownloadOpen, setDataDownloadOpen, studies }: Props) {
         <CloudDownloadIcon />
       </Fab>
       <Dialog
-        fullWidth={true}
-        maxWidth={"md"}
+        fullScreen
         open={isDataDownloadOpen}
         onClose={handleToggle}
         aria-labelledby="max-width-dialog-title"
       >
-        <DialogContent>
-          <Stepper alternativeLabel nonLinear activeStep={0}>
-            {steps.map((label, index) => {
-              const stepProps = {};
-              const buttonProps = {};
-              return (
-                <Step key={label} {...stepProps}>
-                  <StepButton {...buttonProps}>{t(label)}</StepButton>
-                </Step>
-              );
-            })}
+        <AppBar position={"relative"}>
+          <Container maxWidth={"md"}>
+            <Toolbar variant="dense">
+              <Typography variant="h6" className={classes.title}>
+                {t("data_download.title")}
+              </Typography>
+              <FlexGrow />
+              <Button autoFocus color="inherit" onClick={handleToggle}>
+                {t("data_download.buttons.close")}
+              </Button>
+            </Toolbar>
+          </Container>
+        </AppBar>
+        <Container maxWidth={"md"}>
+          <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+            {steps.map((label, index) => (
+              <Step key={label} onClick={() => setActiveStep(index)}>
+                <StepButton style={{ cursor: "pointer" }}>
+                  {t(label)}
+                </StepButton>
+              </Step>
+            ))}
           </Stepper>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            startIcon={<CloudDownloadIcon />}
-            variant={"contained"}
-            color={"primary"}
-            onClick={() => exportToCSV([], "file")}
-          >
-            Download
-          </Button>
-        </DialogActions>
+        </Container>
+        <Container maxWidth={"md"}>
+          <Wrapper>{renderStep()}</Wrapper>
+        </Container>
+        <Container maxWidth={"md"}>
+          <DialogActions>
+            <Button
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              className={classes.button}
+            >
+              {t("data_download.buttons.back")}
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleNext}
+              className={classes.button}
+              disabled={activeStep === steps.length - 2}
+            >
+              {t("data_download.buttons.next")}
+            </Button>
+            <Button
+              startIcon={<CloudDownloadIcon />}
+              variant={"contained"}
+              color={"primary"}
+              disabled={!(isLastStep && isFormValid)}
+              onClick={() => exportToCSV(studies, [], "file")}
+            >
+              {t("data_download.buttons.download")}
+            </Button>
+          </DialogActions>
+        </Container>
       </Dialog>
     </div>
   );
