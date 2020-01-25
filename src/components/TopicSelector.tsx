@@ -90,6 +90,7 @@ class ThemeSelector extends Component<Props> {
                   <StyledIconButton
                     title={t(`themes.diagnosis`)}
                     onClick={() => setTheme("diagnosis")}
+                    disabled={!!diagnosisError}
                   >
                     <DiagnosisIcon active={theme === "diagnosis"} />
                   </StyledIconButton>
@@ -98,6 +99,7 @@ class ThemeSelector extends Component<Props> {
                   <StyledIconButton
                     title={t(`themes.treatment`)}
                     onClick={() => setTheme("treatment")}
+                    disabled={!!treatmentError}
                   >
                     <TreatmentIcon active={theme === "treatment"} />
                   </StyledIconButton>
@@ -106,6 +108,7 @@ class ThemeSelector extends Component<Props> {
                   <StyledIconButton
                     title={t(`themes.invasive`)}
                     onClick={() => setTheme("invasive")}
+                    disabled={!!invasiveError}
                   >
                     <InvasiveIcon active={theme === "invasive"} />
                   </StyledIconButton>

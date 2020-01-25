@@ -36,8 +36,8 @@ function Notifier({ notifications, dismissNotification }: Props) {
       {notifications.map(notification => (
         <Snackbar
           anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right"
+            vertical: "top",
+            horizontal: "center"
           }}
           open={open}
           autoHideDuration={5000}

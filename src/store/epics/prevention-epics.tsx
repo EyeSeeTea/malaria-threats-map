@@ -26,11 +26,7 @@ import {
   setType
 } from "../actions/prevention-actions";
 import { PreventionMapType, State } from "../types";
-import {
-  logEventAction,
-  setCountryModeAction,
-  setThemeAction
-} from "../actions/base-actions";
+import { logEventAction, setCountryModeAction } from "../actions/base-actions";
 import { ASSAY_TYPES } from "../../components/filters/AssayTypeCheckboxFilter";
 import { ErrorResponse } from "../../types/Malaria";
 import { addNotificationAction } from "../actions/notifier-actions";
@@ -49,7 +45,7 @@ export const getPreventionStudiesEpic = (
       const params: Params = {
         f: "json",
         where: `1%3D1`,
-        outFields: "*",
+        outFields: "*"
       };
       const query: string = Object.keys(params)
         .map(key => `${key}=${params[key]}`)
@@ -61,8 +57,7 @@ export const getPreventionStudiesEpic = (
             if (response.error) {
               return of(
                 addNotificationAction(response.error.message),
-                fetchPreventionStudiesError(response.error.message),
-                setThemeAction("diagnosis")
+                fetchPreventionStudiesError(response.error.message)
               );
             } else {
               return of(fetchPreventionStudiesSuccess(response));
@@ -71,8 +66,7 @@ export const getPreventionStudiesEpic = (
           catchError((error: AjaxError) =>
             of(
               addNotificationAction(error.message),
-              fetchPreventionStudiesError(error),
-              setThemeAction("diagnosis")
+              fetchPreventionStudiesError(error)
             )
           )
         );
