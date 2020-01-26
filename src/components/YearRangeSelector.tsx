@@ -7,11 +7,13 @@ import { State } from "../store/types";
 import { selectFilters } from "../store/reducers/base-reducer";
 import { setFiltersAction } from "../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
+import * as R from "ramda";
 
-function range(start: number, end: number) {
-  return Array(end - start + 1)
+export function range(start: number, end: number, reverse?: boolean) {
+  const years = Array(end - start + 1)
     .fill(1)
     .map((_, idx) => start + idx);
+  return reverse ? R.reverse(years) : years;
 }
 const marks = range(1985, new Date().getFullYear()).map(year =>
   year % 5 === 0
@@ -26,7 +28,7 @@ const marks = range(1985, new Date().getFullYear()).map(year =>
 
 const useStyles = makeStyles({
   root: {
-    margin: '0px 24px'
+    margin: "0px 24px"
   },
   slider: {
     marginBottom: 20,

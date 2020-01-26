@@ -5,7 +5,7 @@ import { createSelector } from "reselect";
 import { PreventionMapType, PreventionState, State } from "../types";
 import { PreventionResponse, PreventionStudy } from "../../types/Prevention";
 
-const initialState: PreventionState = Object.freeze({
+export const initialState: PreventionState = Object.freeze({
   studies: [],
   error: null,
   loading: false,

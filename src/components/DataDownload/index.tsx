@@ -92,7 +92,7 @@ function getSteps() {
 function Index({ isDataDownloadOpen, setDataDownloadOpen, studies }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(3);
   const handleToggle = () => {
     setDataDownloadOpen(!isDataDownloadOpen);
   };
