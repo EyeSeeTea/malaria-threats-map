@@ -13,6 +13,7 @@ import { ConfirmationStatusColors } from "./symbols";
 import * as R from "ramda";
 import Citation from "../../../charts/Citation";
 import Pagination from "../../../charts/Pagination";
+import Curation from "../../../Curation";
 
 const options: (data: any, translations: any) => Highcharts.Options = (
   data,
@@ -166,7 +167,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
       )}
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-          studyObject.COUNTRY_NAME
+          studyObject.ISO2
         )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
@@ -177,6 +178,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         options={options(data, translations)}
       />
       <Citation study={studyObject} />
+      <Curation study={studyObject} />
     </>
   );
   return (

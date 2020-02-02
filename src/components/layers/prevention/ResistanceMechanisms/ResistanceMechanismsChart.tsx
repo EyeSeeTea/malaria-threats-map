@@ -14,6 +14,7 @@ import { ResistanceMechanismColors } from "./symbols";
 import { RESISTANCE_MECHANISM } from "./utils";
 import { baseChart } from "../../../charts/chart-utils";
 import { isNotNull } from "../../../../utils/number-utils";
+import Curation from "../../../Curation";
 
 const Flex = styled.div`
   display: flex;
@@ -197,7 +198,7 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
     <>
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${studies[0].VILLAGE_NAME}, ${t(
-          studies[0].COUNTRY_NAME
+          studies[0].ISO2
         )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
@@ -220,6 +221,7 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
         )}
       </Flex>
       <Citation study={studies[0]} />
+      <Curation study={studies[0]} />
     </>
   );
   return (

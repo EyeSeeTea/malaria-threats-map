@@ -257,7 +257,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
   const titleItems = [
     studies[studyIndex].SITE_NAME,
     studies[studyIndex].PROVINCE,
-    t(studies[studyIndex].COUNTRY_NAME)
+    t(studies[studyIndex].ISO2)
   ];
   const title = titleItems.filter(Boolean).join(", ");
   const molecularMarker = t(

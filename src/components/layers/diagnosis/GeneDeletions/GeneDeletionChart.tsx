@@ -71,17 +71,15 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
   const maxYear = sortedStudies2[sortedStudies2.length - 1].YEAR_END;
   const minYear = sortedStudies[0].YEAR_START;
   const studyObject = studies[0];
-  const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(
-    type => t(type)
-  );
+  const surveyTypes = R.uniq(
+    studies.map(study => study.SURVEY_TYPE)
+  ).map(type => t(type));
   const formatPercentage = (value: string) =>
     `${(parseFloat(value) * 100).toFixed(1)}%`;
   return (
     <ChatContainer>
       <Typography variant="subtitle1">
-        <Box fontWeight="fontWeightBold">{`${t(
-          studyObject.COUNTRY_NAME
-        )}`}</Box>
+        <Box fontWeight="fontWeightBold">{`${t(studyObject.ISO2)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
         {t(`diagnosis.chart.gene_deletions.content_1`, {
@@ -89,7 +87,11 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
         })}
         <i>{t(diagnosisFilters.deletionType).toLowerCase()}</i>
         {t(`diagnosis.chart.gene_deletions.content_2`, {
-          surveyTypes: formatList(surveyTypes.map(st => t(st) === "DHS" ? t(st) : t(st).toLowerCase())),
+          surveyTypes: formatList(
+            surveyTypes.map(st =>
+              t(st) === "DHS" ? t(st) : t(st).toLowerCase()
+            )
+          ),
           years: formatYears(minYear, maxYear)
         })}
       </Typography>
@@ -153,7 +155,4 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
     </ChatContainer>
   );
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(GeneDeletionChart);
+export default connect(mapStateToProps, mapDispatchToProps)(GeneDeletionChart);

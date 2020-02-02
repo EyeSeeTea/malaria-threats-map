@@ -111,7 +111,7 @@ const ResistanceMechanismCountryChart = ({
     };
   });
   const onClick = () => {
-    setRegion({ country: studies[0].COUNTRY_NAME });
+    setRegion({ country: studies[0].ISO2 });
     setCountryMode(false);
   };
   const translations = {
@@ -122,7 +122,7 @@ const ResistanceMechanismCountryChart = ({
   return (
     <ChartContainer>
       <Typography variant="subtitle1">
-        <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
+        <Box fontWeight="fontWeightBold">{`${t(studies[0].ISO2)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
         {t(`prevention.chart.resistance_mechanism.content_1`, {

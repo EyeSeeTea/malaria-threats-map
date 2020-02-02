@@ -105,6 +105,10 @@ function MechanismTypeFilter({
     studies
   );
 
+  console.log(fromDb);
+  console.log(types);
+  console.log(filteredStudies);
+
   const uniques = R.map(
     unique => ({ VALUE_: unique }),
     R.uniq(R.map(R.prop("TYPE"), filteredStudies))
@@ -118,7 +122,7 @@ function MechanismTypeFilter({
     ? suggestions
     : WHITELISTED_TYPES.map(value =>
         suggestions.find((type: any) => type.VALUE_ === value)
-      );
+      ).filter(Boolean);
 
   const { t } = useTranslation("common");
 

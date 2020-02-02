@@ -61,7 +61,7 @@ class RegionLayer extends Component<Props> {
     const { fetchCountryLayer } = this.props;
     fetchCountryLayer();
     const query =
-      "where=1%3D1&f=geojson&geometryPrecision=2.5&outFields=ADM0_SOVRN,ADM0_NAME,SUBREGION,REGION_FULL,CENTER_LAT,CENTER_LON";
+      "where=1%3D1&f=geojson&geometryPrecision=2.5&outFields=SUBREGION,REGION_FULL,CENTER_LAT,CENTER_LON,ISO_2_CODE";
     const source: any = {
       type: "geojson",
       data: `${config.mapServerUrl}/${MapServerConfig.layers.countries}/query?${query}`
@@ -109,7 +109,7 @@ class RegionLayer extends Component<Props> {
   highlightToCountry = (country: string) => {
     this.props.map.setFilter(REGION_LAYER_ID, [
       "all",
-      ["!=", "ADM0_NAME", country]
+      ["!=", "ISO_2_CODE", country]
     ]);
   };
 
@@ -131,7 +131,9 @@ class RegionLayer extends Component<Props> {
     const { countryLayer } = this.props;
     if (!countryLayer) return;
     const feature = countryLayer.features.find(
-      (feature: any) => feature.properties.ADM0_NAME === country
+      (feature: any) =>
+        feature.properties.ADM0_NAME === country ||
+        feature.properties.ISO_2_CODE === country
     );
     if (!feature) return;
     const coordinates: any[] = R.chain((coords: any) => {
@@ -226,7 +228,4 @@ class RegionLayer extends Component<Props> {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RegionLayer);
+export default connect(mapStateToProps, mapDispatchToProps)(RegionLayer);

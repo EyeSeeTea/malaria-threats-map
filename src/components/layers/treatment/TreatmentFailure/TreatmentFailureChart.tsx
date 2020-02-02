@@ -149,7 +149,7 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
   const titleItems = [
     studies[study].SITE_NAME,
     studies[study].PROVINCE,
-    t(studies[study].COUNTRY_NAME)
+    t(studies[study].ISO2)
   ];
   const title = titleItems.filter(Boolean).join(", ");
   const {

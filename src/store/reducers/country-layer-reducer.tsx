@@ -33,6 +33,16 @@ export const selectCountries = createSelector(
   R.prop("countries")
 );
 
+export const selectMekongCountries = createSelector(
+  selectCountries,
+  R.filter(country => {
+    return (
+      country.SUBREGION === "GREATER MEKONG" ||
+      country.SUBREGION === "GREATER_MEKONG"
+    );
+  })
+);
+
 export const selectCountryLayerIsLoading = createSelector(
   selectCountryLayerState,
   R.prop("loading")

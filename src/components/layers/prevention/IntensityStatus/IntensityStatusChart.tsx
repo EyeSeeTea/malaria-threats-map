@@ -101,9 +101,7 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
   const studies = groupedStudies[study];
   const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
   const cleanedStudies = R.groupBy((study: PreventionStudy) => {
-    return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${
-      study.INSECTICIDE_INTENSITY
-    }`;
+    return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_INTENSITY}`;
   }, sortedStudies);
   const simplifiedStudies = R.values(cleanedStudies).map(
     (groupStudies: PreventionStudy[]) =>
@@ -136,7 +134,7 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
       )}
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-          studyObject.COUNTRY_NAME
+          studyObject.ISO2
         )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">

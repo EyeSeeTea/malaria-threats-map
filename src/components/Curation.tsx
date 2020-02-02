@@ -18,12 +18,14 @@ const isNull = (value: string) => value === "NA" || value === null || !value;
 // TODO: Translations
 const Curation = ({ study }: Props) => {
   const { t } = useTranslation("common");
+  console.log(study);
   return !isNull(study.INSTITUTE_CURATION || study.CURATION) ? (
     <Margin>
-      <Typography variant="body2">
-        <b>{t("invasive.chart.vector_occurrance.data_collection")}:</b>
+      <Typography variant="caption">
+        <b>{t("invasive.chart.vector_occurrance.data_collection")}</b>
       </Typography>
-      <Typography variant="body2">
+      <br />
+      <Typography variant="caption">
         {study.INSTITUTE_CURATION || study.CURATION}
       </Typography>
     </Margin>

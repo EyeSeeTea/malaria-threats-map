@@ -216,14 +216,12 @@ const FiltersSidebar = ({
             label={t(`filters.tabs.filters`)}
             id={"filters-tab"}
           />
-          {!config.mekong && (
-            <Tab
-              className={classes.tab}
-              icon={<GlobeIcon />}
-              label={t(`filters.tabs.regions`)}
-              id={"regions-tab"}
-            />
-          )}
+          <Tab
+            className={classes.tab}
+            icon={<GlobeIcon />}
+            label={t(`filters.tabs.regions`)}
+            id={"regions-tab"}
+          />
         </Tabs>
       </AppBar>
       {config.env === "local" && (
@@ -247,8 +245,12 @@ const FiltersSidebar = ({
         ) : (
           <>
             <CountrySelector />
-            <RegionSelector />
-            <SubRegionSelector />
+            {!config.mekong && (
+              <>
+                <RegionSelector />
+                <SubRegionSelector />
+              </>
+            )}
           </>
         )}
       </FiltersWrapper>
@@ -256,7 +258,4 @@ const FiltersSidebar = ({
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FiltersSidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(FiltersSidebar);

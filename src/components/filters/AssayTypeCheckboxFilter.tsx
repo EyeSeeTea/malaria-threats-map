@@ -79,9 +79,11 @@ function AssayTypeCheckboxFilter({
     }
   };
 
-  const types = ASSAY_TYPE_FILTER[preventionFilters.type].map(value =>
-    (assayTypes as Translation[]).find(type => type.VALUE_ === value)
-  );
+  const types = ASSAY_TYPE_FILTER[preventionFilters.type]
+    .map(value =>
+      (assayTypes as Translation[]).find(type => type.VALUE_ === value)
+    )
+    .filter(Boolean);
 
   const { t } = useTranslation("common");
 

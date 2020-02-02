@@ -43,16 +43,16 @@ const GeneDeletionCountryChart = ({
   const maxYear = sortedStudies2[sortedStudies2.length - 1].YEAR_END;
   const minYear = sortedStudies[0].YEAR_START;
   const onClick = () => {
-    setRegion({ country: studies[0].COUNTRY_NAME });
+    setRegion({ country: studies[0].ISO2 });
     setCountryMode(false);
   };
-  const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(
-    type => t(type)
-  );
+  const surveyTypes = R.uniq(
+    studies.map(study => study.SURVEY_TYPE)
+  ).map(type => t(type));
   return (
     <ChartContainer>
       <Typography variant="subtitle1">
-        <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
+        <Box fontWeight="fontWeightBold">{`${t(studies[0].ISO2)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
         {t(`diagnosis.chart.gene_deletions.content_1`, {

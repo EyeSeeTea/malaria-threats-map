@@ -53,13 +53,13 @@ const TreatmentFailureCountryChart = ({
   const maxYear = sortedStudies[sortedStudies.length - 1].YEAR_START;
   const minYear = sortedStudies[0].YEAR_START;
   const onClick = () => {
-    setRegion({ country: studies[0].COUNTRY_NAME });
+    setRegion({ country: studies[0].ISO2 });
     setCountryMode(false);
   };
   return (
     <ChatContainer>
       <Typography variant="subtitle1">
-        <Box fontWeight="fontWeightBold">{`${t(studies[0].COUNTRY_NAME)}`}</Box>
+        <Box fontWeight="fontWeightBold">{`${t(studies[0].ISO2)}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
         {t(`treatment.chart.treatment_failure.content`, {

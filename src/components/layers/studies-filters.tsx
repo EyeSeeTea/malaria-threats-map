@@ -36,18 +36,14 @@ export const filterByResistanceMechanism = (study: any) => {
   );
 };
 export const filterByLevelOfInvolvement = (study: any) => {
-  return (
-    study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY"
-    // &&
-    // study.MECHANISM_PROXY !== "CANNOT_BE_RELIABLY_ASSESSED" &&
-    // study.MECHANISM_PROXY !== "NEGATIVE_INVOLVEMENT" &&
-    // study.MECHANISM_PROXY !== "NA"
-  );
+  return study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY";
 };
 
 export const filterByRegion = (region: RegionState) => (study: any) => {
   if (region.country) {
-    return study.COUNTRY_NAME === region.country;
+    return (
+      study.COUNTRY_NAME === region.country || study.ISO2 === region.country
+    );
   } else if (region.region) {
     return study.REGION_FULL === region.region;
   } else if (region.subRegion) {
@@ -59,7 +55,9 @@ export const filterByRegion = (region: RegionState) => (study: any) => {
 export const filterByInsecticideClass = (insecticideClass: string) => (
   study: any
 ) => {
-  return !study.INSECTICIDE_CLASS || study.INSECTICIDE_CLASS === insecticideClass;
+  return (
+    !study.INSECTICIDE_CLASS || study.INSECTICIDE_CLASS === insecticideClass
+  );
 };
 
 export const filterByInsecticideTypes = (insecticideTypes: string[]) => (
