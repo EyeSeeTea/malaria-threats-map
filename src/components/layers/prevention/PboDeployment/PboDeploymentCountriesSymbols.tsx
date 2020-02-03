@@ -1,5 +1,3 @@
-import { LEVEL_OF_INVOLVEMENT } from "../Involvement/utils";
-
 export enum PboDeploymentCountriesStatus {
   ELIGIBLE = "Eligible",
   NOT_ELIGIBLE = "Not eligible",

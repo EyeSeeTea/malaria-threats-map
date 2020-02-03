@@ -11,10 +11,9 @@ import {
   PboDeploymentColors,
   PboDeploymentCountriesStatus
 } from "./prevention/PboDeployment/PboDeploymentCountriesSymbols";
-import { studiesToGeoJson } from "./layer-utils";
 
-const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
-const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
+export const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
+export const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
 
 const layer: any = {
   id: COUNTRY_SELECTOR_LAYER_ID,
