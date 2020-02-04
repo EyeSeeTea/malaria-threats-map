@@ -137,7 +137,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     R.prop("YEAR_START"),
     R.values(cleanedStudies).map(
       (groupStudies: PreventionStudy[]) =>
-        R.sortBy(study => -parseInt(study.MORTALITY_ADJUSTED), groupStudies)[0]
+        R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
     )
   );
   const data = simplifiedStudies.map(study => ({
