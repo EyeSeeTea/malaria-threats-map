@@ -6,10 +6,6 @@ import mapboxgl from "mapbox-gl";
 
 import { PreventionMapType, State } from "../store/types";
 import { connect } from "react-redux";
-import PreventionLayer from "./layers/prevention/PreventionLayer";
-import DiagnosisLayer from "./layers/diagnosis/DiagnosisLayer";
-import TreatmentLayer from "./layers/treatment/TreatmentLayer";
-import InvasiveLayer from "./layers/invasive/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
 import Filters from "./Filters";
 import MapTypesSelector from "./MapTypesSelector";
@@ -50,6 +46,8 @@ import InitialDialog from "./InitialDialog";
 import MekongLayer from "./layers/MekongLayer";
 import config from "../config";
 import DataDownload from "./DataDownload";
+import CountrySelectorLayer from "./layers/CountrySelectorLayer";
+import LabelsLayer from "./layers/LabelsLayer";
 
 ReactMapboxGl({
   accessToken:
@@ -247,13 +245,19 @@ class Map extends React.Component<any> {
           ref={el => (this.mapContainer = el)}
           style={{ position: "absolute", bottom: 0, top: 0, right: 0, left: 0 }}
         />
-        {this.map && this.state.ready && <PreventionLayer map={this.map} />}
-        {this.map && this.state.ready && <DiagnosisLayer map={this.map} />}
-        {this.map && this.state.ready && <TreatmentLayer map={this.map} />}
-        {this.map && this.state.ready && <InvasiveLayer map={this.map} />}
+        {/*{this.map && this.state.ready && <LabelsLayer map={this.map} />}*/}
+
+        {this.map && this.state.ready && (
+          <CountrySelectorLayer map={this.map} />
+        )}
         {this.map && this.state.ready && <EndemicityLayer map={this.map} />}
         {this.map && this.state.ready && <RegionLayer map={this.map} />}
         {this.map && this.state.ready && <MekongLayer map={this.map} />}
+        {/*{this.map && this.state.ready && <PreventionLayer map={this.map} />}*/}
+        {/*{this.map && this.state.ready && <DiagnosisLayer map={this.map} />}*/}
+        {/*{this.map && this.state.ready && <TreatmentLayer map={this.map} />}*/}
+        {/*{this.map && this.state.ready && <InvasiveLayer map={this.map} />}*/}
+        {this.map && this.state.ready && <LabelsLayer map={this.map} />}
         <Fade in={!initialDialogOpen}>
           <SearchContainer>
             <Hidden xsDown>
@@ -317,7 +321,4 @@ class Map extends React.Component<any> {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Map);
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
