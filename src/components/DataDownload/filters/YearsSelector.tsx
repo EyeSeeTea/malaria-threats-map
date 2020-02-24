@@ -16,11 +16,7 @@ const suggestions = range(min, max, true).map(year => ({
 
 const useStyles = makeStyles({
   root: {
-    margin: "0px 24px"
-  },
-  slider: {
-    marginBottom: 20,
-    marginTop: 8
+    margin: "10px 20px"
   }
 });
 

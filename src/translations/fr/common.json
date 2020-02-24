@@ -220,6 +220,7 @@
     "mechanism_type": "Type de mécanisme",
     "assay_type": "Type d'analyse",
     "synergist_type": "Type de test",
+    "synergist_types": "Types du mécanismes métaboliques",
     "deletion_type": "Type de délétion",
     "survey_type": "Type d'enquête",
     "patient_type": "Type de patient",

@@ -1,5 +1,4 @@
 import * as XLSX from "xlsx";
-import * as R from "ramda";
 import * as FileSaver from "file-saver";
 
 const fileType =
@@ -12,9 +11,7 @@ export const exportToCSV = (
   fileName: string
 ) => {
   const primary = XLSX.utils.json_to_sheet(studies);
-  const molecular = XLSX.utils.json_to_sheet(
-    R.flatten(studies.map(s => s.groupStudies))
-  );
+  const molecular = XLSX.utils.json_to_sheet([]);
   const wb = {
     Sheets: { K13: primary, Molecular: molecular },
     SheetNames: ["K13", "Molecular"]

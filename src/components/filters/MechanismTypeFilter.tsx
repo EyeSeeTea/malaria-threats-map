@@ -26,7 +26,7 @@ import * as R from "ramda";
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import { PreventionStudy } from "../../types/Prevention";
 
-const WHITELISTED_TYPES = [
+export const WHITELISTED_TYPES = [
   "MONO_OXYGENASES",
   "ESTERASES",
   "GSTS",
@@ -89,6 +89,7 @@ function MechanismTypeFilter({
   region
 }: Props) {
   const classes = useStyles({});
+  const { t } = useTranslation("common");
 
   function handleChange(event: React.ChangeEvent<unknown>) {
     setType((event.target as HTMLInputElement).value);
@@ -105,10 +106,6 @@ function MechanismTypeFilter({
     studies
   );
 
-  console.log(fromDb);
-  console.log(types);
-  console.log(filteredStudies);
-
   const uniques = R.map(
     unique => ({ VALUE_: unique }),
     R.uniq(R.map(R.prop("TYPE"), filteredStudies))
@@ -124,7 +121,6 @@ function MechanismTypeFilter({
         suggestions.find((type: any) => type.VALUE_ === value)
       ).filter(Boolean);
 
-  const { t } = useTranslation("common");
 
   return (
     <FilterWrapper>

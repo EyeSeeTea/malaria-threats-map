@@ -9,59 +9,239 @@ import InvasiveDataSetSelector from "./filters/InvasiveDataSetSelector";
 import TreatmentDataSetSelector from "./filters/TreatmentDataSetSelector";
 import YearsSelector from "./filters/YearsSelector";
 import CountriesSelector from "./filters/CountriesSelector";
+import InsecticideClassSelector from "../filters/InsecticideClassSelector";
+import SpeciesSelector from "../filters/SpeciesSelector";
+import TypeSelector from "../filters/TypeSelector";
+import DrugsSelector from "../filters/DrugsSelector";
+import PlasmodiumSpeciesSelector from "../filters/PlasmodiumSpeciesSelector";
+import SynergistTypesSelector from "../filters/SynergistTypesSelector";
+import InsecticideTypeSelector from "../filters/InsecticideTypeSelector";
+import MechanismTypeSelector from "../filters/MechanismTypeSelector";
+import MechanismsTypeSelector from "../filters/MechanismTypeSelector";
+import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state)
+  theme: selectTheme(state),
+  preventionStudies: selectPreventionStudies(state)
 });
 
 const mapDispatchToProps = {
   setTheme: setThemeAction
 };
 
+type OwnProps = {
+  onChange: (filters: any) => void;
+  selections: any;
+};
+
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type Props = DispatchProps & StateProps & OwnProps;
 
-const Filters = ({ theme: initialTheme }: Props) => {
-  const [theme, setTheme] = React.useState(initialTheme);
-  const [preventionDataset, setPreventionDataset] = React.useState(undefined);
-  const [treatmentDataset, setTreatmentDataset] = React.useState(undefined);
-  const [invasiveDataset, setInvasiveDataset] = React.useState(undefined);
-  const [years, setYears] = React.useState<number[]>([]);
-  const [countries, setCountries] = React.useState<string[]>([]);
+const Filters = ({ onChange, selections }: Props) => {
+  const onSetTheme = (value: string) => {
+    onChange({
+      ...selections,
+      theme: value
+    });
+  };
+
+  const onSetPreventionDataset = (value: string) => {
+    onChange({
+      ...selections,
+      preventionDataset: value
+    });
+  };
+
+  const onSetTreatmentDataset = (value: string) => {
+    onChange({
+      ...selections,
+      treatmentDataset: value
+    });
+  };
+
+  const onSetInvasiveDataset = (value: string) => {
+    onChange({
+      ...selections,
+      invasiveDataset: value
+    });
+  };
+
+  const onSetInsecticideClasses = (value: string[]) => {
+    onChange({
+      ...selections,
+      insecticideClasses: value
+    });
+  };
+
+  const onSetInsecticideTypes = (value: string[]) => {
+    onChange({
+      ...selections,
+      insecticideTypes: value
+    });
+  };
+
+  const onSetMechanismTypes = (value: string[]) => {
+    onChange({
+      ...selections,
+      mechanismTypes: value
+    });
+  };
+
+  const onSetSpecies = (value: string[]) => {
+    onChange({
+      ...selections,
+      species: value
+    });
+  };
+
+  const onSetTypes = (value: string[]) => {
+    onChange({
+      ...selections,
+      types: value
+    });
+  };
+
+  const onSetDrugs = (value: string[]) => {
+    onChange({
+      ...selections,
+      drugs: value
+    });
+  };
+
+  const onSetPlasmodiumSpecies = (value: string[]) => {
+    onChange({
+      ...selections,
+      plasmodiumSpecies: value
+    });
+  };
+
+  const onSetSynergistTypes = (value: string[]) => {
+    onChange({
+      ...selections,
+      synergistTypes: value
+    });
+  };
+
+  const onSetYears = (value: number[]) => {
+    onChange({
+      ...selections,
+      years: value
+    });
+  };
+
+  const onSetCountries = (value: string[]) => {
+    onChange({
+      ...selections,
+      countries: value
+    });
+  };
+
+  const {
+    theme,
+    preventionDataset,
+    treatmentDataset,
+    invasiveDataset,
+    insecticideClasses,
+    insecticideTypes,
+    synergistTypes,
+    mechanismTypes,
+    types,
+    species,
+    plasmodiumSpecies,
+    drugs,
+    years,
+    countries
+  } = selections;
 
   return (
     <div>
-      <ThemeFilter value={theme} onChange={setTheme} />
+      <ThemeFilter value={theme} onChange={onSetTheme} />
       {theme === "prevention" && (
-        <PreventionDataSetSelector
-          value={preventionDataset}
-          onChange={setPreventionDataset}
-        />
+        <>
+          <PreventionDataSetSelector
+            value={preventionDataset}
+            onChange={onSetPreventionDataset}
+          />
+          {["INSECTICIDE_BIOASSAY"].includes(preventionDataset) ? (
+            <>
+              <SynergistTypesSelector
+                onChange={onSetSynergistTypes}
+                value={synergistTypes}
+              />
+            </>
+          ) : ["MOLECULAR_ASSAY", "BIOCHEMICAL_ASSAY"].includes(
+              preventionDataset
+            ) ? (
+            <>
+              <MechanismTypeSelector
+                value={mechanismTypes}
+                onChange={onSetMechanismTypes}
+              />
+            </>
+          ) : [
+              "DISCRIMINATING_CONCENTRATION_BIOASSAY",
+              "INTENSITY_CONCENTRATION_BIOASSAY"
+            ].includes(preventionDataset) ? (
+            <>
+              <InsecticideClassSelector
+                onChange={onSetInsecticideClasses}
+                value={insecticideClasses}
+              />
+              <InsecticideTypeSelector
+                onChange={onSetInsecticideTypes}
+                value={insecticideTypes}
+              />
+              <TypeSelector onChange={onSetTypes} value={types} />
+            </>
+          ) : (
+            <></>
+          )}
+          <SpeciesSelector onChange={onSetSpecies} value={species} />
+        </>
       )}
       {theme === "treatment" && (
-        <TreatmentDataSetSelector
-          value={treatmentDataset}
-          onChange={setTreatmentDataset}
-        />
+        <>
+          <TreatmentDataSetSelector
+            value={treatmentDataset}
+            onChange={onSetTreatmentDataset}
+          />
+          {["THERAPEUTIC_EFFICACY_STUDY"].includes(treatmentDataset) ? (
+            <>
+              <PlasmodiumSpeciesSelector
+                onChange={onSetPlasmodiumSpecies}
+                value={plasmodiumSpecies}
+              />
+              <DrugsSelector onChange={onSetDrugs} value={drugs} />
+            </>
+          ) : ["MOLECULAR_MARKER_STUDY"].includes(treatmentDataset) ? (
+            <>
+              <MechanismsTypeSelector
+                value={mechanismTypes}
+                onChange={onSetMechanismTypes}
+              />
+            </>
+          ) : (
+            <></>
+          )}
+        </>
       )}
       {theme === "invasive" && (
-        <InvasiveDataSetSelector
-          value={invasiveDataset}
-          onChange={setInvasiveDataset}
-        />
+        <>
+          <InvasiveDataSetSelector
+            value={invasiveDataset}
+            onChange={onSetInvasiveDataset}
+          />
+        </>
       )}
       {(preventionDataset || treatmentDataset || invasiveDataset) && (
-        <YearsSelector value={years} onChange={setYears} />
+        <YearsSelector value={years} onChange={onSetYears} />
       )}
       {(preventionDataset || treatmentDataset || invasiveDataset) && (
-        <CountriesSelector value={countries} onChange={setCountries} />
+        <CountriesSelector value={countries} onChange={onSetCountries} />
       )}
     </div>
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Filters);
+export default connect(mapStateToProps, mapDispatchToProps)(Filters);

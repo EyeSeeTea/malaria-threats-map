@@ -59,6 +59,7 @@ const CountrySelector = ({
       <Divider />
       <IntegrationReactSelect
         isClearable
+        isMulti
         placeholder={"Select Country"}
         suggestions={R.sortBy(R.prop("label"), suggestions)}
         onChange={onChange}

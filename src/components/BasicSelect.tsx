@@ -236,6 +236,11 @@ const components = {
   ValueContainer
 };
 
+export type Option = {
+  label: string;
+  value: string;
+};
+
 export default function IntegrationReactSelect({
   suggestions = [],
   value,

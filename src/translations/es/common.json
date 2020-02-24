@@ -220,6 +220,7 @@
     "mechanism_type": "Tipo de mecanismo",
     "assay_type": "Tipo de ensayo",
     "synergist_type": "Tipo de test",
+    "synergist_types": "Tipos sinergistas",
     "deletion_type": "Tipo de deleción",
     "survey_type": "Tipo de encuesta",
     "patient_type": "Tipos de pacientes",

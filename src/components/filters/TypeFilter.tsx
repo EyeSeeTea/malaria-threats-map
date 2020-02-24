@@ -120,7 +120,4 @@ class TypeFilter extends Component<Props, any> {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TypeFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(TypeFilter);

@@ -21,7 +21,7 @@ import StepButton from "@material-ui/core/StepButton";
 import { selectIsDataDownloadOpen } from "../../store/reducers/base-reducer";
 import { setDataDownloadOpenAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
-import { selectFilteredTreatmentStudies } from "../../store/reducers/treatment-reducer";
+import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
 import UserForm from "./UserForm";
 import UseForm from "./UseForm";
 import Welcome from "./Welcome";
@@ -29,6 +29,12 @@ import Filters from "./Filters";
 import { exportToCSV } from "./download";
 import { FlexGrow } from "../Chart";
 import styled from "styled-components";
+import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
+import {
+  filterByAssayTypes,
+  filterByCountries
+} from "../layers/studies-filters";
+import { MAPPINGS } from "./mappings";
 
 const Wrapper = styled.div`
   margin: 16px 0;
@@ -69,7 +75,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const mapStateToProps = (state: State) => ({
   isDataDownloadOpen: selectIsDataDownloadOpen(state),
-  studies: selectFilteredTreatmentStudies(state)
+  preventionStudies: selectPreventionStudies(state),
+  treatmentStudies: selectTreatmentStudies(state),
+  invasiveStudies: selectPreventionStudies(state)
 });
 
 const mapDispatchToProps = {
@@ -89,10 +97,32 @@ function getSteps() {
   ];
 }
 
-function Index({ isDataDownloadOpen, setDataDownloadOpen, studies }: Props) {
+function Index({
+  isDataDownloadOpen,
+  setDataDownloadOpen,
+  preventionStudies,
+  treatmentStudies,
+  invasiveStudies
+}: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
   const [activeStep, setActiveStep] = React.useState(3);
+  const [selections, setSelections] = React.useState({
+    theme: "prevention",
+    preventionDataset: undefined,
+    treatmentDataset: undefined,
+    invasiveDataset: undefined,
+    insecticideClasses: [],
+    insecticideTypes: [],
+    mechanismTypes: [],
+    types: [],
+    synergistTypes: [],
+    plasmodiumSpecies: [],
+    species: [],
+    drugs: [],
+    years: [],
+    countries: []
+  });
   const handleToggle = () => {
     setDataDownloadOpen(!isDataDownloadOpen);
   };
@@ -106,6 +136,30 @@ function Index({ isDataDownloadOpen, setDataDownloadOpen, studies }: Props) {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
+  const downloadData = () => {
+    switch (selections.theme) {
+      case "prevention":
+        switch (selections.preventionDataset) {
+          case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
+            const filters = [
+              filterByAssayTypes(["DISCRIMINATING_CONCENTRATION_BIOASSAY"]),
+              filterByCountries(selections.countries)
+            ];
+            const studies = filters.reduce(
+              (studies, filter) => studies.filter(filter),
+              preventionStudies
+            );
+            const results = studies.map((study: { [key: string]: any }) =>
+              MAPPINGS["DISCRIMINATING_CONCENTRATION_BIOASSAY"].reduce(
+                (acc, field) => ({ ...acc, [field.label]: study[field.value] }),
+                {}
+              )
+            );
+            exportToCSV(results, [], "file");
+        }
+    }
+  };
+
   const renderStep = () => {
     switch (activeStep) {
       case 0:
@@ -115,7 +169,7 @@ function Index({ isDataDownloadOpen, setDataDownloadOpen, studies }: Props) {
       case 2:
         return <UseForm />;
       case 3:
-        return <Filters />;
+        return <Filters onChange={setSelections} selections={selections} />;
       default:
         return <div />;
     }
@@ -191,7 +245,7 @@ function Index({ isDataDownloadOpen, setDataDownloadOpen, studies }: Props) {
               variant={"contained"}
               color={"primary"}
               disabled={!(isLastStep && isFormValid)}
-              onClick={() => exportToCSV(studies, [], "file")}
+              onClick={() => downloadData()}
             >
               {t("data_download.buttons.download")}
             </Button>
@@ -202,7 +256,4 @@ function Index({ isDataDownloadOpen, setDataDownloadOpen, studies }: Props) {
   );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Index);
+export default connect(mapStateToProps, mapDispatchToProps)(Index);

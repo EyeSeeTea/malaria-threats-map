@@ -52,6 +52,10 @@ export const filterByRegion = (region: RegionState) => (study: any) => {
   return true;
 };
 
+export const filterByCountries = (countries: string[]) => (study: any) => {
+  return !countries.length || countries.includes(study.ISO2);
+};
+
 export const filterByInsecticideClass = (insecticideClass: string) => (
   study: any
 ) => {
