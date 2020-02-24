@@ -1,13 +1,15 @@
 export enum PboDeploymentStatus {
   ELIGIBLE = "Eligible",
   NOT_ELIGIBLE = "Not eligible",
-  NOT_ENOUGH_DATA = "Not enough data"
+  NOT_ENOUGH_DATA = "Not enough data",
+  NO_DATA = "No data"
 }
 
 export const PboDeploymentColors = {
   [PboDeploymentStatus.ELIGIBLE]: ["#869C66", "#5e6e47"],
   [PboDeploymentStatus.NOT_ELIGIBLE]: ["#D43501", "#882201"],
-  [PboDeploymentStatus.NOT_ENOUGH_DATA]: ["#FF9502", "#b56900"]
+  [PboDeploymentStatus.NOT_ENOUGH_DATA]: ["#FF9502", "#b56900"],
+  [PboDeploymentStatus.NO_DATA]: ["#d3d3d3", "#adadad"]
 };
 
 export default {

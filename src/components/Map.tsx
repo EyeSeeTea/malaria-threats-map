@@ -6,6 +6,10 @@ import mapboxgl from "mapbox-gl";
 
 import { PreventionMapType, State } from "../store/types";
 import { connect } from "react-redux";
+import PreventionLayer from "./layers/prevention/PreventionLayer";
+import DiagnosisLayer from "./layers/diagnosis/DiagnosisLayer";
+import TreatmentLayer from "./layers/treatment/TreatmentLayer";
+import InvasiveLayer from "./layers/invasive/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
 import Filters from "./Filters";
 import MapTypesSelector from "./MapTypesSelector";
@@ -14,6 +18,7 @@ import RegionLayer, { MEKONG_BOUNDS } from "./layers/RegionLayer";
 import WhoLogo from "./WhoLogo";
 import {
   selectAny,
+  selectCountryMode,
   selectIsInitialDialogOpen,
   selectRegion,
   selectSetBounds,
@@ -48,6 +53,7 @@ import config from "../config";
 import DataDownload from "./DataDownload";
 import CountrySelectorLayer from "./layers/CountrySelectorLayer";
 import LabelsLayer from "./layers/LabelsLayer";
+import DistrictsLayer from "./layers/DistrictsLayer";
 
 ReactMapboxGl({
   accessToken:
@@ -100,6 +106,7 @@ const mapStateToProps = (state: State) => ({
   setZoom: selectSetZoom(state),
   setBounds: selectSetBounds(state),
   region: selectRegion(state),
+  countryMode: selectCountryMode(state),
   preventionStudies: selectPreventionStudies(state),
   diagnosisStudies: selectDiagnosisStudies(state),
   treatmentStudies: selectTreatmentStudies(state),
@@ -233,12 +240,10 @@ class Map extends React.Component<any> {
   }
 
   render() {
-    const { initialDialogOpen } = this.props;
-    const countryTogglerDisabled =
-      (this.props.theme === "prevention" &&
-        this.props.preventionFilters.mapType ===
-          PreventionMapType.PBO_DEPLOYMENT) ||
-      this.props.theme === "invasive";
+    const { initialDialogOpen, countryMode } = this.props;
+    const isPbo =
+      this.props.theme === "prevention" &&
+      this.props.preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
     return (
       <React.Fragment>
         <div
@@ -246,18 +251,26 @@ class Map extends React.Component<any> {
           style={{ position: "absolute", bottom: 0, top: 0, right: 0, left: 0 }}
         />
         {/*{this.map && this.state.ready && <LabelsLayer map={this.map} />}*/}
-
-        {this.map && this.state.ready && (
-          <CountrySelectorLayer map={this.map} />
-        )}
         {this.map && this.state.ready && <EndemicityLayer map={this.map} />}
-        {this.map && this.state.ready && <RegionLayer map={this.map} />}
+        {isPbo && countryMode ? (
+          <>
+            {this.map && this.state.ready && (
+              <CountrySelectorLayer map={this.map} />
+            )}
+            {this.map && this.state.ready && <DistrictsLayer map={this.map} />}
+          </>
+        ) : (
+          <>
+            {this.map && this.state.ready && <RegionLayer map={this.map} />}
+            {this.map && this.state.ready && <PreventionLayer map={this.map} />}
+          </>
+        )}
         {this.map && this.state.ready && <MekongLayer map={this.map} />}
-        {/*{this.map && this.state.ready && <PreventionLayer map={this.map} />}*/}
-        {/*{this.map && this.state.ready && <DiagnosisLayer map={this.map} />}*/}
-        {/*{this.map && this.state.ready && <TreatmentLayer map={this.map} />}*/}
-        {/*{this.map && this.state.ready && <InvasiveLayer map={this.map} />}*/}
         {this.map && this.state.ready && <LabelsLayer map={this.map} />}
+        {this.map && this.state.ready && <DiagnosisLayer map={this.map} />}
+        {this.map && this.state.ready && <TreatmentLayer map={this.map} />}
+        {this.map && this.state.ready && <InvasiveLayer map={this.map} />}
+
         <Fade in={!initialDialogOpen}>
           <SearchContainer>
             <Hidden xsDown>
@@ -275,7 +288,7 @@ class Map extends React.Component<any> {
               {!mekong && <MalariaTour />}
             </Hidden>
             {!mekong && <Layers />}
-            {!mekong && <Country disabled={countryTogglerDisabled} />}
+            {!mekong && <Country />}
             {!mekong && <StoryModeSelector />}
             {!mekong && <DataDownload />}
             {/*<Hidden xsDown>*/}

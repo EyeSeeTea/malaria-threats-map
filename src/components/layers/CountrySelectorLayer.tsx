@@ -11,6 +11,7 @@ import {
   PboDeploymentColors,
   PboDeploymentCountriesStatus
 } from "./prevention/PboDeployment/PboDeploymentCountriesSymbols";
+import {selectCountryMode, selectRegion} from "../../store/reducers/base-reducer";
 
 export const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
 export const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
@@ -45,7 +46,9 @@ const layer: any = {
 
 const mapStateToProps = (state: State) => ({
   countries: selectCountryLayer(state),
-  studies: selectPreventionStudies(state)
+  studies: selectPreventionStudies(state),
+  region: selectRegion(state),
+  countryMode: selectCountryMode(state),
 });
 
 const mapDispatchToProps = {
@@ -62,11 +65,15 @@ type Props = DispatchProps & StateProps & OwnProps;
 
 class CountrySelectorLayer extends Component<Props> {
   componentDidMount(): void {
-    // this.mountLayer();
+    if (this.props.countryMode) {
+      this.mountLayer();
+    }
   }
 
-  componentDidUpdate() {
-    this.mountLayer();
+  componentDidUpdate(prev: Props) {
+    if (prev.countryMode) {
+      this.mountLayer();
+    }
   }
 
   mountLayer = () => {
@@ -106,36 +113,36 @@ class CountrySelectorLayer extends Component<Props> {
         }),
         {}
       );
-      console.log(statusByCountry);
-
-      const features = this.props.countries.features.map((feature: any) => {
-        const newFeature = { ...feature };
-        const countryStatus: { [key: string]: number } =
-          statusByCountry[newFeature.properties.ISO_2_CODE];
-        if (!countryStatus) {
-          newFeature.properties.PBO_DEPLOYMENT_STATUS = null;
+      const features = this.props.countries.features
+        .filter(
+          (feature: any) =>
+            feature.properties.ISO_2_CODE !== this.props.region.country
+        )
+        .map((feature: any) => {
+          const newFeature = { ...feature };
+          const countryStatus: { [key: string]: number } =
+            statusByCountry[newFeature.properties.ISO_2_CODE];
+          if (!countryStatus) {
+            newFeature.properties.PBO_DEPLOYMENT_STATUS = null;
+            return newFeature;
+          }
+          const sortByDeploymentStatusNumbers = (
+            a: [string, number],
+            b: [string, number]
+          ) => (a[1] > b[1] ? -1 : 1);
+          newFeature.properties.PBO_DEPLOYMENT_STATUS = Object.entries(
+            countryStatus
+          ).sort(sortByDeploymentStatusNumbers)[0][0];
           return newFeature;
-        }
-        const sortByDeploymentStatusNumbers = (
-          a: [string, number],
-          b: [string, number]
-        ) => (a[1] > b[1] ? -1 : 1);
-        const status = Object.entries(countryStatus).sort(
-          sortByDeploymentStatusNumbers
-        )[0][0];
-        console.log(status);
-        console.log(newFeature);
-
-        newFeature.properties.PBO_DEPLOYMENT_STATUS = status;
-        return newFeature;
-      });
-
-      console.log(features);
+        });
 
       let existing: any = this.props.map.getSource(COUNTRY_SELECTOR_SOURCE_ID);
       if (existing) {
-        console.log(source.data);
-        existing.setData(this.props.countries);
+        existing.setData({
+          type: "FeatureCollection",
+          features: features
+        });
+        this.showLayer();
         return;
       }
 
@@ -147,7 +154,6 @@ class CountrySelectorLayer extends Component<Props> {
         COUNTRY_SELECTOR_LAYER_ID
       );
       this.setupPopover();
-      console.log(this.props.countries);
       this.showLayer();
     } else {
       this.hideLayer();

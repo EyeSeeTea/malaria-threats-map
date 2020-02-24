@@ -18,7 +18,6 @@ const isNull = (value: string) => value === "NA" || value === null || !value;
 // TODO: Translations
 const Curation = ({ study }: Props) => {
   const { t } = useTranslation("common");
-  console.log(study);
   return !isNull(study.INSTITUTE_CURATION || study.CURATION) ? (
     <Margin>
       <Typography variant="caption">

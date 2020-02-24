@@ -13,6 +13,7 @@ export interface State {
   invasive: InvasiveState;
   translations: TranslationsState;
   countryLayer: CountryLayerState;
+  district: DistrictsState;
   notifications: NotificationsState;
 }
 
@@ -148,4 +149,10 @@ export interface SiteSelection {
 export interface TourState {
   open: boolean;
   step: number;
+}
+
+export interface DistrictsState {
+  layer: any | null;
+  loading: boolean;
+  districts: any[];
 }

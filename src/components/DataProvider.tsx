@@ -13,6 +13,8 @@ import { fetchDiagnosisStudiesRequest } from "../store/actions/diagnosis-actions
 import { fetchInvasiveStudiesRequest } from "../store/actions/invasive-actions";
 import { fetchTreatmentStudiesRequest } from "../store/actions/treatment-actions";
 import { selectCountryLayerIsLoading } from "../store/reducers/country-layer-reducer";
+import { fetchDistrictsRequest } from "../store/actions/district-actions";
+import {fetchCountryLayerRequest} from "../store/actions/country-layer-actions";
 
 const mapStateToProps = (state: State) => ({
   translationsLoading: selectTranslationsAreLoading(state),
@@ -25,7 +27,9 @@ const mapDispatchToProps = {
   fetchPreventionStudies: fetchPreventionStudiesRequest,
   fetchDiagnosisStudies: fetchDiagnosisStudiesRequest,
   fetchTreatmentStudies: fetchTreatmentStudiesRequest,
-  fetchInvasiveStudies: fetchInvasiveStudiesRequest
+  fetchInvasiveStudies: fetchInvasiveStudiesRequest,
+  fetchDistricts: fetchDistrictsRequest,
+  fetchCountryLayer: fetchCountryLayerRequest
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -39,6 +43,7 @@ class DataProvider extends Component<Props> {
     this.props.fetchDiagnosisStudies();
     this.props.fetchTreatmentStudies();
     this.props.fetchInvasiveStudies();
+    this.props.fetchCountryLayer();
   }
 
   componentDidUpdate(prevProps: Readonly<Props>) {
@@ -82,7 +87,4 @@ class DataProvider extends Component<Props> {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DataProvider);
+export default connect(mapStateToProps, mapDispatchToProps)(DataProvider);

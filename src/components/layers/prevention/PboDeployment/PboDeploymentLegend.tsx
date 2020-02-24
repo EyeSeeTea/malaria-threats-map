@@ -25,6 +25,10 @@ export default function PboDeploymentLegend() {
     {
       label: "prevention.legend.pbo_deployment.not_enough_data",
       color: PboDeploymentColors[PboDeploymentStatus.NOT_ENOUGH_DATA][0]
+    },
+    {
+      label: "prevention.legend.pbo_deployment.no_data",
+      color: PboDeploymentColors[PboDeploymentStatus.NO_DATA][0]
     }
   ];
   return (

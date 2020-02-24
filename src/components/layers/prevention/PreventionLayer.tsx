@@ -135,7 +135,13 @@ class PreventionLayer extends Component<Props> {
   }
 
   componentWillUnmount() {
-    this.renderLayer();
+    if (this.props.map.getLayer(PREVENTION_LAYER_ID)) {
+      this.props.map.setLayoutProperty(
+        PREVENTION_LAYER_ID,
+        "visibility",
+        "none"
+      );
+    }
   }
 
   setupGeoJsonData = (studies: any[]) => {
@@ -267,7 +273,6 @@ class PreventionLayer extends Component<Props> {
       SITE_ID: e.features[0].properties.SITE_ID,
       coordinates: coordinates
     };
-    console.log(selection);
     setTimeout(() => {
       this.props.setSelection(selection);
     }, 100);
@@ -357,7 +362,4 @@ class PreventionLayer extends Component<Props> {
     );
   }
 }
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PreventionLayer);
+export default connect(mapStateToProps, mapDispatchToProps)(PreventionLayer);

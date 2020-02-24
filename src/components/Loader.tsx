@@ -9,6 +9,7 @@ import { selectDiagnosisStudiesLoading } from "../store/reducers/diagnosis-reduc
 import { selectInvasiveStudiesLoading } from "../store/reducers/invasive-reducer";
 import { selectTreatmentStudiesLoading } from "../store/reducers/treatment-reducer";
 import { connect } from "react-redux";
+import {selectDistrictsAreLoading} from "../store/reducers/districts-reducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,7 +25,8 @@ const mapStateToProps = (state: State) => ({
   preventionLoading: selectPreventionStudiesLoading(state),
   diagnosisLoading: selectDiagnosisStudiesLoading(state),
   treatmentLoading: selectTreatmentStudiesLoading(state),
-  invasiveLoading: selectInvasiveStudiesLoading(state)
+  invasiveLoading: selectInvasiveStudiesLoading(state),
+  districtsLoading: selectDistrictsAreLoading(state),
 });
 
 const mapDispatchToProps = {};
@@ -39,7 +41,7 @@ function SimpleBackdrop(props: Props) {
   const isLoading = () => {
     switch (props.theme) {
       case "prevention":
-        return props.preventionLoading;
+        return props.preventionLoading || props.districtsLoading;
       case "diagnosis":
         return props.diagnosisLoading;
       case "treatment":

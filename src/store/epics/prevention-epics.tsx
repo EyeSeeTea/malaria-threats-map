@@ -26,7 +26,7 @@ import {
   setType
 } from "../actions/prevention-actions";
 import { PreventionMapType, State } from "../types";
-import { logEventAction, setCountryModeAction } from "../actions/base-actions";
+import { logEventAction } from "../actions/base-actions";
 import { ASSAY_TYPES } from "../../components/filters/AssayTypeCheckboxFilter";
 import { ErrorResponse } from "../../types/Malaria";
 import { addNotificationAction } from "../actions/notifier-actions";
@@ -98,11 +98,7 @@ export const setPreventionMapTypeEpic = (
           log("Metabolic mechanisms involvement")
         );
       } else if (action.payload === PreventionMapType.PBO_DEPLOYMENT) {
-        return of(
-          setType(undefined),
-          setCountryModeAction(false),
-          log("Pyrethroid-PBO nets deployment")
-        );
+        return of(setType(undefined), log("Pyrethroid-PBO nets deployment"));
       }
       return of(setType(undefined));
     })

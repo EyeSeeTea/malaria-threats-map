@@ -240,6 +240,7 @@ export default function IntegrationReactSelect({
   suggestions = [],
   value,
   onChange,
+  className,
   ...rest
 }: any) {
   const { t } = useTranslation("common");
@@ -257,7 +258,7 @@ export default function IntegrationReactSelect({
   };
 
   return (
-    <div className={classes.root}>
+    <div className={`${classes.root} ${className}`}>
       <Select
         classes={classes}
         styles={selectStyles}

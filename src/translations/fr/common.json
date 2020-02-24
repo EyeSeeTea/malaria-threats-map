@@ -99,6 +99,7 @@
         "eligible": "Tous les critères remplis",
         "not_eligible": "Au moins un critère n'est pas rempli",
         "not_enough_data": "Davantage de données doivent être collectées pour évaluer les critères",
+        "no_data": "Pas de données disponibles",
         "link": "https://www.who.int/malaria/publications/atoz/9789241511575/fr/",
         "link_text": "Procédures pour tester la résistance aux insecticides chez les moustiques vecteurs du paludisme – seconde édition",
         "link_content_1": "Plus de information sur les recommandations de l'OMS pour le déploiement de moustiquaires avec pBO et pyréthrinoïde sont disponibles dans les ",

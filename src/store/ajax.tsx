@@ -33,9 +33,9 @@ const handleUnauthorized = async (error: AjaxError) => {
   throw error;
 };
 
-const buildAjaxOptions = ({ method, path }: AjaxOptions) => ({
+const buildAjaxOptions = ({ method, path, customPath }: AjaxOptions) => ({
   method,
-  url: `${config.mapServerUrl}${path}`
+  url: customPath ? path : `${config.mapServerUrl}${path}`
 });
 
 const makeRequestAndHandleUnauthorized = (config: AjaxOptions) =>
@@ -48,5 +48,13 @@ export const get = R.curry((path: string) =>
   makeRequestAndHandleUnauthorized({
     method: "GET",
     path
+  })
+);
+
+export const getFull = R.curry((path: string) =>
+  makeRequestAndHandleUnauthorized({
+    method: "GET",
+    path,
+    customPath: true
   })
 );

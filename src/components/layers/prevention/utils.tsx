@@ -49,7 +49,10 @@ export const resolveMapTypeLegend = (
   preventionFilters: PreventionFilters,
   countryMode: boolean
 ) => {
-  if (countryMode) {
+  if (
+    countryMode &&
+    preventionFilters.mapType !== PreventionMapType.PBO_DEPLOYMENT
+  ) {
     return <PreventionCountryLegend />;
   }
   switch (preventionFilters.mapType) {

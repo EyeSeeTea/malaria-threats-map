@@ -66,8 +66,11 @@ class RegionLayer extends Component<Props> {
       type: "geojson",
       data: `${config.mapServerUrl}/${MapServerConfig.layers.countries}/query?${query}`
     };
-    this.props.map.addSource(REGION_SOURCE_ID, source);
-    this.props.map.addLayer(layer);
+    const existing = this.props.map.getSource(REGION_SOURCE_ID)
+    if (!existing) {
+      this.props.map.addSource(REGION_SOURCE_ID, source);
+      this.props.map.addLayer(layer);
+    }
   }
 
   componentDidUpdate(prevProps: Props) {
