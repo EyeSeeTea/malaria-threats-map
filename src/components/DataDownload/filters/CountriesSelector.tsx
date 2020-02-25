@@ -24,7 +24,7 @@ type Props = OwnProps & StateProps;
 
 class CountriesSelector extends Component<Props> {
   onChange = (selection: OptionType[]) => {
-    this.props.onChange(selection.map(s => s.value));
+    this.props.onChange((selection || []).map(s => s.value));
   };
   render() {
     const { value, countries = [] } = this.props;
@@ -52,7 +52,4 @@ class CountriesSelector extends Component<Props> {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  null
-)(CountriesSelector);
+export default connect(mapStateToProps, null)(CountriesSelector);

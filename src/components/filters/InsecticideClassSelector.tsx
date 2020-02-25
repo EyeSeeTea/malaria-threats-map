@@ -21,7 +21,7 @@ function InsecticideClassSelector({ value, onChange }: Props) {
   }));
 
   const onSelectionChange = (options: Option[]) => {
-    onChange(options.map(o => o.value));
+    onChange((options || []).map(o => o.value));
   };
 
   return (

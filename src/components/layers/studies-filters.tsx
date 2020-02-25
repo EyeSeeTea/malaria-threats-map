@@ -20,6 +20,10 @@ export const filterByYearRange = (
   );
 };
 
+export const filterByYears = (years: number[]) => (study: any) => {
+  return !years.length || years.includes(study.YEAR_START);
+};
+
 export const filterByIntensityStatus = (study: any) => {
   return study.ASSAY_TYPE === "INTENSITY_CONCENTRATION_BIOASSAY";
 };
@@ -35,6 +39,7 @@ export const filterByResistanceMechanism = (study: any) => {
     study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY"
   );
 };
+
 export const filterByLevelOfInvolvement = (study: any) => {
   return study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY";
 };
@@ -64,6 +69,15 @@ export const filterByInsecticideClass = (insecticideClass: string) => (
   );
 };
 
+export const filterByInsecticideClasses = (insecticideClasses: string[]) => (
+  study: any
+) => {
+  return (
+    !insecticideClasses.length ||
+    insecticideClasses.includes(study.INSECTICIDE_CLASS)
+  );
+};
+
 export const filterByInsecticideTypes = (insecticideTypes: string[]) => (
   study: any
 ) => {
@@ -75,6 +89,10 @@ export const filterByInsecticideTypes = (insecticideTypes: string[]) => (
 
 export const filterByType = (type: string) => (study: any) => {
   return !type || study.TYPE === type;
+};
+
+export const filterByTypes = (types: string[]) => (study: any) => {
+  return !types.length || types.includes(study.TYPE);
 };
 
 export const filterByTypeSynergist = (synergistTypes: string[]) => (

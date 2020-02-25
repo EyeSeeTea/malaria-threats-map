@@ -31,7 +31,7 @@ function SpeciesSelector({ studies, onChange, value }: Props) {
   }));
 
   const onSelectionChange = (options: Option[] = []) => {
-    onChange(options.map(o => o.value));
+    onChange((options || []).map(o => o.value));
   };
 
   const selection = suggestions.filter(suggestion =>

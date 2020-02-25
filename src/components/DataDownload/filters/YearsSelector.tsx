@@ -32,7 +32,7 @@ const YearsSelector = ({ value, onChange }: Props) => {
   const { t } = useTranslation("common");
 
   const handleChange = (selection: OptionType[]) => {
-    onChange(selection.map(s => s.value));
+    onChange((selection || []).map(s => s.value));
   };
   return (
     <div className={classes.root}>

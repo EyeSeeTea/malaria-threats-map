@@ -32,9 +32,16 @@ import styled from "styled-components";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import {
   filterByAssayTypes,
-  filterByCountries
+  filterByCountries,
+  filterByInsecticideClasses,
+  filterByInsecticideTypes,
+  filterBySpecies,
+  filterByTypes,
+  filterByYearRange,
+  filterByYears
 } from "../layers/studies-filters";
-import { MAPPINGS } from "./mappings";
+import { Option } from "../BasicSelect";
+import mappings from "./mappings/index";
 
 const Wrapper = styled.div`
   margin: 16px 0;
@@ -136,27 +143,94 @@ function Index({
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
+  const filterStudies = (baseStudies: any[], filters: any[]) => {
+    return filters.reduce(
+      (studies, filter) => studies.filter(filter),
+      baseStudies
+    );
+  };
+
+  const buildResults = (studies: any, mappings: Option[]) => {
+    return studies.map((study: { [key: string]: any }) =>
+      mappings.reduce(
+        (acc: any, field: Option) => ({
+          ...acc,
+          [field.label]: study[field.value]
+        }),
+        {}
+      )
+    );
+  };
+
+  const downloadPreventionData = () => {
+    switch (selections.preventionDataset) {
+      case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
+      case "INTENSITY_CONCENTRATION_BIOASSAY": {
+        const filters = [
+          filterByAssayTypes([selections.preventionDataset]),
+          filterByInsecticideClasses(selections.insecticideClasses),
+          filterByInsecticideTypes(selections.insecticideTypes),
+          filterByTypes(selections.types),
+          filterBySpecies(selections.species),
+          filterByCountries(selections.countries),
+          filterByYears(selections.years)
+        ];
+        const studies = filterStudies(preventionStudies, filters);
+        const results = buildResults(
+          studies,
+          mappings[selections.preventionDataset]
+        );
+        exportToCSV(results, [], "file");
+        break;
+      }
+      case "SYNERGIST-INSECTICIDE_BIOASSAY": {
+        const filters = [
+          filterByAssayTypes([selections.preventionDataset]),
+          filterByTypes(selections.types),
+          filterBySpecies(selections.species),
+          filterByCountries(selections.countries),
+          filterByYears(selections.years)
+        ];
+        const studies = filterStudies(preventionStudies, filters);
+        const results = buildResults(
+          studies,
+          mappings[selections.preventionDataset]
+        );
+        exportToCSV(results, [], "file");
+        break;
+      }
+      case "MOLECULAR_ASSAY":
+      case "BIOCHEMICAL_ASSAY": {
+        const filters = [
+          filterByAssayTypes([selections.preventionDataset]),
+          filterBySpecies(selections.species),
+          filterByCountries(selections.countries),
+          filterByYears(selections.years)
+        ];
+        console.log(selections);
+        const studies = filterStudies(preventionStudies, filters);
+        console.log(studies);
+        const results = buildResults(
+          studies,
+          mappings[selections.preventionDataset]
+        );
+        exportToCSV(results, [], "file");
+        break;
+      }
+    }
+  };
+
   const downloadData = () => {
     switch (selections.theme) {
       case "prevention":
-        switch (selections.preventionDataset) {
-          case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
-            const filters = [
-              filterByAssayTypes(["DISCRIMINATING_CONCENTRATION_BIOASSAY"]),
-              filterByCountries(selections.countries)
-            ];
-            const studies = filters.reduce(
-              (studies, filter) => studies.filter(filter),
-              preventionStudies
-            );
-            const results = studies.map((study: { [key: string]: any }) =>
-              MAPPINGS["DISCRIMINATING_CONCENTRATION_BIOASSAY"].reduce(
-                (acc, field) => ({ ...acc, [field.label]: study[field.value] }),
-                {}
-              )
-            );
-            exportToCSV(results, [], "file");
-        }
+        downloadPreventionData();
+        break;
+      case "treatment":
+        downloadPreventionData();
+        break;
+      case "invasive":
+        downloadPreventionData();
+        break;
     }
   };
 
