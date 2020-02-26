@@ -17,8 +17,14 @@ import PlasmodiumSpeciesSelector from "../filters/PlasmodiumSpeciesSelector";
 import SynergistTypesSelector from "../filters/SynergistTypesSelector";
 import InsecticideTypeSelector from "../filters/InsecticideTypeSelector";
 import MechanismTypeSelector from "../filters/MechanismTypeSelector";
-import MechanismsTypeSelector from "../filters/MechanismTypeSelector";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
+import MolecularMarkerSelector from "../filters/MolecularMarkerSelector";
+import { Paper, Typography } from "@material-ui/core";
+import styled from "styled-components";
+
+const Divider = styled.div`
+  height: 16px;
+`;
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
@@ -116,6 +122,13 @@ const Filters = ({ onChange, selections }: Props) => {
     });
   };
 
+  const onSetMolecularMarkers = (value: string[]) => {
+    onChange({
+      ...selections,
+      molecularMarkers: value
+    });
+  };
+
   const onSetSynergistTypes = (value: string[]) => {
     onChange({
       ...selections,
@@ -146,6 +159,7 @@ const Filters = ({ onChange, selections }: Props) => {
     insecticideTypes,
     synergistTypes,
     mechanismTypes,
+    molecularMarkers,
     types,
     species,
     plasmodiumSpecies,
@@ -156,90 +170,111 @@ const Filters = ({ onChange, selections }: Props) => {
 
   return (
     <div>
-      <ThemeFilter value={theme} onChange={onSetTheme} />
-      {theme === "prevention" && (
-        <>
+      <Typography variant="subtitle1" color="textSecondary">
+        Select a dataset
+      </Typography>
+      <Paper
+        style={{
+          paddingTop: "16px",
+          paddingBottom: "16px"
+        }}
+      >
+        <ThemeFilter value={theme} onChange={onSetTheme} />
+        {theme === "prevention" && (
           <PreventionDataSetSelector
             value={preventionDataset}
             onChange={onSetPreventionDataset}
           />
-          {["INSECTICIDE_BIOASSAY"].includes(preventionDataset) ? (
-            <>
-              <SynergistTypesSelector
-                onChange={onSetSynergistTypes}
-                value={synergistTypes}
-              />
-            </>
-          ) : ["MOLECULAR_ASSAY", "BIOCHEMICAL_ASSAY"].includes(
-              preventionDataset
-            ) ? (
-            <>
-              <MechanismTypeSelector
-                value={mechanismTypes}
-                onChange={onSetMechanismTypes}
-              />
-            </>
-          ) : [
-              "DISCRIMINATING_CONCENTRATION_BIOASSAY",
-              "INTENSITY_CONCENTRATION_BIOASSAY"
-            ].includes(preventionDataset) ? (
-            <>
-              <InsecticideClassSelector
-                onChange={onSetInsecticideClasses}
-                value={insecticideClasses}
-              />
-              <InsecticideTypeSelector
-                onChange={onSetInsecticideTypes}
-                value={insecticideTypes}
-              />
-              <TypeSelector onChange={onSetTypes} value={types} />
-            </>
-          ) : (
-            <></>
-          )}
-          <SpeciesSelector onChange={onSetSpecies} value={species} />
-        </>
-      )}
-      {theme === "treatment" && (
-        <>
+        )}
+        {theme === "treatment" && (
           <TreatmentDataSetSelector
             value={treatmentDataset}
             onChange={onSetTreatmentDataset}
           />
-          {["THERAPEUTIC_EFFICACY_STUDY"].includes(treatmentDataset) ? (
-            <>
-              <PlasmodiumSpeciesSelector
-                onChange={onSetPlasmodiumSpecies}
-                value={plasmodiumSpecies}
-              />
-              <DrugsSelector onChange={onSetDrugs} value={drugs} />
-            </>
-          ) : ["MOLECULAR_MARKER_STUDY"].includes(treatmentDataset) ? (
-            <>
-              <MechanismsTypeSelector
-                value={mechanismTypes}
-                onChange={onSetMechanismTypes}
-              />
-            </>
-          ) : (
-            <></>
-          )}
-        </>
-      )}
-      {theme === "invasive" && (
-        <>
+        )}
+        {theme === "invasive" && (
           <InvasiveDataSetSelector
             value={invasiveDataset}
             onChange={onSetInvasiveDataset}
           />
-        </>
-      )}
-      {(preventionDataset || treatmentDataset || invasiveDataset) && (
+        )}
+      </Paper>
+      <Divider />
+      <Typography variant="subtitle1" color="textSecondary">
+        Additional filters
+      </Typography>
+      <Paper
+        style={{
+          paddingTop: "16px",
+          paddingBottom: "16px"
+        }}
+      >
+        {theme === "prevention" && (
+          <>
+            {["INSECTICIDE_BIOASSAY"].includes(preventionDataset) ? (
+              <>
+                <SynergistTypesSelector
+                  onChange={onSetSynergistTypes}
+                  value={synergistTypes}
+                />
+              </>
+            ) : ["MOLECULAR_ASSAY", "BIOCHEMICAL_ASSAY"].includes(
+                preventionDataset
+              ) ? (
+              <>
+                <MechanismTypeSelector
+                  value={mechanismTypes}
+                  onChange={onSetMechanismTypes}
+                />
+              </>
+            ) : [
+                "DISCRIMINATING_CONCENTRATION_BIOASSAY",
+                "INTENSITY_CONCENTRATION_BIOASSAY"
+              ].includes(preventionDataset) ? (
+              <>
+                <InsecticideClassSelector
+                  onChange={onSetInsecticideClasses}
+                  value={insecticideClasses}
+                />
+                <InsecticideTypeSelector
+                  onChange={onSetInsecticideTypes}
+                  value={insecticideTypes}
+                />
+                <TypeSelector onChange={onSetTypes} value={types} />
+              </>
+            ) : (
+              <></>
+            )}
+            {preventionDataset && (
+              <SpeciesSelector onChange={onSetSpecies} value={species} />
+            )}
+          </>
+        )}
+        {theme === "treatment" && (
+          <>
+            {["THERAPEUTIC_EFFICACY_STUDY"].includes(treatmentDataset) ? (
+              <>
+                <PlasmodiumSpeciesSelector
+                  onChange={onSetPlasmodiumSpecies}
+                  value={plasmodiumSpecies}
+                />
+                <DrugsSelector onChange={onSetDrugs} value={drugs} />
+              </>
+            ) : ["MOLECULAR_MARKER_STUDY"].includes(treatmentDataset) ? (
+              <>
+                <MolecularMarkerSelector
+                  value={molecularMarkers}
+                  onChange={onSetMolecularMarkers}
+                />
+              </>
+            ) : (
+              <></>
+            )}
+          </>
+        )}
         <YearsSelector value={years} onChange={onSetYears} />
-      )}
-      {(preventionDataset || treatmentDataset || invasiveDataset) && (
         <CountriesSelector value={countries} onChange={onSetCountries} />
-      )}
+      </Paper>
     </div>
   );
 };

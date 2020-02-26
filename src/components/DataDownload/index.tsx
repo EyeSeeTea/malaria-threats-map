@@ -33,15 +33,21 @@ import { selectPreventionStudies } from "../../store/reducers/prevention-reducer
 import {
   filterByAssayTypes,
   filterByCountries,
+  filterByDimensionId,
+  filterByDrugs,
   filterByInsecticideClasses,
   filterByInsecticideTypes,
+  filterByManyPlasmodiumSpecies,
+  filterByMolecularMarkers,
+  filterByMolecularMarkerStudy,
   filterBySpecies,
   filterByTypes,
-  filterByYearRange,
   filterByYears
 } from "../layers/studies-filters";
 import { Option } from "../BasicSelect";
 import mappings from "./mappings/index";
+import * as R from "ramda";
+import { selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
 
 const Wrapper = styled.div`
   margin: 16px 0;
@@ -76,6 +82,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     appBar: {
       position: "relative"
+    },
+    paper: {
+      backgroundColor: "#fafafa"
     }
   })
 );
@@ -84,7 +93,7 @@ const mapStateToProps = (state: State) => ({
   isDataDownloadOpen: selectIsDataDownloadOpen(state),
   preventionStudies: selectPreventionStudies(state),
   treatmentStudies: selectTreatmentStudies(state),
-  invasiveStudies: selectPreventionStudies(state)
+  invasiveStudies: selectInvasiveStudies(state)
 });
 
 const mapDispatchToProps = {
@@ -122,6 +131,7 @@ function Index({
     insecticideClasses: [],
     insecticideTypes: [],
     mechanismTypes: [],
+    molecularMarkers: [],
     types: [],
     synergistTypes: [],
     plasmodiumSpecies: [],
@@ -180,7 +190,13 @@ function Index({
           studies,
           mappings[selections.preventionDataset]
         );
-        exportToCSV(results, [], "file");
+        const tabs = [
+          {
+            name: "Data",
+            studies: results
+          }
+        ];
+        exportToCSV(tabs, "file");
         break;
       }
       case "SYNERGIST-INSECTICIDE_BIOASSAY": {
@@ -196,7 +212,13 @@ function Index({
           studies,
           mappings[selections.preventionDataset]
         );
-        exportToCSV(results, [], "file");
+        const tabs = [
+          {
+            name: "Data",
+            studies: results
+          }
+        ];
+        exportToCSV(tabs, "file");
         break;
       }
       case "MOLECULAR_ASSAY":
@@ -207,29 +229,118 @@ function Index({
           filterByCountries(selections.countries),
           filterByYears(selections.years)
         ];
-        console.log(selections);
         const studies = filterStudies(preventionStudies, filters);
-        console.log(studies);
         const results = buildResults(
           studies,
           mappings[selections.preventionDataset]
         );
-        exportToCSV(results, [], "file");
+        const tabs = [
+          {
+            name: "Data",
+            studies: results
+          }
+        ];
+        exportToCSV(tabs, "file");
+        break;
+      }
+    }
+  };
+
+  const downloadTreatmentData = () => {
+    switch (selections.treatmentDataset) {
+      case "THERAPEUTIC_EFFICACY_STUDY": {
+        const filters = [
+          filterByDimensionId(256),
+          filterByManyPlasmodiumSpecies(selections.plasmodiumSpecies),
+          filterByDrugs(selections.drugs),
+          filterByCountries(selections.countries),
+          filterByYears(selections.years)
+        ];
+        console.log(selections);
+        const studies = filterStudies(treatmentStudies, filters);
+        console.log(studies);
+        const results = buildResults(
+          studies,
+          mappings[selections.treatmentDataset]
+        );
+        const tabs = [
+          {
+            name: "Data",
+            studies: results
+          }
+        ];
+        exportToCSV(tabs, "file");
+        break;
+      }
+      case "MOLECULAR_MARKER_STUDY": {
+        const filters = [
+          filterByMolecularMarkerStudy(),
+          filterByMolecularMarkers(selections.molecularMarkers),
+          filterByCountries(selections.countries),
+          filterByYears(selections.years)
+        ];
+        const studies = filterStudies(treatmentStudies, filters);
+        const results = buildResults(
+          studies,
+          mappings["MOLECULAR_MARKER_STUDY"]
+        );
+        const genes = buildResults(
+          R.flatten(R.map(r => r.groupStudies, studies)),
+          mappings["MOLECULAR_MARKER_STUDY_GENES"]
+        );
+        const tabs = [
+          {
+            name: "MM_StudyInfo",
+            studies: results
+          },
+          {
+            name: "MM_geneMutations",
+            studies: genes
+          }
+        ];
+        exportToCSV(tabs, "file");
+        break;
+      }
+    }
+  };
+
+  const downloadInvasiveData = () => {
+    switch (selections.invasiveDataset) {
+      case "INVASIVE_VECTOR_SPECIES": {
+        const filters = [
+          filterBySpecies(selections.species),
+          filterByCountries(selections.countries),
+          filterByYears(selections.years)
+        ];
+        const studies = filterStudies(invasiveStudies, filters);
+        const results = buildResults(
+          studies,
+          mappings[selections.invasiveDataset]
+        );
+        console.log(studies);
+        const tabs = [
+          {
+            name: "Data",
+            studies: results
+          }
+        ];
+        exportToCSV(tabs, "file");
         break;
       }
     }
   };
 
   const downloadData = () => {
+    console.log(selections);
     switch (selections.theme) {
       case "prevention":
         downloadPreventionData();
         break;
       case "treatment":
-        downloadPreventionData();
+        downloadTreatmentData();
         break;
       case "invasive":
-        downloadPreventionData();
+        downloadInvasiveData();
         break;
     }
   };
@@ -250,7 +361,16 @@ function Index({
   };
 
   const isLastStep = activeStep === steps.length - 1;
-  const isFormValid = true;
+  const {
+    theme,
+    preventionDataset,
+    treatmentDataset,
+    invasiveDataset
+  } = selections;
+  const isFormValid =
+    (theme === "prevention" && preventionDataset) ||
+    (theme === "treatment" && treatmentDataset) ||
+    (theme === "invasive" && invasiveDataset);
 
   return (
     <div>
@@ -268,6 +388,9 @@ function Index({
         open={isDataDownloadOpen}
         onClose={handleToggle}
         aria-labelledby="max-width-dialog-title"
+        PaperProps={{
+          className: classes.paper
+        }}
       >
         <AppBar position={"relative"}>
           <Container maxWidth={"md"}>
@@ -283,7 +406,12 @@ function Index({
           </Container>
         </AppBar>
         <Container maxWidth={"md"}>
-          <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+          <Stepper
+            alternativeLabel
+            nonLinear
+            activeStep={activeStep}
+            className={classes.paper}
+          >
             {steps.map((label, index) => (
               <Step key={label} onClick={() => setActiveStep(index)}>
                 <StepButton style={{ cursor: "pointer" }}>
@@ -310,7 +438,7 @@ function Index({
               color="primary"
               onClick={handleNext}
               className={classes.button}
-              disabled={activeStep === steps.length - 2}
+              disabled={activeStep === steps.length - 1}
             >
               {t("data_download.buttons.next")}
             </Button>

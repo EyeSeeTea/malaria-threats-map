@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Card,
   createStyles,
   FormControl,
   InputLabel,
@@ -9,7 +10,6 @@ import {
   Theme
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import Container from "@material-ui/core/Container";
 import Select from "@material-ui/core/Select";
 import { State } from "../../store/types";
 import { selectCountries } from "../../store/reducers/translations-reducer";
@@ -18,7 +18,10 @@ import { connect } from "react-redux";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
-      margin: theme.spacing(1, 1)
+      margin: theme.spacing(1, 0)
+    },
+    paper: {
+      padding: "24px"
     }
   })
 );
@@ -66,7 +69,7 @@ const UserForm = ({ countries }: Props) => {
   };
 
   return (
-    <Container maxWidth={"sm"}>
+    <Card className={classes.paper}>
       <FormControl fullWidth className={classes.formControl}>
         <TextField
           label={t("data_download.step1.first_name")}
@@ -141,11 +144,8 @@ const UserForm = ({ countries }: Props) => {
           }}
         />
       </FormControl>
-    </Container>
+    </Card>
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserForm);
+export default connect(mapStateToProps, mapDispatchToProps)(UserForm);

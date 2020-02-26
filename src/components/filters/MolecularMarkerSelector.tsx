@@ -3,6 +3,7 @@ import IntegrationReactSelect, { Option } from "../BasicSelect";
 import { Divider, FilterWrapper } from "./Filters";
 import T from "../../translations/T";
 import { MOLECULAR_MARKERS } from "./MolecularMarkerFilter";
+import { FormLabel } from "@material-ui/core";
 
 type OwnProps = {
   onChange: (selection: string[]) => void;
@@ -11,27 +12,31 @@ type OwnProps = {
 
 type Props = OwnProps;
 
-function MechanismsTypeSelector({ onChange, value }: Props) {
+const suggestions = MOLECULAR_MARKERS.map(s => ({ ...s, value: `${s.value}` }));
+
+function MolecularMarkerSelector({ onChange, value }: Props) {
   const onSelectionChange = (options: Option[] = []) => {
-    onChange(options.map(o => o.value));
+    onChange((options || []).map(o => o.value));
   };
 
-  const selection = MOLECULAR_MARKERS.filter(suggestion =>
+  const selection = suggestions.filter(suggestion =>
     value.includes(`${suggestion.value}`)
   );
 
   return (
     <FilterWrapper>
-      <T i18nKey={`filters.molecular_marker`} />
+      <FormLabel component="legend">
+        <T i18nKey={`filters.molecular_marker`} />
+      </FormLabel>
       <Divider />
       <IntegrationReactSelect
         isMulti
         isClearable
-        suggestions={MOLECULAR_MARKERS}
+        suggestions={suggestions}
         onChange={onSelectionChange}
         value={selection}
       />
     </FilterWrapper>
   );
 }
-export default MechanismsTypeSelector;
+export default MolecularMarkerSelector;

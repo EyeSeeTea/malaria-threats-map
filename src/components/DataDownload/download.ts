@@ -5,16 +5,23 @@ const fileType =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 const fileExtension = ".xlsx";
 
-export const exportToCSV = (
-  studies: any[],
-  csvData: any[],
-  fileName: string
-) => {
-  const primary = XLSX.utils.json_to_sheet(studies);
-  const molecular = XLSX.utils.json_to_sheet([]);
+type Tab = {
+  studies: any[];
+  name: string;
+};
+
+export const exportToCSV = (tabs: Tab[], fileName: string) => {
+  const xlsxTabs = tabs.map(tab => ({
+    ...tab,
+    xlsx: XLSX.utils.json_to_sheet(tab.studies)
+  }));
+  const Sheets = xlsxTabs.reduce(
+    (acc, tab) => ({ ...acc, [tab.name]: tab.xlsx }),
+    {}
+  );
   const wb = {
-    Sheets: { K13: primary, Molecular: molecular },
-    SheetNames: ["K13", "Molecular"]
+    Sheets,
+    SheetNames: tabs.map(tab => tab.name)
   };
   const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
   const data = new Blob([excelBuffer], { type: fileType });

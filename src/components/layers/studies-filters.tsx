@@ -137,8 +137,21 @@ export const filterByPlasmodiumSpecies = (plasmodiumSpecies: string) => (
   return study.PLASMODIUM_SPECIES === plasmodiumSpecies;
 };
 
+export const filterByManyPlasmodiumSpecies = (plasmodiumSpecies: string[]) => (
+  study: any
+) => {
+  return (
+    !plasmodiumSpecies.length ||
+    plasmodiumSpecies.includes(study.PLASMODIUM_SPECIES)
+  );
+};
+
 export const filterByDrug = (drug: string) => (study: any) => {
   return study.DRUG_NAME === drug;
+};
+
+export const filterByDrugs = (drugs: string[]) => (study: any) => {
+  return !drugs.length || drugs.includes(study.DRUG_NAME);
 };
 
 export const filterByVectorSpecies = (species: string[]) => (study: any) => {
@@ -158,6 +171,12 @@ export const filterByMolecularMarker = (molecularMarker: number) => (
   study: any
 ) => {
   return study.MM_TYPE === molecularMarker.toString();
+};
+
+export const filterByMolecularMarkers = (molecularMarkers: string[]) => (
+  study: any
+) => {
+  return !molecularMarkers.length || molecularMarkers.includes(study.MM_TYPE);
 };
 
 export const buildPreventionFilters = (

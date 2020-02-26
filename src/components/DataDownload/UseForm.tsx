@@ -1,26 +1,14 @@
 import React from "react";
-import {
-  Checkbox,
-  createStyles,
-  FormControl,
-  makeStyles,
-  Paper,
-  TextField,
-  Theme
-} from "@material-ui/core";
-import Container from "@material-ui/core/Container";
+import {Card, Checkbox, createStyles, FormControl, makeStyles, Paper, TextField, Theme} from "@material-ui/core";
 import styled from "styled-components";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import FormLabel from "@material-ui/core/FormLabel";
-import { Divider } from "../filters/Filters";
+import {Divider} from "../filters/Filters";
 import * as R from "ramda";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider
-} from "@material-ui/pickers";
+import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   & span {
@@ -31,7 +19,10 @@ const StyledFormControlLabel = styled(FormControlLabel)`
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
-      margin: theme.spacing(1, 1)
+      margin: theme.spacing(1, 0)
+    },
+    paper: {
+      padding: "24px"
     }
   })
 );
@@ -62,7 +53,7 @@ const UseForm = () => {
     setSelectedDate(date);
   };
   return (
-    <Container maxWidth={"md"}>
+    <Card className={classes.paper}>
       <FormControl fullWidth className={classes.formControl}>
         <FormLabel component="legend">
           {t(`data_download.step2.data_use`)}
@@ -158,7 +149,7 @@ const UseForm = () => {
         </MuiPickersUtilsProvider>
       </FormControl>
       <Snackbar>{t(`data_download.step2.message`)}</Snackbar>
-    </Container>
+    </Card>
   );
 };
 

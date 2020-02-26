@@ -41,7 +41,7 @@ function ThemeFilter({ value, onChange }: Props) {
   return (
     <FilterWrapper>
       <FormLabel component="legend">
-        <T i18nKey={`data_download.step3.filters.theme`} />
+        <T i18nKey={`data_download.step3.filters.theme`} /> *
       </FormLabel>
       <Divider />
       <IntegrationReactSelect
