@@ -29,6 +29,8 @@ const Citation = ({ study }: Props) => {
         </Link>
       </Typography>
     </>
+  ) : !isNull(study.CITATION) ? (
+    <Typography variant="caption">{study.CITATION}</Typography>
   ) : !isNull(study.INSTITUTION) ? (
     <Typography variant="caption">{study.INSTITUTION}</Typography>
   ) : (
