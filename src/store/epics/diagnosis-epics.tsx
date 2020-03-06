@@ -1,15 +1,9 @@
-import { ActionsObservable, StateObservable } from "redux-observable";
+import { ActionsObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
 import * as ajax from "../../store/ajax";
 import { of } from "rxjs";
-import {
-  catchError,
-  mergeMap,
-  skip,
-  switchMap,
-  withLatestFrom
-} from "rxjs/operators";
+import { catchError, mergeMap, skip, switchMap } from "rxjs/operators";
 import { AjaxError } from "rxjs/ajax";
 import { DiagnosisResponse } from "../../types/Diagnosis";
 import { MapServerConfig } from "../../constants/constants";
@@ -27,7 +21,7 @@ import {
   setFiltersAction,
   setThemeAction
 } from "../actions/base-actions";
-import { DiagnosisMapType, State } from "../types";
+import { DiagnosisMapType } from "../types";
 import { addNotificationAction } from "../actions/notifier-actions";
 import { ErrorResponse } from "../../types/Malaria";
 
@@ -73,24 +67,17 @@ export const getDiagnosisStudiesEpic = (
     })
   );
 
-export const setStoryModeStepEpic = (
-  action$: ActionsObservable<
-    ActionType<typeof setDiagnosisMapType | typeof setThemeAction>
-  >,
-  state$: StateObservable<State>
+export const setDiagnosisThemeEpic = (
+  action$: ActionsObservable<ActionType<typeof setThemeAction>>
 ) =>
-  action$
-    .ofType(ActionTypeEnum.SetDiagnosisMapType, ActionTypeEnum.MalariaSetTheme)
-    .pipe(
-      withLatestFrom(state$),
-      switchMap(([_, state]) => {
-        if (state.malaria.filters[0] < 1998) {
-          return of(setFiltersAction([1998, state.malaria.filters[1]]));
-        } else {
-          return of();
-        }
-      })
-    );
+  action$.ofType(ActionTypeEnum.MalariaSetTheme).pipe(
+    switchMap($action => {
+      if ($action.payload !== "diagnosis") {
+        return of();
+      }
+      return of(setFiltersAction([1998, new Date().getFullYear()]));
+    })
+  );
 
 export const setDiagnosisMapTypeEpic = (
   action$: ActionsObservable<ActionType<typeof setDiagnosisMapType>>

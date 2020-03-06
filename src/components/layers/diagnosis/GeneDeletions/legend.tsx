@@ -9,8 +9,19 @@ import {
 import { DIAGNOSIS_STATUS } from "./utils";
 import { DiagnosisStatusColors } from "./symbols";
 import { useTranslation } from "react-i18next";
+import { State } from "../../../../store/types";
+import { connect } from "react-redux";
+import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
 
-export default function Legend() {
+const mapStateToProps = (state: State) => ({
+  filters: selectDiagnosisFilters(state)
+});
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+
+type Props = StateProps;
+
+function Legend({ filters }: Props) {
   const { t } = useTranslation("common");
   const labels = [
     {
@@ -26,7 +37,7 @@ export default function Legend() {
     <LegendContainer>
       <LegendTitleContainer>
         <LegendTitleTypography color="textPrimary" gutterBottom>
-          {t("diagnosis.gene_deletions")}
+          {t(`diagnosis.legend.gene_deletions.${filters.deletionType}`)}
         </LegendTitleTypography>
       </LegendTitleContainer>
       <LegendLabels labels={labels} />
@@ -34,3 +45,5 @@ export default function Legend() {
     </LegendContainer>
   );
 }
+
+export default connect(mapStateToProps, null)(Legend);

@@ -121,6 +121,8 @@
     },
     "legend": {
       "gene_deletions": {
+        "HRP2_HRP3_PROPORTION_DELETION": "Deleciones del gen pfhrp2/3",
+        "HRP2_PROPORTION_DELETION": "Deleciones del gen pfhrp2",
         "confirmed": "Confirmado",
         "not_identified": "No detectado"
       }

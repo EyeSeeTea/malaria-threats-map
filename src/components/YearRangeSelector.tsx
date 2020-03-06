@@ -15,16 +15,17 @@ export function range(start: number, end: number, reverse?: boolean) {
     .map((_, idx) => start + idx);
   return reverse ? R.reverse(years) : years;
 }
-const marks = range(1985, new Date().getFullYear()).map(year =>
-  year % 5 === 0
-    ? {
-        value: year,
-        label: year.toString()
-      }
-    : {
-        value: year
-      }
-);
+const marks = (start: number, end: number) =>
+  range(start, end).map(year =>
+    year % 5 === 0
+      ? {
+          value: year,
+          label: year.toString()
+        }
+      : {
+          value: year
+        }
+  );
 
 const useStyles = makeStyles({
   root: {
@@ -79,7 +80,7 @@ const YearRangeSelector = ({
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
         getAriaValueText={valuetext}
-        marks={marks}
+        marks={marks(minYear, maxYear)}
         step={1}
         min={minYear}
         max={maxYear}
@@ -87,7 +88,4 @@ const YearRangeSelector = ({
     </div>
   );
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(YearRangeSelector);
+export default connect(mapStateToProps, mapDispatchToProps)(YearRangeSelector);
