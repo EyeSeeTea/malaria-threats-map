@@ -14,7 +14,11 @@ import {
   setInvasiveVectorSpecies
 } from "../actions/invasive-actions";
 import { MapServerConfig } from "../../constants/constants";
-import { logEventAction } from "../actions/base-actions";
+import {
+  logEventAction,
+  setFiltersAction,
+  setThemeAction
+} from "../actions/base-actions";
 import { InvasiveMapType } from "../types";
 import { addNotificationAction } from "../actions/notifier-actions";
 import { ErrorResponse } from "../../types/Malaria";
@@ -98,3 +102,15 @@ export const setInvasiveVectorSpeciesEpic = (
         return of(...actions);
       })
     );
+
+export const setInvasiveThemeEpic = (
+  action$: ActionsObservable<ActionType<typeof setThemeAction>>
+) =>
+  action$.ofType(ActionTypeEnum.MalariaSetTheme).pipe(
+    switchMap($action => {
+      if ($action.payload !== "invasive") {
+        return of();
+      }
+      return of(setFiltersAction([1985, new Date().getFullYear()]));
+    })
+  );
