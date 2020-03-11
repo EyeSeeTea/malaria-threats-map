@@ -54,6 +54,8 @@ import DataDownload from "./DataDownload";
 import CountrySelectorLayer from "./layers/CountrySelectorLayer";
 import LabelsLayer from "./layers/LabelsLayer";
 import DistrictsLayer from "./layers/DistrictsLayer";
+import PBOEndemicityLayer from "./layers/PBOEndemicityLayer";
+import DisputedBordersEndemicityLayer from "./layers/PBODisputedBordersLayer";
 
 ReactMapboxGl({
   accessToken:
@@ -244,32 +246,33 @@ class Map extends React.Component<any> {
     const isPbo =
       this.props.theme === "prevention" &&
       this.props.preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
+    const ready = this.map && this.state.ready;
     return (
       <React.Fragment>
         <div
           ref={el => (this.mapContainer = el)}
           style={{ position: "absolute", bottom: 0, top: 0, right: 0, left: 0 }}
         />
-        {/*{this.map && this.state.ready && <LabelsLayer map={this.map} />}*/}
-        {this.map && this.state.ready && <EndemicityLayer map={this.map} />}
+        {/*{ready && <LabelsLayer map={this.map} />}*/}
+        {ready && <EndemicityLayer map={this.map} />}
         {isPbo && countryMode ? (
           <>
-            {this.map && this.state.ready && (
-              <CountrySelectorLayer map={this.map} />
-            )}
-            {this.map && this.state.ready && <DistrictsLayer map={this.map} />}
+            {ready && <CountrySelectorLayer map={this.map} />}
+            {ready && <PBOEndemicityLayer map={this.map} />}
+            {ready && <DisputedBordersEndemicityLayer map={this.map} />}
+            {ready && <DistrictsLayer map={this.map} />}
           </>
         ) : (
           <>
-            {this.map && this.state.ready && <RegionLayer map={this.map} />}
-            {this.map && this.state.ready && <PreventionLayer map={this.map} />}
+            {ready && <RegionLayer map={this.map} />}
+            {ready && <PreventionLayer map={this.map} />}
           </>
         )}
-        {this.map && this.state.ready && <MekongLayer map={this.map} />}
-        {this.map && this.state.ready && <LabelsLayer map={this.map} />}
-        {this.map && this.state.ready && <DiagnosisLayer map={this.map} />}
-        {this.map && this.state.ready && <TreatmentLayer map={this.map} />}
-        {this.map && this.state.ready && <InvasiveLayer map={this.map} />}
+        {ready && <MekongLayer map={this.map} />}
+        {ready && <LabelsLayer map={this.map} />}
+        {ready && <DiagnosisLayer map={this.map} />}
+        {ready && <TreatmentLayer map={this.map} />}
+        {ready && <InvasiveLayer map={this.map} />}
 
         <Fade in={!initialDialogOpen}>
           <SearchContainer>
@@ -292,7 +295,7 @@ class Map extends React.Component<any> {
             {!mekong && <StoryModeSelector />}
             {!mekong && <DataDownload />}
             {/*<Hidden xsDown>*/}
-            {/*  {this.map && this.state.ready ? (*/}
+            {/*  {ready ? (*/}
             {/*    <Screenshot map={this.map} />*/}
             {/*  ) : (*/}
             {/*    <div />*/}

@@ -49,7 +49,7 @@ export const LegendEntry = styled.div`
   display: flex;
   align-items: center;
 `;
-export const LegendSymbol = styled.span<{ color: string }>`
+export const LegendSymbol = styled.span<{ color: string, border?: boolean }>`
   background-color: ${props => props.color};
   border-radius: 99999px;
   width: 12px;
@@ -58,6 +58,7 @@ export const LegendSymbol = styled.span<{ color: string }>`
   margin-right: 8px;
   align-self: flex-start;
   margin-top: 6px;
+  border: ${props => props.border ? 'solid 1px grey' : 'none'}
 `;
 export const LegendText = styled.span`
   line-height: 24px;
@@ -88,6 +89,7 @@ export function LegendFooter() {
 export interface LegendLabel {
   label: string;
   color: string;
+  border?: boolean;
 }
 
 export function LegendLabels({ labels }: { labels: LegendLabel[] }) {
@@ -96,7 +98,7 @@ export function LegendLabels({ labels }: { labels: LegendLabel[] }) {
     <LegendEntries>
       {labels.map(label => (
         <LegendEntry key={label.label}>
-          <LegendSymbol color={label.color} />
+          <LegendSymbol color={label.color} border={label.border} />
           <LegendText>{t(label.label)}</LegendText>
         </LegendEntry>
       ))}

@@ -11,7 +11,12 @@ import {
   PboDeploymentColors,
   PboDeploymentCountriesStatus
 } from "./prevention/PboDeployment/PboDeploymentCountriesSymbols";
-import {selectCountryMode, selectRegion} from "../../store/reducers/base-reducer";
+import {
+  selectCountryMode,
+  selectRegion
+} from "../../store/reducers/base-reducer";
+import { PboDeploymentStatus } from "./prevention/PboDeployment/PboDeploymentSymbols";
+import { DISPUTED_BORDERS_ENDEMICITY_LAYER_ID } from "./PBODisputedBordersLayer";
 
 export const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
 export const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
@@ -48,7 +53,7 @@ const mapStateToProps = (state: State) => ({
   countries: selectCountryLayer(state),
   studies: selectPreventionStudies(state),
   region: selectRegion(state),
-  countryMode: selectCountryMode(state),
+  countryMode: selectCountryMode(state)
 });
 
 const mapDispatchToProps = {
@@ -120,19 +125,28 @@ class CountrySelectorLayer extends Component<Props> {
         )
         .map((feature: any) => {
           const newFeature = { ...feature };
-          const countryStatus: { [key: string]: number } =
-            statusByCountry[newFeature.properties.ISO_2_CODE];
-          if (!countryStatus) {
-            newFeature.properties.PBO_DEPLOYMENT_STATUS = null;
+          if (newFeature.properties.ENDEMICITY === 0) {
             return newFeature;
           }
-          const sortByDeploymentStatusNumbers = (
-            a: [string, number],
-            b: [string, number]
-          ) => (a[1] > b[1] ? -1 : 1);
-          newFeature.properties.PBO_DEPLOYMENT_STATUS = Object.entries(
+
+          const countryStatus: { [key: string]: number } =
+            statusByCountry[newFeature.properties.ISO_2_CODE];
+          if (["PG", "KR"].includes(feature.properties.ISO_2_CODE)) {
+            console.log(feature.properties.ISO_2_CODE, countryStatus);
+          }
+          if (!countryStatus) {
+            newFeature.properties.PBO_DEPLOYMENT_STATUS =
+              PboDeploymentStatus.NOT_ELIGIBLE;
+            return newFeature;
+          }
+          const statuses: Record<string, number> = Object.entries(
             countryStatus
-          ).sort(sortByDeploymentStatusNumbers)[0][0];
+          ).reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+          const isGreen = statuses[PboDeploymentStatus.ELIGIBLE] > 0;
+          newFeature.properties.PBO_DEPLOYMENT_STATUS = isGreen
+            ? PboDeploymentStatus.ELIGIBLE
+            : PboDeploymentStatus.NOT_ENOUGH_DATA;
+
           return newFeature;
         });
 
@@ -147,7 +161,7 @@ class CountrySelectorLayer extends Component<Props> {
       }
 
       this.props.map.addSource(COUNTRY_SELECTOR_SOURCE_ID, source);
-      this.props.map.addLayer(layer);
+      this.props.map.addLayer(layer, DISPUTED_BORDERS_ENDEMICITY_LAYER_ID);
       setupEffects(
         this.props.map,
         COUNTRY_SELECTOR_SOURCE_ID,
@@ -185,6 +199,7 @@ class CountrySelectorLayer extends Component<Props> {
   };
 
   onClickListener = (e: any) => {
+    console.log(e.features[0]);
     this.props.setRegion({ country: e.features[0].properties.ISO_2_CODE });
   };
 

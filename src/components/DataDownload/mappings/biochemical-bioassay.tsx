@@ -22,7 +22,7 @@ const mappings: Option[] = [
     label: "VILLAGE_NAME"
   },
   {
-    value: "VILLAGE_CODE",
+    value: "SITE_ID",
     label: "VILLAGE_CODE"
   },
   {

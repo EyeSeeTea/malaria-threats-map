@@ -18,7 +18,7 @@ const mappings: Option[] = [
     label: "DISTRICT"
   },
   {
-    value: "VILLAGE_NAME",
+    value: "SITE_ID",
     label: "VILLAGE_NAME"
   },
   {
