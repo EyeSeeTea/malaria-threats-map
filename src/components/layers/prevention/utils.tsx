@@ -21,6 +21,7 @@ import {
 import CountrySymbols from "./Countries/PreventionCountrySymbols";
 import PreventionCountryLegend from "./Countries/PreventionCountryLegend";
 import LevelOfInvolvementLegend from "./Involvement/LevelOfInvolvementLegend";
+import PboDeploymentCountriesLegend from "./PboDeployment/PboDeploymentCountriesLegend";
 
 export const resolveMapTypeSymbols = (
   preventionFilters: PreventionFilters,
@@ -49,11 +50,15 @@ export const resolveMapTypeLegend = (
   preventionFilters: PreventionFilters,
   countryMode: boolean
 ) => {
-  if (
-    countryMode &&
-    preventionFilters.mapType !== PreventionMapType.PBO_DEPLOYMENT
-  ) {
-    return <PreventionCountryLegend />;
+  if (countryMode) {
+    if (
+      countryMode &&
+      preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT
+    ) {
+      return <PboDeploymentCountriesLegend />;
+    } else {
+      return <PreventionCountryLegend />;
+    }
   }
   switch (preventionFilters.mapType) {
     case PreventionMapType.RESISTANCE_STATUS:

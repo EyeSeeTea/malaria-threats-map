@@ -5,7 +5,7 @@ import {selectEndemicity} from "../../store/reducers/base-reducer";
 import config from "../../config";
 
 export const DISPUTED_BORDERS_ENDEMICITY_LAYER_ID =
-         "disputed-borders-endemicity-layer";
+  "disputed-borders-endemicity-layer";
 export const DISPUTED_BORDERS_ENDEMICITY_SOURCE_ID =
   "disputed-borders-endemicity-source";
 
@@ -34,7 +34,7 @@ class DisputedBordersEndemicityLayer extends Component<Props> {
   componentDidMount(): void {
     const source: any = {
       type: "geojson",
-      data: `${config.mapServerUrl}/0/query?where=1%3D1&f=geojson&geometryPrecision=2.5`
+      data: config.boundariesBaseUrl
     };
     if (this.props.map.getSource(DISPUTED_BORDERS_ENDEMICITY_SOURCE_ID)) {
       this.showLayer();

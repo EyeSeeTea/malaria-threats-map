@@ -19,7 +19,10 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepButton from "@material-ui/core/StepButton";
 import { selectIsDataDownloadOpen } from "../../store/reducers/base-reducer";
-import { setDataDownloadOpenAction } from "../../store/actions/base-actions";
+import {
+  logEventAction,
+  setDataDownloadOpenAction
+} from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
 import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
 import UserForm from "./UserForm";
@@ -97,7 +100,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  setDataDownloadOpen: setDataDownloadOpenAction
+  setDataDownloadOpen: setDataDownloadOpenAction,
+  logEvent: logEventAction
 };
 type OwnProps = {};
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -118,7 +122,8 @@ function Index({
   setDataDownloadOpen,
   preventionStudies,
   treatmentStudies,
-  invasiveStudies
+  invasiveStudies,
+  logEvent
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
@@ -343,6 +348,10 @@ function Index({
         downloadInvasiveData();
         break;
     }
+    logEvent({
+      category: "Download Data",
+      action: selections.theme
+    });
   };
 
   const renderStep = () => {

@@ -20,6 +20,7 @@ export enum ActionTypeEnum {
   SetTourOpen = "malaria/SET_TOUR_OPEN",
   SetTourStep = "malaria/SET_TOUR_STEP",
   SetDataDownloadOpen = "malaria/SET_DATA_DOWNLOAD_OPEN",
+  SetReportOpen = "malaria/SET_REPORT_OPEN",
 
   FetchPreventionStudiesRequest = "prevention/FETCH_PREVENTION_STUDIES_REQUEST",
   FetchPreventionStudiesSuccess = "prevention/FETCH_PREVENTION_STUDIES_SUCCESS",

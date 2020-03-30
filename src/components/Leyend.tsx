@@ -27,6 +27,7 @@ export const LegendContainer = styled(Paper)`
   flex-direction: column;
   width: 200px;
   font-size: 12px;
+  box-shadow: none !important;
 `;
 
 export const LegendEntries = styled.div`
@@ -49,7 +50,7 @@ export const LegendEntry = styled.div`
   display: flex;
   align-items: center;
 `;
-export const LegendSymbol = styled.span<{ color: string, border?: boolean }>`
+export const LegendSymbol = styled.span<{ color: string; border?: boolean }>`
   background-color: ${props => props.color};
   border-radius: 99999px;
   width: 12px;
@@ -58,7 +59,7 @@ export const LegendSymbol = styled.span<{ color: string, border?: boolean }>`
   margin-right: 8px;
   align-self: flex-start;
   margin-top: 6px;
-  border: ${props => props.border ? 'solid 1px grey' : 'none'}
+  border: ${props => (props.border ? "solid 1px grey" : "none")};
 `;
 export const LegendText = styled.span`
   line-height: 24px;
@@ -146,7 +147,4 @@ function Leyend({
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Leyend);
+export default connect(mapStateToProps, mapDispatchToProps)(Leyend);

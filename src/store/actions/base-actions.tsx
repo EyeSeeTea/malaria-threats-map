@@ -150,3 +150,10 @@ export const setDataDownloadOpenAction = createAction(
     return (dataDownloadOpen: boolean) => action(dataDownloadOpen);
   }
 );
+
+export const setReportOpenAction = createAction(
+  ActionTypeEnum.SetReportOpen,
+  action => {
+    return (reportOpen: boolean) => action(reportOpen);
+  }
+);

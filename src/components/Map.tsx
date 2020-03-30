@@ -56,6 +56,8 @@ import LabelsLayer from "./layers/LabelsLayer";
 import DistrictsLayer from "./layers/DistrictsLayer";
 import PBOEndemicityLayer from "./layers/PBOEndemicityLayer";
 import DisputedBordersEndemicityLayer from "./layers/PBODisputedBordersLayer";
+import Screenshot from "./Screenshot";
+import Report from "./Report";
 
 ReactMapboxGl({
   accessToken:
@@ -294,13 +296,10 @@ class Map extends React.Component<any> {
             {!mekong && <Country />}
             {!mekong && <StoryModeSelector />}
             {!mekong && <DataDownload />}
-            {/*<Hidden xsDown>*/}
-            {/*  {ready ? (*/}
-            {/*    <Screenshot map={this.map} />*/}
-            {/*  ) : (*/}
-            {/*    <div />*/}
-            {/*  )}*/}
-            {/*</Hidden>*/}
+            <Hidden xsDown>
+              {ready ? <Screenshot map={this.map} /> : <div />}
+              {ready ? <Report /> : <div />}
+            </Hidden>
           </SearchContainer>
         </Fade>
         <Fade in={!initialDialogOpen}>

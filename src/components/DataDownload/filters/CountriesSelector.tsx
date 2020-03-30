@@ -42,7 +42,6 @@ class CountriesSelector extends Component<Props> {
         <IntegrationReactSelect
           isClearable
           isMulti
-          placeholder={"Select Countries"}
           suggestions={suggestions}
           onChange={this.onChange}
           value={suggestions.filter(s => value.includes(s.value))}

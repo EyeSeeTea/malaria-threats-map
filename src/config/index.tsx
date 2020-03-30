@@ -4,6 +4,7 @@ type ConfigProps = {
   mapServerUrl: string;
   mapTilesBaseUrl: string;
   mapLabelsBaseUrl: string;
+  boundariesBaseUrl: string;
   gaAppId: string;
   env: string;
   mekong: boolean;
@@ -24,12 +25,16 @@ const BASEMAP_NONIC =
 const BASEMAP_NONIC_LABEL =
   "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_LABEL/MapServer";
 
+const BOUNDARIES_BASE_URL = `https://services.arcgis.com/5T5nSi527N4F7luB/ArcGIS/rest/services/POLIO_ADMINISTRATIVE_BOUNDARIES/FeatureServer/1/query?where=1%3D1&f=geojson&geometryPrecision=2.5`;
+
 const stagingMapServer = {
-  mapServerUrl: WHO_MALARIA_THREATS_MAP_STAGING
+  mapServerUrl: WHO_MALARIA_THREATS_MAP_STAGING,
+  boundariesBaseUrl: BOUNDARIES_BASE_URL
 };
 
 const prodMapServer = {
-  mapServerUrl: WHO_MALARIA_THREATS_MAP
+  mapServerUrl: WHO_MALARIA_THREATS_MAP,
+  boundariesBaseUrl: BOUNDARIES_BASE_URL
 };
 
 const stagingMapTile = {

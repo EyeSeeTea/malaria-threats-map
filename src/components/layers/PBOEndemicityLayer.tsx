@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectEndemicity } from "../../store/reducers/base-reducer";
 import config from "../../config";
-import {DISPUTED_BORDERS_ENDEMICITY_LAYER_ID} from "./PBODisputedBordersLayer";
 
 export const PBO_ENDEMICITY_LAYER_ID = "pbo-endemicity-layer";
 export const PBO_ENDEMICITY_SOURCE_ID = "pbo-endemicity-source";

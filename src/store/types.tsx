@@ -43,6 +43,7 @@ export interface MalariaState {
   setBounds: Array<Array<number>>;
   tour: TourState;
   dataDownloadOpen: boolean;
+  reportOpen: boolean;
 }
 
 export interface TranslationsState {

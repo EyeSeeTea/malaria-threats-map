@@ -32,7 +32,8 @@ const initialState: MalariaState = Object.freeze({
     open: true,
     step: 0
   },
-  dataDownloadOpen: false
+  dataDownloadOpen: false,
+  reportOpen: true
 });
 
 export default createReducer<MalariaState>(initialState, {
@@ -77,23 +78,19 @@ export default createReducer<MalariaState>(initialState, {
     tour: { ...initialState.tour, step }
   }),
   [ActionTypeEnum.SetDataDownloadOpen]: (dataDownloadOpen: boolean) =>
-    R.assoc("dataDownloadOpen", dataDownloadOpen)
+    R.assoc("dataDownloadOpen", dataDownloadOpen),
+  [ActionTypeEnum.SetReportOpen]: (reportOpen: boolean) =>
+    R.assoc("reportOpen", reportOpen)
 });
 
 export const selectMalariaState = (state: State) => state.malaria;
 
-export const selectTheme = createSelector(
-  selectMalariaState,
-  R.prop("theme")
-);
+export const selectTheme = createSelector(selectMalariaState, R.prop("theme"));
 export const selectStoryMode = createSelector(
   selectMalariaState,
   R.prop("storyMode")
 );
-export const selectAny = createSelector(
-  selectMalariaState,
-  R.prop("any")
-);
+export const selectAny = createSelector(selectMalariaState, R.prop("any"));
 export const selectEndemicity = createSelector(
   selectMalariaState,
   R.prop("endemicity")
@@ -134,10 +131,7 @@ export const selectAreMobileOptionsOpen = createSelector(
   selectMalariaState,
   R.prop("mobileOptionsOpen")
 );
-export const selectZoom = createSelector(
-  selectMalariaState,
-  R.prop("zoom")
-);
+export const selectZoom = createSelector(selectMalariaState, R.prop("zoom"));
 export const selectSetZoom = createSelector(
   selectMalariaState,
   R.prop("setZoom")
@@ -150,11 +144,12 @@ export const selectSetBounds = createSelector(
   selectMalariaState,
   R.prop("setBounds")
 );
-export const selectTour = createSelector(
-  selectMalariaState,
-  R.prop("tour")
-);
+export const selectTour = createSelector(selectMalariaState, R.prop("tour"));
 export const selectIsDataDownloadOpen = createSelector(
   selectMalariaState,
   R.prop("dataDownloadOpen")
+);
+export const selectIsReportOpen = createSelector(
+  selectMalariaState,
+  R.prop("reportOpen")
 );
