@@ -5,6 +5,7 @@ type ConfigProps = {
   mapTilesBaseUrl: string;
   mapLabelsBaseUrl: string;
   boundariesBaseUrl: string;
+  backendUrl: string;
   gaAppId: string;
   env: string;
   mekong: boolean;
@@ -51,6 +52,7 @@ const configurations: { [key: string]: ConfigProps } = {
   local: {
     ...stagingMapServer,
     ...stagingMapTile,
+    backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "",
     env: "local",
     mekong: false
@@ -58,6 +60,7 @@ const configurations: { [key: string]: ConfigProps } = {
   staging: {
     ...stagingMapServer,
     ...stagingMapTile,
+    backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "UA-151634352-1",
     env: "staging",
     mekong: false
@@ -65,6 +68,7 @@ const configurations: { [key: string]: ConfigProps } = {
   prod: {
     ...prodMapServer,
     ...prodMapTile,
+    backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "UA-140410266-1",
     env: "prod",
     mekong: false
@@ -72,6 +76,7 @@ const configurations: { [key: string]: ConfigProps } = {
   "local-mekong": {
     ...stagingMapServer,
     ...stagingMapTile,
+    backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "",
     env: "local",
     mekong: true
@@ -79,6 +84,7 @@ const configurations: { [key: string]: ConfigProps } = {
   "staging-mekong": {
     ...stagingMapServer,
     ...stagingMapTile,
+    backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "",
     env: "staging",
     mekong: true
@@ -86,6 +92,7 @@ const configurations: { [key: string]: ConfigProps } = {
   "prod-mekong": {
     ...prodMapServer,
     ...prodMapTile,
+    backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "",
     env: "prod",
     mekong: true

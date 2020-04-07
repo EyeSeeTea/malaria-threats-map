@@ -1,17 +1,20 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {InvasiveMapType, State} from "../../store/types";
-import IntegrationReactSelect, {OptionType} from "../BasicSelect";
-import {ValueType} from "react-select/src/types";
-import {selectInvasiveFilters} from "../../store/reducers/invasive-reducer";
-import {setInvasiveMapType} from "../../store/actions/invasive-actions";
+import React from "react";
+import { connect } from "react-redux";
+import { InvasiveMapType, State } from "../../store/types";
+import IntegrationReactSelect, { OptionType } from "../BasicSelect";
+import { ValueType } from "react-select/src/types";
+import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
+import { setInvasiveMapType } from "../../store/actions/invasive-actions";
+import { useTranslation } from "react-i18next";
+import { setMapTitleAction } from "../../store/actions/base-actions";
 
 const mapStateToProps = (state: State) => ({
   invasiveFilters: selectInvasiveFilters(state)
 });
 
 const mapDispatchToProps = {
-  setInvasiveMapType: setInvasiveMapType
+  setInvasiveMapType: setInvasiveMapType,
+  setMapTitle: setMapTitleAction
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -25,22 +28,33 @@ const invasiveSuggestions: OptionType[] = [
   }
 ];
 
-export class InvasiveMapTypesSelector extends Component<Props> {
-  onChange = (value: ValueType<OptionType>) => {
+function InvasiveMapTypesSelector({
+  setInvasiveMapType,
+  setMapTitle,
+  invasiveFilters
+}: Props) {
+  const { t } = useTranslation("common");
+
+  const onChange = (value: ValueType<OptionType>) => {
     const selection = value as OptionType;
-    this.props.setInvasiveMapType(selection.value);
+    setInvasiveMapType(selection.value);
+    setMapTitle(t(selection.label));
   };
-  render() {
-    return (
-      <IntegrationReactSelect
-        suggestions={invasiveSuggestions}
-        onChange={this.onChange}
-        value={invasiveSuggestions.find(
-          s => s.value === this.props.invasiveFilters.mapType
-        )}
-      />
+
+  React.useEffect(() => {
+    const selection = invasiveSuggestions.find(
+      s => s.value === invasiveFilters.mapType
     );
-  }
+    setMapTitle(t(selection.label));
+  });
+
+  return (
+    <IntegrationReactSelect
+      suggestions={invasiveSuggestions}
+      onChange={onChange}
+      value={invasiveSuggestions.find(s => s.value === invasiveFilters.mapType)}
+    />
+  );
 }
 
 export default connect(

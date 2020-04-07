@@ -157,3 +157,10 @@ export const setReportOpenAction = createAction(
     return (reportOpen: boolean) => action(reportOpen);
   }
 );
+
+export const setMapTitleAction = createAction(
+  ActionTypeEnum.SetMapTitle,
+  action => {
+    return (mapTitle: string) => action(mapTitle);
+  }
+);

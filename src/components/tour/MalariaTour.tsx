@@ -121,7 +121,8 @@ const mapDispatchToProps = {
   setFilteredStudies: setFilteredStudiesAction,
   setInsecticideClass,
   setInsecticideTypes,
-  setSpecies
+  setSpecies,
+  logEvent: logEventAction
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -187,7 +188,7 @@ class MalariaTour extends PureComponent<Props> {
     this.setSelection(null);
     this.setCountryMode(false);
     this.toggleFilters(false);
-    logEventAction({
+    this.props.logEvent({
       category: "Malaria Tour Close Event",
       action: `${this.props.tour.step}`
     });

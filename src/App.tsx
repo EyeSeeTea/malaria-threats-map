@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import createStore from "./store";
 import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
-import { State } from "./store/types";
+import { PreventionMapType, State } from "./store/types";
 import { createMuiTheme, Hidden } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 
@@ -79,7 +79,7 @@ ReduxQuerySync({
       },
       action: (value: string) => {
         if (!value) {
-          return setPreventionMapType(0);
+          return setPreventionMapType(PreventionMapType.RESISTANCE_STATUS);
         }
         const pair = value.split(":");
         const mapType: number = parseInt(pair[1]);

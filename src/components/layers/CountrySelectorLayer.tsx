@@ -131,9 +131,6 @@ class CountrySelectorLayer extends Component<Props> {
 
           const countryStatus: { [key: string]: number } =
             statusByCountry[newFeature.properties.ISO_2_CODE];
-          if (["PG", "KR"].includes(feature.properties.ISO_2_CODE)) {
-            console.log(feature.properties.ISO_2_CODE, countryStatus);
-          }
           if (!countryStatus) {
             newFeature.properties.PBO_DEPLOYMENT_STATUS =
               PboDeploymentStatus.NOT_ELIGIBLE;
@@ -161,7 +158,7 @@ class CountrySelectorLayer extends Component<Props> {
       }
 
       this.props.map.addSource(COUNTRY_SELECTOR_SOURCE_ID, source);
-      this.props.map.addLayer(layer, DISPUTED_BORDERS_ENDEMICITY_LAYER_ID);
+      this.props.map.addLayer(layer);
       setupEffects(
         this.props.map,
         COUNTRY_SELECTOR_SOURCE_ID,

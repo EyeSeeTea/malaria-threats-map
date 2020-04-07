@@ -1,17 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { PreventionMapType, State } from "../../store/types";
 import IntegrationReactSelect, { OptionType } from "../BasicSelect";
 import { ValueType } from "react-select/src/types";
 import { setPreventionMapType } from "../../store/actions/prevention-actions";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
+import { setMapTitleAction } from "../../store/actions/base-actions";
+import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({
   preventionFilters: selectPreventionFilters(state)
 });
 
 const mapDispatchToProps = {
-  setPreventionMapType: setPreventionMapType
+  setPreventionMapType: setPreventionMapType,
+  setMapTitle: setMapTitleAction
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -40,27 +43,35 @@ const preventionSuggestions: OptionType[] = [
     value: PreventionMapType.PBO_DEPLOYMENT
   }
 ];
-export class PreventionMapTypesSelector extends Component<Props> {
-  onChange = (value: ValueType<OptionType>) => {
+function PreventionMapTypesSelector({
+  preventionFilters,
+  setPreventionMapType,
+  setMapTitle
+}: Props) {
+  const { t } = useTranslation("common");
+
+  const onChange = (value: ValueType<OptionType>) => {
     const selection = value as OptionType;
-    this.props.setPreventionMapType(selection.value);
+    setPreventionMapType(selection.value);
+    setMapTitle(t(selection.label));
   };
 
-  getSuggestions = () => {
-    return preventionSuggestions;
-  };
-
-  render() {
-    return (
-      <IntegrationReactSelect
-        suggestions={preventionSuggestions}
-        onChange={this.onChange}
-        value={preventionSuggestions.find(
-          s => s.value === this.props.preventionFilters.mapType
-        )}
-      />
+  React.useEffect(() => {
+    const selection = preventionSuggestions.find(
+      s => s.value === preventionFilters.mapType
     );
-  }
+    setMapTitle(t(selection.label));
+  });
+
+  return (
+    <IntegrationReactSelect
+      suggestions={preventionSuggestions}
+      onChange={onChange}
+      value={preventionSuggestions.find(
+        s => s.value === preventionFilters.mapType
+      )}
+    />
+  );
 }
 
 export default connect(

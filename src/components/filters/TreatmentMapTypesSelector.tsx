@@ -1,17 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { State, TreatmentMapType } from "../../store/types";
 import IntegrationReactSelect, { OptionType } from "../BasicSelect";
 import { ValueType } from "react-select/src/types";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
 import { setTreatmentMapType } from "../../store/actions/treatment-actions";
+import { useTranslation } from "react-i18next";
+import { setMapTitleAction } from "../../store/actions/base-actions";
 
 const mapStateToProps = (state: State) => ({
   treatmentFilters: selectTreatmentFilters(state)
 });
 
 const mapDispatchToProps = {
-  setTreatmentMapType: setTreatmentMapType
+  setTreatmentMapType: setTreatmentMapType,
+  setMapTitle: setMapTitleAction
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -33,23 +36,35 @@ const treatmentSuggestions: OptionType[] = [
   }
 ];
 
-export class TreatmentMapTypesSelector extends Component<Props> {
-  onChange = (value: ValueType<OptionType>) => {
+function TreatmentMapTypesSelector({
+  setTreatmentMapType,
+  setMapTitle,
+  treatmentFilters
+}: Props) {
+  const { t } = useTranslation("common");
+
+  const onChange = (value: ValueType<OptionType>) => {
     const selection = value as OptionType;
-    this.props.setTreatmentMapType(selection.value);
+    setTreatmentMapType(selection.value);
+    setMapTitle(t(selection.label));
   };
 
-  render() {
-    return (
-      <IntegrationReactSelect
-        suggestions={treatmentSuggestions}
-        onChange={this.onChange}
-        value={treatmentSuggestions.find(
-          s => s.value === this.props.treatmentFilters.mapType
-        )}
-      />
+  React.useEffect(() => {
+    const selection = treatmentSuggestions.find(
+      s => s.value === treatmentFilters.mapType
     );
-  }
+    setMapTitle(t(selection.label));
+  });
+
+  return (
+    <IntegrationReactSelect
+      suggestions={treatmentSuggestions}
+      onChange={onChange}
+      value={treatmentSuggestions.find(
+        s => s.value === treatmentFilters.mapType
+      )}
+    />
+  );
 }
 
 export default connect(

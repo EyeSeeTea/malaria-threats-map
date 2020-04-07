@@ -7,6 +7,7 @@ interface AjaxOptions {
   method: string;
   path: string;
   body?: Record<string, any>;
+  headers?: Record<string, any>;
   customPath?: boolean;
   responseType?: string;
   params?: RequestParams;
@@ -33,8 +34,16 @@ const handleUnauthorized = async (error: AjaxError) => {
   throw error;
 };
 
-const buildAjaxOptions = ({ method, path, customPath }: AjaxOptions) => ({
+const buildAjaxOptions = ({
   method,
+  path,
+  customPath,
+  body,
+  headers
+}: AjaxOptions) => ({
+  method,
+  body,
+  headers,
   url: customPath ? path : `${config.mapServerUrl}${path}`
 });
 
@@ -58,3 +67,14 @@ export const getFull = R.curry((path: string) =>
     customPath: true
   })
 );
+
+export const postFull = (path: string, request: any) =>
+  makeRequestAndHandleUnauthorized({
+    method: "POST",
+    path,
+    body: request,
+    headers: {
+      "Content-Type": "application/json"
+    },
+    customPath: true
+  });

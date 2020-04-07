@@ -11,7 +11,7 @@ import {
   PboDeploymentColors,
   PboDeploymentCountriesStatus
 } from "./prevention/PboDeployment/PboDeploymentCountriesSymbols";
-import { studiesToGeoJson } from "./layer-utils";
+import { GeoJSONSource } from "mapbox-gl";
 
 const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
 const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
@@ -63,7 +63,7 @@ type Props = DispatchProps & StateProps & OwnProps;
 
 class PBODistrictLayer extends Component<Props> {
   componentDidMount(): void {
-    // this.mountLayer();
+    this.mountLayer();
   }
 
   componentDidUpdate() {
@@ -107,9 +107,8 @@ class PBODistrictLayer extends Component<Props> {
         }),
         {}
       );
-      console.log(statusByCountry);
 
-      const features = this.props.countries.features.map((feature: any) => {
+      this.props.countries.features.map((feature: any) => {
         const newFeature = { ...feature };
         const countryStatus: { [key: string]: number } =
           statusByCountry[newFeature.properties.ISO_2_CODE];
@@ -121,34 +120,28 @@ class PBODistrictLayer extends Component<Props> {
           a: [string, number],
           b: [string, number]
         ) => (a[1] > b[1] ? -1 : 1);
-        const status = Object.entries(countryStatus).sort(
-          sortByDeploymentStatusNumbers
-        )[0][0];
-        console.log(status);
-        console.log(newFeature);
-
-        newFeature.properties.PBO_DEPLOYMENT_STATUS = status;
-        return newFeature;
+        newFeature.properties.PBO_DEPLOYMENT_STATUS = Object.entries(
+          countryStatus
+        ).sort(sortByDeploymentStatusNumbers)[0][0];
       });
 
-      console.log(features);
-
-      let existing: any = this.props.map.getSource(COUNTRY_SELECTOR_SOURCE_ID);
+      let existing = this.props.map.getSource(
+        COUNTRY_SELECTOR_SOURCE_ID
+      ) as GeoJSONSource;
       if (existing) {
-        console.log(source.data);
         existing.setData(this.props.countries);
         return;
       }
 
       this.props.map.addSource(COUNTRY_SELECTOR_SOURCE_ID, source);
       this.props.map.addLayer(layer);
+
       setupEffects(
         this.props.map,
         COUNTRY_SELECTOR_SOURCE_ID,
         COUNTRY_SELECTOR_LAYER_ID
       );
       this.setupPopover();
-      console.log(this.props.countries);
       this.showLayer();
     } else {
       this.hideLayer();

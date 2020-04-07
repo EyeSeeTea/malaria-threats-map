@@ -1,9 +1,19 @@
 import React from "react";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import {createStyles, Fab, makeStyles, Theme} from "@material-ui/core";
-import whoLogoWhite from "../assets/img/who-logo-white.svg";
-import invasive from "../assets/img/invasive.svg";
+import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
+import whoLogoWhite from "../assets/img/who-logo-blue.png";
+import prevention from "../assets/img/prevention.png";
+import diagnosis from "../assets/img/diagnosis.png";
+import treatment from "../assets/img/treatment.png";
+import invasive from "../assets/img/invasive.jpg";
 import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import { useTranslation } from "react-i18next";
+import { State } from "../store/types";
+import { selectMapTitle, selectTheme } from "../store/reducers/base-reducer";
+import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
+import { connect } from "react-redux";
+import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -14,111 +24,132 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function dataURLtoBlob(dataurl: string) {
-  let arr = dataurl.split(","),
-    mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]),
-    n = bstr.length,
-    u8arr = new Uint8Array(n);
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-  return new Blob([u8arr], { type: mime });
-}
+const mapStateToProps = (state: State) => ({
+  theme: selectTheme(state),
+  title: selectMapTitle(state),
+  preventionMapType: selectPreventionFilters(state),
+  diagnosisFilters: selectDiagnosisFilters(state)
+});
+const mapDispatchToProps = {};
 
-const loadImage: (url: string) => Promise<HTMLImageElement> = (url: string) =>
-  new Promise((resolve, reject) => {
-    const imageObj1 = new Image();
-    imageObj1.src = url;
-    imageObj1.onload = function() {
-      resolve(imageObj1);
-    };
-    imageObj1.onabort = function() {
-      reject();
-    };
-  });
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+type OwnProps = {
+  map: mapboxgl.Map;
+};
+type Props = DispatchProps & StateProps & OwnProps;
 
-function Screenshot({ map }: any) {
+function Screenshot({ map, theme, title }: Props) {
+  const { t } = useTranslation("common");
   const classes = useStyles({});
 
   const handleClick = () => {
-    // var c=document.getElementById("myCanvas");
-    // var ctx=c.getContext("2d");
     const mapCanvas = map.getCanvas();
-    const color = "#5abe86";
-    const padding = 20;
-    const titleHeight = 60;
-    const footerHeight = 80;
-    const headerPadding = titleHeight + padding;
-    const footerPadding = footerHeight + padding;
-    const canvasWidth = mapCanvas.width + 2 * padding;
-    const canvasHeight = mapCanvas.height + headerPadding + footerPadding;
-    const logoWidth = 150;
-    const logoHeight = 50;
+
+    const copyright = t("copyright.content");
 
     const imageObj1 = new Image();
     imageObj1.src = whoLogoWhite;
-    Promise.all([loadImage(whoLogoWhite), loadImage(invasive)]).then(
-      ([logo, icon]) => {
-        html2canvas(document.querySelector("#legend")).then(legend => {
-          const destCanvas = document.createElement("canvas");
-          const destCtx = destCanvas.getContext("2d");
-          destCanvas.width = canvasWidth;
-          destCanvas.height = canvasHeight;
-          destCtx.fillStyle = color;
-          destCtx.fillRect(0, 0, canvasWidth, canvasHeight);
+    const a4h = 297;
+    const a4p = 10;
 
-          //call its drawImage() function passing it the source canvas directly
-          // const baseCanvasImage = canvas.toDataURL("image/octet-stream", 1.0);
-          destCtx.drawImage(mapCanvas, padding, titleHeight + padding);
-          const legendPositionX = canvasWidth - legend.width - 2 * padding;
-          const legendPositionY =
-            canvasHeight - legend.height - footerHeight - 2 * padding;
-          destCtx.drawImage(legend, legendPositionX, legendPositionY);
-          destCtx.fillStyle = "#FFFFFF";
-          destCtx.drawImage(
-            logo,
-            canvasWidth - logoWidth - padding,
-            canvasHeight - footerPadding + padding / 2,
-            logoWidth,
-            logoHeight
-          );
-          destCtx.fillStyle = "#000000";
-          destCtx.drawImage(icon, padding, padding, logoHeight, logoHeight);
-          destCtx.fillStyle = "#FFFFFF";
-          destCtx.font = "30px Arial";
-          destCtx.fillText(
-            "Intensity of An.gambiae s.l. resistance to Deltamethrin",
-            2 * padding + logoHeight,
-            2.5 * padding
-          );
-          destCtx.font = "14px Arial";
-          const textWidth = destCtx.measureText(
-            "@WHO 2019. All rights reserve"
-          );
-          destCtx.fillText(
-            "@WHO 2019. All rights reserve",
-            canvasWidth - textWidth.width - padding,
-            canvasHeight - padding
-          );
-          const image = destCanvas.toDataURL("image/octet-stream", 1.0);
-          const link = document.createElement("a");
-          const objurl = URL.createObjectURL(dataURLtoBlob(image));
-          link.download = `MTM - ${new Date().toUTCString()}.png`;
-          link.href = objurl;
-          link.click();
-        });
+    const icon = (() => {
+      switch (theme) {
+        case "prevention":
+          return prevention;
+        case "diagnosis":
+          return diagnosis;
+        case "treatment":
+          return treatment;
+        default:
+          return invasive;
       }
-    );
-    // imageObj1.onload = function() {
-    //     ctx.drawImage(imageObj1, 0, 0, 328, 526);
-    //     imageObj2.src = "2.png";
-    //     imageObj2.onload = function() {
-    //         ctx.drawImage(imageObj2, 15, 85, 300, 300);
-    //         var img = c.toDataURL("image/png");
-    //         document.write('<img src="' + img + '" width="328" height="526"/>');
-    //     }
-    // };
+    })();
+
+    html2canvas(document.querySelector("#legend")).then(legend => {
+      const doc = new jsPDF({
+        orientation: "l",
+        unit: "mm",
+        format: "a4",
+        putOnlyUsedFonts: true,
+        floatPrecision: 16
+      });
+
+      const ratio = mapCanvas.width / mapCanvas.height;
+
+      doc.setFontSize(24);
+      const textWidth2 =
+        (doc.getStringUnitWidth(title) * doc.internal.getFontSize()) /
+        doc.internal.scaleFactor;
+      const titleOffset = (doc.internal.pageSize.width - textWidth2 - 25) / 2;
+      doc.text(title, titleOffset + 25, 20);
+      const img2 = new Image();
+      img2.src = icon;
+      doc.addImage(img2, "JPEG", titleOffset, 10, 15, 15);
+
+      doc.setFontSize(7);
+      doc.setFontType("normal");
+      let lines = doc.splitTextToSize(copyright, 150);
+      doc.text(10, 180, lines);
+      const maxWidth = a4h - 2 * a4p;
+      const maxHeight = 135;
+      let mapWidth, mapHeight;
+      let horizontalOffset = 0;
+
+      if (maxHeight * ratio > maxWidth) {
+        mapWidth = maxWidth;
+        mapHeight = mapWidth / ratio;
+      } else {
+        mapWidth = maxHeight * ratio;
+        mapHeight = maxHeight;
+      }
+
+      const verticalPadding = (maxHeight - mapHeight) / 2;
+      if (verticalPadding === 0) {
+        horizontalOffset = (maxWidth - mapWidth) / 2;
+      }
+
+      doc.addImage(
+        mapCanvas.toDataURL("JPEG"),
+        "JPEG",
+        10 + horizontalOffset,
+        30 + verticalPadding,
+        mapWidth,
+        mapHeight
+      );
+      const baseCanvasImage = legend.toDataURL("image/octet-stream", 1.0);
+      const legendRatio = legend.height / legend.width;
+
+      const legendWidth = 40;
+      const legendHeight = legendWidth * legendRatio;
+
+      const legendX = maxWidth - horizontalOffset - legendWidth + 5;
+      const legendY = mapHeight + 30 + verticalPadding - legendHeight - 5;
+
+      doc.addImage(
+        baseCanvasImage,
+        "JPEG",
+        legendX,
+        legendY,
+        legendWidth,
+        legendHeight
+      );
+
+      doc.setFontSize(10);
+      doc.text("Data source: Malaria Threats Map", a4h - 130, 180);
+      doc.text("Map Production: Global Malaria Program", a4h - 130, 185);
+      doc.text("World Health Organization", a4h - 130, 190);
+
+      const img = new Image();
+      img.src = whoLogoWhite;
+      doc.addImage(img, "JPEG", a4h - 60, 175, 45, 13);
+      doc.setFontSize(9);
+      doc.text("@WHO 2019. All rights reserved", a4h - 60, 195);
+
+      // Save the Data
+      doc.save("Report.pdf");
+      return;
+    });
   };
   return (
     <div>
@@ -134,4 +165,4 @@ function Screenshot({ map }: any) {
   );
 }
 
-export default Screenshot;
+export default connect(mapStateToProps, mapDispatchToProps)(Screenshot);

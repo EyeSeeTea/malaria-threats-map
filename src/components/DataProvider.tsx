@@ -14,7 +14,8 @@ import { fetchInvasiveStudiesRequest } from "../store/actions/invasive-actions";
 import { fetchTreatmentStudiesRequest } from "../store/actions/treatment-actions";
 import { selectCountryLayerIsLoading } from "../store/reducers/country-layer-reducer";
 import { fetchDistrictsRequest } from "../store/actions/district-actions";
-import {fetchCountryLayerRequest} from "../store/actions/country-layer-actions";
+import { fetchCountryLayerRequest } from "../store/actions/country-layer-actions";
+import { fetchDataDownloadRequestAction } from "../store/actions/data-download-actions";
 
 const mapStateToProps = (state: State) => ({
   translationsLoading: selectTranslationsAreLoading(state),
@@ -29,7 +30,8 @@ const mapDispatchToProps = {
   fetchTreatmentStudies: fetchTreatmentStudiesRequest,
   fetchInvasiveStudies: fetchInvasiveStudiesRequest,
   fetchDistricts: fetchDistrictsRequest,
-  fetchCountryLayer: fetchCountryLayerRequest
+  fetchCountryLayer: fetchCountryLayerRequest,
+  fetchDownloads: fetchDataDownloadRequestAction
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

@@ -14,6 +14,7 @@ import Select from "@material-ui/core/Select";
 import { State } from "../../store/types";
 import { selectCountries } from "../../store/reducers/translations-reducer";
 import { connect } from "react-redux";
+import { UserInfo } from "./index";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ORGANIZATION_TYPES = [
+export const ORGANIZATION_TYPES = [
   "data_download.step1.organization_type_options.university",
   "data_download.step1.organization_type_options.ngos",
   "data_download.step1.organization_type_options.agency",
@@ -45,27 +46,29 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {};
-type OwnProps = {};
+type OwnProps = {
+  userInfo: Partial<UserInfo>;
+  onChange: (key: keyof UserInfo, value: any) => void;
+};
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
-const UserForm = ({ countries }: Props) => {
+const UserForm = ({ countries, onChange, userInfo }: Props) => {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [organizationType, setOrganizationType] = React.useState(
-    ORGANIZATION_TYPES[0]
-  );
-  const [country, setCountry] = React.useState(undefined);
   const handleOrganizationTypeChange = (
     event: React.ChangeEvent<{ value: unknown }>
   ) => {
-    setOrganizationType(event.target.value as string);
+    const newOrganizationType = event.target.value as string;
+    onChange("organizationType", t(newOrganizationType));
   };
+
   const handleCountryChange = (
     event: React.ChangeEvent<{ value: unknown }>
   ) => {
-    setCountry(event.target.value as string);
+    const newCountry = event.target.value as string;
+    onChange("country", newCountry);
   };
 
   return (
@@ -76,6 +79,10 @@ const UserForm = ({ countries }: Props) => {
           InputLabelProps={{
             shrink: true
           }}
+          value={userInfo.firstName}
+          onChange={event =>
+            onChange("firstName", event.target.value as string)
+          }
         />
       </FormControl>
       <FormControl fullWidth className={classes.formControl}>
@@ -84,13 +91,15 @@ const UserForm = ({ countries }: Props) => {
           InputLabelProps={{
             shrink: true
           }}
+          value={userInfo.lastName}
+          onChange={event => onChange("lastName", event.target.value as string)}
         />
       </FormControl>
       <FormControl fullWidth className={classes.formControl}>
         <InputLabel>{t("data_download.step1.organization_type")}</InputLabel>
         <Select
           fullWidth
-          value={organizationType}
+          value={userInfo.organizationType}
           onChange={handleOrganizationTypeChange}
         >
           {ORGANIZATION_TYPES.map(type => (
@@ -106,6 +115,10 @@ const UserForm = ({ countries }: Props) => {
           InputLabelProps={{
             shrink: true
           }}
+          value={userInfo.organizationName}
+          onChange={event =>
+            onChange("organizationName", event.target.value as string)
+          }
         />
       </FormControl>
       <FormControl fullWidth className={classes.formControl}>
@@ -114,12 +127,18 @@ const UserForm = ({ countries }: Props) => {
           InputLabelProps={{
             shrink: true
           }}
+          value={userInfo.position}
+          onChange={event => onChange("position", event.target.value as string)}
         />
       </FormControl>
       {countries && (
         <FormControl fullWidth className={classes.formControl}>
           <InputLabel>{t("data_download.step1.country")}</InputLabel>
-          <Select fullWidth value={country} onChange={handleCountryChange}>
+          <Select
+            fullWidth
+            value={userInfo.country}
+            onChange={handleCountryChange}
+          >
             {countries.map(type => (
               <MenuItem key={type.VALUE_} value={type.VALUE_}>
                 {t(type.VALUE_)}
@@ -134,6 +153,8 @@ const UserForm = ({ countries }: Props) => {
           InputLabelProps={{
             shrink: true
           }}
+          value={userInfo.email}
+          onChange={event => onChange("email", event.target.value as string)}
         />
       </FormControl>
       <FormControl fullWidth className={classes.formControl}>
@@ -142,6 +163,10 @@ const UserForm = ({ countries }: Props) => {
           InputLabelProps={{
             shrink: true
           }}
+          value={userInfo.phoneNumber}
+          onChange={event =>
+            onChange("phoneNumber", event.target.value as string)
+          }
         />
       </FormControl>
     </Card>

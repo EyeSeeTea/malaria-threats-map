@@ -1,14 +1,28 @@
 import React from "react";
-import {Card, Checkbox, createStyles, FormControl, makeStyles, Paper, TextField, Theme} from "@material-ui/core";
+import {
+  Card,
+  Checkbox,
+  createStyles,
+  FormControl,
+  makeStyles,
+  Paper,
+  TextField,
+  Theme
+} from "@material-ui/core";
 import styled from "styled-components";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import FormLabel from "@material-ui/core/FormLabel";
-import {Divider} from "../filters/Filters";
+import { Divider } from "../filters/Filters";
 import * as R from "ramda";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
-import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider
+} from "@material-ui/pickers";
+import { connect } from "react-redux";
+import { UseInfo } from "./index";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   & span {
@@ -41,17 +55,56 @@ const USES = [
   "data_download.step2.data_use_options.advocacy"
 ];
 
-const UseForm = () => {
-  const classes = useStyles({});
-  const { t } = useTranslation("common");
-  const [uses, selectUses] = React.useState([]);
-  const [selectedDate, setSelectedDate] = React.useState<Date | null>(
-    new Date()
+export const isResearchActive = (uses: string[]) =>
+  R.any(
+    use =>
+      [
+        "data_download.step2.data_use_options.research",
+        "data_download.step2.data_use_options.grant"
+      ].includes(use),
+    uses
   );
 
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
+export const isPoliciesActive = (uses: string[]) =>
+  R.any(
+    use => ["data_download.step2.data_use_options.policies"].includes(use),
+    uses
+  );
+
+export const isToolsActive = (uses: string[]) =>
+  R.any(
+    use =>
+      [
+        "data_download.step2.data_use_options.vector",
+        "data_download.step2.data_use_options.diagnosis"
+      ].includes(use),
+    uses
+  );
+
+const mapDispatchToProps = {};
+type OwnProps = {
+  useInfo: Partial<UseInfo>;
+  onChange: (key: keyof UseInfo, value: any) => void;
+};
+type DispatchProps = typeof mapDispatchToProps;
+type Props = DispatchProps & OwnProps;
+
+const UseForm = ({ onChange, useInfo }: Props) => {
+  const classes = useStyles({});
+  const { t } = useTranslation("common");
+
+  const handleUsesChange = (uses: string[]) => {
+    onChange("uses", uses);
   };
+
+  const handleDateChange = (date: Date | null) => {
+    onChange("studyDate", date);
+  };
+
+  const researchActive = isResearchActive(useInfo.uses);
+  const policiesActive = isPoliciesActive(useInfo.uses);
+  const toolsActive = isToolsActive(useInfo.uses);
+
   return (
     <Card className={classes.paper}>
       <FormControl fullWidth className={classes.formControl}>
@@ -65,12 +118,12 @@ const UseForm = () => {
             control={
               <Checkbox
                 color="primary"
-                checked={uses.includes(use)}
+                checked={useInfo.uses.includes(use)}
                 onChange={() =>
-                  selectUses(
-                    uses.includes(use)
-                      ? uses.filter(u => u !== use)
-                      : [...uses, use]
+                  handleUsesChange(
+                    useInfo.uses.includes(use)
+                      ? useInfo.uses.filter(u => u !== use)
+                      : [...useInfo.uses, use]
                   )
                 }
               />
@@ -79,14 +132,7 @@ const UseForm = () => {
           />
         ))}
       </FormControl>
-      {R.any(
-        use =>
-          [
-            "data_download.step2.data_use_options.research",
-            "data_download.step2.data_use_options.grant"
-          ].includes(use),
-        uses
-      ) && (
+      {researchActive && (
         <FormControl fullWidth className={classes.formControl}>
           <TextField
             label={t(`data_download.step2.date_use_options_content.research`)}
@@ -95,13 +141,14 @@ const UseForm = () => {
             InputLabelProps={{
               shrink: true
             }}
+            value={useInfo.researchInfo}
+            onChange={event =>
+              onChange("researchInfo", event.target.value as string)
+            }
           />
         </FormControl>
       )}
-      {R.any(
-        use => ["data_download.step2.data_use_options.policies"].includes(use),
-        uses
-      ) && (
+      {policiesActive && (
         <FormControl fullWidth className={classes.formControl}>
           <TextField
             label={t(`data_download.step2.date_use_options_content.policies`)}
@@ -110,25 +157,26 @@ const UseForm = () => {
             InputLabelProps={{
               shrink: true
             }}
+            value={useInfo.policiesInfo}
+            onChange={event =>
+              onChange("policiesInfo", event.target.value as string)
+            }
           />
         </FormControl>
       )}
-      {R.any(
-        use =>
-          [
-            "data_download.step2.data_use_options.vector",
-            "data_download.step2.data_use_options.diagnosis"
-          ].includes(use),
-        uses
-      ) && (
+      {toolsActive && (
         <FormControl fullWidth className={classes.formControl}>
           <TextField
-            label={t(`data_download.step2.date_use_options_content.policies`)}
+            label={t(`data_download.step2.date_use_options_content.tools`)}
             multiline
             rowsMax="3"
             InputLabelProps={{
               shrink: true
             }}
+            value={useInfo.toolsInfo}
+            onChange={event =>
+              onChange("toolsInfo", event.target.value as string)
+            }
           />
         </FormControl>
       )}
@@ -140,7 +188,7 @@ const UseForm = () => {
           <KeyboardDatePicker
             disableToolbar
             variant="inline"
-            value={selectedDate}
+            value={useInfo.studyDate}
             onChange={handleDateChange}
             KeyboardButtonProps={{
               "aria-label": "change date"
@@ -153,4 +201,4 @@ const UseForm = () => {
   );
 };
 
-export default UseForm;
+export default connect(null, mapDispatchToProps)(UseForm);

@@ -6,6 +6,7 @@ import * as InvasiveEpics from "./epics/invasive-epics";
 import * as TranslationsEpics from "./epics/translations-epics";
 import * as CountryLayerEpics from "./epics/country-layer-epics";
 import * as DistrictEpics from "./epics/districts-epics";
+import * as DataDownloadEpics from "./epics/data-download-epics";
 import * as BaseEpics from "./epics/base-epics";
 
 const rootEpic = combineEpics(
@@ -16,6 +17,7 @@ const rootEpic = combineEpics(
   ...Object.values(TranslationsEpics),
   ...Object.values(CountryLayerEpics),
   ...Object.values(DistrictEpics),
+  ...Object.values(DataDownloadEpics),
   ...Object.values(BaseEpics)
 );
 

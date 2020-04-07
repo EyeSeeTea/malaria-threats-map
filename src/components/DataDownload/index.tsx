@@ -1,7 +1,7 @@
 import React from "react";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
-import { State } from "../../store/types";
-import { connect } from "react-redux";
+import {State} from "../../store/types";
+import {connect} from "react-redux";
 import {
   AppBar,
   Button,
@@ -18,21 +18,18 @@ import Dialog from "@material-ui/core/Dialog";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepButton from "@material-ui/core/StepButton";
-import { selectIsDataDownloadOpen } from "../../store/reducers/base-reducer";
-import {
-  logEventAction,
-  setDataDownloadOpenAction
-} from "../../store/actions/base-actions";
-import { useTranslation } from "react-i18next";
-import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
-import UserForm from "./UserForm";
-import UseForm from "./UseForm";
+import {selectIsDataDownloadOpen} from "../../store/reducers/base-reducer";
+import {logEventAction, setDataDownloadOpenAction} from "../../store/actions/base-actions";
+import {useTranslation} from "react-i18next";
+import {selectTreatmentStudies} from "../../store/reducers/treatment-reducer";
+import UserForm, {ORGANIZATION_TYPES} from "./UserForm";
+import UseForm, {isPoliciesActive, isResearchActive, isToolsActive} from "./UseForm";
 import Welcome from "./Welcome";
 import Filters from "./Filters";
-import { exportToCSV } from "./download";
-import { FlexGrow } from "../Chart";
+import {exportToCSV} from "./download";
+import {FlexGrow} from "../Chart";
 import styled from "styled-components";
-import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
+import {selectPreventionStudies} from "../../store/reducers/prevention-reducer";
 import {
   filterByAssayTypes,
   filterByCountries,
@@ -47,10 +44,11 @@ import {
   filterByTypes,
   filterByYears
 } from "../layers/studies-filters";
-import { Option } from "../BasicSelect";
+import {Option} from "../BasicSelect";
 import mappings from "./mappings/index";
 import * as R from "ramda";
-import { selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
+import {selectInvasiveStudies} from "../../store/reducers/invasive-reducer";
+import {addDataDownloadRequestAction} from "../../store/actions/data-download-actions";
 
 const Wrapper = styled.div`
   margin: 16px 0;
@@ -101,6 +99,7 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
   setDataDownloadOpen: setDataDownloadOpenAction,
+  addDownload: addDataDownloadRequestAction,
   logEvent: logEventAction
 };
 type OwnProps = {};
@@ -117,17 +116,63 @@ function getSteps() {
   ];
 }
 
+export type UserInfo = {
+  firstName: string;
+  lastName: string;
+  organizationType: string;
+  organizationName: string;
+  position: string;
+  country: string;
+  email: string;
+  phoneNumber: string;
+};
+
+export type UseInfo = {
+  uses: string[];
+  studyDate: Date;
+  researchInfo: string;
+  policiesInfo: string;
+  toolsInfo: string;
+};
+
+export type Download = {
+  firstName: string;
+  lastName: string;
+  organizationType: string;
+  organizationName: string;
+  position: string;
+  country: string;
+  email: string;
+  phoneNumber: string;
+  uses: string;
+  date: string;
+  researchInfo: string;
+  policiesInfo: string;
+  toolsInfo: string;
+  theme: string;
+  dataset: string;
+};
+
 function Index({
   isDataDownloadOpen,
   setDataDownloadOpen,
   preventionStudies,
   treatmentStudies,
   invasiveStudies,
-  logEvent
+  logEvent,
+  addDownload
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [activeStep, setActiveStep] = React.useState(3);
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({
+    organizationType: ORGANIZATION_TYPES[0]
+  });
+  const [useInfo, setUseInfo] = React.useState<Partial<UseInfo>>({
+    uses: [],
+    studyDate: new Date()
+  });
+
   const [selections, setSelections] = React.useState({
     theme: "prevention",
     preventionDataset: undefined,
@@ -145,9 +190,17 @@ function Index({
     years: [],
     countries: []
   });
+
+  const onChangeUserInfo = (field: keyof UserInfo, value: any) => {
+    setUserInfo({ ...userInfo, [field]: value });
+  };
+  const onChangeUseInfo = (field: keyof UseInfo, value: any) => {
+    setUseInfo({ ...useInfo, [field]: value });
+  };
   const handleToggle = () => {
     setDataDownloadOpen(!isDataDownloadOpen);
   };
+
   const steps = getSteps();
 
   const handleNext = () => {
@@ -261,9 +314,7 @@ function Index({
           filterByCountries(selections.countries),
           filterByYears(selections.years)
         ];
-        console.log(selections);
         const studies = filterStudies(treatmentStudies, filters);
-        console.log(studies);
         const results = buildResults(
           studies,
           mappings[selections.treatmentDataset]
@@ -310,8 +361,8 @@ function Index({
   };
 
   const downloadInvasiveData = () => {
-    switch (selections.invasiveDataset) {
-      case "INVASIVE_VECTOR_SPECIES": {
+    if (selections.invasiveDataset === "INVASIVE_VECTOR_SPECIES") {
+      {
         const filters = [
           filterBySpecies(selections.species),
           filterByCountries(selections.countries),
@@ -322,7 +373,6 @@ function Index({
           studies,
           mappings[selections.invasiveDataset]
         );
-        console.log(studies);
         const tabs = [
           {
             name: "Data",
@@ -330,13 +380,32 @@ function Index({
           }
         ];
         exportToCSV(tabs, "file");
-        break;
       }
     }
   };
 
   const downloadData = () => {
-    console.log(selections);
+    const request: Download = {
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName,
+      organizationType: t(userInfo.organizationType),
+      organizationName: userInfo.organizationName,
+      position: userInfo.position,
+      country: userInfo.country,
+      email: userInfo.email,
+      phoneNumber: userInfo.phoneNumber,
+      uses: useInfo.uses.map(use => t(use)).join(", "),
+      researchInfo: useInfo.researchInfo || "",
+      policiesInfo: useInfo.policiesInfo || "",
+      toolsInfo: useInfo.toolsInfo || "",
+      date: useInfo.studyDate.toISOString().slice(0, 10),
+      theme: selections.theme,
+      dataset: t(
+        selections.preventionDataset ||
+          selections.treatmentDataset ||
+          selections.invasiveDataset
+      )
+    };
     switch (selections.theme) {
       case "prevention":
         downloadPreventionData();
@@ -348,10 +417,48 @@ function Index({
         downloadInvasiveData();
         break;
     }
+    addDownload(request);
     logEvent({
       category: "Download Data",
       action: selections.theme
     });
+  };
+
+  const isUserFormValid = () => {
+    return (
+      userInfo.firstName &&
+      userInfo.lastName &&
+      userInfo.position &&
+      userInfo.country &&
+      userInfo.organizationType &&
+      userInfo.organizationName &&
+      userInfo.email &&
+      userInfo.phoneNumber
+    );
+  };
+
+  const isUseFormValid = () => {
+    if (!useInfo.uses) {
+      return false;
+    }
+    const researchActive = isResearchActive(useInfo.uses);
+    const policiesActive = isPoliciesActive(useInfo.uses);
+    const toolsActive = isToolsActive(useInfo.uses);
+    return (
+      useInfo.uses.length > 0 &&
+      useInfo.studyDate &&
+      (researchActive ? useInfo.researchInfo : true) &&
+      (policiesActive ? useInfo.policiesInfo : true) &&
+      (toolsActive ? useInfo.toolsInfo : true)
+    );
+  };
+
+  const isDownloadFormValid = () => {
+    return (
+      (theme === "prevention" && preventionDataset) ||
+      (theme === "treatment" && treatmentDataset) ||
+      (theme === "invasive" && invasiveDataset)
+    );
   };
 
   const renderStep = () => {
@@ -359,9 +466,9 @@ function Index({
       case 0:
         return <Welcome />;
       case 1:
-        return <UserForm />;
+        return <UserForm userInfo={userInfo} onChange={onChangeUserInfo} />;
       case 2:
-        return <UseForm />;
+        return <UseForm useInfo={useInfo} onChange={onChangeUseInfo} />;
       case 3:
         return <Filters onChange={setSelections} selections={selections} />;
       default:
@@ -369,17 +476,26 @@ function Index({
     }
   };
 
-  const isLastStep = activeStep === steps.length - 1;
   const {
     theme,
     preventionDataset,
     treatmentDataset,
     invasiveDataset
   } = selections;
-  const isFormValid =
-    (theme === "prevention" && preventionDataset) ||
-    (theme === "treatment" && treatmentDataset) ||
-    (theme === "invasive" && invasiveDataset);
+
+  const isStepValid = () => {
+    switch (activeStep) {
+      case 0:
+        return true;
+      case 1:
+        return isUserFormValid();
+      case 2:
+        return isUserFormValid() && isUseFormValid();
+    }
+  };
+
+  const isFormValid = () =>
+    isUserFormValid() && isUseFormValid() && isDownloadFormValid();
 
   return (
     <div>
@@ -422,10 +538,8 @@ function Index({
             className={classes.paper}
           >
             {steps.map((label, index) => (
-              <Step key={label} onClick={() => setActiveStep(index)}>
-                <StepButton style={{ cursor: "pointer" }}>
-                  {t(label)}
-                </StepButton>
+              <Step key={label}>
+                <StepButton>{t(label)}</StepButton>
               </Step>
             ))}
           </Stepper>
@@ -447,7 +561,7 @@ function Index({
               color="primary"
               onClick={handleNext}
               className={classes.button}
-              disabled={activeStep === steps.length - 1}
+              disabled={!isStepValid()}
             >
               {t("data_download.buttons.next")}
             </Button>
@@ -455,7 +569,7 @@ function Index({
               startIcon={<CloudDownloadIcon />}
               variant={"contained"}
               color={"primary"}
-              disabled={!(isLastStep && isFormValid)}
+              disabled={!isFormValid()}
               onClick={() => downloadData()}
             >
               {t("data_download.buttons.download")}

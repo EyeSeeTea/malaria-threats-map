@@ -33,7 +33,8 @@ const initialState: MalariaState = Object.freeze({
     step: 0
   },
   dataDownloadOpen: false,
-  reportOpen: true
+  reportOpen: false,
+  mapTitle: ""
 });
 
 export default createReducer<MalariaState>(initialState, {
@@ -80,7 +81,9 @@ export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.SetDataDownloadOpen]: (dataDownloadOpen: boolean) =>
     R.assoc("dataDownloadOpen", dataDownloadOpen),
   [ActionTypeEnum.SetReportOpen]: (reportOpen: boolean) =>
-    R.assoc("reportOpen", reportOpen)
+    R.assoc("reportOpen", reportOpen),
+  [ActionTypeEnum.SetMapTitle]: (mapTitle: string) =>
+    R.assoc("mapTitle", mapTitle)
 });
 
 export const selectMalariaState = (state: State) => state.malaria;
@@ -152,4 +155,9 @@ export const selectIsDataDownloadOpen = createSelector(
 export const selectIsReportOpen = createSelector(
   selectMalariaState,
   R.prop("reportOpen")
+);
+
+export const selectMapTitle = createSelector(
+  selectMalariaState,
+  R.prop("mapTitle")
 );

@@ -21,6 +21,7 @@ export enum ActionTypeEnum {
   SetTourStep = "malaria/SET_TOUR_STEP",
   SetDataDownloadOpen = "malaria/SET_DATA_DOWNLOAD_OPEN",
   SetReportOpen = "malaria/SET_REPORT_OPEN",
+  SetMapTitle = "malaria/SET_MAP_TITLE",
 
   FetchPreventionStudiesRequest = "prevention/FETCH_PREVENTION_STUDIES_REQUEST",
   FetchPreventionStudiesSuccess = "prevention/FETCH_PREVENTION_STUDIES_SUCCESS",
@@ -77,5 +78,13 @@ export enum ActionTypeEnum {
 
   FetchDistrictsRequest = "layers/FETCH_DISTRICTS_REQUEST",
   FetchDistrictsSuccess = "layers/FETCH_DISTRICTS_SUCCESS",
-  FetchDistrictsError = "layers/FETCH_DISTRICTS_ERROR"
+  FetchDistrictsError = "layers/FETCH_DISTRICTS_ERROR",
+
+  FetchDownloadsRequest = "downloads/FETCH_DOWNLOADS_REQUEST",
+  FetchDownloadsSuccess = "downloads/FETCH_DOWNLOADS_SUCCESS",
+  FetchDownloadsError = "downloads/FETCH_DOWNLOADS_ERROR",
+
+  AddDownloadRequest = "downloads/ADD_DOWNLOAD_REQUEST",
+  AddDownloadSuccess = "downloads/ADD_DOWNLOAD_SUCCESS",
+  AddDownloadError = "downloads/ADD_DOWNLOAD_ERROR"
 }
