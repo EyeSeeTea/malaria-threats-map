@@ -80,13 +80,15 @@ const StyledCell = styled(TableCell)<{
   isBold?: boolean;
   color?: string;
   isRight?: boolean;
+  divider?: boolean;
 }>`
-  font-size: ${props => (props.isBold ? "13px" : "12px")} !important;
+  font-size: ${props => (props.isBold ? "12px" : "11.5px")} !important;
   line-height: 1rem !important;
-  padding: 6px 10px !important;
+  padding: 3px 6px !important;
   font-weight: ${props => (props.isBold ? "bold" : "normal")} !important;
   color: ${props => props.color || "inherit"} !important;
   ${props => props.isRight && "text-align: right !important"};
+  ${props => props.divider && "border-left: 1px solid rgba(224, 224, 224, 1)"}
 `;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -98,7 +100,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%"
     },
     wrapper: {
-      padding: theme.spacing(2)
+      padding: theme.spacing(0, 2)
     },
     table: {
       minWidth: 750
@@ -149,10 +151,10 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     <TableHead>
       <TableRow>
         <StyledCell isBold colSpan={2} />
-        <StyledCell isBold colSpan={8}>
+        <StyledCell isBold colSpan={8} divider>
           Resistance status
         </StyledCell>
-        <StyledCell isBold colSpan={7}>
+        <StyledCell isBold colSpan={7} divider>
           Resistance mechanisms
         </StyledCell>
       </TableRow>
@@ -160,7 +162,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         <StyledCell isBold colSpan={2}>
           Insecticide classes to which vector resistance confirmed
         </StyledCell>
-        <StyledCell isBold colSpan={2}>
+        <StyledCell isBold colSpan={2} divider>
           Pyrethroids
         </StyledCell>
         <StyledCell isBold colSpan={2}>
@@ -172,7 +174,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         <StyledCell isBold colSpan={2}>
           Organophosphates
         </StyledCell>
-        <StyledCell isBold colSpan={3}>
+        <StyledCell isBold colSpan={3} divider>
           Metabolic
         </StyledCell>
         <StyledCell isBold colSpan={4}>
@@ -194,6 +196,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             align={headCell.align || "left"}
             padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={orderBy === headCell.id ? order : false}
+            divider={headCell.divider}
           >
             {headCell.sortable ? (
               <TableSortLabel
@@ -339,8 +342,19 @@ function StudiesTable({ studies: baseStudies }: Props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const [countries, setCountries] = React.useState<string[]>([]);
-  const [species, setSpecies] = React.useState<string[]>([]);
+  const [countries, doSetCountries] = React.useState<string[]>([]);
+  const [species, doSetSpecies] = React.useState<string[]>([]);
+
+  const setCountries = (countries: string[]) => {
+    doSetCountries(countries);
+
+    setPage(0);
+  };
+
+  const setSpecies = (species: string[]) => {
+    doSetSpecies(species);
+    setPage(0);
+  };
 
   const filters = [filterByCountries(countries), filterBySpecies(species)];
 
@@ -489,6 +503,7 @@ function StudiesTable({ studies: baseStudies }: Props) {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
+    setPage(0);
   };
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -513,13 +528,15 @@ function StudiesTable({ studies: baseStudies }: Props) {
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, groups.length - page * rowsPerPage);
-
-  const tablePage = stableSort(groups, getComparator(order, orderBy)).slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
+  const sortedGroups = R.sort(
+    (a, b) => (t(a.ISO2) < t(b.ISO2) ? -1 : 1),
+    groups
   );
+
+  const tablePage = stableSort(
+    sortedGroups,
+    getComparator(order, orderBy)
+  ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   const rows: Data[] = tablePage.map(row => ({
     ...row,
@@ -569,15 +586,6 @@ function StudiesTable({ studies: baseStudies }: Props) {
                         tablePage[index].ISO2 !==
                           tablePage[index - 1].ISO2) && (
                         <>
-                          {/*<StyledCell*/}
-                          {/*  padding="checkbox"*/}
-                          {/*  rowSpan={row.COUNTRY_NUMBER}*/}
-                          {/*>*/}
-                          {/*  <Checkbox*/}
-                          {/*    checked={isItemSelected}*/}
-                          {/*    inputProps={{ "aria-labelledby": labelId }}*/}
-                          {/*  />*/}
-                          {/*</StyledCell>*/}
                           <StyledCell
                             component="th"
                             id={labelId}
@@ -620,6 +628,7 @@ function StudiesTable({ studies: baseStudies }: Props) {
                                 error ? "red" : grey ? darkGrey : undefined
                               }
                               isRight={header.align === "right"}
+                              divider={header.divider}
                             >
                               {header && header.numeric && isNumber
                                 ? `${number.toFixed(2)}% ${
@@ -632,16 +641,11 @@ function StudiesTable({ studies: baseStudies }: Props) {
                     </TableRow>
                   );
                 })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 33 * emptyRows }}>
-                    <StyledCell colSpan={2} />
-                  </TableRow>
-                )}
               </TableBody>
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 20]}
+            rowsPerPageOptions={[5, 10, 15, 20]}
             component="div"
             count={groups.length}
             rowsPerPage={rowsPerPage}

@@ -1,6 +1,6 @@
 import React from "react";
 import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
-import ReportIcon from "@material-ui/icons/School";
+import ReportIcon from "@material-ui/icons/Description";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import { State } from "../../store/types";

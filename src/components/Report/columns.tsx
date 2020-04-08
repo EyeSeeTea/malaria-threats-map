@@ -72,6 +72,7 @@ export interface HeadCell {
   label: string;
   sortable?: boolean;
   align?: "right" | "left";
+  divider?: boolean;
 }
 
 export const headCells: HeadCell[] = [
@@ -93,7 +94,8 @@ export const headCells: HeadCell[] = [
     disablePadding: false,
     label: "% sites exhibiting resistance (n*)",
     sortable: true,
-    align: "right"
+    align: "right",
+    divider: true
   },
   {
     id: "PYRETHROIDS_YEARS",
@@ -156,7 +158,8 @@ export const headCells: HeadCell[] = [
     numeric: true,
     disablePadding: false,
     label: "Mono oxygenases",
-    align: "right"
+    align: "right",
+    divider: true
   },
   {
     id: "ESTERASES",

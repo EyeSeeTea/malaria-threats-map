@@ -13,7 +13,7 @@ export function resolveMechanism(
     countrySpeciesStudies
   );
   const detected = studies.filter(
-    study => parseFloat(study.MORTALITY_ADJUSTED) < 0.9
+    study => study.MECHANISM_STATUS === "DETECTED"
   );
   const percentage = (detected.length * 100) / studies.length;
   return {
