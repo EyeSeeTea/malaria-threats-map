@@ -11,11 +11,11 @@ const mappings: Option[] = [
   },
   {
     value: "ADMIN1",
-    label: "PROVINCE"
+    label: "ADMIN1"
   },
   {
     value: "ADMIN2",
-    label: "DISTRICT"
+    label: "ADMIN2"
   },
   {
     value: "VILLAGE_NAME",
@@ -75,11 +75,11 @@ const mappings: Option[] = [
   },
   {
     value: "INSTITUTE",
-    label: "INSTITUTE"
+    label: "DATA_SOURCE"
   },
   {
     value: "CITATION_LONG",
-    label: "CITATION_LONG"
+    label: "CITATION"
   },
   {
     value: "CITATION_URL",
@@ -87,7 +87,7 @@ const mappings: Option[] = [
   },
   {
     value: "INSTITUTE_CURATION",
-    label: "CURATOR"
+    label: "DATA_CURATOR"
   }
 ];
 

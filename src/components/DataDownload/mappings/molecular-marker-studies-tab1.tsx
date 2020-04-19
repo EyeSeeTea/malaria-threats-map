@@ -15,7 +15,7 @@ const mappings: Option[] = [
   },
   {
     value: "PROVINCE",
-    label: "PROVINCE"
+    label: "ADMIN2"
   },
   {
     value: "VILLAGE_NAME",
@@ -47,7 +47,7 @@ const mappings: Option[] = [
   },
   {
     value: "INSTITUTE",
-    label: "INSTITUTION"
+    label: "DATA_SOURCE"
   },
   {
     value: "CITATION_URL",
