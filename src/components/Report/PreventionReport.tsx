@@ -1,6 +1,11 @@
 import React from "react";
 import clsx from "clsx";
-import {createStyles, lighten, makeStyles, Theme} from "@material-ui/core/styles";
+import {
+  createStyles,
+  lighten,
+  makeStyles,
+  Theme
+} from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -16,20 +21,26 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
-import {connect} from "react-redux";
-import {State} from "../../store/types";
-import {selectPreventionStudies} from "../../store/reducers/prevention-reducer";
-import {PreventionStudy} from "../../types/Prevention";
+import { connect } from "react-redux";
+import { State } from "../../store/types";
+import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
+import { PreventionStudy } from "../../types/Prevention";
 import * as R from "ramda";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import {COLUMNS, Data, ERROR_COLUMNS, GREY_COLUMNS, headCells} from "./columns";
-import {resolvePyrethroids} from "./resolvers/resistanceStatus";
-import {resolveMechanism} from "./resolvers/resistanceMechanism";
+import {
+  COLUMNS,
+  Data,
+  ERROR_COLUMNS,
+  GREY_COLUMNS,
+  headCells
+} from "./columns";
+import { resolvePyrethroids } from "./resolvers/resistanceStatus";
+import { resolveMechanism } from "./resolvers/resistanceMechanism";
 import FilterPopover from "./FilterPopover";
-import {filterByCountries, filterBySpecies} from "../layers/studies-filters";
-import {exportToCSV} from "../DataDownload/download";
-import {Button} from "@material-ui/core";
+import { filterByCountries, filterBySpecies } from "../layers/studies-filters";
+import { exportToCSV } from "../DataDownload/download";
+import { Button } from "@material-ui/core";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -256,6 +267,7 @@ interface EnhancedTableToolbarProps {
 }
 
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
+  const { t } = useTranslation("common");
   const classes = useToolbarStyles({});
   const {
     numSelected,
@@ -282,7 +294,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle">
-          Global Report
+          {t("report.prevention.title")}
         </Typography>
       )}
       {numSelected > 0 ? (

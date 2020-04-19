@@ -56,6 +56,7 @@ import mappings from "./mappings/index";
 import * as R from "ramda";
 import { selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
 import { addDataDownloadRequestAction } from "../../store/actions/data-download-actions";
+import { format } from "date-fns";
 
 const Wrapper = styled.div`
   margin: 16px 0;
@@ -275,7 +276,8 @@ function Index({
             studies: results
           }
         ];
-        exportToCSV(tabs, "file");
+        const dateString = format(new Date(), "yyyyMMdd");
+        exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
         break;
       }
       case "SYNERGIST-INSECTICIDE_BIOASSAY": {
@@ -297,7 +299,8 @@ function Index({
             studies: results
           }
         ];
-        exportToCSV(tabs, "file");
+        const dateString = format(new Date(), "yyyyMMdd");
+        exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
         break;
       }
       case "MOLECULAR_ASSAY":
@@ -319,7 +322,8 @@ function Index({
             studies: results
           }
         ];
-        exportToCSV(tabs, "file");
+        const dateString = format(new Date(), "yyyyMMdd");
+        exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
         break;
       }
     }
@@ -346,7 +350,8 @@ function Index({
             studies: results
           }
         ];
-        exportToCSV(tabs, "file");
+        const dateString = format(new Date(), "yyyyMMdd");
+        exportToCSV(tabs, `MTM_${selections.treatmentDataset}_${dateString}`);
         break;
       }
       case "MOLECULAR_MARKER_STUDY": {
@@ -375,7 +380,8 @@ function Index({
             studies: genes
           }
         ];
-        exportToCSV(tabs, "file");
+        const dateString = format(new Date(), "yyyyMMdd");
+        exportToCSV(tabs, `MTM_${selections.treatmentDataset}_${dateString}`);
         break;
       }
     }
@@ -400,7 +406,8 @@ function Index({
             studies: results
           }
         ];
-        exportToCSV(tabs, "file");
+        const dateString = format(new Date(), "yyyyMMdd");
+        exportToCSV(tabs, `MTM_${selections.invasiveDataset}_${dateString}`);
       }
     }
   };

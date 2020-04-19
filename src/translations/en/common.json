@@ -371,6 +371,14 @@
       }
     }
   },
+  "report": {
+    "prevention": {
+      "title": "Overview of insecticide resistance in malaria vectors"
+    },
+    "treatment": {
+      "title": "Overview of treatment failure rates among malaria infected patients"
+    }
+  },
   "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",
   "PROP_RELATED": "Percentage %"
 }
