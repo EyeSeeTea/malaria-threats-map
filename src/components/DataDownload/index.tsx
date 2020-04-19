@@ -140,6 +140,7 @@ export type WelcomeInfo = {
 
 export type UseInfo = {
   uses: string[];
+  countries: string[];
   studyDate: Date;
   researchInfo: string;
   policiesInfo: string;
@@ -160,6 +161,7 @@ export type Download = {
   researchInfo: string;
   policiesInfo: string;
   toolsInfo: string;
+  implementationCountries: string;
   theme: string;
   dataset: string;
 };
@@ -175,7 +177,7 @@ function Index({
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [activeStep, setActiveStep] = React.useState(1);
+  const [activeStep, setActiveStep] = React.useState(2);
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
   );
@@ -184,6 +186,7 @@ function Index({
   });
   const [useInfo, setUseInfo] = React.useState<Partial<UseInfo>>({
     uses: [],
+    countries: [],
     studyDate: new Date()
   });
 
@@ -414,6 +417,7 @@ function Index({
       researchInfo: useInfo.researchInfo || "",
       policiesInfo: useInfo.policiesInfo || "",
       toolsInfo: useInfo.toolsInfo || "",
+      implementationCountries: useInfo.countries.join(", ") || "",
       date: useInfo.studyDate.toISOString().slice(0, 10),
       theme: selections.theme,
       dataset: t(

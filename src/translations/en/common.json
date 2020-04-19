@@ -359,6 +359,7 @@
         "tools": " Please describe briefly the new treatment, diagnosis or vector control tools you aim to develop (minimum 100 words)",
         "date": "When are you planning to finish your project, policy, strategy or plan?"
       },
+      "countries": "Countries where the project, policy, strategy or plan will be implemented",
       "message": "We would like to receive the output of your work to monitor and showcase the use of our WHO Global Databases, we will appreciate it if you could share the output with us through the following email address: XXXX@who.int"
     },
     "step3": {

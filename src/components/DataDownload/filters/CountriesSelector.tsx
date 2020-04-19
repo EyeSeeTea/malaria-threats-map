@@ -16,6 +16,10 @@ const mapStateToProps = (state: State) => ({
 });
 
 type OwnProps = {
+  includeGlobalOption?: boolean;
+  menuIsOpen?: boolean;
+  label?: string;
+  className?: string;
   value: string[];
   onChange: (value: string[]) => void;
 };
@@ -23,7 +27,15 @@ type OwnProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = OwnProps & StateProps;
 
-function CountriesSelector({ onChange, value, countries = [] }: Props) {
+function CountriesSelector({
+  onChange,
+  value,
+  countries = [],
+  includeGlobalOption,
+  menuIsOpen,
+  label,
+  className
+}: Props) {
   const { t } = useTranslation("common");
   const onOptionChange = (selection: OptionType[]) => {
     onChange((selection || []).map(s => s.value));
@@ -33,18 +45,29 @@ function CountriesSelector({ onChange, value, countries = [] }: Props) {
     value: country.VALUE_
   }));
 
+  const suggs = includeGlobalOption
+    ? [
+        ...suggestions,
+        {
+          label: "Project applies globally",
+          value: "Project applies globally"
+        }
+      ]
+    : suggestions;
+
   return (
-    <FilterWrapper>
+    <FilterWrapper className={className}>
       <FormLabel component="legend">
-        <T i18nKey={"filters.countries"} />
+        {label || <T i18nKey={"filters.countries"} />}
       </FormLabel>
       <Divider />
       <IntegrationReactSelect
         isClearable
         isMulti
-        suggestions={suggestions}
+        suggestions={suggs}
         onChange={onOptionChange}
         value={suggestions.filter(s => value.includes(s.value))}
+        menuIsOpen={menuIsOpen}
       />
     </FilterWrapper>
   );

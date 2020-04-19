@@ -71,6 +71,8 @@ const UserForm = ({ countries, onChange, userInfo }: Props) => {
     onChange("country", newCountry);
   };
 
+  const organizationTypes = ORGANIZATION_TYPES.map(ot => t(ot)).sort();
+
   return (
     <Card className={classes.paper}>
       <FormControl fullWidth className={classes.formControl}>
@@ -102,9 +104,9 @@ const UserForm = ({ countries, onChange, userInfo }: Props) => {
           value={userInfo.organizationType}
           onChange={handleOrganizationTypeChange}
         >
-          {ORGANIZATION_TYPES.map(type => (
+          {organizationTypes.map(type => (
             <MenuItem key={type} value={type}>
-              {t(type)}
+              {type}
             </MenuItem>
           ))}
         </Select>

@@ -23,6 +23,7 @@ import {
 } from "@material-ui/pickers";
 import { connect } from "react-redux";
 import { UseInfo } from "./index";
+import CountriesSelector from "./filters/CountriesSelector";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   & span {
@@ -36,7 +37,11 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1, 0)
     },
     paper: {
-      padding: "24px"
+      padding: "24px",
+      overflow: "unset"
+    },
+    countries: {
+      margin: 0
     }
   })
 );
@@ -95,6 +100,10 @@ const UseForm = ({ onChange, useInfo }: Props) => {
 
   const handleUsesChange = (uses: string[]) => {
     onChange("uses", uses);
+  };
+
+  const handleCountriesChange = (countries: string[]) => {
+    onChange("countries", countries);
   };
 
   const handleDateChange = (date: Date | null) => {
@@ -196,6 +205,12 @@ const UseForm = ({ onChange, useInfo }: Props) => {
           />
         </MuiPickersUtilsProvider>
       </FormControl>
+      <CountriesSelector
+        label={t(`data_download.step2.countries`)}
+        className={classes.countries}
+        value={useInfo.countries}
+        onChange={handleCountriesChange}
+      />
       <Snackbar>{t(`data_download.step2.message`)}</Snackbar>
     </Card>
   );
