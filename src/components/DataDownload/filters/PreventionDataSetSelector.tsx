@@ -4,6 +4,7 @@ import { ValueType } from "react-select/src/types";
 import { FormLabel } from "@material-ui/core";
 import T from "../../../translations/T";
 import { Divider, FilterWrapper } from "../../filters/Filters";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   value: string;
@@ -39,10 +40,13 @@ const suggestions: OptionType[] = [
 ];
 
 const PreventionDataSetSelector = ({ value, onChange }: Props) => {
+  const { t } = useTranslation("common");
   const valueOnChange = (value: ValueType<OptionType>) => {
     const selection = value as OptionType;
     onChange(selection.value);
   };
+
+  const suggs = suggestions.map(s => ({ label: t(s.label), value: s.value }));
 
   return (
     <FilterWrapper>
@@ -51,7 +55,7 @@ const PreventionDataSetSelector = ({ value, onChange }: Props) => {
       </FormLabel>
       <Divider />
       <IntegrationReactSelect
-        suggestions={suggestions}
+        suggestions={suggs}
         onChange={valueOnChange}
         value={suggestions.find(s => s.value === value)}
       />

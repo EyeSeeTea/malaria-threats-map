@@ -5,45 +5,45 @@ export interface Data {
   COUNTRY_NUMBER: number;
   SPECIES: string;
   INSECTICIDE_CLASSES: string;
-  PYRETHROIDS_PERCENTAGE: number | "-";
-  PYRETHROIDS_YEARS: string;
-  ORGANOCHLORINES_PERCENTAGE: number | "-";
-  ORGANOCHLORINES_YEARS: string;
-  CARBAMATES_PERCENTAGE: number | "-";
-  CARBAMATES_YEARS: string;
-  ORGANOPHOSPHATES_PERCENTAGE: number | "-";
-  ORGANOPHOSPHATES_YEARS: string;
-  MONOOXYGENASES: number | "-";
-  MONOOXYGENASES_NUMBER: number;
-  ESTERASES: number | "-";
-  ESTERASES_NUMBER: number;
-  GSTS: number | "-";
-  GSTS_NUMBER: number;
-  K1014S: number | "-";
-  K1014S_NUMBER: number;
-  K1014F: number | "-";
-  K1014F_NUMBER: number;
-  KDR_UNSPECIFIED: number | "-";
-  KDR_UNSPECIFIED_NUMBER: number;
-  ACE1R: number | "-";
-  ACE1R_NUMBER: number;
+  PYRETHROIDS_AVERAGE_MORTALITY: number | "-";
+  PYRETHROIDS_LAST_YEAR: string;
+  ORGANOCHLORINES_AVERAGE_MORTALITY: number | "-";
+  ORGANOCHLORINES_LAST_YEAR: string;
+  CARBAMATES_AVERAGE_MORTALITY: number | "-";
+  CARBAMATES_LAST_YEAR: string;
+  ORGANOPHOSPHATES_AVERAGE_MORTALITY: number | "-";
+  ORGANOPHOSPHATES_LAST_YEAR: string;
+  MONOXYGENASES_PERCENT_SITES_DETECTED: number | "-";
+  MONOXYGENASES_NUMBER_SITES: number;
+  ESTERASES_PERCENT_SITES_DETECTED: number | "-";
+  ESTERASES_NUMBER_SITES: number;
+  GSTS_PERCENT_SITES_DETECTED: number | "-";
+  GSTS_NUMBER_SITES: number;
+  K1014S_PERCENT_SITES_DETECTED: number | "-";
+  K1014S_NUMBER_SITES: number;
+  K1014F_PERCENT_SITES_DETECTED: number | "-";
+  K1014F_NUMBER_SITES: number;
+  KDR_UNSPECIFIED_PERCENT_SITES_DETECTED: number | "-";
+  KDR_UNSPECIFIED_NUMBER_SITES: number;
+  ACE1R_PERCENT_SITES_DETECTED: number | "-";
+  ACE1R_NUMBER_SITES: number;
 }
 
 export const ERROR_COLUMNS = [
-  "PYRETHROIDS_PERCENTAGE",
-  "ORGANOCHLORINES_PERCENTAGE",
-  "CARBAMATES_PERCENTAGE",
-  "ORGANOPHOSPHATES_PERCENTAGE"
+  "PYRETHROIDS_AVERAGE_MORTALITY",
+  "ORGANOCHLORINES_AVERAGE_MORTALITY",
+  "CARBAMATES_AVERAGE_MORTALITY",
+  "ORGANOPHOSPHATES_AVERAGE_MORTALITY"
 ];
 
 export const GREY_COLUMNS = [
-  "MONOOXYGENASES",
-  "ESTERASES",
-  "GSTS",
-  "K1014S",
-  "K1014F",
-  "KDR_UNSPECIFIED",
-  "ACE1R"
+  "MONOXYGENASES_PERCENT_SITES_DETECTED",
+  "ESTERASES_PERCENT_SITES_DETECTED",
+  "GSTS_PERCENT_SITES_DETECTED",
+  "K1014S_PERCENT_SITES_DETECTED",
+  "K1014F_PERCENT_SITES_DETECTED",
+  "KDR_UNSPECIFIED_PERCENT_SITES_DETECTED",
+  "ACE1R_PERCENT_SITES_DETECTED"
 ];
 
 export const COLUMNS = [
@@ -56,13 +56,13 @@ export const COLUMNS = [
   "ORGANOCHLORINES_N",
   "CARBAMATES_N",
   "ORGANOPHOSPHATES_N",
-  "MONOOXYGENASES_NUMBER",
-  "ESTERASES_NUMBER",
-  "GSTS_NUMBER",
-  "K1014S_NUMBER",
-  "K1014F_NUMBER",
-  "KDR_UNSPECIFIED_NUMBER",
-  "ACE1R_NUMBER"
+  "MONOXYGENASES_NUMBER_SITES",
+  "ESTERASES_NUMBER_SITES",
+  "GSTS_NUMBER_SITES",
+  "K1014S_NUMBER_SITES",
+  "K1014F_NUMBER_SITES",
+  "KDR_UNSPECIFIED_NUMBER_SITES",
+  "ACE1R_NUMBER_SITES"
 ];
 
 export interface HeadCell {
@@ -83,13 +83,21 @@ export const headCells: HeadCell[] = [
     label: "Country"
   },
   {
+    id: "INSECTICIDE_CLASSES",
+    numeric: false,
+    disablePadding: false,
+    label: "Insecticide classes to which vector resistance confirmed",
+    divider: true
+  },
+  {
     id: "SPECIES",
     numeric: false,
     disablePadding: false,
-    label: "Vector species"
+    label: "Vector species",
+    divider: true
   },
   {
-    id: "PYRETHROIDS_PERCENTAGE",
+    id: "PYRETHROIDS_AVERAGE_MORTALITY",
     numeric: true,
     disablePadding: false,
     label: "% sites exhibiting resistance (n*)",
@@ -98,7 +106,7 @@ export const headCells: HeadCell[] = [
     divider: true
   },
   {
-    id: "PYRETHROIDS_YEARS",
+    id: "PYRETHROIDS_LAST_YEAR",
     numeric: false,
     disablePadding: false,
     label: "Year of last reports",
@@ -106,101 +114,104 @@ export const headCells: HeadCell[] = [
     align: "right"
   },
   {
-    id: "ORGANOCHLORINES_PERCENTAGE",
+    id: "ORGANOCHLORINES_AVERAGE_MORTALITY",
     numeric: true,
     disablePadding: false,
     label: "% sites exhibiting resistance (n*)",
     sortable: true,
-    align: "right"
-  },
-  {
-    id: "ORGANOCHLORINES_YEARS",
-    numeric: false,
-    disablePadding: false,
-    label: "Year of last reports",
-    sortable: true,
-    align: "right"
-  },
-  {
-    id: "CARBAMATES_PERCENTAGE",
-    numeric: true,
-    disablePadding: false,
-    label: "% sites exhibiting resistance (n*)",
-    sortable: true,
-    align: "right"
-  },
-  {
-    id: "CARBAMATES_YEARS",
-    numeric: false,
-    disablePadding: false,
-    label: "Year of last reports",
-    sortable: true,
-    align: "right"
-  },
-  {
-    id: "ORGANOPHOSPHATES_PERCENTAGE",
-    numeric: true,
-    disablePadding: false,
-    label: "% sites exhibiting resistance (n*)",
-    sortable: true,
-    align: "right"
-  },
-  {
-    id: "ORGANOPHOSPHATES_YEARS",
-    numeric: false,
-    disablePadding: false,
-    label: "Year of last reports",
-    sortable: true,
-    align: "right"
-  },
-  {
-    id: "MONOOXYGENASES",
-    numeric: true,
-    disablePadding: false,
-    label: "Mono oxygenases",
     align: "right",
     divider: true
   },
   {
-    id: "ESTERASES",
-    numeric: true,
+    id: "ORGANOCHLORINES_LAST_YEAR",
+    numeric: false,
     disablePadding: false,
-    label: "Esterases",
+    label: "Year of last reports",
+    sortable: true,
     align: "right"
   },
   {
-    id: "GSTS",
+    id: "CARBAMATES_AVERAGE_MORTALITY",
     numeric: true,
     disablePadding: false,
-    label: "GSTs",
+    label: "% sites exhibiting resistance (n*)",
+    sortable: true,
+    align: "right",
+    divider: true
+  },
+  {
+    id: "CARBAMATES_LAST_YEAR",
+    numeric: false,
+    disablePadding: false,
+    label: "Year of last reports",
+    sortable: true,
     align: "right"
   },
   {
-    id: "K1014S",
+    id: "ORGANOPHOSPHATES_AVERAGE_MORTALITY",
     numeric: true,
     disablePadding: false,
-    label: "kdr (K1014S)",
+    label: "% sites exhibiting resistance (n*)",
+    sortable: true,
+    align: "right",
+    divider: true
+  },
+  {
+    id: "ORGANOPHOSPHATES_LAST_YEAR",
+    numeric: false,
+    disablePadding: false,
+    label: "Year of last reports",
+    sortable: true,
     align: "right"
   },
   {
-    id: "K1014F",
+    id: "MONOXYGENASES_PERCENT_SITES_DETECTED",
     numeric: true,
     disablePadding: false,
-    label: "kdr (K1014F)",
+    label: "% sites exhibiting mechanism (n*)",
+    align: "right",
+    divider: true
+  },
+  {
+    id: "ESTERASES_PERCENT_SITES_DETECTED",
+    numeric: true,
+    disablePadding: false,
+    label: "% sites exhibiting mechanism (n*)",
     align: "right"
   },
   {
-    id: "KDR_UNSPECIFIED",
+    id: "GSTS_PERCENT_SITES_DETECTED",
     numeric: true,
     disablePadding: false,
-    label: "kdr (unspecified mutation)",
+    label: "% sites exhibiting mechanism (n*)",
     align: "right"
   },
   {
-    id: "ACE1R",
+    id: "K1014S_PERCENT_SITES_DETECTED",
     numeric: true,
     disablePadding: false,
-    label: "Ace-1R",
+    label: "% sites exhibiting mechanism (n*)",
+    align: "right"
+  },
+  {
+    id: "K1014F_PERCENT_SITES_DETECTED",
+    numeric: true,
+    disablePadding: false,
+    label: "% sites exhibiting mechanism (n*)",
+    align: "right"
+  },
+  {
+    id: "KDR_UNSPECIFIED_PERCENT_SITES_DETECTED",
+    numeric: true,
+    disablePadding: false,
+    label: "% sites exhibiting mechanism (n*)",
+    align: "right"
+  },
+  {
+    id: "ACE1R_PERCENT_SITES_DETECTED",
+    numeric: true,
+    disablePadding: false,
+    label: "% sites exhibiting mechanism (n*)",
     align: "right"
   }
 ];

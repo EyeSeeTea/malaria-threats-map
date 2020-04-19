@@ -1,7 +1,7 @@
 import React from "react";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
-import {State} from "../../store/types";
-import {connect} from "react-redux";
+import { State } from "../../store/types";
+import { connect } from "react-redux";
 import {
   AppBar,
   Button,
@@ -18,18 +18,25 @@ import Dialog from "@material-ui/core/Dialog";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepButton from "@material-ui/core/StepButton";
-import {selectIsDataDownloadOpen} from "../../store/reducers/base-reducer";
-import {logEventAction, setDataDownloadOpenAction} from "../../store/actions/base-actions";
-import {useTranslation} from "react-i18next";
-import {selectTreatmentStudies} from "../../store/reducers/treatment-reducer";
-import UserForm, {ORGANIZATION_TYPES} from "./UserForm";
-import UseForm, {isPoliciesActive, isResearchActive, isToolsActive} from "./UseForm";
+import { selectIsDataDownloadOpen } from "../../store/reducers/base-reducer";
+import {
+  logEventAction,
+  setDataDownloadOpenAction
+} from "../../store/actions/base-actions";
+import { useTranslation } from "react-i18next";
+import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
+import UserForm, { ORGANIZATION_TYPES } from "./UserForm";
+import UseForm, {
+  isPoliciesActive,
+  isResearchActive,
+  isToolsActive
+} from "./UseForm";
 import Welcome from "./Welcome";
 import Filters from "./Filters";
-import {exportToCSV} from "./download";
-import {FlexGrow} from "../Chart";
+import { exportToCSV } from "./download";
+import { FlexGrow } from "../Chart";
 import styled from "styled-components";
-import {selectPreventionStudies} from "../../store/reducers/prevention-reducer";
+import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import {
   filterByAssayTypes,
   filterByCountries,
@@ -44,11 +51,11 @@ import {
   filterByTypes,
   filterByYears
 } from "../layers/studies-filters";
-import {Option} from "../BasicSelect";
+import { Option } from "../BasicSelect";
 import mappings from "./mappings/index";
 import * as R from "ramda";
-import {selectInvasiveStudies} from "../../store/reducers/invasive-reducer";
-import {addDataDownloadRequestAction} from "../../store/actions/data-download-actions";
+import { selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
+import { addDataDownloadRequestAction } from "../../store/actions/data-download-actions";
 
 const Wrapper = styled.div`
   margin: 16px 0;
@@ -127,6 +134,10 @@ export type UserInfo = {
   phoneNumber: string;
 };
 
+export type WelcomeInfo = {
+  agreement: boolean;
+};
+
 export type UseInfo = {
   uses: string[];
   studyDate: Date;
@@ -164,7 +175,10 @@ function Index({
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(1);
+  const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
+    {}
+  );
   const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({
     organizationType: ORGANIZATION_TYPES[0]
   });
@@ -190,7 +204,9 @@ function Index({
     years: [],
     countries: []
   });
-
+  const onChangeWelcomeInfo = (field: keyof WelcomeInfo, value: any) => {
+    setWelcomeInfo({ ...welcomeInfo, [field]: value });
+  };
   const onChangeUserInfo = (field: keyof UserInfo, value: any) => {
     setUserInfo({ ...userInfo, [field]: value });
   };
@@ -424,6 +440,10 @@ function Index({
     });
   };
 
+  const isWelcomeFormValid = () => {
+    return welcomeInfo.agreement;
+  };
+
   const isUserFormValid = () => {
     return (
       userInfo.firstName &&
@@ -464,7 +484,9 @@ function Index({
   const renderStep = () => {
     switch (activeStep) {
       case 0:
-        return <Welcome />;
+        return (
+          <Welcome welcomeInfo={welcomeInfo} onChange={onChangeWelcomeInfo} />
+        );
       case 1:
         return <UserForm userInfo={userInfo} onChange={onChangeUserInfo} />;
       case 2:
@@ -486,16 +508,19 @@ function Index({
   const isStepValid = () => {
     switch (activeStep) {
       case 0:
-        return true;
+        return isWelcomeFormValid();
       case 1:
-        return isUserFormValid();
+        return isWelcomeFormValid() && isUserFormValid();
       case 2:
-        return isUserFormValid() && isUseFormValid();
+        return isWelcomeFormValid() && isUserFormValid() && isUseFormValid();
     }
   };
 
   const isFormValid = () =>
-    isUserFormValid() && isUseFormValid() && isDownloadFormValid();
+    isWelcomeFormValid() &&
+    isUserFormValid() &&
+    isUseFormValid() &&
+    isDownloadFormValid();
 
   return (
     <div>

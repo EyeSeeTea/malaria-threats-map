@@ -23,6 +23,7 @@ import { PlaceholderProps } from "react-select/src/components/Placeholder";
 import { SingleValueProps } from "react-select/src/components/SingleValue";
 import { Omit } from "@material-ui/types";
 import { useTranslation } from "react-i18next";
+import * as R from "ramda";
 
 export interface OptionType {
   label: string;
@@ -267,7 +268,7 @@ export default function IntegrationReactSelect({
       <Select
         classes={classes}
         styles={selectStyles}
-        options={suggestions}
+        options={R.sortBy<Option>(R.prop("label"), suggestions)}
         components={components}
         value={value}
         onChange={onChange}

@@ -1,13 +1,24 @@
 import React from "react";
-import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
+import {
+  createStyles,
+  Fab,
+  Link,
+  makeStyles,
+  Theme,
+  Typography
+} from "@material-ui/core";
 import ReportIcon from "@material-ui/icons/Description";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import { State } from "../../store/types";
-import { selectIsReportOpen } from "../../store/reducers/base-reducer";
+import {
+  selectIsReportOpen,
+  selectTheme
+} from "../../store/reducers/base-reducer";
 import { setReportOpenAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
-import StudiesTable from "./StudiesTable";
+import PreventionReport from "./PreventionReport";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,6 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const mapStateToProps = (state: State) => ({
+  theme: selectTheme(state),
   isReportOpen: selectIsReportOpen(state)
 });
 const mapDispatchToProps = {
@@ -49,7 +61,8 @@ type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {};
 type Props = StateProps & OwnProps & DispatchProps;
 
-function Report({ isReportOpen, openReport }: Props) {
+function Report({ isReportOpen, openReport, theme }: Props) {
+  const { t } = useTranslation("common");
   const classes = useStyles({});
 
   const handleClickOpen = () => {
@@ -58,6 +71,17 @@ function Report({ isReportOpen, openReport }: Props) {
 
   const handleClose = () => {
     openReport(false);
+  };
+
+  const renderReport = () => {
+    switch (theme) {
+      case "prevention":
+        return <PreventionReport />;
+      case "treatment":
+        return <div />;
+      default:
+        openReport(false);
+    }
   };
 
   return (
@@ -79,7 +103,7 @@ function Report({ isReportOpen, openReport }: Props) {
         aria-labelledby="max-width-dialog-title"
       >
         <DialogContent className={classes.content}>
-          <StudiesTable />
+          {renderReport()}
         </DialogContent>
       </Dialog>
     </React.Fragment>

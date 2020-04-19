@@ -1,11 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import {
-  createStyles,
-  lighten,
-  makeStyles,
-  Theme
-} from "@material-ui/core/styles";
+import {createStyles, lighten, makeStyles, Theme} from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -21,26 +16,20 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
-import { connect } from "react-redux";
-import { State } from "../../store/types";
-import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
-import { PreventionStudy } from "../../types/Prevention";
+import {connect} from "react-redux";
+import {State} from "../../store/types";
+import {selectPreventionStudies} from "../../store/reducers/prevention-reducer";
+import {PreventionStudy} from "../../types/Prevention";
 import * as R from "ramda";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import styled from "styled-components";
-import {
-  COLUMNS,
-  Data,
-  ERROR_COLUMNS,
-  GREY_COLUMNS,
-  headCells
-} from "./columns";
-import { resolvePyrethroids } from "./resolvers/resistanceStatus";
-import { resolveMechanism } from "./resolvers/resistanceMechanism";
+import {COLUMNS, Data, ERROR_COLUMNS, GREY_COLUMNS, headCells} from "./columns";
+import {resolvePyrethroids} from "./resolvers/resistanceStatus";
+import {resolveMechanism} from "./resolvers/resistanceMechanism";
 import FilterPopover from "./FilterPopover";
-import { filterByCountries, filterBySpecies } from "../layers/studies-filters";
-import { exportToCSV } from "../DataDownload/download";
-import { Button } from "@material-ui/core";
+import {filterByCountries, filterBySpecies} from "../layers/studies-filters";
+import {exportToCSV} from "../DataDownload/download";
+import {Button} from "@material-ui/core";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -150,7 +139,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   return (
     <TableHead>
       <TableRow>
-        <StyledCell isBold colSpan={2} />
+        <StyledCell isBold colSpan={3} />
         <StyledCell isBold colSpan={8} divider>
           Resistance status
         </StyledCell>
@@ -159,9 +148,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         </StyledCell>
       </TableRow>
       <TableRow>
-        <StyledCell isBold colSpan={2}>
-          Insecticide classes to which vector resistance confirmed
-        </StyledCell>
+        <StyledCell isBold colSpan={3} />
         <StyledCell isBold colSpan={2} divider>
           Pyrethroids
         </StyledCell>
@@ -174,22 +161,29 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         <StyledCell isBold colSpan={2}>
           Organophosphates
         </StyledCell>
-        <StyledCell isBold colSpan={3} divider>
-          Metabolic
+        <StyledCell isBold colSpan={1} divider>
+          Mono oxygenases
         </StyledCell>
-        <StyledCell isBold colSpan={4}>
-          Target site
+        <StyledCell isBold colSpan={1}>
+          Esterases
+        </StyledCell>
+        <StyledCell isBold colSpan={1}>
+          GSTs
+        </StyledCell>
+        <StyledCell isBold colSpan={1}>
+          kdr (K1014S)
+        </StyledCell>
+        <StyledCell isBold colSpan={1}>
+          kdr (K1014F)
+        </StyledCell>
+        <StyledCell isBold colSpan={1}>
+          kdr (unspecified mutation)
+        </StyledCell>
+        <StyledCell isBold colSpan={1}>
+          Ace-1R
         </StyledCell>
       </TableRow>
       <TableRow>
-        {/*<StyledCell padding="checkbox">*/}
-        {/*  <Checkbox*/}
-        {/*    indeterminate={numSelected > 0 && numSelected < rowCount}*/}
-        {/*    checked={rowCount > 0 && numSelected === rowCount}*/}
-        {/*    onChange={onSelectAllClick}*/}
-        {/*    inputProps={{ "aria-label": "select all desserts" }}*/}
-        {/*  />*/}
-        {/*</StyledCell>*/}
         {headCells.map(headCell => (
           <StyledCell
             key={headCell.id}
@@ -331,12 +325,12 @@ type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {};
 type Props = StateProps & OwnProps & DispatchProps;
 
-function StudiesTable({ studies: baseStudies }: Props) {
+function PreventionReport({ studies: baseStudies }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
   const [order, setOrder] = React.useState<Order>("desc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>(
-    "PYRETHROIDS_PERCENTAGE"
+    "PYRETHROIDS_AVERAGE_MORTALITY"
   );
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState(0);
@@ -374,6 +368,14 @@ function StudiesTable({ studies: baseStudies }: Props) {
         (study: PreventionStudy) => `${study.SPECIES}`,
         countryStudies
       );
+
+      const insecticideClasses = R.uniqBy(
+        study => study.INSECTICIDE_CLASS,
+        countryStudies.filter(
+          study => parseFloat(study.MORTALITY_ADJUSTED) < 0.9
+        )
+      );
+
       const entries = Object.entries(countrySpeciesGroup);
       return entries
         .map(([species, countrySpeciesStudies]) => {
@@ -436,50 +438,50 @@ function StudiesTable({ studies: baseStudies }: Props) {
             COUNTRY: t(country),
             COUNTRY_NUMBER: entries.length,
             SPECIES: species,
-            INSECTICIDE_CLASSES: " ",
-            PYRETHROIDS_PERCENTAGE: pyrethroidsPercentage,
-            PYRETHROIDS_YEARS: `${
+            INSECTICIDE_CLASSES: `${insecticideClasses.length}`,
+            PYRETHROIDS_AVERAGE_MORTALITY: pyrethroidsPercentage,
+            PYRETHROIDS_LAST_YEAR: `${
               sortedPyrethroidsStudies.length
                 ? sortedPyrethroidsStudies[0].YEAR_START
                 : "-"
             }`,
             PYRETHROIDS_N: pyrethroidsStudies,
-            ORGANOCHLORINES_PERCENTAGE: organochlorinesPercentage,
-            ORGANOCHLORINES_YEARS: `${
+            ORGANOCHLORINES_AVERAGE_MORTALITY: organochlorinesPercentage,
+            ORGANOCHLORINES_LAST_YEAR: `${
               sortedOrganochlorinesStudies.length
                 ? sortedOrganochlorinesStudies[0].YEAR_START
                 : "-"
             }`,
 
             ORGANOCHLORINES_N: organochlorinesStudies,
-            CARBAMATES_PERCENTAGE: carbamatesPercentage,
-            CARBAMATES_YEARS: `${
+            CARBAMATES_AVERAGE_MORTALITY: carbamatesPercentage,
+            CARBAMATES_LAST_YEAR: `${
               sortedCarbamatesStudies.length
                 ? sortedCarbamatesStudies[0].YEAR_START
                 : "-"
             }`,
             CARBAMATES_N: carbamatesStudies,
-            ORGANOPHOSPHATES_PERCENTAGE: organophosphatesPercentage,
-            ORGANOPHOSPHATES_YEARS: `${
+            ORGANOPHOSPHATES_AVERAGE_MORTALITY: organophosphatesPercentage,
+            ORGANOPHOSPHATES_LAST_YEAR: `${
               sortedOrganophosphatesStudies.length
                 ? sortedOrganophosphatesStudies[0].YEAR_START
                 : "-"
             }`,
             ORGANOPHOSPHATES_N: organophosphatesStudies,
-            MONOOXYGENASES: monoOxygenases,
-            MONOOXYGENASES_NUMBER: monoOxygenasesNumber,
-            ESTERASES: esterases,
-            ESTERASES_NUMBER: esterasesNumber,
-            GSTS: gsts,
-            GSTS_NUMBER: gstsNumber,
-            K1014S: kdrL1014s,
-            K1014S_NUMBER: kdrL1014sNumber,
-            K1014F: kdrL1014f,
-            K1014F_NUMBER: kdrL1014fNumber,
-            KDR_UNSPECIFIED: kdrUnspecified,
-            KDR_UNSPECIFIED_NUMBER: kdrUnspecifiedNumber,
-            ACE1R: ace1r,
-            ACE1R_NUMBER: ace1rNumber
+            MONOXYGENASES_PERCENT_SITES_DETECTED: monoOxygenases,
+            MONOXYGENASES_NUMBER_SITES: monoOxygenasesNumber,
+            ESTERASES_PERCENT_SITES_DETECTED: esterases,
+            ESTERASES_NUMBER_SITES: esterasesNumber,
+            GSTS_PERCENT_SITES_DETECTED: gsts,
+            GSTS_NUMBER_SITES: gstsNumber,
+            K1014S_PERCENT_SITES_DETECTED: kdrL1014s,
+            K1014S_NUMBER_SITES: kdrL1014sNumber,
+            K1014F_PERCENT_SITES_DETECTED: kdrL1014f,
+            K1014F_NUMBER_SITES: kdrL1014fNumber,
+            KDR_UNSPECIFIED_PERCENT_SITES_DETECTED: kdrUnspecified,
+            KDR_UNSPECIFIED_NUMBER_SITES: kdrUnspecifiedNumber,
+            ACE1R_PERCENT_SITES_DETECTED: ace1r,
+            ACE1R_NUMBER_SITES: ace1rNumber
           };
         })
         .sort(getComparator(order, orderBy));
@@ -487,10 +489,15 @@ function StudiesTable({ studies: baseStudies }: Props) {
   );
 
   const downloadData = () => {
+    const studies = R.map(group => {
+      const study = { ...group };
+      delete study.ID;
+      return study;
+    }, groups);
     const tabs = [
       {
         name: "Data",
-        studies: groups
+        studies: studies
       }
     ];
     exportToCSV(tabs, "file");
@@ -577,7 +584,6 @@ function StudiesTable({ studies: baseStudies }: Props) {
                   const labelId = `enhanced-table-checkbox-${index}`;
                   return (
                     <TableRow
-                      role="checkbox"
                       tabIndex={-1}
                       key={row.ID}
                       selected={isItemSelected}
@@ -594,6 +600,16 @@ function StudiesTable({ studies: baseStudies }: Props) {
                             rowSpan={row.COUNTRY_NUMBER}
                           >
                             {row.COUNTRY}
+                          </StyledCell>
+                          <StyledCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                            rowSpan={row.COUNTRY_NUMBER}
+                            divider={true}
+                          >
+                            {row.INSECTICIDE_CLASSES}
                           </StyledCell>
                         </>
                       )}
@@ -614,7 +630,7 @@ function StudiesTable({ studies: baseStudies }: Props) {
                             number > 0;
                           const grey = GREY_COLUMNS.includes(entry[0]);
                           const darkGrey =
-                            grey && (row as any)[`${entry[0]}_NUMBER`] > 0
+                            grey && (row as any)[`${entry[0]}_NUMBER_SITES`] > 0
                               ? "dimgrey"
                               : "darkgray";
                           return (
@@ -631,7 +647,7 @@ function StudiesTable({ studies: baseStudies }: Props) {
                               divider={header.divider}
                             >
                               {header && header.numeric && isNumber
-                                ? `${number.toFixed(2)}% ${
+                                ? `${number.toFixed(1)}% ${
                                     active ? `(${active})` : ""
                                   }`
                                 : entry[1] || "-"}
@@ -653,10 +669,12 @@ function StudiesTable({ studies: baseStudies }: Props) {
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
+          <Typography variant={"body2"}>{t("data_download.footer")}</Typography>
+          <br />
         </div>
       </Paper>
     </div>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(StudiesTable);
+export default connect(mapStateToProps, mapDispatchToProps)(PreventionReport);

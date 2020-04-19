@@ -8,14 +8,13 @@ import {
 import { selectRegion } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { Translation } from "../../types/Translation";
-import IntegrationReactSelect from "../BasicSelect";
+import IntegrationReactSelect, { Option } from "../BasicSelect";
 import { selectCountries } from "../../store/reducers/translations-reducer";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Divider, FilterWrapper } from "./Filters";
 import T from "../../translations/T";
 import config from "../../config";
 import { useTranslation } from "react-i18next";
-import * as R from "ramda";
 
 const mapStateToProps = (state: State) => ({
   region: selectRegion(state),
@@ -39,7 +38,7 @@ const CountrySelector = ({
   setRegion
 }: Props) => {
   const { t } = useTranslation("common");
-  const onChange = (selection: any) => {
+  const onChange = (selection: Option | undefined) => {
     setRegion({ country: selection ? selection.value : undefined });
   };
   const suggestions: any[] = config.mekong
@@ -59,9 +58,8 @@ const CountrySelector = ({
       <Divider />
       <IntegrationReactSelect
         isClearable
-        isMulti
         placeholder={"Select Country"}
-        suggestions={R.sortBy(R.prop("label"), suggestions)}
+        suggestions={suggestions}
         onChange={onChange}
         value={suggestions.find((s: any) => s.value === region.country) || null}
       />

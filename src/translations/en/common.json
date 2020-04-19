@@ -270,6 +270,7 @@
   },
   "data_download": {
     "title": "Data download",
+    "footer": "(*) total number of sites for which data was reported",
     "dataset": "Select Dataset",
     "buttons": {
       "back": "Back",
@@ -302,10 +303,19 @@
     "step0": {
       "title": "Welcome message",
       "p1": "Welcome to the Malaria Threats data download dialogue!",
-      "p2": "This dialogue will allow you to download (raw) data from the WHO Global Databases on Vector Insecticide Resistance, Drug Efficacy and Resistance and Invasive Vector species.",
-      "p3": "The Global Databases contained data submitted to us by our Members states, research institutions and partners, as well as data extracted from scientific publications. To acknowledge their contributions, the source of the data is always included in all datasets.",
-      "p4": "The Global Malaria Program is interested in understanding how the community is making use of the Global Databases and on improving data accessibility. Hence, we are asking you to provide some information on the use you intend to make of the datasets, as well as suggestions to improving our current data download tools.",
-      "p5": "Kindly acknowledge the use of these data in your reports and publication by providing the following reference: "
+      "p2": "This dialogue will allow you to download raw data from the WHO global databases on insecticide resistance in malaria vectors, on drug efficacy and resistance and on invasive vector species.",
+      "p3": "These three WHO global databases contain data submitted to us by our Members states, research institutions and partners, as well as data extracted from scientific publications. To credit their contributions, a column containing the sources of the data is included in every datasets. Please note that not every contributor has allowed us to share their data. Hence some of the data in Malaria Threats Map is not available for download. For data extracted from publications, please note that when the values of relevant variables were not directly provided in the publications or were analyzed differently than recommended by WHO, values were calculated from the reported data.",
+      "p4a": "The use of all data is subject to the ",
+      "p4bLinkText": "Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses",
+      "p4bLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions",
+      "p4c": ". By using the Datasets or any presentations of data derived from them, you agree to be bound by and adhere to these Terms and Conditions, as may be amended from time to time by WHO at its sole discretion. If any datasets are credited to a source other than WHO, then those materials are not covered by these Terms and Conditions, and permission should be sought from the source.",
+      "p5": "Please acknowledge the use of these datasets by including the following reference in your publications: WHO, Malaria Threats Map, year, date of access, acknowledgement of the countries having provided the underlying data (in the event that the source refers to ministries of health or national malaria control programs of specific countries).",
+      "p6": "The Global Malaria Program is keen on tracking and showcasing the use of the Global databases. Therefore, we will ask you a few questions about the intended use of the data you wish to download.",
+      "p7a": "If you have any questions, do not hesitate to contact us on: ",
+      "p7bEmail": "gmp-maps@who.int",
+      "p8a": "Check here to indicate that you have read and agree to the ",
+      "p8bLinkText": "Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses",
+      "p8bLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions"
     },
     "step1": {
       "title": " Personal contact details",
@@ -327,7 +337,7 @@
       },
       "organization_name": "Organization Name",
       "position": "Position",
-      "country": "Country",
+      "country": "Country of residency",
       "email": "Email",
       "phone": "Phone Number"
     },

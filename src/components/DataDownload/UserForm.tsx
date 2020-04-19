@@ -61,7 +61,7 @@ const UserForm = ({ countries, onChange, userInfo }: Props) => {
     event: React.ChangeEvent<{ value: unknown }>
   ) => {
     const newOrganizationType = event.target.value as string;
-    onChange("organizationType", t(newOrganizationType));
+    onChange("organizationType", newOrganizationType);
   };
 
   const handleCountryChange = (

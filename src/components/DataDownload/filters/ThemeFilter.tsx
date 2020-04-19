@@ -5,6 +5,7 @@ import { FormLabel } from "@material-ui/core";
 import { Divider, FilterWrapper } from "../../filters/Filters";
 import T from "../../../translations/T";
 import IntegrationReactSelect from "../../BasicSelect";
+import { useTranslation } from "react-i18next";
 
 const THEMES = [
   {
@@ -38,6 +39,8 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
 function ThemeFilter({ value, onChange }: Props) {
+  const { t } = useTranslation("common");
+  const suggs = THEMES.map(s => ({ label: t(s.label), value: s.value }));
   return (
     <FilterWrapper>
       <FormLabel component="legend">
@@ -45,7 +48,7 @@ function ThemeFilter({ value, onChange }: Props) {
       </FormLabel>
       <Divider />
       <IntegrationReactSelect
-        suggestions={THEMES}
+        suggestions={suggs}
         onChange={(selection: any) => {
           return onChange(selection.value);
         }}
@@ -55,7 +58,4 @@ function ThemeFilter({ value, onChange }: Props) {
   );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ThemeFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(ThemeFilter);

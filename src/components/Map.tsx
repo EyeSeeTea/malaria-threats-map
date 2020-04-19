@@ -104,29 +104,6 @@ const Divider = styled.div`
   height: 10px;
 `;
 
-const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state),
-  any: selectAny(state),
-  setZoom: selectSetZoom(state),
-  setBounds: selectSetBounds(state),
-  region: selectRegion(state),
-  countryMode: selectCountryMode(state),
-  preventionStudies: selectPreventionStudies(state),
-  diagnosisStudies: selectDiagnosisStudies(state),
-  treatmentStudies: selectTreatmentStudies(state),
-  invasiveStudies: selectInvasiveStudies(state),
-  initialDialogOpen: selectIsInitialDialogOpen(state),
-  preventionFilters: selectPreventionFilters(state)
-});
-
-const mapDispatchToProps = {
-  setTheme: setThemeAction,
-  setAny: setAnyAction,
-  setRegion: setRegionAction,
-  updateZoom: updateZoomAction,
-  updateBounds: updateBoundsAction
-};
-
 export const debounce = <F extends (...args: any[]) => any>(
   func: F,
   waitFor: number
@@ -173,7 +150,35 @@ export const throttle = <F extends (...args: any[]) => any>(
 
 const mekong = config.mekong;
 
-class Map extends React.Component<any> {
+const mapStateToProps = (state: State) => ({
+  theme: selectTheme(state),
+  any: selectAny(state),
+  setZoom: selectSetZoom(state),
+  setBounds: selectSetBounds(state),
+  region: selectRegion(state),
+  countryMode: selectCountryMode(state),
+  preventionStudies: selectPreventionStudies(state),
+  diagnosisStudies: selectDiagnosisStudies(state),
+  treatmentStudies: selectTreatmentStudies(state),
+  invasiveStudies: selectInvasiveStudies(state),
+  initialDialogOpen: selectIsInitialDialogOpen(state),
+  preventionFilters: selectPreventionFilters(state)
+});
+
+const mapDispatchToProps = {
+  setTheme: setThemeAction,
+  setAny: setAnyAction,
+  setRegion: setRegionAction,
+  updateZoom: updateZoomAction,
+  updateBounds: updateBoundsAction
+};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+type OwnProps = {};
+type Props = StateProps & OwnProps & DispatchProps;
+
+class Map extends React.Component<Props> {
   map: mapboxgl.Map;
   mapContainer: any;
   state = {
@@ -244,10 +249,15 @@ class Map extends React.Component<any> {
   }
 
   render() {
-    const { initialDialogOpen, countryMode } = this.props;
+    const {
+      theme,
+      initialDialogOpen,
+      countryMode,
+      preventionFilters
+    } = this.props;
     const isPbo =
-      this.props.theme === "prevention" &&
-      this.props.preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
+      theme === "prevention" &&
+      preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
     const ready = this.map && this.state.ready;
     return (
       <React.Fragment>
@@ -255,7 +265,6 @@ class Map extends React.Component<any> {
           ref={el => (this.mapContainer = el)}
           style={{ position: "absolute", bottom: 0, top: 0, right: 0, left: 0 }}
         />
-        {/*{ready && <LabelsLayer map={this.map} />}*/}
         {ready && <EndemicityLayer map={this.map} />}
         {isPbo && countryMode ? (
           <>
@@ -275,7 +284,6 @@ class Map extends React.Component<any> {
         {ready && <DiagnosisLayer map={this.map} />}
         {ready && <TreatmentLayer map={this.map} />}
         {ready && <InvasiveLayer map={this.map} />}
-
         <Fade in={!initialDialogOpen}>
           <SearchContainer>
             <Hidden xsDown>
@@ -298,14 +306,17 @@ class Map extends React.Component<any> {
             {!mekong && <DataDownload />}
             <Hidden xsDown>
               {ready ? <Screenshot map={this.map} /> : <div />}
-              {ready ? <Report /> : <div />}
+              {ready && ["prevention", "treatment"].includes(theme) ? (
+                <Report />
+              ) : (
+                <div />
+              )}
             </Hidden>
           </SearchContainer>
         </Fade>
         <Fade in={!initialDialogOpen}>
           <TopRightContainer>
             <Hidden xsDown>
-              {/*<MalariaTable />*/}
               {!initialDialogOpen && <LanguageSelectorSelect />}
             </Hidden>
           </TopRightContainer>
