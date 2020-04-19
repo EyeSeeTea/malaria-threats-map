@@ -360,7 +360,9 @@
         "date": "When are you planning to finish your project, policy, strategy or plan?"
       },
       "countries": "Countries where the project, policy, strategy or plan will be implemented",
-      "message": "We would like to receive the output of your work to monitor and showcase the use of our WHO Global Databases, we will appreciate it if you could share the output with us through the following email address: XXXX@who.int"
+      "message": "WHO is keen to improve the global databases and Malaria Threats Map to better serve the needs of our user community. Hence, WHO would like to engage with our user community to collect suggestions for improvement and to learn from different use cases and benefits that these products bring to them.",
+      "consent1": "I consent the World Health Organization on using my personal data to contact me regarding my experience using Malaria Threats Map and data from the global databases. ",
+      "consent2": "I consent the World Health Organization on using the organization name and project descriptions I provided to showcase the uses of the global databases (no personal data will be shown)."
     },
     "step3": {
       "title": "Filter the data",

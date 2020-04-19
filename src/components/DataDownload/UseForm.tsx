@@ -4,10 +4,12 @@ import {
   Checkbox,
   createStyles,
   FormControl,
+  Link,
   makeStyles,
   Paper,
   TextField,
-  Theme
+  Theme,
+  Typography
 } from "@material-ui/core";
 import styled from "styled-components";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -65,7 +67,8 @@ export const isResearchActive = (uses: string[]) =>
     use =>
       [
         "data_download.step2.data_use_options.research",
-        "data_download.step2.data_use_options.grant"
+        "data_download.step2.data_use_options.grant",
+        "data_download.step2.data_use_options.treatments"
       ].includes(use),
     uses
   );
@@ -108,6 +111,14 @@ const UseForm = ({ onChange, useInfo }: Props) => {
 
   const handleDateChange = (date: Date | null) => {
     onChange("studyDate", date);
+  };
+
+  const handleConsent1Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChange("contactConsent", event.target.checked);
+  };
+
+  const handleConsent2Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChange("piConsent", event.target.checked);
   };
 
   const researchActive = isResearchActive(useInfo.uses);
@@ -208,10 +219,39 @@ const UseForm = ({ onChange, useInfo }: Props) => {
       <CountriesSelector
         label={t(`data_download.step2.countries`)}
         className={classes.countries}
+        includeGlobalOption
         value={useInfo.countries}
         onChange={handleCountriesChange}
       />
       <Snackbar>{t(`data_download.step2.message`)}</Snackbar>
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={useInfo.contactConsent}
+            onChange={handleConsent1Change}
+            color="primary"
+          />
+        }
+        label={
+          <Typography variant={"body2"}>
+            {t("data_download.step2.consent1")}
+          </Typography>
+        }
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={useInfo.piConsent}
+            onChange={handleConsent2Change}
+            color="primary"
+          />
+        }
+        label={
+          <Typography variant={"body2"}>
+            {t("data_download.step2.consent2")}
+          </Typography>
+        }
+      />
     </Card>
   );
 };

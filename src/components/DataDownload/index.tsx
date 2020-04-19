@@ -145,6 +145,8 @@ export type UseInfo = {
   researchInfo: string;
   policiesInfo: string;
   toolsInfo: string;
+  contactConsent: boolean;
+  piConsent: boolean;
 };
 
 export type Download = {
@@ -473,7 +475,9 @@ function Index({
       useInfo.studyDate &&
       (researchActive ? useInfo.researchInfo : true) &&
       (policiesActive ? useInfo.policiesInfo : true) &&
-      (toolsActive ? useInfo.toolsInfo : true)
+      (toolsActive ? useInfo.toolsInfo : true) &&
+      useInfo.piConsent &&
+      useInfo.contactConsent
     );
   };
 

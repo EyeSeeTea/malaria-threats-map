@@ -37,22 +37,31 @@ function CountriesSelector({
   className
 }: Props) {
   const { t } = useTranslation("common");
-  const onOptionChange = (selection: OptionType[]) => {
-    onChange((selection || []).map(s => s.value));
+  const global = value.includes("GLOBAL");
+  const onOptionChange = (selection: OptionType[] | OptionType | undefined) => {
+    if (!global) {
+      const selected = (selection || []) as OptionType[];
+      onChange(selected.map(s => s.value));
+    } else {
+      if (selection) {
+        onChange(["GLOBAL"]);
+      } else {
+        onChange([]);
+      }
+    }
   };
   const suggestions: any[] = countries.map((country: Translation) => ({
     label: t(country.VALUE_),
     value: country.VALUE_
   }));
 
+  const globalOption = {
+    label: "Project applies globally",
+    value: "GLOBAL"
+  };
+
   const suggs = includeGlobalOption
-    ? [
-        ...suggestions,
-        {
-          label: "Project applies globally",
-          value: "Project applies globally"
-        }
-      ]
+    ? [...suggestions, globalOption]
     : suggestions;
 
   return (
@@ -63,10 +72,12 @@ function CountriesSelector({
       <Divider />
       <IntegrationReactSelect
         isClearable
-        isMulti
+        isMulti={!value.includes("GLOBAL")}
         suggestions={suggs}
         onChange={onOptionChange}
-        value={suggestions.filter(s => value.includes(s.value))}
+        value={
+          global ? globalOption : suggs.filter(s => value.includes(s.value))
+        }
         menuIsOpen={menuIsOpen}
       />
     </FilterWrapper>
