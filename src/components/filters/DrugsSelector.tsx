@@ -8,6 +8,7 @@ import * as R from "ramda";
 import { Divider, FilterWrapper } from "./Filters";
 import FormLabel from "@material-ui/core/FormLabel";
 import T from "../../translations/T";
+import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({
   drugs: selectDrugs(state),
@@ -23,10 +24,11 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps & OwnProps;
 
 function DrugsSelector({ studies, onChange, value }: Props) {
+  const { t } = useTranslation("common");
   const uniques = R.uniq(R.map(R.prop("DRUG_NAME"), studies)).filter(Boolean);
 
   const suggestions: any[] = uniques.map((drug: string) => ({
-    label: drug,
+    label: t(drug),
     value: drug
   }));
 
@@ -47,7 +49,7 @@ function DrugsSelector({ studies, onChange, value }: Props) {
       <IntegrationReactSelect
         isMulti
         isClearable
-        suggestions={suggestions}
+        suggestions={R.sortBy(R.prop("label"), suggestions)}
         onChange={onSelectionChange}
         value={selection}
       />
