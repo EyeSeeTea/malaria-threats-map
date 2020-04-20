@@ -1,9 +1,9 @@
-import {Translation} from "../types/Translation";
-import {DiagnosisStudy} from "../types/Diagnosis";
-import {InvasiveStudy} from "../types/Invasive";
-import {PreventionStudy} from "../types/Prevention";
-import {TreatmentStudy} from "../types/Treatment";
-import {NotificationsState} from "../types/Notifications";
+import { Translation } from "../types/Translation";
+import { DiagnosisStudy } from "../types/Diagnosis";
+import { InvasiveStudy } from "../types/Invasive";
+import { PreventionStudy } from "../types/Prevention";
+import { TreatmentStudy } from "../types/Treatment";
+import { NotificationsState } from "../types/Notifications";
 
 export interface State {
   malaria: MalariaState;
@@ -45,6 +45,7 @@ export interface MalariaState {
   dataDownloadOpen: boolean;
   reportOpen: boolean;
   mapTitle: string;
+  subscriptionOpen: boolean;
 }
 
 export interface TranslationsState {

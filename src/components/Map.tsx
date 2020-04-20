@@ -58,6 +58,7 @@ import PBOEndemicityLayer from "./layers/PBOEndemicityLayer";
 import DisputedBordersEndemicityLayer from "./layers/PBODisputedBordersLayer";
 import Screenshot from "./Screenshot";
 import Report from "./Report";
+import Subscription from "./Subscription";
 
 ReactMapboxGl({
   accessToken:
@@ -304,6 +305,7 @@ class Map extends React.Component<Props> {
             {!mekong && <Country />}
             {!mekong && <StoryModeSelector />}
             {!mekong && <DataDownload />}
+            {!mekong && <Subscription />}
             <Hidden xsDown>
               {ready ? <Screenshot map={this.map} /> : <div />}
               {ready && ["prevention", "treatment"].includes(theme) ? (

@@ -164,3 +164,8 @@ export const setMapTitleAction = createAction(
     return (mapTitle: string) => action(mapTitle);
   }
 );
+
+export const setSubscriptionOpenAction = createAction(
+  ActionTypeEnum.SetSubscriptionOpen,
+  action => (subscriptionOpen: boolean) => action(subscriptionOpen)
+);
