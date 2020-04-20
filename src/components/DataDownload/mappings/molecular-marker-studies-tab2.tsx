@@ -2,8 +2,8 @@ import { Option } from "../../BasicSelect";
 
 const mappings: Option[] = [
   {
-    value: "OBJECTID",
-    label: "OBJECTID"
+    value: "K13_CODE",
+    label: "ID"
   },
   {
     value: "GENOTYPE",

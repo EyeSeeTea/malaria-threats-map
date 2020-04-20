@@ -22,9 +22,9 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import { connect } from "react-redux";
-import { State } from "../../store/types";
-import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
-import { PreventionStudy } from "../../types/Prevention";
+import { State } from "../../../store/types";
+import { selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
+import { PreventionStudy } from "../../../types/Prevention";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -35,46 +35,17 @@ import {
   GREY_COLUMNS,
   headCells
 } from "./columns";
-import { resolvePyrethroids } from "./resolvers/resistanceStatus";
-import { resolveMechanism } from "./resolvers/resistanceMechanism";
+import { resolvePyrethroids } from "../resolvers/resistanceStatus";
+import { resolveMechanism } from "../resolvers/resistanceMechanism";
 import FilterPopover from "./FilterPopover";
-import { filterByCountries, filterBySpecies } from "../layers/studies-filters";
-import { exportToCSV } from "../DataDownload/download";
+import {
+  filterByCountries,
+  filterBySpecies
+} from "../../layers/studies-filters";
+import { exportToCSV } from "../../DataDownload/download";
 import { Button } from "@material-ui/core";
-
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-type Order = "asc" | "desc";
-
-function getComparator<Key extends keyof any>(
-  order: Order,
-  orderBy: Key
-): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string }
-) => number {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
-  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-  // stabilizedThis.sort((a, b) => {
-  //   const order = comparator(a[0], b[0]);
-  //   if (order !== 0) return order;
-  //   return a[1] - b[1];
-  // });
-  return stabilizedThis.map(el => el[0]);
-}
+import { format } from "date-fns";
+import { getComparator, Order, stableSort } from "../utils";
 
 const StyledCell = styled(TableCell)<{
   isBold?: boolean;
@@ -512,7 +483,8 @@ function PreventionReport({ studies: baseStudies }: Props) {
         studies: studies
       }
     ];
-    exportToCSV(tabs, "file");
+    const dateString = format(new Date(), "yyyyMMdd");
+    exportToCSV(tabs, `MTM_PREVENTION_${dateString}`);
   };
 
   const handleRequestSort = (

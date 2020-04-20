@@ -16,7 +16,6 @@ import {
   selectRegion
 } from "../../store/reducers/base-reducer";
 import { PboDeploymentStatus } from "./prevention/PboDeployment/PboDeploymentSymbols";
-import { DISPUTED_BORDERS_ENDEMICITY_LAYER_ID } from "./PBODisputedBordersLayer";
 
 export const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
 export const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";

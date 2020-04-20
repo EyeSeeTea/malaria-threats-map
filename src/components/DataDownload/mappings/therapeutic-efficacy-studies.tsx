@@ -15,7 +15,7 @@ const mappings: Option[] = [
     },
     {
         value: "VILLAGE_NAME",
-        label: "VILLAGE_NAME"
+        label: "SITE_NAME"
     },
     {
         value: "Latitude",
@@ -39,11 +39,15 @@ const mappings: Option[] = [
     },
     {
         value: "N",
-        label: "N"
+        label: "SAMPLE_SIZE"
     },
     {
         value: "FOLLOW_UP",
-        label: "FOLLOW_UP"
+        label: "FOLLOW_UP (days)"
+    },
+    {
+        value: "POSITIVE_DAY_3",
+        label: "POSITIVE_DAY_3 (days)"
     },
     {
         value: "TREATMENT_FAILURE_PP",

@@ -11,7 +11,7 @@ const mappings: Option[] = [
   },
   {
     value: "VILLAGE_NAME",
-    label: "VILLAGE_NAME"
+    label: "SITE_NAME"
   },
   {
     value: "Latitude",
@@ -52,6 +52,10 @@ const mappings: Option[] = [
   {
     value: "SAMPLING_METHOD",
     label: "SAMPLING_METHOD"
+  },
+  {
+    value: "MOSQUITO_NUMBER",
+    label: "MOSQUITO_NUMBER"
   },
   {
     value: "BREEDING_HABITAT",

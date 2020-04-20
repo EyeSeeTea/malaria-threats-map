@@ -18,12 +18,12 @@ const mappings: Option[] = [
     label: "ADMIN2"
   },
   {
-    value: "SITE_ID",
-    label: "VILLAGE_NAME"
+    value: "VILLAGE_NAME",
+    label: "SITE_NAME"
   },
   {
-    value: "VILLAGE_CODE",
-    label: "VILLAGE_CODE"
+    value: "SITE_ID",
+    label: "SITE_CODE"
   },
   {
     value: "Latitude",
@@ -39,7 +39,7 @@ const mappings: Option[] = [
   },
   {
     value: "TYPE",
-    label: "TYPE"
+    label: "TEST_TYPE"
   },
   {
     value: "INSECTICIDE_TYPE",
@@ -59,7 +59,7 @@ const mappings: Option[] = [
   },
   {
     value: "NUMBER",
-    label: "NUMBER"
+    label: "MOSQUITO_NUMBER"
   },
   {
     value: "TIME",

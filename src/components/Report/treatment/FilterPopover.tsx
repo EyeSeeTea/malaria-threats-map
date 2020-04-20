@@ -3,9 +3,9 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
 import Button from "@material-ui/core/Button";
 import FilterListIcon from "@material-ui/icons/FilterList";
-import CountriesSelector from "../DataDownload/filters/CountriesSelector";
-import SpeciesSelector from "../filters/SpeciesSelector";
-import T from "../../translations/T";
+import CountriesSelector from "../../DataDownload/filters/CountriesSelector";
+import T from "../../../translations/T";
+import DrugsSelector from "../../filters/DrugsSelector";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,12 +20,19 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+interface Props {
+  countries: string[];
+  setCountries: any;
+  drugs: string[];
+  setDrugs: any;
+}
+
 export default function FilterPopover({
   countries,
   setCountries,
-  species,
-  setSpecies
-}: any) {
+  drugs,
+  setDrugs
+}: Props) {
   const classes = useStyles({});
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
@@ -69,7 +76,7 @@ export default function FilterPopover({
         }}
       >
         <CountriesSelector onChange={setCountries} value={countries} />
-        <SpeciesSelector onChange={setSpecies} value={species} />
+        <DrugsSelector onChange={setDrugs} value={drugs} />
       </Popover>
     </div>
   );

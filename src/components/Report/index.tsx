@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  createStyles,
-  Fab,
-  Link,
-  makeStyles,
-  Theme,
-  Typography
-} from "@material-ui/core";
+import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
 import ReportIcon from "@material-ui/icons/Description";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -17,8 +10,8 @@ import {
 } from "../../store/reducers/base-reducer";
 import { setReportOpenAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
-import PreventionReport from "./PreventionReport";
-import { useTranslation } from "react-i18next";
+import PreventionReport from "./prevention/PreventionReport";
+import TreatmentReport from "./treatment/TreatmentReport";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -62,7 +55,6 @@ type OwnProps = {};
 type Props = StateProps & OwnProps & DispatchProps;
 
 function Report({ isReportOpen, openReport, theme }: Props) {
-  const { t } = useTranslation("common");
   const classes = useStyles({});
 
   const handleClickOpen = () => {
@@ -78,7 +70,7 @@ function Report({ isReportOpen, openReport, theme }: Props) {
       case "prevention":
         return <PreventionReport />;
       case "treatment":
-        return <div />;
+        return <TreatmentReport />;
       default:
         openReport(false);
     }

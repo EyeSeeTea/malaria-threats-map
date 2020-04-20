@@ -19,7 +19,7 @@ const mappings: Option[] = [
   },
   {
     value: "VILLAGE_NAME",
-    label: "VILLAGE_NAME"
+    label: "SITE_NAME"
   },
   {
     value: "Latitude",
@@ -43,7 +43,7 @@ const mappings: Option[] = [
   },
   {
     value: "N",
-    label: "N"
+    label: "SAMPLE_SIZE"
   },
   {
     value: "INSTITUTE",

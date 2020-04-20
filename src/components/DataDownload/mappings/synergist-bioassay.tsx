@@ -19,11 +19,11 @@ const mappings: Option[] = [
   },
   {
     value: "VILLAGE_NAME",
-    label: "VILLAGE_NAME"
+    label: "SITE_NAME"
   },
   {
     value: "SITE_ID",
-    label: "VILLAGE_CODE"
+    label: "SITE_CODE"
   },
   {
     value: "Latitude",
@@ -39,7 +39,7 @@ const mappings: Option[] = [
   },
   {
     value: "TYPE",
-    label: "TYPE"
+    label: "TEST_TYPE"
   },
   {
     value: "TYPE_SYNERGIST",
@@ -67,7 +67,7 @@ const mappings: Option[] = [
   },
   {
     value: "NUMBER",
-    label: "NUMBER"
+    label: "MOSQUITO_NUMBER"
   },
   {
     value: "TIME",

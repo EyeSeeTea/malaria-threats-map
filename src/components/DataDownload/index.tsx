@@ -57,6 +57,8 @@ import * as R from "ramda";
 import { selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
 import { addDataDownloadRequestAction } from "../../store/actions/data-download-actions";
 import { format } from "date-fns";
+import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
+import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
 
 const Wrapper = styled.div`
   margin: 16px 0;
@@ -180,12 +182,12 @@ function Index({
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [activeStep, setActiveStep] = React.useState(3);
+  const [activeStep, setActiveStep] = React.useState(0);
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
   );
   const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({
-    organizationType: ORGANIZATION_TYPES[0]
+    organizationType: t(ORGANIZATION_TYPES[0])
   });
   const [useInfo, setUseInfo] = React.useState<Partial<UseInfo>>({
     uses: [],
@@ -240,12 +242,27 @@ function Index({
     );
   };
 
+  const resolveValue = (field: Option, study: any) => {
+    if (field.label === "MM_TYPE") {
+      return MOLECULAR_MARKERS.find(
+        mm => mm.value === Number(study[field.label])
+      ).label;
+    }
+    if (field.label === "PLASMODIUM_SPECIES") {
+      return PLASMODIUM_SPECIES_SUGGESTIONS.find(
+        species => species.value === study[field.label]
+      ).label;
+    } else {
+      return t(study[field.value]);
+    }
+  };
+
   const buildResults = (studies: any, mappings: Option[]) => {
     return studies.map((study: { [key: string]: any }) =>
       mappings.reduce(
         (acc: any, field: Option) => ({
           ...acc,
-          [field.label]: study[field.value]
+          [field.label]: resolveValue(field, study)
         }),
         {}
       )
@@ -532,10 +549,11 @@ function Index({
   };
 
   const isFormValid = () =>
-    isWelcomeFormValid() &&
-    isUserFormValid() &&
-    isUseFormValid() &&
-    isDownloadFormValid();
+    (isWelcomeFormValid() &&
+      isUserFormValid() &&
+      isUseFormValid() &&
+      isDownloadFormValid()) ||
+    true;
 
   return (
     <div>
