@@ -452,19 +452,19 @@ function PreventionReport({ studies: baseStudies }: Props) {
             }`,
             ORGANOPHOSPHATES_N: organophosphatesStudies,
             MONOXYGENASES_PERCENT_SITES_DETECTED: monoOxygenases,
-            MONOXYGENASES_NUMBER_SITES: monoOxygenasesNumber,
+            MONOXYGENASES_PERCENT_SITES_DETECTED_NUMBER_SITES: monoOxygenasesNumber,
             ESTERASES_PERCENT_SITES_DETECTED: esterases,
-            ESTERASES_NUMBER_SITES: esterasesNumber,
+            ESTERASES_PERCENT_SITES_DETECTED_NUMBER_SITES: esterasesNumber,
             GSTS_PERCENT_SITES_DETECTED: gsts,
-            GSTS_NUMBER_SITES: gstsNumber,
+            GSTS_PERCENT_SITES_DETECTED_NUMBER_SITES: gstsNumber,
             K1014S_PERCENT_SITES_DETECTED: kdrL1014s,
-            K1014S_NUMBER_SITES: kdrL1014sNumber,
+            K1014S_PERCENT_SITES_DETECTED_NUMBER_SITES: kdrL1014sNumber,
             K1014F_PERCENT_SITES_DETECTED: kdrL1014f,
-            K1014F_NUMBER_SITES: kdrL1014fNumber,
+            K1014F_PERCENT_SITES_DETECTED_NUMBER_SITES: kdrL1014fNumber,
             KDR_UNSPECIFIED_PERCENT_SITES_DETECTED: kdrUnspecified,
-            KDR_UNSPECIFIED_NUMBER_SITES: kdrUnspecifiedNumber,
+            KDR_UNSPECIFIED_PERCENT_SITES_DETECTED_NUMBER_SITES: kdrUnspecifiedNumber,
             ACE1R_PERCENT_SITES_DETECTED: ace1r,
-            ACE1R_NUMBER_SITES: ace1rNumber
+            ACE1R_PERCENT_SITES_DETECTED_NUMBER_SITES: ace1rNumber
           };
         })
         .sort(getComparator(order, orderBy));
@@ -582,6 +582,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
                             scope="row"
                             padding="none"
                             rowSpan={row.COUNTRY_NUMBER}
+                            align={"left"}
                           >
                             {row.COUNTRY}
                           </StyledCell>
@@ -591,6 +592,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
                             scope="row"
                             padding="none"
                             rowSpan={row.COUNTRY_NUMBER}
+                            align={"center"}
                             divider={true}
                           >
                             {row.INSECTICIDE_CLASSES}
@@ -610,7 +612,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
                           const active = (row as any)[`${cell}_N`];
                           const error =
                             percentage &&
-                            entry[0].indexOf("PERCENTAGE") > -1 &&
+                            entry[0].indexOf("AVERAGE") > -1 &&
                             number > 0;
                           const grey = GREY_COLUMNS.includes(entry[0]);
                           const darkGrey =
