@@ -60,6 +60,8 @@ import Screenshot from "./Screenshot";
 import Report from "./Report";
 import Subscription from "./Subscription";
 import Feedback from "./Feedback";
+import Disclaimer from "./Disclaimer";
+import InitialDisclaimer from "./InitialDisclaimer";
 
 ReactMapboxGl({
   accessToken:
@@ -315,6 +317,7 @@ class Map extends React.Component<Props> {
               ) : (
                 <div />
               )}
+              {!mekong && <InitialDisclaimer />}
             </Hidden>
           </SearchContainer>
         </Fade>

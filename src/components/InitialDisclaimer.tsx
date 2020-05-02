@@ -2,10 +2,9 @@ import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import CloseIcon from "@material-ui/icons/Close";
 import {
-  Button,
   createStyles,
   DialogActions,
-  DialogContent,
+  Fab,
   IconButton,
   makeStyles,
   Theme,
@@ -14,12 +13,21 @@ import {
 import { useTranslation } from "react-i18next";
 import { FlexGrow } from "./Chart";
 import styled from "styled-components";
+import DisclaimerIcon from "@material-ui/icons/Error";
+import EnglishDisclaimer from "./disclaimers/EnglishDisclaimer";
+import i18next from "i18next";
+import SpanishDisclaimer from "./disclaimers/SpanishDisclaimer";
+import FrenchDisclaimer from "./disclaimers/FrenchDisclaimer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
       margin: theme.spacing(2, 0),
       width: "100%"
+    },
+    fab: {
+      pointerEvents: "all",
+      margin: theme.spacing(0.5, 0)
     }
   })
 );
@@ -32,7 +40,7 @@ const Wrapper = styled.div`
 const InitialDisclaimer = () => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles({});
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("disclaimer");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -42,16 +50,28 @@ const InitialDisclaimer = () => {
     setOpen(false);
   };
 
+  const getDisclaimer = () => {
+    const language = i18next.language || window.localStorage.i18nextLng;
+    switch (language) {
+      case "fr":
+        return <FrenchDisclaimer />;
+      case "es":
+        return <SpanishDisclaimer />;
+      default:
+        return <EnglishDisclaimer />;
+    }
+  };
+
   return (
-    <Wrapper>
-      <Button
-        variant="outlined"
+    <div>
+      <Fab
         size="small"
-        color="primary"
+        color={"default"}
+        className={classes.fab}
         onClick={handleClickOpen}
       >
-        {t("disclaimer.title")}
-      </Button>
+        <DisclaimerIcon />
+      </Fab>
       <Dialog
         fullWidth
         open={open}
@@ -62,42 +82,17 @@ const InitialDisclaimer = () => {
       >
         <DialogActions>
           <Wrapper>
-            <Typography variant="h5">{t("disclaimer.title")}</Typography>
+            <Typography variant="h5">{t("title")}</Typography>
           </Wrapper>
           <FlexGrow />
           <IconButton onClick={handleClose}>
             <CloseIcon />
           </IconButton>
         </DialogActions>
-        <DialogContent>
-          {t("disclaimer.p1a")}
-          <a
-            href={t("disclaimer.p1aLink")}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t("disclaimer.p1aLinkText")}
-          </a>
-          {t("disclaimer.p1b")}
-          <br />
-          {t("disclaimer.p2")}
-          <br />
-          {t("disclaimer.p3a")}
-          <a
-            href={t("disclaimer.p3aLink")}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t("disclaimer.p3aLinkText")}
-          </a>
-          {t("disclaimer.p3b")}
-          <br />
-          {t("disclaimer.p4a")}
-          <a href={t("disclaimer.p4aLink")}>{t("disclaimer.p4aLinkText")}</a>
-        </DialogContent>
+        {getDisclaimer()}
         <DialogActions />
       </Dialog>
-    </Wrapper>
+    </div>
   );
 };
 

@@ -244,21 +244,6 @@
     "mobile": "Haga clic aquí para leer la advertencia que se aplica al mapa de arriba",
     "content": "Las denominaciones empleadas en esta publicación y la forma en que aparecen presentados los datos que contiene no implican, por parte de la Organización Mundial de la Salud, juicio alguno sobre la condición jurídica de países, territorios, ciudades o zonas, o de sus autoridades, ni con respecto al trazado de sus fronteras o límites. Las líneas de puntos, así como las líneas discontinuas y las áreas marcadas en gris, en los mapas representan de manera aproximada las fronteras y áreas respecto de las cuales puede que no haya pleno acuerdo. Las fronteras del mapa proporcionadas reflejan la situación política y geográfica actual a partir de la fecha de publicación (2017). Sin embargo, la información técnica sobre la salud se basa en datos precisos con respecto al año seleccionado. Debe destacarse la desconexión en esta disposición, pero no debe extraerse ninguna implicación de carácter político o terminológico de esta disposición, ya que es puramente una función de limitaciones técnicas y gráficas. Fuente de datos: Programa Mundial \nsobre Paludismo. Producción de mapas: Programa Mundial sobre Paludismo. Organización Mundial de la Salud."
   },
-  "disclaimer": {
-    "title": "Aviso Legal",
-    "p1a": "Fuente de datos: Programa Mundial sobre el Paludismo. Elaboración de mapas: Programa Mundial sobre el Paludismo. Organización Mundial de la Salud. ",
-    "p1aLink": "https://www.who.int/about/copyright/",
-    "p1aLinkText": "© WHO 2019",
-    "p1b": " Todos los privilegios reservados.",
-    "p2": "A menos que se especifique lo contrario, la información contenida en esta solicitud ha sido puesta a disposición del Programa Mundial sobre Paludismo de la Organización Mundial de la Salud (OMS) por los Ministerios de Salud o sus asociados en el desarrollo, o mediante la extracción por parte de la OMS o de socios contractuales de publicaciones en revistas internacionales acreditadas como revistas científicas. Por consiguiente, la OMS no garantiza la validez, exactitud o integridad de esta información.",
-    "p3a": "Las imágenes y archivos generados a partir de esta aplicación deben usarse sólo con referencia al subconjunto mostrado de acuerdo con los filtros de datos aplicados. Fuente: Mapa de los desafíos de la malaria: seguimiento de los desafíos biológicos para el control y la eliminación de la malaria (",
-    "p3aLink": "https://www.who.int/malaria/maps/threats/",
-    "p3aLinkText": "https://www.who.int/malaria/maps/threats/",
-    "p3b": "); fecha de creación.",
-    "p4a": "Para obtener más información, póngase en contacto con: ",
-    "p4aLink": "mailto:gmp-maps@who.int",
-    "p4aLinkText": "gmp-maps@who.int"
-  },
   "options": {
     "title": "Opciones",
     "select_language": "Seleccione idioma",

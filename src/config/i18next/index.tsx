@@ -2,6 +2,9 @@ import i18next from "i18next";
 import common_en from "../../translations/en/common.json";
 import common_es from "../../translations/es/common.json";
 import common_fr from "../../translations/fr/common.json";
+import disclaimer_en from "../../translations/en/disclaimer.json";
+import disclaimer_es from "../../translations/es/disclaimer.json";
+import disclaimer_fr from "../../translations/fr/disclaimer.json";
 import tour_en from "../../translations/en/tour.json";
 import tour_es from "../../translations/es/tour.json";
 import tour_fr from "../../translations/fr/tour.json";
@@ -22,16 +25,19 @@ i18next.init({
   resources: {
     en: {
       common: common_en,
+      disclaimer: disclaimer_en,
       tour: tour_en,
       mekong: mekong_en
     },
     es: {
       common: common_es,
+      disclaimer: disclaimer_es,
       tour: tour_es,
       mekong: mekong_es
     },
     fr: {
       common: common_fr,
+      disclaimer: disclaimer_fr,
       tour: tour_fr,
       mekong: mekong_fr
     }

@@ -244,21 +244,6 @@
     "mobile": "Cliquez ici pour lire l'avertissement qui s'applique à la carte ci-dessus",
     "content": "Les appellations employées dans la présente publication et la présentation des données qui y figurent \nn’impliquent de la part de l’Organisation mondiale de la Santé aucune prise de position quant au statut juridique des \npays, territoires, villes ou zones, ou de leurs autorités, ni quant au tracé de leurs frontières ou limites. Les lignes \ndiscontinues et en pointillé, ainsi que les zones en gris, sur les cartes représentent des frontières et zones \napproximatives dont le tracé peut ne pas avoir fait l'objet d'un accord définitif. Les limites de la carte fournies \nreflètent l'état politique et géographique à la date de publication (2017). Cependant, les informations techniques sur \nla santé sont basées sur des données précises par rapport à l'année sélectionnée. La déconnexion dans cet arrangement \ndoit être notée, mais aucune implication concernant le statut politique ou terminologique ne doit être tirée de cet \narrangement car il est purement fonction des limitations techniques et graphiques. Source des données: Programme mondial \ncontre le paludisme. Production de cartes: Programme mondial contre le paludisme. Organisation mondiale de la santé."
   },
-  "disclaimer": {
-    "title": "Avertissement",
-    "p1a": "Source des données: Programme mondial contre le paludisme. Production de cartes: Programme mondial contre le paludisme. Organisation mondiale de la santé. ",
-    "p1aLink": "https://www.who.int/about/copyright/",
-    "p1aLinkText": "© WHO 2019",
-    "p1b": " Tous droits réservés.",
-    "p2": "Sauf indication contraire, les informations contenues dans cette demande ont été mises à la disposition du Programme mondial de lutte contre le paludisme de l'Organisation mondiale de la santé (OMS) par les ministères de la Santé ou leurs partenaires de développement; ou par l'extraction de publications dans des revues internationales homologuées revues scientifiques, par l'OMS ou des partenaires contractuels . L'OMS ne fournit donc aucune assurance quant à la validité, l'exactitude ou l'exhaustivité de ces informations.",
-    "p3a": "Les images et les fichiers générés à partir de cette demande ne doivent être utilisés qu'en référence au sous-groupe affiché, conformément aux filtres de données appliqués. La citation suivante doit être visiblement accompagnée d'images ou de fichiers générés par la demande: Source: Carte des menaces du paludisme de l'OMS: suivi des défis biologiques au contrôle et à l'élimination du paludisme (",
-    "p3aLink": "https://www.who.int/malaria/maps/threats/",
-    "p3aLinkText": "https://www.who.int/malaria/maps/threats/",
-    "p3b": "); date de création.",
-    "p4a": "Pour plus d'informations, veuillez contacter: ",
-    "p4aLink": "mailto:gmp-maps@who.int",
-    "p4aLinkText": "gmp-maps@who.int"
-  },
   "options": {
     "title": "Options",
     "select_language": "Choisir la langue",
