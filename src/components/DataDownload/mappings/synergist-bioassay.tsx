@@ -78,6 +78,10 @@ const mappings: Option[] = [
     label: "MORTALITY_ADJUSTED"
   },
   {
+    value: "MORTALITY_ADJUSTED_INSECTICIDE",
+    label: "MORTALITY_ADJUSTED_INSECTICIDE"
+  },
+  {
     value: "MECHANISM_PROXY",
     label: "MECHANISM_PROXY"
   },

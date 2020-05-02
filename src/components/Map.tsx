@@ -59,6 +59,7 @@ import DisputedBordersEndemicityLayer from "./layers/PBODisputedBordersLayer";
 import Screenshot from "./Screenshot";
 import Report from "./Report";
 import Subscription from "./Subscription";
+import Feedback from "./Feedback";
 
 ReactMapboxGl({
   accessToken:
@@ -306,6 +307,7 @@ class Map extends React.Component<Props> {
             {!mekong && <StoryModeSelector />}
             {!mekong && <DataDownload />}
             {!mekong && <Subscription />}
+            {!mekong && <Feedback />}
             <Hidden xsDown>
               {ready ? <Screenshot map={this.map} /> : <div />}
               {ready && ["prevention", "treatment"].includes(theme) ? (

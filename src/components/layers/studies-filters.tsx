@@ -24,6 +24,14 @@ export const filterByYears = (years: number[]) => (study: any) => {
   return !years.length || years.includes(study.YEAR_START);
 };
 
+export const filterByDownload = () => (study: any) => {
+  return study.DOWNLOAD === "1";
+};
+
+export const filterBySynergistStudies = () => (study: any) => {
+  return study.STUDY_PAIRING_CODE === "NA";
+};
+
 export const filterByIntensityStatus = (study: any) => {
   return study.ASSAY_TYPE === "INTENSITY_CONCENTRATION_BIOASSAY";
 };

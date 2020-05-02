@@ -41,6 +41,7 @@ import {
   filterByAssayTypes,
   filterByCountries,
   filterByDimensionId,
+  filterByDownload,
   filterByDrugs,
   filterByInsecticideClasses,
   filterByInsecticideTypes,
@@ -48,6 +49,7 @@ import {
   filterByMolecularMarkers,
   filterByMolecularMarkerStudy,
   filterBySpecies,
+  filterBySynergistStudies,
   filterByTypes,
   filterByYears
 } from "../layers/studies-filters";
@@ -182,7 +184,7 @@ function Index({
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(3);
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
   );
@@ -274,6 +276,7 @@ function Index({
       case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
       case "INTENSITY_CONCENTRATION_BIOASSAY": {
         const filters = [
+          filterByDownload(),
           filterByAssayTypes([selections.preventionDataset]),
           filterByInsecticideClasses(selections.insecticideClasses),
           filterByInsecticideTypes(selections.insecticideTypes),
@@ -299,6 +302,7 @@ function Index({
       }
       case "SYNERGIST-INSECTICIDE_BIOASSAY": {
         const filters = [
+          filterByDownload(),
           filterByAssayTypes([selections.preventionDataset]),
           filterByTypes(selections.types),
           filterBySpecies(selections.species),
@@ -323,6 +327,7 @@ function Index({
       case "MOLECULAR_ASSAY":
       case "BIOCHEMICAL_ASSAY": {
         const filters = [
+          filterByDownload(),
           filterByAssayTypes([selections.preventionDataset]),
           filterBySpecies(selections.species),
           filterByCountries(selections.countries),

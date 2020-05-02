@@ -169,3 +169,8 @@ export const setSubscriptionOpenAction = createAction(
   ActionTypeEnum.SetSubscriptionOpen,
   action => (subscriptionOpen: boolean) => action(subscriptionOpen)
 );
+
+export const setFeedbackOpenAction = createAction(
+    ActionTypeEnum.SetFeedbackOpen,
+    action => (feedbackOpen: boolean) => action(feedbackOpen)
+);

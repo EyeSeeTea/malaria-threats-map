@@ -23,6 +23,7 @@ export enum ActionTypeEnum {
   SetReportOpen = "malaria/SET_REPORT_OPEN",
   SetMapTitle = "malaria/SET_MAP_TITLE",
   SetSubscriptionOpen = "malaria/SET_SUBSCRIPTION_OPEN",
+  SetFeedbackOpen = "malaria/SET_FEEDBACK_OPEN",
 
   FetchPreventionStudiesRequest = "prevention/FETCH_PREVENTION_STUDIES_REQUEST",
   FetchPreventionStudiesSuccess = "prevention/FETCH_PREVENTION_STUDIES_SUCCESS",
