@@ -62,6 +62,19 @@ import { format } from "date-fns";
 import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
 
+export const MOLECULAR_MECHANISM_TYPES = [
+  "MONO_OXYGENASES",
+  "ESTERASES",
+  "GSTS"
+];
+
+export const BIOCHEMICAL_MECHANISM_TYPES = [
+  "KDR_L1014S",
+  "KDR_L1014F",
+  "KDR_(MUTATION_UNSPECIFIED)",
+  "ACE1R"
+];
+
 const Wrapper = styled.div`
   margin: 16px 0;
 `;
@@ -184,7 +197,7 @@ function Index({
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [activeStep, setActiveStep] = React.useState(2);
+  const [activeStep, setActiveStep] = React.useState(3);
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
   );
@@ -324,11 +337,34 @@ function Index({
         exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
         break;
       }
-      case "MOLECULAR_ASSAY":
+      case "MOLECULAR_ASSAY": {
+        const filters = [
+          filterByDownload(),
+          filterByAssayTypes(["MOLECULAR_ASSAY", "BIOCHEMICAL_ASSAY"]),
+          filterByTypes(MOLECULAR_MECHANISM_TYPES),
+          filterBySpecies(selections.species),
+          filterByCountries(selections.countries),
+          filterByYears(selections.years)
+        ];
+        const studies = filterStudies(preventionStudies, filters);
+        const results = buildResults(
+          studies,
+          mappings[selections.preventionDataset]
+        );
+        const tabs = [
+          {
+            name: "Data",
+            studies: results
+          }
+        ];
+        const dateString = format(new Date(), "yyyyMMdd");
+        exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
+        break;
+      }
       case "BIOCHEMICAL_ASSAY": {
         const filters = [
           filterByDownload(),
-          filterByAssayTypes([selections.preventionDataset]),
+          filterByTypes(BIOCHEMICAL_MECHANISM_TYPES),
           filterBySpecies(selections.species),
           filterByCountries(selections.countries),
           filterByYears(selections.years)

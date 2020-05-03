@@ -223,6 +223,7 @@ const Filters = ({ onChange, selections }: Props) => {
               ) ? (
               <>
                 <MechanismTypeSelector
+                  dataset={preventionDataset}
                   value={mechanismTypes}
                   onChange={onSetMechanismTypes}
                 />

@@ -269,8 +269,8 @@
           "discriminating_concentration_bioassays": "Results of discriminating concentration bioassays",
           "intensity_concentration_bioassays": "Results of intensity concentration bioassays",
           "synergist_insecticide_bioassays": "Results of synergist-insecticide bioassays",
-          "resistance_mechanism_assays_molecular": "Results of resistance mechanism assays – Molecular",
-          "resistance_mechanism_assays_biochemical": "Results of resistance mechanism assays – Biochemical"
+          "resistance_mechanism_assays_molecular": "Results of molecular resistance mechanism identification",
+          "resistance_mechanism_assays_biochemical": "Results of biochemical resistance mechanism identification"
         }
       },
       "treatment": {
