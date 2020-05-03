@@ -39,14 +39,19 @@ function CountriesSelector({
   const { t } = useTranslation("common");
   const global = value.includes("GLOBAL");
   const onOptionChange = (selection: OptionType[] | OptionType | undefined) => {
-    if (!global) {
-      const selected = (selection || []) as OptionType[];
-      onChange(selected.map(s => s.value));
-    } else {
-      if (selection) {
+    if (!selection) {
+      onChange([]);
+    } else if (Array.isArray(selection) && selection) {
+      const values = selection.map(selection => selection.value);
+      if (values.includes("GLOBAL")) {
         onChange(["GLOBAL"]);
       } else {
-        onChange([]);
+        onChange(values);
+      }
+    } else {
+      const optionType = selection as OptionType;
+      if (optionType.value) {
+        onChange([optionType.value]);
       }
     }
   };
