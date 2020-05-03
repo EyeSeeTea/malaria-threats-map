@@ -23,6 +23,7 @@ import {
   selectRegion,
   selectSetBounds,
   selectSetZoom,
+  selectTheaterMode,
   selectTheme
 } from "../store/reducers/base-reducer";
 import {
@@ -62,11 +63,17 @@ import Subscription from "./Subscription";
 import Feedback from "./Feedback";
 import Disclaimer from "./Disclaimer";
 import InitialDisclaimer from "./InitialDisclaimer";
+import TheaterMode from "./TheaterMode";
+import TheaterModeIcon from "./TheaterMode/TheaterModeIcon";
 
 ReactMapboxGl({
   accessToken:
     "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA"
 });
+
+const Separator = styled.div`
+  width: 20px;
+`;
 
 const BaseContainer = styled.div`
   max-width: 600px;
@@ -92,6 +99,14 @@ const BottomLeftContainer = styled(BaseContainer)`
   position: absolute;
   bottom: 0;
   left: 0;
+`;
+
+const BottomMiddleContainer = styled(BaseContainer)`
+  position: absolute;
+  margin: 10px auto;
+  left: 0;
+  bottom: 0;
+  right: 0;
 `;
 
 const SearchContainer = styled(BaseContainer)`
@@ -161,6 +176,7 @@ const mapStateToProps = (state: State) => ({
   setBounds: selectSetBounds(state),
   region: selectRegion(state),
   countryMode: selectCountryMode(state),
+  theaterMode: selectTheaterMode(state),
   preventionStudies: selectPreventionStudies(state),
   diagnosisStudies: selectDiagnosisStudies(state),
   treatmentStudies: selectTreatmentStudies(state),
@@ -304,12 +320,11 @@ class Map extends React.Component<Props> {
               <Filters />
               {!mekong && <MalariaTour />}
             </Hidden>
+            {!mekong && <TheaterModeIcon />}
             {!mekong && <Layers />}
             {!mekong && <Country />}
             {!mekong && <StoryModeSelector />}
             {!mekong && <DataDownload />}
-            {!mekong && <Subscription />}
-            {!mekong && <Feedback />}
             <Hidden xsDown>
               {ready ? <Screenshot map={this.map} /> : <div />}
               {ready && ["prevention", "treatment"].includes(theme) ? (
@@ -324,6 +339,10 @@ class Map extends React.Component<Props> {
         <Fade in={!initialDialogOpen}>
           <TopRightContainer>
             <Hidden xsDown>
+              {!mekong && <Subscription />}
+              {!mekong && <Feedback />}
+              {!mekong && <InitialDisclaimer />}
+              <Separator />
               {!initialDialogOpen && <LanguageSelectorSelect />}
             </Hidden>
           </TopRightContainer>
@@ -346,9 +365,9 @@ class Map extends React.Component<Props> {
             <WhoLogo />
           </Hidden>
         </BottomLeftContainer>
-        <Hidden xsDown>
-          <InitialDialog />
-        </Hidden>
+        <BottomMiddleContainer>
+          {this.props.theaterMode ? <TheaterMode /> : <div />}
+        </BottomMiddleContainer>
       </React.Fragment>
     );
   }

@@ -47,6 +47,7 @@ export interface MalariaState {
   mapTitle: string;
   subscriptionOpen: boolean;
   feedbackOpen: boolean;
+  theaterMode: boolean;
 }
 
 export interface TranslationsState {

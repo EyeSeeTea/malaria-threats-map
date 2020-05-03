@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     fab: {
       pointerEvents: "all",
-      margin: theme.spacing(0.5, 0)
+      margin: theme.spacing(0.5, 0.5)
     }
   })
 );

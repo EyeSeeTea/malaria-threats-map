@@ -236,8 +236,7 @@ function PersistentDrawerLeft({
       >
         <>
           {storyMode ? <StoryModeStepper /> : <FiltersSidebar />}
-
-          <InitialDisclaimer />
+          {/*<InitialDisclaimer />*/}
         </>
       </Drawer>
       <div

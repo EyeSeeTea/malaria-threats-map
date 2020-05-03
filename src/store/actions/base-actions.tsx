@@ -171,6 +171,11 @@ export const setSubscriptionOpenAction = createAction(
 );
 
 export const setFeedbackOpenAction = createAction(
-    ActionTypeEnum.SetFeedbackOpen,
-    action => (feedbackOpen: boolean) => action(feedbackOpen)
+  ActionTypeEnum.SetFeedbackOpen,
+  action => (feedbackOpen: boolean) => action(feedbackOpen)
+);
+
+export const setTheaterModeAction = createAction(
+  ActionTypeEnum.SetTheaterMode,
+  action => (theaterMode: boolean) => action(theaterMode)
 );

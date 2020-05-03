@@ -32,11 +32,12 @@ const initialState: MalariaState = Object.freeze({
     open: true,
     step: 0
   },
-  dataDownloadOpen: true,
+  dataDownloadOpen: false,
   reportOpen: false,
   mapTitle: "",
   subscriptionOpen: false,
-  feedbackOpen: false
+  feedbackOpen: false,
+  theaterMode: false
 });
 
 export default createReducer<MalariaState>(initialState, {
@@ -89,7 +90,9 @@ export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.SetSubscriptionOpen]: (subscriptionOpen: boolean) =>
     R.assoc("subscriptionOpen", subscriptionOpen),
   [ActionTypeEnum.SetFeedbackOpen]: (feedbackOpen: boolean) =>
-      R.assoc("feedbackOpen", feedbackOpen)
+    R.assoc("feedbackOpen", feedbackOpen),
+  [ActionTypeEnum.SetTheaterMode]: (theaterMode: boolean) =>
+    R.assoc("theaterMode", theaterMode)
 });
 
 export const selectMalariaState = (state: State) => state.malaria;
@@ -174,6 +177,10 @@ export const selectIsSubscriptionOpen = createSelector(
 );
 
 export const selectIsFeedbackOpen = createSelector(
-    selectMalariaState,
-    R.prop("feedbackOpen")
+  selectMalariaState,
+  R.prop("feedbackOpen")
+);
+export const selectTheaterMode = createSelector(
+  selectMalariaState,
+  R.prop("theaterMode")
 );
