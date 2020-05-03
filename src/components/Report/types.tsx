@@ -5,12 +5,14 @@ import React from "react";
 import { Data } from "./treatment/columns";
 import { Order } from "./utils";
 
-export const StyledCell = styled(TableCell)<{
+export type CellProps = {
   isBold?: boolean;
   color?: string;
   isRight?: boolean;
   divider?: boolean;
-}>`
+};
+
+export const StyledCell = styled(TableCell)<CellProps>`
   font-size: ${props => (props.isBold ? "12px" : "11.5px")} !important;
   line-height: 1rem !important;
   padding: 3px 6px !important;

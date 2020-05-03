@@ -48,7 +48,6 @@ import Leyend from "./Leyend";
 import StoryModeSelector from "./StoryModeSelector";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
 import MalariaTour from "./tour/MalariaTour";
-import InitialDialog from "./InitialDialog";
 import MekongLayer from "./layers/MekongLayer";
 import config from "../config";
 import DataDownload from "./DataDownload";
@@ -61,7 +60,6 @@ import Screenshot from "./Screenshot";
 import Report from "./Report";
 import Subscription from "./Subscription";
 import Feedback from "./Feedback";
-import Disclaimer from "./Disclaimer";
 import InitialDisclaimer from "./InitialDisclaimer";
 import TheaterMode from "./TheaterMode";
 import TheaterModeIcon from "./TheaterMode/TheaterModeIcon";
@@ -332,7 +330,6 @@ class Map extends React.Component<Props> {
               ) : (
                 <div />
               )}
-              {!mekong && <InitialDisclaimer />}
             </Hidden>
           </SearchContainer>
         </Fade>

@@ -74,10 +74,6 @@ const Feedback = ({ feedbackOpen, setFeedbackOpen }: Props) => {
     setFeedbackOpen(true);
   };
 
-  const verifyCallback = (response: any) => {
-    console.log(response);
-  };
-
   const getIframeUrl = () => {
     const language = i18next.language || window.localStorage.i18nextLng;
     switch (language) {
@@ -113,6 +109,7 @@ const Feedback = ({ feedbackOpen, setFeedbackOpen }: Props) => {
         }}
       >
         <iframe
+          title={"feedback dialog"}
           src={getIframeUrl()}
           width={"100%"}
           height={"800vh"}

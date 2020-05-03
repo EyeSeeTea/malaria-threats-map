@@ -13,9 +13,9 @@ const layer: any = {
   id: DISPUTED_BORDERS_ENDEMICITY_LAYER_ID,
   type: "fill",
   paint: {
-    "fill-color": "#aaa",
+    "fill-color": "#E0E8FF",
     "fill-opacity": 0.8,
-    "fill-outline-color": "#aaa"
+    "fill-outline-color": "#E0E8FF"
   },
   minZoom: 0,
   maxZoom: 20,

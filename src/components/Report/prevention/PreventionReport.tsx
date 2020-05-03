@@ -46,13 +46,9 @@ import { exportToCSV } from "../../DataDownload/download";
 import { Button } from "@material-ui/core";
 import { format } from "date-fns";
 import { getComparator, Order, stableSort } from "../utils";
+import { CellProps } from "../types";
 
-const StyledCell = styled(TableCell)<{
-  isBold?: boolean;
-  color?: string;
-  isRight?: boolean;
-  divider?: boolean;
-}>`
+const StyledCell = styled(TableCell)<CellProps>`
   font-size: ${props => (props.isBold ? "12px" : "11.5px")} !important;
   line-height: 1rem !important;
   padding: 3px 6px !important;

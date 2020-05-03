@@ -1,21 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Dialog from "@material-ui/core/Dialog";
-import {
-  Button,
-  Checkbox,
-  createStyles,
-  Fab,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  makeStyles,
-  MenuItem,
-  Select,
-  TextField,
-  Theme
-} from "@material-ui/core";
+import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
 import SubscriptionIcon from "@material-ui/icons/RssFeed";
-import Typography from "@material-ui/core/Typography";
 import { State } from "../store/types";
 import { setSubscriptionOpenAction } from "../store/actions/base-actions";
 import { selectIsSubscriptionOpen } from "../store/reducers/base-reducer";
@@ -87,12 +73,6 @@ const Subscription = ({ subscriptionOpen, setSubscriptionOpen }: Props) => {
     setSubscriptionOpen(true);
   };
 
-  const verifyCallback = (response: any) => {
-    console.log(response);
-  };
-
-  // @ts-ignore
-  // @ts-ignore
   return (
     <React.Fragment>
       <Fab
@@ -342,7 +322,10 @@ const Subscription = ({ subscriptionOpen, setSubscriptionOpen }: Props) => {
             <div className="hidden-container" />
           </div>
         </form>
-        <img src="//app.icontact.com/icp/core/signup/tracking.gif?id=397&cid=1358575&lid=10873" />
+        <img
+          alt={"icontact"}
+          src="//app.icontact.com/icp/core/signup/tracking.gif?id=397&cid=1358575&lid=10873"
+        />
       </Dialog>
     </React.Fragment>
   );

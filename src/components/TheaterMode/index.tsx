@@ -1,22 +1,12 @@
 import React, { useEffect } from "react";
 import { Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useTranslation } from "react-i18next";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import InputBase from "@material-ui/core/InputBase";
-import DirectionsIcon from "@material-ui/icons/Directions";
-import YearRangeSelector from "../YearRangeSelector";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import CloseIcon from "@material-ui/icons/Close";
-import SkipNextIcon from "@material-ui/icons/SkipNext";
 import Slider from "@material-ui/core/Slider";
-import { State } from "../../store/types";
-import { selectMapTitle, selectTheme } from "../../store/reducers/base-reducer";
-import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
-import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
 import {
   setFiltersAction,
   setTheaterModeAction
@@ -60,8 +50,6 @@ type Props = DispatchProps;
 
 function TheaterMode({ setYears, setTheaterMode }: Props) {
   const classes = useStyles({});
-  let timer: number;
-  const { t } = useTranslation("common");
 
   const [year, setYear] = React.useState<number>(MIN_YEAR);
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
@@ -83,7 +71,7 @@ function TheaterMode({ setYears, setTheaterMode }: Props) {
       }, 750);
     }
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, setYears]);
 
   const play = () => {
     setIsPlaying(true);
