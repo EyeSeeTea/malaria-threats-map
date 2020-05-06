@@ -12,6 +12,9 @@ import {
   setTheaterModeAction
 } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
+import { State } from "../../store/types";
+import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
+import { selectTheme } from "../../store/reducers/base-reducer";
 
 const useStyles = makeStyles({
   root: {
@@ -37,21 +40,37 @@ const useStyles = makeStyles({
   }
 });
 
-const MIN_YEAR = 1998;
 const THIS_YEAR = new Date().getFullYear();
+
+const mapStateToProps = (state: State) => ({
+  theme: selectTheme(state)
+});
 
 const mapDispatchToProps = {
   setYears: setFiltersAction,
   setTheaterMode: setTheaterModeAction
 };
 
+type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps;
+type Props = DispatchProps & StateProps;
 
-function TheaterMode({ setYears, setTheaterMode }: Props) {
+const getMinYear = (theme: string) => {
+  switch (theme) {
+    case "diagnosis":
+      return 1998;
+    case "invasive":
+      return 1985;
+    default:
+      return 2010;
+  }
+};
+
+function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
   const classes = useStyles({});
+  const minYear = getMinYear(theme);
 
-  const [year, setYear] = React.useState<number>(MIN_YEAR);
+  const [year, setYear] = React.useState<number>(minYear);
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
 
   useEffect(() => {
@@ -61,10 +80,10 @@ function TheaterMode({ setYears, setTheaterMode }: Props) {
         setYear(year => {
           const newYear = year + 1;
           if (newYear > THIS_YEAR) {
-            setYears([MIN_YEAR, MIN_YEAR]);
-            return MIN_YEAR;
+            setYears([minYear, minYear]);
+            return minYear;
           } else {
-            setYears([MIN_YEAR, newYear]);
+            setYears([minYear, newYear]);
             return newYear;
           }
         });
@@ -82,8 +101,8 @@ function TheaterMode({ setYears, setTheaterMode }: Props) {
   };
 
   const beginning = () => {
-    setYear(() => MIN_YEAR);
-    setYears([MIN_YEAR, MIN_YEAR]);
+    setYear(() => minYear);
+    setYears([minYear, minYear]);
   };
 
   function valuetext(value: number) {
@@ -93,7 +112,7 @@ function TheaterMode({ setYears, setTheaterMode }: Props) {
   const handleChange = (event: any, newValue: number | number[]) => {
     const value = newValue as number;
     setYear(() => value);
-    setYears([MIN_YEAR, value]);
+    setYears([minYear, value]);
   };
 
   return (
@@ -130,7 +149,7 @@ function TheaterMode({ setYears, setTheaterMode }: Props) {
         getAriaValueText={valuetext}
         onChange={handleChange}
         step={1}
-        min={1998}
+        min={minYear}
         max={THIS_YEAR}
       />
       <IconButton
@@ -145,4 +164,4 @@ function TheaterMode({ setYears, setTheaterMode }: Props) {
   );
 }
 
-export default connect(null, mapDispatchToProps)(TheaterMode);
+export default connect(mapStateToProps, mapDispatchToProps)(TheaterMode);
