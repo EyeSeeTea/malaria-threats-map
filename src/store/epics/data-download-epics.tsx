@@ -11,6 +11,8 @@ import {
 } from "../actions/data-download-actions";
 import config from "../../config";
 import { AjaxError } from "rxjs/ajax";
+import { addNotificationAction } from "../actions/notifier-actions";
+import { setSubscriptionOpenAction } from "../actions/base-actions";
 
 export const getDataDownloadEntriesEpic = (
   action$: ActionsObservable<ActionType<typeof fetchDataDownloadRequestAction>>
@@ -49,12 +51,17 @@ export const createSubscriptionContact = (
       return ajax.patchFull(config.backendUrl, action.payload).pipe(
         // return ajax.getFull(`https://portal-uat.who.int/malthreats-api/`).pipe(
         mergeMap((response: any) => {
-          console.log(response);
-          return of();
+          return of(
+            addNotificationAction("User successfully subscribed!"),
+            setSubscriptionOpenAction(false)
+          );
         }),
         catchError((error: AjaxError) => {
-          console.log(error);
-          return of();
+          return of(
+            addNotificationAction(
+              "There was an error while trying to subscribe"
+            )
+          );
         })
       );
     })
