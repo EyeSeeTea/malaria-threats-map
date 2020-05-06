@@ -63,6 +63,7 @@ import Feedback from "./Feedback";
 import InitialDisclaimer from "./InitialDisclaimer";
 import TheaterMode from "./TheaterMode";
 import TheaterModeIcon from "./TheaterMode/TheaterModeIcon";
+import InitialDialog from "./InitialDialog";
 
 ReactMapboxGl({
   accessToken:
@@ -365,6 +366,9 @@ class Map extends React.Component<Props> {
         <BottomMiddleContainer>
           {this.props.theaterMode ? <TheaterMode /> : <div />}
         </BottomMiddleContainer>
+        <Hidden xsDown>
+          <InitialDialog />
+        </Hidden>
       </React.Fragment>
     );
   }
