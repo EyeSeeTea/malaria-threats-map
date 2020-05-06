@@ -1,14 +1,16 @@
 import { ActionsObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import { mergeMap, switchMap } from "rxjs/operators";
+import { catchError, mergeMap, switchMap } from "rxjs/operators";
 import * as ajax from "../ajax";
 import { of } from "rxjs";
 import {
   addDataDownloadRequestAction,
+  addSubscriptionContactRequestAction,
   fetchDataDownloadRequestAction
 } from "../actions/data-download-actions";
 import config from "../../config";
+import { AjaxError } from "rxjs/ajax";
 
 export const getDataDownloadEntriesEpic = (
   action$: ActionsObservable<ActionType<typeof fetchDataDownloadRequestAction>>
@@ -31,6 +33,27 @@ export const createDataDownloadEntryEpic = (
       return ajax.postFull(config.backendUrl, action.payload).pipe(
         // return ajax.getFull(`https://portal-uat.who.int/malthreats-api/`).pipe(
         mergeMap((response: any) => {
+          return of();
+        })
+      );
+    })
+  );
+
+export const createSubscriptionContact = (
+  action$: ActionsObservable<
+    ActionType<typeof addSubscriptionContactRequestAction>
+  >
+) =>
+  action$.ofType(ActionTypeEnum.AddSubscriptionContactRequest).pipe(
+    switchMap(action => {
+      return ajax.patchFull(config.backendUrl, action.payload).pipe(
+        // return ajax.getFull(`https://portal-uat.who.int/malthreats-api/`).pipe(
+        mergeMap((response: any) => {
+          console.log(response);
+          return of();
+        }),
+        catchError((error: AjaxError) => {
+          console.log(error);
           return of();
         })
       );

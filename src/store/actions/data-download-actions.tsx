@@ -1,6 +1,6 @@
 import { createAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import { Download } from "../../components/DataDownload";
+import {Contact, Download} from "../../components/DataDownload";
 
 export const fetchDataDownloadRequestAction = createAction(
   ActionTypeEnum.FetchDownloadsRequest,
@@ -14,4 +14,12 @@ export const addDataDownloadRequestAction = createAction(
   action => {
     return (download: Download) => action(download);
   }
+);
+
+
+export const addSubscriptionContactRequestAction = createAction(
+    ActionTypeEnum.AddSubscriptionContactRequest,
+    action => {
+        return (contact: Contact) => action(contact);
+    }
 );

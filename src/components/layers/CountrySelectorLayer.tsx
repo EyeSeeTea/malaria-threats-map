@@ -135,7 +135,6 @@ class CountrySelectorLayer extends Component<Props> {
               PboDeploymentStatus.NOT_ELIGIBLE;
             return newFeature;
           }
-          console.log(countryStatus)
           const statuses: Record<string, number> = Object.entries(
             countryStatus
           ).reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});

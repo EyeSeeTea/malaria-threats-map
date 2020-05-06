@@ -1,0 +1,19 @@
+{
+  "close": "Close",
+  "data_download": "Data download",
+  "welcome_message": "Welcome message",
+  "personal_contact_details": "Personal contact details",
+  "purpose_of_data_download": "Purpose of data download",
+  "filter_the_data": "Filter the data",
+  "first_name": "First name",
+  "family_name": "Family name",
+  "organization_type": "Organization type",
+  "organization_name": "Organization name",
+  "position": "Position",
+  "country_of_residency": "Country of residency",
+  "email": "Email",
+  "phone_number": "Phone number",
+  "back": "Back",
+  "next": "Next",
+  "download": "Download"
+}

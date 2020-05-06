@@ -256,7 +256,7 @@
   "data_download": {
     "title": "Data download",
     "footer": "(*) total number of sites for which data was reported",
-    "dataset": "Select Dataset",
+    "dataset": "Data selection",
     "buttons": {
       "back": "Back",
       "next": "Next",
@@ -352,7 +352,9 @@
     "step3": {
       "title": "Filter the data",
       "filters": {
-        "theme": "Select Theme"
+        "additional": "Additional filters",
+        "theme": "Select Theme",
+        "dataset": "Select Dataset"
       }
     }
   },

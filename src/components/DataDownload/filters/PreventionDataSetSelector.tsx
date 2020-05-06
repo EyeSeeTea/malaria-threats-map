@@ -51,7 +51,7 @@ const PreventionDataSetSelector = ({ value, onChange }: Props) => {
   return (
     <FilterWrapper>
       <FormLabel component="legend">
-        <T i18nKey={`data_download.dataset`} /> *
+        <T i18nKey={`data_download.step3.filters.dataset`} /> *
       </FormLabel>
       <Divider />
       <IntegrationReactSelect

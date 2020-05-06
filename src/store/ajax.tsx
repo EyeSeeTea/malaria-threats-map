@@ -78,3 +78,14 @@ export const postFull = (path: string, request: any) =>
     },
     customPath: true
   });
+
+export const patchFull = (path: string, request: any) =>
+  makeRequestAndHandleUnauthorized({
+    method: "PATCH",
+    path,
+    body: request,
+    headers: {
+      "Content-Type": "application/json"
+    },
+    customPath: true
+  });

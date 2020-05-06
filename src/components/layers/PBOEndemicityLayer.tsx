@@ -13,7 +13,7 @@ const layer: any = {
   paint: {
     "fill-color": "rgba(255,255,255,1)",
     "fill-opacity": 0.8,
-    "fill-outline-color": "rgba(255,255,255,1)"
+    "fill-outline-color": "#adadad"
   },
   minZoom: 0,
   maxZoom: 20,

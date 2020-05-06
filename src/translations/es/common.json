@@ -228,6 +228,7 @@
     "patient_type": "Tipos de pacientes",
     "years": "Años",
     "country": "País",
+    "countries": "Países",
     "region": "Región",
     "sub_region": "Subregión"
   },
@@ -251,6 +252,111 @@
   },
   "citation": {
     "no_citation": "Referencia no disponible"
+  },
+  "data_download": {
+    "title": "Descarga de datos",
+    "footer": "(*) total number of sites for which data was reported",
+    "dataset": "Selección de datos",
+    "buttons": {
+      "back": "Anterior",
+      "next": "Siguiente",
+      "download": "Descargar",
+      "close": "Cerrar"
+    },
+    "filters": {
+      "prevention": {
+        "datasets": {
+          "discriminating_concentration_bioassays": "Results of discriminating concentration bioassays",
+          "intensity_concentration_bioassays": "Results of intensity concentration bioassays",
+          "synergist_insecticide_bioassays": "Results of synergist-insecticide bioassays",
+          "resistance_mechanism_assays_molecular": "Results of molecular resistance mechanism identification",
+          "resistance_mechanism_assays_biochemical": "Results of biochemical resistance mechanism identification"
+        }
+      },
+      "treatment": {
+        "datasets": {
+          "therapeutic_efficacy_studies": "Results of therapeutic efficacy studies",
+          "molecular_marker_studies": "Results of molecular marker studies"
+        }
+      },
+      "invasive": {
+        "datasets": {
+          "invasive_vector_species": "Invasive vector species detections"
+        }
+      }
+    },
+    "step0": {
+      "title": "Mensaje de bienvenida",
+      "p1": "¡Bienvenido al diálogo de descarga de datos del Mapa de los desafíos de la malaria!",
+      "p2": "Este diálogo le permitirá descargar datos de las bases de datos mundiales de la OMS sobre la resistencia a los insecticidas en los vectores de la malaria, la eficacia y resistencia de los parásitos a los medicamentos antipalúdicos y las especies vectoras invasoras.",
+      "p3": "Los datos  contenidos en estas tres bases de datos globales han sido puestos a disposición del  Programa Mundial sobre Paludismo de la Organización Mundial de la Salud (OMS) por los Ministerios de Salud o sus asociados en el desarrollo, o mediante su extracción de publicaciones científicas por parte de la OMS o sus socios. Para reconocer sus contribuciones, cada conjunto de datos incluye una columna con sus fuentes. Tenga en cuenta que no todos los contribuyentes nos han permitido compartir sus datos. Por lo tanto, algunos de los datos que usted puede ver en el Mapa de los desafíos de la malaria no están disponibles para descarga. En el caso de datos extraídos de las publicaciones, tenga en cuenta que cuando las publicaciones no proporcionan directamente los valores de las variables incluidas en las bases de datos globales, o cuando estos se calculan de manera diferente a la recomendada por la OMS, los valores de las bases de datos han sido calculados por la OMS a partir de los datos disponibles.",
+      "p4a": "El uso de los datos está sujeto a los ",
+      "p4bLinkText": "Términos y condiciones de uso para compilaciones, agregaciones, evaluaciones y análisis de datos de la OMS",
+      "p4bLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions",
+      "p4c": ". Al utilizar los Conjuntos de datos o cualquier representación derivada de ellos, usted acepta respetar y adherirse a estos términos y condiciones, que pueden ser modificados por la OMS de vez en cuando a su exclusivo criterio.",
+      "p5": "Usted deberá reconocer el uso de estos conjuntos de datos incluyendo la siguiente referencia en sus publicaciones: OMS, Mapa de los desafíos de la malaria (https://www.who.int/malaria/maps/threats/), fecha de acceso, reconocimiento a los países que proporcionaron los datos subyacentes (en caso de que la fuente se refiera a los ministerios de salud o programas nacionales de control de la malaria de países específicos).",
+      "p6": "El Programa Mundial sobre el Paludismo de la OMS está interesado en hacer seguimiento y de mostrar la utilidad de las bases de datos globales. Por lo tanto, a continuación le haremos algunas preguntas sobre el propósito para el cual desea descargar datos.",
+      "p7a": "Si tiene alguna pregunta, no dude en contactarnos en: ",
+      "p7bEmail": "gmp-maps@who.int",
+      "p8a": "Marque aquí para indicar que ha leído y acepta los ",
+      "p8bLinkText": "Términos y condiciones de uso para compilaciones, agregaciones, evaluaciones y análisis de datos de la OMS",
+      "p8bLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions"
+    },
+    "step1": {
+      "title": "Datos de contacto",
+      "first_name": "Nombre",
+      "last_name": "Apellidos",
+      "organization_type": "Tipo de organización",
+      "organization_type_options": {
+        "university": "University or Research center",
+        "ngos": "NGOs",
+        "agency": "Funding agencies or donors",
+        "international": "International Organization",
+        "government": "Government institutions",
+        "partnership": "Partnerships/alliances",
+        "consultant": "Independent consultant/freelancer",
+        "health": "Health commodities manufacturers",
+        "communications": "Communications company",
+        "private": "Other private companies",
+        "other": "Others"
+      },
+      "organization_name": "Nombre de la Organización",
+      "position": "Position",
+      "country": "País de residencia",
+      "email": "Email",
+      "phone": "Teléfono de contacto"
+    },
+    "step2": {
+      "title": "Propósito de la descarga",
+      "data_use": "¿Para qué utilizará los datos?",
+      "data_use_options": {
+        "research": "Investigación",
+        "grant": "Desarrollar propuestas de proyectos",
+        "treatments": "Development of new anti-malaria treatments",
+        "vector": "Desarrollar nuevas herramientas de control de vectores",
+        "diagnosis": "Desarrollar nuevas herramientas de diagnóstico",
+        "policies": "Desarrollo de políticas nacionales, estrategias y / o planes de trabajo (por ejemplo, Plan Estratégico Nacional contra la Malaria, políticas o directrices de tratamiento, planes nacionales de monitoreo y manejo de la resistencia a insecticidas en vectores del paludismo)",
+        "advocacy": "Abogacía"
+      },
+      "date_use_options_content": {
+        "research": " Proporcione una breve descripción del proyecto o pregunta de investigación para la cual se utilizarán los datos (mínimo 100 palabras)",
+        "policies": "Proporcione el título o una breve descripción de la política, estrategia o plan para la que se utilizarán los datos.",
+        "tools": "Describa brevemente los nuevos tratamiento o las nuevas herramientas diagnóstico o de control de vectores que pretende desarrollar (mínimo 100 palabras)",
+        "date": "¿Cuándo tiene previsto terminar su proyecto, política, estrategia o plan?"
+      },
+      "countries": "Países donde se implementará el proyecto, política, estrategia o plan",
+      "message": "La OMS desea mejorar las bases de datos mundiales y el Mapa de los desafíos de la malaria para satisfacer mejor las necesidades de su comunidad de usuarios. Por lo tanto, la OMS pretende comunicarse con los usuarios para recopilar sugerencias de mejora y aprender de los diferentes casos de uso de estos productos y los beneficios que estos productos les reportan.",
+      "consent1": "Autorizo a la Organización Mundial de la Salud a usar mis datos personales para contactarme con respecto a mi experiencia usando el Mapa de los desafíos de la malaria y los datos de las bases de datos globales. ",
+      "consent2": "Autorizo a la Organización Mundial de la Salud a usar el nombre de la organización y las descripciones de proyectos que he proporcionado para presentar los casos de uso de las bases de datos globales (no se mostrarán datos personales)."
+    },
+    "step3": {
+      "title": "Filtrar datos a descargar",
+      "filters": {
+        "additional": "Filtros adicionales",
+        "theme": "Selecciona un tema",
+        "dataset": "Seleccione un conjunto de datos"
+      }
+    }
   },
   "TREATMENT_FAILURE_KM": "% de pacientes con fallo terapeutico, Kaplan-Meier",
   "PROP_RELATED": "%"

@@ -185,6 +185,14 @@ export type Download = {
   dataset: string;
 };
 
+export type Contact = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  organization: string;
+  country: string;
+};
+
 function Index({
   isDataDownloadOpen,
   setDataDownloadOpen,
@@ -196,7 +204,7 @@ function Index({
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(3);
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
   );

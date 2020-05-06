@@ -11,6 +11,9 @@ import tour_fr from "../../translations/fr/tour.json";
 import mekong_en from "../../translations/en/mekong.json";
 import mekong_es from "../../translations/es/mekong.json";
 import mekong_fr from "../../translations/fr/mekong.json";
+import download_en from "../../translations/en/download.json";
+import download_es from "../../translations/es/download.json";
+import download_fr from "../../translations/fr/download.json";
 import { dispatchCustomEvent } from "../../utils/dom-utils";
 
 const ALLOWED_LANGUAGES = ["en", "fr", "es"];
@@ -27,19 +30,22 @@ i18next.init({
       common: common_en,
       disclaimer: disclaimer_en,
       tour: tour_en,
-      mekong: mekong_en
+      mekong: mekong_en,
+      download: download_en
     },
     es: {
       common: common_es,
       disclaimer: disclaimer_es,
       tour: tour_es,
-      mekong: mekong_es
+      mekong: mekong_es,
+      download: download_es
     },
     fr: {
       common: common_fr,
       disclaimer: disclaimer_fr,
       tour: tour_fr,
-      mekong: mekong_fr
+      mekong: mekong_fr,
+      download: download_fr
     }
   }
 });

@@ -21,6 +21,7 @@ import { selectPreventionStudies } from "../../store/reducers/prevention-reducer
 import MolecularMarkerSelector from "../filters/MolecularMarkerSelector";
 import { Paper, Typography } from "@material-ui/core";
 import styled from "styled-components";
+import {useTranslation} from "react-i18next";
 
 const Divider = styled.div`
   height: 16px;
@@ -45,6 +46,8 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
 const Filters = ({ onChange, selections }: Props) => {
+  const { t } = useTranslation("common");
+
   const onSetTheme = (value: string) => {
     onChange({
       ...selections,
@@ -171,7 +174,7 @@ const Filters = ({ onChange, selections }: Props) => {
   return (
     <div>
       <Typography variant="subtitle1" color="textSecondary">
-        Select a dataset
+        {t('data_download.dataset')}
       </Typography>
       <Paper
         style={{
@@ -201,7 +204,7 @@ const Filters = ({ onChange, selections }: Props) => {
       </Paper>
       <Divider />
       <Typography variant="subtitle1" color="textSecondary">
-        Additional filters
+        {t('data_download.step3.filters.additional')}
       </Typography>
       <Paper
         style={{
