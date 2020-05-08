@@ -50,11 +50,12 @@ class DataProvider extends Component<Props> {
 
   componentDidUpdate(prevProps: Readonly<Props>) {
     if (this.props.translations.length !== prevProps.translations.length) {
-      const translations = this.props.translations.filter(
-        translation =>
-          translation.VALUE_ !== "NA" ||
-          (translation.FIELD === "COUNTRY_NAME" && translation.VALUE_ === "NA")
-      );
+      const translations = this.props.translations;
+      //     .filter(
+      //   translation =>
+      //     translation.VALUE_ !== "NA" ||
+      //     (translation.FIELD === "COUNTRY_NAME" && translation.VALUE_ === "NA")
+      // );
       const englishResources = translations.reduce((acc, translation) => {
         return {
           ...acc,

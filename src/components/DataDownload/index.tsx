@@ -204,7 +204,7 @@ function Index({
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(3);
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
   );
@@ -265,15 +265,21 @@ function Index({
   };
 
   const resolveValue = (field: Option, study: any) => {
-    if (field.label === "MM_TYPE") {
+    if (field.value === "MM_TYPE") {
       return MOLECULAR_MARKERS.find(
-        mm => mm.value === Number(study[field.label])
+        mm => mm.value === Number(study[field.value])
       ).label;
     }
-    if (field.label === "PLASMODIUM_SPECIES") {
+    if (field.value === "PLASMODIUM_SPECIES") {
       return PLASMODIUM_SPECIES_SUGGESTIONS.find(
-        species => species.value === study[field.label]
+        species => species.value === study[field.value]
       ).label;
+    }
+    if (field.value === "CITATION_LONG") {
+      return study[field.value];
+    }
+    if (!isNaN(study[field.value])) {
+      return study[field.value];
     } else {
       return t(study[field.value]);
     }
@@ -596,11 +602,11 @@ function Index({
     }
   };
 
-  const isFormValid = () =>
-    isWelcomeFormValid() &&
-    isUserFormValid() &&
-    isUseFormValid() &&
-    isDownloadFormValid();
+  const isFormValid = () => true;
+  // isWelcomeFormValid() &&
+  // isUserFormValid() &&
+  // isUseFormValid() &&
+  // isDownloadFormValid();
 
   return (
     <div>
