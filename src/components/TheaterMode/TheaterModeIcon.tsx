@@ -32,6 +32,7 @@ function TheaterModeIcon({ theaterMode, setTheaterMode }: any) {
         color={theaterMode ? "primary" : "default"}
         onClick={() => setTheaterMode(!theaterMode)}
         className={classes.fab}
+        title={"Timeline mode"}
       >
         <TheaterIcon />
       </Fab>

@@ -95,6 +95,7 @@ const Subscription = ({
         color={"default"}
         className={classes.fab}
         onClick={handleOpen}
+        title={"Subscription"}
       >
         <SubscriptionIcon />
       </Fab>

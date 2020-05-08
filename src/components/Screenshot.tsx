@@ -158,6 +158,7 @@ function Screenshot({ map, theme, title }: Props) {
         color="default"
         onClick={handleClick}
         className={classes.fab}
+        title={"Export"}
       >
         <AddAPhotoIcon />
       </Fab>

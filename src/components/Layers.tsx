@@ -30,6 +30,7 @@ function Layers({ toogleEndemicityLayer, endemicityLayer }: any) {
         color={endemicityLayer ? "primary" : "default"}
         onClick={handleToggle}
         className={classes.fab}
+        title={"Endemicity"}
       >
         <LayersIcon />
       </Fab>

@@ -96,6 +96,7 @@ const Feedback = ({ feedbackOpen, setFeedbackOpen }: Props) => {
         color={"default"}
         className={classes.fab}
         onClick={handleOpen}
+        title={"Feedback"}
       >
         <FeedbackIcon />
       </Fab>

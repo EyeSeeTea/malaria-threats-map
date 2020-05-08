@@ -60,7 +60,8 @@ export const createSubscriptionContact = (
           return of(
             addNotificationAction(
               "There was an error while trying to subscribe"
-            )
+            ),
+            setSubscriptionOpenAction(false)
           );
         })
       );

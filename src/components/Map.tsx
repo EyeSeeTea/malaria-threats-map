@@ -337,9 +337,9 @@ class Map extends React.Component<Props> {
         <Fade in={!initialDialogOpen}>
           <TopRightContainer>
             <Hidden xsDown>
+              {!mekong && <InitialDisclaimer />}
               {!mekong && <Subscription />}
               {!mekong && <Feedback />}
-              {!mekong && <InitialDisclaimer />}
               <Separator />
               {!initialDialogOpen && <LanguageSelectorSelect />}
             </Hidden>

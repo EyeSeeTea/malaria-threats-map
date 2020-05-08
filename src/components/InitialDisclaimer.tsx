@@ -69,6 +69,7 @@ const InitialDisclaimer = () => {
         color={"default"}
         className={classes.fab}
         onClick={handleClickOpen}
+        title={"Disclaimer"}
       >
         <DisclaimerIcon />
       </Fab>

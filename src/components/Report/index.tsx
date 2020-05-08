@@ -84,6 +84,7 @@ function Report({ isReportOpen, openReport, theme }: Props) {
         color={isReportOpen ? "primary" : "default"}
         onClick={handleClickOpen}
         className={classes.fab}
+        title={"Report"}
       >
         <ReportIcon />
       </Fab>
