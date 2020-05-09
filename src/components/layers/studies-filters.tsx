@@ -175,6 +175,10 @@ export const filterByMolecularMarkerStudy = () => (study: any) => {
   return study.DimensionID === 255 || study.DimensionID === 257;
 };
 
+export const filterByMolecularMarkerStudyDimension255 = () => (study: any) => {
+  return study.DimensionID === 255;
+};
+
 export const filterByMolecularMarker = (molecularMarker: number) => (
   study: any
 ) => {

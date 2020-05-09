@@ -6,7 +6,7 @@ const mappings: Option[] = [
     label: "ID"
   },
   {
-    value: "COUNTRY_NAME",
+    value: "ISO2",
     label: "COUNTRY_NAME"
   },
   {
@@ -27,15 +27,11 @@ const mappings: Option[] = [
   },
   {
     value: "Latitude",
-    label: "Latitude"
+    label: "LATITUDE"
   },
   {
     value: "Longitude",
-    label: "Longitude"
-  },
-  {
-    value: "ASSAY_TYPE",
-    label: "ASSAY_TYPE"
+    label: "LONGITUDE"
   },
   {
     value: "TYPE",
@@ -47,7 +43,7 @@ const mappings: Option[] = [
   },
   {
     value: "SPECIES",
-    label: "SPECIES"
+    label: "VECTOR SPECIES"
   },
   {
     value: "STAGE_ORIGIN",
@@ -56,10 +52,6 @@ const mappings: Option[] = [
   {
     value: "NUMBER",
     label: "MOSQUITO_NUMBER"
-  },
-  {
-    value: "TIME",
-    label: "TEST_TIME"
   },
   {
     value: "MECHANISM_STATUS",

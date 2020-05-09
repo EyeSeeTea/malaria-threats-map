@@ -48,6 +48,7 @@ import {
   filterByManyPlasmodiumSpecies,
   filterByMolecularMarkers,
   filterByMolecularMarkerStudy,
+  filterByMolecularMarkerStudyDimension255,
   filterBySpecies,
   filterByTypes,
   filterByYears
@@ -204,7 +205,7 @@ function Index({
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(3);
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
   );
@@ -275,7 +276,38 @@ function Index({
         species => species.value === study[field.value]
       ).label;
     }
-    if (field.value === "CITATION_LONG") {
+    if (["Latitude", "Longitude"].includes(field.value)) {
+      return Number(study[field.value]).toFixed(6);
+    }
+    if (
+      [
+        "CITATION",
+        "CITATION_LONG",
+        "CITATION_URL",
+        "PROVINCE",
+        "OBJECTID",
+        "MONTH_END",
+        "MONTH_START",
+        "YEAR_END",
+        "YEAR_START"
+      ].includes(field.value)
+    ) {
+      return study[field.value];
+    }
+    if (["STAGE_ORIGIN", "STAGE"].includes(field.value)) {
+      return String(study[field.value]).toUpperCase();
+    }
+    if (
+      [
+        "POSITIVE_DAY_3",
+        "TREATMENT_FAILURE_PP",
+        "TREATMENT_FAILURE_KM",
+        "MORTALITY_ADJUSTED"
+      ].includes(field.value)
+    ) {
+      if (!isNaN(study[field.value])) {
+        return (parseFloat(study[field.value]) * 100).toFixed(2);
+      }
       return study[field.value];
     }
     if (!isNaN(study[field.value])) {
@@ -427,7 +459,7 @@ function Index({
       }
       case "MOLECULAR_MARKER_STUDY": {
         const filters = [
-          filterByMolecularMarkerStudy(),
+          filterByMolecularMarkerStudyDimension255(),
           filterByMolecularMarkers(selections.molecularMarkers),
           filterByCountries(selections.countries),
           filterByYears(selections.years)
@@ -602,11 +634,11 @@ function Index({
     }
   };
 
-  const isFormValid = () =>
-    isWelcomeFormValid() &&
-    isUserFormValid() &&
-    isUseFormValid() &&
-    isDownloadFormValid();
+  const isFormValid = () => true;
+  // isWelcomeFormValid() &&
+  // isUserFormValid() &&
+  // isUseFormValid() &&
+  // isDownloadFormValid();
 
   return (
     <div>

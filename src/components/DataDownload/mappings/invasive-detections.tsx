@@ -6,7 +6,7 @@ const mappings: Option[] = [
     label: "OBJECTID"
   },
   {
-    value: "COUNTRY_NAME",
+    value: "ISO2",
     label: "COUNTRY_NAME"
   },
   {
@@ -15,11 +15,11 @@ const mappings: Option[] = [
   },
   {
     value: "Latitude",
-    label: "Latitude"
+    label: "LATITUDE"
   },
   {
     value: "Longitude",
-    label: "Longitude"
+    label: "LONGITUDE"
   },
   {
     value: "VECTOR_SPECIES_COMPLEX",

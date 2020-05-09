@@ -6,7 +6,7 @@ const mappings: Option[] = [
     label: "ID"
   },
   {
-    value: "COUNTRY_NAME",
+    value: "ISO2",
     label: "COUNTRY_NAME"
   },
   {
@@ -27,11 +27,11 @@ const mappings: Option[] = [
   },
   {
     value: "Latitude",
-    label: "Latitude"
+    label: "LATITUDE"
   },
   {
     value: "Longitude",
-    label: "Longitude"
+    label: "LONGITUDE"
   },
   {
     value: "ASSAY_TYPE",
@@ -44,6 +44,10 @@ const mappings: Option[] = [
   {
     value: "INSECTICIDE_TYPE",
     label: "INSECTICIDE_TYPE"
+  },
+  {
+    value: "INSECTICIDE_CONC",
+    label: "INSECTICIDE_CONC"
   },
   {
     value: "YEAR_START",

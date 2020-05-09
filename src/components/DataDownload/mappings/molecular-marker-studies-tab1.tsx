@@ -10,7 +10,7 @@ const mappings: Option[] = [
     label: "MM_TYPE"
   },
   {
-    value: "COUNTRY_NAME",
+    value: "ISO2",
     label: "COUNTRY_NAME"
   },
   {
@@ -18,16 +18,16 @@ const mappings: Option[] = [
     label: "ADMIN2"
   },
   {
-    value: "VILLAGE_NAME",
+    value: "SITE_NAME",
     label: "SITE_NAME"
   },
   {
     value: "Latitude",
-    label: "Latitude"
+    label: "LATITUDE"
   },
   {
     value: "Longitude",
-    label: "Longitude"
+    label: "LONGITUDE"
   },
   {
     value: "YEAR_START",
@@ -46,7 +46,7 @@ const mappings: Option[] = [
     label: "SAMPLE_SIZE"
   },
   {
-    value: "INSTITUTE",
+    value: "INSTITUTION",
     label: "DATA_SOURCE"
   },
   {
