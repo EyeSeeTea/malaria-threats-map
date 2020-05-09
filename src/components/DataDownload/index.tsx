@@ -205,7 +205,7 @@ function Index({
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [activeStep, setActiveStep] = React.useState(3);
+  const [activeStep, setActiveStep] = React.useState(0);
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
   );
@@ -634,11 +634,11 @@ function Index({
     }
   };
 
-  const isFormValid = () => true;
-  // isWelcomeFormValid() &&
-  // isUserFormValid() &&
-  // isUseFormValid() &&
-  // isDownloadFormValid();
+  const isFormValid = () =>
+    isWelcomeFormValid() &&
+    isUserFormValid() &&
+    isUseFormValid() &&
+    isDownloadFormValid();
 
   return (
     <div>

@@ -26,7 +26,7 @@ import * as R from "ramda";
 import { useTranslation } from "react-i18next";
 import { Data, headCells } from "./columns";
 import FilterPopover from "./FilterPopover";
-import { filterByCountries, filterByDrugs } from "../../layers/studies-filters";
+import {filterByCountries, filterByDrugs, filterByMolecularMarkerStudyDimension256} from "../../layers/studies-filters";
 import { exportToCSV } from "../../DataDownload/download";
 import { Button } from "@material-ui/core";
 import { getComparator, Order, percentile, stableSort } from "../utils";
@@ -215,6 +215,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
   const filters = [
     (study: TreatmentStudy) => !isNull(study.DRUG_NAME),
+    filterByMolecularMarkerStudyDimension256(),
     filterByCountries(countries),
     filterByDrugs(drugs)
   ];

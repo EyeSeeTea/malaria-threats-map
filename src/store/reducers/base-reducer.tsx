@@ -32,7 +32,7 @@ const initialState: MalariaState = Object.freeze({
     open: true,
     step: 0
   },
-  dataDownloadOpen: true,
+  dataDownloadOpen: false,
   reportOpen: false,
   mapTitle: "",
   subscriptionOpen: false,
