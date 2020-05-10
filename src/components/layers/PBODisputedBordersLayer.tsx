@@ -1,7 +1,7 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {State} from "../../store/types";
-import {selectEndemicity} from "../../store/reducers/base-reducer";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { State } from "../../store/types";
+import { selectEndemicity } from "../../store/reducers/base-reducer";
 import config from "../../config";
 
 export const DISPUTED_BORDERS_ENDEMICITY_LAYER_ID =
@@ -13,9 +13,16 @@ const layer: any = {
   id: DISPUTED_BORDERS_ENDEMICITY_LAYER_ID,
   type: "fill",
   paint: {
-    "fill-color": "#E0E8FF",
+    "fill-color": ["match", ["get", "NAME"], "Lakes", "#E0E8FF", "#CECECE"],
     "fill-opacity": 0.8,
-    "fill-outline-color": "#E0E8FF"
+    "fill-outline-color": [
+      "match",
+      ["get", "NAME"],
+      "Lakes",
+      "#E0E8FF",
+
+      "#CECECE"
+    ]
   },
   minZoom: 0,
   maxZoom: 20,

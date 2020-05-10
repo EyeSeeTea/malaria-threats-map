@@ -288,9 +288,9 @@ class Map extends React.Component<Props> {
         {isPbo && countryMode ? (
           <>
             {ready && <CountrySelectorLayer map={this.map} />}
+            {ready && <DistrictsLayer map={this.map} />}
             {ready && <PBOEndemicityLayer map={this.map} />}
             {ready && <DisputedBordersEndemicityLayer map={this.map} />}
-            {ready && <DistrictsLayer map={this.map} />}
           </>
         ) : (
           <>

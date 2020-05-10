@@ -16,6 +16,7 @@ import {
   selectRegion
 } from "../../store/reducers/base-reducer";
 import { PboDeploymentStatus } from "./prevention/PboDeployment/PboDeploymentSymbols";
+import { PBO_ENDEMICITY_LAYER_ID } from "./PBOEndemicityLayer";
 
 export const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
 export const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
@@ -157,7 +158,11 @@ class CountrySelectorLayer extends Component<Props> {
       }
 
       this.props.map.addSource(COUNTRY_SELECTOR_SOURCE_ID, source);
-      this.props.map.addLayer(layer);
+      if (this.props.map.getLayer(PBO_ENDEMICITY_LAYER_ID)) {
+        this.props.map.addLayer(layer, PBO_ENDEMICITY_LAYER_ID);
+      } else {
+        this.props.map.addLayer(layer);
+      }
       setupEffects(
         this.props.map,
         COUNTRY_SELECTOR_SOURCE_ID,
