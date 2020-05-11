@@ -14,6 +14,9 @@ import { selectMapTitle, selectTheme } from "../store/reducers/base-reducer";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import { connect } from "react-redux";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
+// @ts-ignore
+import * as PdfJs from "pdfjs-dist";
+import { convertDataURIToBinary, download } from "../utils/download-utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -147,7 +150,28 @@ function Screenshot({ map, theme, title }: Props) {
       doc.text("@WHO 2019. All rights reserved", a4h - 60, 195);
 
       // Save the Data
-      doc.save("Report.pdf");
+      const file = doc.output("dataurlstring");
+
+      // If we wanted to save as PDF
+      //doc.save("Report.pdf");
+
+      const pdfAsArray = convertDataURIToBinary(file);
+
+      PdfJs.disableWorker = true;
+      PdfJs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.3.200/pdf.worker.js`;
+      PdfJs.getDocument(pdfAsArray).then((pdf: any) => {
+        pdf.getPage(1).then((page: any) => {
+          const viewport = page.getViewport(2.5);
+          const canvas = document.createElement("canvas");
+          const context = canvas.getContext("2d");
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+          const renderContext = { canvasContext: context, viewport: viewport };
+          page.render(renderContext).then(() => {
+            download(canvas, "report.png");
+          });
+        });
+      });
       return;
     });
   };

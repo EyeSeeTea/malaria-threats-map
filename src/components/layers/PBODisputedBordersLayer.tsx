@@ -20,7 +20,6 @@ const layer: any = {
       ["get", "NAME"],
       "Lakes",
       "#E0E8FF",
-
       "#CECECE"
     ]
   },
