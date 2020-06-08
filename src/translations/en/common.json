@@ -360,10 +360,26 @@
   },
   "report": {
     "prevention": {
-      "title": "Overview of insecticide resistance in malaria vectors"
+      "title": "Overview of insecticide resistance in malaria vectors",
+      "country": "Country",
+      "resistance": "Resistance status",
+      "mechanism": "Resistance mechanisms",
+      "species": "Vector Species",
+      "resistance_percentage": "% sites exhibiting resistance (n*)",
+      "resistance_year": "Year of last reports",
+      "insecticide": "Insecticide classes to which vector resistance confirmed",
+      "mechanism_percentage": "% sites exhibiting mechanism (n*)"
     },
     "treatment": {
-      "title": "Overview of treatment failure rates among malaria infected patients"
+      "title": "Overview of treatment failure rates among malaria infected patients",
+      "country": "Country",
+      "period": "Study years",
+      "median": "Median",
+      "treatment": "Drug",
+      "follow": "Follow up (days)",
+      "studies": "Number of studies",
+      "percentile_25": "Percentile 25th",
+      "percentile_75": "Percentile 75th"
     }
   },
   "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",

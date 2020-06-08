@@ -25,6 +25,7 @@ export enum ActionTypeEnum {
   SetSubscriptionOpen = "malaria/SET_SUBSCRIPTION_OPEN",
   SetFeedbackOpen = "malaria/SET_FEEDBACK_OPEN",
   SetTheaterMode = "malaria/SET_THEATER_MODE_OPEN",
+  SetLegendExpanded = "malaria/SET_LEGEND_EXPANDED",
 
   FetchPreventionStudiesRequest = "prevention/FETCH_PREVENTION_STUDIES_REQUEST",
   FetchPreventionStudiesSuccess = "prevention/FETCH_PREVENTION_STUDIES_SUCCESS",

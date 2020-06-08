@@ -1,12 +1,12 @@
 import React from "react";
 import {
-  LegendContainer,
   LegendFooter,
   LegendLabels,
   LegendTitleContainer,
   LegendTitleTypography
 } from "../../../Leyend";
 import { useTranslation } from "react-i18next";
+import LegendContainer from "../../../LegendContainer";
 
 export default function Legend() {
   const { t } = useTranslation("common");

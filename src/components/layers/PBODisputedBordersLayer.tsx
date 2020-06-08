@@ -15,13 +15,7 @@ const layer: any = {
   paint: {
     "fill-color": ["match", ["get", "NAME"], "Lakes", "#E0E8FF", "#CECECE"],
     "fill-opacity": 0.8,
-    "fill-outline-color": [
-      "match",
-      ["get", "NAME"],
-      "Lakes",
-      "#E0E8FF",
-      "#CECECE"
-    ]
+    "fill-outline-color": "rgba(0,0,0,0.15)"
   },
   minZoom: 0,
   maxZoom: 20,

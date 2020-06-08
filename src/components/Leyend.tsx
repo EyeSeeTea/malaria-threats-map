@@ -1,5 +1,4 @@
 import React from "react";
-import Paper from "@material-ui/core/Paper";
 import { Typography } from "@material-ui/core";
 
 import styled from "styled-components";
@@ -21,14 +20,7 @@ import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 import { useTranslation } from "react-i18next";
 
-export const LegendContainer = styled(Paper)`
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  font-size: 12px;
-  box-shadow: none !important;
-`;
+export { default as LegendContainer } from "./LegendContainer";
 
 export const LegendEntries = styled.div`
   display: flex;

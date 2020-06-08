@@ -26,7 +26,11 @@ import * as R from "ramda";
 import { useTranslation } from "react-i18next";
 import { Data, headCells } from "./columns";
 import FilterPopover from "./FilterPopover";
-import {filterByCountries, filterByDrugs, filterByMolecularMarkerStudyDimension256} from "../../layers/studies-filters";
+import {
+  filterByCountries,
+  filterByDrugs,
+  filterByMolecularMarkerStudyDimension256
+} from "../../layers/studies-filters";
 import { exportToCSV } from "../../DataDownload/download";
 import { Button } from "@material-ui/core";
 import { getComparator, Order, percentile, stableSort } from "../utils";
@@ -37,6 +41,7 @@ import { isNull } from "../../../utils/number-utils";
 import { format } from "date-fns";
 
 function EnhancedTableHead(props: EnhancedTableProps) {
+  const { t } = useTranslation("common");
   const { classes, order, orderBy, onRequestSort } = props;
 
   const createSortHandler = (property: keyof Data) => (
@@ -65,7 +70,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                   headCell.sortable ? createSortHandler(headCell.id) : () => {}
                 }
               >
-                {headCell.label}
+                {t(headCell.label)}
                 {headCell.sortable && orderBy === headCell.id ? (
                   <span className={classes.visuallyHidden}>
                     {order === "desc"
@@ -75,7 +80,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                 ) : null}
               </TableSortLabel>
             ) : (
-              headCell.label
+              t(headCell.label)
             )}
           </StyledCell>
         ))}
@@ -167,7 +172,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
             startIcon={<CloudDownloadIcon />}
             onClick={onClick}
           >
-            Download
+            {t("data_download.buttons.download")}
           </Button>
           <FilterPopover
             countries={countries}

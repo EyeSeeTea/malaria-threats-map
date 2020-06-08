@@ -255,7 +255,7 @@
   },
   "data_download": {
     "title": "Descarga de datos",
-    "footer": "(*) total number of sites for which data was reported",
+    "footer": "(*) Número total de localizaciones que reportaron datos.",
     "dataset": "Selección de datos",
     "buttons": {
       "back": "Anterior",
@@ -356,6 +356,30 @@
         "theme": "Selecciona un tema",
         "dataset": "Seleccione un conjunto de datos"
       }
+    }
+  },
+  "report": {
+    "prevention": {
+      "title": "Tabla resumen del estado de la resistencia a los insecticidas en los vectores de malaria",
+      "country": "País",
+      "resistance": "Estado de la resistencia",
+      "mechanism": "Mecanismos de resistencia",
+      "species": "Especie vectora",
+      "resistance_percentage": "% de lugares que confirmaron resistencia",
+      "resistance_year": "Año del los últimos estudios",
+      "insecticide": "Número de clases de insecticidas a las que se confirmó la resistencia en los vectores",
+      "mechanism_percentage": "% de lugares que detectaron el mecanismo"
+    },
+    "treatment": {
+      "title": "Tabla resumen de las tasas de fallo terapéutico en pacientes infectados de malaria",
+      "country": "País",
+      "period": "Periodo de estudio",
+      "median": "Mediana",
+      "treatment": "Tratamiento",
+      "follow": "Seguimiento",
+      "studies": "Número de estudios",
+      "percentile_25": "Percentile 25",
+      "percentile_75": "Percentile 75"
     }
   },
   "TREATMENT_FAILURE_KM": "% de pacientes con fallo terapeutico, Kaplan-Meier",

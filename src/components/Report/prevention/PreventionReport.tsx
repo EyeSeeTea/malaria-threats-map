@@ -106,6 +106,7 @@ interface EnhancedTableProps {
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
+  const { t } = useTranslation("common");
   const { classes, order, orderBy, onRequestSort } = props;
 
   const createSortHandler = (property: keyof Data) => (
@@ -119,10 +120,10 @@ function EnhancedTableHead(props: EnhancedTableProps) {
       <TableRow>
         <StyledCell isBold colSpan={3} />
         <StyledCell isBold colSpan={8} divider>
-          Resistance status
+          {t("report.prevention.resistance")}
         </StyledCell>
         <StyledCell isBold colSpan={7} divider>
-          Resistance mechanisms
+          {t("report.prevention.mechanism")}
         </StyledCell>
       </TableRow>
       <TableRow>
@@ -178,7 +179,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                   headCell.sortable ? createSortHandler(headCell.id) : () => {}
                 }
               >
-                {headCell.label}
+                {t(headCell.label)}
                 {headCell.sortable && orderBy === headCell.id ? (
                   <span className={classes.visuallyHidden}>
                     {order === "desc"
@@ -188,7 +189,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                 ) : null}
               </TableSortLabel>
             ) : (
-              headCell.label
+              t(headCell.label)
             )}
           </StyledCell>
         ))}
@@ -280,7 +281,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
             startIcon={<CloudDownloadIcon />}
             onClick={onClick}
           >
-            Download
+            {t("data_download.buttons.download")}
           </Button>
           <FilterPopover
             countries={countries}

@@ -80,13 +80,13 @@ export const headCells: HeadCell[] = [
     id: "COUNTRY",
     numeric: false,
     disablePadding: false,
-    label: "Country"
+    label: "report.prevention.country"
   },
   {
     id: "INSECTICIDE_CLASSES",
     numeric: false,
     disablePadding: false,
-    label: "Insecticide classes to which vector resistance confirmed",
+    label: "report.prevention.insecticide",
     align: "center",
     divider: true
   },
@@ -94,14 +94,14 @@ export const headCells: HeadCell[] = [
     id: "SPECIES",
     numeric: false,
     disablePadding: false,
-    label: "Vector species",
+    label: "report.prevention.species",
     divider: true
   },
   {
     id: "PYRETHROIDS_AVERAGE_MORTALITY",
     numeric: true,
     disablePadding: false,
-    label: "% sites exhibiting resistance (n*)",
+    label: "report.prevention.resistance_percentage",
     sortable: true,
     align: "right",
     divider: true
@@ -110,7 +110,7 @@ export const headCells: HeadCell[] = [
     id: "PYRETHROIDS_LAST_YEAR",
     numeric: false,
     disablePadding: false,
-    label: "Year of last reports",
+    label: "report.prevention.resistance_year",
     sortable: true,
     align: "right"
   },
@@ -118,7 +118,7 @@ export const headCells: HeadCell[] = [
     id: "ORGANOCHLORINES_AVERAGE_MORTALITY",
     numeric: true,
     disablePadding: false,
-    label: "% sites exhibiting resistance (n*)",
+    label: "report.prevention.resistance_percentage",
     sortable: true,
     align: "right",
     divider: true
@@ -127,7 +127,7 @@ export const headCells: HeadCell[] = [
     id: "ORGANOCHLORINES_LAST_YEAR",
     numeric: false,
     disablePadding: false,
-    label: "Year of last reports",
+    label: "report.prevention.resistance_year",
     sortable: true,
     align: "right"
   },
@@ -135,7 +135,7 @@ export const headCells: HeadCell[] = [
     id: "CARBAMATES_AVERAGE_MORTALITY",
     numeric: true,
     disablePadding: false,
-    label: "% sites exhibiting resistance (n*)",
+    label: "report.prevention.resistance_percentage",
     sortable: true,
     align: "right",
     divider: true
@@ -144,7 +144,7 @@ export const headCells: HeadCell[] = [
     id: "CARBAMATES_LAST_YEAR",
     numeric: false,
     disablePadding: false,
-    label: "Year of last reports",
+    label: "report.prevention.resistance_year",
     sortable: true,
     align: "right"
   },
@@ -152,7 +152,7 @@ export const headCells: HeadCell[] = [
     id: "ORGANOPHOSPHATES_AVERAGE_MORTALITY",
     numeric: true,
     disablePadding: false,
-    label: "% sites exhibiting resistance (n*)",
+    label: "report.prevention.resistance_percentage",
     sortable: true,
     align: "right",
     divider: true
@@ -161,7 +161,7 @@ export const headCells: HeadCell[] = [
     id: "ORGANOPHOSPHATES_LAST_YEAR",
     numeric: false,
     disablePadding: false,
-    label: "Year of last reports",
+    label: "report.prevention.resistance_year",
     sortable: true,
     align: "right"
   },
@@ -169,7 +169,7 @@ export const headCells: HeadCell[] = [
     id: "MONOXYGENASES_PERCENT_SITES_DETECTED",
     numeric: true,
     disablePadding: false,
-    label: "% sites exhibiting mechanism (n*)",
+    label: "report.prevention.mechanism_percentage",
     align: "right",
     divider: true
   },
@@ -177,42 +177,42 @@ export const headCells: HeadCell[] = [
     id: "ESTERASES_PERCENT_SITES_DETECTED",
     numeric: true,
     disablePadding: false,
-    label: "% sites exhibiting mechanism (n*)",
+    label: "report.prevention.mechanism_percentage",
     align: "right"
   },
   {
     id: "GSTS_PERCENT_SITES_DETECTED",
     numeric: true,
     disablePadding: false,
-    label: "% sites exhibiting mechanism (n*)",
+    label: "report.prevention.mechanism_percentage",
     align: "right"
   },
   {
     id: "K1014S_PERCENT_SITES_DETECTED",
     numeric: true,
     disablePadding: false,
-    label: "% sites exhibiting mechanism (n*)",
+    label: "report.prevention.mechanism_percentage",
     align: "right"
   },
   {
     id: "K1014F_PERCENT_SITES_DETECTED",
     numeric: true,
     disablePadding: false,
-    label: "% sites exhibiting mechanism (n*)",
+    label: "report.prevention.mechanism_percentage",
     align: "right"
   },
   {
     id: "KDR_UNSPECIFIED_PERCENT_SITES_DETECTED",
     numeric: true,
     disablePadding: false,
-    label: "% sites exhibiting mechanism (n*)",
+    label: "report.prevention.mechanism_percentage",
     align: "right"
   },
   {
     id: "ACE1R_PERCENT_SITES_DETECTED",
     numeric: true,
     disablePadding: false,
-    label: "% sites exhibiting mechanism (n*)",
+    label: "report.prevention.mechanism_percentage",
     align: "right"
   }
 ];

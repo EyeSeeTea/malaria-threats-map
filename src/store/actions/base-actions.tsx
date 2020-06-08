@@ -179,3 +179,7 @@ export const setTheaterModeAction = createAction(
   ActionTypeEnum.SetTheaterMode,
   action => (theaterMode: boolean) => action(theaterMode)
 );
+export const setLegendExpandedAction = createAction(
+  ActionTypeEnum.SetLegendExpanded,
+  action => (legendExpanded: boolean) => action(legendExpanded)
+);

@@ -12,17 +12,17 @@ type ConfigProps = {
 };
 
 const WHO_MALARIA_THREATS_MAP_STAGING =
-  "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer";
+  "https://extranet.who.int/gis/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer";
 const WHO_MALARIA_THREATS_MAP =
   "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP/MapServer";
 
 const BASEMAP_NONIC_UAT =
-  "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_UAT/MapServer";
+  "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/WHO_Basemap_Beta3/MapServer";
 const BASEMAP_NONIC_LABEL_UAT =
   "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_LABEL_UAT/MapServer";
 
 const BASEMAP_NONIC =
-  "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC/MapServer";
+  "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/WHO_Basemap_Beta3/MapServer";
 const BASEMAP_NONIC_LABEL =
   "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_LABEL/MapServer";
 

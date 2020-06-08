@@ -32,20 +32,20 @@ export const headCells: HeadCell[] = [
     id: "COUNTRY",
     numeric: false,
     disablePadding: false,
-    label: "Country"
+    label: "report.treatment.country"
   },
   {
     id: "DRUG",
     numeric: false,
     disablePadding: false,
     divider: true,
-    label: "Drug"
+    label: "report.treatment.drug"
   },
   {
     id: "FOLLOW_UP",
     numeric: true,
     disablePadding: false,
-    label: "Follow Up (days)",
+    label: "report.treatment.follow",
     sortable: true,
     align: "right",
     divider: true,
@@ -55,7 +55,7 @@ export const headCells: HeadCell[] = [
     id: "STUDY_YEARS",
     numeric: false,
     disablePadding: false,
-    label: "Study years",
+    label: "report.treatment.period",
     sortable: true,
     align: "right",
     divider: true
@@ -64,7 +64,7 @@ export const headCells: HeadCell[] = [
     id: "NUMBER_OF_STUDIES",
     numeric: true,
     disablePadding: false,
-    label: "Number of studies",
+    label: "report.treatment.studies",
     sortable: true,
     align: "right",
     divider: true,
@@ -74,7 +74,7 @@ export const headCells: HeadCell[] = [
     id: "MEDIAN",
     numeric: true,
     disablePadding: false,
-    label: "Median",
+    label: "report.treatment.median",
     sortable: true,
     align: "right",
     divider: true,
@@ -104,7 +104,7 @@ export const headCells: HeadCell[] = [
     id: "PERCENTILE_25",
     numeric: true,
     disablePadding: false,
-    label: "Percentile 25th",
+    label: "report.treatment.percentile_25",
     sortable: true,
     align: "right",
     divider: true,
@@ -114,7 +114,7 @@ export const headCells: HeadCell[] = [
     id: "PERCENTILE_75",
     numeric: true,
     disablePadding: false,
-    label: "Percentile 75th",
+    label: "report.treatment.percentile_75",
     sortable: true,
     align: "right",
     divider: true,
