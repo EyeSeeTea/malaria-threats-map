@@ -204,7 +204,7 @@ function Index({
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(2);
 
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
@@ -237,7 +237,7 @@ function Index({
   });
 
   const reset = () => {
-    setActiveStep(0);
+    setActiveStep(2);
     setWelcomeInfo({});
     setUserInfo({
       organizationType: t(ORGANIZATION_TYPES[0]),
@@ -601,8 +601,7 @@ function Index({
       userInfo.country &&
       userInfo.organizationType &&
       userInfo.organizationName &&
-      userInfo.email &&
-      userInfo.phoneNumber
+      userInfo.email
     );
   };
 

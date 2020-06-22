@@ -208,6 +208,7 @@ const UseForm = ({ onChange, useInfo }: Props) => {
             disableToolbar
             variant="inline"
             value={useInfo.studyDate}
+            format="dd/MM/yyyy"
             onChange={handleDateChange}
             KeyboardButtonProps={{
               "aria-label": "change date",

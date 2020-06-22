@@ -7,7 +7,7 @@ import {
   makeStyles,
   MenuItem,
   TextField,
-  Theme
+  Theme,
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import Select from "@material-ui/core/Select";
@@ -15,15 +15,16 @@ import { State } from "../../store/types";
 import { selectCountries } from "../../store/reducers/translations-reducer";
 import { connect } from "react-redux";
 import { UserInfo } from "./index";
+import { Translation } from "../../types/Translation";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
-      margin: theme.spacing(1, 0)
+      margin: theme.spacing(1, 0),
     },
     paper: {
-      padding: "24px"
-    }
+      padding: "24px",
+    },
   })
 );
 
@@ -38,11 +39,11 @@ export const ORGANIZATION_TYPES = [
   "data_download.step1.organization_type_options.health",
   "data_download.step1.organization_type_options.communications",
   "data_download.step1.organization_type_options.private",
-  "data_download.step1.organization_type_options.other"
+  "data_download.step1.organization_type_options.other",
 ];
 
 const mapStateToProps = (state: State) => ({
-  countries: selectCountries(state)
+  countries: selectCountries(state),
 });
 
 const mapDispatchToProps = {};
@@ -54,7 +55,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
-const UserForm = ({ countries, onChange, userInfo }: Props) => {
+const UserForm = ({ countries: baseCountries, onChange, userInfo }: Props) => {
   const classes = useStyles({});
   const { t } = useTranslation("common");
   const handleOrganizationTypeChange = (
@@ -71,40 +72,51 @@ const UserForm = ({ countries, onChange, userInfo }: Props) => {
     onChange("country", newCountry);
   };
 
-  const organizationTypes = ORGANIZATION_TYPES.map(ot => t(ot)).sort();
+  const organizationTypes = ORGANIZATION_TYPES.map((ot) => t(ot)).sort();
+
+  const countries = baseCountries
+    .map((country) => ({
+      ...country,
+      translation: t(country.VALUE_),
+    }))
+    .sort((t1, t2) => (t1.translation < t2.translation ? -1 : 1));
 
   return (
     <Card className={classes.paper}>
       <FormControl fullWidth className={classes.formControl}>
         <TextField
-          label={t("data_download.step1.first_name")}
+          label={t("data_download.step1.first_name") + "*"}
           InputLabelProps={{
-            shrink: true
+            shrink: true,
           }}
           value={userInfo.firstName}
-          onChange={event =>
+          onChange={(event) =>
             onChange("firstName", event.target.value as string)
           }
         />
       </FormControl>
       <FormControl fullWidth className={classes.formControl}>
         <TextField
-          label={t("data_download.step1.last_name")}
+          label={t("data_download.step1.last_name") + "*"}
           InputLabelProps={{
-            shrink: true
+            shrink: true,
           }}
           value={userInfo.lastName}
-          onChange={event => onChange("lastName", event.target.value as string)}
+          onChange={(event) =>
+            onChange("lastName", event.target.value as string)
+          }
         />
       </FormControl>
       <FormControl fullWidth className={classes.formControl}>
-        <InputLabel>{t("data_download.step1.organization_type")}</InputLabel>
+        <InputLabel>
+          {t("data_download.step1.organization_type") + "*"}
+        </InputLabel>
         <Select
           fullWidth
           value={userInfo.organizationType}
           onChange={handleOrganizationTypeChange}
         >
-          {organizationTypes.map(type => (
+          {organizationTypes.map((type) => (
             <MenuItem key={type} value={type}>
               {type}
             </MenuItem>
@@ -113,37 +125,39 @@ const UserForm = ({ countries, onChange, userInfo }: Props) => {
       </FormControl>
       <FormControl fullWidth className={classes.formControl}>
         <TextField
-          label={t("data_download.step1.organization_name")}
+          label={t("data_download.step1.organization_name") + "*"}
           InputLabelProps={{
-            shrink: true
+            shrink: true,
           }}
           value={userInfo.organizationName}
-          onChange={event =>
+          onChange={(event) =>
             onChange("organizationName", event.target.value as string)
           }
         />
       </FormControl>
       <FormControl fullWidth className={classes.formControl}>
         <TextField
-          label={t("data_download.step1.position")}
+          label={t("data_download.step1.position") + "*"}
           InputLabelProps={{
-            shrink: true
+            shrink: true,
           }}
           value={userInfo.position}
-          onChange={event => onChange("position", event.target.value as string)}
+          onChange={(event) =>
+            onChange("position", event.target.value as string)
+          }
         />
       </FormControl>
       {countries && (
         <FormControl fullWidth className={classes.formControl}>
-          <InputLabel>{t("data_download.step1.country")}</InputLabel>
+          <InputLabel>{t("data_download.step1.country") + "*"}</InputLabel>
           <Select
             fullWidth
             value={userInfo.country}
             onChange={handleCountryChange}
           >
-            {countries.map(type => (
-              <MenuItem key={type.VALUE_} value={type.VALUE_}>
-                {t(type.VALUE_)}
+            {countries.map((country) => (
+              <MenuItem key={country.VALUE_} value={country.VALUE_}>
+                {country.translation}
               </MenuItem>
             ))}
           </Select>
@@ -151,22 +165,22 @@ const UserForm = ({ countries, onChange, userInfo }: Props) => {
       )}
       <FormControl fullWidth className={classes.formControl}>
         <TextField
-          label={t("data_download.step1.email")}
+          label={t("data_download.step1.email") + "*"}
           InputLabelProps={{
-            shrink: true
+            shrink: true,
           }}
           value={userInfo.email}
-          onChange={event => onChange("email", event.target.value as string)}
+          onChange={(event) => onChange("email", event.target.value as string)}
         />
       </FormControl>
       <FormControl fullWidth className={classes.formControl}>
         <TextField
           label={t("data_download.step1.phone")}
           InputLabelProps={{
-            shrink: true
+            shrink: true,
           }}
           value={userInfo.phoneNumber}
-          onChange={event =>
+          onChange={(event) =>
             onChange("phoneNumber", event.target.value as string)
           }
         />
