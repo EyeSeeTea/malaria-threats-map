@@ -328,7 +328,7 @@
     },
     "step2": {
       "title": "Propósito de la descarga",
-      "data_use": "¿Para qué utilizará los datos?",
+      "data_use": "¿Con qué propósito se utilizarán estos datos?",
       "data_use_options": {
         "research": "Investigación",
         "grant": "Desarrollar propuestas de proyectos",
@@ -381,6 +381,14 @@
       "percentile_25": "Percentile 25",
       "percentile_75": "Percentile 75"
     }
+  },
+  "subscription": {
+    "title": "Subscribe to receive Threats Updates!",
+    "first_name": "Nombre",
+    "last_name": "Apellidos",
+    "email": "Email",
+    "country": "País",
+    "organization": "Organización"
   },
   "TREATMENT_FAILURE_KM": "% de pacientes con fallo terapeutico, Kaplan-Meier",
   "PROP_RELATED": "%"

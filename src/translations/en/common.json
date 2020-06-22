@@ -382,6 +382,14 @@
       "percentile_75": "Percentile 75th"
     }
   },
+  "subscription": {
+    "title": "Subscribe to receive Threats Updates!",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "email": "Email",
+    "country": "Country",
+    "organization": "Organization"
+  },
   "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",
   "PROP_RELATED": "Percentage %"
 }
