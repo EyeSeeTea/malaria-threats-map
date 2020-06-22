@@ -2,8 +2,8 @@ import { Option } from "../../BasicSelect";
 
 const mappings: Option[] = [
   {
-    value: "OBJECTID",
-    label: "OBJECTID"
+    value: "Code",
+    label: "ID"
   },
   {
     value: "ISO2",
@@ -75,7 +75,7 @@ const mappings: Option[] = [
   },
   {
     value: "INSTITUTE_CURATION",
-    label: "INSTITUTE_CURATION"
+    label: "DATA_CURATOR"
   },
   {
     value: "INVASIVE_STATUS",

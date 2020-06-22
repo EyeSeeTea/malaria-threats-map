@@ -335,6 +335,7 @@ function Index({
         "TREATMENT_FAILURE_PP",
         "TREATMENT_FAILURE_KM",
         "MORTALITY_ADJUSTED",
+        "PROPORTION",
       ].includes(field.value)
     ) {
       if (!isNaN(study[field.value])) {
