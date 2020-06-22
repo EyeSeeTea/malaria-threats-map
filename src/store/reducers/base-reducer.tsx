@@ -6,6 +6,9 @@ import { ActionTypeEnum } from "../actions";
 
 const query = window.location.search.substring(1);
 
+const isTourInitiallyOpen =
+  localStorage.getItem("tour") !== "visited" && !query;
+
 const initialState: MalariaState = Object.freeze({
   theme: "prevention",
   any: null,
@@ -17,7 +20,7 @@ const initialState: MalariaState = Object.freeze({
   region: {
     country: "",
     region: "",
-    subRegion: ""
+    subRegion: "",
   },
   initialDialogOpen: !query,
   filtersOpen: false,
@@ -29,8 +32,8 @@ const initialState: MalariaState = Object.freeze({
   bounds: [[]],
   setBounds: [[]],
   tour: {
-    open: true,
-    step: 0
+    open: isTourInitiallyOpen,
+    step: 0,
   },
   dataDownloadOpen: false,
   reportOpen: false,
@@ -38,15 +41,17 @@ const initialState: MalariaState = Object.freeze({
   subscriptionOpen: false,
   feedbackOpen: false,
   theaterMode: false,
-  legendExpanded: false
+  legendExpanded: false,
 });
 
 export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.MalariaSetTheme]: (theme: string) => R.assoc("theme", theme),
   [ActionTypeEnum.MalariaSetAny]: (any: any) => R.assoc("any", any),
-  [ActionTypeEnum.MalariaSetRegion]: (region: RegionState | null) => state => ({
+  [ActionTypeEnum.MalariaSetRegion]: (region: RegionState | null) => (
+    state
+  ) => ({
     ...state,
-    region: region ? { ...initialState.region, ...region } : null
+    region: region ? { ...initialState.region, ...region } : null,
   }),
   [ActionTypeEnum.MalariaSetFilters]: (filters: number[] | undefined) =>
     R.assoc("filters", filters || initialState.filters),
@@ -74,13 +79,13 @@ export default createReducer<MalariaState>(initialState, {
     R.assoc("bounds", bounds),
   [ActionTypeEnum.SetBounds]: (bounds: Array<Array<number>>) =>
     R.assoc("setBounds", bounds),
-  [ActionTypeEnum.SetTourOpen]: (open: boolean) => state => ({
+  [ActionTypeEnum.SetTourOpen]: (open: boolean) => (state) => ({
     ...state,
-    tour: { ...initialState.tour, open }
+    tour: { ...initialState.tour, open },
   }),
-  [ActionTypeEnum.SetTourStep]: (step: number) => state => ({
+  [ActionTypeEnum.SetTourStep]: (step: number) => (state) => ({
     ...state,
-    tour: { ...initialState.tour, step }
+    tour: { ...initialState.tour, step },
   }),
   [ActionTypeEnum.SetDataDownloadOpen]: (dataDownloadOpen: boolean) =>
     R.assoc("dataDownloadOpen", dataDownloadOpen),
@@ -95,7 +100,7 @@ export default createReducer<MalariaState>(initialState, {
   [ActionTypeEnum.SetTheaterMode]: (theaterMode: boolean) =>
     R.assoc("theaterMode", theaterMode),
   [ActionTypeEnum.SetLegendExpanded]: (legendExpanded: boolean) =>
-    R.assoc("legendExpanded", legendExpanded)
+    R.assoc("legendExpanded", legendExpanded),
 });
 
 export const selectMalariaState = (state: State) => state.malaria;

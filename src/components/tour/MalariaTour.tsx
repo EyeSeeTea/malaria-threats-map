@@ -14,7 +14,7 @@ import {
   setSelection,
   setThemeAction,
   setTourOpenAction,
-  setTourStepAction
+  setTourStepAction,
 } from "../../store/actions/base-actions";
 import { setFilteredStudiesAction } from "../../store/actions/treatment-actions";
 import { Button, IconButton, withStyles } from "@material-ui/core";
@@ -34,16 +34,14 @@ import { dispatchCustomEvent } from "../../utils/dom-utils";
 import {
   setInsecticideClass,
   setInsecticideTypes,
-  setSpecies
+  setSpecies,
 } from "../../store/actions/prevention-actions";
 import Step6b from "./steps/Step6b";
 
-const query = window.location.search.substring(1);
-
 const styles = {
   root: {
-    padding: 10
-  }
+    padding: 10,
+  },
 };
 
 const Flex = styled.div`
@@ -105,7 +103,7 @@ export const Footer = (options: StepProps) => (
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
-  tour: selectTour(state)
+  tour: selectTour(state),
 });
 const mapDispatchToProps = {
   setTheme: setThemeAction,
@@ -122,7 +120,7 @@ const mapDispatchToProps = {
   setInsecticideClass,
   setInsecticideTypes,
   setSpecies,
-  logEvent: logEventAction
+  logEvent: logEventAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -133,11 +131,11 @@ type Props = DispatchProps & StateProps & OwnProps;
 class MalariaTour extends PureComponent<Props> {
   state = {
     step: 0,
-    visible: false
+    visible: false,
   };
 
   componentDidMount(): void {
-    setTimeout(() => this.setState(state => ({ visible: true })), 200);
+    setTimeout(() => this.setState((state) => ({ visible: true })), 200);
   }
 
   setStep = (step: number) => {
@@ -182,6 +180,7 @@ class MalariaTour extends PureComponent<Props> {
   };
 
   onClose = () => {
+    this.setState({ open: false });
     this.props.setTourOpen(false);
     this.setInsecticideClass("PYRETHROIDS");
     this.setInsecticideTypes([]);
@@ -190,7 +189,7 @@ class MalariaTour extends PureComponent<Props> {
     this.toggleFilters(false);
     this.props.logEvent({
       category: "Malaria Tour Close Event",
-      action: `${this.props.tour.step}`
+      action: `${this.props.tour.step}`,
     });
     localStorage.setItem("tour", "visited");
   };
@@ -204,52 +203,52 @@ class MalariaTour extends PureComponent<Props> {
         "div[data-focus-lock-disabled] button"
       );
       // @ts-ignore
-      elements.forEach(el => (el.tabIndex = "-1"));
+      elements.forEach((el) => (el.tabIndex = "-1"));
     }, 100);
 
     const baseProps = {
-      setTourOpen: this.onClose
+      setTourOpen: this.onClose,
     };
 
     const steps: ReactourStep[] = [
       {
         selector: "#title",
-        content: options => {
+        content: (options) => {
           setInitialDialogOpen(true);
           this.toggleFilters(false);
           return <Step1 {...options} {...baseProps} step={0} />;
         },
         // @ts-ignore
-        observe: "#title"
+        observe: "#title",
       },
       {
         selector: "#language",
-        content: options => {
+        content: (options) => {
           setInitialDialogOpen(true);
           this.toggleFilters(false);
           return <Step2 {...options} {...baseProps} step={1} />;
         },
         // @ts-ignore
-        observe: "#language"
+        observe: "#language",
       },
       {
         selector: "#dialog",
-        content: options => {
+        content: (options) => {
           setInitialDialogOpen(true);
           this.toggleFilters(false);
           return <Step3 {...options} {...baseProps} step={2} />;
-        }
+        },
       },
       {
         selector: "#filters",
-        content: options => {
+        content: (options) => {
           setInitialDialogOpen(false);
           this.setTheme("prevention");
           this.toggleFilters(false);
           return <Step4 {...options} {...baseProps} step={3} />;
         },
         // @ts-ignore
-        observe: "#filters"
+        observe: "#filters",
       },
       {
         selector: "#sidebar",
@@ -259,15 +258,15 @@ class MalariaTour extends PureComponent<Props> {
           this.setFiltersMode("regions");
           setTimeout(() => goTo(5), 200);
           return <div />;
-        }
+        },
       },
       {
         selector: "#sidebar",
-        content: options => {
+        content: (options) => {
           setInitialDialogOpen(false);
           this.toggleFilters(true);
           return <Step5 {...options} {...baseProps} step={5} back={2} />;
-        }
+        },
       },
       {
         selector: "#sidebar",
@@ -275,26 +274,26 @@ class MalariaTour extends PureComponent<Props> {
           this.setFiltersMode("filters");
           setTimeout(() => goTo(7), 200);
           return <div />;
-        }
+        },
       },
       {
         selector: "#sidebar",
-        content: options => {
+        content: (options) => {
           this.setInsecticideClass("PYRETHROIDS");
           this.setInsecticideTypes([]);
           this.setSelection(null);
           return <Step6 {...options} {...baseProps} step={7} back={4} />;
-        }
+        },
       },
       {
         selector: "#sidebar",
-        content: options => {
+        content: (options) => {
           this.setInsecticideClass("CARBAMATES");
           this.setInsecticideTypes(["PROPOXUR"]);
           this.setSelection(null);
           // this.setSpecies(["An.+arabiensis", "An.+coluzzii"]);
           return <Step6b {...options} {...baseProps} step={8} back={7} />;
-        }
+        },
       },
       {
         selector: "#fifth-duo",
@@ -306,19 +305,19 @@ class MalariaTour extends PureComponent<Props> {
                 return {
                   ISO_2_CODE: "",
                   SITE_ID: "S8.600000_16.433300",
-                  coordinates: [16.435546875, 8.597315884206026]
+                  coordinates: [16.435546875, 8.597315884206026],
                 };
               case "treatment":
                 return {
                   ISO_2_CODE: "",
                   SITE_ID: "S12.036389_24.876944",
-                  coordinates: [24.87579345703125, 12.036634374014696]
+                  coordinates: [24.87579345703125, 12.036634374014696],
                 };
               case "diagnosis":
                 return {
                   ISO_2_CODE: "",
                   SITE_ID: "S15.642516_32.455489",
-                  coordinates: [32.45635986328125, 15.6415517493066]
+                  coordinates: [32.45635986328125, 15.6415517493066],
                 };
               default:
                 return null;
@@ -327,21 +326,21 @@ class MalariaTour extends PureComponent<Props> {
           setTimeout(() => this.setSelection(selection as SiteSelection), 200);
           setTimeout(() => goTo(10), 300);
           return <div />;
-        }
+        },
       },
       {
         selector: ".mapboxgl-popup",
-        content: options => {
+        content: (options) => {
           return <Step7 {...options} {...baseProps} step={10} back={7} />;
-        }
+        },
       },
       {
         selector: "#country-button",
-        content: options => {
+        content: (options) => {
           this.setSelection(null);
           this.setCountryMode(true);
           return <Step8 {...options} {...baseProps} step={11} back={9} />;
-        }
+        },
       },
       {
         selector: "#country-button",
@@ -349,41 +348,37 @@ class MalariaTour extends PureComponent<Props> {
           const selection = {
             ISO_2_CODE: "SD",
             SITE_ID: "",
-            coordinates: [30.003662109375, 16.048453014179174]
+            coordinates: [30.003662109375, 16.048453014179174],
           };
           setTimeout(() => this.setSelection(selection as SiteSelection), 200);
           setTimeout(() => goTo(13), 300);
           return <div />;
-        }
+        },
       },
       {
         selector: ".mapboxgl-popup",
-        content: options => {
+        content: (options) => {
           return <Step9 {...options} {...baseProps} step={13} back={11} />;
-        }
-      }
+        },
+      },
     ];
-    const isOpen =
-      tour.open && localStorage.getItem("tour") !== "visited" && !query;
 
     return (
-      this.state.visible && (
-        <Tour
-          className={classes.root}
-          steps={steps}
-          isOpen={isOpen}
-          onRequestClose={this.onClose}
-          disableDotsNavigation={true}
-          disableKeyboardNavigation={true}
-          disableInteraction={![1].includes(tour.step)}
-          showNavigation={false}
-          showButtons={false}
-          showNumber={false}
-          showCloseButton={false}
-          getCurrentStep={this.setStep}
-          goToStep={tour.step}
-        />
-      )
+      <Tour
+        className={classes.root}
+        steps={steps}
+        isOpen={this.props.tour.open}
+        onRequestClose={this.onClose}
+        disableDotsNavigation={true}
+        disableKeyboardNavigation={true}
+        disableInteraction={![1].includes(tour.step)}
+        showNavigation={false}
+        showButtons={false}
+        showNumber={false}
+        showCloseButton={false}
+        getCurrentStep={this.setStep}
+        goToStep={tour.step}
+      />
     );
   }
 }

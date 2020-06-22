@@ -24,11 +24,11 @@ import {
   selectSetBounds,
   selectSetZoom,
   selectTheaterMode,
-  selectTheme
+  selectTheme, selectTour,
 } from "../store/reducers/base-reducer";
 import {
   selectPreventionFilters,
-  selectPreventionStudies
+  selectPreventionStudies,
 } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
@@ -38,7 +38,7 @@ import {
   setRegionAction,
   setThemeAction,
   updateBoundsAction,
-  updateZoomAction
+  updateZoomAction,
 } from "../store/actions/base-actions";
 import ReactMapboxGl from "react-mapbox-gl";
 import { Fade, Hidden } from "@material-ui/core";
@@ -64,10 +64,11 @@ import InitialDisclaimer from "./InitialDisclaimer";
 import TheaterMode from "./TheaterMode";
 import TheaterModeIcon from "./TheaterMode/TheaterModeIcon";
 import InitialDialog from "./InitialDialog";
+import TourIcon from "./TourIcon";
 
 ReactMapboxGl({
   accessToken:
-    "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA"
+    "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA",
 });
 
 const Separator = styled.div`
@@ -129,7 +130,7 @@ export const debounce = <F extends (...args: any[]) => any>(
   let timeout: number;
 
   return (...args: Parameters<F>): Promise<ReturnType<F>> =>
-    new Promise(resolve => {
+    new Promise((resolve) => {
       if (timeout) {
         clearTimeout(timeout);
       }
@@ -144,7 +145,7 @@ export const debounceTimes = <F extends (...args: any[]) => any>(
 ) => {
   let counter: number = 0;
   return (...args: Parameters<F>): Promise<ReturnType<F>> =>
-    new Promise(resolve => {
+    new Promise((resolve) => {
       counter = counter + 1;
       if (counter >= times) {
         resolve(func(...args));
@@ -181,7 +182,8 @@ const mapStateToProps = (state: State) => ({
   treatmentStudies: selectTreatmentStudies(state),
   invasiveStudies: selectInvasiveStudies(state),
   initialDialogOpen: selectIsInitialDialogOpen(state),
-  preventionFilters: selectPreventionFilters(state)
+  preventionFilters: selectPreventionFilters(state),
+  tour: selectTour(state),
 });
 
 const mapDispatchToProps = {
@@ -189,7 +191,7 @@ const mapDispatchToProps = {
   setAny: setAnyAction,
   setRegion: setRegionAction,
   updateZoom: updateZoomAction,
-  updateBounds: updateBoundsAction
+  updateBounds: updateBoundsAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -209,8 +211,8 @@ class Map extends React.Component<Props> {
       longitude: 0,
       zoom: 2,
       bearing: 0,
-      pitch: 0
-    }
+      pitch: 0,
+    },
   };
   images: any[] = [];
 
@@ -223,7 +225,7 @@ class Map extends React.Component<Props> {
       minZoom: 1,
       zoom: 2,
       maxBounds: mekong ? MEKONG_BOUNDS : undefined,
-      preserveDrawingBuffer: true
+      preserveDrawingBuffer: true,
     });
     this.map.dragRotate.disable();
     this.map.touchZoomRotate.disableRotation();
@@ -240,7 +242,7 @@ class Map extends React.Component<Props> {
         const [[b0, b1], [b2, b3]] = this.props.setBounds;
         if (!mekong) {
           this.map.fitBounds([b0, b1, b2, b3], {
-            padding: 100
+            padding: 100,
           });
         }
       }
@@ -253,7 +255,7 @@ class Map extends React.Component<Props> {
     if (mekong) {
       this.props.setTheme("treatment");
       this.props.setRegion({
-        subRegion: "GREATER_MEKONG"
+        subRegion: "GREATER_MEKONG",
       });
     }
   }
@@ -262,7 +264,7 @@ class Map extends React.Component<Props> {
     if (this.props.setBounds !== prevProps.setBounds) {
       const [[b0, b1], [b2, b3]] = this.props.setBounds;
       this.map.fitBounds([b0, b1, b2, b3], {
-        padding: 100
+        padding: 100,
       });
     }
   }
@@ -270,9 +272,10 @@ class Map extends React.Component<Props> {
   render() {
     const {
       theme,
+      tour,
       initialDialogOpen,
       countryMode,
-      preventionFilters
+      preventionFilters,
     } = this.props;
     const isPbo =
       theme === "prevention" &&
@@ -281,7 +284,7 @@ class Map extends React.Component<Props> {
     return (
       <React.Fragment>
         <div
-          ref={el => (this.mapContainer = el)}
+          ref={(el) => (this.mapContainer = el)}
           style={{ position: "absolute", bottom: 0, top: 0, right: 0, left: 0 }}
         />
         {ready && <EndemicityLayer map={this.map} />}
@@ -340,6 +343,7 @@ class Map extends React.Component<Props> {
               {!mekong && <InitialDisclaimer />}
               {!mekong && <Subscription />}
               {!mekong && <Feedback />}
+              {!mekong && <TourIcon />}
               <Separator />
               {!initialDialogOpen && <LanguageSelectorSelect />}
             </Hidden>
