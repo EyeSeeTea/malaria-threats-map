@@ -12,7 +12,7 @@ import {
   makeStyles,
   Theme,
   Toolbar,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import Stepper from "@material-ui/core/Stepper";
@@ -21,7 +21,7 @@ import StepButton from "@material-ui/core/StepButton";
 import { selectIsDataDownloadOpen } from "../../store/reducers/base-reducer";
 import {
   logEventAction,
-  setDataDownloadOpenAction
+  setDataDownloadOpenAction,
 } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
 import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
@@ -29,7 +29,7 @@ import UserForm, { ORGANIZATION_TYPES } from "./UserForm";
 import UseForm, {
   isPoliciesActive,
   isResearchActive,
-  isToolsActive
+  isToolsActive,
 } from "./UseForm";
 import Welcome from "./Welcome";
 import Filters from "./Filters";
@@ -51,7 +51,7 @@ import {
   filterByMolecularMarkerStudyDimension255,
   filterBySpecies,
   filterByTypes,
-  filterByYears
+  filterByYears,
 } from "../layers/studies-filters";
 import { Option } from "../BasicSelect";
 import mappings from "./mappings/index";
@@ -65,14 +65,14 @@ import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilt
 export const MOLECULAR_MECHANISM_TYPES = [
   "MONO_OXYGENASES",
   "ESTERASES",
-  "GSTS"
+  "GSTS",
 ];
 
 export const BIOCHEMICAL_MECHANISM_TYPES = [
   "KDR_L1014S",
   "KDR_L1014F",
   "KDR_(MUTATION_UNSPECIFIED)",
-  "ACE1R"
+  "ACE1R",
 ];
 
 const Wrapper = styled.div`
@@ -84,34 +84,34 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       marginLeft: theme.spacing(2),
       flex: 1,
-      whiteSpace: "nowrap"
+      whiteSpace: "nowrap",
     },
     fab: {
       pointerEvents: "all",
-      margin: theme.spacing(0.5, 0)
+      margin: theme.spacing(0.5, 0),
     },
     form: {
       display: "flex",
       flexDirection: "column",
       margin: "auto",
-      width: "fit-content"
+      width: "fit-content",
     },
     formControl: {
       marginTop: theme.spacing(2),
-      minWidth: 120
+      minWidth: 120,
     },
     formControlLabel: {
-      marginTop: theme.spacing(1)
+      marginTop: theme.spacing(1),
     },
     button: {
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(1),
     },
     appBar: {
-      position: "relative"
+      position: "relative",
     },
     paper: {
-      backgroundColor: "#fafafa"
-    }
+      backgroundColor: "#fafafa",
+    },
   })
 );
 
@@ -119,13 +119,13 @@ const mapStateToProps = (state: State) => ({
   isDataDownloadOpen: selectIsDataDownloadOpen(state),
   preventionStudies: selectPreventionStudies(state),
   treatmentStudies: selectTreatmentStudies(state),
-  invasiveStudies: selectInvasiveStudies(state)
+  invasiveStudies: selectInvasiveStudies(state),
 });
 
 const mapDispatchToProps = {
   setDataDownloadOpen: setDataDownloadOpenAction,
   addDownload: addDataDownloadRequestAction,
-  logEvent: logEventAction
+  logEvent: logEventAction,
 };
 type OwnProps = {};
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -137,7 +137,7 @@ function getSteps() {
     "data_download.step0.title",
     "data_download.step1.title",
     "data_download.step2.title",
-    "data_download.step3.title"
+    "data_download.step3.title",
   ];
 }
 
@@ -193,7 +193,6 @@ export type Contact = {
   organization: string;
   country: string;
 };
-
 function Index({
   isDataDownloadOpen,
   setDataDownloadOpen,
@@ -201,21 +200,22 @@ function Index({
   treatmentStudies,
   invasiveStudies,
   logEvent,
-  addDownload
+  addDownload,
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
   const [activeStep, setActiveStep] = React.useState(0);
+
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
   );
   const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({
-    organizationType: t(ORGANIZATION_TYPES[0])
+    organizationType: t(ORGANIZATION_TYPES[0]),
   });
   const [useInfo, setUseInfo] = React.useState<Partial<UseInfo>>({
     uses: [],
     countries: [],
-    studyDate: new Date()
+    studyDate: new Date(),
   });
 
   const [selections, setSelections] = React.useState({
@@ -233,8 +233,39 @@ function Index({
     species: [],
     drugs: [],
     years: [],
-    countries: []
+    countries: [],
   });
+
+  const reset = () => {
+    setActiveStep(0);
+    setWelcomeInfo({});
+    setUserInfo({
+      organizationType: t(ORGANIZATION_TYPES[0]),
+    });
+    setUseInfo({
+      uses: [],
+      countries: [],
+      studyDate: new Date(),
+    });
+    setSelections({
+      theme: "prevention",
+      preventionDataset: undefined,
+      treatmentDataset: undefined,
+      invasiveDataset: undefined,
+      insecticideClasses: [],
+      insecticideTypes: [],
+      mechanismTypes: [],
+      molecularMarkers: [],
+      types: [],
+      synergistTypes: [],
+      plasmodiumSpecies: [],
+      species: [],
+      drugs: [],
+      years: [],
+      countries: [],
+    });
+  };
+
   const onChangeWelcomeInfo = (field: keyof WelcomeInfo, value: any) => {
     setWelcomeInfo({ ...welcomeInfo, [field]: value });
   };
@@ -246,16 +277,17 @@ function Index({
   };
   const handleToggle = () => {
     setDataDownloadOpen(!isDataDownloadOpen);
+    reset();
   };
 
   const steps = getSteps();
 
   const handleNext = () => {
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   const filterStudies = (baseStudies: any[], filters: any[]) => {
@@ -268,12 +300,12 @@ function Index({
   const resolveValue = (field: Option, study: any) => {
     if (field.value === "MM_TYPE") {
       return MOLECULAR_MARKERS.find(
-        mm => mm.value === Number(study[field.value])
+        (mm) => mm.value === Number(study[field.value])
       ).label;
     }
     if (field.value === "PLASMODIUM_SPECIES") {
       return PLASMODIUM_SPECIES_SUGGESTIONS.find(
-        species => species.value === study[field.value]
+        (species) => species.value === study[field.value]
       ).label;
     }
     if (["Latitude", "Longitude"].includes(field.value)) {
@@ -289,7 +321,7 @@ function Index({
         "MONTH_END",
         "MONTH_START",
         "YEAR_END",
-        "YEAR_START"
+        "YEAR_START",
       ].includes(field.value)
     ) {
       return study[field.value];
@@ -302,7 +334,7 @@ function Index({
         "POSITIVE_DAY_3",
         "TREATMENT_FAILURE_PP",
         "TREATMENT_FAILURE_KM",
-        "MORTALITY_ADJUSTED"
+        "MORTALITY_ADJUSTED",
       ].includes(field.value)
     ) {
       if (!isNaN(study[field.value])) {
@@ -322,7 +354,7 @@ function Index({
       mappings.reduce(
         (acc: any, field: Option) => ({
           ...acc,
-          [field.label]: resolveValue(field, study)
+          [field.label]: resolveValue(field, study),
         }),
         {}
       )
@@ -341,7 +373,7 @@ function Index({
           filterByTypes(selections.types),
           filterBySpecies(selections.species),
           filterByCountries(selections.countries),
-          filterByYears(selections.years)
+          filterByYears(selections.years),
         ];
         const studies = filterStudies(preventionStudies, filters);
         const results = buildResults(
@@ -351,8 +383,8 @@ function Index({
         const tabs = [
           {
             name: "Data",
-            studies: results
-          }
+            studies: results,
+          },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
         exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
@@ -365,7 +397,7 @@ function Index({
           filterByTypes(selections.types),
           filterBySpecies(selections.species),
           filterByCountries(selections.countries),
-          filterByYears(selections.years)
+          filterByYears(selections.years),
         ];
         const studies = filterStudies(preventionStudies, filters);
         const results = buildResults(
@@ -375,8 +407,8 @@ function Index({
         const tabs = [
           {
             name: "Data",
-            studies: results
-          }
+            studies: results,
+          },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
         exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
@@ -389,7 +421,7 @@ function Index({
           filterByTypes(MOLECULAR_MECHANISM_TYPES),
           filterBySpecies(selections.species),
           filterByCountries(selections.countries),
-          filterByYears(selections.years)
+          filterByYears(selections.years),
         ];
         const studies = filterStudies(preventionStudies, filters);
         const results = buildResults(
@@ -399,8 +431,8 @@ function Index({
         const tabs = [
           {
             name: "Data",
-            studies: results
-          }
+            studies: results,
+          },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
         exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
@@ -412,7 +444,7 @@ function Index({
           filterByTypes(BIOCHEMICAL_MECHANISM_TYPES),
           filterBySpecies(selections.species),
           filterByCountries(selections.countries),
-          filterByYears(selections.years)
+          filterByYears(selections.years),
         ];
         const studies = filterStudies(preventionStudies, filters);
         const results = buildResults(
@@ -422,8 +454,8 @@ function Index({
         const tabs = [
           {
             name: "Data",
-            studies: results
-          }
+            studies: results,
+          },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
         exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
@@ -440,7 +472,7 @@ function Index({
           filterByManyPlasmodiumSpecies(selections.plasmodiumSpecies),
           filterByDrugs(selections.drugs),
           filterByCountries(selections.countries),
-          filterByYears(selections.years)
+          filterByYears(selections.years),
         ];
         const studies = filterStudies(treatmentStudies, filters);
         const results = buildResults(
@@ -450,8 +482,8 @@ function Index({
         const tabs = [
           {
             name: "Data",
-            studies: results
-          }
+            studies: results,
+          },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
         exportToCSV(tabs, `MTM_${selections.treatmentDataset}_${dateString}`);
@@ -462,7 +494,7 @@ function Index({
           filterByMolecularMarkerStudyDimension255(),
           filterByMolecularMarkers(selections.molecularMarkers),
           filterByCountries(selections.countries),
-          filterByYears(selections.years)
+          filterByYears(selections.years),
         ];
         const studies = filterStudies(treatmentStudies, filters);
         const results = buildResults(
@@ -470,18 +502,18 @@ function Index({
           mappings["MOLECULAR_MARKER_STUDY"]
         );
         const genes = buildResults(
-          R.flatten(R.map(r => r.groupStudies, studies)),
+          R.flatten(R.map((r) => r.groupStudies, studies)),
           mappings["MOLECULAR_MARKER_STUDY_GENES"]
         );
         const tabs = [
           {
             name: "MM_StudyInfo",
-            studies: results
+            studies: results,
           },
           {
             name: "MM_geneMutations",
-            studies: genes
-          }
+            studies: genes,
+          },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
         exportToCSV(tabs, `MTM_${selections.treatmentDataset}_${dateString}`);
@@ -496,7 +528,7 @@ function Index({
         const filters = [
           filterBySpecies(selections.species),
           filterByCountries(selections.countries),
-          filterByYears(selections.years)
+          filterByYears(selections.years),
         ];
         const studies = filterStudies(invasiveStudies, filters);
         const results = buildResults(
@@ -506,8 +538,8 @@ function Index({
         const tabs = [
           {
             name: "Data",
-            studies: results
-          }
+            studies: results,
+          },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
         exportToCSV(tabs, `MTM_${selections.invasiveDataset}_${dateString}`);
@@ -525,7 +557,7 @@ function Index({
       country: userInfo.country,
       email: userInfo.email,
       phoneNumber: userInfo.phoneNumber,
-      uses: useInfo.uses.map(use => t(use)).join(", "),
+      uses: useInfo.uses.map((use) => t(use)).join(", "),
       researchInfo: useInfo.researchInfo || "",
       policiesInfo: useInfo.policiesInfo || "",
       toolsInfo: useInfo.toolsInfo || "",
@@ -536,7 +568,7 @@ function Index({
         selections.preventionDataset ||
           selections.treatmentDataset ||
           selections.invasiveDataset
-      )
+      ),
     };
     switch (selections.theme) {
       case "prevention":
@@ -552,7 +584,7 @@ function Index({
     addDownload(request);
     logEvent({
       category: "Download Data",
-      action: selections.theme
+      action: selections.theme,
     });
   };
 
@@ -620,7 +652,7 @@ function Index({
     theme,
     preventionDataset,
     treatmentDataset,
-    invasiveDataset
+    invasiveDataset,
   } = selections;
 
   const isStepValid = () => {
@@ -657,7 +689,7 @@ function Index({
         onClose={handleToggle}
         aria-labelledby="max-width-dialog-title"
         PaperProps={{
-          className: classes.paper
+          className: classes.paper,
         }}
       >
         <AppBar position={"relative"}>
