@@ -388,7 +388,8 @@
     "last_name": "Apellidos",
     "email": "Email",
     "country": "País",
-    "organization": "Organización"
+    "organization": "Organización",
+    "button": "Subscríbete"
   },
   "TREATMENT_FAILURE_KM": "% de pacientes con fallo terapeutico, Kaplan-Meier",
   "PROP_RELATED": "%"

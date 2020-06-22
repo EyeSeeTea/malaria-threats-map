@@ -388,7 +388,8 @@
     "last_name": "Last name",
     "email": "Email",
     "country": "Country",
-    "organization": "Organization"
+    "organization": "Organization",
+    "button": "Subscribe"
   },
   "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",
   "PROP_RELATED": "Percentage %"
