@@ -8,7 +8,7 @@ import {
   Paper,
   TextField,
   Theme,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import styled from "styled-components";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -20,7 +20,7 @@ import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   KeyboardDatePicker,
-  MuiPickersUtilsProvider
+  MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import { connect } from "react-redux";
 import { UseInfo } from "./index";
@@ -35,15 +35,15 @@ const StyledFormControlLabel = styled(FormControlLabel)`
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
-      margin: theme.spacing(1, 0)
+      margin: theme.spacing(1, 0),
     },
     paper: {
       padding: "24px",
-      overflow: "unset"
+      overflow: "unset",
     },
     countries: {
-      margin: 0
-    }
+      margin: 0,
+    },
   })
 );
 const Snackbar = styled(Paper)`
@@ -58,32 +58,32 @@ const USES = [
   "data_download.step2.data_use_options.vector",
   "data_download.step2.data_use_options.diagnosis",
   "data_download.step2.data_use_options.policies",
-  "data_download.step2.data_use_options.advocacy"
+  "data_download.step2.data_use_options.advocacy",
 ];
 
 export const isResearchActive = (uses: string[]) =>
   R.any(
-    use =>
+    (use) =>
       [
         "data_download.step2.data_use_options.research",
         "data_download.step2.data_use_options.grant",
-        "data_download.step2.data_use_options.treatments"
+        "data_download.step2.data_use_options.treatments",
       ].includes(use),
     uses
   );
 
 export const isPoliciesActive = (uses: string[]) =>
   R.any(
-    use => ["data_download.step2.data_use_options.policies"].includes(use),
+    (use) => ["data_download.step2.data_use_options.policies"].includes(use),
     uses
   );
 
 export const isToolsActive = (uses: string[]) =>
   R.any(
-    use =>
+    (use) =>
       [
         "data_download.step2.data_use_options.vector",
-        "data_download.step2.data_use_options.diagnosis"
+        "data_download.step2.data_use_options.diagnosis",
       ].includes(use),
     uses
   );
@@ -131,7 +131,7 @@ const UseForm = ({ onChange, useInfo }: Props) => {
           {t(`data_download.step2.data_use`)}
         </FormLabel>
         <Divider />
-        {USES.map(use => (
+        {USES.map((use) => (
           <StyledFormControlLabel
             key={use}
             control={
@@ -141,7 +141,7 @@ const UseForm = ({ onChange, useInfo }: Props) => {
                 onChange={() =>
                   handleUsesChange(
                     useInfo.uses.includes(use)
-                      ? useInfo.uses.filter(u => u !== use)
+                      ? useInfo.uses.filter((u) => u !== use)
                       : [...useInfo.uses, use]
                   )
                 }
@@ -158,10 +158,10 @@ const UseForm = ({ onChange, useInfo }: Props) => {
             multiline
             rowsMax="3"
             InputLabelProps={{
-              shrink: true
+              shrink: true,
             }}
             value={useInfo.researchInfo}
-            onChange={event =>
+            onChange={(event) =>
               onChange("researchInfo", event.target.value as string)
             }
           />
@@ -174,10 +174,10 @@ const UseForm = ({ onChange, useInfo }: Props) => {
             multiline
             rowsMax="3"
             InputLabelProps={{
-              shrink: true
+              shrink: true,
             }}
             value={useInfo.policiesInfo}
-            onChange={event =>
+            onChange={(event) =>
               onChange("policiesInfo", event.target.value as string)
             }
           />
@@ -190,10 +190,10 @@ const UseForm = ({ onChange, useInfo }: Props) => {
             multiline
             rowsMax="3"
             InputLabelProps={{
-              shrink: true
+              shrink: true,
             }}
             value={useInfo.toolsInfo}
-            onChange={event =>
+            onChange={(event) =>
               onChange("toolsInfo", event.target.value as string)
             }
           />
@@ -210,7 +210,7 @@ const UseForm = ({ onChange, useInfo }: Props) => {
             value={useInfo.studyDate}
             onChange={handleDateChange}
             KeyboardButtonProps={{
-              "aria-label": "change date"
+              "aria-label": "change date",
             }}
           />
         </MuiPickersUtilsProvider>
@@ -222,35 +222,37 @@ const UseForm = ({ onChange, useInfo }: Props) => {
         value={useInfo.countries}
         onChange={handleCountriesChange}
       />
-      <Snackbar>{t(`data_download.step2.message`)}</Snackbar>
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={useInfo.contactConsent}
-            onChange={handleConsent1Change}
-            color="primary"
-          />
-        }
-        label={
-          <Typography variant={"body2"}>
-            {t("data_download.step2.consent1")}
-          </Typography>
-        }
-      />
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={useInfo.piConsent}
-            onChange={handleConsent2Change}
-            color="primary"
-          />
-        }
-        label={
-          <Typography variant={"body2"}>
-            {t("data_download.step2.consent2")}
-          </Typography>
-        }
-      />
+      <Snackbar>
+        {t(`data_download.step2.message`)}
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={useInfo.contactConsent}
+              onChange={handleConsent1Change}
+              color="primary"
+            />
+          }
+          label={
+            <Typography variant={"body2"}>
+              {t("data_download.step2.consent1")}
+            </Typography>
+          }
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={useInfo.piConsent}
+              onChange={handleConsent2Change}
+              color="primary"
+            />
+          }
+          label={
+            <Typography variant={"body2"}>
+              {t("data_download.step2.consent2")}
+            </Typography>
+          }
+        />
+      </Snackbar>
     </Card>
   );
 };
