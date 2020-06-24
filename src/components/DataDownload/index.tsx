@@ -47,7 +47,6 @@ import {
   filterByInsecticideTypes,
   filterByManyPlasmodiumSpecies,
   filterByMolecularMarkers,
-  filterByMolecularMarkerStudy,
   filterByMolecularMarkerStudyDimension255,
   filterBySpecies,
   filterByTypes,

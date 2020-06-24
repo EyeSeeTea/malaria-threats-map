@@ -6,17 +6,19 @@ import { selectStoryMode } from "../store/reducers/base-reducer";
 import { setStoryModeAction } from "../store/actions/base-actions";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import { dispatchCustomEvent } from "../utils/dom-utils";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fab: {
       pointerEvents: "all",
-      margin: theme.spacing(0.5, 0)
-    }
+      margin: theme.spacing(0.5, 0),
+    },
   })
 );
 
 function StoryModeSelector({ storyMode, setStoryMode }: any) {
+  const { t } = useTranslation("common");
   const classes = useStyles({});
   const handleToggle = () => {
     setStoryMode(!storyMode);
@@ -29,8 +31,7 @@ function StoryModeSelector({ storyMode, setStoryMode }: any) {
         color={storyMode ? "primary" : "default"}
         onClick={handleToggle}
         className={classes.fab}
-        aria-label={"Select story mode"}
-        title={"Select story mode"}
+        title={t("buttons.select_story_mode")}
       >
         <ImportContactsIcon />
       </Fab>
@@ -39,14 +40,11 @@ function StoryModeSelector({ storyMode, setStoryMode }: any) {
 }
 
 const mapStateToProps = (state: State) => ({
-  storyMode: selectStoryMode(state)
+  storyMode: selectStoryMode(state),
 });
 
 const mapDispatchToProps = {
-  setStoryMode: setStoryModeAction
+  setStoryMode: setStoryModeAction,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StoryModeSelector);
+export default connect(mapStateToProps, mapDispatchToProps)(StoryModeSelector);

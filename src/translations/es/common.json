@@ -23,8 +23,8 @@
   },
   "prevention": {
     "resistance_status": "Estado de la resistencia a insecticidas",
-    "resistance_intensity": "Intensidad de resistencia a insecticidas",
-    "resistance_mechanism": "Mecanismos de resistencia a insecticidas",
+    "resistance_intensity": "Intensidad de la resistenciaa insecticidas",
+    "resistance_mechanism": "Mecanismos de la resistencia a insecticidas",
     "synergist_involvement": "Implicación de los mecanismos metabólicos",
     "synergist_involvement_legend": "Implicación del mecanismo metabólico",
     "pbo_deployment": "Despliegue de mosquiteros PBO-piretroide",
@@ -390,6 +390,9 @@
     "country": "País",
     "organization": "Organización",
     "button": "Subscríbete"
+  },
+  "buttons": {
+    "select_story_mode": "Select story mode"
   },
   "TREATMENT_FAILURE_KM": "% de pacientes con fallo terapeutico, Kaplan-Meier",
   "PROP_RELATED": "%"
