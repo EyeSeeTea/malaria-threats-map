@@ -203,7 +203,7 @@ function Index({
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [activeStep, setActiveStep] = React.useState(2);
+  const [activeStep, setActiveStep] = React.useState(0);
 
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
@@ -236,7 +236,7 @@ function Index({
   });
 
   const reset = () => {
-    setActiveStep(2);
+    setActiveStep(0);
     setWelcomeInfo({});
     setUserInfo({
       organizationType: t(ORGANIZATION_TYPES[0]),

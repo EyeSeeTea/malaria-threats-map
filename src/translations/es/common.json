@@ -353,7 +353,7 @@
       "title": "Filtrar datos a descargar",
       "filters": {
         "additional": "Filtros adicionales",
-        "theme": "Selecciona un tema",
+        "theme": "Seleccione un tema",
         "dataset": "Seleccione un conjunto de datos"
       }
     }
