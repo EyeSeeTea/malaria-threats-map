@@ -395,5 +395,6 @@
     "select_story_mode": "Select story mode"
   },
   "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",
-  "PROP_RELATED": "Percentage %"
+  "PROP_RELATED": "Percentage %",
+  "COUNTRY_NA": "Namibia"
 }

@@ -2,11 +2,9 @@ import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import {
   Button,
-  Checkbox,
   createStyles,
   Fab,
   FormControl,
-  FormControlLabel,
   InputLabel,
   makeStyles,
   MenuItem,

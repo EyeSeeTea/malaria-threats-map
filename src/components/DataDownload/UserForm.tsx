@@ -15,7 +15,6 @@ import { State } from "../../store/types";
 import { selectCountries } from "../../store/reducers/translations-reducer";
 import { connect } from "react-redux";
 import { UserInfo } from "./index";
-import { Translation } from "../../types/Translation";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

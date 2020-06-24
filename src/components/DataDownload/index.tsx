@@ -192,7 +192,7 @@ export type Contact = {
   organization: string;
   country: string;
 };
-function Index({
+function DataDownload({
   isDataDownloadOpen,
   setDataDownloadOpen,
   preventionStudies,
@@ -756,4 +756,4 @@ function Index({
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default connect(mapStateToProps, mapDispatchToProps)(DataDownload);

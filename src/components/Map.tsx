@@ -24,7 +24,8 @@ import {
   selectSetBounds,
   selectSetZoom,
   selectTheaterMode,
-  selectTheme, selectTour,
+  selectTheme,
+  selectTour,
 } from "../store/reducers/base-reducer";
 import {
   selectPreventionFilters,
@@ -272,7 +273,6 @@ class Map extends React.Component<Props> {
   render() {
     const {
       theme,
-      tour,
       initialDialogOpen,
       countryMode,
       preventionFilters,

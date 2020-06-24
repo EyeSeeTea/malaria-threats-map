@@ -9,11 +9,10 @@ import CloseIcon from "@material-ui/icons/Close";
 import Slider from "@material-ui/core/Slider";
 import {
   setFiltersAction,
-  setTheaterModeAction
+  setTheaterModeAction,
 } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
 import { selectTheme } from "../../store/reducers/base-reducer";
 
 const useStyles = makeStyles({
@@ -21,34 +20,34 @@ const useStyles = makeStyles({
     padding: "2px 4px",
     marginBottom: "8px",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   iconButton: {
-    padding: "10px"
+    padding: "10px",
   },
   input: {
-    flex: 1
+    flex: 1,
   },
   divider: {
     width: 1,
     height: 28,
-    margin: 4
+    margin: 4,
   },
   slider: {
     marginLeft: "10px",
-    marginRight: "10px"
-  }
+    marginRight: "10px",
+  },
 });
 
 const THIS_YEAR = new Date().getFullYear();
 
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state)
+  theme: selectTheme(state),
 });
 
 const mapDispatchToProps = {
   setYears: setFiltersAction,
-  setTheaterMode: setTheaterModeAction
+  setTheaterMode: setTheaterModeAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -77,7 +76,7 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
     let interval: number;
     if (isPlaying) {
       interval = setInterval(() => {
-        setYear(year => {
+        setYear((year) => {
           const newYear = year + 1;
           if (newYear > THIS_YEAR) {
             setYears([minYear, minYear]);
@@ -87,10 +86,10 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
             return newYear;
           }
         });
-      }, 750);
+      }, 1000);
     }
     return () => clearInterval(interval);
-  }, [isPlaying, setYears]);
+  }, [isPlaying, setYears, minYear]);
 
   const play = () => {
     setIsPlaying(true);

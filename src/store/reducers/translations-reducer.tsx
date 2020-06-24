@@ -8,21 +8,21 @@ import { TranslationResponse } from "../../types/Translation";
 const initialState: TranslationsState = Object.freeze({
   translations: [],
   loading: false,
-  fields: {}
+  fields: {},
 });
 
 export default createReducer<TranslationsState>(initialState, {
   [ActionTypeEnum.FetchTranslationsRequest]: () => R.assoc("loading", true),
   [ActionTypeEnum.FetchTranslationsSuccess]: (response: TranslationResponse) =>
     R.mergeLeft({
-      translations: response.features.map(feature => feature.attributes),
+      translations: response.features.map((feature) => feature.attributes),
       loading: false,
       fields: R.groupBy(
         R.path(["FIELD"]),
-        response.features.map(feature => feature.attributes)
-      )
+        response.features.map((feature) => feature.attributes)
+      ),
     }),
-  [ActionTypeEnum.FetchTranslationsError]: () => R.assoc("loading", false)
+  [ActionTypeEnum.FetchTranslationsError]: () => R.assoc("loading", false),
 });
 
 export const selectTranslationsState = (state: State) => state.translations;
@@ -81,9 +81,11 @@ export const selectPatientType = createSelector(
 
 export const selectCountries = createSelector(
   selectTranslationsState,
-  state => {
-    const { COUNTRY_NAME } = R.groupBy(R.path(["FIELD"]), state.translations);
-    return COUNTRY_NAME;
+  (state) => {
+    const { COUNTRY_NAME = [] } = R.groupBy(R.path(["FIELD"]), state.translations);
+    return COUNTRY_NAME.map((country) =>
+      country.VALUE_ === "NA" ? { ...country, VALUE_: "COUNTRY_NA" } : country
+    );
   }
 );
 
