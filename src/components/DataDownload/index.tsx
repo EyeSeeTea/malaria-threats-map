@@ -343,6 +343,9 @@ function Index({
       }
       return study[field.value];
     }
+    if (field.label === "ISO2") {
+      return study[field.value];
+    }
     if (!isNaN(study[field.value])) {
       return study[field.value];
     } else {

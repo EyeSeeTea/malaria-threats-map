@@ -14,6 +14,10 @@ const mappings: Option[] = [
     label: "COUNTRY_NAME"
   },
   {
+    value: "ISO2",
+    label: "ISO2"
+  },
+  {
     value: "PROVINCE",
     label: "ADMIN2"
   },
