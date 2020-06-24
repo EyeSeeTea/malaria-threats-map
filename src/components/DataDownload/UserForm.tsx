@@ -108,20 +108,16 @@ const UserForm = ({ countries: baseCountries, onChange, userInfo }: Props) => {
         />
       </FormControl>
       <FormControl fullWidth className={classes.formControl}>
-        <InputLabel>
-          {t("data_download.step1.organization_type") + "*"}
-        </InputLabel>
-        <Select
-          fullWidth
-          value={userInfo.organizationType}
-          onChange={handleOrganizationTypeChange}
-        >
-          {organizationTypes.map((type) => (
-            <MenuItem key={type} value={type}>
-              {type}
-            </MenuItem>
-          ))}
-        </Select>
+        <TextField
+          label={t("data_download.step1.position") + "*"}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          value={userInfo.position}
+          onChange={(event) =>
+            onChange("position", event.target.value as string)
+          }
+        />
       </FormControl>
       <FormControl fullWidth className={classes.formControl}>
         <TextField
@@ -136,16 +132,20 @@ const UserForm = ({ countries: baseCountries, onChange, userInfo }: Props) => {
         />
       </FormControl>
       <FormControl fullWidth className={classes.formControl}>
-        <TextField
-          label={t("data_download.step1.position") + "*"}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          value={userInfo.position}
-          onChange={(event) =>
-            onChange("position", event.target.value as string)
-          }
-        />
+        <InputLabel>
+          {t("data_download.step1.organization_type") + "*"}
+        </InputLabel>
+        <Select
+          fullWidth
+          value={userInfo.organizationType}
+          onChange={handleOrganizationTypeChange}
+        >
+          {organizationTypes.map((type) => (
+            <MenuItem key={type} value={type}>
+              {type}
+            </MenuItem>
+          ))}
+        </Select>
       </FormControl>
       {countries && (
         <FormControl fullWidth className={classes.formControl}>
