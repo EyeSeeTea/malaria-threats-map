@@ -11,7 +11,6 @@ import { TREATMENT_FAILURE_STATUS } from "./utils";
 import { TreatmentFailureColors } from "./treatmentLayerSymbols";
 import { useTranslation } from "react-i18next";
 import { State } from "../../../../store/types";
-import { setFeedbackOpenAction } from "../../../../store/actions/base-actions";
 import { connect } from "react-redux";
 import { selectTreatmentFilters } from "../../../../store/reducers/treatment-reducer";
 import T from "../../../../translations/T";

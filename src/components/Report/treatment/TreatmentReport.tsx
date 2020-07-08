@@ -4,7 +4,7 @@ import {
   createStyles,
   lighten,
   makeStyles,
-  Theme
+  Theme,
 } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -29,7 +29,8 @@ import FilterPopover from "./FilterPopover";
 import {
   filterByCountries,
   filterByDrugs,
-  filterByMolecularMarkerStudyDimension256
+  filterByManyPlasmodiumSpecies,
+  filterByMolecularMarkerStudyDimension256,
 } from "../../layers/studies-filters";
 import { exportToCSV } from "../../DataDownload/download";
 import { Button } from "@material-ui/core";
@@ -53,7 +54,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   return (
     <TableHead>
       <TableRow>
-        {headCells.map(headCell => (
+        {headCells.map((headCell) => (
           <StyledCell
             key={headCell.id}
             align={headCell.align || "left"}
@@ -92,27 +93,27 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 const useToolbarStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1)
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
     },
     highlight:
       theme.palette.type === "light"
         ? {
             color: theme.palette.secondary.main,
-            backgroundColor: lighten(theme.palette.secondary.light, 0.85)
+            backgroundColor: lighten(theme.palette.secondary.light, 0.85),
           }
         : {
             color: theme.palette.text.primary,
-            backgroundColor: theme.palette.secondary.dark
+            backgroundColor: theme.palette.secondary.dark,
           },
     title: {
-      flex: "1 1 100%"
+      flex: "1 1 100%",
     },
     button: {
       margin: theme.spacing(1),
       paddingLeft: theme.spacing(4),
-      paddingRight: theme.spacing(4)
-    }
+      paddingRight: theme.spacing(4),
+    },
   })
 );
 
@@ -122,6 +123,8 @@ interface EnhancedTableToolbarProps {
   setCountries: any;
   drugs: string[];
   setDrugs: any;
+  plasmodiumSpecies: string[];
+  setPlasmodiumSpecies: any;
   onClick: any;
 }
 
@@ -134,13 +137,15 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
     setCountries,
     drugs,
     setDrugs,
-    onClick
+    plasmodiumSpecies,
+    setPlasmodiumSpecies,
+    onClick,
   } = props;
 
   return (
     <Toolbar
       className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0
+        [classes.highlight]: numSelected > 0,
       })}
     >
       {numSelected > 0 ? (
@@ -152,9 +157,19 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography className={classes.title} variant="h6" id="tableTitle">
-          {t("report.treatment.title")}
-        </Typography>
+        <>
+          <Typography className={classes.title} variant="h6" id="tableTitle">
+            {t("report.treatment.title")}
+            <br />
+            <Typography variant="body1" id="tableTitle">
+              {plasmodiumSpecies.length
+                ? `(${plasmodiumSpecies
+                    .map((species) => t(species.replace(".", "%2E")))
+                    .join(", ")})`
+                : "(All plasmodium species)"}
+            </Typography>
+          </Typography>
+        </>
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
@@ -179,6 +194,8 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
             setCountries={setCountries}
             drugs={drugs}
             setDrugs={setDrugs}
+            plasmodiumSpecies={plasmodiumSpecies}
+            setPlasmodiumSpecies={setPlasmodiumSpecies}
           />
         </>
       )}
@@ -187,7 +204,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
 };
 
 const mapStateToProps = (state: State) => ({
-  studies: selectTreatmentStudies(state)
+  studies: selectTreatmentStudies(state),
 });
 const mapDispatchToProps = {};
 
@@ -207,6 +224,9 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
   const [countries, doSetCountries] = React.useState<string[]>([]);
   const [drugs, doSetDrugs] = React.useState<string[]>([]);
+  const [plasmodiumSpecies, doSetPlasmodiumSpecies] = React.useState<string[]>(
+    []
+  );
 
   const setCountries = (countries: string[]) => {
     doSetCountries(countries);
@@ -218,11 +238,17 @@ function TreatmentReport({ studies: baseStudies }: Props) {
     setPage(0);
   };
 
+  const setPlasmodiumSpecies = (species: string[]) => {
+    doSetPlasmodiumSpecies(species);
+    setPage(0);
+  };
+
   const filters = [
     (study: TreatmentStudy) => !isNull(study.DRUG_NAME),
     filterByMolecularMarkerStudyDimension256(),
+    filterByManyPlasmodiumSpecies(plasmodiumSpecies),
     filterByCountries(countries),
-    filterByDrugs(drugs)
+    filterByDrugs(drugs),
   ];
 
   const studies = filters.reduce(
@@ -254,7 +280,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
           const values = countrySpeciesStudies
             .map((study: TreatmentStudy) => parseFloat(study[prop]))
-            .filter(value => !Number.isNaN(value));
+            .filter((value) => !Number.isNaN(value));
           const sortedValues = values.sort();
 
           const min = values.length ? sortedValues[0] : "-";
@@ -280,7 +306,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
             MIN: min,
             MAX: max,
             PERCENTILE_25: percentile25,
-            PERCENTILE_75: percentile75
+            PERCENTILE_75: percentile75,
           };
         })
         .sort(getComparator(order, orderBy));
@@ -288,7 +314,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
   );
 
   const downloadData = () => {
-    const studies = R.map(group => {
+    const studies = R.map((group) => {
       const study = { ...group };
       delete study.ID;
       delete study.COUNTRY_NUMBER;
@@ -297,8 +323,8 @@ function TreatmentReport({ studies: baseStudies }: Props) {
     const tabs = [
       {
         name: "Data",
-        studies: studies
-      }
+        studies: studies,
+      },
     ];
     const dateString = format(new Date(), "yyyyMMdd");
     exportToCSV(tabs, `MTM_TREATMENT_${dateString}`);
@@ -316,7 +342,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = groups.map(n => n.ID);
+      const newSelecteds = groups.map((n) => n.ID);
       setSelected(newSelecteds);
       return;
     }
@@ -345,9 +371,9 @@ function TreatmentReport({ studies: baseStudies }: Props) {
     sortedGroups,
     getComparator(order, orderBy)
   ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-  const rows: Data[] = tablePage.map(row => ({
+  const rows: Data[] = tablePage.map((row) => ({
     ...row,
-    COUNTRY_NUMBER: tablePage.filter(r => r.COUNTRY === row.COUNTRY).length
+    COUNTRY_NUMBER: tablePage.filter((r) => r.COUNTRY === row.COUNTRY).length,
   }));
 
   const filterColumnsToDisplay = ([field, value]: [string, string]) =>
@@ -363,6 +389,8 @@ function TreatmentReport({ studies: baseStudies }: Props) {
             setCountries={setCountries}
             drugs={drugs}
             setDrugs={setDrugs}
+            plasmodiumSpecies={plasmodiumSpecies}
+            setPlasmodiumSpecies={setPlasmodiumSpecies}
             onClick={() => downloadData()}
           />
           <TableContainer>
@@ -410,7 +438,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                         .filter(filterColumnsToDisplay)
                         .map(([field, value]) => {
                           const header = headCells.find(
-                            cell => cell.id === field
+                            (cell) => cell.id === field
                           );
                           const number = Number(value);
                           const isNumber = !Number.isNaN(number);

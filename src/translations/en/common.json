@@ -375,7 +375,7 @@
       "country": "Country",
       "period": "Study years",
       "median": "Median",
-      "treatment": "Drug",
+      "drug": "Drug",
       "follow": "Follow up (days)",
       "studies": "Number of studies",
       "percentile_25": "Percentile 25th",

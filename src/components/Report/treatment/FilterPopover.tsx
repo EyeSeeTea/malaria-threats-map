@@ -6,17 +6,19 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import CountriesSelector from "../../DataDownload/filters/CountriesSelector";
 import T from "../../../translations/T";
 import DrugsSelector from "../../filters/DrugsSelector";
+import PlasmodiumSpeciesSelector from "../../filters/PlasmodiumSpeciesSelector";
+import { setPlasmodiumSpeciesEpic } from "../../../store/epics/treatment-epics";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
       minWidth: 400,
       overflowY: "unset",
-      overflowX: "unset"
+      overflowX: "unset",
     },
     typography: {
-      padding: theme.spacing(2)
-    }
+      padding: theme.spacing(2),
+    },
   })
 );
 
@@ -25,13 +27,17 @@ interface Props {
   setCountries: any;
   drugs: string[];
   setDrugs: any;
+  plasmodiumSpecies: string[];
+  setPlasmodiumSpecies: any;
 }
 
 export default function FilterPopover({
   countries,
   setCountries,
   drugs,
-  setDrugs
+  setDrugs,
+  plasmodiumSpecies,
+  setPlasmodiumSpecies,
 }: Props) {
   const classes = useStyles({});
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -68,15 +74,19 @@ export default function FilterPopover({
         PaperProps={{ className: classes.paper }}
         anchorOrigin={{
           vertical: "top",
-          horizontal: "right"
+          horizontal: "right",
         }}
         transformOrigin={{
           vertical: "top",
-          horizontal: "right"
+          horizontal: "right",
         }}
       >
-        <CountriesSelector onChange={setCountries} value={countries} />
+        <PlasmodiumSpeciesSelector
+          onChange={setPlasmodiumSpecies}
+          value={plasmodiumSpecies}
+        />
         <DrugsSelector onChange={setDrugs} value={drugs} />
+        <CountriesSelector onChange={setCountries} value={countries} />
       </Popover>
     </div>
   );
