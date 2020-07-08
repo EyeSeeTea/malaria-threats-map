@@ -3,7 +3,7 @@ import { selectLegendExpanded } from "../store/reducers/base-reducer";
 import { setLegendExpandedAction } from "../store/actions/base-actions";
 import React from "react";
 import { ClickAwayListener, IconButton } from "@material-ui/core";
-import GrowIcon from "@material-ui/icons/ExpandLess";
+import GrowIcon from "@material-ui/icons/Info";
 import ReduceIcon from "@material-ui/icons/ExpandMore";
 import { connect } from "react-redux";
 import styled from "styled-components";
@@ -13,27 +13,29 @@ const LegendContainerStyled = styled(Paper)<{ size?: number }>`
   padding: 8px;
   display: flex;
   flex-direction: column;
-  max-width: ${props => props.size | 200}px;
+  max-width: ${(props) => props.size | 200}px;
   width: 100%;
   font-size: 12px;
   box-shadow: none !important;
 `;
 
-const LegendContent = styled.div``;
+const LegendContent = styled.div<{ small: boolean }>`
+  margin-right: ${(props) => (props.small ? "20px" : 0)};
+`;
 
 const IconContainer = styled.div`
   position: absolute;
   flex-direction: reverse;
   right: 4px;
-  top: 2px;
+  top: 4px;
 `;
 
 const mapStateToProps = (state: State) => ({
-  legendExpanded: selectLegendExpanded(state)
+  legendExpanded: selectLegendExpanded(state),
 });
 
 const mapDispatchToProps = {
-  setLegendExpanded: setLegendExpandedAction
+  setLegendExpanded: setLegendExpandedAction,
 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
@@ -45,7 +47,7 @@ type Props = DispatchProps & StateProps & OwnProps;
 const LegendContainer = ({
   children,
   legendExpanded,
-  setLegendExpanded
+  setLegendExpanded,
 }: Props) => {
   const small = !legendExpanded;
   return (
@@ -65,7 +67,7 @@ const LegendContainer = ({
         </IconButton>
       </IconContainer>
       <ClickAwayListener onClickAway={() => setLegendExpanded(false)}>
-        <LegendContent>{children}</LegendContent>
+        <LegendContent small>{children}</LegendContent>
       </ClickAwayListener>
     </LegendContainerStyled>
   );

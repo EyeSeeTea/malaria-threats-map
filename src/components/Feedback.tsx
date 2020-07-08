@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
-import FeedbackIcon from "@material-ui/icons/Feedback";
+import FeedbackIcon from "@material-ui/icons/RateReview";
 import { State } from "../store/types";
 import { setFeedbackOpenAction } from "../store/actions/base-actions";
 import { selectIsFeedbackOpen } from "../store/reducers/base-reducer";
