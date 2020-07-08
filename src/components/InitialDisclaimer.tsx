@@ -83,7 +83,7 @@ const InitialDisclaimer = () => {
       >
         <DialogActions>
           <Wrapper>
-            <Typography variant="h5">{t("title")}</Typography>
+            <Typography variant="h5">{t("icons.disclaimer")}</Typography>
           </Wrapper>
           <FlexGrow />
           <IconButton onClick={handleClose}>

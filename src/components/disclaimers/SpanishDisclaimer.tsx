@@ -3,7 +3,12 @@ import { DialogContent, Link, Typography } from "@material-ui/core";
 
 const SpanishDisclaimer = () => {
   return (
-    <DialogContent>
+    <DialogContent
+      style={{
+        textAlign: "justify",
+        textJustify: "inter-word",
+      }}
+    >
       <Typography variant={"body2"}>
         <strong>Fuente de datos:</strong> Programa Mundial sobre el Paludismo
       </Typography>

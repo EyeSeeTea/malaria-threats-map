@@ -3,7 +3,12 @@ import { DialogContent, Link, Typography } from "@material-ui/core";
 
 const EnglishDisclaimer = () => {
   return (
-    <DialogContent>
+    <DialogContent
+      style={{
+        textAlign: "justify",
+        textJustify: "inter-word",
+      }}
+    >
       <Typography variant={"body2"}>
         <strong>Data source:</strong> Global Malaria Programme
       </Typography>
