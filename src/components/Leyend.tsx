@@ -11,7 +11,7 @@ import { resolveMapTypeLegend as resolveInvasiveMapTypeLegend } from "./layers/i
 import {
   selectCountryMode,
   selectFilters,
-  selectTheme
+  selectTheme,
 } from "../store/reducers/base-reducer";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
@@ -43,7 +43,7 @@ export const LegendEntry = styled.div`
   align-items: center;
 `;
 export const LegendSymbol = styled.span<{ color: string; border?: boolean }>`
-  background-color: ${props => props.color};
+  background-color: ${(props) => props.color};
   border-radius: 99999px;
   width: 12px;
   min-width: 12px;
@@ -51,7 +51,7 @@ export const LegendSymbol = styled.span<{ color: string; border?: boolean }>`
   margin-right: 8px;
   align-self: flex-start;
   margin-top: 6px;
-  border: ${props => (props.border ? "solid 1px grey" : "none")};
+  border: ${(props) => (props.border ? "solid 1px grey" : "none")};
 `;
 export const LegendText = styled.span`
   line-height: 24px;
@@ -63,6 +63,9 @@ export const LegendTypography = styled(Typography)`
 
 export const LegendTitleTypography = styled(Typography)`
   font-size: 0.9rem !important;
+`;
+export const LegendSubtitleTypography = styled(Typography)`
+  font-size: 0.8rem !important;
 `;
 export const LegendFooterTypography = styled(Typography)`
   font-size: 0.7rem !important;
@@ -89,7 +92,7 @@ export function LegendLabels({ labels }: { labels: LegendLabel[] }) {
   const { t } = useTranslation("common");
   return (
     <LegendEntries>
-      {labels.map(label => (
+      {labels.map((label) => (
         <LegendEntry key={label.label}>
           <LegendSymbol color={label.color} border={label.border} />
           <LegendText>{t(label.label)}</LegendText>
@@ -106,11 +109,11 @@ const mapStateToProps = (state: State) => ({
   diagnosisFilters: selectDiagnosisFilters(state),
   treatmentFilters: selectTreatmentFilters(state),
   invasiveFilters: selectInvasiveFilters(state),
-  countryMode: selectCountryMode(state)
+  countryMode: selectCountryMode(state),
 });
 
 const mapDispatchToProps = {
-  setPreventionMapType: setPreventionMapType
+  setPreventionMapType: setPreventionMapType,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -123,7 +126,7 @@ function Leyend({
   diagnosisFilters,
   treatmentFilters,
   invasiveFilters,
-  countryMode
+  countryMode,
 }: Props) {
   switch (theme) {
     case "prevention":
