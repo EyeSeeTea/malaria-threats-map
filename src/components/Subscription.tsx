@@ -16,7 +16,10 @@ import SubscriptionIcon from "@material-ui/icons/RssFeed";
 import Typography from "@material-ui/core/Typography";
 import { State } from "../store/types";
 import { setSubscriptionOpenAction } from "../store/actions/base-actions";
-import { selectIsSubscriptionOpen } from "../store/reducers/base-reducer";
+import {
+  selectIsSubmittingSubscription,
+  selectIsSubscriptionOpen,
+} from "../store/reducers/base-reducer";
 import { connect } from "react-redux";
 import { addSubscriptionContactRequestAction } from "../store/actions/data-download-actions";
 import { Contact } from "./DataDownload";
@@ -45,6 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const mapStateToProps = (state: State) => ({
   subscriptionOpen: selectIsSubscriptionOpen(state),
+  isSubmitting: selectIsSubmittingSubscription(state),
 });
 
 const mapDispatchToProps = {
@@ -58,6 +62,7 @@ type Props = DispatchProps & StateProps;
 const Subscription = ({
   subscriptionOpen,
   setSubscriptionOpen,
+  isSubmitting,
   saveContact,
 }: Props) => {
   const { t } = useTranslation("common");
@@ -232,6 +237,7 @@ const Subscription = ({
                 variant="contained"
                 color="primary"
                 type="button"
+                disabled={isSubmitting}
                 onClick={() => submit()}
               >
                 {t("subscription.button")}

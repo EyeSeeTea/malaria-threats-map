@@ -42,6 +42,7 @@ const initialState: MalariaState = Object.freeze({
   feedbackOpen: false,
   theaterMode: false,
   legendExpanded: false,
+  isSubmittingSubscription: false,
 });
 
 export default createReducer<MalariaState>(initialState, {
@@ -101,6 +102,12 @@ export default createReducer<MalariaState>(initialState, {
     R.assoc("theaterMode", theaterMode),
   [ActionTypeEnum.SetLegendExpanded]: (legendExpanded: boolean) =>
     R.assoc("legendExpanded", legendExpanded),
+  [ActionTypeEnum.AddSubscriptionContactRequest]: () =>
+    R.assoc("isSubmittingSubscription", true),
+  [ActionTypeEnum.AddSubscriptionContactError]: () =>
+    R.assoc("isSubmittingSubscription", false),
+  [ActionTypeEnum.AddSubscriptionContactSuccess]: () =>
+    R.assoc("isSubmittingSubscription", false),
 });
 
 export const selectMalariaState = (state: State) => state.malaria;
@@ -196,4 +203,8 @@ export const selectTheaterMode = createSelector(
 export const selectLegendExpanded = createSelector(
   selectMalariaState,
   R.prop("legendExpanded")
+);
+export const selectIsSubmittingSubscription = createSelector(
+  selectMalariaState,
+  R.prop("isSubmittingSubscription")
 );

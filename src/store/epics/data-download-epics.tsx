@@ -6,8 +6,10 @@ import * as ajax from "../ajax";
 import { of } from "rxjs";
 import {
   addDataDownloadRequestAction,
+  addSubscriptionContactErrorAction,
   addSubscriptionContactRequestAction,
-  fetchDataDownloadRequestAction
+  addSubscriptionContactSuccessAction,
+  fetchDataDownloadRequestAction,
 } from "../actions/data-download-actions";
 import config from "../../config";
 import { AjaxError } from "rxjs/ajax";
@@ -31,7 +33,7 @@ export const createDataDownloadEntryEpic = (
   action$: ActionsObservable<ActionType<typeof addDataDownloadRequestAction>>
 ) =>
   action$.ofType(ActionTypeEnum.AddDownloadRequest).pipe(
-    switchMap(action => {
+    switchMap((action) => {
       return ajax.postFull(config.backendUrl, action.payload).pipe(
         // return ajax.getFull(`https://portal-uat.who.int/malthreats-api/`).pipe(
         mergeMap((response: any) => {
@@ -47,13 +49,14 @@ export const createSubscriptionContact = (
   >
 ) =>
   action$.ofType(ActionTypeEnum.AddSubscriptionContactRequest).pipe(
-    switchMap(action => {
+    switchMap((action) => {
       return ajax.patchFull(config.backendUrl, action.payload).pipe(
         // return ajax.getFull(`https://portal-uat.who.int/malthreats-api/`).pipe(
         mergeMap((response: any) => {
           return of(
             addNotificationAction("User successfully subscribed!"),
-            setSubscriptionOpenAction(false)
+            setSubscriptionOpenAction(false),
+            addSubscriptionContactSuccessAction()
           );
         }),
         catchError((error: AjaxError) => {
@@ -61,7 +64,7 @@ export const createSubscriptionContact = (
             addNotificationAction(
               "There was an error while trying to subscribe"
             ),
-            setSubscriptionOpenAction(false)
+            addSubscriptionContactErrorAction()
           );
         })
       );

@@ -49,6 +49,7 @@ export interface MalariaState {
   feedbackOpen: boolean;
   theaterMode: boolean;
   legendExpanded: boolean;
+  isSubmittingSubscription: boolean;
 }
 
 export interface TranslationsState {
