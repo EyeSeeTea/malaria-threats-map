@@ -194,18 +194,36 @@ const Subscription = ({
                     setOrganization(event.target.value as string)
                   }
                 >
-                  <MenuItem value="nmcp">NMCP</MenuItem>
-                  <MenuItem value="funding">Funding organization</MenuItem>
-                  <MenuItem value="research">Research Organization</MenuItem>
-                  <MenuItem value="collaboratingcenter">
-                    WHO Collaborating Centers
+                  <MenuItem value="nmcp">
+                    {t("subscription.institutions.nmcp")}
                   </MenuItem>
-                  <MenuItem value="privatesector">Private Sector</MenuItem>
-                  <MenuItem value="ngo">NGO</MenuItem>
-                  <MenuItem value="media">Media Organization</MenuItem>
-                  <MenuItem value="whoco">WHO Country Office</MenuItem>
-                  <MenuItem value="whoro">WHO Regional Office</MenuItem>
-                  <MenuItem value="whohq">WHO Headquarters</MenuItem>
+                  <MenuItem value="funding">
+                    {t("subscription.institutions.funding_organization")}
+                  </MenuItem>
+                  <MenuItem value="research">
+                    {t("subscription.institutions.research_organization")}
+                  </MenuItem>
+                  <MenuItem value="collaboratingcenter">
+                    {t("subscription.institutions.who_collaborating_centers")}
+                  </MenuItem>
+                  <MenuItem value="privatesector">
+                    {t("subscription.institutions.private_sector")}
+                  </MenuItem>
+                  <MenuItem value="ngo">
+                    {t("subscription.institutions.ngo")}
+                  </MenuItem>
+                  <MenuItem value="media">
+                    {t("subscription.institutions.media_organization")}
+                  </MenuItem>
+                  <MenuItem value="whoco">
+                    {t("subscription.institutions.who_country_office")}
+                  </MenuItem>
+                  <MenuItem value="whoro">
+                    {t("subscription.institutions.who_regional_office")}
+                  </MenuItem>
+                  <MenuItem value="whohq">
+                    {t("subscription.institutions.who_headquarters")}
+                  </MenuItem>
                 </Select>
               </FormControl>
             </div>

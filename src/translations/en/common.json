@@ -389,7 +389,19 @@
     "email": "Email",
     "country": "Country",
     "organization": "Organization",
-    "button": "Subscribe"
+    "button": "Subscribe",
+    "institutions": {
+      "nmcp": "NMCP",
+      "funding_organization": "Funding Organization",
+      "research_organization": "Research Organization",
+      "who_collaborating_centers": "WHO Collaborating Centers",
+      "private_sector": "Private Sector",
+      "ngo": "NGO",
+      "media_organization": "Media Organization",
+      "who_country_office": "WHO Country Office",
+      "who_regional_office": "WHO Regional Office",
+      "who_headquarters": "WHO Headquarters"
+    }
   },
   "buttons": {
     "select_story_mode": "Select story mode"
