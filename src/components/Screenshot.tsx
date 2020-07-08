@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fab: {
       pointerEvents: "all",
-      margin: theme.spacing(0.5, 0)
-    }
+      margin: theme.spacing(0.5, 0),
+    },
   })
 );
 
@@ -31,7 +31,7 @@ const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
   title: selectMapTitle(state),
   preventionMapType: selectPreventionFilters(state),
-  diagnosisFilters: selectDiagnosisFilters(state)
+  diagnosisFilters: selectDiagnosisFilters(state),
 });
 const mapDispatchToProps = {};
 
@@ -69,13 +69,13 @@ function Screenshot({ map, theme, title }: Props) {
       }
     })();
 
-    html2canvas(document.querySelector("#legend")).then(legend => {
+    html2canvas(document.querySelector("#legend")).then((legend) => {
       const doc = new jsPDF({
         orientation: "l",
         unit: "mm",
         format: "a4",
         putOnlyUsedFonts: true,
-        floatPrecision: 16
+        floatPrecision: 16,
       });
 
       const ratio = mapCanvas.width / mapCanvas.height;
@@ -182,7 +182,7 @@ function Screenshot({ map, theme, title }: Props) {
         color="default"
         onClick={handleClick}
         className={classes.fab}
-        title={"Export"}
+        title={t("icons.image")}
       >
         <AddAPhotoIcon />
       </Fab>

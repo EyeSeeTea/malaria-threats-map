@@ -406,6 +406,19 @@
   "buttons": {
     "select_story_mode": "Select story mode"
   },
+  "icons": {
+    "animation": "Animation de la chronologie",
+    "endemicity": "Couche d'endémicité",
+    "visualization": "Changer la visualisation",
+    "story": "Afficher l'explication des menaces",
+    "download": "Télécharger des données",
+    "image": "Exporter une image de la carte",
+    "summary": "Rapport sommaire",
+    "disclaimer": "Avertissement",
+    "subscribe": "Souscrire",
+    "comments": "Envoyez vos commentaires",
+    "help": "Help"
+  },
   "TREATMENT_FAILURE_KM": "% de patients en échec thérapeutique, Kaplan-Meier",
   "PROP_RELATED": "Pourcentage %",
   "COUNTRY_NA": "Namibie"

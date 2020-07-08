@@ -406,6 +406,19 @@
   "buttons": {
     "select_story_mode": "Select story mode"
   },
+  "icons": {
+    "animation": "Animación de evolución temporal",
+    "endemicity": "Capa de endemicidad",
+    "visualization": "Cambiar visualización",
+    "story": "Explicaciones de los desafíos",
+    "download": "Descargar datos",
+    "image": "Exportar mapa",
+    "summary": "Informe resumen",
+    "disclaimer": "Aviso Legal",
+    "subscribe": "Suscríbase",
+    "comments": "Envíe sus comentarios",
+    "help": "Ayuda"
+  },
   "TREATMENT_FAILURE_KM": "% de pacientes con fallo terapeutico, Kaplan-Meier",
   "PROP_RELATED": "%",
   "COUNTRY_NA": "Namibia"

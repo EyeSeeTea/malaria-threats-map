@@ -31,7 +31,7 @@ function StoryModeSelector({ storyMode, setStoryMode }: any) {
         color={storyMode ? "primary" : "default"}
         onClick={handleToggle}
         className={classes.fab}
-        title={t("buttons.select_story_mode")}
+        title={t("icons.story")}
       >
         <ImportContactsIcon />
       </Fab>

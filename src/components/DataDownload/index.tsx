@@ -236,7 +236,7 @@ function DataDownload({
   });
 
   const reset = () => {
-    setActiveStep(3);
+    setActiveStep(0);
     setWelcomeInfo({});
     setUserInfo({
       organizationType: t(ORGANIZATION_TYPES[0]),
@@ -372,7 +372,7 @@ function DataDownload({
     switch (selections.preventionDataset) {
       case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
       case "INTENSITY_CONCENTRATION_BIOASSAY": {
-        console.log(selections)
+        console.log(selections);
         const filters = [
           filterByDownload(),
           filterByAssayTypes([selections.preventionDataset]),
@@ -675,7 +675,7 @@ function DataDownload({
     isWelcomeFormValid() &&
     isUserFormValid() &&
     isUseFormValid() &&
-    isDownloadFormValid() || true;
+    isDownloadFormValid();
 
   return (
     <div>
@@ -684,7 +684,7 @@ function DataDownload({
         color={isDataDownloadOpen ? "primary" : "default"}
         onClick={handleToggle}
         className={classes.fab}
-        title={t("data_download.title")}
+        title={t("icons.download")}
       >
         <CloudDownloadIcon />
       </Fab>

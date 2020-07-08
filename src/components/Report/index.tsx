@@ -6,47 +6,48 @@ import DialogContent from "@material-ui/core/DialogContent";
 import { State } from "../../store/types";
 import {
   selectIsReportOpen,
-  selectTheme
+  selectTheme,
 } from "../../store/reducers/base-reducer";
 import { setReportOpenAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
 import PreventionReport from "./prevention/PreventionReport";
 import TreatmentReport from "./treatment/TreatmentReport";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fab: {
       pointerEvents: "all",
-      margin: theme.spacing(0.5, 0)
+      margin: theme.spacing(0.5, 0),
     },
     form: {
       display: "flex",
       flexDirection: "column",
       margin: "auto",
-      width: "fit-content"
+      width: "fit-content",
     },
     formControl: {
       marginTop: theme.spacing(2),
-      minWidth: 120
+      minWidth: 120,
     },
     formControlLabel: {
-      marginTop: theme.spacing(1)
+      marginTop: theme.spacing(1),
     },
     paper: {
-      backgroundColor: "#fafafa"
+      backgroundColor: "#fafafa",
     },
     content: {
-      padding: "0 !important"
-    }
+      padding: "0 !important",
+    },
   })
 );
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
-  isReportOpen: selectIsReportOpen(state)
+  isReportOpen: selectIsReportOpen(state),
 });
 const mapDispatchToProps = {
-  openReport: setReportOpenAction
+  openReport: setReportOpenAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -56,6 +57,7 @@ type Props = StateProps & OwnProps & DispatchProps;
 
 function Report({ isReportOpen, openReport, theme }: Props) {
   const classes = useStyles({});
+  const { t } = useTranslation("common");
 
   const handleClickOpen = () => {
     openReport(true);
@@ -84,7 +86,7 @@ function Report({ isReportOpen, openReport, theme }: Props) {
         color={isReportOpen ? "primary" : "default"}
         onClick={handleClickOpen}
         className={classes.fab}
-        title={"Report"}
+        title={t("icons.summary")}
       >
         <ReportIcon />
       </Fab>

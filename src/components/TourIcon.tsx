@@ -8,6 +8,7 @@ import {
 } from "../store/actions/base-actions";
 import { selectTour } from "../store/reducers/base-reducer";
 import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,6 +45,7 @@ type Props = DispatchProps & StateProps;
 
 const TourIcon = ({ tour, setTourOpen, setInitialDialogOpen }: Props) => {
   const classes = useStyles({});
+  const { t } = useTranslation("common");
 
   return (
     <React.Fragment>
@@ -57,7 +59,7 @@ const TourIcon = ({ tour, setTourOpen, setInitialDialogOpen }: Props) => {
           window.history.pushState({}, document.title, "/");
           window.location.reload();
         }}
-        title={"Help"}
+        title={t("icons.help")}
       >
         <HelpIcon />
       </Fab>

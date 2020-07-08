@@ -6,20 +6,22 @@ import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
 import { selectEndemicity } from "../store/reducers/base-reducer";
 import {
   setFiltersAction,
-  toggleEndemicityLayerAction
+  toggleEndemicityLayerAction,
 } from "../store/actions/base-actions";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fab: {
       pointerEvents: "all",
-      margin: theme.spacing(0.5, 0)
-    }
+      margin: theme.spacing(0.5, 0),
+    },
   })
 );
 
 function Layers({ toogleEndemicityLayer, endemicityLayer }: any) {
   const classes = useStyles({});
+  const { t } = useTranslation("common");
   const handleToggle = () => {
     toogleEndemicityLayer(!endemicityLayer);
   };
@@ -30,7 +32,7 @@ function Layers({ toogleEndemicityLayer, endemicityLayer }: any) {
         color={endemicityLayer ? "primary" : "default"}
         onClick={handleToggle}
         className={classes.fab}
-        title={"Endemicity"}
+        title={t("icons.endemicity")}
       >
         <LayersIcon />
       </Fab>
@@ -39,15 +41,12 @@ function Layers({ toogleEndemicityLayer, endemicityLayer }: any) {
 }
 
 const mapStateToProps = (state: State) => ({
-  endemicityLayer: selectEndemicity(state)
+  endemicityLayer: selectEndemicity(state),
 });
 
 const mapDispatchToProps = {
   toogleEndemicityLayer: toggleEndemicityLayerAction,
-  setFilters: setFiltersAction
+  setFilters: setFiltersAction,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Layers);
+export default connect(mapStateToProps, mapDispatchToProps)(Layers);

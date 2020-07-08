@@ -95,7 +95,7 @@ const Subscription = ({
         color={"default"}
         className={classes.fab}
         onClick={handleOpen}
-        title={t("subscription.button")}
+        title={t("icons.subscribe")}
       >
         <SubscriptionIcon />
       </Fab>

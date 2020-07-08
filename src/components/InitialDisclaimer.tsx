@@ -8,7 +8,7 @@ import {
   IconButton,
   makeStyles,
   Theme,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { FlexGrow } from "./Chart";
@@ -23,12 +23,12 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
       margin: theme.spacing(2, 0),
-      width: "100%"
+      width: "100%",
     },
     fab: {
       pointerEvents: "all",
-      margin: theme.spacing(0.5, 0.5)
-    }
+      margin: theme.spacing(0.5, 0.5),
+    },
   })
 );
 
@@ -40,7 +40,7 @@ const Wrapper = styled.div`
 const InitialDisclaimer = () => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles({});
-  const { t } = useTranslation("disclaimer");
+  const { t } = useTranslation("common");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -69,7 +69,7 @@ const InitialDisclaimer = () => {
         color={"default"}
         className={classes.fab}
         onClick={handleClickOpen}
-        title={"Disclaimer"}
+        title={t("icons.disclaimer")}
       >
         <DisclaimerIcon />
       </Fab>
@@ -78,7 +78,7 @@ const InitialDisclaimer = () => {
         open={open}
         onClose={handleClose}
         PaperProps={{
-          className: classes.paper
+          className: classes.paper,
         }}
       >
         <DialogActions>

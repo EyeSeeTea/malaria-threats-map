@@ -406,6 +406,19 @@
   "buttons": {
     "select_story_mode": "Select story mode"
   },
+  "icons": {
+    "animation": "Temporal animation",
+    "endemicity": "Endemicity layer",
+    "visualization": "Country/site mode",
+    "story": "Story mode",
+    "download": "Download data",
+    "image": "Export map",
+    "summary": "Summary Report",
+    "disclaimer": "Disclaimer",
+    "subscribe": "Subscribe",
+    "comments": "Provide your feedback",
+    "help": "Help"
+  },
   "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",
   "PROP_RELATED": "Percentage %",
   "COUNTRY_NA": "Namibia"

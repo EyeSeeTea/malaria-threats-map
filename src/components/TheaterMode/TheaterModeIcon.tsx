@@ -5,26 +5,28 @@ import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
 import { setTheaterModeAction } from "../../store/actions/base-actions";
 import { State } from "../../store/types";
 import { selectTheaterMode } from "../../store/reducers/base-reducer";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fab: {
       pointerEvents: "all",
-      margin: theme.spacing(0.5, 0)
-    }
+      margin: theme.spacing(0.5, 0),
+    },
   })
 );
 
 const mapStateToProps = (state: State) => ({
-  theaterMode: selectTheaterMode(state)
+  theaterMode: selectTheaterMode(state),
 });
 
 const mapDispatchToProps = {
-  setTheaterMode: setTheaterModeAction
+  setTheaterMode: setTheaterModeAction,
 };
 
 function TheaterModeIcon({ theaterMode, setTheaterMode }: any) {
   const classes = useStyles({});
+  const { t } = useTranslation("common");
   return (
     <div>
       <Fab
@@ -32,7 +34,7 @@ function TheaterModeIcon({ theaterMode, setTheaterMode }: any) {
         color={theaterMode ? "primary" : "default"}
         onClick={() => setTheaterMode(!theaterMode)}
         className={classes.fab}
-        title={"Timeline mode"}
+        title={t("icons.animation")}
       >
         <TheaterIcon />
       </Fab>

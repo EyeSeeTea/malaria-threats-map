@@ -7,6 +7,7 @@ import { setFeedbackOpenAction } from "../store/actions/base-actions";
 import { selectIsFeedbackOpen } from "../store/reducers/base-reducer";
 import { connect } from "react-redux";
 import i18next from "i18next";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -14,27 +15,27 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(1),
       "& > *": {
         margin: theme.spacing(1),
-        width: "25ch"
-      }
+        width: "25ch",
+      },
     },
     fab: {
       pointerEvents: "all",
-      margin: theme.spacing(0.5, 0.5)
+      margin: theme.spacing(0.5, 0.5),
     },
     paper: {
       margin: theme.spacing(1),
       padding: theme.spacing(3),
-      width: "100%"
-    }
+      width: "100%",
+    },
   })
 );
 
 const mapStateToProps = (state: State) => ({
-  feedbackOpen: selectIsFeedbackOpen(state)
+  feedbackOpen: selectIsFeedbackOpen(state),
 });
 
 const mapDispatchToProps = {
-  setFeedbackOpen: setFeedbackOpenAction
+  setFeedbackOpen: setFeedbackOpenAction,
 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
@@ -42,6 +43,7 @@ type Props = DispatchProps & StateProps;
 
 const Feedback = ({ feedbackOpen, setFeedbackOpen }: Props) => {
   const classes = useStyles({});
+  const { t } = useTranslation("common");
   const ref = useRef();
 
   useEffect(() => {
@@ -96,7 +98,7 @@ const Feedback = ({ feedbackOpen, setFeedbackOpen }: Props) => {
         color={"default"}
         className={classes.fab}
         onClick={handleOpen}
-        title={"Feedback"}
+        title={t("icons.comments")}
       >
         <FeedbackIcon />
       </Fab>
@@ -106,7 +108,7 @@ const Feedback = ({ feedbackOpen, setFeedbackOpen }: Props) => {
         open={feedbackOpen}
         onClose={handleClose}
         PaperProps={{
-          className: classes.paper
+          className: classes.paper,
         }}
       >
         <iframe
@@ -116,7 +118,7 @@ const Feedback = ({ feedbackOpen, setFeedbackOpen }: Props) => {
           height={"800vh"}
           frameBorder="0"
           style={{
-            overflowX: "auto"
+            overflowX: "auto",
           }}
         />
       </Dialog>
