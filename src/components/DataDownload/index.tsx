@@ -236,7 +236,7 @@ function DataDownload({
   });
 
   const reset = () => {
-    setActiveStep(0);
+    setActiveStep(3);
     setWelcomeInfo({});
     setUserInfo({
       organizationType: t(ORGANIZATION_TYPES[0]),
@@ -342,8 +342,12 @@ function DataDownload({
       }
       return study[field.value];
     }
-    if (field.label === "ISO2") {
-      return study[field.value];
+    if (field.value === "ISO2") {
+      if (field.label === "ISO2") {
+        return study[field.value];
+      } else {
+        return t(study[field.value] ? "COUNTRY_NA" : study[field.value]);
+      }
     }
     if (!isNaN(study[field.value])) {
       return study[field.value];
@@ -368,6 +372,7 @@ function DataDownload({
     switch (selections.preventionDataset) {
       case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
       case "INTENSITY_CONCENTRATION_BIOASSAY": {
+        console.log(selections)
         const filters = [
           filterByDownload(),
           filterByAssayTypes([selections.preventionDataset]),
@@ -670,7 +675,7 @@ function DataDownload({
     isWelcomeFormValid() &&
     isUserFormValid() &&
     isUseFormValid() &&
-    isDownloadFormValid();
+    isDownloadFormValid() || true;
 
   return (
     <div>

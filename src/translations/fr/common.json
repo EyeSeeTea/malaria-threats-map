@@ -266,11 +266,11 @@
     "filters": {
       "prevention": {
         "datasets": {
-          "discriminating_concentration_bioassays": "Results of discriminating concentration bioassays",
-          "intensity_concentration_bioassays": "Results of intensity concentration bioassays",
-          "synergist_insecticide_bioassays": "Results of synergist-insecticide bioassays",
-          "resistance_mechanism_assays_molecular": "Results of molecular resistance mechanism identification",
-          "resistance_mechanism_assays_biochemical": "Results of biochemical resistance mechanism identification"
+          "discriminating_concentration_bioassays": "Résultats de tests de sensibilité avec une concentration discriminante",
+          "intensity_concentration_bioassays": "Résultats des tests de sensibilité avec 5 fois et 10 fois les concentrations discriminantes",
+          "synergist_insecticide_bioassays": "Résultats des tests biologiques sur des mélanges synergiste/insecticide",
+          "resistance_mechanism_assays_molecular": "Résultats de l'identification du mécanisme de résistance moléculaire",
+          "resistance_mechanism_assays_biochemical": "Résultats de l'identification des mécanismes de résistance biochimique"
         }
       },
       "treatment": {

@@ -190,7 +190,7 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
   );
 
   const showAllelic = R.any(
-    serie => R.any(data => data.y !== undefined, serie.data),
+    (serie) => R.any((data) => data.y !== undefined, serie.data),
     series
   );
 
@@ -198,7 +198,7 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
     <>
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${studies[0].VILLAGE_NAME}, ${t(
-          studies[0].ISO2
+          studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2
         )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">

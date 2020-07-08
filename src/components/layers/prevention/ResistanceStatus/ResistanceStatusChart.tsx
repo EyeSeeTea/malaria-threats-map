@@ -26,26 +26,26 @@ const options: (data: any, translations: any) => Highcharts.Options = (
     type: "column",
     height: 300,
     style: {
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;'
-    }
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+    },
   },
   title: {
-    text: translations.mosquito_mortality
+    text: translations.mosquito_mortality,
   },
   xAxis: {
     type: "category",
     labels: {
       rotation: -45,
       style: {
-        whiteSpace: "nowrap"
-      }
-    }
+        whiteSpace: "nowrap",
+      },
+    },
   },
   yAxis: {
     min: 0,
     max: 100,
     title: {
-      text: translations.mortality
+      text: translations.mortality,
     },
     plotLines: [
       {
@@ -55,60 +55,60 @@ const options: (data: any, translations: any) => Highcharts.Options = (
         width: 2,
         zIndex: 5,
         label: {
-          text: ""
-        }
-      }
-    ]
+          text: "",
+        },
+      },
+    ],
   },
   plotOptions: {
     column: {
       dataLabels: {
-        enabled: true
+        enabled: true,
       },
       zones: [
         {
           value: 90,
-          color: ConfirmationStatusColors.Confirmed[0]
+          color: ConfirmationStatusColors.Confirmed[0],
         },
         {
           value: 98,
-          color: ConfirmationStatusColors.Possible[0]
+          color: ConfirmationStatusColors.Possible[0],
         },
         {
           value: 100.001,
-          color: ConfirmationStatusColors.Susceptible[0]
-        }
-      ]
-    }
+          color: ConfirmationStatusColors.Susceptible[0],
+        },
+      ],
+    },
   },
   tooltip: {
-    formatter: function() {
+    formatter: function () {
       const point = this.point as any;
       return `
 <b><i>${point.species}</i></b><br>
 ${translations.mortality} (%): ${point.y}<br>
 ${translations.tested}: ${point.number}
 `;
-    }
+    },
   },
   series: [
     {
       maxPointWidth: 20,
       type: "column",
       name: translations.mortality,
-      data: data
-    }
+      data: data,
+    },
   ],
   legend: {
-    enabled: false
+    enabled: false,
   },
   credits: {
-    enabled: false
-  }
+    enabled: false,
+  },
 });
 
 const ChatContainer = styled.div<{ width?: string }>`
-  width: ${props => props.width || "100%"};
+  width: ${(props) => props.width || "100%"};
 `;
 
 const StyledSelect = styled(IntegrationReactSelect)`
@@ -124,7 +124,7 @@ const Flex = styled.div`
 `;
 
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state)
+  theme: selectTheme(state),
 });
 const mapDispatchToProps = {};
 
@@ -138,10 +138,10 @@ type Props = DispatchProps & StateProps & OwnProps;
 const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
   const { t } = useTranslation("common");
   const [study, setStudy] = useState(0);
-  const speciesOptions = R.uniq(R.map(s => s.SPECIES, baseStudies));
+  const speciesOptions = R.uniq(R.map((s) => s.SPECIES, baseStudies));
   const suggestions: any[] = speciesOptions.map((specie: string) => ({
     label: specie,
-    value: specie
+    value: specie,
   }));
   const [species, setSpecies] = useState<any[]>(suggestions);
   const onSpeciesChange = (value: any) => {
@@ -151,15 +151,18 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     R.groupBy(
       R.prop("CITATION_URL"),
       baseStudies.filter(
-        study =>
+        (study) =>
           !species ||
           !species.length ||
-          species.map(s => s.value).includes(study.SPECIES)
+          species.map((s) => s.value).includes(study.SPECIES)
       )
     )
   );
   const studies = groupedStudies[study];
-  const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
+  const sortedStudies = R.sortBy(
+    (study) => -parseInt(study.YEAR_START),
+    studies
+  );
   const cleanedStudies = R.groupBy((study: PreventionStudy) => {
     return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
   }, sortedStudies);
@@ -168,16 +171,19 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     R.prop("YEAR_START"),
     R.values(cleanedStudies).map(
       (groupStudies: PreventionStudy[]) =>
-        R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
+        R.sortBy(
+          (study) => parseFloat(study.MORTALITY_ADJUSTED),
+          groupStudies
+        )[0]
     )
   );
-  const data = simplifiedStudies.map(study => ({
+  const data = simplifiedStudies.map((study) => ({
     name: `${study.YEAR_START}, ${t(study.INSECTICIDE_TYPE)} ${t(
       study.INSECTICIDE_CONC
     )}`,
     y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
     species: t(study.SPECIES),
-    number: study.NUMBER
+    number: study.NUMBER,
   }));
   const studyObject = groupedStudies[study][0];
   const translations = {
@@ -185,7 +191,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     mosquito_mortality: t(
       "prevention.chart.resistance_status.mosquito_mortality"
     ),
-    tested: t("prevention.chart.resistance_status.tested")
+    tested: t("prevention.chart.resistance_status.tested"),
   };
   const content = () => (
     <>
@@ -198,7 +204,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
       )}
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-          studyObject.ISO2
+          studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2
         )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">

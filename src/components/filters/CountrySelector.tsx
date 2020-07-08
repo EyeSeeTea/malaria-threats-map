@@ -43,11 +43,13 @@ const CountrySelector = ({
   };
   const suggestions: any[] = config.mekong
     ? mekongCountries.map((country) => ({
-        label: t(country.ISO_2_CODE) || country.VALUE_,
+        label: t(
+          country.ISO_2_CODE === "NA" ? "COUNTRY_NA" : country.VALUE_
+        ),
         value: country.ISO_2_CODE,
       }))
     : countries.map((country: Translation) => ({
-        label: t(country.VALUE_) || country.VALUE_,
+        label: t(country.VALUE_ === "NA" ? "COUNTRY_NA" : country.VALUE_),
         value: country.VALUE_,
       }));
   return (

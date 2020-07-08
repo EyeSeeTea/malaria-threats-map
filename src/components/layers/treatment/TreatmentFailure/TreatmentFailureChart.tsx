@@ -24,50 +24,50 @@ const options: (
     height: 250,
     width: 300,
     style: {
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;'
-    }
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+    },
   },
   title: {
-    text: ""
+    text: "",
   },
   subtitle: {
-    text: ""
+    text: "",
   },
   tooltip: {
     pointFormat: "{series.name}: <b>{point.y:.2f}%</b>",
     style: {
-      width: 150
-    }
+      width: 150,
+    },
   },
   xAxis: { categories },
   yAxis: {
     min: 0,
     title: {
-      text: translations.percentage
-    }
+      text: translations.percentage,
+    },
   },
   plotOptions: {
     series: {
       dataLabels: {
         enabled: true,
-        format: "{point.y}%"
+        format: "{point.y}%",
       },
       label: {
-        connectorAllowed: false
-      }
-    }
+        connectorAllowed: false,
+      },
+    },
   },
   series: data,
   legend: {
     itemStyle: {
-      fontSize: "9px"
+      fontSize: "9px",
     },
     enabled: true,
-    maxHeight: 70
+    maxHeight: 70,
   },
   credits: {
-    enabled: false
-  }
+    enabled: false,
+  },
 });
 
 const ChatContainer = styled.div`
@@ -85,7 +85,7 @@ const Flex = styled.div`
 `;
 
 const FlexCol = styled.div<{ flex?: number }>`
-  flex: ${props => props.flex || 1};
+  flex: ${(props) => props.flex || 1};
 `;
 
 const Margin = styled.div`
@@ -94,7 +94,7 @@ const Margin = styled.div`
 `;
 
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state)
+  theme: selectTheme(state),
 });
 const mapDispatchToProps = {};
 
@@ -108,15 +108,18 @@ type Props = DispatchProps & StateProps & OwnProps;
 const TreatmentFailureChart = ({ theme, studies }: Props) => {
   const { t } = useTranslation("common");
   const [study, setStudy] = useState(0);
-  const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
-  const years = R.uniq(sortedStudies.map(study => study.YEAR_START)).sort();
+  const sortedStudies = R.sortBy(
+    (study) => parseInt(study.YEAR_START),
+    studies
+  );
+  const years = R.uniq(sortedStudies.map((study) => study.YEAR_START)).sort();
   const maxYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
   const minYear = parseInt(sortedStudies[0].YEAR_START);
 
   const keys = [
     { name: "POSITIVE_DAY_3", color: "#00994C" },
     { name: "TREATMENT_FAILURE_PP", color: "#BE4B48" },
-    { name: "TREATMENT_FAILURE_KM", color: "#4b48be" }
+    { name: "TREATMENT_FAILURE_KM", color: "#4b48be" },
   ];
 
   const exists = (value: string) => {
@@ -127,20 +130,20 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
     return trimmed !== "N/A" && trimmed !== "NA" && trimmed !== null;
   };
 
-  const series = keys.map(key => {
+  const series = keys.map((key) => {
     return {
       name: t(key.name),
       color: key.color,
-      data: years.map(year => {
+      data: years.map((year) => {
         const yearFilters: any = studies.filter(
-          study => parseInt(year) === parseInt(study.YEAR_START)
+          (study) => parseInt(year) === parseInt(study.YEAR_START)
         )[0];
         return yearFilters
           ? parseFloat(
               (parseFloat(yearFilters[key.name] || "0") * 100).toFixed(2)
             )
           : 0;
-      })
+      }),
     };
   });
 
@@ -149,7 +152,7 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
   const titleItems = [
     studies[study].SITE_NAME,
     studies[study].PROVINCE,
-    t(studies[study].ISO2)
+    t(studies[study].ISO2 === "NA" ? "COUNTRY_NA" : studies[study].ISO2),
   ];
   const title = titleItems.filter(Boolean).join(", ");
   const {
@@ -162,7 +165,7 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
     CONFIRMED_RESIST_PV,
     POSITIVE_DAY_3,
     TREATMENT_FAILURE_KM,
-    TREATMENT_FAILURE_PP
+    TREATMENT_FAILURE_PP,
   } = sortedStudies[study];
 
   const duration = formatYears2(YEAR_START, YEAR_END);
@@ -172,7 +175,7 @@ const TreatmentFailureChart = ({ theme, studies }: Props) => {
       : `${(parseFloat(value) * 100).toFixed(2)}%`;
 
   const translations = {
-    percentage: t("treatment.chart.treatment_failure.percentage")
+    percentage: t("treatment.chart.treatment_failure.percentage"),
   };
   const studyYears = t("treatment.chart.treatment_failure.study_years");
   const numberOfPatients = t(

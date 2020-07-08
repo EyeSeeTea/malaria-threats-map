@@ -52,7 +52,9 @@ const GeneDeletionCountryChart = ({
   return (
     <ChartContainer>
       <Typography variant="subtitle1">
-        <Box fontWeight="fontWeightBold">{`${t(studies[0].ISO2)}`}</Box>
+        <Box fontWeight="fontWeightBold">{`${t(
+            studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2
+        )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
         {t(`diagnosis.chart.gene_deletions.content_1`, {

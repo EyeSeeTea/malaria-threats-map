@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({
   countryLayer: selectCountryLayer(state),
-  countries: selectCountries(state)
+  countries: selectCountries(state),
 });
 
 type OwnProps = {
@@ -34,7 +34,7 @@ function CountriesSelector({
   includeGlobalOption,
   menuIsOpen,
   label,
-  className
+  className,
 }: Props) {
   const { t } = useTranslation("common");
   const global = value.includes("GLOBAL");
@@ -42,7 +42,7 @@ function CountriesSelector({
     if (!selection) {
       onChange([]);
     } else if (Array.isArray(selection) && selection) {
-      const values = selection.map(selection => selection.value);
+      const values = selection.map((selection) => selection.value);
       if (values.includes("GLOBAL")) {
         onChange(["GLOBAL"]);
       } else {
@@ -56,13 +56,13 @@ function CountriesSelector({
     }
   };
   const suggestions: any[] = countries.map((country: Translation) => ({
-    label: t(country.VALUE_),
-    value: country.VALUE_
+    label: t(country.VALUE_ === "NA" ? "COUNTRY_NA" : country.VALUE_),
+    value: country.VALUE_,
   }));
 
   const globalOption = {
     label: "Project applies globally",
-    value: "GLOBAL"
+    value: "GLOBAL",
   };
 
   const suggs = includeGlobalOption
@@ -81,7 +81,7 @@ function CountriesSelector({
         suggestions={suggs}
         onChange={onOptionChange}
         value={
-          global ? globalOption : suggs.filter(s => value.includes(s.value))
+          global ? globalOption : suggs.filter((s) => value.includes(s.value))
         }
         menuIsOpen={menuIsOpen}
       />

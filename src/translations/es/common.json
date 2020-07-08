@@ -23,7 +23,7 @@
   },
   "prevention": {
     "resistance_status": "Estado de la resistencia a insecticidas",
-    "resistance_intensity": "Intensidad de la resistenciaa insecticidas",
+    "resistance_intensity": "Intensidad de la resistencia a insecticidas",
     "resistance_mechanism": "Mecanismos de la resistencia a insecticidas",
     "synergist_involvement": "Implicación de los mecanismos metabólicos",
     "synergist_involvement_legend": "Implicación del mecanismo metabólico",
@@ -266,11 +266,11 @@
     "filters": {
       "prevention": {
         "datasets": {
-          "discriminating_concentration_bioassays": "Results of discriminating concentration bioassays",
-          "intensity_concentration_bioassays": "Results of intensity concentration bioassays",
-          "synergist_insecticide_bioassays": "Results of synergist-insecticide bioassays",
-          "resistance_mechanism_assays_molecular": "Results of molecular resistance mechanism identification",
-          "resistance_mechanism_assays_biochemical": "Results of biochemical resistance mechanism identification"
+          "discriminating_concentration_bioassays": "Resultados de pruebas de susceptibilidad a la concentracion discriminante",
+          "intensity_concentration_bioassays": "Resultados de pruebas de susceptibilidad para determinar la intensidad de la resistencia",
+          "synergist_insecticide_bioassays": "Resultados de pruebas con sinergista e insecticida",
+          "resistance_mechanism_assays_molecular": "Resultados de pruebas de detección de mecanismos moleculares de la resistencia",
+          "resistance_mechanism_assays_biochemical": "Resultados de pruebas de detección de mecanismos bioquímicos de la resistencia"
         }
       },
       "treatment": {

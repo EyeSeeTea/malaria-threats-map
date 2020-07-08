@@ -4,7 +4,7 @@ import {
   createStyles,
   lighten,
   makeStyles,
-  Theme
+  Theme,
 } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -33,14 +33,14 @@ import {
   Data,
   ERROR_COLUMNS,
   GREY_COLUMNS,
-  headCells
+  headCells,
 } from "./columns";
 import { resolvePyrethroids } from "../resolvers/resistanceStatus";
 import { resolveMechanism } from "../resolvers/resistanceMechanism";
 import FilterPopover from "./FilterPopover";
 import {
   filterByCountries,
-  filterBySpecies
+  filterBySpecies,
 } from "../../layers/studies-filters";
 import { exportToCSV } from "../../DataDownload/download";
 import { Button } from "@material-ui/core";
@@ -49,28 +49,28 @@ import { getComparator, Order, stableSort } from "../utils";
 import { CellProps } from "../types";
 
 const StyledCell = styled(TableCell)<CellProps>`
-  font-size: ${props => (props.isBold ? "12px" : "11.5px")} !important;
+  font-size: ${(props) => (props.isBold ? "12px" : "11.5px")} !important;
   line-height: 1rem !important;
   padding: 3px 6px !important;
-  font-weight: ${props => (props.isBold ? "bold" : "normal")} !important;
-  color: ${props => props.color || "inherit"} !important;
-  ${props => props.isRight && "text-align: right !important"};
-  ${props => props.divider && "border-left: 1px solid rgba(224, 224, 224, 1)"}
+  font-weight: ${(props) => (props.isBold ? "bold" : "normal")} !important;
+  color: ${(props) => props.color || "inherit"} !important;
+  ${(props) => props.isRight && "text-align: right !important"};
+  ${(props) => props.divider && "border-left: 1px solid rgba(224, 224, 224, 1)"}
 `;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: "100%"
+      width: "100%",
     },
     paper: {
-      width: "100%"
+      width: "100%",
     },
     wrapper: {
-      padding: theme.spacing(0, 2)
+      padding: theme.spacing(0, 2),
     },
     table: {
-      minWidth: 750
+      minWidth: 750,
     },
     visuallyHidden: {
       border: 0,
@@ -81,11 +81,11 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 0,
       position: "absolute",
       top: 20,
-      width: 1
+      width: 1,
     },
     cell: {
-      fontSize: 10
-    }
+      fontSize: 10,
+    },
   })
 );
 
@@ -163,7 +163,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         </StyledCell>
       </TableRow>
       <TableRow>
-        {headCells.map(headCell => (
+        {headCells.map((headCell) => (
           <StyledCell
             key={headCell.id}
             align={headCell.align || "left"}
@@ -202,26 +202,26 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1)
+      paddingRight: theme.spacing(1),
     },
     highlight:
       theme.palette.type === "light"
         ? {
             color: theme.palette.secondary.main,
-            backgroundColor: lighten(theme.palette.secondary.light, 0.85)
+            backgroundColor: lighten(theme.palette.secondary.light, 0.85),
           }
         : {
             color: theme.palette.text.primary,
-            backgroundColor: theme.palette.secondary.dark
+            backgroundColor: theme.palette.secondary.dark,
           },
     title: {
-      flex: "1 1 100%"
+      flex: "1 1 100%",
     },
     button: {
       margin: theme.spacing(1),
       paddingLeft: theme.spacing(4),
-      paddingRight: theme.spacing(4)
-    }
+      paddingRight: theme.spacing(4),
+    },
   })
 );
 
@@ -243,13 +243,13 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
     setCountries,
     species,
     setSpecies,
-    onClick
+    onClick,
   } = props;
 
   return (
     <Toolbar
       className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0
+        [classes.highlight]: numSelected > 0,
       })}
     >
       {numSelected > 0 ? (
@@ -296,7 +296,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
 };
 
 const mapStateToProps = (state: State) => ({
-  studies: selectPreventionStudies(state)
+  studies: selectPreventionStudies(state),
 });
 const mapDispatchToProps = {};
 
@@ -350,9 +350,9 @@ function PreventionReport({ studies: baseStudies }: Props) {
       );
 
       const insecticideClasses = R.uniqBy(
-        study => study.INSECTICIDE_CLASS,
+        (study) => study.INSECTICIDE_CLASS,
         countryStudies.filter(
-          study => parseFloat(study.MORTALITY_ADJUSTED) < 0.9
+          (study) => parseFloat(study.MORTALITY_ADJUSTED) < 0.9
         )
       );
 
@@ -362,31 +362,31 @@ function PreventionReport({ studies: baseStudies }: Props) {
           const {
             percentage: pyrethroidsPercentage,
             sorted: sortedPyrethroidsStudies,
-            n: pyrethroidsStudies
+            n: pyrethroidsStudies,
           } = resolvePyrethroids("PYRETHROIDS", countrySpeciesStudies, t);
           const {
             percentage: organochlorinesPercentage,
             sorted: sortedOrganochlorinesStudies,
-            n: organochlorinesStudies
+            n: organochlorinesStudies,
           } = resolvePyrethroids("ORGANOCHLORINES", countrySpeciesStudies, t);
           const {
             percentage: carbamatesPercentage,
             sorted: sortedCarbamatesStudies,
-            n: carbamatesStudies
+            n: carbamatesStudies,
           } = resolvePyrethroids("CARBAMATES", countrySpeciesStudies, t);
           const {
             percentage: organophosphatesPercentage,
             sorted: sortedOrganophosphatesStudies,
-            n: organophosphatesStudies
+            n: organophosphatesStudies,
           } = resolvePyrethroids("ORGANOPHOSPHATES", countrySpeciesStudies, t);
 
           const {
             percentage: monoOxygenases,
-            n: monoOxygenasesNumber
+            n: monoOxygenasesNumber,
           } = resolveMechanism("MONO_OXYGENASES", countrySpeciesStudies);
           const {
             percentage: esterases,
-            n: esterasesNumber
+            n: esterasesNumber,
           } = resolveMechanism("ESTERASES", countrySpeciesStudies);
           const { percentage: gsts, n: gstsNumber } = resolveMechanism(
             "GSTS",
@@ -394,15 +394,15 @@ function PreventionReport({ studies: baseStudies }: Props) {
           );
           const {
             percentage: kdrL1014s,
-            n: kdrL1014sNumber
+            n: kdrL1014sNumber,
           } = resolveMechanism("KDR_L1014S", countrySpeciesStudies);
           const {
             percentage: kdrL1014f,
-            n: kdrL1014fNumber
+            n: kdrL1014fNumber,
           } = resolveMechanism("KDR_L1014F", countrySpeciesStudies);
           const {
             percentage: kdrUnspecified,
-            n: kdrUnspecifiedNumber
+            n: kdrUnspecifiedNumber,
           } = resolveMechanism(
             "KDR_(MUTATION_UNSPECIFIED)",
             countrySpeciesStudies
@@ -461,7 +461,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
             KDR_UNSPECIFIED_PERCENT_SITES_DETECTED: kdrUnspecified,
             KDR_UNSPECIFIED_PERCENT_SITES_DETECTED_NUMBER_SITES: kdrUnspecifiedNumber,
             ACE1R_PERCENT_SITES_DETECTED: ace1r,
-            ACE1R_PERCENT_SITES_DETECTED_NUMBER_SITES: ace1rNumber
+            ACE1R_PERCENT_SITES_DETECTED_NUMBER_SITES: ace1rNumber,
           };
         })
         .sort(getComparator(order, orderBy));
@@ -469,7 +469,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
   );
 
   const downloadData = () => {
-    const studies = R.map(group => {
+    const studies = R.map((group) => {
       const study = { ...group };
       delete study.ID;
       return study;
@@ -477,8 +477,8 @@ function PreventionReport({ studies: baseStudies }: Props) {
     const tabs = [
       {
         name: "Data",
-        studies: studies
-      }
+        studies: studies,
+      },
     ];
     const dateString = format(new Date(), "yyyyMMdd");
     exportToCSV(tabs, `MTM_PREVENTION_${dateString}`);
@@ -496,7 +496,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = groups.map(n => n.ID);
+      const newSelecteds = groups.map((n) => n.ID);
       setSelected(newSelecteds);
       return;
     }
@@ -517,7 +517,11 @@ function PreventionReport({ studies: baseStudies }: Props) {
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
   const sortedGroups = R.sort(
-    (a, b) => (t(a.ISO2) < t(b.ISO2) ? -1 : 1),
+    (a, b) =>
+      t(a.ISO2 === "NA" ? "COUNTRY_NA" : a.ISO2) <
+      t(b.ISO2 === "NA" ? "COUNTRY_NA" : b.ISO2)
+        ? -1
+        : 1,
     groups
   );
 
@@ -526,9 +530,9 @@ function PreventionReport({ studies: baseStudies }: Props) {
     getComparator(order, orderBy)
   ).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
-  const rows: Data[] = tablePage.map(row => ({
+  const rows: Data[] = tablePage.map((row) => ({
     ...row,
-    COUNTRY_NUMBER: tablePage.filter(r => r.ISO2 === row.ISO2).length
+    COUNTRY_NUMBER: tablePage.filter((r) => r.ISO2 === row.ISO2).length,
   }));
 
   return (
@@ -597,11 +601,11 @@ function PreventionReport({ studies: baseStudies }: Props) {
                         </>
                       )}
                       {Object.entries(row)
-                        .filter(entry => !COLUMNS.includes(entry[0]))
+                        .filter((entry) => !COLUMNS.includes(entry[0]))
                         .map((entry, index) => {
                           const number = Number(entry[1]);
                           const header = headCells.find(
-                            cell => cell.id === entry[0]
+                            (cell) => cell.id === entry[0]
                           );
                           const isNumber = !Number.isNaN(number);
                           const percentage = ERROR_COLUMNS.includes(entry[0]);

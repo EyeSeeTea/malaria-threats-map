@@ -129,7 +129,7 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
       )}
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-          studyObject.ISO2
+            studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2
         )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">

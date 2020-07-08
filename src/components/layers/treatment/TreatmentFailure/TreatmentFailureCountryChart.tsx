@@ -8,7 +8,7 @@ import { State } from "../../../../store/types";
 import * as R from "ramda";
 import {
   setCountryModeAction,
-  setRegionAction
+  setRegionAction,
 } from "../../../../store/actions/base-actions";
 import { TreatmentStudy } from "../../../../types/Treatment";
 import { formatYears } from "../../../../utils/string-utils";
@@ -28,11 +28,11 @@ const FlexGrow = styled.div`
 `;
 
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state)
+  theme: selectTheme(state),
 });
 const mapDispatchToProps = {
   setRegion: setRegionAction,
-  setCountryMode: setCountryModeAction
+  setCountryMode: setCountryModeAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -45,11 +45,14 @@ type Props = DispatchProps & StateProps & OwnProps;
 const TreatmentFailureCountryChart = ({
   studies,
   setRegion,
-  setCountryMode
+  setCountryMode,
 }: Props) => {
   const { t } = useTranslation("common");
   const nStudies = studies.length;
-  const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
+  const sortedStudies = R.sortBy(
+    (study) => parseInt(study.YEAR_START),
+    studies
+  );
   const maxYear = sortedStudies[sortedStudies.length - 1].YEAR_START;
   const minYear = sortedStudies[0].YEAR_START;
   const onClick = () => {
@@ -59,7 +62,9 @@ const TreatmentFailureCountryChart = ({
   return (
     <ChatContainer>
       <Typography variant="subtitle1">
-        <Box fontWeight="fontWeightBold">{`${t(studies[0].ISO2)}`}</Box>
+        <Box fontWeight="fontWeightBold">{`${t(
+          studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2
+        )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
         {t(`treatment.chart.treatment_failure.content`, {
@@ -68,7 +73,7 @@ const TreatmentFailureCountryChart = ({
           plasmodiumSpecies: t(
             sortedStudies[0].PLASMODIUM_SPECIES.replace(".", "%2E")
           ),
-          years: formatYears(minYear, maxYear)
+          years: formatYears(minYear, maxYear),
         })}
       </Typography>
       <Actions>

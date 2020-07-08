@@ -23,7 +23,7 @@ const ChatContainer = styled.div`
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
-  diagnosisFilters: selectDiagnosisFilters(state)
+  diagnosisFilters: selectDiagnosisFilters(state),
 });
 const mapDispatchToProps = {};
 
@@ -47,52 +47,57 @@ const StyledBodyCell = styled(TableCell)`
   font-weight: 400 !important;
 `;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     overflowX: "auto",
-    margin: "20px 0"
+    margin: "20px 0",
   },
   table: {
-    marginTop: 10
+    marginTop: 10,
   },
   head: {
     color: theme.palette.common.white,
-    backgroundColor: theme.palette.background.default
-  }
+    backgroundColor: theme.palette.background.default,
+  },
 }));
 
 const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
   const { t } = useTranslation("common");
   const classes = useStyles({});
   const nStudies = studies.length;
-  const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
-  const sortedStudies2 = R.sortBy(study => parseInt(study.YEAR_END), studies);
+  const sortedStudies = R.sortBy(
+    (study) => parseInt(study.YEAR_START),
+    studies
+  );
+  const sortedStudies2 = R.sortBy((study) => parseInt(study.YEAR_END), studies);
   const maxYear = sortedStudies2[sortedStudies2.length - 1].YEAR_END;
   const minYear = sortedStudies[0].YEAR_START;
   const studyObject = studies[0];
   const surveyTypes = R.uniq(
-    studies.map(study => study.SURVEY_TYPE)
-  ).map(type => t(type));
+    studies.map((study) => study.SURVEY_TYPE)
+  ).map((type) => t(type));
   const formatPercentage = (value: string) =>
     `${(parseFloat(value) * 100).toFixed(1)}%`;
   return (
     <ChatContainer>
       <Typography variant="subtitle1">
-        <Box fontWeight="fontWeightBold">{`${t(studyObject.ISO2)}`}</Box>
+        <Box fontWeight="fontWeightBold">{`${t(
+          studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2
+        )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">
         {t(`diagnosis.chart.gene_deletions.content_1`, {
-          nStudies: nStudies
+          nStudies: nStudies,
         })}
         <i>{t(diagnosisFilters.deletionType).toLowerCase()}</i>
         {t(`diagnosis.chart.gene_deletions.content_2`, {
           surveyTypes: formatList(
-            surveyTypes.map(st =>
+            surveyTypes.map((st) =>
               t(st) === "DHS" ? t(st) : t(st).toLowerCase()
             )
           ),
-          years: formatYears(minYear, maxYear)
+          years: formatYears(minYear, maxYear),
         })}
       </Typography>
       <div className={classes.root}>

@@ -83,9 +83,7 @@ export const selectCountries = createSelector(
   selectTranslationsState,
   (state) => {
     const { COUNTRY_NAME = [] } = R.groupBy(R.path(["FIELD"]), state.translations);
-    return COUNTRY_NAME.map((country) =>
-      country.VALUE_ === "NA" ? { ...country, VALUE_: "COUNTRY_NA" } : country
-    );
+    return COUNTRY_NAME;
   }
 );
 

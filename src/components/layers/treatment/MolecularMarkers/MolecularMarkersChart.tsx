@@ -28,30 +28,30 @@ const options: (data: any, translations: any) => Highcharts.Options = (
     type: "pie",
     height: 250,
     style: {
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;'
-    }
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+    },
   },
   title: {
-    text: ""
+    text: "",
   },
   subtitle: {
-    text: ""
+    text: "",
   },
   tooltip: {
     pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
     style: {
-      width: 150
-    }
+      width: 150,
+    },
   },
   plotOptions: {
     pie: {
       allowPointSelect: true,
       cursor: "pointer",
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
-      showInLegend: true
-    }
+      showInLegend: true,
+    },
   },
   series: [
     {
@@ -59,21 +59,21 @@ const options: (data: any, translations: any) => Highcharts.Options = (
       innerSize: "50%",
       text: translations.studies,
       colorByPoint: true,
-      data
-    }
+      data,
+    },
   ],
   legend: {
     itemStyle: {
-      fontSize: "9px"
+      fontSize: "9px",
     },
     margin: 0,
     padding: 0,
     enabled: true,
-    maxHeight: 70
+    maxHeight: 70,
   },
   credits: {
-    enabled: false
-  }
+    enabled: false,
+  },
 });
 const options2: (
   data: any,
@@ -85,18 +85,18 @@ const options2: (
     type: "column",
     height: 250,
     style: {
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;'
-    }
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+    },
   },
   title: {
-    text: ""
+    text: "",
   },
   xAxis: { categories },
   yAxis: {
     min: 0,
     max: 100,
     title: {
-      text: translations.percentage
+      text: translations.percentage,
     },
     stackLabels: {
       style: {
@@ -105,21 +105,21 @@ const options2: (
           // theme
           (Highcharts.defaultOptions.title.style &&
             Highcharts.defaultOptions.title.style.color) ||
-          "gray"
-      }
-    }
+          "gray",
+      },
+    },
   },
   tooltip: {
     headerFormat: "<b>{point.x}</b><br/>",
     pointFormat: "{series.name}: {point.y}<br/>Total: {point.stackTotal}",
     style: {
-      width: 150
-    }
+      width: 150,
+    },
   },
   plotOptions: {
     column: {
-      stacking: "normal"
-    }
+      stacking: "normal",
+    },
   },
   series: data,
   legend: {
@@ -127,11 +127,11 @@ const options2: (
     align: "right",
     verticalAlign: "top",
     layout: "vertical",
-    width: 70
+    width: 70,
   },
   credits: {
-    enabled: false
-  }
+    enabled: false,
+  },
 });
 
 const options3: (
@@ -143,47 +143,47 @@ const options3: (
     height: 250,
     width: 300,
     style: {
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;'
-    }
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+    },
   },
   title: {
-    text: ""
+    text: "",
   },
   subtitle: {
-    text: ""
+    text: "",
   },
   tooltip: {
     pointFormat: "{series.name}: <b>{point.y:.2f}%</b>",
     style: {
-      width: 150
-    }
+      width: 150,
+    },
   },
   xAxis: { categories },
   yAxis: {
     min: 0,
     max: 100,
     title: {
-      text: translations.percentage
-    }
+      text: translations.percentage,
+    },
   },
   plotOptions: {
     series: {
       label: {
-        connectorAllowed: false
-      }
-    }
+        connectorAllowed: false,
+      },
+    },
   },
   series: data,
   legend: {
     itemStyle: {
-      fontSize: "9px"
+      fontSize: "9px",
     },
     enabled: true,
-    maxHeight: 70
+    maxHeight: 70,
   },
   credits: {
-    enabled: false
-  }
+    enabled: false,
+  },
 });
 
 const ChatContainer = styled.div`
@@ -196,7 +196,7 @@ const Flex = styled.div`
 `;
 
 const FlexCol = styled.div<{ flex?: number }>`
-  flex: ${props => props.flex || 1};
+  flex: ${(props) => props.flex || 1};
 `;
 
 const Margin = styled.div`
@@ -206,7 +206,7 @@ const Margin = styled.div`
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
-  treatmentFilters: selectTreatmentFilters(state)
+  treatmentFilters: selectTreatmentFilters(state),
 });
 const mapDispatchToProps = {};
 
@@ -220,12 +220,15 @@ type Props = DispatchProps & StateProps & OwnProps;
 const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
   const { t } = useTranslation("common");
   const [studyIndex, setStudy] = useState(0);
-  const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
-  const years = sortedStudies.map(study => parseInt(study.YEAR_START)).sort();
+  const sortedStudies = R.sortBy(
+    (study) => -parseInt(study.YEAR_START),
+    studies
+  );
+  const years = sortedStudies.map((study) => parseInt(study.YEAR_START)).sort();
   const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
   const maxYear = parseInt(sortedStudies[0].YEAR_START);
   const groupStudies = R.flatten(
-    sortedStudies.map(study => study.groupStudies)
+    sortedStudies.map((study) => study.groupStudies)
   );
   const k13Groups = R.groupBy(R.prop("GENOTYPE"), groupStudies);
   const series = Object.keys(k13Groups).map((genotype: string) => {
@@ -235,29 +238,35 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
       type: "column",
       name: genotype,
       color: MutationColors[genotype] ? MutationColors[genotype].color : "000",
-      data: R.reverse(sortedStudies).map(k13Study => {
-        const study = studies.find(study => k13Study.Code === study.K13_CODE);
+      data: R.reverse(sortedStudies).map((k13Study) => {
+        const study = studies.find((study) => k13Study.Code === study.K13_CODE);
         return {
-          y: study ? parseFloat((study.PROPORTION * 100).toFixed(1)) : undefined
+          y: study
+            ? parseFloat((study.PROPORTION * 100).toFixed(1))
+            : undefined,
         };
-      })
+      }),
     };
   });
 
   const data = sortedStudies[
     sortedStudies.length - studyIndex - 1
-  ].groupStudies.map(study => ({
+  ].groupStudies.map((study) => ({
     name: `${study.GENOTYPE}`,
     y: Math.round(study.PROPORTION * 100),
     color: MutationColors[study.GENOTYPE]
       ? MutationColors[study.GENOTYPE].color
-      : "000"
+      : "000",
   }));
 
   const titleItems = [
     studies[studyIndex].SITE_NAME,
     studies[studyIndex].PROVINCE,
-    t(studies[studyIndex].ISO2)
+    t(
+      studies[studyIndex].ISO2 === "NA"
+        ? "COUNTRY_NA"
+        : studies[studyIndex].ISO2
+    ),
   ];
   const title = titleItems.filter(Boolean).join(", ");
   const molecularMarker = t(
@@ -267,7 +276,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
   );
   const study = sortedStudies[sortedStudies.length - studyIndex - 1];
   const translations = {
-    percentage: t("treatment.chart.molecular_markers.percentage")
+    percentage: t("treatment.chart.molecular_markers.percentage"),
   };
 
   const pfkelch13 = () => {
@@ -279,12 +288,12 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
         </Typography>
         <Typography variant="body2">
           {t(`treatment.chart.molecular_markers.site_content_1`, {
-            year: study.YEAR_START
+            year: study.YEAR_START,
           })}{" "}
           <i>{molecularMarker}</i>{" "}
           {t(`treatment.chart.molecular_markers.site_content_2`, {
             nStudies: study.N,
-            molecularMarker: t(molecularMarker)
+            molecularMarker: t(molecularMarker),
           })}
         </Typography>
         <Hidden smUp>
@@ -324,11 +333,11 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
     YEAR_END,
     PROP_RELATED,
     N,
-    groupStudies: subStudies
+    groupStudies: subStudies,
   } = study;
 
-  const mcStudy = subStudies.find(s => s.GENOTYPE === "MC");
-  const wtStudy = subStudies.find(s => s.GENOTYPE === "WT");
+  const mcStudy = subStudies.find((s) => s.GENOTYPE === "MC");
+  const wtStudy = subStudies.find((s) => s.GENOTYPE === "WT");
 
   const duration = formatYears2(YEAR_START, YEAR_END);
 
@@ -404,20 +413,20 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
 
   const keys = [{ name: "PROP_RELATED", color: "#00994C" }];
 
-  const series3 = keys.map(key => {
+  const series3 = keys.map((key) => {
     return {
       name: t(key.name),
       color: key.color,
-      data: years.map(year => {
+      data: years.map((year) => {
         const yearFilters: any = studies.filter(
-          study => year === parseInt(study.YEAR_START)
+          (study) => year === parseInt(study.YEAR_START)
         )[0];
         return yearFilters
           ? parseFloat(
               (parseFloat(yearFilters[key.name] || "0") * 100).toFixed(1)
             )
           : 0;
-      })
+      }),
     };
   });
 
