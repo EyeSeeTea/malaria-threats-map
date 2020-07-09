@@ -1,2 +1,42 @@
 {
+  "invasive": {
+    "ID": "Identificador único de la colección de mosquitos que condujo a la identificación de la especie",
+    "COUNTRY_NAME": "Nombre del país donde se capturaron los mosquitos",
+    "SITE_NAME": "Lugar donde se capturaron los mosquitos",
+    "LATITUDE": "Latitud del lugar dondes se capturaron los mosquitos",
+    "LONGITUDE": "Longitud del lugar dondes se capturaron los mosquitos",
+    "VECTOR_SPECIES_COMPLEX": "Complejo de especies vectoras",
+    "VECTOR_SPECIES": "Especie vectora",
+    "STAGE": "Fase de ciclo vital de los mosquitos capturados",
+    "YEAR_START": "Año en que comenzó la captura de mosquitos",
+    "MONTH_START": "Mes cuando comenzó la captura de mosquitos",
+    "YEAR_END": "Año en que terminó la captura de mosquitos",
+    "MONTH_END": "Mes cuando terminó la captura de mosquitos",
+    "SAMPLING_METHOD": "Método de muestreo utilizado para capturar los mosquitos.",
+    "MOSQUITO_NUMBER": "Número total de mosquitos capturados",
+    "BREEDING_HABITAT": "Hábitat de cría donde se capturaron los mosquitos",
+    "ID_METHOD": "Método utilizado para identificar las especies de mosquitos",
+    "DATA_SOURCE": "",
+    "CITATION": "Cita de la publicación donde se publicaron los datos.",
+    "CITATION_URL": "URL de la publicación donde se publicaron los datos",
+    "DATA_CURATOR": "Instituto que compiló los datos. Parte de los datos en esta base de datos ha sido compilada por instituciones colaboradoras que compartieron sus colecciones de datos con la OMS. Esta columna indicará el nombre de la institución o grupo que compiló los datos.",
+    "INVASIVE_STATUS": "Esta variable indica si los mosquitos capturados se consideran invasivos o nativos.\nNota: Una especie invasora es una especie no nativas que se establecen en un nuevo ecosistema y causan, o tiene el potencial de causar, daño al medio ambiente, a la economía y a la salud humana"
+  },
+  "mm": {
+    "ID": "Identificador único del estudio",
+    "MM_TYPE": "Tipo de marcador molecular",
+    "COUNTRY_NAME": "Nombre del país donde se llevo a cabo el estudio",
+    "SITE_NAME": "Lugar donde se llevo a cabo el estudio",
+    "ADMIN2": "Nivel administrativo 2 donde se llevo a cabo el estudio",
+    "LATITUDE": "Latitud del lugar dondes se llevo a cabo el estudio",
+    "LONGITUDE": "Longitud del lugar dondes se llevo a cabo el estudio",
+    "YEAR_START": "Año en que comenzó el estudio",
+    "DRUG_NAME": "Tratamiento administrado a los pacientes durante el estudio.\nNota: se muestra solo cuando los datos provienen de un estudio de eficacia terapéutica",
+    "PLASMODIUM_SPECIES": "Especie de Plasmodium",
+    "SAMPLE_SIZE": "Número de muestras de pacientes analizadas.",
+    "DATA_SOURCE": "Institucion o grupo que recogio los datos.",
+    "CITATION_URL": "URL de la publicación donde se publicaron los datos",
+    "GENOTYPE": "Genotipo",
+    "PROPORTION": "Frecuencia de detección del genotipo en las muestras analizadas"
+  }
 }

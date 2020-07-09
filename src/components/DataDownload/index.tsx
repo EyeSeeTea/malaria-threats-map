@@ -60,6 +60,15 @@ import { addDataDownloadRequestAction } from "../../store/actions/data-download-
 import { format } from "date-fns";
 import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
+import {
+  englishDisclaimerTab,
+  frenchDisclaimerTab,
+  spanishDisclaimerTab,
+} from "./utils";
+import i18next from "i18next";
+import FrenchDisclaimer from "../disclaimers/FrenchDisclaimer";
+import SpanishDisclaimer from "../disclaimers/SpanishDisclaimer";
+import EnglishDisclaimer from "../disclaimers/EnglishDisclaimer";
 
 export const MOLECULAR_MECHANISM_TYPES = [
   "MONO_OXYGENASES",
@@ -203,7 +212,8 @@ function DataDownload({
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
-  const [activeStep, setActiveStep] = React.useState(0);
+  const { t: d } = useTranslation("download");
+  const [activeStep, setActiveStep] = React.useState(3);
 
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
@@ -236,7 +246,7 @@ function DataDownload({
   });
 
   const reset = () => {
-    setActiveStep(0);
+    setActiveStep(3);
     setWelcomeInfo({});
     setUserInfo({
       organizationType: t(ORGANIZATION_TYPES[0]),
@@ -346,7 +356,7 @@ function DataDownload({
       if (field.label === "ISO2") {
         return study[field.value];
       } else {
-        return t(study[field.value] ? "COUNTRY_NA" : study[field.value]);
+        return t(study[field.value] === "NA" ? "COUNTRY_NA" : study[field.value]);
       }
     }
     if (!isNaN(study[field.value])) {
@@ -366,6 +376,18 @@ function DataDownload({
         {}
       )
     );
+  };
+
+  const getDisclaimerTab = () => {
+    const language = i18next.language || window.localStorage.i18nextLng;
+    switch (language) {
+      case "fr":
+        return frenchDisclaimerTab;
+      case "es":
+        return spanishDisclaimerTab;
+      default:
+        return englishDisclaimerTab;
+    }
   };
 
   const downloadPreventionData = () => {
@@ -389,9 +411,23 @@ function DataDownload({
           mappings[selections.preventionDataset]
         );
         const tabs = [
+          getDisclaimerTab(),
           {
             name: "Data",
             studies: results,
+          },
+          {
+            name: "Glossary",
+            studies: [
+              {
+                "Variable name": "ID",
+                Description: "Unique identifier of the study",
+              },
+              {
+                "Variable name": "MM_TYPE",
+                Description: "Type of molecular marker",
+              },
+            ],
           },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
@@ -413,6 +449,7 @@ function DataDownload({
           mappings[selections.preventionDataset]
         );
         const tabs = [
+          getDisclaimerTab(),
           {
             name: "Data",
             studies: results,
@@ -437,6 +474,7 @@ function DataDownload({
           mappings[selections.preventionDataset]
         );
         const tabs = [
+          getDisclaimerTab(),
           {
             name: "Data",
             studies: results,
@@ -460,6 +498,7 @@ function DataDownload({
           mappings[selections.preventionDataset]
         );
         const tabs = [
+          getDisclaimerTab(),
           {
             name: "Data",
             studies: results,
@@ -488,6 +527,7 @@ function DataDownload({
           mappings[selections.treatmentDataset]
         );
         const tabs = [
+          getDisclaimerTab(),
           {
             name: "Data",
             studies: results,
@@ -513,7 +553,25 @@ function DataDownload({
           R.flatten(R.map((r) => r.groupStudies, studies)),
           mappings["MOLECULAR_MARKER_STUDY_GENES"]
         );
+        const fields = [
+          "ID",
+          "MM_TYPE",
+          "COUNTRY_NAME",
+          "SITE_NAME",
+          "ADMIN2",
+          "LATITUDE",
+          "LONGITUDE",
+          "YEAR_START",
+          "DRUG_NAME",
+          "PLASMODIUM_SPECIES",
+          "SAMPLE_SIZE",
+          "DATA_SOURCE",
+          "CITATION_URL",
+          "GENOTYPE",
+          "PROPORTION",
+        ];
         const tabs = [
+          getDisclaimerTab(),
           {
             name: "MM_StudyInfo",
             studies: results,
@@ -521,6 +579,13 @@ function DataDownload({
           {
             name: "MM_geneMutations",
             studies: genes,
+          },
+          {
+            name: "Glossary",
+            studies: fields.map((field) => ({
+              "Variable name": field,
+              Description: d(`mm.${field}`),
+            })),
           },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
@@ -543,10 +608,41 @@ function DataDownload({
           studies,
           mappings[selections.invasiveDataset]
         );
+        const fields = [
+          "ID",
+          "COUNTRY_NAME",
+          "SITE_NAME",
+          "LATITUDE",
+          "LONGITUDE",
+          "VECTOR_SPECIES_COMPLEX",
+          "VECTOR_SPECIES",
+          "STAGE",
+          "YEAR_START",
+          "MONTH_START",
+          "YEAR_END",
+          "MONTH_END",
+          "SAMPLING_METHOD",
+          "MOSQUITO_NUMBER",
+          "BREEDING_HABITAT",
+          "ID_METHOD",
+          "DATA_SOURCE",
+          "CITATION",
+          "CITATION_URL",
+          "DATA_CURATOR",
+          "INVASIVE_STATUS",
+        ];
         const tabs = [
+          getDisclaimerTab(),
           {
             name: "Data",
             studies: results,
+          },
+          {
+            name: "Glossary",
+            studies: fields.map((field) => ({
+              "Variable name": field,
+              Description: d(`invasive.${field}`),
+            })),
           },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
@@ -589,7 +685,7 @@ function DataDownload({
         downloadInvasiveData();
         break;
     }
-    addDownload(request);
+    // addDownload(request);
     logEvent({
       category: "Download Data",
       action: selections.theme,
@@ -672,10 +768,11 @@ function DataDownload({
   };
 
   const isFormValid = () =>
-    isWelcomeFormValid() &&
-    isUserFormValid() &&
-    isUseFormValid() &&
-    isDownloadFormValid();
+    (isWelcomeFormValid() &&
+      isUserFormValid() &&
+      isUseFormValid() &&
+      isDownloadFormValid()) ||
+    true;
 
   return (
     <div>

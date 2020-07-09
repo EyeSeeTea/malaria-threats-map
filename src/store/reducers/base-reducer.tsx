@@ -35,7 +35,7 @@ const initialState: MalariaState = Object.freeze({
     open: isTourInitiallyOpen,
     step: 0,
   },
-  dataDownloadOpen: false,
+  dataDownloadOpen: true,
   reportOpen: false,
   mapTitle: "",
   subscriptionOpen: false,
