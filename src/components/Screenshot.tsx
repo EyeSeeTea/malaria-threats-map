@@ -17,6 +17,8 @@ import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 // @ts-ignore
 import * as PdfJs from "pdfjs-dist";
 import { convertDataURIToBinary, download } from "../utils/download-utils";
+import { format } from "date-fns";
+import { exportToCSV } from "./DataDownload/download";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -93,7 +95,7 @@ function Screenshot({ map, theme, title }: Props) {
       doc.setFontSize(7);
       doc.setFontType("normal");
       let lines = doc.splitTextToSize(copyright, 150);
-      doc.text(10, 180, lines);
+      doc.text(10, 175, lines);
       const maxWidth = a4h - 2 * a4p;
       const maxHeight = 135;
       let mapWidth, mapHeight;
@@ -168,7 +170,9 @@ function Screenshot({ map, theme, title }: Props) {
           canvas.height = viewport.height;
           const renderContext = { canvasContext: context, viewport: viewport };
           page.render(renderContext).then(() => {
-            download(canvas, "report.png");
+            const dateString = format(new Date(), "yyyyMMdd");
+            const fileName = `MTM_${title.toUpperCase()}_${dateString}`;
+            download(canvas, fileName);
           });
         });
       });
