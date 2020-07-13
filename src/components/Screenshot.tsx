@@ -5,7 +5,7 @@ import whoLogoWhite from "../assets/img/who-logo-blue.png";
 import prevention from "../assets/img/prevention.png";
 import diagnosis from "../assets/img/diagnosis.png";
 import treatment from "../assets/img/treatment.png";
-import invasive from "../assets/img/invasive.png";
+import invasive from "../assets/img/invasive.jpg";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useTranslation } from "react-i18next";

@@ -275,13 +275,13 @@
       },
       "treatment": {
         "datasets": {
-          "therapeutic_efficacy_studies": "Results of therapeutic efficacy studies",
-          "molecular_marker_studies": "Results of molecular marker studies"
+          "therapeutic_efficacy_studies": "Résultats des études d'efficacité thérapeutique",
+          "molecular_marker_studies": "Résultats des études sur les marqueurs moléculaires de la résistance aux médicaments"
         }
       },
       "invasive": {
         "datasets": {
-          "invasive_vector_species": "Invasive vector species detections"
+          "invasive_vector_species": "Détections d'espèces vectorielles envahissantes"
         }
       }
     },

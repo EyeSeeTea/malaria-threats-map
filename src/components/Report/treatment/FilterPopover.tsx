@@ -7,7 +7,6 @@ import CountriesSelector from "../../DataDownload/filters/CountriesSelector";
 import T from "../../../translations/T";
 import DrugsSelector from "../../filters/DrugsSelector";
 import PlasmodiumSpeciesSelector from "../../filters/PlasmodiumSpeciesSelector";
-import { setPlasmodiumSpeciesEpic } from "../../../store/epics/treatment-epics";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

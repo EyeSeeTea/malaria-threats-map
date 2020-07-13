@@ -469,11 +469,23 @@ function PreventionReport({ studies: baseStudies }: Props) {
   );
 
   const downloadData = () => {
-    const studies = R.map((group) => {
-      const study = { ...group };
-      delete study.ID;
-      return study;
-    }, groups);
+    const studies = R.map(
+      (group) =>
+        Object.entries(group).reduce((acc, [field, value]) => {
+          if (field === "ID") {
+            return acc;
+          } else {
+            return {
+              ...acc,
+              [field]:
+                (typeof value === "number" && isNaN(value)) || value === "-"
+                  ? ""
+                  : value,
+            };
+          }
+        }, {}),
+      groups
+    );
     const tabs = [
       {
         name: "Data",

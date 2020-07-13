@@ -66,9 +66,6 @@ import {
   spanishDisclaimerTab,
 } from "./utils";
 import i18next from "i18next";
-import FrenchDisclaimer from "../disclaimers/FrenchDisclaimer";
-import SpanishDisclaimer from "../disclaimers/SpanishDisclaimer";
-import EnglishDisclaimer from "../disclaimers/EnglishDisclaimer";
 
 export const MOLECULAR_MECHANISM_TYPES = [
   "MONO_OXYGENASES",
@@ -213,7 +210,7 @@ function DataDownload({
   const classes = useStyles({});
   const { t } = useTranslation("common");
   const { t: d } = useTranslation("download");
-  const [activeStep, setActiveStep] = React.useState(3);
+  const [activeStep, setActiveStep] = React.useState(0);
 
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
@@ -246,7 +243,7 @@ function DataDownload({
   });
 
   const reset = () => {
-    setActiveStep(3);
+    setActiveStep(0);
     setWelcomeInfo({});
     setUserInfo({
       organizationType: t(ORGANIZATION_TYPES[0]),
@@ -356,7 +353,9 @@ function DataDownload({
       if (field.label === "ISO2") {
         return study[field.value];
       } else {
-        return t(study[field.value] === "NA" ? "COUNTRY_NA" : study[field.value]);
+        return t(
+          study[field.value] === "NA" ? "COUNTRY_NA" : study[field.value]
+        );
       }
     }
     if (!isNaN(study[field.value])) {
@@ -685,7 +684,7 @@ function DataDownload({
         downloadInvasiveData();
         break;
     }
-    // addDownload(request);
+    addDownload(request);
     logEvent({
       category: "Download Data",
       action: selections.theme,
@@ -768,11 +767,10 @@ function DataDownload({
   };
 
   const isFormValid = () =>
-    (isWelcomeFormValid() &&
-      isUserFormValid() &&
-      isUseFormValid() &&
-      isDownloadFormValid()) ||
-    true;
+    isWelcomeFormValid() &&
+    isUserFormValid() &&
+    isUseFormValid() &&
+    isDownloadFormValid();
 
   return (
     <div>
