@@ -1,6 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
-import Highcharts from "highcharts";
+import Highcharts, {
+  DataLabelsFormatterCallbackFunction,
+  DataLabelsFormatterContextObject,
+} from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import { Box, Hidden, Typography } from "@material-ui/core";
@@ -21,67 +24,71 @@ const options: (data: any, translations: any) => Highcharts.Options = (
 ) => ({
   ...baseChart,
   title: {
-    text: translations.mosquito_mortality
+    text: translations.mosquito_mortality,
   },
   xAxis: {
-    type: "category"
+    type: "category",
   },
   yAxis: {
     min: 0,
     max: 100,
     title: {
-      text: translations.mortality
-    }
+      text: translations.mortality,
+    },
   },
   plotOptions: {
     column: {
       dataLabels: {
-        enabled: true
+        formatter: function () {
+          // @ts-ignore
+          return `${this.y} (${this.point.number})`;
+        } as DataLabelsFormatterCallbackFunction,
+        enabled: true,
       },
       zones: [
         {
           value: 97.001,
-          color: "#D3D3D3"
+          color: "#D3D3D3",
         },
         {
           value: 100.001,
-          color: "#2f4f4f"
-        }
-      ]
-    }
+          color: "#2f4f4f",
+        },
+      ],
+    },
   },
   tooltip: {
-    formatter: function() {
+    formatter: function () {
       const point = this.point as any;
       return `
 <b><i>${point.species}</i></b><br>
 ${translations.mortality} (%): ${point.y}<br>
 ${translations.tested}: ${point.number}
 `;
-    }
+    },
   },
   series: [
     {
       maxPointWidth: 20,
       type: "column",
       name: translations.mortality,
-      data: data
-    }
+      data: data,
+    },
   ],
   legend: {
-    enabled: false
+    enabled: false,
   },
   credits: {
-    enabled: false
-  }
+    enabled: false,
+  },
 });
 
 const ChatContainer = styled.div<{ width?: string }>`
-  width: ${props => props.width || "100%"};
+  width: ${(props) => props.width || "100%"};
 `;
 
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state)
+  theme: selectTheme(state),
 });
 const mapDispatchToProps = {};
 
@@ -99,29 +106,32 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
     R.groupBy(R.prop("CITATION_URL"), baseStudies)
   );
   const studies = groupedStudies[study];
-  const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
+  const sortedStudies = R.sortBy(
+    (study) => -parseInt(study.YEAR_START),
+    studies
+  );
   const cleanedStudies = R.groupBy((study: PreventionStudy) => {
     return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_INTENSITY}`;
   }, sortedStudies);
   const simplifiedStudies = R.values(cleanedStudies).map(
     (groupStudies: PreventionStudy[]) =>
-      R.sortBy(study => -parseInt(study.MORTALITY_ADJUSTED), groupStudies)[0]
+      R.sortBy((study) => -parseInt(study.MORTALITY_ADJUSTED), groupStudies)[0]
   );
-  const data = simplifiedStudies.map(study => ({
+  const data = simplifiedStudies.map((study) => ({
     name: `${study.YEAR_START}, ${t(study.INSECTICIDE_INTENSITY)} ${t(
       study.INSECTICIDE_TYPE
     )}`,
     y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
     species: study.SPECIES,
-    number: study.NUMBER
+    number: study.NUMBER,
   }));
   const studyObject = simplifiedStudies[study];
   const translations = {
     mortality: t("prevention.chart.resistance_intensity.mortality"),
-    mosquito_mortality: t(
+    mosquito_mortality: `${t(
       "prevention.chart.resistance_intensity.mosquito_mortality"
-    ),
-    tested: t("prevention.chart.resistance_intensity.tested")
+    )} (${t("prevention.chart.resistance_intensity.number_of_tests")})`,
+    tested: t("prevention.chart.resistance_intensity.tested"),
   };
   const content = () => (
     <>
@@ -134,7 +144,7 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
       )}
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-            studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2
+          studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2
         )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">

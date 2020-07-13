@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import Highcharts from "highcharts";
+import Highcharts, { DataLabelsFormatterCallbackFunction } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import { Box, Hidden, Typography } from "@material-ui/core";
@@ -21,61 +21,65 @@ const options: (data: any, translations: any) => Highcharts.Options = (
 ) => ({
   ...baseChart,
   title: {
-    text: translations.mosquito_mortality
+    text: translations.mosquito_mortality,
   },
   xAxis: {
-    type: "category"
+    type: "category",
   },
   yAxis: {
     min: 0,
     max: 100,
     title: {
-      text: translations.mortality
-    }
+      text: translations.mortality,
+    },
   },
   plotOptions: {
     column: {
       dataLabels: {
-        enabled: true
+        formatter: function () {
+          // @ts-ignore
+          return `${this.y} (${this.point.number})`;
+        } as DataLabelsFormatterCallbackFunction,
+        enabled: true,
       },
       zones: [
         {
           value: 97.001,
-          color: "#D3D3D3"
+          color: "#D3D3D3",
         },
         {
           value: 100.001,
-          color: "#2f4f4f"
-        }
-      ]
-    }
+          color: "#2f4f4f",
+        },
+      ],
+    },
   },
   tooltip: {
-    formatter: function() {
+    formatter: function () {
       const point = this.point as any;
       return `
 <b><i>${point.species}</i></b><br>
 ${translations.mortality} (%): ${point.y}<br>
 ${translations.tested}: ${point.number}
 `;
-    }
+    },
   },
   series: [
     {
       maxPointWidth: 20,
       type: "column",
       name: translations.mortality,
-      data: data
-    }
-  ]
+      data: data,
+    },
+  ],
 });
 
 const ChatContainer = styled.div<{ width?: string }>`
-  width: ${props => props.width || "100%"};
+  width: ${(props) => props.width || "100%"};
 `;
 
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state)
+  theme: selectTheme(state),
 });
 const mapDispatchToProps = {};
 
@@ -94,8 +98,11 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
   );
   const studies = groupedStudies[study];
 
-  const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
-  const data = sortedStudies.map(study => {
+  const sortedStudies = R.sortBy(
+    (study) => parseInt(study.YEAR_START),
+    studies
+  );
+  const data = sortedStudies.map((study) => {
     const base = `${study.YEAR_START}, ${t(study.INSECTICIDE_TYPE)} ${t(
       study.INSECTICIDE_CONC
     )}`;
@@ -107,16 +114,16 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
       name: `${base}, ${syn}`,
       y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
       species: study.SPECIES,
-      number: study.NUMBER
+      number: study.NUMBER,
     };
   });
   const studyObject = sortedStudies[study];
   const translations = {
     mortality: t("prevention.chart.synergist_involvement.mortality"),
-    mosquito_mortality: t(
+    mosquito_mortality: `${t(
       "prevention.chart.synergist_involvement.mosquito_mortality"
-    ),
-    tested: t("prevention.chart.synergist_involvement.tested")
+    )} (${t("prevention.chart.synergist_involvement.number_of_tests")})`,
+    tested: t("prevention.chart.synergist_involvement.tested"),
   };
   const content = () => (
     <>
@@ -129,7 +136,7 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
       )}
       <Typography variant="subtitle1">
         <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-            studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2
+          studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2
         )}`}</Box>
       </Typography>
       <Typography variant="subtitle2">

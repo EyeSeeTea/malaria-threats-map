@@ -68,6 +68,7 @@
       "synergist_involvement": {
         "mortality": "mortality (%)",
         "tested": "Tested (n)",
+        "number_of_tests": "# of tests",
         "mosquito_mortality": "% mosquito mortality",
         "no_synergist": "No synergist"
       }

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import Highcharts from "highcharts";
+import Highcharts, { DataLabelsFormatterCallbackFunction } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import { Box, Hidden, Typography } from "@material-ui/core";
@@ -63,6 +63,10 @@ const options: (data: any, translations: any) => Highcharts.Options = (
   plotOptions: {
     column: {
       dataLabels: {
+        formatter: function () {
+          // @ts-ignore
+          return `${this.y} (${this.point.number})`;
+        } as DataLabelsFormatterCallbackFunction,
         enabled: true,
       },
       zones: [
@@ -188,9 +192,9 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
   const studyObject = groupedStudies[study][0];
   const translations = {
     mortality: t("prevention.chart.resistance_status.mortality"),
-    mosquito_mortality: t(
+    mosquito_mortality: `${t(
       "prevention.chart.resistance_status.mosquito_mortality"
-    ),
+    )} (${t("prevention.chart.resistance_status.number_of_tests")})`,
     tested: t("prevention.chart.resistance_status.tested"),
   };
   const content = () => (
