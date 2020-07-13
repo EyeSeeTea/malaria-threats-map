@@ -1,6 +1,6 @@
 import React from "react";
 import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
-import HelpIcon from "@material-ui/icons/Help";
+import WizardIcon from "@material-ui/icons/Explore";
 import { State } from "../store/types";
 import {
   setInitialDialogOpen,
@@ -61,7 +61,7 @@ const TourIcon = ({ tour, setTourOpen, setInitialDialogOpen }: Props) => {
         }}
         title={t("icons.help")}
       >
-        <HelpIcon />
+        <WizardIcon />
       </Fab>
     </React.Fragment>
   );
