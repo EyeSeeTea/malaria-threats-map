@@ -29,7 +29,6 @@ export function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 
 export function percentile(data: number[], percentile: number) {
   const sortedData = data.sort();
-  console.log(data);
   const pos = (sortedData.length - 1) * percentile;
   const base = Math.floor(pos);
   const rest = pos - base;

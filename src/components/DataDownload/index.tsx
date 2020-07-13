@@ -393,7 +393,6 @@ function DataDownload({
     switch (selections.preventionDataset) {
       case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
       case "INTENSITY_CONCENTRATION_BIOASSAY": {
-        console.log(selections);
         const filters = [
           filterByDownload(),
           filterByAssayTypes([selections.preventionDataset]),

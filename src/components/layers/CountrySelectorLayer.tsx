@@ -200,7 +200,6 @@ class CountrySelectorLayer extends Component<Props> {
   };
 
   onClickListener = (e: any) => {
-    console.log(e.features[0]);
     this.props.setRegion({ country: e.features[0].properties.ISO_2_CODE });
   };
 

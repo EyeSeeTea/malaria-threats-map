@@ -261,7 +261,6 @@ class TreatmentLayer extends Component<Props> {
       SITE_ID: e.features[0].properties.SITE_ID,
       coordinates: coordinates
     };
-    console.log(selection);
     setTimeout(() => {
       this.props.setSelection(selection);
     }, 100);
