@@ -123,8 +123,8 @@ interface EnhancedTableToolbarProps {
   setCountries: any;
   drugs: string[];
   setDrugs: any;
-  plasmodiumSpecies: string[];
-  setPlasmodiumSpecies: any;
+  plasmodiumSpecie: string;
+  setPlasmodiumSpecie: any;
   onClick: any;
 }
 
@@ -137,8 +137,8 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
     setCountries,
     drugs,
     setDrugs,
-    plasmodiumSpecies,
-    setPlasmodiumSpecies,
+    plasmodiumSpecie,
+    setPlasmodiumSpecie,
     onClick,
   } = props;
 
@@ -162,11 +162,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
             {t("report.treatment.title")}
             <br />
             <Typography variant="body1" id="tableTitle">
-              {plasmodiumSpecies.length
-                ? `(${plasmodiumSpecies
-                    .map((species) => t(species.replace(".", "%2E")))
-                    .join(", ")})`
-                : "(All plasmodium species)"}
+              ({t(plasmodiumSpecie.replace(".", "%2E"))})
             </Typography>
           </Typography>
         </>
@@ -194,8 +190,8 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
             setCountries={setCountries}
             drugs={drugs}
             setDrugs={setDrugs}
-            plasmodiumSpecies={plasmodiumSpecies}
-            setPlasmodiumSpecies={setPlasmodiumSpecies}
+            plasmodiumSpecie={plasmodiumSpecie}
+            setPlasmodiumSpecie={setPlasmodiumSpecie}
           />
         </>
       )}
@@ -224,8 +220,8 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
   const [countries, doSetCountries] = React.useState<string[]>([]);
   const [drugs, doSetDrugs] = React.useState<string[]>([]);
-  const [plasmodiumSpecies, doSetPlasmodiumSpecies] = React.useState<string[]>(
-    []
+  const [plasmodiumSpecie, doSetPlasmodiumSpecie] = React.useState<string>(
+    "P._FALCIPARUM"
   );
 
   const setCountries = (countries: string[]) => {
@@ -238,15 +234,15 @@ function TreatmentReport({ studies: baseStudies }: Props) {
     setPage(0);
   };
 
-  const setPlasmodiumSpecies = (species: string[]) => {
-    doSetPlasmodiumSpecies(species);
+  const setPlasmodiumSpecie = (specie: string) => {
+    doSetPlasmodiumSpecie(specie);
     setPage(0);
   };
 
   const filters = [
     (study: TreatmentStudy) => !isNull(study.DRUG_NAME),
     filterByMolecularMarkerStudyDimension256(),
-    filterByManyPlasmodiumSpecies(plasmodiumSpecies),
+    filterByManyPlasmodiumSpecies([plasmodiumSpecie]),
     filterByCountries(countries),
     filterByDrugs(drugs),
   ];
@@ -389,8 +385,8 @@ function TreatmentReport({ studies: baseStudies }: Props) {
             setCountries={setCountries}
             drugs={drugs}
             setDrugs={setDrugs}
-            plasmodiumSpecies={plasmodiumSpecies}
-            setPlasmodiumSpecies={setPlasmodiumSpecies}
+            plasmodiumSpecie={plasmodiumSpecie}
+            setPlasmodiumSpecie={setPlasmodiumSpecie}
             onClick={() => downloadData()}
           />
           <TableContainer>

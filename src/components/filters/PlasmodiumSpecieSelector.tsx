@@ -1,12 +1,13 @@
 import React from "react";
-import IntegrationReactSelect, { Option } from "../BasicSelect";
+import IntegrationReactSelect, { Option, OptionType } from "../BasicSelect";
 import { Divider, FilterWrapper } from "./Filters";
 import FormLabel from "@material-ui/core/FormLabel";
 import T from "../../translations/T";
+import { ValueType } from "react-select/src/types";
 
 type OwnProps = {
   onChange: (selection: string[]) => void;
-  value: string[];
+  value: string;
 };
 
 type Props = OwnProps;
@@ -34,15 +35,15 @@ export const PLASMODIUM_SPECIES_SUGGESTIONS: any[] = [
   },
 ];
 
-function PlasmodiumSpeciesSelector({ onChange, value }: Props) {
-  const onSelectionChange = (options: Option[] = []) => {
-    onChange((options || []).map((o) => o.value));
+function PlasmodiumSpecieSelector({ onChange, value }: Props) {
+  const onSelectionChange = (value: ValueType<OptionType>) => {
+    const selection = value as OptionType;
+    onChange(selection.value);
   };
 
-  const selection = PLASMODIUM_SPECIES_SUGGESTIONS.filter((suggestion) =>
-    value.includes(suggestion.value)
+  const selection = PLASMODIUM_SPECIES_SUGGESTIONS.filter(
+    (suggestion) => value === suggestion.value
   );
-
   return (
     <FilterWrapper>
       <FormLabel component="legend">
@@ -50,8 +51,6 @@ function PlasmodiumSpeciesSelector({ onChange, value }: Props) {
       </FormLabel>
       <Divider />
       <IntegrationReactSelect
-        isMulti
-        isClearable
         suggestions={PLASMODIUM_SPECIES_SUGGESTIONS}
         onChange={onSelectionChange}
         value={selection}
@@ -60,4 +59,4 @@ function PlasmodiumSpeciesSelector({ onChange, value }: Props) {
   );
 }
 
-export default PlasmodiumSpeciesSelector;
+export default PlasmodiumSpecieSelector;

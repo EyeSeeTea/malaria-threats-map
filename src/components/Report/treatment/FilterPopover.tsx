@@ -6,7 +6,7 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import CountriesSelector from "../../DataDownload/filters/CountriesSelector";
 import T from "../../../translations/T";
 import DrugsSelector from "../../filters/DrugsSelector";
-import PlasmodiumSpeciesSelector from "../../filters/PlasmodiumSpeciesSelector";
+import PlasmodiumSpecieSelector from "../../filters/PlasmodiumSpecieSelector";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,8 +26,8 @@ interface Props {
   setCountries: any;
   drugs: string[];
   setDrugs: any;
-  plasmodiumSpecies: string[];
-  setPlasmodiumSpecies: any;
+  plasmodiumSpecie: string;
+  setPlasmodiumSpecie: any;
 }
 
 export default function FilterPopover({
@@ -35,8 +35,8 @@ export default function FilterPopover({
   setCountries,
   drugs,
   setDrugs,
-  plasmodiumSpecies,
-  setPlasmodiumSpecies,
+  plasmodiumSpecie,
+  setPlasmodiumSpecie,
 }: Props) {
   const classes = useStyles({});
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -80,9 +80,9 @@ export default function FilterPopover({
           horizontal: "right",
         }}
       >
-        <PlasmodiumSpeciesSelector
-          onChange={setPlasmodiumSpecies}
-          value={plasmodiumSpecies}
+        <PlasmodiumSpecieSelector
+          onChange={setPlasmodiumSpecie}
+          value={plasmodiumSpecie}
         />
         <DrugsSelector onChange={setDrugs} value={drugs} />
         <CountriesSelector onChange={setCountries} value={countries} />
