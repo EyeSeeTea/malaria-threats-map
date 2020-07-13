@@ -21,7 +21,7 @@ import { selectPreventionStudies } from "../../store/reducers/prevention-reducer
 import MolecularMarkerSelector from "../filters/MolecularMarkerSelector";
 import { Paper, Typography } from "@material-ui/core";
 import styled from "styled-components";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const Divider = styled.div`
   height: 16px;
@@ -29,11 +29,11 @@ const Divider = styled.div`
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
-  preventionStudies: selectPreventionStudies(state)
+  preventionStudies: selectPreventionStudies(state),
 });
 
 const mapDispatchToProps = {
-  setTheme: setThemeAction
+  setTheme: setThemeAction,
 };
 
 type OwnProps = {
@@ -51,105 +51,105 @@ const Filters = ({ onChange, selections }: Props) => {
   const onSetTheme = (value: string) => {
     onChange({
       ...selections,
-      theme: value
+      theme: value,
     });
   };
 
   const onSetPreventionDataset = (value: string) => {
     onChange({
       ...selections,
-      preventionDataset: value
+      preventionDataset: value,
     });
   };
 
   const onSetTreatmentDataset = (value: string) => {
     onChange({
       ...selections,
-      treatmentDataset: value
+      treatmentDataset: value,
     });
   };
 
   const onSetInvasiveDataset = (value: string) => {
     onChange({
       ...selections,
-      invasiveDataset: value
+      invasiveDataset: value,
     });
   };
 
   const onSetInsecticideClasses = (value: string[]) => {
     onChange({
       ...selections,
-      insecticideClasses: value
+      insecticideClasses: value,
     });
   };
 
   const onSetInsecticideTypes = (value: string[]) => {
     onChange({
       ...selections,
-      insecticideTypes: value
+      insecticideTypes: value,
     });
   };
 
   const onSetMechanismTypes = (value: string[]) => {
     onChange({
       ...selections,
-      mechanismTypes: value
+      mechanismTypes: value,
     });
   };
 
   const onSetSpecies = (value: string[]) => {
     onChange({
       ...selections,
-      species: value
+      species: value,
     });
   };
 
   const onSetTypes = (value: string[]) => {
     onChange({
       ...selections,
-      types: value
+      types: value,
     });
   };
 
   const onSetDrugs = (value: string[]) => {
     onChange({
       ...selections,
-      drugs: value
+      drugs: value,
     });
   };
 
   const onSetPlasmodiumSpecies = (value: string[]) => {
     onChange({
       ...selections,
-      plasmodiumSpecies: value
+      plasmodiumSpecies: value,
     });
   };
 
   const onSetMolecularMarkers = (value: string[]) => {
     onChange({
       ...selections,
-      molecularMarkers: value
+      molecularMarkers: value,
     });
   };
 
   const onSetSynergistTypes = (value: string[]) => {
     onChange({
       ...selections,
-      synergistTypes: value
+      synergistTypes: value,
     });
   };
 
   const onSetYears = (value: number[]) => {
     onChange({
       ...selections,
-      years: value
+      years: value,
     });
   };
 
   const onSetCountries = (value: string[]) => {
     onChange({
       ...selections,
-      countries: value
+      countries: value,
     });
   };
 
@@ -168,18 +168,18 @@ const Filters = ({ onChange, selections }: Props) => {
     plasmodiumSpecies,
     drugs,
     years,
-    countries
+    countries,
   } = selections;
 
   return (
     <div>
       <Typography variant="subtitle1" color="textSecondary">
-        {t('data_download.dataset')}
+        {t("data_download.dataset")}
       </Typography>
       <Paper
         style={{
           paddingTop: "16px",
-          paddingBottom: "16px"
+          paddingBottom: "16px",
         }}
       >
         <ThemeFilter value={theme} onChange={onSetTheme} />
@@ -204,12 +204,12 @@ const Filters = ({ onChange, selections }: Props) => {
       </Paper>
       <Divider />
       <Typography variant="subtitle1" color="textSecondary">
-        {t('data_download.step3.filters.additional')}
+        {t("data_download.step3.filters.additional")}
       </Typography>
       <Paper
         style={{
           paddingTop: "16px",
-          paddingBottom: "16px"
+          paddingBottom: "16px",
         }}
       >
         {theme === "prevention" && (
@@ -233,7 +233,7 @@ const Filters = ({ onChange, selections }: Props) => {
               </>
             ) : [
                 "DISCRIMINATING_CONCENTRATION_BIOASSAY",
-                "INTENSITY_CONCENTRATION_BIOASSAY"
+                "INTENSITY_CONCENTRATION_BIOASSAY",
               ].includes(preventionDataset) ? (
               <>
                 <InsecticideClassSelector

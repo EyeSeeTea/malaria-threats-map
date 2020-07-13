@@ -289,13 +289,17 @@ function TreatmentReport({ studies: baseStudies }: Props) {
             ? percentile(sortedValues, 0.75)
             : "-";
 
+          const followUpDays = R.uniq(
+            countrySpeciesStudies.map((study) => study.FOLLOW_UP)
+          ).join(", ");
+
           return {
             ID: `${country}_${drug}`,
             DRUG: t(drug),
             ISO2: country,
             COUNTRY: t(country),
             COUNTRY_NUMBER: entries.length,
-            FOLLOW_UP: 0,
+            FOLLOW_UP: followUpDays,
             STUDY_YEARS: `${minYear} - ${maxYear}`,
             NUMBER_OF_STUDIES: countrySpeciesStudies.length,
             MEDIAN: median,

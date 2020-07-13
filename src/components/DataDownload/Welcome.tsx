@@ -7,7 +7,7 @@ import {
   Link,
   makeStyles,
   Theme,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { WelcomeInfo } from "./index";
@@ -16,8 +16,8 @@ import { connect } from "react-redux";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      padding: "24px"
-    }
+      padding: "24px",
+    },
   })
 );
 
@@ -47,7 +47,7 @@ const Welcome = ({ onChange, welcomeInfo }: Props) => {
       <br />
       <Typography variant={"body2"}>
         {t("data_download.step0.p4a")}
-        <Link href={t("data_download.step0.p4bLink")}>
+        <Link href={t("data_download.step0.p4bLink")} target={"_blank"}>
           {t("data_download.step0.p4bLinkText")}
         </Link>
         {t("data_download.step0.p4c")}
@@ -76,7 +76,7 @@ const Welcome = ({ onChange, welcomeInfo }: Props) => {
         label={
           <Typography variant={"body2"}>
             {t("data_download.step0.p8a")}
-            <Link href={t("data_download.step0.p8bLink")}>
+            <Link href={t("data_download.step0.p8bLink")} target={"_blank"}>
               {t("data_download.step0.p8bLinkText")}
             </Link>
           </Typography>
