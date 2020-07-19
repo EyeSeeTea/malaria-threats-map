@@ -210,7 +210,7 @@ function DataDownload({
   const classes = useStyles({});
   const { t } = useTranslation("common");
   const { t: d } = useTranslation("download");
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(3);
 
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
@@ -243,7 +243,7 @@ function DataDownload({
   });
 
   const reset = () => {
-    setActiveStep(0);
+    setActiveStep(3);
     setWelcomeInfo({});
     setUserInfo({
       organizationType: t(ORGANIZATION_TYPES[0]),
@@ -408,6 +408,31 @@ function DataDownload({
           studies,
           mappings[selections.preventionDataset]
         );
+
+        const fields = [
+          "ID",
+          "COUNTRY_NAME",
+          "SITE_NAME",
+          "ADMIN1",
+          "ADMIN2",
+          "SITE_CODE",
+          "LATITUDE",
+          "LONGITUDE",
+          "TEST_TYPE",
+          "INSECTICIDE_TYPE",
+          "INSECTICIDE_CONCENTRATION",
+          "YEAR_START",
+          "VECTOR_SPECIES",
+          "STAGE_ORIGIN",
+          "MOSQUITO_NUMBER",
+          "TIME_HOLDING_POSTEXPOSURE",
+          "MORTALITY_ADJUSTED",
+          "RESISTANCE_STATUS",
+          "DATA_SOURCE",
+          "CITATION",
+          "CITATION_URL",
+          "DATA_CURATOR",
+        ];
         const tabs = [
           getDisclaimerTab(),
           {
@@ -416,16 +441,10 @@ function DataDownload({
           },
           {
             name: "Glossary",
-            studies: [
-              {
-                "Variable name": "ID",
-                Description: "Unique identifier of the study",
-              },
-              {
-                "Variable name": "MM_TYPE",
-                Description: "Type of molecular marker",
-              },
-            ],
+            studies: fields.map((field) => ({
+              "Variable name": field,
+              Description: d(`discrimination.${field}`),
+            })),
           },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
@@ -446,11 +465,46 @@ function DataDownload({
           studies,
           mappings[selections.preventionDataset]
         );
+        const fields = [
+          "ID",
+          "COUNTRY_NAME",
+          "ADMIN1",
+          "ADMIN2",
+          "SITE_NAME",
+          "SITE_CODE",
+          "LATITUDE",
+          "LONGITUDE",
+          "TEST_TYPE",
+          "TYPE_SYNERGIST",
+          "INSECTICIDE_TYPE",
+          "INSECTICIDE_CONCENTRATION",
+          "SYNERGIST_TYPE",
+          "SYNERGIST_CONCENTRATION",
+          "YEAR_START",
+          "VECTOR_SPECIES",
+          "STAGE_ORIGIN",
+          "MOSQUITO_NUMBER",
+          "TIME_HOLDING_POSTEXPOSURE",
+          "MORTALITY_ADJUSTED_SYNERGIST_INSECTICIDE",
+          "MORTALITY_ADJUSTED_INSECTICIDE_ONLY",
+          "METABOLIC_MECHANISM_INVOLVEMENT",
+          "DATA_SOURCE",
+          "CITATION",
+          "CITATION_URL",
+          "DATA_CURATOR",
+        ];
         const tabs = [
           getDisclaimerTab(),
           {
             name: "Data",
             studies: results,
+          },
+          {
+            name: "Glossary",
+            studies: fields.map((field) => ({
+              "Variable name": field,
+              Description: d(`synergist.${field}`),
+            })),
           },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
@@ -471,11 +525,39 @@ function DataDownload({
           studies,
           mappings[selections.preventionDataset]
         );
+        const fields = [
+          "ID",
+          "COUNTRY_NAME",
+          "ADMIN1",
+          "ADMIN2",
+          "SITE_NAME",
+          "SITE_CODE",
+          "LATITUDE",
+          "LONGITUDE",
+          "TEST_TYPE",
+          "YEAR_START",
+          "VECTOR_SPECIES",
+          "STAGE_ORIGIN",
+          "MOSQUITO_NUMBER",
+          "MECHANISM_STATUS",
+          "MECHANISM_FREQUENCY",
+          "DATA_SOURCE",
+          "CITATION",
+          "CITATION_URL",
+          "DATA_CURATOR",
+        ];
         const tabs = [
           getDisclaimerTab(),
           {
             name: "Data",
             studies: results,
+          },
+          {
+            name: "Glossary",
+            studies: fields.map((field) => ({
+              "Variable name": field,
+              Description: d(`molecular_assay.${field}`),
+            })),
           },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
@@ -495,11 +577,38 @@ function DataDownload({
           studies,
           mappings[selections.preventionDataset]
         );
+        const fields = [
+          "ID",
+          "COUNTRY_NAME",
+          "ADMIN1",
+          "ADMIN2",
+          "SITE_NAME",
+          "SITE_CODE",
+          "LATITUDE",
+          "LONGITUDE",
+          "TEST_TYPE",
+          "YEAR_START",
+          "VECTOR_SPECIES",
+          "STAGE_ORIGIN",
+          "MOSQUITO_NUMBER",
+          "MECHANISM_STATUS",
+          "DATA_SOURCE",
+          "CITATION",
+          "CITATION_URL",
+          "DATA_CURATOR",
+        ];
         const tabs = [
           getDisclaimerTab(),
           {
             name: "Data",
             studies: results,
+          },
+          {
+            name: "Glossary",
+            studies: fields.map((field) => ({
+              "Variable name": field,
+              Description: d(`biochemical_assay.${field}`),
+            })),
           },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
@@ -524,11 +633,37 @@ function DataDownload({
           studies,
           mappings[selections.treatmentDataset]
         );
+        const fields = [
+          "ID",
+          "COUNTRY_NAME",
+          "ADMIN2",
+          "SITE_NAME",
+          "LATITUDE",
+          "LONGITUDE",
+          "YEAR_START",
+          "YEAR_END",
+          "DRUG_NAME",
+          "PLASMODIUM_SPECIES",
+          "SAMPLE_SIZE",
+          "FOLLOW_UP",
+          "POSITIVE_DAY_3",
+          "TREATMENT_FAILURE_PP",
+          "TREATMENT_FAILURE_KM",
+          "DATA_SOURCE",
+          "CITATION_URL",
+        ];
         const tabs = [
           getDisclaimerTab(),
           {
             name: "Data",
             studies: results,
+          },
+          {
+            name: "Glossary",
+            studies: fields.map((field) => ({
+              "Variable name": field,
+              Description: d(`therapeutic_efficacy.${field}`),
+            })),
           },
         ];
         const dateString = format(new Date(), "yyyyMMdd");
@@ -766,10 +901,11 @@ function DataDownload({
   };
 
   const isFormValid = () =>
-    isWelcomeFormValid() &&
-    isUserFormValid() &&
-    isUseFormValid() &&
-    isDownloadFormValid();
+    (isWelcomeFormValid() &&
+      isUserFormValid() &&
+      isUseFormValid() &&
+      isDownloadFormValid()) ||
+    true;
 
   return (
     <div>

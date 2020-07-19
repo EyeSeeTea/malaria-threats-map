@@ -1,5 +1,5 @@
 import React from "react";
-import IntegrationReactSelect, { Option, OptionType } from "../BasicSelect";
+import IntegrationReactSelect, { OptionType } from "../BasicSelect";
 import { Divider, FilterWrapper } from "./Filters";
 import FormLabel from "@material-ui/core/FormLabel";
 import T from "../../translations/T";

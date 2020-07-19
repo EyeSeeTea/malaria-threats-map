@@ -1,21 +1,18 @@
 import * as React from "react";
-import { useState } from "react";
-import Highcharts, {
-  DataLabelsFormatterCallbackFunction,
-  DataLabelsFormatterContextObject,
-} from "highcharts";
+import {useState} from "react";
+import Highcharts, {DataLabelsFormatterCallbackFunction,} from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, Hidden, Typography } from "@material-ui/core";
-import { connect } from "react-redux";
-import { useTranslation } from "react-i18next";
-import { selectTheme } from "../../../../store/reducers/base-reducer";
-import { State } from "../../../../store/types";
-import { PreventionStudy } from "../../../../types/Prevention";
+import {Box, Hidden, Typography} from "@material-ui/core";
+import {connect} from "react-redux";
+import {useTranslation} from "react-i18next";
+import {selectTheme} from "../../../../store/reducers/base-reducer";
+import {State} from "../../../../store/types";
+import {PreventionStudy} from "../../../../types/Prevention";
 import Citation from "../../../charts/Citation";
 import * as R from "ramda";
 import Pagination from "../../../charts/Pagination";
-import { baseChart } from "../../../charts/chart-utils";
+import {baseChart} from "../../../charts/chart-utils";
 import Curation from "../../../Curation";
 
 const options: (data: any, translations: any) => Highcharts.Options = (

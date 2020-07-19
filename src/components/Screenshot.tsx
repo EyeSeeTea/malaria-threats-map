@@ -18,7 +18,6 @@ import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import * as PdfJs from "pdfjs-dist";
 import { convertDataURIToBinary, download } from "../utils/download-utils";
 import { format } from "date-fns";
-import { exportToCSV } from "./DataDownload/download";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
