@@ -210,7 +210,7 @@ function DataDownload({
   const classes = useStyles({});
   const { t } = useTranslation("common");
   const { t: d } = useTranslation("download");
-  const [activeStep, setActiveStep] = React.useState(3);
+  const [activeStep, setActiveStep] = React.useState(0);
 
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
@@ -243,7 +243,7 @@ function DataDownload({
   });
 
   const reset = () => {
-    setActiveStep(3);
+    setActiveStep(0);
     setWelcomeInfo({});
     setUserInfo({
       organizationType: t(ORGANIZATION_TYPES[0]),
@@ -901,11 +901,10 @@ function DataDownload({
   };
 
   const isFormValid = () =>
-    (isWelcomeFormValid() &&
-      isUserFormValid() &&
-      isUseFormValid() &&
-      isDownloadFormValid()) ||
-    true;
+    isWelcomeFormValid() &&
+    isUserFormValid() &&
+    isUseFormValid() &&
+    isDownloadFormValid();
 
   return (
     <div>
