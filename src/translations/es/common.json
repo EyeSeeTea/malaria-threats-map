@@ -418,7 +418,8 @@
     "disclaimer": "Aviso Legal",
     "subscribe": "Suscríbase",
     "comments": "Envíe sus comentarios",
-    "help": "Ayuda"
+    "help": "Ayuda",
+    "tour": "Visita guiada por la aplicación"
   },
   "TREATMENT_FAILURE_KM": "% de pacientes con fallo terapeutico, Kaplan-Meier",
   "PROP_RELATED": "%",

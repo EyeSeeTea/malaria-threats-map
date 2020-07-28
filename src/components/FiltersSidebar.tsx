@@ -15,24 +15,28 @@ import {
   InvasiveMapType,
   PreventionMapType,
   State,
-  TreatmentMapType
+  TreatmentMapType,
 } from "../store/types";
-import { selectFiltersMode, selectTheme } from "../store/reducers/base-reducer";
+import {
+  selectFiltersMode,
+  selectLastUpdatedDates,
+  selectTheme,
+} from "../store/reducers/base-reducer";
 import {
   selectFilteredPreventionStudies,
-  selectPreventionFilters
+  selectPreventionFilters,
 } from "../store/reducers/prevention-reducer";
 import {
   selectDiagnosisFilters,
-  selectFilteredDiagnosisStudies
+  selectFilteredDiagnosisStudies,
 } from "../store/reducers/diagnosis-reducer";
 import {
   selectFilteredTreatmentStudies,
-  selectTreatmentFilters
+  selectTreatmentFilters,
 } from "../store/reducers/treatment-reducer";
 import {
   selectFilteredInvasiveStudies,
-  selectInvasiveFilters
+  selectInvasiveFilters,
 } from "../store/reducers/invasive-reducer";
 import { setFiltersMode, setFiltersOpen } from "../store/actions/base-actions";
 import { connect } from "react-redux";
@@ -55,20 +59,24 @@ const FiltersWrapper = styled.div`
   margin-top: 20px;
 `;
 
+const LastUpdatedContainer = styled.div`
+  padding: 20px 20px 0 20px;
+`;
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
-      })
+        duration: theme.transitions.duration.leavingScreen,
+      }),
     },
     tab: {
-      minWidth: 0
+      minWidth: 0,
     },
     title: {
-      flexGrow: 1
-    }
+      flexGrow: 1,
+    },
   })
 );
 const mapStateToProps = (state: State) => ({
@@ -81,11 +89,12 @@ const mapStateToProps = (state: State) => ({
   preventionFilters: selectPreventionFilters(state),
   diagnosisFilters: selectDiagnosisFilters(state),
   treatmentFilters: selectTreatmentFilters(state),
-  invasiveFilters: selectInvasiveFilters(state)
+  invasiveFilters: selectInvasiveFilters(state),
+  lastUpdatedDates: selectLastUpdatedDates(state),
 });
 const mapDispatchToProps = {
   setFiltersOpen: setFiltersOpen,
-  setFiltersMode: setFiltersMode
+  setFiltersMode: setFiltersMode,
 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
@@ -105,7 +114,8 @@ const FiltersSidebar = ({
   preventionFilters,
   diagnosisFilters,
   treatmentFilters,
-  invasiveFilters
+  invasiveFilters,
+  lastUpdatedDates,
 }: Props) => {
   const classes = useStyles({});
 
@@ -182,7 +192,11 @@ const FiltersSidebar = ({
   }
 
   const { t } = useTranslation("common");
-
+  const themeSelector = theme as
+    | "prevention"
+    | "diagnosis"
+    | "treatment"
+    | "invasive";
   return (
     <div id="sidebar">
       <AppBar position="static" className={classes.appBar}>
@@ -224,20 +238,24 @@ const FiltersSidebar = ({
           />
         </Tabs>
       </AppBar>
-      {config.env === "local" && (
-        <>
-          {!filteredStudies.length ? (
-            <WarningSnackbar>
-              <Typography variant="body2">{t(`filters.no_records`)}</Typography>
-            </WarningSnackbar>
-          ) : (
-            <SuccessSnackbar>
-              <Typography variant="body2">
-                {t(`filters.records`, { studies: filteredStudies.length })}
-              </Typography>
-            </SuccessSnackbar>
-          )}
-        </>
+      {lastUpdatedDates[themeSelector] && (
+        <LastUpdatedContainer>
+          <Typography variant="body2" display="block" gutterBottom>
+            <strong>Last Updated:</strong>{" "}
+            {lastUpdatedDates[themeSelector].toLocaleDateString()}
+          </Typography>
+        </LastUpdatedContainer>
+      )}
+      {!filteredStudies.length ? (
+        <WarningSnackbar>
+          <Typography variant="body2">{t(`filters.no_records`)}</Typography>
+        </WarningSnackbar>
+      ) : (
+        <SuccessSnackbar>
+          <Typography variant="body2">
+            {t(`filters.records`, { studies: filteredStudies.length })}
+          </Typography>
+        </SuccessSnackbar>
       )}
       <FiltersWrapper>
         {value === 0 ? (

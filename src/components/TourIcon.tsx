@@ -59,7 +59,7 @@ const TourIcon = ({ tour, setTourOpen, setInitialDialogOpen }: Props) => {
           window.history.pushState({}, document.title, "/");
           window.location.reload();
         }}
-        title={t("icons.help")}
+        title={t("icons.tour")}
       >
         <WizardIcon />
       </Fab>

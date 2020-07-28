@@ -5,7 +5,7 @@ import i18next from "i18next";
 import * as R from "ramda";
 import {
   selectTranslations,
-  selectTranslationsAreLoading
+  selectTranslationsAreLoading,
 } from "../store/reducers/translations-reducer";
 import { fetchTranslationsRequestAction } from "../store/actions/translations-actions";
 import { fetchPreventionStudiesRequest } from "../store/actions/prevention-actions";
@@ -16,11 +16,12 @@ import { selectCountryLayerIsLoading } from "../store/reducers/country-layer-red
 import { fetchDistrictsRequest } from "../store/actions/district-actions";
 import { fetchCountryLayerRequest } from "../store/actions/country-layer-actions";
 import { fetchDataDownloadRequestAction } from "../store/actions/data-download-actions";
+import { getLastUpdatedRequestAction } from "../store/actions/base-actions";
 
 const mapStateToProps = (state: State) => ({
   translationsLoading: selectTranslationsAreLoading(state),
   countriesLoading: selectCountryLayerIsLoading(state),
-  translations: selectTranslations(state)
+  translations: selectTranslations(state),
 });
 
 const mapDispatchToProps = {
@@ -31,7 +32,8 @@ const mapDispatchToProps = {
   fetchInvasiveStudies: fetchInvasiveStudiesRequest,
   fetchDistricts: fetchDistrictsRequest,
   fetchCountryLayer: fetchCountryLayerRequest,
-  fetchDownloads: fetchDataDownloadRequestAction
+  fetchDownloads: fetchDataDownloadRequestAction,
+  getLastUpdated: getLastUpdatedRequestAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -46,6 +48,7 @@ class DataProvider extends Component<Props> {
     this.props.fetchTreatmentStudies();
     this.props.fetchInvasiveStudies();
     this.props.fetchCountryLayer();
+    this.props.getLastUpdated();
   }
 
   componentDidUpdate(prevProps: Readonly<Props>) {
@@ -59,19 +62,19 @@ class DataProvider extends Component<Props> {
       const englishResources = translations.reduce((acc, translation) => {
         return {
           ...acc,
-          [translation.VALUE_.replace(".", "%2E")]: translation.EN
+          [translation.VALUE_.replace(".", "%2E")]: translation.EN,
         };
       }, {});
       const spanishResources = translations.reduce((acc, translation) => {
         return {
           ...acc,
-          [translation.VALUE_.replace(".", "%2E")]: translation.ES
+          [translation.VALUE_.replace(".", "%2E")]: translation.ES,
         };
       }, {});
       const frenchResources = translations.reduce((acc, translation) => {
         return {
           ...acc,
-          [translation.VALUE_.replace(".", "%2E")]: translation.FR
+          [translation.VALUE_.replace(".", "%2E")]: translation.FR,
         };
       }, {});
       i18next.addResourceBundle("en", "common", englishResources);

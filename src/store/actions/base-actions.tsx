@@ -1,17 +1,18 @@
 import { createAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import { RegionState, SiteSelection } from "../types";
+import { AjaxError } from "rxjs/ajax";
 
 export const setAnyAction = createAction(
   ActionTypeEnum.MalariaSetAny,
-  action => {
+  (action) => {
     return (any: any) => action(any);
   }
 );
 
 export const setThemeAction = createAction(
   ActionTypeEnum.MalariaSetTheme,
-  action => {
+  (action) => {
     return (theme: string) => action(theme);
   }
 );
@@ -23,163 +24,184 @@ export interface GAEvent {
 
 export const logEventAction = createAction(
   ActionTypeEnum.MalariaLogEvent,
-  action => {
+  (action) => {
     return (event: GAEvent) => action(event);
   }
 );
 
 export const setRegionAction = createAction(
   ActionTypeEnum.MalariaSetRegion,
-  action => {
+  (action) => {
     return (region: RegionState | null) => action(region);
   }
 );
 
 export const setFiltersAction = createAction(
   ActionTypeEnum.MalariaSetFilters,
-  action => {
+  (action) => {
     return (filters: number[] | undefined) => action(filters);
   }
 );
 
 export const toggleEndemicityLayerAction = createAction(
   ActionTypeEnum.MalariaToogleEndemicityLayer,
-  action => {
+  (action) => {
     return (visible: boolean) => action(visible);
   }
 );
 
 export const setCountryModeAction = createAction(
   ActionTypeEnum.MalariaSetCountryMode,
-  action => {
+  (action) => {
     return (countryMode: boolean) => action(countryMode);
   }
 );
 
 export const setStoryModeAction = createAction(
   ActionTypeEnum.MalariaSetStoryMode,
-  action => {
+  (action) => {
     return (storyMode: boolean) => action(storyMode);
   }
 );
 
 export const setStoryModeStepAction = createAction(
   ActionTypeEnum.MalariaSetStoryModeStep,
-  action => {
+  (action) => {
     return (storyModeStep: number) => action(storyModeStep);
   }
 );
 
 export const setInitialDialogOpen = createAction(
   ActionTypeEnum.MalariaSetInitialDialogOpen,
-  action => {
+  (action) => {
     return (initialDialogOpen: boolean) => action(initialDialogOpen);
   }
 );
 
 export const setFiltersOpen = createAction(
   ActionTypeEnum.SetFiltersOpen,
-  action => {
+  (action) => {
     return (filtersOpen: boolean) => action(filtersOpen);
   }
 );
 
 export const setFiltersMode = createAction(
   ActionTypeEnum.SetFiltersMode,
-  action => {
+  (action) => {
     return (filtersMode: string) => action(filtersMode);
   }
 );
 
 export const setSelection = createAction(
   ActionTypeEnum.SetSelection,
-  action => {
+  (action) => {
     return (selection: SiteSelection | null) => action(selection);
   }
 );
 
 export const setMobileOptionsOpen = createAction(
   ActionTypeEnum.SetMobileOptionsOpen,
-  action => {
+  (action) => {
     return (mobileOptionsOpen: boolean) => action(mobileOptionsOpen);
   }
 );
 
 export const updateZoomAction = createAction(
   ActionTypeEnum.UpdateZoom,
-  action => {
+  (action) => {
     return (zoom: number) => action(zoom);
   }
 );
 
-export const setZoomAction = createAction(ActionTypeEnum.SetZoom, action => {
+export const setZoomAction = createAction(ActionTypeEnum.SetZoom, (action) => {
   return (zoom: number) => action(zoom);
 });
 
 export const updateBoundsAction = createAction(
   ActionTypeEnum.UpdateBounds,
-  action => {
+  (action) => {
     return (bounds: Array<Array<number>>) => action(bounds);
   }
 );
 
 export const setBoundsAction = createAction(
   ActionTypeEnum.SetBounds,
-  action => {
+  (action) => {
     return (bounds: Array<Array<number>>) => action(bounds);
   }
 );
 
 export const setTourOpenAction = createAction(
   ActionTypeEnum.SetTourOpen,
-  action => {
+  (action) => {
     return (open: boolean) => action(open);
   }
 );
 
 export const setTourStepAction = createAction(
   ActionTypeEnum.SetTourStep,
-  action => {
+  (action) => {
     return (step: number) => action(step);
   }
 );
 
 export const setDataDownloadOpenAction = createAction(
   ActionTypeEnum.SetDataDownloadOpen,
-  action => {
+  (action) => {
     return (dataDownloadOpen: boolean) => action(dataDownloadOpen);
   }
 );
 
 export const setReportOpenAction = createAction(
   ActionTypeEnum.SetReportOpen,
-  action => {
+  (action) => {
     return (reportOpen: boolean) => action(reportOpen);
   }
 );
 
 export const setMapTitleAction = createAction(
   ActionTypeEnum.SetMapTitle,
-  action => {
+  (action) => {
     return (mapTitle: string) => action(mapTitle);
   }
 );
 
 export const setSubscriptionOpenAction = createAction(
   ActionTypeEnum.SetSubscriptionOpen,
-  action => (subscriptionOpen: boolean) => action(subscriptionOpen)
+  (action) => (subscriptionOpen: boolean) => action(subscriptionOpen)
 );
 
 export const setFeedbackOpenAction = createAction(
   ActionTypeEnum.SetFeedbackOpen,
-  action => (feedbackOpen: boolean) => action(feedbackOpen)
+  (action) => (feedbackOpen: boolean) => action(feedbackOpen)
 );
 
 export const setTheaterModeAction = createAction(
   ActionTypeEnum.SetTheaterMode,
-  action => (theaterMode: boolean) => action(theaterMode)
+  (action) => (theaterMode: boolean) => action(theaterMode)
 );
+
 export const setLegendExpandedAction = createAction(
   ActionTypeEnum.SetLegendExpanded,
-  action => (legendExpanded: boolean) => action(legendExpanded)
+  (action) => (legendExpanded: boolean) => action(legendExpanded)
+);
+
+export const getLastUpdatedRequestAction = createAction(
+  ActionTypeEnum.GetLastUpdatedRequest,
+  (action) => () => action()
+);
+
+export const getLastUpdatedSuccessAction = createAction(
+  ActionTypeEnum.GetLastUpdatedSuccess,
+  (action) => (lastUpdated: {
+    prevention: Date;
+    diagnosis: Date;
+    treatment: Date;
+    invasive: Date;
+  }) => action(lastUpdated)
+);
+
+export const getLastUpdatedFailureAction = createAction(
+  ActionTypeEnum.GetLastUpdatedFailure,
+  (action) => (error: AjaxError | string) => action()
 );

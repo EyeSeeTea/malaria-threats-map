@@ -418,7 +418,8 @@
     "disclaimer": "Avertissement",
     "subscribe": "Souscrire",
     "comments": "Envoyez vos commentaires",
-    "help": "Help"
+    "help": "Help",
+    "tour": "Guide-moi à travers l'application"
   },
   "TREATMENT_FAILURE_KM": "% de patients en échec thérapeutique, Kaplan-Meier",
   "PROP_RELATED": "Pourcentage %",

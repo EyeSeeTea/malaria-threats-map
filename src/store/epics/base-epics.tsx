@@ -2,8 +2,16 @@ import { ActionsObservable, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import { of } from "rxjs";
-import { switchMap, withLatestFrom } from "rxjs/operators";
 import {
+  catchError,
+  mergeMap,
+  switchMap,
+  withLatestFrom,
+} from "rxjs/operators";
+import {
+  getLastUpdatedFailureAction,
+  getLastUpdatedRequestAction,
+  getLastUpdatedSuccessAction,
   logEventAction,
   setBoundsAction,
   setCountryModeAction,
@@ -11,10 +19,15 @@ import {
   setSelection,
   setStoryModeAction,
   setStoryModeStepAction,
-  setThemeAction
+  setThemeAction,
 } from "../actions/base-actions";
 import { PreventionMapType, State } from "../types";
 import ReactGA from "react-ga";
+import * as ajax from "../ajax";
+import { MapServerConfig } from "../../constants/constants";
+import { addNotificationAction } from "../actions/notifier-actions";
+import { AjaxError } from "rxjs/ajax";
+import { ErrorResponse } from "../../types/Malaria";
 
 export const setThemeEpic = (
   action$: ActionsObservable<ActionType<typeof setThemeAction>>,
@@ -26,7 +39,7 @@ export const setThemeEpic = (
       const base = [
         logEventAction({ category: "theme", action: action.payload }),
         setSelection(null),
-        setStoryModeStepAction(0)
+        setStoryModeStepAction(0),
       ];
       switch (action.payload) {
         case "invasive":
@@ -138,7 +151,7 @@ export const setStoryModeStepEpic = (
                   setRegionAction({}),
                   setBoundsAction([
                     [23.73159810368128, -5.628262912580524],
-                    [57.46049921128645, 22.484559914680688]
+                    [57.46049921128645, 22.484559914680688],
                   ])
                 );
               case 1:
@@ -168,11 +181,73 @@ export const setStoryModeLogEventStepEpic = (
         return of(
           logEventAction({
             category: "Story Mode",
-            action: "true"
+            action: "true",
           })
         );
       } else {
         return of();
       }
+    })
+  );
+export type LastUpdated = {
+  OBJECTID: number;
+  TABLE_NAME: string;
+  DATE: number;
+};
+type Response = { features: { attributes: LastUpdated }[] } & ErrorResponse;
+
+export const getLastUpdatedEpic = (
+  action$: ActionsObservable<ActionType<typeof getLastUpdatedRequestAction>>
+) =>
+  action$.ofType(ActionTypeEnum.GetLastUpdatedRequest).pipe(
+    switchMap(() => {
+      const params: { [key: string]: string } = {
+        f: "json",
+        where: `1%3D1`,
+        outFields: "*",
+      };
+      const query: string = Object.keys(params)
+        .map((key) => `${key}=${params[key]}`)
+        .join("&");
+      return ajax.get(`/${MapServerConfig.layers.updates}/query?${query}`).pipe(
+        mergeMap((response: Response) => {
+          if (response.error) {
+            return of(
+              addNotificationAction(response.error.message),
+              getLastUpdatedFailureAction(response.error.message)
+            );
+          } else {
+            const updatesList = response.features.map(
+              (feature) => feature.attributes
+            );
+            const updates: any = {};
+            for (const update of updatesList) {
+              switch (update.TABLE_NAME) {
+                case "TREATMENT":
+                  updates["treatment"] = new Date(update.DATE);
+                  break;
+                case "HRP":
+                  updates["diagnosis"] = new Date(update.DATE);
+                  break;
+                case "PREVENTION":
+                  updates["prevention"] = new Date(update.DATE);
+                  break;
+                case "INVASIVE":
+                  updates["invasive"] = new Date(update.DATE);
+                  break;
+                default:
+                  break;
+              }
+            }
+            return of(getLastUpdatedSuccessAction(updates));
+          }
+        }),
+        catchError((error: AjaxError) =>
+          of(
+            addNotificationAction(error.message),
+            getLastUpdatedFailureAction(error)
+          )
+        )
+      );
     })
   );

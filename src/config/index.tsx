@@ -14,7 +14,7 @@ type ConfigProps = {
 const WHO_MALARIA_THREATS_MAP_STAGING =
   "https://extranet.who.int/gis/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer";
 const WHO_MALARIA_THREATS_MAP =
-  "https://who-cache.esriemcs.com/cloud53/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP/MapServer";
+  "https://extranet.who.int/gis/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP/MapServer";
 
 const BASEMAP_NONIC_UAT =
   "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/WHO_Basemap_Beta3/MapServer";
@@ -30,22 +30,22 @@ const BOUNDARIES_BASE_URL = `https://services.arcgis.com/5T5nSi527N4F7luB/ArcGIS
 
 const stagingMapServer = {
   mapServerUrl: WHO_MALARIA_THREATS_MAP_STAGING,
-  boundariesBaseUrl: BOUNDARIES_BASE_URL
+  boundariesBaseUrl: BOUNDARIES_BASE_URL,
 };
 
 const prodMapServer = {
   mapServerUrl: WHO_MALARIA_THREATS_MAP,
-  boundariesBaseUrl: BOUNDARIES_BASE_URL
+  boundariesBaseUrl: BOUNDARIES_BASE_URL,
 };
 
 const stagingMapTile = {
   mapTilesBaseUrl: BASEMAP_NONIC_UAT,
-  mapLabelsBaseUrl: BASEMAP_NONIC_LABEL_UAT
+  mapLabelsBaseUrl: BASEMAP_NONIC_LABEL_UAT,
 };
 
 const prodMapTile = {
   mapTilesBaseUrl: BASEMAP_NONIC,
-  mapLabelsBaseUrl: BASEMAP_NONIC_LABEL
+  mapLabelsBaseUrl: BASEMAP_NONIC_LABEL,
 };
 
 const configurations: { [key: string]: ConfigProps } = {
@@ -55,7 +55,7 @@ const configurations: { [key: string]: ConfigProps } = {
     backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "",
     env: "local",
-    mekong: false
+    mekong: false,
   },
   staging: {
     ...stagingMapServer,
@@ -63,7 +63,7 @@ const configurations: { [key: string]: ConfigProps } = {
     backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "UA-151634352-1",
     env: "staging",
-    mekong: false
+    mekong: false,
   },
   prod: {
     ...prodMapServer,
@@ -71,7 +71,7 @@ const configurations: { [key: string]: ConfigProps } = {
     backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "UA-140410266-1",
     env: "prod",
-    mekong: false
+    mekong: false,
   },
   "local-mekong": {
     ...stagingMapServer,
@@ -79,7 +79,7 @@ const configurations: { [key: string]: ConfigProps } = {
     backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "",
     env: "local",
-    mekong: true
+    mekong: true,
   },
   "staging-mekong": {
     ...stagingMapServer,
@@ -87,7 +87,7 @@ const configurations: { [key: string]: ConfigProps } = {
     backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "",
     env: "staging",
-    mekong: true
+    mekong: true,
   },
   "prod-mekong": {
     ...prodMapServer,
@@ -95,8 +95,8 @@ const configurations: { [key: string]: ConfigProps } = {
     backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "",
     env: "prod",
-    mekong: true
-  }
+    mekong: true,
+  },
 };
 
 export default configurations[process.env.REACT_APP_ENV];

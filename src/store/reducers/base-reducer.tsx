@@ -22,6 +22,12 @@ const initialState: MalariaState = Object.freeze({
     region: "",
     subRegion: "",
   },
+  lastUpdatedDates: {
+    prevention: null,
+    diagnosis: null,
+    treatment: null,
+    invasive: null,
+  },
   initialDialogOpen: !query,
   filtersOpen: false,
   filtersMode: "filters",
@@ -108,6 +114,8 @@ export default createReducer<MalariaState>(initialState, {
     R.assoc("isSubmittingSubscription", false),
   [ActionTypeEnum.AddSubscriptionContactSuccess]: () =>
     R.assoc("isSubmittingSubscription", false),
+  [ActionTypeEnum.GetLastUpdatedSuccess]: (lastUpdatedDates: any) =>
+    R.assoc("lastUpdatedDates", lastUpdatedDates),
 });
 
 export const selectMalariaState = (state: State) => state.malaria;
@@ -195,6 +203,7 @@ export const selectIsFeedbackOpen = createSelector(
   selectMalariaState,
   R.prop("feedbackOpen")
 );
+
 export const selectTheaterMode = createSelector(
   selectMalariaState,
   R.prop("theaterMode")
@@ -204,7 +213,13 @@ export const selectLegendExpanded = createSelector(
   selectMalariaState,
   R.prop("legendExpanded")
 );
+
 export const selectIsSubmittingSubscription = createSelector(
   selectMalariaState,
   R.prop("isSubmittingSubscription")
+);
+
+export const selectLastUpdatedDates = createSelector(
+  selectMalariaState,
+  R.prop("lastUpdatedDates")
 );

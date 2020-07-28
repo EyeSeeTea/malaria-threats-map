@@ -211,8 +211,8 @@
       "filters": "Filters",
       "regions": "Regions"
     },
-    "no_records": "There are no records available with the specified criteria",
-    "records": "There are {{studies}} records found with specified criteria",
+    "no_records": "There are no studies available with the specified criteria",
+    "records": "There are {{studies}} studies found with specified criteria",
     "insecticide_class": "Insecticide class",
     "insecticide_type": "Insecticide type",
     "test_type": "Test type",
@@ -418,7 +418,8 @@
     "disclaimer": "Disclaimer",
     "subscribe": "Subscribe",
     "comments": "Provide your feedback",
-    "help": "Help"
+    "help": "Help",
+    "tour": "Take a tour"
   },
   "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",
   "PROP_RELATED": "Percentage %",

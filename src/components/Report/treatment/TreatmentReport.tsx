@@ -264,52 +264,62 @@ function TreatmentReport({ studies: baseStudies }: Props) {
         countryStudies
       );
       const entries = Object.entries(countrySpeciesGroup);
-      return entries
-        .map(([drug, countrySpeciesStudies]) => {
-          const yearSortedStudies = countrySpeciesStudies
-            .map((study: TreatmentStudy) => parseInt(study.YEAR_START))
-            .sort();
-          const minYear = yearSortedStudies[0];
-          const maxYear = yearSortedStudies[yearSortedStudies.length - 1];
+      let nStudies = 0;
+      return R.flatten(
+        entries.map(([drug, countrySpeciesStudies]) => {
+          const followUpCountrySpeciesGroup = R.groupBy(
+            (study: TreatmentStudy) => `${study.FOLLOW_UP}`,
+            countrySpeciesStudies
+          );
 
-          const prop = "TREATMENT_FAILURE_KM";
+          const followUpCountrySpeciesGroupStudies = Object.entries(
+            followUpCountrySpeciesGroup
+          );
+          nStudies += followUpCountrySpeciesGroupStudies.length;
+          return followUpCountrySpeciesGroupStudies
+            .map(([followUpDays, followUpCountrySpeciesStudies]) => {
+              const yearSortedStudies = followUpCountrySpeciesStudies
+                .map((study: TreatmentStudy) => parseInt(study.YEAR_START))
+                .sort();
+              const minYear = yearSortedStudies[0];
+              const maxYear = yearSortedStudies[yearSortedStudies.length - 1];
 
-          const values = countrySpeciesStudies
-            .map((study: TreatmentStudy) => parseFloat(study[prop]))
-            .filter((value) => !Number.isNaN(value));
-          const sortedValues = values.sort();
+              const prop = "TREATMENT_FAILURE_KM";
 
-          const min = values.length ? sortedValues[0] : "-";
-          const max = values.length ? sortedValues[values.length - 1] : "-";
-          const median = values.length ? R.median(sortedValues) : "-";
-          const percentile25 = values.length
-            ? percentile(sortedValues, 0.25)
-            : "-";
-          const percentile75 = values.length
-            ? percentile(sortedValues, 0.75)
-            : "-";
+              const values = followUpCountrySpeciesStudies
+                .map((study: TreatmentStudy) => parseFloat(study[prop]))
+                .filter((value) => !Number.isNaN(value));
+              const sortedValues = values.sort();
 
-          const followUpDays = R.uniq(
-            countrySpeciesStudies.map((study) => study.FOLLOW_UP)
-          ).join(", ");
+              const min = values.length ? sortedValues[0] : "-";
+              const max = values.length ? sortedValues[values.length - 1] : "-";
+              const median = values.length ? R.median(sortedValues) : "-";
+              const percentile25 = values.length
+                ? percentile(sortedValues, 0.25)
+                : "-";
+              const percentile75 = values.length
+                ? percentile(sortedValues, 0.75)
+                : "-";
 
-          return {
-            ID: `${country}_${drug}`,
-            DRUG: t(drug),
-            ISO2: country,
-            COUNTRY: t(country),
-            COUNTRY_NUMBER: entries.length,
-            FOLLOW_UP: followUpDays,
-            STUDY_YEARS: `${minYear} - ${maxYear}`,
-            NUMBER_OF_STUDIES: countrySpeciesStudies.length,
-            MEDIAN: median,
-            MIN: min,
-            MAX: max,
-            PERCENTILE_25: percentile25,
-            PERCENTILE_75: percentile75,
-          };
+              return {
+                ID: `${country}_${drug}`,
+                DRUG: t(drug),
+                ISO2: country,
+                COUNTRY: t(country),
+                COUNTRY_NUMBER: nStudies,
+                FOLLOW_UP: followUpDays,
+                STUDY_YEARS: `${minYear} - ${maxYear}`,
+                NUMBER_OF_STUDIES: countrySpeciesStudies.length,
+                MEDIAN: median,
+                MIN: min,
+                MAX: max,
+                PERCENTILE_25: percentile25,
+                PERCENTILE_75: percentile75,
+              };
+            })
+            .sort(getComparator(order, orderBy));
         })
-        .sort(getComparator(order, orderBy));
+      );
     })
   );
 
@@ -378,6 +388,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
   const filterColumnsToDisplay = ([field, value]: [string, string]) =>
     !["ID", "COUNTRY", "COUNTRY_NUMBER", "ISO2"].includes(field);
+  console.log(sortedGroups);
 
   return (
     <div className={classes.root}>
@@ -416,7 +427,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                   return (
                     <TableRow
                       tabIndex={-1}
-                      key={row.ID}
+                      key={`${row.ID}_${row.ISO2}_${row.FOLLOW_UP}`}
                       selected={isItemSelected}
                     >
                       {(index === 0 ||

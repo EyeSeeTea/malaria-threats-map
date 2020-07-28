@@ -26,6 +26,9 @@ export enum ActionTypeEnum {
   SetFeedbackOpen = "malaria/SET_FEEDBACK_OPEN",
   SetTheaterMode = "malaria/SET_THEATER_MODE_OPEN",
   SetLegendExpanded = "malaria/SET_LEGEND_EXPANDED",
+  GetLastUpdatedRequest = "malaria/GET_LAST_UPDATED_REQUEST",
+  GetLastUpdatedSuccess = "malaria/GET_LAST_UPDATED_SUCCESS",
+  GetLastUpdatedFailure = "malaria/GET_LAST_UPDATED_FAILURE",
 
   FetchPreventionStudiesRequest = "prevention/FETCH_PREVENTION_STUDIES_REQUEST",
   FetchPreventionStudiesSuccess = "prevention/FETCH_PREVENTION_STUDIES_SUCCESS",
@@ -94,5 +97,5 @@ export enum ActionTypeEnum {
 
   AddSubscriptionContactRequest = "downloads/ADD_SUBSCRIPTION_CONTACT_REQUEST",
   AddSubscriptionContactSuccess = "downloads/ADD_SUBSCRIPTION_CONTACT_SUCCESS",
-  AddSubscriptionContactError = "downloads/ADD_SUBSCRIPTION_CONTACT_ERROR"
+  AddSubscriptionContactError = "downloads/ADD_SUBSCRIPTION_CONTACT_ERROR",
 }

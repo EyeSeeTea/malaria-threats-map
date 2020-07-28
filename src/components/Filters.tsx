@@ -12,16 +12,16 @@ import {
   InvasiveMapType,
   PreventionMapType,
   State,
-  TreatmentMapType
+  TreatmentMapType,
 } from "../store/types";
 import {
   selectAreFiltersOpen,
   selectFilters,
-  selectTheme
+  selectTheme,
 } from "../store/reducers/base-reducer";
 import {
   selectFilteredPreventionStudies,
-  selectPreventionFilters
+  selectPreventionFilters,
 } from "../store/reducers/prevention-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
 import { connect } from "react-redux";
@@ -32,18 +32,18 @@ import LevelOfInvolvementFilters from "./layers/prevention/Involvement/LevelOfIn
 import GeneDeletionFilters from "./layers/diagnosis/GeneDeletions/GeneDeletionFilters";
 import {
   selectDiagnosisFilters,
-  selectFilteredDiagnosisStudies
+  selectFilteredDiagnosisStudies,
 } from "../store/reducers/diagnosis-reducer";
 import PboDeploymentFilters from "./layers/prevention/PboDeployment/PboDeploymentFilters";
 import TreatmentFailureFilters from "./layers/treatment/TreatmentFailure/TreatmentFailureFilters";
 import {
   selectFilteredTreatmentStudies,
-  selectTreatmentFilters
+  selectTreatmentFilters,
 } from "../store/reducers/treatment-reducer";
 import VectorOccuranceFilters from "./layers/invasive/VectorOccurance/VectorOccuranceFilters";
 import {
   selectFilteredInvasiveStudies,
-  selectInvasiveFilters
+  selectInvasiveFilters,
 } from "../store/reducers/invasive-reducer";
 import DelayedParasiteClearanceFilters from "./layers/treatment/DelayedParasiteClearance/DelayedParasiteClearanceFilters";
 import MolecularMarkerFilters from "./layers/treatment/MolecularMarkers/MolecularMarkerFilters";
@@ -56,22 +56,25 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
       backgroundColor: "#008dc9",
-      position: "relative"
+      position: "relative",
     },
     title: {
       marginLeft: theme.spacing(2),
-      flex: 1
+      flex: 1,
     },
     fab: {
       pointerEvents: "all",
-      margin: theme.spacing(0.5, 0)
+      margin: theme.spacing(0.5, 0),
     },
     extendedIcon: {
-      marginRight: theme.spacing(0.5)
+      marginRight: theme.spacing(0.5),
     },
     paper: {
-      backgroundColor: "#f3f3f3"
-    }
+      backgroundColor: "#f3f3f3",
+    },
+    popover: {
+      padding: theme.spacing(2),
+    },
   })
 );
 
@@ -115,12 +118,12 @@ const mapStateToProps = (state: State) => ({
   diagnosisFilters: selectDiagnosisFilters(state),
   treatmentFilters: selectTreatmentFilters(state),
   invasiveFilters: selectInvasiveFilters(state),
-  filtersOpen: selectAreFiltersOpen(state)
+  filtersOpen: selectAreFiltersOpen(state),
 });
 
 const mapDispatchToProps = {
   setPreventionMapType: setPreventionMapType,
-  setFiltersOpen: setFiltersOpen
+  setFiltersOpen: setFiltersOpen,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -138,10 +141,11 @@ function Filters({
   treatmentFilters,
   invasiveFilters,
   filtersOpen,
-  setFiltersOpen
+  setFiltersOpen,
 }: Props) {
   const classes = useStyles({});
   const [open, setOpen] = React.useState(false);
+
   const filteredStudies = (() => {
     switch (theme) {
       case "prevention":
@@ -222,11 +226,14 @@ function Filters({
         variant="extended"
         size="small"
         color={filtersOpen ? "primary" : "default"}
-        onClick={handleClickOpen}
         className={classes.fab}
       >
-        <FilterIconSimple className={classes.extendedIcon} fontSize="small" />
-        {t("filters.filters")}
+        <FilterIconSimple
+          className={classes.extendedIcon}
+          fontSize="small"
+          onClick={handleClickOpen}
+        />
+        <span onClick={handleClickOpen}>{t("filters.filters")}</span>
       </Fab>
       <Dialog
         fullScreen
@@ -235,16 +242,16 @@ function Filters({
         TransitionComponent={Transition}
         BackdropProps={{
           style: {
-            backgroundColor: "transparent"
-          }
+            backgroundColor: "transparent",
+          },
         }}
         PaperProps={{
-          className: classes.paper
+          className: classes.paper,
         }}
         style={{
           position: "absolute",
           left: 0,
-          maxWidth: "400px"
+          maxWidth: "400px",
         }}
       >
         <AppBar className={classes.appBar}>
@@ -271,13 +278,13 @@ function Filters({
         {!filteredStudies.length ? (
           <WarningSnackbar>
             <Typography variant="body2">
-              There are no records available with the specified criteria
+              There are no studies available wioth the specified criteria
             </Typography>
           </WarningSnackbar>
         ) : (
           <SuccessSnackbar>
             <Typography variant="body2">
-              There are {filteredStudies.length} records found with specified
+              There are {filteredStudies.length} studies found with specified
               criteria
             </Typography>
           </SuccessSnackbar>
@@ -288,7 +295,4 @@ function Filters({
   );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Filters);
+export default connect(mapStateToProps, mapDispatchToProps)(Filters);

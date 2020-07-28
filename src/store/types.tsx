@@ -32,6 +32,12 @@ export interface MalariaState {
   storyModeStep: number;
   filters: number[];
   region: RegionState;
+  lastUpdatedDates: {
+    prevention: Date | null;
+    diagnosis: Date | null;
+    treatment: Date | null;
+    invasive: Date | null;
+  };
   initialDialogOpen: boolean;
   filtersOpen: boolean;
   filtersMode: string;
@@ -74,7 +80,7 @@ export interface DiagnosisFilters {
 }
 
 export enum DiagnosisMapType {
-  GENE_DELETIONS
+  GENE_DELETIONS,
 }
 
 export enum PreventionMapType {
@@ -82,7 +88,7 @@ export enum PreventionMapType {
   INTENSITY_STATUS,
   RESISTANCE_MECHANISM,
   LEVEL_OF_INVOLVEMENT,
-  PBO_DEPLOYMENT
+  PBO_DEPLOYMENT,
 }
 
 export interface PreventionFilters {
@@ -106,7 +112,7 @@ export interface PreventionState {
 export enum TreatmentMapType {
   TREATMENT_FAILURE,
   DELAYED_PARASITE_CLEARANCE,
-  MOLECULAR_MARKERS
+  MOLECULAR_MARKERS,
 }
 
 export interface TreatmentFilters {
@@ -125,7 +131,7 @@ export interface TreatmentState {
 }
 
 export enum InvasiveMapType {
-  VECTOR_OCCURANCE
+  VECTOR_OCCURANCE,
 }
 
 export interface InvasiveFilters {
