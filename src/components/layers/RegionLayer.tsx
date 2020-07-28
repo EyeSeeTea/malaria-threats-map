@@ -7,10 +7,11 @@ import { fetchCountryLayerRequest } from "../../store/actions/country-layer-acti
 import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
 import {
   selectEndemicity,
-  selectRegion
+  selectRegion,
 } from "../../store/reducers/base-reducer";
 import { MapServerConfig } from "../../constants/constants";
 import config from "../../config";
+import { setSelection } from "../../store/actions/base-actions";
 
 const REGION_LAYER_ID = "regions-layer";
 const REGION_SOURCE_ID = "regions-source";
@@ -21,24 +22,25 @@ const layer: any = {
   paint: {
     "fill-color": "rgba(0,0,0,0.4)",
     "fill-opacity": 0.5,
-    "fill-outline-color": "rgba(0,0,0,0.1)"
+    "fill-outline-color": "rgba(0,0,0,0.1)",
   },
   layout: {
-    visibility: "none"
+    visibility: "none",
   },
   minZoom: 0,
   maxZoom: 20,
-  source: REGION_SOURCE_ID
+  source: REGION_SOURCE_ID,
 };
 
 const mapStateToProps = (state: State) => ({
   endemicity: selectEndemicity(state),
   region: selectRegion(state),
-  countryLayer: selectCountryLayer(state)
+  countryLayer: selectCountryLayer(state),
 });
 
 const mapDispatchToProps = {
-  fetchCountryLayer: fetchCountryLayerRequest
+  fetchCountryLayer: fetchCountryLayerRequest,
+  setSelection: setSelection,
 };
 
 interface OwnProps {
@@ -49,7 +51,7 @@ export const MEKONG_BOUNDS: [number, number, number, number] = [
   71.67568318434894,
   -10.1059286413618565,
   129.04037704012393,
-  38.602914952002706
+  38.602914952002706,
 ];
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -64,9 +66,9 @@ class RegionLayer extends Component<Props> {
       "where=1%3D1&f=geojson&geometryPrecision=2.5&outFields=SUBREGION,REGION_FULL,CENTER_LAT,CENTER_LON,ISO_2_CODE";
     const source: any = {
       type: "geojson",
-      data: `${config.mapServerUrl}/${MapServerConfig.layers.countries}/query?${query}`
+      data: `${config.mapServerUrl}/${MapServerConfig.layers.countries}/query?${query}`,
     };
-    const existing = this.props.map.getSource(REGION_SOURCE_ID)
+    const existing = this.props.map.getSource(REGION_SOURCE_ID);
     if (!existing) {
       this.props.map.addSource(REGION_SOURCE_ID, source);
       this.props.map.addLayer(layer);
@@ -96,6 +98,8 @@ class RegionLayer extends Component<Props> {
       this.zoomToRegion(region.region);
       this.highlightToRegion(region.region);
       this.showLayer();
+    } else if (region.site) {
+      this.zoomToSite(region.site, region.siteIso2, region.siteCoordinates);
     } else {
       // const location = {
       //   center: [-16.629129, 28.291565],
@@ -112,21 +116,21 @@ class RegionLayer extends Component<Props> {
   highlightToCountry = (country: string) => {
     this.props.map.setFilter(REGION_LAYER_ID, [
       "all",
-      ["!=", "ISO_2_CODE", country]
+      ["!=", "ISO_2_CODE", country],
     ]);
   };
 
   highlightToRegion = (region: string) => {
     this.props.map.setFilter(REGION_LAYER_ID, [
       "all",
-      ["!=", "REGION_FULL", region.replace(/_/g, " ")]
+      ["!=", "REGION_FULL", region.replace(/_/g, " ")],
     ]);
   };
 
   highlightToSubRegion = (subRegion: string) => {
     this.props.map.setFilter(REGION_LAYER_ID, [
       "all",
-      ["!=", "SUBREGION", subRegion.replace(/_/g, " ")]
+      ["!=", "SUBREGION", subRegion.replace(/_/g, " ")],
     ]);
   };
 
@@ -146,7 +150,7 @@ class RegionLayer extends Component<Props> {
       return bounds.extend(coord);
     }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
     this.props.map.fitBounds(bounds, {
-      padding: 100
+      padding: 100,
     });
   };
 
@@ -170,7 +174,7 @@ class RegionLayer extends Component<Props> {
       return bounds.extend(coord);
     }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
     this.props.map.fitBounds(bounds, {
-      padding: 100
+      padding: 100,
     });
   };
 
@@ -179,7 +183,7 @@ class RegionLayer extends Component<Props> {
     if (subRegion === "GREATER_MEKONG") {
       if (!config.mekong) {
         this.props.map.fitBounds(MEKONG_BOUNDS, {
-          padding: 100
+          padding: 100,
         });
       }
       return;
@@ -202,7 +206,29 @@ class RegionLayer extends Component<Props> {
       return bounds.extend(coord);
     }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
     this.props.map.fitBounds(bounds, {
-      padding: 100
+      padding: 100,
+    });
+  };
+
+  zoomToSite = (site: string, iso2: string, coords: [number, number]) => {
+    console.log(site, coords);
+    const coordinates: [number, number] = [coords[1], coords[0]];
+
+    this.props.map.once("moveend", ({ originalEvent }: any) => {
+      const selection = {
+        ISO_2_CODE: iso2,
+        SITE_ID: site,
+        coordinates: coordinates,
+      };
+      setTimeout(() => {
+        this.props.setSelection(selection);
+      }, 100);
+    });
+    this.props.map.flyTo({
+      center: coordinates,
+      zoom: 20,
+      essential: true,
+      maxDuration: 5000,
     });
   };
 

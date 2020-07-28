@@ -54,6 +54,7 @@ import SubRegionSelector from "./filters/SubRegionSelector";
 import { SuccessSnackbar, WarningSnackbar } from "./Filters";
 import { useTranslation } from "react-i18next";
 import config from "../config";
+import SiteSelector from "./filters/SiteSelector";
 
 const FiltersWrapper = styled.div`
   margin-top: 20px;
@@ -278,6 +279,7 @@ const FiltersSidebar = ({
               <>
                 <RegionSelector />
                 <SubRegionSelector />
+                <SiteSelector />
               </>
             )}
           </>

@@ -21,6 +21,9 @@ const initialState: MalariaState = Object.freeze({
     country: "",
     region: "",
     subRegion: "",
+    site: "",
+    siteIso2: "",
+    siteCoordinates: undefined,
   },
   lastUpdatedDates: {
     prevention: null,

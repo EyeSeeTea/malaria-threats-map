@@ -21,6 +21,9 @@ export interface RegionState {
   country?: string;
   region?: string;
   subRegion?: string;
+  site?: string;
+  siteIso2?: string;
+  siteCoordinates?: [number, number];
 }
 
 export interface MalariaState {

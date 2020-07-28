@@ -38,7 +38,7 @@ const options: (data: any, translations: any) => Highcharts.Options = (
       dataLabels: {
         formatter: function () {
           // @ts-ignore
-          return `${this.y} (${this.point.number})`;
+          return `${this.y}% (${this.point.number})`;
         } as DataLabelsFormatterCallbackFunction,
         enabled: true,
       },

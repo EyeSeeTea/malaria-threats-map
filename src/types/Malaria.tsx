@@ -1,5 +1,8 @@
 export interface Study {
   OBJECTID: number;
+  VILLAGE_NAME: string;
+  SITE_ID: string;
+  ISO2: string;
   CITATION_LONG: string;
   INSTITUTE_CURATION: string;
   CURATION: string;
