@@ -66,6 +66,7 @@ import TheaterMode from "./TheaterMode";
 import TheaterModeIcon from "./TheaterMode/TheaterModeIcon";
 import InitialDialog from "./InitialDialog";
 import TourIcon from "./TourIcon";
+import ShareIcon from "./ShareIcon";
 
 ReactMapboxGl({
   accessToken:
@@ -327,6 +328,9 @@ class Map extends React.Component<Props> {
             {!mekong && <Country />}
             {!mekong && <StoryModeSelector />}
             {!mekong && <DataDownload />}
+            <Hidden smUp>
+              <ShareIcon />
+            </Hidden>
             <Hidden xsDown>
               {ready ? <Screenshot map={this.map} /> : <div />}
               {ready && ["prevention", "treatment"].includes(theme) ? (
