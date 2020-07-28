@@ -212,7 +212,18 @@
       "regions": "Regions"
     },
     "no_records": "There are no studies available with the specified criteria",
-    "records": "There are {{studies}} studies found with specified criteria",
+    "records": {
+      "prevention": {
+        "0": "There are {{studies}} bioassays found with the specified criteria",
+        "1": "There are {{studies}} bioassays found with the specified criteria",
+        "2": "There are {{studies}} assays found with the specified criteria",
+        "3": "There are {{studies}} bioassays found with the specified criteria",
+        "4": ""
+      },
+      "diagnosis": "There are {{studies}} surveys found with the specified criteria",
+      "treatment": "There are {{studies}} studies found with the specified criteria",
+      "invasive": "There are {{studies}} vector detections found with the specified criteria"
+    },
     "insecticide_class": "Insecticide class",
     "insecticide_type": "Insecticide type",
     "test_type": "Test type",

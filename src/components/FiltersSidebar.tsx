@@ -246,16 +246,27 @@ const FiltersSidebar = ({
           </Typography>
         </LastUpdatedContainer>
       )}
-      {!filteredStudies.length ? (
-        <WarningSnackbar>
-          <Typography variant="body2">{t(`filters.no_records`)}</Typography>
-        </WarningSnackbar>
-      ) : (
-        <SuccessSnackbar>
-          <Typography variant="body2">
-            {t(`filters.records`, { studies: filteredStudies.length })}
-          </Typography>
-        </SuccessSnackbar>
+      {(theme !== "prevention" || preventionFilters.mapType !== 4) && (
+        <>
+          {!filteredStudies.length ? (
+            <WarningSnackbar>
+              <Typography variant="body2">{t(`filters.no_records`)}</Typography>
+            </WarningSnackbar>
+          ) : (
+            <SuccessSnackbar>
+              <Typography variant="body2">
+                {t(
+                  `filters.records.${theme}${
+                    theme === "prevention"
+                      ? `.${preventionFilters.mapType}`
+                      : ""
+                  }`,
+                  { studies: filteredStudies.length }
+                )}
+              </Typography>
+            </SuccessSnackbar>
+          )}
+        </>
       )}
       <FiltersWrapper>
         {value === 0 ? (

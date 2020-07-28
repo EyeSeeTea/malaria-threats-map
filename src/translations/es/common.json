@@ -212,7 +212,18 @@
       "regions": "Regiones"
     },
     "no_records": "No hay registros disponibles con los criterios especificados",
-    "records": "Hay {{studies}} registros encontrados con los criterios especificados",
+    "records": {
+      "prevention": {
+        "0": "Hay {{studies}} pruebas con los criterios especificados",
+        "1": "Hay {{studies}} pruebas con los criterios especificados",
+        "2": "Hay {{studies}} ensayo con los criterios especificados",
+        "3": "Hay {{studies}} pruebas con los criterios especificados",
+        "4": ""
+      },
+      "diagnosis": "Hay {{studies}} encuestas con los criterios especificados",
+      "treatment": "Hay {{studies}} estudios con los criterios especificados",
+      "invasive": "Hay {{studies}} detecciones de vectores encontrados con los criterios especificados"
+    },
     "insecticide_class": "Clase de insecticida",
     "insecticide_type": "Tipo de insecticida",
     "test_type": "Tipo de ensayo",
