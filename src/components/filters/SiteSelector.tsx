@@ -60,6 +60,8 @@ function SiteSelector({
     }
   })();
 
+  console.log(studies.length)
+
   const SITES_SUGGESTIONS = R.uniqBy(
     (study) => study.value,
     studies.map((study) => ({

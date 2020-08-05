@@ -223,7 +223,6 @@ class RegionLayer extends Component<Props> {
   };
 
   zoomToSite = (site: string, iso2: string, coords: [number, number]) => {
-    console.log(site, coords);
     const coordinates: [number, number] = [coords[1], coords[0]];
 
     this.props.map.once("moveend", ({ originalEvent }: any) => {

@@ -9,7 +9,7 @@ import { State } from "../../../store/types";
 import mapboxgl from "mapbox-gl";
 import {
   selectCountryMode,
-  selectSelection
+  selectSelection,
 } from "../../../store/reducers/base-reducer";
 import TreatmentSelectionChart from "./TreatmentSelectionChart";
 import { selectTreatmentFilters } from "../../../store/reducers/treatment-reducer";
@@ -20,11 +20,11 @@ import { setSelection } from "../../../store/actions/base-actions";
 const mapStateToProps = (state: State) => ({
   treatmentFilters: selectTreatmentFilters(state),
   countryMode: selectCountryMode(state),
-  selection: selectSelection(state)
+  selection: selectSelection(state),
 });
 
 const mapDispatchToProps = {
-  setSelection: setSelection
+  setSelection: setSelection,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -53,15 +53,17 @@ class PreventionSitePopover extends Component<Props> {
       placeholder
     );
 
-    this.popup = new mapboxgl.Popup()
-      .setLngLat(selection.coordinates)
-      .setDOMContent(placeholder)
-      .addTo(this.props.map)
-      .on("close", () => {
-        this.props.setSelection(null);
-      });
+    if (selection.coordinates) {
+      this.popup = new mapboxgl.Popup()
+        .setLngLat(selection.coordinates)
+        .setDOMContent(placeholder)
+        .addTo(this.props.map)
+        .on("close", () => {
+          this.props.setSelection(null);
+        });
 
-    setTimeout(() => dispatchCustomEvent("resize"), 100);
+      setTimeout(() => dispatchCustomEvent("resize"), 100);
+    }
   }
 
   componentDidUpdate(
