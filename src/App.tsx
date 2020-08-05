@@ -19,7 +19,7 @@ import {
   setStoryModeAction,
   setStoryModeStepAction,
   setThemeAction,
-  toggleEndemicityLayerAction
+  toggleEndemicityLayerAction,
 } from "./store/actions/base-actions";
 import {
   setAssayTypes,
@@ -28,23 +28,23 @@ import {
   setPreventionMapType,
   setSpecies,
   setSynergistTypes,
-  setType
+  setType,
 } from "./store/actions/prevention-actions";
 import {
   setDiagnosisDeletionType,
   setDiagnosisMapType,
   setDiagnosisPatientType,
-  setDiagnosisSurveyTypes
+  setDiagnosisSurveyTypes,
 } from "./store/actions/diagnosis-actions";
 import {
   setMolecularMarker,
   setTreatmentDrug,
   setTreatmentMapType,
-  setTreatmentPlasmodiumSpecies
+  setTreatmentPlasmodiumSpecies,
 } from "./store/actions/treatment-actions";
 import {
   setInvasiveMapType,
-  setInvasiveVectorSpecies
+  setInvasiveVectorSpecies,
 } from "./store/actions/invasive-actions";
 import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
 import config from "./config";
@@ -60,7 +60,7 @@ ReduxQuerySync({
     theme: {
       selector: (state: State) => state.malaria.theme,
       action: (value: string) =>
-        setThemeAction(mekong ? "treatment" : value || "prevention")
+        setThemeAction(mekong ? "treatment" : value || "prevention"),
     },
     mapType: {
       selector: (state: State) => {
@@ -98,103 +98,103 @@ ReduxQuerySync({
           default:
             return setPreventionMapType(mapType);
         }
-      }
+      },
     },
     bounds: {
       selector: (state: State) => JSON.stringify(state.malaria.bounds),
       action: (value: string) =>
-        setBoundsAction(value ? JSON.parse(value) : undefined)
+        setBoundsAction(value ? JSON.parse(value) : undefined),
     },
     insecticideClass: {
       selector: (state: State) => state.prevention.filters.insecticideClass,
-      action: (value: string) => setInsecticideClass(value)
+      action: (value: string) => setInsecticideClass(value),
     },
     insecticideTypes: {
       selector: (state: State) => state.prevention.filters.insecticideTypes,
       action: (value: string) =>
-        setInsecticideTypes(value ? value.split(",") : undefined)
+        setInsecticideTypes(value ? value.split(",") : undefined),
     },
     assayTypes: {
       selector: (state: State) => state.prevention.filters.assayTypes,
       action: (value: string) =>
-        setAssayTypes(value ? value.split(",") : undefined)
+        setAssayTypes(value ? value.split(",") : undefined),
     },
     synergistTypes: {
       selector: (state: State) => state.prevention.filters.synergistTypes,
       action: (value: string) =>
-        setSynergistTypes(value ? value.split(",") : undefined)
+        setSynergistTypes(value ? value.split(",") : undefined),
     },
     type: {
       selector: (state: State) => state.prevention.filters.type,
-      action: (value: string) => setType(value)
+      action: (value: string) => setType(value),
     },
     species: {
       selector: (state: State) => state.prevention.filters.species,
       action: (value: string) =>
-        setSpecies(value ? value.split(",") : undefined)
+        setSpecies(value ? value.split(",") : undefined),
     },
     vectorSpecies: {
       selector: (state: State) => state.invasive.filters.vectorSpecies,
       action: (value: string) =>
-        setInvasiveVectorSpecies(value ? value.split(",") : undefined)
+        setInvasiveVectorSpecies(value ? value.split(",") : undefined),
     },
     surveyTypes: {
       selector: (state: State) => state.diagnosis.filters.surveyTypes,
       action: (value: string) =>
-        setDiagnosisSurveyTypes(value ? value.split(",") : undefined)
+        setDiagnosisSurveyTypes(value ? value.split(",") : undefined),
     },
     patientType: {
       selector: (state: State) => state.diagnosis.filters.patientType,
-      action: (value: string) => setDiagnosisPatientType(value)
+      action: (value: string) => setDiagnosisPatientType(value),
     },
     deletionType: {
       selector: (state: State) => state.diagnosis.filters.deletionType,
-      action: (value: string) => setDiagnosisDeletionType(value)
+      action: (value: string) => setDiagnosisDeletionType(value),
     },
     plasmodiumSpecies: {
       selector: (state: State) => state.treatment.filters.plasmodiumSpecies,
-      action: (value: string) => setTreatmentPlasmodiumSpecies(value)
+      action: (value: string) => setTreatmentPlasmodiumSpecies(value),
     },
     drug: {
       selector: (state: State) => state.treatment.filters.drug,
-      action: (value: string) => setTreatmentDrug(value)
+      action: (value: string) => setTreatmentDrug(value),
     },
     mmType: {
       selector: (state: State) => state.treatment.filters.molecularMarker,
-      action: (value: string) => setMolecularMarker(parseInt(value))
+      action: (value: string) => setMolecularMarker(parseInt(value)),
     },
     endemicity: {
       selector: (state: State) => state.malaria.endemicity,
-      action: (value: string) => toggleEndemicityLayerAction(value === "true")
+      action: (value: string) => toggleEndemicityLayerAction(value === "true"),
     },
     countryMode: {
       selector: (state: State) => state.malaria.countryMode,
       action: (value: string) =>
-        setCountryModeAction(mekong ? false : value === "true")
+        setCountryModeAction(mekong ? false : value === "true"),
     },
     storyMode: {
       selector: (state: State) => state.malaria.storyMode,
       action: (value: string) =>
-        setStoryModeAction(mekong ? false : value === "true")
+        setStoryModeAction(mekong ? false : value === "true"),
     },
     storyModeStep: {
       selector: (state: State) => state.malaria.storyModeStep,
-      action: (value: string) => setStoryModeStepAction(parseInt(value))
+      action: (value: string) => setStoryModeStepAction(parseInt(value)),
     },
     filterOpen: {
       selector: (state: State) => state.malaria.filtersOpen,
-      action: (value: string) => setFiltersOpen(value === "true")
+      action: (value: string) => setFiltersOpen(value === "true"),
     },
     filtersMode: {
       selector: (state: State) => state.malaria.filtersMode,
-      action: (value: string) => setFiltersMode(mekong ? "filters" : value)
+      action: (value: string) => setFiltersMode(mekong ? "filters" : value),
     },
     years: {
       selector: (state: State) => state.malaria.filters,
       action: (value: string) =>
         setFiltersAction(
-          value ? value.split(",").map(value => parseInt(value)) : undefined
-        )
+          value ? value.split(",").map((value) => parseInt(value)) : undefined
+        ),
     },
     region: {
       selector: (state: State) => {
@@ -207,46 +207,65 @@ ReduxQuerySync({
         if (state.malaria.region.subRegion) {
           return `subRegion:${state.malaria.region.subRegion}`;
         }
+        if (state.malaria.region.site) {
+          const site = `site:${encodeURI(
+            JSON.stringify({
+              siteIso2: state.malaria.region.siteIso2,
+              site: state.malaria.region.site,
+              siteCoordinates: state.malaria.region.siteCoordinates,
+            })
+          )}`;
+          return site;
+        }
       },
       action: (value: string) => {
-        const terms = value.split(":");
-        switch (terms[0]) {
+        const [type, ...rest] = value.split(":");
+        switch (type) {
           case "country":
-            return setRegionAction({ country: terms[1] });
+            return setRegionAction({ country: rest[1] });
           case "region":
-            return setRegionAction({ region: terms[1] });
+            return setRegionAction({ region: rest[1] });
           case "subRegion":
-            return setRegionAction({ subRegion: terms[1] });
+            return setRegionAction({ subRegion: rest[1] });
+          case "site":
+            const { siteIso2, site, siteCoordinates } = JSON.parse(
+              decodeURIComponent(rest.join(":"))
+            );
+            return setRegionAction({
+              siteIso2,
+              site,
+              siteCoordinates,
+            });
           default:
-            return setRegionAction({ subRegion: terms[1] });
+            return setRegionAction({ subRegion: rest[1] });
         }
-      }
-    }
+      },
+    },
   },
-  initialTruth: "location"
+  initialTruth: "location",
 });
 
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#008dc9"
+      main: "#008dc9",
     },
     secondary: {
-      main: "#d86422"
-    }
+      main: "#d86422",
+    },
   },
   overrides: {
     MuiFab: {
       root: {
-        backgroundColor: "white"
-      }
+        backgroundColor: "white",
+      },
     },
     MuiButton: {
       contained: {
-        backgroundColor: "white"
-      }
-    }
-  }
+        backgroundColor: "white",
+      },
+    },
+  },
 });
 
 class App extends React.Component {

@@ -11,7 +11,10 @@ import {
 } from "../../store/reducers/base-reducer";
 import { MapServerConfig } from "../../constants/constants";
 import config from "../../config";
-import { setSelection } from "../../store/actions/base-actions";
+import {
+  setRegionAction,
+  setSelection,
+} from "../../store/actions/base-actions";
 
 const REGION_LAYER_ID = "regions-layer";
 const REGION_SOURCE_ID = "regions-source";
@@ -41,6 +44,7 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
   fetchCountryLayer: fetchCountryLayerRequest,
   setSelection: setSelection,
+  setRegion: setRegionAction,
 };
 
 interface OwnProps {
@@ -109,6 +113,14 @@ class RegionLayer extends Component<Props> {
       //   padding: 100
       // });
       // this.zoomToCountry(region.country);
+
+      const mekong = config.mekong;
+      if (mekong) {
+        this.props.setRegion({
+          subRegion: "GREATER_MEKONG",
+        });
+      }
+
       this.hideLayer();
     }
   };

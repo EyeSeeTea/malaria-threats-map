@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { setRegionAction } from "../../store/actions/base-actions";
 import { selectRegion, selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import IntegrationReactSelect from "../BasicSelect";
-import { selectRegions } from "../../store/reducers/translations-reducer";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Divider, FilterWrapper } from "./Filters";
 import { selectFilteredPreventionStudies } from "../../store/reducers/prevention-reducer";
@@ -31,63 +30,66 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-class SiteSelector extends Component<Props> {
-  onChange = (selection: any) => {
-    this.props.setRegion({
+function SiteSelector({
+  theme,
+  preventionStudies,
+  diagnosisStudies,
+  treatmentStudies,
+  invasiveStudies,
+  region,
+  setRegion,
+}: Props) {
+  const [input, setInput] = useState("");
+  const onChange = (selection: any) => {
+    setRegion({
       site: selection ? selection.value : undefined,
       siteIso2: selection ? selection.iso2 : undefined,
       siteCoordinates: selection ? selection.coords : undefined,
     });
   };
-  render() {
-    const {
-      theme,
-      preventionStudies,
-      diagnosisStudies,
-      treatmentStudies,
-      invasiveStudies,
-      region,
-    } = this.props;
+  const studies: Study[] = (() => {
+    switch (theme) {
+      case "prevention":
+        return preventionStudies;
+      case "diagnosis":
+        return diagnosisStudies;
+      case "treatment":
+        return treatmentStudies;
+      case "invasive":
+        return invasiveStudies;
+    }
+  })();
 
-    const studies: Study[] = (() => {
-      switch (theme) {
-        case "prevention":
-          return preventionStudies;
-        case "diagnosis":
-          return diagnosisStudies;
-        case "treatment":
-          return treatmentStudies;
-        case "invasive":
-          return invasiveStudies;
-      }
-    })();
+  const SITES_SUGGESTIONS = R.uniqBy(
+    (study) => study.value,
+    studies.map((study) => ({
+      label: study.SITE_NAME || study.VILLAGE_NAME,
+      value: study.SITE_ID,
+      iso2: study.ISO2,
+      coords: [study.Latitude, study.Longitude],
+    }))
+  );
 
-    const SITES_SUGGESTIONS = R.uniqBy(
-      (study) => study.value,
-      studies.map((study) => ({
-        label: study.VILLAGE_NAME,
-        value: study.SITE_ID,
-        iso2: study.ISO2,
-        coords: [study.Latitude, study.Longitude],
-      }))
-    );
+  const suggestions = SITES_SUGGESTIONS.filter((suggestion) =>
+    suggestion.label.toLowerCase().startsWith(input.toLowerCase())
+  ).slice(0, 10);
 
-    const suggestions = SITES_SUGGESTIONS.slice(0, 10);
-
-    return (
-      <FilterWrapper>
-        <FormLabel component="legend">Site</FormLabel>
-        <Divider />
-        <IntegrationReactSelect
-          isClearable
-          placeholder={"Select Site"}
-          suggestions={suggestions}
-          onChange={this.onChange}
-          value={suggestions.find((s: any) => s.value === region.site) || null}
-        />
-      </FilterWrapper>
-    );
-  }
+  return (
+    <FilterWrapper>
+      <FormLabel component="legend">Site</FormLabel>
+      <Divider />
+      <IntegrationReactSelect
+        isClearable
+        placeholder={"Select Site"}
+        suggestions={suggestions}
+        onChange={onChange}
+        onInputChange={setInput}
+        value={
+          SITES_SUGGESTIONS.find((s: any) => s.value === region.site) || null
+        }
+      />
+    </FilterWrapper>
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SiteSelector);

@@ -2,6 +2,7 @@ export interface Study {
   OBJECTID: number;
   VILLAGE_NAME: string;
   SITE_ID: string;
+  SITE_NAME: string;
   ISO2: string;
   CITATION_LONG: string;
   INSTITUTE_CURATION: string;

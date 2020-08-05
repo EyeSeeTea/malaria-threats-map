@@ -326,7 +326,7 @@ class Map extends React.Component<Props> {
             {!mekong && <TheaterModeIcon />}
             {!mekong && <Layers />}
             {!mekong && <Country />}
-            {!mekong && <StoryModeSelector />}
+            <StoryModeSelector />
             {!mekong && <DataDownload />}
             <Hidden smUp>
               <ShareIcon />
