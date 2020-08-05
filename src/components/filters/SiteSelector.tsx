@@ -70,8 +70,12 @@ function SiteSelector({
     }))
   );
 
-  const suggestions = SITES_SUGGESTIONS.filter((suggestion) =>
-    suggestion.label.toLowerCase().startsWith(input.toLowerCase())
+  console.log(SITES_SUGGESTIONS);
+
+  const suggestions = SITES_SUGGESTIONS.filter(
+    (suggestion) =>
+      suggestion.label &&
+      suggestion.label.toLowerCase().startsWith(input.toLowerCase())
   ).slice(0, 10);
 
   return (

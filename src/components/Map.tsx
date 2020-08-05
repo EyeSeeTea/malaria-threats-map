@@ -254,7 +254,7 @@ class Map extends React.Component<Props> {
       this.props.updateBounds(cc);
     });
 
-    if (mekong) {
+    if (mekong && !this.props.region.site) {
       this.props.setTheme("treatment");
       this.props.setRegion({
         subRegion: "GREATER_MEKONG",
