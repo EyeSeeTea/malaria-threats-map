@@ -70,8 +70,6 @@ function SiteSelector({
     }))
   );
 
-  console.log(SITES_SUGGESTIONS);
-
   const suggestions = SITES_SUGGESTIONS.filter(
     (suggestion) =>
       suggestion.label &&
