@@ -101,6 +101,12 @@
         "not_eligible": "Al menos un criterio no se cumple",
         "not_enough_data": "Es necesario recopilar más datos para evaluar los criterios",
         "no_data": "No hay datos disponibles",
+        "expanded": {
+          "eligible": "sitios donde al menos una especie de vector cumple los tres criterios recomendados por la OMS",
+          "not_eligible": "sitios donde una de las especies de vectores para las que se dispone de datos viola al menos uno de los, y ninguna de las especies para las que se dispone de datos cumple los tres criterios.",
+          "not_enough_data": "sitios con datos insuficientes para evaluar si las especies de vectores locales cumplen con los tres criterios",
+          "no_data": "datos no disponibles"
+        },
         "link": "https://www.who.int/malaria/publications/atoz/9789241511575/es/",
         "link_text": "Procedimientos de las pruebas para la vigilancia de la resistencia a los insecticidas en los mosquitos vectores del paludismo, Segunda edición",
         "link_content_1": "Más información sobre las recomendaciones de la OMS para el despliegue de mosquiteros con PBO y piretroide está disponible en los ",

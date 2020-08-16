@@ -101,6 +101,12 @@
         "not_eligible": "Au moins un critère n'est pas rempli",
         "not_enough_data": "Davantage de données doivent être collectées pour évaluer les critères",
         "no_data": "Pas de données disponibles",
+        "expanded": {
+          "eligible": "les sites où au moins une espèce de vecteur satisfait les trois critères recommandés par l'OMS",
+          "not_eligible": "les sites où l'une des espèces vectrices pour lesquelles des données sont disponibles enfreint au moins l'un des trois critères recommandés par l'OMS décrits ci-dessus, et aucune  espèce pour lesquelle des données sont disponibles ne satisfait les trois critères.",
+          "not_enough_data": "sites avec des données insuffisantes pour évaluer si les espèces vectorielles locales satisfont les trois critères",
+          "no_data": "aucune donnée disponible"
+        },
         "link": "https://www.who.int/malaria/publications/atoz/9789241511575/fr/",
         "link_text": "Procédures pour tester la résistance aux insecticides chez les moustiques vecteurs du paludisme – seconde édition",
         "link_content_1": "Plus de information sur les recommandations de l'OMS pour le déploiement de moustiquaires avec pBO et pyréthrinoïde sont disponibles dans les ",

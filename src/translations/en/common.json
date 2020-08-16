@@ -101,6 +101,12 @@
         "not_eligible": "At least one criteria is not met",
         "not_enough_data": "More data needs to be collected to evaluate criteria",
         "no_data": "No data available",
+        "expanded": {
+          "eligible": "sites where at least one vector species meets the three WHO recommended criteria",
+          "not_eligible": "sites where one of the vector species for which data are available violates at least one of the three criteria, and none of the species for which data are available meet the three criteria.",
+          "not_enough_data": "sites with insufficient data to evaluate whether the local vector species meets the three criteria",
+          "no_data": "no data available"
+        },
         "link": "https://www.who.int/malaria/publications/atoz/9789241550499/en/",
         "link_text": "WHO Guidelines for Malaria Vector Control",
         "link_content_1": "More information on the WHO recommendations for the deployment of Pyrethroid-PBO nets can be found in the ",

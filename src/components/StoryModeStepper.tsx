@@ -10,7 +10,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
-import { State } from "../store/types";
+import { PreventionMapType, State } from "../store/types";
 import {
   selectFilters,
   selectStoryModeStep,
@@ -28,6 +28,8 @@ import i18next from "i18next";
 import TreatmentSteps from "./story/treatment/TreatmentSteps";
 import InvasiveSteps from "./story/invasive/InvasiveSteps";
 import { EventData, Swipeable } from "react-swipeable";
+import PBOSteps from "./story/pbo/PBOSteps";
+import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 
 const FlexGrow = styled.div`
   flex-grow: 1;
@@ -72,6 +74,7 @@ function getSteps() {
 }
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
+  preventionFilters: selectPreventionFilters(state),
   filters: selectFilters(state),
   storyModeStep: selectStoryModeStep(state),
 });
@@ -89,6 +92,7 @@ type Steps = { [value: string]: any[] };
 
 const stepsMap = (language: string) => ({
   prevention: (PreventionSteps as Steps)[language],
+  pbo: (PBOSteps as Steps)[language],
   diagnosis: (DiagnosisSteps as Steps)[language],
   treatment: (TreatmentSteps as Steps)[language],
   invasive: (InvasiveSteps as Steps)[language],
@@ -96,6 +100,7 @@ const stepsMap = (language: string) => ({
 
 function StoryModeStepper({
   theme,
+  preventionFilters,
   setStoryMode,
   setStoryModeStep,
   storyModeStep,
@@ -127,7 +132,13 @@ function StoryModeStepper({
   };
 
   const themeMap = stepsMap(language) as Steps;
-  const selectedSteps = themeMap[theme];
+  const selectedSteps =
+    themeMap[
+      theme === "prevention" &&
+      preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT
+        ? "pbo"
+        : theme
+    ];
   const SelectedStep = selectedSteps[storyModeStep];
 
   if (storyModeStep < 0 || storyModeStep > selectedSteps.length - 1) {

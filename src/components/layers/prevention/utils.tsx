@@ -4,7 +4,7 @@ import intensityStatusSymbols from "./IntensityStatus/symbols";
 import resistanceMechanismSymbols from "./ResistanceMechanisms/symbols";
 import levelOfInvolvementSymbols from "./Involvement/symbols";
 import PboDeploymentSymbols, {
-  PboDeploymentStatus
+  PboDeploymentStatus,
 } from "./PboDeployment/PboDeploymentSymbols";
 import { default as ResistanceStatusLegend } from "./ResistanceStatus/legend";
 import { default as IntensityStatusLegend } from "./IntensityStatus/legend";
@@ -16,7 +16,7 @@ import {
   filterByAssayTypes,
   filterByInsecticideClass,
   filterByType,
-  filterByYearRange
+  filterByYearRange,
 } from "../studies-filters";
 import CountrySymbols from "./Countries/PreventionCountrySymbols";
 import PreventionCountryLegend from "./Countries/PreventionCountryLegend";
@@ -80,7 +80,7 @@ function filterByCriteria1(group: any[]) {
   const currentYear = new Date().getFullYear();
   const baseStudies = [
     filterByAssayTypes(["DISCRIMINATING_CONCENTRATION_BIOASSAY"]),
-    filterByInsecticideClass("PYRETHROIDS")
+    filterByInsecticideClass("PYRETHROIDS"),
   ].reduce((studies, filter) => studies.filter(filter), group);
   let filteredStudies = baseStudies.filter(
     filterByYearRange([currentYear - 3, currentYear - 1])
@@ -89,47 +89,83 @@ function filterByCriteria1(group: any[]) {
     const maxYear = R.reduce(
       R.max,
       0,
-      baseStudies.map(study => parseInt(study.YEAR_START))
+      baseStudies.map((study) => parseInt(study.YEAR_START))
     );
     filteredStudies = baseStudies.filter(
-      study => maxYear === parseInt(study.YEAR_START)
+      (study) => maxYear === parseInt(study.YEAR_START)
     );
   }
   return filteredStudies;
 }
 
-function meetsCriteria1(group: any[]) {
+function meetsCriteria1(group: any[], criteria: any) {
   let filteredStudies = filterByCriteria1(group);
+  const groupedStudies = R.groupBy(R.prop("SPECIES"), filteredStudies);
+  Object.entries(groupedStudies).forEach(([species, studies]) => {
+    if (!criteria[species]) {
+      criteria[species] = {};
+    }
+    criteria[species].criteria1 = R.any(
+      (study) => study.MORTALITY_ADJUSTED < 0.9,
+      studies
+    );
+  });
   if (filteredStudies.length === 0) return;
-  return R.any(study => study.MORTALITY_ADJUSTED < 0.9, filteredStudies);
+  return R.any((study) => study.MORTALITY_ADJUSTED < 0.9, filteredStudies);
 }
 
-function meetsCriteria2(group: any[]) {
+function meetsCriteria2(group: any[], criteria: any) {
   let filteredStudies = filterByCriteria1(group);
+  const groupedStudies = R.groupBy(R.prop("SPECIES"), filteredStudies);
+  Object.entries(groupedStudies).forEach(([species, studies]) => {
+    if (!criteria[species]) {
+      criteria[species] = {};
+    }
+    criteria[species].criteria2 = R.any(
+      (study) =>
+        study.MORTALITY_ADJUSTED >= 0.1 && study.MORTALITY_ADJUSTED <= 0.8,
+      studies
+    );
+  });
+
   if (filteredStudies.length === 0) return;
   return R.any(
-    study => study.MORTALITY_ADJUSTED >= 0.1 && study.MORTALITY_ADJUSTED <= 0.8,
+    (study) =>
+      study.MORTALITY_ADJUSTED >= 0.1 && study.MORTALITY_ADJUSTED <= 0.8,
     filteredStudies
   );
 }
-function meetsCriteria3(group: any[]) {
+function meetsCriteria3(group: any[], criteria: any) {
   const filteredStudies = [
     filterByAssayTypes([
       "SYNERGIST-INSECTICIDE_BIOASSAY",
       "BIOCHEMICAL_ASSAY",
-      "MOLECULAR_ASSAY"
+      "MOLECULAR_ASSAY",
     ]),
-    filterByType("MONO_OXYGENASES")
+    filterByType("MONO_OXYGENASES"),
   ].reduce((studies, filter) => studies.filter(filter), group);
+  const groupedStudies = R.groupBy(R.prop("SPECIES"), filteredStudies);
+  Object.entries(groupedStudies).forEach(([species, studies]) => {
+    if (!criteria[species]) {
+      criteria[species] = {};
+    }
+    criteria[species].criteria3 = R.any(
+      (study) => study.MECHANISM_STATUS === "DETECTED",
+      studies
+    );
+  });
   if (filteredStudies.length === 0) return;
-  return R.any(study => study.MECHANISM_STATUS === "DETECTED", filteredStudies);
+  return R.any(
+    (study) => study.MECHANISM_STATUS === "DETECTED",
+    filteredStudies
+  );
 }
 
 const filterByMostRecentYear = (group: any[]) => {
-  const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), group);
+  const sortedStudies = R.sortBy((study) => -parseInt(study.YEAR_START), group);
   // We filter all studies conducted that year.
   return R.filter(
-    study =>
+    (study) =>
       parseInt(study.YEAR_START) === parseInt(sortedStudies[0].YEAR_START),
     group
   );
@@ -139,7 +175,7 @@ function getByMostRecentYearAndMortalityAdjusted(group: any[]) {
   const filteredStudies = filterByMostRecentYear(group);
   // We sort remaining records by MORTALITY_ADJUSTED
   const filteredSortedStudies = R.sortBy(
-    study => parseFloat(study.MORTALITY_ADJUSTED),
+    (study) => parseFloat(study.MORTALITY_ADJUSTED),
     filteredStudies
   );
   return filteredSortedStudies[0];
@@ -152,14 +188,14 @@ const ResistanceIntensityOrder: { [value: string]: number } = {
   LOW_INTENSITY: 2,
   MODERATE_INTENSITY: 3,
   MODERATE_TO_HIGH_INTENSITY: 4,
-  HIGH_INTENSITY: 5
+  HIGH_INTENSITY: 5,
 };
 
 function getByMostRecentYearAndResistanceIntensity(group: any[]) {
   const filteredStudies = filterByMostRecentYear(group);
   // We sort remaining records by RESISTANCE INTENSITY
   const filteredSortedStudies = R.sortBy(
-    study => -ResistanceIntensityOrder[study.RESISTANCE_INTENSITY] || 0,
+    (study) => -ResistanceIntensityOrder[study.RESISTANCE_INTENSITY] || 0,
     filteredStudies
   );
   return filteredSortedStudies[0];
@@ -168,14 +204,14 @@ function getByMostRecentYearAndResistanceIntensity(group: any[]) {
 const ResistanceMechanismOrder: { [value: string]: number } = {
   NA: 0,
   NOT_DETECTED: 0,
-  DETECTED: 1
+  DETECTED: 1,
 };
 
 function getByMostRecentYearAndResistanceMechanism(group: any[]) {
   const filteredStudies = filterByMostRecentYear(group);
   // We sort remaining records by RESISTANCE INTENSITY
   const filteredSortedStudies = R.sortBy(
-    study => -ResistanceMechanismOrder[study.MECHANISM_STATUS] || 0,
+    (study) => -ResistanceMechanismOrder[study.MECHANISM_STATUS] || 0,
     filteredStudies
   );
   return filteredSortedStudies[0];
@@ -185,17 +221,29 @@ const InvolvementOrder: { [value: string]: number } = {
   COULD_NOT_BE_RELIABLY_ASSESSED: 0,
   NO_INVOLVEMENT: 0,
   PARTIAL_INVOLVEMENT: 1,
-  FULL_INVOLVEMENT: 2
+  FULL_INVOLVEMENT: 2,
 };
 
 function getByMostRecentYearAndInvolvement(group: any[]) {
   const filteredStudies = filterByMostRecentYear(group);
   // We sort remaining records by RESISTANCE INTENSITY
   const filteredSortedStudies = R.sortBy(
-    study => -InvolvementOrder[study.MECHANISM_PROXY] || 0,
+    (study) => -InvolvementOrder[study.MECHANISM_PROXY] || 0,
     filteredStudies
   );
   return filteredSortedStudies[0];
+}
+
+function getPboDeploymentStatus(
+  criteria1: boolean,
+  criteria2: boolean,
+  criteria3: boolean
+) {
+  return criteria1 && criteria2 && criteria3
+    ? PboDeploymentStatus.ELIGIBLE
+    : R.any((v) => v === false, [criteria1, criteria2, criteria3])
+    ? PboDeploymentStatus.NOT_ELIGIBLE
+    : PboDeploymentStatus.NOT_ENOUGH_DATA;
 }
 
 export const studySelector = (group: any[], mapType: PreventionMapType) => {
@@ -209,9 +257,10 @@ export const studySelector = (group: any[], mapType: PreventionMapType) => {
     case PreventionMapType.LEVEL_OF_INVOLVEMENT:
       return getByMostRecentYearAndInvolvement(group);
     case PreventionMapType.PBO_DEPLOYMENT:
-      const criteria1 = meetsCriteria1(group);
-      const criteria2 = meetsCriteria2(group);
-      const criteria3 = meetsCriteria3(group);
+      let criteria = {}
+      const criteria1 = meetsCriteria1(group, criteria);
+      const criteria2 = meetsCriteria2(group, criteria);
+      const criteria3 = meetsCriteria3(group, criteria);
       const pboDeploymentStatus =
         criteria1 && criteria2 && criteria3
           ? PboDeploymentStatus.ELIGIBLE
@@ -223,7 +272,7 @@ export const studySelector = (group: any[], mapType: PreventionMapType) => {
         PBO_DEPLOYMENT_CRITERIA_1: criteria1,
         PBO_DEPLOYMENT_CRITERIA_2: criteria2,
         PBO_DEPLOYMENT_CRITERIA_3: criteria3,
-        PBO_DEPLOYMENT_STATUS: pboDeploymentStatus
+        PBO_DEPLOYMENT_STATUS: pboDeploymentStatus,
       };
     default:
       return group[0];

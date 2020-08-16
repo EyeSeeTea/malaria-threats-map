@@ -6,8 +6,6 @@ import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import { setRegionAction, setThemeAction } from "../store/actions/base-actions";
 import { connect } from "react-redux";
-import { Link } from "@material-ui/core";
-import CardActions from "@material-ui/core/CardActions";
 import { ColorButton } from "./mekong/MekongTitle";
 
 const useStyles = makeStyles({

@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import { colors } from "../../constants/theme";
 import { setInitialDialogOpen } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
-import styled from "styled-components";
 
 const useStyles = makeStyles({
   card: {

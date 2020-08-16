@@ -95,6 +95,12 @@ export const setStoryModeStepEpic = (
         }
         switch (theme) {
           case "prevention":
+            if (
+              state.prevention.filters.mapType ===
+              PreventionMapType.PBO_DEPLOYMENT
+            ) {
+              return of();
+            }
             switch (action.payload) {
               case 0:
                 return of(setCountryModeAction(true), setRegionAction({}));

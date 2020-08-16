@@ -57,6 +57,10 @@ export const LegendText = styled.span`
   line-height: 24px;
 `;
 
+export const LegendDescriptionText = styled.span`
+  line-height: 18px;
+`;
+
 export const LegendTypography = styled(Typography)`
   font-size: 0.8rem !important;
 `;
