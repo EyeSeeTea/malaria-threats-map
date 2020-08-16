@@ -47,6 +47,8 @@ const ShareIcon = () => {
               })
               .then(() => console.log("Share complete"))
               .error(() => console.error("Could not share at this time"));
+          } else {
+              alert("Option not available on your phone")
           }
         }}
         title={t("icons.tour")}
