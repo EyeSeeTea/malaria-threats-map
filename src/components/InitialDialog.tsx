@@ -6,17 +6,17 @@ import {
   DiagnosisIcon,
   InvasiveIcon,
   PreventionIcon,
-  TreatmentIcon
+  TreatmentIcon,
 } from "./Icons";
 import { State } from "../store/types";
 import {
   selectIsInitialDialogOpen,
-  selectTour
+  selectTour,
 } from "../store/reducers/base-reducer";
 import {
   setInitialDialogOpen,
   setThemeAction,
-  setTourStepAction
+  setTourStepAction,
 } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
@@ -53,13 +53,13 @@ const WhiteColumn = styled(Column)`
 
 const mapStateToProps = (state: State) => ({
   tour: selectTour(state),
-  initialDialogOpen: selectIsInitialDialogOpen(state)
+  initialDialogOpen: selectIsInitialDialogOpen(state),
 });
 
 const mapDispatchToProps = {
   setTheme: setThemeAction,
   setTourStep: setTourStepAction,
-  setInitialDialogOpen: setInitialDialogOpen
+  setInitialDialogOpen: setInitialDialogOpen,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -67,13 +67,13 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const mekong = config.mekong;
-console.log(mekong)
+console.log(mekong);
 
 function InitialDialog({
   initialDialogOpen,
   setInitialDialogOpen,
   tour,
-  setTourStep
+  setTourStep,
 }: Props) {
   const { t } = useTranslation("common");
   function handleClose() {
@@ -82,7 +82,7 @@ function InitialDialog({
     }
     setInitialDialogOpen(false);
   }
-  console.log(mekong)
+  console.log(mekong);
 
   return (
     <Dialog
@@ -92,17 +92,17 @@ function InitialDialog({
       PaperProps={{
         style: {
           backgroundColor: "transparent",
-          boxShadow: "none"
-        }
+          boxShadow: "none",
+        },
       }}
       BackdropProps={{
         style: mekong
           ? {
               backgroundImage: `url(${background})`,
               backgroundSize: "cover",
-              backgroundRepeat: "no-repeat"
+              backgroundRepeat: "no-repeat",
             }
-          : {}
+          : {},
       }}
     >
       <Container maxWidth={mekong ? "md" : "xl"}>
@@ -145,6 +145,7 @@ function InitialDialog({
                 description={t("cards.treatment")}
                 Icon={TreatmentIcon}
                 onSelection={handleClose}
+                hasFooter
               />
               <SimpleCard
                 title={t("themes_caps.invasive")}
@@ -161,7 +162,4 @@ function InitialDialog({
   );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(InitialDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(InitialDialog);

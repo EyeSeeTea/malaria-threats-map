@@ -4,8 +4,11 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
-import { setThemeAction } from "../store/actions/base-actions";
+import { setRegionAction, setThemeAction } from "../store/actions/base-actions";
 import { connect } from "react-redux";
+import { Link } from "@material-ui/core";
+import CardActions from "@material-ui/core/CardActions";
+import { ColorButton } from "./mekong/MekongTitle";
 
 const useStyles = makeStyles({
   card: {
@@ -16,23 +19,23 @@ const useStyles = makeStyles({
     flexDirection: "column",
     display: "flex",
     alignItems: "center",
-    cursor: "pointer"
+    cursor: "pointer",
   },
   bullet: {
     display: "inline-block",
     margin: "0 2px",
-    transform: "scale(0.8)"
+    transform: "scale(0.8)",
   },
   title: {
-    fontSize: 14
+    fontSize: 14,
   },
   pos: {
     marginBottom: 12,
-    width: "100%"
+    width: "100%",
   },
   desc: {
-    width: "100%"
-  }
+    width: "100%",
+  },
 });
 
 // Fix for IE11
@@ -45,8 +48,13 @@ const StyledCardContent = styled(CardContent)`
 `;
 
 const mapDispatchToProps = {
-  setTheme: setThemeAction
+  setTheme: setThemeAction,
+  setRegion: setRegionAction,
 };
+
+const ButtonWrapper = styled.div`
+  margin-top: 16px;
+`;
 
 type OwnProp = {
   title?: string;
@@ -54,6 +62,7 @@ type OwnProp = {
   theme?: string;
   onSelection?: () => void;
   Icon?: any;
+  hasFooter?: boolean;
 };
 
 type DispatchProps = typeof mapDispatchToProps;
@@ -65,7 +74,9 @@ export const SimpleCard = ({
   Icon,
   theme,
   setTheme,
-  onSelection
+  setRegion,
+  onSelection,
+  hasFooter,
 }: Props) => {
   const classes = useStyles({});
 
@@ -85,12 +96,25 @@ export const SimpleCard = ({
         <Typography className={classes.desc} variant="body2" component="p">
           {description}
         </Typography>
+        {hasFooter && (
+          <ButtonWrapper>
+            <ColorButton
+              variant="contained"
+              size="large"
+              onClick={() => {
+                setTheme("treatment");
+                setRegion({
+                  subRegion: "GREATER_MEKONG",
+                });
+              }}
+            >
+              {"Greater Mekong Subregion"}
+            </ColorButton>
+          </ButtonWrapper>
+        )}
       </StyledCardContent>
     </Card>
   );
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(SimpleCard);
+export default connect(null, mapDispatchToProps)(SimpleCard);

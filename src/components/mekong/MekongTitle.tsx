@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { colors } from "../../constants/theme";
 import { setInitialDialogOpen } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
+import styled from "styled-components";
 
 const useStyles = makeStyles({
   card: {
@@ -16,27 +17,27 @@ const useStyles = makeStyles({
     padding: "16px 64px",
     maxWidth: "100%",
     textAlign: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.75)"
+    backgroundColor: "rgba(255, 255, 255, 0.75)",
   },
   media: {
-    height: 100
-  }
+    height: 100,
+  },
 });
 
-const ColorButton = withStyles((theme: Theme) => ({
+export const ColorButton = withStyles((theme: Theme) => ({
   root: {
     color: "white",
     backgroundColor: colors.treatment.N,
     "&:hover": {
-      backgroundColor: colors.treatment.D1
-    }
-  }
+      backgroundColor: colors.treatment.D1,
+    },
+  },
 }))(Button);
 
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {
-  setInitialDialogOpen: setInitialDialogOpen
+  setInitialDialogOpen: setInitialDialogOpen,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -60,7 +61,7 @@ function MekongTitle({ setInitialDialogOpen }: Props) {
       <CardActions
         style={{
           justifyContent: "center",
-          color: colors.treatment.N
+          color: colors.treatment.N,
         }}
       >
         <ColorButton
@@ -75,7 +76,4 @@ function MekongTitle({ setInitialDialogOpen }: Props) {
   );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MekongTitle);
+export default connect(mapStateToProps, mapDispatchToProps)(MekongTitle);
