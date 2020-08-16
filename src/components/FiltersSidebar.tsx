@@ -118,6 +118,7 @@ const FiltersSidebar = ({
   invasiveFilters,
   lastUpdatedDates,
 }: Props) => {
+  const { t } = useTranslation("common");
   const classes = useStyles({});
 
   const filteredStudies = (() => {
@@ -192,7 +193,6 @@ const FiltersSidebar = ({
     }
   }
 
-  const { t } = useTranslation("common");
   const themeSelector = theme as
     | "prevention"
     | "diagnosis"

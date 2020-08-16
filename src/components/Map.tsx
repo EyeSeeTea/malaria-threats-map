@@ -3,6 +3,7 @@ import { style } from "./style";
 import styled from "styled-components";
 import Layers from "./Layers";
 import mapboxgl from "mapbox-gl";
+import { isMobile } from "react-device-detect";
 
 import { PreventionMapType, State } from "../store/types";
 import { connect } from "react-redux";
@@ -89,6 +90,15 @@ const TopRightContainer = styled(BaseContainer)`
   right: 0;
   display: flex;
   align-items: center;
+`;
+
+const TopRightVerticalContainer = styled(BaseContainer)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 `;
 
 const BottomRightContainer = styled(BaseContainer)`
@@ -278,6 +288,7 @@ class Map extends React.Component<Props> {
       countryMode,
       preventionFilters,
     } = this.props;
+    const showOptions = isMobile || !initialDialogOpen;
     const isPbo =
       theme === "prevention" &&
       preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
@@ -307,7 +318,7 @@ class Map extends React.Component<Props> {
         {ready && <DiagnosisLayer map={this.map} />}
         {ready && <TreatmentLayer map={this.map} />}
         {ready && <InvasiveLayer map={this.map} />}
-        <Fade in={!initialDialogOpen}>
+        <Fade in={showOptions}>
           <SearchContainer>
             <Hidden xsDown>
               {!mekong && (
@@ -327,7 +338,7 @@ class Map extends React.Component<Props> {
             {!mekong && <Layers />}
             {!mekong && <Country />}
             <StoryModeSelector />
-            {!mekong && <DataDownload />}
+            {!mekong && !isMobile && <DataDownload />}
             <Hidden smUp>
               <ShareIcon />
             </Hidden>
@@ -341,19 +352,28 @@ class Map extends React.Component<Props> {
             </Hidden>
           </SearchContainer>
         </Fade>
-        <Fade in={!initialDialogOpen}>
-          <TopRightContainer>
-            <Hidden xsDown>
+        <Hidden xsDown>
+          <Fade in={showOptions}>
+            <TopRightContainer>
               {!mekong && <InitialDisclaimer />}
               {!mekong && <Subscription />}
               {!mekong && <Feedback />}
               {!mekong && <TourIcon />}
               <Separator />
-              {!initialDialogOpen && <LanguageSelectorSelect />}
-            </Hidden>
-          </TopRightContainer>
-        </Fade>
-        <Fade in={!initialDialogOpen}>
+              {showOptions && <LanguageSelectorSelect />}
+            </TopRightContainer>
+          </Fade>
+        </Hidden>
+        <Hidden smUp>
+          <Fade in={showOptions}>
+            <TopRightVerticalContainer>
+              {!mekong && <InitialDisclaimer />}
+              {!mekong && <Subscription />}
+              {!mekong && <Feedback />}
+            </TopRightVerticalContainer>
+          </Fade>
+        </Hidden>
+        <Fade in={showOptions}>
           <BottomRightContainer id={"legend"}>
             <Hidden smUp>
               <LeyendPopover />

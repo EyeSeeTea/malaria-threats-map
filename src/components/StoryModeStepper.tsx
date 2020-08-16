@@ -4,7 +4,7 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
-import { Paper } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -14,11 +14,11 @@ import { State } from "../store/types";
 import {
   selectFilters,
   selectStoryModeStep,
-  selectTheme
+  selectTheme,
 } from "../store/reducers/base-reducer";
 import {
   setStoryModeAction,
-  setStoryModeStepAction
+  setStoryModeStepAction,
 } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 import PreventionSteps from "./story/prevention/PreventionSteps";
@@ -44,26 +44,26 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {},
     title: {
-      lineHeight: 1.3
+      flexGrow: 1,
     },
     button: {
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(1),
     },
     instructions: {
       marginTop: theme.spacing(1),
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
     },
     paper: {
       margin: theme.spacing(2),
-      padding: theme.spacing(2)
+      padding: theme.spacing(2),
     },
     buttons: {
       marginLeft: theme.spacing(2),
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(2),
     },
     appBar: {
-      position: "relative"
-    }
+      position: "relative",
+    },
   })
 );
 
@@ -73,12 +73,12 @@ function getSteps() {
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
   filters: selectFilters(state),
-  storyModeStep: selectStoryModeStep(state)
+  storyModeStep: selectStoryModeStep(state),
 });
 
 const mapDispatchToProps = {
   setStoryMode: setStoryModeAction,
-  setStoryModeStep: setStoryModeStepAction
+  setStoryModeStep: setStoryModeStepAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -91,19 +91,19 @@ const stepsMap = (language: string) => ({
   prevention: (PreventionSteps as Steps)[language],
   diagnosis: (DiagnosisSteps as Steps)[language],
   treatment: (TreatmentSteps as Steps)[language],
-  invasive: (InvasiveSteps as Steps)[language]
+  invasive: (InvasiveSteps as Steps)[language],
 });
 
 function StoryModeStepper({
   theme,
   setStoryMode,
   setStoryModeStep,
-  storyModeStep
+  storyModeStep,
 }: Props) {
   const classes = useStyles({});
   const steps = getSteps();
 
-  useTranslation("common");
+  const { t } = useTranslation("common");
   const language = i18next.language || window.localStorage.i18nextLng;
 
   const handleNext = () => {
@@ -136,18 +136,21 @@ function StoryModeStepper({
 
   return (
     <Swipeable
-      onSwiped={eventData => handleSwipe(eventData)}
+      onSwiped={(eventData) => handleSwipe(eventData)}
       {...{
         delta: 10, // min distance(px) before a swipe starts
         preventDefaultTouchmoveEvent: false, // preventDefault on touchmove, *See Details*
         trackTouch: true, // track touch input
         trackMouse: false, // track mouse input
-        rotationAngle: 0 // set a rotation angle
+        rotationAngle: 0, // set a rotation angle
       }}
     >
       <div className={classes.root}>
         <AppBar className={classes.appBar}>
           <Toolbar variant="dense">
+            <Typography variant="subtitle1" className={classes.title}>
+              {t(`themes.${theme}`)}
+            </Typography>
             <FlexGrow />
             <IconButton
               edge="start"
@@ -211,7 +214,4 @@ function StoryModeStepper({
   );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StoryModeStepper);
+export default connect(mapStateToProps, mapDispatchToProps)(StoryModeStepper);

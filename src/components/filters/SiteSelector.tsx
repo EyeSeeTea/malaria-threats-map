@@ -60,8 +60,6 @@ function SiteSelector({
     }
   })();
 
-  console.log(studies.length)
-
   const SITES_SUGGESTIONS = R.uniqBy(
     (study) => study.value,
     studies.map((study) => ({
@@ -76,7 +74,9 @@ function SiteSelector({
     (suggestion) =>
       suggestion.label &&
       suggestion.label.toLowerCase().startsWith(input.toLowerCase())
-  ).slice(0, 10);
+  )
+    .sort((a, b) => (a.label < b.label ? -1 : 1))
+    .slice(0, 10);
 
   return (
     <FilterWrapper>

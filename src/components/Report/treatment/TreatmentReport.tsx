@@ -252,6 +252,8 @@ function TreatmentReport({ studies: baseStudies }: Props) {
     baseStudies
   );
 
+  console.log(R.uniqBy(study => study.ISO2, studies))
+
   const countryStudyGroups = R.groupBy(
     (study: TreatmentStudy) => `${study.ISO2}`,
     studies
@@ -285,9 +287,19 @@ function TreatmentReport({ studies: baseStudies }: Props) {
               const maxYear = yearSortedStudies[yearSortedStudies.length - 1];
 
               const prop = "TREATMENT_FAILURE_KM";
+              const prop2 = "TREATMENT_FAILURE_PP";
 
-              const values = followUpCountrySpeciesStudies
-                .map((study: TreatmentStudy) => parseFloat(study[prop]))
+              const rawValues = followUpCountrySpeciesStudies.map(
+                (study: TreatmentStudy) =>
+                  !isNull(study[prop]) ? study[prop] : study[prop2]
+              );
+
+              if (country === "AO") {
+                console.log(rawValues);
+              }
+
+              const values = rawValues
+                .map((value) => parseFloat(value))
                 .filter((value) => !Number.isNaN(value));
               const sortedValues = values.sort();
 
@@ -301,6 +313,8 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                 ? percentile(sortedValues, 0.75)
                 : "-";
 
+              console.log(country)
+
               return {
                 ID: `${country}_${drug}`,
                 DRUG: t(drug),
@@ -309,7 +323,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                 COUNTRY_NUMBER: nStudies,
                 FOLLOW_UP: followUpDays,
                 STUDY_YEARS: `${minYear} - ${maxYear}`,
-                NUMBER_OF_STUDIES: countrySpeciesStudies.length,
+                NUMBER_OF_STUDIES: followUpCountrySpeciesStudies.length,
                 MEDIAN: median,
                 MIN: min,
                 MAX: max,
