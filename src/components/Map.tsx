@@ -355,6 +355,7 @@ class Map extends React.Component<Props> {
         <Hidden xsDown>
           <Fade in={showOptions}>
             <TopRightContainer>
+              <StoryModeSelector />
               {!mekong && <InitialDisclaimer />}
               {!mekong && <Subscription />}
               {!mekong && <Feedback />}
@@ -367,6 +368,7 @@ class Map extends React.Component<Props> {
         <Hidden smUp>
           <Fade in={showOptions}>
             <TopRightVerticalContainer>
+              <StoryModeSelector />
               {!mekong && <InitialDisclaimer />}
               {!mekong && <Subscription />}
               {!mekong && <Feedback />}
