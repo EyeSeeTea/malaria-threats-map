@@ -99,6 +99,10 @@ export const filterByType = (type: string) => (study: any) => {
   return !type || study.TYPE === type;
 };
 
+export const filterByProxyType = (type: string) => (study: any) => {
+  return !type || study.PROXY_TYPE === type;
+};
+
 export const filterByTypes = (types: string[]) => (study: any) => {
   return !types.length || types.includes(study.TYPE);
 };

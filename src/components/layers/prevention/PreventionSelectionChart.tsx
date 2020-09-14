@@ -11,23 +11,24 @@ import { selectPreventionFilters } from "../../../store/reducers/prevention-redu
 import {
   selectCountryMode,
   selectSelection,
-  selectTheme
+  selectTheme,
 } from "../../../store/reducers/base-reducer";
 import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
 import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 import { PreventionStudy } from "../../../types/Prevention";
+import PboSiteChart from "./PboDeployment/PboSiteChart";
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
   preventionFilters: selectPreventionFilters(state),
   countryMode: selectCountryMode(state),
-  selection: selectSelection(state)
+  selection: selectSelection(state),
 });
 
 const mapDispatchToProps = {
   setFilteredStudies: setPreventionFilteredStudiesAction,
-  setSelection: setSelection
+  setSelection: setSelection,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -45,12 +46,12 @@ class PreventionSelectionChart extends Component<Props> {
       studies,
       countryMode,
       selection,
-      preventionFilters: { mapType }
+      preventionFilters: { mapType },
     } = this.props;
     if (!selection) {
       return <div />;
     }
-    const filteredStudies = studies.filter(study =>
+    const filteredStudies = studies.filter((study) =>
       countryMode
         ? study.ISO2 === selection.ISO_2_CODE
         : study.SITE_ID === selection.SITE_ID
@@ -83,6 +84,9 @@ class PreventionSelectionChart extends Component<Props> {
         )}
         {!countryMode && mapType === PreventionMapType.RESISTANCE_MECHANISM && (
           <ResistanceMechanismsChart studies={filteredStudies} />
+        )}
+        {!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
+          <PboSiteChart studies={filteredStudies} />
         )}
       </div>
     );

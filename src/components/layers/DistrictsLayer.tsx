@@ -3,23 +3,23 @@ import { connect } from "react-redux";
 import { PreventionMapType, State } from "../../store/types";
 import setupEffects from "./effects";
 import * as R from "ramda";
-import { studySelector } from "./prevention/utils";
+import { evaluateDeploymentStatus, studySelector } from "./prevention/utils";
 import {
   selectPreventionFilters,
-  selectPreventionStudies
+  selectPreventionStudies,
 } from "../../store/reducers/prevention-reducer";
 import {
   PboDeploymentColors,
-  PboDeploymentCountriesStatus
+  PboDeploymentCountriesStatus,
 } from "./prevention/PboDeployment/PboDeploymentCountriesSymbols";
 import {
   selectDistricts,
-  selectDistrictsLayer
+  selectDistrictsLayer,
 } from "../../store/reducers/districts-reducer";
 import {
   selectCountryMode,
   selectFilters,
-  selectRegion
+  selectRegion,
 } from "../../store/reducers/base-reducer";
 import { fetchDistrictsRequest } from "../../store/actions/district-actions";
 import mapboxgl from "mapbox-gl";
@@ -42,19 +42,19 @@ const layer: any = {
       PboDeploymentColors[PboDeploymentCountriesStatus.NOT_ELIGIBLE][0],
       PboDeploymentCountriesStatus.NOT_ENOUGH_DATA,
       PboDeploymentColors[PboDeploymentCountriesStatus.NOT_ENOUGH_DATA][0],
-      PboDeploymentColors[PboDeploymentCountriesStatus.NOT_APPLICABLE][0]
+      PboDeploymentColors[PboDeploymentCountriesStatus.NOT_APPLICABLE][0],
     ],
     "fill-opacity": [
       "case",
       ["boolean", ["feature-state", "hover"], false],
       0.5,
-      0.7
+      0.7,
     ],
-    "fill-outline-color": "rgba(0,0,0,0.1)"
+    "fill-outline-color": "rgba(0,0,0,0.1)",
   },
   minZoom: 0,
   maxZoom: 20,
-  source: DISTRICTS_SOURCE_ID
+  source: DISTRICTS_SOURCE_ID,
 };
 
 const mapStateToProps = (state: State) => ({
@@ -64,11 +64,11 @@ const mapStateToProps = (state: State) => ({
   studies: selectPreventionStudies(state),
   preventionFilters: selectPreventionFilters(state),
   filters: selectFilters(state),
-  countryMode: selectCountryMode(state)
+  countryMode: selectCountryMode(state),
 });
 
 const mapDispatchToProps = {
-  fetchDistricts: fetchDistrictsRequest
+  fetchDistricts: fetchDistrictsRequest,
 };
 
 type OwnProps = {
@@ -93,7 +93,7 @@ class CountrySelectorLayer extends Component<Props> {
       districts,
       studies,
       fetchDistricts,
-      countryMode
+      countryMode,
     } = this.props;
     if (region.country && region.country !== prevProps.region.country) {
       fetchDistricts(region.country);
@@ -104,7 +104,7 @@ class CountrySelectorLayer extends Component<Props> {
       } else {
         const data: any = {
           type: "FeatureCollection",
-          features: []
+          features: [],
         };
         let existing: any = this.props.map.getSource(DISTRICTS_SOURCE_ID);
         if (existing) {
@@ -128,61 +128,30 @@ class CountrySelectorLayer extends Component<Props> {
     const { region } = this.props;
     const studies = this.filterStudies(this.props.studies);
     const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
-    const filteredStudies = R.values(groupedStudies).map(group =>
+    const filteredStudies = R.values(groupedStudies).map((group) =>
       studySelector(group, PreventionMapType.PBO_DEPLOYMENT)
     );
 
     const studiesByDistrict = R.groupBy(
       R.path(["ADMIN2_GUID"]),
-      filteredStudies.filter(s => s.ISO2 === region.country)
-    );
-
-    const {
-      ELIGIBLE,
-      NOT_ENOUGH_DATA,
-      NOT_ELIGIBLE
-    } = PboDeploymentCountriesStatus;
-
-    const filterByStatus = (status: PboDeploymentCountriesStatus) => (
-      studies: any[]
-    ) => studies.filter(s => s.PBO_DEPLOYMENT_STATUS === status);
-
-    const statusByDistrict: { [key: string]: any } = Object.entries(
-      studiesByDistrict
-    ).reduce(
-      (acc, [key, studies]) => ({
-        ...acc,
-        [key]: {
-          [ELIGIBLE]: filterByStatus(ELIGIBLE)(studies).length,
-          [NOT_ENOUGH_DATA]: filterByStatus(NOT_ENOUGH_DATA)(studies).length,
-          [NOT_ELIGIBLE]: filterByStatus(NOT_ELIGIBLE)(studies).length
-        }
-      }),
-      {}
+      filteredStudies.filter((s) => s.ISO2 === region.country)
     );
 
     const features = this.props.layer.features.map((feature: any) => {
       const newFeature = { ...feature };
-      const districtStatus: { [key: string]: number } =
-        statusByDistrict[newFeature.properties.GUID];
-      if (!districtStatus) {
-        newFeature.properties.PBO_DEPLOYMENT_STATUS = null;
-        return newFeature;
-      }
-      const sortByDeploymentStatusNumbers = (
-        a: [string, number],
-        b: [string, number]
-      ) => (a[1] > b[1] ? -1 : 1);
-      const status = Object.entries(districtStatus).sort(
-        sortByDeploymentStatusNumbers
-      )[0][0];
-      newFeature.properties.PBO_DEPLOYMENT_STATUS = status;
+      const districtStudies =
+        studiesByDistrict[newFeature.properties.GUID] || [];
+      const { criteria, pboDeploymentStatus } = evaluateDeploymentStatus(
+        districtStudies
+      );
+      newFeature.properties.criteria = criteria;
+      newFeature.properties.PBO_DEPLOYMENT_STATUS = pboDeploymentStatus;
       return newFeature;
     });
 
     const data: GeoJSON.FeatureCollection = {
       type: "FeatureCollection",
-      features
+      features,
     };
 
     let existing: mapboxgl.GeoJSONSource = this.props.map.getSource(
@@ -195,7 +164,7 @@ class CountrySelectorLayer extends Component<Props> {
     } else {
       const source: any = {
         type: "geojson",
-        data: data
+        data: data,
       };
       this.props.map.addSource(DISTRICTS_SOURCE_ID, source);
       this.props.map.addLayer(layer);

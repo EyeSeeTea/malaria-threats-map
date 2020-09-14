@@ -3,14 +3,21 @@ import resistanceStatusSymbols from "./ResistanceStatus/symbols";
 import intensityStatusSymbols from "./IntensityStatus/symbols";
 import resistanceMechanismSymbols from "./ResistanceMechanisms/symbols";
 import levelOfInvolvementSymbols from "./Involvement/symbols";
-import PboDeploymentSymbols, {PboDeploymentStatus,} from "./PboDeployment/PboDeploymentSymbols";
-import {default as ResistanceStatusLegend} from "./ResistanceStatus/legend";
-import {default as IntensityStatusLegend} from "./IntensityStatus/legend";
-import {default as ResistanceMechanismsLegend} from "./ResistanceMechanisms/legend";
-import {PreventionFilters, PreventionMapType} from "../../../store/types";
+import PboDeploymentSymbols, {
+  PboDeploymentStatus,
+} from "./PboDeployment/PboDeploymentSymbols";
+import { default as ResistanceStatusLegend } from "./ResistanceStatus/legend";
+import { default as IntensityStatusLegend } from "./IntensityStatus/legend";
+import { default as ResistanceMechanismsLegend } from "./ResistanceMechanisms/legend";
+import { PreventionFilters, PreventionMapType } from "../../../store/types";
 import PboDeploymentLegend from "./PboDeployment/PboDeploymentLegend";
 import * as R from "ramda";
-import {filterByAssayTypes, filterByInsecticideClass, filterByType, filterByYearRange,} from "../studies-filters";
+import {
+  filterByAssayTypes,
+  filterByInsecticideClass,
+  filterByType,
+  filterByYearRange,
+} from "../studies-filters";
 import CountrySymbols from "./Countries/PreventionCountrySymbols";
 import PreventionCountryLegend from "./Countries/PreventionCountryLegend";
 import LevelOfInvolvementLegend from "./Involvement/LevelOfInvolvementLegend";
@@ -91,7 +98,7 @@ function filterByCriteria1(group: any[]) {
   return filteredStudies;
 }
 
-function meetsCriteria1(group: any[], criteria: any) {
+export function meetsCriteria1(group: any[], criteria: any) {
   let filteredStudies = filterByCriteria1(group);
   const groupedStudies = R.groupBy(R.prop("SPECIES"), filteredStudies);
   Object.entries(groupedStudies).forEach(([species, studies]) => {
@@ -107,7 +114,7 @@ function meetsCriteria1(group: any[], criteria: any) {
   return R.any((study) => study.MORTALITY_ADJUSTED < 0.9, filteredStudies);
 }
 
-function meetsCriteria2(group: any[], criteria: any) {
+export function meetsCriteria2(group: any[], criteria: any) {
   let filteredStudies = filterByCriteria1(group);
   const groupedStudies = R.groupBy(R.prop("SPECIES"), filteredStudies);
   Object.entries(groupedStudies).forEach(([species, studies]) => {
@@ -227,6 +234,36 @@ function getByMostRecentYearAndInvolvement(group: any[]) {
   return filteredSortedStudies[0];
 }
 
+export function evaluateDeploymentStatus(group: any[]) {
+  let criteria = {};
+  meetsCriteria1(group, criteria);
+  meetsCriteria2(group, criteria);
+  meetsCriteria3(group, criteria);
+  const criterias = Object.entries(criteria);
+  let pboDeploymentStatus;
+  if (criterias.length === 0) {
+    pboDeploymentStatus = PboDeploymentStatus.NO_DATA;
+  } else if (
+    R.any(
+      (c: any) => c.criteria1 && c.criteria2 && c.criteria3,
+      R.values(criteria)
+    )
+  ) {
+    pboDeploymentStatus = PboDeploymentStatus.ELIGIBLE;
+  } else if (
+    R.any(
+      (c: any) =>
+        c.criteria1 === false || c.criteria2 === false || c.criteria3 === false,
+      R.values(criteria)
+    )
+  ) {
+    pboDeploymentStatus = PboDeploymentStatus.NOT_ELIGIBLE;
+  } else {
+    pboDeploymentStatus = PboDeploymentStatus.NOT_ENOUGH_DATA;
+  }
+  return { criteria, pboDeploymentStatus };
+}
+
 export const studySelector = (group: any[], mapType: PreventionMapType) => {
   switch (mapType) {
     case PreventionMapType.RESISTANCE_STATUS:
@@ -238,34 +275,7 @@ export const studySelector = (group: any[], mapType: PreventionMapType) => {
     case PreventionMapType.LEVEL_OF_INVOLVEMENT:
       return getByMostRecentYearAndInvolvement(group);
     case PreventionMapType.PBO_DEPLOYMENT:
-      let criteria = {};
-      meetsCriteria1(group, criteria);
-      meetsCriteria2(group, criteria);
-      meetsCriteria3(group, criteria);
-      const criterias = Object.entries(criteria);
-      let pboDeploymentStatus;
-      if (criterias.length === 0) {
-        pboDeploymentStatus = PboDeploymentStatus.NO_DATA;
-      } else if (
-        R.any(
-          (c: any) => c.criteria1 && c.criteria2 && c.criteria3,
-          R.values(criteria)
-        )
-      ) {
-        pboDeploymentStatus = PboDeploymentStatus.ELIGIBLE;
-      } else if (
-        R.any(
-          (c: any) =>
-            c.criteria1 === false ||
-            c.criteria2 === false ||
-            c.criteria3 === false,
-          R.values(criteria)
-        )
-      ) {
-        pboDeploymentStatus = PboDeploymentStatus.NOT_ELIGIBLE;
-      } else {
-        pboDeploymentStatus = PboDeploymentStatus.NOT_ENOUGH_DATA;
-      }
+      let { criteria, pboDeploymentStatus } = evaluateDeploymentStatus(group);
       return {
         ...group[0],
         criteria,

@@ -1,18 +1,15 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { PreventionMapType, State } from "../../../store/types";
-import { studiesToGeoJson } from "../layer-utils";
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import {State} from "../../../store/types";
+import {studiesToGeoJson} from "../layer-utils";
 import setupEffects from "../effects";
 import * as R from "ramda";
 import resistanceStatusSymbols from "./ResistanceStatus/symbols";
-import { resolveResistanceStatus } from "./ResistanceStatus/utils";
-import { PreventionStudy } from "../../../types/Prevention";
-import { buildPreventionFilters } from "../studies-filters";
-import { resolveMapTypeSymbols, studySelector } from "./utils";
-import {
-  selectPreventionFilters,
-  selectPreventionStudies,
-} from "../../../store/reducers/prevention-reducer";
+import {resolveResistanceStatus} from "./ResistanceStatus/utils";
+import {PreventionStudy} from "../../../types/Prevention";
+import {buildPreventionFilters} from "../studies-filters";
+import {resolveMapTypeSymbols, studySelector} from "./utils";
+import {selectPreventionFilters, selectPreventionStudies,} from "../../../store/reducers/prevention-reducer";
 import {
   selectCountryMode,
   selectFilters,
@@ -21,10 +18,10 @@ import {
   selectTheme,
 } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
-import { selectCountries } from "../../../store/reducers/country-layer-reducer";
-import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
-import { Hidden } from "@material-ui/core";
-import { setSelection } from "../../../store/actions/base-actions";
+import {selectCountries} from "../../../store/reducers/country-layer-reducer";
+import {setPreventionFilteredStudiesAction} from "../../../store/actions/prevention-actions";
+import {Hidden} from "@material-ui/core";
+import {setSelection} from "../../../store/actions/base-actions";
 import PreventionSitePopover from "./PreventionSitePopover";
 import PreventionSelectionChart from "./PreventionSelectionChart";
 import ChartModal from "../../ChartModal";
@@ -261,10 +258,6 @@ class PreventionLayer extends Component<Props> {
       countryMode,
       preventionFilters: { mapType },
     } = this.props;
-    if (!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT) {
-      console.log(e.features[0]);
-      return;
-    }
     const coordinates = e.features[0].geometry.coordinates.slice();
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
