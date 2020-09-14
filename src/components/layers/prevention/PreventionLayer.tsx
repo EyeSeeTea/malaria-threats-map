@@ -11,14 +11,14 @@ import { buildPreventionFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import {
   selectPreventionFilters,
-  selectPreventionStudies
+  selectPreventionStudies,
 } from "../../../store/reducers/prevention-reducer";
 import {
   selectCountryMode,
   selectFilters,
   selectRegion,
   selectSelection,
-  selectTheme
+  selectTheme,
 } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
 import { selectCountries } from "../../../store/reducers/country-layer-reducer";
@@ -34,7 +34,7 @@ const PREVENTION_LAYER_ID = "prevention-layer";
 const PREVENTION_SOURCE_ID = "prevention-source";
 
 const circleLayout = {
-  visibility: "visible"
+  visibility: "visible",
 };
 
 const layer: any = (symbols: any) => ({
@@ -42,7 +42,7 @@ const layer: any = (symbols: any) => ({
   type: "circle",
   layout: circleLayout,
   paint: symbols || resistanceStatusSymbols,
-  source: PREVENTION_SOURCE_ID
+  source: PREVENTION_SOURCE_ID,
 });
 
 const mapStateToProps = (state: State) => ({
@@ -53,12 +53,12 @@ const mapStateToProps = (state: State) => ({
   region: selectRegion(state),
   countries: selectCountries(state),
   countryMode: selectCountryMode(state),
-  selection: selectSelection(state)
+  selection: selectSelection(state),
 });
 
 const mapDispatchToProps = {
   setFilteredStudies: setPreventionFilteredStudiesAction,
-  setSelection: setSelection
+  setSelection: setSelection,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -84,12 +84,12 @@ class PreventionLayer extends Component<Props> {
         type,
         species,
         assayTypes,
-        synergistTypes
+        synergistTypes,
       },
       countryMode,
       filters,
       region,
-      countries
+      countries,
     } = this.props;
     this.mountLayer(prevProps);
     this.renderLayer();
@@ -147,15 +147,15 @@ class PreventionLayer extends Component<Props> {
   setupGeoJsonData = (studies: any[]) => {
     const { mapType } = this.props.preventionFilters;
     const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
-    const filteredStudies = R.values(groupedStudies).map(group =>
+    const filteredStudies = R.values(groupedStudies).map((group) =>
       studySelector(group, mapType)
     );
 
-    return filteredStudies.map(study => {
+    return filteredStudies.map((study) => {
       const percentage = parseFloat(study["MORTALITY_ADJUSTED"]);
       return {
         ...study,
-        CONFIRMATION_STATUS: resolveResistanceStatus(percentage)
+        CONFIRMATION_STATUS: resolveResistanceStatus(percentage),
       };
     });
   };
@@ -191,11 +191,11 @@ class PreventionLayer extends Component<Props> {
         OBJECTID: index,
         Latitude: country.CENTER_LAT,
         Longitude: country.CENTER_LON,
-        STUDIES: (countryStudies[country.ISO_2_CODE] || []).length || 0
+        STUDIES: (countryStudies[country.ISO_2_CODE] || []).length || 0,
       }))
-      .filter(study => study.STUDIES !== 0);
+      .filter((study) => study.STUDIES !== 0);
 
-    const sortedCountries = R.sortBy(country => country.STUDIES, countries);
+    const sortedCountries = R.sortBy((country) => country.STUDIES, countries);
     if (sortedCountries.length === 0) return [];
     // const maxSize = sortedCountries[sortedCountries.length - 1].STUDIES;
     // const minSize = sortedCountries[0].STUDIES;
@@ -216,12 +216,12 @@ class PreventionLayer extends Component<Props> {
       }
     };
 
-    return countries.map(country => ({
+    return countries.map((country) => ({
       ...country,
       // SIZE: 5 + ratio * (country.STUDIES - minSize),
       // SIZE_HOVER: 5 + ratio * (country.STUDIES - minSize)
       SIZE: getSize(country.STUDIES),
-      SIZE_HOVER: getSize(country.STUDIES) - 1
+      SIZE_HOVER: getSize(country.STUDIES) - 1,
     }));
   };
 
@@ -243,7 +243,7 @@ class PreventionLayer extends Component<Props> {
       const data = countryMode ? countryStudies : geoStudies;
       const source: any = {
         type: "geojson",
-        data: studiesToGeoJson(data)
+        data: studiesToGeoJson(data),
       };
       this.props.map.addSource(PREVENTION_SOURCE_ID, source);
       this.props.map.addLayer(
@@ -259,9 +259,10 @@ class PreventionLayer extends Component<Props> {
   onClickListener = (e: any, a: any) => {
     const {
       countryMode,
-      preventionFilters: { mapType }
+      preventionFilters: { mapType },
     } = this.props;
     if (!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT) {
+      console.log(e.features[0]);
       return;
     }
     const coordinates = e.features[0].geometry.coordinates.slice();
@@ -271,7 +272,7 @@ class PreventionLayer extends Component<Props> {
     const selection = {
       ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
       SITE_ID: e.features[0].properties.SITE_ID,
-      coordinates: coordinates
+      coordinates: coordinates,
     };
     setTimeout(() => {
       this.props.setSelection(selection);
@@ -335,7 +336,7 @@ class PreventionLayer extends Component<Props> {
     if (selection === null) {
       return <div />;
     }
-    const filteredStudies = this.filterStudies(studies).filter(study =>
+    const filteredStudies = this.filterStudies(studies).filter((study) =>
       countryMode
         ? study.ISO2 === selection.ISO_2_CODE
         : study.SITE_ID === selection.SITE_ID

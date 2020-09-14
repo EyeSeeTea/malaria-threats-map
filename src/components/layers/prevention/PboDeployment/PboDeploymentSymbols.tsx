@@ -28,7 +28,7 @@ export default {
     PboDeploymentColors[PboDeploymentStatus.NOT_ELIGIBLE][0],
     PboDeploymentStatus.NOT_ENOUGH_DATA,
     PboDeploymentColors[PboDeploymentStatus.NOT_ENOUGH_DATA][0],
-    /* other */ "#ccc"
+    /* other */ "#d3d3d3"
   ],
   "circle-opacity": 1,
   "circle-stroke-color": [
@@ -44,7 +44,7 @@ export default {
       PboDeploymentColors[PboDeploymentStatus.NOT_ELIGIBLE][1],
       PboDeploymentStatus.NOT_ENOUGH_DATA,
       PboDeploymentColors[PboDeploymentStatus.NOT_ENOUGH_DATA][1],
-      /* other */ "#111"
+      /* other */ "#adadad"
     ]
   ],
   "circle-stroke-width": [

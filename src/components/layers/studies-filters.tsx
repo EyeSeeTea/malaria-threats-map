@@ -5,7 +5,7 @@ import {
   DiagnosisMapType,
   PreventionFilters,
   PreventionMapType,
-  RegionState
+  RegionState,
 } from "../../store/types";
 import { isSynergyst } from "./prevention/ResistanceMechanisms/ResistanceMechanismFilters";
 
@@ -163,11 +163,10 @@ export const filterByDrugs = (drugs: string[]) => (study: any) => {
 };
 
 export const filterByVectorSpecies = (species: string[]) => (study: any) => {
-  console.log(study, species)
   return (
     !species.length ||
     species
-      .map(specie => VectorSpeciesKey[specie])
+      .map((specie) => VectorSpeciesKey[specie])
       .includes(study.VECTOR_SPECIES)
   );
 };
@@ -210,7 +209,7 @@ export const buildPreventionFilters = (
         filterByType(preventionFilters.type),
         filterBySpecies(preventionFilters.species),
         filterByYearRange(filters),
-        filterByRegion(region)
+        filterByRegion(region),
       ];
     case PreventionMapType.INTENSITY_STATUS:
       return [
@@ -220,7 +219,7 @@ export const buildPreventionFilters = (
         filterByType(preventionFilters.type),
         filterBySpecies(preventionFilters.species),
         filterByYearRange(filters),
-        filterByRegion(region)
+        filterByRegion(region),
       ];
     case PreventionMapType.RESISTANCE_MECHANISM:
       const base = [
@@ -229,7 +228,7 @@ export const buildPreventionFilters = (
         filterBySpecies(preventionFilters.species),
         filterByAssayTypes(preventionFilters.assayTypes),
         filterByYearRange(filters),
-        filterByRegion(region)
+        filterByRegion(region),
       ];
       return isSynergyst(preventionFilters)
         ? [...base, filterByTypeSynergist(preventionFilters.synergistTypes)]
@@ -241,14 +240,14 @@ export const buildPreventionFilters = (
         filterBySpecies(preventionFilters.species),
         filterByTypeSynergist(preventionFilters.synergistTypes),
         filterByYearRange(filters),
-        filterByRegion(region)
+        filterByRegion(region),
       ];
     case PreventionMapType.PBO_DEPLOYMENT:
       return [
         filterByInsecticideTypes(preventionFilters.insecticideTypes),
         filterBySpecies(preventionFilters.species),
         filterByYearRange(filters),
-        filterByRegion(region)
+        filterByRegion(region),
       ];
     default:
       return [];
@@ -267,7 +266,7 @@ export const buildDiagnosisFilters = (
         filterBySurveyTypes(diagnosisFilters.surveyTypes),
         filterByPatientType(diagnosisFilters.patientType),
         filterByYearRange(filters),
-        filterByRegion(region)
+        filterByRegion(region),
       ];
     default:
       return [];
