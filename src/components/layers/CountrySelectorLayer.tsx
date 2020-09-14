@@ -5,7 +5,7 @@ import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
 import setupEffects from "./effects";
 import { setRegionAction } from "../../store/actions/base-actions";
 import * as R from "ramda";
-import { evaluateDeploymentStatus, studySelector } from "./prevention/utils";
+import { studySelector } from "./prevention/utils";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import {
   PboDeploymentColors,
@@ -95,6 +95,29 @@ class CountrySelectorLayer extends Component<Props> {
 
       const studiesByCountry = R.groupBy(R.path(["ISO2"]), filteredStudies);
 
+      const {
+        ELIGIBLE,
+        NOT_ENOUGH_DATA,
+        NOT_ELIGIBLE,
+      } = PboDeploymentCountriesStatus;
+
+      const filterByStatus = (status: PboDeploymentCountriesStatus) => (
+        studies: any[]
+      ) => studies.filter((s) => s.PBO_DEPLOYMENT_STATUS === status);
+
+      const statusByCountry: { [key: string]: any } = Object.entries(
+        studiesByCountry
+      ).reduce(
+        (acc, [key, studies]) => ({
+          ...acc,
+          [key]: {
+            [ELIGIBLE]: filterByStatus(ELIGIBLE)(studies).length,
+            [NOT_ENOUGH_DATA]: filterByStatus(NOT_ENOUGH_DATA)(studies).length,
+            [NOT_ELIGIBLE]: filterByStatus(NOT_ELIGIBLE)(studies).length,
+          },
+        }),
+        {}
+      );
       const features = this.props.countries.features
         .filter(
           (feature: any) =>
@@ -102,14 +125,25 @@ class CountrySelectorLayer extends Component<Props> {
         )
         .map((feature: any) => {
           const newFeature = { ...feature };
-          const countryStudies =
-            studiesByCountry[newFeature.properties.ISO_2_CODE] || [];
-          const { criteria, pboDeploymentStatus } = evaluateDeploymentStatus(
-            countryStudies
-          );
-          console.log(criteria)
-          newFeature.properties.criteria = criteria;
-          newFeature.properties.PBO_DEPLOYMENT_STATUS = pboDeploymentStatus;
+          if (newFeature.properties.ENDEMICITY === 0) {
+            return newFeature;
+          }
+
+          const countryStatus: { [key: string]: number } =
+            statusByCountry[newFeature.properties.ISO_2_CODE];
+          if (!countryStatus) {
+            newFeature.properties.PBO_DEPLOYMENT_STATUS =
+              PboDeploymentStatus.NOT_ELIGIBLE;
+            return newFeature;
+          }
+          const statuses: Record<string, number> = Object.entries(
+            countryStatus
+          ).reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+          const isGreen = statuses[PboDeploymentStatus.ELIGIBLE] > 0;
+          newFeature.properties.PBO_DEPLOYMENT_STATUS = isGreen
+            ? PboDeploymentStatus.ELIGIBLE
+            : PboDeploymentStatus.NOT_ENOUGH_DATA;
+
           return newFeature;
         });
 

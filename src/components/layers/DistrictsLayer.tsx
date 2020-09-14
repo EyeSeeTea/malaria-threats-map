@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { PreventionMapType, State } from "../../store/types";
 import setupEffects from "./effects";
 import * as R from "ramda";
-import { evaluateDeploymentStatus, studySelector } from "./prevention/utils";
+import { studySelector } from "./prevention/utils";
 import {
   selectPreventionFilters,
   selectPreventionStudies,
@@ -137,15 +137,46 @@ class CountrySelectorLayer extends Component<Props> {
       filteredStudies.filter((s) => s.ISO2 === region.country)
     );
 
+    const {
+      ELIGIBLE,
+      NOT_ENOUGH_DATA,
+      NOT_ELIGIBLE,
+    } = PboDeploymentCountriesStatus;
+
+    const filterByStatus = (status: PboDeploymentCountriesStatus) => (
+      studies: any[]
+    ) => studies.filter((s) => s.PBO_DEPLOYMENT_STATUS === status);
+
+    const statusByDistrict: { [key: string]: any } = Object.entries(
+      studiesByDistrict
+    ).reduce(
+      (acc, [key, studies]) => ({
+        ...acc,
+        [key]: {
+          [ELIGIBLE]: filterByStatus(ELIGIBLE)(studies).length,
+          [NOT_ENOUGH_DATA]: filterByStatus(NOT_ENOUGH_DATA)(studies).length,
+          [NOT_ELIGIBLE]: filterByStatus(NOT_ELIGIBLE)(studies).length,
+        },
+      }),
+      {}
+    );
+
     const features = this.props.layer.features.map((feature: any) => {
       const newFeature = { ...feature };
-      const districtStudies =
-        studiesByDistrict[newFeature.properties.GUID] || [];
-      const { criteria, pboDeploymentStatus } = evaluateDeploymentStatus(
-        districtStudies
-      );
-      newFeature.properties.criteria = criteria;
-      newFeature.properties.PBO_DEPLOYMENT_STATUS = pboDeploymentStatus;
+      const districtStatus: { [key: string]: number } =
+        statusByDistrict[newFeature.properties.GUID];
+      if (!districtStatus) {
+        newFeature.properties.PBO_DEPLOYMENT_STATUS = null;
+        return newFeature;
+      }
+      const sortByDeploymentStatusNumbers = (
+        a: [string, number],
+        b: [string, number]
+      ) => (a[1] > b[1] ? -1 : 1);
+      const status = Object.entries(districtStatus).sort(
+        sortByDeploymentStatusNumbers
+      )[0][0];
+      newFeature.properties.PBO_DEPLOYMENT_STATUS = status;
       return newFeature;
     });
 
