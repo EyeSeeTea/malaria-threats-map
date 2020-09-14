@@ -426,7 +426,7 @@
   },
   "icons": {
     "animation": "Temporal animation",
-    "endemicity": "Endemicity layer",
+    "endemicity": "Shade non-endemic countries",
     "visualization": "Country/site mode",
     "story": "Story mode",
     "download": "Download data",

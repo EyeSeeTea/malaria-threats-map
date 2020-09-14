@@ -426,7 +426,7 @@
   },
   "icons": {
     "animation": "Animation de la chronologie",
-    "endemicity": "Couche d'endémicité",
+    "endemicity": "Ombrager les pays non endémiques",
     "visualization": "Changer la visualisation",
     "story": "Afficher l'explication des menaces",
     "download": "Télécharger des données",

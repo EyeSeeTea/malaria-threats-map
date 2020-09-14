@@ -426,7 +426,7 @@
   },
   "icons": {
     "animation": "Animación de evolución temporal",
-    "endemicity": "Capa de endemicidad",
+    "endemicity": "Ensombrecer países no endémicos",
     "visualization": "Cambiar visualización",
     "story": "Explicaciones de los desafíos",
     "download": "Descargar datos",
