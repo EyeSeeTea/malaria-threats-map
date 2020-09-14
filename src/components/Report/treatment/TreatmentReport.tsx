@@ -286,34 +286,28 @@ function TreatmentReport({ studies: baseStudies }: Props) {
               const minYear = yearSortedStudies[0];
               const maxYear = yearSortedStudies[yearSortedStudies.length - 1];
 
-              const prop = "TREATMENT_FAILURE_KM";
-              const prop2 = "TREATMENT_FAILURE_PP";
+              const defaultProp = "TREATMENT_FAILURE_PP";
+              const fallbackProp = "TREATMENT_FAILURE_KM";
 
               const rawValues = followUpCountrySpeciesStudies.map(
                 (study: TreatmentStudy) =>
-                  !isNull(study[prop]) ? study[prop] : study[prop2]
+                  !isNull(study[defaultProp]) ? study[defaultProp] : study[fallbackProp]
               );
-
-              if (country === "AO") {
-                console.log(rawValues);
-              }
 
               const values = rawValues
                 .map((value) => parseFloat(value))
                 .filter((value) => !Number.isNaN(value));
               const sortedValues = values.sort();
 
-              const min = values.length ? sortedValues[0] : "-";
-              const max = values.length ? sortedValues[values.length - 1] : "-";
-              const median = values.length ? R.median(sortedValues) : "-";
+              const min = values.length ? sortedValues[0]  * 100 : "-";
+              const max = values.length ? sortedValues[values.length - 1]  * 100 : "-";
+              const median = values.length ? R.median(sortedValues)  * 100 : "-";
               const percentile25 = values.length
-                ? percentile(sortedValues, 0.25)
+                ? percentile(sortedValues, 0.25) * 100
                 : "-";
               const percentile75 = values.length
-                ? percentile(sortedValues, 0.75)
+                ? percentile(sortedValues, 0.75) * 100
                 : "-";
-
-              console.log(country)
 
               return {
                 ID: `${country}_${drug}`,

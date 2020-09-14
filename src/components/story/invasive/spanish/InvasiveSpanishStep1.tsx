@@ -1,12 +1,12 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import { createStyles, makeStyles } from "@material-ui/core";
+import { createStyles, Link, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() =>
   createStyles({
     title: {
-      lineHeight: 1.3
-    }
+      lineHeight: 1.3,
+    },
   })
 );
 
@@ -46,6 +46,19 @@ export default () => {
         de <i>An. stephensi</i> en el medio urbano podría poner en riesgo los
         logros en la reducción de la carga de malaria conseguidos desde el año
         2000.
+      </Typography>
+      <br />
+      <Typography variant={"body2"}>
+        <Link
+          href="https://www.who.int/publications/i/item/vector-alert-anopheles-stephensi-invasion-and-spread"
+          target="_blank"
+          color={"textSecondary"}
+        >
+          <img
+            src="https://apps.who.int/iris/rest/bitstreams/1283866/retrieve"
+            alt="supporting"
+          />
+        </Link>
       </Typography>
     </div>
   );

@@ -78,7 +78,7 @@ export const headCells: HeadCell[] = [
     sortable: true,
     align: "right",
     divider: true,
-    decimalPositions: 3
+    decimalPositions: 2
   },
   {
     id: "MIN",
@@ -88,7 +88,7 @@ export const headCells: HeadCell[] = [
     sortable: true,
     align: "right",
     divider: true,
-    decimalPositions: 3
+    decimalPositions: 2
   },
   {
     id: "MAX",
@@ -98,7 +98,7 @@ export const headCells: HeadCell[] = [
     sortable: true,
     align: "right",
     divider: true,
-    decimalPositions: 3
+    decimalPositions: 2
   },
   {
     id: "PERCENTILE_25",
@@ -108,7 +108,7 @@ export const headCells: HeadCell[] = [
     sortable: true,
     align: "right",
     divider: true,
-    decimalPositions: 3
+    decimalPositions: 2
   },
   {
     id: "PERCENTILE_75",
@@ -118,6 +118,6 @@ export const headCells: HeadCell[] = [
     sortable: true,
     align: "right",
     divider: true,
-    decimalPositions: 3
+    decimalPositions: 2
   }
 ];

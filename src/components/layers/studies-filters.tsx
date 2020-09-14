@@ -163,6 +163,7 @@ export const filterByDrugs = (drugs: string[]) => (study: any) => {
 };
 
 export const filterByVectorSpecies = (species: string[]) => (study: any) => {
+  console.log(study, species)
   return (
     !species.length ||
     species

@@ -129,6 +129,7 @@ const SearchContainer = styled(BaseContainer)`
   display: flex;
   flex-direction: column;
   align-items: start;
+  z-index: 1;
 `;
 
 const Divider = styled.div`
@@ -292,6 +293,7 @@ class Map extends React.Component<Props> {
     const isPbo =
       theme === "prevention" &&
       preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
+    const isInvasive = theme === "invasive";
     const ready = this.map && this.state.ready;
     return (
       <React.Fragment>
@@ -336,18 +338,14 @@ class Map extends React.Component<Props> {
             </Hidden>
             {!mekong && <TheaterModeIcon />}
             {!mekong && <Layers />}
-            {!mekong && <Country />}
+            {!mekong && <Country disabled={isInvasive} />}
             {!mekong && !isMobile && <DataDownload />}
             <Hidden smUp>
               <ShareIcon />
             </Hidden>
             <Hidden xsDown>
-              {ready ? <Screenshot map={this.map} /> : <div />}
-              {ready && ["prevention", "treatment"].includes(theme) ? (
-                <Report />
-              ) : (
-                <div />
-              )}
+              <Screenshot map={this.map} />
+              {["prevention", "treatment"].includes(theme) && <Report />}
             </Hidden>
           </SearchContainer>
         </Fade>

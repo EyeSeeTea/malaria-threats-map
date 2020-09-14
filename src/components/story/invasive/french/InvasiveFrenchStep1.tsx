@@ -1,12 +1,12 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import { createStyles, makeStyles } from "@material-ui/core";
+import { createStyles, Link, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() =>
   createStyles({
     title: {
-      lineHeight: 1.3
-    }
+      lineHeight: 1.3,
+    },
   })
 );
 
@@ -47,6 +47,19 @@ export default () => {
         d'<i>An. stephensi</i> en milieu urbain pourraient mettre en péril les
         progrès réalisés depuis 2000 dans la réduction de la charge du
         paludisme.
+      </Typography>
+      <br />
+      <Typography variant={"body2"}>
+        <Link
+          href="https://www.who.int/publications/i/item/vector-alert-anopheles-stephensi-invasion-and-spread"
+          target="_blank"
+          color={"textSecondary"}
+        >
+          <img
+            src="https://apps.who.int/iris/rest/bitstreams/1283866/retrieve"
+            alt="supporting"
+          />
+        </Link>
       </Typography>
     </div>
   );

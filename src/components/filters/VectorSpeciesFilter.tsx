@@ -32,13 +32,18 @@ const suggestions = [
   {
     label: "An. stephensi intermediate form",
     value: "AN_STEPHENSI_INTERMEDIATE_FORM"
+  },
+  {
+    label: "An. stephensi form unspecified",
+    value: "AN_STEPHENSI_FORM_UNSPECIFIED"
   }
 ];
 
 export const VectorSpeciesKey: { [key: string]: string } = {
   AN_STEPHENSI_TYPE_FORM: "An. stephensi type form",
   AN_STEPHENSI_MYSORENSIS: "An. stephensi mysorensis",
-  AN_STEPHENSI_INTERMEDIATE_FORM: "An. stephensi intermediate form"
+  AN_STEPHENSI_INTERMEDIATE_FORM: "An. stephensi intermediate form",
+  AN_STEPHENSI_FORM_UNSPECIFIED: "NR"
 };
 
 class VectorSpeciesFilter extends Component<Props, any> {
