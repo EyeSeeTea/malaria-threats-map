@@ -57,6 +57,10 @@ export interface PreventionStudy extends Study {
   YEAR_END: string;
   YEAR_START: string;
   STUDY_PAIRING_CODE: string;
+  ADMIN1: string;
+  ADMIN1_GUID: string;
+  ADMIN2: string;
+  ADMIN2_GUID: string;
 }
 
 export interface Field {

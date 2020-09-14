@@ -8,7 +8,7 @@ import { of } from "rxjs";
 import {
   fetchDistrictsError,
   fetchDistrictsRequest,
-  fetchDistrictsSuccess
+  fetchDistrictsSuccess,
 } from "../actions/district-actions";
 
 const DISTRICTS =
@@ -18,17 +18,17 @@ export const getDistrictsEpic = (
   action$: ActionsObservable<ActionType<typeof fetchDistrictsRequest>>
 ) =>
   action$.ofType(ActionTypeEnum.FetchDistrictsRequest).pipe(
-    switchMap(action => {
+    switchMap((action) => {
       const params: any = {
         f: "geojson",
         where: encodeURIComponent(
           `ISO_2_CODE='${action.payload}' AND ENDDATE='12/31/9999 12:00:00 AM'`
         ),
         geometryPrecision: 3.0,
-        outFields: "OBJECTID,GUID"
+        outFields: "OBJECTID,GUID,CENTER_LAT,CENTER_LON",
       };
       const query: string = Object.keys(params)
-        .map(key => `${key}=${params[key]}`)
+        .map((key) => `${key}=${params[key]}`)
         .join("&");
       return ajax.getFull(`${DISTRICTS}/query?${query}`).pipe(
         mergeMap((response: any) => {

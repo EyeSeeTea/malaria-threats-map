@@ -20,11 +20,17 @@ import {
   selectCountryMode,
   selectFilters,
   selectRegion,
+  selectSelection,
 } from "../../store/reducers/base-reducer";
 import { fetchDistrictsRequest } from "../../store/actions/district-actions";
 import mapboxgl from "mapbox-gl";
 import { buildPreventionFilters } from "./studies-filters";
 import { PreventionStudy } from "../../types/Prevention";
+import { Hidden } from "@material-ui/core";
+import PreventionSitePopover from "./prevention/PreventionSitePopover";
+import ChartModal from "../ChartModal";
+import PreventionSelectionChart from "./prevention/PreventionSelectionChart";
+import { setSelection } from "../../store/actions/base-actions";
 
 export const DISTRICTS_LAYER_ID = "districts-layer";
 export const DISTRICTS_SOURCE_ID = "districts-source";
@@ -65,14 +71,16 @@ const mapStateToProps = (state: State) => ({
   preventionFilters: selectPreventionFilters(state),
   filters: selectFilters(state),
   countryMode: selectCountryMode(state),
+  selection: selectSelection(state),
 });
 
 const mapDispatchToProps = {
   fetchDistricts: fetchDistrictsRequest,
+  setSelection: setSelection,
 };
 
 type OwnProps = {
-  map: mapboxgl.Map;
+  map: any;
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -229,8 +237,19 @@ class CountrySelectorLayer extends Component<Props> {
     }
   };
 
-  onClickListener = (e: any) => {
-    console.log(e.features[0]);
+  onClickListener = (e: any, a: any) => {
+    const coordinates = [
+      e.features[0].properties.CENTER_LON,
+      e.features[0].properties.CENTER_LAT,
+    ] as [number, number];
+    const selection = {
+      ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
+      SITE_ID: e.features[0].properties.GUID,
+      coordinates: coordinates,
+    };
+    setTimeout(() => {
+      this.props.setSelection(selection);
+    }, 100);
   };
 
   setupPopover = () => {
@@ -239,7 +258,31 @@ class CountrySelectorLayer extends Component<Props> {
   };
 
   render() {
-    return <div />;
+    const { studies, selection } = this.props;
+    if (selection === null) {
+      return <div />;
+    }
+    const filteredStudies = this.filterStudies(studies).filter(
+      (study) => study.ADMIN2_GUID === selection.SITE_ID
+    );
+    if (filteredStudies.length === 0) {
+      return <div />;
+    }
+    return (
+      <>
+        <Hidden xsDown>
+          <PreventionSitePopover
+            map={this.props.map}
+            studies={filteredStudies}
+          />
+        </Hidden>
+        <Hidden smUp>
+          <ChartModal selection={selection}>
+            <PreventionSelectionChart studies={filteredStudies} />
+          </ChartModal>
+        </Hidden>
+      </>
+    );
   }
 }
 

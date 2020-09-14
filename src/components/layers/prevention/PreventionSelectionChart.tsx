@@ -18,6 +18,7 @@ import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 import { PreventionStudy } from "../../../types/Prevention";
 import PboSiteChart from "./PboDeployment/PboSiteChart";
+import PboDistrictChart from "./PboDeployment/PboDistrictChart";
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
@@ -53,7 +54,8 @@ class PreventionSelectionChart extends Component<Props> {
     }
     const filteredStudies = studies.filter((study) =>
       countryMode
-        ? study.ISO2 === selection.ISO_2_CODE
+        ? study.ISO2 === selection.ISO_2_CODE ||
+          study.ADMIN2_GUID === selection.SITE_ID
         : study.SITE_ID === selection.SITE_ID
     );
     if (!filteredStudies.length || theme !== "prevention") {
@@ -87,6 +89,9 @@ class PreventionSelectionChart extends Component<Props> {
         )}
         {!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
           <PboSiteChart studies={filteredStudies} />
+        )}
+        {countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
+          <PboDistrictChart studies={filteredStudies} />
         )}
       </div>
     );
