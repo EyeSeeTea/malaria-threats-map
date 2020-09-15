@@ -6,17 +6,23 @@ import setupEffects from "./effects";
 import { setRegionAction } from "../../store/actions/base-actions";
 import * as R from "ramda";
 import { studySelector } from "./prevention/utils";
-import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
+import {
+  selectPreventionFilters,
+  selectPreventionStudies,
+} from "../../store/reducers/prevention-reducer";
 import {
   PboDeploymentColors,
   PboDeploymentCountriesStatus,
 } from "./prevention/PboDeployment/PboDeploymentCountriesSymbols";
 import {
   selectCountryMode,
+  selectFilters,
   selectRegion,
 } from "../../store/reducers/base-reducer";
 import { PboDeploymentStatus } from "./prevention/PboDeployment/PboDeploymentSymbols";
 import { PBO_ENDEMICITY_LAYER_ID } from "./PBOEndemicityLayer";
+import { buildPreventionFilters } from "./studies-filters";
+import { PreventionStudy } from "../../types/Prevention";
 
 export const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
 export const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
@@ -34,6 +40,8 @@ const layer: any = {
       PboDeploymentColors[PboDeploymentCountriesStatus.NOT_ELIGIBLE][0],
       PboDeploymentCountriesStatus.NOT_ENOUGH_DATA,
       PboDeploymentColors[PboDeploymentCountriesStatus.NOT_ENOUGH_DATA][0],
+      PboDeploymentCountriesStatus.NOT_APPLICABLE,
+      PboDeploymentColors[PboDeploymentCountriesStatus.NOT_APPLICABLE][0],
       "rgba(0,0,0,0)",
     ],
     "fill-opacity": [
@@ -54,6 +62,8 @@ const mapStateToProps = (state: State) => ({
   studies: selectPreventionStudies(state),
   region: selectRegion(state),
   countryMode: selectCountryMode(state),
+  preventionFilters: selectPreventionFilters(state),
+  filters: selectFilters(state),
 });
 
 const mapDispatchToProps = {
@@ -81,14 +91,30 @@ class CountrySelectorLayer extends Component<Props> {
     }
   }
 
+  buildFilters = () => {
+    const { preventionFilters } = this.props;
+    return buildPreventionFilters(
+      preventionFilters,
+      [1900, new Date().getFullYear()],
+      {}
+    );
+  };
+
+  filterStudies = (studies: PreventionStudy[]) => {
+    const filters = this.buildFilters();
+    return filters.reduce((studies, filter) => studies.filter(filter), studies);
+  };
+
   mountLayer = () => {
+    const studies = this.filterStudies(this.props.studies);
+
     if (this.props.countries) {
       const source: any = {
         type: "geojson",
         data: this.props.countries,
       };
 
-      const groupedStudies = R.groupBy(R.path(["SITE_ID"]), this.props.studies);
+      const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
       const filteredStudies = R.values(groupedStudies).map((group) =>
         studySelector(group, PreventionMapType.PBO_DEPLOYMENT)
       );
@@ -133,12 +159,13 @@ class CountrySelectorLayer extends Component<Props> {
             statusByCountry[newFeature.properties.ISO_2_CODE];
           if (!countryStatus) {
             newFeature.properties.PBO_DEPLOYMENT_STATUS =
-              PboDeploymentStatus.NOT_ELIGIBLE;
+              PboDeploymentCountriesStatus.NOT_APPLICABLE;
             return newFeature;
           }
           const statuses: Record<string, number> = Object.entries(
             countryStatus
           ).reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+
           const isGreen = statuses[PboDeploymentStatus.ELIGIBLE] > 0;
           newFeature.properties.PBO_DEPLOYMENT_STATUS = isGreen
             ? PboDeploymentStatus.ELIGIBLE

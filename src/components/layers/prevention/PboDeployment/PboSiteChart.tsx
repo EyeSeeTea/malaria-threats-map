@@ -16,7 +16,7 @@ import { ChartContainer } from "../../../Chart";
 import * as R from "ramda";
 import {
   filterByAssayTypes,
-  filterByProxyType,
+  filterByInsecticideClass,
   filterByType,
 } from "../../studies-filters";
 
@@ -32,7 +32,6 @@ type OwnProps = {
   studies: PreventionStudy[];
 };
 type Props = DispatchProps & StateProps & OwnProps;
-
 
 const StyledHeaderCell = styled(TableCell)<{ borderLeft?: boolean }>`
   ${(props) =>
@@ -69,17 +68,6 @@ const useStyles = makeStyles((theme) => ({
 
 const PboSiteChart = ({ studies }: Props) => {
   const { t } = useTranslation("common");
-  const titleTranslation = t(
-    "Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment"
-  );
-  const nSitesTranslation = t("Number of sites that meet criteria");
-  const vectorSpeciesTranslation = t("Vector species that meet criteria");
-  const pyrethroidYearTranslation = t(
-    "Most recent pyrethroid susceptibility test results"
-  );
-  const monoOxygenaseYearTranslation = t(
-    "Most recent mono-oxygenase involvement results"
-  );
   const siteSubtitleTranslation = t(
     "Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment by vector species"
   );
@@ -89,9 +77,10 @@ const PboSiteChart = ({ studies }: Props) => {
   const studiesBySpecies = R.groupBy(R.prop("SPECIES"), studies);
   const rows = Object.entries(studiesBySpecies).map(
     ([species, specieStudies]) => {
-      const group1Studies = specieStudies.filter(
-        filterByAssayTypes(["DISCRIMINATING_CONCENTRATION_BIOASSAY"])
-      );
+      const group1Studies = specieStudies
+        .filter(filterByAssayTypes(["DISCRIMINATING_CONCENTRATION_BIOASSAY"]))
+        .filter(filterByInsecticideClass("PYRETHROIDS"));
+
       const mostRecentPyrethroidStudies: any =
         R.reverse(R.sortBy(R.prop("YEAR_START"), group1Studies)) || [];
       const mostRecentPyrethroidStudy = mostRecentPyrethroidStudies[0] || {};
@@ -99,18 +88,9 @@ const PboSiteChart = ({ studies }: Props) => {
         ? parseFloat(mostRecentPyrethroidStudy.MORTALITY_ADJUSTED)
         : undefined;
 
-      const group2aStudies = specieStudies
-        .filter(
-          filterByAssayTypes([
-            "MOLECULAR_ASSAY",
-            "SYNERGIST-INSECTICIDE_BIOASSAY",
-          ])
-        )
-        .filter(filterByType("MONO_OXYGENASES"));
-      const group2bStudies = specieStudies
-        .filter(filterByAssayTypes(["SYNERGIST-INSECTICIDE_BIOASSAY"]))
-        .filter(filterByProxyType("MONO_OXYGENASES"));
-      const group2Studies = [...group2aStudies, ...group2bStudies];
+      const group2Studies = specieStudies.filter(
+        filterByType("MONO_OXYGENASES")
+      );
       const mostRecentMonoOxygenasesStudies: any =
         R.reverse(R.sortBy(R.prop("YEAR_START"), group2Studies)) || [];
       const mostRecentMonoOxygenasesStudy =

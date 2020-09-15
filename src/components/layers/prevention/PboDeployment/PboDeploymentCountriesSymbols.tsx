@@ -2,14 +2,14 @@ export enum PboDeploymentCountriesStatus {
   ELIGIBLE = "Eligible",
   NOT_ELIGIBLE = "Not eligible",
   NOT_ENOUGH_DATA = "Not enough data",
-  NOT_APPLICABLE = "Not applicable"
+  NOT_APPLICABLE = "Not applicable",
 }
 
 export const PboDeploymentColors = {
   [PboDeploymentCountriesStatus.ELIGIBLE]: ["#869C66", "#5e6e47"],
-  [PboDeploymentCountriesStatus.NOT_ELIGIBLE]: ["#D43501", "#882201"],
+  [PboDeploymentCountriesStatus.NOT_ELIGIBLE]: ["#FF9502", "#b56900"],
   [PboDeploymentCountriesStatus.NOT_ENOUGH_DATA]: ["#FF9502", "#b56900"],
-  [PboDeploymentCountriesStatus.NOT_APPLICABLE]: ["#d3d3d3", "#adadad"]
+  [PboDeploymentCountriesStatus.NOT_APPLICABLE]: ["#D43501", "#882201"],
 };
 
 export default {
@@ -17,7 +17,7 @@ export default {
     "case",
     ["boolean", ["feature-state", "hover"], false],
     7,
-    6
+    6,
   ],
   "circle-color": [
     "match",
@@ -28,7 +28,9 @@ export default {
     PboDeploymentColors[PboDeploymentCountriesStatus.NOT_ELIGIBLE][0],
     PboDeploymentCountriesStatus.NOT_ENOUGH_DATA,
     PboDeploymentColors[PboDeploymentCountriesStatus.NOT_ENOUGH_DATA][0],
-    /* other */ "#ccc"
+    PboDeploymentCountriesStatus.NOT_APPLICABLE,
+    PboDeploymentColors[PboDeploymentCountriesStatus.NOT_APPLICABLE][0],
+    /* other */ "#ccc",
   ],
   "circle-opacity": 1,
   "circle-stroke-color": [
@@ -44,19 +46,21 @@ export default {
       PboDeploymentColors[PboDeploymentCountriesStatus.NOT_ELIGIBLE][1],
       PboDeploymentCountriesStatus.NOT_ENOUGH_DATA,
       PboDeploymentColors[PboDeploymentCountriesStatus.NOT_ENOUGH_DATA][1],
-      /* other */ "#111"
-    ]
+      PboDeploymentCountriesStatus.NOT_APPLICABLE,
+      PboDeploymentColors[PboDeploymentCountriesStatus.NOT_APPLICABLE][1],
+      /* other */ "#111",
+    ],
   ],
   "circle-stroke-width": [
     "case",
     ["boolean", ["feature-state", "hover"], false],
     5,
-    1
+    1,
   ],
   "circle-stroke-opacity": [
     "case",
     ["boolean", ["feature-state", "hover"], false],
     0.7,
-    0.7
-  ]
+    0.7,
+  ],
 };

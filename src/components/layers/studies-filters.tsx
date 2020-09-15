@@ -8,6 +8,7 @@ import {
   RegionState,
 } from "../../store/types";
 import { isSynergyst } from "./prevention/ResistanceMechanisms/ResistanceMechanismFilters";
+import { PreventionStudy } from "../../types/Prevention";
 
 export const filterByYearRange = (
   years: number[],
@@ -199,6 +200,17 @@ export const filterByMolecularMarkers = (molecularMarkers: string[]) => (
   return !molecularMarkers.length || molecularMarkers.includes(study.MM_TYPE);
 };
 
+export const filterByPBOStudies = (study: PreventionStudy) => {
+  return (
+    ((study.ASSAY_TYPE === "MOLECULAR_ASSAY" ||
+      study.ASSAY_TYPE === "BIOCHEMICAL_ASSAY" ||
+      study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY") &&
+      study.TYPE === "MONO_OXYGENASES") ||
+    (study.ASSAY_TYPE === "DISCRIMINATING_CONCENTRATION_BIOASSAY" &&
+      study.INSECTICIDE_CLASS === "PYRETHROIDS")
+  );
+};
+
 export const buildPreventionFilters = (
   preventionFilters: PreventionFilters,
   filters: number[],
@@ -248,6 +260,7 @@ export const buildPreventionFilters = (
       ];
     case PreventionMapType.PBO_DEPLOYMENT:
       return [
+        filterByPBOStudies,
         filterByInsecticideTypes(preventionFilters.insecticideTypes),
         filterBySpecies(preventionFilters.species),
         filterByYearRange(filters),

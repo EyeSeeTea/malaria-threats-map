@@ -31,6 +31,7 @@ import PreventionSitePopover from "./prevention/PreventionSitePopover";
 import ChartModal from "../ChartModal";
 import PreventionSelectionChart from "./prevention/PreventionSelectionChart";
 import { setSelection } from "../../store/actions/base-actions";
+import { PboDeploymentStatus } from "./prevention/PboDeployment/PboDeploymentSymbols";
 
 export const DISTRICTS_LAYER_ID = "districts-layer";
 export const DISTRICTS_SOURCE_ID = "districts-source";
@@ -123,8 +124,12 @@ class CountrySelectorLayer extends Component<Props> {
   }
 
   buildFilters = () => {
-    const { preventionFilters, filters, region } = this.props;
-    return buildPreventionFilters(preventionFilters, filters, region);
+    const { preventionFilters } = this.props;
+    return buildPreventionFilters(
+      preventionFilters,
+      [1900, new Date().getFullYear()],
+      {}
+    );
   };
 
   filterStudies = (studies: PreventionStudy[]) => {
@@ -133,7 +138,6 @@ class CountrySelectorLayer extends Component<Props> {
   };
 
   mountLayer = () => {
-    const { region } = this.props;
     const studies = this.filterStudies(this.props.studies);
     const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
     const filteredStudies = R.values(groupedStudies).map((group) =>
@@ -142,7 +146,7 @@ class CountrySelectorLayer extends Component<Props> {
 
     const studiesByDistrict = R.groupBy(
       R.path(["ADMIN2_GUID"]),
-      filteredStudies.filter((s) => s.ISO2 === region.country)
+      filteredStudies
     );
 
     const {
@@ -177,14 +181,15 @@ class CountrySelectorLayer extends Component<Props> {
         newFeature.properties.PBO_DEPLOYMENT_STATUS = null;
         return newFeature;
       }
-      const sortByDeploymentStatusNumbers = (
-        a: [string, number],
-        b: [string, number]
-      ) => (a[1] > b[1] ? -1 : 1);
-      const status = Object.entries(districtStatus).sort(
-        sortByDeploymentStatusNumbers
-      )[0][0];
-      newFeature.properties.PBO_DEPLOYMENT_STATUS = status;
+      const statuses: Record<string, number> = Object.entries(
+        districtStatus
+      ).reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+
+      const isGreen = statuses[PboDeploymentStatus.ELIGIBLE] > 0;
+      newFeature.properties.PBO_DEPLOYMENT_STATUS = isGreen
+        ? PboDeploymentStatus.ELIGIBLE
+        : PboDeploymentStatus.NOT_ENOUGH_DATA;
+
       return newFeature;
     });
 
