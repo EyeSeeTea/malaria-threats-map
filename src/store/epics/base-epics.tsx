@@ -257,3 +257,22 @@ export const getLastUpdatedEpic = (
       );
     })
   );
+
+export const setCountryModeEpic = (
+  action$: ActionsObservable<ActionType<typeof setCountryModeAction>>,
+  state$: StateObservable<State>
+) =>
+  action$.ofType(ActionTypeEnum.MalariaSetCountryMode).pipe(
+    withLatestFrom(state$),
+    switchMap(([_, state]) => {
+      if (
+        !state.malaria.countryMode &&
+        state.malaria.theme === "prevention" &&
+        state.prevention.filters.mapType === PreventionMapType.PBO_DEPLOYMENT
+      ) {
+        return of(setRegionAction({}));
+      } else {
+        return of();
+      }
+    })
+  );
