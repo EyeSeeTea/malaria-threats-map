@@ -117,7 +117,6 @@ const PboSiteChart = ({ studies }: Props) => {
       };
     }
   );
-  console.log(studies);
   const studyObject = studies[0];
   return (
     <ChartContainer>

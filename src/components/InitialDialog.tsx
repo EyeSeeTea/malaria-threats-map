@@ -67,7 +67,6 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const mekong = config.mekong;
-console.log(mekong);
 
 function InitialDialog({
   initialDialogOpen,
@@ -82,8 +81,6 @@ function InitialDialog({
     }
     setInitialDialogOpen(false);
   }
-  console.log(mekong);
-
   return (
     <Dialog
       open={initialDialogOpen}

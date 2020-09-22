@@ -252,8 +252,6 @@ function TreatmentReport({ studies: baseStudies }: Props) {
     baseStudies
   );
 
-  console.log(R.uniqBy(study => study.ISO2, studies))
-
   const countryStudyGroups = R.groupBy(
     (study: TreatmentStudy) => `${study.ISO2}`,
     studies
@@ -396,8 +394,6 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
   const filterColumnsToDisplay = ([field, value]: [string, string]) =>
     !["ID", "COUNTRY", "COUNTRY_NUMBER", "ISO2"].includes(field);
-  console.log(sortedGroups);
-
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
