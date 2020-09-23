@@ -1,7 +1,6 @@
 import React from "react";
 import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
 import WizardIcon from "@material-ui/icons/Explore";
-import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme: Theme) =>
