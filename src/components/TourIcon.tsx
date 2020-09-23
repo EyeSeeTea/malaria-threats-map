@@ -1,12 +1,6 @@
 import React from "react";
 import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
 import WizardIcon from "@material-ui/icons/Explore";
-import { State } from "../store/types";
-import {
-  setInitialDialogOpen,
-  setTourOpenAction,
-} from "../store/actions/base-actions";
-import { selectTour } from "../store/reducers/base-reducer";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 
@@ -31,19 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const mapStateToProps = (state: State) => ({
-  tour: selectTour(state),
-});
-
-const mapDispatchToProps = {
-  setTourOpen: setTourOpenAction,
-  setInitialDialogOpen: setInitialDialogOpen,
-};
-type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
-
-const TourIcon = ({ tour, setTourOpen, setInitialDialogOpen }: Props) => {
+const TourIcon = () => {
   const classes = useStyles({});
   const { t } = useTranslation("common");
 
@@ -56,7 +38,11 @@ const TourIcon = ({ tour, setTourOpen, setInitialDialogOpen }: Props) => {
         className={classes.fab}
         onClick={() => {
           localStorage.setItem("tour", "");
-          window.history.pushState({}, document.title, "/");
+          window.history.pushState(
+            {},
+            document.title,
+            window.location.href.split("?")[0]
+          );
           window.location.reload();
         }}
         title={t("icons.tour")}
@@ -67,4 +53,4 @@ const TourIcon = ({ tour, setTourOpen, setInitialDialogOpen }: Props) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TourIcon);
+export default TourIcon;
