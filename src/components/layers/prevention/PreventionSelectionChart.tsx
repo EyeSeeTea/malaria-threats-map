@@ -49,6 +49,7 @@ class PreventionSelectionChart extends Component<Props> {
       selection,
       preventionFilters: { mapType },
     } = this.props;
+    console.log(selection)
     if (!selection) {
       return <div />;
     }
@@ -75,6 +76,9 @@ class PreventionSelectionChart extends Component<Props> {
         {countryMode && mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
           <ResistanceMechanismCountryChart studies={filteredStudies} />
         )}
+        {countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
+          <PboDistrictChart studies={filteredStudies} />
+        )}
         {!countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
           <ResistanceStatusChart studies={filteredStudies} />
         )}
@@ -89,9 +93,6 @@ class PreventionSelectionChart extends Component<Props> {
         )}
         {!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
           <PboSiteChart studies={filteredStudies} />
-        )}
-        {countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
-          <PboDistrictChart studies={filteredStudies} />
         )}
       </div>
     );

@@ -325,9 +325,11 @@ class PreventionLayer extends Component<Props> {
 
   render() {
     const { studies, countryMode, selection } = this.props;
+    console.log(selection)
     if (selection === null) {
       return <div />;
     }
+    console.log(2)
     const filteredStudies = this.filterStudies(studies).filter((study) =>
       countryMode
         ? study.ISO2 === selection.ISO_2_CODE
