@@ -50,7 +50,7 @@ const configurations: { [key: string]: ConfigProps } = {
   local: {
     ...stagingMapServer,
     ...stagingMapTile,
-    backendUrl: `https://portal-uat.who.int/malthreats-api/`,
+    backendUrl: `https://desolate-fjord-62744.herokuapp.com`,
     gaAppId: "",
     env: "local",
     mekong: false,
@@ -58,7 +58,7 @@ const configurations: { [key: string]: ConfigProps } = {
   staging: {
     ...stagingMapServer,
     ...stagingMapTile,
-    backendUrl: `https://portal-uat.who.int/malthreats-api/`,
+    backendUrl: `https://desolate-fjord-62744.herokuapp.com`,
     gaAppId: "UA-151634352-1",
     env: "staging",
     mekong: false,

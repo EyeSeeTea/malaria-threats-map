@@ -49,7 +49,6 @@ class PreventionSelectionChart extends Component<Props> {
       selection,
       preventionFilters: { mapType },
     } = this.props;
-    console.log(selection)
     if (!selection) {
       return <div />;
     }
