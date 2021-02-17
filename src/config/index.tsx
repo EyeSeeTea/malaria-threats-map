@@ -50,7 +50,9 @@ const configurations: { [key: string]: ConfigProps } = {
   local: {
     ...stagingMapServer,
     ...stagingMapTile,
-    backendUrl: `https://portal-uat.who.int/malthreats-api/`,
+    backendUrl:
+      process.env.REACT_APP_BACKEND_URL ||
+      `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "",
     env: "local",
     mekong: false,
