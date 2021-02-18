@@ -19,11 +19,11 @@ $ yarn build-prod
 ## Development
 
 ```
-REACT_APP_BACKEND_URL=http://localhost:8080 yarn start
+$ REACT_APP_BACKEND_URL=http://localhost:8080 yarn start
 ```
 
 ## Tests
 
 ```
-yarn test
+$ yarn test
 ```
