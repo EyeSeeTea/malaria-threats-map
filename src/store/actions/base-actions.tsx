@@ -10,10 +10,15 @@ export const setAnyAction = createAction(
   }
 );
 
+interface SetThemeOptions {
+  fromHome?: boolean
+  mekong?: boolean
+}
+
 export const setThemeAction = createAction(
   ActionTypeEnum.MalariaSetTheme,
   (action) => {
-    return (theme: string) => action(theme);
+    return (theme: string, options: SetThemeOptions = {}) => action(theme, options);
   }
 );
 
@@ -22,10 +27,21 @@ export interface GAEvent {
   action: string;
 }
 
+export interface GAPageView {
+  path: string;
+}
+
 export const logEventAction = createAction(
   ActionTypeEnum.MalariaLogEvent,
   (action) => {
     return (event: GAEvent) => action(event);
+  }
+);
+
+export const logPageViewAction = createAction(
+  ActionTypeEnum.MalariaLogPageView,
+  (action) => {
+    return (pageView: GAPageView | undefined) => pageView ? action(pageView) : null;
   }
 );
 

@@ -2,6 +2,7 @@ export enum ActionTypeEnum {
   MalariaSetAny = "malaria/SET_ANY",
   MalariaSetTheme = "malaria/SET_THEME",
   MalariaLogEvent = "malaria/LOG_EVENT",
+  MalariaLogPageView = "malaria/PAGE_VIEW",
   MalariaSetRegion = "malaria/SET_REGION",
   MalariaSetFilters = "malaria/SET_FILTERS",
   MalariaToogleEndemicityLayer = "malaria/TOGGLE_ENDEMICITY_LAYER",
