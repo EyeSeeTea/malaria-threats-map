@@ -62,7 +62,7 @@
     "xlsx": "^0.15.4"
   },
   "scripts": {
-    "start": "cross-env-shell REACT_APP_ENV=local react-scripts start",
+    "start": "cross-env-shell REACT_APP_ENV=local BROWSER=none react-scripts start",
     "build": "cross-env-shell REACT_APP_ENV=staging react-scripts build",
     "build-prod": "cross-env-shell REACT_APP_ENV=prod react-scripts build",
     "start-mekong": "cross-env-shell REACT_APP_ENV=local-mekong react-scripts start",
