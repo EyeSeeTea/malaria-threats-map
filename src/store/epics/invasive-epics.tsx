@@ -17,11 +17,13 @@ import { MapServerConfig } from "../../constants/constants";
 import {
   logEventAction,
   setFiltersAction,
-  setThemeAction
+  setThemeAction,
+  logPageViewAction
 } from "../actions/base-actions";
 import { InvasiveMapType } from "../types";
 import { addNotificationAction } from "../actions/notifier-actions";
 import { ErrorResponse } from "../../types/Malaria";
+import { getAnalyticsPageView } from "../analytics";
 
 interface Params {
   [key: string]: string | number | boolean;
@@ -75,8 +77,10 @@ export const setTreatmentMapTypeEpic = (
           category: "Invasive Map Type",
           action: type
         });
+      const pageView = getAnalyticsPageView({ page: "invasive", section: action.payload });
+      const logPageView = logPageViewAction(pageView);
       if (action.payload === InvasiveMapType.VECTOR_OCCURANCE) {
-        return of(log("Vector occurance"));
+        return of(log("Vector occurance"), logPageView);
       }
       return of();
     })

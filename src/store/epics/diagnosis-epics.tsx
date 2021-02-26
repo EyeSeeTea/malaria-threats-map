@@ -19,11 +19,13 @@ import {
 import {
   logEventAction,
   setFiltersAction,
-  setThemeAction
+  setThemeAction,
+  logPageViewAction
 } from "../actions/base-actions";
 import { DiagnosisMapType } from "../types";
 import { addNotificationAction } from "../actions/notifier-actions";
 import { ErrorResponse } from "../../types/Malaria";
+import { getAnalyticsPageView } from "../analytics";
 
 interface Params {
   [key: string]: string | number | boolean;
@@ -89,8 +91,11 @@ export const setDiagnosisMapTypeEpic = (
           category: "Diagnosis Map Type",
           action: type
         });
+      const pageView = getAnalyticsPageView({ page: "diagnosis", section: action.payload });
+      const logPageView = logPageViewAction(pageView);
+  
       if (action.payload === DiagnosisMapType.GENE_DELETIONS) {
-        return of(log("pfhrp2/3 gene deletions"));
+        return of(log("pfhrp2/3 gene deletions"), logPageView);
       }
       return of();
     })

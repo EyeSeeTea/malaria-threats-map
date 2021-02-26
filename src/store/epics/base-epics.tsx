@@ -20,6 +20,7 @@ import {
   setStoryModeAction,
   setStoryModeStepAction,
   setThemeAction,
+  logPageViewAction,
 } from "../actions/base-actions";
 import { PreventionMapType, State } from "../types";
 import ReactGA from "react-ga";
@@ -28,6 +29,7 @@ import { MapServerConfig } from "../../constants/constants";
 import { addNotificationAction } from "../actions/notifier-actions";
 import { AjaxError } from "rxjs/ajax";
 import { ErrorResponse } from "../../types/Malaria";
+import { getAnalyticsPageViewFromString } from "../analytics";
 
 export const setThemeEpic = (
   action$: ActionsObservable<ActionType<typeof setThemeAction>>,
@@ -36,11 +38,16 @@ export const setThemeEpic = (
   action$.ofType(ActionTypeEnum.MalariaSetTheme).pipe(
     withLatestFrom(state$),
     switchMap(([action, state]) => {
+      const { meta } = action;
+      const eventCategory = meta.fromHome ? "homeItem" : "theme_menu";
       const base = [
-        logEventAction({ category: "theme", action: action.payload }),
+        logEventAction({ category: eventCategory, action: action.payload }),
+        meta.mekong ? logEventAction({ category: eventCategory, action: "mekong" }) : null,
+        logPageViewAction(getAnalyticsPageViewFromString({ page: action.payload })),
         setSelection(null),
         setStoryModeStepAction(0),
-      ];
+      ].filter(Boolean);
+
       switch (action.payload) {
         case "invasive":
           return of(...[setCountryModeAction(false), ...base]);
@@ -64,8 +71,22 @@ export const logEvent = (
 ) =>
   action$.ofType(ActionTypeEnum.MalariaLogEvent).pipe(
     withLatestFrom(state$),
-    switchMap(([action, state]) => {
+    switchMap(([action, _state]) => {
+      console.log("ga-event", action.payload);
       ReactGA.event(action.payload);
+      return of();
+    })
+  );
+
+export const logPageView = (
+  action$: ActionsObservable<ActionType<typeof logPageViewAction>>,
+  state$: StateObservable<State>
+) =>
+  action$.ofType(ActionTypeEnum.MalariaLogPageView).pipe(
+    withLatestFrom(state$),
+    switchMap(([action, _state]) => {
+      console.log("ga-pageview", action.payload);
+      ReactGA.pageview(action.payload.path);
       return of();
     })
   );

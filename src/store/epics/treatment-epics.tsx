@@ -16,11 +16,12 @@ import {
   setTreatmentPlasmodiumSpecies
 } from "../actions/treatment-actions";
 import { MapServerConfig } from "../../constants/constants";
-import { logEventAction } from "../actions/base-actions";
+import { logEventAction, logPageViewAction } from "../actions/base-actions";
 import { TreatmentMapType } from "../types";
 import { MOLECULAR_MARKERS } from "../../components/filters/MolecularMarkerFilter";
 import { addNotificationAction } from "../actions/notifier-actions";
 import { ErrorResponse } from "../../types/Malaria";
+import { getAnalyticsPageView } from "../analytics";
 
 interface Params {
   [key: string]: string | number | boolean;
@@ -100,14 +101,16 @@ export const setTreatmentMapTypeEpic = (
           category: "Treatment Map Type",
           action: type
         });
+      const pageView = getAnalyticsPageView({ page: "treatment", section: action.payload });
+      const logPageView = logPageViewAction(pageView);
       if (action.payload === TreatmentMapType.TREATMENT_FAILURE) {
-        return of(log("Treatment failure"));
+        return of(log("Treatment failure"), logPageView);
       } else if (action.payload === TreatmentMapType.MOLECULAR_MARKERS) {
-        return of(log("Molecular markers of drug resistance"));
+        return of(log("Molecular markers of drug resistance"), logPageView);
       } else if (
         action.payload === TreatmentMapType.DELAYED_PARASITE_CLEARANCE
       ) {
-        return of(log("Delayed parasite clearance"));
+        return of(log("Delayed parasite clearance"), logPageView);
       }
       return of();
     })

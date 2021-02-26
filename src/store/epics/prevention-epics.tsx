@@ -26,10 +26,11 @@ import {
   setType
 } from "../actions/prevention-actions";
 import { PreventionMapType, State } from "../types";
-import { logEventAction } from "../actions/base-actions";
+import { logEventAction, logPageViewAction } from "../actions/base-actions";
 import { ASSAY_TYPES } from "../../components/filters/AssayTypeCheckboxFilter";
 import { ErrorResponse } from "../../types/Malaria";
 import { addNotificationAction } from "../actions/notifier-actions";
+import { getAnalyticsPageView } from "../analytics";
 
 interface Params {
   [key: string]: string | number | boolean;
@@ -83,24 +84,30 @@ export const setPreventionMapTypeEpic = (
           category: "Prevention Map Type",
           action: type
         });
+
+      const pageView = getAnalyticsPageView({ page: "prevention", section: action.payload });
+      const logPageView = logPageViewAction(pageView);
+
       if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
         return of(
           setType("MONO_OXYGENASES"),
-          log("Resistance mechanisms detection")
+          log("Resistance mechanisms detection"),
+          logPageView
         );
       } else if (action.payload === PreventionMapType.INTENSITY_STATUS) {
-        return of(setType(undefined), log("Insecticide resistance intensity"));
+        return of(setType(undefined), log("Insecticide resistance intensity"), logPageView);
       } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
-        return of(setType(undefined), log("Insecticide resistance status"));
+        return of(setType(undefined), log("Insecticide resistance status"), logPageView);
       } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
         return of(
           setType("MONO_OXYGENASES"),
-          log("Metabolic mechanisms involvement")
+          log("Metabolic mechanisms involvement"),
+          logPageView
         );
       } else if (action.payload === PreventionMapType.PBO_DEPLOYMENT) {
-        return of(setType(undefined), log("Pyrethroid-PBO nets deployment"));
+        return of(setType(undefined), log("Pyrethroid-PBO nets deployment"), logPageView);
       }
-      return of(setType(undefined));
+      return of(setType(undefined), logPageView);
     })
   );
 
