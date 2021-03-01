@@ -42,7 +42,8 @@ function SiteSelector({
 }: Props) {
   const [input, setInput] = useState("");
   const onChange = (selection: any) => {
-    sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label: selection.value });
+    const label = selection && selection.value || undefined;
+    sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label });
     setRegion({
       site: selection ? selection.value : undefined,
       siteIso2: selection ? selection.iso2 : undefined,
