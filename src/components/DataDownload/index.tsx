@@ -66,6 +66,7 @@ import {
   spanishDisclaimerTab,
 } from "./utils";
 import i18next from "i18next";
+import { sendAnalytics } from "../../utils/analytics";
 
 export const MOLECULAR_MECHANISM_TYPES = [
   "MONO_OXYGENASES",
@@ -212,6 +213,17 @@ function DataDownload({
   const { t: d } = useTranslation("download");
   const [activeStep, setActiveStep] = React.useState(0);
 
+  React.useEffect(() => {
+    if (isDataDownloadOpen) {
+      sendAnalytics({
+          type: "event",
+          category: "download",
+          action: "step",
+          label: (activeStep + 1).toString(),
+      });
+    }
+  }, [activeStep, isDataDownloadOpen]);
+
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
   );
@@ -282,6 +294,7 @@ function DataDownload({
     setUseInfo({ ...useInfo, [field]: value });
   };
   const handleToggle = () => {
+    sendAnalytics({ type: "event", category: "menu", action: "download" })
     setDataDownloadOpen(!isDataDownloadOpen);
     reset();
   };

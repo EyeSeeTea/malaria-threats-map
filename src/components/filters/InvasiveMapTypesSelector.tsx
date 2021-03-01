@@ -7,6 +7,7 @@ import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
 import { setInvasiveMapType } from "../../store/actions/invasive-actions";
 import { useTranslation } from "react-i18next";
 import { setMapTitleAction } from "../../store/actions/base-actions";
+import { sendAnalyticsMapMenuChange } from "../../store/analytics";
 
 const mapStateToProps = (state: State) => ({
   invasiveFilters: selectInvasiveFilters(state)
@@ -39,6 +40,7 @@ function InvasiveMapTypesSelector({
     const selection = value as OptionType;
     setInvasiveMapType(selection.value);
     setMapTitle(t(selection.label));
+    sendAnalyticsMapMenuChange("invasive", selection.value)
   };
 
   React.useEffect(() => {

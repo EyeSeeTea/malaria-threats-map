@@ -16,6 +16,7 @@ import Pagination from "../../../charts/Pagination";
 import Curation from "../../../Curation";
 import IntegrationReactSelect from "../../../BasicSelect";
 import FormLabel from "@material-ui/core/FormLabel";
+import { sendAnalytics } from "../../../../utils/analytics";
 
 const options: (data: any, translations: any) => Highcharts.Options = (
   data,
@@ -149,6 +150,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
   }));
   const [species, setSpecies] = useState<any[]>(suggestions);
   const onSpeciesChange = (value: any) => {
+    sendAnalytics({ type: "event", category: "popup", action: "filter" });
     setSpecies(value);
   };
   const groupedStudies = R.values(

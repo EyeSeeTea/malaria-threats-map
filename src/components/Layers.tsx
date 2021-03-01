@@ -9,6 +9,7 @@ import {
   toggleEndemicityLayerAction,
 } from "../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
+import { sendAnalytics } from "../utils/analytics";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,7 +24,9 @@ function Layers({ toogleEndemicityLayer, endemicityLayer }: any) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
   const handleToggle = () => {
-    toogleEndemicityLayer(!endemicityLayer);
+    const newValue = !endemicityLayer;
+    if (newValue) sendAnalytics({ type: "event", category: "menu", action: "shade" });
+    toogleEndemicityLayer(newValue);
   };
   return (
     <div>

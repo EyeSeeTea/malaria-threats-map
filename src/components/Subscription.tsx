@@ -24,6 +24,7 @@ import { connect } from "react-redux";
 import { addSubscriptionContactRequestAction } from "../store/actions/data-download-actions";
 import { Contact } from "./DataDownload";
 import { useTranslation } from "react-i18next";
+import { sendAnalytics } from "../utils/analytics";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -78,6 +79,7 @@ const Subscription = ({
   };
 
   const handleOpen = () => {
+    sendAnalytics({ type: "event", category: "menu", action: "subscribe" });
     setSubscriptionOpen(true);
   };
 
@@ -90,6 +92,7 @@ const Subscription = ({
       country,
     };
     saveContact(contact);
+    sendAnalytics({ type: "event", category: "menu", action: "subscribe", label: "submit" });
   };
 
   return (

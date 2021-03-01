@@ -25,6 +25,7 @@ import { Container, Typography } from "@material-ui/core";
 import MekongTitle from "./mekong/MekongTitle";
 import background from "../assets/img/background.jpeg";
 import config from "../config";
+import { sendAnalytics } from "../utils/analytics";
 
 const FlexGrow = styled.div`
   flex-grow: 1;
@@ -81,11 +82,20 @@ function InitialDialog({
     }
     setInitialDialogOpen(false);
   }
+  function logAndClose() {
+    sendAnalytics({ type: "event", category: "homeItem", action: "exit" });
+    handleClose();
+  }
+
+  React.useEffect(() => {
+    if (initialDialogOpen) sendAnalytics({ type: "pageView", path: "Home" });
+  }, [initialDialogOpen]);
+
   return (
     <Dialog
       open={initialDialogOpen}
       maxWidth={"lg"}
-      onClose={handleClose}
+      onClose={logAndClose}
       PaperProps={{
         style: {
           backgroundColor: "transparent",
@@ -114,7 +124,7 @@ function InitialDialog({
           )}
           <FlexGrow />
           <LanguageWrapper>
-            <LanguageSelectorSelect />
+            <LanguageSelectorSelect section="homeItem" />
           </LanguageWrapper>
         </CenteredRow>
         <Row id="dialog">

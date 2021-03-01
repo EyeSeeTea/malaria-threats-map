@@ -7,6 +7,7 @@ import { setStoryModeAction } from "../store/actions/base-actions";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import { dispatchCustomEvent } from "../utils/dom-utils";
 import { useTranslation } from "react-i18next";
+import { sendAnalytics } from "../utils/analytics";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,7 +22,9 @@ function StoryModeSelector({ storyMode, setStoryMode }: any) {
   const { t } = useTranslation("common");
   const classes = useStyles({});
   const handleToggle = () => {
-    setStoryMode(!storyMode);
+    const newStoryModel = !storyMode;
+    if (newStoryModel) sendAnalytics({ type: "event", category: "menu", action: "storymode" });
+    setStoryMode(newStoryModel);
   };
   dispatchCustomEvent("resize");
   return (

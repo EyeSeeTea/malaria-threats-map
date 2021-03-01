@@ -9,6 +9,7 @@ import {
 import { selectTour } from "../store/reducers/base-reducer";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { sendAnalytics } from "../utils/analytics";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -55,6 +56,7 @@ const TourIcon = ({ tour, setTourOpen, setInitialDialogOpen }: Props) => {
         color={"default"}
         className={classes.fab}
         onClick={() => {
+          sendAnalytics({ type: "event", category: "menu", action: "tour" });
           localStorage.setItem("tour", "");
           window.history.pushState({}, document.title, "/");
           window.location.reload();

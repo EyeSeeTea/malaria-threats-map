@@ -8,6 +8,7 @@ import { selectIsFeedbackOpen } from "../store/reducers/base-reducer";
 import { connect } from "react-redux";
 import i18next from "i18next";
 import { useTranslation } from "react-i18next";
+import { sendAnalytics } from "../utils/analytics";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -73,6 +74,7 @@ const Feedback = ({ feedbackOpen, setFeedbackOpen }: Props) => {
   };
 
   const handleOpen = () => {
+    sendAnalytics({ type: "event", category: "menu", action: "feedback" });
     setFeedbackOpen(true);
   };
 

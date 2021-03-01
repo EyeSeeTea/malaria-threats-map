@@ -15,6 +15,7 @@ import { Divider, FilterWrapper } from "./Filters";
 import T from "../../translations/T";
 import config from "../../config";
 import { useTranslation } from "react-i18next";
+import { sendAnalytics } from "../../utils/analytics";
 
 const mapStateToProps = (state: State) => ({
   region: selectRegion(state),
@@ -39,6 +40,7 @@ const CountrySelector = ({
 }: Props) => {
   const { t } = useTranslation("common");
   const onChange = (selection: Option | undefined) => {
+    sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label: selection.value });
     setRegion({ country: selection ? selection.value : undefined });
   };
   const suggestions: any[] = config.mekong
