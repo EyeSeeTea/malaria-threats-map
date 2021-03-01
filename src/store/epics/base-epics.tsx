@@ -65,6 +65,20 @@ export const setThemeEpic = (
     })
   );
 
+export const setSelectionEpic = (
+  action$: ActionsObservable<ActionType<typeof setSelection>>,
+  state$: StateObservable<State>
+) =>
+  action$.ofType(ActionTypeEnum.SetSelection).pipe(
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      if (!action.payload) return of();
+      const { theme } = state.malaria;
+      const logAction = logEventAction({ category: "popup", action: "pin", label: theme });
+      return of(logAction);
+    })
+  );
+
 export const logEvent = (
   action$: ActionsObservable<ActionType<typeof logEventAction>>,
   state$: StateObservable<State>
