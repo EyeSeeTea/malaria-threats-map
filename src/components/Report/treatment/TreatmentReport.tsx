@@ -40,6 +40,7 @@ import { TreatmentStudy } from "../../../types/Treatment";
 import { EnhancedTableProps, StyledCell, useStyles } from "../types";
 import { isNull } from "../../../utils/number-utils";
 import { format } from "date-fns";
+import { sendAnalytics } from "../../../utils/analytics";
 
 function EnhancedTableHead(props: EnhancedTableProps) {
   const { t } = useTranslation("common");
@@ -344,6 +345,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
     ];
     const dateString = format(new Date(), "yyyyMMdd");
     exportToCSV(tabs, `MTM_TREATMENT_${dateString}`);
+    sendAnalytics({ type: "event", category: "tableView", action: "download", label: "treatment" });
   };
 
   const handleRequestSort = (
