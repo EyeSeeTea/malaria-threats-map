@@ -2,9 +2,12 @@ import { Link, Typography } from "@material-ui/core";
 import * as React from "react";
 import { Study } from "../../types/Malaria";
 import { useTranslation } from "react-i18next";
-import { sendAnalytics } from "../../utils/analytics";
 import { logOutboundLinkAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
+
+const mapDispatchToProps = {
+  logOutboundLinkAction: logOutboundLinkAction,
+};
 
 type OwnProps = {
   study: Partial<Study>;
@@ -18,16 +21,12 @@ const isNull = (value: string) =>
 const valueOrUndefined = (value: string) =>
   isNull(value) ? undefined : value.trim();
 
-const mapDispatchToProps = {
-  logOutboundLinkAction: logOutboundLinkAction,
-};
-
 // TODO: Translations
 const Citation = ({ study, logOutboundLinkAction }: Props) => {
   const { t } = useTranslation("common");
   const logClick = React.useCallback(() => {
     logOutboundLinkAction(study.CITATION_URL);
-  }, [study])
+  }, [study, logOutboundLinkAction])
   return !isNull(study.CITATION_URL) ? (
     <>
       <Typography variant="caption">

@@ -9,7 +9,7 @@ import * as serviceWorker from "./serviceWorker";
 import "./config/i18next";
 import ReactGA from "react-ga";
 import config from "./config";
-import { hotjar } from "react-hotjar"
+// import { hotjar } from "react-hotjar"
 
 const gaAppId = config.gaAppId;
 

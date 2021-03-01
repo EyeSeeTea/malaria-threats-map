@@ -53,7 +53,7 @@ const configurations: { [key: string]: ConfigProps } = {
     backendUrl:
       process.env.REACT_APP_BACKEND_URL ||
       `https://portal-uat.who.int/malthreats-api/`,
-    gaAppId: "",
+    gaAppId: "UA-190583813-1",
     env: "local",
     mekong: false,
   },
