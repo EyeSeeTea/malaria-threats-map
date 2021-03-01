@@ -25,6 +25,7 @@ export const setThemeAction = createAction(
 export interface GAEvent {
   category: string;
   action: string;
+  label?: string;
 }
 
 export interface GAPageView {
