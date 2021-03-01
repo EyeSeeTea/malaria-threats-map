@@ -103,6 +103,7 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
   };
 
   const beginning = () => {
+    sendAnalytics({ type: "event", category: "timeline", action: "restart" });
     setYear(() => minYear);
     setYears([minYear, minYear]);
   };
@@ -159,7 +160,6 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
         className={classes.iconButton}
         size={"small"}
         onClick={() => {
-          sendAnalytics({ type: "event", category: "timeline", action: "restart" });
           setTheaterMode(false);
         }}
         title={"Exit theater mode"}
