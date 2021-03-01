@@ -40,7 +40,7 @@ const CountrySelector = ({
 }: Props) => {
   const { t } = useTranslation("common");
   const onChange = (selection: Option | undefined) => {
-    const label = selection && selection.value || undefined;
+    const label = selection ? selection.value : undefined;
     sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label });
     setRegion({ country: selection ? selection.value : undefined });
   };

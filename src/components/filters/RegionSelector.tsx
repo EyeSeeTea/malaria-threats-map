@@ -28,7 +28,7 @@ type Props = DispatchProps & StateProps;
 
 class RegionSelector extends Component<Props> {
   onChange = (selection: any) => {
-    const label = selection && selection.value || undefined;
+    const label = selection ? selection.value : undefined;
     sendAnalytics({ type: "event", category: "geoFilter", action: "Region", label });
     this.props.setRegion({ region: selection ? selection.value : undefined });
   };
