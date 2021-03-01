@@ -832,9 +832,11 @@ function DataDownload({
         break;
     }
     addDownload(request);
-    logEvent({
-      category: "Download Data",
-      action: selections.theme,
+    sendAnalytics({
+      type: "event",
+      category: "Download",
+      action: "download",
+      label: selections.theme,
     });
   };
 
