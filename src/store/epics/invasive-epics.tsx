@@ -98,8 +98,9 @@ export const setInvasiveVectorSpeciesEpic = (
         (action.payload || []).forEach(species =>
           actions.push(
             logEventAction({
-              category: "Vector Species",
-              action: species
+              category: "filter",
+              action: "vectorSpecies",
+              label: species
             })
           )
         );

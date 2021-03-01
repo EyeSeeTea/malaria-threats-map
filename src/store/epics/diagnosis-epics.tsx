@@ -113,8 +113,9 @@ export const setDiagnosisSurveyTypesEpic = (
         (action.payload || []).forEach(surveyType =>
           actions.push(
             logEventAction({
-              category: "Survey Type",
-              action: surveyType
+              category: "filter",
+              action: "surveyType",
+              label: surveyType
             })
           )
         );
@@ -132,8 +133,9 @@ export const setDiagnosisPatientTypeEpic = (
       switchMap(action => {
         return of(
           logEventAction({
-            category: "Patient Type",
-            action: action.payload
+            category: "filter",
+            action: "patient",
+            label: action.payload
           })
         );
       })
@@ -149,8 +151,9 @@ export const setDiagnosisDeletionTypeEpic = (
       switchMap(action => {
         return of(
           logEventAction({
-            category: "Deletion Type",
-            action: action.payload
+            category: "filter",
+            action: "deletionType",
+            label: action.payload
           })
         );
       })

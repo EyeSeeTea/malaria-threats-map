@@ -142,8 +142,9 @@ export const setPreventionInsecticideClassEpic = (
           setType(state.prevention.filters.type || "MONO_OXYGENASES"),
           setSpecies([]),
           logEventAction({
-            category: "Insecticide Class",
-            action: action.payload
+            category: "filter",
+            action: "insecticideClass",
+            label: action.payload
           })
         );
       })
@@ -161,8 +162,9 @@ export const setPreventionInsecticideTypeEpic = (
         (action.payload || []).forEach(type =>
           actions.push(
             logEventAction({
-              category: "Insecticide Type",
-              action: type
+              category: "filter",
+              action: "InsecticideType",
+              label: type
             })
           )
         );
@@ -181,8 +183,9 @@ export const setPreventionTypeResetEpic = (
         return of(
           setSpecies([]),
           logEventAction({
-            category: "Type",
-            action: action.payload
+            category: "filter",
+            action: "mechanismType",
+            label: action.payload
           })
         );
       })
@@ -221,8 +224,9 @@ export const setPreventionSpeciesEpic = (
         (action.payload || []).forEach(species =>
           actions.push(
             logEventAction({
-              category: "Species",
-              action: species
+              category: "filter",
+              action: "vectorSpecies",
+              label: species
             })
           )
         );
@@ -241,10 +245,7 @@ export const setPreventionAssayTypesEpic = (
         const actions: any[] = [];
         (action.payload || []).forEach(assayType =>
           actions.push(
-            logEventAction({
-              category: "Assay Type",
-              action: assayType
-            })
+            logEventAction({ category: "filter", action: "assayType", label: assayType })
           )
         );
         return of(...actions);

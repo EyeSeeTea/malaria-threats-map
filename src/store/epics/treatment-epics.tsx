@@ -125,8 +125,9 @@ export const setTreatmentPlasmodiumSpeciesEpic = (
     .pipe(
       switchMap(action => {
         const logEvent = logEventAction({
-          category: "Plasmodium Species",
-          action: action.payload
+          category: "filter",
+          action: "plasmodiumSpecies",
+          label: action.payload
         });
         if (
           ["P._FALCIPARUM", "P._KNOWLESI", "P._OVALE"].includes(action.payload)
@@ -148,8 +149,9 @@ export const setTreatmentDrugEpic = (
       switchMap(action => {
         return of(
           logEventAction({
-            category: "Drug",
-            action: action.payload
+            category: "filter",
+            action: "drug",
+            label: action.payload
           })
         );
       })
@@ -171,8 +173,9 @@ export const setMolecularMarkerEpic = (
         }
         return of(
           logEventAction({
-            category: "Molecular marker",
-            action: selection.label
+            category: "filter",
+            action: "molecularMarkers",
+            label: selection.label
           })
         );
       })
