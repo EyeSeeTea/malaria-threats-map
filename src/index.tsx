@@ -9,8 +9,12 @@ import * as serviceWorker from "./serviceWorker";
 import "./config/i18next";
 import ReactGA from "react-ga";
 import config from "./config";
+import { hotjar } from "react-hotjar"
 
 const gaAppId = config.gaAppId;
+
+// TODO
+hotjar.initialize(1234, 5678);
 
 ReactGA.initialize(gaAppId, {
   debug: true

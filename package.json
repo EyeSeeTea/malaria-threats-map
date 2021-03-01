@@ -43,6 +43,7 @@
     "react-device-detect": "^1.13.1",
     "react-dom": "^16.8.6",
     "react-ga": "^2.7.0",
+    "react-hotjar": "^2.2.1",
     "react-i18next": "^10.11.4",
     "react-joyride": "^2.1.1",
     "react-map-gl": "^5.0.7",
