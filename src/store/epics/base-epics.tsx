@@ -21,6 +21,7 @@ import {
   setStoryModeStepAction,
   setThemeAction,
   logPageViewAction,
+  logOutboundLinkAction,
 } from "../actions/base-actions";
 import { PreventionMapType, State } from "../types";
 import ReactGA from "react-ga";
@@ -86,7 +87,6 @@ export const logEvent = (
   action$.ofType(ActionTypeEnum.MalariaLogEvent).pipe(
     withLatestFrom(state$),
     switchMap(([action, _state]) => {
-      console.log("ga-event", action.payload);
       ReactGA.event(action.payload);
       return of();
     })
@@ -99,8 +99,20 @@ export const logPageView = (
   action$.ofType(ActionTypeEnum.MalariaLogPageView).pipe(
     withLatestFrom(state$),
     switchMap(([action, _state]) => {
-      console.log("ga-pageview", action.payload);
       ReactGA.pageview(action.payload.path);
+      return of();
+    })
+  );
+
+export const logOutboundLink = (
+  action$: ActionsObservable<ActionType<typeof logOutboundLinkAction>>,
+  state$: StateObservable<State>
+) =>
+  action$.ofType(ActionTypeEnum.MalariaLogOutboundLink).pipe(
+    withLatestFrom(state$),
+    switchMap(([action, _state]) => {
+      console.log("out-debug")
+      ReactGA.outboundLink({ label: action.payload }, () => {});
       return of();
     })
   );

@@ -2,6 +2,7 @@ import { Link, Typography } from "@material-ui/core";
 import * as React from "react";
 import { Study } from "../../types/Malaria";
 import { useTranslation } from "react-i18next";
+import { sendAnalytics } from "../../utils/analytics";
 
 type OwnProps = {
   study: Partial<Study>;
@@ -17,10 +18,13 @@ const valueOrUndefined = (value: string) =>
 // TODO: Translations
 const Citation = ({ study }: Props) => {
   const { t } = useTranslation("common");
+  const logClick = React.useCallback(() => {
+    sendAnalytics({ type: "outboundLink", label: study.CITATION_URL });
+  }, [study])
   return !isNull(study.CITATION_URL) ? (
     <>
       <Typography variant="caption">
-        <Link href={study.CITATION_URL} target="_blank" color={"textSecondary"}>
+        <Link onClick={logClick} href={study.CITATION_URL} target="_blank" color={"textSecondary"}>
           {valueOrUndefined(study.CITATION_LONG) ||
             valueOrUndefined(study.CITATION) ||
             valueOrUndefined(study.INSTITUTION) ||

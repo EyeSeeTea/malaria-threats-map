@@ -46,6 +46,13 @@ export const logPageViewAction = createAction(
   }
 );
 
+export const logOutboundLinkAction = createAction(
+  ActionTypeEnum.MalariaLogOutboundLink,
+  (action) => {
+    return (url: string) => action(url);
+  }
+);
+
 export const setRegionAction = createAction(
   ActionTypeEnum.MalariaSetRegion,
   (action) => {
