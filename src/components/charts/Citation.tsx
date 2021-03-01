@@ -3,11 +3,14 @@ import * as React from "react";
 import { Study } from "../../types/Malaria";
 import { useTranslation } from "react-i18next";
 import { sendAnalytics } from "../../utils/analytics";
+import { logOutboundLinkAction } from "../../store/actions/base-actions";
+import { connect } from "react-redux";
 
 type OwnProps = {
   study: Partial<Study>;
 };
-type Props = OwnProps;
+type DispatchProps = typeof mapDispatchToProps;
+type Props = OwnProps & DispatchProps;
 
 const isNull = (value: string) =>
   value === null || !value || value.trim() === "NA" || value.trim() === "NR";
@@ -15,11 +18,15 @@ const isNull = (value: string) =>
 const valueOrUndefined = (value: string) =>
   isNull(value) ? undefined : value.trim();
 
+const mapDispatchToProps = {
+  logOutboundLinkAction: logOutboundLinkAction,
+};
+
 // TODO: Translations
-const Citation = ({ study }: Props) => {
+const Citation = ({ study, logOutboundLinkAction }: Props) => {
   const { t } = useTranslation("common");
   const logClick = React.useCallback(() => {
-    sendAnalytics({ type: "outboundLink", label: study.CITATION_URL });
+    logOutboundLinkAction(study.CITATION_URL);
   }, [study])
   return !isNull(study.CITATION_URL) ? (
     <>
@@ -42,4 +49,4 @@ const Citation = ({ study }: Props) => {
   );
 };
 
-export default Citation;
+export default connect(null, mapDispatchToProps)(Citation);

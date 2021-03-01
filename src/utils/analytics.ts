@@ -1,5 +1,13 @@
 import ReactGA from "react-ga";
 
+/* Non-redux GA analytics helpers. For Redux, check for example the <Citation> component. Steps:
+    - Import action.
+    - Create mapDispatchToProps.
+    - Add dispatch props to Props type.
+    - Use redux connect with mapDispatchToProps.
+    - Call dispatcher from props.
+*/
+
 export type AnalyticsData = Event | PageView | OutboundLink;
 
 export interface Event {
