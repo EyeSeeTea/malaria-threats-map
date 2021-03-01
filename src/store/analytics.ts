@@ -1,5 +1,6 @@
 import { PreventionMapType, DiagnosisMapType, TreatmentMapType, InvasiveMapType } from "./types";
 import { GAPageView } from "./actions/base-actions";
+import { sendAnalytics } from "../utils/analytics";
 
 const analyticsPaths = {
     prevention: {
@@ -22,24 +23,40 @@ const analyticsPaths = {
     }
   }
 
-type AnalyticsMainPage = keyof typeof analyticsPaths;
+type AppPage = keyof typeof analyticsPaths;
 
 const analyticsPages = new Set(Object.keys(analyticsPaths))
 
-function isGoogleAnalyticsPage(page: string): page is AnalyticsMainPage  {
+function isGoogleAnalyticsPage(page: string): page is AppPage  {
     return analyticsPages.has(page);
 }
 
+interface Options<Page extends string = string> {
+  page: Page;
+  section?: number;
+}
 
-export function getAnalyticsPageViewFromString(options: {page: string, section?: number}): GAPageView | undefined {
+export function getAnalyticsPageViewFromString(options: Options): GAPageView | undefined {
     const { page, section = 0 } = options;
     if (!isGoogleAnalyticsPage(page)) return;
     return getAnalyticsPageView({ page, section });
 }
 
-export function getAnalyticsPageView<Page extends AnalyticsMainPage>(options: {page: Page, section?: number}): GAPageView | undefined {
+export function getAnalyticsPageView<P extends AppPage>(options: Options<P>): GAPageView | undefined {
+  const sectionName = getSection(options);
+  return sectionName ? { path: [options.page, sectionName].join("/") } : undefined;
+}
+
+export function sendAnalyticsMapMenuChange<Page extends AppPage>(
+    page: Page,
+    sectionIndex: number
+): void {
+    const section = getSection({ page, section: sectionIndex })
+    sendAnalytics({ type: "event", category: "map_menu", action: page, label: section });
+}
+
+function getSection<Page extends AppPage>(options: Options<Page>): string | undefined {
   const { page, section = 0 } = options;
   const mapping = analyticsPaths[page] as Record<number, string>;
-  const sectionName = mapping ? mapping[section] : undefined;
-  return sectionName ? { path: [page, sectionName].join("/") } : undefined;
+  return mapping ? mapping[section] : undefined;
 }
