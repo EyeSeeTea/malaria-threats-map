@@ -223,25 +223,29 @@ export const setStoryModeStepEpic = (
       })
     );
 
-export const setStoryModeLogEventStepEpic = (
-  action$: ActionsObservable<ActionType<typeof setStoryModeAction>>,
+export const logStoryModeStepEpic = (
+  action$: ActionsObservable<
+    ActionType<typeof setStoryModeStepAction>
+  >,
   state$: StateObservable<State>
 ) =>
-  action$.ofType(ActionTypeEnum.MalariaSetStoryMode).pipe(
-    withLatestFrom(state$),
-    switchMap(([_, state]) => {
-      if (state.malaria.storyMode) {
-        return of(
-          logEventAction({
-            category: "Story Mode",
-            action: "true",
-          })
-        );
-      } else {
-        return of();
-      }
-    })
-  );
+  action$
+    .ofType(ActionTypeEnum.MalariaSetStoryModeStep)
+    .pipe(
+      withLatestFrom(state$),
+      switchMap(([action, state]) => {
+        const theme = state.malaria.theme;
+        if (!state.malaria.storyMode) {
+          return of();
+        } else {
+          const step = (action.payload + 1).toString();
+          return of(
+            logEventAction({ category: "storyMode", action: theme, label: step })
+          );
+        }
+      })
+    );
+
 export type LastUpdated = {
   OBJECTID: number;
   TABLE_NAME: string;
