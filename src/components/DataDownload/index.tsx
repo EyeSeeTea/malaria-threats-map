@@ -66,7 +66,6 @@ import {
   spanishDisclaimerTab,
 } from "./utils";
 import i18next from "i18next";
-import { sendAnalytics } from "../../utils/analytics";
 
 export const MOLECULAR_MECHANISM_TYPES = [
   "MONO_OXYGENASES",
@@ -215,8 +214,7 @@ function DataDownload({
 
   React.useEffect(() => {
     if (isDataDownloadOpen) {
-      sendAnalytics({
-          type: "event",
+      logEvent({
           category: "download",
           action: "step",
           label: (activeStep + 1).toString(),
@@ -294,7 +292,7 @@ function DataDownload({
     setUseInfo({ ...useInfo, [field]: value });
   };
   const handleToggle = () => {
-    sendAnalytics({ type: "event", category: "menu", action: "download" })
+    logEvent({ category: "menu", action: "download" })
     setDataDownloadOpen(!isDataDownloadOpen);
     reset();
   };
@@ -820,24 +818,23 @@ function DataDownload({
           selections.invasiveDataset
       ),
     };
+    let dataset;
     switch (selections.theme) {
       case "prevention":
         downloadPreventionData();
+        dataset = selections.preventionDataset;
         break;
       case "treatment":
         downloadTreatmentData();
+        dataset = selections.treatmentDataset;
         break;
       case "invasive":
         downloadInvasiveData();
+        dataset = selections.invasiveDataset;
         break;
     }
     addDownload(request);
-    sendAnalytics({
-      type: "event",
-      category: "Download",
-      action: "download",
-      label: selections.theme,
-    });
+    logEvent({ category: "Download", action: "download", label: dataset || undefined });
   };
 
   const isWelcomeFormValid = () => {
