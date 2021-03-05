@@ -220,7 +220,7 @@ function DataDownload({
           label: (activeStep + 1).toString(),
       });
     }
-  }, [activeStep, isDataDownloadOpen]);
+  }, [activeStep, isDataDownloadOpen, logEvent]);
 
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
