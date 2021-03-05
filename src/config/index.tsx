@@ -9,6 +9,9 @@ type ConfigProps = {
   mekong: boolean;
 };
 
+//https://apps-dev.who.int/malaria/maps/threats/
+//https://apps.who.int/malaria/maps/threats/
+
 const WHO_MALARIA_THREATS_MAP_STAGING =
   "https://extranet.who.int/gis/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer";
 const WHO_MALARIA_THREATS_MAP =
@@ -53,7 +56,7 @@ const configurations: { [key: string]: ConfigProps } = {
     backendUrl:
       process.env.REACT_APP_BACKEND_URL ||
       `https://portal-uat.who.int/malthreats-api/`,
-    gaAppId: "UA-190583813-1",
+    gaAppId: "UA-191197789-1",
     env: "local",
     mekong: false,
   },
@@ -61,7 +64,7 @@ const configurations: { [key: string]: ConfigProps } = {
     ...stagingMapServer,
     ...stagingMapTile,
     backendUrl: `https://portal-uat.who.int/malthreats-api/`,
-    gaAppId: "UA-151634352-1",
+    gaAppId: "UA-191197789-1",
     env: "staging",
     mekong: false,
   },

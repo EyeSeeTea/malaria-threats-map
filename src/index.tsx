@@ -13,7 +13,11 @@ import { hotjar } from "react-hotjar"
 
 const gaAppId = config.gaAppId;
 
-hotjar.initialize(2269048, 6);
+// Production
+//hotjar.initialize(2269048, 6);
+//Staging
+hotjar.initialize(2280607, 6);
+
 
 ReactGA.initialize(gaAppId, {
   debug: true
