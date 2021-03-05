@@ -7,6 +7,7 @@ type ConfigProps = {
   gaAppId: string;
   env: string;
   mekong: boolean;
+  hotjar?: { hjid: number, hjsv: number },
 };
 
 //https://apps-dev.who.int/malaria/maps/threats/
@@ -67,6 +68,7 @@ const configurations: { [key: string]: ConfigProps } = {
     gaAppId: "UA-191197789-1",
     env: "staging",
     mekong: false,
+    hotjar: {hjid: 2280607, hjsv: 6},
   },
   prod: {
     ...prodMapServer,
@@ -75,6 +77,7 @@ const configurations: { [key: string]: ConfigProps } = {
     gaAppId: "UA-140410266-1",
     env: "prod",
     mekong: false,
+    hotjar: {hjid: 2269048, hjsv: 6},
   },
   "local-mekong": {
     ...stagingMapServer,

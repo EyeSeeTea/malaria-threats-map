@@ -11,13 +11,11 @@ import ReactGA from "react-ga";
 import config from "./config";
 import { hotjar } from "react-hotjar"
 
-const gaAppId = config.gaAppId;
+const {gaAppId, hotjar: hotjarConfig } = config;
 
-// Production
-//hotjar.initialize(2269048, 6);
-//Staging
-hotjar.initialize(2280607, 6);
-
+if (hotjarConfig) {
+  hotjar.initialize(hotjarConfig.hjid, hotjarConfig.hjsv);
+}
 
 ReactGA.initialize(gaAppId, {
   debug: true
