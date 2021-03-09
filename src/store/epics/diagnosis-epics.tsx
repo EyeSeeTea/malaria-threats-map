@@ -86,16 +86,11 @@ export const setDiagnosisMapTypeEpic = (
 ) =>
   action$.ofType(ActionTypeEnum.SetDiagnosisMapType).pipe(
     switchMap(action => {
-      const log = (type: string) =>
-        logEventAction({
-          category: "Diagnosis Map Type",
-          action: type
-        });
       const pageView = getAnalyticsPageView({ page: "diagnosis", section: action.payload });
       const logPageView = logPageViewAction(pageView);
   
       if (action.payload === DiagnosisMapType.GENE_DELETIONS) {
-        return of(log("pfhrp2/3 gene deletions"), logPageView);
+        return of(logPageView);
       }
       return of();
     })

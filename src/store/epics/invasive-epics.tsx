@@ -72,15 +72,10 @@ export const setTreatmentMapTypeEpic = (
 ) =>
   action$.ofType(ActionTypeEnum.SetInvasiveMapType).pipe(
     switchMap(action => {
-      const log = (type: string) =>
-        logEventAction({
-          category: "Invasive Map Type",
-          action: type
-        });
       const pageView = getAnalyticsPageView({ page: "invasive", section: action.payload });
       const logPageView = logPageViewAction(pageView);
       if (action.payload === InvasiveMapType.VECTOR_OCCURANCE) {
-        return of(log("Vector occurance"), logPageView);
+        return of(logPageView);
       }
       return of();
     })

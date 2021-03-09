@@ -79,33 +79,25 @@ export const setPreventionMapTypeEpic = (
 ) =>
   action$.ofType(ActionTypeEnum.SetPreventionMapType).pipe(
     switchMap(action => {
-      const log = (type: string) =>
-        logEventAction({
-          category: "Prevention Map Type",
-          action: type
-        });
-
       const pageView = getAnalyticsPageView({ page: "prevention", section: action.payload });
       const logPageView = logPageViewAction(pageView);
 
       if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
         return of(
           setType("MONO_OXYGENASES"),
-          log("Resistance mechanisms detection"),
           logPageView
         );
       } else if (action.payload === PreventionMapType.INTENSITY_STATUS) {
-        return of(setType(undefined), log("Insecticide resistance intensity"), logPageView);
+        return of(setType(undefined), logPageView);
       } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
-        return of(setType(undefined), log("Insecticide resistance status"), logPageView);
+        return of(setType(undefined), logPageView);
       } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
         return of(
           setType("MONO_OXYGENASES"),
-          log("Metabolic mechanisms involvement"),
           logPageView
         );
       } else if (action.payload === PreventionMapType.PBO_DEPLOYMENT) {
-        return of(setType(undefined), log("Pyrethroid-PBO nets deployment"), logPageView);
+        return of(setType(undefined), logPageView);
       }
       return of(setType(undefined), logPageView);
     })

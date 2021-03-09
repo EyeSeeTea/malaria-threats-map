@@ -96,21 +96,16 @@ export const setTreatmentMapTypeEpic = (
 ) =>
   action$.ofType(ActionTypeEnum.SetTreatmentMapType).pipe(
     switchMap(action => {
-      const log = (type: string) =>
-        logEventAction({
-          category: "Treatment Map Type",
-          action: type
-        });
       const pageView = getAnalyticsPageView({ page: "treatment", section: action.payload });
       const logPageView = logPageViewAction(pageView);
       if (action.payload === TreatmentMapType.TREATMENT_FAILURE) {
-        return of(log("Treatment failure"), logPageView);
+        return of(logPageView);
       } else if (action.payload === TreatmentMapType.MOLECULAR_MARKERS) {
-        return of(log("Molecular markers of drug resistance"), logPageView);
+        return of(logPageView);
       } else if (
         action.payload === TreatmentMapType.DELAYED_PARASITE_CLEARANCE
       ) {
-        return of(log("Delayed parasite clearance"), logPageView);
+        return of(logPageView);
       }
       return of();
     })
