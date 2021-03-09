@@ -275,7 +275,9 @@ class Map extends React.Component<Props> {
     }
 
     const pageView = getAnalyticsPageViewFromString({ page: this.props.theme });
-    if (pageView) sendAnalytics({ type: "pageView", ...pageView });
+    if (pageView && !this.props.initialDialogOpen) {
+      sendAnalytics({ type: "pageView", ...pageView });
+    }
   }
 
   componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void {
