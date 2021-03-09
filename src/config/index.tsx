@@ -61,6 +61,15 @@ const configurations: { [key: string]: ConfigProps } = {
     env: "local",
     mekong: false,
   },
+  dev: {
+    ...stagingMapServer,
+    ...stagingMapTile,
+    backendUrl: "https://dev.eyeseetea.com/mtm/",
+    gaAppId: "UA-191197789-2",
+    env: "dev",
+    mekong: false,
+    hotjar: { hjid:2287362, hjsv:6 }
+  },
   staging: {
     ...stagingMapServer,
     ...stagingMapTile,
@@ -68,7 +77,7 @@ const configurations: { [key: string]: ConfigProps } = {
     gaAppId: "UA-191197789-1",
     env: "staging",
     mekong: false,
-    hotjar: {hjid: 2280607, hjsv: 6},
+    hotjar: { hjid: 2280607, hjsv: 6 },
   },
   prod: {
     ...prodMapServer,

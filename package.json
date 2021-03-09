@@ -64,9 +64,10 @@
   },
   "scripts": {
     "start": "cross-env-shell REACT_APP_ENV=local BROWSER=none react-scripts start",
+    "start-mekong": "cross-env-shell REACT_APP_ENV=local-mekong react-scripts start",
     "build": "cross-env-shell REACT_APP_ENV=staging react-scripts build",
     "build-prod": "cross-env-shell REACT_APP_ENV=prod react-scripts build",
-    "start-mekong": "cross-env-shell REACT_APP_ENV=local-mekong react-scripts start",
+    "build-dev": "cross-env-shell REACT_APP_ENV=dev PUBLIC_URL=/mtm react-scripts build",
     "build-mekong": "cross-env-shell REACT_APP_ENV=staging-mekong react-scripts build",
     "build-prod-mekong": "cross-env-shell REACT_APP_ENV=prod-mekong react-scripts build",
     "test": "react-scripts test",
