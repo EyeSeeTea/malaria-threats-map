@@ -69,9 +69,13 @@ const YearRangeSelector = ({
 
   const handleChange = (event: any, newValue: number | number[]) => {
     const [start, end] = newValue as number[];
+    const [prevStart, prevEnd] = filters
     const label = `(${start}, ${end})`
-    sendAnalytics({ type: "event", category: "filter", action: "Years", label });
-    setFilters(newValue as number[]);
+    
+    if (prevStart !== start || prevEnd !== end) {
+      sendAnalytics({ type: "event", category: "filter", action: "Years", label });
+      setFilters(newValue as number[]);
+    }
   };
 
   return (
