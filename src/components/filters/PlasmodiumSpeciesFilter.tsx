@@ -8,6 +8,8 @@ import { setTreatmentPlasmodiumSpecies } from "../../store/actions/treatment-act
 import { Divider, FilterWrapper } from "./Filters";
 import FormLabel from "@material-ui/core/FormLabel";
 import T from "../../translations/T";
+import { logEventAction } from "../../store/actions/base-actions";
+import { sendAnalytics } from "../../utils/analytics";
 
 const mapStateToProps = (state: State) => ({
   plasmodiumSpecies: selectPlasmodiumSpecies(state),
@@ -15,7 +17,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  setPlasmodiumSpecies: setTreatmentPlasmodiumSpecies
+  setPlasmodiumSpecies: setTreatmentPlasmodiumSpecies,
+  logEventAction: logEventAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -48,6 +51,8 @@ export const PLASMODIUM_SPECIES_SUGGESTIONS: any[] = [
 class PlasmodiumSpeciesFilter extends Component<Props, any> {
   onChange = (selection: any) => {
     this.props.setPlasmodiumSpecies(selection ? selection.value : undefined);
+    if (selection)
+      sendAnalytics({ type: "event", category: "filter", action: "plasmodiumSpecies", label: selection.value });
   };
 
   render() {

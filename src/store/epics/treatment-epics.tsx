@@ -16,9 +16,8 @@ import {
   setTreatmentPlasmodiumSpecies
 } from "../actions/treatment-actions";
 import { MapServerConfig } from "../../constants/constants";
-import { logEventAction, logPageViewAction } from "../actions/base-actions";
+import { logPageViewAction } from "../actions/base-actions";
 import { TreatmentMapType } from "../types";
-import { MOLECULAR_MARKERS } from "../../components/filters/MolecularMarkerFilter";
 import { addNotificationAction } from "../actions/notifier-actions";
 import { ErrorResponse } from "../../types/Malaria";
 import { getAnalyticsPageView } from "../analytics";
@@ -119,59 +118,13 @@ export const setTreatmentPlasmodiumSpeciesEpic = (
     .pipe(skip(1))
     .pipe(
       switchMap(action => {
-        const logEvent = logEventAction({
-          category: "filter",
-          action: "plasmodiumSpecies",
-          label: action.payload
-        });
         if (
           ["P._FALCIPARUM", "P._KNOWLESI", "P._OVALE"].includes(action.payload)
         ) {
-          return of(setTreatmentDrug("DRUG_AL"), logEvent);
+          return of(setTreatmentDrug("DRUG_AL"));
         } else {
-          return of(setTreatmentDrug("DRUG_CQ"), logEvent);
+          return of(setTreatmentDrug("DRUG_CQ"));
         }
       })
     );
 
-export const setTreatmentDrugEpic = (
-  action$: ActionsObservable<ActionType<typeof setTreatmentDrug>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetDrug)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        return of(
-          logEventAction({
-            category: "filter",
-            action: "drug",
-            label: action.payload
-          })
-        );
-      })
-    );
-
-export const setMolecularMarkerEpic = (
-  action$: ActionsObservable<ActionType<typeof setMolecularMarker>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetMolecularMarker)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        const selection = MOLECULAR_MARKERS.find(
-          mm => mm.value === action.payload
-        );
-        if (!selection) {
-          return of();
-        }
-        return of(
-          logEventAction({
-            category: "filter",
-            action: "molecularMarkers",
-            label: selection.label
-          })
-        );
-      })
-    );

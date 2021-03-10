@@ -22,7 +22,6 @@ import {
   setInsecticideTypes,
   setPreventionMapType,
   setSpecies,
-  setSynergistTypes,
   setType
 } from "../actions/prevention-actions";
 import { PreventionMapType, State } from "../types";
@@ -143,7 +142,7 @@ export const setPreventionInsecticideClassEpic = (
     );
 
 export const setPreventionInsecticideTypeEpic = (
-  action$: ActionsObservable<ActionType<typeof setInsecticideTypes>>
+  action$: ActionsObservable<ActionType<typeof setInsecticideTypes>>,
 ) =>
   action$
     .ofType(ActionTypeEnum.SetInsecticideTypes)
@@ -151,15 +150,6 @@ export const setPreventionInsecticideTypeEpic = (
     .pipe(
       switchMap(action => {
         const actions: any[] = [setType(undefined), setSpecies([])];
-        (action.payload || []).forEach(type =>
-          actions.push(
-            logEventAction({
-              category: "filter",
-              action: "InsecticideType",
-              label: type
-            })
-          )
-        );
         return of(...actions);
       })
     );
@@ -171,75 +161,8 @@ export const setPreventionTypeResetEpic = (
     .ofType(ActionTypeEnum.SetType)
     .pipe(skip(1))
     .pipe(
-      switchMap(action => {
-        return of(
-          setSpecies([]),
-          logEventAction({
-            category: "filter",
-            action: "mechanismType",
-            label: action.payload
-          })
-        );
+      switchMap(_action => {
+        return of(setSpecies([]));
       })
     );
 
-export const setPreventionSynergistTypesEpic = (
-  action$: ActionsObservable<ActionType<typeof setSynergistTypes>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetSynergistTypes)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        const actions: any[] = [];
-        (action.payload || []).forEach(type =>
-          actions.push(
-            logEventAction({
-              category: "Synergist Type",
-              action: type
-            })
-          )
-        );
-        return of(...actions);
-      })
-    );
-
-export const setPreventionSpeciesEpic = (
-  action$: ActionsObservable<ActionType<typeof setSpecies>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetSpecies)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        const actions: any[] = [];
-        (action.payload || []).forEach(species =>
-          actions.push(
-            logEventAction({
-              category: "filter",
-              action: "vectorSpecies",
-              label: species
-            })
-          )
-        );
-        return of(...actions);
-      })
-    );
-
-export const setPreventionAssayTypesEpic = (
-  action$: ActionsObservable<ActionType<typeof setAssayTypes>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetAssayTypes)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        const actions: any[] = [];
-        (action.payload || []).forEach(assayType =>
-          actions.push(
-            logEventAction({ category: "filter", action: "assayType", label: assayType })
-          )
-        );
-        return of(...actions);
-      })
-    );

@@ -20,6 +20,7 @@ import { TreatmentStudy } from "../../types/Treatment";
 import { Divider, FilterWrapper } from "./Filters";
 import FormLabel from "@material-ui/core/FormLabel";
 import T from "../../translations/T";
+import { logEventAction } from "../../store/actions/base-actions";
 
 const mapStateToProps = (state: State) => ({
   drugs: selectDrugs(state),
@@ -30,7 +31,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  setDrug: setTreatmentDrug
+  setDrug: setTreatmentDrug,
+  logEventAction: logEventAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -40,6 +42,8 @@ type Props = DispatchProps & StateProps;
 class DrugsFilter extends Component<Props, any> {
   onChange = (selection: any) => {
     this.props.setDrug(selection ? selection.value : undefined);
+    if (selection)
+      this.props.logEventAction({ category: "filter", action: "drug", label: selection.value })
   };
 
   render() {

@@ -3,7 +3,7 @@ import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import * as ajax from "../../store/ajax";
 import { of } from "rxjs";
-import { catchError, mergeMap, skip, switchMap } from "rxjs/operators";
+import { catchError, mergeMap, switchMap } from "rxjs/operators";
 import { AjaxError } from "rxjs/ajax";
 import { InvasiveResponse } from "../../types/Invasive";
 import {
@@ -11,11 +11,9 @@ import {
   fetchInvasiveStudiesRequest,
   fetchInvasiveStudiesSuccess,
   setInvasiveMapType,
-  setInvasiveVectorSpecies
 } from "../actions/invasive-actions";
 import { MapServerConfig } from "../../constants/constants";
 import {
-  logEventAction,
   setFiltersAction,
   setThemeAction,
   logPageViewAction
@@ -80,28 +78,6 @@ export const setTreatmentMapTypeEpic = (
       return of();
     })
   );
-
-export const setInvasiveVectorSpeciesEpic = (
-  action$: ActionsObservable<ActionType<typeof setInvasiveVectorSpecies>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetInvasiveVectorSpecies)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        const actions: any[] = [];
-        (action.payload || []).forEach(species =>
-          actions.push(
-            logEventAction({
-              category: "filter",
-              action: "vectorSpecies",
-              label: species
-            })
-          )
-        );
-        return of(...actions);
-      })
-    );
 
 export const setInvasiveThemeEpic = (
   action$: ActionsObservable<ActionType<typeof setThemeAction>>

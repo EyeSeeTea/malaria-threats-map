@@ -13,6 +13,7 @@ import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
 import { Divider, FilterWrapper } from "./Filters";
 import FormLabel from "@material-ui/core/FormLabel";
 import T from "../../translations/T";
+import { logEventAction } from "../../store/actions/base-actions";
 
 export const MOLECULAR_MARKERS = [
   {
@@ -61,7 +62,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  setMolecularMarker: setMolecularMarker
+  setMolecularMarker: setMolecularMarker,
+  logEventAction: logEventAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -70,12 +72,17 @@ type Props = DispatchProps & StateProps;
 
 function MolecularMarkerFilter({
   treatmentFilters,
-  setMolecularMarker
+  setMolecularMarker,
+  logEventAction
 }: Props) {
   const classes = useStyles({});
 
   function handleChange(value: string) {
-    setMolecularMarker(parseInt(value));
+    const nValue = parseInt(value);
+    setMolecularMarker(nValue);
+    const obj = MOLECULAR_MARKERS.find(m => m.value === nValue);
+    const label = obj ? obj.label : undefined;
+    logEventAction({ category: "filter", action: "molecularMarkers", label });
   }
 
   const { t } = useTranslation("common");

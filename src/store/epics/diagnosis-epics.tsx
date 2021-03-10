@@ -13,8 +13,6 @@ import {
   fetchDiagnosisStudiesSuccess,
   setDiagnosisDeletionType,
   setDiagnosisMapType,
-  setDiagnosisPatientType,
-  setDiagnosisSurveyTypes
 } from "../actions/diagnosis-actions";
 import {
   logEventAction,
@@ -95,46 +93,6 @@ export const setDiagnosisMapTypeEpic = (
       return of();
     })
   );
-
-export const setDiagnosisSurveyTypesEpic = (
-  action$: ActionsObservable<ActionType<typeof setDiagnosisSurveyTypes>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetSurveyTypes)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        const actions: any[] = [];
-        (action.payload || []).forEach(surveyType =>
-          actions.push(
-            logEventAction({
-              category: "filter",
-              action: "surveyType",
-              label: surveyType
-            })
-          )
-        );
-        return of(...actions);
-      })
-    );
-
-export const setDiagnosisPatientTypeEpic = (
-  action$: ActionsObservable<ActionType<typeof setDiagnosisPatientType>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetPatientType)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        return of(
-          logEventAction({
-            category: "filter",
-            action: "patient",
-            label: action.payload
-          })
-        );
-      })
-    );
 
 export const setDiagnosisDeletionTypeEpic = (
   action$: ActionsObservable<ActionType<typeof setDiagnosisDeletionType>>

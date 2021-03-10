@@ -9,6 +9,7 @@ import { setSynergistTypes } from "../../store/actions/prevention-actions";
 import { Divider, FilterWrapper } from "./Filters";
 import FormLabel from "@material-ui/core/FormLabel";
 import T from "../../translations/T";
+import { sendMultiFilterAnalytics } from "../../utils/analytics";
 
 const mapStateToProps = (state: State) => ({
   synergistTypes: selectTypes(state),
@@ -28,6 +29,7 @@ class SynergistTypeFilter extends Component<Props, any> {
     this.props.setSynergistTypes(
       (selection || []).map(selection => selection.value)
     );
+    sendMultiFilterAnalytics("testType", this.props.preventionFilters.synergistTypes, selection);
   };
 
   render() {
