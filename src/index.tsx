@@ -11,6 +11,12 @@ import ReactGA from "react-ga";
 import config from "./config";
 import { hotjar } from "react-hotjar"
 
+declare global {
+  interface Window {
+    hj?(command: 'stateChange', path: string): void;
+  }
+}
+
 const {gaAppId, hotjar: hotjarConfig } = config;
 
 if (hotjarConfig) {

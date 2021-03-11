@@ -34,7 +34,10 @@ export function sendAnalytics(data: AnalyticsData) {
             ReactGA.event({ category: data.category, action: data.action, label: data.label });
             break;
         case "pageView":
+            ReactGA.set({ page : data.path })
             ReactGA.pageview(data.path);
+            if (window.hj)
+                window.hj('stateChange', data.path);
             break;
         case "outboundLink":
             ReactGA.outboundLink({ label: data.label }, () => {});
