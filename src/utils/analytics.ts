@@ -61,10 +61,7 @@ export function sendMultiFilterAnalytics(
     })
 }
 
-const url = new URL(config.backendUrl);
-const backendUrl    = url.pathname;
-
 function getHotjarPath(path: string) {
-    const pathPrefix = backendUrl.replace(/^\//, "").replace(/\/$/, "");
+    const pathPrefix = window.location.pathname.replace(/^\//, "").replace(/\/$/, "");
     return pathPrefix ? (pathPrefix + "/" + path) : path;
 }

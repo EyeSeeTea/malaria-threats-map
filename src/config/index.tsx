@@ -64,11 +64,11 @@ const configurations: { [key: string]: ConfigProps } = {
   dev: {
     ...stagingMapServer,
     ...stagingMapTile,
-    backendUrl: "https://dev.eyeseetea.com/mtm/",
+    backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "UA-191197789-2",
     env: "dev",
     mekong: false,
-    hotjar: { hjid:2287362, hjsv:6 }
+    hotjar: { hjid: 2287362, hjsv: 6 }
   },
   staging: {
     ...stagingMapServer,
