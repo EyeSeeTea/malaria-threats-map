@@ -7,11 +7,13 @@ $ yarn install
 ## Build
 
 Build for staging:
+
 ```
 $ yarn build
 ```
 
-Build for production
+Build for production:
+
 ```
 $ yarn build-prod
 ```
