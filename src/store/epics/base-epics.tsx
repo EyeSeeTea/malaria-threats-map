@@ -31,6 +31,7 @@ import { addNotificationAction } from "../actions/notifier-actions";
 import { AjaxError } from "rxjs/ajax";
 import { ErrorResponse } from "../../types/Malaria";
 import { getAnalyticsPageViewFromString } from "../analytics";
+import { sendAnalytics } from "../../utils/analytics";
 
 export const setThemeEpic = (
   action$: ActionsObservable<ActionType<typeof setThemeAction>>,
@@ -88,7 +89,7 @@ export const logEvent = (
   action$.ofType(ActionTypeEnum.MalariaLogEvent).pipe(
     withLatestFrom(state$),
     switchMap(([action, _state]) => {
-      ReactGA.event(action.payload);
+      sendAnalytics({ type: "event", ...action.payload })
       return of();
     })
   );
@@ -100,7 +101,7 @@ export const logPageView = (
   action$.ofType(ActionTypeEnum.MalariaLogPageView).pipe(
     withLatestFrom(state$),
     switchMap(([action, _state]) => {
-      ReactGA.pageview(action.payload.path);
+      sendAnalytics({ type: "pageView", ...action.payload })
       return of();
     })
   );
@@ -112,8 +113,7 @@ export const logOutboundLink = (
   action$.ofType(ActionTypeEnum.MalariaLogOutboundLink).pipe(
     withLatestFrom(state$),
     switchMap(([action, _state]) => {
-      console.log("out-debug")
-      ReactGA.outboundLink({ label: action.payload }, () => {});
+      sendAnalytics({ type: "outboundLink", label: action.payload })
       return of();
     })
   );
