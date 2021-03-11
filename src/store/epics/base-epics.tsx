@@ -24,7 +24,6 @@ import {
   logOutboundLinkAction,
 } from "../actions/base-actions";
 import { PreventionMapType, State } from "../types";
-import ReactGA from "react-ga";
 import * as ajax from "../ajax";
 import { MapServerConfig } from "../../constants/constants";
 import { addNotificationAction } from "../actions/notifier-actions";

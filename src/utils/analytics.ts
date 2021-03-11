@@ -1,4 +1,5 @@
 import ReactGA from "react-ga";
+import config from "../config";
 import _ from "lodash";
 
 /* Non-redux GA analytics helpers. For Redux, check for example the <Citation> component. Steps:
@@ -36,8 +37,10 @@ export function sendAnalytics(data: AnalyticsData) {
         case "pageView":
             ReactGA.set({ page : data.path })
             ReactGA.pageview(data.path);
-            if (window.hj)
-                window.hj('stateChange', data.path);
+            if (window.hj) {
+                const hotjarPath = getHotjarPath(data.path);
+                window.hj('stateChange', hotjarPath);
+            }
             break;
         case "outboundLink":
             ReactGA.outboundLink({ label: data.label }, () => {});
@@ -56,4 +59,12 @@ export function sendMultiFilterAnalytics(
     _(newValues).uniq().each(newValue => {
         sendAnalytics({ type: "event", category: "filter", action, label: newValue })
     })
+}
+
+const url = new URL(config.backendUrl);
+const backendUrl    = url.pathname;
+
+function getHotjarPath(path: string) {
+    const pathPrefix = backendUrl.replace(/^\//, "").replace(/\/$/, "");
+    return pathPrefix ? (pathPrefix + "/" + path) : path;
 }
