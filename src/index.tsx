@@ -9,18 +9,23 @@ import * as serviceWorker from "./serviceWorker";
 import "./config/i18next";
 import ReactGA from "react-ga";
 import config from "./config";
-import { hotjar } from "react-hotjar"
+import { initHotjar } from "./hotjar";
 
 declare global {
   interface Window {
-    hj?(command: 'stateChange', path: string): void;
+    hj?: Hotjar
   }
+}
+
+interface Hotjar {
+  (command: 'stateChange', path: string): void;
+  debug: { on(): void, off(): void };
 }
 
 const {gaAppId, hotjar: hotjarConfig } = config;
 
 if (hotjarConfig) {
-  hotjar.initialize(hotjarConfig.hjid, hotjarConfig.hjsv);
+  initHotjar(hotjarConfig.hjid, hotjarConfig.hjsv, true);
 }
 
 ReactGA.initialize(gaAppId, {
