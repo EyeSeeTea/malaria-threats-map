@@ -1,5 +1,4 @@
 import ReactGA from "react-ga";
-import config from "../config";
 import _ from "lodash";
 
 /* Non-redux GA analytics helpers. For Redux, check for example the <Citation> component. Steps:
