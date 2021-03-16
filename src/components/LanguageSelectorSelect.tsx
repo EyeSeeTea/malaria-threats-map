@@ -3,6 +3,7 @@ import { changeLanguage } from "../config/i18next";
 import IntegrationReactSelect from "./BasicSelect";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
+import { sendAnalytics } from "../utils/analytics";
 
 const LANGUAGES = [
   {
@@ -22,9 +23,13 @@ const LANGUAGES = [
   }
 ];
 
-export default function LanguageSelectorSelect() {
+export default function LanguageSelectorSelect(props: { section?: string }) {
   function handleChange(selection: any) {
-    changeLanguage(selection.value);
+    const language = selection.value;
+    changeLanguage(language);
+    const { section } = props;
+    if (section)
+      sendAnalytics({ type: "event", category: section, action: "language", label: language });
   }
   useTranslation("common");
   const language = i18next.language || window.localStorage.i18nextLng;

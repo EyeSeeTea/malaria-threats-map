@@ -187,10 +187,6 @@ class MalariaTour extends PureComponent<Props> {
     this.setSelection(null);
     this.setCountryMode(false);
     this.toggleFilters(false);
-    this.props.logEvent({
-      category: "Malaria Tour Close Event",
-      action: `${this.props.tour.step}`,
-    });
     localStorage.setItem("tour", "visited");
   };
 

@@ -20,14 +20,17 @@ import {
   setStoryModeAction,
   setStoryModeStepAction,
   setThemeAction,
+  logPageViewAction,
+  logOutboundLinkAction,
 } from "../actions/base-actions";
 import { PreventionMapType, State } from "../types";
-import ReactGA from "react-ga";
 import * as ajax from "../ajax";
 import { MapServerConfig } from "../../constants/constants";
 import { addNotificationAction } from "../actions/notifier-actions";
 import { AjaxError } from "rxjs/ajax";
 import { ErrorResponse } from "../../types/Malaria";
+import { getAnalyticsPageViewFromString } from "../analytics";
+import { sendAnalytics } from "../../utils/analytics";
 
 export const setThemeEpic = (
   action$: ActionsObservable<ActionType<typeof setThemeAction>>,
@@ -36,11 +39,17 @@ export const setThemeEpic = (
   action$.ofType(ActionTypeEnum.MalariaSetTheme).pipe(
     withLatestFrom(state$),
     switchMap(([action, state]) => {
+      const { meta } = action;
+      const eventCategory = meta.fromHome ? "homeItem" : "theme_menu";
       const base = [
-        logEventAction({ category: "theme", action: action.payload }),
+        meta.mekong
+          ? logEventAction({ category: eventCategory, action: "mekong" })
+          : logEventAction({ category: eventCategory, action: action.payload }),
+        logPageViewAction(getAnalyticsPageViewFromString({ page: action.payload })),
         setSelection(null),
         setStoryModeStepAction(0),
-      ];
+      ].filter(Boolean);
+
       switch (action.payload) {
         case "invasive":
           return of(...[setCountryModeAction(false), ...base]);
@@ -58,14 +67,52 @@ export const setThemeEpic = (
     })
   );
 
+export const setSelectionEpic = (
+  action$: ActionsObservable<ActionType<typeof setSelection>>,
+  state$: StateObservable<State>
+) =>
+  action$.ofType(ActionTypeEnum.SetSelection).pipe(
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      if (!action.payload) return of();
+      const { theme } = state.malaria;
+      const logAction = logEventAction({ category: "popup", action: "pin", label: theme });
+      return of(logAction);
+    })
+  );
+
 export const logEvent = (
   action$: ActionsObservable<ActionType<typeof logEventAction>>,
   state$: StateObservable<State>
 ) =>
   action$.ofType(ActionTypeEnum.MalariaLogEvent).pipe(
     withLatestFrom(state$),
-    switchMap(([action, state]) => {
-      ReactGA.event(action.payload);
+    switchMap(([action, _state]) => {
+      sendAnalytics({ type: "event", ...action.payload })
+      return of();
+    })
+  );
+
+export const logPageView = (
+  action$: ActionsObservable<ActionType<typeof logPageViewAction>>,
+  state$: StateObservable<State>
+) =>
+  action$.ofType(ActionTypeEnum.MalariaLogPageView).pipe(
+    withLatestFrom(state$),
+    switchMap(([action, _state]) => {
+      sendAnalytics({ type: "pageView", ...action.payload })
+      return of();
+    })
+  );
+
+export const logOutboundLink = (
+  action$: ActionsObservable<ActionType<typeof logOutboundLinkAction>>,
+  state$: StateObservable<State>
+) =>
+  action$.ofType(ActionTypeEnum.MalariaLogOutboundLink).pipe(
+    withLatestFrom(state$),
+    switchMap(([action, _state]) => {
+      sendAnalytics({ type: "outboundLink", label: action.payload })
       return of();
     })
   );
@@ -176,25 +223,29 @@ export const setStoryModeStepEpic = (
       })
     );
 
-export const setStoryModeLogEventStepEpic = (
-  action$: ActionsObservable<ActionType<typeof setStoryModeAction>>,
+export const logStoryModeStepEpic = (
+  action$: ActionsObservable<
+    ActionType<typeof setStoryModeStepAction>
+  >,
   state$: StateObservable<State>
 ) =>
-  action$.ofType(ActionTypeEnum.MalariaSetStoryMode).pipe(
-    withLatestFrom(state$),
-    switchMap(([_, state]) => {
-      if (state.malaria.storyMode) {
-        return of(
-          logEventAction({
-            category: "Story Mode",
-            action: "true",
-          })
-        );
-      } else {
-        return of();
-      }
-    })
-  );
+  action$
+    .ofType(ActionTypeEnum.MalariaSetStoryModeStep)
+    .pipe(
+      withLatestFrom(state$),
+      switchMap(([action, state]) => {
+        const theme = state.malaria.theme;
+        if (!state.malaria.storyMode) {
+          return of();
+        } else {
+          const step = (action.payload + 1).toString();
+          return of(
+            logEventAction({ category: "storyMode", action: theme, label: step })
+          );
+        }
+      })
+    );
+
 export type LastUpdated = {
   OBJECTID: number;
   TABLE_NAME: string;

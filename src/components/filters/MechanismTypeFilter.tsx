@@ -25,6 +25,7 @@ import {
 import * as R from "ramda";
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import { PreventionStudy } from "../../types/Prevention";
+import { logEventAction } from "../../store/actions/base-actions";
 
 export const WHITELISTED_TYPES = [
   "MONO_OXYGENASES",
@@ -68,7 +69,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  setType: setType
+  setType: setType,
+  logEventAction: logEventAction,
 };
 
 type OwnProps = {
@@ -86,13 +88,17 @@ function MechanismTypeFilter({
   setType,
   fromDb,
   yearFilter,
-  region
+  region,
+  logEventAction
 }: Props) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
 
   function handleChange(event: React.ChangeEvent<unknown>) {
-    setType((event.target as HTMLInputElement).value);
+    const newValue = (event.target as HTMLInputElement).value;
+    setType(newValue);
+    logEventAction({ category: "filter", action: "mechanismType", label: newValue });
+
   }
 
   const filters = [

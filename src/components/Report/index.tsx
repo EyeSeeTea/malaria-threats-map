@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import PreventionReport from "./prevention/PreventionReport";
 import TreatmentReport from "./treatment/TreatmentReport";
 import { useTranslation } from "react-i18next";
+import { sendAnalytics } from "../../utils/analytics";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -60,6 +61,7 @@ function Report({ isReportOpen, openReport, theme }: Props) {
   const { t } = useTranslation("common");
 
   const handleClickOpen = () => {
+    sendAnalytics({ type: "event", category: "menu", action: "summary" })
     openReport(true);
   };
 

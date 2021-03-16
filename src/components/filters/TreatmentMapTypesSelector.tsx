@@ -7,6 +7,7 @@ import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
 import { setTreatmentMapType } from "../../store/actions/treatment-actions";
 import { useTranslation } from "react-i18next";
 import { setMapTitleAction } from "../../store/actions/base-actions";
+import { sendAnalyticsMapMenuChange } from "../../store/analytics";
 
 const mapStateToProps = (state: State) => ({
   treatmentFilters: selectTreatmentFilters(state)
@@ -47,6 +48,7 @@ function TreatmentMapTypesSelector({
     const selection = value as OptionType;
     setTreatmentMapType(selection.value);
     setMapTitle(t(selection.label));
+    sendAnalyticsMapMenuChange("treatment", selection.value)
   };
 
   React.useEffect(() => {

@@ -22,14 +22,14 @@ import {
   setInsecticideTypes,
   setPreventionMapType,
   setSpecies,
-  setSynergistTypes,
   setType
 } from "../actions/prevention-actions";
 import { PreventionMapType, State } from "../types";
-import { logEventAction } from "../actions/base-actions";
+import { logEventAction, logPageViewAction } from "../actions/base-actions";
 import { ASSAY_TYPES } from "../../components/filters/AssayTypeCheckboxFilter";
 import { ErrorResponse } from "../../types/Malaria";
 import { addNotificationAction } from "../actions/notifier-actions";
+import { getAnalyticsPageView } from "../analytics";
 
 interface Params {
   [key: string]: string | number | boolean;
@@ -78,29 +78,27 @@ export const setPreventionMapTypeEpic = (
 ) =>
   action$.ofType(ActionTypeEnum.SetPreventionMapType).pipe(
     switchMap(action => {
-      const log = (type: string) =>
-        logEventAction({
-          category: "Prevention Map Type",
-          action: type
-        });
+      const pageView = getAnalyticsPageView({ page: "prevention", section: action.payload });
+      const logPageView = logPageViewAction(pageView);
+
       if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
         return of(
           setType("MONO_OXYGENASES"),
-          log("Resistance mechanisms detection")
+          logPageView
         );
       } else if (action.payload === PreventionMapType.INTENSITY_STATUS) {
-        return of(setType(undefined), log("Insecticide resistance intensity"));
+        return of(setType(undefined), logPageView);
       } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
-        return of(setType(undefined), log("Insecticide resistance status"));
+        return of(setType(undefined), logPageView);
       } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
         return of(
           setType("MONO_OXYGENASES"),
-          log("Metabolic mechanisms involvement")
+          logPageView
         );
       } else if (action.payload === PreventionMapType.PBO_DEPLOYMENT) {
-        return of(setType(undefined), log("Pyrethroid-PBO nets deployment"));
+        return of(setType(undefined), logPageView);
       }
-      return of(setType(undefined));
+      return of(setType(undefined), logPageView);
     })
   );
 
@@ -135,15 +133,16 @@ export const setPreventionInsecticideClassEpic = (
           setType(state.prevention.filters.type || "MONO_OXYGENASES"),
           setSpecies([]),
           logEventAction({
-            category: "Insecticide Class",
-            action: action.payload
+            category: "filter",
+            action: "insecticideClass",
+            label: action.payload
           })
         );
       })
     );
 
 export const setPreventionInsecticideTypeEpic = (
-  action$: ActionsObservable<ActionType<typeof setInsecticideTypes>>
+  action$: ActionsObservable<ActionType<typeof setInsecticideTypes>>,
 ) =>
   action$
     .ofType(ActionTypeEnum.SetInsecticideTypes)
@@ -151,14 +150,6 @@ export const setPreventionInsecticideTypeEpic = (
     .pipe(
       switchMap(action => {
         const actions: any[] = [setType(undefined), setSpecies([])];
-        (action.payload || []).forEach(type =>
-          actions.push(
-            logEventAction({
-              category: "Insecticide Type",
-              action: type
-            })
-          )
-        );
         return of(...actions);
       })
     );
@@ -170,76 +161,8 @@ export const setPreventionTypeResetEpic = (
     .ofType(ActionTypeEnum.SetType)
     .pipe(skip(1))
     .pipe(
-      switchMap(action => {
-        return of(
-          setSpecies([]),
-          logEventAction({
-            category: "Type",
-            action: action.payload
-          })
-        );
+      switchMap(_action => {
+        return of(setSpecies([]));
       })
     );
 
-export const setPreventionSynergistTypesEpic = (
-  action$: ActionsObservable<ActionType<typeof setSynergistTypes>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetSynergistTypes)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        const actions: any[] = [];
-        (action.payload || []).forEach(type =>
-          actions.push(
-            logEventAction({
-              category: "Synergist Type",
-              action: type
-            })
-          )
-        );
-        return of(...actions);
-      })
-    );
-
-export const setPreventionSpeciesEpic = (
-  action$: ActionsObservable<ActionType<typeof setSpecies>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetSpecies)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        const actions: any[] = [];
-        (action.payload || []).forEach(species =>
-          actions.push(
-            logEventAction({
-              category: "Species",
-              action: species
-            })
-          )
-        );
-        return of(...actions);
-      })
-    );
-
-export const setPreventionAssayTypesEpic = (
-  action$: ActionsObservable<ActionType<typeof setAssayTypes>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetAssayTypes)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        const actions: any[] = [];
-        (action.payload || []).forEach(assayType =>
-          actions.push(
-            logEventAction({
-              category: "Assay Type",
-              action: assayType
-            })
-          )
-        );
-        return of(...actions);
-      })
-    );

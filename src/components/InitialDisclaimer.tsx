@@ -18,6 +18,7 @@ import EnglishDisclaimer from "./disclaimers/EnglishDisclaimer";
 import i18next from "i18next";
 import SpanishDisclaimer from "./disclaimers/SpanishDisclaimer";
 import FrenchDisclaimer from "./disclaimers/FrenchDisclaimer";
+import { sendAnalytics } from "../utils/analytics";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,6 +44,7 @@ const InitialDisclaimer = () => {
   const { t } = useTranslation("common");
 
   const handleClickOpen = () => {
+    sendAnalytics({ type: "event", category: "menu", action: "disclaimer" });
     setOpen(true);
   };
 

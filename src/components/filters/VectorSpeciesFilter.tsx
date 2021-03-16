@@ -7,6 +7,7 @@ import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
 import FormLabel from "@material-ui/core/FormLabel";
 import T from "../../translations/T";
 import { Divider, FilterWrapper } from "./Filters";
+import { sendMultiFilterAnalytics } from "../../utils/analytics";
 
 const mapStateToProps = (state: State) => ({
   invasiveFilters: selectInvasiveFilters(state)
@@ -51,6 +52,7 @@ class VectorSpeciesFilter extends Component<Props, any> {
     this.props.setVectorSpecies(
       (selection || []).map(selection => selection.value)
     );
+    sendMultiFilterAnalytics("vectorSpecies", this.props.invasiveFilters.vectorSpecies, selection);
   };
 
   render() {

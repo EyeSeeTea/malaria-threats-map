@@ -51,6 +51,7 @@ import { setFiltersOpen } from "../store/actions/base-actions";
 import { dispatchCustomEvent } from "../utils/dom-utils";
 import { useTranslation } from "react-i18next";
 import { FilterIconSimple } from "./Icons";
+import { sendAnalytics } from "../utils/analytics";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -162,6 +163,7 @@ function Filters({
   })();
 
   function handleClickOpen() {
+    sendAnalytics({ type: "event", category: "menu", action: "filter" });
     setFiltersOpen(!filtersOpen);
   }
 

@@ -68,6 +68,8 @@ import TheaterModeIcon from "./TheaterMode/TheaterModeIcon";
 import InitialDialog from "./InitialDialog";
 import TourIcon from "./TourIcon";
 import ShareIcon from "./ShareIcon";
+import { getAnalyticsPageViewFromString } from "../store/analytics";
+import { sendAnalytics } from "../utils/analytics";
 
 ReactMapboxGl({
   accessToken:
@@ -271,6 +273,11 @@ class Map extends React.Component<Props> {
         subRegion: "GREATER_MEKONG",
       });
     }
+
+    const pageView = getAnalyticsPageViewFromString({ page: this.props.theme });
+    if (pageView && !this.props.initialDialogOpen) {
+      sendAnalytics({ type: "pageView", ...pageView });
+    }
   }
 
   componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void {
@@ -295,6 +302,7 @@ class Map extends React.Component<Props> {
       preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
     const isInvasive = theme === "invasive";
     const ready = this.map && this.state.ready;
+
     return (
       <React.Fragment>
         <div
@@ -358,7 +366,7 @@ class Map extends React.Component<Props> {
               {!mekong && <Feedback />}
               {!mekong && <TourIcon />}
               <Separator />
-              {showOptions && <LanguageSelectorSelect />}
+              {showOptions && <LanguageSelectorSelect section="menu" />}
             </TopRightContainer>
           </Fade>
         </Hidden>

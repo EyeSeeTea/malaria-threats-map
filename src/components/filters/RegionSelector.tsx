@@ -10,6 +10,7 @@ import { selectRegions } from "../../store/reducers/translations-reducer";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Divider, FilterWrapper } from "./Filters";
 import T from "../../translations/T";
+import { sendAnalytics } from "../../utils/analytics";
 
 const mapStateToProps = (state: State) => ({
   region: selectRegion(state),
@@ -27,6 +28,9 @@ type Props = DispatchProps & StateProps;
 
 class RegionSelector extends Component<Props> {
   onChange = (selection: any) => {
+    const label = selection ? selection.value : undefined;
+    if (label)
+      sendAnalytics({ type: "event", category: "geoFilter", action: "Region", label });
     this.props.setRegion({ region: selection ? selection.value : undefined });
   };
   render() {

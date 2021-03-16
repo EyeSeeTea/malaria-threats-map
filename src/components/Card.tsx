@@ -82,7 +82,7 @@ export const SimpleCard = ({
     <Card
       className={classes.card}
       onClick={() => {
-        setTheme(theme);
+        setTheme(theme, { fromHome: true });
         onSelection();
       }}
     >
@@ -99,11 +99,13 @@ export const SimpleCard = ({
             <ColorButton
               variant="contained"
               size="large"
-              onClick={() => {
-                setTheme("treatment");
+              onClick={(ev) => {
+                setTheme("treatment", { fromHome: true, mekong: true });
                 setRegion({
                   subRegion: "GREATER_MEKONG",
                 });
+                onSelection();
+                ev.stopPropagation();
               }}
             >
               {"Greater Mekong Subregion"}

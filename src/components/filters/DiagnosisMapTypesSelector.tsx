@@ -7,6 +7,7 @@ import { setDiagnosisMapType } from "../../store/actions/diagnosis-actions";
 import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
 import { setMapTitleAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
+import { sendAnalyticsMapMenuChange } from "../../store/analytics";
 
 const mapStateToProps = (state: State) => ({
   diagnosisFilters: selectDiagnosisFilters(state)
@@ -36,6 +37,7 @@ function DiagnosisMapTypesSelector({
     const selection = value as OptionType;
     setDiagnosisMapType(selection.value);
     setMapTitle(t(selection.label));
+    sendAnalyticsMapMenuChange("diagnosis", selection.value)
   };
 
   React.useEffect(() => {

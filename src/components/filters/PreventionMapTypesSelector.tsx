@@ -7,6 +7,7 @@ import { setPreventionMapType } from "../../store/actions/prevention-actions";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { setMapTitleAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
+import { sendAnalyticsMapMenuChange } from "../../store/analytics";
 
 const mapStateToProps = (state: State) => ({
   preventionFilters: selectPreventionFilters(state)
@@ -54,6 +55,7 @@ function PreventionMapTypesSelector({
     const selection = value as OptionType;
     setPreventionMapType(selection.value);
     setMapTitle(t(selection.label));
+    sendAnalyticsMapMenuChange("prevention", selection.value)
   };
 
   React.useEffect(() => {

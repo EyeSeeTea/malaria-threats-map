@@ -6,6 +6,7 @@ import { selectCountryMode } from "../store/reducers/base-reducer";
 import { setCountryModeAction } from "../store/actions/base-actions";
 import { GlobeIcon } from "./Icons";
 import { useTranslation } from "react-i18next";
+import { sendAnalytics } from "../utils/analytics";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,7 +21,10 @@ function Layers({ countryMode, setCountryMode, disabled }: any) {
   const classes = useStyles({});
   const { t } = useTranslation("common");
   const handleToggle = () => {
-    setCountryMode(!countryMode);
+    const newCountryMode = !countryMode;
+    const label = newCountryMode ? "country" : "site";
+    sendAnalytics({ type: "event", category: "menu", action: "country/site", label })
+    setCountryMode(newCountryMode);
   };
   return (
     <div>
