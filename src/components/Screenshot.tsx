@@ -18,6 +18,7 @@ import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import * as PdfJs from "pdfjs-dist";
 import { convertDataURIToBinary, download } from "../utils/download-utils";
 import { format } from "date-fns";
+import { sendAnalytics } from "../utils/analytics";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,6 +49,7 @@ function Screenshot({ map, theme, title }: Props) {
   const classes = useStyles({});
 
   const handleClick = () => {
+    sendAnalytics({ type: "event", category: "menu", action: "capture" })
     const mapCanvas = map.getCanvas();
 
     const copyright = t("copyright.content");

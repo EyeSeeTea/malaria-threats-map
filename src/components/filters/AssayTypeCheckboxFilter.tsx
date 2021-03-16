@@ -12,6 +12,8 @@ import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
 import { Divider, FilterWrapper } from "./Filters";
 import FormLabel from "@material-ui/core/FormLabel";
+import { logEventAction } from "../../store/actions/base-actions";
+import { sendMultiFilterAnalytics } from "../../utils/analytics";
 
 export const ASSAY_TYPES = [
   "MOLECULAR_ASSAY",
@@ -55,7 +57,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  setAssayTypes: setAssayTypes
+  setAssayTypes: setAssayTypes,
+  logEventAction: logEventAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -65,18 +68,20 @@ type Props = DispatchProps & StateProps;
 function AssayTypeCheckboxFilter({
   assayTypes,
   preventionFilters,
-  setAssayTypes
+  setAssayTypes,
+  logEventAction
 }: Props) {
   const classes = useStyles({});
 
   const handleChange = (type: string) => () => {
+    let newValues: string[];
     if (preventionFilters.assayTypes.includes(type)) {
-      setAssayTypes(
-        preventionFilters.assayTypes.filter(assayType => assayType !== type)
-      );
+      newValues = preventionFilters.assayTypes.filter(assayType => assayType !== type);
     } else {
-      setAssayTypes([...preventionFilters.assayTypes, type]);
+      newValues = [...preventionFilters.assayTypes, type];
     }
+    setAssayTypes(newValues);
+    sendMultiFilterAnalytics("assayType", preventionFilters.assayTypes, newValues.map(value => ({ value })));
   };
 
   const types = ASSAY_TYPE_FILTER[preventionFilters.type]

@@ -47,6 +47,7 @@ import { Button } from "@material-ui/core";
 import { format } from "date-fns";
 import { getComparator, Order, stableSort } from "../utils";
 import { CellProps } from "../types";
+import { sendAnalytics } from "../../../utils/analytics";
 
 const StyledCell = styled(TableCell)<CellProps>`
   font-size: ${(props) => (props.isBold ? "12px" : "11.5px")} !important;
@@ -494,6 +495,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
     ];
     const dateString = format(new Date(), "yyyyMMdd");
     exportToCSV(tabs, `MTM_PREVENTION_${dateString}`);
+    sendAnalytics({ type: "event", category: "tableView", action: "download", label: "prevention" });
   };
 
   const handleRequestSort = (

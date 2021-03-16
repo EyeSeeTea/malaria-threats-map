@@ -26,6 +26,7 @@ import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Divider, FilterWrapper } from "./Filters";
 import T from "../../translations/T";
+import { logEventAction } from "../../store/actions/base-actions";
 
 const mapStateToProps = (state: State) => ({
   types: selectTypes(state),
@@ -36,7 +37,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  setType: setType
+  setType: setType,
+  logEventAction: logEventAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -46,6 +48,9 @@ type Props = DispatchProps & StateProps;
 class TypeFilter extends Component<Props, any> {
   onChange = (selection: any) => {
     this.props.setType(selection ? selection.value : undefined);
+    if (selection) {
+      this.props.logEventAction({ category: "filter", action: "testType", label: selection.value });
+    }
   };
 
   render() {

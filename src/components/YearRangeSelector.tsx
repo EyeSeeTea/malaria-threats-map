@@ -8,6 +8,7 @@ import { selectFilters } from "../store/reducers/base-reducer";
 import { setFiltersAction } from "../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
 import * as R from "ramda";
+import { sendAnalytics } from "../utils/analytics";
 
 export function range(start: number, end: number, reverse?: boolean) {
   const years = Array(end - start + 1)
@@ -67,7 +68,14 @@ const YearRangeSelector = ({
   const { t } = useTranslation("common");
 
   const handleChange = (event: any, newValue: number | number[]) => {
-    setFilters(newValue as number[]);
+    const [start, end] = newValue as number[];
+    const [prevStart, prevEnd] = filters
+    const label = `(${start}, ${end})`
+    
+    if (prevStart !== start || prevEnd !== end) {
+      sendAnalytics({ type: "event", category: "filter", action: "Years", label });
+      setFilters(newValue as number[]);
+    }
   };
 
   return (

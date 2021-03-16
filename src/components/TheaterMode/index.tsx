@@ -14,6 +14,7 @@ import {
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectTheme } from "../../store/reducers/base-reducer";
+import { sendAnalytics } from "../../utils/analytics";
 
 const useStyles = makeStyles({
   root: {
@@ -92,14 +93,17 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
   }, [isPlaying, setYears, minYear]);
 
   const play = () => {
+    sendAnalytics({ type: "event", category: "timeline", action: "play" });
     setIsPlaying(true);
   };
 
   const pause = () => {
+    sendAnalytics({ type: "event", category: "timeline", action: "pause" });
     setIsPlaying(false);
   };
 
   const beginning = () => {
+    sendAnalytics({ type: "event", category: "timeline", action: "restart" });
     setYear(() => minYear);
     setYears([minYear, minYear]);
   };
@@ -110,6 +114,7 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
 
   const handleChange = (event: any, newValue: number | number[]) => {
     const value = newValue as number;
+    sendAnalytics({ type: "event", category: "timeline", action: "drag", label: year.toString() });
     setYear(() => value);
     setYears([minYear, value]);
   };
@@ -154,7 +159,9 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
       <IconButton
         className={classes.iconButton}
         size={"small"}
-        onClick={() => setTheaterMode(false)}
+        onClick={() => {
+          setTheaterMode(false);
+        }}
         title={"Exit theater mode"}
       >
         <CloseIcon />

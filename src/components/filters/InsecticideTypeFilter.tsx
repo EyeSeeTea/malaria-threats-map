@@ -14,6 +14,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 import { Divider, FilterWrapper } from "./Filters";
 import T from "../../translations/T";
 import {filterByInsecticideClass} from "../layers/studies-filters";
+import { sendMultiFilterAnalytics } from "../../utils/analytics";
 
 const mapStateToProps = (state: State) => ({
   insecticideTypes: selectInsecticideTypes(state),
@@ -23,7 +24,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  setInsecticideTypes: setInsecticideTypes
+  setInsecticideTypes: setInsecticideTypes,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -35,6 +36,7 @@ class InsecticideTypeFilter extends Component<Props, any> {
     this.props.setInsecticideTypes(
       (selection || []).map(selection => selection.value)
     );
+    sendMultiFilterAnalytics("insecticideType", this.props.preventionFilters.insecticideTypes, selection);
   };
 
   render() {

@@ -212,6 +212,16 @@ function DataDownload({
   const { t: d } = useTranslation("download");
   const [activeStep, setActiveStep] = React.useState(0);
 
+  React.useEffect(() => {
+    if (isDataDownloadOpen) {
+      logEvent({
+          category: "download",
+          action: "step",
+          label: (activeStep + 1).toString(),
+      });
+    }
+  }, [activeStep, isDataDownloadOpen, logEvent]);
+
   const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>(
     {}
   );
@@ -282,6 +292,7 @@ function DataDownload({
     setUseInfo({ ...useInfo, [field]: value });
   };
   const handleToggle = () => {
+    logEvent({ category: "menu", action: "download" })
     setDataDownloadOpen(!isDataDownloadOpen);
     reset();
   };
@@ -807,22 +818,23 @@ function DataDownload({
           selections.invasiveDataset
       ),
     };
+    let dataset;
     switch (selections.theme) {
       case "prevention":
         downloadPreventionData();
+        dataset = selections.preventionDataset;
         break;
       case "treatment":
         downloadTreatmentData();
+        dataset = selections.treatmentDataset;
         break;
       case "invasive":
         downloadInvasiveData();
+        dataset = selections.invasiveDataset;
         break;
     }
     addDownload(request);
-    logEvent({
-      category: "Download Data",
-      action: selections.theme,
-    });
+    logEvent({ category: "Download", action: "download", label: dataset || undefined });
   };
 
   const isWelcomeFormValid = () => {

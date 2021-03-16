@@ -20,6 +20,7 @@ import { DiagnosisStudy } from "../../types/Diagnosis";
 import { Divider, FilterWrapper } from "./Filters";
 import FormLabel from "@material-ui/core/FormLabel";
 import T from "../../translations/T";
+import { logEventAction } from "../../store/actions/base-actions";
 
 const mapStateToProps = (state: State) => ({
   patientType: selectPatientType(state),
@@ -30,7 +31,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  setPatientType: setDiagnosisPatientType
+  setPatientType: setDiagnosisPatientType,
+  logEventAction: logEventAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -40,6 +42,8 @@ type Props = DispatchProps & StateProps;
 class PatientTypeFilter extends Component<Props, any> {
   onChange = (selection: any) => {
     this.props.setPatientType(selection ? selection.value : null);
+    if (selection)
+      this.props.logEventAction({ category: "filter", action: "patient", label: selection.value });
   };
 
   render() {

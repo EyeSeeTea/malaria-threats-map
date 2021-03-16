@@ -13,17 +13,17 @@ import {
   fetchDiagnosisStudiesSuccess,
   setDiagnosisDeletionType,
   setDiagnosisMapType,
-  setDiagnosisPatientType,
-  setDiagnosisSurveyTypes
 } from "../actions/diagnosis-actions";
 import {
   logEventAction,
   setFiltersAction,
-  setThemeAction
+  setThemeAction,
+  logPageViewAction
 } from "../actions/base-actions";
 import { DiagnosisMapType } from "../types";
 import { addNotificationAction } from "../actions/notifier-actions";
 import { ErrorResponse } from "../../types/Malaria";
+import { getAnalyticsPageView } from "../analytics";
 
 interface Params {
   [key: string]: string | number | boolean;
@@ -84,55 +84,15 @@ export const setDiagnosisMapTypeEpic = (
 ) =>
   action$.ofType(ActionTypeEnum.SetDiagnosisMapType).pipe(
     switchMap(action => {
-      const log = (type: string) =>
-        logEventAction({
-          category: "Diagnosis Map Type",
-          action: type
-        });
+      const pageView = getAnalyticsPageView({ page: "diagnosis", section: action.payload });
+      const logPageView = logPageViewAction(pageView);
+  
       if (action.payload === DiagnosisMapType.GENE_DELETIONS) {
-        return of(log("pfhrp2/3 gene deletions"));
+        return of(logPageView);
       }
       return of();
     })
   );
-
-export const setDiagnosisSurveyTypesEpic = (
-  action$: ActionsObservable<ActionType<typeof setDiagnosisSurveyTypes>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetSurveyTypes)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        const actions: any[] = [];
-        (action.payload || []).forEach(surveyType =>
-          actions.push(
-            logEventAction({
-              category: "Survey Type",
-              action: surveyType
-            })
-          )
-        );
-        return of(...actions);
-      })
-    );
-
-export const setDiagnosisPatientTypeEpic = (
-  action$: ActionsObservable<ActionType<typeof setDiagnosisPatientType>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetPatientType)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        return of(
-          logEventAction({
-            category: "Patient Type",
-            action: action.payload
-          })
-        );
-      })
-    );
 
 export const setDiagnosisDeletionTypeEpic = (
   action$: ActionsObservable<ActionType<typeof setDiagnosisDeletionType>>
@@ -144,8 +104,9 @@ export const setDiagnosisDeletionTypeEpic = (
       switchMap(action => {
         return of(
           logEventAction({
-            category: "Deletion Type",
-            action: action.payload
+            category: "filter",
+            action: "deletionType",
+            label: action.payload
           })
         );
       })

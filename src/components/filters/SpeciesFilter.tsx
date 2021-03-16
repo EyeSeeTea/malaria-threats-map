@@ -27,6 +27,7 @@ import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Divider, FilterWrapper } from "./Filters";
 import T from "../../translations/T";
+import { sendMultiFilterAnalytics } from "../../utils/analytics";
 
 const mapStateToProps = (state: State) => ({
   species: selectSpecies(state),
@@ -47,6 +48,7 @@ type Props = DispatchProps & StateProps;
 class SpeciesFilter extends Component<Props, any> {
   onChange = (selection: any[]) => {
     this.props.setSpecies((selection || []).map(selection => selection.value));
+    sendMultiFilterAnalytics("vectorSpecies", this.props.preventionFilters.species, selection);
   };
 
   render() {

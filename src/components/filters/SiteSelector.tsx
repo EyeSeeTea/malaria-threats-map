@@ -12,6 +12,7 @@ import { selectFilteredTreatmentStudies } from "../../store/reducers/treatment-r
 import { selectFilteredInvasiveStudies } from "../../store/reducers/invasive-reducer";
 import { Study } from "../../types/Malaria";
 import * as R from "ramda";
+import { sendAnalytics } from "../../utils/analytics";
 
 const mapStateToProps = (state: State) => ({
   theme: selectTheme(state),
@@ -41,6 +42,9 @@ function SiteSelector({
 }: Props) {
   const [input, setInput] = useState("");
   const onChange = (selection: any) => {
+    const label = selection ? selection.value : undefined;
+    if (label)
+      sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label });
     setRegion({
       site: selection ? selection.value : undefined,
       siteIso2: selection ? selection.iso2 : undefined,

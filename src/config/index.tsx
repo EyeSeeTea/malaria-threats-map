@@ -7,6 +7,7 @@ type ConfigProps = {
   gaAppId: string;
   env: string;
   mekong: boolean;
+  hotjar?: { hjid: number, hjsv: number },
 };
 
 const WHO_MALARIA_THREATS_MAP_STAGING =
@@ -50,18 +51,30 @@ const configurations: { [key: string]: ConfigProps } = {
   local: {
     ...stagingMapServer,
     ...stagingMapTile,
-    backendUrl: `https://portal-uat.who.int/malthreats-api/`,
-    gaAppId: "",
+    backendUrl:
+      process.env.REACT_APP_BACKEND_URL ||
+      `https://portal-uat.who.int/malthreats-api/`,
+    gaAppId: "UA-191197789-1",
     env: "local",
     mekong: false,
+  },
+  dev: {
+    ...stagingMapServer,
+    ...stagingMapTile,
+    backendUrl: `https://portal-uat.who.int/malthreats-api/`,
+    gaAppId: "UA-191197789-2",
+    env: "dev",
+    mekong: false,
+    hotjar: { hjid: 2287362, hjsv: 6 }
   },
   staging: {
     ...stagingMapServer,
     ...stagingMapTile,
     backendUrl: `https://portal-uat.who.int/malthreats-api/`,
-    gaAppId: "UA-151634352-1",
+    gaAppId: "UA-191197789-1",
     env: "staging",
     mekong: false,
+    hotjar: { hjid: 2280607, hjsv: 6 },
   },
   prod: {
     ...prodMapServer,
@@ -70,6 +83,7 @@ const configurations: { [key: string]: ConfigProps } = {
     gaAppId: "UA-140410266-1",
     env: "prod",
     mekong: false,
+    hotjar: {hjid: 2269048, hjsv: 6},
   },
   "local-mekong": {
     ...stagingMapServer,

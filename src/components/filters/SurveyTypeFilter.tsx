@@ -9,6 +9,7 @@ import { setDiagnosisSurveyTypes } from "../../store/actions/diagnosis-actions";
 import { Divider, FilterWrapper } from "./Filters";
 import FormLabel from "@material-ui/core/FormLabel";
 import T from "../../translations/T";
+import { sendMultiFilterAnalytics } from "../../utils/analytics";
 
 const mapStateToProps = (state: State) => ({
   surveyTypes: selectSurveyTypes(state),
@@ -28,6 +29,7 @@ class SurveyTypeFilter extends Component<Props, any> {
     this.props.setSurveyTypes(
       (selection || []).map(selection => selection.value)
     );
+    sendMultiFilterAnalytics("surveyType", this.props.diagnosisFilters.surveyTypes, selection);
   };
 
   render() {

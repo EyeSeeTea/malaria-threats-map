@@ -16,11 +16,11 @@ import {
   setTreatmentPlasmodiumSpecies
 } from "../actions/treatment-actions";
 import { MapServerConfig } from "../../constants/constants";
-import { logEventAction } from "../actions/base-actions";
+import { logPageViewAction } from "../actions/base-actions";
 import { TreatmentMapType } from "../types";
-import { MOLECULAR_MARKERS } from "../../components/filters/MolecularMarkerFilter";
 import { addNotificationAction } from "../actions/notifier-actions";
 import { ErrorResponse } from "../../types/Malaria";
+import { getAnalyticsPageView } from "../analytics";
 
 interface Params {
   [key: string]: string | number | boolean;
@@ -95,19 +95,16 @@ export const setTreatmentMapTypeEpic = (
 ) =>
   action$.ofType(ActionTypeEnum.SetTreatmentMapType).pipe(
     switchMap(action => {
-      const log = (type: string) =>
-        logEventAction({
-          category: "Treatment Map Type",
-          action: type
-        });
+      const pageView = getAnalyticsPageView({ page: "treatment", section: action.payload });
+      const logPageView = logPageViewAction(pageView);
       if (action.payload === TreatmentMapType.TREATMENT_FAILURE) {
-        return of(log("Treatment failure"));
+        return of(logPageView);
       } else if (action.payload === TreatmentMapType.MOLECULAR_MARKERS) {
-        return of(log("Molecular markers of drug resistance"));
+        return of(logPageView);
       } else if (
         action.payload === TreatmentMapType.DELAYED_PARASITE_CLEARANCE
       ) {
-        return of(log("Delayed parasite clearance"));
+        return of(logPageView);
       }
       return of();
     })
@@ -121,56 +118,13 @@ export const setTreatmentPlasmodiumSpeciesEpic = (
     .pipe(skip(1))
     .pipe(
       switchMap(action => {
-        const logEvent = logEventAction({
-          category: "Plasmodium Species",
-          action: action.payload
-        });
         if (
           ["P._FALCIPARUM", "P._KNOWLESI", "P._OVALE"].includes(action.payload)
         ) {
-          return of(setTreatmentDrug("DRUG_AL"), logEvent);
+          return of(setTreatmentDrug("DRUG_AL"));
         } else {
-          return of(setTreatmentDrug("DRUG_CQ"), logEvent);
+          return of(setTreatmentDrug("DRUG_CQ"));
         }
       })
     );
 
-export const setTreatmentDrugEpic = (
-  action$: ActionsObservable<ActionType<typeof setTreatmentDrug>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetDrug)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        return of(
-          logEventAction({
-            category: "Drug",
-            action: action.payload
-          })
-        );
-      })
-    );
-
-export const setMolecularMarkerEpic = (
-  action$: ActionsObservable<ActionType<typeof setMolecularMarker>>
-) =>
-  action$
-    .ofType(ActionTypeEnum.SetMolecularMarker)
-    .pipe(skip(1))
-    .pipe(
-      switchMap(action => {
-        const selection = MOLECULAR_MARKERS.find(
-          mm => mm.value === action.payload
-        );
-        if (!selection) {
-          return of();
-        }
-        return of(
-          logEventAction({
-            category: "Molecular marker",
-            action: selection.label
-          })
-        );
-      })
-    );

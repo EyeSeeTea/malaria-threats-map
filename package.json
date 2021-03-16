@@ -1,6 +1,6 @@
 {
-  "name": "malaria",
-  "version": "0.1.0",
+  "name": "malaria-threats-map",
+  "version": "2.4.0",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -35,6 +35,7 @@
     "html2canvas": "^1.0.0-rc.5",
     "i18next": "^17.0.6",
     "jspdf": "^1.5.3",
+    "lodash": "^4.17",
     "mapbox-gl": "^1.1.1",
     "notistack": "^0.9.7",
     "pdfjs-dist": "^2.3.200",
@@ -43,6 +44,7 @@
     "react-device-detect": "^1.13.1",
     "react-dom": "^16.8.6",
     "react-ga": "^2.7.0",
+    "react-hotjar": "^2.2.1",
     "react-i18next": "^10.11.4",
     "react-joyride": "^2.1.1",
     "react-map-gl": "^5.0.7",
@@ -62,10 +64,11 @@
     "xlsx": "^0.15.4"
   },
   "scripts": {
-    "start": "cross-env-shell REACT_APP_ENV=local react-scripts start",
+    "start": "cross-env-shell REACT_APP_ENV=local BROWSER=none react-scripts start",
+    "start-mekong": "cross-env-shell REACT_APP_ENV=local-mekong react-scripts start",
     "build": "cross-env-shell REACT_APP_ENV=staging react-scripts build",
     "build-prod": "cross-env-shell REACT_APP_ENV=prod react-scripts build",
-    "start-mekong": "cross-env-shell REACT_APP_ENV=local-mekong react-scripts start",
+    "build-dev": "cross-env-shell REACT_APP_ENV=dev react-scripts build",
     "build-mekong": "cross-env-shell REACT_APP_ENV=staging-mekong react-scripts build",
     "build-prod-mekong": "cross-env-shell REACT_APP_ENV=prod-mekong react-scripts build",
     "test": "react-scripts test",
@@ -89,6 +92,7 @@
     ]
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.168",
     "cross-env": "^6.0.3"
   }
 }
