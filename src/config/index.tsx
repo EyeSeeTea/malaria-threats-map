@@ -10,9 +10,6 @@ type ConfigProps = {
   hotjar?: { hjid: number, hjsv: number },
 };
 
-//https://apps-dev.who.int/malaria/maps/threats/
-//https://apps.who.int/malaria/maps/threats/
-
 const WHO_MALARIA_THREATS_MAP_STAGING =
   "https://extranet.who.int/gis/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer";
 const WHO_MALARIA_THREATS_MAP =
