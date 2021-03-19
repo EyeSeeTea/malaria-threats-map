@@ -79,7 +79,7 @@ const configurations: { [key: string]: ConfigProps } = {
   prod: {
     ...prodMapServer,
     ...prodMapTile,
-    backendUrl: `https://extranet.who.int/gis/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP/MapServer/`,
+    backendUrl: `https://extranet.who.int/malthreats-api/`,
     gaAppId: "UA-140410266-1",
     env: "prod",
     mekong: false,
@@ -104,7 +104,7 @@ const configurations: { [key: string]: ConfigProps } = {
   "prod-mekong": {
     ...prodMapServer,
     ...prodMapTile,
-    backendUrl: `https://extranet.who.int/gis/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP/MapServer/`,
+    backendUrl: `https://extranet.who.int/malthreats-api/`,
     gaAppId: "",
     env: "prod",
     mekong: true,
