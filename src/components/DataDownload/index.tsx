@@ -66,6 +66,7 @@ import {
   spanishDisclaimerTab,
 } from "./utils";
 import i18next from "i18next";
+import { emailRegexp } from "../Subscription";
 
 export const MOLECULAR_MECHANISM_TYPES = [
   "MONO_OXYGENASES",
@@ -849,7 +850,7 @@ function DataDownload({
       userInfo.country &&
       userInfo.organizationType &&
       userInfo.organizationName &&
-      userInfo.email
+      emailRegexp.test(userInfo.email)
     );
   };
 

@@ -12,7 +12,7 @@ import { Paper } from "@material-ui/core";
 import { selectInsecticideClasses } from "../../store/reducers/translations-reducer";
 import {
   selectFilteredPreventionStudies,
-  selectPreventionFilters
+  selectPreventionFilters,
 } from "../../store/reducers/prevention-reducer";
 import { setInsecticideClass } from "../../store/actions/prevention-actions";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -27,28 +27,28 @@ const StyledFormControlLabel = styled(FormControlLabel)`
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex"
+      display: "flex",
     },
     formControl: {
-      margin: theme.spacing(3)
+      margin: theme.spacing(3),
     },
     group: {
-      padding: theme.spacing(1, 2)
+      padding: theme.spacing(1, 2),
     },
     radio: {
-      padding: theme.spacing(0.5, 0)
-    }
+      padding: theme.spacing(0.5, 0),
+    },
   })
 );
 
 const mapStateToProps = (state: State) => ({
   insecticideClasses: selectInsecticideClasses(state),
   preventionFilters: selectPreventionFilters(state),
-  filteredStudies: selectFilteredPreventionStudies(state)
+  filteredStudies: selectFilteredPreventionStudies(state),
 });
 
 const mapDispatchToProps = {
-  setInsecticideClass: setInsecticideClass
+  setInsecticideClass: setInsecticideClass,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -59,13 +59,14 @@ export const INSECTICIDE_CLASSES: string[] = [
   "PYRETHROIDS",
   "ORGANOCHLORINES",
   "CARBAMATES",
-  "ORGANOPHOSPHATES"
+  "ORGANOPHOSPHATES",
+  "PYRROLES",
 ];
 
 function InsecticideClassFilter({
   insecticideClasses = [],
   preventionFilters,
-  setInsecticideClass
+  setInsecticideClass,
 }: Props) {
   const classes = useStyles({});
 
@@ -84,7 +85,7 @@ function InsecticideClassFilter({
           onChange={handleChange}
         >
           {(insecticideClasses as Translation[])
-            .filter(translation => translation.VALUE_ !== "NA")
+            .filter((translation) => translation.VALUE_ !== "NA")
             .sort((a, b) =>
               INSECTICIDE_CLASSES.indexOf(a.VALUE_) -
                 INSECTICIDE_CLASSES.indexOf(b.VALUE_) >
