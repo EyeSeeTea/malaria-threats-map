@@ -1,6 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import Dialog from "@material-ui/core/Dialog";
-import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
+import {
+  Button,
+  createStyles,
+  Fab,
+  makeStyles,
+  Theme,
+} from "@material-ui/core";
 import FeedbackIcon from "@material-ui/icons/RateReview";
 import { State } from "../store/types";
 import { setFeedbackOpenAction } from "../store/actions/base-actions";
@@ -9,6 +15,12 @@ import { connect } from "react-redux";
 import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 import { sendAnalytics } from "../utils/analytics";
+import { Flex, FlexGrow } from "./Chart";
+import styled from "styled-components";
+
+const ButtonWrapper = styled(Flex)`
+  margin-bottom: 16px;
+`;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -113,6 +125,12 @@ const Feedback = ({ feedbackOpen, setFeedbackOpen }: Props) => {
           className: classes.paper,
         }}
       >
+        <ButtonWrapper>
+          <FlexGrow />
+          <Button variant="contained" color="primary" onClick={handleClose}>
+            {t("data_download.buttons.close")}
+          </Button>
+        </ButtonWrapper>
         <iframe
           title={"feedback dialog"}
           src={getIframeUrl()}
