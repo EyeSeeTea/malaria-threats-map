@@ -176,7 +176,7 @@ const UserForm = ({ countries: baseCountries, onChange, userInfo }: Props) => {
       </FormControl>
       <FormControl fullWidth className={classes.formControl}>
         <TextField
-          label={t("data_download.step1.phone")}
+          label={t("data_download.step1.phone") + "*"}
           InputLabelProps={{
             shrink: true,
           }}

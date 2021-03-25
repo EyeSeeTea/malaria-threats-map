@@ -850,7 +850,8 @@ function DataDownload({
       userInfo.country &&
       userInfo.organizationType &&
       userInfo.organizationName &&
-      emailRegexp.test(userInfo.email)
+      emailRegexp.test(userInfo.email) &&
+      userInfo.phoneNumber
     );
   };
 
