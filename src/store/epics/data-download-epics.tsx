@@ -53,11 +53,19 @@ export const createSubscriptionContact = (
       return ajax.patchFull(config.backendUrl, action.payload).pipe(
         // return ajax.getFull(`https://portal-uat.who.int/malthreats-api/`).pipe(
         mergeMap((response: any) => {
-          return of(
-            addNotificationAction("User successfully subscribed!"),
-            setSubscriptionOpenAction(false),
-            addSubscriptionContactSuccessAction()
-          );
+          if (response.notices) {
+            return of(
+              addNotificationAction(response.notices.join(", ")),
+              setSubscriptionOpenAction(false),
+              addSubscriptionContactSuccessAction()
+            );
+          } else {
+            return of(
+              addNotificationAction("User successfully subscribed!"),
+              setSubscriptionOpenAction(false),
+              addSubscriptionContactSuccessAction()
+            );
+          }
         }),
         catchError((error: AjaxError) => {
           return of(

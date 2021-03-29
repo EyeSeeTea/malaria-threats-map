@@ -15,6 +15,7 @@ import { State } from "../../store/types";
 import { selectCountries } from "../../store/reducers/translations-reducer";
 import { connect } from "react-redux";
 import { UserInfo } from "./index";
+import { emailRegexp } from "../Subscription";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -168,13 +169,14 @@ const UserForm = ({ countries: baseCountries, onChange, userInfo }: Props) => {
           InputLabelProps={{
             shrink: true,
           }}
+          error={userInfo.email && !emailRegexp.test(userInfo.email)}
           value={userInfo.email}
           onChange={(event) => onChange("email", event.target.value as string)}
         />
       </FormControl>
       <FormControl fullWidth className={classes.formControl}>
         <TextField
-          label={t("data_download.step1.phone")}
+          label={t("data_download.step1.phone") + "*"}
           InputLabelProps={{
             shrink: true,
           }}

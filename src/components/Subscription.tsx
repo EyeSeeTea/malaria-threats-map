@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import {
   Button,
@@ -25,6 +25,8 @@ import { addSubscriptionContactRequestAction } from "../store/actions/data-downl
 import { Contact } from "./DataDownload";
 import { useTranslation } from "react-i18next";
 import { sendAnalytics } from "../utils/analytics";
+import { addNotificationAction } from "../store/actions/notifier-actions";
+import { isNotNull } from "../utils/number-utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -55,10 +57,14 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
   setSubscriptionOpen: setSubscriptionOpenAction,
   saveContact: addSubscriptionContactRequestAction,
+  addNotification: addNotificationAction,
 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
+export const emailRegexp = new RegExp(
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+);
 
 const Subscription = ({
   subscriptionOpen,
@@ -73,6 +79,17 @@ const Subscription = ({
   const [lastName, setLastName] = React.useState<string>(null);
   const [organization, setOrganization] = React.useState<string>(null);
   const [country, setCountry] = React.useState<string>(null);
+  const [valid, setValid] = React.useState<boolean>(false);
+
+  useEffect(() => {
+    const isValid: boolean =
+      emailRegexp.test(email) &&
+      isNotNull(firstName) &&
+      isNotNull(lastName) &&
+      isNotNull(organization) &&
+      isNotNull(country);
+    setValid(isValid);
+  }, [email, firstName, lastName, organization, country]);
 
   const handleClose = () => {
     setSubscriptionOpen(false);
@@ -240,7 +257,7 @@ const Subscription = ({
                 variant="contained"
                 color="primary"
                 type="button"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !valid}
                 onClick={() => submit()}
               >
                 {t("subscription.button")}

@@ -436,6 +436,7 @@
     "subscribe": "Subscribe",
     "comments": "Provide your feedback",
     "help": "Help",
+    "share": "Share",
     "tour": "Take a tour"
   },
   "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",

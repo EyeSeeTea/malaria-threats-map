@@ -236,7 +236,7 @@ class Map extends React.Component<Props> {
       container: this.mapContainer,
       style: style,
       center: [-16.629129, 28.291565],
-      maxZoom: 7.99999,
+      maxZoom: 8.99999,
       minZoom: 1,
       zoom: 2,
       maxBounds: mekong ? MEKONG_BOUNDS : undefined,

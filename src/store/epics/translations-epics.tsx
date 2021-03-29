@@ -10,7 +10,7 @@ import { MapServerConfig } from "../../constants/constants";
 import {
   fetchTranslationsErrorAction,
   fetchTranslationsRequestAction,
-  fetchTranslationsSuccessAction
+  fetchTranslationsSuccessAction,
 } from "../actions/translations-actions";
 
 interface Params {
@@ -25,10 +25,10 @@ export const getTreatmentStudiesEpic = (
       const params: Params = {
         f: "json",
         where: "1%3D1",
-        outFields: "*"
+        outFields: "*",
       };
       const query: string = Object.keys(params)
-        .map(key => `${key}=${params[key]}`)
+        .map((key) => `${key}=${params[key]}`)
         .join("&");
       return ajax
         .get(`/${MapServerConfig.layers.translations}/query?${query}`)
