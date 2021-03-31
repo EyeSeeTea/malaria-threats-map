@@ -25,8 +25,8 @@
     "resistance_status": "Estado de la resistencia a insecticidas",
     "resistance_intensity": "Intensidad de la resistencia a insecticidas",
     "resistance_mechanism": "Mecanismos de la resistencia a insecticidas",
-    "synergist_involvement": "Implicación de los mecanismos metabólicos",
-    "synergist_involvement_legend": "Implicación del mecanismo metabólico",
+    "synergist_involvement": "Efecto sinérgico en susceptibilidad",
+    "synergist_involvement_legend": "Participación del efecto sinérgico en la susceptibilidad",
     "pbo_deployment": "Despliegue de mosquiteros PBO-piretroide",
     "pbo_deployment_legend": "Cumplimiento de los criterios recomendados por la OMS para el despliegue de mosquiteros con PBO y piretroide",
     "chart": {

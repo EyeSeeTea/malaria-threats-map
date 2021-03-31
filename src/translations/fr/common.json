@@ -25,8 +25,8 @@
     "resistance_status": "État de résistance aux insecticides",
     "resistance_intensity": "Intensité de la résistance aux insecticides",
     "resistance_mechanism": "Mécanismes de résistance aux insecticides",
-    "synergist_involvement": "Implication des mécanismes métaboliques",
-    "synergist_involvement_legend": "Implication du mécanisme métabolique",
+    "synergist_involvement": "Effet synergiste de la susceptibilité",
+    "synergist_involvement_legend": "Implication de l'effet synergiste dans la susceptibilité",
     "pbo_deployment": "Déploiement de moustiquaires  PBO-pyréthroïde",
     "pbo_deployment_legend": "Conformité aux critères recommandés par l'OMS pour le  déploiementde moustiquaires avec PBO et pyréthroïde",
     "chart": {
