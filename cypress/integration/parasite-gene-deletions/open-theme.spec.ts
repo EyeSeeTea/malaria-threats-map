@@ -8,6 +8,7 @@ describe("Open theme", () => {
     it("should contains pfhrp2/3 gene deletions subtheme by default", () => {
         cy.contains("pfhrp2/3 gene deletions");
     });
+
     it("should contains english language by default", () => {
         cy.contains("English");
     });
