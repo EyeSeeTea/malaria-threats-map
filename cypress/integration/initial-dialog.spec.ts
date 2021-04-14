@@ -1,3 +1,5 @@
+import { themes } from "../support/constants";
+
 describe("Open theme", () => {
     beforeEach(() => {
         cy.visit("/");
@@ -13,9 +15,9 @@ describe("Open theme", () => {
     });
 
     it("should contains 4 theme cards", () => {
-        cy.contains("VECTOR INSECTICIDE RESISTANCE");
-        cy.contains("PARASITE pfhrp2/3 GENE DELETIONS");
-        cy.contains("PARASITE DRUG EFFICACY AND RESISTANCE");
-        cy.contains("INVASIVE VECTOR SPECIES");
+        cy.contains(themes.vectorInsecticideResistance);
+        cy.contains(themes.parasiteGeneDeletions);
+        cy.contains(themes.parasiteDrugEfficacy);
+        cy.contains(themes.invasiveVectorSpecies);
     });
 });

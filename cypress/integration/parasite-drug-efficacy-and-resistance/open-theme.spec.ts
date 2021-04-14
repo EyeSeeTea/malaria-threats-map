@@ -1,8 +1,10 @@
+import { themes } from "../../support/constants";
+
 describe("Open theme", () => {
     beforeEach(() => {
         cy.visit("/");
         cy.contains("Close").click();
-        cy.contains("PARASITE DRUG EFFICACY AND RESISTANCE").click();
+        cy.contains(themes.parasiteDrugEfficacy).click();
     })
 
     it("should contains treatment failure subtheme by default", () => {

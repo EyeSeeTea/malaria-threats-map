@@ -1,8 +1,10 @@
+import { themes } from "../../support/constants";
+
 describe("Story mode", () => {
     beforeEach(() => {
         cy.visit("/");
         cy.contains("Close").click();
-        cy.contains("PARASITE pfhrp2/3 GENE DELETIONS").click();
+        cy.contains(themes.parasiteGeneDeletions).click();
         cy.findByRole("progressbar").should('not.exist')
         cy.findByTitle("Story mode").click();
     })

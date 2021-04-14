@@ -1,8 +1,10 @@
+import { themes } from "../../support/constants";
+
 describe("Open theme", () => {
     beforeEach(() => {
         cy.visit("/");
         cy.contains("Close").click();
-        cy.contains("PARASITE pfhrp2/3 GENE DELETIONS").click();
+        cy.contains(themes.parasiteGeneDeletions).click();
     })
 
     it("should contains pfhrp2/3 gene deletions subtheme by default", () => {
