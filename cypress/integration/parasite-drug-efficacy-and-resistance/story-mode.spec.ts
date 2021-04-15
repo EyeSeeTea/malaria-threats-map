@@ -2,10 +2,7 @@ import { themes } from "../../support/constants";
 
 describe("Story mode", () => {
     beforeEach(() => {
-        cy.visit("/");
-        cy.contains("Close").click();
-        cy.contains(themes.parasiteDrugEfficacy).click();
-        cy.findByRole("progressbar").should('not.exist')
+        cy.loadPage(themes.parasiteDrugEfficacy);
         cy.findByTitle("Story mode").click();
     })
     it("should contains expected step 1 title in the story", () => {

@@ -2,8 +2,7 @@ import { themes } from "../support/constants";
 
 describe("Open theme", () => {
     beforeEach(() => {
-        cy.visit("/");
-        cy.contains("Close").click();
+        cy.loadPage();
     })
 
     it("should contains insecticide resistance status sub theme by default", () => {
