@@ -8,8 +8,6 @@ import ReduxQuerySync from "./store/query-middleware";
 import { PreventionMapType, State } from "./store/types";
 import { createMuiTheme, Hidden } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
-import { ActionTypeEnum } from "./store/actions";
-
 
 import {
     setBoundsAction,
@@ -58,7 +56,7 @@ ReduxQuerySync({
     params: {
         theme: {
             selector: (state: State) => state.malaria.theme,
-            action: (value: string) => setThemeAction<any>(mekong ? "treatment" : value || "prevention"),
+            action: (value: string) => setThemeAction(mekong ? "treatment" : value || "prevention"),
         },
         mapType: {
             selector: (state: State) => {

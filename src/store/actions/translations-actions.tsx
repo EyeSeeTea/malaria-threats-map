@@ -10,5 +10,5 @@ export const fetchTranslationsSuccessAction = createAction(ActionTypeEnum.FetchT
     return (translations: TranslationResponse) => action(translations);
 });
 export const fetchTranslationsErrorAction = createAction(ActionTypeEnum.FetchTranslationsError, action => {
-    return (error: AjaxError) => action();
+    return (_error: AjaxError) => action();
 });

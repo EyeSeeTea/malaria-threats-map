@@ -13,7 +13,7 @@ export const fetchPreventionStudiesSuccess = createAction(ActionTypeEnum.FetchPr
 });
 
 export const fetchPreventionStudiesError = createAction(ActionTypeEnum.FetchPreventionStudiesError, action => {
-    return (error: AjaxError | string) => action();
+    return (_error: AjaxError | string) => action();
 });
 
 export const setPreventionMapType = createAction(ActionTypeEnum.SetPreventionMapType, action => {

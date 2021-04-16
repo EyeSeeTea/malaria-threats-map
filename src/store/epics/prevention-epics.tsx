@@ -125,7 +125,7 @@ export const setPreventionInsecticideTypeEpic = (action$: ActionsObservable<Acti
         .ofType(ActionTypeEnum.SetInsecticideTypes)
         .pipe(skip(1))
         .pipe(
-            switchMap(action => {
+            switchMap(_action => {
                 const actions: any[] = [setType(undefined), setSpecies([])];
                 return of(...actions);
             })

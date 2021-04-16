@@ -119,7 +119,7 @@ class MalariaTour extends PureComponent<Props> {
     };
 
     componentDidMount(): void {
-        setTimeout(() => this.setState(state => ({ visible: true })), 200);
+        setTimeout(() => this.setState(_state => ({ visible: true })), 200);
     }
 
     setStep = (step: number) => {

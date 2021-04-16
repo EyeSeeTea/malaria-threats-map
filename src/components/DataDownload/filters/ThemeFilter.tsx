@@ -25,7 +25,7 @@ const THEMES = [
         value: "invasive",
     },
 ];
-const mapStateToProps = (state: State) => ({});
+const mapStateToProps = (_state: State) => ({});
 
 const mapDispatchToProps = {};
 

@@ -9,5 +9,5 @@ export const fetchDistrictsSuccess = createAction(ActionTypeEnum.FetchDistrictsS
     return (response: any) => action(response);
 });
 export const fetchDistrictsError = createAction(ActionTypeEnum.FetchDistrictsError, action => {
-    return (error: AjaxError) => action();
+    return (_error: AjaxError) => action();
 });

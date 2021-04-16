@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { WelcomeInfo } from "./index";
 import { connect } from "react-redux";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((_theme: Theme) =>
     createStyles({
         paper: {
             padding: "24px",

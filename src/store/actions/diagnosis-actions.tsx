@@ -11,7 +11,7 @@ export const fetchDiagnosisStudiesSuccess = createAction(ActionTypeEnum.FetchDia
     return (response: DiagnosisResponse) => action(response);
 });
 export const fetchDiagnosisStudiesError = createAction(ActionTypeEnum.FetchDiagnosisStudiesError, action => {
-    return (error: AjaxError | string) => action();
+    return (_error: AjaxError | string) => action();
 });
 
 export const setDiagnosisSurveyTypes = createAction(ActionTypeEnum.SetSurveyTypes, action => {

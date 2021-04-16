@@ -11,7 +11,7 @@ export const fetchInvasiveStudiesSuccess = createAction(ActionTypeEnum.FetchInva
     return (response: InvasiveResponse) => action(response);
 });
 export const fetchInvasiveStudiesError = createAction(ActionTypeEnum.FetchInvasiveStudiesError, action => {
-    return (error: AjaxError | string) => action();
+    return (_error: AjaxError | string) => action();
 });
 
 export const setInvasiveMapType = createAction(ActionTypeEnum.SetInvasiveMapType, action => {

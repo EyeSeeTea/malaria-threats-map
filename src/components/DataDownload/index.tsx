@@ -888,7 +888,7 @@ function DataDownload({
                 </AppBar>
                 <Container maxWidth={"md"}>
                     <Stepper alternativeLabel nonLinear activeStep={activeStep} className={classes.paper}>
-                        {steps.map((label, index) => (
+                        {steps.map((label, _index) => (
                             <Step key={label}>
                                 <StepButton>{t(label)}</StepButton>
                             </Step>

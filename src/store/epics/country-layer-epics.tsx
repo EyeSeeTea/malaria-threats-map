@@ -14,7 +14,7 @@ import { MapServerConfig } from "../../constants/constants";
 
 export const getCountriesEpic = (action$: ActionsObservable<ActionType<typeof fetchCountryLayerRequest>>) =>
     action$.ofType(ActionTypeEnum.FetchCountryLayerRequest).pipe(
-        switchMap(action => {
+        switchMap(_action => {
             const params: any = {
                 f: "geojson",
                 where: `1%3D1`,

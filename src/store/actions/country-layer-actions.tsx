@@ -9,5 +9,5 @@ export const fetchCountryLayerSuccess = createAction(ActionTypeEnum.FetchCountry
     return (response: any) => action(response);
 });
 export const fetchCountryLayerError = createAction(ActionTypeEnum.FetchCountryLayerError, action => {
-    return (error: AjaxError) => action();
+    return (_error: AjaxError) => action();
 });

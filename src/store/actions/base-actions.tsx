@@ -5,7 +5,7 @@ import { AjaxError } from "rxjs/ajax";
 
 export const setAnyAction = createAction(ActionTypeEnum.MalariaSetAny, action => {
     return (any: any) => action(any);
-})<any>();
+});
 
 interface SetThemeOptions {
     fromHome?: boolean;
@@ -146,5 +146,5 @@ export const getLastUpdatedSuccessAction = createAction(
 
 export const getLastUpdatedFailureAction = createAction(
     ActionTypeEnum.GetLastUpdatedFailure,
-    action => (error: AjaxError | string) => action()
+    action => (_error: AjaxError | string) => action()
 );

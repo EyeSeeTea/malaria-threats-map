@@ -22,7 +22,7 @@ export const getDataDownloadEntriesEpic = (
     action$.ofType(ActionTypeEnum.FetchDownloadsRequest).pipe(
         switchMap(() => {
             return ajax.getFull(config.backendUrl).pipe(
-                mergeMap((response: Response) => {
+                mergeMap((_response: Response) => {
                     return of();
                 })
             );
@@ -36,7 +36,7 @@ export const createDataDownloadEntryEpic = (
         switchMap(action => {
             return ajax.postFull(config.backendUrl, action.payload).pipe(
                 // return ajax.getFull(`https://portal-uat.who.int/malthreats-api/`).pipe(
-                mergeMap((response: any) => {
+                mergeMap((_response: any) => {
                     return of();
                 })
             );
@@ -65,7 +65,7 @@ export const createSubscriptionContact = (
                         );
                     }
                 }),
-                catchError((error: AjaxError) => {
+                catchError((_error: AjaxError) => {
                     return of(
                         addNotificationAction("There was an error while trying to subscribe"),
                         addSubscriptionContactErrorAction()

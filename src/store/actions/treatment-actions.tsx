@@ -11,7 +11,7 @@ export const fetchTreatmentStudiesSuccess = createAction(ActionTypeEnum.FetchTre
     return (response: TreatmentResponse) => action(response);
 });
 export const fetchTreatmentStudiesError = createAction(ActionTypeEnum.FetchTreatmentStudiesError, action => {
-    return (error: AjaxError | string) => action();
+    return (_error: AjaxError | string) => action();
 });
 
 export const setTreatmentMapType = createAction(ActionTypeEnum.SetTreatmentMapType, action => {
