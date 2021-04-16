@@ -1,6 +1,6 @@
 import { themes } from "../../support/constants";
 
-describe("Story mode", () => {
+describe("Open summary report", () => {
     beforeEach(() => {
         cy.loadPage(themes.vectorInsecticideResistance);
         cy.findByRole('button', { name: "Summary Report" }).click();
