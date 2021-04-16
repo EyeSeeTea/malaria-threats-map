@@ -42,7 +42,7 @@ export default () => {
       <br />
       <Typography variant={"body2"}>
         <Link
-          href="https://www.who.int/malaria/publications/atoz/information-note-hrp2-based-rdt/"
+          href="https://www.who.int/publications/i/item/WHO-HTM-GMP-2017.18"
           target="_blank"
           color={"textSecondary"}
         >

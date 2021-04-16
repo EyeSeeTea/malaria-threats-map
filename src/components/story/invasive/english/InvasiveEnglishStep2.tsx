@@ -41,7 +41,7 @@ export default () => {
         by filling and sending the
         <Link
           target="_blank"
-          href="https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-formd9410d7f2b424a04949a64b5e5f5fbd9.xlsm"
+          href="https://www.who.int/publications/i/item/who-form-to-report-detection-of-invasive-anopheles-vector-species"
           color={"textSecondary"}
         >
           WHO form to report detection of invasive Anopheles vector species
@@ -69,7 +69,7 @@ export default () => {
       <br />
       <Typography variant={"body2"}>
         <Link
-          href="https://www.who.int/malaria/publications/atoz/9789241565578/"
+          href="https://www.who.int/publications/i/item/9789241565578"
           target="_blank"
           color={"textSecondary"}
         >
