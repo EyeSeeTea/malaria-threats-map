@@ -8,12 +8,8 @@ const epicMiddleware = createEpicMiddleware();
 const middleware = [epicMiddleware];
 
 export default function configureStore() {
-  const composeEnhancer: typeof compose =
-    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const store = createStore(
-    createRootReducer(),
-    composeEnhancer(applyMiddleware(...middleware))
-  );
-  epicMiddleware.run(rootEpic as any);
-  return { store };
+    const composeEnhancer: typeof compose = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const store = createStore(createRootReducer(), composeEnhancer(applyMiddleware(...middleware)));
+    epicMiddleware.run(rootEpic as any);
+    return { store };
 }

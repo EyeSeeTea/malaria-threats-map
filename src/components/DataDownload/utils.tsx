@@ -1,8 +1,8 @@
 export const englishDisclaimerTab = {
-  name: "Disclaimer",
-  studies: [
-    {
-      Disclaimer: `
+    name: "Disclaimer",
+    studies: [
+        {
+            Disclaimer: `
 The use of all data is subject to the Terms and Conditions of use for WHO data compilations, aggregations, evaluations 
 and analyses. By using the Datasets or any presentations of data derived from them, you agree to be bound by and adhere 
 to these Terms and Conditions, as may be amended from time to time by WHO at its sole discretion. If any datasets are 
@@ -21,15 +21,15 @@ were calculated from the reported data.
 WHO has made a best effort to geolocate all the studies for which coordinate were not provided or wrong coordinates 
 were provided. However, precise coordinates could not always be found. Hence the coordinates  provided in this datasets 
 often correspond to the closest location that could be found, i.e the center of the village or district.`,
-    },
-  ],
+        },
+    ],
 };
 
 export const spanishDisclaimerTab = {
-  name: "Aviso Legal",
-  studies: [
-    {
-      "Aviso Legal": `
+    name: "Aviso Legal",
+    studies: [
+        {
+            "Aviso Legal": `
 El uso de los datos está sujeto a los Términos y condiciones de uso para compilaciones, agregaciones, evaluaciones y 
 análisis de datos de la OMS. Al utilizar los Conjuntos de datos o cualquier representación derivada de ellos, usted 
 acepta respetar y adherirse a estos términos y condiciones, que pueden ser modificados por la OMS de vez en cuando a 
@@ -51,15 +51,15 @@ La OMS ha hecho un gran esfuerzo para geolocalizar todos los estudios para los c
 o se proporcionaron coordenadas incorrectas. Sin embargo, no siempre se pueden encontrar coordenadas precisas. Por lo 
 tanto, las coordenadas proporcionadas en estos conjuntos de datos a menudo corresponden a la ubicación más cercana que 
 se pudo encontrar, es decir, el centro de la aldea o distrito.`,
-    },
-  ],
+        },
+    ],
 };
 
 export const frenchDisclaimerTab = {
-  name: "Avertissement",
-  studies: [
-    {
-      Avertissement: `
+    name: "Avertissement",
+    studies: [
+        {
+            Avertissement: `
 L'utilisation de toutes les données est soumise aux Conditions d'utilisation des compilations, agrégations, évaluations 
 et analyses de données de l'OMS. En utilisant les ensembles de données ou toute présentation de données qui en dérivent, 
 vous acceptez d'être lié par ces conditions générales et de les respecter, conditions qui pourront être modifiées de 
@@ -80,6 +80,6 @@ L'OMS s'est efforcée de géolocaliser toutes les études pour lesquelles aucune
 mauvaises coordonnées ont été fournies. Cependant, des coordonnées précises ne peuvent pas toujours être trouvées. Par 
 conséquent, les coordonnées fournies dans ces ensembles de données correspondent souvent à l'emplacement le plus proche 
 qui pourrait être trouvé, à savoir le centre du village ou du district.`,
-    },
-  ],
+        },
+    ],
 };

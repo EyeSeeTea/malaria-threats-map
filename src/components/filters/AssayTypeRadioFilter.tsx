@@ -8,57 +8,53 @@ import FormLabel from "@material-ui/core/FormLabel";
 import styled from "styled-components";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
-  & span {
-    padding: 2px;
-  }
+    & span {
+        padding: 2px;
+    }
 `;
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: "flex"
-    },
-    formControl: {
-      margin: theme.spacing(3)
-    },
-    group: {
-      margin: theme.spacing(1, 0)
-    },
-    radio: {
-      padding: theme.spacing(0.5, 0)
-    }
-  })
+    createStyles({
+        root: {
+            display: "flex",
+        },
+        formControl: {
+            margin: theme.spacing(3),
+        },
+        group: {
+            margin: theme.spacing(1, 0),
+        },
+        radio: {
+            padding: theme.spacing(0.5, 0),
+        },
+    })
 );
 
 export default function AssayTypeRadioFilter() {
-  const classes = useStyles({});
-  const [value, setValue] = React.useState("female");
+    const classes = useStyles({});
+    const [value, setValue] = React.useState("female");
 
-  function handleChange(event: React.ChangeEvent<unknown>) {
-    setValue((event.target as HTMLInputElement).value);
-  }
+    function handleChange(event: React.ChangeEvent<unknown>) {
+        setValue((event.target as HTMLInputElement).value);
+    }
 
-  return (
-    <div className={classes.root}>
-      <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">Assay Type</FormLabel>
-        <RadioGroup
-          className={classes.group}
-          value={value}
-          onChange={handleChange}
-        >
-          <StyledFormControlLabel
-            value="female"
-            control={<Radio color="primary" />}
-            label="Discriminating concentration bioassay"
-          />
-          <StyledFormControlLabel
-            value="male"
-            control={<Radio color="primary" />}
-            label="Intensity concentration bioassay"
-          />
-        </RadioGroup>
-      </FormControl>
-    </div>
-  );
+    return (
+        <div className={classes.root}>
+            <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel component="legend">Assay Type</FormLabel>
+                <RadioGroup className={classes.group} value={value} onChange={handleChange}>
+                    <StyledFormControlLabel
+                        value="female"
+                        control={<Radio color="primary" />}
+                        label="Discriminating concentration bioassay"
+                    />
+                    <StyledFormControlLabel
+                        value="male"
+                        control={<Radio color="primary" />}
+                        label="Intensity concentration bioassay"
+                    />
+                </RadioGroup>
+            </FormControl>
+        </div>
+    );
 }

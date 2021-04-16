@@ -10,12 +10,12 @@ import { useTranslation } from "react-i18next";
 import { sendAnalyticsMapMenuChange } from "../../store/analytics";
 
 const mapStateToProps = (state: State) => ({
-  preventionFilters: selectPreventionFilters(state)
+    preventionFilters: selectPreventionFilters(state),
 });
 
 const mapDispatchToProps = {
-  setPreventionMapType: setPreventionMapType,
-  setMapTitle: setMapTitleAction
+    setPreventionMapType: setPreventionMapType,
+    setMapTitle: setMapTitleAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -23,60 +23,49 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const preventionSuggestions: OptionType[] = [
-  {
-    label: "prevention.resistance_status",
-    value: PreventionMapType.RESISTANCE_STATUS
-  },
-  {
-    label: "prevention.resistance_intensity",
-    value: PreventionMapType.INTENSITY_STATUS
-  },
-  {
-    label: "prevention.resistance_mechanism",
-    value: PreventionMapType.RESISTANCE_MECHANISM
-  },
-  {
-    label: "prevention.synergist_involvement",
-    value: PreventionMapType.LEVEL_OF_INVOLVEMENT
-  },
-  {
-    label: "prevention.pbo_deployment",
-    value: PreventionMapType.PBO_DEPLOYMENT
-  }
+    {
+        label: "prevention.resistance_status",
+        value: PreventionMapType.RESISTANCE_STATUS,
+    },
+    {
+        label: "prevention.resistance_intensity",
+        value: PreventionMapType.INTENSITY_STATUS,
+    },
+    {
+        label: "prevention.resistance_mechanism",
+        value: PreventionMapType.RESISTANCE_MECHANISM,
+    },
+    {
+        label: "prevention.synergist_involvement",
+        value: PreventionMapType.LEVEL_OF_INVOLVEMENT,
+    },
+    {
+        label: "prevention.pbo_deployment",
+        value: PreventionMapType.PBO_DEPLOYMENT,
+    },
 ];
-function PreventionMapTypesSelector({
-  preventionFilters,
-  setPreventionMapType,
-  setMapTitle
-}: Props) {
-  const { t } = useTranslation("common");
+function PreventionMapTypesSelector({ preventionFilters, setPreventionMapType, setMapTitle }: Props) {
+    const { t } = useTranslation("common");
 
-  const onChange = (value: ValueType<OptionType>) => {
-    const selection = value as OptionType;
-    setPreventionMapType(selection.value);
-    setMapTitle(t(selection.label));
-    sendAnalyticsMapMenuChange("prevention", selection.value)
-  };
+    const onChange = (value: ValueType<OptionType>) => {
+        const selection = value as OptionType;
+        setPreventionMapType(selection.value);
+        setMapTitle(t(selection.label));
+        sendAnalyticsMapMenuChange("prevention", selection.value);
+    };
 
-  React.useEffect(() => {
-    const selection = preventionSuggestions.find(
-      s => s.value === preventionFilters.mapType
+    React.useEffect(() => {
+        const selection = preventionSuggestions.find(s => s.value === preventionFilters.mapType);
+        setMapTitle(t(selection.label));
+    });
+
+    return (
+        <IntegrationReactSelect
+            suggestions={preventionSuggestions}
+            onChange={onChange}
+            value={preventionSuggestions.find(s => s.value === preventionFilters.mapType)}
+        />
     );
-    setMapTitle(t(selection.label));
-  });
-
-  return (
-    <IntegrationReactSelect
-      suggestions={preventionSuggestions}
-      onChange={onChange}
-      value={preventionSuggestions.find(
-        s => s.value === preventionFilters.mapType
-      )}
-    />
-  );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PreventionMapTypesSelector);
+export default connect(mapStateToProps, mapDispatchToProps)(PreventionMapTypesSelector);

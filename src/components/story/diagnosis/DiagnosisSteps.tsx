@@ -3,7 +3,7 @@ import DiagnosisSpanishSteps from "./spanish/DiagnosisSpanishSteps";
 import DiagnosisFrenchSteps from "./french/DiagnosisFrenchSteps";
 
 export default {
-  en: DiagnosisEnglishSteps,
-  es: DiagnosisSpanishSteps,
-  fr: DiagnosisFrenchSteps
+    en: DiagnosisEnglishSteps,
+    es: DiagnosisSpanishSteps,
+    fr: DiagnosisFrenchSteps,
 };

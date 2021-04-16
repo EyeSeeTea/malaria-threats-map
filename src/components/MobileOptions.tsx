@@ -7,7 +7,7 @@ import List from "@material-ui/core/List";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import Slide from "@material-ui/core/Slide";
 import { TransitionProps } from "@material-ui/core/transitions";
 import { State } from "../store/types";
@@ -20,32 +20,30 @@ import LanguageSelectorSelect from "./LanguageSelectorSelect";
 import { useTranslation } from "react-i18next";
 
 const FlexGrow = styled.div`
-  flex-grow: 1;
+    flex-grow: 1;
 `;
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    appBar: {
-      position: "relative"
-    },
-    title: {
-      marginLeft: theme.spacing(2),
-      flex: 1
-    }
-  })
+    createStyles({
+        appBar: {
+            position: "relative",
+        },
+        title: {
+            marginLeft: theme.spacing(2),
+            flex: 1,
+        },
+    })
 );
 
-const Transition = React.forwardRef<unknown, TransitionProps>(
-  function Transition(props, ref) {
+const Transition = React.forwardRef<unknown, TransitionProps>(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
-  }
-);
+});
 
 const mapStateToProps = (state: State) => ({
-  areMobileOptionsOpen: selectAreMobileOptionsOpen(state)
+    areMobileOptionsOpen: selectAreMobileOptionsOpen(state),
 });
 const mapDispatchToProps = {
-  setMobileOptionsOpen: setMobileOptionsOpen
+    setMobileOptionsOpen: setMobileOptionsOpen,
 };
 type OwnProps = {};
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -53,50 +51,42 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
 function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
-  const classes = useStyles({});
+    const classes = useStyles({});
 
-  function handleClose() {
-    setMobileOptionsOpen(false);
-  }
-  const { t } = useTranslation("common");
-  return (
-    <>
-      <Dialog
-        fullScreen
-        open={areMobileOptionsOpen}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-      >
-        <AppBar className={classes.appBar}>
-          <Toolbar variant="dense">
-            <Typography variant="h6" className={classes.title}>
-              {t("options.title")}
-            </Typography>
-            <FlexGrow />
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              size={"small"}
-              aria-label="close"
-            >
-              <ArrowDownwardIcon fontSize={"small"} />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <List>
-          <ListItem button>
-            <ListItemText primary={t("options.select_language")} />
-            <FlexGrow />
-            <LanguageSelectorSelect />
-          </ListItem>
-        </List>
-      </Dialog>
-    </>
-  );
+    function handleClose() {
+        setMobileOptionsOpen(false);
+    }
+    const { t } = useTranslation("common");
+    return (
+        <>
+            <Dialog fullScreen open={areMobileOptionsOpen} onClose={handleClose} TransitionComponent={Transition}>
+                <AppBar className={classes.appBar}>
+                    <Toolbar variant="dense">
+                        <Typography variant="h6" className={classes.title}>
+                            {t("options.title")}
+                        </Typography>
+                        <FlexGrow />
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            onClick={handleClose}
+                            size={"small"}
+                            aria-label="close"
+                        >
+                            <ArrowDownwardIcon fontSize={"small"} />
+                        </IconButton>
+                    </Toolbar>
+                </AppBar>
+                <List>
+                    <ListItem button>
+                        <ListItemText primary={t("options.select_language")} />
+                        <FlexGrow />
+                        <LanguageSelectorSelect />
+                    </ListItem>
+                </List>
+            </Dialog>
+        </>
+    );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MobileOptions);
+export default connect(mapStateToProps, mapDispatchToProps)(MobileOptions);

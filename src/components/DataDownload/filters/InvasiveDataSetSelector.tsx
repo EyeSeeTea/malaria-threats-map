@@ -7,39 +7,39 @@ import { Divider, FilterWrapper } from "../../filters/Filters";
 import { useTranslation } from "react-i18next";
 
 type Props = {
-  value: string;
-  onChange: (selection: string) => void;
+    value: string;
+    onChange: (selection: string) => void;
 };
 
 const suggestions: OptionType[] = [
-  {
-    label: "data_download.filters.invasive.datasets.invasive_vector_species",
-    value: "INVASIVE_VECTOR_SPECIES"
-  }
+    {
+        label: "data_download.filters.invasive.datasets.invasive_vector_species",
+        value: "INVASIVE_VECTOR_SPECIES",
+    },
 ];
 
 const InvasiveDataSetSelector = ({ value, onChange }: Props) => {
-  const { t } = useTranslation("common");
-  const valueOnChange = (value: ValueType<OptionType>) => {
-    const selection = value as OptionType;
-    onChange(selection.value);
-  };
+    const { t } = useTranslation("common");
+    const valueOnChange = (value: ValueType<OptionType>) => {
+        const selection = value as OptionType;
+        onChange(selection.value);
+    };
 
-  const suggs = suggestions.map(s => ({ label: t(s.label), value: s.value }));
+    const suggs = suggestions.map(s => ({ label: t(s.label), value: s.value }));
 
-  return (
-    <FilterWrapper>
-      <FormLabel component="legend">
-        <T i18nKey={`data_download.dataset`} /> *
-      </FormLabel>
-      <Divider />
-      <IntegrationReactSelect
-        suggestions={suggs}
-        onChange={valueOnChange}
-        value={suggestions.find(s => s.value === value)}
-      />
-    </FilterWrapper>
-  );
+    return (
+        <FilterWrapper>
+            <FormLabel component="legend">
+                <T i18nKey={`data_download.dataset`} /> *
+            </FormLabel>
+            <Divider />
+            <IntegrationReactSelect
+                suggestions={suggs}
+                onChange={valueOnChange}
+                value={suggestions.find(s => s.value === value)}
+            />
+        </FilterWrapper>
+    );
 };
 
 export default InvasiveDataSetSelector;

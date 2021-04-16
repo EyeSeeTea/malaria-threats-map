@@ -1,13 +1,7 @@
 import React, { CSSProperties, HTMLAttributes } from "react";
 import clsx from "clsx";
 import Select from "react-select";
-import {
-  createStyles,
-  emphasize,
-  makeStyles,
-  Theme,
-  useTheme
-} from "@material-ui/core/styles";
+import { createStyles, emphasize, makeStyles, Theme, useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import TextField, { BaseTextFieldProps } from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
@@ -26,255 +20,260 @@ import { useTranslation } from "react-i18next";
 import * as R from "ramda";
 
 export interface OptionType {
-  label: string;
-  value: any;
+    label: string;
+    value: any;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      pointerEvents: "all",
-      flexGrow: 1,
-      minWidth: 150
-    },
-    inputPaper: {
-      padding: theme.spacing(0.5, 1.5)
-    },
-    input: {
-      cursor: "pointer",
-      display: "flex",
-      padding: 0,
-      height: "auto",
-      "& span": {
-        backgroundColor: "transparent"
-      }
-    },
-    valueContainer: {
-      display: "flex",
-      flex: 1,
-      alignItems: "center",
-      overflow: "hidden",
-      flexWrap: (props: { isMulti?: boolean }) =>
-        props.isMulti ? "wrap" : "nowrap"
-    },
-    chip: {
-      margin: theme.spacing(0.5, 0.25)
-    },
-    chipFocused: {
-      backgroundColor: emphasize(
-        theme.palette.type === "light"
-          ? theme.palette.grey[300]
-          : theme.palette.grey[700],
-        0.08
-      )
-    },
-    noOptionsMessage: {
-      padding: theme.spacing(1, 2)
-    },
-    singleValue: {
-      fontSize: 16
-    },
-    placeholder: {
-      position: "absolute",
-      left: 2,
-      bottom: 6,
-      fontSize: 16
-    },
-    paper: {
-      position: "absolute",
-      zIndex: 1,
-      marginTop: theme.spacing(1),
-      left: 0,
-      right: 0
-    },
-    divider: {
-      height: theme.spacing(2)
-    }
-  })
+    createStyles({
+        root: {
+            pointerEvents: "all",
+            flexGrow: 1,
+            minWidth: 150,
+        },
+        inputPaper: {
+            padding: theme.spacing(0.5, 1.5),
+        },
+        input: {
+            cursor: "pointer",
+            display: "flex",
+            padding: 0,
+            height: "auto",
+            "& span": {
+                backgroundColor: "transparent",
+            },
+        },
+        valueContainer: {
+            display: "flex",
+            flex: 1,
+            alignItems: "center",
+            overflow: "hidden",
+            flexWrap: (props: { isMulti?: boolean }) => (props.isMulti ? "wrap" : "nowrap"),
+        },
+        chip: {
+            margin: theme.spacing(0.5, 0.25),
+        },
+        chipFocused: {
+            backgroundColor: emphasize(
+                theme.palette.type === "light" ? theme.palette.grey[300] : theme.palette.grey[700],
+                0.08
+            ),
+        },
+        noOptionsMessage: {
+            padding: theme.spacing(1, 2),
+        },
+        singleValue: {
+            fontSize: 16,
+        },
+        placeholder: {
+            position: "absolute",
+            left: 2,
+            bottom: 6,
+            fontSize: 16,
+        },
+        paper: {
+            position: "absolute",
+            zIndex: 1,
+            marginTop: theme.spacing(1),
+            left: 0,
+            right: 0,
+        },
+        divider: {
+            height: theme.spacing(2),
+        },
+    })
 );
 
-function NoOptionsMessage(props: NoticeProps<OptionType>) {
-  return (
-    <Typography
-      color="textSecondary"
-      className={props.selectProps.classes.noOptionsMessage}
-      {...props.innerProps}
-    >
-      {props.children}
-    </Typography>
-  );
+function NoOptionsMessage(props: NoticeProps<OptionType, false>) {
+    return (
+        <Typography color="textSecondary" className={props.selectProps.classes.noOptionsMessage} {...props.innerProps}>
+            {props.children}
+        </Typography>
+    );
 }
 
-type InputComponentProps = Pick<BaseTextFieldProps, "inputRef"> &
-  HTMLAttributes<HTMLDivElement>;
+type InputComponentProps = Pick<BaseTextFieldProps, "inputRef"> & HTMLAttributes<HTMLDivElement>;
 
 function inputComponent({ inputRef, ...props }: InputComponentProps) {
-  return <div ref={inputRef} {...props} />;
+    return <div ref={inputRef} {...props} />;
 }
 
-function Control(props: ControlProps<OptionType>) {
-  const {
-    children,
-    innerProps,
-    innerRef,
-    selectProps: { classes, TextFieldProps }
-  } = props;
+function Control(props: ControlProps<OptionType, false>) {
+    const {
+        children,
+        innerProps,
+        innerRef,
+        selectProps: { classes, TextFieldProps },
+    } = props;
 
-  return (
-    <Paper className={classes.inputPaper}>
-      <TextField
-        fullWidth
-        InputProps={{
-          inputComponent,
-          inputProps: {
-            className: classes.input,
-            ref: innerRef,
-            children,
-            ...innerProps
-          },
-          disableUnderline: true
-        }}
-        {...TextFieldProps}
-      />
-    </Paper>
-  );
+    return (
+        <Paper className={classes.inputPaper}>
+            <TextField
+                fullWidth
+                InputProps={{
+                    inputComponent,
+                    inputProps: {
+                        className: classes.input,
+                        ref: innerRef,
+                        children,
+                        ...innerProps,
+                    },
+                    disableUnderline: true,
+                }}
+                {...TextFieldProps}
+            />
+        </Paper>
+    );
 }
 
-function Option(props: OptionProps<OptionType>) {
-  const { t } = useTranslation("common");
-  const value = props.children ? t(props.children.toString()) : "";
-  return (
-    <MenuItem
-      dense
-      ref={props.innerRef}
-      selected={props.isFocused}
-      component="div"
-      style={{
-        fontWeight: props.isSelected ? 500 : 400
-      }}
-      {...props.innerProps}
-      title={value}
-    >
-      <Typography variant="inherit" noWrap>
-        {value}
-      </Typography>
-    </MenuItem>
-  );
+function Option(props: OptionProps<OptionType, false>) {
+    const { t } = useTranslation("common");
+    const value = props.children ? t(props.children.toString()) : "";
+    console.log(value);
+    console.log(props);
+    console.log(props.isFocused);
+    //it doesn't have access to the control/selected value
+    return (
+        <MenuItem
+            dense
+            ref={props.innerRef}
+            selected={props.isFocused}
+            component="div"
+            style={{
+                fontWeight: props.isSelected ? 500 : 400,
+            }}
+            {...props.innerProps}
+            title={value}
+        >
+            <Typography variant="inherit" noWrap>
+                {value}
+            </Typography>
+        </MenuItem>
+    );
 }
 
-type MuiPlaceholderProps = Omit<PlaceholderProps<OptionType>, "innerProps"> &
-  Partial<Pick<PlaceholderProps<OptionType>, "innerProps">>;
+type MuiPlaceholderProps = Omit<PlaceholderProps<OptionType, false>, "innerProps"> &
+    Partial<Pick<PlaceholderProps<OptionType, false>, "innerProps">>;
 function Placeholder(props: MuiPlaceholderProps) {
-  const { selectProps, innerProps = {}, children } = props;
-  return (
-    <Typography
-      color="textSecondary"
-      className={selectProps.classes.placeholder}
-      {...innerProps}
-    >
-      {children}
-    </Typography>
-  );
+    const { selectProps, innerProps = {}, children } = props;
+    return (
+        <Typography color="textSecondary" className={selectProps.classes.placeholder} {...innerProps}>
+            {children}
+        </Typography>
+    );
 }
 
 function SingleValue(props: SingleValueProps<OptionType>) {
-  const { t } = useTranslation("common");
-  const value = props.children ? t(props.children.toString()) : "";
-  return (
-    <Typography
-      className={props.selectProps.classes.singleValue}
-      {...props.innerProps}
-    >
-      {value}
-    </Typography>
-  );
+    const { t } = useTranslation("common");
+    const value = props.children ? t(props.children.toString()) : "";
+    return (
+        <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
+            {value}
+        </Typography>
+    );
 }
 
-function ValueContainer(props: ValueContainerProps<OptionType>) {
-  return (
-    <div className={props.selectProps.classes.valueContainer}>
-      {props.children}
-    </div>
-  );
+function ValueContainer(props: ValueContainerProps<OptionType, false>) {
+    return <div className={props.selectProps.classes.valueContainer}>{props.children}</div>;
 }
 
 function MultiValue(props: MultiValueProps<OptionType>) {
-  const { t } = useTranslation("common");
-  const value = props.children ? t(props.children.toString()) : "";
-  return (
-    <Chip
-      tabIndex={-1}
-      label={value}
-      className={clsx(props.selectProps.classes.chip, {
-        [props.selectProps.classes.chipFocused]: props.isFocused
-      })}
-      onDelete={props.removeProps.onClick}
-      deleteIcon={<CancelIcon {...props.removeProps} />}
-    />
-  );
+    const { t } = useTranslation("common");
+    const value = props.children ? t(props.children.toString()) : "";
+    return (
+        <Chip
+            tabIndex={-1}
+            label={value}
+            className={clsx(props.selectProps.classes.chip, {
+                [props.selectProps.classes.chipFocused]: props.isFocused,
+            })}
+            onDelete={props.removeProps.onClick}
+            deleteIcon={<CancelIcon {...props.removeProps} />}
+        />
+    );
 }
 
-function Menu(props: MenuProps<OptionType>) {
-  return (
-    <Paper
-      square
-      className={props.selectProps.classes.paper}
-      {...props.innerProps}
-    >
-      {props.children}
-    </Paper>
-  );
+function Menu(props: MenuProps<OptionType, false>) {
+    return (
+        <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
+            {props.children}
+        </Paper>
+    );
 }
 
 const components = {
-  Control,
-  Menu,
-  MultiValue,
-  NoOptionsMessage,
-  Option,
-  Placeholder,
-  SingleValue,
-  ValueContainer
+    Control,
+    Menu,
+    MultiValue,
+    NoOptionsMessage,
+    Option,
+    Placeholder,
+    SingleValue,
+    ValueContainer,
 };
 
 export type Option = {
-  label: string;
-  value: string;
+    label: string;
+    value: string;
 };
 
-export default function IntegrationReactSelect({
-  suggestions = [],
-  value,
-  onChange,
-  className,
-  ...rest
-}: any) {
-  const { t } = useTranslation("common");
-  const classes = useStyles(rest);
-  const theme = useTheme();
+export default function IntegrationReactSelect({ suggestions = [], value, onChange, className, ...rest }: any) {
+    const { t } = useTranslation("common");
+    //console.log(rest);
+    const classes = useStyles(rest);
+    //console.log(classes);
+    const theme = useTheme();
 
-  const selectStyles = {
-    input: (base: CSSProperties) => ({
-      ...base,
-      color: theme.palette.text.primary,
-      "& input": {
-        font: "inherit"
-      }
-    })
-  };
-
-  return (
-    <div className={`${classes.root} ${className}`}>
-      <Select
+    const selectStyles = {
+        input: (base: CSSProperties) => ({
+            ...base,
+            isFocused: true,
+            color: theme.palette.text.primary,
+            "& input": {
+                font: "inherit",
+            },
+        }),
+        option: (base: any, state: any) => ({
+            ...base,
+            backgroundColor: state.isSelected ? "red" : "blue",
+            ":active": {
+                backgroundColor: state.isSelected ? "green" : "yellow",
+            },
+        }),
+    };
+    /*
+        <Select
         classes={classes}
         styles={selectStyles}
-        options={R.sortBy<Option>(R.prop("label"), suggestions)}
         components={components}
+        options={R.sortBy<Option>(R.prop("label"), suggestions)}
         value={value}
         onChange={onChange}
         placeholder={t("options.select") + "..."}
         {...rest}
       />
-    </div>
-  );
+
+*/
+    return (
+        <div className={`${classes.root} ${className}`}>
+            <Select
+                classes={classes}
+                styles={selectStyles}
+                components={components}
+                options={R.sortBy<Option>(R.prop("label"), suggestions)}
+                value={value}
+                onChange={onChange}
+                placeholder={t("options.select") + "..."}
+                {...rest}
+            />
+            <Select
+                onChange={onChange}
+                value={value}
+                styles={selectStyles}
+                className={classes}
+                options={R.sortBy<Option>(R.prop("label"), suggestions)}
+                {...rest}
+            />
+        </div>
+    );
 }

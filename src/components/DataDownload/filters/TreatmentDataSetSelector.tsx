@@ -7,43 +7,42 @@ import { Divider, FilterWrapper } from "../../filters/Filters";
 import { useTranslation } from "react-i18next";
 
 type Props = {
-  value: string;
-  onChange: (selection: string) => void;
+    value: string;
+    onChange: (selection: string) => void;
 };
 
 const suggestions: OptionType[] = [
-  {
-    label:
-      "data_download.filters.treatment.datasets.therapeutic_efficacy_studies",
-    value: "THERAPEUTIC_EFFICACY_STUDY"
-  },
-  {
-    label: "data_download.filters.treatment.datasets.molecular_marker_studies",
-    value: "MOLECULAR_MARKER_STUDY"
-  }
+    {
+        label: "data_download.filters.treatment.datasets.therapeutic_efficacy_studies",
+        value: "THERAPEUTIC_EFFICACY_STUDY",
+    },
+    {
+        label: "data_download.filters.treatment.datasets.molecular_marker_studies",
+        value: "MOLECULAR_MARKER_STUDY",
+    },
 ];
 
 const TreatmentDataSetSelector = ({ value, onChange }: Props) => {
-  const { t } = useTranslation("common");
-  const suggs = suggestions.map(s => ({ label: t(s.label), value: s.value }));
-  const valueOnChange = (value: ValueType<OptionType>) => {
-    const selection = value as OptionType;
-    onChange(selection.value);
-  };
+    const { t } = useTranslation("common");
+    const suggs = suggestions.map(s => ({ label: t(s.label), value: s.value }));
+    const valueOnChange = (value: ValueType<OptionType>) => {
+        const selection = value as OptionType;
+        onChange(selection.value);
+    };
 
-  return (
-    <FilterWrapper>
-      <FormLabel component="legend">
-        <T i18nKey={`data_download.dataset`} /> *
-      </FormLabel>
-      <Divider />
-      <IntegrationReactSelect
-        suggestions={suggs}
-        onChange={valueOnChange}
-        value={suggestions.find(s => s.value === value)}
-      />
-    </FilterWrapper>
-  );
+    return (
+        <FilterWrapper>
+            <FormLabel component="legend">
+                <T i18nKey={`data_download.dataset`} /> *
+            </FormLabel>
+            <Divider />
+            <IntegrationReactSelect
+                suggestions={suggs}
+                onChange={valueOnChange}
+                value={suggestions.find(s => s.value === value)}
+            />
+        </FilterWrapper>
+    );
 };
 
 export default TreatmentDataSetSelector;

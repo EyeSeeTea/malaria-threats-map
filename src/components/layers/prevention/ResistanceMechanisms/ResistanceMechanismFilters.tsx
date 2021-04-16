@@ -9,29 +9,25 @@ import { connect } from "react-redux";
 import SynergistTypeFilter from "../../../filters/SynergistTypeFilter";
 
 const mapStateToProps = (state: State) => ({
-  preventionFilters: selectPreventionFilters(state)
+    preventionFilters: selectPreventionFilters(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps;
 
 export const isSynergyst = (filters: PreventionFilters) =>
-  filters.assayTypes.length === 1 &&
-  filters.assayTypes[0] === "SYNERGIST-INSECTICIDE_BIOASSAY";
+    filters.assayTypes.length === 1 && filters.assayTypes[0] === "SYNERGIST-INSECTICIDE_BIOASSAY";
 
 function ResistanceMechanismFilters({ preventionFilters }: Props) {
-  return (
-    <div>
-      <MechanismTypeFilter />
-      <AssayTypeCheckboxFilter />
-      <SpeciesFilter />
-      {isSynergyst(preventionFilters) && <SynergistTypeFilter />}
-      <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
-    </div>
-  );
+    return (
+        <div>
+            <MechanismTypeFilter />
+            <AssayTypeCheckboxFilter />
+            <SpeciesFilter />
+            {isSynergyst(preventionFilters) && <SynergistTypeFilter />}
+            <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
+        </div>
+    );
 }
 
-export default connect(
-  mapStateToProps,
-  null
-)(ResistanceMechanismFilters);
+export default connect(mapStateToProps, null)(ResistanceMechanismFilters);

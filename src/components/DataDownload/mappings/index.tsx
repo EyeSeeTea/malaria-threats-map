@@ -10,15 +10,15 @@ import invasiveMappings from "./invasive-detections";
 import { Option } from "../../BasicSelect";
 
 const mappings: { [key: string]: Option[] } = {
-  DISCRIMINATING_CONCENTRATION_BIOASSAY: concentrationMappings,
-  INTENSITY_CONCENTRATION_BIOASSAY: intensityMappings,
-  "SYNERGIST-INSECTICIDE_BIOASSAY": synergistMappings,
-  MOLECULAR_ASSAY: molecularMappings,
-  BIOCHEMICAL_ASSAY: biochemicalMappings,
-  THERAPEUTIC_EFFICACY_STUDY: therapeuticMappings,
-  MOLECULAR_MARKER_STUDY: molecularMarkerMappings1,
-  MOLECULAR_MARKER_STUDY_GENES: molecularMarkerMappings2,
-  INVASIVE_VECTOR_SPECIES: invasiveMappings
+    DISCRIMINATING_CONCENTRATION_BIOASSAY: concentrationMappings,
+    INTENSITY_CONCENTRATION_BIOASSAY: intensityMappings,
+    "SYNERGIST-INSECTICIDE_BIOASSAY": synergistMappings,
+    MOLECULAR_ASSAY: molecularMappings,
+    BIOCHEMICAL_ASSAY: biochemicalMappings,
+    THERAPEUTIC_EFFICACY_STUDY: therapeuticMappings,
+    MOLECULAR_MARKER_STUDY: molecularMarkerMappings1,
+    MOLECULAR_MARKER_STUDY_GENES: molecularMarkerMappings2,
+    INVASIVE_VECTOR_SPECIES: invasiveMappings,
 };
 
 export default mappings;

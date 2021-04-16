@@ -1,3 +1,1 @@
-export type DownloadRequest = {
-
-}
+export type DownloadRequest = {};

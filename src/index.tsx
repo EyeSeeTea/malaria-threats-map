@@ -12,24 +12,24 @@ import config from "./config";
 import { initHotjar } from "./hotjar";
 
 declare global {
-  interface Window {
-    hj?: Hotjar
-  }
+    interface Window {
+        hj?: Hotjar;
+    }
 }
 
 interface Hotjar {
-  (command: 'stateChange', path: string): void;
-  debug: { on(): void, off(): void };
+    (command: "stateChange", path: string): void;
+    debug: { on(): void; off(): void };
 }
 
-const {gaAppId, hotjar: hotjarConfig } = config;
+const { gaAppId, hotjar: hotjarConfig } = config;
 
 if (hotjarConfig) {
-  initHotjar(hotjarConfig.hjid, hotjarConfig.hjsv, true);
+    initHotjar(hotjarConfig.hjid, hotjarConfig.hjsv, true);
 }
 
 ReactGA.initialize(gaAppId, {
-  debug: true
+    debug: true,
 });
 
 ReactDOM.render(<App />, document.getElementById("root"));

@@ -1,7 +1,7 @@
 export enum TREATMENT_FAILURE_STATUS {
-  HIGH = "HIGH",
-  MEDIUM_HIGH = "MEDIUM_HIGH",
-  MEDIUM = "MEDIUM",
-  LOW = "LOW",
-  UNKNOWN = "UNKNOWN"
+    HIGH = "HIGH",
+    MEDIUM_HIGH = "MEDIUM_HIGH",
+    MEDIUM = "MEDIUM",
+    LOW = "LOW",
+    UNKNOWN = "UNKNOWN",
 }

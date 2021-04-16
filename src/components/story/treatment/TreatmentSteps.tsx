@@ -3,7 +3,7 @@ import TreatmentSpanishSteps from "./spanish/TreatmentSpanishSteps";
 import TreatmentFrenchSteps from "./french/TreatmentFrenchSteps";
 
 export default {
-  en: TreatmentEnglishSteps,
-  es: TreatmentSpanishSteps,
-  fr: TreatmentFrenchSteps
+    en: TreatmentEnglishSteps,
+    es: TreatmentSpanishSteps,
+    fr: TreatmentFrenchSteps,
 };

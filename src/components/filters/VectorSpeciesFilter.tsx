@@ -10,11 +10,11 @@ import { Divider, FilterWrapper } from "./Filters";
 import { sendMultiFilterAnalytics } from "../../utils/analytics";
 
 const mapStateToProps = (state: State) => ({
-  invasiveFilters: selectInvasiveFilters(state)
+    invasiveFilters: selectInvasiveFilters(state),
 });
 
 const mapDispatchToProps = {
-  setVectorSpecies: setInvasiveVectorSpecies
+    setVectorSpecies: setInvasiveVectorSpecies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -22,62 +22,57 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const suggestions = [
-  {
-    label: "An. stephensi type form",
-    value: "AN_STEPHENSI_TYPE_FORM"
-  },
-  {
-    label: "An. stephensi mysorensis",
-    value: "AN_STEPHENSI_MYSORENSIS"
-  },
-  {
-    label: "An. stephensi intermediate form",
-    value: "AN_STEPHENSI_INTERMEDIATE_FORM"
-  },
-  {
-    label: "An. stephensi form unspecified",
-    value: "AN_STEPHENSI_FORM_UNSPECIFIED"
-  }
+    {
+        label: "An. stephensi type form",
+        value: "AN_STEPHENSI_TYPE_FORM",
+    },
+    {
+        label: "An. stephensi mysorensis",
+        value: "AN_STEPHENSI_MYSORENSIS",
+    },
+    {
+        label: "An. stephensi intermediate form",
+        value: "AN_STEPHENSI_INTERMEDIATE_FORM",
+    },
+    {
+        label: "An. stephensi form unspecified",
+        value: "AN_STEPHENSI_FORM_UNSPECIFIED",
+    },
 ];
 
 export const VectorSpeciesKey: { [key: string]: string } = {
-  AN_STEPHENSI_TYPE_FORM: "An. stephensi type form",
-  AN_STEPHENSI_MYSORENSIS: "An. stephensi mysorensis",
-  AN_STEPHENSI_INTERMEDIATE_FORM: "An. stephensi intermediate form",
-  AN_STEPHENSI_FORM_UNSPECIFIED: "NR"
+    AN_STEPHENSI_TYPE_FORM: "An. stephensi type form",
+    AN_STEPHENSI_MYSORENSIS: "An. stephensi mysorensis",
+    AN_STEPHENSI_INTERMEDIATE_FORM: "An. stephensi intermediate form",
+    AN_STEPHENSI_FORM_UNSPECIFIED: "NR",
 };
 
 class VectorSpeciesFilter extends Component<Props, any> {
-  onChange = (selection: any[]) => {
-    this.props.setVectorSpecies(
-      (selection || []).map(selection => selection.value)
-    );
-    sendMultiFilterAnalytics("vectorSpecies", this.props.invasiveFilters.vectorSpecies, selection);
-  };
+    onChange = (selection: any[]) => {
+        this.props.setVectorSpecies((selection || []).map(selection => selection.value));
+        sendMultiFilterAnalytics("vectorSpecies", this.props.invasiveFilters.vectorSpecies, selection);
+    };
 
-  render() {
-    const selection = suggestions.filter(suggestion =>
-      this.props.invasiveFilters.vectorSpecies.includes(suggestion.value)
-    );
-    return (
-      <FilterWrapper>
-        <FormLabel component="legend">
-          <T i18nKey={`filters.vector_species`} />
-        </FormLabel>
-        <Divider />
-        <IntegrationReactSelect
-          isMulti
-          isClearable
-          suggestions={suggestions}
-          onChange={this.onChange}
-          value={selection}
-        />
-      </FilterWrapper>
-    );
-  }
+    render() {
+        const selection = suggestions.filter(suggestion =>
+            this.props.invasiveFilters.vectorSpecies.includes(suggestion.value)
+        );
+        return (
+            <FilterWrapper>
+                <FormLabel component="legend">
+                    <T i18nKey={`filters.vector_species`} />
+                </FormLabel>
+                <Divider />
+                <IntegrationReactSelect
+                    isMulti
+                    isClearable
+                    suggestions={suggestions}
+                    onChange={this.onChange}
+                    value={selection}
+                />
+            </FilterWrapper>
+        );
+    }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(VectorSpeciesFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(VectorSpeciesFilter);

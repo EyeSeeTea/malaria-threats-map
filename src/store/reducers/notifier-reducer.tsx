@@ -6,31 +6,24 @@ import { createSelector } from "reselect";
 import { NotificationsState } from "../../types/Notifications";
 
 const initialState: NotificationsState = Object.freeze({
-  notifications: []
+    notifications: [],
 });
 
 export default createReducer<NotificationsState>(initialState, {
-  [ActionTypeEnum.AddNotification]: (notification: string) => (
-    state: NotificationsState
-  ) => ({
-    notifications: [
-      ...state.notifications,
-      {
-        id: new Date().getTime(),
-        message: notification
-      }
-    ]
-  }),
-  [ActionTypeEnum.DismissNotification]: (id: number) => (
-    state: NotificationsState
-  ) => ({
-    notifications: state.notifications.filter(n => n.id !== id)
-  })
+    [ActionTypeEnum.AddNotification]: (notification: string) => (state: NotificationsState) => ({
+        notifications: [
+            ...state.notifications,
+            {
+                id: new Date().getTime(),
+                message: notification,
+            },
+        ],
+    }),
+    [ActionTypeEnum.DismissNotification]: (id: number) => (state: NotificationsState) => ({
+        notifications: state.notifications.filter(n => n.id !== id),
+    }),
 });
 
 export const selectNotificationsState = (state: State) => state.notifications;
 
-export const selectNotifications = createSelector(
-  selectNotificationsState,
-  R.prop("notifications")
-);
+export const selectNotifications = createSelector(selectNotificationsState, R.prop("notifications"));
