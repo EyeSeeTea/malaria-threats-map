@@ -26,7 +26,7 @@
     "resistance_intensity": "Intensidad de la resistencia a insecticidas",
     "resistance_mechanism": "Mecanismos de la resistencia a insecticidas",
     "synergist_involvement": "Efecto sinérgico en susceptibilidad",
-    "synergist_involvement_legend": "Participación del efecto sinérgico en la susceptibilidad",
+    "synergist_involvement_legend": "Efecto de la sinergia en susceptibilidad",
     "pbo_deployment": "Despliegue de mosquiteros PBO-piretroide",
     "pbo_deployment_legend": "Cumplimiento de los criterios recomendados por la OMS para el despliegue de mosquiteros con PBO y piretroide",
     "chart": {

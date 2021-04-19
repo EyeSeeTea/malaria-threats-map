@@ -26,7 +26,7 @@
     "resistance_intensity": "Insecticide resistance intensity",
     "resistance_mechanism": "Resistance mechanisms detection",
     "synergist_involvement": "Synergist effect in susceptibility",
-    "synergist_involvement_legend": "Involvement of synergist effect in susceptibility",
+    "synergist_involvement_legend": "Effect of synergy in susceptibility",
     "pbo_deployment": "Pyrethroid-PBO nets deployment",
     "pbo_deployment_legend": "Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment",
     "chart": {
