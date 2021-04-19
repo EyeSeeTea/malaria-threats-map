@@ -3,7 +3,7 @@ import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import { Provider } from "react-redux";
 import createStore from "./store";
-import DataProvider from "./components/DataProvider";
+import DataProvider, { Props } from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
 import { PreventionMapType, State } from "./store/types";
 import { createMuiTheme, Hidden } from "@material-ui/core";
@@ -267,7 +267,24 @@ export const theme = createMuiTheme({
     },
   },
 });
+/*
+<ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <DataProvider>
+            <I18nextProvider i18n={i18next}>
+              <Hidden smUp>
+                <PersistentDrawerLeft drawerWidth={"100%"} />
+              </Hidden>
+              <Hidden xsDown>
+                <PersistentDrawerLeft />
+              </Hidden>
+              <Notifier />
+            </I18nextProvider>
+          </DataProvider>
+        </Provider>
+      </ThemeProvider>
 
+*/
 class App extends React.Component {
   render() {
     return (
