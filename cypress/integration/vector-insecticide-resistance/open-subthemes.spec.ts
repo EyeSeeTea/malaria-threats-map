@@ -12,7 +12,7 @@ describe("Open subthemes", () => {
 
         cy.findByText("Pyrethroid-PBO nets deployment").click();
 
-        cy.findByRole("group",{name:"Legend"}).findByText("Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment")
+        cy.findByLegendTitle("Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment")
     })
 
     it("should open Insecticide resistance intensity subtheme", () => {
@@ -20,7 +20,7 @@ describe("Open subthemes", () => {
 
         cy.findByText("Insecticide resistance intensity").click();
 
-        cy.findByRole("group",{name:"Legend"}).findByText("Insecticide resistance intensity")
+        cy.findByLegendTitle("Insecticide resistance intensity")
     })
 
     it("should open Resistance mechanisms detection subtheme", () => {
@@ -28,7 +28,7 @@ describe("Open subthemes", () => {
 
         cy.findByText("Resistance mechanisms detection").click();
 
-        cy.findByRole("group",{name:"Legend"}).findByText("Resistance mechanisms detection")
+        cy.findByLegendTitle("Resistance mechanisms detection")
     })
 
     it("should open Metabolic mechanisms involvement subtheme", () => {
@@ -36,7 +36,7 @@ describe("Open subthemes", () => {
 
         cy.findByText("Metabolic mechanisms involvement").click();
 
-        cy.findByRole("group",{name:"Legend"}).findByText("Involvement of metabolic mechanisms")
+        cy.findByLegendTitle("Involvement of metabolic mechanisms")
     })
 });
 

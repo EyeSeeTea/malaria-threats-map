@@ -8,16 +8,37 @@ declare namespace Cypress {
     }
     interface Chainable {
         /**
+         * Custom command to open story mode
+         * @example cy.openStoryMode('')
+        */
+        openStoryMode(): Chainable<Element>
+    }
+    interface Chainable {
+        /**
+         * Custom command to open summary report
+         * @example cy.openSummaryReport('')
+        */
+        openSummaryReport(): Chainable<Element>
+    }
+    interface Chainable {
+        /**
+         * Custom command to find a legend title
+         * @example cy.findByLegendTitle('title')
+        */
+        findByLegendTitle(title: string): Chainable<Element>
+    }
+    interface Chainable {
+        /**
          * Custom command to reset zoom (zoom out)
          * @example cy.resetMapZoom()
         */
-         resetMapZoom(theme?: string): Chainable<Element>
+        resetMapZoom(theme?: string): Chainable<Element>
     }
     interface Chainable {
         /**
          * Click on Map at specific coordinates
          * @example cy.clickOnMap(15, 40)
         */
-         clickOnMap(x: number, y: number): Chainable<Element>
+        clickOnMap(x: number, y: number): Chainable<Element>
     }
 }

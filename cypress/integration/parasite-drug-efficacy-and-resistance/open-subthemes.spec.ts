@@ -12,7 +12,7 @@ describe("Open subthemes", () => {
 
         cy.findByText("Molecular markers of drug resistance").click();
 
-        cy.findByRole("group",{name:"Legend"}).findByText("Molecular markers of drug resistance")
+        cy.findByLegendTitle("Molecular markers of drug resistance")
     })
 
     it("should open Delayed parasite clearance subtheme", () => {
@@ -20,7 +20,7 @@ describe("Open subthemes", () => {
 
         cy.findByText("Delayed parasite clearance").click();
 
-        cy.findByRole("group",{name:"Legend"}).findByText("Delayed parasite clearance")
+        cy.findByLegendTitle("Delayed parasite clearance")
     })
 });
 

@@ -3,7 +3,7 @@ import { themes } from "../../support/constants";
 describe("Story mode", () => {
     beforeEach(() => {
         cy.loadPage(themes.parasiteDrugEfficacy);
-        cy.findByRole('button', { name: "Summary Report" }).click();
+        cy.openSummaryReport();
     })
 
     it("should open summary report dialog", () => {

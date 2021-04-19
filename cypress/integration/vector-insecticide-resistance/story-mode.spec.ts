@@ -3,7 +3,7 @@ import { themes } from "../../support/constants";
 describe("Story mode", () => {
     beforeEach(() => {
         cy.loadPage(themes.vectorInsecticideResistance);
-        cy.findByRole('button', { name: "Story mode" }).click();
+        cy.openStoryMode();
     })
 
     it("should contains expected step 1 title in the story", () => {

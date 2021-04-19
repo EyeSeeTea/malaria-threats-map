@@ -3,7 +3,7 @@ import { themes } from "../../support/constants";
 describe("Open summary report", () => {
     beforeEach(() => {
         cy.loadPage(themes.vectorInsecticideResistance);
-        cy.findByRole('button', { name: "Summary Report" }).click();
+        cy.openSummaryReport();
     })
 
     it("should open summary report dialog", () => {

@@ -5,7 +5,7 @@ describe("Open popup", () => {
         cy.loadPage(themes.invasiveVectorSpecies);
     })
 
-    it("should open summary report dialog", () => {
+    it("should open a popup to click on coordinates", () => {
         cy.resetMapZoom();
        
         cy.clickOnMap(800, 300);
