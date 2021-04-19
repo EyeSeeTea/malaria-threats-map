@@ -9,7 +9,7 @@ import * as R from "ramda";
 import { InvasiveStudy } from "../../../../types/Invasive";
 import Citation from "../../../charts/Citation";
 import { getMonthFromNumber } from "./utils";
-import { lowerCase } from "change-case";
+import { lowerCase } from "lower-case";
 import Pagination from "../../../charts/Pagination";
 import { useTranslation } from "react-i18next";
 import { ChartContainer } from "../../../Chart";
