@@ -154,7 +154,7 @@ function Option(props: OptionProps<OptionType>) {
       selected={isFocused}
       component="div"
       style={{
-        fontWeight: props.isSelected ? 500 : 400
+        fontWeight: props.isSelected ? 800 : 400
       }}
       {...props.innerProps}
       title={value}
