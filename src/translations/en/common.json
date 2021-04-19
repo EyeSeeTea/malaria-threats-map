@@ -269,7 +269,7 @@
     "select": "Select"
   },
   "citation": {
-    "no_citation": "No citation data available"
+    "unpublished_data": "Unpublished data"
   },
   "data_download": {
     "title": "Data download",
