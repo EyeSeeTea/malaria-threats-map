@@ -22,7 +22,7 @@ export default () => {
       </Typography>
       <br />
       <Typography variant={"body2"}>
-        Once&nbsp;<i>pfhrp2/3</i>&nbsp;deletions are confirmed in a
+        >Once&nbsp;<i>pfhrp2/3</i>&nbsp;deletions are confirmed in a
         geographical region, surveys should be conducted locally and in
         neighbouring areas to estimate the prevalence of the parasites carrying
         gene deletions. In clinical settings the cause(s) of false negative RDTs

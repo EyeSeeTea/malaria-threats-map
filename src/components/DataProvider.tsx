@@ -38,7 +38,7 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-export type Props = DispatchProps & StateProps;
+type Props = DispatchProps & StateProps;
 
 class DataProvider extends Component<Props> {
   componentDidMount(): void {

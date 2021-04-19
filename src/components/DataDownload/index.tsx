@@ -852,7 +852,6 @@ function DataDownload({
       emailRegexp.test(userInfo.email) 
     );
   };
-  // && userInfo.phoneNumber
 
   const isUseFormValid = () => {
     if (!useInfo.uses) {
