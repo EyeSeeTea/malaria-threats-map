@@ -47,7 +47,7 @@ export default () => {
         el
         <Link
           target="_blank"
-          href="https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-formd9410d7f2b424a04949a64b5e5f5fbd9.xlsm"
+          href="https://www.who.int/publications/i/item/who-form-to-report-detection-of-invasive-anopheles-vector-species"
           color={"textSecondary"}
         >
           Formulario de la OMS para informar sobre la detección de las especies

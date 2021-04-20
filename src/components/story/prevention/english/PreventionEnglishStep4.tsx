@@ -43,7 +43,7 @@ export default () => {
       </Typography>
       <br />
       <Link
-        href="https://www.who.int/malaria/publications/atoz/9789241511575/"
+        href="https://www.who.int/publications/i/item/9789241511575"
         target="_blank"
         color={"textSecondary"}
       >

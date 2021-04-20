@@ -24,6 +24,7 @@ import { SingleValueProps } from "react-select/src/components/SingleValue";
 import { Omit } from "@material-ui/types";
 import { useTranslation } from "react-i18next";
 import * as R from "ramda";
+import { useFirstRender } from "./hooks/use-first-render";
 
 export interface OptionType {
   label: string;
@@ -143,14 +144,17 @@ function Control(props: ControlProps<OptionType>) {
 function Option(props: OptionProps<OptionType>) {
   const { t } = useTranslation("common");
   const value = props.children ? t(props.children.toString()) : "";
+  const isFirstRender = useFirstRender();
+  const isFocused = isFirstRender ? false : props.isFocused;
+
   return (
     <MenuItem
       dense
       ref={props.innerRef}
-      selected={props.isFocused}
+      selected={isFocused}
       component="div"
       style={{
-        fontWeight: props.isSelected ? 500 : 400
+        fontWeight: props.isSelected ? 800 : 400
       }}
       {...props.innerProps}
       title={value}

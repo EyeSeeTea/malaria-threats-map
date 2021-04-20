@@ -62,7 +62,7 @@ const YearRangeSelector = ({
   filters,
   setFilters,
   minYear = 1988,
-  maxYear = 2019
+  maxYear = 2021
 }: Props) => {
   const classes = useStyles({});
   const { t } = useTranslation("common");

@@ -16,7 +16,7 @@ const initialState: MalariaState = Object.freeze({
   countryMode: false,
   storyMode: false,
   storyModeStep: 0,
-  filters: [2010, 2018],
+  filters: [2010, new Date().getFullYear()],
   region: {
     country: "",
     region: "",
