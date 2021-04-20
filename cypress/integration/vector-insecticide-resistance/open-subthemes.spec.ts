@@ -31,12 +31,12 @@ describe("Open subthemes", () => {
         cy.findByLegendTitle("Resistance mechanisms detection")
     })
 
-    it("should open Metabolic mechanisms involvement subtheme", () => {
+    it("should open Synergist effect in susceptibility subtheme", () => {
         cy.contains(defaultSubtheme).click()
 
-        cy.findByText("Metabolic mechanisms involvement").click();
+        cy.findByText("Synergist effect in susceptibility").click();
 
-        cy.findByLegendTitle("Involvement of metabolic mechanisms")
+        cy.findByLegendTitle("Effect of synergy in susceptibility")
     })
 });
 
