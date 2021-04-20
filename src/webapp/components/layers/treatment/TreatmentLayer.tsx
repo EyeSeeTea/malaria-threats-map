@@ -25,7 +25,6 @@ import {
     filterByRegion,
     filterByYearRange,
 } from "../studies-filters";
-import {TreatmentStudy} from "../../../types/Treatment";
 import {State, TreatmentMapType} from "../../../store/types";
 import {resolveMapTypeSymbols, studySelector} from "./utils";
 import {
@@ -37,6 +36,7 @@ import {Hidden} from "@material-ui/core";
 import ChartModal from "../../ChartModal";
 import TreatmentSelectionChart from "./TreatmentSelectionChart";
 import TreatmentSitePopover from "./TreatmentSitePopover";
+import {TreatmentStudy} from "../../../../domain/entities/TreatmentStudy";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";

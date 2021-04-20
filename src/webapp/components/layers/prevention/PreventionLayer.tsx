@@ -6,7 +6,6 @@ import setupEffects from "../effects";
 import * as R from "ramda";
 import resistanceStatusSymbols from "./ResistanceStatus/symbols";
 import {resolveResistanceStatus} from "./ResistanceStatus/utils";
-import {PreventionStudy} from "../../../types/Prevention";
 import {buildPreventionFilters} from "../studies-filters";
 import {resolveMapTypeSymbols, studySelector} from "./utils";
 import {
@@ -31,6 +30,7 @@ import {setSelection} from "../../../store/actions/base-actions";
 import PreventionSitePopover from "./PreventionSitePopover";
 import PreventionSelectionChart from "./PreventionSelectionChart";
 import ChartModal from "../../ChartModal";
+import {PreventionStudy} from "../../../../domain/entities/PreventionStudy";
 
 const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";

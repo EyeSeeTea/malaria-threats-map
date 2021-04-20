@@ -14,7 +14,6 @@ import {selectCountries} from "../../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
 import {filterByRegion, filterByVectorSpecies, filterByYearRange} from "../studies-filters";
-import {InvasiveStudy} from "../../../types/Invasive";
 import {resolveMapTypeSymbols, studySelector} from "./utils";
 import {
     selectInvasiveFilters,
@@ -27,6 +26,7 @@ import ChartModal from "../../ChartModal";
 import InvasiveSelectionChart from "./InvasiveSelectionChart";
 import {setSelection} from "../../../store/actions/base-actions";
 import {fetchInvasiveStudiesRequest} from "../../../store/actions/invasive-actions";
+import {InvasiveStudy} from "../../../../domain/entities/InvasiveStudy";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";

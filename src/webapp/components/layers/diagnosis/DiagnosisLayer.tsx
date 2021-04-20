@@ -19,7 +19,6 @@ import * as R from "ramda";
 import {resolveResistanceStatus} from "../prevention/ResistanceStatus/utils";
 import {buildDiagnosisFilters} from "../studies-filters";
 import {resolveMapTypeSymbols, studySelector} from "./utils";
-import {DiagnosisStudy} from "../../../types/Diagnosis";
 import {DIAGNOSIS_STATUS} from "./GeneDeletions/utils";
 import {selectCountries} from "../../../store/reducers/country-layer-reducer";
 import {
@@ -31,6 +30,7 @@ import ChartModal from "../../ChartModal";
 import DiagnosisSitePopover from "./DiagnosisSitePopover";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
 import {setSelection} from "../../../store/actions/base-actions";
+import {DiagnosisStudy} from "../../../../domain/entities/DiagnosisStudy";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";

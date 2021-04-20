@@ -10,9 +10,9 @@ import mapboxgl from "mapbox-gl";
 import {selectCountryMode, selectSelection} from "../../../store/reducers/base-reducer";
 import InvasiveSelectionChart from "./InvasiveSelectionChart";
 import {selectInvasiveFilters} from "../../../store/reducers/invasive-reducer";
-import {InvasiveStudy} from "../../../types/Invasive";
 import {dispatchCustomEvent} from "../../../utils/dom-utils";
 import {setSelection} from "../../../store/actions/base-actions";
+import {InvasiveStudy} from "../../../../domain/entities/InvasiveStudy";
 
 const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),

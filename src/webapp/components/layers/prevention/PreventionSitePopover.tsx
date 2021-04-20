@@ -9,10 +9,10 @@ import {State} from "../../../store/types";
 import mapboxgl from "mapbox-gl";
 import {selectPreventionFilters} from "../../../store/reducers/prevention-reducer";
 import {selectCountryMode, selectSelection} from "../../../store/reducers/base-reducer";
-import {PreventionStudy} from "../../../types/Prevention";
 import PreventionSelectionChart from "./PreventionSelectionChart";
 import {dispatchCustomEvent} from "../../../utils/dom-utils";
 import {setSelection} from "../../../store/actions/base-actions";
+import {PreventionStudy} from "../../../../domain/entities/PreventionStudy";
 
 const mapStateToProps = (state: State) => ({
     preventionFilters: selectPreventionFilters(state),
