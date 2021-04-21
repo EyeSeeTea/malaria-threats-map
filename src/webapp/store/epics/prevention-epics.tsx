@@ -1,12 +1,9 @@
 import {ActionsObservable, StateObservable} from "redux-observable";
 import {ActionType} from "typesafe-actions";
 import {ActionTypeEnum} from "../actions";
-import * as ajax from "../../store/ajax";
 import {of} from "rxjs";
 import {catchError, mergeMap, skip, switchMap, withLatestFrom} from "rxjs/operators";
 import {AjaxError} from "rxjs/ajax";
-import {PreventionResponse} from "../../types/Prevention";
-import {MapServerConfig} from "../../constants/constants";
 import {
     fetchPreventionStudiesError,
     fetchPreventionStudiesRequest,
@@ -21,41 +18,24 @@ import {
 import {PreventionMapType, State} from "../types";
 import {logEventAction, logPageViewAction} from "../actions/base-actions";
 import {ASSAY_TYPES} from "../../components/filters/AssayTypeCheckboxFilter";
-import {ErrorResponse} from "../../types/Malaria";
 import {addNotificationAction} from "../actions/notifier-actions";
 import {getAnalyticsPageView} from "../analytics";
-
-interface Params {
-    [key: string]: string | number | boolean;
-}
-
-type Response = PreventionResponse & ErrorResponse;
+import {fromFuture} from "./utils";
+import {PreventionStudy} from "../../../domain/entities/PreventionStudy";
+import {EpicDependencies} from "..";
 
 export const getPreventionStudiesEpic = (
-    action$: ActionsObservable<ActionType<typeof fetchPreventionStudiesRequest>>
+    action$: ActionsObservable<ActionType<typeof fetchPreventionStudiesRequest>>,
+    _state$: StateObservable<State>,
+    {compositionRoot}: EpicDependencies
 ) =>
     action$.ofType(ActionTypeEnum.FetchPreventionStudiesRequest).pipe(
         switchMap(() => {
-            const params: Params = {
-                f: "json",
-                where: `1%3D1`,
-                outFields: "*",
-            };
-            const query: string = Object.keys(params)
-                .map((key) => `${key}=${params[key]}`)
-                .join("&");
-            return ajax.get(`/${MapServerConfig.layers.prevention}/query?${query}`).pipe(
-                mergeMap((response: Response) => {
-                    if (response.error) {
-                        return of(
-                            addNotificationAction(response.error.message),
-                            fetchPreventionStudiesError(response.error.message)
-                        );
-                    } else {
-                        return of(fetchPreventionStudiesSuccess(response));
-                    }
+            return fromFuture(compositionRoot.prevention.getStudies()).pipe(
+                mergeMap((studies: PreventionStudy[]) => {
+                    return of(fetchPreventionStudiesSuccess(studies));
                 }),
-                catchError((error: AjaxError) =>
+                catchError((error: Error) =>
                     of(
                         addNotificationAction(error.message),
                         fetchPreventionStudiesError(error.message)
@@ -132,7 +112,7 @@ export const setPreventionInsecticideTypeEpic = (
         .ofType(ActionTypeEnum.SetInsecticideTypes)
         .pipe(skip(1))
         .pipe(
-            switchMap((action) => {
+            switchMap(() => {
                 const actions: any[] = [setType(undefined), setSpecies([])];
                 return of(...actions);
             })

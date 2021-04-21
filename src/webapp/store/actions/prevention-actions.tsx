@@ -1,6 +1,5 @@
 import {createAction} from "typesafe-actions";
 import {ActionTypeEnum} from "../actions";
-import {PreventionResponse} from "../../types/Prevention";
 import {PreventionMapType} from "../types";
 import {PreventionStudy} from "../../../domain/entities/PreventionStudy";
 
@@ -14,7 +13,7 @@ export const fetchPreventionStudiesRequest = createAction(
 export const fetchPreventionStudiesSuccess = createAction(
     ActionTypeEnum.FetchPreventionStudiesSuccess,
     (action) => {
-        return (response: PreventionResponse) => action(response);
+        return (studies: PreventionStudy[]) => action(studies);
     }
 );
 

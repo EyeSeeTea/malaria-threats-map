@@ -3,7 +3,6 @@ import {ActionTypeEnum} from "../actions";
 import {createReducer} from "../reducer-utils";
 import {createSelector} from "reselect";
 import {PreventionMapType, PreventionState, State} from "../types";
-import {PreventionResponse} from "../../types/Prevention";
 import {PreventionStudy} from "../../../domain/entities/PreventionStudy";
 
 export const initialState: PreventionState = Object.freeze({
@@ -66,10 +65,10 @@ export default createReducer<PreventionState>(initialState, {
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchPreventionStudiesSuccess]: (response: PreventionResponse) => (state) => ({
+    [ActionTypeEnum.FetchPreventionStudiesSuccess]: (studies: PreventionStudy[]) => (state) => ({
         ...state,
         loading: false,
-        studies: response.features.map((feature) => feature.attributes),
+        studies,
     }),
     [ActionTypeEnum.FetchPreventionStudiesError]: () => (state) => ({
         ...state,
