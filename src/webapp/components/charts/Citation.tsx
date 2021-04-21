@@ -1,9 +1,9 @@
 import {Link, Typography} from "@material-ui/core";
 import * as React from "react";
+import {Study} from "../../../domain/entities/Study";
 import {useTranslation} from "react-i18next";
 import {logOutboundLinkAction} from "../../store/actions/base-actions";
 import {connect} from "react-redux";
-import {Study} from "../../../domain/entities/Study";
 
 const mapDispatchToProps = {
     logOutboundLinkAction: logOutboundLinkAction,
@@ -48,7 +48,7 @@ const Citation = ({study, logOutboundLinkAction}: Props) => {
     ) : !isNull(study.INSTITUTION) ? (
         <Typography variant="caption">{study.INSTITUTION}</Typography>
     ) : (
-        <Typography variant="caption">{t("citation.no_citation")}</Typography>
+        <Typography variant="caption">{t("citation.unpublished_data")}</Typography>
     );
 };
 
