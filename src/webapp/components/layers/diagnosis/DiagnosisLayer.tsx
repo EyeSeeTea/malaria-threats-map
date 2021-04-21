@@ -7,6 +7,8 @@ import setupEffects from "../effects";
 import {
     selectDiagnosisFilters,
     selectDiagnosisStudies,
+    selectDiagnosisStudiesLoading,
+    selectDiagnosisStudiesError,
 } from "../../../store/reducers/diagnosis-reducer";
 import {
     selectCountryMode,
@@ -46,6 +48,8 @@ const layer: any = (symbols: any) => ({
 
 const mapStateToProps = (state: State) => ({
     studies: selectDiagnosisStudies(state),
+    studiesLoading: selectDiagnosisStudiesLoading(state),
+    studiesError: selectDiagnosisStudiesError(state),
     theme: selectTheme(state),
     filters: selectFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
@@ -71,50 +75,56 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 class DiagnosisLayer extends Component<Props> {
     componentDidMount() {
-        if (this.props.theme === DIAGNOSIS) {
-            this.props.fetchDiagnosisStudies();
-        } else {
-            this.mountLayer();
-        }
+        this.loadStudiesIfRequired();
+        this.mountLayer();
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (this.props.theme === DIAGNOSIS && this.props.studies.length === 0) {
-            this.props.fetchDiagnosisStudies();
-        } else {
-            const {
-                diagnosisFilters: {mapType, surveyTypes, patientType, deletionType},
-                filters,
-                region,
-                countryMode,
-                countries,
-            } = this.props;
+        this.loadStudiesIfRequired();
 
-            this.mountLayer(prevProps);
-            this.renderLayer();
-            const mapTypeChange = prevProps.diagnosisFilters.mapType !== mapType;
-            const yearChange =
-                prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
-            const surveyTypesChange =
-                prevProps.diagnosisFilters.surveyTypes.length !== surveyTypes.length;
-            const patientTypeChange = prevProps.diagnosisFilters.patientType !== patientType;
-            const deletionTypeChange = prevProps.diagnosisFilters.deletionType !== deletionType;
-            const countryChange = prevProps.region !== region;
-            const countryModeChange = prevProps.countryMode !== countryMode;
-            const countriesChange = prevProps.countries.length !== countries.length;
-            if (
-                mapTypeChange ||
-                yearChange ||
-                countryChange ||
-                surveyTypesChange ||
-                patientTypeChange ||
-                deletionTypeChange ||
-                countryModeChange ||
-                countriesChange
-            ) {
-                this.filterSource();
-                this.applyMapTypeSymbols();
-            }
+        const {
+            diagnosisFilters: {mapType, surveyTypes, patientType, deletionType},
+            filters,
+            region,
+            countryMode,
+            countries,
+        } = this.props;
+
+        this.mountLayer(prevProps);
+        this.renderLayer();
+        const mapTypeChange = prevProps.diagnosisFilters.mapType !== mapType;
+        const yearChange =
+            prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
+        const surveyTypesChange =
+            prevProps.diagnosisFilters.surveyTypes.length !== surveyTypes.length;
+        const patientTypeChange = prevProps.diagnosisFilters.patientType !== patientType;
+        const deletionTypeChange = prevProps.diagnosisFilters.deletionType !== deletionType;
+        const countryChange = prevProps.region !== region;
+        const countryModeChange = prevProps.countryMode !== countryMode;
+        const countriesChange = prevProps.countries.length !== countries.length;
+        if (
+            mapTypeChange ||
+            yearChange ||
+            countryChange ||
+            surveyTypesChange ||
+            patientTypeChange ||
+            deletionTypeChange ||
+            countryModeChange ||
+            countriesChange
+        ) {
+            this.filterSource();
+            this.applyMapTypeSymbols();
+        }
+    }
+
+    loadStudiesIfRequired() {
+        const {theme, studies, studiesLoading, studiesError} = this.props;
+
+        const required =
+            theme === DIAGNOSIS && studies.length === 0 && !studiesLoading && !studiesError;
+
+        if (required) {
+            this.props.fetchDiagnosisStudies();
         }
     }
 
