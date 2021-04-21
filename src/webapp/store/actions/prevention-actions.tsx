@@ -1,7 +1,6 @@
 import {createAction} from "typesafe-actions";
 import {ActionTypeEnum} from "../actions";
 import {PreventionResponse} from "../../types/Prevention";
-import {AjaxError} from "rxjs/ajax";
 import {PreventionMapType} from "../types";
 import {PreventionStudy} from "../../../domain/entities/PreventionStudy";
 
@@ -22,7 +21,7 @@ export const fetchPreventionStudiesSuccess = createAction(
 export const fetchPreventionStudiesError = createAction(
     ActionTypeEnum.FetchPreventionStudiesError,
     (action) => {
-        return (error: AjaxError | string) => action();
+        return (error: string) => action();
     }
 );
 

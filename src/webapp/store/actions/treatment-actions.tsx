@@ -1,7 +1,6 @@
 import {createAction} from "typesafe-actions";
 import {ActionTypeEnum} from "../actions";
 import {TreatmentResponse} from "../../types/Treatment";
-import {AjaxError} from "rxjs/ajax";
 import {TreatmentMapType} from "../types";
 import {TreatmentStudy} from "../../../domain/entities/TreatmentStudy";
 
@@ -20,7 +19,7 @@ export const fetchTreatmentStudiesSuccess = createAction(
 export const fetchTreatmentStudiesError = createAction(
     ActionTypeEnum.FetchTreatmentStudiesError,
     (action) => {
-        return (error: AjaxError | string) => action();
+        return (error: string) => action();
     }
 );
 
