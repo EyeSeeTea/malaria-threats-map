@@ -18,6 +18,8 @@ import {resolveMapTypeSymbols, studySelector} from "./utils";
 import {
     selectInvasiveFilters,
     selectInvasiveStudies,
+    selectInvasiveStudiesLoading,
+    selectInvasiveStudiesError,
 } from "../../../store/reducers/invasive-reducer";
 import {setInvasiveFilteredStudiesAction} from "../../../store/actions/invasive-actions";
 import {Hidden} from "@material-ui/core";
@@ -46,6 +48,8 @@ const layer: any = (symbols: any) => ({
 
 const mapStateToProps = (state: State) => ({
     studies: selectInvasiveStudies(state),
+    studiesLoading: selectInvasiveStudiesLoading(state),
+    studiesError: selectInvasiveStudiesError(state),
     theme: selectTheme(state),
     filters: selectFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
@@ -72,49 +76,55 @@ type Props = StateProps & OwnProps & DispatchProps;
 class InvasiveLayer extends Component<Props> {
     popup: mapboxgl.Popup;
     componentDidMount() {
-        if (this.props.theme === INVASIVE) {
-            this.props.fetchInvasiveStudies();
-        } else {
-            this.mountLayer();
-        }
+        this.loadStudiesIfRequired();
+        this.mountLayer();
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (this.props.theme === INVASIVE && this.props.studies.length === 0) {
-            this.props.fetchInvasiveStudies();
-        } else {
-            const {
-                invasiveFilters: {mapType, vectorSpecies},
-                countryMode,
-                filters,
-                region,
-                countries,
-            } = this.props;
+        this.loadStudiesIfRequired();
 
-            this.mountLayer(prevProps);
-            this.renderLayer();
-            const mapTypeChange = prevProps.invasiveFilters.mapType !== mapType;
-            const yearChange =
-                prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
-            const countryChange = prevProps.region !== region;
-            const countryModeChange = prevProps.countryMode !== countryMode;
-            const countriesChange = prevProps.countries.length !== countries.length;
-            const speciesChange =
-                prevProps.invasiveFilters.vectorSpecies.length !== vectorSpecies.length;
-            if (
-                mapTypeChange ||
-                yearChange ||
-                countryChange ||
-                countryModeChange ||
-                countriesChange ||
-                speciesChange
-            ) {
-                if (this.popup) {
-                    this.popup.remove();
-                }
-                this.filterSource();
-                this.applyMapTypeSymbols();
+        const {
+            invasiveFilters: {mapType, vectorSpecies},
+            countryMode,
+            filters,
+            region,
+            countries,
+        } = this.props;
+
+        this.mountLayer(prevProps);
+        this.renderLayer();
+        const mapTypeChange = prevProps.invasiveFilters.mapType !== mapType;
+        const yearChange =
+            prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
+        const countryChange = prevProps.region !== region;
+        const countryModeChange = prevProps.countryMode !== countryMode;
+        const countriesChange = prevProps.countries.length !== countries.length;
+        const speciesChange =
+            prevProps.invasiveFilters.vectorSpecies.length !== vectorSpecies.length;
+        if (
+            mapTypeChange ||
+            yearChange ||
+            countryChange ||
+            countryModeChange ||
+            countriesChange ||
+            speciesChange
+        ) {
+            if (this.popup) {
+                this.popup.remove();
             }
+            this.filterSource();
+            this.applyMapTypeSymbols();
+        }
+    }
+
+    loadStudiesIfRequired() {
+        const {theme, studies, studiesLoading, studiesError} = this.props;
+
+        const required =
+            theme === INVASIVE && studies.length === 0 && !studiesLoading && !studiesError;
+
+        if (required) {
+            this.props.fetchInvasiveStudies();
         }
     }
 
