@@ -71,6 +71,7 @@ import { sendAnalytics } from "../utils/analytics";
 ReactMapboxGl({
     accessToken: "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA",
 });
+mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
 const Separator = styled.div`
     width: 20px;
@@ -135,7 +136,7 @@ const Divider = styled.div`
 `;
 
 export const debounce = <F extends (...args: any[]) => any>(func: F, waitFor: number) => {
-    let timeout: number;
+    let timeout: any;
 
     return (...args: Parameters<F>): Promise<ReturnType<F>> =>
         new Promise(resolve => {

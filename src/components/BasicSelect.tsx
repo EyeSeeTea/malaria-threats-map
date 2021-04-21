@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-function NoOptionsMessage(props: NoticeProps<OptionType>) {
+function NoOptionsMessage(props: NoticeProps<OptionType, false>) {
     return (
         <Typography color="textSecondary" className={props.selectProps.classes.noOptionsMessage} {...props.innerProps}>
             {props.children}
@@ -98,7 +98,7 @@ function inputComponent({ inputRef, ...props }: InputComponentProps) {
     return <div ref={inputRef} {...props} />;
 }
 
-function Control(props: ControlProps<OptionType>) {
+function Control(props: ControlProps<OptionType, false>) {
     const {
         children,
         innerProps,
@@ -126,12 +126,9 @@ function Control(props: ControlProps<OptionType>) {
     );
 }
 
-function Option(props: OptionProps<OptionType>) {
+function Option(props: OptionProps<OptionType, false>) {
     const { t } = useTranslation("common");
     const value = props.children ? t(props.children.toString()) : "";
-    console.log(value);
-    console.log(props);
-    console.log(props.isFocused);
     //it doesn't have access to the control/selected value
     return (
         <MenuItem
@@ -152,8 +149,8 @@ function Option(props: OptionProps<OptionType>) {
     );
 }
 
-type MuiPlaceholderProps = Omit<PlaceholderProps<OptionType>, "innerProps"> &
-    Partial<Pick<PlaceholderProps<OptionType>, "innerProps">>;
+type MuiPlaceholderProps = Omit<PlaceholderProps<OptionType, false>, "innerProps"> &
+    Partial<Pick<PlaceholderProps<OptionType, false>, "innerProps">>;
 function Placeholder(props: MuiPlaceholderProps) {
     const { selectProps, innerProps = {}, children } = props;
     return (
@@ -173,7 +170,7 @@ function SingleValue(props: SingleValueProps<OptionType>) {
     );
 }
 
-function ValueContainer(props: ValueContainerProps<OptionType>) {
+function ValueContainer(props: ValueContainerProps<OptionType, false>) {
     return <div className={props.selectProps.classes.valueContainer}>{props.children}</div>;
 }
 
@@ -193,7 +190,7 @@ function MultiValue(props: MultiValueProps<OptionType>) {
     );
 }
 
-function Menu(props: MenuProps<OptionType>) {
+function Menu(props: MenuProps<OptionType, false>) {
     return (
         <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
             {props.children}
@@ -219,9 +216,7 @@ export type Option = {
 
 export default function IntegrationReactSelect({ suggestions = [], value, onChange, className, ...rest }: any) {
     const { t } = useTranslation("common");
-    //console.log(rest);
     const classes = useStyles(rest);
-    //console.log(classes);
     const theme = useTheme();
 
     const selectStyles = {
@@ -241,19 +236,7 @@ export default function IntegrationReactSelect({ suggestions = [], value, onChan
             },
         }),
     };
-    /*
-        <Select
-        classes={classes}
-        styles={selectStyles}
-        components={components}
-        options={R.sortBy<Option>(R.prop("label"), suggestions)}
-        value={value}
-        onChange={onChange}
-        placeholder={t("options.select") + "..."}
-        {...rest}
-      />
 
-*/
     return (
         <div className={`${classes.root} ${className}`}>
             <Select
@@ -264,14 +247,6 @@ export default function IntegrationReactSelect({ suggestions = [], value, onChan
                 value={value}
                 onChange={onChange}
                 placeholder={t("options.select") + "..."}
-                {...rest}
-            />
-            <Select
-                onChange={onChange}
-                value={value}
-                styles={selectStyles}
-                className={classes}
-                options={R.sortBy<Option>(R.prop("label"), suggestions)}
                 {...rest}
             />
         </div>

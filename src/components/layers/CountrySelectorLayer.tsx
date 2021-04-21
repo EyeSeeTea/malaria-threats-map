@@ -98,13 +98,18 @@ class CountrySelectorLayer extends Component<Props> {
                 type: "geojson",
                 data: this.props.countries,
             };
-
-            const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
+            const groupedStudies = R.groupBy(
+                R.path<string>(["SITE_ID"]),
+                studies
+            );
             const filteredStudies = R.values(groupedStudies).map(group =>
                 studySelector(group, PreventionMapType.PBO_DEPLOYMENT)
             );
 
-            const studiesByCountry = R.groupBy(R.path(["ISO2"]), filteredStudies);
+            const studiesByCountry = R.groupBy(
+                R.path<string>(["ISO2"]),
+                filteredStudies
+            );
 
             const { ELIGIBLE, NOT_ENOUGH_DATA, NOT_ELIGIBLE } = PboDeploymentCountriesStatus;
 
