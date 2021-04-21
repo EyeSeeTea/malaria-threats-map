@@ -11,6 +11,8 @@ import {resolveMapTypeSymbols, studySelector} from "./utils";
 import {
     selectPreventionFilters,
     selectPreventionStudies,
+    selectPreventionStudiesLoading,
+    selectPreventionStudiesError,
 } from "../../../store/reducers/prevention-reducer";
 import {
     selectCountryMode,
@@ -50,6 +52,8 @@ const layer: any = (symbols: any) => ({
 
 const mapStateToProps = (state: State) => ({
     studies: selectPreventionStudies(state),
+    studiesLoading: selectPreventionStudiesLoading(state),
+    studiesError: selectPreventionStudiesError(state),
     theme: selectTheme(state),
     filters: selectFilters(state),
     preventionFilters: selectPreventionFilters(state),
@@ -76,70 +80,74 @@ type Props = StateProps & DispatchProps & OwnProps;
 class PreventionLayer extends Component<Props> {
     popup: mapboxgl.Popup;
     componentDidMount() {
-        if (this.props.theme === PREVENTION) {
-            this.props.fetchPreventionStudies();
-        } else {
-            this.mountLayer();
-        }
+        this.loadStudiesIfRequired();
+        this.mountLayer();
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (this.props.theme === PREVENTION && this.props.studies.length === 0) {
-            this.props.fetchPreventionStudies();
-        } else {
-            const {
-                preventionFilters: {
-                    mapType,
-                    insecticideClass,
-                    insecticideTypes,
-                    type,
-                    species,
-                    assayTypes,
-                    synergistTypes,
-                },
-                countryMode,
-                filters,
-                region,
-                countries,
-            } = this.props;
+        this.loadStudiesIfRequired();
 
-            this.mountLayer(prevProps);
-            this.renderLayer();
-            const mapTypeChange = prevProps.preventionFilters.mapType !== mapType;
-            const yearChange =
-                prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
-            const countryChange = prevProps.region !== region;
-            const insecticideChange =
-                prevProps.preventionFilters.insecticideClass !== insecticideClass;
-            const insecticideTypesChange =
-                prevProps.preventionFilters.insecticideTypes.length !== insecticideTypes.length;
-            const typeChange = prevProps.preventionFilters.type !== type;
-            const speciesChange = prevProps.preventionFilters.species.length !== species.length;
-            const assayTypesChange =
-                prevProps.preventionFilters.assayTypes.length !== assayTypes.length;
-            const synergistTypesChange =
-                prevProps.preventionFilters.synergistTypes.length !== synergistTypes.length;
-            const countryModeChange = prevProps.countryMode !== countryMode;
-            const countriesChange = prevProps.countries.length !== countries.length;
-            if (
-                mapTypeChange ||
-                yearChange ||
-                countryChange ||
-                insecticideChange ||
-                insecticideTypesChange ||
-                typeChange ||
-                speciesChange ||
-                assayTypesChange ||
-                synergistTypesChange ||
-                countryModeChange ||
-                countriesChange
-            ) {
-                if (this.popup) {
-                    this.popup.remove();
-                }
-                this.filterSource();
-                this.applyMapTypeSymbols();
+        const {
+            preventionFilters: {
+                mapType,
+                insecticideClass,
+                insecticideTypes,
+                type,
+                species,
+                assayTypes,
+                synergistTypes,
+            },
+            countryMode,
+            filters,
+            region,
+            countries,
+        } = this.props;
+
+        this.mountLayer(prevProps);
+        this.renderLayer();
+        const mapTypeChange = prevProps.preventionFilters.mapType !== mapType;
+        const yearChange =
+            prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
+        const countryChange = prevProps.region !== region;
+        const insecticideChange = prevProps.preventionFilters.insecticideClass !== insecticideClass;
+        const insecticideTypesChange =
+            prevProps.preventionFilters.insecticideTypes.length !== insecticideTypes.length;
+        const typeChange = prevProps.preventionFilters.type !== type;
+        const speciesChange = prevProps.preventionFilters.species.length !== species.length;
+        const assayTypesChange =
+            prevProps.preventionFilters.assayTypes.length !== assayTypes.length;
+        const synergistTypesChange =
+            prevProps.preventionFilters.synergistTypes.length !== synergistTypes.length;
+        const countryModeChange = prevProps.countryMode !== countryMode;
+        const countriesChange = prevProps.countries.length !== countries.length;
+        if (
+            mapTypeChange ||
+            yearChange ||
+            countryChange ||
+            insecticideChange ||
+            insecticideTypesChange ||
+            typeChange ||
+            speciesChange ||
+            assayTypesChange ||
+            synergistTypesChange ||
+            countryModeChange ||
+            countriesChange
+        ) {
+            if (this.popup) {
+                this.popup.remove();
             }
+            this.filterSource();
+            this.applyMapTypeSymbols();
+        }
+    }
+    loadStudiesIfRequired() {
+        const {theme, studies, studiesLoading, studiesError} = this.props;
+
+        const required =
+            theme === PREVENTION && studies.length === 0 && !studiesLoading && !studiesError;
+
+        if (required) {
+            this.props.fetchPreventionStudies();
         }
     }
 
