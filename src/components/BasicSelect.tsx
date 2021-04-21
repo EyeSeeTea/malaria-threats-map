@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-function NoOptionsMessage(props: NoticeProps<OptionType, false>) {
+function NoOptionsMessage(props: NoticeProps<OptionType>) {
     return (
         <Typography color="textSecondary" className={props.selectProps.classes.noOptionsMessage} {...props.innerProps}>
             {props.children}
@@ -98,7 +98,7 @@ function inputComponent({ inputRef, ...props }: InputComponentProps) {
     return <div ref={inputRef} {...props} />;
 }
 
-function Control(props: ControlProps<OptionType, false>) {
+function Control(props: ControlProps<OptionType>) {
     const {
         children,
         innerProps,
@@ -126,7 +126,7 @@ function Control(props: ControlProps<OptionType, false>) {
     );
 }
 
-function Option(props: OptionProps<OptionType, false>) {
+function Option(props: OptionProps<OptionType>) {
     const { t } = useTranslation("common");
     const value = props.children ? t(props.children.toString()) : "";
     console.log(value);
@@ -152,8 +152,8 @@ function Option(props: OptionProps<OptionType, false>) {
     );
 }
 
-type MuiPlaceholderProps = Omit<PlaceholderProps<OptionType, false>, "innerProps"> &
-    Partial<Pick<PlaceholderProps<OptionType, false>, "innerProps">>;
+type MuiPlaceholderProps = Omit<PlaceholderProps<OptionType>, "innerProps"> &
+    Partial<Pick<PlaceholderProps<OptionType>, "innerProps">>;
 function Placeholder(props: MuiPlaceholderProps) {
     const { selectProps, innerProps = {}, children } = props;
     return (
@@ -173,7 +173,7 @@ function SingleValue(props: SingleValueProps<OptionType>) {
     );
 }
 
-function ValueContainer(props: ValueContainerProps<OptionType, false>) {
+function ValueContainer(props: ValueContainerProps<OptionType>) {
     return <div className={props.selectProps.classes.valueContainer}>{props.children}</div>;
 }
 
@@ -193,7 +193,7 @@ function MultiValue(props: MultiValueProps<OptionType>) {
     );
 }
 
-function Menu(props: MenuProps<OptionType, false>) {
+function Menu(props: MenuProps<OptionType>) {
     return (
         <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
             {props.children}

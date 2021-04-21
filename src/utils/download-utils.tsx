@@ -15,8 +15,8 @@ export function convertDataURIToBinary(dataURI: string) {
 
 export function download(canvas: any, filename: string) {
     /// create an "off-screen" anchor tag
-    const lnk: any = document.createElement("a"),
-        e;
+    const lnk: any = document.createElement("a");
+    let e;
 
     /// the key here is to set the download attribute of the a tag
     lnk.download = filename;

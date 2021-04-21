@@ -12,7 +12,7 @@ import {
 import { selectDistricts, selectDistrictsLayer } from "../../store/reducers/districts-reducer";
 import { selectCountryMode, selectFilters, selectRegion, selectSelection } from "../../store/reducers/base-reducer";
 import { fetchDistrictsRequest } from "../../store/actions/district-actions";
-import mapboxgl, { GeoJSON } from "mapbox-gl";
+import mapboxgl from "mapbox-gl";
 import { buildPreventionFilters } from "./studies-filters";
 import { PreventionStudy } from "../../types/Prevention";
 import { Hidden } from "@material-ui/core";
