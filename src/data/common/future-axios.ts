@@ -1,11 +1,11 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
-import { Future } from "../../utils/Future";
+import { Future } from "../../common/Future";
 
 type AxiosRequest = AxiosRequestConfig;
 
 export interface AxiosBuilder<E, D = unknown> {
     mapResponse(response: AxiosResponse<unknown>): ["success", D] | ["error", E];
-    mapNetworkError: (request: AxiosRequestConfig, message: string) => E;
+    mapNetworkError: (request: AxiosRequest, message: string) => E;
 }
 
 export function axiosRequest<E, D>(builder: AxiosBuilder<E>, request: AxiosRequest): Future<E, D> {
@@ -36,16 +36,3 @@ export function axiosRequest<E, D>(builder: AxiosBuilder<E>, request: AxiosReque
         return () => source.cancel();
     });
 }
-
-export type DefaultError = { message: string };
-
-export const defaultBuilder: AxiosBuilder<DefaultError> = {
-    mapResponse: res => {
-        if (res.status >= 200 && res.status < 300) {
-            return ["success", res.data];
-        } else {
-            return ["error", { message: JSON.stringify(res.data) }];
-        }
-    },
-    mapNetworkError: (_req, message) => ({ message }),
-};
