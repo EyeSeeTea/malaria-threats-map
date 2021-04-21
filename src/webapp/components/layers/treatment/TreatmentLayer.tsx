@@ -5,6 +5,8 @@ import setupEffects from "../effects";
 import {
     selectTreatmentFilters,
     selectTreatmentStudies,
+    selectTreatmentStudiesLoading,
+    selectTreatmentStudiesError,
 } from "../../../store/reducers/treatment-reducer";
 import {
     selectCountryMode,
@@ -56,6 +58,8 @@ const layer: any = (symbols: any) => ({
 
 const mapStateToProps = (state: State) => ({
     studies: selectTreatmentStudies(state),
+    studiesLoading: selectTreatmentStudiesLoading(state),
+    studiesError: selectTreatmentStudiesError(state),
     theme: selectTheme(state),
     filters: selectFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
@@ -81,53 +85,59 @@ type Props = StateProps & OwnProps & DispatchProps;
 class TreatmentLayer extends Component<Props> {
     popup: mapboxgl.Popup;
     componentDidMount() {
-        if (this.props.theme === TREATMENT) {
-            this.props.fetchTreatmentStudies();
-        } else {
-            this.mountLayer();
-        }
+        this.loadStudiesIfRequired();
+        this.mountLayer();
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (this.props.theme === TREATMENT && this.props.studies.length === 0) {
-            this.props.fetchTreatmentStudies();
-        } else {
-            const {
-                treatmentFilters: {mapType, plasmodiumSpecies, drug, molecularMarker},
-                countryMode,
-                filters,
-                region,
-                countries,
-            } = this.props;
-            this.mountLayer(prevProps);
-            this.renderLayer();
-            const mapTypeChange = prevProps.treatmentFilters.mapType !== mapType;
-            const yearChange =
-                prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
-            const countryChange = prevProps.region !== region;
-            const plasmodiumSpeciesChange =
-                prevProps.treatmentFilters.plasmodiumSpecies !== plasmodiumSpecies;
-            const drugChange = prevProps.treatmentFilters.drug !== drug;
-            const molecularMarkerChange =
-                prevProps.treatmentFilters.molecularMarker !== molecularMarker;
-            const countryModeChange = prevProps.countryMode !== countryMode;
-            const countriesChange = prevProps.countries.length !== countries.length;
-            if (
-                mapTypeChange ||
-                yearChange ||
-                countryChange ||
-                countryModeChange ||
-                countriesChange ||
-                plasmodiumSpeciesChange ||
-                drugChange ||
-                molecularMarkerChange
-            ) {
-                if (this.popup) {
-                    this.popup.remove();
-                }
-                this.filterSource();
-                this.applyMapTypeSymbols();
+        this.loadStudiesIfRequired();
+
+        const {
+            treatmentFilters: {mapType, plasmodiumSpecies, drug, molecularMarker},
+            countryMode,
+            filters,
+            region,
+            countries,
+        } = this.props;
+        this.mountLayer(prevProps);
+        this.renderLayer();
+        const mapTypeChange = prevProps.treatmentFilters.mapType !== mapType;
+        const yearChange =
+            prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
+        const countryChange = prevProps.region !== region;
+        const plasmodiumSpeciesChange =
+            prevProps.treatmentFilters.plasmodiumSpecies !== plasmodiumSpecies;
+        const drugChange = prevProps.treatmentFilters.drug !== drug;
+        const molecularMarkerChange =
+            prevProps.treatmentFilters.molecularMarker !== molecularMarker;
+        const countryModeChange = prevProps.countryMode !== countryMode;
+        const countriesChange = prevProps.countries.length !== countries.length;
+        if (
+            mapTypeChange ||
+            yearChange ||
+            countryChange ||
+            countryModeChange ||
+            countriesChange ||
+            plasmodiumSpeciesChange ||
+            drugChange ||
+            molecularMarkerChange
+        ) {
+            if (this.popup) {
+                this.popup.remove();
             }
+            this.filterSource();
+            this.applyMapTypeSymbols();
+        }
+    }
+
+    loadStudiesIfRequired() {
+        const {theme, studies, studiesLoading, studiesError} = this.props;
+
+        const required =
+            theme === TREATMENT && studies.length === 0 && !studiesLoading && !studiesError;
+
+        if (required) {
+            this.props.fetchTreatmentStudies();
         }
     }
 
