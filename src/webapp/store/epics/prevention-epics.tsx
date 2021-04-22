@@ -3,7 +3,6 @@ import {ActionType} from "typesafe-actions";
 import {ActionTypeEnum} from "../actions";
 import {of} from "rxjs";
 import {catchError, mergeMap, skip, switchMap, withLatestFrom} from "rxjs/operators";
-import {AjaxError} from "rxjs/ajax";
 import {
     fetchPreventionStudiesError,
     fetchPreventionStudiesRequest,
@@ -22,7 +21,7 @@ import {addNotificationAction} from "../actions/notifier-actions";
 import {getAnalyticsPageView} from "../analytics";
 import {fromFuture} from "./utils";
 import {PreventionStudy} from "../../../domain/entities/PreventionStudy";
-import {EpicDependencies} from "..";
+import {EpicDependencies} from "../../store/index";
 
 export const getPreventionStudiesEpic = (
     action$: ActionsObservable<ActionType<typeof fetchPreventionStudiesRequest>>,

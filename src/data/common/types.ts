@@ -1,14 +1,16 @@
-import {DiagnosisStudy} from "../../domain/entities/DiagnosisStudy";
+export interface ApiParams {
+    [key: string]: string | number | boolean;
+}
 
-export interface DiagnosisResponse {
+export interface ApiResponse<T> {
     displayFieldName: string;
-    features: DiagnosisFeature[];
+    features: Feature<T>[];
     fieldAliases: FieldAlias[];
     fields: Field[];
 }
 
-export interface DiagnosisFeature {
-    attributes: DiagnosisStudy;
+export interface Feature<T> {
+    attributes: T;
 }
 
 export interface FieldAlias {
@@ -21,3 +23,4 @@ export interface Field {
     alias: string;
     length: number;
 }
+

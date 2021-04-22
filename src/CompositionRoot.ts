@@ -1,14 +1,24 @@
+
+import config from "./webapp/config";
 import { UseCase } from "./domain/common/UseCase";
 import { PreventionApiRepository } from "./data/repositories/PreventionApiRepository";
-import config from "./webapp/config";
 import { GetPreventionStudiesUseCase } from "./domain/usecases/GetPreventionStudiesUseCase";
+import { DiagnosisApiRepository } from "./data/repositories/DiagnosisApiRepository";
+import { GetDiagnosisStudiesUseCase } from "./domain/usecases/GetDiagnosisStudiesUseCase";
 
 export class CompositionRoot {
     private preventionRepository = new PreventionApiRepository(config.mapServerUrl);
+    private diagnosisRepository = new DiagnosisApiRepository(config.mapServerUrl);
 
     public get prevention() {
         return getExecute({
             getStudies: new GetPreventionStudiesUseCase(this.preventionRepository),
+        });
+    }
+
+    public get diagnosis() {
+        return getExecute({
+            getStudies: new GetDiagnosisStudiesUseCase(this.diagnosisRepository),
         });
     }
 }

@@ -3,7 +3,6 @@ import {ActionTypeEnum} from "../actions";
 import {createReducer} from "../reducer-utils";
 import {createSelector} from "reselect";
 import {DiagnosisMapType, DiagnosisState, State} from "../types";
-import {DiagnosisResponse} from "../../types/Diagnosis";
 import {DELETION_TYPES} from "../../components/filters/DeletionTypeFilter";
 import {DiagnosisStudy} from "../../../domain/entities/DiagnosisStudy";
 
@@ -57,10 +56,10 @@ export default createReducer<DiagnosisState>(initialState, {
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchDiagnosisStudiesSuccess]: (response: DiagnosisResponse) => (state) => ({
+    [ActionTypeEnum.FetchDiagnosisStudiesSuccess]: (studies: DiagnosisStudy[]) => (state) => ({
         ...state,
         loading: false,
-        studies: response.features.map((feature) => feature.attributes),
+        studies,
     }),
     [ActionTypeEnum.FetchDiagnosisStudiesError]: () => (state) => ({
         ...state,
