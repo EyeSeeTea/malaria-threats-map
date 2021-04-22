@@ -3,7 +3,6 @@ import {ActionTypeEnum} from "../actions";
 import {createReducer} from "../reducer-utils";
 import {createSelector} from "reselect";
 import {State, TreatmentMapType, TreatmentState} from "../types";
-import {TreatmentResponse} from "../../types/Treatment";
 import {TreatmentStudy} from "../../../domain/entities/TreatmentStudy";
 
 const initialState: TreatmentState = Object.freeze({
@@ -46,14 +45,13 @@ function updateDrug(drug: string) {
 function updateMolecularMarker(molecularMarker: number) {
     return updateFilter("molecularMarker", molecularMarker, 1);
 }
-function groupStudies(response: TreatmentResponse) {
-    const allStudies: TreatmentStudy[] = response.features.map((feature) => feature.attributes);
-    const filtered255Studies = allStudies.filter(
+function groupStudies(studies: TreatmentStudy[]) {
+    const filtered255Studies = studies.filter(
         (study) => study.DimensionID === 255 || study.DimensionID === 256
     );
     return filtered255Studies.map((study) => ({
         ...study,
-        groupStudies: allStudies.filter(
+        groupStudies: studies.filter(
             (relatedStudy) =>
                 relatedStudy.DimensionID === 257 && relatedStudy.K13_CODE === study.Code
         ),
@@ -65,10 +63,10 @@ export default createReducer<TreatmentState>(initialState, {
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchTreatmentStudiesSuccess]: (response: TreatmentResponse) => (state) => ({
+    [ActionTypeEnum.FetchTreatmentStudiesSuccess]: (studies: TreatmentStudy[]) => (state) => ({
         ...state,
         loading: false,
-        studies: groupStudies(response),
+        studies: groupStudies(studies),
     }),
     [ActionTypeEnum.FetchTreatmentStudiesError]: () => (state) => ({
         ...state,

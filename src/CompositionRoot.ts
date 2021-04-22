@@ -5,10 +5,13 @@ import { PreventionApiRepository } from "./data/repositories/PreventionApiReposi
 import { GetPreventionStudiesUseCase } from "./domain/usecases/GetPreventionStudiesUseCase";
 import { DiagnosisApiRepository } from "./data/repositories/DiagnosisApiRepository";
 import { GetDiagnosisStudiesUseCase } from "./domain/usecases/GetDiagnosisStudiesUseCase";
+import { TreatmentApiRepository } from "./data/repositories/TreatmentApiRepository";
+import { GetTreatmentStudiesUseCase } from "./domain/usecases/GetTreatmentStudiesUseCase";
 
 export class CompositionRoot {
     private preventionRepository = new PreventionApiRepository(config.mapServerUrl);
     private diagnosisRepository = new DiagnosisApiRepository(config.mapServerUrl);
+    private treatmentRepository = new TreatmentApiRepository(config.mapServerUrl);
 
     public get prevention() {
         return getExecute({
@@ -19,6 +22,12 @@ export class CompositionRoot {
     public get diagnosis() {
         return getExecute({
             getStudies: new GetDiagnosisStudiesUseCase(this.diagnosisRepository),
+        });
+    }
+
+    public get treatment() {
+        return getExecute({
+            getStudies: new GetTreatmentStudiesUseCase(this.treatmentRepository),
         });
     }
 }

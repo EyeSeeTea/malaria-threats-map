@@ -1,11 +1,8 @@
-import {ActionsObservable} from "redux-observable";
+import {ActionsObservable, StateObservable} from "redux-observable";
 import {ActionType} from "typesafe-actions";
 import {ActionTypeEnum} from "../actions";
-import * as ajax from "../../store/ajax";
 import {of} from "rxjs";
 import {catchError, mergeMap, skip, switchMap} from "rxjs/operators";
-import {AjaxError} from "rxjs/ajax";
-import {TreatmentResponse} from "../../types/Treatment";
 import {
     fetchTreatmentStudiesError,
     fetchTreatmentStudiesRequest,
@@ -15,44 +12,26 @@ import {
     setTreatmentMapType,
     setTreatmentPlasmodiumSpecies,
 } from "../actions/treatment-actions";
-import {MapServerConfig} from "../../constants/constants";
 import {logPageViewAction} from "../actions/base-actions";
-import {TreatmentMapType} from "../types";
+import {TreatmentMapType, State} from "../types";
 import {addNotificationAction} from "../actions/notifier-actions";
-import {ErrorResponse} from "../../types/Malaria";
 import {getAnalyticsPageView} from "../analytics";
-
-interface Params {
-    [key: string]: string | number | boolean;
-}
-
-type Response = TreatmentResponse & ErrorResponse;
+import {fromFuture} from "./utils";
+import {EpicDependencies} from "../../store/index";
+import {TreatmentStudy} from "../../../domain/entities/TreatmentStudy";
 
 export const getTreatmentStudiesEpic = (
-    action$: ActionsObservable<ActionType<typeof fetchTreatmentStudiesRequest>>
+    action$: ActionsObservable<ActionType<typeof fetchTreatmentStudiesRequest>>,
+    _state$: StateObservable<State>,
+    {compositionRoot}: EpicDependencies
 ) =>
     action$.ofType(ActionTypeEnum.FetchTreatmentStudiesRequest).pipe(
         switchMap(() => {
-            const params: Params = {
-                f: "json",
-                where: `1%3D1`,
-                outFields: "*",
-            };
-            const query: string = Object.keys(params)
-                .map((key) => `${key}=${params[key]}`)
-                .join("&");
-            return ajax.get(`/${MapServerConfig.layers.treatment}/query?${query}`).pipe(
-                mergeMap((response: Response) => {
-                    if (response.error) {
-                        return of(
-                            addNotificationAction(response.error.message),
-                            fetchTreatmentStudiesError(response.error.message)
-                        );
-                    } else {
-                        return of(fetchTreatmentStudiesSuccess(response));
-                    }
+            return fromFuture(compositionRoot.treatment.getStudies()).pipe(
+                mergeMap((studies: TreatmentStudy[]) => {
+                    return of(fetchTreatmentStudiesSuccess(studies));
                 }),
-                catchError((error: AjaxError) =>
+                catchError((error: Error) =>
                     of(
                         addNotificationAction(error.message),
                         fetchTreatmentStudiesError(error.message)
