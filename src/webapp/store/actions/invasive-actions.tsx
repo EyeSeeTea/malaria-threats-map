@@ -1,6 +1,5 @@
 import {createAction} from "typesafe-actions";
 import {ActionTypeEnum} from "../actions";
-import {InvasiveResponse} from "../../types/Invasive";
 import {InvasiveMapType} from "../types";
 import {InvasiveStudy} from "../../../domain/entities/InvasiveStudy";
 
@@ -12,10 +11,9 @@ export const fetchInvasiveStudiesRequest = createAction(
 );
 export const fetchInvasiveStudiesSuccess = createAction(
     ActionTypeEnum.FetchInvasiveStudiesSuccess,
-    (action) => {
-        return (response: InvasiveResponse) => action(response);
-    }
+    (action) => (studies: InvasiveStudy[]) => action(studies)
 );
+
 export const fetchInvasiveStudiesError = createAction(
     ActionTypeEnum.FetchInvasiveStudiesError,
     (action) => {

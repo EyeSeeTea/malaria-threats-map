@@ -3,8 +3,8 @@ import {ActionTypeEnum} from "../actions";
 import {createReducer} from "../reducer-utils";
 import {createSelector} from "reselect";
 import {InvasiveMapType, InvasiveState, State} from "../types";
-import {InvasiveResponse} from "../../types/Invasive";
 import {PreventionStudy} from "../../../domain/entities/PreventionStudy";
+import {InvasiveStudy} from "../../../domain/entities/InvasiveStudy";
 
 const initialState: InvasiveState = Object.freeze({
     studies: [],
@@ -38,10 +38,10 @@ export default createReducer<InvasiveState>(initialState, {
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchInvasiveStudiesSuccess]: (response: InvasiveResponse) => (state) => ({
+    [ActionTypeEnum.FetchInvasiveStudiesSuccess]: (studies: InvasiveStudy[]) => (state) => ({
         ...state,
         loading: false,
-        studies: response.features.map((feature) => feature.attributes),
+        studies,
     }),
     [ActionTypeEnum.FetchInvasiveStudiesError]: () => (state) => ({
         ...state,

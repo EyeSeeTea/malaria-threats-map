@@ -1,55 +1,34 @@
-import {ActionsObservable} from "redux-observable";
+import {ActionsObservable, StateObservable} from "redux-observable";
 import {ActionType} from "typesafe-actions";
 import {ActionTypeEnum} from "../actions";
-import * as ajax from "../../store/ajax";
 import {of} from "rxjs";
 import {catchError, mergeMap, switchMap} from "rxjs/operators";
-import {AjaxError} from "rxjs/ajax";
-import {InvasiveResponse} from "../../types/Invasive";
 import {
     fetchInvasiveStudiesError,
     fetchInvasiveStudiesRequest,
     fetchInvasiveStudiesSuccess,
     setInvasiveMapType,
 } from "../actions/invasive-actions";
-import {MapServerConfig} from "../../constants/constants";
 import {setFiltersAction, setThemeAction, logPageViewAction} from "../actions/base-actions";
-import {InvasiveMapType} from "../types";
+import {InvasiveMapType, State} from "../types";
 import {addNotificationAction} from "../actions/notifier-actions";
-import {ErrorResponse} from "../../types/Malaria";
 import {getAnalyticsPageView} from "../analytics";
-
-interface Params {
-    [key: string]: string | number | boolean;
-}
-
-type Response = InvasiveResponse & ErrorResponse;
+import {fromFuture} from "./utils";
+import {EpicDependencies} from "../../store/index";
+import {InvasiveStudy} from "../../../domain/entities/InvasiveStudy";
 
 export const getInvasiveStudiesEpic = (
-    action$: ActionsObservable<ActionType<typeof fetchInvasiveStudiesRequest>>
+    action$: ActionsObservable<ActionType<typeof fetchInvasiveStudiesRequest>>,
+    _state$: StateObservable<State>,
+    {compositionRoot}: EpicDependencies
 ) =>
     action$.ofType(ActionTypeEnum.FetchInvasiveStudiesRequest).pipe(
         switchMap(() => {
-            const params: Params = {
-                f: "json",
-                where: `1%3D1`,
-                outFields: "*",
-            };
-            const query: string = Object.keys(params)
-                .map((key) => `${key}=${params[key]}`)
-                .join("&");
-            return ajax.get(`/${MapServerConfig.layers.invasive}/query?${query}`).pipe(
-                mergeMap((response: Response) => {
-                    if (response.error) {
-                        return of(
-                            addNotificationAction(response.error.message),
-                            fetchInvasiveStudiesError(response.error.message)
-                        );
-                    } else {
-                        return of(fetchInvasiveStudiesSuccess(response));
-                    }
+            return fromFuture(compositionRoot.invasive.getStudies()).pipe(
+                mergeMap((studies: InvasiveStudy[]) => {
+                    return of(fetchInvasiveStudiesSuccess(studies));
                 }),
-                catchError((error: AjaxError) =>
+                catchError((error: Error) =>
                     of(
                         addNotificationAction(error.message),
                         fetchInvasiveStudiesError(error.message)

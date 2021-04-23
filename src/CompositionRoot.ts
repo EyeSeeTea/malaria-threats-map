@@ -7,11 +7,14 @@ import { DiagnosisApiRepository } from "./data/repositories/DiagnosisApiReposito
 import { GetDiagnosisStudiesUseCase } from "./domain/usecases/GetDiagnosisStudiesUseCase";
 import { TreatmentApiRepository } from "./data/repositories/TreatmentApiRepository";
 import { GetTreatmentStudiesUseCase } from "./domain/usecases/GetTreatmentStudiesUseCase";
+import { InvasiveApiRepository } from "./data/repositories/InvasiveApiRepository";
+import { GetInvasiveStudiesUseCase } from "./domain/usecases/GetInvasiveStudiesUseCase";
 
 export class CompositionRoot {
     private preventionRepository = new PreventionApiRepository(config.mapServerUrl);
     private diagnosisRepository = new DiagnosisApiRepository(config.mapServerUrl);
     private treatmentRepository = new TreatmentApiRepository(config.mapServerUrl);
+    private invasiveRepository = new InvasiveApiRepository(config.mapServerUrl);
 
     public get prevention() {
         return getExecute({
@@ -28,6 +31,12 @@ export class CompositionRoot {
     public get treatment() {
         return getExecute({
             getStudies: new GetTreatmentStudiesUseCase(this.treatmentRepository),
+        });
+    }
+
+    public get invasive() {
+        return getExecute({
+            getStudies: new GetInvasiveStudiesUseCase(this.invasiveRepository),
         });
     }
 }
