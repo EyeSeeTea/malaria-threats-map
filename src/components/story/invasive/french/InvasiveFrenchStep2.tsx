@@ -46,7 +46,7 @@ export default () => {
         invasives
         <Link
           target="_blank"
-          href="https://www.who.int/publications/i/item/who-form-to-report-detection-of-invasive-anopheles-vector-species"
+          href="https://www.who.int/fr/publications/i/item/vector-alert-anopheles-stephensi-invasion-and-spread"
           color={"textSecondary"}
         >
           Formulaire de l'OMS pour signaler la détection d'espèces d’anophèles
