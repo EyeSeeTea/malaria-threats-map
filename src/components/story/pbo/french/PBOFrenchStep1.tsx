@@ -18,7 +18,7 @@ const Images = styled.div`
     justify-content: space-between;
 `;
 
-export default () => {
+export default function PBOFrenchStep1() {
     const classes = useStyles({});
     return (
         <div>
@@ -71,4 +71,4 @@ export default () => {
             </Images>
         </div>
     );
-};
+}

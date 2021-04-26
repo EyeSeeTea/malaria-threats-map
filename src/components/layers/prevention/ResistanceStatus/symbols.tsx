@@ -4,7 +4,7 @@ export const ConfirmationStatusColors: { [key: string]: string[] } = {
     Susceptible: ["#869C66", "#5e6e47"],
 };
 
-export default {
+const resistanceStatusSymbols = {
     "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
     "circle-color": [
         "match",
@@ -37,3 +37,5 @@ export default {
     "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
     "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
 };
+
+export default resistanceStatusSymbols;

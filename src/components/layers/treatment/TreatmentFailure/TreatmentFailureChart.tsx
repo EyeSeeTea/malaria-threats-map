@@ -105,7 +105,7 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const TreatmentFailureChart = ({ theme, studies }: Props) => {
+const TreatmentFailureChart = ({ studies }: Props) => {
     const { t } = useTranslation("common");
     const [study, setStudy] = useState(0);
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);

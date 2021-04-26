@@ -62,7 +62,7 @@ class PreventionSitePopover extends Component<Props> {
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
     }
-    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<{}>, snapshot?: any): void {
+    componentDidUpdate(): void {
         this.componentWillUnmount();
         this.componentDidMount();
     }

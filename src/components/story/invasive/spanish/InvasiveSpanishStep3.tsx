@@ -10,7 +10,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export default () => {
+export default function InvasiveSpanishStep3() {
     const classes = useStyles({});
     return (
         <div>
@@ -47,4 +47,4 @@ export default () => {
             </Typography>
         </div>
     );
-};
+}

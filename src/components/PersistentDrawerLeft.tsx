@@ -8,13 +8,7 @@ import Disclaimer from "./Disclaimer";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { State } from "../store/types";
-import {
-    selectAreFiltersOpen,
-    selectFilters,
-    selectIsInitialDialogOpen,
-    selectStoryMode,
-    selectTheme,
-} from "../store/reducers/base-reducer";
+import { selectAreFiltersOpen, selectFilters, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
 import {
     setFiltersOpen,
     setMobileOptionsOpen,
@@ -157,7 +151,6 @@ const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
-    initialDialogOpen: selectIsInitialDialogOpen(state),
 });
 const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
@@ -178,7 +171,6 @@ function PersistentDrawerLeft({
     storyMode,
     filtersOpen,
     setFiltersOpen,
-    initialDialogOpen,
     drawerWidth = "400px",
     setTheme,
     theme,
@@ -188,7 +180,7 @@ function PersistentDrawerLeft({
 
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 
-    const onChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    const onChange = (_event: React.ChangeEvent<{}>, newValue: number) => {
         switch (newValue) {
             case 0:
                 setTheme("prevention");

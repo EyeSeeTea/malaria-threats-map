@@ -2,8 +2,10 @@ import TreatmentEnglishSteps from "./english/TreatmentEnglishSteps";
 import TreatmentSpanishSteps from "./spanish/TreatmentSpanishSteps";
 import TreatmentFrenchSteps from "./french/TreatmentFrenchSteps";
 
-export default {
+const treatmentSteps = {
     en: TreatmentEnglishSteps,
     es: TreatmentSpanishSteps,
     fr: TreatmentFrenchSteps,
 };
+
+export default treatmentSteps;

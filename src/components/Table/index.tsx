@@ -235,7 +235,7 @@ export default function EnhancedTable({ rows }: { rows: Data[] }) {
     const [orderBy, setOrderBy] = React.useState<keyof Data>("calories");
     const [selected, setSelected] = React.useState<string[]>([]);
     const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
+    const [dense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     function handleRequestSort(event: React.MouseEvent<unknown>, property: keyof Data) {
@@ -270,17 +270,13 @@ export default function EnhancedTable({ rows }: { rows: Data[] }) {
         setSelected(newSelected);
     }
 
-    function handleChangePage(event: unknown, newPage: number) {
+    function handleChangePage(_event: unknown, newPage: number) {
         setPage(newPage);
     }
 
     function handleChangeRowsPerPage(event: React.ChangeEvent<HTMLInputElement>) {
         setRowsPerPage(+event.target.value);
         setPage(0);
-    }
-
-    function handleChangeDense(event: React.ChangeEvent<HTMLInputElement>) {
-        setDense(event.target.checked);
     }
 
     const isSelected = (name: string) => selected.indexOf(name) !== -1;

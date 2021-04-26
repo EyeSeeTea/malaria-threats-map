@@ -23,7 +23,7 @@ type OwnProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps & OwnProps;
 
-function TypeSelector({ studies, onChange, value }: Props) {
+function TypeSelector({ onChange, value }: Props) {
     const { t } = useTranslation("common");
     // const uniques = R.uniq(R.map(R.prop("TYPE"), studies)).sort();
 

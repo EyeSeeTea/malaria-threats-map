@@ -6,7 +6,7 @@ export const InvasiveStatusColors: { [key: string]: string[] } = {
     [INVASIVE_STATUS.UNKNOWN]: ["#d3d3d3", "#adadad"],
 };
 
-export default {
+const vectorOcurranceSymbols = {
     "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
     "circle-color": [
         "match",
@@ -35,3 +35,5 @@ export default {
     "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
     "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
 };
+
+export default vectorOcurranceSymbols;

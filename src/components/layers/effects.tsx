@@ -1,4 +1,4 @@
-export default (map: any, source: string, layer: string) => {
+export default function setupEffects(map: any, source: string, layer: string) {
     let hoveredStateId: any = null;
 
     map.on("mousemove", layer, (e: any) => {
@@ -17,4 +17,4 @@ export default (map: any, source: string, layer: string) => {
         }
         hoveredStateId = null;
     });
-};
+}

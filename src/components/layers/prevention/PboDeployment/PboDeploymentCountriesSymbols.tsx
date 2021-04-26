@@ -12,7 +12,7 @@ export const PboDeploymentColors = {
     [PboDeploymentCountriesStatus.NOT_APPLICABLE]: ["#D43501", "#882201"],
 };
 
-export default {
+const pboDeploymentCountrySymbols = {
     "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
     "circle-color": [
         "match",
@@ -49,3 +49,5 @@ export default {
     "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
     "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
 };
+
+export default pboDeploymentCountrySymbols;

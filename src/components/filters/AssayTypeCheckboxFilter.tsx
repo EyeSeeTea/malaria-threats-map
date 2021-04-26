@@ -61,7 +61,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function AssayTypeCheckboxFilter({ assayTypes, preventionFilters, setAssayTypes, logEventAction }: Props) {
+function AssayTypeCheckboxFilter({ assayTypes, preventionFilters, setAssayTypes }: Props) {
     const classes = useStyles({});
 
     const handleChange = (type: string) => () => {

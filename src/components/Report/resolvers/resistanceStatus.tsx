@@ -2,7 +2,7 @@ import { PreventionStudy } from "../../../types/Prevention";
 import { filterByInsecticideClass } from "../../layers/studies-filters";
 import * as R from "ramda";
 
-export function resolvePyrethroids(insecticideClass: string, countrySpeciesStudies: PreventionStudy[], t: any) {
+export function resolvePyrethroids(insecticideClass: string, countrySpeciesStudies: PreventionStudy[]) {
     const studies = countrySpeciesStudies.filter(filterByInsecticideClass(insecticideClass));
     const detectedPyrethroidsStudies = studies.filter(study => parseFloat(study.MORTALITY_ADJUSTED) < 0.9);
     const percentage: number | "-" = studies.length

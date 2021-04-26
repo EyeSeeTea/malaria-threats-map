@@ -6,13 +6,11 @@ import Typography from "@material-ui/core/Typography";
 import TextField, { BaseTextFieldProps } from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import Chip from "@material-ui/core/Chip";
-import MenuItem from "@material-ui/core/MenuItem";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { ValueContainerProps } from "react-select/src/components/containers";
 import { ControlProps } from "react-select/src/components/Control";
 import { MenuProps, NoticeProps } from "react-select/src/components/Menu";
 import { MultiValueProps } from "react-select/src/components/MultiValue";
-import { OptionProps } from "react-select/src/components/Option";
 import { PlaceholderProps } from "react-select/src/components/Placeholder";
 import { SingleValueProps } from "react-select/src/components/SingleValue";
 import { Omit } from "@material-ui/types";
@@ -123,29 +121,6 @@ function Control(props: ControlProps<OptionType, false>) {
                 {...TextFieldProps}
             />
         </Paper>
-    );
-}
-
-function Option(props: OptionProps<OptionType, false>) {
-    const { t } = useTranslation("common");
-    const value = props.children ? t(props.children.toString()) : "";
-    //it doesn't have access to the control/selected value
-    return (
-        <MenuItem
-            dense
-            ref={props.innerRef}
-            selected={props.isFocused}
-            component="div"
-            style={{
-                fontWeight: props.isSelected ? 500 : 400,
-            }}
-            {...props.innerProps}
-            title={value}
-        >
-            <Typography variant="inherit" noWrap>
-                {value}
-            </Typography>
-        </MenuItem>
     );
 }
 

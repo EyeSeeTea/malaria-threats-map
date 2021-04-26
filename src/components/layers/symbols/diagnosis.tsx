@@ -1,6 +1,6 @@
 import { colors } from "../../../constants/theme";
 
-export default {
+const diagnosisSymbols = {
     "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
     "circle-color": colors.diagnosis.N,
     "circle-opacity": 1,
@@ -8,3 +8,5 @@ export default {
     "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
     "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
 };
+
+export default diagnosisSymbols;

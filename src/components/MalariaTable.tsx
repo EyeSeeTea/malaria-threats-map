@@ -1,24 +1,8 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import IconButton from "@material-ui/core/IconButton";
-import Slide from "@material-ui/core/Slide";
-import { TransitionProps } from "@material-ui/core/transitions";
 import FilterIcon from "@material-ui/icons/FilterList";
 import Table, { Data } from "./Table";
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        appBar: {
-            backgroundColor: "#404041",
-            position: "relative",
-        },
-        title: {
-            marginLeft: theme.spacing(2),
-            flex: 1,
-        },
-    })
-);
 
 function createData(name: string, calories: number, fat: number, carbs: number, protein: number): Data {
     return { name, calories, fat, carbs, protein };
@@ -40,12 +24,7 @@ const rows = [
     createData("Oreo", 437, 18.0, 63, 4.0),
 ];
 
-const Transition = React.forwardRef<unknown, TransitionProps>(function Transition(props: any, ref: any) {
-    return <Slide direction="right" ref={ref} {...props} />;
-});
-
 export default function MalariaTable() {
-    const classes = useStyles({});
     const [open, setOpen] = React.useState(false);
 
     function handleClickOpen() {

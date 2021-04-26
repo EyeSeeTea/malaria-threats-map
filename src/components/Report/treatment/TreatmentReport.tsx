@@ -353,7 +353,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
         COUNTRY_NUMBER: tablePage.filter(r => r.COUNTRY === row.COUNTRY).length,
     }));
 
-    const filterColumnsToDisplay = ([field, value]: [string, string]) =>
+    const filterColumnsToDisplay = ([field, _value]: [string, string]) =>
         !["ID", "COUNTRY", "COUNTRY_NUMBER", "ISO2"].includes(field);
     return (
         <div className={classes.root}>

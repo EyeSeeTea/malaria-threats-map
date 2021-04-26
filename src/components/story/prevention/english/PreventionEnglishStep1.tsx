@@ -10,7 +10,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export default () => {
+export default function PreventionEnglishStep1() {
     const classes = useStyles({});
     return (
         <div>
@@ -50,4 +50,4 @@ export default () => {
             </Link>
         </div>
     );
-};
+}

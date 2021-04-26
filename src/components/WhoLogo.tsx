@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ({ color = "#fff", width = 175 }) => (
+const WhoLogo = ({ color = "#fff", width = 175 }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580.82 177.96" width={width}>
         <defs>
             <style>{`.cls-1{fill:${color};}`}</style>
@@ -124,3 +124,5 @@ export default ({ color = "#fff", width = 175 }) => (
         </g>
     </svg>
 );
+
+export default WhoLogo;

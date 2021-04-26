@@ -16,20 +16,20 @@ const baseIcon = css<Props>`
     border-radius: 50%;
 `;
 
-const TreatmentSVG = ({ active = false, size = 48, ...rest }: Props) => <img alt="" {...rest} src={treatmentIcon} />;
+const TreatmentSVG = ({ ...rest }: Props) => <img alt="" {...rest} src={treatmentIcon} />;
 
 export const TreatmentIcon = styled(TreatmentSVG)`
     background-color: ${props => (props.active ? colors.treatment.N : "lightgrey")};
     ${baseIcon};
 `;
 
-const DiagnosisSVG = ({ active, ...rest }: Props) => <img alt="" {...rest} src={diagnosisIcon} />;
+const DiagnosisSVG = ({ ...rest }: Props) => <img alt="" {...rest} src={diagnosisIcon} />;
 export const DiagnosisIcon = styled(DiagnosisSVG)`
     background-color: ${props => (props.active ? colors.diagnosis.N : "lightgrey")};
     ${baseIcon};
 `;
 
-const PreventionSVG = ({ active, ...rest }: any) => <img alt="" {...rest} src={preventionIcon} />;
+const PreventionSVG = ({ ...rest }: any) => <img alt="" {...rest} src={preventionIcon} />;
 export const PreventionIcon = styled(PreventionSVG)`
     background-color: ${props => (props.active ? colors.prevention.N : "lightgrey")};
     ${baseIcon};

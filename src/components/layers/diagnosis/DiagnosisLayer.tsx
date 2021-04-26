@@ -217,7 +217,7 @@ class DiagnosisLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any, a: any) => {
+    onClickListener = (e: any, _a: any) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;

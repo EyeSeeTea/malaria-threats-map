@@ -198,7 +198,7 @@ class CountrySelectorLayer extends Component<Props> {
         }
     };
 
-    onClickListener = (e: any, a: any) => {
+    onClickListener = (e: any, _a: any) => {
         const coordinates = [e.features[0].properties.CENTER_LON, e.features[0].properties.CENTER_LAT] as [
             number,
             number

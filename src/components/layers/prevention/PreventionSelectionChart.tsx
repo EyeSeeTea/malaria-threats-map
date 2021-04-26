@@ -53,6 +53,7 @@ class PreventionSelectionChart extends Component<Props> {
                 ? study.ISO2 === selection.ISO_2_CODE || study.ADMIN2_GUID === selection.SITE_ID
                 : study.SITE_ID === selection.SITE_ID
         );
+
         if (!filteredStudies.length || theme !== "prevention") {
             return <div />;
         }

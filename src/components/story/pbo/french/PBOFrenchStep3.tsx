@@ -10,7 +10,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export default () => {
+export default function PBOFrenchStep3() {
     const classes = useStyles({});
     return (
         <div>
@@ -50,4 +50,4 @@ export default () => {
             </Typography>
         </div>
     );
-};
+}

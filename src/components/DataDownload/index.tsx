@@ -693,54 +693,52 @@ function DataDownload({
 
     const downloadInvasiveData = () => {
         if (selections.invasiveDataset === "INVASIVE_VECTOR_SPECIES") {
-            {
-                const filters = [
-                    filterBySpecies(selections.species),
-                    filterByCountries(selections.countries),
-                    filterByYears(selections.years),
-                ];
-                const studies = filterStudies(invasiveStudies, filters);
-                const results = buildResults(studies, mappings[selections.invasiveDataset]);
-                const fields = [
-                    "ID",
-                    "COUNTRY_NAME",
-                    "SITE_NAME",
-                    "LATITUDE",
-                    "LONGITUDE",
-                    "VECTOR_SPECIES_COMPLEX",
-                    "VECTOR_SPECIES",
-                    "STAGE",
-                    "YEAR_START",
-                    "MONTH_START",
-                    "YEAR_END",
-                    "MONTH_END",
-                    "SAMPLING_METHOD",
-                    "MOSQUITO_NUMBER",
-                    "BREEDING_HABITAT",
-                    "ID_METHOD",
-                    "DATA_SOURCE",
-                    "CITATION",
-                    "CITATION_URL",
-                    "DATA_CURATOR",
-                    "INVASIVE_STATUS",
-                ];
-                const tabs = [
-                    getDisclaimerTab(),
-                    {
-                        name: "Data",
-                        studies: results,
-                    },
-                    {
-                        name: "Glossary",
-                        studies: fields.map(field => ({
-                            "Variable name": field,
-                            Description: d(`invasive.${field}`),
-                        })),
-                    },
-                ];
-                const dateString = format(new Date(), "yyyyMMdd");
-                exportToCSV(tabs, `MTM_${selections.invasiveDataset}_${dateString}`);
-            }
+            const filters = [
+                filterBySpecies(selections.species),
+                filterByCountries(selections.countries),
+                filterByYears(selections.years),
+            ];
+            const studies = filterStudies(invasiveStudies, filters);
+            const results = buildResults(studies, mappings[selections.invasiveDataset]);
+            const fields = [
+                "ID",
+                "COUNTRY_NAME",
+                "SITE_NAME",
+                "LATITUDE",
+                "LONGITUDE",
+                "VECTOR_SPECIES_COMPLEX",
+                "VECTOR_SPECIES",
+                "STAGE",
+                "YEAR_START",
+                "MONTH_START",
+                "YEAR_END",
+                "MONTH_END",
+                "SAMPLING_METHOD",
+                "MOSQUITO_NUMBER",
+                "BREEDING_HABITAT",
+                "ID_METHOD",
+                "DATA_SOURCE",
+                "CITATION",
+                "CITATION_URL",
+                "DATA_CURATOR",
+                "INVASIVE_STATUS",
+            ];
+            const tabs = [
+                getDisclaimerTab(),
+                {
+                    name: "Data",
+                    studies: results,
+                },
+                {
+                    name: "Glossary",
+                    studies: fields.map(field => ({
+                        "Variable name": field,
+                        Description: d(`invasive.${field}`),
+                    })),
+                },
+            ];
+            const dateString = format(new Date(), "yyyyMMdd");
+            exportToCSV(tabs, `MTM_${selections.invasiveDataset}_${dateString}`);
         }
     };
 

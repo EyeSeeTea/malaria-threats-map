@@ -12,7 +12,7 @@ export const PboDeploymentColors = {
     [PboDeploymentStatus.NO_DATA]: ["#d3d3d3", "#adadad"],
 };
 
-export default {
+const pboDeploymentSymbols = {
     "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
     "circle-color": [
         "match",
@@ -45,3 +45,5 @@ export default {
     "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
     "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
 };
+
+export default pboDeploymentSymbols;

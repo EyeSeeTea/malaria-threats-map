@@ -9,7 +9,7 @@ const useStyles = makeStyles(() =>
         },
     })
 );
-const TreatmentSpanishStep4 = () => {
+export default function TreatmentSpanishStep4() {
     const classes = useStyles({});
     return (
         <div>
@@ -43,5 +43,4 @@ const TreatmentSpanishStep4 = () => {
             </Typography>
         </div>
     );
-};
-export default TreatmentSpanishStep4;
+}
