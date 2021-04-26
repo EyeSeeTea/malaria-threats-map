@@ -1,0 +1,25 @@
+{
+    "step1": {
+      "part1": "<b>The recent detection of <i>An. stephensi</i> in Sri Lanka and the horn of Africa underscores the potential for vector species to spread and establish in new geographical areas.</b>",
+      "part2": "<b><i>An. Gambiae</i> ’s invasion of northern Brazil in 1930 provides another example. Its elimination between 1930s and early 40s proves that vector invasions can be controlled.</b>",
+      "part3": "<i>An. stephensi</i> is a highly efficient urban malaria vector traditionally reported from certain countries in South-East Asia and the Arabian Peninsula. Since 2012, it has been detected in Djibouti (2012), Ethiopia (2016), Sri Lanka (2017) and most recently in the Republic of the Sudan (2019, unpublished report).",
+      "part4": "The invasion of <i>An. stephensi</i> has contributed to the resurgence of malaria in Djibouti City. In Sri Lanka, the recent invasion of this vector could jeopardize efforts to prevent the re-establishment of malaria. In Africa, given the rapid and uncontrolled growth of cities, further spread and establishment of <i>An. stephensi</i> in urban environments could put at risk the gains in malaria burden reduction made since 2000.",
+      "supporting": "supporting"
+    },
+    "step2": {
+        "part1": "<b>Timely detection of invasive vector species is crucial to contain their spread.</b>",
+        "part2": "<b>Entomological surveillance systems provide critical information to inform the design and implementation of vector control strategies.</b>",
+        "part3": "Understanding vector species’ breeding and resting habitats, behaviour, feeding preferences and resistance status is required to design effective interventions to prevent further spread of invasive vector species and establishment in new geographical areas.",
+        "part4":  "WHO recommends that all malaria endemic countries conduct entomological surveillance and report detection of suspected invasive species to WHO by filling and sending the",
+        "whoForm": "WHO form to report detection of invasive Anopheles vector species to",
+        "part5": "Key indicators for entomological surveillance entomological surveillance are listed in chapter 5 of the",
+        "whoManual": "WHO Malaria Surveillance, monitoring and evaluation: a reference manual."
+    },
+    "step3": {
+      "part1": "<b>Control strategies should be informed by best practices from other countries, be adequately monitored and evaluated, and be modified where required.</b>",
+      "part2": "<b>Invasive vector species may adapt to their new environment by changing their traditional behaviours, including their choice of breeding habitats and resting sites, and may become insecticide resistant when exposed to vector control interventions.</b>",
+      "part3": "National programmes aiming to control and eliminate invasive vector species, should initially draw on best practices from countries where the species is indigenous and has been successfully controlled. However, due to the potential adaptive behavioural changes of vector species, programmes should continuously monitor and evaluate the effectiveness of the deployed vector control interventions to inform strategic adjustments when required.",
+      "part4": "The WHO recommends that national malaria control programs, and their executive partners, record lessons learned and send them to WHO (",
+      "part5": ") in order to contribute to the development of a plan based on evidence for the control and eradication of vector and invasive species of malaria."
+    }
+  }

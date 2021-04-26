@@ -13,7 +13,7 @@ const useStyles = makeStyles(() =>
 
 export default () => {
   const classes = useStyles({});
-  const { t } = useTranslation("invasiveTranslation");
+  const { t } = useTranslation("invasive");
   return (
     <div>
       <Typography variant={"h6"} className={classes.title}>
@@ -54,9 +54,8 @@ export default () => {
           href="https://www.who.int/publications/i/item/who-form-to-report-detection-of-invasive-anopheles-vector-species"
           color={"textSecondary"}
         >
-          {t("WHO form to report detection of invasive Anopheles vector species")}
+          {t("step2.whoForm")}
         </Link>
-        to{" "}
         <Link href="mailto:vectorsurveillance@who.int" color={"textSecondary"}>
           vectorsurveillance@who.int
         </Link>
@@ -64,13 +63,13 @@ export default () => {
       </Typography>
       <br />
       <Typography variant={"body2"}>
-        {t("Key indicators for entomological surveillance entomological surveillance are listed in chapter 5 of the")}
+        {t("step2.part5")}
         <Link
           target="_blank"
           href="https://www.who.int/malaria/publications/atoz/9789241565578/en/"
           color={"textSecondary"}
         >
-         {t("WHO Malaria Surveillance, monitoring and evaluation: a reference manual.")} 
+         {t("step2.whoManual")} 
         </Link>
       </Typography>
       <br />

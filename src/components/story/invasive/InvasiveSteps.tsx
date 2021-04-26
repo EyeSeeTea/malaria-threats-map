@@ -1,9 +1,9 @@
-import InvasiveEnglishSteps from "./english/InvasiveEnglishSteps";
-import InvasiveSpanishSteps from "./spanish/InvasiveSpanishSteps";
-import InvasiveFrenchSteps from "./french/InvasiveFrenchSteps";
+import InvasiveStep1 from "./InvasiveStep1";
+import InvasiveStep2 from "./InvasiveStep2";
+import InvasiveStep3 from "./InvasiveStep3";
 
-export default {
-  en: InvasiveEnglishSteps,
-  es: InvasiveSpanishSteps,
-  fr: InvasiveFrenchSteps
-};
+export default [
+  InvasiveStep1,
+  InvasiveStep2,
+  InvasiveStep3
+];

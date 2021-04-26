@@ -14,6 +14,22 @@ import mekong_fr from "../../translations/fr/mekong.json";
 import download_en from "../../translations/en/download.json";
 import download_es from "../../translations/es/download.json";
 import download_fr from "../../translations/fr/download.json";
+import invasiveStory_en from "../../translations/en/invasiveStory.json";
+import invasiveStory_es from "../../translations/es/invasiveStory.json";
+import invasiveStory_fr from "../../translations/fr/invasiveStory.json";
+import diagnosisStory_en from "../../translations/en/diagnosisStory.json";
+import diagnosisStory_es from "../../translations/es/diagnosisStory.json";
+import diagnosisStory_fr from "../../translations/fr/diagnosisStory.json";
+import PBOStory_en from "../../translations/en/PBOStory.json";
+import PBOStory_es from "../../translations/es/PBOStory.json";
+import PBOStory_fr from "../../translations/fr/PBOStory.json";
+import preventionStory_en from "../../translations/en/preventionStory.json";
+import preventionStory_es from "../../translations/es/preventionStory.json";
+import preventionStory_fr from "../../translations/fr/preventionStory.json";
+import treatmentStory_en from "../../translations/en/treatmentStory.json";
+import treatmentStory_es from "../../translations/es/treatmentStory.json";
+import treatmentStory_fr from "../../translations/fr/treatmentStory.json";
+
 import { dispatchCustomEvent } from "../../utils/dom-utils";
 
 const ALLOWED_LANGUAGES = ["en", "fr", "es"];
@@ -31,21 +47,36 @@ i18next.init({
       disclaimer: disclaimer_en,
       tour: tour_en,
       mekong: mekong_en,
-      download: download_en
+      download: download_en,
+      invasive: invasiveStory_en,
+      diagnosis: diagnosisStory_en,
+      pbo: PBOStory_en,
+      prevention: preventionStory_en,
+      treatment: treatmentStory_en
     },
     es: {
       common: common_es,
       disclaimer: disclaimer_es,
       tour: tour_es,
       mekong: mekong_es,
-      download: download_es
+      download: download_es,
+      invasive: invasiveStory_es,
+      diagnosis: diagnosisStory_es,
+      pbo: PBOStory_es,
+      prevention: preventionStory_es,
+      treatment: treatmentStory_es
     },
     fr: {
       common: common_fr,
       disclaimer: disclaimer_fr,
       tour: tour_fr,
       mekong: mekong_fr,
-      download: download_fr
+      download: download_fr,
+      invasive: invasiveStory_fr,
+      diagnosis: diagnosisStory_fr,
+      pbo: PBOStory_fr,
+      prevention: preventionStory_fr,
+      treatment: treatmentStory_fr
     }
   }
 });

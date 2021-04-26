@@ -13,7 +13,7 @@ const useStyles = makeStyles(() =>
 
 export default () => {
   const classes = useStyles({});
-  const { t } = useTranslation("invasiveTranslation");
+  const { t } = useTranslation("invasive");
   return (
     <div>
       <Typography variant={"h6"} className={classes.title}>
@@ -67,7 +67,7 @@ export default () => {
         >
           <img
             src="https://apps.who.int/iris/rest/bitstreams/1283866/retrieve"
-            alt={t("supporting")}
+            alt={t("step1.supporting")}
           />
         </Link>
       </Typography>
