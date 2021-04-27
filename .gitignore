@@ -25,3 +25,8 @@ yarn-error.log*
 # IDE Configuration
 /.idea/
 .vscode/
+/.idea
+
+# cypress
+cypress/screenshots/
+cypress/videos/

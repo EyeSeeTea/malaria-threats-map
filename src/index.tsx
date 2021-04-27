@@ -4,12 +4,12 @@ import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import App from "./webapp/App";
 import * as serviceWorker from "./serviceWorker";
-import "./config/i18next";
+import "./webapp/config/i18next";
 import ReactGA from "react-ga";
-import config from "./config";
 import { initHotjar } from "./hotjar";
+import config from "./webapp/config";
 
 declare global {
     interface Window {
