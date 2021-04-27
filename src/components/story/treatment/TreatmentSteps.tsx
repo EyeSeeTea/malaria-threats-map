@@ -1,9 +1,12 @@
-import TreatmentEnglishSteps from "./english/TreatmentEnglishSteps";
-import TreatmentSpanishSteps from "./spanish/TreatmentSpanishSteps";
-import TreatmentFrenchSteps from "./french/TreatmentFrenchSteps";
+import TreatmentStep1 from "./TreatmentStep1";
+import TreatmentStep2 from "./TreatmentStep2";
+import TreatmentStep3 from "./TreatmentStep3";
+import TreatmentStep4 from "./TreatmentStep4";
 
-export default {
-  en: TreatmentEnglishSteps,
-  es: TreatmentSpanishSteps,
-  fr: TreatmentFrenchSteps
-};
+export default [
+  TreatmentStep1,
+  TreatmentStep2,
+  TreatmentStep3,
+  TreatmentStep4
+];
+

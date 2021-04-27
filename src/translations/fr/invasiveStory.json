@@ -1,0 +1,26 @@
+{
+    "step1": {
+      "part1": "<b>La détection d'<i>An. stephensi</i> au Sri Lanka et dans la corne de l'Afrique souligne le potentiel de dissémination et d'établissement des espèces vectrices dans des nouvelles zones géographiques.</b>",
+      "part2": "<b>L'invasion du nord du Brésil par <i>An. gambiae</i> en 1930 est un autre exemple. Son éradication prouve que les invasions de vecteurs peuvent être résorbées.</b>",
+      "part3": "<i>An. stephensi</i> est un vecteur de paludisme urbain très compétent, traditionnellement signalé dans certains pays d'Asie du Sud-Est et dans la péninsule arabique. Depuis 2012, il a été détecté à Djibouti (2012), en Ethiopie (2016), au Sri Lanka (2017) et plus récemment en République du Soudan (2019, rapport non publié).",
+      "part4": "L'invasion d'<i>An. stephensi</i> a contribué à la résurgence du paludisme dans la ville de Djibouti. Au Sri Lanka, la récente invasion de ce vecteur pourrait compromettre les efforts visant à prévenir le rétablissement du paludisme. En Afrique, dans le contexte de l'urbanisation rapide et incontrôlée, la propagation et l'établissement d'<i>An. stephensi</i> en milieu urbain pourraient mettre en péril les progrès réalisés depuis 2000 dans la réduction de la charge du paludisme.",
+      "supporting": "justificative"
+    },
+    "step2": {
+      "part1": "<b>La détection opportune des espèces vectrices invasives est cruciale pour contenir leur propagation. </b>",
+      "part2": "<b>Les systèmes de surveillance entomologique fournissent des informations essentielles pour la conception et la mise en œuvre des stratégies de lutte antivectorielle.</b>",
+      "part3": "La connaissance des gîtes de reproduction et de repos des espèces vectrices, de leur comportement, de leurs préférences alimentaires et de leur statut en matière de résistance est nécessaire pour concevoir des interventions efficaces visant à prévenir la propagation des espèces vectrices invasives et leur établissement dans de nouvelles aires géographiques.",
+      "part4":  "L'OMS recommande que tous les pays d'endémie palustre effectuent une surveillance entomologique et signalent à l'OMS la détection d'espèces soupçonnées d'être invasives en remplissant et en envoyant le formulaire de l'OMS pour signaler la détection des espèces d’anophèles vectrices invasives",
+      "whoForm": "Formulaire de l'OMS pour signaler la détection d'espèces d’anophèles vectrices invasives à",
+      "part5": "Les indicateurs clés pour la surveillance entomologique sont énumérés au chapitre 5 du manuel de référence de l'OMS intitulé:",
+      "link": "https://www.who.int/fr/publications/i/item/vector-alert-anopheles-stephensi-invasion-and-spread",
+      "whoManual": "Lutte contre le paludisme : surveillance, suivi et évaluation. Un manuel de référence"
+    },
+    "step3": {
+      "part1": "<b>Les stratégies de lutte devraient s'inspirer des meilleures pratiques d'autres pays, faire l'objet d'un suivi et d'une évaluation adéquats et être modifiées au besoin.</b>",
+      "part2": "<b>Les espèces vectrices invasives peuvent s'adapter à leur nouvel environnement en modifiant leurs comportements traditionnels et peuvent devenir résistantes aux insecticides lorsqu'elles sont exposées aux outils de lutte antivectorielle.</b>",
+      "part3": "En raison des ces potentiels changements de comportement adaptatifs des espèces vectrices, les programmes devraient continuellement surveiller et évaluer l'efficacité des interventions de lutte antivectorielle déployées afin d'opérer les ajustements stratégiques nécessaires.",
+      "part4": "L'OMS recommande aux programmes nationaux de lutte contre le paludisme, et à leurs partenaires exécutifs, de consigner les enseignements retenus et de les communiquer à l'OMS (",
+      "part5": ") afin de contribuer à l'élaboration de plan fondé sur des données probantes en matière de lutte et d'éradication des espèces vectrices et invasives du paludisme."
+    }
+  }
