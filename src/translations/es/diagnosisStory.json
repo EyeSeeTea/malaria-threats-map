@@ -10,6 +10,7 @@
         "part1": "<b>Las supresiones de los genes <i>pfhrp2/3</i> pueden tener implicaciones significativas para la salud pública</b>",
         "part2": "Los falsos negativos obtenidos mediante PDR causados por supresiones de <i>pfhrp2/3</i> pueden conducir a un diagnóstico incorrecto o tardío y amenazar la seguridad del paciente. Además, el paciente puede seguir siendo una fuente de transmisión de la malaria hasta que se le trate adecuadamente.",
         "part3": "Desde 2010, varios estudios realizados en distintas regiones de África y Asia también encontraron parásitos <i>P. falciparum</i> que carecen del gen <i>pfhrp2</i>. La prevalencia de esta mutación genética varía según los países. En los lugares donde se confirma la supresión del gen, las prácticas de compra de PDR y gestión de casos deben adaptarse en consecuencia. En los casos en los que la prevalencia de falsos negativos debido a la supresión del <i>pfhrp2</i> supera el 5% la OMS recomienda usar una PDR que no esté basada exclusivamente en la detección de HRP2 para detectar parásitos de la especie <i>P. falciparum</i> (pf-pLDH) en pacientes sintomáticos.",
+        "link": "https://www.who.int/publications/i/item/WHO-HTM-GMP-2017.18",
         "supportingStudies": "Enlace a estudios de apoyo."
     },
     "step3": {

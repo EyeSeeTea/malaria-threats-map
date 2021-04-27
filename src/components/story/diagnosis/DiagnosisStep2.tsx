@@ -51,7 +51,7 @@ export default () => {
       <br />
       <Typography variant={"body2"}>
         <Link
-          href="https://www.who.int/publications/i/item/WHO-HTM-GMP-2017.18"
+          href={t("step2.link")}
           target="_blank"
           color={"textSecondary"}
         >

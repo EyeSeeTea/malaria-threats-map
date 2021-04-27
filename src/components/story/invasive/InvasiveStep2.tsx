@@ -51,7 +51,7 @@ export default () => {
         </Trans>
         <Link
           target="_blank"
-          href="https://www.who.int/publications/i/item/who-form-to-report-detection-of-invasive-anopheles-vector-species"
+          href={t("step2.link")}
           color={"textSecondary"}
         >
           {t("step2.whoForm")}

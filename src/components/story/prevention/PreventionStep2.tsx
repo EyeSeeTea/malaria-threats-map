@@ -40,7 +40,7 @@ export default () => {
       </Typography>
       <br />
       <Link
-        href="https://www.who.int/publications/i/item/9789241514057"
+        href={t("step2.link")}
         target="_blank"
         color={"textSecondary"}
       >
