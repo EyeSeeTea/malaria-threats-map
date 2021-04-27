@@ -22,9 +22,6 @@ import { connect } from "react-redux";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
 import { useTranslation } from "react-i18next";
 import { Container, Typography } from "@material-ui/core";
-import MekongTitle from "./mekong/MekongTitle";
-import background from "../assets/img/background.jpeg";
-import config from "../config";
 import { sendAnalytics } from "../utils/analytics";
 
 const FlexGrow = styled.div`
@@ -67,8 +64,6 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const mekong = config.mekong;
-
 function InitialDialog({
   initialDialogOpen,
   setInitialDialogOpen,
@@ -103,66 +98,52 @@ function InitialDialog({
         },
       }}
       BackdropProps={{
-        style: mekong
-          ? {
-              backgroundImage: `url(${background})`,
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-            }
-          : {},
+        style: {},
       }}
     >
-      <Container maxWidth={mekong ? "md" : "xl"}>
+      <Container maxWidth={"xl"}>
         <CenteredRow id="title">
-          {!mekong && (
             <WhiteColumn>
               <Typography variant="h2" color={"inherit"}>
                 {t("title.title")}
               </Typography>
               <Typography variant="h6">{t("title.subtitle")}</Typography>
             </WhiteColumn>
-          )}
           <FlexGrow />
           <LanguageWrapper>
             <LanguageSelectorSelect section="homeItem" />
           </LanguageWrapper>
         </CenteredRow>
         <Row id="dialog">
-          {mekong ? (
-            <MekongTitle />
-          ) : (
-            <>
-              <SimpleCard
-                title={t("themes_caps.prevention")}
-                theme="prevention"
-                description={t("cards.prevention")}
-                Icon={PreventionIcon}
-                onSelection={handleClose}
-              />
-              <SimpleCard
-                title={t("themes_caps.diagnosis")}
-                theme="diagnosis"
-                description={t("cards.diagnosis")}
-                Icon={DiagnosisIcon}
-                onSelection={handleClose}
-              />
-              <SimpleCard
-                title={t("themes_caps.treatment")}
-                theme="treatment"
-                description={t("cards.treatment")}
-                Icon={TreatmentIcon}
-                onSelection={handleClose}
-                hasFooter
-              />
-              <SimpleCard
-                title={t("themes_caps.invasive")}
-                theme="invasive"
-                description={t("cards.invasive")}
-                Icon={InvasiveIcon}
-                onSelection={handleClose}
-              />
-            </>
-          )}
+          <SimpleCard
+            title={t("themes_caps.prevention")}
+            theme="prevention"
+            description={t("cards.prevention")}
+            Icon={PreventionIcon}
+            onSelection={handleClose}
+          />
+          <SimpleCard
+            title={t("themes_caps.diagnosis")}
+            theme="diagnosis"
+            description={t("cards.diagnosis")}
+            Icon={DiagnosisIcon}
+            onSelection={handleClose}
+          />
+          <SimpleCard
+            title={t("themes_caps.treatment")}
+            theme="treatment"
+            description={t("cards.treatment")}
+            Icon={TreatmentIcon}
+            onSelection={handleClose}
+            hasFooter
+          />
+          <SimpleCard
+            title={t("themes_caps.invasive")}
+            theme="invasive"
+            description={t("cards.invasive")}
+            Icon={InvasiveIcon}
+            onSelection={handleClose}
+          />
         </Row>
       </Container>
     </Dialog>

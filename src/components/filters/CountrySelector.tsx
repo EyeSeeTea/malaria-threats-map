@@ -13,7 +13,6 @@ import { selectCountries } from "../../store/reducers/translations-reducer";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Divider, FilterWrapper } from "./Filters";
 import T from "../../translations/T";
-import config from "../../config";
 import { useTranslation } from "react-i18next";
 import { sendAnalytics } from "../../utils/analytics";
 
@@ -45,12 +44,7 @@ const CountrySelector = ({
       sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label });
     setRegion({ country: selection ? selection.value : undefined });
   };
-  const suggestions: any[] = config.mekong
-    ? mekongCountries.map((country) => ({
-        label: t(country.ISO_2_CODE),
-        value: country.ISO_2_CODE,
-      }))
-    : countries.map((country: Translation) => ({
+  const suggestions: any[] = countries.map((country: Translation) => ({
         label: t(country.VALUE_ === "NA" ? "COUNTRY_NA" : country.VALUE_),
         value: country.VALUE_,
       }));

@@ -42,9 +42,7 @@ export const setThemeEpic = (
       const { meta } = action;
       const eventCategory = meta.fromHome ? "homeItem" : "theme_menu";
       const base = [
-        meta.mekong
-          ? logEventAction({ category: eventCategory, action: "mekong" })
-          : logEventAction({ category: eventCategory, action: action.payload }),
+        logEventAction({ category: eventCategory, action: action.payload }),
         logPageViewAction(getAnalyticsPageViewFromString({ page: action.payload })),
         setSelection(null),
         setStoryModeStepAction(0),

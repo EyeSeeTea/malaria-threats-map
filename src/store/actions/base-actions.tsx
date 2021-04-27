@@ -12,7 +12,6 @@ export const setAnyAction = createAction(
 
 interface SetThemeOptions {
   fromHome?: boolean
-  mekong?: boolean
 }
 
 export const setThemeAction = createAction(

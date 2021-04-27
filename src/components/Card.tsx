@@ -1,12 +1,20 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
+import { makeStyles, Theme, withStyles } from "@material-ui/core/styles";
+import { Button, Card, CardContent, Typography } from "@material-ui/core";
 import styled from "styled-components";
 import { setRegionAction, setThemeAction } from "../store/actions/base-actions";
 import { connect } from "react-redux";
-import { ColorButton } from "./mekong/MekongTitle";
+import { colors } from "../constants/theme";
+
+const ColorButton = withStyles((theme: Theme) => ({
+  root: {
+    color: "white",
+    backgroundColor: colors.treatment.N,
+    "&:hover": {
+      backgroundColor: colors.treatment.D1,
+    },
+  },
+}))(Button);
 
 const useStyles = makeStyles({
   card: {
@@ -100,7 +108,7 @@ export const SimpleCard = ({
               variant="contained"
               size="large"
               onClick={(ev) => {
-                setTheme("treatment", { fromHome: true, mekong: true });
+                setTheme("treatment", { fromHome: true });
                 setRegion({
                   subRegion: "GREATER_MEKONG",
                 });

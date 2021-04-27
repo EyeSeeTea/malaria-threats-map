@@ -6,7 +6,6 @@ type ConfigProps = {
   backendUrl: string;
   gaAppId: string;
   env: string;
-  mekong: boolean;
   hotjar?: { hjid: number, hjsv: number },
 };
 
@@ -56,7 +55,6 @@ const configurations: { [key: string]: ConfigProps } = {
       `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "UA-191197789-1",
     env: "local",
-    mekong: false,
   },
   dev: {
     ...stagingMapServer,
@@ -64,7 +62,6 @@ const configurations: { [key: string]: ConfigProps } = {
     backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "UA-191197789-2",
     env: "dev",
-    mekong: false,
     hotjar: { hjid: 2287362, hjsv: 6 }
   },
   staging: {
@@ -73,7 +70,6 @@ const configurations: { [key: string]: ConfigProps } = {
     backendUrl: `https://portal-uat.who.int/malthreats-api/`,
     gaAppId: "UA-191197789-1",
     env: "staging",
-    mekong: false,
     hotjar: { hjid: 2280607, hjsv: 6 },
   },
   prod: {
@@ -82,32 +78,7 @@ const configurations: { [key: string]: ConfigProps } = {
     backendUrl: `https://extranet.who.int/malthreats-api/`,
     gaAppId: "UA-140410266-1",
     env: "prod",
-    mekong: false,
     hotjar: {hjid: 2269048, hjsv: 6},
-  },
-  "local-mekong": {
-    ...stagingMapServer,
-    ...stagingMapTile,
-    backendUrl: `https://portal-uat.who.int/malthreats-api/`,
-    gaAppId: "",
-    env: "local",
-    mekong: true,
-  },
-  "staging-mekong": {
-    ...stagingMapServer,
-    ...stagingMapTile,
-    backendUrl: `https://portal-uat.who.int/malthreats-api/`,
-    gaAppId: "",
-    env: "staging",
-    mekong: true,
-  },
-  "prod-mekong": {
-    ...prodMapServer,
-    ...prodMapTile,
-    backendUrl: `https://extranet.who.int/malthreats-api/`,
-    gaAppId: "",
-    env: "prod",
-    mekong: true,
   },
 };
 
