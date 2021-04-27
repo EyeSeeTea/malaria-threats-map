@@ -237,7 +237,7 @@ export default function IntegrationReactSelect({ suggestions = [], value, onChan
     };
 
     return (
-        <div className={`${classes.root} ${className}`}>
+        <div className={`${classes.root} ${className}`} role="listbox">
             <Select
                 classes={classes}
                 styles={selectStyles}

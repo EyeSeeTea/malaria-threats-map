@@ -47,7 +47,7 @@ type Props = DispatchProps & StateProps & OwnProps;
 const LegendContainer = ({ children, legendExpanded, setLegendExpanded }: Props) => {
     const small = !legendExpanded;
     return (
-        <LegendContainerStyled size={small ? 200 : 600}>
+        <LegendContainerStyled size={small ? 200 : 600} role="group" aria-label="Legend">
             <IconContainer>
                 <IconButton
                     size={"small"}
