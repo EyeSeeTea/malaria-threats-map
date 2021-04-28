@@ -20,37 +20,37 @@ export const lng = ALLOWED_LANGUAGES.includes(storageLng) ? storageLng : "en";
 localStorage.setItem("language", lng);
 
 i18next.init({
-  interpolation: { escapeValue: false },
-  lng: lng, // language to use
-  resources: {
-    en: {
-      common: common_en,
-      disclaimer: disclaimer_en,
-      tour: tour_en,
-      download: download_en
+    interpolation: { escapeValue: false },
+    lng: lng, // language to use
+    resources: {
+        en: {
+            common: common_en,
+            disclaimer: disclaimer_en,
+            tour: tour_en,
+            download: download_en,
+        },
+        es: {
+            common: common_es,
+            disclaimer: disclaimer_es,
+            tour: tour_es,
+            download: download_es,
+        },
+        fr: {
+            common: common_fr,
+            disclaimer: disclaimer_fr,
+            tour: tour_fr,
+            download: download_fr,
+        },
     },
-    es: {
-      common: common_es,
-      disclaimer: disclaimer_es,
-      tour: tour_es,
-      download: download_es
-    },
-    fr: {
-      common: common_fr,
-      disclaimer: disclaimer_fr,
-      tour: tour_fr,
-      download: download_fr
-    }
-  }
 });
 
 export const changeLanguage = (lng: string) => {
-  setTimeout(() => dispatchCustomEvent("resize"));
-  return i18next.changeLanguage(lng, err => {
-    if (err) {
-      return console.log("something went wrong loading", err);
-    } else {
-      localStorage.setItem("language", lng);
-    }
-  });
+    setTimeout(() => dispatchCustomEvent("resize"));
+    return i18next.changeLanguage(lng, err => {
+        if (err) {
+            return console.log("something went wrong loading", err);
+        } else {
+            localStorage.setItem("language", lng);
+        }
+    });
 };
