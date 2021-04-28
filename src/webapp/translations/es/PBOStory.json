@@ -5,8 +5,8 @@
         "part3": "<b>¿Los recomienda la OMS como intervención de salud pública?</b>",
         "part4": "La OMS recomienda condicionalmente el despliegue de los mosquiteros con piretroides-BOP precalificados por la OMS, en lugar de los mosquiteros que solo contienen piretroide, en aquellos lugares donde los vectores principales del paludismo presentan resistencia a los piretroides que sea: a) confirmada; b) de nivel intermedio, y c) conferida, al menos en parte, por un mecanismo de resistencia basado en la monoxigenasa, determinado mediante procedimientos estándar.",
         "part5": "Esta recomendación se otorgó excepcionalmente en 2017 con base a los datos epidemiológicos de un ensayo clínico randomizado en clusters y seguirá siendo condicional hasta que los datos de al menos otro ensayo, realizado durante un periodo de 2 años, confirmen el impacto epidemiológico demostrado por el primer ensayo."
-      },
-      "step2": {
+    },
+    "step2": {
         "part1": "<b>Consideraciones para el despliegue de mosquiteros con piretroide y BOP</b>",
         "part2": "El despliegue de <b>mosquiteros con piretroide y BOP</b> solo debe considerarse si no se hace a expensas de una reducción en la cobertura del control vectorial con otras herramientas eficaces (principalmente  MILD o PID); el objetivo principal debe seguir siendo siempre el logro y el mantenimiento de la cobertura universal para todas las personas en riesgo de contraer paludismo.",
         "part3": "Su despliegue debe considerarse zona por zona (por ejemplo, distritos o provincias) evaluado si cada una de ellas cumplen los criterios recomendados por la OMS; en lugar de desplegarse en el país completo. Es importante considerar su despliegue en el contexto de la disponibilidad de recursos y evaluándolo frente a otras intervenciones de control de la malaria.",
@@ -19,4 +19,4 @@
         "part4": "Aún no se conoce la duración del sinergista piperonil butóxido (PBO) impregnado en el material del mosquitero.",
         "part5": "Para obtener más información sobre los mosquiteros con piretroide y BOP, y su diferencia con los mosquiteros que solo contienen piretroides, consulte:"
     }
-  }
+}

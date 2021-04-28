@@ -1,0 +1,47 @@
+import { Study } from "./Study";
+
+export interface InvasiveStudy extends Study {
+    ASSAY_TYPE: string;
+    INSTITUTE_CURATION: string;
+    COUNTRY_NAME: string;
+    Code: string;
+    INSECTICIDE_CLASS: string;
+    INSECTICIDE_CONC: string;
+    INSECTICIDE_INTENSITY: string;
+    INSECTICIDE_TYPE: string;
+    INSTITUTE: string;
+    INVESTIGATION_TYPE: string;
+    ISO2: string;
+    MALARIA_ENDEMIC: number;
+    MECHANISM_FREQUENCY: string;
+    MECHANISM_PROXY: string;
+    MECHANISM_STATUS: string;
+    METHOD_STANDARD: number;
+    MONTH_END: string;
+    MONTH_START: string;
+    MORTALITY_ADJUSTED: string;
+    NUMBER: string;
+    PROXY_TYPE: string;
+    REGION_FULL: string;
+    RESISTANCE_FREQUENCY: string;
+    RESISTANCE_INTENSITY: string;
+    RESISTANCE_STATUS: string;
+    RESISTANCE_STATUS_NUMERIC: number;
+    SITE_ID: string;
+    SPECIES: string;
+    STAGE_ORIGIN: string;
+    SUBREGION: string;
+    SYNERGIST_CONC: string;
+    SYNERGIST_TYPE: string;
+    TIME: string;
+    TYPE: string;
+    TYPE_SYNERGIST: string;
+    VERSION: number;
+    VILLAGE_NAME: string;
+    YEAR_END: string;
+    YEAR_START: string;
+    SAMPLING_METHOD: string;
+    ID_METHOD: string;
+    VECTOR_SPECIES: string;
+    VECTOR_SPECIES_COMPLEX: string;
+}

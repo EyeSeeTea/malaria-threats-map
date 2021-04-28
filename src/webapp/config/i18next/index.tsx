@@ -39,46 +39,46 @@ export const lng = ALLOWED_LANGUAGES.includes(storageLng) ? storageLng : "en";
 localStorage.setItem("language", lng);
 
 i18next.init({
-  interpolation: { escapeValue: false },
-  lng: lng, // language to use
-  resources: {
-    en: {
-      common: common_en,
-      disclaimer: disclaimer_en,
-      tour: tour_en,
-      mekong: mekong_en,
-      download: download_en,
-      invasive: invasiveStory_en,
-      diagnosis: diagnosisStory_en,
-      pbo: PBOStory_en,
-      prevention: preventionStory_en,
-      treatment: treatmentStory_en
+    interpolation: { escapeValue: false },
+    lng: lng, // language to use
+    resources: {
+        en: {
+            common: common_en,
+            disclaimer: disclaimer_en,
+            tour: tour_en,
+            mekong: mekong_en,
+            download: download_en,
+            invasive: invasiveStory_en,
+            diagnosis: diagnosisStory_en,
+            pbo: PBOStory_en,
+            prevention: preventionStory_en,
+            treatment: treatmentStory_en,
+        },
+        es: {
+            common: common_es,
+            disclaimer: disclaimer_es,
+            tour: tour_es,
+            mekong: mekong_es,
+            download: download_es,
+            invasive: invasiveStory_es,
+            diagnosis: diagnosisStory_es,
+            pbo: PBOStory_es,
+            prevention: preventionStory_es,
+            treatment: treatmentStory_es,
+        },
+        fr: {
+            common: common_fr,
+            disclaimer: disclaimer_fr,
+            tour: tour_fr,
+            mekong: mekong_fr,
+            download: download_fr,
+            invasive: invasiveStory_fr,
+            diagnosis: diagnosisStory_fr,
+            pbo: PBOStory_fr,
+            prevention: preventionStory_fr,
+            treatment: treatmentStory_fr,
+        },
     },
-    es: {
-      common: common_es,
-      disclaimer: disclaimer_es,
-      tour: tour_es,
-      mekong: mekong_es,
-      download: download_es,
-      invasive: invasiveStory_es,
-      diagnosis: diagnosisStory_es,
-      pbo: PBOStory_es,
-      prevention: preventionStory_es,
-      treatment: treatmentStory_es
-    },
-    fr: {
-      common: common_fr,
-      disclaimer: disclaimer_fr,
-      tour: tour_fr,
-      mekong: mekong_fr,
-      download: download_fr,
-      invasive: invasiveStory_fr,
-      diagnosis: diagnosisStory_fr,
-      pbo: PBOStory_fr,
-      prevention: preventionStory_fr,
-      treatment: treatmentStory_fr
-    }
-  }
 });
 
 export const changeLanguage = (lng: string) => {
