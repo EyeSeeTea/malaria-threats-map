@@ -1,6 +1,6 @@
 import "@testing-library/cypress/add-commands";
 
-Cypress.Commands.add("loadPage", (theme) => {
+Cypress.Commands.add("loadPage", theme => {
     cy.visit("/");
     cy.contains("Close").click();
 
@@ -10,7 +10,7 @@ Cypress.Commands.add("loadPage", (theme) => {
 });
 
 Cypress.Commands.add("resetMapZoom", () => {
-    cy.get(".mapboxgl-canvas").trigger("wheel", {deltaY: 800});
+    cy.get(".mapboxgl-canvas").trigger("wheel", { deltaY: 800 });
     //Wait to load points in canvas
     //Points are not at the DOM then we wait by time
     cy.wait(5000);
@@ -21,13 +21,13 @@ Cypress.Commands.add("clickOnMap", (x, y) => {
 });
 
 Cypress.Commands.add("openStoryMode", () => {
-    cy.findByRole("button", {name: "Story mode"}).click();
+    cy.findByRole("button", { name: "Story mode" }).click();
 });
 
 Cypress.Commands.add("openSummaryReport", () => {
-    cy.findByRole("button", {name: "Summary Report"}).click();
+    cy.findByRole("button", { name: "Summary Report" }).click();
 });
 
-Cypress.Commands.add("findByLegendTitle", (title) => {
-    cy.findByRole("group", {name: "Legend"}).findByText(title);
+Cypress.Commands.add("findByLegendTitle", title => {
+    cy.findByRole("group", { name: "Legend" }).findByText(title);
 });

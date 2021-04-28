@@ -3,7 +3,7 @@ import { themes } from "../support/constants";
 describe("Open theme", () => {
     beforeEach(() => {
         cy.loadPage();
-    })
+    });
 
     it("should contains insecticide resistance status sub theme by default", () => {
         cy.contains("Malaria Threats Map");

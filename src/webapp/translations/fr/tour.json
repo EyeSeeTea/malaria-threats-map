@@ -1,0 +1,33 @@
+{
+    "steps": {
+        "1": {
+            "title": "Bienvenue sur la Carte des menaces du paludisme",
+            "p1": "Vous êtes sur la plateforme officielle de l’Organisation Mondiale de la Santé, éditée pour présenter l’ampleur et la répartition des quatre défis biologiques à la lutte contre le paludisme et son éradication.",
+            "p2": "Cet assistant vous montrera comment utiliser cette plateforme."
+        },
+        "2": {
+            "title": "Veuillez sélectionner une langue."
+        },
+        "3": {
+            "p1": "Allez sur nos cartes interactives qui présentent les données actualisées sur les trois défis."
+        },
+        "4": {
+            "p1": "Ouvrez la section des filtres pour choisir parmi les filtres de défi ainsi que les filtres de région"
+        },
+        "5": {
+            "p1": "Sélectionnez un pays, une région ou une sous-région de votre choix ou laisser ces champs vides pour avoir un aperçu sur tous les pays."
+        },
+        "6": {
+            "p1": "Sélectionnez plusieurs filtres et notez comment la carte s'ajuste automatiquement."
+        },
+        "7": {
+            "p1": "Cliquez sur un site pour accéder au résultat de l’étude correspondant à vos critères de recherche. La fenêtre contextuelle affiche les résultats pour une seule étude. S’il y a plus d’une étude correspondant à vos critères de recherche pour un site, vous pouvez consulter les résultats des autres études en cliquant sur la flèche dirigée vers le haut >"
+        },
+        "8": {
+            "p1": "Consulter les résultats de bioessais par site pour chaque pays."
+        },
+        "9": {
+            "p1": "Cliquez sur un pays pour accéder au récapitulatif sur la résistance."
+        }
+    }
+}

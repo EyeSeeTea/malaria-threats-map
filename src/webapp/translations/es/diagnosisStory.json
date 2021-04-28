@@ -1,0 +1,22 @@
+{
+    "step1": {
+        "part1": "<b>Las supresiones de genes entre los parásitos de la malaria causan falsos negativos en las pruebas de diagnóstico.</b>",
+        "part2": "Las pruebas de diagnóstico rápido (PDR) se utilizan para el diagnóstico de la malaria en la mayoría de las áreas endémicas. La detección de <i> Plasmodium falciparum </i>, el parásito de la malaria que causa más mortalidad en el mundo, depende de las PDR dirigidas a la detección de un antígeno llamado HRP2 (proteína 2 rica en histidina), así como cierta reactividad cruzada con HRP3, una proteína de los parásitos estructuralmente similar al HRP2. La gran mayoría de los PDR fabricadas, adquiridas y utilizadas en todo el mundo se basan en la detección de HRP2 ya sea solos o en combinación con otros antígenos (como la lactato-deshidrogenasa o la aldolasa).",
+        "part3": "Sin embargo, en 2010 un estudio patrocinado por la OMS y FIND encontró que algunos parásitos de <i>P. falciparum</i> en el Perú carecían del gen <i>pfhrp2</i>. Sin este gen, el parásito no puede producir HRP2 y, por tanto, las pruebas rápidas basadas en HRP2 no lo detectan. Este fue el primer informe que confirmó la ausencia del gen <i>pfhrp2</i> entre parásitos de la especie <i>P. falciparum</i> en un entorno clínico.",
+        "see": "Ver: ",
+        "part4": "Gamboa et al. (2010) Una gran proporción de aislamientos de <i>P. falciparum</i> en la región amazónica del Perú carece de <i>pfhrp2</i> y pfhrp3: implicaciones para las pruebas de diagnóstico rápido del paludismo. PLoS One. 5(1):e8091"
+    },
+    "step2": {
+        "part1": "<b>Las supresiones de los genes <i>pfhrp2/3</i> pueden tener implicaciones significativas para la salud pública</b>",
+        "part2": "Los falsos negativos obtenidos mediante PDR causados por supresiones de <i>pfhrp2/3</i> pueden conducir a un diagnóstico incorrecto o tardío y amenazar la seguridad del paciente. Además, el paciente puede seguir siendo una fuente de transmisión de la malaria hasta que se le trate adecuadamente.",
+        "part3": "Desde 2010, varios estudios realizados en distintas regiones de África y Asia también encontraron parásitos <i>P. falciparum</i> que carecen del gen <i>pfhrp2</i>. La prevalencia de esta mutación genética varía según los países. En los lugares donde se confirma la supresión del gen, las prácticas de compra de PDR y gestión de casos deben adaptarse en consecuencia. En los casos en los que la prevalencia de falsos negativos debido a la supresión del <i>pfhrp2</i> supera el 5% la OMS recomienda usar una PDR que no esté basada exclusivamente en la detección de HRP2 para detectar parásitos de la especie <i>P. falciparum</i> (pf-pLDH) en pacientes sintomáticos.",
+        "link": "https://www.who.int/publications/i/item/WHO-HTM-GMP-2017.18",
+        "supportingStudies": "Enlace a estudios de apoyo."
+    },
+    "step3": {
+        "part1": "<b>Una mayor vigilancia de las supresiones del gen <i>pfhrp2/3</i> entre las poblaciones de <i>P. falciparum</i> es esencial</b>",
+        "part2": "Una vez que se confirman las supresiones en una región geográfica, deben realizarse estudios localmente y en zonas vecinas para estimar la prevalencia de los parásitos con supresión del gen. En contextos clínicos, es importante investigar la causa o causas de los falsos negativos en las PDR.",
+        "part3": "La vigilancia centinela debe ser diseñada para reportar los hallazgos tanto positivos como negativos. Los datos deben gestionarse bien para ayudar a priorizar los estudios, analizar adecuadamente las tendencias a lo largo del tiempo e informar una respuesta coordinada a esta amenaza.",
+        "part4": "A partir de 2017, la base de datos de la OMS incluye datos de supresión de genes pfhrp2/3para 29 países en 5 de las regiones de la OMS."
+    }
+}

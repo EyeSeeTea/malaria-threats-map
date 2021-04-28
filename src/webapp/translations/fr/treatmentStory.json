@@ -1,0 +1,25 @@
+{
+    "step1": {
+        "part1": "<b>Les parasites du paludisme ont développé de manière successive une résistance au traitement antipaludique</b>",
+        "part2": "<b>Pendant des décennies, la résistance aux médicaments a été l'un des principaux obstacles à la lutte contre le paludisme.</b>",
+        "part3": "La surveillance continue et l’information sur l'efficacité du médicament et sur la résistance des parasites sont essentielles pour garantir aux patients un traitement efficace. L'OMS soutient les programmes nationaux de lutte contre le paludisme afin de surveiller l'efficacité du traitement antipaludique et de suivre les changements génétiques liés à la résistance aux médicaments chez les parasites du paludisme.",
+        "part4": "Le rôle crucial de la surveillance de l'efficacité des médicaments a été observé dans le monde entier. La résistance a été un défi persistant dans la sous-région du Grand Mékong. La région a été très active dans la surveillance de l'efficacité des médicaments."
+    },
+    "step2": {
+        "part1": "<b>La surveillance systématique de l'efficacité des thérapies combinées à base d'artémisinine (ACT) est essentielle pour s'assurer que les patients reçoivent un traitement efficace</b>",
+        "part2": "<b>L'OMS recommande que tous les pays où le paludisme est endémique effectuent des études d'efficacité thérapeutique au moins une fois tous les deux ans pour informer la politique de traitement.</b>",
+        "part3": "La sélection du médicament antipaludique recommandé repose sur l'efficacité du médicament contre le parasite du paludisme. Par conséquent, le suivi de l'efficacité thérapeutique des médicaments antipaludiques est un élément fondamental des stratégies de traitement du paludisme. L'OMS a élaboré un protocole standard pour la surveillance de l'efficacité du traitement antipaludique."
+    },
+    "step3": {
+        "part1": "<b>Les études sur les marqueurs moléculaires fournissent des données essentielles pour la détection et le suivi de la résistance aux médicaments antipaludiques</b>",
+        "part2": "<b>Les marqueurs moléculaires pour la résistance aux médicaments sont des changements génétiques dans le parasite du paludisme qui se sont révélés être associés à une résistance.</b>",
+        "part3": "Par rapport aux études d'efficacité, les études sur les marqueurs moléculaires présentent plusieurs avantages pratiques. Par exemple, un grand nombre d'échantillons peuvent être collectés et analysés rapidement. Les marqueurs moléculaires de la résistance de <i>P. falciparum</i> aux médicaments ont été identifiés comprenant la chloroquine, la piperaquine, la mefloquine, la pyrimethamine, la sulfadoxine, l’atovaquone et l’artémisinine et ses dérivés. Pour les artémisinines, plusieurs mutations dans le domaine du promoteur Kelch 13 (K13) se sont révélées associées à une clearance parasitaire retardée. Il s'agit d'un domaine en constante évolution au fur et à mesure que de nouvelles mutations K13 sont découvertes et nous développons une meilleure compréhension des mutations ayant la plus grande influence.",
+        "part4": "Pour les artémisinines, de nombreuses mutations dans le domaine du promoteur Kelch 13 (K13) se sont révélées associées au dégagement de parasites retardé. Il s'agit d'un champ évolutif au fur et à mesure que de nouvelles mutations K13 sont découvertes et nous développons une meilleure compréhension des mutations les plus influentes."
+    },
+    "step4": {
+        "part1": "<b>La resistencia a los fármacos es un desafío tanto en <i>P. vivax</i> como en <i>P. falciparum</i>, las dos especies más comunes de parásitos de la malaria humana</b>",
+        "part2": "<b>Es critico contar con información actualizada sobre la resistencia a fármacos para ambos parásitos de la malaria</b>",
+        "part3": "Las terapias combinadas basadas en la artemisinina son el tratamiento recomendado para el parásito más mortal de la malaria, <i>P. falciparum</i>. Existen dos indicadores clave para vigilar la eficacia de las TCA: (1) la proporción de tratamientos fallidos y (2) la proporción de pacientes que presenta parásitos al tercer día después del inicio del tratamiento. Un aumento en la proporción de pacientes con parásitos al tercer día es un signo que advierte de la potencial existencia de resistencia a la artemisinina.",
+        "part4": "La cloroquina se sigue utilizando en muchos lugares para tratar la malaria por <i>P. vivax</i>. Sin embargo, como la resistencia a la cloroquina también se está desarrollando en este parásito, algunos países han comenzado a utilizar TCA para el tratamiento de la malaria por <i>P. vivax</i>."
+    }
+}
