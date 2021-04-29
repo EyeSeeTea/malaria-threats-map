@@ -58,14 +58,11 @@ function PboDeploymentLegend({ legendExpanded }: Props) {
             color: PboDeploymentColors[PboDeploymentStatus.NO_DATA][0],
         },
     ];
-    
+
     const legend = () => (
         <LegendDescriptionText>
             {t("legend:p1")}
-            <Link
-                href={t("legend:p1Link")}
-                target={"_blank"}
-            >
+            <Link href={t("legend:p1Link")} target={"_blank"}>
                 {t("legend:p1a")}
             </Link>
             {t("legend:p1b")}
@@ -81,9 +78,7 @@ function PboDeploymentLegend({ legendExpanded }: Props) {
             </LegendTitleContainer>
             {legendExpanded && (
                 <>
-                    <Description>
-                        {legend()}
-                    </Description>
+                    <Description>{legend()}</Description>
                     <br />
                     <br />
                 </>

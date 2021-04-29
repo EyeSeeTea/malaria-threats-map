@@ -401,9 +401,9 @@ function DataDownload({
                         name: t("disclaimerTab:name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer")
-                            } 
-                        ]
+                                Disclaimer: t("disclaimerTab:disclaimer"),
+                            },
+                        ],
                     },
                     {
                         name: "Data",
@@ -465,9 +465,9 @@ function DataDownload({
                         name: t("disclaimerTab:name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer")
-                            } 
-                        ]
+                                Disclaimer: t("disclaimerTab:disclaimer"),
+                            },
+                        ],
                     },
                     {
                         name: "Data",
@@ -522,9 +522,9 @@ function DataDownload({
                         name: t("disclaimerTab:name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer")
-                            } 
-                        ]
+                                Disclaimer: t("disclaimerTab:disclaimer"),
+                            },
+                        ],
                     },
                     {
                         name: "Data",
@@ -577,9 +577,9 @@ function DataDownload({
                         name: t("disclaimerTab:name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer")
-                            } 
-                        ]
+                                Disclaimer: t("disclaimerTab:disclaimer"),
+                            },
+                        ],
                     },
                     {
                         name: "Data",
@@ -636,9 +636,9 @@ function DataDownload({
                         name: t("disclaimerTab:name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer")
-                            } 
-                        ]
+                                Disclaimer: t("disclaimerTab:disclaimer"),
+                            },
+                        ],
                     },
                     {
                         name: "Data",
@@ -691,9 +691,9 @@ function DataDownload({
                         name: t("disclaimerTab:name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer")
-                            } 
-                        ]
+                                Disclaimer: t("disclaimerTab:disclaimer"),
+                            },
+                        ],
                     },
                     {
                         name: "MM_StudyInfo",
@@ -755,9 +755,9 @@ function DataDownload({
                     name: t("disclaimerTab:name"),
                     studies: [
                         {
-                            Disclaimer: t("disclaimerTab:disclaimer")
-                        } 
-                    ]
+                            Disclaimer: t("disclaimerTab:disclaimer"),
+                        },
+                    ],
                 },
                 {
                     name: "Data",
@@ -793,7 +793,9 @@ function DataDownload({
             implementationCountries: useInfo.countries.join(", ") || "",
             date: useInfo.studyDate.toISOString().slice(0, 10),
             theme: selections.theme,
-            dataset: t(`common:${selections.preventionDataset || selections.treatmentDataset || selections.invasiveDataset}`),
+            dataset: t(
+                `common:${selections.preventionDataset || selections.treatmentDataset || selections.invasiveDataset}`
+            ),
         };
         let dataset;
         switch (selections.theme) {

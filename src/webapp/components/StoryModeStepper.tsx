@@ -122,15 +122,13 @@ function StoryModeStepper({ theme, preventionFilters, setStoryMode, setStoryMode
         pbo: PBOSteps,
         diagnosis: DiagnosisSteps,
         treatment: TreatmentSteps,
-        prevention: PreventionSteps
-      } as Steps;
-    
-      const selectedSteps = themeMap[
-        theme === "prevention" &&
-        preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT
-          ? "pbo"
-          : theme
-      ];
+        prevention: PreventionSteps,
+    } as Steps;
+
+    const selectedSteps =
+        themeMap[
+            theme === "prevention" && preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT ? "pbo" : theme
+        ];
 
     const SelectedStep = selectedSteps[storyModeStep];
 
