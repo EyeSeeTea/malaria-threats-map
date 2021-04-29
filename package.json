@@ -73,7 +73,7 @@
     "build-dev": "cross-env-shell REACT_APP_ENV=dev react-scripts build",
     "build-mekong": "cross-env-shell REACT_APP_ENV=staging-mekong react-scripts build",
     "build-prod-mekong": "cross-env-shell REACT_APP_ENV=prod-mekong react-scripts build",
-    "test": "react-scripts test",
+    "test": "cross-env-shell REACT_APP_ENV=staging jest --passWithNoTests",
     "eject": "react-scripts eject",
     "cy:verify": "cypress verify",
     "cy:open": "cypress open",
