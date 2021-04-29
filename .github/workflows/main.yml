@@ -1,4 +1,4 @@
-name: GitHub Pages deployment
+name: Application testing
 
 on: [push, pull_request]
 
@@ -46,9 +46,9 @@ jobs:
       - uses: cypress-io/github-action@v2
         env:
           REACT_APP_ENV: ${{ matrix.server }}
-        start: yarn start
-        wait-on: 'https://localhost:8080'
         with:
           browser: chrome
           headless: true
           install-command: yarn install --frozen-lockfile --silent
+          start: yarn start
+          wait-on: 'https://localhost:8080'
