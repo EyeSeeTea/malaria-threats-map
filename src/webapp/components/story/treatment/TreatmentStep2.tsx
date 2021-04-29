@@ -11,7 +11,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export default () => {
+const TreatmentStep2 = () => {
     const classes = useStyles({});
     const { t } = useTranslation("treatment");
 
@@ -39,3 +39,5 @@ export default () => {
         </div>
     );
 };
+
+export default TreatmentStep2;

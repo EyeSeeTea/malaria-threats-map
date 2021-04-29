@@ -53,7 +53,7 @@
         "styled-components": "^5.2.3",
         "typesafe-actions": "^4.4.2",
         "url-search-params": "^1.1.0",
-        "worker-loader": "3.0.8",
+        "worker-loader": "3.0.7",
         "xlsx": "^0.16.9"
     },
     "scripts": {

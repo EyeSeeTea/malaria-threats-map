@@ -10,8 +10,7 @@ const useStyles = makeStyles(() =>
         },
     })
 );
-
-export default () => {
+const InvasiveStep3 = () => {
     const classes = useStyles({});
     const { t } = useTranslation("invasive");
 
@@ -56,3 +55,5 @@ export default () => {
         </div>
     );
 };
+
+export default InvasiveStep3;

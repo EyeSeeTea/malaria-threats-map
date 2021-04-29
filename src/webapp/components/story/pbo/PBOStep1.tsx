@@ -19,7 +19,7 @@ const Images = styled.div`
     justify-content: space-between;
 `;
 
-export default () => {
+const PBOStep1 = () => {
     const classes = useStyles({});
     const { t } = useTranslation("pbo");
 
@@ -62,3 +62,5 @@ export default () => {
         </div>
     );
 };
+
+export default PBOStep1;

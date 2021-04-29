@@ -10,8 +10,7 @@ const useStyles = makeStyles(() =>
         },
     })
 );
-
-export default () => {
+const DiagnosisStep1 = () => {
     const classes = useStyles({});
     const { t } = useTranslation("diagnosis");
     return (
@@ -60,3 +59,4 @@ export default () => {
         </div>
     );
 };
+export default DiagnosisStep1;
