@@ -1,7 +1,5 @@
 name: Application testing
-
-on: [push, pull_request]
-
+on: [push]
 jobs:
   unit-testing:
     runs-on: ubuntu-latest
