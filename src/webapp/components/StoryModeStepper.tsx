@@ -17,7 +17,6 @@ import { connect } from "react-redux";
 import PreventionSteps from "./story/prevention/PreventionSteps";
 import DiagnosisSteps from "./story/diagnosis/DiagnosisSteps";
 import { useTranslation } from "react-i18next";
-import i18next from "i18next";
 import TreatmentSteps from "./story/treatment/TreatmentSteps";
 import InvasiveSteps from "./story/invasive/InvasiveSteps";
 import { useSwipeable, SwipeEventData } from "react-swipeable";
@@ -83,20 +82,11 @@ type Props = DispatchProps & StateProps;
 
 type Steps = { [value: string]: any[] };
 
-const stepsMap = (language: string) => ({
-    prevention: (PreventionSteps as Steps)[language],
-    pbo: (PBOSteps as Steps)[language],
-    diagnosis: (DiagnosisSteps as Steps)[language],
-    treatment: (TreatmentSteps as Steps)[language],
-    invasive: (InvasiveSteps as Steps)[language],
-});
-
 function StoryModeStepper({ theme, preventionFilters, setStoryMode, setStoryModeStep, storyModeStep }: Props) {
     const classes = useStyles({});
     const steps = getSteps();
 
     const { t } = useTranslation("common");
-    const language = i18next.language || window.localStorage.i18nextLng;
 
     const handleNext = () => {
         setStoryModeStep(storyModeStep + 1);
@@ -127,11 +117,21 @@ function StoryModeStepper({ theme, preventionFilters, setStoryMode, setStoryMode
         setStoryMode(false);
     };
 
-    const themeMap = stepsMap(language) as Steps;
-    const selectedSteps =
-        themeMap[
-            theme === "prevention" && preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT ? "pbo" : theme
-        ];
+    const themeMap = {
+        invasive: InvasiveSteps,
+        pbo: PBOSteps,
+        diagnosis: DiagnosisSteps,
+        treatment: TreatmentSteps,
+        prevention: PreventionSteps
+      } as Steps;
+    
+      const selectedSteps = themeMap[
+        theme === "prevention" &&
+        preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT
+          ? "pbo"
+          : theme
+      ];
+
     const SelectedStep = selectedSteps[storyModeStep];
 
     if (storyModeStep < 0 || storyModeStep > selectedSteps.length - 1) {

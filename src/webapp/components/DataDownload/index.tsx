@@ -53,8 +53,6 @@ import { addDataDownloadRequestAction } from "../../store/actions/data-download-
 import { format } from "date-fns";
 import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
-import { englishDisclaimerTab, frenchDisclaimerTab, spanishDisclaimerTab } from "./utils";
-import i18next from "i18next";
 import { emailRegexp } from "../Subscription";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
@@ -189,8 +187,7 @@ function DataDownload({
     addDownload,
 }: Props) {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
-    const { t: d } = useTranslation("download");
+    const { t } = useTranslation(["disclaimerTab", "common", "download"]);
     const [activeStep, setActiveStep] = React.useState(0);
 
     React.useEffect(() => {
@@ -358,18 +355,6 @@ function DataDownload({
         );
     };
 
-    const getDisclaimerTab = () => {
-        const language = i18next.language || window.localStorage.i18nextLng;
-        switch (language) {
-            case "fr":
-                return frenchDisclaimerTab;
-            case "es":
-                return spanishDisclaimerTab;
-            default:
-                return englishDisclaimerTab;
-        }
-    };
-
     const downloadPreventionData = () => {
         switch (selections.preventionDataset) {
             case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
@@ -412,7 +397,14 @@ function DataDownload({
                     "DATA_CURATOR",
                 ];
                 const tabs = [
-                    getDisclaimerTab(),
+                    {
+                        name: t("disclaimerTab:name"),
+                        studies: [
+                            {
+                                Disclaimer: t("disclaimerTab:disclaimer")
+                            } 
+                        ]
+                    },
                     {
                         name: "Data",
                         studies: results,
@@ -421,7 +413,7 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: d(`discrimination.${field}`),
+                            Description: t(`download:discrimination.${field}`),
                         })),
                     },
                 ];
@@ -469,7 +461,14 @@ function DataDownload({
                     "DATA_CURATOR",
                 ];
                 const tabs = [
-                    getDisclaimerTab(),
+                    {
+                        name: t("disclaimerTab:name"),
+                        studies: [
+                            {
+                                Disclaimer: t("disclaimerTab:disclaimer")
+                            } 
+                        ]
+                    },
                     {
                         name: "Data",
                         studies: results,
@@ -478,7 +477,7 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: d(`synergist.${field}`),
+                            Description: t(`download:synergist.${field}`),
                         })),
                     },
                 ];
@@ -519,7 +518,14 @@ function DataDownload({
                     "DATA_CURATOR",
                 ];
                 const tabs = [
-                    getDisclaimerTab(),
+                    {
+                        name: t("disclaimerTab:name"),
+                        studies: [
+                            {
+                                Disclaimer: t("disclaimerTab:disclaimer")
+                            } 
+                        ]
+                    },
                     {
                         name: "Data",
                         studies: results,
@@ -528,7 +534,7 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: d(`molecular_assay.${field}`),
+                            Description: t(`download:molecular_assay.${field}`),
                         })),
                     },
                 ];
@@ -567,7 +573,14 @@ function DataDownload({
                     "DATA_CURATOR",
                 ];
                 const tabs = [
-                    getDisclaimerTab(),
+                    {
+                        name: t("disclaimerTab:name"),
+                        studies: [
+                            {
+                                Disclaimer: t("disclaimerTab:disclaimer")
+                            } 
+                        ]
+                    },
                     {
                         name: "Data",
                         studies: results,
@@ -576,7 +589,7 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: d(`biochemical_assay.${field}`),
+                            Description: t(`download:biochemical_assay.${field}`),
                         })),
                     },
                 ];
@@ -619,7 +632,14 @@ function DataDownload({
                     "CITATION_URL",
                 ];
                 const tabs = [
-                    getDisclaimerTab(),
+                    {
+                        name: t("disclaimerTab:name"),
+                        studies: [
+                            {
+                                Disclaimer: t("disclaimerTab:disclaimer")
+                            } 
+                        ]
+                    },
                     {
                         name: "Data",
                         studies: results,
@@ -628,7 +648,7 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: d(`therapeutic_efficacy.${field}`),
+                            Description: t(`download:therapeutic_efficacy.${field}`),
                         })),
                     },
                 ];
@@ -667,7 +687,14 @@ function DataDownload({
                     "PROPORTION",
                 ];
                 const tabs = [
-                    getDisclaimerTab(),
+                    {
+                        name: t("disclaimerTab:name"),
+                        studies: [
+                            {
+                                Disclaimer: t("disclaimerTab:disclaimer")
+                            } 
+                        ]
+                    },
                     {
                         name: "MM_StudyInfo",
                         studies: results,
@@ -680,7 +707,7 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: d(`mm.${field}`),
+                            Description: t(`download:mm.${field}`),
                         })),
                     },
                 ];
@@ -724,7 +751,14 @@ function DataDownload({
                 "INVASIVE_STATUS",
             ];
             const tabs = [
-                getDisclaimerTab(),
+                {
+                    name: t("disclaimerTab:name"),
+                    studies: [
+                        {
+                            Disclaimer: t("disclaimerTab:disclaimer")
+                        } 
+                    ]
+                },
                 {
                     name: "Data",
                     studies: results,
@@ -733,7 +767,7 @@ function DataDownload({
                     name: "Glossary",
                     studies: fields.map(field => ({
                         "Variable name": field,
-                        Description: d(`invasive.${field}`),
+                        Description: t(`download:invasive.${field}`),
                     })),
                 },
             ];
@@ -746,20 +780,20 @@ function DataDownload({
         const request: Download = {
             firstName: userInfo.firstName,
             lastName: userInfo.lastName,
-            organizationType: t(userInfo.organizationType),
+            organizationType: t(`common:${userInfo.organizationType}`),
             organizationName: userInfo.organizationName,
             position: userInfo.position,
             country: userInfo.country,
             email: userInfo.email,
             phoneNumber: userInfo.phoneNumber,
-            uses: useInfo.uses.map(use => t(use)).join(", "),
+            uses: useInfo.uses.map(use => t(`common:${use}`)).join(", "),
             researchInfo: useInfo.researchInfo || "",
             policiesInfo: useInfo.policiesInfo || "",
             toolsInfo: useInfo.toolsInfo || "",
             implementationCountries: useInfo.countries.join(", ") || "",
             date: useInfo.studyDate.toISOString().slice(0, 10),
             theme: selections.theme,
-            dataset: t(selections.preventionDataset || selections.treatmentDataset || selections.invasiveDataset),
+            dataset: t(`common:${selections.preventionDataset || selections.treatmentDataset || selections.invasiveDataset}`),
         };
         let dataset;
         switch (selections.theme) {
@@ -858,7 +892,7 @@ function DataDownload({
                 color={isDataDownloadOpen ? "primary" : "default"}
                 onClick={handleToggle}
                 className={classes.fab}
-                title={t("icons.download")}
+                title={t("common:icons.download")}
             >
                 <CloudDownloadIcon />
             </Fab>
@@ -875,11 +909,11 @@ function DataDownload({
                     <Container maxWidth={"md"}>
                         <Toolbar variant="dense">
                             <Typography variant="h6" className={classes.title}>
-                                {t("data_download.title")}
+                                {t("common:data_download.title")}
                             </Typography>
                             <FlexGrow />
                             <Button autoFocus color="inherit" onClick={handleToggle}>
-                                {t("data_download.buttons.close")}
+                                {t("common:data_download.buttons.close")}
                             </Button>
                         </Toolbar>
                     </Container>
@@ -888,7 +922,7 @@ function DataDownload({
                     <Stepper alternativeLabel nonLinear activeStep={activeStep} className={classes.paper}>
                         {steps.map((label, _index) => (
                             <Step key={label}>
-                                <StepButton>{t(label)}</StepButton>
+                                <StepButton>{t(`common:${label}`)}</StepButton>
                             </Step>
                         ))}
                     </Stepper>
@@ -899,7 +933,7 @@ function DataDownload({
                 <Container maxWidth={"md"}>
                     <DialogActions>
                         <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                            {t("data_download.buttons.back")}
+                            {t("common:data_download.buttons.back")}
                         </Button>
                         <Button
                             variant="contained"
@@ -908,7 +942,7 @@ function DataDownload({
                             className={classes.button}
                             disabled={!isStepValid()}
                         >
-                            {t("data_download.buttons.next")}
+                            {t("common:data_download.buttons.next")}
                         </Button>
                         <Button
                             startIcon={<CloudDownloadIcon />}
@@ -917,7 +951,7 @@ function DataDownload({
                             disabled={!isFormValid()}
                             onClick={() => downloadData()}
                         >
-                            {t("data_download.buttons.download")}
+                            {t("common:data_download.buttons.download")}
                         </Button>
                     </DialogActions>
                 </Container>

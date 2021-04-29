@@ -5,6 +5,12 @@ import common_fr from "../../translations/fr/common.json";
 import disclaimer_en from "../../translations/en/disclaimer.json";
 import disclaimer_es from "../../translations/es/disclaimer.json";
 import disclaimer_fr from "../../translations/fr/disclaimer.json";
+import disclaimerTab_en from "../../translations/en/disclaimerTab.json";
+import disclaimerTab_es from "../../translations/es/disclaimerTab.json";
+import disclaimerTab_fr from "../../translations/fr/disclaimerTab.json";
+import legend_en from "../../translations/en/legend.json";
+import legend_es from "../../translations/es/legend.json";
+import legend_fr from "../../translations/fr/legend.json";
 import tour_en from "../../translations/en/tour.json";
 import tour_es from "../../translations/es/tour.json";
 import tour_fr from "../../translations/fr/tour.json";
@@ -45,6 +51,8 @@ i18next.init({
         en: {
             common: common_en,
             disclaimer: disclaimer_en,
+            disclaimerTab: disclaimerTab_en,
+            legend: legend_en,
             tour: tour_en,
             mekong: mekong_en,
             download: download_en,
@@ -57,6 +65,8 @@ i18next.init({
         es: {
             common: common_es,
             disclaimer: disclaimer_es,
+            disclaimerTab: disclaimerTab_es,
+            legend: legend_es,
             tour: tour_es,
             mekong: mekong_es,
             download: download_es,
@@ -69,6 +79,8 @@ i18next.init({
         fr: {
             common: common_fr,
             disclaimer: disclaimer_fr,
+            disclaimerTab: disclaimerTab_fr,
+            legend: legend_fr,
             tour: tour_fr,
             mekong: mekong_fr,
             download: download_fr,

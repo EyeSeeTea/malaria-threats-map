@@ -11,7 +11,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export default () => {
+const PreventionStep4 = () => {
     const classes = useStyles({});
     const { t } = useTranslation("prevention");
 
@@ -45,3 +45,5 @@ export default () => {
         </div>
     );
 };
+
+export default PreventionStep4;

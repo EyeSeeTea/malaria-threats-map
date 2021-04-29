@@ -11,7 +11,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export default () => {
+const PBOStep3 = () => {
     const classes = useStyles({});
     const { t } = useTranslation("pbo");
 
@@ -46,3 +46,5 @@ export default () => {
         </div>
     );
 };
+
+export default PBOStep3;
