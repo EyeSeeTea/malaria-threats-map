@@ -1,7 +1,8 @@
 name: Application testing
 on: [push]
 jobs:
-  unit-testing:
+  unit-tests:
+    name: Unit tests
     runs-on: ubuntu-latest
     env:
       REACT_APP_ENV: staging
@@ -36,7 +37,8 @@ jobs:
       - name: Run typescript tests
         run: npx tsc
 
-  cypress-testing:
+  cypress:
+    name: Cypress tests
     strategy:
       matrix:
         server: [staging, dev, prod]
