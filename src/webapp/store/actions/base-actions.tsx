@@ -145,5 +145,5 @@ export const getLastUpdatedSuccessAction = createAction(
 
 export const getLastUpdatedFailureAction = createAction(
     ActionTypeEnum.GetLastUpdatedFailure,
-    action => (error: AjaxError | string) => action()
+    action => (_error: AjaxError | string) => action()
 );

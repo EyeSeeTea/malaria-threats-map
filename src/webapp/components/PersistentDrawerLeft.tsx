@@ -11,7 +11,6 @@ import { State } from "../store/types";
 import {
     selectAreFiltersOpen,
     selectFilters,
-    selectIsInitialDialogOpen,
     selectStoryMode,
     selectTheme,
 } from "../store/reducers/base-reducer";
@@ -156,7 +155,6 @@ const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
-    initialDialogOpen: selectIsInitialDialogOpen(state),
 });
 const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
@@ -177,7 +175,7 @@ function PersistentDrawerLeft({
     storyMode,
     filtersOpen,
     setFiltersOpen,
-    initialDialogOpen,
+   // initialDialogOpen,
     drawerWidth = "400px",
     setTheme,
     theme,

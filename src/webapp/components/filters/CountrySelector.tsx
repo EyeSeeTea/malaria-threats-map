@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { setRegionAction } from "../../store/actions/base-actions";
-import { selectCountryLayer, selectMekongCountries } from "../../store/reducers/country-layer-reducer";
+import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
 import { selectRegion } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { Translation } from "../../types/Translation";
@@ -17,7 +17,6 @@ const mapStateToProps = (state: State) => ({
     region: selectRegion(state),
     countryLayer: selectCountryLayer(state),
     countries: selectCountries(state),
-    mekongCountries: selectMekongCountries(state),
 });
 
 const mapDispatchToProps = {
@@ -28,7 +27,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const CountrySelector = ({ region, countries = [], mekongCountries, setRegion }: Props) => {
+const CountrySelector = ({ region, countries = [], setRegion }: Props) => {
     const { t } = useTranslation("common");
     const onChange = (selection: Option | undefined) => {
         const label = selection ? selection.value : undefined;

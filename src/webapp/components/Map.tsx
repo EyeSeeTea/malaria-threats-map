@@ -38,7 +38,6 @@ import {
     updateBoundsAction,
     updateZoomAction,
 } from "../store/actions/base-actions";
-import ReactMapboxGl from "react-mapbox-gl";
 import { Fade, Hidden } from "@material-ui/core";
 import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
@@ -66,9 +65,7 @@ import ShareIcon from "./ShareIcon";
 import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
 
-ReactMapboxGl({
-    accessToken: "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA",
-});
+mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
 const Separator = styled.div`
     width: 20px;
@@ -133,7 +130,7 @@ const Divider = styled.div`
 `;
 
 export const debounce = <F extends (...args: any[]) => any>(func: F, waitFor: number) => {
-    let timeout: number;
+    let timeout: any;
 
     return (...args: Parameters<F>): Promise<ReturnType<F>> =>
         new Promise(resolve => {
@@ -254,7 +251,7 @@ class Map extends React.Component<Props> {
         }
     }
 
-    componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void {
+    componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {
         if (this.props.setBounds !== prevProps.setBounds) {
             const [[b0, b1], [b2, b3]] = this.props.setBounds;
             this.map.fitBounds([b0, b1, b2, b3], {

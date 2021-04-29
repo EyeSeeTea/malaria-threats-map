@@ -6,7 +6,7 @@ import { setRegionAction, setThemeAction } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 import { colors } from "../constants/theme";
 
-const ColorButton = withStyles((theme: Theme) => ({
+const ColorButton = withStyles((_theme: Theme) => ({
     root: {
         color: "white",
         backgroundColor: colors.treatment.N,
