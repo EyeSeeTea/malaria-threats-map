@@ -47,7 +47,9 @@ const TreatmentStep3 = () => {
             <br />
             <Typography variant={"body2"}>
                 <Trans i18nKey="step3.part4" t={t}>
-                    For artemisinins, several mutations in the Kelch 13 (K13)-propeller domain have been found to be associated with delayed parasite clearance. This is an evolving field as more K13 mutations are discovered and we develop a better understanding of which mutations are of greatest influence.
+                    For artemisinins, several mutations in the Kelch 13 (K13)-propeller domain have been found to be
+                    associated with delayed parasite clearance. This is an evolving field as more K13 mutations are
+                    discovered and we develop a better understanding of which mutations are of greatest influence.
                 </Trans>
             </Typography>
         </div>

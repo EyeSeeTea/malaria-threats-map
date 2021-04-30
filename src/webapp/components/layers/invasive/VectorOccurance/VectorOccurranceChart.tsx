@@ -15,7 +15,6 @@ import Curation from "../../../Curation";
 import { isNotNull } from "../../../../utils/number-utils";
 import { InvasiveStudy } from "../../../../../domain/entities/InvasiveStudy";
 
-
 const Flex = styled.div`
     display: flex;
 `;
@@ -39,8 +38,21 @@ type OwnProps = {
 type Props = DispatchProps & StateProps & OwnProps;
 
 const VectorOccurrenceChart = ({ studies }: Props) => {
-    const { t } = useTranslation(["utils","common"]);
-    const translations = [t("utils:Jan."), t("utils:Feb."), t("utils:Mar."), t("utils:Apr."), t("utils:May"), t("utils:June"), t("utils:July"), t("utils:Aug."), t("utils:Sept."), t("utils:Oct."), t("utils:Nov."), t("utils:Dec.")];
+    const { t } = useTranslation(["utils", "common"]);
+    const translations = [
+        t("utils:Jan."),
+        t("utils:Feb."),
+        t("utils:Mar."),
+        t("utils:Apr."),
+        t("utils:May"),
+        t("utils:June"),
+        t("utils:July"),
+        t("utils:Aug."),
+        t("utils:Sept."),
+        t("utils:Oct."),
+        t("utils:Nov."),
+        t("utils:Dec."),
+    ];
     const getMonthFromNumber = (month: number) => translations[month - 1];
 
     const [study, setStudy] = useState(0);

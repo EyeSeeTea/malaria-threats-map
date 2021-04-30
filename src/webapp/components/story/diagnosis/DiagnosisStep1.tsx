@@ -17,7 +17,7 @@ const DiagnosisStep1 = () => {
         <div>
             <Typography variant={"h6"} className={classes.title}>
                 <Trans i18nKey="step1.part1">
-                <b>Gene deletions among malaria parasites causes false-negative diagnostic test results</b>
+                    <b>Gene deletions among malaria parasites causes false-negative diagnostic test results</b>
                 </Trans>
             </Typography>
             <br />
@@ -43,8 +43,8 @@ const DiagnosisStep1 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-            <Trans i18nKey="step1.see" t={t}>
-                See: 
+                <Trans i18nKey="step1.see" t={t}>
+                    See:
                 </Trans>
                 <Link
                     href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0008091"

@@ -34,14 +34,18 @@ const PreventionStep4 = () => {
             <br />
             <Typography variant={"body2"}>
                 <Trans i18nKey="step4.part3" t={t}>
-                    Classical resistance tests measure the number of mosquitoes that survive exposure to a standard concentration of insecticide. However, intensity of resistance in survivors and the mechanisms that confer resistance are important. High intensity resistance warrants urgent action that should be guided by knowledge of the underlying resistance mechanisms.
+                    Classical resistance tests measure the number of mosquitoes that survive exposure to a standard
+                    concentration of insecticide. However, intensity of resistance in survivors and the mechanisms that
+                    confer resistance are important. High intensity resistance warrants urgent action that should be
+                    guided by knowledge of the underlying resistance mechanisms.
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"}>
                 <Trans i18nKey="step4.part4" t={t}>
-                    WHO test procedures were recently extended to include bioassays that measure resistance intensity and metabolic mechanism involvement.                
-                 </Trans>
+                    WHO test procedures were recently extended to include bioassays that measure resistance intensity
+                    and metabolic mechanism involvement.
+                </Trans>
             </Typography>
             <br />
             <Link href="https://www.who.int/publications/i/item/9789241511575" target="_blank" color={"textSecondary"}>

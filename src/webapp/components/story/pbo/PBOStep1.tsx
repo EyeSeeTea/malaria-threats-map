@@ -33,9 +33,12 @@ const PBOStep1 = () => {
             <br />
             <Typography variant={"body2"}>
                 <Trans i18nKey="step1.part2" t={t}>
-                    Pyrethroid PBO nets are mosquito nets that include both a pyrethroid insecticide and the synergist PBO. PBO acts by inhibiting certain metabolic enzymes (e.g. mixed-function oxidases) within the mosquito that detoxify or sequester insecticides before they can have a toxic effect on the mosquito.
+                    Pyrethroid PBO nets are mosquito nets that include both a pyrethroid insecticide and the synergist
+                    PBO. PBO acts by inhibiting certain metabolic enzymes (e.g. mixed-function oxidases) within the
+                    mosquito that detoxify or sequester insecticides before they can have a toxic effect on the
+                    mosquito.
                 </Trans>
-                </Typography>
+            </Typography>
             <br />
             <Typography variant={"body1"} className={classes.title}>
                 <Trans i18nKey="step1.part3">
@@ -45,13 +48,18 @@ const PBOStep1 = () => {
             <br />
             <Typography variant={"body2"}>
                 <Trans i18nKey="step1.part4" t={t}>
-                    Pyrethroid-PBO nets prequalified by WHO are conditionally recommended for deployment instead of pyrethroid-only LLINs where the principal malaria vector(s) exhibit pyrethroid resistance that is: a) confirmed, b) of intermediate level, and c) conferred (at least in part) by a monooxygenase-based resistance mechanism, as determined by standard procedures.                
+                    Pyrethroid-PBO nets prequalified by WHO are conditionally recommended for deployment instead of
+                    pyrethroid-only LLINs where the principal malaria vector(s) exhibit pyrethroid resistance that is:
+                    a) confirmed, b) of intermediate level, and c) conferred (at least in part) by a monooxygenase-based
+                    resistance mechanism, as determined by standard procedures.
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"}>
                 <Trans i18nKey="step1.part5" t={t}>
-                    This recommendation was exceptionally granted in 2017 based on the epidemiological data from one cluster RCT and will remain conditional until data from at least one more trial conducted over 2 years have confirmed the enhanced impact on malaria that was demonstrated in the first study.                
+                    This recommendation was exceptionally granted in 2017 based on the epidemiological data from one
+                    cluster RCT and will remain conditional until data from at least one more trial conducted over 2
+                    years have confirmed the enhanced impact on malaria that was demonstrated in the first study.
                 </Trans>
             </Typography>
             <br />

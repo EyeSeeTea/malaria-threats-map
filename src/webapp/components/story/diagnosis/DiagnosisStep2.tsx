@@ -45,9 +45,9 @@ const DiagnosisStep2 = () => {
             <br />
             <Typography variant={"body2"}>
                 <Link href={t("step2.link")} target="_blank" color={"textSecondary"}>
-                <Trans i18nKey="step2.part3" t={t}>
-                    Link to supporting studies.
-                </Trans>
+                    <Trans i18nKey="step2.part3" t={t}>
+                        Link to supporting studies.
+                    </Trans>
                 </Link>
             </Typography>
         </div>

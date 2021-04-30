@@ -34,7 +34,9 @@ const PreventionStep2 = () => {
             <br />
             <Typography variant={"body2"}>
                 <Trans i18nKey="step2.part3" t={t}>
-                    Resistance has been found in vectors from all six WHO regions and to all four classes of insecticide currently used in adult malaria vector control. Pyrethroid resistance is most commonly tested and reported.                
+                    Resistance has been found in vectors from all six WHO regions and to all four classes of insecticide
+                    currently used in adult malaria vector control. Pyrethroid resistance is most commonly tested and
+                    reported.
                 </Trans>
             </Typography>
             <br />
