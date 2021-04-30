@@ -17,7 +17,7 @@ const DiagnosisStep3 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step3.part1" t={t}>
+                <Trans i18nKey="step3.part1">
                     <b>
                         Increased monitoring of <i>P. falciparum</i> populations for <i>pfhrp2/3</i> gene deletions is
                         essential

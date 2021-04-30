@@ -18,13 +18,13 @@ const PreventionStep3 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step3.part1" t={t}>
+                <Trans i18nKey="step3.part1">
                     <b>Recent and complete data on insecticide resistance are lacking for many countries</b>
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step3.part2" t={t}>
+                <Trans i18nKey="step3.part2">
                     <b>
                         47 of 89 malaria-endemic countries reported data for 2017. There are relatively few data in
                         regions other than Africa, such as South-East Asia. Monitoring often does not include all major
@@ -33,9 +33,21 @@ const PreventionStep3 = () => {
                 </Trans>
             </Typography>
             <br />
-            <Typography variant={"body2"}>{t("step3.part3")}</Typography>
+            <Typography variant={"body2"}>
+                <Trans i18nKey="step3.part3" t={t}>
+                    Up-to-date and representative data are needed for planning and implementation of vector control.
+                    Monitoring should be conducted in all malaria-endemic countries at least once per year, and should
+                    include all major vector species from the different eco-epidemiological zones. Tests should be
+                    conducted with insecticide classes that are either in use or planned for use in vector control.
+                </Trans>
+            </Typography>
             <br />
-            <Typography variant={"body2"}>{t("step3.part4")}</Typography>
+            <Typography variant={"body2"}>
+                <Trans i18nKey="step3.part4" t={t}>
+                    Monitoring requirements are to be defined through a comprehensive national insecticide resistance
+                    monitoring and management plan.
+                </Trans>
+            </Typography>
             <br />
             <Link href="https://www.who.int/publications/i/item/9789241512138" target="_blank" color={"textSecondary"}>
                 <img
