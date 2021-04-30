@@ -36,14 +36,12 @@ const mapStateToProps = (state: State) => ({
     preventionMapType: selectPreventionFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
 });
-const mapDispatchToProps = {};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     map: mapboxgl.Map;
 };
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
 function Screenshot({ map, theme, title }: Props) {
     const { t } = useTranslation("common");
@@ -181,4 +179,4 @@ function Screenshot({ map, theme, title }: Props) {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Screenshot);
+export default connect(mapStateToProps)(Screenshot);

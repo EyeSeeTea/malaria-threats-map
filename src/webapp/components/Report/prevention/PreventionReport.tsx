@@ -1,19 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { createStyles, lighten, makeStyles, Theme } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Toolbar, Typography, Paper, IconButton, Tooltip } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import { connect } from "react-redux";
@@ -28,7 +16,6 @@ import { resolveMechanism } from "../resolvers/resistanceMechanism";
 import FilterPopover from "./FilterPopover";
 import { filterByCountries, filterBySpecies } from "../../layers/studies-filters";
 import { exportToCSV } from "../../DataDownload/download";
-import { Button } from "@material-ui/core";
 import { format } from "date-fns";
 import { getComparator, Order, stableSort } from "../utils";
 import { CellProps } from "../types";
@@ -93,7 +80,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
     };
-    //17
+
     return (
         <TableHead>
             <TableRow>
@@ -262,12 +249,10 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
 const mapStateToProps = (state: State) => ({
     studies: selectPreventionStudies(state),
 });
-const mapDispatchToProps = {};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {};
-type Props = StateProps & OwnProps & DispatchProps;
+type Props = StateProps & OwnProps;
 
 function PreventionReport({ studies: baseStudies }: Props) {
     const classes = useStyles({});
@@ -314,22 +299,22 @@ function PreventionReport({ studies: baseStudies }: Props) {
                         percentage: pyrethroidsPercentage,
                         sorted: sortedPyrethroidsStudies,
                         n: pyrethroidsStudies,
-                    } = resolvePyrethroids("PYRETHROIDS", countrySpeciesStudies, t);
+                    } = resolvePyrethroids("PYRETHROIDS", countrySpeciesStudies);
                     const {
                         percentage: organochlorinesPercentage,
                         sorted: sortedOrganochlorinesStudies,
                         n: organochlorinesStudies,
-                    } = resolvePyrethroids("ORGANOCHLORINES", countrySpeciesStudies, t);
+                    } = resolvePyrethroids("ORGANOCHLORINES", countrySpeciesStudies);
                     const {
                         percentage: carbamatesPercentage,
                         sorted: sortedCarbamatesStudies,
                         n: carbamatesStudies,
-                    } = resolvePyrethroids("CARBAMATES", countrySpeciesStudies, t);
+                    } = resolvePyrethroids("CARBAMATES", countrySpeciesStudies);
                     const {
                         percentage: organophosphatesPercentage,
                         sorted: sortedOrganophosphatesStudies,
                         n: organophosphatesStudies,
-                    } = resolvePyrethroids("ORGANOPHOSPHATES", countrySpeciesStudies, t);
+                    } = resolvePyrethroids("ORGANOPHOSPHATES", countrySpeciesStudies);
 
                     const { percentage: monoOxygenases, n: monoOxygenasesNumber } = resolveMechanism(
                         "MONO_OXYGENASES",
@@ -485,7 +470,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
                         setCountries={setCountries}
                         species={species}
                         setSpecies={setSpecies}
-                        onClick={() => downloadData()}
+                        onClick={downloadData}
                     />
                     <TableContainer>
                         <Table
@@ -590,4 +575,4 @@ function PreventionReport({ studies: baseStudies }: Props) {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PreventionReport);
+export default connect(mapStateToProps)(PreventionReport);

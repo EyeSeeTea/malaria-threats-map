@@ -29,11 +29,9 @@ const mapStateToProps = (state: State) => ({
     districtsLoading: selectDistrictsAreLoading(state),
 });
 
-const mapDispatchToProps = {};
 type OwnProps = {};
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
 function SimpleBackdrop(props: Props) {
     const classes = useStyles(props);
@@ -62,4 +60,4 @@ function SimpleBackdrop(props: Props) {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SimpleBackdrop);
+export default connect(mapStateToProps)(SimpleBackdrop);

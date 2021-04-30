@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
 import Button from "@material-ui/core/Button";
 import FilterListIcon from "@material-ui/icons/FilterList";
@@ -7,15 +7,12 @@ import CountriesSelector from "../../DataDownload/filters/CountriesSelector";
 import SpeciesSelector from "../../filters/SpeciesSelector";
 import T from "../../../translations/T";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         paper: {
             minWidth: 400,
             overflowY: "unset",
             overflowX: "unset",
-        },
-        typography: {
-            padding: theme.spacing(2),
         },
     })
 );

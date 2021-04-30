@@ -263,11 +263,11 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
                     <Box fontWeight="fontWeightBold">{`${title} (${minYear}-${maxYear})`}</Box>
                 </Typography>
                 <Typography variant="body2">
-                    {t(`treatment.chart.molecular_markers.site_content_1`, {
+                    {t("treatment.chart.molecular_markers.site_content_1", {
                         year: study.YEAR_START,
                     })}{" "}
                     <i>{molecularMarker}</i>{" "}
-                    {t(`treatment.chart.molecular_markers.site_content_2`, {
+                    {t("treatment.chart.molecular_markers.site_content_2", {
                         nStudies: study.N,
                         molecularMarker: t(molecularMarker),
                     })}

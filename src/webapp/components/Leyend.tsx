@@ -118,12 +118,12 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function Leyend({ theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters, countryMode }: Props) {
+function Leyend({ theme, preventionFilters, treatmentFilters, invasiveFilters, countryMode }: Props) {
     switch (theme) {
         case "prevention":
             return resolvePreventionMapTypeLegend(preventionFilters, countryMode);
         case "diagnosis":
-            return resolveDiagnosisMapTypeLegend(diagnosisFilters, countryMode);
+            return resolveDiagnosisMapTypeLegend(countryMode);
         case "treatment":
             return resolveTreatmentMapTypeLegend(treatmentFilters, countryMode);
         case "invasive":

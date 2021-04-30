@@ -114,11 +114,11 @@ const ResistanceMechanismCountryChart = ({ studies, preventionFilters, setRegion
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
-                {t(`prevention.chart.resistance_mechanism.content_1`, {
-                    nStudies: nStudies,
+                {t("prevention.chart.resistance_mechanism.content_1", {
+                    nStudies,
                 })}
                 <i>Anopheles</i>
-                {t(`prevention.chart.resistance_mechanism.content_2`, {
+                {t("prevention.chart.resistance_mechanism.content_2", {
                     insecticideClasses: preventionFilters.assayTypes.map(type => t(type)).join(", "),
                     type: t(preventionFilters.insecticideClass),
                     years: formatYears(minYear, maxYear),

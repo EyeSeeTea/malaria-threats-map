@@ -94,14 +94,12 @@ const ChatContainer = styled.div<{ width?: string }>`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
 });
-const mapDispatchToProps = {};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     studies: PreventionStudy[];
 };
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
 const ResistanceMechanismsChart = ({ studies }: Props) => {
     const { t } = useTranslation("common");
@@ -210,4 +208,4 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
         </>
     );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(ResistanceMechanismsChart);
+export default connect(mapStateToProps)(ResistanceMechanismsChart);

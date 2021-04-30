@@ -8,12 +8,7 @@ import Disclaimer from "./Disclaimer";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { State } from "../store/types";
-import {
-    selectAreFiltersOpen,
-    selectFilters,
-    selectStoryMode,
-    selectTheme,
-} from "../store/reducers/base-reducer";
+import { selectAreFiltersOpen, selectFilters, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
 import {
     setFiltersOpen,
     setMobileOptionsOpen,
@@ -175,7 +170,6 @@ function PersistentDrawerLeft({
     storyMode,
     filtersOpen,
     setFiltersOpen,
-   // initialDialogOpen,
     drawerWidth = "400px",
     setTheme,
     theme,

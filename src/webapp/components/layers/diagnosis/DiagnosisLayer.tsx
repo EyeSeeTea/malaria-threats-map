@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
 import { circleLayout, studiesToGeoJson } from "../layer-utils";
-import diagnosisSymbol from "../symbols/diagnosis";
+import diagnosisSymbols from "../symbols/diagnosis";
 import setupEffects from "../effects";
 import {
     selectDiagnosisFilters,
@@ -42,7 +42,7 @@ const layer: any = (symbols: any) => ({
     id: DIAGNOSIS_LAYER_ID,
     type: "circle",
     layout: circleLayout,
-    paint: symbols || diagnosisSymbol,
+    paint: symbols || diagnosisSymbols,
     source: DIAGNOSIS_SOURCE_ID,
 });
 
@@ -130,7 +130,7 @@ class DiagnosisLayer extends Component<Props> {
     }
 
     setupGeoJsonData = (studies: any[]) => {
-        const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
+        const groupedStudies = R.groupBy(R.path<string>(["SITE_ID"]), studies);
         const filteredStudies = R.values(groupedStudies).map(group =>
             studySelector(group, this.props.diagnosisFilters.mapType, this.props.diagnosisFilters.deletionType)
         );
@@ -174,7 +174,7 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     getCountryStudies = (studies: any[] = []) => {
-        const countryStudies = R.groupBy(R.path(["ISO2"]), studies);
+        const countryStudies = R.groupBy(R.path<string>(["ISO2"]), studies);
         const countries = this.props.countries
             .map((country, index) => ({
                 ...country,
@@ -187,10 +187,6 @@ class DiagnosisLayer extends Component<Props> {
 
         const sortedCountries = R.sortBy(country => country.STUDIES, countries);
         if (sortedCountries.length === 0) return [];
-        // const maxSize = sortedCountries[sortedCountries.length - 1].STUDIES;
-        // const minSize = sortedCountries[0].STUDIES;
-
-        // const ratio = (20 - 5) / (maxSize - minSize);
 
         const getSize = (nStudies: number) => {
             if (nStudies > 15) {
@@ -208,8 +204,6 @@ class DiagnosisLayer extends Component<Props> {
 
         return countries.map(country => ({
             ...country,
-            // SIZE: 5 + ratio * (country.STUDIES - minSize),
-            // SIZE_HOVER: 5 + ratio * (country.STUDIES - minSize)
             SIZE: getSize(country.STUDIES),
             SIZE_HOVER: getSize(country.STUDIES) - 1,
         }));
@@ -234,7 +228,7 @@ class DiagnosisLayer extends Component<Props> {
                 data: studiesToGeoJson(data),
             };
             this.props.map.addSource(DIAGNOSIS_SOURCE_ID, source);
-            this.props.map.addLayer(layer(resolveMapTypeSymbols(diagnosisFilters, countryMode)));
+            this.props.map.addLayer(layer(resolveMapTypeSymbols(countryMode)));
 
             setupEffects(this.props.map, DIAGNOSIS_SOURCE_ID, DIAGNOSIS_LAYER_ID);
             this.setupPopover();
@@ -273,9 +267,9 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     applyMapTypeSymbols = () => {
-        const { diagnosisFilters, countryMode } = this.props;
+        const { countryMode } = this.props;
         const layer = this.props.map.getLayer(DIAGNOSIS_LAYER_ID);
-        const mapTypeSymbols = resolveMapTypeSymbols(diagnosisFilters, countryMode);
+        const mapTypeSymbols = resolveMapTypeSymbols(countryMode);
         if (layer && mapTypeSymbols) {
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-radius", mapTypeSymbols["circle-radius"]);
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-color", mapTypeSymbols["circle-color"]);

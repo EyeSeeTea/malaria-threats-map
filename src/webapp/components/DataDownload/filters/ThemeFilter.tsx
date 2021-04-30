@@ -12,10 +12,6 @@ const THEMES = [
         label: "themes.prevention",
         value: "prevention",
     },
-    // {
-    //   label: "themes.diagnosis",
-    //   value: "diagnosis"
-    // },
     {
         label: "themes.treatment",
         value: "treatment",
@@ -27,16 +23,13 @@ const THEMES = [
 ];
 const mapStateToProps = (_state: State) => ({});
 
-const mapDispatchToProps = {};
-
 type OwnProps = {
     value: string;
     onChange: (value: string) => void;
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
 function ThemeFilter({ value, onChange }: Props) {
     const { t } = useTranslation("common");
@@ -44,7 +37,7 @@ function ThemeFilter({ value, onChange }: Props) {
     return (
         <FilterWrapper>
             <FormLabel component="legend">
-                <T i18nKey={`data_download.step3.filters.theme`} /> *
+                <T i18nKey={"data_download.step3.filters.theme"} /> *
             </FormLabel>
             <Divider />
             <IntegrationReactSelect
@@ -58,4 +51,4 @@ function ThemeFilter({ value, onChange }: Props) {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ThemeFilter);
+export default connect(mapStateToProps)(ThemeFilter);

@@ -45,7 +45,6 @@ export const InvasiveIcon = styled(InvasiveSVG)`
 
 export const WhoLogoBlue = () => <img alt="" style={{ width: "150px", color: "white" }} src={whoLogoBlueIcon} />;
 
-// https://materialdesignicons.com/
 export function GlobeIcon(props: any) {
     return (
         <SvgIcon {...props} viewBox="0 0 24 24">

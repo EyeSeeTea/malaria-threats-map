@@ -1,18 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { createStyles, lighten, makeStyles, Theme } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
+import { Button, Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Toolbar, Typography, Paper, IconButton, Tooltip } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import { connect } from "react-redux";
@@ -28,7 +17,6 @@ import {
     filterByMolecularMarkerStudyDimension256,
 } from "../../layers/studies-filters";
 import { exportToCSV } from "../../DataDownload/download";
-import { Button } from "@material-ui/core";
 import { getComparator, Order, percentile, stableSort } from "../utils";
 import { selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
 import { EnhancedTableProps, StyledCell, useStyles } from "../types";
@@ -44,7 +32,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
     };
-    //17
+
     return (
         <TableHead>
             <TableRow>
@@ -160,7 +148,6 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
                     </IconButton>
                 </Tooltip>
             ) : (
-                // <div />
                 <>
                     <Button
                         variant="contained"
@@ -188,12 +175,10 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
 const mapStateToProps = (state: State) => ({
     studies: selectTreatmentStudies(state),
 });
-const mapDispatchToProps = {};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {};
-type Props = StateProps & OwnProps & DispatchProps;
+type Props = StateProps & OwnProps;
 
 function TreatmentReport({ studies: baseStudies }: Props) {
     const classes = useStyles({});
@@ -456,4 +441,4 @@ function TreatmentReport({ studies: baseStudies }: Props) {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TreatmentReport);
+export default connect(mapStateToProps)(TreatmentReport);
