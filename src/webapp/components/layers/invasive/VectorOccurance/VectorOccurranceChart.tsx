@@ -7,7 +7,6 @@ import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import * as R from "ramda";
 import Citation from "../../../charts/Citation";
-import { getMonthFromNumber } from "./utils";
 import { lowerCase } from "lower-case";
 import Pagination from "../../../charts/Pagination";
 import { useTranslation } from "react-i18next";
@@ -15,6 +14,7 @@ import { ChartContainer } from "../../../Chart";
 import Curation from "../../../Curation";
 import { isNotNull } from "../../../../utils/number-utils";
 import { InvasiveStudy } from "../../../../../domain/entities/InvasiveStudy";
+
 
 const Flex = styled.div`
     display: flex;
@@ -28,6 +28,7 @@ const Margin = styled.div`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
 });
+
 const mapDispatchToProps = {};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -38,7 +39,10 @@ type OwnProps = {
 type Props = DispatchProps & StateProps & OwnProps;
 
 const VectorOccurrenceChart = ({ studies }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation(["utils","common"]);
+    const translations = [t("utils:Jan."), t("utils:Feb."), t("utils:Mar."), t("utils:Apr."), t("utils:May"), t("utils:June"), t("utils:July"), t("utils:Aug."), t("utils:Sept."), t("utils:Oct."), t("utils:Nov."), t("utils:Dec.")];
+    const getMonthFromNumber = (month: number) => translations[month - 1];
+
     const [study, setStudy] = useState(0);
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
 
@@ -65,9 +69,9 @@ const VectorOccurrenceChart = ({ studies }: Props) => {
 
     const duration = (unique ? start : partial) || "";
 
-    const samplingPeriod = t("invasive.chart.vector_occurrance.sampling_period");
-    const samplingMethod = t("invasive.chart.vector_occurrance.sampling_method");
-    const studyIdentificationMethod = t("invasive.chart.vector_occurrance.study_identification_method");
+    const samplingPeriod = t("common:invasive.chart.vector_occurrance.sampling_period");
+    const samplingMethod = t("common:invasive.chart.vector_occurrance.sampling_method");
+    const studyIdentificationMethod = t("common:invasive.chart.vector_occurrance.study_identification_method");
 
     return (
         <ChartContainer>
@@ -79,7 +83,7 @@ const VectorOccurrenceChart = ({ studies }: Props) => {
                 {(isNotNull(studyObject.VECTOR_SPECIES) || isNotNull(studyObject.VECTOR_SPECIES_COMPLEX)) && (
                     <Flex>
                         <Typography variant="body2">
-                            <b>{t("invasive.chart.vector_occurrance.species")}:&nbsp;</b>
+                            <b>{t("common:invasive.chart.vector_occurrance.species")}:&nbsp;</b>
                             {isNotNull(studyObject.VECTOR_SPECIES)
                                 ? studyObject.VECTOR_SPECIES
                                 : isNotNull(studyObject.VECTOR_SPECIES_COMPLEX)
@@ -99,7 +103,7 @@ const VectorOccurrenceChart = ({ studies }: Props) => {
                 <Flex>
                     <Typography variant="body2">
                         <b>{samplingMethod}:&nbsp;</b>
-                        {studyObject.SAMPLING_METHOD || t("invasive.chart.vector_occurrance.no_available")}
+                        {studyObject.SAMPLING_METHOD || t("common:invasive.chart.vector_occurrance.no_available")}
                     </Typography>
                 </Flex>
                 <Flex>
@@ -107,7 +111,7 @@ const VectorOccurrenceChart = ({ studies }: Props) => {
                         <b>{studyIdentificationMethod}:&nbsp;</b>
                         {studyObject.ID_METHOD
                             ? lowerCase(studyObject.ID_METHOD)
-                            : t("invasive.chart.vector_occurrance.no_available")}
+                            : t("common:invasive.chart.vector_occurrance.no_available")}
                     </Typography>
                 </Flex>
             </Margin>

@@ -35,6 +35,9 @@ import preventionStory_fr from "../../translations/fr/preventionStory.json";
 import treatmentStory_en from "../../translations/en/treatmentStory.json";
 import treatmentStory_es from "../../translations/es/treatmentStory.json";
 import treatmentStory_fr from "../../translations/fr/treatmentStory.json";
+import utils_en from "../../translations/en/utils.json";
+import utils_es from "../../translations/es/utils.json";
+import utils_fr from "../../translations/fr/utils.json";
 
 import { dispatchCustomEvent } from "../../utils/dom-utils";
 
@@ -56,6 +59,7 @@ i18next.init({
             tour: tour_en,
             mekong: mekong_en,
             download: download_en,
+            utils: utils_en,
             invasive: invasiveStory_en,
             diagnosis: diagnosisStory_en,
             pbo: PBOStory_en,
@@ -70,6 +74,7 @@ i18next.init({
             tour: tour_es,
             mekong: mekong_es,
             download: download_es,
+            utils: utils_es,
             invasive: invasiveStory_es,
             diagnosis: diagnosisStory_es,
             pbo: PBOStory_es,
@@ -84,6 +89,7 @@ i18next.init({
             tour: tour_fr,
             mekong: mekong_fr,
             download: download_fr,
+            utils: utils_fr,
             invasive: invasiveStory_fr,
             diagnosis: diagnosisStory_fr,
             pbo: PBOStory_fr,

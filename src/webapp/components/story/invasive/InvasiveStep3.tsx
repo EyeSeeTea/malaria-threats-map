@@ -17,7 +17,7 @@ const InvasiveStep3 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step3.part1" t={t}>
+                <Trans i18nKey="step3.part1">
                     <b>
                         Control strategies should be informed by best practices from other countries, be adequately
                         monitored and evaluated, and be modified where required.
@@ -26,7 +26,7 @@ const InvasiveStep3 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step3.part2" t={t}>
+                <Trans i18nKey="step3.part2">
                     <b>
                         Invasive vector species may adapt to their new environment by changing their traditional
                         behaviours, including their choice of breeding habitats and resting sites, and may become
@@ -46,11 +46,15 @@ const InvasiveStep3 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                {t("step3.part4")}
+                <Trans i18nKey="step3.part4" t={t}>
+                The WHO recommends that national malaria control programs, and their executive partners, record lessons learned and send them to WHO (
+                </Trans>
                 <Link href="mailto:vectorsurveillance@who.int" color={"textSecondary"}>
                     vectorsurveillance@who.int
                 </Link>
-                {t("step3.part5")}
+                <Trans i18nKey="step3.part5" t={t}>
+                ) in order to contribute to the development of a plan based on evidence for the control and eradication of vector and invasive species of malaria.
+                </Trans>
             </Typography>
         </div>
     );

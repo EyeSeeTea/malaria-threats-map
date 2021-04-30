@@ -18,7 +18,7 @@ const TreatmentStep3 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step3.part1" t={t}>
+                <Trans i18nKey="step3.part1">
                     <b>
                         Studies of molecular prevention provide essential data for detecting and tracking antimalarial
                         drug resistance
@@ -27,7 +27,7 @@ const TreatmentStep3 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step3.part2" t={t}>
+                <Trans i18nKey="step3.part2">
                     <b>
                         Molecular prevention for drug resistance are genetic changes in the malaria parasite found to be
                         associated with resistance.
@@ -45,7 +45,11 @@ const TreatmentStep3 = () => {
                 </Trans>
             </Typography>
             <br />
-            <Typography variant={"body2"}>{t("step3.part4")}</Typography>
+            <Typography variant={"body2"}>
+                <Trans i18nKey="step3.part4" t={t}>
+                    For artemisinins, several mutations in the Kelch 13 (K13)-propeller domain have been found to be associated with delayed parasite clearance. This is an evolving field as more K13 mutations are discovered and we develop a better understanding of which mutations are of greatest influence.
+                </Trans>
+            </Typography>
         </div>
     );
 };
