@@ -1,21 +1,21 @@
 import * as React from "react";
-import {useState} from "react";
+import { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import {Box, Hidden, Typography} from "@material-ui/core";
-import {connect} from "react-redux";
-import {useTranslation} from "react-i18next";
-import {selectTheme} from "../../../../store/reducers/base-reducer";
-import {State} from "../../../../store/types";
+import { Box, Hidden, Typography } from "@material-ui/core";
+import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { State } from "../../../../store/types";
 import * as R from "ramda";
-import {MutationColors} from "./utils";
+import { MutationColors } from "./utils";
 import Pagination from "../../../charts/Pagination";
-import {MOLECULAR_MARKERS} from "../../../filters/MolecularMarkerFilter";
-import {selectTreatmentFilters} from "../../../../store/reducers/treatment-reducer";
+import { MOLECULAR_MARKERS } from "../../../filters/MolecularMarkerFilter";
+import { selectTreatmentFilters } from "../../../../store/reducers/treatment-reducer";
 import Citation from "../../../charts/Citation";
-import {formatYears, formatYears2} from "../../../../utils/string-utils";
-import {TreatmentStudy} from "../../../../../domain/entities/TreatmentStudy";
+import { formatYears, formatYears2 } from "../../../../utils/string-utils";
+import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
@@ -88,7 +88,7 @@ const options2: (data: any, categories: any[], translations: any) => Highcharts.
     title: {
         text: "",
     },
-    xAxis: {categories},
+    xAxis: { categories },
     yAxis: {
         min: 0,
         max: 100,
@@ -100,9 +100,7 @@ const options2: (data: any, categories: any[], translations: any) => Highcharts.
                 fontWeight: "bold",
                 color:
                     // theme
-                    (Highcharts.defaultOptions.title.style &&
-                        Highcharts.defaultOptions.title.style.color) ||
-                    "gray",
+                    (Highcharts.defaultOptions.title.style && Highcharts.defaultOptions.title.style.color) || "gray",
             },
         },
     },
@@ -155,7 +153,7 @@ const options3: (data: any, categories: any[], translations: any) => Highcharts.
             width: 150,
         },
     },
-    xAxis: {categories},
+    xAxis: { categories },
     yAxis: {
         min: 0,
         max: 100,
@@ -192,8 +190,8 @@ const Flex = styled.div`
     display: flex;
 `;
 
-const FlexCol = styled.div<{flex?: number}>`
-    flex: ${(props) => props.flex || 1};
+const FlexCol = styled.div<{ flex?: number }>`
+    flex: ${props => props.flex || 1};
 `;
 
 const Margin = styled.div`
@@ -214,14 +212,14 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const MolecularMarkersChart = ({studies, treatmentFilters}: Props) => {
-    const {t} = useTranslation("common");
+const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
+    const { t } = useTranslation("common");
     const [studyIndex, setStudy] = useState(0);
-    const sortedStudies = R.sortBy((study) => -parseInt(study.YEAR_START), studies);
-    const years = sortedStudies.map((study) => parseInt(study.YEAR_START)).sort();
+    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
+    const years = sortedStudies.map(study => parseInt(study.YEAR_START)).sort();
     const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
     const maxYear = parseInt(sortedStudies[0].YEAR_START);
-    const groupStudies = R.flatten(sortedStudies.map((study) => study.groupStudies));
+    const groupStudies = R.flatten(sortedStudies.map(study => study.groupStudies));
     const k13Groups = R.groupBy(R.prop("GENOTYPE"), groupStudies);
     const series = Object.keys(k13Groups).map((genotype: string) => {
         const studies: TreatmentStudy[] = k13Groups[genotype];
@@ -230,8 +228,8 @@ const MolecularMarkersChart = ({studies, treatmentFilters}: Props) => {
             type: "column",
             name: genotype,
             color: MutationColors[genotype] ? MutationColors[genotype].color : "000",
-            data: R.reverse(sortedStudies).map((k13Study) => {
-                const study = studies.find((study) => k13Study.Code === study.K13_CODE);
+            data: R.reverse(sortedStudies).map(k13Study => {
+                const study = studies.find(study => k13Study.Code === study.K13_CODE);
                 return {
                     y: study ? parseFloat((study.PROPORTION * 100).toFixed(1)) : undefined,
                 };
@@ -239,7 +237,7 @@ const MolecularMarkersChart = ({studies, treatmentFilters}: Props) => {
         };
     });
 
-    const data = sortedStudies[sortedStudies.length - studyIndex - 1].groupStudies.map((study) => ({
+    const data = sortedStudies[sortedStudies.length - studyIndex - 1].groupStudies.map(study => ({
         name: `${study.GENOTYPE}`,
         y: Math.round(study.PROPORTION * 100),
         color: MutationColors[study.GENOTYPE] ? MutationColors[study.GENOTYPE].color : "000",
@@ -251,9 +249,7 @@ const MolecularMarkersChart = ({studies, treatmentFilters}: Props) => {
         t(studies[studyIndex].ISO2 === "NA" ? "COUNTRY_NA" : studies[studyIndex].ISO2),
     ];
     const title = titleItems.filter(Boolean).join(", ");
-    const molecularMarker = t(
-        MOLECULAR_MARKERS.find((m: any) => m.value === treatmentFilters.molecularMarker).label
-    );
+    const molecularMarker = t(MOLECULAR_MARKERS.find((m: any) => m.value === treatmentFilters.molecularMarker).label);
     const study = sortedStudies[sortedStudies.length - studyIndex - 1];
     const translations = {
         percentage: t("treatment.chart.molecular_markers.percentage"),
@@ -277,28 +273,16 @@ const MolecularMarkersChart = ({studies, treatmentFilters}: Props) => {
                     })}
                 </Typography>
                 <Hidden smUp>
-                    <HighchartsReact
-                        highcharts={Highcharts}
-                        options={options(data, translations)}
-                    />
-                    <HighchartsReact
-                        highcharts={Highcharts}
-                        options={options2(series, years, translations)}
-                    />
+                    <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
+                    <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations)} />
                 </Hidden>
                 <Hidden xsDown>
                     <Flex>
                         <FlexCol>
-                            <HighchartsReact
-                                highcharts={Highcharts}
-                                options={options(data, translations)}
-                            />
+                            <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
                         </FlexCol>
                         <FlexCol flex={2}>
-                            <HighchartsReact
-                                highcharts={Highcharts}
-                                options={options2(series, years, translations)}
-                            />
+                            <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations)} />
                         </FlexCol>
                     </Flex>
                 </Hidden>
@@ -308,15 +292,14 @@ const MolecularMarkersChart = ({studies, treatmentFilters}: Props) => {
         );
     };
 
-    const {YEAR_START, YEAR_END, PROP_RELATED, N, groupStudies: subStudies} = study;
+    const { YEAR_START, YEAR_END, PROP_RELATED, N, groupStudies: subStudies } = study;
 
-    const mcStudy = subStudies.find((s) => s.GENOTYPE === "MC");
-    const wtStudy = subStudies.find((s) => s.GENOTYPE === "WT");
+    const mcStudy = subStudies.find(s => s.GENOTYPE === "MC");
+    const wtStudy = subStudies.find(s => s.GENOTYPE === "WT");
 
     const duration = formatYears2(YEAR_START, YEAR_END);
 
-    const formatValue = (value: number) =>
-        Number.isNaN(value) ? "N/A" : `${(value * 100).toFixed(1)}%`;
+    const formatValue = (value: number) => (Number.isNaN(value) ? "N/A" : `${(value * 100).toFixed(1)}%`);
 
     const studyYears = t("treatment.chart.molecular_markers.study_years");
     const t_studies = t("treatment.chart.molecular_markers.studies");
@@ -383,19 +366,15 @@ const MolecularMarkersChart = ({studies, treatmentFilters}: Props) => {
         );
     };
 
-    const keys = [{name: "PROP_RELATED", color: "#00994C"}];
+    const keys = [{ name: "PROP_RELATED", color: "#00994C" }];
 
-    const series3 = keys.map((key) => {
+    const series3 = keys.map(key => {
         return {
             name: t(key.name),
             color: key.color,
-            data: years.map((year) => {
-                const yearFilters: any = studies.filter(
-                    (study) => year === parseInt(study.YEAR_START)
-                )[0];
-                return yearFilters
-                    ? parseFloat((parseFloat(yearFilters[key.name] || "0") * 100).toFixed(1))
-                    : 0;
+            data: years.map(year => {
+                const yearFilters: any = studies.filter(study => year === parseInt(study.YEAR_START))[0];
+                return yearFilters ? parseFloat((parseFloat(yearFilters[key.name] || "0") * 100).toFixed(1)) : 0;
             }),
         };
     });
@@ -411,17 +390,11 @@ const MolecularMarkersChart = ({studies, treatmentFilters}: Props) => {
                         <Box fontWeight="fontWeightBold">{`${title}`}</Box>
                     </Typography>
                     <Typography variant="subtitle2">
-                        <Box>{`${studies.length} ${t_studies} ${formatYears(
-                            `${minYear}`,
-                            `${maxYear}`
-                        )}`}</Box>
+                        <Box>{`${studies.length} ${t_studies} ${formatYears(`${minYear}`, `${maxYear}`)}`}</Box>
                     </Typography>
                     <Hidden smUp>
                         {pfcrt()}
-                        <HighchartsReact
-                            highcharts={Highcharts}
-                            options={options3(series3, years, translations)}
-                        />
+                        <HighchartsReact highcharts={Highcharts} options={options3(series3, years, translations)} />
                     </Hidden>
                     <Hidden xsDown>
                         <Flex>

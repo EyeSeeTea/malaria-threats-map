@@ -1,13 +1,9 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {State} from "../../store/types";
-import IntegrationReactSelect from "../BasicSelect";
-import {selectPatientType} from "../../store/reducers/translations-reducer";
-import {
-    selectDiagnosisFilters,
-    selectDiagnosisStudies,
-} from "../../store/reducers/diagnosis-reducer";
-import {setDiagnosisPatientType} from "../../store/actions/diagnosis-actions";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { State } from "../../store/types";
+import { selectPatientType } from "../../store/reducers/translations-reducer";
+import { selectDiagnosisFilters, selectDiagnosisStudies } from "../../store/reducers/diagnosis-reducer";
+import { setDiagnosisPatientType } from "../../store/actions/diagnosis-actions";
 import {
     filterByDeletionType,
     filterByRegion,
@@ -15,12 +11,13 @@ import {
     filterByYearRange,
 } from "../layers/studies-filters";
 import * as R from "ramda";
-import {selectFilters, selectRegion} from "../../store/reducers/base-reducer";
-import {Divider, FilterWrapper} from "./Filters";
+import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
+import { Divider, FilterWrapper } from "./Filters";
 import FormLabel from "@material-ui/core/FormLabel";
 import T from "../../translations/T";
-import {logEventAction} from "../../store/actions/base-actions";
-import {DiagnosisStudy} from "../../../domain/entities/DiagnosisStudy";
+import { logEventAction } from "../../store/actions/base-actions";
+import { DiagnosisStudy } from "../../../domain/entities/DiagnosisStudy";
+import IntegrationReactSelect from "../BasicSelect";
 
 const mapStateToProps = (state: State) => ({
     patientType: selectPatientType(state),
@@ -42,16 +39,11 @@ type Props = DispatchProps & StateProps;
 class PatientTypeFilter extends Component<Props, any> {
     onChange = (selection: any) => {
         this.props.setPatientType(selection ? selection.value : null);
-        if (selection)
-            this.props.logEventAction({
-                category: "filter",
-                action: "patient",
-                label: selection.value,
-            });
+        if (selection) this.props.logEventAction({ category: "filter", action: "patient", label: selection.value });
     };
 
     render() {
-        const {diagnosisFilters, studies, yearFilter, region} = this.props;
+        const { diagnosisFilters, studies, yearFilter, region } = this.props;
 
         const filters = [
             filterByDeletionType(diagnosisFilters.deletionType),
@@ -60,10 +52,7 @@ class PatientTypeFilter extends Component<Props, any> {
             filterByRegion(region),
         ];
 
-        const filteredStudies: DiagnosisStudy[] = filters.reduce(
-            (studies, filter) => studies.filter(filter),
-            studies
-        );
+        const filteredStudies: DiagnosisStudy[] = filters.reduce((studies, filter) => studies.filter(filter), studies);
 
         const uniques = R.uniq(R.map(R.prop("PATIENT_TYPE"), filteredStudies));
 
@@ -71,9 +60,7 @@ class PatientTypeFilter extends Component<Props, any> {
             label: patientType,
             value: patientType,
         }));
-        const selection = suggestions.find(
-            (suggestion) => this.props.diagnosisFilters.patientType === suggestion.value
-        );
+        const selection = suggestions.find(suggestion => this.props.diagnosisFilters.patientType === suggestion.value);
         return (
             <FilterWrapper>
                 <FormLabel component="legend">

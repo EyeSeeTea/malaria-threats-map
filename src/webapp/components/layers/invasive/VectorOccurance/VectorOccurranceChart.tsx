@@ -1,20 +1,20 @@
 import * as React from "react";
-import {useState} from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import {Box, Typography} from "@material-ui/core";
-import {connect} from "react-redux";
-import {selectTheme} from "../../../../store/reducers/base-reducer";
-import {State} from "../../../../store/types";
+import { Box, Typography } from "@material-ui/core";
+import { connect } from "react-redux";
+import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { State } from "../../../../store/types";
 import * as R from "ramda";
 import Citation from "../../../charts/Citation";
-import {getMonthFromNumber} from "./utils";
-import {lowerCase} from "change-case";
+import { getMonthFromNumber } from "./utils";
+import { lowerCase } from "lower-case";
 import Pagination from "../../../charts/Pagination";
-import {useTranslation} from "react-i18next";
-import {ChartContainer} from "../../../Chart";
+import { useTranslation } from "react-i18next";
+import { ChartContainer } from "../../../Chart";
 import Curation from "../../../Curation";
-import {isNotNull} from "../../../../utils/number-utils";
-import {InvasiveStudy} from "../../../../../domain/entities/InvasiveStudy";
+import { isNotNull } from "../../../../utils/number-utils";
+import { InvasiveStudy } from "../../../../../domain/entities/InvasiveStudy";
 
 const Flex = styled.div`
     display: flex;
@@ -37,10 +37,10 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const VectorOccurrenceChart = ({studies}: Props) => {
-    const {t} = useTranslation("common");
+const VectorOccurrenceChart = ({ studies }: Props) => {
+    const { t } = useTranslation("common");
     const [study, setStudy] = useState(0);
-    const sortedStudies = R.sortBy((study) => -parseInt(study.YEAR_START), studies);
+    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
 
     const studyObject = sortedStudies[study];
 
@@ -67,21 +67,16 @@ const VectorOccurrenceChart = ({studies}: Props) => {
 
     const samplingPeriod = t("invasive.chart.vector_occurrance.sampling_period");
     const samplingMethod = t("invasive.chart.vector_occurrance.sampling_method");
-    const studyIdentificationMethod = t(
-        "invasive.chart.vector_occurrance.study_identification_method"
-    );
+    const studyIdentificationMethod = t("invasive.chart.vector_occurrance.study_identification_method");
 
     return (
         <ChartContainer>
-            {sortedStudies.length > 1 && (
-                <Pagination studies={studies} study={study} setStudy={setStudy} />
-            )}
+            {sortedStudies.length > 1 && <Pagination studies={studies} study={study} setStudy={setStudy} />}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}`}</Box>
             </Typography>
             <Margin>
-                {(isNotNull(studyObject.VECTOR_SPECIES) ||
-                    isNotNull(studyObject.VECTOR_SPECIES_COMPLEX)) && (
+                {(isNotNull(studyObject.VECTOR_SPECIES) || isNotNull(studyObject.VECTOR_SPECIES_COMPLEX)) && (
                     <Flex>
                         <Typography variant="body2">
                             <b>{t("invasive.chart.vector_occurrance.species")}:&nbsp;</b>
@@ -104,8 +99,7 @@ const VectorOccurrenceChart = ({studies}: Props) => {
                 <Flex>
                     <Typography variant="body2">
                         <b>{samplingMethod}:&nbsp;</b>
-                        {studyObject.SAMPLING_METHOD ||
-                            t("invasive.chart.vector_occurrance.no_available")}
+                        {studyObject.SAMPLING_METHOD || t("invasive.chart.vector_occurrance.no_available")}
                     </Typography>
                 </Flex>
                 <Flex>

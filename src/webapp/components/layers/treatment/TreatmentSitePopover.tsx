@@ -1,18 +1,18 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import {I18nextProvider} from "react-i18next";
+import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
-import {ThemeProvider} from "@material-ui/styles";
-import {store, theme} from "../../../App";
-import {connect, Provider} from "react-redux";
-import {State} from "../../../store/types";
+import { ThemeProvider } from "@material-ui/styles";
+import { store, theme } from "../../../App";
+import { connect, Provider } from "react-redux";
+import { State } from "../../../store/types";
 import mapboxgl from "mapbox-gl";
-import {selectCountryMode, selectSelection} from "../../../store/reducers/base-reducer";
+import { selectCountryMode, selectSelection } from "../../../store/reducers/base-reducer";
 import TreatmentSelectionChart from "./TreatmentSelectionChart";
-import {selectTreatmentFilters} from "../../../store/reducers/treatment-reducer";
-import {dispatchCustomEvent} from "../../../utils/dom-utils";
-import {setSelection} from "../../../store/actions/base-actions";
-import {TreatmentStudy} from "../../../../domain/entities/TreatmentStudy";
+import { selectTreatmentFilters } from "../../../store/reducers/treatment-reducer";
+import { dispatchCustomEvent } from "../../../utils/dom-utils";
+import { setSelection } from "../../../store/actions/base-actions";
+import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 
 const mapStateToProps = (state: State) => ({
     treatmentFilters: selectTreatmentFilters(state),
@@ -38,7 +38,7 @@ class PreventionSitePopover extends Component<Props> {
 
     componentDidMount(): void {
         const placeholder = document.createElement("div");
-        const {selection, studies} = this.props;
+        const { selection, studies } = this.props;
         ReactDOM.render(
             <I18nextProvider i18n={i18next}>
                 <ThemeProvider theme={theme}>
@@ -63,7 +63,7 @@ class PreventionSitePopover extends Component<Props> {
         }
     }
 
-    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<{}>, snapshot?: any): void {
+    componentDidUpdate(): void {
         this.componentWillUnmount();
         this.componentDidMount();
     }

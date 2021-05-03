@@ -1,4 +1,3 @@
-
 import config from "./webapp/config";
 import { UseCase } from "./domain/common/UseCase";
 import { PreventionApiRepository } from "./data/repositories/PreventionApiRepository";

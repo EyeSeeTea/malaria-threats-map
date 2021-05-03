@@ -1,22 +1,22 @@
 import * as React from "react";
-import {useState} from "react";
-import Highcharts, {DataLabelsFormatterCallbackFunction} from "highcharts";
+import { useState } from "react";
+import Highcharts, { DataLabelsFormatterCallbackFunction } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import {Box, Hidden, Typography} from "@material-ui/core";
-import {connect} from "react-redux";
-import {useTranslation} from "react-i18next";
-import {selectTheme} from "../../../../store/reducers/base-reducer";
-import {State} from "../../../../store/types";
-import {ConfirmationStatusColors} from "./symbols";
+import { Box, Hidden, Typography } from "@material-ui/core";
+import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { State } from "../../../../store/types";
+import { ConfirmationStatusColors } from "./symbols";
 import * as R from "ramda";
 import Citation from "../../../charts/Citation";
 import Pagination from "../../../charts/Pagination";
 import Curation from "../../../Curation";
 import IntegrationReactSelect from "../../../BasicSelect";
 import FormLabel from "@material-ui/core/FormLabel";
-import {sendAnalytics} from "../../../../utils/analytics";
-import {PreventionStudy} from "../../../../../domain/entities/PreventionStudy";
+import { sendAnalytics } from "../../../../utils/analytics";
+import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
@@ -109,8 +109,8 @@ ${translations.tested}: ${point.number}
     },
 });
 
-const ChatContainer = styled.div<{width?: string}>`
-    width: ${(props) => props.width || "100%"};
+const ChatContainer = styled.div<{ width?: string }>`
+    width: ${props => props.width || "100%"};
 `;
 
 const StyledSelect = styled(IntegrationReactSelect)`
@@ -137,32 +137,29 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const ResistanceStatusChart = ({studies: baseStudies}: Props) => {
-    const {t} = useTranslation("common");
+const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
+    const { t } = useTranslation("common");
     const [study, setStudy] = useState(0);
-    const speciesOptions = R.uniq(R.map((s) => s.SPECIES, baseStudies));
+    const speciesOptions = R.uniq(R.map(s => s.SPECIES, baseStudies));
     const suggestions: any[] = speciesOptions.map((specie: string) => ({
         label: specie,
         value: specie,
     }));
     const [species, setSpecies] = useState<any[]>(suggestions);
     const onSpeciesChange = (value: any) => {
-        sendAnalytics({type: "event", category: "popup", action: "filter"});
+        sendAnalytics({ type: "event", category: "popup", action: "filter" });
         setSpecies(value);
     };
     const groupedStudies = R.values(
         R.groupBy(
             R.prop("CITATION_URL"),
             baseStudies.filter(
-                (study) =>
-                    !species ||
-                    !species.length ||
-                    species.map((s) => s.value).includes(study.SPECIES)
+                study => !species || !species.length || species.map(s => s.value).includes(study.SPECIES)
             )
         )
     );
     const studies = groupedStudies[study];
-    const sortedStudies = R.sortBy((study) => -parseInt(study.YEAR_START), studies);
+    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
         return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
     }, sortedStudies);
@@ -171,10 +168,10 @@ const ResistanceStatusChart = ({studies: baseStudies}: Props) => {
         R.prop("YEAR_START"),
         R.values(cleanedStudies).map(
             (groupStudies: PreventionStudy[]) =>
-                R.sortBy((study) => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
+                R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
         )
     );
-    const data = simplifiedStudies.map((study) => ({
+    const data = simplifiedStudies.map(study => ({
         name: `${study.YEAR_START}, ${t(study.INSECTICIDE_TYPE)} ${t(study.INSECTICIDE_CONC)}`,
         y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
         species: t(study.SPECIES),
@@ -188,19 +185,16 @@ const ResistanceStatusChart = ({studies: baseStudies}: Props) => {
         )})`,
         tested: t("prevention.chart.resistance_status.tested"),
     };
+
     const content = () => (
         <>
-            {groupedStudies.length > 1 && (
-                <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />
-            )}
+            {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
                     studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2
                 )}`}</Box>
             </Typography>
-            <Typography variant="subtitle2">
-                {`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}
-            </Typography>
+            <Typography variant="subtitle2">{`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}</Typography>
             {suggestions.length > 1 && (
                 <Flex>
                     <FormLabel component="legend">Species</FormLabel>

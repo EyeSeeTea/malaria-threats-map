@@ -1,9 +1,9 @@
-import {Link, Typography} from "@material-ui/core";
+import { Link, Typography } from "@material-ui/core";
 import * as React from "react";
-import {Study} from "../../../domain/entities/Study";
-import {useTranslation} from "react-i18next";
-import {logOutboundLinkAction} from "../../store/actions/base-actions";
-import {connect} from "react-redux";
+import { useTranslation } from "react-i18next";
+import { logOutboundLinkAction } from "../../store/actions/base-actions";
+import { connect } from "react-redux";
+import { Study } from "../../../domain/entities/Study";
 
 const mapDispatchToProps = {
     logOutboundLinkAction: logOutboundLinkAction,
@@ -15,26 +15,20 @@ type OwnProps = {
 type DispatchProps = typeof mapDispatchToProps;
 type Props = OwnProps & DispatchProps;
 
-const isNull = (value: string) =>
-    value === null || !value || value.trim() === "NA" || value.trim() === "NR";
+const isNull = (value: string) => value === null || !value || value.trim() === "NA" || value.trim() === "NR";
 
 const valueOrUndefined = (value: string) => (isNull(value) ? undefined : value.trim());
 
 // TODO: Translations
-const Citation = ({study, logOutboundLinkAction}: Props) => {
-    const {t} = useTranslation("common");
+const Citation = ({ study, logOutboundLinkAction }: Props) => {
+    const { t } = useTranslation("common");
     const logClick = React.useCallback(() => {
         logOutboundLinkAction(study.CITATION_URL);
     }, [study, logOutboundLinkAction]);
     return !isNull(study.CITATION_URL) ? (
         <>
             <Typography variant="caption">
-                <Link
-                    onClick={logClick}
-                    href={study.CITATION_URL}
-                    target="_blank"
-                    color={"textSecondary"}
-                >
+                <Link onClick={logClick} href={study.CITATION_URL} target="_blank" color={"textSecondary"}>
                     {valueOrUndefined(study.CITATION_LONG) ||
                         valueOrUndefined(study.CITATION) ||
                         valueOrUndefined(study.INSTITUTION) ||

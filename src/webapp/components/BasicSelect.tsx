@@ -1,24 +1,23 @@
-import React, {CSSProperties, HTMLAttributes} from "react";
+import React, { CSSProperties, HTMLAttributes } from "react";
 import clsx from "clsx";
-import Select from "react-select";
-import {createStyles, emphasize, makeStyles, Theme, useTheme} from "@material-ui/core/styles";
+import Select, { OptionProps } from "react-select";
+import { createStyles, emphasize, makeStyles, Theme, useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import TextField, {BaseTextFieldProps} from "@material-ui/core/TextField";
+import TextField, { BaseTextFieldProps } from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import Chip from "@material-ui/core/Chip";
-import MenuItem from "@material-ui/core/MenuItem";
 import CancelIcon from "@material-ui/icons/Cancel";
-import {ValueContainerProps} from "react-select/src/components/containers";
-import {ControlProps} from "react-select/src/components/Control";
-import {MenuProps, NoticeProps} from "react-select/src/components/Menu";
-import {MultiValueProps} from "react-select/src/components/MultiValue";
-import {OptionProps} from "react-select/src/components/Option";
-import {PlaceholderProps} from "react-select/src/components/Placeholder";
-import {SingleValueProps} from "react-select/src/components/SingleValue";
-import {Omit} from "@material-ui/types";
-import {useTranslation} from "react-i18next";
+import { ValueContainerProps } from "react-select/src/components/containers";
+import { ControlProps } from "react-select/src/components/Control";
+import { MenuProps, NoticeProps } from "react-select/src/components/Menu";
+import { MultiValueProps } from "react-select/src/components/MultiValue";
+import { PlaceholderProps } from "react-select/src/components/Placeholder";
+import { SingleValueProps } from "react-select/src/components/SingleValue";
+import { Omit } from "@material-ui/types";
+import { useTranslation } from "react-i18next";
 import * as R from "ramda";
-import {useFirstRender} from "./hooks/use-first-render";
+import { MenuItem } from "@material-ui/core";
+import { useFirstRender } from "./hooks/use-first-render";
 
 export interface OptionType {
     label: string;
@@ -49,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
             flex: 1,
             alignItems: "center",
             overflow: "hidden",
-            flexWrap: (props: {isMulti?: boolean}) => (props.isMulti ? "wrap" : "nowrap"),
+            flexWrap: (props: { isMulti?: boolean }) => (props.isMulti ? "wrap" : "nowrap"),
         },
         chip: {
             margin: theme.spacing(0.5, 0.25),
@@ -85,13 +84,9 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-function NoOptionsMessage(props: NoticeProps<OptionType>) {
+function NoOptionsMessage(props: NoticeProps<OptionType, false>) {
     return (
-        <Typography
-            color="textSecondary"
-            className={props.selectProps.classes.noOptionsMessage}
-            {...props.innerProps}
-        >
+        <Typography color="textSecondary" className={props.selectProps.classes.noOptionsMessage} {...props.innerProps}>
             {props.children}
         </Typography>
     );
@@ -99,16 +94,16 @@ function NoOptionsMessage(props: NoticeProps<OptionType>) {
 
 type InputComponentProps = Pick<BaseTextFieldProps, "inputRef"> & HTMLAttributes<HTMLDivElement>;
 
-function inputComponent({inputRef, ...props}: InputComponentProps) {
+function inputComponent({ inputRef, ...props }: InputComponentProps) {
     return <div ref={inputRef} {...props} />;
 }
 
-function Control(props: ControlProps<OptionType>) {
+function Control(props: ControlProps<OptionType, false>) {
     const {
         children,
         innerProps,
         innerRef,
-        selectProps: {classes, TextFieldProps},
+        selectProps: { classes, TextFieldProps },
     } = props;
 
     return (
@@ -131,12 +126,12 @@ function Control(props: ControlProps<OptionType>) {
     );
 }
 
-function Option(props: OptionProps<OptionType>) {
-    const {t} = useTranslation("common");
+function Option(props: OptionProps<OptionType, false>) {
+    const { t } = useTranslation("common");
     const value = props.children ? t(props.children.toString()) : "";
     const isFirstRender = useFirstRender();
     const isFocused = isFirstRender ? false : props.isFocused;
-
+    //it doesn't have access to the control/selected value
     return (
         <MenuItem
             dense
@@ -156,23 +151,19 @@ function Option(props: OptionProps<OptionType>) {
     );
 }
 
-type MuiPlaceholderProps = Omit<PlaceholderProps<OptionType>, "innerProps"> &
-    Partial<Pick<PlaceholderProps<OptionType>, "innerProps">>;
+type MuiPlaceholderProps = Omit<PlaceholderProps<OptionType, false>, "innerProps"> &
+    Partial<Pick<PlaceholderProps<OptionType, false>, "innerProps">>;
 function Placeholder(props: MuiPlaceholderProps) {
-    const {selectProps, innerProps = {}, children} = props;
+    const { selectProps, innerProps = {}, children } = props;
     return (
-        <Typography
-            color="textSecondary"
-            className={selectProps.classes.placeholder}
-            {...innerProps}
-        >
+        <Typography color="textSecondary" className={selectProps.classes.placeholder} {...innerProps}>
             {children}
         </Typography>
     );
 }
 
 function SingleValue(props: SingleValueProps<OptionType>) {
-    const {t} = useTranslation("common");
+    const { t } = useTranslation("common");
     const value = props.children ? t(props.children.toString()) : "";
     return (
         <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
@@ -181,12 +172,12 @@ function SingleValue(props: SingleValueProps<OptionType>) {
     );
 }
 
-function ValueContainer(props: ValueContainerProps<OptionType>) {
+function ValueContainer(props: ValueContainerProps<OptionType, false>) {
     return <div className={props.selectProps.classes.valueContainer}>{props.children}</div>;
 }
 
 function MultiValue(props: MultiValueProps<OptionType>) {
-    const {t} = useTranslation("common");
+    const { t } = useTranslation("common");
     const value = props.children ? t(props.children.toString()) : "";
     return (
         <Chip
@@ -201,7 +192,7 @@ function MultiValue(props: MultiValueProps<OptionType>) {
     );
 }
 
-function Menu(props: MenuProps<OptionType>) {
+function Menu(props: MenuProps<OptionType, false>) {
     return (
         <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
             {props.children}
@@ -225,23 +216,25 @@ export type Option = {
     value: string;
 };
 
-export default function IntegrationReactSelect({
-    suggestions = [],
-    value,
-    onChange,
-    className,
-    ...rest
-}: any) {
-    const {t} = useTranslation("common");
+export default function IntegrationReactSelect({ suggestions = [], value, onChange, className, ...rest }: any) {
+    const { t } = useTranslation("common");
     const classes = useStyles(rest);
     const theme = useTheme();
 
     const selectStyles = {
         input: (base: CSSProperties) => ({
             ...base,
+            isFocused: true,
             color: theme.palette.text.primary,
             "& input": {
                 font: "inherit",
+            },
+        }),
+        option: (base: any, state: any) => ({
+            ...base,
+            backgroundColor: state.isSelected ? "red" : "blue",
+            ":active": {
+                backgroundColor: state.isSelected ? "green" : "yellow",
             },
         }),
     };
@@ -251,8 +244,8 @@ export default function IntegrationReactSelect({
             <Select
                 classes={classes}
                 styles={selectStyles}
-                options={R.sortBy<Option>(R.prop("label"), suggestions)}
                 components={components}
+                options={R.sortBy<Option>(R.prop("label"), suggestions)}
                 value={value}
                 onChange={onChange}
                 placeholder={t("options.select") + "..."}

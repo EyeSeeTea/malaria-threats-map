@@ -1,10 +1,10 @@
-import {Translation} from "../types/Translation";
+import { Translation } from "../types/Translation";
 
-import {NotificationsState} from "../types/Notifications";
-import {DiagnosisStudy} from "../../domain/entities/DiagnosisStudy";
-import {PreventionStudy} from "../../domain/entities/PreventionStudy";
-import {TreatmentStudy} from "../../domain/entities/TreatmentStudy";
-import {InvasiveStudy} from "../../domain/entities/InvasiveStudy";
+import { NotificationsState } from "../types/Notifications";
+import { DiagnosisStudy } from "../../domain/entities/DiagnosisStudy";
+import { PreventionStudy } from "../../domain/entities/PreventionStudy";
+import { TreatmentStudy } from "../../domain/entities/TreatmentStudy";
+import { InvasiveStudy } from "../../domain/entities/InvasiveStudy";
 
 export interface State {
     malaria: MalariaState;

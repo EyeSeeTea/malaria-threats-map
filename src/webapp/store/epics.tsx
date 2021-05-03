@@ -10,15 +10,15 @@ import * as DataDownloadEpics from "./epics/data-download-epics";
 import * as BaseEpics from "./epics/base-epics";
 
 const rootEpic = combineEpics(
-  ...Object.values(PreventionEpics),
-  ...Object.values(DiagnosisEpics),
-  ...Object.values(TreatmentEpics),
-  ...Object.values(InvasiveEpics),
-  ...Object.values(TranslationsEpics),
-  ...Object.values(CountryLayerEpics),
-  ...Object.values(DistrictEpics),
-  ...Object.values(DataDownloadEpics),
-  ...Object.values(BaseEpics)
+    ...Object.values(PreventionEpics),
+    ...Object.values(DiagnosisEpics),
+    ...Object.values(TreatmentEpics),
+    ...Object.values(InvasiveEpics),
+    ...Object.values(TranslationsEpics),
+    ...Object.values(CountryLayerEpics),
+    ...Object.values(DistrictEpics),
+    ...Object.values(DataDownloadEpics),
+    ...Object.values(BaseEpics)
 );
 
 export default rootEpic;

@@ -10,12 +10,12 @@ import { useTranslation } from "react-i18next";
 import { sendAnalyticsMapMenuChange } from "../../store/analytics";
 
 const mapStateToProps = (state: State) => ({
-  diagnosisFilters: selectDiagnosisFilters(state)
+    diagnosisFilters: selectDiagnosisFilters(state),
 });
 
 const mapDispatchToProps = {
-  setDiagnosisMapType: setDiagnosisMapType,
-  setMapTitle: setMapTitleAction
+    setDiagnosisMapType: setDiagnosisMapType,
+    setMapTitle: setMapTitleAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -23,42 +23,31 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const diagnosisSuggestions: OptionType[] = [
-  { label: "diagnosis.gene_deletions", value: DiagnosisMapType.GENE_DELETIONS }
+    { label: "diagnosis.gene_deletions", value: DiagnosisMapType.GENE_DELETIONS },
 ];
 
-function DiagnosisMapTypesSelector({
-  setDiagnosisMapType,
-  setMapTitle,
-  diagnosisFilters
-}: Props) {
-  const { t } = useTranslation("common");
+function DiagnosisMapTypesSelector({ setDiagnosisMapType, setMapTitle, diagnosisFilters }: Props) {
+    const { t } = useTranslation("common");
 
-  const onChange = (value: ValueType<OptionType>) => {
-    const selection = value as OptionType;
-    setDiagnosisMapType(selection.value);
-    setMapTitle(t(selection.label));
-    sendAnalyticsMapMenuChange("diagnosis", selection.value)
-  };
+    const onChange = (value: ValueType<OptionType>) => {
+        const selection = value as OptionType;
+        setDiagnosisMapType(selection.value);
+        setMapTitle(t(selection.label));
+        sendAnalyticsMapMenuChange("diagnosis", selection.value);
+    };
 
-  React.useEffect(() => {
-    const selection = diagnosisSuggestions.find(
-      s => s.value === diagnosisFilters.mapType
+    React.useEffect(() => {
+        const selection = diagnosisSuggestions.find(s => s.value === diagnosisFilters.mapType);
+        setMapTitle(t(selection.label));
+    });
+
+    return (
+        <IntegrationReactSelect
+            suggestions={diagnosisSuggestions}
+            onChange={onChange}
+            value={diagnosisSuggestions.find(s => s.value === diagnosisFilters.mapType)}
+        />
     );
-    setMapTitle(t(selection.label));
-  });
-
-  return (
-    <IntegrationReactSelect
-      suggestions={diagnosisSuggestions}
-      onChange={onChange}
-      value={diagnosisSuggestions.find(
-        s => s.value === diagnosisFilters.mapType
-      )}
-    />
-  );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DiagnosisMapTypesSelector);
+export default connect(mapStateToProps, mapDispatchToProps)(DiagnosisMapTypesSelector);

@@ -1,13 +1,9 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {PreventionMapType, State} from "../../store/types";
-import IntegrationReactSelect from "../BasicSelect";
-import {selectTypes} from "../../store/reducers/translations-reducer";
-import {
-    selectPreventionFilters,
-    selectPreventionStudies,
-} from "../../store/reducers/prevention-reducer";
-import {setType} from "../../store/actions/prevention-actions";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { PreventionMapType, State } from "../../store/types";
+import { selectTypes } from "../../store/reducers/translations-reducer";
+import { selectPreventionFilters, selectPreventionStudies } from "../../store/reducers/prevention-reducer";
+import { setType } from "../../store/actions/prevention-actions";
 import * as R from "ramda";
 import {
     filterByAssayTypes,
@@ -21,12 +17,13 @@ import {
     filterByTypeSynergist,
     filterByYearRange,
 } from "../layers/studies-filters";
-import {selectFilters, selectRegion} from "../../store/reducers/base-reducer";
+import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import FormLabel from "@material-ui/core/FormLabel";
-import {Divider, FilterWrapper} from "./Filters";
+import { Divider, FilterWrapper } from "./Filters";
 import T from "../../translations/T";
-import {logEventAction} from "../../store/actions/base-actions";
-import {PreventionStudy} from "../../../domain/entities/PreventionStudy";
+import { logEventAction } from "../../store/actions/base-actions";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
+import IntegrationReactSelect from "../BasicSelect";
 
 const mapStateToProps = (state: State) => ({
     types: selectTypes(state),
@@ -49,19 +46,15 @@ class TypeFilter extends Component<Props, any> {
     onChange = (selection: any) => {
         this.props.setType(selection ? selection.value : undefined);
         if (selection) {
-            this.props.logEventAction({
-                category: "filter",
-                action: "testType",
-                label: selection.value,
-            });
+            this.props.logEventAction({ category: "filter", action: "testType", label: selection.value });
         }
     };
 
     render() {
-        const {preventionFilters, studies, yearFilter, region} = this.props;
-        const {mapType} = preventionFilters;
+        const { preventionFilters, studies, yearFilter, region } = this.props;
+        const { mapType } = preventionFilters;
 
-        const filtersMap: {[mapType: string]: any[]} = {
+        const filtersMap: { [mapType: string]: any[] } = {
             [PreventionMapType.INTENSITY_STATUS]: [
                 filterByIntensityStatus,
                 filterByInsecticideClass(preventionFilters.insecticideClass),
@@ -108,9 +101,7 @@ class TypeFilter extends Component<Props, any> {
             value: type,
         }));
 
-        const selection = suggestions.find(
-            (suggestion) => this.props.preventionFilters.type === suggestion.value
-        );
+        const selection = suggestions.find(suggestion => this.props.preventionFilters.type === suggestion.value);
 
         return (
             <FilterWrapper>

@@ -1,6 +1,6 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {studiesToGeoJson} from "../layer-utils";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { studiesToGeoJson } from "../layer-utils";
 import setupEffects from "../effects";
 import {
     selectTreatmentFilters,
@@ -15,7 +15,7 @@ import {
     selectSelection,
     selectTheme,
 } from "../../../store/reducers/base-reducer";
-import {selectCountries} from "../../../store/reducers/country-layer-reducer";
+import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
 import {
@@ -27,18 +27,15 @@ import {
     filterByRegion,
     filterByYearRange,
 } from "../studies-filters";
-import {State, TreatmentMapType} from "../../../store/types";
-import {resolveMapTypeSymbols, studySelector} from "./utils";
-import {
-    fetchTreatmentStudiesRequest,
-    setFilteredStudiesAction,
-} from "../../../store/actions/treatment-actions";
-import {setSelection} from "../../../store/actions/base-actions";
-import {Hidden} from "@material-ui/core";
+import { State, TreatmentMapType } from "../../../store/types";
+import { resolveMapTypeSymbols, studySelector } from "./utils";
+import { fetchTreatmentStudiesRequest, setFilteredStudiesAction } from "../../../store/actions/treatment-actions";
+import { setSelection } from "../../../store/actions/base-actions";
+import { Hidden } from "@material-ui/core";
 import ChartModal from "../../ChartModal";
 import TreatmentSelectionChart from "./TreatmentSelectionChart";
 import TreatmentSitePopover from "./TreatmentSitePopover";
-import {TreatmentStudy} from "../../../../domain/entities/TreatmentStudy";
+import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -93,7 +90,7 @@ class TreatmentLayer extends Component<Props> {
         this.loadStudiesIfRequired();
 
         const {
-            treatmentFilters: {mapType, plasmodiumSpecies, drug, molecularMarker},
+            treatmentFilters: { mapType, plasmodiumSpecies, drug, molecularMarker },
             countryMode,
             filters,
             region,
@@ -102,14 +99,11 @@ class TreatmentLayer extends Component<Props> {
         this.mountLayer(prevProps);
         this.renderLayer();
         const mapTypeChange = prevProps.treatmentFilters.mapType !== mapType;
-        const yearChange =
-            prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
+        const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
         const countryChange = prevProps.region !== region;
-        const plasmodiumSpeciesChange =
-            prevProps.treatmentFilters.plasmodiumSpecies !== plasmodiumSpecies;
+        const plasmodiumSpeciesChange = prevProps.treatmentFilters.plasmodiumSpecies !== plasmodiumSpecies;
         const drugChange = prevProps.treatmentFilters.drug !== drug;
-        const molecularMarkerChange =
-            prevProps.treatmentFilters.molecularMarker !== molecularMarker;
+        const molecularMarkerChange = prevProps.treatmentFilters.molecularMarker !== molecularMarker;
         const countryModeChange = prevProps.countryMode !== countryMode;
         const countriesChange = prevProps.countries.length !== countries.length;
         if (
@@ -131,10 +125,9 @@ class TreatmentLayer extends Component<Props> {
     }
 
     loadStudiesIfRequired() {
-        const {theme, studies, studiesLoading, studiesError} = this.props;
+        const { theme, studies, studiesLoading, studiesError } = this.props;
 
-        const required =
-            theme === TREATMENT && studies.length === 0 && !studiesLoading && !studiesError;
+        const required = theme === TREATMENT && studies.length === 0 && !studiesLoading && !studiesError;
 
         if (required) {
             this.props.fetchTreatmentStudies();
@@ -146,16 +139,14 @@ class TreatmentLayer extends Component<Props> {
     }
 
     setupGeoJsonData = (studies: any[]) => {
-        const {mapType} = this.props.treatmentFilters;
+        const { mapType } = this.props.treatmentFilters;
         const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
-        const filteredStudies = R.values(groupedStudies).map((group) =>
-            studySelector(group, mapType)
-        );
+        const filteredStudies = R.values(groupedStudies).map(group => studySelector(group, mapType));
         return filteredStudies;
     };
 
     buildFilters = () => {
-        const {treatmentFilters, filters, region} = this.props;
+        const { treatmentFilters, filters, region } = this.props;
         switch (treatmentFilters.mapType) {
             case TreatmentMapType.TREATMENT_FAILURE:
                 return [
@@ -191,7 +182,7 @@ class TreatmentLayer extends Component<Props> {
     };
 
     filterSource = () => {
-        const {studies, countryMode} = this.props;
+        const { studies, countryMode } = this.props;
         const source = this.props.map.getSource(TREATMENT_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
@@ -213,9 +204,9 @@ class TreatmentLayer extends Component<Props> {
                 Longitude: country.CENTER_LON,
                 STUDIES: (countryStudies[country.ISO_2_CODE] || []).length || 0,
             }))
-            .filter((study) => study.STUDIES !== 0);
+            .filter(study => study.STUDIES !== 0);
 
-        const sortedCountries = R.sortBy((country) => country.STUDIES, countries);
+        const sortedCountries = R.sortBy(country => country.STUDIES, countries);
         if (sortedCountries.length === 0) return [];
 
         const getSize = (nStudies: number) => {
@@ -234,7 +225,7 @@ class TreatmentLayer extends Component<Props> {
             }
         };
 
-        return countries.map((country) => ({
+        return countries.map(country => ({
             ...country,
             SIZE: getSize(country.STUDIES),
             SIZE_HOVER: getSize(country.STUDIES) - 1,
@@ -242,7 +233,7 @@ class TreatmentLayer extends Component<Props> {
     };
 
     mountLayer(prevProps?: Props) {
-        const {studies, treatmentFilters, countryMode} = this.props;
+        const { studies, treatmentFilters, countryMode } = this.props;
         if (!prevProps || (prevProps.studies.length !== studies.length && studies.length)) {
             if (this.props.map.getSource(TREATMENT_SOURCE_ID)) {
                 this.props.map.removeLayer(TREATMENT_LAYER_ID);
@@ -267,7 +258,7 @@ class TreatmentLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any, a: any) => {
+    onClickListener = (e: any, _a: any) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -298,23 +289,12 @@ class TreatmentLayer extends Component<Props> {
     };
 
     applyMapTypeSymbols = () => {
-        const {treatmentFilters, countryMode} = this.props;
+        const { treatmentFilters, countryMode } = this.props;
         const layer = this.props.map.getLayer(TREATMENT_LAYER_ID);
-        const mapTypeSymbols: {[key: string]: any} = resolveMapTypeSymbols(
-            treatmentFilters,
-            countryMode
-        );
+        const mapTypeSymbols: { [key: string]: any } = resolveMapTypeSymbols(treatmentFilters, countryMode);
         if (layer && mapTypeSymbols) {
-            this.props.map.setPaintProperty(
-                TREATMENT_LAYER_ID,
-                "circle-radius",
-                mapTypeSymbols["circle-radius"]
-            );
-            this.props.map.setPaintProperty(
-                TREATMENT_LAYER_ID,
-                "circle-color",
-                mapTypeSymbols["circle-color"]
-            );
+            this.props.map.setPaintProperty(TREATMENT_LAYER_ID, "circle-radius", mapTypeSymbols["circle-radius"]);
+            this.props.map.setPaintProperty(TREATMENT_LAYER_ID, "circle-color", mapTypeSymbols["circle-color"]);
             this.props.map.setPaintProperty(
                 TREATMENT_LAYER_ID,
                 "circle-stroke-color",
@@ -324,11 +304,11 @@ class TreatmentLayer extends Component<Props> {
     };
 
     render() {
-        const {studies, countryMode, selection} = this.props;
+        const { studies, countryMode, selection } = this.props;
         if (selection === null) {
             return <div />;
         }
-        const filteredStudies = this.filterStudies(studies).filter((study) =>
+        const filteredStudies = this.filterStudies(studies).filter(study =>
             countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
         if (filteredStudies.length === 0) {

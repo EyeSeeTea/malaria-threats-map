@@ -1,19 +1,15 @@
-import React, {Component} from "react";
-import {State, TreatmentMapType} from "../../../store/types";
-import {
-    selectCountryMode,
-    selectSelection,
-    selectTheme,
-} from "../../../store/reducers/base-reducer";
-import {setPreventionFilteredStudiesAction} from "../../../store/actions/prevention-actions";
-import {setSelection} from "../../../store/actions/base-actions";
-import {connect} from "react-redux";
+import React, { Component } from "react";
+import { State, TreatmentMapType } from "../../../store/types";
+import { selectCountryMode, selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
+import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
+import { setSelection } from "../../../store/actions/base-actions";
+import { connect } from "react-redux";
 import MolecularMarkersChart from "./MolecularMarkers/MolecularMarkersChart";
 import TreatmentFailureChart from "./TreatmentFailure/TreatmentFailureChart";
 import TreatmentFailureCountryChart from "./TreatmentFailure/TreatmentFailureCountryChart";
-import {selectTreatmentFilters} from "../../../store/reducers/treatment-reducer";
+import { selectTreatmentFilters } from "../../../store/reducers/treatment-reducer";
 import MolecularMarkersCountryChart from "./MolecularMarkers/MolecularMarkersCountryChart";
-import {TreatmentStudy} from "../../../../domain/entities/TreatmentStudy";
+import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -42,12 +38,12 @@ class TreatmentSelectionChart extends Component<Props> {
             studies,
             countryMode,
             selection,
-            treatmentFilters: {mapType},
+            treatmentFilters: { mapType },
         } = this.props;
         if (!selection) {
             return <div />;
         }
-        const filteredStudies = studies.filter((study) =>
+        const filteredStudies = studies.filter(study =>
             countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
         if (!filteredStudies.length || theme !== "treatment") {

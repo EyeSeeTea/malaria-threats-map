@@ -1,34 +1,26 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {PreventionMapType, State} from "../../store/types";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { PreventionMapType, State } from "../../store/types";
 import setupEffects from "./effects";
 import * as R from "ramda";
-import {studySelector} from "./prevention/utils";
-import {
-    selectPreventionFilters,
-    selectPreventionStudies,
-} from "../../store/reducers/prevention-reducer";
+import { studySelector } from "./prevention/utils";
+import { selectPreventionFilters, selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import {
     PboDeploymentColors,
     PboDeploymentCountriesStatus,
 } from "./prevention/PboDeployment/PboDeploymentCountriesSymbols";
-import {selectDistricts, selectDistrictsLayer} from "../../store/reducers/districts-reducer";
-import {
-    selectCountryMode,
-    selectFilters,
-    selectRegion,
-    selectSelection,
-} from "../../store/reducers/base-reducer";
-import {fetchDistrictsRequest} from "../../store/actions/district-actions";
+import { selectDistricts, selectDistrictsLayer } from "../../store/reducers/districts-reducer";
+import { selectCountryMode, selectFilters, selectRegion, selectSelection } from "../../store/reducers/base-reducer";
+import { fetchDistrictsRequest } from "../../store/actions/district-actions";
 import mapboxgl from "mapbox-gl";
-import {buildPreventionFilters} from "./studies-filters";
-import {Hidden} from "@material-ui/core";
+import { buildPreventionFilters } from "./studies-filters";
+import { Hidden } from "@material-ui/core";
 import PreventionSitePopover from "./prevention/PreventionSitePopover";
 import ChartModal from "../ChartModal";
 import PreventionSelectionChart from "./prevention/PreventionSelectionChart";
-import {setSelection} from "../../store/actions/base-actions";
-import {PboDeploymentStatus} from "./prevention/PboDeployment/PboDeploymentSymbols";
-import {PreventionStudy} from "../../../domain/entities/PreventionStudy";
+import { setSelection } from "../../store/actions/base-actions";
+import { PboDeploymentStatus } from "./prevention/PboDeployment/PboDeploymentSymbols";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 export const DISTRICTS_LAYER_ID = "districts-layer";
 export const DISTRICTS_SOURCE_ID = "districts-source";
@@ -82,14 +74,14 @@ type Props = DispatchProps & StateProps & OwnProps;
 
 class CountrySelectorLayer extends Component<Props> {
     componentDidMount() {
-        const {region, fetchDistricts} = this.props;
+        const { region, fetchDistricts } = this.props;
         if (region.country) {
             fetchDistricts(region.country);
         }
     }
 
     componentDidUpdate(prevProps: Props) {
-        const {region, districts, studies, fetchDistricts, countryMode} = this.props;
+        const { region, districts, studies, fetchDistricts, countryMode } = this.props;
         if (region.country && region.country !== prevProps.region.country) {
             fetchDistricts(region.country);
         }
@@ -101,7 +93,7 @@ class CountrySelectorLayer extends Component<Props> {
                     type: "FeatureCollection",
                     features: [],
                 };
-                let existing: any = this.props.map.getSource(DISTRICTS_SOURCE_ID);
+                const existing: any = this.props.map.getSource(DISTRICTS_SOURCE_ID);
                 if (existing) {
                     existing.setData(data);
                 }
@@ -110,7 +102,7 @@ class CountrySelectorLayer extends Component<Props> {
     }
 
     buildFilters = () => {
-        const {preventionFilters} = this.props;
+        const { preventionFilters } = this.props;
         return buildPreventionFilters(preventionFilters, [1900, new Date().getFullYear()], {});
     };
 
@@ -122,18 +114,18 @@ class CountrySelectorLayer extends Component<Props> {
     mountLayer = () => {
         const studies = this.filterStudies(this.props.studies);
         const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
-        const filteredStudies = R.values(groupedStudies).map((group) =>
+        const filteredStudies = R.values(groupedStudies).map(group =>
             studySelector(group, PreventionMapType.PBO_DEPLOYMENT)
         );
 
         const studiesByDistrict = R.groupBy(R.path(["ADMIN2_GUID"]), filteredStudies);
 
-        const {ELIGIBLE, NOT_ENOUGH_DATA, NOT_ELIGIBLE} = PboDeploymentCountriesStatus;
+        const { ELIGIBLE, NOT_ENOUGH_DATA, NOT_ELIGIBLE } = PboDeploymentCountriesStatus;
 
         const filterByStatus = (status: PboDeploymentCountriesStatus) => (studies: any[]) =>
-            studies.filter((s) => s.PBO_DEPLOYMENT_STATUS === status);
+            studies.filter(s => s.PBO_DEPLOYMENT_STATUS === status);
 
-        const statusByDistrict: {[key: string]: any} = Object.entries(studiesByDistrict).reduce(
+        const statusByDistrict: { [key: string]: any } = Object.entries(studiesByDistrict).reduce(
             (acc, [key, studies]) => ({
                 ...acc,
                 [key]: {
@@ -146,15 +138,14 @@ class CountrySelectorLayer extends Component<Props> {
         );
 
         const features = this.props.layer.features.map((feature: any) => {
-            const newFeature = {...feature};
-            const districtStatus: {[key: string]: number} =
-                statusByDistrict[newFeature.properties.GUID];
+            const newFeature = { ...feature };
+            const districtStatus: { [key: string]: number } = statusByDistrict[newFeature.properties.GUID];
             if (!districtStatus) {
                 newFeature.properties.PBO_DEPLOYMENT_STATUS = null;
                 return newFeature;
             }
             const statuses: Record<string, number> = Object.entries(districtStatus).reduce(
-                (acc, [key, value]) => ({...acc, [key]: value}),
+                (acc, [key, value]) => ({ ...acc, [key]: value }),
                 {}
             );
 
@@ -171,7 +162,7 @@ class CountrySelectorLayer extends Component<Props> {
             features,
         };
 
-        let existing: mapboxgl.GeoJSONSource = this.props.map.getSource(
+        const existing: mapboxgl.GeoJSONSource = this.props.map.getSource(
             DISTRICTS_SOURCE_ID
         ) as mapboxgl.GeoJSONSource;
         if (existing) {
@@ -207,11 +198,11 @@ class CountrySelectorLayer extends Component<Props> {
         }
     };
 
-    onClickListener = (e: any, a: any) => {
-        const coordinates = [
-            e.features[0].properties.CENTER_LON,
-            e.features[0].properties.CENTER_LAT,
-        ] as [number, number];
+    onClickListener = (e: any, _a: any) => {
+        const coordinates = [e.features[0].properties.CENTER_LON, e.features[0].properties.CENTER_LAT] as [
+            number,
+            number
+        ];
         const selection = {
             ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
             SITE_ID: e.features[0].properties.GUID,
@@ -228,13 +219,11 @@ class CountrySelectorLayer extends Component<Props> {
     };
 
     render() {
-        const {studies, selection} = this.props;
+        const { studies, selection } = this.props;
         if (selection === null) {
             return <div />;
         }
-        const filteredStudies = this.filterStudies(studies).filter(
-            (study) => study.ADMIN2_GUID === selection.SITE_ID
-        );
+        const filteredStudies = this.filterStudies(studies).filter(study => study.ADMIN2_GUID === selection.SITE_ID);
         if (filteredStudies.length === 0) {
             return <div />;
         }

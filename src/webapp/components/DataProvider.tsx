@@ -1,17 +1,14 @@
-import {Component} from "react";
-import {State} from "../store/types";
-import {connect} from "react-redux";
+import { Component } from "react";
+import { State } from "../store/types";
+import { connect } from "react-redux";
 import i18next from "i18next";
 import * as R from "ramda";
-import {
-    selectTranslations,
-    selectTranslationsAreLoading,
-} from "../store/reducers/translations-reducer";
-import {fetchTranslationsRequestAction} from "../store/actions/translations-actions";
-import {selectCountryLayerIsLoading} from "../store/reducers/country-layer-reducer";
-import {fetchCountryLayerRequest} from "../store/actions/country-layer-actions";
-import {fetchDataDownloadRequestAction} from "../store/actions/data-download-actions";
-import {getLastUpdatedRequestAction} from "../store/actions/base-actions";
+import { selectTranslations, selectTranslationsAreLoading } from "../store/reducers/translations-reducer";
+import { fetchTranslationsRequestAction } from "../store/actions/translations-actions";
+import { selectCountryLayerIsLoading } from "../store/reducers/country-layer-reducer";
+import { fetchCountryLayerRequest } from "../store/actions/country-layer-actions";
+import { fetchDataDownloadRequestAction } from "../store/actions/data-download-actions";
+import { getLastUpdatedRequestAction } from "../store/actions/base-actions";
 
 const mapStateToProps = (state: State) => ({
     translationsLoading: selectTranslationsAreLoading(state),

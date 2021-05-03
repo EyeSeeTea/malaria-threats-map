@@ -5,12 +5,12 @@ import MechanismTypeFilter from "../../../filters/MechanismTypeFilter";
 import SynergistTypeFilter from "../../../filters/SynergistTypeFilter";
 
 export default function LevelOfInvolvementFilters() {
-  return (
-    <div>
-      <MechanismTypeFilter fromDb/>
-      <SpeciesFilter />
-      <SynergistTypeFilter />
-      <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
-    </div>
-  );
+    return (
+        <div>
+            <MechanismTypeFilter fromDb />
+            <SpeciesFilter />
+            <SynergistTypeFilter />
+            <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
+        </div>
+    );
 }

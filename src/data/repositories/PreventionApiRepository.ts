@@ -1,12 +1,11 @@
-
-import { request } from "../common/request"
+import { request } from "../common/request";
 import { FutureData } from "../../domain/common/FutureData";
 import { PreventionStudy } from "../../domain/entities/PreventionStudy";
 import { PreventionRepository } from "../../domain/repositories/PreventionRepository";
 import { ApiResponse, ApiParams } from "../common/types";
 
 export class PreventionApiRepository implements PreventionRepository {
-    constructor(private baseUrl: string) { }
+    constructor(private baseUrl: string) {}
 
     getStudies(): FutureData<PreventionStudy[]> {
         const params: ApiParams = {
@@ -15,7 +14,8 @@ export class PreventionApiRepository implements PreventionRepository {
             outFields: "*",
         };
 
-        return request<ApiResponse<PreventionStudy>>({ url: `${this.baseUrl}/5/query`, params })
-            .map(response => response.features.map((feature) => feature.attributes));
+        return request<ApiResponse<PreventionStudy>>({ url: `${this.baseUrl}/5/query`, params }).map(response =>
+            response.features.map(feature => feature.attributes)
+        );
     }
 }

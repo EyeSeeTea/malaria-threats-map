@@ -1,19 +1,19 @@
 import * as React from "react";
-import {useState} from "react";
+import { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import {Box, Hidden, Typography} from "@material-ui/core";
-import {connect} from "react-redux";
-import {useTranslation} from "react-i18next";
-import {selectTheme} from "../../../../store/reducers/base-reducer";
-import {State} from "../../../../store/types";
+import { Box, Hidden, Typography } from "@material-ui/core";
+import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { State } from "../../../../store/types";
 import * as R from "ramda";
 import Pagination from "../../../charts/Pagination";
 import Citation from "../../../charts/Citation";
-import {formatYears, formatYears2} from "../../../../utils/string-utils";
-import {PLASMODIUM_SPECIES_SUGGESTIONS} from "../../../filters/PlasmodiumSpeciesFilter";
-import {TreatmentStudy} from "../../../../../domain/entities/TreatmentStudy";
+import { formatYears, formatYears2 } from "../../../../utils/string-utils";
+import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../filters/PlasmodiumSpeciesFilter";
+import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 
 const options: (data: any, categories: any[], translations: any) => Highcharts.Options = (
     data,
@@ -39,7 +39,7 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
             width: 150,
         },
     },
-    xAxis: {categories},
+    xAxis: { categories },
     yAxis: {
         min: 0,
         title: {
@@ -84,8 +84,8 @@ const Flex = styled.div`
     display: flex;
 `;
 
-const FlexCol = styled.div<{flex?: number}>`
-    flex: ${(props) => props.flex || 1};
+const FlexCol = styled.div<{ flex?: number }>`
+    flex: ${props => props.flex || 1};
 `;
 
 const Margin = styled.div`
@@ -105,18 +105,18 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const TreatmentFailureChart = ({theme, studies}: Props) => {
-    const {t} = useTranslation("common");
+const TreatmentFailureChart = ({ studies }: Props) => {
+    const { t } = useTranslation("common");
     const [study, setStudy] = useState(0);
-    const sortedStudies = R.sortBy((study) => parseInt(study.YEAR_START), studies);
-    const years = R.uniq(sortedStudies.map((study) => study.YEAR_START)).sort();
+    const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
+    const years = R.uniq(sortedStudies.map(study => study.YEAR_START)).sort();
     const maxYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
     const minYear = parseInt(sortedStudies[0].YEAR_START);
 
     const keys = [
-        {name: "POSITIVE_DAY_3", color: "#00994C"},
-        {name: "TREATMENT_FAILURE_PP", color: "#BE4B48"},
-        {name: "TREATMENT_FAILURE_KM", color: "#4b48be"},
+        { name: "POSITIVE_DAY_3", color: "#00994C" },
+        { name: "TREATMENT_FAILURE_PP", color: "#BE4B48" },
+        { name: "TREATMENT_FAILURE_KM", color: "#4b48be" },
     ];
 
     const exists = (value: string) => {
@@ -127,17 +127,13 @@ const TreatmentFailureChart = ({theme, studies}: Props) => {
         return trimmed !== "N/A" && trimmed !== "NA" && trimmed !== null;
     };
 
-    const series = keys.map((key) => {
+    const series = keys.map(key => {
         return {
             name: t(key.name),
             color: key.color,
-            data: years.map((year) => {
-                const yearFilters: any = studies.filter(
-                    (study) => parseInt(year) === parseInt(study.YEAR_START)
-                )[0];
-                return yearFilters
-                    ? parseFloat((parseFloat(yearFilters[key.name] || "0") * 100).toFixed(2))
-                    : 0;
+            data: years.map(year => {
+                const yearFilters: any = studies.filter(study => parseInt(year) === parseInt(study.YEAR_START))[0];
+                return yearFilters ? parseFloat((parseFloat(yearFilters[key.name] || "0") * 100).toFixed(2)) : 0;
             }),
         };
     });
@@ -274,19 +270,13 @@ const TreatmentFailureChart = ({theme, studies}: Props) => {
             </Typography>
             <Hidden smUp>
                 {renderInfo()}
-                <HighchartsReact
-                    highcharts={Highcharts}
-                    options={options(series, years, translations)}
-                />
+                <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
             </Hidden>
             <Hidden xsDown>
                 <Flex>
                     <FlexCol>{renderInfo()}</FlexCol>
                     <FlexCol>
-                        <HighchartsReact
-                            highcharts={Highcharts}
-                            options={options(series, years, translations)}
-                        />
+                        <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
                     </FlexCol>
                 </Flex>
             </Hidden>

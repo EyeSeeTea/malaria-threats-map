@@ -9,7 +9,7 @@ import TreatmentMapTypesSelector from "./filters/TreatmentMapTypesSelector";
 import DiagnosisMapTypesSelector from "./filters/DiagnosisMapTypesSelector";
 
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state)
+    theme: selectTheme(state),
 });
 
 const mapDispatchToProps = {};
@@ -19,24 +19,21 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const Wrapper = styled.div`
-  min-width: 250px;
+    min-width: 250px;
 `;
 
 export class MapTypesSelector extends Component<Props> {
-  render() {
-    const { theme } = this.props;
-    return (
-      <Wrapper>
-        {theme === "prevention" && <PreventionMapTypesSelector />}
-        {theme === "diagnosis" && <DiagnosisMapTypesSelector />}
-        {theme === "treatment" && <TreatmentMapTypesSelector />}
-        {theme === "invasive" && <InvasiveMapTypesSelector />}
-      </Wrapper>
-    );
-  }
+    render() {
+        const { theme } = this.props;
+        return (
+            <Wrapper>
+                {theme === "prevention" && <PreventionMapTypesSelector />}
+                {theme === "diagnosis" && <DiagnosisMapTypesSelector />}
+                {theme === "treatment" && <TreatmentMapTypesSelector />}
+                {theme === "invasive" && <InvasiveMapTypesSelector />}
+            </Wrapper>
+        );
+    }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MapTypesSelector);
+export default connect(mapStateToProps, mapDispatchToProps)(MapTypesSelector);

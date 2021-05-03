@@ -9,24 +9,24 @@ import { selectDiagnosisStudiesLoading } from "../store/reducers/diagnosis-reduc
 import { selectInvasiveStudiesLoading } from "../store/reducers/invasive-reducer";
 import { selectTreatmentStudiesLoading } from "../store/reducers/treatment-reducer";
 import { connect } from "react-redux";
-import {selectDistrictsAreLoading} from "../store/reducers/districts-reducer";
+import { selectDistrictsAreLoading } from "../store/reducers/districts-reducer";
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    backdrop: {
-      zIndex: theme.zIndex.drawer + 1,
-      color: "#fff"
-    }
-  })
+    createStyles({
+        backdrop: {
+            zIndex: theme.zIndex.drawer + 1,
+            color: "#fff",
+        },
+    })
 );
 
 const mapStateToProps = (state: State) => ({
-  theme: selectTheme(state),
-  preventionLoading: selectPreventionStudiesLoading(state),
-  diagnosisLoading: selectDiagnosisStudiesLoading(state),
-  treatmentLoading: selectTreatmentStudiesLoading(state),
-  invasiveLoading: selectInvasiveStudiesLoading(state),
-  districtsLoading: selectDistrictsAreLoading(state),
+    theme: selectTheme(state),
+    preventionLoading: selectPreventionStudiesLoading(state),
+    diagnosisLoading: selectDiagnosisStudiesLoading(state),
+    treatmentLoading: selectTreatmentStudiesLoading(state),
+    invasiveLoading: selectInvasiveStudiesLoading(state),
+    districtsLoading: selectDistrictsAreLoading(state),
 });
 
 const mapDispatchToProps = {};
@@ -36,33 +36,30 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
 function SimpleBackdrop(props: Props) {
-  const classes = useStyles(props);
+    const classes = useStyles(props);
 
-  const isLoading = () => {
-    switch (props.theme) {
-      case "prevention":
-        return props.preventionLoading || props.districtsLoading;
-      case "diagnosis":
-        return props.diagnosisLoading;
-      case "treatment":
-        return props.treatmentLoading;
-      case "invasive":
-        return props.invasiveLoading;
-      default:
-        return false;
-    }
-  };
+    const isLoading = () => {
+        switch (props.theme) {
+            case "prevention":
+                return props.preventionLoading || props.districtsLoading;
+            case "diagnosis":
+                return props.diagnosisLoading;
+            case "treatment":
+                return props.treatmentLoading;
+            case "invasive":
+                return props.invasiveLoading;
+            default:
+                return false;
+        }
+    };
 
-  return (
-    <div>
-      <Backdrop className={classes.backdrop} open={isLoading()}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-    </div>
-  );
+    return (
+        <div>
+            <Backdrop className={classes.backdrop} open={isLoading()}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
+        </div>
+    );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SimpleBackdrop);
+export default connect(mapStateToProps, mapDispatchToProps)(SimpleBackdrop);

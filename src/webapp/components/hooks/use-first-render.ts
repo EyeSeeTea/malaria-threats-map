@@ -5,4 +5,4 @@ export function useFirstRender(): boolean {
     const firstRender = ref.current;
     ref.current = false;
     return firstRender;
-  };
+}

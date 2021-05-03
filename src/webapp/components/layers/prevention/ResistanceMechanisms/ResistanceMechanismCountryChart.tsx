@@ -1,19 +1,19 @@
 import * as React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import {Box, Typography} from "@material-ui/core";
-import {connect} from "react-redux";
-import {useTranslation} from "react-i18next";
-import {selectTheme} from "../../../../store/reducers/base-reducer";
-import {State} from "../../../../store/types";
+import { Box, Typography } from "@material-ui/core";
+import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { State } from "../../../../store/types";
 import * as R from "ramda";
-import {ResistanceMechanismColors} from "./symbols";
-import {setCountryModeAction, setRegionAction} from "../../../../store/actions/base-actions";
-import {RESISTANCE_MECHANISM} from "./utils";
-import {selectPreventionFilters} from "../../../../store/reducers/prevention-reducer";
-import {formatYears} from "../../../../utils/string-utils";
-import {Actions, ChartContainer, FlexGrow, ZoomButton} from "../../../Chart";
-import {PreventionStudy} from "../../../../../domain/entities/PreventionStudy";
+import { ResistanceMechanismColors } from "./symbols";
+import { setCountryModeAction, setRegionAction } from "../../../../store/actions/base-actions";
+import { RESISTANCE_MECHANISM } from "./utils";
+import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
+import { formatYears } from "../../../../utils/string-utils";
+import { Actions, ChartContainer, FlexGrow, ZoomButton } from "../../../Chart";
+import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
@@ -75,19 +75,14 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const ResistanceMechanismCountryChart = ({
-    studies,
-    preventionFilters,
-    setRegion,
-    setCountryMode,
-}: Props) => {
-    const {t} = useTranslation("common");
-    const sortedStudies = R.sortBy((study) => parseInt(study.YEAR_START), studies);
+const ResistanceMechanismCountryChart = ({ studies, preventionFilters, setRegion, setCountryMode }: Props) => {
+    const { t } = useTranslation("common");
+    const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
     const maxYear = sortedStudies[sortedStudies.length - 1].YEAR_START;
     const minYear = sortedStudies[0].YEAR_START;
-    const filteredStudies = sortedStudies.filter((study) => study.MECHANISM_STATUS !== "NA");
+    const filteredStudies = sortedStudies.filter(study => study.MECHANISM_STATUS !== "NA");
     const nStudies = filteredStudies.length;
-    const richStudies = filteredStudies.map((study) => {
+    const richStudies = filteredStudies.map(study => {
         return {
             ...study,
         };
@@ -103,7 +98,7 @@ const ResistanceMechanismCountryChart = ({
         }
     );
     const onClick = () => {
-        setRegion({country: studies[0].ISO2});
+        setRegion({ country: studies[0].ISO2 });
         setCountryMode(false);
     };
     const translations = {
@@ -124,9 +119,7 @@ const ResistanceMechanismCountryChart = ({
                 })}
                 <i>Anopheles</i>
                 {t(`prevention.chart.resistance_mechanism.content_2`, {
-                    insecticideClasses: preventionFilters.assayTypes
-                        .map((type) => t(type))
-                        .join(", "),
+                    insecticideClasses: preventionFilters.assayTypes.map(type => t(type)).join(", "),
                     type: t(preventionFilters.insecticideClass),
                     years: formatYears(minYear, maxYear),
                 })}

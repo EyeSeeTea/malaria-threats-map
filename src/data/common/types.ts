@@ -23,4 +23,3 @@ export interface Field {
     alias: string;
     length: number;
 }
-

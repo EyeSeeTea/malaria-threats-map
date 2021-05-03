@@ -1,18 +1,18 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import {I18nextProvider} from "react-i18next";
+import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
-import {ThemeProvider} from "@material-ui/styles";
-import {store, theme} from "../../../App";
-import {connect, Provider} from "react-redux";
-import {State} from "../../../store/types";
+import { ThemeProvider } from "@material-ui/styles";
+import { store, theme } from "../../../App";
+import { connect, Provider } from "react-redux";
+import { State } from "../../../store/types";
 import mapboxgl from "mapbox-gl";
-import {selectCountryMode, selectSelection} from "../../../store/reducers/base-reducer";
-import {selectInvasiveFilters} from "../../../store/reducers/invasive-reducer";
+import { selectCountryMode, selectSelection } from "../../../store/reducers/base-reducer";
+import { selectInvasiveFilters } from "../../../store/reducers/invasive-reducer";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
-import {dispatchCustomEvent} from "../../../utils/dom-utils";
-import {setSelection} from "../../../store/actions/base-actions";
-import {DiagnosisStudy} from "../../../../domain/entities/DiagnosisStudy";
+import { dispatchCustomEvent } from "../../../utils/dom-utils";
+import { setSelection } from "../../../store/actions/base-actions";
+import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 
 const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
@@ -36,7 +36,7 @@ class DiagnosisSitePopover extends Component<Props> {
 
     componentDidMount(): void {
         const placeholder = document.createElement("div");
-        const {selection, studies} = this.props;
+        const { selection, studies } = this.props;
         ReactDOM.render(
             <I18nextProvider i18n={i18next}>
                 <ThemeProvider theme={theme}>
@@ -59,7 +59,7 @@ class DiagnosisSitePopover extends Component<Props> {
         setTimeout(() => dispatchCustomEvent("resize"), 100);
     }
 
-    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<{}>, snapshot?: any): void {
+    componentDidUpdate(): void {
         this.componentWillUnmount();
         this.componentDidMount();
     }

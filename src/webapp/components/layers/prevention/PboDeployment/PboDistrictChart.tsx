@@ -1,17 +1,17 @@
 import * as React from "react";
 import styled from "styled-components";
-import {Box, Typography} from "@material-ui/core";
-import {connect} from "react-redux";
-import {useTranslation} from "react-i18next";
-import {selectTheme} from "../../../../store/reducers/base-reducer";
-import {State} from "../../../../store/types";
-import {selectPreventionFilters} from "../../../../store/reducers/prevention-reducer";
-import {ChartContainer} from "../../../Chart";
+import { Box, Typography } from "@material-ui/core";
+import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { State } from "../../../../store/types";
+import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
+import { ChartContainer } from "../../../Chart";
 import * as R from "ramda";
-import {filterByAssayTypes, filterByProxyType, filterByType} from "../../studies-filters";
-import {evaluateDeploymentStatus} from "../utils";
-import {PboDeploymentStatus} from "./PboDeploymentSymbols";
-import {PreventionStudy} from "../../../../../domain/entities/PreventionStudy";
+import { filterByAssayTypes, filterByProxyType, filterByType } from "../../studies-filters";
+import { evaluateDeploymentStatus } from "../utils";
+import { PboDeploymentStatus } from "./PboDeploymentSymbols";
+import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -35,11 +35,9 @@ const Margin = styled.div`
     margin-bottom: 10px;
 `;
 
-const PboDistrictChart = ({studies}: Props) => {
-    const {t} = useTranslation("common");
-    const titleTranslation = t(
-        "Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment"
-    );
+const PboDistrictChart = ({ studies }: Props) => {
+    const { t } = useTranslation("common");
+    const titleTranslation = t("Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment");
     const nSitesTranslation = t("Number of sites that meet criteria");
     const vectorSpeciesTranslation = t("Vector species that meet criteria");
     const pyrethroidYearTranslation = t("Most recent pyrethroid susceptibility test results");
@@ -47,24 +45,22 @@ const PboDistrictChart = ({studies}: Props) => {
     const studyObject = studies[0];
 
     const studiesBySiteID = R.groupBy(R.prop("SITE_ID"), studies);
-    const studiesWithCriteriaPerSiteId = Object.entries(studiesBySiteID).map(
-        ([siteId, studies]) => {
-            const {criteria, pboDeploymentStatus} = evaluateDeploymentStatus(studies);
-            return {
-                siteId,
-                criteria,
-                studies,
-                pboDeploymentStatus,
-            };
-        }
-    );
+    const studiesWithCriteriaPerSiteId = Object.entries(studiesBySiteID).map(([siteId, studies]) => {
+        const { criteria, pboDeploymentStatus } = evaluateDeploymentStatus(studies);
+        return {
+            siteId,
+            criteria,
+            studies,
+            pboDeploymentStatus,
+        };
+    });
 
     const meetsCriteria = studiesWithCriteriaPerSiteId.filter(
-        (site) => site.pboDeploymentStatus === PboDeploymentStatus.ELIGIBLE
+        site => site.pboDeploymentStatus === PboDeploymentStatus.ELIGIBLE
     );
 
     const species = R.flatten(
-        meetsCriteria.map((site) => {
+        meetsCriteria.map(site => {
             return Object.entries(site.criteria).map(([species, criterias]: any) => {
                 if (criterias.criteria1 && criterias.criteria2 && criterias.criteria3) {
                     return [species];
@@ -75,11 +71,8 @@ const PboDistrictChart = ({studies}: Props) => {
         })
     );
 
-    const group1Studies = studies.filter(
-        filterByAssayTypes(["DISCRIMINATING_CONCENTRATION_BIOASSAY"])
-    );
-    const mostRecentPyrethroidStudies: any =
-        R.reverse(R.sortBy(R.prop("YEAR_START"), group1Studies)) || [];
+    const group1Studies = studies.filter(filterByAssayTypes(["DISCRIMINATING_CONCENTRATION_BIOASSAY"]));
+    const mostRecentPyrethroidStudies: any = R.reverse(R.sortBy(R.prop("YEAR_START"), group1Studies)) || [];
     const mostRecentPyrethroidStudy = mostRecentPyrethroidStudies[0] || {};
     const group2aStudies = studies
         .filter(filterByAssayTypes(["MOLECULAR_ASSAY", "SYNERGIST-INSECTICIDE_BIOASSAY"]))
@@ -88,8 +81,7 @@ const PboDistrictChart = ({studies}: Props) => {
         .filter(filterByAssayTypes(["SYNERGIST-INSECTICIDE_BIOASSAY"]))
         .filter(filterByProxyType("MONO_OXYGENASES"));
     const group2Studies = [...group2aStudies, ...group2bStudies];
-    const mostRecentMonoOxygenasesStudies: any =
-        R.reverse(R.sortBy(R.prop("YEAR_START"), group2Studies)) || [];
+    const mostRecentMonoOxygenasesStudies: any = R.reverse(R.sortBy(R.prop("YEAR_START"), group2Studies)) || [];
     const mostRecentMonoOxygenasesStudy = mostRecentMonoOxygenasesStudies[0] || {};
 
     return (

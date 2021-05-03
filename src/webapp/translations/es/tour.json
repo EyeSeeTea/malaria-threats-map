@@ -1,33 +1,33 @@
 {
-  "steps": {
-    "1": {
-      "title": "Bienvenido al Mapa de los desafíos de la malaria!",
-      "p1": "Usted se encuentra en una plataforma oficial de la OMS creada con el objetivo de mostrar la magnitud y la distribución geográfica de cuatro desafíos biológicos para el control y eliminación de la malaria.",
-      "p2": "Este asistente le mostrará cómo utilizar la plataforma."
-    },
-    "2": {
-      "title": "Por favor, selecciona un idioma."
-    },
-    "3": {
-      "p1": "Abra nuestros mapas interactivos que muestran datos recientes sobre los tres desafíos."
-    },
-    "4": {
-      "p1": "Abra la sección filtros para aplicar filtros aplicables al desafío asi como filtros por regiones"
-    },
-    "5": {
-      "p1": "Seleccione un país, una región o una sub-región o deje estos campos vacíos si prefiere ver todos los países a la vez."
-    },
-    "6": {
-      "p1": "Seleccione varios filtros y observer cómo el mapa cambia automáticamente."
-    },
-    "7": {
-      "p1": "Haga clic en un punto para acceder a los resultados de los bioensayos que cumplen sus criterios de búsqueda. La ventana emergente muestra los resultados para un solo estudio. Si hubiera más estudios que cumple sus criterios de búsqueda para ese punto, puede ver los resultados haciendo clic en la flecha >"
-    },
-    "8": {
-      "p1": "Consulte los resultados de los bioensayos de resistencia efectuados en cada lugar de monitoria de cada país."
-    },
-    "9": {
-      "p1": "Haga clic en un país para ver un resumen del estado de la resistance para dicho país."
+    "steps": {
+        "1": {
+            "title": "Bienvenido al Mapa de los desafíos de la malaria!",
+            "p1": "Usted se encuentra en una plataforma oficial de la OMS creada con el objetivo de mostrar la magnitud y la distribución geográfica de cuatro desafíos biológicos para el control y eliminación de la malaria.",
+            "p2": "Este asistente le mostrará cómo utilizar la plataforma."
+        },
+        "2": {
+            "title": "Por favor, selecciona un idioma."
+        },
+        "3": {
+            "p1": "Abra nuestros mapas interactivos que muestran datos recientes sobre los tres desafíos."
+        },
+        "4": {
+            "p1": "Abra la sección filtros para aplicar filtros aplicables al desafío asi como filtros por regiones"
+        },
+        "5": {
+            "p1": "Seleccione un país, una región o una sub-región o deje estos campos vacíos si prefiere ver todos los países a la vez."
+        },
+        "6": {
+            "p1": "Seleccione varios filtros y observer cómo el mapa cambia automáticamente."
+        },
+        "7": {
+            "p1": "Haga clic en un punto para acceder a los resultados de los bioensayos que cumplen sus criterios de búsqueda. La ventana emergente muestra los resultados para un solo estudio. Si hubiera más estudios que cumple sus criterios de búsqueda para ese punto, puede ver los resultados haciendo clic en la flecha >"
+        },
+        "8": {
+            "p1": "Consulte los resultados de los bioensayos de resistencia efectuados en cada lugar de monitoria de cada país."
+        },
+        "9": {
+            "p1": "Haga clic en un país para ver un resumen del estado de la resistance para dicho país."
+        }
     }
-  }
 }

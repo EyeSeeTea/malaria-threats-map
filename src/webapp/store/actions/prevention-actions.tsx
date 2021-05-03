@@ -1,60 +1,48 @@
-import {createAction} from "typesafe-actions";
-import {ActionTypeEnum} from "../actions";
-import {PreventionMapType} from "../types";
-import {PreventionStudy} from "../../../domain/entities/PreventionStudy";
+import { createAction } from "typesafe-actions";
+import { ActionTypeEnum } from "../actions";
+import { PreventionMapType } from "../types";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
-export const fetchPreventionStudiesRequest = createAction(
-    ActionTypeEnum.FetchPreventionStudiesRequest,
-    (action) => {
-        return () => action();
-    }
+export const fetchPreventionStudiesRequest = createAction(ActionTypeEnum.FetchPreventionStudiesRequest, action => {
+    return () => action();
+});
+
+export const fetchPreventionStudiesSuccess = createAction(ActionTypeEnum.FetchPreventionStudiesSuccess, action => {
+    return (studies: PreventionStudy[]) => action(studies);
+});
+
+export const fetchPreventionStudiesError = createAction(ActionTypeEnum.FetchPreventionStudiesError, action => () =>
+    action()
 );
 
-export const fetchPreventionStudiesSuccess = createAction(
-    ActionTypeEnum.FetchPreventionStudiesSuccess,
-    (action) => {
-        return (studies: PreventionStudy[]) => action(studies);
-    }
-);
-
-export const fetchPreventionStudiesError = createAction(
-    ActionTypeEnum.FetchPreventionStudiesError,
-    (action) => {
-        return (error: string) => action();
-    }
-);
-
-export const setPreventionMapType = createAction(ActionTypeEnum.SetPreventionMapType, (action) => {
+export const setPreventionMapType = createAction(ActionTypeEnum.SetPreventionMapType, action => {
     return (mapType: PreventionMapType) => action(mapType);
 });
 
-export const setInsecticideClass = createAction(ActionTypeEnum.SetInsecticideClass, (action) => {
+export const setInsecticideClass = createAction(ActionTypeEnum.SetInsecticideClass, action => {
     return (insecticideClass: string) => action(insecticideClass);
 });
 
-export const setInsecticideTypes = createAction(ActionTypeEnum.SetInsecticideTypes, (action) => {
+export const setInsecticideTypes = createAction(ActionTypeEnum.SetInsecticideTypes, action => {
     return (insecticideTypes: string[]) => action(insecticideTypes);
 });
 
-export const setAssayTypes = createAction(ActionTypeEnum.SetAssayTypes, (action) => {
+export const setAssayTypes = createAction(ActionTypeEnum.SetAssayTypes, action => {
     return (assayTypes: string[]) => action(assayTypes);
 });
 
-export const setType = createAction(ActionTypeEnum.SetType, (action) => {
+export const setType = createAction(ActionTypeEnum.SetType, action => {
     return (type: string) => action(type);
 });
 
-export const setSynergistTypes = createAction(ActionTypeEnum.SetSynergistTypes, (action) => {
+export const setSynergistTypes = createAction(ActionTypeEnum.SetSynergistTypes, action => {
     return (type: string[]) => action(type);
 });
 
-export const setSpecies = createAction(ActionTypeEnum.SetSpecies, (action) => {
+export const setSpecies = createAction(ActionTypeEnum.SetSpecies, action => {
     return (species: string[]) => action(species);
 });
 
-export const setPreventionFilteredStudiesAction = createAction(
-    ActionTypeEnum.SetPreventionFilteredStudies,
-    (action) => {
-        return (filteredStudies: PreventionStudy[]) => action(filteredStudies);
-    }
-);
+export const setPreventionFilteredStudiesAction = createAction(ActionTypeEnum.SetPreventionFilteredStudies, action => {
+    return (filteredStudies: PreventionStudy[]) => action(filteredStudies);
+});

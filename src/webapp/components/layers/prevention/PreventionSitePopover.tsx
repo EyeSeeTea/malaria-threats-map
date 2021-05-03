@@ -1,18 +1,18 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import {I18nextProvider} from "react-i18next";
+import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
-import {ThemeProvider} from "@material-ui/styles";
-import {store, theme} from "../../../App";
-import {connect, Provider} from "react-redux";
-import {State} from "../../../store/types";
+import { ThemeProvider } from "@material-ui/styles";
+import { store, theme } from "../../../App";
+import { connect, Provider } from "react-redux";
+import { State } from "../../../store/types";
 import mapboxgl from "mapbox-gl";
-import {selectPreventionFilters} from "../../../store/reducers/prevention-reducer";
-import {selectCountryMode, selectSelection} from "../../../store/reducers/base-reducer";
+import { selectPreventionFilters } from "../../../store/reducers/prevention-reducer";
+import { selectCountryMode, selectSelection } from "../../../store/reducers/base-reducer";
 import PreventionSelectionChart from "./PreventionSelectionChart";
-import {dispatchCustomEvent} from "../../../utils/dom-utils";
-import {setSelection} from "../../../store/actions/base-actions";
-import {PreventionStudy} from "../../../../domain/entities/PreventionStudy";
+import { dispatchCustomEvent } from "../../../utils/dom-utils";
+import { setSelection } from "../../../store/actions/base-actions";
+import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 
 const mapStateToProps = (state: State) => ({
     preventionFilters: selectPreventionFilters(state),
@@ -37,7 +37,7 @@ class PreventionSitePopover extends Component<Props> {
 
     componentDidMount(): void {
         const placeholder = document.createElement("div");
-        const {selection, studies} = this.props;
+        const { selection, studies } = this.props;
         if (!selection) {
             return;
         }
@@ -62,7 +62,7 @@ class PreventionSitePopover extends Component<Props> {
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
     }
-    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<{}>, snapshot?: any): void {
+    componentDidUpdate(): void {
         this.componentWillUnmount();
         this.componentDidMount();
     }

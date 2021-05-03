@@ -1,5 +1,5 @@
-import {DELETION_TYPES} from "../filters/DeletionTypeFilter";
-import {VectorSpeciesKey} from "../filters/VectorSpeciesFilter";
+import { DELETION_TYPES } from "../filters/DeletionTypeFilter";
+import { VectorSpeciesKey } from "../filters/VectorSpeciesFilter";
 import {
     DiagnosisFilters,
     DiagnosisMapType,
@@ -7,10 +7,10 @@ import {
     PreventionMapType,
     RegionState,
 } from "../../store/types";
-import {isSynergyst} from "./prevention/ResistanceMechanisms/ResistanceMechanismFilters";
-import {PreventionStudy} from "../../../domain/entities/PreventionStudy";
+import { isSynergyst } from "./prevention/ResistanceMechanisms/ResistanceMechanismFilters";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
-export const filterByYearRange = (years: number[], allowEmpty: boolean = false) => (study: any) => {
+export const filterByYearRange = (years: number[], allowEmpty = false) => (study: any) => {
     return (
         (allowEmpty && !study.YEAR_START) ||
         (parseInt(study.YEAR_START) >= years[0] && parseInt(study.YEAR_START) <= years[1])
@@ -111,8 +111,7 @@ export const filterByPatientType = (patientType: string) => (study: any) => {
 export const filterByDeletionType = (deletionType: string) => (study: any) => {
     return deletionType === DELETION_TYPES.HRP2_PROPORTION_DELETION.value
         ? study.HRP2_PROPORTION_DELETION !== "NR" && study.HRP2_PROPORTION_DELETION !== null
-        : study.HRP2_HRP3_PROPORTION_DELETION !== "NR" &&
-              study.HRP2_HRP3_PROPORTION_DELETION !== null;
+        : study.HRP2_HRP3_PROPORTION_DELETION !== "NR" && study.HRP2_HRP3_PROPORTION_DELETION !== null;
 };
 
 export const filterByDimensionId = (dimensionId: number) => (study: any) => {
@@ -136,10 +135,7 @@ export const filterByDrugs = (drugs: string[]) => (study: any) => {
 };
 
 export const filterByVectorSpecies = (species: string[]) => (study: any) => {
-    return (
-        !species.length ||
-        species.map((specie) => VectorSpeciesKey[specie]).includes(study.VECTOR_SPECIES)
-    );
+    return !species.length || species.map(specie => VectorSpeciesKey[specie]).includes(study.VECTOR_SPECIES);
 };
 
 export const filterByMolecularMarkerStudy = () => (study: any) => {
@@ -168,8 +164,7 @@ export const filterByPBOStudies = (study: PreventionStudy) => {
             study.ASSAY_TYPE === "BIOCHEMICAL_ASSAY" ||
             study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY") &&
             study.TYPE === "MONO_OXYGENASES") ||
-        (study.ASSAY_TYPE === "DISCRIMINATING_CONCENTRATION_BIOASSAY" &&
-            study.INSECTICIDE_CLASS === "PYRETHROIDS")
+        (study.ASSAY_TYPE === "DISCRIMINATING_CONCENTRATION_BIOASSAY" && study.INSECTICIDE_CLASS === "PYRETHROIDS")
     );
 };
 
@@ -199,7 +194,7 @@ export const buildPreventionFilters = (
                 filterByYearRange(filters),
                 filterByRegion(region),
             ];
-        case PreventionMapType.RESISTANCE_MECHANISM:
+        case PreventionMapType.RESISTANCE_MECHANISM: {
             const base = [
                 filterByResistanceMechanism,
                 filterByType(preventionFilters.type),
@@ -211,6 +206,7 @@ export const buildPreventionFilters = (
             return isSynergyst(preventionFilters)
                 ? [...base, filterByTypeSynergist(preventionFilters.synergistTypes)]
                 : base;
+        }
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return [
                 filterByLevelOfInvolvement,
@@ -233,11 +229,7 @@ export const buildPreventionFilters = (
     }
 };
 
-export const buildDiagnosisFilters = (
-    diagnosisFilters: DiagnosisFilters,
-    filters: number[],
-    region: RegionState
-) => {
+export const buildDiagnosisFilters = (diagnosisFilters: DiagnosisFilters, filters: number[], region: RegionState) => {
     switch (diagnosisFilters.mapType) {
         case DiagnosisMapType.GENE_DELETIONS:
             return [

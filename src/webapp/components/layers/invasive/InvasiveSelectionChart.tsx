@@ -1,16 +1,12 @@
-import React, {Component} from "react";
-import {InvasiveMapType, State} from "../../../store/types";
-import {
-    selectCountryMode,
-    selectSelection,
-    selectTheme,
-} from "../../../store/reducers/base-reducer";
-import {setSelection} from "../../../store/actions/base-actions";
-import {connect} from "react-redux";
+import React, { Component } from "react";
+import { InvasiveMapType, State } from "../../../store/types";
+import { selectCountryMode, selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
+import { setSelection } from "../../../store/actions/base-actions";
+import { connect } from "react-redux";
 import VectorOccurrenceChart from "./VectorOccurance/VectorOccurranceChart";
-import {selectInvasiveFilters} from "../../../store/reducers/invasive-reducer";
-import {setInvasiveFilteredStudiesAction} from "../../../store/actions/invasive-actions";
-import {InvasiveStudy} from "../../../../domain/entities/InvasiveStudy";
+import { selectInvasiveFilters } from "../../../store/reducers/invasive-reducer";
+import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
+import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -39,12 +35,12 @@ class PreventionSelectionChart extends Component<Props> {
             studies,
             countryMode,
             selection,
-            invasiveFilters: {mapType},
+            invasiveFilters: { mapType },
         } = this.props;
         if (!selection) {
             return <div />;
         }
-        const filteredStudies = studies.filter((study) =>
+        const filteredStudies = studies.filter(study =>
             countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
         if (!filteredStudies.length || theme !== "invasive") {

@@ -1,12 +1,11 @@
-
-import { request } from "../common/request"
+import { request } from "../common/request";
 import { FutureData } from "../../domain/common/FutureData";
-import { ApiParams, ApiResponse } from "../common/types"
+import { ApiParams, ApiResponse } from "../common/types";
 import { TreatmentRepository } from "../../domain/repositories/TreatmentRepository";
 import { TreatmentStudy } from "../../domain/entities/TreatmentStudy";
 
 export class TreatmentApiRepository implements TreatmentRepository {
-    constructor(private baseUrl: string) { }
+    constructor(private baseUrl: string) {}
 
     getStudies(): FutureData<TreatmentStudy[]> {
         const params: ApiParams = {
@@ -15,7 +14,8 @@ export class TreatmentApiRepository implements TreatmentRepository {
             outFields: "*",
         };
 
-        return request<ApiResponse<TreatmentStudy>>({ url: `${this.baseUrl}/6/query`, params })
-            .map(response => response.features.map((feature) => feature.attributes));
+        return request<ApiResponse<TreatmentStudy>>({ url: `${this.baseUrl}/6/query`, params }).map(response =>
+            response.features.map(feature => feature.attributes)
+        );
     }
 }

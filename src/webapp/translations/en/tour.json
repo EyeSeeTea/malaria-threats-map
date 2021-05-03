@@ -1,33 +1,33 @@
 {
-  "steps": {
-    "1": {
-      "title": "Welcome to Malaria Threats Map!",
-      "p1": "You are at a WHO official platform created to present the magnitude and spread of four biological challenges for malaria control and elimination.",
-      "p2": "This wizard will show how to use the platform"
-    },
-    "2": {
-      "title": "Choose a language"
-    },
-    "3": {
-      "p1": "Open our interactive maps containing the latest data for the four challenges"
-    },
-    "4": {
-      "p1": "Open the filters section to chose from the challenge filters as well as region filters"
-    },
-    "5": {
-      "p1": "Select the country, region or sub region of your interest or leave this filters blank to explore all countries"
-    },
-    "6": {
-      "p1": "Select several filters and notice how the map adjusts automatically."
-    },
-    "7": {
-      "p1": "Click on a site to see individual study result meeting your filter criteria. Results for one study at time are shown in the window. If there is more than one study meeting your criteria, you can visualize other study results by clicking the upper arrow."
-    },
-    "8": {
-      "p1": "Click on the country view to the number of studies performed in such country"
-    },
-    "9": {
-      "p1": "Click on a country to see a summary of resistance status for that country"
+    "steps": {
+        "1": {
+            "title": "Welcome to Malaria Threats Map!",
+            "p1": "You are at a WHO official platform created to present the magnitude and spread of four biological challenges for malaria control and elimination.",
+            "p2": "This wizard will show how to use the platform"
+        },
+        "2": {
+            "title": "Choose a language"
+        },
+        "3": {
+            "p1": "Open our interactive maps containing the latest data for the four challenges"
+        },
+        "4": {
+            "p1": "Open the filters section to chose from the challenge filters as well as region filters"
+        },
+        "5": {
+            "p1": "Select the country, region or sub region of your interest or leave this filters blank to explore all countries"
+        },
+        "6": {
+            "p1": "Select several filters and notice how the map adjusts automatically."
+        },
+        "7": {
+            "p1": "Click on a site to see individual study result meeting your filter criteria. Results for one study at time are shown in the window. If there is more than one study meeting your criteria, you can visualize other study results by clicking the upper arrow."
+        },
+        "8": {
+            "p1": "Click on the country view to the number of studies performed in such country"
+        },
+        "9": {
+            "p1": "Click on a country to see a summary of resistance status for that country"
+        }
     }
-  }
 }

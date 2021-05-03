@@ -12,16 +12,16 @@ import notificationsReducer from "../store/reducers/notifier-reducer";
 import { State } from "./types";
 
 const rootReducer = () =>
-  combineReducers<State>({
-    malaria: malariaReducer,
-    prevention: preventionReducer,
-    diagnosis: diagnosisReducer,
-    treatment: treatmentReducer,
-    invasive: invasiveReducer,
-    translations: translationsReducer,
-    countryLayer: countryLayerReducer,
-    district: districtsReducer,
-    notifications: notificationsReducer
-  });
+    combineReducers<State>({
+        malaria: malariaReducer,
+        prevention: preventionReducer,
+        diagnosis: diagnosisReducer,
+        treatment: treatmentReducer,
+        invasive: invasiveReducer,
+        translations: translationsReducer,
+        countryLayer: countryLayerReducer,
+        district: districtsReducer,
+        notifications: notificationsReducer,
+    });
 
 export default rootReducer;

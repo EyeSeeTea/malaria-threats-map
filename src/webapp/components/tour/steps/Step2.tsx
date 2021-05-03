@@ -4,15 +4,15 @@ import { Footer, StepProps } from "../MalariaTour";
 import { useTranslation } from "react-i18next";
 
 export default function Step2(options: StepProps) {
-  const { t } = useTranslation("tour");
-  return (
-    <>
-      <>
-        <Typography variant="subtitle1">
-          <strong>{t("steps.2.title")}</strong>
-        </Typography>
-      </>
-      <Footer {...options} current={2} total={10} />
-    </>
-  );
+    const { t } = useTranslation("tour");
+    return (
+        <>
+            <>
+                <Typography variant="subtitle1">
+                    <strong>{t("steps.2.title")}</strong>
+                </Typography>
+            </>
+            <Footer {...options} current={2} total={10} />
+        </>
+    );
 }

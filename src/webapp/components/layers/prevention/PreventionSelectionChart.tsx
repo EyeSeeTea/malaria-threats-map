@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {PreventionMapType, State} from "../../../store/types";
+import React, { Component } from "react";
+import { PreventionMapType, State } from "../../../store/types";
 import ResistanceStatusCountryChart from "./ResistanceStatus/ResistanceStatusCountryChart";
 import IntensityStatusCountryChart from "./IntensityStatus/IntensityStatusCountryChart";
 import ResistanceMechanismCountryChart from "./ResistanceMechanisms/ResistanceMechanismCountryChart";
@@ -7,18 +7,14 @@ import ResistanceStatusChart from "./ResistanceStatus/ResistanceStatusChart";
 import IntensityStatusChart from "./IntensityStatus/IntensityStatusChart";
 import LevelOfInvolvementChart from "./Involvement/LevelOfInvolvementChart";
 import ResistanceMechanismsChart from "./ResistanceMechanisms/ResistanceMechanismsChart";
-import {selectPreventionFilters} from "../../../store/reducers/prevention-reducer";
-import {
-    selectCountryMode,
-    selectSelection,
-    selectTheme,
-} from "../../../store/reducers/base-reducer";
-import {setPreventionFilteredStudiesAction} from "../../../store/actions/prevention-actions";
-import {setSelection} from "../../../store/actions/base-actions";
-import {connect} from "react-redux";
+import { selectPreventionFilters } from "../../../store/reducers/prevention-reducer";
+import { selectCountryMode, selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
+import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
+import { setSelection } from "../../../store/actions/base-actions";
+import { connect } from "react-redux";
 import PboSiteChart from "./PboDeployment/PboSiteChart";
 import PboDistrictChart from "./PboDeployment/PboDistrictChart";
-import {PreventionStudy} from "../../../../domain/entities/PreventionStudy";
+import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -47,12 +43,13 @@ class PreventionSelectionChart extends Component<Props> {
             studies,
             countryMode,
             selection,
-            preventionFilters: {mapType},
+            preventionFilters: { mapType },
         } = this.props;
+
         if (!selection) {
             return <div />;
         }
-        const filteredStudies = studies.filter((study) =>
+        const filteredStudies = studies.filter(study =>
             countryMode
                 ? study.ISO2 === selection.ISO_2_CODE || study.ADMIN2_GUID === selection.SITE_ID
                 : study.SITE_ID === selection.SITE_ID
@@ -60,6 +57,7 @@ class PreventionSelectionChart extends Component<Props> {
         if (!filteredStudies.length || theme !== "prevention") {
             return <div />;
         }
+
         return (
             <div id="fifth-duo">
                 {countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (

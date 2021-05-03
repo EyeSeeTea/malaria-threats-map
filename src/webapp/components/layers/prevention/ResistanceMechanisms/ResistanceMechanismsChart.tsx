@@ -2,26 +2,26 @@ import * as React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import {Box, Hidden, Typography} from "@material-ui/core";
-import {connect} from "react-redux";
-import {useTranslation} from "react-i18next";
-import {selectTheme} from "../../../../store/reducers/base-reducer";
-import {State} from "../../../../store/types";
+import { Box, Hidden, Typography } from "@material-ui/core";
+import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { State } from "../../../../store/types";
 import Citation from "../../../charts/Citation";
 import * as R from "ramda";
-import {ResistanceMechanismColors} from "./symbols";
-import {RESISTANCE_MECHANISM} from "./utils";
-import {baseChart} from "../../../charts/chart-utils";
-import {isNotNull} from "../../../../utils/number-utils";
+import { ResistanceMechanismColors } from "./symbols";
+import { RESISTANCE_MECHANISM } from "./utils";
+import { baseChart } from "../../../charts/chart-utils";
+import { isNotNull } from "../../../../utils/number-utils";
 import Curation from "../../../Curation";
-import {PreventionStudy} from "../../../../../domain/entities/PreventionStudy";
+import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 
 const Flex = styled.div`
     display: flex;
 `;
 
-const FlexCol = styled.div<{flex?: number}>`
-    flex: ${(props) => props.flex || 1};
+const FlexCol = styled.div<{ flex?: number }>`
+    flex: ${props => props.flex || 1};
 `;
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
@@ -60,7 +60,7 @@ const options2: (data: any, categories: any[], translations: any) => Highcharts.
     title: {
         text: translations.title,
     },
-    xAxis: {categories},
+    xAxis: { categories },
     yAxis: {
         title: {
             text: translations.count,
@@ -87,8 +87,8 @@ const options2: (data: any, categories: any[], translations: any) => Highcharts.
     },
 });
 
-const ChatContainer = styled.div<{width?: string}>`
-    width: ${(props) => props.width || "100%"};
+const ChatContainer = styled.div<{ width?: string }>`
+    width: ${props => props.width || "100%"};
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -103,31 +103,31 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const ResistanceMechanismsChart = ({studies}: Props) => {
-    const {t} = useTranslation("common");
-    const sortedStudies = R.sortBy((study) => -parseInt(study.YEAR_START), studies);
+const ResistanceMechanismsChart = ({ studies }: Props) => {
+    const { t } = useTranslation("common");
+    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
     const maxYear = parseInt(sortedStudies[0].YEAR_START);
     const years: number[] = [];
     for (let i = minYear; i <= maxYear; i++) {
         years.push(i);
     }
-    const detected = years.map((year) => {
-        const yearStudies = studies.filter((study) => parseInt(study.YEAR_START) === year);
-        const d = yearStudies.filter((study) => study.MECHANISM_STATUS === "DETECTED");
+    const detected = years.map(year => {
+        const yearStudies = studies.filter(study => parseInt(study.YEAR_START) === year);
+        const d = yearStudies.filter(study => study.MECHANISM_STATUS === "DETECTED");
         return {
             name: year,
             y: d.length,
-            names: R.uniq(d.map((s) => s.SPECIES)).join(", "),
+            names: R.uniq(d.map(s => s.SPECIES)).join(", "),
         };
     });
-    const notDetected = years.map((year) => {
-        const yearStudies = studies.filter((study) => parseInt(study.YEAR_START) === year);
-        const nD = yearStudies.filter((study) => study.MECHANISM_STATUS !== "DETECTED");
+    const notDetected = years.map(year => {
+        const yearStudies = studies.filter(study => parseInt(study.YEAR_START) === year);
+        const nD = yearStudies.filter(study => study.MECHANISM_STATUS !== "DETECTED");
         return {
             name: year,
             y: nD.length,
-            names: R.uniq(nD.map((s) => s.SPECIES)).join(", "),
+            names: R.uniq(nD.map(s => s.SPECIES)).join(", "),
         };
     });
     const data = [
@@ -153,10 +153,10 @@ const ResistanceMechanismsChart = ({studies}: Props) => {
             maxPointWidth: 20,
             type: "column",
             name: specie,
-            data: years.map((year) => {
+            data: years.map(year => {
                 const study = studies
-                    .filter((s) => isNotNull(s.MECHANISM_FREQUENCY))
-                    .filter((study) => year === parseInt(study.YEAR_START))[0];
+                    .filter(s => isNotNull(s.MECHANISM_FREQUENCY))
+                    .filter(study => year === parseInt(study.YEAR_START))[0];
                 return {
                     name: `${year}`,
                     y: study ? parseFloat(study.MECHANISM_FREQUENCY) : undefined,
@@ -173,9 +173,9 @@ const ResistanceMechanismsChart = ({studies}: Props) => {
         title: t("prevention.chart.resistance_mechanism.allelic"),
     };
 
-    const series = R.filter((serie) => R.any((data) => !!data.y, serie.data), baseSeries);
+    const series = R.filter(serie => R.any(data => !!data.y, serie.data), baseSeries);
 
-    const showAllelic = R.any((serie) => R.any((data) => data.y !== undefined, serie.data), series);
+    const showAllelic = R.any(serie => R.any(data => data.y !== undefined, serie.data), series);
 
     const content = () => (
         <>
@@ -184,22 +184,14 @@ const ResistanceMechanismsChart = ({studies}: Props) => {
                     studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2
                 )}`}</Box>
             </Typography>
-            <Typography variant="subtitle2">
-                {`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}
-            </Typography>
+            <Typography variant="subtitle2">{`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}</Typography>
             <Flex>
                 <FlexCol>
-                    <HighchartsReact
-                        highcharts={Highcharts}
-                        options={options(data, translations)}
-                    />
+                    <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
                 </FlexCol>
                 {showAllelic && (
                     <FlexCol>
-                        <HighchartsReact
-                            highcharts={Highcharts}
-                            options={options2(series, years, translations2)}
-                        />
+                        <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations2)} />
                     </FlexCol>
                 )}
             </Flex>

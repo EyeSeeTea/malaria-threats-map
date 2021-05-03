@@ -1,7 +1,7 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {InvasiveMapType, State} from "../../../store/types";
-import {studiesToGeoJson} from "../layer-utils";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { InvasiveMapType, State } from "../../../store/types";
+import { studiesToGeoJson } from "../layer-utils";
 import setupEffects from "../effects";
 import {
     selectCountryMode,
@@ -10,25 +10,25 @@ import {
     selectSelection,
     selectTheme,
 } from "../../../store/reducers/base-reducer";
-import {selectCountries} from "../../../store/reducers/country-layer-reducer";
+import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
-import {filterByRegion, filterByVectorSpecies, filterByYearRange} from "../studies-filters";
-import {resolveMapTypeSymbols, studySelector} from "./utils";
+import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../studies-filters";
+import { resolveMapTypeSymbols, studySelector } from "./utils";
 import {
     selectInvasiveFilters,
     selectInvasiveStudies,
     selectInvasiveStudiesLoading,
     selectInvasiveStudiesError,
 } from "../../../store/reducers/invasive-reducer";
-import {setInvasiveFilteredStudiesAction} from "../../../store/actions/invasive-actions";
-import {Hidden} from "@material-ui/core";
+import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
+import { Hidden } from "@material-ui/core";
 import InvasiveSitePopover from "./InvasiveSitePopover";
 import ChartModal from "../../ChartModal";
 import InvasiveSelectionChart from "./InvasiveSelectionChart";
-import {setSelection} from "../../../store/actions/base-actions";
-import {fetchInvasiveStudiesRequest} from "../../../store/actions/invasive-actions";
-import {InvasiveStudy} from "../../../../domain/entities/InvasiveStudy";
+import { setSelection } from "../../../store/actions/base-actions";
+import { fetchInvasiveStudiesRequest } from "../../../store/actions/invasive-actions";
+import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
@@ -84,7 +84,7 @@ class InvasiveLayer extends Component<Props> {
         this.loadStudiesIfRequired();
 
         const {
-            invasiveFilters: {mapType, vectorSpecies},
+            invasiveFilters: { mapType, vectorSpecies },
             countryMode,
             filters,
             region,
@@ -94,21 +94,12 @@ class InvasiveLayer extends Component<Props> {
         this.mountLayer(prevProps);
         this.renderLayer();
         const mapTypeChange = prevProps.invasiveFilters.mapType !== mapType;
-        const yearChange =
-            prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
+        const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
         const countryChange = prevProps.region !== region;
         const countryModeChange = prevProps.countryMode !== countryMode;
         const countriesChange = prevProps.countries.length !== countries.length;
-        const speciesChange =
-            prevProps.invasiveFilters.vectorSpecies.length !== vectorSpecies.length;
-        if (
-            mapTypeChange ||
-            yearChange ||
-            countryChange ||
-            countryModeChange ||
-            countriesChange ||
-            speciesChange
-        ) {
+        const speciesChange = prevProps.invasiveFilters.vectorSpecies.length !== vectorSpecies.length;
+        if (mapTypeChange || yearChange || countryChange || countryModeChange || countriesChange || speciesChange) {
             if (this.popup) {
                 this.popup.remove();
             }
@@ -118,10 +109,9 @@ class InvasiveLayer extends Component<Props> {
     }
 
     loadStudiesIfRequired() {
-        const {theme, studies, studiesLoading, studiesError} = this.props;
+        const { theme, studies, studiesLoading, studiesError } = this.props;
 
-        const required =
-            theme === INVASIVE && studies.length === 0 && !studiesLoading && !studiesError;
+        const required = theme === INVASIVE && studies.length === 0 && !studiesLoading && !studiesError;
 
         if (required) {
             this.props.fetchInvasiveStudies();
@@ -133,16 +123,14 @@ class InvasiveLayer extends Component<Props> {
     }
 
     setupGeoJsonData = (studies: any[]) => {
-        const {mapType} = this.props.invasiveFilters;
+        const { mapType } = this.props.invasiveFilters;
         const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
-        const filteredStudies = R.values(groupedStudies).map((group) =>
-            studySelector(group, mapType)
-        );
+        const filteredStudies = R.values(groupedStudies).map(group => studySelector(group, mapType));
         return filteredStudies;
     };
 
     buildFilters = () => {
-        const {invasiveFilters, filters, region} = this.props;
+        const { invasiveFilters, filters, region } = this.props;
         switch (invasiveFilters.mapType) {
             case InvasiveMapType.VECTOR_OCCURANCE:
                 return [
@@ -161,7 +149,7 @@ class InvasiveLayer extends Component<Props> {
     };
 
     filterSource = () => {
-        const {studies, countryMode} = this.props;
+        const { studies, countryMode } = this.props;
         const source = this.props.map.getSource(INVASIVE_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
@@ -183,9 +171,9 @@ class InvasiveLayer extends Component<Props> {
                 Longitude: country.CENTER_LON,
                 STUDIES: (countryStudies[country.ISO_2_CODE] || []).length || 0,
             }))
-            .filter((study) => study.STUDIES !== 0);
+            .filter(study => study.STUDIES !== 0);
 
-        const sortedCountries = R.sortBy((country) => country.STUDIES, countries);
+        const sortedCountries = R.sortBy(country => country.STUDIES, countries);
         if (sortedCountries.length === 0) return [];
         // const maxSize = sortedCountries[sortedCountries.length - 1].STUDIES;
         // const minSize = sortedCountries[0].STUDIES;
@@ -206,7 +194,7 @@ class InvasiveLayer extends Component<Props> {
             }
         };
 
-        return countries.map((country) => ({
+        return countries.map(country => ({
             ...country,
             // SIZE: 5 + ratio * (country.STUDIES - minSize),
             // SIZE_HOVER: 5 + ratio * (country.STUDIES - minSize)
@@ -216,7 +204,7 @@ class InvasiveLayer extends Component<Props> {
     };
 
     mountLayer(prevProps?: Props) {
-        const {studies, countryMode} = this.props;
+        const { studies, countryMode } = this.props;
         if (!prevProps || (prevProps.studies.length !== studies.length && studies.length)) {
             if (this.props.map.getSource(INVASIVE_SOURCE_ID)) {
                 this.props.map.removeLayer(INVASIVE_LAYER_ID);
@@ -241,7 +229,7 @@ class InvasiveLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any, a: any) => {
+    onClickListener = (e: any, _a: any) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -275,16 +263,8 @@ class InvasiveLayer extends Component<Props> {
         const layer = this.props.map.getLayer(INVASIVE_LAYER_ID);
         const mapTypeSymbols = resolveMapTypeSymbols();
         if (layer && mapTypeSymbols) {
-            this.props.map.setPaintProperty(
-                INVASIVE_LAYER_ID,
-                "circle-radius",
-                mapTypeSymbols["circle-radius"]
-            );
-            this.props.map.setPaintProperty(
-                INVASIVE_LAYER_ID,
-                "circle-color",
-                mapTypeSymbols["circle-color"]
-            );
+            this.props.map.setPaintProperty(INVASIVE_LAYER_ID, "circle-radius", mapTypeSymbols["circle-radius"]);
+            this.props.map.setPaintProperty(INVASIVE_LAYER_ID, "circle-color", mapTypeSymbols["circle-color"]);
             this.props.map.setPaintProperty(
                 INVASIVE_LAYER_ID,
                 "circle-stroke-color",
@@ -294,11 +274,11 @@ class InvasiveLayer extends Component<Props> {
     };
 
     render() {
-        const {studies, countryMode, selection} = this.props;
+        const { studies, countryMode, selection } = this.props;
         if (selection === null) {
             return <div />;
         }
-        const filteredStudies = this.filterStudies(studies).filter((study) =>
+        const filteredStudies = this.filterStudies(studies).filter(study =>
             countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
         if (filteredStudies.length === 0) {

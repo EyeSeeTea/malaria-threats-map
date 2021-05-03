@@ -8,7 +8,7 @@ import App from "./webapp/App";
 import * as serviceWorker from "./serviceWorker";
 import "./webapp/config/i18next";
 import ReactGA from "react-ga";
-import {initHotjar} from "./hotjar";
+import { initHotjar } from "./hotjar";
 import config from "./webapp/config";
 
 declare global {
@@ -19,10 +19,10 @@ declare global {
 
 interface Hotjar {
     (command: "stateChange", path: string): void;
-    debug: {on(): void; off(): void};
+    debug: { on(): void; off(): void };
 }
 
-const {gaAppId, hotjar: hotjarConfig} = config;
+const { gaAppId, hotjar: hotjarConfig } = config;
 
 if (hotjarConfig) {
     initHotjar(hotjarConfig.hjid, hotjarConfig.hjsv, true);

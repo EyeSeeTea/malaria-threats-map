@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import {createStyles, lighten, makeStyles, Theme} from "@material-ui/core/styles";
+import { createStyles, lighten, makeStyles, Theme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -15,11 +15,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
-import {connect} from "react-redux";
-import {State} from "../../../store/types";
+import { connect } from "react-redux";
+import { State } from "../../../store/types";
 import * as R from "ramda";
-import {useTranslation} from "react-i18next";
-import {Data, headCells} from "./columns";
+import { useTranslation } from "react-i18next";
+import { Data, headCells } from "./columns";
 import FilterPopover from "./FilterPopover";
 import {
     filterByCountries,
@@ -27,19 +27,19 @@ import {
     filterByManyPlasmodiumSpecies,
     filterByMolecularMarkerStudyDimension256,
 } from "../../layers/studies-filters";
-import {exportToCSV} from "../../DataDownload/download";
-import {Button} from "@material-ui/core";
-import {getComparator, Order, percentile, stableSort} from "../utils";
-import {selectTreatmentStudies} from "../../../store/reducers/treatment-reducer";
-import {EnhancedTableProps, StyledCell, useStyles} from "../types";
-import {isNull} from "../../../utils/number-utils";
-import {format} from "date-fns";
-import {sendAnalytics} from "../../../utils/analytics";
-import {TreatmentStudy} from "../../../../domain/entities/TreatmentStudy";
+import { exportToCSV } from "../../DataDownload/download";
+import { Button } from "@material-ui/core";
+import { getComparator, Order, percentile, stableSort } from "../utils";
+import { selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
+import { EnhancedTableProps, StyledCell, useStyles } from "../types";
+import { isNull } from "../../../utils/number-utils";
+import { format } from "date-fns";
+import { sendAnalytics } from "../../../utils/analytics";
+import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-    const {t} = useTranslation("common");
-    const {classes, order, orderBy, onRequestSort} = props;
+    const { t } = useTranslation("common");
+    const { classes, order, orderBy, onRequestSort } = props;
 
     const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
@@ -48,7 +48,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     return (
         <TableHead>
             <TableRow>
-                {headCells.map((headCell) => (
+                {headCells.map(headCell => (
                     <StyledCell
                         key={headCell.id}
                         align={headCell.align || "left"}
@@ -61,16 +61,12 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                             <TableSortLabel
                                 active={orderBy === headCell.id}
                                 direction={orderBy === headCell.id ? order : "asc"}
-                                onClick={
-                                    headCell.sortable ? createSortHandler(headCell.id) : () => {}
-                                }
+                                onClick={headCell.sortable ? createSortHandler(headCell.id) : () => {}}
                             >
                                 {t(headCell.label)}
                                 {headCell.sortable && orderBy === headCell.id ? (
                                     <span className={classes.visuallyHidden}>
-                                        {order === "desc"
-                                            ? "sorted descending"
-                                            : "sorted ascending"}
+                                        {order === "desc" ? "sorted descending" : "sorted ascending"}
                                     </span>
                                 ) : null}
                             </TableSortLabel>
@@ -123,7 +119,7 @@ interface EnhancedTableToolbarProps {
 }
 
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-    const {t} = useTranslation("common");
+    const { t } = useTranslation("common");
     const classes = useToolbarStyles({});
     const {
         numSelected,
@@ -199,9 +195,9 @@ type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {};
 type Props = StateProps & OwnProps & DispatchProps;
 
-function TreatmentReport({studies: baseStudies}: Props) {
+function TreatmentReport({ studies: baseStudies }: Props) {
     const classes = useStyles({});
-    const {t} = useTranslation("common");
+    const { t } = useTranslation("common");
     const [order, setOrder] = React.useState<Order>("desc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("DRUG");
     const [selected, setSelected] = React.useState<string[]>([]);
@@ -241,10 +237,7 @@ function TreatmentReport({studies: baseStudies}: Props) {
 
     const groups: Data[] = R.flatten(
         Object.entries(countryStudyGroups).map(([country, countryStudies]) => {
-            const countrySpeciesGroup = R.groupBy(
-                (study: TreatmentStudy) => `${study.DRUG_NAME}`,
-                countryStudies
-            );
+            const countrySpeciesGroup = R.groupBy((study: TreatmentStudy) => `${study.DRUG_NAME}`, countryStudies);
             const entries = Object.entries(countrySpeciesGroup);
             let nStudies = 0;
             return R.flatten(
@@ -254,9 +247,7 @@ function TreatmentReport({studies: baseStudies}: Props) {
                         countrySpeciesStudies
                     );
 
-                    const followUpCountrySpeciesGroupStudies = Object.entries(
-                        followUpCountrySpeciesGroup
-                    );
+                    const followUpCountrySpeciesGroupStudies = Object.entries(followUpCountrySpeciesGroup);
                     nStudies += followUpCountrySpeciesGroupStudies.length;
                     return followUpCountrySpeciesGroupStudies
                         .map(([followUpDays, followUpCountrySpeciesStudies]) => {
@@ -269,27 +260,20 @@ function TreatmentReport({studies: baseStudies}: Props) {
                             const defaultProp = "TREATMENT_FAILURE_PP";
                             const fallbackProp = "TREATMENT_FAILURE_KM";
 
-                            const rawValues = followUpCountrySpeciesStudies.map(
-                                (study: TreatmentStudy) =>
-                                    !isNull(study[defaultProp])
-                                        ? study[defaultProp]
-                                        : study[fallbackProp]
+                            const rawValues = followUpCountrySpeciesStudies.map((study: TreatmentStudy) =>
+                                !isNull(study[defaultProp]) ? study[defaultProp] : study[fallbackProp]
                             );
 
                             const values = rawValues
-                                .map((value) => parseFloat(value))
-                                .filter((value) => !Number.isNaN(value));
+                                .map(value => parseFloat(value))
+                                .filter(value => !Number.isNaN(value));
                             const sortedValues = values.sort();
 
                             const min = values.length ? sortedValues[0] * 100 : "-";
                             const max = values.length ? sortedValues[values.length - 1] * 100 : "-";
                             const median = values.length ? R.median(sortedValues) * 100 : "-";
-                            const percentile25 = values.length
-                                ? percentile(sortedValues, 0.25) * 100
-                                : "-";
-                            const percentile75 = values.length
-                                ? percentile(sortedValues, 0.75) * 100
-                                : "-";
+                            const percentile25 = values.length ? percentile(sortedValues, 0.25) * 100 : "-";
+                            const percentile75 = values.length ? percentile(sortedValues, 0.75) * 100 : "-";
 
                             return {
                                 ID: `${country}_${drug}`,
@@ -314,8 +298,8 @@ function TreatmentReport({studies: baseStudies}: Props) {
     );
 
     const downloadData = () => {
-        const studies = R.map((group) => {
-            const study = {...group};
+        const studies = R.map(group => {
+            const study = { ...group };
             delete study.ID;
             delete study.COUNTRY_NUMBER;
             return study;
@@ -345,7 +329,7 @@ function TreatmentReport({studies: baseStudies}: Props) {
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds = groups.map((n) => n.ID);
+            const newSelecteds = groups.map(n => n.ID);
             setSelected(newSelecteds);
             return;
         }
@@ -369,12 +353,12 @@ function TreatmentReport({studies: baseStudies}: Props) {
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
     );
-    const rows: Data[] = tablePage.map((row) => ({
+    const rows: Data[] = tablePage.map(row => ({
         ...row,
-        COUNTRY_NUMBER: tablePage.filter((r) => r.COUNTRY === row.COUNTRY).length,
+        COUNTRY_NUMBER: tablePage.filter(r => r.COUNTRY === row.COUNTRY).length,
     }));
 
-    const filterColumnsToDisplay = ([field, value]: [string, string]) =>
+    const filterColumnsToDisplay = ([field, _value]: [string, string]) =>
         !["ID", "COUNTRY", "COUNTRY_NUMBER", "ISO2"].includes(field);
     return (
         <div className={classes.root}>
@@ -416,9 +400,7 @@ function TreatmentReport({studies: baseStudies}: Props) {
                                             key={`${row.ID}_${row.ISO2}_${row.FOLLOW_UP}`}
                                             selected={isItemSelected}
                                         >
-                                            {(index === 0 ||
-                                                tablePage[index].ISO2 !==
-                                                    tablePage[index - 1].ISO2) && (
+                                            {(index === 0 || tablePage[index].ISO2 !== tablePage[index - 1].ISO2) && (
                                                 <>
                                                     <StyledCell
                                                         component="th"
@@ -434,9 +416,7 @@ function TreatmentReport({studies: baseStudies}: Props) {
                                             {Object.entries(row)
                                                 .filter(filterColumnsToDisplay)
                                                 .map(([field, value]) => {
-                                                    const header = headCells.find(
-                                                        (cell) => cell.id === field
-                                                    );
+                                                    const header = headCells.find(cell => cell.id === field);
                                                     const number = Number(value);
                                                     const isNumber = !Number.isNaN(number);
                                                     return (
@@ -450,9 +430,7 @@ function TreatmentReport({studies: baseStudies}: Props) {
                                                             divider={header.divider}
                                                         >
                                                             {header && header.numeric && isNumber
-                                                                ? `${number.toFixed(
-                                                                      header.decimalPositions | 0
-                                                                  )}`
+                                                                ? `${number.toFixed(header.decimalPositions | 0)}`
                                                                 : value || "-"}
                                                         </StyledCell>
                                                     );

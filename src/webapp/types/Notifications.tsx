@@ -1,8 +1,8 @@
 export interface NotificationMessage {
-  id: number;
-  message: string;
+    id: number;
+    message: string;
 }
 
 export interface NotificationsState {
-  notifications: NotificationMessage[];
+    notifications: NotificationMessage[];
 }

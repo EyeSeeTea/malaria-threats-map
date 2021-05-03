@@ -1,9 +1,9 @@
 import * as R from "ramda";
-import {ActionTypeEnum} from "../actions";
-import {createReducer} from "../reducer-utils";
-import {createSelector} from "reselect";
-import {PreventionMapType, PreventionState, State} from "../types";
-import {PreventionStudy} from "../../../domain/entities/PreventionStudy";
+import { ActionTypeEnum } from "../actions";
+import { createReducer } from "../reducer-utils";
+import { createSelector } from "reselect";
+import { PreventionMapType, PreventionState, State } from "../types";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 export const initialState: PreventionState = Object.freeze({
     studies: [],
@@ -61,16 +61,16 @@ function updateAssayTypes(assayTypes: string[]) {
 }
 
 export default createReducer<PreventionState>(initialState, {
-    [ActionTypeEnum.FetchPreventionStudiesRequest]: () => (state) => ({
+    [ActionTypeEnum.FetchPreventionStudiesRequest]: () => state => ({
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchPreventionStudiesSuccess]: (studies: PreventionStudy[]) => (state) => ({
+    [ActionTypeEnum.FetchPreventionStudiesSuccess]: (studies: PreventionStudy[]) => state => ({
         ...state,
         loading: false,
         studies,
     }),
-    [ActionTypeEnum.FetchPreventionStudiesError]: () => (state) => ({
+    [ActionTypeEnum.FetchPreventionStudiesError]: () => state => ({
         ...state,
         error: "There was a problem loading studies",
         loading: false,
@@ -90,16 +90,10 @@ export const selectPreventionState = (state: State) => state.prevention;
 
 export const selectPreventionStudies = createSelector(selectPreventionState, R.prop("studies"));
 
-export const selectPreventionStudiesLoading = createSelector(
-    selectPreventionState,
-    R.prop("loading")
-);
+export const selectPreventionStudiesLoading = createSelector(selectPreventionState, R.prop("loading"));
 
 export const selectPreventionStudiesError = createSelector(selectPreventionState, R.prop("error"));
 
-export const selectFilteredPreventionStudies = createSelector(
-    selectPreventionState,
-    R.prop("filteredStudies")
-);
+export const selectFilteredPreventionStudies = createSelector(selectPreventionState, R.prop("filteredStudies"));
 
 export const selectPreventionFilters = createSelector(selectPreventionState, R.prop("filters"));

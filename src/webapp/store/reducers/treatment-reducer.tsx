@@ -1,9 +1,9 @@
 import * as R from "ramda";
-import {ActionTypeEnum} from "../actions";
-import {createReducer} from "../reducer-utils";
-import {createSelector} from "reselect";
-import {State, TreatmentMapType, TreatmentState} from "../types";
-import {TreatmentStudy} from "../../../domain/entities/TreatmentStudy";
+import { ActionTypeEnum } from "../actions";
+import { createReducer } from "../reducer-utils";
+import { createSelector } from "reselect";
+import { State, TreatmentMapType, TreatmentState } from "../types";
+import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
 
 const initialState: TreatmentState = Object.freeze({
     studies: [],
@@ -46,29 +46,26 @@ function updateMolecularMarker(molecularMarker: number) {
     return updateFilter("molecularMarker", molecularMarker, 1);
 }
 function groupStudies(studies: TreatmentStudy[]) {
-    const filtered255Studies = studies.filter(
-        (study) => study.DimensionID === 255 || study.DimensionID === 256
-    );
-    return filtered255Studies.map((study) => ({
+    const filtered255Studies = studies.filter(study => study.DimensionID === 255 || study.DimensionID === 256);
+    return filtered255Studies.map(study => ({
         ...study,
         groupStudies: studies.filter(
-            (relatedStudy) =>
-                relatedStudy.DimensionID === 257 && relatedStudy.K13_CODE === study.Code
+            relatedStudy => relatedStudy.DimensionID === 257 && relatedStudy.K13_CODE === study.Code
         ),
     }));
 }
 
 export default createReducer<TreatmentState>(initialState, {
-    [ActionTypeEnum.FetchTreatmentStudiesRequest]: () => (state) => ({
+    [ActionTypeEnum.FetchTreatmentStudiesRequest]: () => state => ({
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchTreatmentStudiesSuccess]: (studies: TreatmentStudy[]) => (state) => ({
+    [ActionTypeEnum.FetchTreatmentStudiesSuccess]: (studies: TreatmentStudy[]) => state => ({
         ...state,
         loading: false,
         studies: groupStudies(studies),
     }),
-    [ActionTypeEnum.FetchTreatmentStudiesError]: () => (state) => ({
+    [ActionTypeEnum.FetchTreatmentStudiesError]: () => state => ({
         ...state,
         error: "There was a problem loading studies",
         loading: false,
@@ -85,16 +82,10 @@ export const selectTreatmentState = (state: State) => state.treatment;
 
 export const selectTreatmentStudies = createSelector(selectTreatmentState, R.prop("studies"));
 
-export const selectTreatmentStudiesLoading = createSelector(
-    selectTreatmentState,
-    R.prop("loading")
-);
+export const selectTreatmentStudiesLoading = createSelector(selectTreatmentState, R.prop("loading"));
 
 export const selectTreatmentStudiesError = createSelector(selectTreatmentState, R.prop("error"));
 
-export const selectFilteredTreatmentStudies = createSelector(
-    selectTreatmentState,
-    R.prop("filteredStudies")
-);
+export const selectFilteredTreatmentStudies = createSelector(selectTreatmentState, R.prop("filteredStudies"));
 
 export const selectTreatmentFilters = createSelector(selectTreatmentState, R.prop("filters"));

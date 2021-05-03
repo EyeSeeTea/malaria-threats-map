@@ -10,49 +10,47 @@ import { Divider, FilterWrapper } from "./Filters";
 import T from "../../translations/T";
 
 const mapStateToProps = (state: State) => ({
-  species: selectSpecies(state),
-  studies: selectPreventionStudies(state)
+    species: selectSpecies(state),
+    studies: selectPreventionStudies(state),
 });
 
 type OwnProps = {
-  onChange: (selection: string[]) => void;
-  value: string[];
+    onChange: (selection: string[]) => void;
+    value: string[];
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps & OwnProps;
 
 function SpeciesSelector({ studies, onChange, value }: Props) {
-  const uniques = R.uniq(R.map(R.prop("SPECIES"), studies)).sort();
+    const uniques = R.uniq(R.map(R.prop("SPECIES"), studies)).sort();
 
-  const suggestions: any[] = uniques.map((specie: string) => ({
-    label: specie,
-    value: specie
-  }));
+    const suggestions: any[] = uniques.map((specie: string) => ({
+        label: specie,
+        value: specie,
+    }));
 
-  const onSelectionChange = (options: Option[] = []) => {
-    onChange((options || []).map(o => o.value));
-  };
+    const onSelectionChange = (options: Option[] = []) => {
+        onChange((options || []).map(o => o.value));
+    };
 
-  const selection = suggestions.filter(suggestion =>
-    value.includes(suggestion.value)
-  );
+    const selection = suggestions.filter(suggestion => value.includes(suggestion.value));
 
-  return (
-    <FilterWrapper>
-      <FormLabel component="legend">
-        <T i18nKey={"filters.vector_species"} />
-      </FormLabel>
-      <Divider />
-      <IntegrationReactSelect
-        isMulti
-        isClearable
-        suggestions={suggestions}
-        onChange={onSelectionChange}
-        value={selection}
-      />
-    </FilterWrapper>
-  );
+    return (
+        <FilterWrapper>
+            <FormLabel component="legend">
+                <T i18nKey={"filters.vector_species"} />
+            </FormLabel>
+            <Divider />
+            <IntegrationReactSelect
+                isMulti
+                isClearable
+                suggestions={suggestions}
+                onChange={onSelectionChange}
+                value={selection}
+            />
+        </FilterWrapper>
+    );
 }
 
 export default connect(mapStateToProps, null)(SpeciesSelector);

@@ -1,16 +1,16 @@
 import * as React from "react";
-import {Box, Typography} from "@material-ui/core";
-import {connect} from "react-redux";
-import {useTranslation} from "react-i18next";
-import {selectTheme} from "../../../../store/reducers/base-reducer";
-import {State} from "../../../../store/types";
+import { Box, Typography } from "@material-ui/core";
+import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { State } from "../../../../store/types";
 import * as R from "ramda";
-import {setCountryModeAction, setRegionAction} from "../../../../store/actions/base-actions";
-import {formatYears} from "../../../../utils/string-utils";
-import {selectTreatmentFilters} from "../../../../store/reducers/treatment-reducer";
-import {MOLECULAR_MARKERS} from "../../../filters/MolecularMarkerFilter";
-import {Actions, ChartContainer, FlexGrow, ZoomButton} from "../../../Chart";
-import {TreatmentStudy} from "../../../../../domain/entities/TreatmentStudy";
+import { setCountryModeAction, setRegionAction } from "../../../../store/actions/base-actions";
+import { formatYears } from "../../../../utils/string-utils";
+import { selectTreatmentFilters } from "../../../../store/reducers/treatment-reducer";
+import { MOLECULAR_MARKERS } from "../../../filters/MolecularMarkerFilter";
+import { Actions, ChartContainer, FlexGrow, ZoomButton } from "../../../Chart";
+import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -28,24 +28,17 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const MolecularMarkersCountryChart = ({
-    studies,
-    setRegion,
-    setCountryMode,
-    treatmentFilters,
-}: Props) => {
-    const {t} = useTranslation("common");
+const MolecularMarkersCountryChart = ({ studies, setRegion, setCountryMode, treatmentFilters }: Props) => {
+    const { t } = useTranslation("common");
     const nStudies = studies.length;
-    const sortedStudies = R.sortBy((study) => parseInt(study.YEAR_START), studies);
+    const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
     const maxYear = sortedStudies[sortedStudies.length - 1].YEAR_START;
     const minYear = sortedStudies[0].YEAR_START;
     const onClick = () => {
-        setRegion({country: studies[0].ISO2});
+        setRegion({ country: studies[0].ISO2 });
         setCountryMode(false);
     };
-    const molecularMarker = t(
-        MOLECULAR_MARKERS.find((m: any) => m.value === treatmentFilters.molecularMarker).label
-    );
+    const molecularMarker = t(MOLECULAR_MARKERS.find((m: any) => m.value === treatmentFilters.molecularMarker).label);
     return (
         <ChartContainer>
             <Typography variant="subtitle1">

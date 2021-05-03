@@ -1,10 +1,10 @@
 import * as R from "ramda";
-import {ActionTypeEnum} from "../actions";
-import {createReducer} from "../reducer-utils";
-import {createSelector} from "reselect";
-import {InvasiveMapType, InvasiveState, State} from "../types";
-import {PreventionStudy} from "../../../domain/entities/PreventionStudy";
-import {InvasiveStudy} from "../../../domain/entities/InvasiveStudy";
+import { ActionTypeEnum } from "../actions";
+import { createReducer } from "../reducer-utils";
+import { createSelector } from "reselect";
+import { InvasiveMapType, InvasiveState, State } from "../types";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
+import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
 
 const initialState: InvasiveState = Object.freeze({
     studies: [],
@@ -34,16 +34,16 @@ function updateFilter<T>(key: string, value: T, def?: T) {
 }
 
 export default createReducer<InvasiveState>(initialState, {
-    [ActionTypeEnum.FetchInvasiveStudiesRequest]: () => (state) => ({
+    [ActionTypeEnum.FetchInvasiveStudiesRequest]: () => state => ({
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchInvasiveStudiesSuccess]: (studies: InvasiveStudy[]) => (state) => ({
+    [ActionTypeEnum.FetchInvasiveStudiesSuccess]: (studies: InvasiveStudy[]) => state => ({
         ...state,
         loading: false,
         studies,
     }),
-    [ActionTypeEnum.FetchInvasiveStudiesError]: () => (state) => ({
+    [ActionTypeEnum.FetchInvasiveStudiesError]: () => state => ({
         ...state,
         error: "There was a problem loading studies",
         loading: false,
@@ -61,9 +61,6 @@ export const selectInvasiveStudiesLoading = createSelector(selectInvasiveState, 
 
 export const selectInvasiveStudiesError = createSelector(selectInvasiveState, R.prop("error"));
 
-export const selectFilteredInvasiveStudies = createSelector(
-    selectInvasiveState,
-    R.prop("filteredStudies")
-);
+export const selectFilteredInvasiveStudies = createSelector(selectInvasiveState, R.prop("filteredStudies"));
 
 export const selectInvasiveFilters = createSelector(selectInvasiveState, R.prop("filters"));

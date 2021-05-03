@@ -1,20 +1,20 @@
 import * as React from "react";
 import styled from "styled-components";
-import {Box, makeStyles, Typography} from "@material-ui/core";
-import {connect} from "react-redux";
-import {useTranslation} from "react-i18next";
-import {selectTheme} from "../../../../store/reducers/base-reducer";
-import {State} from "../../../../store/types";
+import { Box, makeStyles, Typography } from "@material-ui/core";
+import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { State } from "../../../../store/types";
 import Citation from "../../../charts/Citation";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import {formatList, formatYears} from "../../../../utils/string-utils";
+import { formatList, formatYears } from "../../../../utils/string-utils";
 import * as R from "ramda";
-import {selectDiagnosisFilters} from "../../../../store/reducers/diagnosis-reducer";
-import {DiagnosisStudy} from "../../../../../domain/entities/DiagnosisStudy";
+import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
+import { DiagnosisStudy } from "../../../../../domain/entities/DiagnosisStudy";
 
 const ChatContainer = styled.div`
     max-width: 500px;
@@ -47,7 +47,7 @@ const StyledBodyCell = styled(TableCell)`
     font-weight: 400 !important;
 `;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
     root: {
         width: "100%",
         overflowX: "auto",
@@ -62,16 +62,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const GeneDeletionChart = ({studies, diagnosisFilters}: Props) => {
-    const {t} = useTranslation("common");
+const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
+    const { t } = useTranslation("common");
     const classes = useStyles({});
     const nStudies = studies.length;
-    const sortedStudies = R.sortBy((study) => parseInt(study.YEAR_START), studies);
-    const sortedStudies2 = R.sortBy((study) => parseInt(study.YEAR_END), studies);
+    const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
+    const sortedStudies2 = R.sortBy(study => parseInt(study.YEAR_END), studies);
     const maxYear = sortedStudies2[sortedStudies2.length - 1].YEAR_END;
     const minYear = sortedStudies[0].YEAR_START;
     const studyObject = studies[0];
-    const surveyTypes = R.uniq(studies.map((study) => study.SURVEY_TYPE)).map((type) => t(type));
+    const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(type => t(type));
     const formatPercentage = (value: string) => `${(parseFloat(value) * 100).toFixed(1)}%`;
     return (
         <ChatContainer>
@@ -86,16 +86,12 @@ const GeneDeletionChart = ({studies, diagnosisFilters}: Props) => {
                 })}
                 <i>{t(diagnosisFilters.deletionType).toLowerCase()}</i>
                 {t(`diagnosis.chart.gene_deletions.content_2`, {
-                    surveyTypes: formatList(
-                        surveyTypes.map((st) => (t(st) === "DHS" ? t(st) : t(st).toLowerCase()))
-                    ),
+                    surveyTypes: formatList(surveyTypes.map(st => (t(st) === "DHS" ? t(st) : t(st).toLowerCase()))),
                     years: formatYears(minYear, maxYear),
                 })}
             </Typography>
             <div className={classes.root}>
-                <Typography variant={"caption"}>
-                    {t(`diagnosis.chart.gene_deletions.deletions_confirmed`)}
-                </Typography>
+                <Typography variant={"caption"}>{t(`diagnosis.chart.gene_deletions.deletions_confirmed`)}</Typography>
                 <Table aria-label="simple table" size="small" className={classes.table}>
                     <TableHead className={classes.head}>
                         <TableRow>
@@ -106,17 +102,14 @@ const GeneDeletionChart = ({studies, diagnosisFilters}: Props) => {
                                 {t(`diagnosis.chart.gene_deletions.no_tested`)}
                             </StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
-                                {t(`diagnosis.chart.gene_deletions.percentage`)}{" "}
-                                {studyObject.YEAR_START}
+                                {t(`diagnosis.chart.gene_deletions.percentage`)} {studyObject.YEAR_START}
                             </StyledHeaderCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         <TableRow>
                             <StyledBodyCell align={"center"}>HRP2</StyledBodyCell>
-                            <StyledBodyCell align={"center"}>
-                                {studyObject.HRP2_TESTED || "N/A"}
-                            </StyledBodyCell>
+                            <StyledBodyCell align={"center"}>{studyObject.HRP2_TESTED || "N/A"}</StyledBodyCell>
                             <StyledBodyCell align={"center"}>
                                 {!Number.isNaN(parseFloat(studyObject.HRP2_PROPORTION_DELETION))
                                     ? formatPercentage(studyObject.HRP2_PROPORTION_DELETION)
@@ -125,9 +118,7 @@ const GeneDeletionChart = ({studies, diagnosisFilters}: Props) => {
                         </TableRow>
                         <TableRow>
                             <StyledBodyCell align={"center"}>HRP3</StyledBodyCell>
-                            <StyledBodyCell align={"center"}>
-                                {studyObject.HRP3_TESTED || "N/A"}
-                            </StyledBodyCell>
+                            <StyledBodyCell align={"center"}>{studyObject.HRP3_TESTED || "N/A"}</StyledBodyCell>
                             <StyledBodyCell align={"center"}>
                                 {!Number.isNaN(parseFloat(studyObject.HRP3_PROPORTION_DELETION))
                                     ? formatPercentage(studyObject.HRP3_PROPORTION_DELETION)
@@ -136,9 +127,7 @@ const GeneDeletionChart = ({studies, diagnosisFilters}: Props) => {
                         </TableRow>
                         <TableRow>
                             <StyledBodyCell align={"center"}>HRP2 & 3</StyledBodyCell>
-                            <StyledBodyCell align={"center"}>
-                                {studyObject.HRP2_HRP3_TESTED || "N/A"}
-                            </StyledBodyCell>
+                            <StyledBodyCell align={"center"}>{studyObject.HRP2_HRP3_TESTED || "N/A"}</StyledBodyCell>
                             <StyledBodyCell align={"center"}>
                                 {!Number.isNaN(parseFloat(studyObject.HRP2_HRP3_TESTED))
                                     ? formatPercentage(studyObject.HRP2_HRP3_PROPORTION_DELETION)

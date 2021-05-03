@@ -1,10 +1,10 @@
 import * as R from "ramda";
-import {ActionTypeEnum} from "../actions";
-import {createReducer} from "../reducer-utils";
-import {createSelector} from "reselect";
-import {DiagnosisMapType, DiagnosisState, State} from "../types";
-import {DELETION_TYPES} from "../../components/filters/DeletionTypeFilter";
-import {DiagnosisStudy} from "../../../domain/entities/DiagnosisStudy";
+import { ActionTypeEnum } from "../actions";
+import { createReducer } from "../reducer-utils";
+import { createSelector } from "reselect";
+import { DiagnosisMapType, DiagnosisState, State } from "../types";
+import { DELETION_TYPES } from "../../components/filters/DeletionTypeFilter";
+import { DiagnosisStudy } from "../../../domain/entities/DiagnosisStudy";
 
 const initialState: DiagnosisState = Object.freeze({
     studies: [],
@@ -44,24 +44,20 @@ function updatePatientType(patientType: string) {
 }
 
 function updateDeletionType(deletionType: string) {
-    return updateFilter(
-        "deletionType",
-        deletionType,
-        DELETION_TYPES.HRP2_PROPORTION_DELETION.value
-    );
+    return updateFilter("deletionType", deletionType, DELETION_TYPES.HRP2_PROPORTION_DELETION.value);
 }
 
 export default createReducer<DiagnosisState>(initialState, {
-    [ActionTypeEnum.FetchDiagnosisStudiesRequest]: () => (state) => ({
+    [ActionTypeEnum.FetchDiagnosisStudiesRequest]: () => state => ({
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchDiagnosisStudiesSuccess]: (studies: DiagnosisStudy[]) => (state) => ({
+    [ActionTypeEnum.FetchDiagnosisStudiesSuccess]: (studies: DiagnosisStudy[]) => state => ({
         ...state,
         loading: false,
         studies,
     }),
-    [ActionTypeEnum.FetchDiagnosisStudiesError]: () => (state) => ({
+    [ActionTypeEnum.FetchDiagnosisStudiesError]: () => state => ({
         ...state,
         error: "There was a problem loading studies",
         loading: false,
@@ -78,16 +74,10 @@ export const selectDiagnosisState = (state: State) => state.diagnosis;
 
 export const selectDiagnosisStudies = createSelector(selectDiagnosisState, R.prop("studies"));
 
-export const selectDiagnosisStudiesLoading = createSelector(
-    selectDiagnosisState,
-    R.prop("loading")
-);
+export const selectDiagnosisStudiesLoading = createSelector(selectDiagnosisState, R.prop("loading"));
 
 export const selectDiagnosisStudiesError = createSelector(selectDiagnosisState, R.prop("error"));
 
-export const selectFilteredDiagnosisStudies = createSelector(
-    selectDiagnosisState,
-    R.prop("filteredStudies")
-);
+export const selectFilteredDiagnosisStudies = createSelector(selectDiagnosisState, R.prop("filteredStudies"));
 
 export const selectDiagnosisFilters = createSelector(selectDiagnosisState, R.prop("filters"));

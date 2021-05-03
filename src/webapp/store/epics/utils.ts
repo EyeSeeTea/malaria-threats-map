@@ -1,5 +1,5 @@
 import { Future } from "../../../common/Future";
-import { Observable, Subscriber } from "rxjs"
+import { Observable, Subscriber } from "rxjs";
 
 export function fromFuture<Error, Data>(future: Future<Error, Data>): Observable<Data> {
     return new Observable((subscriber: Subscriber<Data>) => {
@@ -11,7 +11,7 @@ export function fromFuture<Error, Data>(future: Future<Error, Data>): Observable
             error => {
                 subscriber.error(error);
             }
-        )
+        );
 
         return () => cancel();
     });

@@ -5,42 +5,40 @@ import { Fab } from "@material-ui/core";
 import ListIcon from "@material-ui/icons/List";
 
 export default function LegendPopover() {
-  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+    const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
-  const handlePopoverOpen = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
-    setAnchorEl(event.currentTarget);
-  };
+    const handlePopoverOpen = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        setAnchorEl(event.currentTarget);
+    };
 
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
+    const handlePopoverClose = () => {
+        setAnchorEl(null);
+    };
 
-  const open = Boolean(anchorEl);
+    const open = Boolean(anchorEl);
 
-  return (
-    <div>
-      <Fab size={"small"} onClick={handlePopoverOpen}>
-        <ListIcon />
-      </Fab>
-      <Popover
-        id="mouse-over-popover"
-        open={open}
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right"
-        }}
-        transformOrigin={{
-          vertical: "bottom",
-          horizontal: "left"
-        }}
-        onClose={handlePopoverClose}
-        disableRestoreFocus
-      >
-        <Legend />
-      </Popover>
-    </div>
-  );
+    return (
+        <div>
+            <Fab size={"small"} onClick={handlePopoverOpen}>
+                <ListIcon />
+            </Fab>
+            <Popover
+                id="mouse-over-popover"
+                open={open}
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                }}
+                transformOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                }}
+                onClose={handlePopoverClose}
+                disableRestoreFocus
+            >
+                <Legend />
+            </Popover>
+        </div>
+    );
 }

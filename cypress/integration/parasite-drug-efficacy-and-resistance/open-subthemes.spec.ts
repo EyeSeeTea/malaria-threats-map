@@ -5,23 +5,21 @@ describe("Open subthemes", () => {
 
     beforeEach(() => {
         cy.loadPage(themes.parasiteDrugEfficacy);
-    })
+    });
 
     it("should open Molecular markers of drug resistance subtheme", () => {
-        cy.contains(defaultSubtheme).click()
+        cy.contains(defaultSubtheme).click();
 
         cy.findByText("Molecular markers of drug resistance").click();
 
-        cy.findByLegendTitle("Molecular markers of drug resistance")
-    })
+        cy.findByLegendTitle("Molecular markers of drug resistance");
+    });
 
     it("should open Delayed parasite clearance subtheme", () => {
-        cy.contains(defaultSubtheme).click()
+        cy.contains(defaultSubtheme).click();
 
         cy.findByText("Delayed parasite clearance").click();
 
-        cy.findByLegendTitle("Delayed parasite clearance")
-    })
+        cy.findByLegendTitle("Delayed parasite clearance");
+    });
 });
-
-

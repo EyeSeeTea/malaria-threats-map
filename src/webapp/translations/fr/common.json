@@ -1,445 +1,445 @@
 {
-  "title": {
-    "title": "Carte des menaces du paludisme",
-    "subtitle": "Suivi des défis biologiques liés à la lutte et à l'élimination du paludisme"
-  },
-  "themes": {
-    "prevention": "Résistance aux insecticides",
-    "diagnosis": "Délétion de pfhrp2/3 gènes parasites",
-    "treatment": "Efficacité et résistance aux antipaludiques",
-    "invasive": "Espèces vectorielles invasives"
-  },
-  "themes_caps": {
-    "prevention": "RÉSISTANCE AUX INSECTICIDES",
-    "diagnosis": "DÉLÉTION DE pfhrp2/3 GÈNES PARASITES",
-    "treatment": "EFFICACITÉ ET RÉSISTANCE AUX ANTIPALUDIQUES",
-    "invasive": "ESPÈCES VECTORIELLES INVASIVES"
-  },
-  "cards": {
-    "prevention": "La résistance des vecteurs du paludisme aux insecticides utilisés dans les moyens de prévention tels que les moustiquaires imprégnées et les pulvérisations d'insecticides à effet rémanent à l'intérieur des habitations, menace l'efficacité de  la lutte antivectorielle",
-    "diagnosis": "Les délétions de gènes chez certains parasites du paludisme conduisent à des faux négatifs aux tests de diagnostiques, compliquant la gestion et le traitement des cas",
-    "treatment": "La résistance des parasites à l'artémisinine - le principal composé des meilleurs médicaments antipaludiques disponibles - menace l'efficacité desdits antipaludiques",
-    "invasive": "La propagation des espèces d’anophèles vectrices, et leur établissement dans des écosystèmes dont ils ne sont pas indigènes, constitue une menace potentielle pour la lutte et l'éradication du paludisme."
-  },
-  "prevention": {
-    "resistance_status": "État de résistance aux insecticides",
-    "resistance_intensity": "Intensité de la résistance aux insecticides",
-    "resistance_mechanism": "Mécanismes de résistance aux insecticides",
-    "synergist_involvement": "Effet synergiste de la susceptibilité",
-    "synergist_involvement_legend": "Effet de la synergie sur la susceptibilité",
-    "pbo_deployment": "Déploiement de moustiquaires  PBO-pyréthroïde",
-    "pbo_deployment_legend": "Conformité aux critères recommandés par l'OMS pour le  déploiementde moustiquaires avec PBO et pyréthroïde",
-    "chart": {
-      "resistance_status": {
-        "content_1": "{{nStudies}} test(s) sur les vecteurs ",
-        "content_2": " du paludisme via détermination de la dose diagnostique(s) avec {{insecticideClass}} {{years}}",
-        "number_of_tests": "# de tests",
-        "Confirmed": "Confirmée",
-        "Possible": "Suspectée",
-        "Susceptible": "Sensible",
-        "mortality": "mortalité (%)",
-        "tested": "Études (n)",
-        "mosquito_mortality": "% mortalité de moustique"
-      },
-      "resistance_intensity": {
-        "content_1": "{{nStudies}} test(s) sur les vecteurs ",
-        "content_2": " du paludisme via détermination de l'intensité de la résistance(s) avec {{insecticideClass}} {{years}}",
-        "number_of_tests": "# de tests",
-        "HIGH_INTENSITY": "Fort",
-        "MODERATE_TO_HIGH_INTENSITY": "Moyen Fort",
-        "MODERATE_INTENSITY": "Moyen",
-        "LOW_INTENSITY": "Faible",
-        "NA": "Sensible",
-        "mortality": "mortalité (%)",
-        "tested": "Études (n)",
-        "mosquito_mortality": "% mortalité de moustique"
-      },
-      "resistance_mechanism": {
-        "content_1": "{{nStudies}} test(s) sur les vecteurs ",
-        "content_2": " du paludisme via {{insecticideClasses}} avec {{type}} {{years}}",
-        "number_of_tests": "# de tests",
-        "DETECTED": "Détecté",
-        "NOT_DETECTED": "Non détecté",
-        "title": "Nombre d'essais de mécanismes",
-        "allelic": "Fréquence allélique à partir d'analyse moléculaire",
-        "count": "Nombre",
-        "frequency": "Fréquence (%)"
-      },
-      "synergist_involvement": {
-        "mortality": "mortalité (%)",
-        "tested": "Études (n)",
-        "number_of_tests": "# de tests",
-        "mosquito_mortality": "% mortalité de moustique",
-        "no_synergist": "Pas de synergistes"
-      }
+    "title": {
+        "title": "Carte des menaces du paludisme",
+        "subtitle": "Suivi des défis biologiques liés à la lutte et à l'élimination du paludisme"
     },
-    "legend": {
-      "resistance_intensity": {
-        "high_intensity": "Fort",
-        "moderate_to_high_intensity": "Moyen Fort",
-        "moderate_intensity": "Moyen",
-        "low_intensity": "Faible",
-        "susceptible": "Sensible"
-      },
-      "resistance_status": {
-        "confirmed": "Confirmée (0 to <90%)",
-        "possible": "Suspectée (90 to <98%)",
-        "susceptible": "Sensible (≥98%)"
-      },
-      "resistance_mechanism": {
-        "confirmed": "Détecté",
-        "not_confirmed": "Non détecté"
-      },
-      "synergist_involvement": {
-        "mosquito_mortality": "Mortalité de moustique",
-        "full_involvement": "Implication totale",
-        "partial_involvement": "Implication partielle",
-        "no_involvement": "Pas d'implication"
-      },
-      "pbo_deployment": {
-        "eligible": "Tous les critères remplis",
-        "not_eligible": "Au moins un critère n'est pas rempli",
-        "not_enough_data": "Davantage de données doivent être collectées pour évaluer les critères",
-        "no_data": "Pas de données disponibles",
-        "expanded": {
-          "eligible": "les sites où au moins une espèce de vecteur satisfait les trois critères recommandés par l'OMS",
-          "not_eligible": "les sites où l'une des espèces vectrices pour lesquelles des données sont disponibles enfreint au moins l'un des trois critères recommandés par l'OMS décrits ci-dessus, et aucune  espèce pour lesquelle des données sont disponibles ne satisfait les trois critères.",
-          "not_enough_data": "sites avec des données insuffisantes pour évaluer si les espèces vectorielles locales satisfont les trois critères",
-          "no_data": "aucune donnée disponible"
-        },
-        "link": "https://www.who.int/malaria/publications/atoz/9789241511575/fr/",
-        "link_text": "Procédures pour tester la résistance aux insecticides chez les moustiques vecteurs du paludisme – seconde édition",
-        "link_content_1": "Plus de information sur les recommandations de l'OMS pour le déploiement de moustiquaires avec pBO et pyréthrinoïde sont disponibles dans les ",
-        "link_content_2": ". Ces recommandations seront mises à jour à mesure que de nouvelles preuves scientifiques deviennent disponibles."
-      }
-    }
-  },
-  "diagnosis": {
-    "gene_deletions": "Délétions du gène pfhrp2/3",
-    "chart": {
-      "gene_deletions": {
-        "content_1": "{{nStudies}} enquête(s) ",
-        "content_2": " par {{surveyTypes}} {{years}}",
-        "deletions_confirmed": "Délétions confirmées (% d'échantillons)",
-        "deletion_type": "Type de délétion",
-        "no_tested": "Nombre d'échantillons testés",
-        "percentage": "Pourcentage de délétion en "
-      }
+    "themes": {
+        "prevention": "Résistance aux insecticides",
+        "diagnosis": "Délétion de pfhrp2/3 gènes parasites",
+        "treatment": "Efficacité et résistance aux antipaludiques",
+        "invasive": "Espèces vectorielles invasives"
     },
-    "legend": {
-      "gene_deletions": {
-        "HRP2_HRP3_PROPORTION_DELETION": "Délétions du gène pfhrp2/3",
-        "HRP2_PROPORTION_DELETION": "Délétions du gène pfhrp2",
-        "confirmed": "Confirmée",
-        "not_identified": "Non identifiée"
-      }
-    }
-  },
-  "treatment": {
-    "treatment_failure": "Échec du traitement",
-    "delayed_parasite_clearance": "Retard dans l'élimination des parasites",
-    "molecular_markers": "Marqueurs moléculaires de la résistance aux médicaments",
-    "chart": {
-      "treatment_failure": {
-        "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre {{plasmodiumSpecies}} {{years}}",
-        "percentage": "Pourcentage (%)",
-        "study_years": "Années d'étude(s)",
-        "number_of_patients": "Nombre de patients",
-        "follow_up": "Suivi",
-        "confirmed_resist_pv": "Patients avec une résistance confirmée",
-        "positive_day_3": "Positif après le 3ème jour",
-        "treatment_failure_pp": "Patients avec un échec thérapeutique, selon le protocole",
-        "treatment_failure_km": "Patients avec un échec thérapeutique, Kaplan-Meier",
-        "days": "journées",
-        "studies": "Étude(s)"
-      },
-      "molecular_markers": {
-        "content": "{{nStudies}} etudes de marqueur moléculaire effectuée sur {{molecularMarker}} {{years}}",
-        "site_content_1": "Dans cette {{year}} étude, suivantes ",
-        "site_content_2": " les mutations ont été observées parmi {{nStudies}} échantillons",
-        "percentage": "Pourcentage (%)",
-        "studies": "Étude(s)",
-        "study_years": "Années d'étude(s)",
-        "number_of_samples": "Nombre d'échantillons",
-        "mutation_detected": "Échantillons avec mutations détectées",
-        "wt_tudy": "Échantillons de type sauvage",
-        "mc_study": "Échantillons avec plusieurs numéros de copie"
-      }
+    "themes_caps": {
+        "prevention": "RÉSISTANCE AUX INSECTICIDES",
+        "diagnosis": "DÉLÉTION DE pfhrp2/3 GÈNES PARASITES",
+        "treatment": "EFFICACITÉ ET RÉSISTANCE AUX ANTIPALUDIQUES",
+        "invasive": "ESPÈCES VECTORIELLES INVASIVES"
     },
-    "legend": {
-      "treatment_failure": {
-        "high": "> 20%",
-        "medium_high": "10% - 20%",
-        "medium": "5% - 10%",
-        "low": "< 5%",
-        "unknown": "Données non disponibles"
-      },
-      "delayed_parasite_clearance": {
-        "high": "> 20%",
-        "medium_high": "10% - 20%",
-        "medium": "5% - 10%",
-        "low": "< 5%",
-        "unknown": "Données non disponibles"
-      },
-      "molecular_markers": {
-        "high": "> 80%",
-        "medium_high": "51% - 80%",
-        "medium": "10% - 50%",
-        "low": "< 10%"
-      }
-    }
-  },
-  "invasive": {
-    "vector_occurrance": "Espèces vectorielles invasives",
-    "chart": {
-      "vector_occurrance": {
-        "species": "Espèces",
-        "sampling_period": "Période d’échantillonnage",
-        "sampling_method": "Méthode d’échantillonnage",
-        "study_identification_method": "Méthode d’identification des espèces",
-        "data_collection": "Remerciements pour la collecte de données",
-        "no_available": "Indisponible"
-      }
+    "cards": {
+        "prevention": "La résistance des vecteurs du paludisme aux insecticides utilisés dans les moyens de prévention tels que les moustiquaires imprégnées et les pulvérisations d'insecticides à effet rémanent à l'intérieur des habitations, menace l'efficacité de  la lutte antivectorielle",
+        "diagnosis": "Les délétions de gènes chez certains parasites du paludisme conduisent à des faux négatifs aux tests de diagnostiques, compliquant la gestion et le traitement des cas",
+        "treatment": "La résistance des parasites à l'artémisinine - le principal composé des meilleurs médicaments antipaludiques disponibles - menace l'efficacité desdits antipaludiques",
+        "invasive": "La propagation des espèces d’anophèles vectrices, et leur établissement dans des écosystèmes dont ils ne sont pas indigènes, constitue une menace potentielle pour la lutte et l'éradication du paludisme."
     },
-    "legend": {
-      "vector_occurrance": {
-        "invasive": "Envahissante",
-        "native": "Autochtone",
-        "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
-        "link_text": "formulaire de rapport",
-        "link_content_1": "Si vous avez détecté une espèce invasive vecteur Anopheles, veuillez nous en informer via le "
-      }
-    }
-  },
-  "filters": {
-    "filters": "Filtres",
-    "tabs": {
-      "filters": "Filtres",
-      "regions": "Régions"
-    },
-    "no_records": "Aucun enregistrement n'est disponible avec les critères spécifiés",
-    "records": {
-      "prevention": {
-        "0": "There are {{studies}} tests found with the specified criteria",
-        "1": "There are {{studies}} tests found with the specified criteria",
-        "2": "There are {{studies}} essais found with the specified criteria",
-        "3": "There are {{studies}} tests found with the specified criteria",
-        "4": ""
-      },
-      "diagnosis": "{{studies}} enquêtes trouvés avec des critères spécifiés",
-      "treatment": "{{studies}} études trouvés avec des critères spécifiés",
-      "invasive": "{{studies}} détections de vecteurs trouvés avec des critères spécifiés"
-    },
-    "insecticide_class": "Classe d'insecticide",
-    "insecticide_type": "Type d'insecticide",
-    "test_type": "Type de test",
-    "vector_species": "Espèces vectorielles",
-    "plasmodium_species": "Espèces de plasmodium",
-    "drug": "Médicament",
-    "molecular_marker": "Marqueur moléculaire",
-    "mechanism_type": "Type de mécanisme",
-    "assay_type": "Type d'analyse",
-    "synergist_type": "Type de test",
-    "synergist_types": "Types du mécanismes métaboliques",
-    "deletion_type": "Type de délétion",
-    "survey_type": "Type d'enquête",
-    "patient_type": "Type de patient",
-    "years": "Années",
-    "country": "Pays",
-    "countries": "Pays",
-    "region": "Région",
-    "sub_region": "Sous-région"
-  },
-  "legend": {
-    "number_of_studies": "Nombre d'études",
-    "number_of_surveys": "Nombre d'enquêtes",
-    "most_recent_data_shown": "Données les plus récentes affichées"
-  },
-  "chart": {
-    "studies": "Études",
-    "zoom": "Zoom"
-  },
-  "copyright": {
-    "mobile": "Cliquez ici pour lire l'avertissement qui s'applique à la carte ci-dessus",
-    "content": "Les appellations employées dans la présente publication et la présentation des données qui y figurent \nn’impliquent de la part de l’Organisation mondiale de la Santé aucune prise de position quant au statut juridique des \npays, territoires, villes ou zones, ou de leurs autorités, ni quant au tracé de leurs frontières ou limites. Les lignes \ndiscontinues et en pointillé, ainsi que les zones en gris, sur les cartes représentent des frontières et zones \napproximatives dont le tracé peut ne pas avoir fait l'objet d'un accord définitif. Les limites de la carte fournies \nreflètent l'état politique et géographique à la date de publication (2017). Cependant, les informations techniques sur \nla santé sont basées sur des données précises par rapport à l'année sélectionnée. La déconnexion dans cet arrangement \ndoit être notée, mais aucune implication concernant le statut politique ou terminologique ne doit être tirée de cet \narrangement car il est purement fonction des limitations techniques et graphiques. Source des données: Programme mondial \ncontre le paludisme. Production de cartes: Programme mondial contre le paludisme. Organisation mondiale de la santé."
-  },
-  "options": {
-    "title": "Options",
-    "select_language": "Choisir la langue",
-    "select": "Sélectionner"
-  },
-  "citation": {
-    "unpublished_data": "données non publiées"
-  },
-  "data_download": {
-    "title": "Téléchargement de données",
-    "footer": "(*) nombre total de sites pour lesquels des données ont été communiquées",
-    "dataset": "Sélection des données",
-    "buttons": {
-      "back": "Précédent",
-      "next": "Suivant",
-      "download": "Télécharger",
-      "close": "Sortir"
-    },
-    "filters": {
-      "prevention": {
-        "datasets": {
-          "discriminating_concentration_bioassays": "Résultats de tests de sensibilité avec une concentration discriminante",
-          "intensity_concentration_bioassays": "Résultats des tests de sensibilité avec 5 fois et 10 fois les concentrations discriminantes",
-          "synergist_insecticide_bioassays": "Résultats des tests biologiques sur des mélanges synergiste/insecticide",
-          "resistance_mechanism_assays_molecular": "Résultats de l'identification du mécanisme de résistance moléculaire",
-          "resistance_mechanism_assays_biochemical": "Résultats de l'identification des mécanismes de résistance biochimique"
-        }
-      },
-      "treatment": {
-        "datasets": {
-          "therapeutic_efficacy_studies": "Résultats des études d'efficacité thérapeutique",
-          "molecular_marker_studies": "Résultats des études sur les marqueurs moléculaires de la résistance aux médicaments"
-        }
-      },
-      "invasive": {
-        "datasets": {
-          "invasive_vector_species": "Détections d'espèces vectorielles envahissantes"
-        }
-      }
-    },
-    "step0": {
-      "title": "Message d'accueil",
-      "p1": "Bienvenue dans la boîte de dialogue de téléchargement des données des Cartes de menaces du paludisme!",
-      "p2": "Cette boîte de dialogue vous permettra de télécharger des données des bases de données mondiales de l'OMS sur la résistance aux insecticides chez les vecteurs du paludisme, sur l'efficacité et la résistance des médicaments et sur les espèces invasives de vecteurs.",
-      "p3": "Les données contenues dans ces trois bases de données mondiales ont été mises à la disposition du Programme mondial de lutte contre le paludisme de l'Organisation mondiale de la santé (OMS) par les ministères de la santé ou leurs partenaires de développement, ou par leur extraction de publications scientifiques par l'OMS ou ses partenaires. Afin de créditer leurs contributions, une colonne contenant les sources des données est incluse dans chaque ensemble de données. Veuillez noter que tous les contributeurs ne nous ont pas permis de partager leurs données. Par conséquent, certaines des données de la carte des menaces de paludisme ne peuvent pas être téléchargées. Pour les données extraites des publications, veuillez noter que lorsque les valeurs des variables pertinentes n'ont pas été directement fournies dans les publications ou ont été analysées d’une manière différente de celle recommandée par l'OMS, les valeurs ont été calculées à partir des données déclarées.",
-      "p4a": "L'utilisation de toutes les données est soumise aux ",
-      "p4bLinkText": "Conditions d'utilisation des compilations, agrégations, évaluations et analyses de données de l'OMS",
-      "p4bLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions",
-      "p4c": ". En utilisant les ensembles de données ou toute présentation de données qui en dérivent, vous acceptez d'être lié par ces conditions générales et de les respecter, conditions qui pourront être modifiées de temps à autre par l'OMS à sa seule discrétion.",
-      "p5": "Veuillez reconnaître l'utilisation de ces ensembles de données en incluant la référence suivante dans vos publications: OMS, Carte des menaces de paludisme (https://www.who.int/malaria/maps/threats/), date d'accès, reconnaissance des pays ayant fourni les données sous-jacentes (dans le cas où la source se réfère aux ministères de la santé ou programmes nationaux de lutte antipaludique de pays spécifiques).",
-      "p6": "Le programmes mondial de lutte antipaludique tient à suivre et à présenter l'utilisation des bases de données mondiales. Par conséquent, nous vous poserons quelques questions sur l'utilisation prévue des données que vous souhaitez télécharger.",
-      "p7a": "Si vous avez des questions, n'hésitez pas à nous contacter sur: ",
-      "p7bEmail": "gmp-maps@who.int",
-      "p8a": "Cochez ici pour indiquer que vous avez lu et accepté les ",
-      "p8bLinkText": "Conditions d'utilisation des compilations, agrégations, évaluations et analyses de données de l'OMS",
-      "p8bLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions"
-    },
-    "step1": {
-      "title": "Coordonnées personnelles",
-      "first_name": "Prénom",
-      "last_name": "Nom de famille",
-      "organization_type": "Type d'Organisation",
-      "organization_type_options": {
-        "university": "University or Research center",
-        "ngos": "NGOs",
-        "agency": "Funding agencies or donors",
-        "international": "International Organization",
-        "government": "Government institutions",
-        "partnership": "Partnerships/alliances",
-        "consultant": "Independent consultant/freelancer",
-        "health": "Health commodities manufacturers",
-        "communications": "Communications company",
-        "private": "Other private companies",
-        "other": "Others"
-      },
-      "organization_name": "Nom de l'organisation",
-      "position": "Position",
-      "country": "Pays de résidence",
-      "email": "Email",
-      "phone": "Téléphone de contact"
-    },
-    "step2": {
-      "title": "But du téléchargement",
-      "data_use": "Quel est le but de l'utilisation de ces données?",
-      "data_use_options": {
-        "research": "Recherche",
-        "grant": "Développer des propositions de projets",
-        "treatments": "Development of new anti-malaria treatments",
-        "vector": "Développer de nouveaux outils de contrôle vectoriel",
-        "diagnosis": "Développer de nouveaux outils de diagnostic",
-        "policies": "Élaboration de politiques, stratégies et / ou plans de travail nationaux (par exemple, Plan stratégique national de lutte contre le paludisme, Politique ou directives nationales de traitement, plans nationaux de suivi et de gestion de la résistance aux insecticides chez les vecteurs du paludisme)",
-        "advocacy": "Plaidoyer"
-      },
-      "date_use_options_content": {
-        "research": "Veuillez fournir une brève description du projet ou de la question de recherche pour laquelle les données seront utilisées (100 mots minimum)",
-        "policies": "Veuillez fournir le titre ou une brève description de la politique, de la stratégie ou du plan pour lesquels les données seront utilisées",
-        "tools": "Veuillez décrire brièvement les nouveaux traitements, outils de diagnostic ou de lutte antivectorielle que vous souhaitez développer (minimum 100 mots)",
-        "date": "Quand prévoyez-vous de terminer votre projet, politique, stratégie ou plan?"
-      },
-      "countries": "Pays où le projet, la politique, la stratégie ou le plan seront mis en œuvre",
-      "message": "L'OMS souhaite améliorer les bases de données mondiales et la carte des menaces de paludisme afin de mieux répondre aux besoins de notre communauté d'utilisateurs. Par conséquent, l'OMS souhaite collaborer avec notre communauté d'utilisateurs pour recueillir des suggestions d'amélioration et tirer des enseignements des différents cas d'utilisation et avantages que ces produits leur apportent",
-      "consent1": "J'autorise l'Organisation mondiale de la santé à utiliser mes données personnelles pour me contacter concernant mon expérience de l’utilisation de la carte des menaces de paludisme et des données des bases de données mondiales. ",
-      "consent2": "J'autorise l'Organisation mondiale de la santé à utiliser le nom de l'organisation et les descriptions de projet que j'ai fournies pour présenter les utilisations des bases de données mondiales (aucune donnée personnelle ne sera affichée)."
-    },
-    "step3": {
-      "title": "Filtrer les données à télécharger",
-      "filters": {
-        "additional": "Filtres supplémentaires",
-        "theme": "Sélectionnez un thème",
-        "dataset": "Sélectionnez un jeu de données"
-      }
-    }
-  },
-  "report": {
     "prevention": {
-      "title": "Résumé de la résistance aux insecticides chez les vecteurs du paludisme",
-      "country": "Pay",
-      "resistance": "État de résistance",
-      "mechanism": "Mécanismes de résistance",
-      "species": "Espèce de vecteur",
-      "resistance_percentage": "% de sites confirmant la résistance",
-      "resistance_year": "Année des derniers études",
-      "insecticide": "Nombre de classes d'insecticides auxquelles la résistance des vecteurs a été confirmée",
-      "mechanism_percentage": "% de sites détectant le mécanisme"
+        "resistance_status": "État de résistance aux insecticides",
+        "resistance_intensity": "Intensité de la résistance aux insecticides",
+        "resistance_mechanism": "Mécanismes de résistance aux insecticides",
+        "synergist_involvement": "Effet synergiste de la susceptibilité",
+        "synergist_involvement_legend": "Effet de la synergie sur la susceptibilité",
+        "pbo_deployment": "Déploiement de moustiquaires  PBO-pyréthroïde",
+        "pbo_deployment_legend": "Conformité aux critères recommandés par l'OMS pour le  déploiementde moustiquaires avec PBO et pyréthroïde",
+        "chart": {
+            "resistance_status": {
+                "content_1": "{{nStudies}} test(s) sur les vecteurs ",
+                "content_2": " du paludisme via détermination de la dose diagnostique(s) avec {{insecticideClass}} {{years}}",
+                "number_of_tests": "# de tests",
+                "Confirmed": "Confirmée",
+                "Possible": "Suspectée",
+                "Susceptible": "Sensible",
+                "mortality": "mortalité (%)",
+                "tested": "Études (n)",
+                "mosquito_mortality": "% mortalité de moustique"
+            },
+            "resistance_intensity": {
+                "content_1": "{{nStudies}} test(s) sur les vecteurs ",
+                "content_2": " du paludisme via détermination de l'intensité de la résistance(s) avec {{insecticideClass}} {{years}}",
+                "number_of_tests": "# de tests",
+                "HIGH_INTENSITY": "Fort",
+                "MODERATE_TO_HIGH_INTENSITY": "Moyen Fort",
+                "MODERATE_INTENSITY": "Moyen",
+                "LOW_INTENSITY": "Faible",
+                "NA": "Sensible",
+                "mortality": "mortalité (%)",
+                "tested": "Études (n)",
+                "mosquito_mortality": "% mortalité de moustique"
+            },
+            "resistance_mechanism": {
+                "content_1": "{{nStudies}} test(s) sur les vecteurs ",
+                "content_2": " du paludisme via {{insecticideClasses}} avec {{type}} {{years}}",
+                "number_of_tests": "# de tests",
+                "DETECTED": "Détecté",
+                "NOT_DETECTED": "Non détecté",
+                "title": "Nombre d'essais de mécanismes",
+                "allelic": "Fréquence allélique à partir d'analyse moléculaire",
+                "count": "Nombre",
+                "frequency": "Fréquence (%)"
+            },
+            "synergist_involvement": {
+                "mortality": "mortalité (%)",
+                "tested": "Études (n)",
+                "number_of_tests": "# de tests",
+                "mosquito_mortality": "% mortalité de moustique",
+                "no_synergist": "Pas de synergistes"
+            }
+        },
+        "legend": {
+            "resistance_intensity": {
+                "high_intensity": "Fort",
+                "moderate_to_high_intensity": "Moyen Fort",
+                "moderate_intensity": "Moyen",
+                "low_intensity": "Faible",
+                "susceptible": "Sensible"
+            },
+            "resistance_status": {
+                "confirmed": "Confirmée (0 to <90%)",
+                "possible": "Suspectée (90 to <98%)",
+                "susceptible": "Sensible (≥98%)"
+            },
+            "resistance_mechanism": {
+                "confirmed": "Détecté",
+                "not_confirmed": "Non détecté"
+            },
+            "synergist_involvement": {
+                "mosquito_mortality": "Mortalité de moustique",
+                "full_involvement": "Implication totale",
+                "partial_involvement": "Implication partielle",
+                "no_involvement": "Pas d'implication"
+            },
+            "pbo_deployment": {
+                "eligible": "Tous les critères remplis",
+                "not_eligible": "Au moins un critère n'est pas rempli",
+                "not_enough_data": "Davantage de données doivent être collectées pour évaluer les critères",
+                "no_data": "Pas de données disponibles",
+                "expanded": {
+                    "eligible": "les sites où au moins une espèce de vecteur satisfait les trois critères recommandés par l'OMS",
+                    "not_eligible": "les sites où l'une des espèces vectrices pour lesquelles des données sont disponibles enfreint au moins l'un des trois critères recommandés par l'OMS décrits ci-dessus, et aucune  espèce pour lesquelle des données sont disponibles ne satisfait les trois critères.",
+                    "not_enough_data": "sites avec des données insuffisantes pour évaluer si les espèces vectorielles locales satisfont les trois critères",
+                    "no_data": "aucune donnée disponible"
+                },
+                "link": "https://www.who.int/malaria/publications/atoz/9789241511575/fr/",
+                "link_text": "Procédures pour tester la résistance aux insecticides chez les moustiques vecteurs du paludisme – seconde édition",
+                "link_content_1": "Plus de information sur les recommandations de l'OMS pour le déploiement de moustiquaires avec pBO et pyréthrinoïde sont disponibles dans les ",
+                "link_content_2": ". Ces recommandations seront mises à jour à mesure que de nouvelles preuves scientifiques deviennent disponibles."
+            }
+        }
+    },
+    "diagnosis": {
+        "gene_deletions": "Délétions du gène pfhrp2/3",
+        "chart": {
+            "gene_deletions": {
+                "content_1": "{{nStudies}} enquête(s) ",
+                "content_2": " par {{surveyTypes}} {{years}}",
+                "deletions_confirmed": "Délétions confirmées (% d'échantillons)",
+                "deletion_type": "Type de délétion",
+                "no_tested": "Nombre d'échantillons testés",
+                "percentage": "Pourcentage de délétion en "
+            }
+        },
+        "legend": {
+            "gene_deletions": {
+                "HRP2_HRP3_PROPORTION_DELETION": "Délétions du gène pfhrp2/3",
+                "HRP2_PROPORTION_DELETION": "Délétions du gène pfhrp2",
+                "confirmed": "Confirmée",
+                "not_identified": "Non identifiée"
+            }
+        }
     },
     "treatment": {
-      "title": "Résumé de la taux d'échecs thérapeutiques chez les patients infectés par le paludisme",
-      "country": "Pay",
-      "period": "Periode de l'étude",
-      "median": "Médiane",
-      "drug": "Traitement",
-      "follow": "Suivi",
-      "studies": "Nombre d'études",
-      "percentile_25": "Percentile 25",
-      "percentile_75": "Percentile 75"
-    }
-  },
-  "subscription": {
-    "title": "Inscrivez-vous pour recevoir des mises à jour sur ces quatre défis de la lutte contre le paludisme!",
-    "first_name": "Prénom",
-    "last_name": "Nom de famille",
-    "email": "Email",
-    "country": "Pay",
-    "organization": "Organisation",
-    "button": "Souscrire",
-    "institutions": {
-      "nmcp": "PNLP",
-      "funding_organization": "Entité financiatrice",
-      "research_organization": "Institution de recherche",
-      "who_collaborating_centers": "Centre collaborateur de la OMS",
-      "private_sector": "Secteur privé",
-      "ngo": "ONG",
-      "media_organization": "Agence de communication",
-      "who_country_office": "OMS - Bureau pay",
-      "who_regional_office": "OMS - Bureau regional",
-      "who_headquarters": "OMS - Siège"
-    }
-  },
-  "buttons": {
-    "select_story_mode": "Select story mode"
-  },
-  "icons": {
-    "animation": "Animation de la chronologie",
-    "endemicity": "Ombrager les pays non endémiques",
-    "visualization": "Changer la visualisation",
-    "story": "Afficher l'explication des menaces",
-    "download": "Télécharger des données",
-    "image": "Exporter une image de la carte",
-    "summary": "Rapport sommaire",
-    "disclaimer": "Avertissement",
-    "subscribe": "Souscrire",
-    "comments": "Envoyez vos commentaires",
-    "help": "Help",
-    "share": "Partager",
-    "tour": "Guide-moi à travers l'application"
-  },
-  "TREATMENT_FAILURE_KM": "% de patients en échec thérapeutique, Kaplan-Meier",
-  "PROP_RELATED": "Pourcentage %",
-  "COUNTRY_NA": "Namibie"
+        "treatment_failure": "Échec du traitement",
+        "delayed_parasite_clearance": "Retard dans l'élimination des parasites",
+        "molecular_markers": "Marqueurs moléculaires de la résistance aux médicaments",
+        "chart": {
+            "treatment_failure": {
+                "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre {{plasmodiumSpecies}} {{years}}",
+                "percentage": "Pourcentage (%)",
+                "study_years": "Années d'étude(s)",
+                "number_of_patients": "Nombre de patients",
+                "follow_up": "Suivi",
+                "confirmed_resist_pv": "Patients avec une résistance confirmée",
+                "positive_day_3": "Positif après le 3ème jour",
+                "treatment_failure_pp": "Patients avec un échec thérapeutique, selon le protocole",
+                "treatment_failure_km": "Patients avec un échec thérapeutique, Kaplan-Meier",
+                "days": "journées",
+                "studies": "Étude(s)"
+            },
+            "molecular_markers": {
+                "content": "{{nStudies}} etudes de marqueur moléculaire effectuée sur {{molecularMarker}} {{years}}",
+                "site_content_1": "Dans cette {{year}} étude, suivantes ",
+                "site_content_2": " les mutations ont été observées parmi {{nStudies}} échantillons",
+                "percentage": "Pourcentage (%)",
+                "studies": "Étude(s)",
+                "study_years": "Années d'étude(s)",
+                "number_of_samples": "Nombre d'échantillons",
+                "mutation_detected": "Échantillons avec mutations détectées",
+                "wt_tudy": "Échantillons de type sauvage",
+                "mc_study": "Échantillons avec plusieurs numéros de copie"
+            }
+        },
+        "legend": {
+            "treatment_failure": {
+                "high": "> 20%",
+                "medium_high": "10% - 20%",
+                "medium": "5% - 10%",
+                "low": "< 5%",
+                "unknown": "Données non disponibles"
+            },
+            "delayed_parasite_clearance": {
+                "high": "> 20%",
+                "medium_high": "10% - 20%",
+                "medium": "5% - 10%",
+                "low": "< 5%",
+                "unknown": "Données non disponibles"
+            },
+            "molecular_markers": {
+                "high": "> 80%",
+                "medium_high": "51% - 80%",
+                "medium": "10% - 50%",
+                "low": "< 10%"
+            }
+        }
+    },
+    "invasive": {
+        "vector_occurrance": "Espèces vectorielles invasives",
+        "chart": {
+            "vector_occurrance": {
+                "species": "Espèces",
+                "sampling_period": "Période d’échantillonnage",
+                "sampling_method": "Méthode d’échantillonnage",
+                "study_identification_method": "Méthode d’identification des espèces",
+                "data_collection": "Remerciements pour la collecte de données",
+                "no_available": "Indisponible"
+            }
+        },
+        "legend": {
+            "vector_occurrance": {
+                "invasive": "Envahissante",
+                "native": "Autochtone",
+                "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
+                "link_text": "formulaire de rapport",
+                "link_content_1": "Si vous avez détecté une espèce invasive vecteur Anopheles, veuillez nous en informer via le "
+            }
+        }
+    },
+    "filters": {
+        "filters": "Filtres",
+        "tabs": {
+            "filters": "Filtres",
+            "regions": "Régions"
+        },
+        "no_records": "Aucun enregistrement n'est disponible avec les critères spécifiés",
+        "records": {
+            "prevention": {
+                "0": "There are {{studies}} tests found with the specified criteria",
+                "1": "There are {{studies}} tests found with the specified criteria",
+                "2": "There are {{studies}} essais found with the specified criteria",
+                "3": "There are {{studies}} tests found with the specified criteria",
+                "4": ""
+            },
+            "diagnosis": "{{studies}} enquêtes trouvés avec des critères spécifiés",
+            "treatment": "{{studies}} études trouvés avec des critères spécifiés",
+            "invasive": "{{studies}} détections de vecteurs trouvés avec des critères spécifiés"
+        },
+        "insecticide_class": "Classe d'insecticide",
+        "insecticide_type": "Type d'insecticide",
+        "test_type": "Type de test",
+        "vector_species": "Espèces vectorielles",
+        "plasmodium_species": "Espèces de plasmodium",
+        "drug": "Médicament",
+        "molecular_marker": "Marqueur moléculaire",
+        "mechanism_type": "Type de mécanisme",
+        "assay_type": "Type d'analyse",
+        "synergist_type": "Type de test",
+        "synergist_types": "Types du mécanismes métaboliques",
+        "deletion_type": "Type de délétion",
+        "survey_type": "Type d'enquête",
+        "patient_type": "Type de patient",
+        "years": "Années",
+        "country": "Pays",
+        "countries": "Pays",
+        "region": "Région",
+        "sub_region": "Sous-région"
+    },
+    "legend": {
+        "number_of_studies": "Nombre d'études",
+        "number_of_surveys": "Nombre d'enquêtes",
+        "most_recent_data_shown": "Données les plus récentes affichées"
+    },
+    "chart": {
+        "studies": "Études",
+        "zoom": "Zoom"
+    },
+    "copyright": {
+        "mobile": "Cliquez ici pour lire l'avertissement qui s'applique à la carte ci-dessus",
+        "content": "Les appellations employées dans la présente publication et la présentation des données qui y figurent \nn’impliquent de la part de l’Organisation mondiale de la Santé aucune prise de position quant au statut juridique des \npays, territoires, villes ou zones, ou de leurs autorités, ni quant au tracé de leurs frontières ou limites. Les lignes \ndiscontinues et en pointillé, ainsi que les zones en gris, sur les cartes représentent des frontières et zones \napproximatives dont le tracé peut ne pas avoir fait l'objet d'un accord définitif. Les limites de la carte fournies \nreflètent l'état politique et géographique à la date de publication (2017). Cependant, les informations techniques sur \nla santé sont basées sur des données précises par rapport à l'année sélectionnée. La déconnexion dans cet arrangement \ndoit être notée, mais aucune implication concernant le statut politique ou terminologique ne doit être tirée de cet \narrangement car il est purement fonction des limitations techniques et graphiques. Source des données: Programme mondial \ncontre le paludisme. Production de cartes: Programme mondial contre le paludisme. Organisation mondiale de la santé."
+    },
+    "options": {
+        "title": "Options",
+        "select_language": "Choisir la langue",
+        "select": "Sélectionner"
+    },
+    "citation": {
+        "unpublished_data": "données non publiées"
+    },
+    "data_download": {
+        "title": "Téléchargement de données",
+        "footer": "(*) nombre total de sites pour lesquels des données ont été communiquées",
+        "dataset": "Sélection des données",
+        "buttons": {
+            "back": "Précédent",
+            "next": "Suivant",
+            "download": "Télécharger",
+            "close": "Sortir"
+        },
+        "filters": {
+            "prevention": {
+                "datasets": {
+                    "discriminating_concentration_bioassays": "Résultats de tests de sensibilité avec une concentration discriminante",
+                    "intensity_concentration_bioassays": "Résultats des tests de sensibilité avec 5 fois et 10 fois les concentrations discriminantes",
+                    "synergist_insecticide_bioassays": "Résultats des tests biologiques sur des mélanges synergiste/insecticide",
+                    "resistance_mechanism_assays_molecular": "Résultats de l'identification du mécanisme de résistance moléculaire",
+                    "resistance_mechanism_assays_biochemical": "Résultats de l'identification des mécanismes de résistance biochimique"
+                }
+            },
+            "treatment": {
+                "datasets": {
+                    "therapeutic_efficacy_studies": "Résultats des études d'efficacité thérapeutique",
+                    "molecular_marker_studies": "Résultats des études sur les marqueurs moléculaires de la résistance aux médicaments"
+                }
+            },
+            "invasive": {
+                "datasets": {
+                    "invasive_vector_species": "Détections d'espèces vectorielles envahissantes"
+                }
+            }
+        },
+        "step0": {
+            "title": "Message d'accueil",
+            "p1": "Bienvenue dans la boîte de dialogue de téléchargement des données des Cartes de menaces du paludisme!",
+            "p2": "Cette boîte de dialogue vous permettra de télécharger des données des bases de données mondiales de l'OMS sur la résistance aux insecticides chez les vecteurs du paludisme, sur l'efficacité et la résistance des médicaments et sur les espèces invasives de vecteurs.",
+            "p3": "Les données contenues dans ces trois bases de données mondiales ont été mises à la disposition du Programme mondial de lutte contre le paludisme de l'Organisation mondiale de la santé (OMS) par les ministères de la santé ou leurs partenaires de développement, ou par leur extraction de publications scientifiques par l'OMS ou ses partenaires. Afin de créditer leurs contributions, une colonne contenant les sources des données est incluse dans chaque ensemble de données. Veuillez noter que tous les contributeurs ne nous ont pas permis de partager leurs données. Par conséquent, certaines des données de la carte des menaces de paludisme ne peuvent pas être téléchargées. Pour les données extraites des publications, veuillez noter que lorsque les valeurs des variables pertinentes n'ont pas été directement fournies dans les publications ou ont été analysées d’une manière différente de celle recommandée par l'OMS, les valeurs ont été calculées à partir des données déclarées.",
+            "p4a": "L'utilisation de toutes les données est soumise aux ",
+            "p4bLinkText": "Conditions d'utilisation des compilations, agrégations, évaluations et analyses de données de l'OMS",
+            "p4bLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions",
+            "p4c": ". En utilisant les ensembles de données ou toute présentation de données qui en dérivent, vous acceptez d'être lié par ces conditions générales et de les respecter, conditions qui pourront être modifiées de temps à autre par l'OMS à sa seule discrétion.",
+            "p5": "Veuillez reconnaître l'utilisation de ces ensembles de données en incluant la référence suivante dans vos publications: OMS, Carte des menaces de paludisme (https://www.who.int/malaria/maps/threats/), date d'accès, reconnaissance des pays ayant fourni les données sous-jacentes (dans le cas où la source se réfère aux ministères de la santé ou programmes nationaux de lutte antipaludique de pays spécifiques).",
+            "p6": "Le programmes mondial de lutte antipaludique tient à suivre et à présenter l'utilisation des bases de données mondiales. Par conséquent, nous vous poserons quelques questions sur l'utilisation prévue des données que vous souhaitez télécharger.",
+            "p7a": "Si vous avez des questions, n'hésitez pas à nous contacter sur: ",
+            "p7bEmail": "gmp-maps@who.int",
+            "p8a": "Cochez ici pour indiquer que vous avez lu et accepté les ",
+            "p8bLinkText": "Conditions d'utilisation des compilations, agrégations, évaluations et analyses de données de l'OMS",
+            "p8bLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions"
+        },
+        "step1": {
+            "title": "Coordonnées personnelles",
+            "first_name": "Prénom",
+            "last_name": "Nom de famille",
+            "organization_type": "Type d'Organisation",
+            "organization_type_options": {
+                "university": "University or Research center",
+                "ngos": "NGOs",
+                "agency": "Funding agencies or donors",
+                "international": "International Organization",
+                "government": "Government institutions",
+                "partnership": "Partnerships/alliances",
+                "consultant": "Independent consultant/freelancer",
+                "health": "Health commodities manufacturers",
+                "communications": "Communications company",
+                "private": "Other private companies",
+                "other": "Others"
+            },
+            "organization_name": "Nom de l'organisation",
+            "position": "Position",
+            "country": "Pays de résidence",
+            "email": "Email",
+            "phone": "Téléphone de contact"
+        },
+        "step2": {
+            "title": "But du téléchargement",
+            "data_use": "Quel est le but de l'utilisation de ces données?",
+            "data_use_options": {
+                "research": "Recherche",
+                "grant": "Développer des propositions de projets",
+                "treatments": "Development of new anti-malaria treatments",
+                "vector": "Développer de nouveaux outils de contrôle vectoriel",
+                "diagnosis": "Développer de nouveaux outils de diagnostic",
+                "policies": "Élaboration de politiques, stratégies et / ou plans de travail nationaux (par exemple, Plan stratégique national de lutte contre le paludisme, Politique ou directives nationales de traitement, plans nationaux de suivi et de gestion de la résistance aux insecticides chez les vecteurs du paludisme)",
+                "advocacy": "Plaidoyer"
+            },
+            "date_use_options_content": {
+                "research": "Veuillez fournir une brève description du projet ou de la question de recherche pour laquelle les données seront utilisées (100 mots minimum)",
+                "policies": "Veuillez fournir le titre ou une brève description de la politique, de la stratégie ou du plan pour lesquels les données seront utilisées",
+                "tools": "Veuillez décrire brièvement les nouveaux traitements, outils de diagnostic ou de lutte antivectorielle que vous souhaitez développer (minimum 100 mots)",
+                "date": "Quand prévoyez-vous de terminer votre projet, politique, stratégie ou plan?"
+            },
+            "countries": "Pays où le projet, la politique, la stratégie ou le plan seront mis en œuvre",
+            "message": "L'OMS souhaite améliorer les bases de données mondiales et la carte des menaces de paludisme afin de mieux répondre aux besoins de notre communauté d'utilisateurs. Par conséquent, l'OMS souhaite collaborer avec notre communauté d'utilisateurs pour recueillir des suggestions d'amélioration et tirer des enseignements des différents cas d'utilisation et avantages que ces produits leur apportent",
+            "consent1": "J'autorise l'Organisation mondiale de la santé à utiliser mes données personnelles pour me contacter concernant mon expérience de l’utilisation de la carte des menaces de paludisme et des données des bases de données mondiales. ",
+            "consent2": "J'autorise l'Organisation mondiale de la santé à utiliser le nom de l'organisation et les descriptions de projet que j'ai fournies pour présenter les utilisations des bases de données mondiales (aucune donnée personnelle ne sera affichée)."
+        },
+        "step3": {
+            "title": "Filtrer les données à télécharger",
+            "filters": {
+                "additional": "Filtres supplémentaires",
+                "theme": "Sélectionnez un thème",
+                "dataset": "Sélectionnez un jeu de données"
+            }
+        }
+    },
+    "report": {
+        "prevention": {
+            "title": "Résumé de la résistance aux insecticides chez les vecteurs du paludisme",
+            "country": "Pay",
+            "resistance": "État de résistance",
+            "mechanism": "Mécanismes de résistance",
+            "species": "Espèce de vecteur",
+            "resistance_percentage": "% de sites confirmant la résistance",
+            "resistance_year": "Année des derniers études",
+            "insecticide": "Nombre de classes d'insecticides auxquelles la résistance des vecteurs a été confirmée",
+            "mechanism_percentage": "% de sites détectant le mécanisme"
+        },
+        "treatment": {
+            "title": "Résumé de la taux d'échecs thérapeutiques chez les patients infectés par le paludisme",
+            "country": "Pay",
+            "period": "Periode de l'étude",
+            "median": "Médiane",
+            "drug": "Traitement",
+            "follow": "Suivi",
+            "studies": "Nombre d'études",
+            "percentile_25": "Percentile 25",
+            "percentile_75": "Percentile 75"
+        }
+    },
+    "subscription": {
+        "title": "Inscrivez-vous pour recevoir des mises à jour sur ces quatre défis de la lutte contre le paludisme!",
+        "first_name": "Prénom",
+        "last_name": "Nom de famille",
+        "email": "Email",
+        "country": "Pay",
+        "organization": "Organisation",
+        "button": "Souscrire",
+        "institutions": {
+            "nmcp": "PNLP",
+            "funding_organization": "Entité financiatrice",
+            "research_organization": "Institution de recherche",
+            "who_collaborating_centers": "Centre collaborateur de la OMS",
+            "private_sector": "Secteur privé",
+            "ngo": "ONG",
+            "media_organization": "Agence de communication",
+            "who_country_office": "OMS - Bureau pay",
+            "who_regional_office": "OMS - Bureau regional",
+            "who_headquarters": "OMS - Siège"
+        }
+    },
+    "buttons": {
+        "select_story_mode": "Select story mode"
+    },
+    "icons": {
+        "animation": "Animation de la chronologie",
+        "endemicity": "Ombrager les pays non endémiques",
+        "visualization": "Changer la visualisation",
+        "story": "Afficher l'explication des menaces",
+        "download": "Télécharger des données",
+        "image": "Exporter une image de la carte",
+        "summary": "Rapport sommaire",
+        "disclaimer": "Avertissement",
+        "subscribe": "Souscrire",
+        "comments": "Envoyez vos commentaires",
+        "help": "Help",
+        "share": "Partager",
+        "tour": "Guide-moi à travers l'application"
+    },
+    "TREATMENT_FAILURE_KM": "% de patients en échec thérapeutique, Kaplan-Meier",
+    "PROP_RELATED": "Pourcentage %",
+    "COUNTRY_NA": "Namibie"
 }

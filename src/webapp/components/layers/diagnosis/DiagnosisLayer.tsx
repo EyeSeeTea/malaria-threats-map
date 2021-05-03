@@ -1,7 +1,7 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {State} from "../../../store/types";
-import {circleLayout, studiesToGeoJson} from "../layer-utils";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { State } from "../../../store/types";
+import { circleLayout, studiesToGeoJson } from "../layer-utils";
 import diagnosisSymbol from "../symbols/diagnosis";
 import setupEffects from "../effects";
 import {
@@ -18,21 +18,21 @@ import {
     selectTheme,
 } from "../../../store/reducers/base-reducer";
 import * as R from "ramda";
-import {resolveResistanceStatus} from "../prevention/ResistanceStatus/utils";
-import {buildDiagnosisFilters} from "../studies-filters";
-import {resolveMapTypeSymbols, studySelector} from "./utils";
-import {DIAGNOSIS_STATUS} from "./GeneDeletions/utils";
-import {selectCountries} from "../../../store/reducers/country-layer-reducer";
+import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
+import { buildDiagnosisFilters } from "../studies-filters";
+import { resolveMapTypeSymbols, studySelector } from "./utils";
+import { DIAGNOSIS_STATUS } from "./GeneDeletions/utils";
+import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import {
     fetchDiagnosisStudiesRequest,
     setDiagnosisFilteredStudiesAction,
 } from "../../../store/actions/diagnosis-actions";
-import {Hidden} from "@material-ui/core";
+import { Hidden } from "@material-ui/core";
 import ChartModal from "../../ChartModal";
 import DiagnosisSitePopover from "./DiagnosisSitePopover";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
-import {setSelection} from "../../../store/actions/base-actions";
-import {DiagnosisStudy} from "../../../../domain/entities/DiagnosisStudy";
+import { setSelection } from "../../../store/actions/base-actions";
+import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -83,7 +83,7 @@ class DiagnosisLayer extends Component<Props> {
         this.loadStudiesIfRequired();
 
         const {
-            diagnosisFilters: {mapType, surveyTypes, patientType, deletionType},
+            diagnosisFilters: { mapType, surveyTypes, patientType, deletionType },
             filters,
             region,
             countryMode,
@@ -93,10 +93,8 @@ class DiagnosisLayer extends Component<Props> {
         this.mountLayer(prevProps);
         this.renderLayer();
         const mapTypeChange = prevProps.diagnosisFilters.mapType !== mapType;
-        const yearChange =
-            prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
-        const surveyTypesChange =
-            prevProps.diagnosisFilters.surveyTypes.length !== surveyTypes.length;
+        const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
+        const surveyTypesChange = prevProps.diagnosisFilters.surveyTypes.length !== surveyTypes.length;
         const patientTypeChange = prevProps.diagnosisFilters.patientType !== patientType;
         const deletionTypeChange = prevProps.diagnosisFilters.deletionType !== deletionType;
         const countryChange = prevProps.region !== region;
@@ -118,10 +116,9 @@ class DiagnosisLayer extends Component<Props> {
     }
 
     loadStudiesIfRequired() {
-        const {theme, studies, studiesLoading, studiesError} = this.props;
+        const { theme, studies, studiesLoading, studiesError } = this.props;
 
-        const required =
-            theme === DIAGNOSIS && studies.length === 0 && !studiesLoading && !studiesError;
+        const required = theme === DIAGNOSIS && studies.length === 0 && !studiesLoading && !studiesError;
 
         if (required) {
             this.props.fetchDiagnosisStudies();
@@ -134,23 +131,17 @@ class DiagnosisLayer extends Component<Props> {
 
     setupGeoJsonData = (studies: any[]) => {
         const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
-        const filteredStudies = R.values(groupedStudies).map((group) =>
-            studySelector(
-                group,
-                this.props.diagnosisFilters.mapType,
-                this.props.diagnosisFilters.deletionType
-            )
+        const filteredStudies = R.values(groupedStudies).map(group =>
+            studySelector(group, this.props.diagnosisFilters.mapType, this.props.diagnosisFilters.deletionType)
         );
 
-        return filteredStudies.map((study) => {
+        return filteredStudies.map(study => {
             const percentage = parseFloat(study["MORTALITY_ADJUSTED"]);
             return {
                 ...study,
                 CONFIRMATION_STATUS: resolveResistanceStatus(percentage),
                 DIAGNOSIS_PFHRP2_STATUS:
-                    study.HRP2_POSITIVE > 0
-                        ? DIAGNOSIS_STATUS.CONFIRMED
-                        : DIAGNOSIS_STATUS.NOT_IDENTIFIED,
+                    study.HRP2_POSITIVE > 0 ? DIAGNOSIS_STATUS.CONFIRMED : DIAGNOSIS_STATUS.NOT_IDENTIFIED,
                 DIAGNOSIS_PFHRP2_PFHRP3_STATUS:
                     study.HRP2_HRP3_PROPORTION_DELETION > 0
                         ? DIAGNOSIS_STATUS.CONFIRMED
@@ -160,7 +151,7 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     buildFilters = () => {
-        const {diagnosisFilters, filters, region} = this.props;
+        const { diagnosisFilters, filters, region } = this.props;
         return buildDiagnosisFilters(diagnosisFilters, filters, region);
     };
 
@@ -170,7 +161,7 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     filterSource = () => {
-        const {studies, countryMode} = this.props;
+        const { studies, countryMode } = this.props;
         const source = this.props.map.getSource(DIAGNOSIS_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
@@ -192,9 +183,9 @@ class DiagnosisLayer extends Component<Props> {
                 Longitude: country.CENTER_LON,
                 STUDIES: (countryStudies[country.ISO_2_CODE] || []).length || 0,
             }))
-            .filter((study) => study.STUDIES !== 0);
+            .filter(study => study.STUDIES !== 0);
 
-        const sortedCountries = R.sortBy((country) => country.STUDIES, countries);
+        const sortedCountries = R.sortBy(country => country.STUDIES, countries);
         if (sortedCountries.length === 0) return [];
         // const maxSize = sortedCountries[sortedCountries.length - 1].STUDIES;
         // const minSize = sortedCountries[0].STUDIES;
@@ -215,7 +206,7 @@ class DiagnosisLayer extends Component<Props> {
             }
         };
 
-        return countries.map((country) => ({
+        return countries.map(country => ({
             ...country,
             // SIZE: 5 + ratio * (country.STUDIES - minSize),
             // SIZE_HOVER: 5 + ratio * (country.STUDIES - minSize)
@@ -225,7 +216,7 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     mountLayer(prevProps?: Props) {
-        const {studies, diagnosisFilters, countryMode} = this.props;
+        const { studies, diagnosisFilters, countryMode } = this.props;
         if (!prevProps || prevProps.studies.length !== studies.length) {
             if (this.props.map.getSource(DIAGNOSIS_SOURCE_ID)) {
                 this.props.map.removeLayer(DIAGNOSIS_LAYER_ID);
@@ -251,7 +242,7 @@ class DiagnosisLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any, a: any) => {
+    onClickListener = (e: any, _a: any) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -282,20 +273,12 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     applyMapTypeSymbols = () => {
-        const {diagnosisFilters, countryMode} = this.props;
+        const { diagnosisFilters, countryMode } = this.props;
         const layer = this.props.map.getLayer(DIAGNOSIS_LAYER_ID);
         const mapTypeSymbols = resolveMapTypeSymbols(diagnosisFilters, countryMode);
         if (layer && mapTypeSymbols) {
-            this.props.map.setPaintProperty(
-                DIAGNOSIS_LAYER_ID,
-                "circle-radius",
-                mapTypeSymbols["circle-radius"]
-            );
-            this.props.map.setPaintProperty(
-                DIAGNOSIS_LAYER_ID,
-                "circle-color",
-                mapTypeSymbols["circle-color"]
-            );
+            this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-radius", mapTypeSymbols["circle-radius"]);
+            this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-color", mapTypeSymbols["circle-color"]);
             this.props.map.setPaintProperty(
                 DIAGNOSIS_LAYER_ID,
                 "circle-stroke-color",
@@ -305,11 +288,11 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     render() {
-        const {studies, countryMode, selection} = this.props;
+        const { studies, countryMode, selection } = this.props;
         if (selection === null) {
             return <div />;
         }
-        const filteredStudies = this.filterStudies(studies).filter((study) =>
+        const filteredStudies = this.filterStudies(studies).filter(study =>
             countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
         if (filteredStudies.length === 0) {

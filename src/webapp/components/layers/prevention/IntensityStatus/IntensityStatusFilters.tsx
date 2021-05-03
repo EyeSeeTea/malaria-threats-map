@@ -6,13 +6,13 @@ import YearRangeSelector from "../../../YearRangeSelector";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
 
 export default function IntensityStatusFilters() {
-  return (
-    <div>
-      <InsecticideClassFilter />
-      <InsecticideTypeFilter />
-      <TypeFilter />
-      <SpeciesFilter />
-      <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
-    </div>
-  );
+    return (
+        <div>
+            <InsecticideClassFilter />
+            <InsecticideTypeFilter />
+            <TypeFilter />
+            <SpeciesFilter />
+            <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
+        </div>
+    );
 }

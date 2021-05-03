@@ -1,17 +1,13 @@
-import React, {Component} from "react";
-import {DiagnosisMapType, State} from "../../../store/types";
-import {
-    selectCountryMode,
-    selectSelection,
-    selectTheme,
-} from "../../../store/reducers/base-reducer";
-import {setPreventionFilteredStudiesAction} from "../../../store/actions/prevention-actions";
-import {setSelection} from "../../../store/actions/base-actions";
-import {connect} from "react-redux";
+import React, { Component } from "react";
+import { DiagnosisMapType, State } from "../../../store/types";
+import { selectCountryMode, selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
+import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
+import { setSelection } from "../../../store/actions/base-actions";
+import { connect } from "react-redux";
 import GeneDeletionChart from "./GeneDeletions/GeneDeletionChart";
 import GeneDeletionCountryChart from "./GeneDeletions/GeneDeletionCountryChart";
-import {selectDiagnosisFilters} from "../../../store/reducers/diagnosis-reducer";
-import {DiagnosisStudy} from "../../../../domain/entities/DiagnosisStudy";
+import { selectDiagnosisFilters } from "../../../store/reducers/diagnosis-reducer";
+import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -40,12 +36,12 @@ class DiagnosisSelectionChart extends Component<Props> {
             studies,
             countryMode,
             selection,
-            diagnosisFilters: {mapType},
+            diagnosisFilters: { mapType },
         } = this.props;
         if (!selection) {
             return <div />;
         }
-        const filteredStudies = studies.filter((study) =>
+        const filteredStudies = studies.filter(study =>
             countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
         if (!filteredStudies.length || theme !== "diagnosis") {

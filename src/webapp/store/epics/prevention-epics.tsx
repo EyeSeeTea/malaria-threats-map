@@ -1,8 +1,8 @@
-import {ActionsObservable, StateObservable} from "redux-observable";
-import {ActionType} from "typesafe-actions";
-import {ActionTypeEnum} from "../actions";
-import {of} from "rxjs";
-import {catchError, mergeMap, skip, switchMap, withLatestFrom} from "rxjs/operators";
+import { ActionsObservable, StateObservable } from "redux-observable";
+import { ActionType } from "typesafe-actions";
+import { ActionTypeEnum } from "../actions";
+import { of } from "rxjs";
+import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
 import {
     fetchPreventionStudiesError,
     fetchPreventionStudiesRequest,
@@ -14,19 +14,19 @@ import {
     setSpecies,
     setType,
 } from "../actions/prevention-actions";
-import {PreventionMapType, State} from "../types";
-import {logEventAction, logPageViewAction} from "../actions/base-actions";
-import {ASSAY_TYPES} from "../../components/filters/AssayTypeCheckboxFilter";
-import {addNotificationAction} from "../actions/notifier-actions";
-import {getAnalyticsPageView} from "../analytics";
-import {fromFuture} from "./utils";
-import {PreventionStudy} from "../../../domain/entities/PreventionStudy";
-import {EpicDependencies} from "../../store/index";
+import { PreventionMapType, State } from "../types";
+import { logEventAction, logPageViewAction } from "../actions/base-actions";
+import { ASSAY_TYPES } from "../../components/filters/AssayTypeCheckboxFilter";
+import { addNotificationAction } from "../actions/notifier-actions";
+import { getAnalyticsPageView } from "../analytics";
+import { fromFuture } from "./utils";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
+import { EpicDependencies } from "../../store/index";
 
 export const getPreventionStudiesEpic = (
     action$: ActionsObservable<ActionType<typeof fetchPreventionStudiesRequest>>,
     _state$: StateObservable<State>,
-    {compositionRoot}: EpicDependencies
+    { compositionRoot }: EpicDependencies
 ) =>
     action$.ofType(ActionTypeEnum.FetchPreventionStudiesRequest).pipe(
         switchMap(() => {
@@ -35,21 +35,16 @@ export const getPreventionStudiesEpic = (
                     return of(fetchPreventionStudiesSuccess(studies));
                 }),
                 catchError((error: Error) =>
-                    of(
-                        addNotificationAction(error.message),
-                        fetchPreventionStudiesError(error.message)
-                    )
+                    of(addNotificationAction(error.message), fetchPreventionStudiesError(error.message))
                 )
             );
         })
     );
 
-export const setPreventionMapTypeEpic = (
-    action$: ActionsObservable<ActionType<typeof setPreventionMapType>>
-) =>
+export const setPreventionMapTypeEpic = (action$: ActionsObservable<ActionType<typeof setPreventionMapType>>) =>
     action$.ofType(ActionTypeEnum.SetPreventionMapType).pipe(
-        switchMap((action) => {
-            const pageView = getAnalyticsPageView({page: "prevention", section: action.payload});
+        switchMap(action => {
+            const pageView = getAnalyticsPageView({ page: "prevention", section: action.payload });
             const logPageView = logPageViewAction(pageView);
 
             if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
@@ -69,7 +64,7 @@ export const setPreventionMapTypeEpic = (
 
 export const setPreventionTypeEpic = (action$: ActionsObservable<ActionType<typeof setType>>) =>
     action$.ofType(ActionTypeEnum.SetType).pipe(
-        switchMap((action) => {
+        switchMap(action => {
             const kdr = ["KDR_L1014S", "KDR_L1014F", "KDR_(MUTATION_UNSPECIFIED)"];
             if (kdr.includes(action.payload)) {
                 return of(setAssayTypes([ASSAY_TYPES[0]]));
@@ -104,9 +99,7 @@ export const setPreventionInsecticideClassEpic = (
             })
         );
 
-export const setPreventionInsecticideTypeEpic = (
-    action$: ActionsObservable<ActionType<typeof setInsecticideTypes>>
-) =>
+export const setPreventionInsecticideTypeEpic = (action$: ActionsObservable<ActionType<typeof setInsecticideTypes>>) =>
     action$
         .ofType(ActionTypeEnum.SetInsecticideTypes)
         .pipe(skip(1))
@@ -117,14 +110,12 @@ export const setPreventionInsecticideTypeEpic = (
             })
         );
 
-export const setPreventionTypeResetEpic = (
-    action$: ActionsObservable<ActionType<typeof setType>>
-) =>
+export const setPreventionTypeResetEpic = (action$: ActionsObservable<ActionType<typeof setType>>) =>
     action$
         .ofType(ActionTypeEnum.SetType)
         .pipe(skip(1))
         .pipe(
-            switchMap((_action) => {
+            switchMap(_action => {
                 return of(setSpecies([]));
             })
         );
