@@ -17,7 +17,7 @@ const InvasiveStep3 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step3.part1">
+                <Trans i18nKey="step3.part1" t={t}>
                     <b>
                         Control strategies should be informed by best practices from other countries, be adequately
                         monitored and evaluated, and be modified where required.
@@ -26,7 +26,7 @@ const InvasiveStep3 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step3.part2">
+                <Trans i18nKey="step3.part2" t={t}>
                     <b>
                         Invasive vector species may adapt to their new environment by changing their traditional
                         behaviours, including their choice of breeding habitats and resting sites, and may become

@@ -18,13 +18,13 @@ const PreventionStep1 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step1.part1">
+                <Trans i18nKey="step1.part1" t={t}>
                     <b>Monitoring insecticide resistance in malaria vectors is essential</b>
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step1.part2">
+                <Trans i18nKey="step1.part2" t={t}>
                     <b>
                         80 of 89 malaria-endemic countries reported monitoring for insecticide resistance between 2010
                         and 2017. The extent and quality of data varies between countries.

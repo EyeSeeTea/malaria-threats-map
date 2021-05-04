@@ -18,7 +18,7 @@ const TreatmentStep3 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step3.part1">
+                <Trans i18nKey="step3.part1" t={t}>
                     <b>
                         Studies of molecular prevention provide essential data for detecting and tracking antimalarial
                         drug resistance
@@ -27,7 +27,7 @@ const TreatmentStep3 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step3.part2">
+                <Trans i18nKey="step3.part2" t={t}>
                     <b>
                         Molecular prevention for drug resistance are genetic changes in the malaria parasite found to be
                         associated with resistance.

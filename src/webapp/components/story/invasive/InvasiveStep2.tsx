@@ -17,13 +17,13 @@ const InvasiveStep2 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step2.part1">
+                <Trans i18nKey="step2.part1" t={t}>
                     <b>Timely detection of invasive vector species is crucial to contain their spread.</b>
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step2.part2">
+                <Trans i18nKey="step2.part2" t={t}>
                     <b>
                         Entomological surveillance systems provide critical information to inform the design and
                         implementation of vector control strategies.
@@ -46,11 +46,11 @@ const InvasiveStep2 = () => {
                 </Trans>
                 <Link target="_blank" href={t("step2.link")} color={"textSecondary"}>
                     <Trans i18nKey="step2.whoForm" t={t}>
-                        WHO form to report detection of invasive Anopheles vector species to
+                         WHO form to report detection of invasive Anopheles vector species to
                     </Trans>
                 </Link>
                 <Link href="mailto:vectorsurveillance@who.int" color={"textSecondary"}>
-                    vectorsurveillance@who.int
+                     vectorsurveillance@who.int
                 </Link>
                 .
             </Typography>

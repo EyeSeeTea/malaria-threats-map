@@ -18,13 +18,13 @@ const PreventionStep4 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step4.part1">
+                <Trans i18nKey="step4.part1" t={t}>
                     <b>Increasing resistance underscores the urgent need for enhanced monitoring</b>
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step4.part2">
+                <Trans i18nKey="step4.part2" t={t}>
                     <b>
                         Malaria vectors in some areas of Africa can now survive exposure to high concentrations of
                         insecticides, indicating intensified resistance.

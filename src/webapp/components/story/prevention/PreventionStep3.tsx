@@ -18,13 +18,13 @@ const PreventionStep3 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step3.part1">
+                <Trans i18nKey="step3.part1" t={t}>
                     <b>Recent and complete data on insecticide resistance are lacking for many countries</b>
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step3.part2">
+                <Trans i18nKey="step3.part2" t={t}>
                     <b>
                         47 of 89 malaria-endemic countries reported data for 2017. There are relatively few data in
                         regions other than Africa, such as South-East Asia. Monitoring often does not include all major

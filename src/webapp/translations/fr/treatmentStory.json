@@ -1,25 +1,25 @@
 {
     "step1": {
-        "part1": "<b>Les parasites du paludisme ont développé de manière successive une résistance au traitement antipaludique</b>",
-        "part2": "<b>Pendant des décennies, la résistance aux médicaments a été l'un des principaux obstacles à la lutte contre le paludisme.</b>",
+        "part1": "<0>Les parasites du paludisme ont développé de manière successive une résistance au traitement antipaludique</0>",
+        "part2": "<0>Pendant des décennies, la résistance aux médicaments a été l'un des principaux obstacles à la lutte contre le paludisme.</0>",
         "part3": "La surveillance continue et l’information sur l'efficacité du médicament et sur la résistance des parasites sont essentielles pour garantir aux patients un traitement efficace. L'OMS soutient les programmes nationaux de lutte contre le paludisme afin de surveiller l'efficacité du traitement antipaludique et de suivre les changements génétiques liés à la résistance aux médicaments chez les parasites du paludisme.",
         "part4": "Le rôle crucial de la surveillance de l'efficacité des médicaments a été observé dans le monde entier. La résistance a été un défi persistant dans la sous-région du Grand Mékong. La région a été très active dans la surveillance de l'efficacité des médicaments."
     },
     "step2": {
-        "part1": "<b>La surveillance systématique de l'efficacité des thérapies combinées à base d'artémisinine (ACT) est essentielle pour s'assurer que les patients reçoivent un traitement efficace</b>",
-        "part2": "<b>L'OMS recommande que tous les pays où le paludisme est endémique effectuent des études d'efficacité thérapeutique au moins une fois tous les deux ans pour informer la politique de traitement.</b>",
+        "part1": "<0>La surveillance systématique de l'efficacité des thérapies combinées à base d'artémisinine (ACT) est essentielle pour s'assurer que les patients reçoivent un traitement efficace</0>",
+        "part2": "<0>L'OMS recommande que tous les pays où le paludisme est endémique effectuent des études d'efficacité thérapeutique au moins une fois tous les deux ans pour informer la politique de traitement.</0>",
         "part3": "La sélection du médicament antipaludique recommandé repose sur l'efficacité du médicament contre le parasite du paludisme. Par conséquent, le suivi de l'efficacité thérapeutique des médicaments antipaludiques est un élément fondamental des stratégies de traitement du paludisme. L'OMS a élaboré un protocole standard pour la surveillance de l'efficacité du traitement antipaludique."
     },
     "step3": {
-        "part1": "<b>Les études sur les marqueurs moléculaires fournissent des données essentielles pour la détection et le suivi de la résistance aux médicaments antipaludiques</b>",
-        "part2": "<b>Les marqueurs moléculaires pour la résistance aux médicaments sont des changements génétiques dans le parasite du paludisme qui se sont révélés être associés à une résistance.</b>",
+        "part1": "<0>Les études sur les marqueurs moléculaires fournissent des données essentielles pour la détection et le suivi de la résistance aux médicaments antipaludiques</0>",
+        "part2": "<0>Les marqueurs moléculaires pour la résistance aux médicaments sont des changements génétiques dans le parasite du paludisme qui se sont révélés être associés à une résistance.</0>",
         "part3": "Par rapport aux études d'efficacité, les études sur les marqueurs moléculaires présentent plusieurs avantages pratiques. Par exemple, un grand nombre d'échantillons peuvent être collectés et analysés rapidement. Les marqueurs moléculaires de la résistance de <i>P. falciparum</i> aux médicaments ont été identifiés comprenant la chloroquine, la piperaquine, la mefloquine, la pyrimethamine, la sulfadoxine, l’atovaquone et l’artémisinine et ses dérivés. Pour les artémisinines, plusieurs mutations dans le domaine du promoteur Kelch 13 (K13) se sont révélées associées à une clearance parasitaire retardée. Il s'agit d'un domaine en constante évolution au fur et à mesure que de nouvelles mutations K13 sont découvertes et nous développons une meilleure compréhension des mutations ayant la plus grande influence.",
         "part4": "Pour les artémisinines, de nombreuses mutations dans le domaine du promoteur Kelch 13 (K13) se sont révélées associées au dégagement de parasites retardé. Il s'agit d'un champ évolutif au fur et à mesure que de nouvelles mutations K13 sont découvertes et nous développons une meilleure compréhension des mutations les plus influentes."
     },
     "step4": {
-        "part1": "<b>La resistencia a los fármacos es un desafío tanto en <i>P. vivax</i> como en <i>P. falciparum</i>, las dos especies más comunes de parásitos de la malaria humana</b>",
-        "part2": "<b>Es critico contar con información actualizada sobre la resistencia a fármacos para ambos parásitos de la malaria</b>",
-        "part3": "Las terapias combinadas basadas en la artemisinina son el tratamiento recomendado para el parásito más mortal de la malaria, <i>P. falciparum</i>. Existen dos indicadores clave para vigilar la eficacia de las TCA: (1) la proporción de tratamientos fallidos y (2) la proporción de pacientes que presenta parásitos al tercer día después del inicio del tratamiento. Un aumento en la proporción de pacientes con parásitos al tercer día es un signo que advierte de la potencial existencia de resistencia a la artemisinina.",
-        "part4": "La cloroquina se sigue utilizando en muchos lugares para tratar la malaria por <i>P. vivax</i>. Sin embargo, como la resistencia a la cloroquina también se está desarrollando en este parásito, algunos países han comenzado a utilizar TCA para el tratamiento de la malaria por <i>P. vivax</i>."
+        "part1": "<0>La résistance aux médicaments est un défi à la fois pour <i> P. vivax </i> comme dans <i> P. falciparum </i>, les deux espèces les plus courantes de parasites du paludisme humain</0>",
+        "part2": "<0>Il est essentiel de disposer d'informations à jour sur la résistance aux médicaments pour les deux parasites du paludisme</0>",
+        "part3": "Les associations thérapeutiques à base d'artémisinine sont le traitement recommandé pour le parasite le plus mortel du paludisme, <i> P. falciparum </i>. Il existe deux indicateurs clés pour surveiller l'efficacité des ACT: (1) la proportion de traitements échoués et (2) la proportion de patients atteints de parasites le troisième jour après le début du traitement. Une augmentation de la proportion de patients atteints de parasites au troisième jour est un signe avant-coureur de l'existence potentielle d'une résistance à l'artémisinine.",
+        "part4": "La chloroquine est encore utilisée dans de nombreux endroits pour traiter le paludisme à <i>P. vivax</i>. Cependant, comme la résistance à la chloroquine se développe également chez ce parasite, certains pays ont commencé à utiliser le TCA pour le traitement de <i>P. vivax</i>."
     }
 }

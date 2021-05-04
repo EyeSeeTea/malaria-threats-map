@@ -18,13 +18,13 @@ const TreatmentStep1 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step1.part1">
+                <Trans i18nKey="step1.part1" t={t}>
                     <b>Malaria parasites repeatedly develop resistance to antimalarial treatment</b>
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step1.part2">
+                <Trans i18nKey="step1.part2" t={t}>
                     <b>For decades, drug resistance has been one of the main obstacles in the fight against malaria.</b>
                 </Trans>
             </Typography>
