@@ -46,11 +46,11 @@ const InvasiveStep2 = () => {
                 </Trans>
                 <Link target="_blank" href={t("step2.link")} color={"textSecondary"}>
                     <Trans i18nKey="step2.whoForm" t={t}>
-                         WHO form to report detection of invasive Anopheles vector species to
+                        WHO form to report detection of invasive Anopheles vector species to
                     </Trans>
                 </Link>
                 <Link href="mailto:vectorsurveillance@who.int" color={"textSecondary"}>
-                     vectorsurveillance@who.int
+                    vectorsurveillance@who.int
                 </Link>
                 .
             </Typography>

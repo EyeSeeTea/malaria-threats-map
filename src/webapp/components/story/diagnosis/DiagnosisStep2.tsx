@@ -18,7 +18,9 @@ const DiagnosisStep2 = () => {
         <div>
             <Typography variant={"h6"} className={classes.title}>
                 <Trans i18nKey="step2.part1" t={t}>
-                    <b><i>pfhrp2/3</i> gene deletions may have significant implications for public health</b>
+                    <b>
+                        <i>pfhrp2/3</i> gene deletions may have significant implications for public health
+                    </b>
                 </Trans>
             </Typography>
             <br />
