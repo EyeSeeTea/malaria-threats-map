@@ -16,7 +16,7 @@ const InvasiveStep1 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step1.part1">
+                <Trans i18nKey="step1.part1" t={t}>
                     <b>
                         The recent detection of <i>An. stephensi</i> in Sri Lanka and the horn of Africa underscores the
                         potential for vector species to spread and establish in new geographical areas.
@@ -25,7 +25,7 @@ const InvasiveStep1 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step1.part2">
+                <Trans i18nKey="step1.part2" t={t}>
                     <b>
                         <i>An. Gambiae</i> ’s invasion of northern Brazil in 1930 provides another example. Its
                         elimination between 1930s and early 40s proves that vector invasions can be controlled.

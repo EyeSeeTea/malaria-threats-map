@@ -17,7 +17,7 @@ const DiagnosisStep2 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step2.part1">
+                <Trans i18nKey="step2.part1" t={t}>
                     <b>
                         <i>pfhrp2/3</i> gene deletions may have significant implications for public health
                     </b>
@@ -45,7 +45,7 @@ const DiagnosisStep2 = () => {
             <br />
             <Typography variant={"body2"}>
                 <Link href={t("step2.link")} target="_blank" color={"textSecondary"}>
-                    <Trans i18nKey="step2.part3" t={t}>
+                    <Trans i18nKey="step2.supportingStudies" t={t}>
                         Link to supporting studies.
                     </Trans>
                 </Link>

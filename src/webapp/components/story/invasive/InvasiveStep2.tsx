@@ -17,13 +17,13 @@ const InvasiveStep2 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step2.part1">
+                <Trans i18nKey="step2.part1" t={t}>
                     <b>Timely detection of invasive vector species is crucial to contain their spread.</b>
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step2.part2">
+                <Trans i18nKey="step2.part2" t={t}>
                     <b>
                         Entomological surveillance systems provide critical information to inform the design and
                         implementation of vector control strategies.

@@ -18,13 +18,13 @@ const PreventionStep2 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step2.part1">
+                <Trans i18nKey="step2.part1" t={t}>
                     <b>Monitoring has found that insecticide resistance is widespread in malaria vectors</b>
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step2.part2">
+                <Trans i18nKey="step2.part2" t={t}>
                     <b>
                         65 of 89 malaria-endemic countries have reported pyrethroid resistance in at least one local
                         vector since 2010

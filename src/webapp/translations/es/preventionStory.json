@@ -1,29 +1,29 @@
 {
     "step1": {
-        "part1": "<b>El seguimiento de la resistencia a los insecticidas en los vectores de la malaria es fundamental</b>",
-        "part2": "<b>80 de los 89 países donde la malaria es endémica informaron de un seguimiento de la resistencia a los insecticidas entre 2010 y 2017. El alcance y la calidad de los datos varían entre los países.</b>",
+        "part1": "<0>El seguimiento de la resistencia a los insecticidas en los vectores de la malaria es fundamental</0>",
+        "part2": "<0>80 de los 89 países donde la malaria es endémica informaron de un seguimiento de la resistencia a los insecticidas entre 2010 y 2017. El alcance y la calidad de los datos varían entre los países.</0>",
         "part3": "La prevención de la malaria depende en gran medida de las herramientas básicas que se dirigen a los mosquitos de la malaria: mosquiteros insecticidas de larga duración y aerosoles insecticidas residuales para interiores. La resistencia de los mosquitos a los insecticidas es una preocupación importante, en particular para los piretroides, ya que son la única clase de insecticidas actualmente aprobada para su uso en mosquiteros.",
         "part4": "El Plan mundial de la OMS para el manejo de la resistencia a los insecticidas en los vectores de la malaria (GPIRM) es un llamado a la acción para mantener la eficacia del control de los vectores de la malaria. El monitoreo de la resistencia es necesario para informar las estrategias de manejo y mitigación de la resistencia.",
         "link": "https://www.who.int/malaria/publications/atoz/gpirm/es/",
         "prevention1": "secundaria 1"
     },
     "step2": {
-        "part1": "<b>Los resultados de la vigilancia muestran que la resistencia a los insecticidas está muy extendida en los vectores de malaria</b>",
-        "part2": "<b>65 de los 89 países endémicos de malaria han reportado resistencia a los piretroides en al menos un vector local desde 2010</b>",
+        "part1": "<0>Los resultados de la vigilancia muestran que la resistencia a los insecticidas está muy extendida en los vectores de malaria</0>",
+        "part2": "<0>65 de los 89 países endémicos de malaria han reportado resistencia a los piretroides en al menos un vector local desde 2010</0>",
         "part3": "A día de hoy, ya ha detectado resistencia a las cuatro clases de insecticidas más comúnmente utilizadas en el control de vectores adultos de malaria en las seis regiones de la OMS. La resistencia a los piretroides es generalmente la más vigilada y la más reportada.",
         "link": "https://www.who.int/publications/i/item/9789241514057",
         "prevention2": "secundaria 2"
     },
     "step3": {
-        "part1": "<b>Aún faltan datos recientes y completos sobre la resistencia a los insecticidas en muchos países</b>",
-        "part2": "<b>47 de 89 países endémicos de malaria reportaron datos para 2017. Los datos de las regiones fuera de África son limitados. La vigilancia a menudo no incluye todas las principales especies de vectores ni todas las clases de insecticidas relevantes.</b>",
+        "part1": "<0>Aún faltan datos recientes y completos sobre la resistencia a los insecticidas en muchos países</0>",
+        "part2": "<0>47 de 89 países endémicos de malaria reportaron datos para 2017. Los datos de las regiones fuera de África son limitados. La vigilancia a menudo no incluye todas las principales especies de vectores ni todas las clases de insecticidas relevantes.</0>",
         "part3": "Se necesitan datos actualizados y representativos para planear e implementar intervenciones de control de vectores. La vigilancia de la resistencia a los insecticidas debe realizarse en todos los países endémicos de malaria al menos una vez al año, y periódicamente en aquellos países que han eliminado la malaria, pero son vulnerables a su reintroducción. Esta vigilancia debe incluir todos los vectores principales de las diferentes zonas eco-epidemiológicas. Las pruebas deben realizarse con los insecticidas que estén en uso o que se planee usar en el futuro para el control de vectores.",
         "part4": "Los requerimientos para la vigilancia deben definirse mediante un plan nacional de vigilancia y manejo de la resistencia a los insecticidas.",
         "prevention3": "secundaria 3"
     },
     "step4": {
-        "part1": "<b>El aumento de la resistencia resalta la necesidad urgente de mejorar la vigilancia de la resistencia a los insecticidas</b>",
-        "part2": "<b>Los vectores de malaria en algunas zonas de África están sobreviviendo a la exposición a altas concentraciones de insecticidas, lo que indica una resistencia de una intensidad cada vez mayor.</b>",
+        "part1": "<0>El aumento de la resistencia resalta la necesidad urgente de mejorar la vigilancia de la resistencia a los insecticidas</0>",
+        "part2": "<0>Los vectores de malaria en algunas zonas de África están sobreviviendo a la exposición a altas concentraciones de insecticidas, lo que indica una resistencia de una intensidad cada vez mayor.</0>",
         "part3": "Las pruebas de resistencia miden el número de mosquitos que sobreviven a la exposición a una concentración estándar de insecticida. Sin embargo, conocer la intensidad de la resistencia en los sobrevivientes y los mecanismos que confieren esta resistencia es importante. La resistencia de alta intensidad pone de manifiesto la necesidad de una acción urgente que debe guiarse por el conocimiento de los mecanismos de resistencia presentes.",
         "part4": "Los procedimientos para las pruebas de la OMS se ampliaron recientemente para incluir bioensayos que miden la intensidad de la resistencia y la implicación de los mecanismos metabólicos.",
         "prevention4": "secundaria 4"

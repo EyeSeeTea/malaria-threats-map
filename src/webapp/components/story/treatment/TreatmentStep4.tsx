@@ -18,7 +18,7 @@ const TreatmentStep4 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step4.part1">
+                <Trans i18nKey="step4.part1" t={t}>
                     <b>
                         Drug resistance is a challenge in both <i>P. vivax</i> and
                         <i>P. falciparum</i>, the two most common human malaria parasite species
@@ -27,7 +27,7 @@ const TreatmentStep4 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step4.part2">
+                <Trans i18nKey="step4.part2" t={t}>
                     <b>
                         Up-to-date information on drug resistance for both <i>P. vivax</i> and
                         <i>P. falciparum</i> malaria is critical.

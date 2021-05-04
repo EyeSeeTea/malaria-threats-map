@@ -16,8 +16,8 @@ const DiagnosisStep1 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step1.part1">
-                    <b>Gene deletions among malaria parasites causes false-negative diagnostic test results</b>
+                <Trans i18nKey="step1.part1" t={t}>
+                    <b> Gene deletions among malaria parasites causes false-negative diagnostic test results </b>
                 </Trans>
             </Typography>
             <br />
