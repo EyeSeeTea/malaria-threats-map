@@ -6,7 +6,6 @@ import { State } from "../store/types";
 import { setFeedbackOpenAction } from "../store/actions/base-actions";
 import { selectIsFeedbackOpen } from "../store/reducers/base-reducer";
 import { connect } from "react-redux";
-import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 import { sendAnalytics } from "../utils/analytics";
 import { Flex, FlexGrow } from "./Chart";
@@ -82,18 +81,6 @@ const Feedback = ({ feedbackOpen, setFeedbackOpen }: Props) => {
         setFeedbackOpen(true);
     };
 
-    const getIframeUrl = () => {
-        const language = i18next.language || window.localStorage.i18nextLng;
-        switch (language) {
-            case "fr":
-                return "https://extranet.who.int/dataform/828325?newtest=Y&lang=fr";
-            case "es":
-                return "https://extranet.who.int/dataform/828325?newtest=Y&lang=es";
-            default:
-                return "https://extranet.who.int/dataform/828325?newtest=Y&lang=en";
-        }
-    };
-
     // @ts-ignore
     // @ts-ignore
     return (
@@ -125,7 +112,7 @@ const Feedback = ({ feedbackOpen, setFeedbackOpen }: Props) => {
                 </ButtonWrapper>
                 <iframe
                     title={"feedback dialog"}
-                    src={getIframeUrl()}
+                    src={t("feedbackIframeUrl")}
                     width={"100%"}
                     height={"800vh"}
                     frameBorder="0"
