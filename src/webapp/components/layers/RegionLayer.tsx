@@ -107,14 +107,6 @@ class RegionLayer extends Component<Props> {
             //   padding: 100
             // });
             // this.zoomToCountry(region.country);
-
-            const mekong = config.mekong;
-            if (mekong) {
-                this.props.setRegion({
-                    subRegion: "GREATER_MEKONG",
-                });
-            }
-
             this.hideLayer();
         }
     };
@@ -176,11 +168,9 @@ class RegionLayer extends Component<Props> {
     zoomToSubRegion = (subRegion: string) => {
         const { countryLayer } = this.props;
         if (subRegion === "GREATER_MEKONG") {
-            if (!config.mekong) {
-                this.props.map.fitBounds(MEKONG_BOUNDS, {
-                    padding: 100,
-                });
-            }
+            this.props.map.fitBounds(MEKONG_BOUNDS, {
+                padding: 100,
+            });
             return;
         }
         if (!countryLayer) return;
@@ -208,7 +198,7 @@ class RegionLayer extends Component<Props> {
     zoomToSite = (site: string, iso2: string, coords: [number, number]) => {
         const coordinates: [number, number] = [coords[1], coords[0]];
 
-        this.props.map.once("moveend", () => {
+        this.props.map.once("moveend", ({ _originalEvent }: any) => {
             const selection = {
                 ISO_2_CODE: iso2,
                 SITE_ID: site,
