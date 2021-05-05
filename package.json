@@ -32,7 +32,7 @@
         "prettier": "^2.2.1",
         "prettify": "^0.1.7",
         "prop-types": "15.7.2",
-        "ramda": "^0.27.1",
+        "ramda": "^0.26.1",
         "react": "^17.0.2",
         "react-copy-to-clipboard": "^5.0.2",
         "react-device-detect": "^1.13.1",
@@ -102,7 +102,7 @@
         "@types/lodash": "^4.14.168",
         "@types/mapbox-gl": "^2.1.1",
         "@types/node": "14.14.41",
-        "@types/ramda": "^0.27.40",
+        "@types/ramda": "^0.26.18",
         "@types/react": "17.0.3",
         "@types/react-copy-to-clipboard": "^5.0.0",
         "@types/react-dom": "17.0.3",
@@ -126,6 +126,6 @@
         "eslint-plugin-react": "^7.23.2",
         "eslint-plugin-react-hooks": "^4.2.0",
         "husky": "4.3.8",
-        "typescript": "3.9.9"
+        "typescript": "4.2.3"
     }
 }

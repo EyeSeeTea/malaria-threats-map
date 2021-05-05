@@ -17,8 +17,8 @@ import FormLabel from "@material-ui/core/FormLabel";
 import { filterByLevelOfInvolvement, filterByRegion, filterByYearRange } from "../layers/studies-filters";
 import * as R from "ramda";
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
-import { PreventionStudy } from "../../types/Prevention";
 import { logEventAction } from "../../store/actions/base-actions";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 export const WHITELISTED_TYPES = [
     "MONO_OXYGENASES",

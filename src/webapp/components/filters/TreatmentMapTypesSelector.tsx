@@ -40,7 +40,7 @@ const treatmentSuggestions: OptionType[] = [
 function TreatmentMapTypesSelector({ setTreatmentMapType, setMapTitle, treatmentFilters }: Props) {
     const { t } = useTranslation("common");
 
-    const onChange = (value: ValueType<OptionType>) => {
+    const onChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;
         setTreatmentMapType(selection.value);
         setMapTitle(t(selection.label));
