@@ -38,7 +38,6 @@ import treatmentStory_fr from "../../translations/fr/treatmentStory.json";
 import utils_en from "../../translations/en/utils.json";
 import utils_es from "../../translations/es/utils.json";
 import utils_fr from "../../translations/fr/utils.json";
-
 import { dispatchCustomEvent } from "../../utils/dom-utils";
 
 const ALLOWED_LANGUAGES = ["en", "fr", "es"];

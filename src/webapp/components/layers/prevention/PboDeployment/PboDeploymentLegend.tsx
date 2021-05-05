@@ -58,7 +58,7 @@ function PboDeploymentLegend({ legendExpanded }: Props) {
             color: PboDeploymentColors[PboDeploymentStatus.NO_DATA][0],
         },
     ];
-
+     
     const legend = () => (
         <LegendDescriptionText>
             {t("legend:p1")}
