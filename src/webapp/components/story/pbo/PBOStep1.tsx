@@ -26,7 +26,7 @@ const PBOStep1 = () => {
     return (
         <div>
             <Typography variant={"body1"} className={classes.title}>
-                <Trans i18nKey="step1.part1">
+                <Trans i18nKey="step1.part1" t={t}>
                     <b>What are Pyrethroid-PBO nets?</b>
                 </Trans>
             </Typography>
@@ -41,7 +41,7 @@ const PBOStep1 = () => {
             </Typography>
             <br />
             <Typography variant={"body1"} className={classes.title}>
-                <Trans i18nKey="step1.part3">
+                <Trans i18nKey="step1.part3" t={t}>
                     <b>Are they recommended by WHO as a public health intervention? </b>
                 </Trans>
             </Typography>

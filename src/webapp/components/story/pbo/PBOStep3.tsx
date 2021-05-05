@@ -18,7 +18,7 @@ const PBOStep3 = () => {
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step3.part1">
+                <Trans i18nKey="step3.part1" t={t}>
                     <b>Prequalified Pyrethroid-PBO nets</b>
                 </Trans>
             </Typography>
