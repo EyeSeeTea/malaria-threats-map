@@ -2280,11 +2280,6 @@
   dependencies:
     source-map "^0.6.1"
 
-"@types/url-search-params@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@types/url-search-params/-/url-search-params-1.1.0.tgz#4eb56e850255ec83c534b199ab548e88972da8a8"
-  integrity sha512-MAiEDfjOmuZLSx2rrRj3rR2729wygQbq5mdQsEW4gMRFRDoW93lUU3n0ablmbAIL9pzharzhmcEjrO2zW0JSKg==
-
 "@types/webpack-sources@*":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@types/webpack-sources/-/webpack-sources-2.1.0.tgz#8882b0bd62d1e0ce62f183d0d01b72e6e82e8c10"
@@ -2494,6 +2489,11 @@
   dependencies:
     "@typescript-eslint/types" "4.22.1"
     eslint-visitor-keys "^2.0.0"
+
+"@ungap/url-search-params@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@ungap/url-search-params/-/url-search-params-0.2.2.tgz#2de3bdec21476a9b70ef11fd7b794752f9afa04c"
+  integrity sha512-qQsguKXZVKdCixOHX9jqnX/K/1HekPDpGKyEcXHT+zR6EjGA7S4boSuelL4uuPv6YfhN0n8c4UxW+v/Z3gM2iw==
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -12773,11 +12773,6 @@ url-parse@^1.4.3, url-parse@^1.5.1:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
-
-url-search-params@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/url-search-params/-/url-search-params-1.1.0.tgz#865669a6e4e9e5543f86fc972b27c91485375326"
-  integrity sha512-XiO5GLAxmlZgdLob/RmKZRc2INHrssMbpwD6O46JkB1aEJO4fkV3x3mR6+CDX01ijfEUwvfwCiUQZrKqfm1ILw==
 
 url@^0.11.0:
   version "0.11.0"

@@ -1,5 +1,5 @@
 import { createBrowserHistory as createHistory } from "history";
-import URLSearchParams from "url-search-params";
+import URLSearchParams from "@ungap/url-search-params";
 
 function ReduxQuerySync({ store, params, replaceState, initialTruth, history = createHistory() }: any) {
     const { dispatch } = store;
