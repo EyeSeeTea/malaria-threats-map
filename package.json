@@ -58,12 +58,9 @@
     },
     "scripts": {
         "start": "cross-env-shell REACT_APP_ENV=local BROWSER=none react-scripts start",
-        "start-mekong": "cross-env-shell REACT_APP_ENV=local-mekong react-scripts start",
         "build": "cross-env-shell REACT_APP_ENV=staging react-scripts build",
         "build-prod": "cross-env-shell REACT_APP_ENV=prod react-scripts build",
         "build-dev": "cross-env-shell REACT_APP_ENV=dev react-scripts build",
-        "build-mekong": "cross-env-shell REACT_APP_ENV=staging-mekong react-scripts build",
-        "build-prod-mekong": "cross-env-shell REACT_APP_ENV=prod-mekong react-scripts build",
         "test": "cross-env-shell REACT_APP_ENV=staging jest --passWithNoTests",
         "eject": "react-scripts eject",
         "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
@@ -93,7 +90,6 @@
         ]
     },
     "devDependencies": {
-        "@testing-library/cypress": "7.0.3",
         "@types/classnames": "^2.2.9",
         "@types/file-saver": "^2.0.1",
         "@types/history": "^4.7.2",
@@ -111,6 +107,7 @@
         "@types/reactour": "^1.13.1",
         "@types/styled-components": "^5.1.9",
         "@types/url-search-params": "^1.1.0",
+        "@testing-library/cypress": "7.0.3",
         "@typescript-eslint/eslint-plugin": "^4.22.0",
         "@typescript-eslint/parser": "^4.22.0",
         "cross-env": "^7.0.3",

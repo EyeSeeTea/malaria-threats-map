@@ -170,7 +170,6 @@ function PersistentDrawerLeft({
     storyMode,
     filtersOpen,
     setFiltersOpen,
-    // initialDialogOpen,
     drawerWidth = "400px",
     setTheme,
     theme,
