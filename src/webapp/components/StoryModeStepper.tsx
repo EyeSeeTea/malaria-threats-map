@@ -1,6 +1,6 @@
 import React from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Stepper, Step, StepLabel, Button, Paper, Typography, AppBar, Toolbar, IconButton  } from "@material-ui/core";
+import { Stepper, Step, StepLabel, Button, Paper, Typography, AppBar, Toolbar, IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import { PreventionMapType, State } from "../store/types";

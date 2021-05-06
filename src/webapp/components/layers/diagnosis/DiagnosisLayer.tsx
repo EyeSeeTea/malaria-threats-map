@@ -130,7 +130,10 @@ class DiagnosisLayer extends Component<Props> {
     }
 
     setupGeoJsonData = (studies: any[]) => {
-        const groupedStudies = R.groupBy(R.path<string>(["SITE_ID"]), studies);
+        const groupedStudies = R.groupBy(
+            R.path<string>(["SITE_ID"]),
+            studies
+        );
         const filteredStudies = R.values(groupedStudies).map(group =>
             studySelector(group, this.props.diagnosisFilters.mapType, this.props.diagnosisFilters.deletionType)
         );
@@ -174,7 +177,10 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     getCountryStudies = (studies: any[] = []) => {
-        const countryStudies = R.groupBy(R.path<string>(["ISO2"]), studies);
+        const countryStudies = R.groupBy(
+            R.path<string>(["ISO2"]),
+            studies
+        );
         const countries = this.props.countries
             .map((country, index) => ({
                 ...country,
@@ -210,7 +216,7 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     mountLayer(prevProps?: Props) {
-        const { studies, diagnosisFilters, countryMode } = this.props;
+        const { studies, countryMode } = this.props;
         if (!prevProps || prevProps.studies.length !== studies.length) {
             if (this.props.map.getSource(DIAGNOSIS_SOURCE_ID)) {
                 this.props.map.removeLayer(DIAGNOSIS_LAYER_ID);

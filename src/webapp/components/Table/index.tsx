@@ -1,7 +1,20 @@
 import React from "react";
 import clsx from "clsx";
 import { createStyles, lighten, makeStyles, Theme } from "@material-ui/core/styles";
-import { Checkbox, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TableSortLabel, Toolbar, Typography, IconButton, Tooltip } from "@material-ui/core";
+import {
+    Checkbox,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TablePagination,
+    TableRow,
+    TableSortLabel,
+    Toolbar,
+    Typography,
+    IconButton,
+    Tooltip,
+} from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 

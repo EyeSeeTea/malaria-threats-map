@@ -1,5 +1,15 @@
 import React from "react";
-import { Card, createStyles, FormControl, InputLabel, makeStyles, MenuItem, TextField, Theme, Select } from "@material-ui/core";
+import {
+    Card,
+    createStyles,
+    FormControl,
+    InputLabel,
+    makeStyles,
+    MenuItem,
+    TextField,
+    Theme,
+    Select,
+} from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { State } from "../../store/types";
 import { selectCountries } from "../../store/reducers/translations-reducer";

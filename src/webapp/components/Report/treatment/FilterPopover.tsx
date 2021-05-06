@@ -14,7 +14,7 @@ const useStyles = makeStyles(() =>
             minWidth: 400,
             overflowY: "unset",
             overflowX: "unset",
-        }
+        },
     })
 );
 

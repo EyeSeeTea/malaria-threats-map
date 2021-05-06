@@ -113,12 +113,18 @@ class CountrySelectorLayer extends Component<Props> {
 
     mountLayer = () => {
         const studies = this.filterStudies(this.props.studies);
-        const groupedStudies = R.groupBy(R.path<string>(["SITE_ID"]), studies);
+        const groupedStudies = R.groupBy(
+            R.path<string>(["SITE_ID"]),
+            studies
+        );
         const filteredStudies = R.values(groupedStudies).map(group =>
             studySelector(group, PreventionMapType.PBO_DEPLOYMENT)
         );
 
-        const studiesByDistrict = R.groupBy(R.path<string>(["ADMIN2_GUID"]), filteredStudies);
+        const studiesByDistrict = R.groupBy(
+            R.path<string>(["ADMIN2_GUID"]),
+            filteredStudies
+        );
 
         const { ELIGIBLE, NOT_ENOUGH_DATA, NOT_ELIGIBLE } = PboDeploymentCountriesStatus;
 
