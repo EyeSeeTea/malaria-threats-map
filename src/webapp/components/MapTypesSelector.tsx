@@ -18,7 +18,7 @@ const Wrapper = styled.div`
     min-width: 250px;
 `;
 
-export class MapTypesSelector extends Component<StateProps> {
+class MapTypesSelector extends Component<StateProps> {
     render() {
         const { theme } = this.props;
         return (

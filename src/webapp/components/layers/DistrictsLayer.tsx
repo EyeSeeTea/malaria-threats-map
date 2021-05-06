@@ -22,8 +22,8 @@ import { setSelection } from "../../store/actions/base-actions";
 import { PboDeploymentStatus } from "./prevention/PboDeployment/PboDeploymentSymbols";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
-export const DISTRICTS_LAYER_ID = "districts-layer";
-export const DISTRICTS_SOURCE_ID = "districts-source";
+const DISTRICTS_LAYER_ID = "districts-layer";
+const DISTRICTS_SOURCE_ID = "districts-source";
 
 const layer: any = {
     id: DISTRICTS_LAYER_ID,

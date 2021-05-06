@@ -87,6 +87,6 @@ type ExtractFutureError<F> = F extends Future<infer E, any> ? E : never;
 
 type Fn<T> = { (value: T): void };
 
-export type Cancel = { (): void };
+type Cancel = { (): void };
 
-export type Computation<E, D> = (resolve: Fn<D>, reject: Fn<E>) => fluture.Cancel;
+type Computation<E, D> = (resolve: Fn<D>, reject: Fn<E>) => fluture.Cancel;

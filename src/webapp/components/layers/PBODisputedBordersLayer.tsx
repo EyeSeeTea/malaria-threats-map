@@ -5,8 +5,8 @@ import { State } from "../../store/types";
 import { selectEndemicity } from "../../store/reducers/base-reducer";
 import config from "../../config";
 
-export const DISPUTED_BORDERS_ENDEMICITY_LAYER_ID = "disputed-borders-endemicity-layer";
-export const DISPUTED_BORDERS_ENDEMICITY_SOURCE_ID = "disputed-borders-endemicity-source";
+const DISPUTED_BORDERS_ENDEMICITY_LAYER_ID = "disputed-borders-endemicity-layer";
+const DISPUTED_BORDERS_ENDEMICITY_SOURCE_ID = "disputed-borders-endemicity-source";
 
 const layer: any = {
     id: DISPUTED_BORDERS_ENDEMICITY_LAYER_ID,

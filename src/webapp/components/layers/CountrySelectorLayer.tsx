@@ -17,8 +17,8 @@ import { PBO_ENDEMICITY_LAYER_ID } from "./PBOEndemicityLayer";
 import { buildPreventionFilters } from "./studies-filters";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
-export const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
-export const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
+const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
+const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
 
 const layer: any = {
     id: COUNTRY_SELECTOR_LAYER_ID,

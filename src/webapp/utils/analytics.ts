@@ -9,21 +9,21 @@ import _ from "lodash";
     - Call dispatcher from props.
 */
 
-export type AnalyticsData = Event | PageView | OutboundLink;
+type AnalyticsData = Event | PageView | OutboundLink;
 
-export interface Event {
+interface Event {
     type: "event";
     category: string;
     action: string;
     label?: string;
 }
 
-export interface PageView {
+interface PageView {
     type: "pageView";
     path: string;
 }
 
-export interface OutboundLink {
+interface OutboundLink {
     type: "outboundLink";
     label: string;
 }

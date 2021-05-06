@@ -4,7 +4,6 @@ import diagnosisIcon from "../assets/img/diagnosis.svg";
 import preventionIcon from "../assets/img/prevention.svg";
 import invasiveIcon from "../assets/img/invasive.svg";
 import invasiveBaseIcon from "../assets/img/invasive-base.svg";
-import whoLogoBlueIcon from "../assets/img/who-logo-blue.svg";
 import styled, { css } from "styled-components";
 import { colors } from "../constants/theme";
 import { SvgIcon } from "@material-ui/core";
@@ -42,8 +41,6 @@ export const InvasiveIcon = styled(InvasiveSVG)`
     background-color: ${props => (props.active ? colors.invasive.N : "lightgrey")};
     ${baseIcon};
 `;
-
-export const WhoLogoBlue = () => <img alt="" style={{ width: "150px", color: "white" }} src={whoLogoBlueIcon} />;
 
 export function GlobeIcon(props: any) {
     return (

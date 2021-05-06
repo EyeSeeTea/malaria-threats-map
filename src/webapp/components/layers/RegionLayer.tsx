@@ -45,7 +45,7 @@ interface OwnProps {
     map: any;
 }
 
-export const MEKONG_BOUNDS: [number, number, number, number] = [
+const MEKONG_BOUNDS: [number, number, number, number] = [
     71.67568318434894,
     -10.1059286413618565,
     129.04037704012393,

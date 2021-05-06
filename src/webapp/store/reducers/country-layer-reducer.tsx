@@ -21,17 +21,10 @@ export default createReducer<CountryLayerState>(initialState, {
     [ActionTypeEnum.FetchCountryLayerError]: () => R.assoc("loading", false),
 });
 
-export const selectCountryLayerState = (state: State) => state.countryLayer;
+const selectCountryLayerState = (state: State) => state.countryLayer;
 
 export const selectCountryLayer = createSelector(selectCountryLayerState, R.prop("layer"));
 
 export const selectCountries = createSelector(selectCountryLayerState, R.prop("countries"));
-
-export const selectMekongCountries = createSelector(
-    selectCountries,
-    R.filter(country => {
-        return country.SUBREGION === "GREATER MEKONG" || country.SUBREGION === "GREATER_MEKONG";
-    })
-);
 
 export const selectCountryLayerIsLoading = createSelector(selectCountryLayerState, R.prop("loading"));
