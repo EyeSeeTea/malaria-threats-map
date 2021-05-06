@@ -1,20 +1,20 @@
 {
     "step1": {
-        "part1": "<b>Gene deletions among malaria parasites causes false-negative diagnostic test results</b>",
+        "part1": "<0>Gene deletions among malaria parasites causes false-negative diagnostic test results</0>",
         "part2": "Rapid diagnostic tests (RDT) are used for malaria diagnosis in most endemic areas. Detection of <i>Plasmodium falciparum</i> - the most deadly malaria parasite globally - relies heavily on RDTs that target an antigen called histidine-rich protein 2 (HRP2), as well as some cross-reactivity with HRP3, a structurally similar parasite protein. The vast majority of RDTs manufactured, procured and used around the world are based on detection of HRP2 either alone or in combination with other antigens (such as parasite lactate dehydrogenase or aldolase).",
         "part3": "However, in 2010 a study sponsored by WHO and FIND found that some <i>P. falciparum</i> parasites in Peru lacked the <i>pfhrp2</i> gene. Without this gene, the parasite cannot produce HRP2 and cannot be detected by HRP2-based RDTs. This was the first report to confirm the absence of the <i>pfhrp2</i> gene among <i>P. falciparum</i> parasites in a clinical setting.",
         "see": "See: ",
         "part4": "Gamboa et al. (2010) A large proportion of <i>P. falciparum</i> isolates in the Amazon region of Peru lack <i>pfhrp2</i> and pfhrp3: implications for malaria rapid diagnostic tests. PLoS One. 5(1):e8091"
     },
     "step2": {
-        "part1": "<b><i>pfhrp2/3</i> gene deletions may have significant implications for public health</b>",
+        "part1": "<0> <i> pfhrp2/3 </i> gene deletions may have significant implications for public health</0>",
         "part2": "False negative RDT results due to <i>pfhrp2/3</i> deletions can lead to incorrect or delayed diagnosis and threaten patient safety. The patient may also continue to be a source of malaria transmission until properly treated.",
         "part3": "Since 2010, surveys in several settings in Africa and Asia have also found a varying proportion of <i>P. falciparum</i> parasites lacking the <i>pfhrp2</i> gene. The prevalence of this genetic mutation reportedly varies between and within countries. If confirmed, RDT procurement and case management practices need to be tailored accordingly. WHO recommends a change to an RDT that is not exclusively based on HRP2 for <i>P. falciparum</i> detection (ie. pf-pLDH) if the prevalence of false negative RDTs due to <i>pfhrp2</i> deletion is ≥ 5% amongst symptomatic patients.",
         "link": "https://www.who.int/publications/i/item/WHO-HTM-GMP-2017.18",
         "supportingStudies": "Link to supporting studies."
     },
     "step3": {
-        "part1": "<b>Increased monitoring of <i>P. falciparum</i> populations for <i>pfhrp2/3</i> gene deletions is essential</b>",
+        "part1": "<0>Increased monitoring of <i>P. falciparum</i> populations for <i>pfhrp2/3</i> gene deletions is essential</0>",
         "part2": "Once <i>pfhrp2/3</i> deletions are confirmed in a geographical region, surveys should be conducted locally and in neighbouring areas to estimate the prevalence of the parasites carrying gene deletions. In clinical settings the cause(s) of false negative RDTs should be investigated.",
         "part3": "Sentinel surveillance should be instituted with all findings (positive and negative) reported. Data must be managed well to help prioritize surveys, adequately monitoring trends over time, and to inform a coordinated response.",
         "part4": "As of 2018, the WHO database includes <i>pfhrp2/3</i> gene deletion data for 29 countries across five WHO regions"

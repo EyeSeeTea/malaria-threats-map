@@ -32,9 +32,22 @@ const PreventionStep1 = () => {
                 </Trans>
             </Typography>
             <br />
-            <Typography variant={"body2"}>{t("step1.part3")}</Typography>
+            <Typography variant={"body2"}>
+                <Trans i18nKey="step1.part3" t={t}>
+                    Malaria prevention is heavily reliant on core tools that target malaria mosquitoes: long-lasting
+                    insecticidal nets and indoor residual insecticide sprays. Resistance of mosquitoes to insecticides
+                    is a major concern particularly for pyrethroids as these are the only insecticide class currently
+                    approved for use on nets.
+                </Trans>
+            </Typography>
             <br />
-            <Typography variant={"body2"}>{t("step1.part4")}</Typography>
+            <Typography variant={"body2"}>
+                <Trans i18nKey="step1.part4" t={t}>
+                    The WHO Global Plan for Insecticide Resistance Management in malaria vectors (GPIRM) is a call to
+                    action to maintain the effectiveness of malaria vector control. Resistance monitoring is needed to
+                    inform resistance mitigation and management strategies.
+                </Trans>
+            </Typography>
             <br />
 
             <Link href={t("step1.link")} target="_blank" color={"textSecondary"}>

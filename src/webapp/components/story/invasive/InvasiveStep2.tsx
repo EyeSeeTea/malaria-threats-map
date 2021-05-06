@@ -45,7 +45,9 @@ const InvasiveStep2 = () => {
                     detection of suspected invasive species to WHO by filling and sending the
                 </Trans>
                 <Link target="_blank" href={t("step2.link")} color={"textSecondary"}>
-                    {t("step2.whoForm")}
+                    <Trans i18nKey="step2.whoForm" t={t}>
+                        WHO form to report detection of invasive Anopheles vector species to
+                    </Trans>
                 </Link>
                 <Link href="mailto:vectorsurveillance@who.int" color={"textSecondary"}>
                     vectorsurveillance@who.int
@@ -54,13 +56,18 @@ const InvasiveStep2 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                {t("step2.part5")}
+                <Trans i18nKey="step2.part5" t={t}>
+                    Key indicators for entomological surveillance entomological surveillance are listed in chapter 5 of
+                    the
+                </Trans>
                 <Link
                     target="_blank"
                     href="https://www.who.int/malaria/publications/atoz/9789241565578/en/"
                     color={"textSecondary"}
                 >
-                    {t("step2.whoManual")}
+                    <Trans i18nKey="step2.whoManual" t={t}>
+                        WHO Malaria Surveillance, monitoring and evaluation: a reference manual.
+                    </Trans>
                 </Link>
             </Typography>
             <br />

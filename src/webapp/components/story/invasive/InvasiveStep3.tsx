@@ -46,11 +46,17 @@ const InvasiveStep3 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                {t("step3.part4")}
+                <Trans i18nKey="step3.part4" t={t}>
+                    The WHO recommends that national malaria control programs, and their executive partners, record
+                    lessons learned and send them to WHO (
+                </Trans>
                 <Link href="mailto:vectorsurveillance@who.int" color={"textSecondary"}>
                     vectorsurveillance@who.int
                 </Link>
-                {t("step3.part5")}
+                <Trans i18nKey="step3.part5" t={t}>
+                    ) in order to contribute to the development of a plan based on evidence for the control and
+                    eradication of vector and invasive species of malaria.
+                </Trans>
             </Typography>
         </div>
     );

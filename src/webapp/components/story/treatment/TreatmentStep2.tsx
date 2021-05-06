@@ -35,7 +35,14 @@ const TreatmentStep2 = () => {
                 </Trans>
             </Typography>
             <br />
-            <Typography variant={"body2"}>{t("step2.part3")}</Typography>
+            <Typography variant={"body2"}>
+                <Trans i18nKey="step2.part3" t={t}>
+                    The selection of the recommended antimalarial drug is based on the medicine’s efficacy against the
+                    malaria parasite. As such, monitoring the therapeutic efficacy of antimalarial medicine is a
+                    fundamental component of malaria treatment strategies. WHO has developed a standard protocol for
+                    monitoring the treatment efficacy of antimalarial medicine.
+                </Trans>
+            </Typography>
         </div>
     );
 };

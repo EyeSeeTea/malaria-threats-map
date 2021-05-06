@@ -26,22 +26,42 @@ const PBOStep1 = () => {
     return (
         <div>
             <Typography variant={"body1"} className={classes.title}>
-                <Trans i18nKey="step1.part1" t={t}>
+                <Trans i18nKey="step1.part1">
                     <b>What are Pyrethroid-PBO nets?</b>
                 </Trans>
             </Typography>
             <br />
-            <Typography variant={"body2"}>{t("step1.part2")}</Typography>
+            <Typography variant={"body2"}>
+                <Trans i18nKey="step1.part2" t={t}>
+                    Pyrethroid PBO nets are mosquito nets that include both a pyrethroid insecticide and the synergist
+                    PBO. PBO acts by inhibiting certain metabolic enzymes (e.g. mixed-function oxidases) within the
+                    mosquito that detoxify or sequester insecticides before they can have a toxic effect on the
+                    mosquito.
+                </Trans>
+            </Typography>
             <br />
             <Typography variant={"body1"} className={classes.title}>
-                <Trans i18nKey="step1.part3" t={t}>
+                <Trans i18nKey="step1.part3">
                     <b>Are they recommended by WHO as a public health intervention? </b>
                 </Trans>
             </Typography>
             <br />
-            <Typography variant={"body2"}>{t("step1.part4")}</Typography>
+            <Typography variant={"body2"}>
+                <Trans i18nKey="step1.part4" t={t}>
+                    Pyrethroid-PBO nets prequalified by WHO are conditionally recommended for deployment instead of
+                    pyrethroid-only LLINs where the principal malaria vector(s) exhibit pyrethroid resistance that is:
+                    a) confirmed, b) of intermediate level, and c) conferred (at least in part) by a monooxygenase-based
+                    resistance mechanism, as determined by standard procedures.
+                </Trans>
+            </Typography>
             <br />
-            <Typography variant={"body2"}>{t("step1.part5")}</Typography>
+            <Typography variant={"body2"}>
+                <Trans i18nKey="step1.part5" t={t}>
+                    This recommendation was exceptionally granted in 2017 based on the epidemiological data from one
+                    cluster RCT and will remain conditional until data from at least one more trial conducted over 2
+                    years have confirmed the enhanced impact on malaria that was demonstrated in the first study.
+                </Trans>
+            </Typography>
             <br />
             <Images>
                 <Link
