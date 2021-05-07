@@ -15,15 +15,16 @@ const useStyles = makeStyles({
 const Pfhrp23Note = () => {
     const { t } = useTranslation("common");
     const classes = useStyles({});
-    
-return (
-    <div className={classes.root}>
-        <div className={classes.note}>
-            <Trans i18nKey="filters.pfhrp23_note" t={t}>
-            Across surveys, the criteria for selecting samples to test for<i>pfhrp 2/3</i>deletions varies; therefore, refer to the full report cited for more details.
-            </Trans>
+
+    return (
+        <div className={classes.root}>
+            <div className={classes.note}>
+                <Trans i18nKey="filters.pfhrp23_note" t={t}>
+                    Across surveys, the criteria for selecting samples to test for<i>pfhrp 2/3</i>deletions varies;
+                    therefore, refer to the full report cited for more details.
+                </Trans>
+            </div>
         </div>
-    </div>
-);
+    );
 };
 export default Pfhrp23Note;
