@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import i18next from "i18next";
 import { selectTranslations } from "../store/reducers/translations-reducer";
 import { fetchTranslationsRequestAction } from "../store/actions/translations-actions";
-import { fetchCountryLayerRequest } from "../store/actions/country-layer-actions";
 import { getLastUpdatedRequestAction } from "../store/actions/base-actions";
 
 const mapStateToProps = (state: State) => ({
@@ -13,7 +12,6 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     fetchTranslations: fetchTranslationsRequestAction,
-    fetchCountryLayer: fetchCountryLayerRequest,
     getLastUpdated: getLastUpdatedRequestAction,
 };
 
@@ -21,18 +19,11 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const DataProvider: React.FC<Props> = ({
-    fetchTranslations,
-    fetchCountryLayer,
-    getLastUpdated,
-    translations,
-    children,
-}) => {
+const DataProvider: React.FC<Props> = ({ fetchTranslations, getLastUpdated, translations, children }) => {
     useEffect(() => {
         fetchTranslations();
-        fetchCountryLayer();
         getLastUpdated();
-    }, [fetchTranslations, fetchCountryLayer, getLastUpdated]);
+    }, [fetchTranslations, getLastUpdated]);
 
     useEffect(() => {
         const englishResources = translations.reduce((acc, translation) => {

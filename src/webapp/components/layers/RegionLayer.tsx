@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import mapboxgl from "mapbox-gl";
 import { RegionState, State } from "../../store/types";
 import * as R from "ramda";
-import { fetchCountryLayerRequest } from "../../store/actions/country-layer-actions";
 import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
 import { selectEndemicity, selectRegion } from "../../store/reducers/base-reducer";
 import { MapServerConfig } from "../../constants/constants";
@@ -36,7 +35,6 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-    fetchCountryLayer: fetchCountryLayerRequest,
     setSelection: setSelection,
     setRegion: setRegionAction,
 };
@@ -58,8 +56,6 @@ type Props = DispatchProps & StateProps & OwnProps;
 
 class RegionLayer extends Component<Props> {
     componentDidMount(): void {
-        const { fetchCountryLayer } = this.props;
-        fetchCountryLayer();
         const query =
             "where=1%3D1&f=geojson&geometryPrecision=2.5&outFields=SUBREGION,REGION_FULL,CENTER_LAT,CENTER_LON,ISO_2_CODE";
         const source: any = {

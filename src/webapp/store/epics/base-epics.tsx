@@ -26,6 +26,8 @@ import { AjaxError } from "rxjs/ajax";
 import { ErrorResponse } from "../../types/Malaria";
 import { getAnalyticsPageViewFromString } from "../analytics";
 import { sendAnalytics } from "../../utils/analytics";
+import _ from "lodash";
+import { fetchCountryLayerRequest } from "../actions/country-layer-actions";
 
 export const setThemeEpic = (
     action$: ActionsObservable<ActionType<typeof setThemeAction>>,
@@ -270,15 +272,50 @@ export const setCountryModeEpic = (
 ) =>
     action$.ofType(ActionTypeEnum.MalariaSetCountryMode).pipe(
         withLatestFrom(state$),
-        switchMap(([_, state]) => {
-            if (
+        switchMap(([_action, state]) => {
+            const requestCountriesAction = requestCountriesIsRequired(state, () => state.malaria.countryMode)
+                ? fetchCountryLayerRequest()
+                : undefined;
+
+            const setRegionIsRequired =
                 !state.malaria.countryMode &&
                 state.malaria.theme === "prevention" &&
                 state.prevention.filters.mapType === PreventionMapType.PBO_DEPLOYMENT
-            ) {
-                return of(setRegionAction({}));
-            } else {
-                return of();
-            }
+                    ? setRegionAction({})
+                    : undefined;
+
+            const actions = _.compact([requestCountriesAction, setRegionIsRequired]);
+
+            return of(...actions);
         })
     );
+
+export const setRegionEpic = (
+    action$: ActionsObservable<ActionType<typeof setRegionAction>>,
+    state$: StateObservable<State>
+) =>
+    action$.ofType(ActionTypeEnum.MalariaSetRegion).pipe(
+        withLatestFrom(state$),
+        switchMap(([_action, state]) => {
+            const { region } = state.malaria;
+
+            const requestCountriesAction = requestCountriesIsRequired(
+                state,
+                () =>
+                    region.country !== undefined ||
+                    region.region !== undefined ||
+                    region.siteIso2 !== undefined ||
+                    region.subRegion !== undefined
+            )
+                ? fetchCountryLayerRequest()
+                : undefined;
+
+            const actions = _.compact([requestCountriesAction]);
+
+            return of(...actions);
+        })
+    );
+
+function requestCountriesIsRequired(state: State, condition: () => boolean) {
+    return !state.countryLayer.loading && state.countryLayer.countries.length === 0 && condition();
+}
