@@ -3,7 +3,6 @@ import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import { catchError, mergeMap, switchMap } from "rxjs/operators";
 import * as ajax from "../../store/ajax";
-import { AjaxError } from "rxjs/ajax";
 import { of } from "rxjs";
 import {
     fetchCountryLayerError,
@@ -11,6 +10,7 @@ import {
     fetchCountryLayerSuccess,
 } from "../actions/country-layer-actions";
 import { MapServerConfig } from "../../constants/constants";
+import { CountryLayer } from "../../../domain/entities/CountryLayer";
 
 export const getCountriesEpic = (action$: ActionsObservable<ActionType<typeof fetchCountryLayerRequest>>) =>
     action$.ofType(ActionTypeEnum.FetchCountryLayerRequest).pipe(
@@ -25,10 +25,10 @@ export const getCountriesEpic = (action$: ActionsObservable<ActionType<typeof fe
                 .map(key => `${key}=${params[key]}`)
                 .join("&");
             return ajax.get(`/${MapServerConfig.layers.countries}/query?${query}`).pipe(
-                mergeMap((response: any) => {
+                mergeMap((response: CountryLayer) => {
                     return of(fetchCountryLayerSuccess(response));
                 }),
-                catchError((error: AjaxError) => of(fetchCountryLayerError(error)))
+                catchError(() => of(fetchCountryLayerError()))
             );
         })
     );

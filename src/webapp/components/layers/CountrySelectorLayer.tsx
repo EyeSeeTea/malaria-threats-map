@@ -16,6 +16,7 @@ import { PboDeploymentStatus } from "./prevention/PboDeployment/PboDeploymentSym
 import { PBO_ENDEMICITY_LAYER_ID } from "./PBOEndemicityLayer";
 import { buildPreventionFilters } from "./studies-filters";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
+import { CountryFeature } from "../../../domain/entities/CountryLayer";
 
 export const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
 export const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
@@ -122,8 +123,8 @@ class CountrySelectorLayer extends Component<Props> {
                 {}
             );
             const features = this.props.countries.features
-                .filter((feature: any) => feature.properties.ISO_2_CODE !== this.props.region.country)
-                .map((feature: any) => {
+                .filter((feature: CountryFeature) => feature.properties.ISO_2_CODE !== this.props.region.country)
+                .map((feature: CountryFeature) => {
                     const newFeature = { ...feature };
                     if (newFeature.properties.ENDEMICITY === 0) {
                         return newFeature;
