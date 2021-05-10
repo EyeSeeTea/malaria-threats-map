@@ -1,0 +1,22 @@
+{
+    "step1": {
+        "part1": "<0>¿Qué son los mosquiteros con piretroide y BOP? </0>",
+        "part2": "Los mosquiteros con piretroide y BOP son mosquiteros que incluyen tanto un insecticida piretroide como el sinergista BOP. El BOP actúa inhibiendo ciertas enzimas metabólicas dentro del mosquito (por ejemplo, oxidasas de función mixta) que desintoxican o secuestran los insecticidas antes de que puedan tener un efecto tóxico en el mosquito.",
+        "part3": "<0>¿Los recomienda la OMS como intervención de salud pública?</0>",
+        "part4": "La OMS recomienda condicionalmente el despliegue de los mosquiteros con piretroides-BOP precalificados por la OMS, en lugar de los mosquiteros que solo contienen piretroide, en aquellos lugares donde los vectores principales del paludismo presentan resistencia a los piretroides que sea: a) confirmada; b) de nivel intermedio, y c) conferida, al menos en parte, por un mecanismo de resistencia basado en la monoxigenasa, determinado mediante procedimientos estándar.",
+        "part5": "Esta recomendación se otorgó excepcionalmente en 2017 con base a los datos epidemiológicos de un ensayo clínico randomizado en clusters y seguirá siendo condicional hasta que los datos de al menos otro ensayo, realizado durante un periodo de 2 años, confirmen el impacto epidemiológico demostrado por el primer ensayo."
+    },
+    "step2": {
+        "part1": "<0>Consideraciones para el despliegue de mosquiteros con piretroide y BOP</0>",
+        "part2": "El despliegue de redes de piretroides-PBO solo debe considerarse en situaciones en las que no se reducirá la cobertura con un control de vectores efectivo (principalmente MTILD o IRS); El objetivo principal debe seguir siendo el logro y el mantenimiento de la cobertura universal para todas las personas en riesgo de contraer paludismo.",
+        "part3": "Su despliegue debe considerarse zona por zona (por ejemplo, distritos o provincias) evaluado si cada una de ellas cumplen los criterios recomendados por la OMS; en lugar de desplegarse en el país completo. Es importante considerar su despliegue en el contexto de la disponibilidad de recursos y evaluándolo frente a otras intervenciones de control de la malaria.",
+        "part4": "Los mosquiteros con piretroide no deben considerarse como una herramienta que por sí sola consiga controlar eficazmente la resistencia a los insecticidas en los vectores de la malaria."
+    },
+    "step3": {
+        "part1": "<0> Mosquiteros con piretroide y BOP precalificados por la OMS</0>",
+        "part2": "El proceso de precalificación de la OMS evalúa los productos de control de vectores por su seguridad, calidad y eficacia entomológica según los criterios oficiales de evaluación. Los nuevos tipos de mosquiteros actualmente precalificados han demostrado ser seguros y eficaces para el uso previsto.",
+        "part3": "La lista de mosquiteros con piretroide y BOP precalificados por la OMS puede la siguiente página: ",
+        "part4": "Aún no se conoce la duración del sinergista piperonil butóxido (PBO) impregnado en el material del mosquitero.",
+        "part5": "Para obtener más información sobre los mosquiteros con piretroide y BOP, y su diferencia con los mosquiteros que solo contienen piretroides, consulte: "
+    }
+}

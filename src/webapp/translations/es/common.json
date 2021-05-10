@@ -18,7 +18,7 @@
     "cards": {
         "prevention": "La resistencia de los parásitos a la artemisinina - el compuesto básico de los mejores medicamentos antipalúdicos disponibles en el mercado - amenaza la eficacia de estos medicamentos.",
         "diagnosis": "Las deleciones genéticas entre algunos parásitos del paludismo causan falsos negativos en las pruebas diagnósticas, complicando el manejo y control de casos.",
-        "treatment": "ResistanceLa resistencia de los parásitos a la artemisinina - el compuesto básico de los mejores medicamentos antipalúdicos disponibles - amenaza la eficacia de los medicamentos antipalúdicos.",
+        "treatment": "La resistencia de los parásitos a la artemisinina - el compuesto básico de los mejores medicamentos antipalúdicos disponibles - amenaza la eficacia de los medicamentos antipalúdicos.",
         "invasive": "La propagación de las especies de vectores anofelinos, y su establecimiento en ecosistemas donde no son nativos, plantea una potencial amenaza para el control y la eliminación de la malaria."
     },
     "prevention": {
@@ -439,6 +439,7 @@
         "share": "Compartir",
         "tour": "Visita guiada por la aplicación"
     },
+    "feedbackIframeUrl": "https://extranet.who.int/dataform/828325?newtest=Y&lang=es",
     "TREATMENT_FAILURE_KM": "% de pacientes con fallo terapeutico, Kaplan-Meier",
     "PROP_RELATED": "%",
     "COUNTRY_NA": "Namibia"
