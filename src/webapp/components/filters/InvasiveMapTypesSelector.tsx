@@ -32,7 +32,7 @@ const invasiveSuggestions: OptionType[] = [
 function InvasiveMapTypesSelector({ setInvasiveMapType, setMapTitle, invasiveFilters }: Props) {
     const { t } = useTranslation("common");
 
-    const onChange = (value: ValueType<OptionType>) => {
+    const onChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;
         setInvasiveMapType(selection.value);
         setMapTitle(t(selection.label));

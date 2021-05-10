@@ -28,9 +28,7 @@ export const getInvasiveStudiesEpic = (
                 mergeMap((studies: InvasiveStudy[]) => {
                     return of(fetchInvasiveStudiesSuccess(studies));
                 }),
-                catchError((error: Error) =>
-                    of(addNotificationAction(error.message), fetchInvasiveStudiesError(error.message))
-                )
+                catchError((error: Error) => of(addNotificationAction(error.message), fetchInvasiveStudiesError()))
             );
         })
     );
