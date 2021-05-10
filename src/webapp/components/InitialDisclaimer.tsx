@@ -93,11 +93,14 @@ const InitialDisclaimer = () => {
                         <Trans i18nKey="disclaimer:p1b" t={t}>
                             <strong>Map production:</strong> Global Malaria Programme. World Health Organization.
                         </Trans>
+                    </Typography>
+                    <Typography variant={"body2"} gutterBottom>
                         <Link href={t("disclaimer:p1bLink")} target="_blank" rel="noopener noreferrer">
                             {t("disclaimer:p1bLinkText")}
                         </Link>
                         {t("disclaimer:p1c")}
                     </Typography>
+
                     <br />
                     <Typography variant={"body2"} gutterBottom>
                         {t("disclaimer:p2")}
