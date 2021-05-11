@@ -69,7 +69,7 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
     const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
 
     useEffect(() => {
-        let interval: any;
+        let interval: NodeJS.Timeout;
         if (isPlaying) {
             interval = setInterval(() => {
                 setYear(year => {
