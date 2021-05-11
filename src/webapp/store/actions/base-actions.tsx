@@ -9,7 +9,6 @@ export const setAnyAction = createAction(ActionTypeEnum.MalariaSetAny, action =>
 
 interface SetThemeOptions {
     fromHome?: boolean;
-    mekong?: boolean;
 }
 
 export const setThemeAction = createAction(ActionTypeEnum.MalariaSetTheme, action => {

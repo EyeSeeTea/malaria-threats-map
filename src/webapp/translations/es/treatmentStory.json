@@ -1,0 +1,25 @@
+{
+    "step1": {
+        "part1": "<0>Los parásitos de la malaria han desarrollado repetidamente resistencia al tratamiento antimalárico</0>",
+        "part2": "<0>Durante décadas, la resistencia de los parásitos a los medicamentos ha sido uno de los principales obstáculos en la lucha contra la malaria.</0>",
+        "part3": "La vigilancia continua y notificación de la eficacia terapéutica y la resistencia de los parásitos a los antimaláricos, es fundamental para asegurar que los pacientes reciban un tratamiento eficaz. La OMS apoya a los programas nacionales de control de la malaria para vigilar la eficacia terapéutica de los antimaláricos y para rastrear los cambios genéticos relacionados con la resistencia a los medicamentos en los parásitos de la malaria.",
+        "part4": "El rol crítico que juega el control de la eficacia de los fármacos se ha observado en todo el mundo. La resistencia ha sido un reto persistente en la subregión del Gran Mekong. La región ha vigilado muy activamente la eficacia de estos fármacos."
+    },
+    "step2": {
+        "part1": "<0>La vigilancia rutinaria de la eficacia de las terapias combinadas basadas en artemisinina (TCA) es esencial para asegurar que los pacientes reciban un tratamiento eficaz</0>",
+        "part2": "<0>La OMS recomienda que todos los países endémicos de malaria realicen estudios de eficacia terapéutica al menos una vez cada dos años para informar sus directivas de tratamiento.</0>",
+        "part3": "La selección del medicamento antimaláricos se basa en la eficacia del medicamento contra el parásito de la malaria. Consecuentemente, el monitoreo de la eficacia terapéutica de los antimaláricos es un componente fundamental de las estrategias de tratamiento de la malaria. La OMS ha elaborado un protocolo estándar para medir la eficacia del tratamiento de los antimaláricos."
+    },
+    "step3": {
+        "part1": "<0>Los estudios de marcadores moleculares proporcionan datos esenciales para la detección y seguimiento de la resistencia a los medicamentos antimaláricos</0>",
+        "part2": "<0>Los marcadores moleculares de la resistencia a fármacos son cambios genéticos en el parásito de la malaria que se asocian con la resistencia a los antimaláricos</0>",
+        "part3": "En comparación con los estudios de eficacia, los estudios de marcadores moleculares tienen varias ventajas prácticas, por ejemplo, se puede recoger y analizar rápidamente un gran número de muestras. Ya se han identificado marcadores moleculares de resistencia de <i>P. falciparum</i> a diferentes fármacos, incluyendo la cloroquina, piperaquina, mefloquina, pirimetamina, sulfadoxina, atovacuona y artemisininas.",
+        "part4": "En el caso de las artemisininas, se ha encontrado varias mutaciones en el dominio de los propelentes de Kelch 13 (K13) que están asociadas con la desaparición retardada del parásito. Este es un campo en desarrollo, ya que se van descubriendo poco a poco más mutaciones del K13 y se va construyendo una mejor comprensión de las mutaciones que tienen mayor influencia en la resistencia."
+    },
+    "step4": {
+        "part1": "<0>La resistencia a los fármacos es un desafío tanto en <i>P. vivax</i> como en <i>P. falciparum</i>, las dos especies más comunes de parásitos de la malaria humana</0>",
+        "part2": "<0>Es critico contar con información actualizada sobre la resistencia a fármacos para ambos parásitos de la malaria</0>",
+        "part3": "Las terapias combinadas basadas en la artemisinina son el tratamiento recomendado para el parásito más mortal de la malaria, <i>P. falciparum</i>. Existen dos indicadores clave para vigilar la eficacia de las TCA: (1) la proporción de tratamientos fallidos y (2) la proporción de pacientes que presenta parásitos al tercer día después del inicio del tratamiento. Un aumento en la proporción de pacientes con parásitos al tercer día es un signo que advierte de la potencial existencia de resistencia a la artemisinina.",
+        "part4": "La cloroquina se sigue utilizando en muchos lugares para tratar la malaria por <i>P. vivax</i>. Sin embargo, como la resistencia a la cloroquina también se está desarrollando en este parásito, algunos países han comenzado a utilizar TCA para el tratamiento de la malaria por <i>P. vivax</i>."
+    }
+}

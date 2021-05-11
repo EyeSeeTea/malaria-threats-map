@@ -44,19 +44,16 @@ import {
 } from "./store/actions/treatment-actions";
 import { setInvasiveMapType, setInvasiveVectorSpecies } from "./store/actions/invasive-actions";
 import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
-import config from "./config";
 import Notifier from "./components/Notifier";
 
 export const { store } = createStore();
-
-const mekong = config.mekong;
 
 ReduxQuerySync({
     store,
     params: {
         theme: {
             selector: (state: State) => state.malaria.theme,
-            action: (value: string) => setThemeAction(mekong ? "treatment" : value || "prevention"),
+            action: (value: string) => setThemeAction(value || "prevention"),
         },
         mapType: {
             selector: (state: State) => {
@@ -158,11 +155,11 @@ ReduxQuerySync({
         },
         countryMode: {
             selector: (state: State) => state.malaria.countryMode,
-            action: (value: string) => setCountryModeAction(mekong ? false : value === "true"),
+            action: (value: string) => setCountryModeAction(value === "true"),
         },
         storyMode: {
             selector: (state: State) => state.malaria.storyMode,
-            action: (value: string) => setStoryModeAction(mekong ? false : value === "true"),
+            action: (value: string) => setStoryModeAction(value === "true"),
         },
         storyModeStep: {
             selector: (state: State) => state.malaria.storyModeStep,
@@ -174,7 +171,7 @@ ReduxQuerySync({
         },
         filtersMode: {
             selector: (state: State) => state.malaria.filtersMode,
-            action: (value: string) => setFiltersMode(mekong ? "filters" : value),
+            action: (value: string) => setFiltersMode(value),
         },
         years: {
             selector: (state: State) => state.malaria.filters,

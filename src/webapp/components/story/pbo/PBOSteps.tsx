@@ -1,10 +1,6 @@
-import PreventionEnglishSteps from "./english/PBOEnglishSteps";
-import PreventionSpanishSteps from "./spanish/PBOSpanishSteps";
-import PreventionFrenchSteps from "./french/PBOFrenchSteps";
+import PBOStep1 from "./PBOStep1";
+import PBOStep2 from "./PBOStep2";
+import PBOStep3 from "./PBOStep3";
 
-const pboSteps = {
-    en: PreventionEnglishSteps,
-    es: PreventionSpanishSteps,
-    fr: PreventionFrenchSteps,
-};
-export default pboSteps;
+const PBOSteps = [PBOStep1, PBOStep2, PBOStep3];
+export default PBOSteps;

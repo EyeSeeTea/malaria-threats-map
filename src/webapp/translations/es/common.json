@@ -440,6 +440,7 @@
         "share": "Compartir",
         "tour": "Visita guiada por la aplicación"
     },
+    "feedbackIframeUrl": "https://extranet.who.int/dataform/828325?newtest=Y&lang=es",
     "TREATMENT_FAILURE_KM": "% de pacientes con fallo terapeutico, Kaplan-Meier",
     "PROP_RELATED": "%",
     "COUNTRY_NA": "Namibia"

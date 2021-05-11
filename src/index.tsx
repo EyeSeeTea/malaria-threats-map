@@ -25,11 +25,11 @@ interface Hotjar {
 const { gaAppId, hotjar: hotjarConfig } = config;
 
 if (hotjarConfig) {
-    initHotjar(hotjarConfig.hjid, hotjarConfig.hjsv, true);
+    initHotjar(hotjarConfig.hjid, hotjarConfig.hjsv, false);
 }
 
 ReactGA.initialize(gaAppId, {
-    debug: true,
+    debug: false,
 });
 
 ReactDOM.render(<App />, document.getElementById("root"));

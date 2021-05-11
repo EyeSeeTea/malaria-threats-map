@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setRegionAction } from "../../store/actions/base-actions";
-import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
 import { selectRegion } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { Translation } from "../../types/Translation";
@@ -14,7 +13,6 @@ import { sendAnalytics } from "../../utils/analytics";
 
 const mapStateToProps = (state: State) => ({
     region: selectRegion(state),
-    countryLayer: selectCountryLayer(state),
     subRegions: selectSubRegions(state),
 });
 
