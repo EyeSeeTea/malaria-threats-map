@@ -36,7 +36,7 @@ export const PLASMODIUM_SPECIES_SUGGESTIONS: any[] = [
 ];
 
 function PlasmodiumSpecieSelector({ onChange, value }: Props) {
-    const onSelectionChange = (value: ValueType<OptionType>) => {
+    const onSelectionChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;
         onChange(selection.value);
     };

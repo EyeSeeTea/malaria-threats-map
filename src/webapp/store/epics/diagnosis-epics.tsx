@@ -29,9 +29,7 @@ export const getDiagnosisStudiesEpic = (
                 mergeMap((studies: DiagnosisStudy[]) => {
                     return of(fetchDiagnosisStudiesSuccess(studies));
                 }),
-                catchError((error: Error) =>
-                    of(addNotificationAction(error.message), fetchDiagnosisStudiesError(error.message))
-                )
+                catchError((error: Error) => of(addNotificationAction(error.message), fetchDiagnosisStudiesError()))
             );
         })
     );

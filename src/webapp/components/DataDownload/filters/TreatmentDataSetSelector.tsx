@@ -25,7 +25,7 @@ const suggestions: OptionType[] = [
 const TreatmentDataSetSelector = ({ value, onChange }: Props) => {
     const { t } = useTranslation("common");
     const suggs = suggestions.map(s => ({ label: t(s.label), value: s.value }));
-    const valueOnChange = (value: ValueType<OptionType>) => {
+    const valueOnChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;
         onChange(selection.value);
     };

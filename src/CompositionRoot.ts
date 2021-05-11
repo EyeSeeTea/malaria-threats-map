@@ -8,12 +8,15 @@ import { TreatmentApiRepository } from "./data/repositories/TreatmentApiReposito
 import { GetTreatmentStudiesUseCase } from "./domain/usecases/GetTreatmentStudiesUseCase";
 import { InvasiveApiRepository } from "./data/repositories/InvasiveApiRepository";
 import { GetInvasiveStudiesUseCase } from "./domain/usecases/GetInvasiveStudiesUseCase";
+import { CountryLayerApiRepository } from "./data/repositories/CountryLayerApiRepository";
+import { GetCountryLayerUseCase } from "./domain/usecases/GetCountryLayerUseCase";
 
 export class CompositionRoot {
     private preventionRepository = new PreventionApiRepository(config.mapServerUrl);
     private diagnosisRepository = new DiagnosisApiRepository(config.mapServerUrl);
     private treatmentRepository = new TreatmentApiRepository(config.mapServerUrl);
     private invasiveRepository = new InvasiveApiRepository(config.mapServerUrl);
+    private countryLayerRepository = new CountryLayerApiRepository(config.mapServerUrl);
 
     public get prevention() {
         return getExecute({
@@ -36,6 +39,12 @@ export class CompositionRoot {
     public get invasive() {
         return getExecute({
             getStudies: new GetInvasiveStudiesUseCase(this.invasiveRepository),
+        });
+    }
+
+    public get countryLayer() {
+        return getExecute({
+            get: new GetCountryLayerUseCase(this.countryLayerRepository),
         });
     }
 }
