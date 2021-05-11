@@ -12,15 +12,12 @@ const useStyles = makeStyles((_theme: Theme) =>
     })
 );
 
-const mapDispatchToProps = {};
 type OwnProps = {
     welcomeInfo: Partial<WelcomeInfo>;
     onChange: (key: keyof WelcomeInfo, value: any) => void;
 };
-type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & OwnProps;
 
-const Welcome = ({ onChange, welcomeInfo }: Props) => {
+const Welcome = ({ onChange, welcomeInfo }: OwnProps) => {
     const { t } = useTranslation("common");
     const classes = useStyles({});
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,4 +67,4 @@ const Welcome = ({ onChange, welcomeInfo }: Props) => {
     );
 };
 
-export default connect(null, mapDispatchToProps)(Welcome);
+export default connect(null)(Welcome);

@@ -163,7 +163,7 @@ export interface SiteSelection {
     coordinates: [number, number];
 }
 
-export interface TourState {
+interface TourState {
     open: boolean;
     step: number;
 }

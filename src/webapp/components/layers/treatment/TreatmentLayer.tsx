@@ -140,7 +140,10 @@ class TreatmentLayer extends Component<Props> {
 
     setupGeoJsonData = (studies: any[]) => {
         const { mapType } = this.props.treatmentFilters;
-        const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
+        const groupedStudies = R.groupBy(
+            R.path<string>(["SITE_ID"]),
+            studies
+        );
         const filteredStudies = R.values(groupedStudies).map(group => studySelector(group, mapType));
         return filteredStudies;
     };
@@ -195,7 +198,10 @@ class TreatmentLayer extends Component<Props> {
     };
 
     getCountryStudies = (studies: any[] = []) => {
-        const countryStudies = R.groupBy(R.path(["ISO2"]), studies);
+        const countryStudies = R.groupBy(
+            R.path<string>(["ISO2"]),
+            studies
+        );
         const countries = this.props.countries
             .map((country, index) => ({
                 ...country,

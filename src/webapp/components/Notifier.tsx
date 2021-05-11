@@ -15,10 +15,10 @@ const mapDispatchToProps = {
     addNotification: addNotificationAction,
     dismissNotification: dismissNotificationAction,
 };
-type OwnProps = {};
+
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = DispatchProps & StateProps;
 
 function Notifier({ notifications, dismissNotification }: Props) {
     const [open, setOpen] = React.useState(true);

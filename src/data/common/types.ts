@@ -9,15 +9,15 @@ export interface ApiResponse<T> {
     fields: Field[];
 }
 
-export interface Feature<T> {
+interface Feature<T> {
     attributes: T;
 }
 
-export interface FieldAlias {
+interface FieldAlias {
     [key: string]: string;
 }
 
-export interface Field {
+interface Field {
     name: string;
     type: string;
     alias: string;

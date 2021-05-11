@@ -15,7 +15,7 @@ export const setThemeAction = createAction(ActionTypeEnum.MalariaSetTheme, actio
     return (theme: string, options: SetThemeOptions = {}) => action(theme, options);
 });
 
-export interface GAEvent {
+interface GAEvent {
     category: string;
     action: string;
     label?: string;
@@ -82,10 +82,6 @@ export const setMobileOptionsOpen = createAction(ActionTypeEnum.SetMobileOptions
 });
 
 export const updateZoomAction = createAction(ActionTypeEnum.UpdateZoom, action => {
-    return (zoom: number) => action(zoom);
-});
-
-export const setZoomAction = createAction(ActionTypeEnum.SetZoom, action => {
     return (zoom: number) => action(zoom);
 });
 

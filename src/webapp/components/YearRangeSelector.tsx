@@ -1,13 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Slider from "@material-ui/core/Slider";
-import FormLabel from "@material-ui/core/FormLabel";
+import { Slider, FormLabel } from "@material-ui/core";
 import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
+import * as R from "ramda";
 import { State } from "../store/types";
 import { selectFilters } from "../store/reducers/base-reducer";
 import { setFiltersAction } from "../store/actions/base-actions";
-import { useTranslation } from "react-i18next";
-import * as R from "ramda";
 import { sendAnalytics } from "../utils/analytics";
 
 export function range(start: number, end: number, reverse?: boolean) {

@@ -17,8 +17,8 @@ import { PBO_ENDEMICITY_LAYER_ID } from "./PBOEndemicityLayer";
 import { buildPreventionFilters } from "./studies-filters";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
-export const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
-export const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
+const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
+const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
 
 const layer: any = {
     id: COUNTRY_SELECTOR_LAYER_ID,
@@ -98,12 +98,18 @@ class CountrySelectorLayer extends Component<Props> {
                 data: this.props.countries,
             };
 
-            const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
+            const groupedStudies = R.groupBy(
+                R.path<string>(["SITE_ID"]),
+                studies
+            );
             const filteredStudies = R.values(groupedStudies).map(group =>
                 studySelector(group, PreventionMapType.PBO_DEPLOYMENT)
             );
 
-            const studiesByCountry = R.groupBy(R.path(["ISO2"]), filteredStudies);
+            const studiesByCountry = R.groupBy(
+                R.path<string>(["ISO2"]),
+                filteredStudies
+            );
 
             const { ELIGIBLE, NOT_ENOUGH_DATA, NOT_ELIGIBLE } = PboDeploymentCountriesStatus;
 
@@ -151,7 +157,7 @@ class CountrySelectorLayer extends Component<Props> {
             if (existing) {
                 existing.setData({
                     type: "FeatureCollection",
-                    features: features,
+                    features,
                 });
                 this.showLayer();
                 return;
