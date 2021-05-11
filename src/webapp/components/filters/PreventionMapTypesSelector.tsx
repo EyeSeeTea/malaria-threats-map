@@ -47,7 +47,7 @@ const preventionSuggestions: OptionType[] = [
 function PreventionMapTypesSelector({ preventionFilters, setPreventionMapType, setMapTitle }: Props) {
     const { t } = useTranslation("common");
 
-    const onChange = (value: ValueType<OptionType>) => {
+    const onChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;
         setPreventionMapType(selection.value);
         setMapTitle(t(selection.label));

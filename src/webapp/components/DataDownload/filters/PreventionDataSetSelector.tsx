@@ -36,7 +36,7 @@ const suggestions: OptionType[] = [
 
 const PreventionDataSetSelector = ({ value, onChange }: Props) => {
     const { t } = useTranslation("common");
-    const valueOnChange = (value: ValueType<OptionType>) => {
+    const valueOnChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;
         onChange(selection.value);
     };

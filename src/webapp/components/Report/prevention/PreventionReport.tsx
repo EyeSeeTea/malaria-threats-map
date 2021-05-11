@@ -314,22 +314,22 @@ function PreventionReport({ studies: baseStudies }: Props) {
                         percentage: pyrethroidsPercentage,
                         sorted: sortedPyrethroidsStudies,
                         n: pyrethroidsStudies,
-                    } = resolvePyrethroids("PYRETHROIDS", countrySpeciesStudies, t);
+                    } = resolvePyrethroids("PYRETHROIDS", countrySpeciesStudies);
                     const {
                         percentage: organochlorinesPercentage,
                         sorted: sortedOrganochlorinesStudies,
                         n: organochlorinesStudies,
-                    } = resolvePyrethroids("ORGANOCHLORINES", countrySpeciesStudies, t);
+                    } = resolvePyrethroids("ORGANOCHLORINES", countrySpeciesStudies);
                     const {
                         percentage: carbamatesPercentage,
                         sorted: sortedCarbamatesStudies,
                         n: carbamatesStudies,
-                    } = resolvePyrethroids("CARBAMATES", countrySpeciesStudies, t);
+                    } = resolvePyrethroids("CARBAMATES", countrySpeciesStudies);
                     const {
                         percentage: organophosphatesPercentage,
                         sorted: sortedOrganophosphatesStudies,
                         n: organophosphatesStudies,
-                    } = resolvePyrethroids("ORGANOPHOSPHATES", countrySpeciesStudies, t);
+                    } = resolvePyrethroids("ORGANOPHOSPHATES", countrySpeciesStudies);
 
                     const { percentage: monoOxygenases, n: monoOxygenasesNumber } = resolveMechanism(
                         "MONO_OXYGENASES",
