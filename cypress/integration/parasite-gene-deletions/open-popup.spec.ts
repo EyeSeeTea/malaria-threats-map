@@ -10,11 +10,11 @@ describe("Open popup", () => {
         cy.clickOnMap(640, 405);
         cy.findByText("Deletions confirmed (% of samples)");
     });
-    
+
     it("should contain all the Democratic Republic of the Congo study information ", () => {
         cy.clickOnMap(640, 405);
 
-        //headings 
+        //headings
         cy.findByText("Democratic Republic of the Congo");
         cy.contains("1 survey(s) hrp2 by DHS in 2013");
         cy.findByText("Deletions confirmed (% of samples)");
@@ -29,7 +29,7 @@ describe("Open popup", () => {
         cy.findByText("182");
         cy.findByText("7.1%");
 
-        //getting row 2 
+        //getting row 2
         cy.contains("HRP3");
         cy.contains("0.0%");
 
@@ -37,12 +37,15 @@ describe("Open popup", () => {
         cy.contains("HRP2 & 3");
 
         //study link
-        cy.contains("Parr JB, Verity R, Doctor SM, Janko M, Carey-Ewend K, Turman BJ et al. Pfhrp2-Deleted Plasmodium falciparum Parasites in the Democratic Republic of the Congo: A National Cross-sectional Survey.");
+        cy.contains(
+            "Parr JB, Verity R, Doctor SM, Janko M, Carey-Ewend K, Turman BJ et al. Pfhrp2-Deleted Plasmodium falciparum Parasites in the Democratic Republic of the Congo: A National Cross-sectional Survey."
+        );
     });
 
-   it("should have an active link to the correct study", () => {
+    it("should have an active link to the correct study", () => {
         cy.clickOnMap(640, 405);
-        cy.contains("Parr JB, Verity R, Doctor SM, Janko M, Carey-Ewend K, Turman BJ et al. Pfhrp2-Deleted Plasmodium falciparum Parasites in the Democratic Republic of the Congo: A National Cross-sectional Survey.")
-          .should("have.attr", "href", "https://www.ncbi.nlm.nih.gov/pubmed/28177502?dopt=Citation");
-   });
+        cy.contains(
+            "Parr JB, Verity R, Doctor SM, Janko M, Carey-Ewend K, Turman BJ et al. Pfhrp2-Deleted Plasmodium falciparum Parasites in the Democratic Republic of the Congo: A National Cross-sectional Survey."
+        ).should("have.attr", "href", "https://www.ncbi.nlm.nih.gov/pubmed/28177502?dopt=Citation");
+    });
 });

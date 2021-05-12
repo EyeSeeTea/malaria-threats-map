@@ -3,7 +3,7 @@ import { themes } from "../../support/constants";
 describe("Open popup in synergist effect in susceptibility subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.parasiteGeneDeletions);
-        cy.get(':nth-child(8) > #country-button').click();
+        cy.get(":nth-child(8) > #country-button").click();
         cy.resetMapZoom();
     });
 
@@ -12,5 +12,4 @@ describe("Open popup in synergist effect in susceptibility subtheme", () => {
         cy.contains("Colombia");
         cy.contains("21 survey(s) P. falciparum by Convenience survey from 1999 to 2011");
     });
-
 });

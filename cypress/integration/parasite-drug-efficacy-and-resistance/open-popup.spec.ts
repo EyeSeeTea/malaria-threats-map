@@ -26,7 +26,7 @@ describe("Open popup in treatment failure subtheme", () => {
         cy.findByText("Patients with treatment failure, per protocol:");
         cy.findByText("Patients with treatment failure, Kaplan-Meier:");
         cy.contains("Programme National de Lutte contre le Paludisme");
-        
+
         //data
         cy.findByText("52");
         cy.findByText("28 days");
@@ -39,47 +39,50 @@ describe("Open popup in treatment failure subtheme", () => {
 describe("Open popup in molecular markers subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.parasiteDrugEfficacy);
-        cy.get('.sc-clIAKW > .makeStyles-root-31 > .css-2b097c-container > .MuiPaper-root > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input > .makeStyles-valueContainer-34')
-        .click();
+        cy.get(
+            ".sc-clIAKW > .makeStyles-root-31 > .css-2b097c-container > .MuiPaper-root > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input > .makeStyles-valueContainer-34"
+        ).click();
         cy.findByText("Molecular markers of drug resistance").click();
         cy.resetMapZoom();
     });
 
     it("should open a popup to click on coordinates", () => {
-        cy.clickOnMap(550,395);
+        cy.clickOnMap(550, 395);
         cy.contains("Multiple sites in Nanoro, Banfora, Niangoloko, Burkina Faso (2014-2014)");
     });
 
     it("should contain all the Multiple sites in Nanoro, Banfora, Niangoloko, Burkina Faso study information ", () => {
-        cy.clickOnMap(550,395);
+        cy.clickOnMap(550, 395);
         cy.contains("Multiple sites in Nanoro, Banfora, Niangoloko, Burkina Faso (2014-2014)");
         cy.contains("In this 2014 study, the following Pfkelch13 mutations were observed among 114 samples");
         cy.contains("Medicines for Malaria Venture, Geneva");
     });
 
     it("should have an active link to the correct study", () => {
-        cy.clickOnMap(550,395);
-        cy.contains("Medicines for Malaria Venture, Geneva")
-        .should("have.attr", "href", "https://www.ncbi.nlm.nih.gov/pubmed/30967148");
+        cy.clickOnMap(550, 395);
+        cy.contains("Medicines for Malaria Venture, Geneva").should(
+            "have.attr",
+            "href",
+            "https://www.ncbi.nlm.nih.gov/pubmed/30967148"
+        );
     });
-    
 });
 
 describe("Open popup in delayed parasite clearance subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.parasiteDrugEfficacy);
-        cy.get('.sc-clIAKW > .makeStyles-root-31 > .css-2b097c-container > .MuiPaper-root > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input > .makeStyles-valueContainer-34')
-        .click();
+        cy.get(
+            ".sc-clIAKW > .makeStyles-root-31 > .css-2b097c-container > .MuiPaper-root > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input > .makeStyles-valueContainer-34"
+        ).click();
         cy.findByText("Delayed parasite clearance").click();
         cy.resetMapZoom();
     });
 
     it("should open a popup to click on coordinates", () => {
-       cy.clickOnMap(375, 380);
-       cy.contains("Paramaribo, Suriname");
-        
+        cy.clickOnMap(375, 380);
+        cy.contains("Paramaribo, Suriname");
     });
-    
+
     it("should contain all the Paramaribo, Suriname study information ", () => {
         cy.clickOnMap(375, 380);
         cy.contains("Paramaribo, Suriname");
@@ -98,10 +101,13 @@ describe("Open popup in delayed parasite clearance subtheme", () => {
 
         cy.contains("Foundation for Scientific Research Suriname, Paramaribo");
     });
-    
+
     it("should have an active link to the correct study", () => {
         cy.clickOnMap(375, 380);
-        cy.contains("Foundation for Scientific Research Suriname, Paramaribo")
-          .should("have.attr", "href", "http://www.ncbi.nlm.nih.gov/pubmed/24402149");
+        cy.contains("Foundation for Scientific Research Suriname, Paramaribo").should(
+            "have.attr",
+            "href",
+            "http://www.ncbi.nlm.nih.gov/pubmed/24402149"
+        );
     });
 });
