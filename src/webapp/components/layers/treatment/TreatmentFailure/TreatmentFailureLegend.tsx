@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
     LegendContainer,
     LegendFooter,
@@ -24,7 +24,7 @@ type Props = StateProps;
 
 function TreatmentFailureLeyend({ treatmentFilters }: Props) {
     const { t } = useTranslation("common");
-    const [show, setShow] = React.useState(false);
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         setTimeout(() => setShow(true), 1000);
