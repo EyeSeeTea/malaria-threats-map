@@ -31,7 +31,6 @@ function updateFilter<T>(key: string, value: T, def?: T) {
 }
 
 function updateMapType(mapType: TreatmentMapType) {
-    console.log(mapType);
     return updateFilter("mapType", mapType, TreatmentMapType.TREATMENT_FAILURE);
 }
 

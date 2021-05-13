@@ -48,7 +48,9 @@ function MolecularMarkerLeyend({ treatmentFilters }: Props) {
                 <LegendTitleTypography color="textPrimary" gutterBottom>
                     {t("treatment.molecular_markers")}
                 </LegendTitleTypography>
-                <LegendSubtitleTypography>{molecularMarkerTranslator[treatmentFilters.molecularMarker-1]}</LegendSubtitleTypography>
+                <LegendSubtitleTypography>
+                    {molecularMarkerTranslator[treatmentFilters.molecularMarker - 1]}
+                </LegendSubtitleTypography>
             </LegendTitleContainer>
             <LegendLabels labels={labels} />
             <LegendFooter />
@@ -56,4 +58,3 @@ function MolecularMarkerLeyend({ treatmentFilters }: Props) {
     );
 }
 export default connect(mapStateToProps, null)(MolecularMarkerLeyend);
-
