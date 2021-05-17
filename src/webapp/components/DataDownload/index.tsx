@@ -845,7 +845,9 @@ function DataDownload({
             useInfo.studyDate &&
             (researchActive ? useInfo.researchInfo : true) &&
             (policiesActive ? useInfo.policiesInfo : true) &&
-            (toolsActive ? useInfo.toolsInfo : true)
+            (toolsActive ? useInfo.toolsInfo : true) &&
+            useInfo.contactConsent &&
+            useInfo.piConsent
         );
     };
 
