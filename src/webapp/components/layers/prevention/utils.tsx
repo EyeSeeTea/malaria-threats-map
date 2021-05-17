@@ -78,7 +78,7 @@ function filterByCriteria1(group: any[]) {
     return filteredStudies;
 }
 
-export function meetsCriteria1(group: any[], criteria: any) {
+function meetsCriteria1(group: any[], criteria: any) {
     const filteredStudies = filterByCriteria1(group);
     const groupedStudies = R.groupBy(R.prop("SPECIES"), filteredStudies);
     Object.entries(groupedStudies).forEach(([species, studies]) => {
@@ -91,7 +91,7 @@ export function meetsCriteria1(group: any[], criteria: any) {
     return R.any(study => study.MORTALITY_ADJUSTED < 0.9, filteredStudies);
 }
 
-export function meetsCriteria2(group: any[], criteria: any) {
+function meetsCriteria2(group: any[], criteria: any) {
     const filteredStudies = filterByCriteria1(group);
     const groupedStudies = R.groupBy(R.prop("SPECIES"), filteredStudies);
     Object.entries(groupedStudies).forEach(([species, studies]) => {

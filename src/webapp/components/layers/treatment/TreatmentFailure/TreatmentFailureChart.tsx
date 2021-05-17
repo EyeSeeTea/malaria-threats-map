@@ -96,14 +96,12 @@ const Margin = styled.div`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
 });
-const mapDispatchToProps = {};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     studies: TreatmentStudy[];
 };
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
 const TreatmentFailureChart = ({ studies }: Props) => {
     const { t } = useTranslation("common");
@@ -284,4 +282,4 @@ const TreatmentFailureChart = ({ studies }: Props) => {
         </ChatContainer>
     );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(TreatmentFailureChart);
+export default connect(mapStateToProps)(TreatmentFailureChart);

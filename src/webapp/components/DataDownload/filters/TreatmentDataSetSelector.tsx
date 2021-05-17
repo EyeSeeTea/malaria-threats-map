@@ -25,7 +25,7 @@ const suggestions: OptionType[] = [
 const TreatmentDataSetSelector = ({ value, onChange }: Props) => {
     const { t } = useTranslation("common");
     const suggs = suggestions.map(s => ({ label: t(s.label), value: s.value }));
-    const valueOnChange = (value: ValueType<OptionType>) => {
+    const valueOnChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;
         onChange(selection.value);
     };
@@ -33,7 +33,7 @@ const TreatmentDataSetSelector = ({ value, onChange }: Props) => {
     return (
         <FilterWrapper>
             <FormLabel component="legend">
-                <T i18nKey={`data_download.dataset`} /> *
+                <T i18nKey={"data_download.dataset"} /> *
             </FormLabel>
             <Divider />
             <IntegrationReactSelect

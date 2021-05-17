@@ -269,7 +269,6 @@ class MalariaTour extends PureComponent<Props> {
                     this.setInsecticideClass("CARBAMATES");
                     this.setInsecticideTypes(["PROPOXUR"]);
                     this.setSelection(null);
-                    // this.setSpecies(["An.+arabiensis", "An.+coluzzii"]);
                     return <Step6b {...options} {...baseProps} step={8} back={7} />;
                 },
             },

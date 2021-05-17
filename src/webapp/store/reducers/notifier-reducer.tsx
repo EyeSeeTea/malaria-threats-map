@@ -24,6 +24,6 @@ export default createReducer<NotificationsState>(initialState, {
     }),
 });
 
-export const selectNotificationsState = (state: State) => state.notifications;
+const selectNotificationsState = (state: State) => state.notifications;
 
 export const selectNotifications = createSelector(selectNotificationsState, R.prop("notifications"));

@@ -5,11 +5,11 @@ export interface TranslationResponse {
     fields: Field[];
 }
 
-export interface TranslationFeature {
+interface TranslationFeature {
     attributes: Translation;
 }
 
-export interface FieldAlias {
+interface FieldAlias {
     [key: string]: string;
 }
 
@@ -26,7 +26,7 @@ export interface Translation {
     NOTES: string;
 }
 
-export interface Field {
+interface Field {
     name: string;
     type: string;
     alias: string;

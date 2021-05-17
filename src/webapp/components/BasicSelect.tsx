@@ -2,10 +2,8 @@ import React, { CSSProperties, HTMLAttributes } from "react";
 import clsx from "clsx";
 import Select, { OptionProps } from "react-select";
 import { createStyles, emphasize, makeStyles, Theme, useTheme } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import { Typography, Paper, Chip, MenuItem } from "@material-ui/core";
 import TextField, { BaseTextFieldProps } from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
-import Chip from "@material-ui/core/Chip";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { ValueContainerProps } from "react-select/src/components/containers";
 import { ControlProps } from "react-select/src/components/Control";
@@ -16,7 +14,6 @@ import { SingleValueProps } from "react-select/src/components/SingleValue";
 import { Omit } from "@material-ui/types";
 import { useTranslation } from "react-i18next";
 import * as R from "ramda";
-import { MenuItem } from "@material-ui/core";
 import { useFirstRender } from "./hooks/use-first-render";
 
 export interface OptionType {

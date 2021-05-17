@@ -45,7 +45,7 @@ interface OwnProps {
     map: any;
 }
 
-export const MEKONG_BOUNDS: [number, number, number, number] = [
+const MEKONG_BOUNDS: [number, number, number, number] = [
     71.67568318434894,
     -10.1059286413618565,
     129.04037704012393,
@@ -99,14 +99,6 @@ class RegionLayer extends Component<Props> {
         } else if (region.site) {
             this.zoomToSite(region.site, region.siteIso2, region.siteCoordinates);
         } else {
-            // const location = {
-            //   center: [-16.629129, 28.291565],
-            //   zoom: 2
-            // };
-            // this.props.map.flyTo(location, {
-            //   padding: 100
-            // });
-            // this.zoomToCountry(region.country);
             this.hideLayer();
         }
     };

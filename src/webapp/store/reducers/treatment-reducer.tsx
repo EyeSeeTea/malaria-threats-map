@@ -78,7 +78,7 @@ export default createReducer<TreatmentState>(initialState, {
         R.assoc("filteredStudies", filteredStudies),
 });
 
-export const selectTreatmentState = (state: State) => state.treatment;
+const selectTreatmentState = (state: State) => state.treatment;
 
 export const selectTreatmentStudies = createSelector(selectTreatmentState, R.prop("studies"));
 

@@ -1,8 +1,7 @@
 import { ActionTypeEnum } from "./actions";
 
-export type Reducer<S, P> = (payload?: P) => (state: S) => S;
-// https://gist.github.com/donnut/fd56232da58d25ceecf1#gistcomment-1617985
-export interface CurriedReducer<S, P> {
+type Reducer<S, P> = (payload?: P) => (state: S) => S;
+interface CurriedReducer<S, P> {
     (t1: P | undefined): (t2: S) => S;
     (t1: P | undefined, t2: S): S;
 }

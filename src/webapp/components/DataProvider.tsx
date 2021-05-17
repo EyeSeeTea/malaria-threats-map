@@ -37,11 +37,6 @@ class DataProvider extends Component<Props> {
     componentDidUpdate(prevProps: Readonly<Props>) {
         if (this.props.translations.length !== prevProps.translations.length) {
             const translations = this.props.translations;
-            //     .filter(
-            //   translation =>
-            //     translation.VALUE_ !== "NA" ||
-            //     (translation.FIELD === "COUNTRY_NAME" && translation.VALUE_ === "NA")
-            // );
             const englishResources = translations.reduce((acc, translation) => {
                 return {
                     ...acc,
@@ -63,7 +58,12 @@ class DataProvider extends Component<Props> {
             i18next.addResourceBundle("en", "common", englishResources);
             i18next.addResourceBundle("es", "common", spanishResources);
             i18next.addResourceBundle("fr", "common", frenchResources);
-            console.log(R.groupBy(R.path(["FIELD"]), translations));
+            console.log(
+                R.groupBy(
+                    R.path<string>(["FIELD"]),
+                    translations
+                )
+            );
         }
     }
 

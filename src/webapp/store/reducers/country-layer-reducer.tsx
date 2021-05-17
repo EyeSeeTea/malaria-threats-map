@@ -21,7 +21,7 @@ export default createReducer<CountryLayerState>(initialState, {
     [ActionTypeEnum.FetchCountryLayerError]: () => R.assoc("loading", false),
 });
 
-export const selectCountryLayerState = (state: State) => state.countryLayer;
+const selectCountryLayerState = (state: State) => state.countryLayer;
 
 export const selectCountryLayer = createSelector(selectCountryLayerState, R.prop("layer"));
 

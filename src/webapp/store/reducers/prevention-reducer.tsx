@@ -5,7 +5,7 @@ import { createSelector } from "reselect";
 import { PreventionMapType, PreventionState, State } from "../types";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
-export const initialState: PreventionState = Object.freeze({
+const initialState: PreventionState = Object.freeze({
     studies: [],
     error: null,
     loading: false,
@@ -86,7 +86,7 @@ export default createReducer<PreventionState>(initialState, {
         R.assoc("filteredStudies", filteredStudies),
 });
 
-export const selectPreventionState = (state: State) => state.prevention;
+const selectPreventionState = (state: State) => state.prevention;
 
 export const selectPreventionStudies = createSelector(selectPreventionState, R.prop("studies"));
 

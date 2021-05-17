@@ -15,7 +15,7 @@ type OwnProps = {
 type Props = OwnProps;
 
 const isNull = (value: string) => value === "NA" || value === null || !value;
-// TODO: Translations
+
 const Curation = ({ study }: Props) => {
     const { t } = useTranslation("common");
     return !isNull(study.INSTITUTE_CURATION || study.CURATION) ? (
