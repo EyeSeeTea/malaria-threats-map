@@ -150,9 +150,9 @@ function Screenshot({ map, theme, title }: Props) {
 
             const pdfAsArray = convertDataURIToBinary(file);
 
-            PdfJs.disableWorker = true;
+            //PdfJs.disableWorker = true;
             PdfJs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.3.200/pdf.worker.js`;
-            PdfJs.getDocument(pdfAsArray).then((pdf: any) => {
+            PdfJs.getDocument(pdfAsArray).promise.then((pdf: any) => {
                 pdf.getPage(1).then((page: any) => {
                     const viewport = page.getViewport(2.5);
                     const canvas = document.createElement("canvas");
