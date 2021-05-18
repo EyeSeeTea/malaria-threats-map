@@ -150,16 +150,6 @@ const UserForm = ({ countries: baseCountries, onChange, userInfo }: Props) => {
                     onChange={event => onChange("email", event.target.value as string)}
                 />
             </FormControl>
-            <FormControl fullWidth className={classes.formControl}>
-                <TextField
-                    label={t("data_download.step1.phone") + "*"}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    value={userInfo.phoneNumber}
-                    onChange={event => onChange("phoneNumber", event.target.value as string)}
-                />
-            </FormControl>
         </Card>
     );
 };
