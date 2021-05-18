@@ -213,6 +213,7 @@
     },
     "filters": {
         "filters": "Filtros",
+        "pfhrp23_note": "Entre las encuestas, los criterios para seleccionar muestras para probar las eliminaciones de <i> pfhrp 2/3 </i> varían; por lo tanto, consulte el informe completo citado para obtener más detalles.",
         "tabs": {
             "filters": "Filtros",
             "regions": "Regiones"
