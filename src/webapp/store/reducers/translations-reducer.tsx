@@ -25,13 +25,13 @@ export default createReducer<TranslationsState>(initialState, {
     [ActionTypeEnum.FetchTranslationsError]: () => R.assoc("loading", false),
 });
 
-export const selectTranslationsState = (state: State) => state.translations;
+const selectTranslationsState = (state: State) => state.translations;
 
 export const selectTranslations = createSelector(selectTranslationsState, R.prop("translations"));
 
 export const selectTranslationsAreLoading = createSelector(selectTranslationsState, R.prop("loading"));
 
-export const selectFields = createSelector(selectTranslationsState, R.prop("fields"));
+const selectFields = createSelector(selectTranslationsState, R.prop("fields"));
 
 export const selectInsecticideClasses = createSelector(selectFields, R.propOr([], "INSECTICIDE_CLASS"));
 
@@ -40,8 +40,6 @@ export const selectInsecticideTypes = createSelector(selectFields, R.propOr([], 
 export const selectAssayTypes = createSelector(selectFields, R.propOr([], "ASSAY_TYPE"));
 
 export const selectTypes = createSelector(selectFields, R.propOr([], "TYPE"));
-
-export const selectSynergistTypes = createSelector(selectFields, R.propOr([], "SYNERGIST_TYPE"));
 
 export const selectSpecies = createSelector(selectFields, R.propOr([], "SPECIES"));
 

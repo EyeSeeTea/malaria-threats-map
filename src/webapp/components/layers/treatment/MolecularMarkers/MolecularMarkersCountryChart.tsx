@@ -47,8 +47,8 @@ const MolecularMarkersCountryChart = ({ studies, setRegion, setCountryMode, trea
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
-                {t(`treatment.chart.molecular_markers.content`, {
-                    nStudies: nStudies,
+                {t("treatment.chart.molecular_markers.content", {
+                    nStudies,
                     molecularMarker: t(molecularMarker),
                     years: formatYears(minYear, maxYear),
                 })}

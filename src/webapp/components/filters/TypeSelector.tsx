@@ -8,7 +8,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 import { Divider, FilterWrapper } from "./Filters";
 import { useTranslation } from "react-i18next";
 
-export const TYPES: string[] = ["WHO_TEST_KIT_ADULTS", "CDC_BOTTLE_ADULTS"];
+const TYPES: string[] = ["WHO_TEST_KIT_ADULTS", "CDC_BOTTLE_ADULTS"];
 
 const mapStateToProps = (state: State) => ({
     types: selectTypes(state),

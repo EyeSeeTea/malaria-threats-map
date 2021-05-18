@@ -1,10 +1,7 @@
 import React from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Dialog from "@material-ui/core/Dialog";
-import IconButton from "@material-ui/core/IconButton";
-import Slide from "@material-ui/core/Slide";
 import { TransitionProps } from "@material-ui/core/transitions";
-import { AppBar, Fab, Paper, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Fab, Paper, Toolbar, Typography, Dialog, IconButton, Slide } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import { DiagnosisMapType, InvasiveMapType, PreventionMapType, State, TreatmentMapType } from "../store/types";

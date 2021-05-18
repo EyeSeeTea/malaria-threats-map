@@ -1,4 +1,3 @@
-import mapboxgl from "mapbox-gl";
 import config from "../config";
 
 export const style: mapboxgl.Style = {
@@ -27,11 +26,3 @@ export const style: mapboxgl.Style = {
         },
     ],
 };
-
-const empty: any = {
-    version: 8,
-    sources: {},
-    layers: [],
-};
-
-export default empty;

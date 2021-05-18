@@ -25,10 +25,6 @@ export const filterByDownload = () => (study: any) => {
     return study.DOWNLOAD === "1";
 };
 
-export const filterBySynergistStudies = () => (study: any) => {
-    return study.STUDY_PAIRING_CODE === "NA";
-};
-
 export const filterByIntensityStatus = (study: any) => {
     return study.ASSAY_TYPE === "INTENSITY_CONCENTRATION_BIOASSAY";
 };
@@ -104,7 +100,7 @@ export const filterBySurveyTypes = (surveyTypes: string[]) => (study: any) => {
     return !surveyTypes.length || surveyTypes.includes(study.SURVEY_TYPE);
 };
 
-export const filterByPatientType = (patientType: string) => (study: any) => {
+const filterByPatientType = (patientType: string) => (study: any) => {
     return !patientType || study.PATIENT_TYPE === patientType;
 };
 
@@ -158,7 +154,7 @@ export const filterByMolecularMarkers = (molecularMarkers: string[]) => (study: 
     return !molecularMarkers.length || molecularMarkers.includes(study.MM_TYPE);
 };
 
-export const filterByPBOStudies = (study: PreventionStudy) => {
+const filterByPBOStudies = (study: PreventionStudy) => {
     return (
         ((study.ASSAY_TYPE === "MOLECULAR_ASSAY" ||
             study.ASSAY_TYPE === "BIOCHEMICAL_ASSAY" ||

@@ -270,7 +270,7 @@
         "select": "Sélectionner"
     },
     "citation": {
-        "no_citation": "Aucune donnée de citation disponible"
+        "unpublished_data": "Données non publiées"
     },
     "data_download": {
         "title": "Téléchargement de données",

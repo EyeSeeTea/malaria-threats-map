@@ -98,7 +98,7 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.GetLastUpdatedSuccess]: (lastUpdatedDates: any) => R.assoc("lastUpdatedDates", lastUpdatedDates),
 });
 
-export const selectMalariaState = (state: State) => state.malaria;
+const selectMalariaState = (state: State) => state.malaria;
 
 export const selectTheme = createSelector(selectMalariaState, R.prop("theme"));
 export const selectStoryMode = createSelector(selectMalariaState, R.prop("storyMode"));
@@ -113,9 +113,7 @@ export const selectFiltersMode = createSelector(selectMalariaState, R.prop("filt
 export const selectStoryModeStep = createSelector(selectMalariaState, R.prop("storyModeStep"));
 export const selectSelection = createSelector(selectMalariaState, R.prop("selection"));
 export const selectAreMobileOptionsOpen = createSelector(selectMalariaState, R.prop("mobileOptionsOpen"));
-export const selectZoom = createSelector(selectMalariaState, R.prop("zoom"));
 export const selectSetZoom = createSelector(selectMalariaState, R.prop("setZoom"));
-export const selectBounds = createSelector(selectMalariaState, R.prop("bounds"));
 export const selectSetBounds = createSelector(selectMalariaState, R.prop("setBounds"));
 export const selectTour = createSelector(selectMalariaState, R.prop("tour"));
 export const selectIsDataDownloadOpen = createSelector(selectMalariaState, R.prop("dataDownloadOpen"));
