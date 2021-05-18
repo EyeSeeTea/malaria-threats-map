@@ -28,7 +28,7 @@ const Citation = ({ study, logOutboundLinkAction }: Props) => {
     return !isNull(study.CITATION_URL) ? (
         <>
             <Typography variant="caption">
-                <Link onClick={logClick} href={study.CITATION_URL} target="_blank" color={"textSecondary"}>
+                <Link onClick={logClick} href={study.CITATION_URL} target="_blank">
                     {valueOrUndefined(study.CITATION_LONG) ||
                         valueOrUndefined(study.CITATION) ||
                         valueOrUndefined(study.INSTITUTION) ||
