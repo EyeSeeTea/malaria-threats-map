@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { State } from "../../../../store/types";
 import { connect } from "react-redux";
 import { selectTreatmentFilters } from "../../../../store/reducers/treatment-reducer";
+import { MOLECULAR_MARKERS } from "../../../filters/MolecularMarkerFilter";
 
 const mapStateToProps = (state: State) => ({
     treatmentFilters: selectTreatmentFilters(state),
@@ -41,7 +42,7 @@ function MolecularMarkerLeyend({ treatmentFilters }: Props) {
             color: MolecularMarkerColors[MOLECULAR_MARKER_STATUS.LOW][0],
         },
     ];
-    const molecularMarkerTranslator = ["Pfkelch13", "Pfcrt", "Pfmdr1", "Pfplasmepsin 2-3"];
+
     return (
         <LegendContainer>
             <LegendTitleContainer>
@@ -49,7 +50,7 @@ function MolecularMarkerLeyend({ treatmentFilters }: Props) {
                     {t("treatment.molecular_markers")}
                 </LegendTitleTypography>
                 <LegendSubtitleTypography>
-                    {molecularMarkerTranslator[treatmentFilters.molecularMarker - 1]}
+                    {MOLECULAR_MARKERS[treatmentFilters.molecularMarker - 1].label}
                 </LegendSubtitleTypography>
             </LegendTitleContainer>
             <LegendLabels labels={labels} />
