@@ -29,3 +29,10 @@ $ REACT_APP_BACKEND_URL=http://localhost:8080 yarn start
 ```
 $ yarn test
 ```
+
+Run integration tests locally:
+
+```
+$ yarn cy:open # interactive UI
+$ yarn cy:run # non-interactive UI
+```

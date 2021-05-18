@@ -1,0 +1,18 @@
+{
+    "p1a": "<strong>Data source:</strong> Global Malaria Programme",
+    "p1b": "<strong>Map production:</strong> Global Malaria Programme. World Health Organization.",
+    "p1bLink": "https://www.who.int/about/copyright/",
+    "p1bLinkText": "© WHO 2019. ",
+    "p1c": "All rights reserved.",
+    "p2": "Unless otherwise specifically stated, the information contained in this application has been made available to the World Health Organization (WHO) Global Malaria Programme by Ministries of Health or their development partners, or through extraction by WHO or contracted partners from publications in international peer-reviewed scientific journals. WHO therefore provides no assurance as to the validity, accuracy or completeness of this information.",
+    "p3a": "The use of all images and files generated from this application is subject to the ",
+    "p3aLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions",
+    "p3b": "Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses.",
+    "p4a": "The following citation shall be conspicuously provided alongside images or files generated from the application.",
+    "p4b": "Source: ",
+    "p4bLink": "https://www.who.int/malaria/maps/threats/",
+    "p4bLinkText": "WHO Malaria Threats Map.",
+    "p5a": "For further information, please contact: ",
+    "p5aLink": "mailto:gmp-maps@who.int",
+    "p5aLinkText": "gmp-maps@who.int"
+}

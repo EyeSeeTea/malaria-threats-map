@@ -1,0 +1,25 @@
+{
+    "step1": {
+        "part1": "<0>Malaria parasites repeatedly develop resistance to antimalarial treatment</0>",
+        "part2": "<0>For decades, drug resistance has been one of the main obstacles in the fight against malaria.</0>",
+        "part3": "Continuous global monitoring and reporting of drug efficacy and parasite resistance is critical to ensure patients receive effective treatment. WHO supports national malaria control programmes to monitor antimalarial treatment efficacy and to track the genetic changes linked to drug resistance in malaria parasites.",
+        "part4": "The critical role of monitoring drug efficacy has been observed worldwide. Resistance has been a persistent challenge in the Greater Mekong Subregion. The region has been very active in monitoring drug efficacy."
+    },
+    "step2": {
+        "part1": "<0>Routine monitoring of the efficacy of artemisinin-based combination therapies (ACTs) is essential to ensure that patients receive effective treatment</0>",
+        "part2": "<0>WHO recommends that all malaria endemic countries conduct therapeutic efficacy studies at least once every two years to inform treatment policy.</0>",
+        "part3": "The selection of the recommended antimalarial drug is based on the medicine’s efficacy against the malaria parasite. As such, monitoring the therapeutic efficacy of antimalarial medicine is a fundamental component of malaria treatment strategies. WHO has developed a standard protocol for monitoring the treatment efficacy of antimalarial medicine."
+    },
+    "step3": {
+        "part1": "<0>Studies of molecular prevention provide essential data for detecting and tracking antimalarial drug resistance</0>",
+        "part2": "<0>Molecular prevention for drug resistance are genetic changes in the malaria parasite found to be associated with resistance.</0>",
+        "part3": "Compared to efficacy studies, studies of molecular prevention have several practical advantages. For example, a large number of samples can be collected and rapidly analysed. Molecular prevention of drug resistance have been identified for different drugs, including <i>P. falciparum</i> resistance to chloroquine pipearquine, mefloquine, pyrimethamine, sulfadoxine, atovaquone and artemisinins.",
+        "part4": "For artemisinins, several mutations in the Kelch 13 (K13)-propeller domain have been found to be associated with delayed parasite clearance. This is an evolving field as more K13 mutations are discovered and we develop a better understanding of which mutations are of greatest influence."
+    },
+    "step4": {
+        "part1": "<0>Drug resistance is a challenge in both <i>P. vivax</i> and <i>P. falciparum</i>, the two most common human malaria parasite species </0>",
+        "part2": "<0>Up-to-date information on drug resistance for both <i>P. vivax</i> and <i>P. falciparum</i> malaria is critical.</0>",
+        "part3": "Artemisinin-based combination therapies (ACTs) are the recommended treatment for the most deadly malaria parasite, <i>P. falciparum</i>. There are two key outcome measures for monitoring the efficacy of ACTs: (1) the proportion of treatment failures and, (2) the proportion of patients with parasites on the third day after starting treatment. An increase in the proportion of patients with parasites on day 3 is a warning sign of artemisinin resistance.",
+        "part4": "Chloroquine is still used in many places to treat <i>P. vivax</i> malaria. However, as chloroquine resistance is also developing in <i>P. vivax</i> parasites, some countries have shifted to ACTs for treating <i>P. vivax</i> malaria."
+    }
+}
