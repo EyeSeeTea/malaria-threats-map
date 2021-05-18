@@ -50,8 +50,7 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type OwnProps = {};
-type Props = StateProps & OwnProps & DispatchProps;
+type Props = StateProps & DispatchProps;
 
 function Report({ isReportOpen, openReport, theme }: Props) {
     const classes = useStyles({});

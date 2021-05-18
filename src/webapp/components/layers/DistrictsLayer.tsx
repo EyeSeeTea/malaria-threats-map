@@ -22,8 +22,8 @@ import { setSelection } from "../../store/actions/base-actions";
 import { PboDeploymentStatus } from "./prevention/PboDeployment/PboDeploymentSymbols";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
-export const DISTRICTS_LAYER_ID = "districts-layer";
-export const DISTRICTS_SOURCE_ID = "districts-source";
+const DISTRICTS_LAYER_ID = "districts-layer";
+const DISTRICTS_SOURCE_ID = "districts-source";
 
 const layer: any = {
     id: DISTRICTS_LAYER_ID,
@@ -113,12 +113,18 @@ class CountrySelectorLayer extends Component<Props> {
 
     mountLayer = () => {
         const studies = this.filterStudies(this.props.studies);
-        const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
+        const groupedStudies = R.groupBy(
+            R.path<string>(["SITE_ID"]),
+            studies
+        );
         const filteredStudies = R.values(groupedStudies).map(group =>
             studySelector(group, PreventionMapType.PBO_DEPLOYMENT)
         );
 
-        const studiesByDistrict = R.groupBy(R.path(["ADMIN2_GUID"]), filteredStudies);
+        const studiesByDistrict = R.groupBy(
+            R.path<string>(["ADMIN2_GUID"]),
+            filteredStudies
+        );
 
         const { ELIGIBLE, NOT_ENOUGH_DATA, NOT_ELIGIBLE } = PboDeploymentCountriesStatus;
 

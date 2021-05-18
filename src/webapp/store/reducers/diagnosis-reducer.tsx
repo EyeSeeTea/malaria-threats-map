@@ -70,7 +70,7 @@ export default createReducer<DiagnosisState>(initialState, {
         R.assoc("filteredStudies", filteredStudies),
 });
 
-export const selectDiagnosisState = (state: State) => state.diagnosis;
+const selectDiagnosisState = (state: State) => state.diagnosis;
 
 export const selectDiagnosisStudies = createSelector(selectDiagnosisState, R.prop("studies"));
 

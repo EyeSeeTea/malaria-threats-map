@@ -21,7 +21,7 @@ export default createReducer<DistrictsState>(initialState, {
     [ActionTypeEnum.FetchDistrictsError]: () => R.assoc("loading", false),
 });
 
-export const selectDistrictsState = (state: State) => state.district;
+const selectDistrictsState = (state: State) => state.district;
 
 export const selectDistrictsLayer = createSelector(selectDistrictsState, R.prop("layer"));
 

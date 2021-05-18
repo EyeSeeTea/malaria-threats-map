@@ -11,7 +11,7 @@ type OwnProps = {
 
 type Props = OwnProps;
 
-export const PLASMODIUM_SPECIES_SUGGESTIONS: any[] = [
+const PLASMODIUM_SPECIES_SUGGESTIONS: any[] = [
     {
         label: "P. falciparum",
         value: "P._FALCIPARUM",

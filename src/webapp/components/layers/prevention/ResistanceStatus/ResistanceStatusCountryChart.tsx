@@ -113,11 +113,11 @@ const ResistanceStatusCountryChart = ({ studies, setRegion, setCountryMode, prev
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
-                {t(`prevention.chart.resistance_status.content_1`, {
-                    nStudies: nStudies,
+                {t("prevention.chart.resistance_status.content_1", {
+                    nStudies,
                 })}
                 <i>Anopheles</i>
-                {t(`prevention.chart.resistance_status.content_2`, {
+                {t("prevention.chart.resistance_status.content_2", {
                     insecticideClass: t(preventionFilters.insecticideClass),
                     years: formatYears(minYear, maxYear),
                 })}

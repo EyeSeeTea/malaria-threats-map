@@ -44,10 +44,9 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
 };
-type OwnProps = {};
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = DispatchProps & StateProps;
 
 function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
     const classes = useStyles({});

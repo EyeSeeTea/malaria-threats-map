@@ -65,7 +65,7 @@ export const COLUMNS = [
     "ACE1R_PERCENT_SITES_DETECTED_NUMBER_SITES",
 ];
 
-export interface HeadCell {
+interface HeadCell {
     id: keyof Data;
     numeric: boolean;
     disablePadding: boolean;

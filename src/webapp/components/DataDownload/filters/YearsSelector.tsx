@@ -36,7 +36,7 @@ const YearsSelector = ({ value, onChange }: Props) => {
     };
     return (
         <div className={classes.root}>
-            <FormLabel component="legend">{t(`filters.years`)}</FormLabel>
+            <FormLabel component="legend">{t("filters.years")}</FormLabel>
             <Divider />
             <IntegrationReactSelect
                 isMulti

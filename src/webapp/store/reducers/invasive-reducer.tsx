@@ -53,7 +53,7 @@ export default createReducer<InvasiveState>(initialState, {
         R.assoc("filteredStudies", filteredStudies),
 });
 
-export const selectInvasiveState = (state: State) => state.invasive;
+const selectInvasiveState = (state: State) => state.invasive;
 
 export const selectInvasiveStudies = createSelector(selectInvasiveState, R.prop("studies"));
 

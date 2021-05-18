@@ -6,7 +6,7 @@ import { selectEndemicity } from "../../store/reducers/base-reducer";
 import config from "../../config";
 
 export const PBO_ENDEMICITY_LAYER_ID = "pbo-endemicity-layer";
-export const PBO_ENDEMICITY_SOURCE_ID = "pbo-endemicity-source";
+const PBO_ENDEMICITY_SOURCE_ID = "pbo-endemicity-source";
 
 const layer: any = {
     id: PBO_ENDEMICITY_LAYER_ID,
