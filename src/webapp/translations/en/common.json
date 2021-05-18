@@ -427,7 +427,7 @@
     "icons": {
         "animation": "Temporal animation",
         "endemicity": "Shade non-endemic countries",
-        "visualization": "Country/site mode",
+        "visualization": "Country mode",
         "story": "Story mode",
         "download": "Download data",
         "image": "Export map",
