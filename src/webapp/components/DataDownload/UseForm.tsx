@@ -81,15 +81,12 @@ export const isToolsActive = (uses: string[]) =>
         uses
     );
 
-const mapDispatchToProps = {};
 type OwnProps = {
     useInfo: Partial<UseInfo>;
     onChange: (key: keyof UseInfo, value: any) => void;
 };
-type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & OwnProps;
 
-const UseForm = ({ onChange, useInfo }: Props) => {
+const UseForm = ({ onChange, useInfo }: OwnProps) => {
     const classes = useStyles({});
     const { t } = useTranslation("common");
 
@@ -120,7 +117,7 @@ const UseForm = ({ onChange, useInfo }: Props) => {
     return (
         <Card className={classes.paper}>
             <FormControl fullWidth className={classes.formControl}>
-                <FormLabel component="legend">{t(`data_download.step2.data_use`)}</FormLabel>
+                <FormLabel component="legend">{t("data_download.step2.data_use")}</FormLabel>
                 <Divider />
                 {USES.map(use => (
                     <StyledFormControlLabel
@@ -145,7 +142,7 @@ const UseForm = ({ onChange, useInfo }: Props) => {
             {researchActive && (
                 <FormControl fullWidth className={classes.formControl}>
                     <TextField
-                        label={t(`data_download.step2.date_use_options_content.research`)}
+                        label={t("data_download.step2.date_use_options_content.research")}
                         multiline
                         rowsMax="3"
                         InputLabelProps={{
@@ -159,7 +156,7 @@ const UseForm = ({ onChange, useInfo }: Props) => {
             {policiesActive && (
                 <FormControl fullWidth className={classes.formControl}>
                     <TextField
-                        label={t(`data_download.step2.date_use_options_content.policies`)}
+                        label={t("data_download.step2.date_use_options_content.policies")}
                         multiline
                         rowsMax="3"
                         InputLabelProps={{
@@ -173,7 +170,7 @@ const UseForm = ({ onChange, useInfo }: Props) => {
             {toolsActive && (
                 <FormControl fullWidth className={classes.formControl}>
                     <TextField
-                        label={t(`data_download.step2.date_use_options_content.tools`)}
+                        label={t("data_download.step2.date_use_options_content.tools")}
                         multiline
                         rowsMax="3"
                         InputLabelProps={{
@@ -185,7 +182,7 @@ const UseForm = ({ onChange, useInfo }: Props) => {
                 </FormControl>
             )}
             <FormControl fullWidth className={classes.formControl}>
-                <FormLabel component="legend">{t(`data_download.step2.date_use_options_content.date`)}</FormLabel>
+                <FormLabel component="legend">{t("data_download.step2.date_use_options_content.date")}</FormLabel>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                         disableToolbar
@@ -200,14 +197,14 @@ const UseForm = ({ onChange, useInfo }: Props) => {
                 </MuiPickersUtilsProvider>
             </FormControl>
             <CountriesSelector
-                label={t(`data_download.step2.countries`)}
+                label={t("data_download.step2.countries")}
                 className={classes.countries}
                 includeGlobalOption
                 value={useInfo.countries}
                 onChange={handleCountriesChange}
             />
             <Snackbar>
-                {t(`data_download.step2.message`)}
+                {t("data_download.step2.message")}
                 <FormControlLabel
                     control={
                         <Checkbox checked={useInfo.contactConsent} onChange={handleConsent1Change} color="primary" />
@@ -223,4 +220,4 @@ const UseForm = ({ onChange, useInfo }: Props) => {
     );
 };
 
-export default connect(null, mapDispatchToProps)(UseForm);
+export default connect(null)(UseForm);

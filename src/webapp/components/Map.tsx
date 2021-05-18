@@ -129,41 +129,6 @@ const Divider = styled.div`
     height: 10px;
 `;
 
-export const debounce = <F extends (...args: any[]) => any>(func: F, waitFor: number) => {
-    let timeout: any;
-
-    return (...args: Parameters<F>): Promise<ReturnType<F>> =>
-        new Promise(resolve => {
-            if (timeout) {
-                clearTimeout(timeout);
-            }
-
-            timeout = setTimeout(() => resolve(func(...args)), waitFor);
-        });
-};
-
-export const debounceTimes = <F extends (...args: any[]) => any>(func: F, times: number) => {
-    let counter = 0;
-    return (...args: Parameters<F>): Promise<ReturnType<F>> =>
-        new Promise(resolve => {
-            counter = counter + 1;
-            if (counter >= times) {
-                resolve(func(...args));
-            }
-        });
-};
-
-export const throttle = <F extends (...args: any[]) => any>(f: F, t: number) => {
-    let lastCall: any;
-    return (...args: Parameters<F>): ReturnType<F> => {
-        const previousCall = lastCall;
-        lastCall = Date.now();
-        if (previousCall === undefined || lastCall - previousCall > t) {
-            return f(args);
-        }
-    };
-};
-
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     any: selectAny(state),
@@ -191,8 +156,7 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type OwnProps = {};
-type Props = StateProps & OwnProps & DispatchProps;
+type Props = StateProps & DispatchProps;
 
 class Map extends React.Component<Props> {
     map: mapboxgl.Map;

@@ -25,14 +25,12 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     diagnosisFilters: selectDiagnosisFilters(state),
 });
-const mapDispatchToProps = {};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     studies: DiagnosisStudy[];
 };
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
 const StyledHeaderCell = styled(TableCell)`
     font-size: 0.875rem !important;
@@ -81,28 +79,28 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
-                {t(`diagnosis.chart.gene_deletions.content_1`, {
-                    nStudies: nStudies,
+                {t("diagnosis.chart.gene_deletions.content_1", {
+                    nStudies,
                 })}
                 <i>{t(diagnosisFilters.deletionType).toLowerCase()}</i>
-                {t(`diagnosis.chart.gene_deletions.content_2`, {
+                {t("diagnosis.chart.gene_deletions.content_2", {
                     surveyTypes: formatList(surveyTypes.map(st => (t(st) === "DHS" ? t(st) : t(st).toLowerCase()))),
                     years: formatYears(minYear, maxYear),
                 })}
             </Typography>
             <div className={classes.root}>
-                <Typography variant={"caption"}>{t(`diagnosis.chart.gene_deletions.deletions_confirmed`)}</Typography>
+                <Typography variant={"caption"}>{t("diagnosis.chart.gene_deletions.deletions_confirmed")}</Typography>
                 <Table aria-label="simple table" size="small" className={classes.table}>
                     <TableHead className={classes.head}>
                         <TableRow>
                             <StyledHeaderCell align={"center"}>
-                                {t(`diagnosis.chart.gene_deletions.deletion_type`)}
+                                {t("diagnosis.chart.gene_deletions.deletion_type")}
                             </StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
-                                {t(`diagnosis.chart.gene_deletions.no_tested`)}
+                                {t("diagnosis.chart.gene_deletions.no_tested")}
                             </StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
-                                {t(`diagnosis.chart.gene_deletions.percentage`)} {studyObject.YEAR_START}
+                                {t("diagnosis.chart.gene_deletions.percentage")} {studyObject.YEAR_START}
                             </StyledHeaderCell>
                         </TableRow>
                     </TableHead>
@@ -141,4 +139,4 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
         </ChatContainer>
     );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(GeneDeletionChart);
+export default connect(mapStateToProps)(GeneDeletionChart);

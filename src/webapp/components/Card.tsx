@@ -74,7 +74,7 @@ type OwnProp = {
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & OwnProp;
 
-export const SimpleCard = ({ title, description, Icon, theme, setTheme, setRegion, onSelection, hasFooter }: Props) => {
+const SimpleCard = ({ title, description, Icon, theme, setTheme, setRegion, onSelection, hasFooter }: Props) => {
     const classes = useStyles({});
 
     return (

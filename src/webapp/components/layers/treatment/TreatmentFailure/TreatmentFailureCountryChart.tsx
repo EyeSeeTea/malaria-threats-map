@@ -57,8 +57,8 @@ const TreatmentFailureCountryChart = ({ studies, setRegion, setCountryMode }: Pr
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
-                {t(`treatment.chart.treatment_failure.content`, {
-                    nStudies: nStudies,
+                {t("treatment.chart.treatment_failure.content", {
+                    nStudies,
                     drug: t(sortedStudies[0].DRUG_NAME),
                     plasmodiumSpecies: t(sortedStudies[0].PLASMODIUM_SPECIES.replace(".", "%2E")),
                     years: formatYears(minYear, maxYear),

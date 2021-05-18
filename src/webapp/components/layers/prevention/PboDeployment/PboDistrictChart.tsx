@@ -17,14 +17,12 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     preventionFilters: selectPreventionFilters(state),
 });
-const mapDispatchToProps = {};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     studies: PreventionStudy[];
 };
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
 const Flex = styled.div`
     display: flex;
@@ -121,4 +119,4 @@ const PboDistrictChart = ({ studies }: Props) => {
         </ChartContainer>
     );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(PboDistrictChart);
+export default connect(mapStateToProps)(PboDistrictChart);

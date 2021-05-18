@@ -16,7 +16,7 @@ export interface Data {
     PERCENTILE_75: NumberOrHyphen;
 }
 
-export interface HeadCell {
+interface HeadCell {
     id: keyof Data;
     numeric: boolean;
     disablePadding: boolean;

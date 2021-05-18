@@ -1,13 +1,6 @@
 import React from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
-import { Paper, Typography } from "@material-ui/core";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
+import { Stepper, Step, StepLabel, Button, Paper, Typography, AppBar, Toolbar, IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import { PreventionMapType, State } from "../store/types";

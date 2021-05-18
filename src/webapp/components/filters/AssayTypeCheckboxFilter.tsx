@@ -87,7 +87,7 @@ function AssayTypeCheckboxFilter({ assayTypes, preventionFilters, setAssayTypes 
 
     return (
         <FilterWrapper>
-            <FormLabel component="legend">{t(`filters.assay_type`)}</FormLabel>
+            <FormLabel component="legend">{t("filters.assay_type")}</FormLabel>
             <Divider />
             <Paper className={classes.group}>
                 <FormGroup>

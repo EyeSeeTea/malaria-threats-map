@@ -35,7 +35,6 @@ export const createDataDownloadEntryEpic = (
     action$.ofType(ActionTypeEnum.AddDownloadRequest).pipe(
         switchMap(action => {
             return ajax.postFull(config.backendUrl, action.payload).pipe(
-                // return ajax.getFull(`https://portal-uat.who.int/malthreats-api/`).pipe(
                 mergeMap((_response: any) => {
                     return of();
                 })
@@ -49,7 +48,6 @@ export const createSubscriptionContact = (
     action$.ofType(ActionTypeEnum.AddSubscriptionContactRequest).pipe(
         switchMap(action => {
             return ajax.patchFull(config.backendUrl, action.payload).pipe(
-                // return ajax.getFull(`https://portal-uat.who.int/malthreats-api/`).pipe(
                 mergeMap((response: any) => {
                     if (response.notices) {
                         return of(
