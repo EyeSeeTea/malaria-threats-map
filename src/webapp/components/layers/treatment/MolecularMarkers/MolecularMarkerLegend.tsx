@@ -5,7 +5,6 @@ import {
     LegendLabels,
     LegendTitleContainer,
     LegendTitleTypography,
-    LegendSubtitleTypography,
 } from "../../../Leyend";
 import { MOLECULAR_MARKER_STATUS } from "./utils";
 import { MolecularMarkerColors } from "./molecularMarkerSymbols";
@@ -47,11 +46,8 @@ function MolecularMarkerLeyend({ treatmentFilters }: Props) {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("treatment.molecular_markers")}
+                    {t("treatment.molecular_markers")} ({MOLECULAR_MARKERS[treatmentFilters.molecularMarker - 1].label})
                 </LegendTitleTypography>
-                <LegendSubtitleTypography>
-                    {MOLECULAR_MARKERS[treatmentFilters.molecularMarker - 1].label}
-                </LegendSubtitleTypography>
             </LegendTitleContainer>
             <LegendLabels labels={labels} />
             <LegendFooter />
