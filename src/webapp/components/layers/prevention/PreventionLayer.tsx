@@ -34,7 +34,7 @@ import PreventionSelectionChart from "./PreventionSelectionChart";
 import ChartModal from "../../ChartModal";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 
-const PREVENTION = "prevention";
+export const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
 const PREVENTION_SOURCE_ID = "prevention-source";
 

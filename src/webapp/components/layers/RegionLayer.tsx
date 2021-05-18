@@ -3,11 +3,8 @@ import { connect } from "react-redux";
 import mapboxgl from "mapbox-gl";
 import { RegionState, State } from "../../store/types";
 import * as R from "ramda";
-import { fetchCountryLayerRequest } from "../../store/actions/country-layer-actions";
 import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
-import { selectEndemicity, selectRegion } from "../../store/reducers/base-reducer";
-import { MapServerConfig } from "../../constants/constants";
-import config from "../../config";
+import { selectRegion } from "../../store/reducers/base-reducer";
 import { setRegionAction, setSelection } from "../../store/actions/base-actions";
 
 const REGION_LAYER_ID = "regions-layer";
@@ -30,13 +27,11 @@ const layer: any = {
 };
 
 const mapStateToProps = (state: State) => ({
-    endemicity: selectEndemicity(state),
     region: selectRegion(state),
     countryLayer: selectCountryLayer(state),
 });
 
 const mapDispatchToProps = {
-    fetchCountryLayer: fetchCountryLayerRequest,
     setSelection: setSelection,
     setRegion: setRegionAction,
 };
@@ -57,23 +52,16 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
 class RegionLayer extends Component<Props> {
-    componentDidMount(): void {
-        const { fetchCountryLayer } = this.props;
-        fetchCountryLayer();
-        const query =
-            "where=1%3D1&f=geojson&geometryPrecision=2.5&outFields=SUBREGION,REGION_FULL,CENTER_LAT,CENTER_LON,ISO_2_CODE";
-        const source: any = {
-            type: "geojson",
-            data: `${config.mapServerUrl}/${MapServerConfig.layers.countries}/query?${query}`,
-        };
+    componentDidUpdate(prevProps: Props) {
         const existing = this.props.map.getSource(REGION_SOURCE_ID);
-        if (!existing) {
-            this.props.map.addSource(REGION_SOURCE_ID, source);
+        if (!existing && this.props.countryLayer) {
+            this.props.map.addSource(REGION_SOURCE_ID, {
+                type: "geojson",
+                data: this.props.countryLayer,
+            });
             this.props.map.addLayer(layer);
         }
-    }
 
-    componentDidUpdate(prevProps: Props) {
         const { region, countryLayer } = this.props;
         if (prevProps.region !== region) {
             this.applyCountryUpdates(region);
