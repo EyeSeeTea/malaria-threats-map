@@ -133,7 +133,6 @@ export type UserInfo = {
     position: string;
     country: string;
     email: string;
-    phoneNumber: string;
 };
 
 export type WelcomeInfo = {
@@ -785,7 +784,7 @@ function DataDownload({
             position: userInfo.position,
             country: userInfo.country,
             email: userInfo.email,
-            phoneNumber: userInfo.phoneNumber,
+            phoneNumber: "",
             uses: useInfo.uses.map(use => t(`common:${use}`)).join(", "),
             researchInfo: useInfo.researchInfo || "",
             policiesInfo: useInfo.policiesInfo || "",
@@ -828,8 +827,7 @@ function DataDownload({
             userInfo.country &&
             userInfo.organizationType &&
             userInfo.organizationName &&
-            emailRegexp.test(userInfo.email) &&
-            userInfo.phoneNumber
+            emailRegexp.test(userInfo.email)
         );
     };
 

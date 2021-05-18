@@ -342,8 +342,7 @@
             "organization_name": "Organization Name",
             "position": "Position",
             "country": "Country of residency",
-            "email": "Email",
-            "phone": "Phone Number"
+            "email": "Email"
         },
         "step2": {
             "title": "Purpose of data download",

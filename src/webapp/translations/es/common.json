@@ -342,8 +342,7 @@
             "organization_name": "Nombre de la Organización",
             "position": "Position",
             "country": "País de residencia",
-            "email": "Email",
-            "phone": "Teléfono de contacto"
+            "email": "Email"
         },
         "step2": {
             "title": "Propósito de la descarga",
