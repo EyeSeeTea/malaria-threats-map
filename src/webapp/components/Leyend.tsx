@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 
 export { default as LegendContainer } from "./LegendContainer";
 
-export const LegendEntries = styled.div`
+const LegendEntries = styled.div`
     display: flex;
     flex-direction: column;
 `;
@@ -29,16 +29,17 @@ export const LegendTitleContainer = styled.div`
     margin-bottom: 8px;
 `;
 
-export const LegendFooterContainer = styled.div`
+const LegendFooterContainer = styled.div`
     display: flex;
     margin-top: 8px;
 `;
 
-export const LegendEntry = styled.div`
+const LegendEntry = styled.div`
     display: flex;
     align-items: center;
 `;
-export const LegendSymbol = styled.span<{ color: string; border?: boolean }>`
+
+const LegendSymbol = styled.span<{ color: string; border?: boolean }>`
     background-color: ${props => props.color};
     border-radius: 99999px;
     width: 12px;
@@ -49,16 +50,13 @@ export const LegendSymbol = styled.span<{ color: string; border?: boolean }>`
     margin-top: 6px;
     border: ${props => (props.border ? "solid 1px grey" : "none")};
 `;
-export const LegendText = styled.span`
+
+const LegendText = styled.span`
     line-height: 24px;
 `;
 
 export const LegendDescriptionText = styled.span`
     line-height: 18px;
-`;
-
-export const LegendTypography = styled(Typography)`
-    font-size: 0.8rem !important;
 `;
 
 export const LegendTitleTypography = styled(Typography)`
@@ -67,7 +65,8 @@ export const LegendTitleTypography = styled(Typography)`
 export const LegendSubtitleTypography = styled(Typography)`
     font-size: 0.8rem !important;
 `;
-export const LegendFooterTypography = styled(Typography)`
+
+const LegendFooterTypography = styled(Typography)`
     font-size: 0.7rem !important;
 `;
 
@@ -80,7 +79,7 @@ export function LegendFooter() {
     );
 }
 
-export interface LegendLabel {
+interface LegendLabel {
     label: string;
     color: string;
     border?: boolean;
@@ -118,12 +117,12 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function Leyend({ theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters, countryMode }: Props) {
+function Leyend({ theme, preventionFilters, treatmentFilters, invasiveFilters, countryMode }: Props) {
     switch (theme) {
         case "prevention":
             return resolvePreventionMapTypeLegend(preventionFilters, countryMode);
         case "diagnosis":
-            return resolveDiagnosisMapTypeLegend(diagnosisFilters, countryMode);
+            return resolveDiagnosisMapTypeLegend(countryMode);
         case "treatment":
             return resolveTreatmentMapTypeLegend(treatmentFilters, countryMode);
         case "invasive":

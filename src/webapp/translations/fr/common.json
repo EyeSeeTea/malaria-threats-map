@@ -213,6 +213,7 @@
     },
     "filters": {
         "filters": "Filtres",
+        "pfhrp23_note": "Dans les enquêtes, les critères de sélection des échantillons à tester pour les suppressions de <i> pfhrp 2/3 </i> varient; par conséquent, reportez-vous au rapport complet cité pour plus de détails.",
         "tabs": {
             "filters": "Filtres",
             "regions": "Régions"
@@ -269,7 +270,7 @@
         "select": "Sélectionner"
     },
     "citation": {
-        "no_citation": "Aucune donnée de citation disponible"
+        "unpublished_data": "Données non publiées"
     },
     "data_download": {
         "title": "Téléchargement de données",
@@ -341,8 +342,7 @@
             "organization_name": "Nom de l'organisation",
             "position": "Position",
             "country": "Pays de résidence",
-            "email": "Email",
-            "phone": "Téléphone de contact"
+            "email": "Email"
         },
         "step2": {
             "title": "But du téléchargement",

@@ -10,6 +10,7 @@ import { selectInvasiveStudiesLoading } from "../store/reducers/invasive-reducer
 import { selectTreatmentStudiesLoading } from "../store/reducers/treatment-reducer";
 import { connect } from "react-redux";
 import { selectDistrictsAreLoading } from "../store/reducers/districts-reducer";
+import { selectCountryLayerIsLoading } from "../store/reducers/country-layer-reducer";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -27,13 +28,12 @@ const mapStateToProps = (state: State) => ({
     treatmentLoading: selectTreatmentStudiesLoading(state),
     invasiveLoading: selectInvasiveStudiesLoading(state),
     districtsLoading: selectDistrictsAreLoading(state),
+    countriesLoading: selectCountryLayerIsLoading(state),
 });
 
-const mapDispatchToProps = {};
 type OwnProps = {};
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
 function SimpleBackdrop(props: Props) {
     const classes = useStyles(props);
@@ -41,13 +41,13 @@ function SimpleBackdrop(props: Props) {
     const isLoading = () => {
         switch (props.theme) {
             case "prevention":
-                return props.preventionLoading || props.districtsLoading;
+                return props.preventionLoading || props.districtsLoading || props.countriesLoading;
             case "diagnosis":
-                return props.diagnosisLoading;
+                return props.diagnosisLoading || props.countriesLoading;
             case "treatment":
-                return props.treatmentLoading;
+                return props.treatmentLoading || props.countriesLoading;
             case "invasive":
-                return props.invasiveLoading;
+                return props.invasiveLoading || props.countriesLoading;
             default:
                 return false;
         }
@@ -62,4 +62,4 @@ function SimpleBackdrop(props: Props) {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SimpleBackdrop);
+export default connect(mapStateToProps)(SimpleBackdrop);

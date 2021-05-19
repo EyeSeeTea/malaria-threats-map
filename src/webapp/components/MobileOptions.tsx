@@ -8,8 +8,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import Slide from "@material-ui/core/Slide";
-import { TransitionProps } from "@material-ui/core/transitions";
+import Slide, { SlideProps } from "@material-ui/core/Slide";
 import { State } from "../store/types";
 import { selectAreMobileOptionsOpen } from "../store/reducers/base-reducer";
 import { setMobileOptionsOpen } from "../store/actions/base-actions";
@@ -35,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const Transition = React.forwardRef<unknown, TransitionProps>(function Transition(props, ref) {
+const Transition = React.forwardRef<unknown, SlideProps>((props, ref) => {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
@@ -45,10 +44,9 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
 };
-type OwnProps = {};
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = DispatchProps & StateProps;
 
 function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
     const classes = useStyles({});

@@ -124,7 +124,10 @@ class InvasiveLayer extends Component<Props> {
 
     setupGeoJsonData = (studies: any[]) => {
         const { mapType } = this.props.invasiveFilters;
-        const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
+        const groupedStudies = R.groupBy(
+            R.path<string>(["SITE_ID"]),
+            studies
+        );
         const filteredStudies = R.values(groupedStudies).map(group => studySelector(group, mapType));
         return filteredStudies;
     };
@@ -162,7 +165,10 @@ class InvasiveLayer extends Component<Props> {
     };
 
     getCountryStudies = (studies: any[] = []) => {
-        const countryStudies = R.groupBy(R.path(["ISO2"]), studies);
+        const countryStudies = R.groupBy(
+            R.path<string>(["ISO2"]),
+            studies
+        );
         const countries = this.props.countries
             .map((country, index) => ({
                 ...country,
@@ -175,10 +181,6 @@ class InvasiveLayer extends Component<Props> {
 
         const sortedCountries = R.sortBy(country => country.STUDIES, countries);
         if (sortedCountries.length === 0) return [];
-        // const maxSize = sortedCountries[sortedCountries.length - 1].STUDIES;
-        // const minSize = sortedCountries[0].STUDIES;
-        //
-        // const ratio = (20 - 5) / (maxSize - minSize);
 
         const getSize = (nStudies: number) => {
             if (nStudies > 50) {
@@ -196,8 +198,6 @@ class InvasiveLayer extends Component<Props> {
 
         return countries.map(country => ({
             ...country,
-            // SIZE: 5 + ratio * (country.STUDIES - minSize),
-            // SIZE_HOVER: 5 + ratio * (country.STUDIES - minSize)
             SIZE: getSize(country.STUDIES),
             SIZE_HOVER: getSize(country.STUDIES) - 1,
         }));

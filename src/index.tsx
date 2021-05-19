@@ -5,7 +5,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./webapp/App";
-import * as serviceWorker from "./serviceWorker";
 import "./webapp/config/i18next";
 import ReactGA from "react-ga";
 import { initHotjar } from "./hotjar";
@@ -25,16 +24,11 @@ interface Hotjar {
 const { gaAppId, hotjar: hotjarConfig } = config;
 
 if (hotjarConfig) {
-    initHotjar(hotjarConfig.hjid, hotjarConfig.hjsv, true);
+    initHotjar(hotjarConfig.hjid, hotjarConfig.hjsv, false);
 }
 
 ReactGA.initialize(gaAppId, {
-    debug: true,
+    debug: false,
 });
 
 ReactDOM.render(<App />, document.getElementById("root"));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();

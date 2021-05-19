@@ -3,11 +3,8 @@ import { connect } from "react-redux";
 import mapboxgl from "mapbox-gl";
 import { RegionState, State } from "../../store/types";
 import * as R from "ramda";
-import { fetchCountryLayerRequest } from "../../store/actions/country-layer-actions";
 import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
-import { selectEndemicity, selectRegion } from "../../store/reducers/base-reducer";
-import { MapServerConfig } from "../../constants/constants";
-import config from "../../config";
+import { selectRegion } from "../../store/reducers/base-reducer";
 import { setRegionAction, setSelection } from "../../store/actions/base-actions";
 
 const REGION_LAYER_ID = "regions-layer";
@@ -30,13 +27,11 @@ const layer: any = {
 };
 
 const mapStateToProps = (state: State) => ({
-    endemicity: selectEndemicity(state),
     region: selectRegion(state),
     countryLayer: selectCountryLayer(state),
 });
 
 const mapDispatchToProps = {
-    fetchCountryLayer: fetchCountryLayerRequest,
     setSelection: setSelection,
     setRegion: setRegionAction,
 };
@@ -45,7 +40,7 @@ interface OwnProps {
     map: any;
 }
 
-export const MEKONG_BOUNDS: [number, number, number, number] = [
+const MEKONG_BOUNDS: [number, number, number, number] = [
     71.67568318434894,
     -10.1059286413618565,
     129.04037704012393,
@@ -57,23 +52,16 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
 class RegionLayer extends Component<Props> {
-    componentDidMount(): void {
-        const { fetchCountryLayer } = this.props;
-        fetchCountryLayer();
-        const query =
-            "where=1%3D1&f=geojson&geometryPrecision=2.5&outFields=SUBREGION,REGION_FULL,CENTER_LAT,CENTER_LON,ISO_2_CODE";
-        const source: any = {
-            type: "geojson",
-            data: `${config.mapServerUrl}/${MapServerConfig.layers.countries}/query?${query}`,
-        };
+    componentDidUpdate(prevProps: Props) {
         const existing = this.props.map.getSource(REGION_SOURCE_ID);
-        if (!existing) {
-            this.props.map.addSource(REGION_SOURCE_ID, source);
+        if (!existing && this.props.countryLayer) {
+            this.props.map.addSource(REGION_SOURCE_ID, {
+                type: "geojson",
+                data: this.props.countryLayer,
+            });
             this.props.map.addLayer(layer);
         }
-    }
 
-    componentDidUpdate(prevProps: Props) {
         const { region, countryLayer } = this.props;
         if (prevProps.region !== region) {
             this.applyCountryUpdates(region);
@@ -99,22 +87,6 @@ class RegionLayer extends Component<Props> {
         } else if (region.site) {
             this.zoomToSite(region.site, region.siteIso2, region.siteCoordinates);
         } else {
-            // const location = {
-            //   center: [-16.629129, 28.291565],
-            //   zoom: 2
-            // };
-            // this.props.map.flyTo(location, {
-            //   padding: 100
-            // });
-            // this.zoomToCountry(region.country);
-
-            const mekong = config.mekong;
-            if (mekong) {
-                this.props.setRegion({
-                    subRegion: "GREATER_MEKONG",
-                });
-            }
-
             this.hideLayer();
         }
     };
@@ -176,11 +148,9 @@ class RegionLayer extends Component<Props> {
     zoomToSubRegion = (subRegion: string) => {
         const { countryLayer } = this.props;
         if (subRegion === "GREATER_MEKONG") {
-            if (!config.mekong) {
-                this.props.map.fitBounds(MEKONG_BOUNDS, {
-                    padding: 100,
-                });
-            }
+            this.props.map.fitBounds(MEKONG_BOUNDS, {
+                padding: 100,
+            });
             return;
         }
         if (!countryLayer) return;
@@ -208,7 +178,7 @@ class RegionLayer extends Component<Props> {
     zoomToSite = (site: string, iso2: string, coords: [number, number]) => {
         const coordinates: [number, number] = [coords[1], coords[0]];
 
-        this.props.map.once("moveend", () => {
+        this.props.map.once("moveend", ({ _originalEvent }: any) => {
             const selection = {
                 ISO_2_CODE: iso2,
                 SITE_ID: site,

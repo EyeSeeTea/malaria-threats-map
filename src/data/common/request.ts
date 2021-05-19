@@ -2,9 +2,9 @@ import { AxiosBuilder, axiosRequest } from "./future-axios";
 import { AxiosRequestConfig } from "axios";
 import { Future } from "../../common/Future";
 
-export type DefaultError = { message: string };
+type DefaultError = { message: string };
 
-export const defaultBuilder: AxiosBuilder<DefaultError> = {
+const defaultBuilder: AxiosBuilder<DefaultError> = {
     mapResponse: res => {
         if (res.status >= 200 && res.status < 300 && res.data) {
             return ["success", res.data];

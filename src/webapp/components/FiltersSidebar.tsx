@@ -1,15 +1,10 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import { AppBar, Toolbar, IconButton, Tabs, Tab, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import { FilterIconSimple, GlobeIcon } from "./Icons";
 import CloseIcon from "@material-ui/icons/ArrowBack";
 import CountrySelector from "./filters/CountrySelector";
 import ResistanceStatusFilters from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
 import styled from "styled-components";
-import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import { DiagnosisMapType, InvasiveMapType, PreventionMapType, State, TreatmentMapType } from "../store/types";
 import { selectFiltersMode, selectLastUpdatedDates, selectTheme } from "../store/reducers/base-reducer";
 import { selectFilteredPreventionStudies, selectPreventionFilters } from "../store/reducers/prevention-reducer";
@@ -31,7 +26,6 @@ import RegionSelector from "./filters/RegionSelector";
 import SubRegionSelector from "./filters/SubRegionSelector";
 import { SuccessSnackbar, WarningSnackbar } from "./Filters";
 import { useTranslation } from "react-i18next";
-import config from "../config";
 import SiteSelector from "./filters/SiteSelector";
 
 const FiltersWrapper = styled.div`
@@ -240,12 +234,8 @@ const FiltersSidebar = ({
                 ) : (
                     <>
                         <CountrySelector />
-                        {!config.mekong && (
-                            <>
-                                <RegionSelector />
-                                <SubRegionSelector />
-                            </>
-                        )}
+                        <RegionSelector />
+                        <SubRegionSelector />
                         <SiteSelector />
                     </>
                 )}

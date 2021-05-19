@@ -47,11 +47,11 @@ const GeneDeletionCountryChart = ({ studies, setRegion, setCountryMode, diagnosi
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
-                {t(`diagnosis.chart.gene_deletions.content_1`, {
-                    nStudies: nStudies,
+                {t("diagnosis.chart.gene_deletions.content_1", {
+                    nStudies,
                 })}{" "}
                 <i>P. falciparum</i>{" "}
-                {t(`diagnosis.chart.gene_deletions.content_2`, {
+                {t("diagnosis.chart.gene_deletions.content_2", {
                     deletionType: t(diagnosisFilters.deletionType).toLowerCase(),
                     surveyTypes: formatList(surveyTypes.map(st => t(st))),
                     years: formatYears(minYear, maxYear),

@@ -12,17 +12,13 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
 });
 
-const mapDispatchToProps = {};
-
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
 
 const Wrapper = styled.div`
     min-width: 250px;
 `;
 
-export class MapTypesSelector extends Component<Props> {
+class MapTypesSelector extends Component<StateProps> {
     render() {
         const { theme } = this.props;
         return (
@@ -36,4 +32,4 @@ export class MapTypesSelector extends Component<Props> {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MapTypesSelector);
+export default connect(mapStateToProps)(MapTypesSelector);

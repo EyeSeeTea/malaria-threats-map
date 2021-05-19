@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Layers from "./Layers";
 import mapboxgl from "mapbox-gl";
 import { isMobile } from "react-device-detect";
-
 import { PreventionMapType, State } from "../store/types";
 import { connect } from "react-redux";
 import PreventionLayer from "./layers/prevention/PreventionLayer";
@@ -15,7 +14,7 @@ import EndemicityLayer from "./layers/EndemicityLayer";
 import Filters from "./Filters";
 import MapTypesSelector from "./MapTypesSelector";
 import TopicSelector from "./TopicSelector";
-import RegionLayer, { MEKONG_BOUNDS } from "./layers/RegionLayer";
+import RegionLayer from "./layers/RegionLayer";
 import WhoLogo from "./WhoLogo";
 import {
     selectAny,
@@ -47,7 +46,6 @@ import StoryModeSelector from "./StoryModeSelector";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
 import MalariaTour from "./tour/MalariaTour";
 import MekongLayer from "./layers/MekongLayer";
-import config from "../config";
 import DataDownload from "./DataDownload";
 import CountrySelectorLayer from "./layers/CountrySelectorLayer";
 import LabelsLayer from "./layers/LabelsLayer";
@@ -131,43 +129,6 @@ const Divider = styled.div`
     height: 10px;
 `;
 
-export const debounce = <F extends (...args: any[]) => any>(func: F, waitFor: number) => {
-    let timeout: NodeJS.Timeout;
-
-    return (...args: Parameters<F>): Promise<ReturnType<F>> =>
-        new Promise(resolve => {
-            if (timeout) {
-                clearTimeout(timeout);
-            }
-
-            timeout = setTimeout(() => resolve(func(...args)), waitFor);
-        });
-};
-
-export const debounceTimes = <F extends (...args: any[]) => any>(func: F, times: number) => {
-    let counter = 0;
-    return (...args: Parameters<F>): Promise<ReturnType<F>> =>
-        new Promise(resolve => {
-            counter = counter + 1;
-            if (counter >= times) {
-                resolve(func(...args));
-            }
-        });
-};
-
-export const throttle = <F extends (...args: any[]) => any>(f: F, t: number) => {
-    let lastCall: any;
-    return (...args: Parameters<F>): ReturnType<F> => {
-        const previousCall = lastCall;
-        lastCall = Date.now();
-        if (previousCall === undefined || lastCall - previousCall > t) {
-            return f(args);
-        }
-    };
-};
-
-const mekong = config.mekong;
-
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     any: selectAny(state),
@@ -195,8 +156,7 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type OwnProps = {};
-type Props = StateProps & OwnProps & DispatchProps;
+type Props = StateProps & DispatchProps;
 
 class Map extends React.Component<Props> {
     map: mapboxgl.Map;
@@ -223,7 +183,7 @@ class Map extends React.Component<Props> {
             maxZoom: 8.99999,
             minZoom: 1,
             zoom: 2,
-            maxBounds: mekong ? MEKONG_BOUNDS : undefined,
+            maxBounds: undefined,
             preserveDrawingBuffer: true,
         });
         this.map.dragRotate.disable();
@@ -239,11 +199,9 @@ class Map extends React.Component<Props> {
                 !this.props.region.region
             ) {
                 const [[b0, b1], [b2, b3]] = this.props.setBounds;
-                if (!mekong) {
-                    this.map.fitBounds([b0, b1, b2, b3], {
-                        padding: 100,
-                    });
-                }
+                this.map.fitBounds([b0, b1, b2, b3], {
+                    padding: 100,
+                });
             }
         });
         this.map.on("moveend", () => {
@@ -251,20 +209,13 @@ class Map extends React.Component<Props> {
             this.props.updateBounds(cc);
         });
 
-        if (mekong && !this.props.region.site) {
-            this.props.setTheme("treatment");
-            this.props.setRegion({
-                subRegion: "GREATER_MEKONG",
-            });
-        }
-
         const pageView = getAnalyticsPageViewFromString({ page: this.props.theme });
         if (pageView && !this.props.initialDialogOpen) {
             sendAnalytics({ type: "pageView", ...pageView });
         }
     }
 
-    componentDidUpdate(prevProps: any): void {
+    componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {
         if (this.props.setBounds !== prevProps.setBounds) {
             const [[b0, b1], [b2, b3]] = this.props.setBounds;
             this.map.fitBounds([b0, b1, b2, b3], {
@@ -308,23 +259,19 @@ class Map extends React.Component<Props> {
                 <Fade in={showOptions}>
                     <SearchContainer>
                         <Hidden xsDown>
-                            {!mekong && (
-                                <>
-                                    <div id={"third"}>
-                                        <TopicSelector />
-                                    </div>
-                                    <Divider />
-                                </>
-                            )}
+                            <div id={"third"}>
+                                <TopicSelector />
+                            </div>
+                            <Divider />
                             <MapTypesSelector />
                             <Divider />
                             <Filters />
-                            {!mekong && <MalariaTour />}
+                            <MalariaTour />
                         </Hidden>
-                        {!mekong && <TheaterModeIcon />}
-                        {!mekong && <Layers />}
-                        {!mekong && <Country disabled={isInvasive} />}
-                        {!mekong && !isMobile && <DataDownload />}
+                        <TheaterModeIcon />
+                        <Layers />
+                        <Country disabled={isInvasive} />
+                        {!isMobile && <DataDownload />}
                         <Hidden smUp>
                             <ShareIcon />
                         </Hidden>
@@ -338,10 +285,10 @@ class Map extends React.Component<Props> {
                     <Fade in={showOptions}>
                         <TopRightContainer>
                             <StoryModeSelector />
-                            {!mekong && <InitialDisclaimer />}
-                            {!mekong && <Subscription />}
-                            {!mekong && <Feedback />}
-                            {!mekong && <TourIcon />}
+                            <InitialDisclaimer />
+                            <Subscription />
+                            <Feedback />
+                            <TourIcon />
                             <Separator />
                             {showOptions && <LanguageSelectorSelect section="menu" />}
                         </TopRightContainer>
@@ -351,9 +298,9 @@ class Map extends React.Component<Props> {
                     <Fade in={showOptions}>
                         <TopRightVerticalContainer>
                             <StoryModeSelector />
-                            {!mekong && <InitialDisclaimer />}
-                            {!mekong && <Subscription />}
-                            {!mekong && <Feedback />}
+                            <InitialDisclaimer />
+                            <Subscription />
+                            <Feedback />
                         </TopRightVerticalContainer>
                     </Fade>
                 </Hidden>

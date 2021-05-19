@@ -1,7 +1,16 @@
 import React from "react";
-import { Card, createStyles, FormControl, InputLabel, makeStyles, MenuItem, TextField, Theme } from "@material-ui/core";
+import {
+    Card,
+    createStyles,
+    FormControl,
+    InputLabel,
+    makeStyles,
+    MenuItem,
+    TextField,
+    Theme,
+    Select,
+} from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import Select from "@material-ui/core/Select";
 import { State } from "../../store/types";
 import { selectCountries } from "../../store/reducers/translations-reducer";
 import { connect } from "react-redux";
@@ -37,14 +46,12 @@ const mapStateToProps = (state: State) => ({
     countries: selectCountries(state),
 });
 
-const mapDispatchToProps = {};
 type OwnProps = {
     userInfo: Partial<UserInfo>;
     onChange: (key: keyof UserInfo, value: any) => void;
 };
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
 const UserForm = ({ countries: baseCountries, onChange, userInfo }: Props) => {
     const classes = useStyles({});
@@ -143,18 +150,8 @@ const UserForm = ({ countries: baseCountries, onChange, userInfo }: Props) => {
                     onChange={event => onChange("email", event.target.value as string)}
                 />
             </FormControl>
-            <FormControl fullWidth className={classes.formControl}>
-                <TextField
-                    label={t("data_download.step1.phone") + "*"}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    value={userInfo.phoneNumber}
-                    onChange={event => onChange("phoneNumber", event.target.value as string)}
-                />
-            </FormControl>
         </Card>
     );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserForm);
+export default connect(mapStateToProps)(UserForm);

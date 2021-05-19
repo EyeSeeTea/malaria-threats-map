@@ -5,6 +5,7 @@ import { DiagnosisStudy } from "../../domain/entities/DiagnosisStudy";
 import { PreventionStudy } from "../../domain/entities/PreventionStudy";
 import { TreatmentStudy } from "../../domain/entities/TreatmentStudy";
 import { InvasiveStudy } from "../../domain/entities/InvasiveStudy";
+import { CountryLayer, CountryProperties } from "../../domain/entities/CountryLayer";
 
 export interface State {
     malaria: MalariaState;
@@ -152,9 +153,9 @@ export interface InvasiveState {
 }
 
 export interface CountryLayerState {
-    layer: any | null;
+    layer: CountryLayer | null;
     loading: boolean;
-    countries: any[];
+    countries: CountryProperties[];
 }
 
 export interface SiteSelection {
@@ -163,7 +164,7 @@ export interface SiteSelection {
     coordinates: [number, number];
 }
 
-export interface TourState {
+interface TourState {
     open: boolean;
     step: number;
 }

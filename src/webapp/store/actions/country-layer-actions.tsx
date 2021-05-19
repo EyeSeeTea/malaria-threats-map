@@ -1,13 +1,13 @@
 import { createAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import { AjaxError } from "rxjs/ajax";
+import { CountryLayer } from "../../../domain/entities/CountryLayer";
 
 export const fetchCountryLayerRequest = createAction(ActionTypeEnum.FetchCountryLayerRequest, action => {
     return () => action();
 });
 export const fetchCountryLayerSuccess = createAction(ActionTypeEnum.FetchCountryLayerSuccess, action => {
-    return (response: any) => action(response);
+    return (response: CountryLayer) => action(response);
 });
 export const fetchCountryLayerError = createAction(ActionTypeEnum.FetchCountryLayerError, action => {
-    return (_error: AjaxError) => action();
+    return () => action();
 });

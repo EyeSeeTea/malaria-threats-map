@@ -6,19 +6,27 @@ import setupEffects from "./effects";
 import { setRegionAction } from "../../store/actions/base-actions";
 import * as R from "ramda";
 import { studySelector } from "./prevention/utils";
-import { selectPreventionFilters, selectPreventionStudies } from "../../store/reducers/prevention-reducer";
+import {
+    selectPreventionFilters,
+    selectPreventionStudies,
+    selectPreventionStudiesError,
+    selectPreventionStudiesLoading,
+} from "../../store/reducers/prevention-reducer";
 import {
     PboDeploymentColors,
     PboDeploymentCountriesStatus,
 } from "./prevention/PboDeployment/PboDeploymentCountriesSymbols";
-import { selectCountryMode, selectFilters, selectRegion } from "../../store/reducers/base-reducer";
+import { selectCountryMode, selectFilters, selectRegion, selectTheme } from "../../store/reducers/base-reducer";
 import { PboDeploymentStatus } from "./prevention/PboDeployment/PboDeploymentSymbols";
 import { PBO_ENDEMICITY_LAYER_ID } from "./PBOEndemicityLayer";
 import { buildPreventionFilters } from "./studies-filters";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
+import { CountryFeature } from "../../../domain/entities/CountryLayer";
+import { fetchPreventionStudiesRequest } from "../../store/actions/prevention-actions";
+import { PREVENTION } from "./prevention/PreventionLayer";
 
-export const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
-export const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
+const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
+const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
 
 const layer: any = {
     id: COUNTRY_SELECTOR_LAYER_ID,
@@ -48,6 +56,9 @@ const layer: any = {
 const mapStateToProps = (state: State) => ({
     countries: selectCountryLayer(state),
     studies: selectPreventionStudies(state),
+    studiesLoading: selectPreventionStudiesLoading(state),
+    studiesError: selectPreventionStudiesError(state),
+    theme: selectTheme(state),
     region: selectRegion(state),
     countryMode: selectCountryMode(state),
     preventionFilters: selectPreventionFilters(state),
@@ -56,6 +67,7 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setRegion: setRegionAction,
+    fetchPreventionStudies: fetchPreventionStudiesRequest,
 };
 
 type OwnProps = {
@@ -69,12 +81,14 @@ type Props = DispatchProps & StateProps & OwnProps;
 class CountrySelectorLayer extends Component<Props> {
     componentDidMount(): void {
         if (this.props.countryMode) {
+            this.loadStudiesIfRequired();
             this.mountLayer();
         }
     }
 
     componentDidUpdate(prev: Props) {
         if (prev.countryMode) {
+            this.loadStudiesIfRequired();
             this.mountLayer();
         }
     }
@@ -89,6 +103,16 @@ class CountrySelectorLayer extends Component<Props> {
         return filters.reduce((studies, filter) => studies.filter(filter), studies);
     };
 
+    loadStudiesIfRequired() {
+        const { theme, studies, studiesLoading, studiesError } = this.props;
+
+        const required = theme === PREVENTION && studies.length === 0 && !studiesLoading && !studiesError;
+
+        if (required) {
+            this.props.fetchPreventionStudies();
+        }
+    }
+
     mountLayer = () => {
         const studies = this.filterStudies(this.props.studies);
 
@@ -98,12 +122,18 @@ class CountrySelectorLayer extends Component<Props> {
                 data: this.props.countries,
             };
 
-            const groupedStudies = R.groupBy(R.path(["SITE_ID"]), studies);
+            const groupedStudies = R.groupBy(
+                R.path<string>(["SITE_ID"]),
+                studies
+            );
             const filteredStudies = R.values(groupedStudies).map(group =>
                 studySelector(group, PreventionMapType.PBO_DEPLOYMENT)
             );
 
-            const studiesByCountry = R.groupBy(R.path(["ISO2"]), filteredStudies);
+            const studiesByCountry = R.groupBy(
+                R.path<string>(["ISO2"]),
+                filteredStudies
+            );
 
             const { ELIGIBLE, NOT_ENOUGH_DATA, NOT_ELIGIBLE } = PboDeploymentCountriesStatus;
 
@@ -122,8 +152,8 @@ class CountrySelectorLayer extends Component<Props> {
                 {}
             );
             const features = this.props.countries.features
-                .filter((feature: any) => feature.properties.ISO_2_CODE !== this.props.region.country)
-                .map((feature: any) => {
+                .filter((feature: CountryFeature) => feature.properties.ISO_2_CODE !== this.props.region.country)
+                .map((feature: CountryFeature) => {
                     const newFeature = { ...feature };
                     if (newFeature.properties.ENDEMICITY === 0) {
                         return newFeature;
@@ -151,7 +181,7 @@ class CountrySelectorLayer extends Component<Props> {
             if (existing) {
                 existing.setData({
                     type: "FeatureCollection",
-                    features: features,
+                    features,
                 });
                 this.showLayer();
                 return;

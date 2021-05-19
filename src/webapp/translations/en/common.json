@@ -213,6 +213,7 @@
     },
     "filters": {
         "filters": "Filters",
+        "pfhrp23_note": "Across surveys, the criteria for selecting samples to test for <i>pfhrp 2/3</i> deletions varies; therefore, refer to the full report cited for more details.",
         "tabs": {
             "filters": "Filters",
             "regions": "Regions"
@@ -269,7 +270,7 @@
         "select": "Select"
     },
     "citation": {
-        "no_citation": "No citation data available"
+        "unpublished_data": "Unpublished data"
     },
     "data_download": {
         "title": "Data download",
@@ -341,8 +342,7 @@
             "organization_name": "Organization Name",
             "position": "Position",
             "country": "Country of residency",
-            "email": "Email",
-            "phone": "Phone Number"
+            "email": "Email"
         },
         "step2": {
             "title": "Purpose of data download",

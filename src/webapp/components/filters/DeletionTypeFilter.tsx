@@ -42,7 +42,7 @@ class DeletionTypeFilter extends Component<Props, any> {
         return (
             <FilterWrapper>
                 <FormLabel component="legend">
-                    <T i18nKey={`filters.deletion_type`} />
+                    <T i18nKey={"filters.deletion_type"} />
                 </FormLabel>
                 <Divider />
                 <IntegrationReactSelect suggestions={suggestions} onChange={this.onChange} value={selection} />

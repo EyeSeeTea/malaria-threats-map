@@ -18,7 +18,7 @@
     "cards": {
         "prevention": "La resistencia de los parásitos a la artemisinina - el compuesto básico de los mejores medicamentos antipalúdicos disponibles en el mercado - amenaza la eficacia de estos medicamentos.",
         "diagnosis": "Las deleciones genéticas entre algunos parásitos del paludismo causan falsos negativos en las pruebas diagnósticas, complicando el manejo y control de casos.",
-        "treatment": "ResistanceLa resistencia de los parásitos a la artemisinina - el compuesto básico de los mejores medicamentos antipalúdicos disponibles - amenaza la eficacia de los medicamentos antipalúdicos.",
+        "treatment": "La resistencia de los parásitos a la artemisinina - el compuesto básico de los mejores medicamentos antipalúdicos disponibles - amenaza la eficacia de los medicamentos antipalúdicos.",
         "invasive": "La propagación de las especies de vectores anofelinos, y su establecimiento en ecosistemas donde no son nativos, plantea una potencial amenaza para el control y la eliminación de la malaria."
     },
     "prevention": {
@@ -213,6 +213,7 @@
     },
     "filters": {
         "filters": "Filtros",
+        "pfhrp23_note": "Entre las encuestas, los criterios para seleccionar muestras para probar las eliminaciones de <i> pfhrp 2/3 </i> varían; por lo tanto, consulte el informe completo citado para obtener más detalles.",
         "tabs": {
             "filters": "Filtros",
             "regions": "Regiones"
@@ -269,7 +270,7 @@
         "select": "Seleccione"
     },
     "citation": {
-        "no_citation": "Referencia no disponible"
+        "unpublished_data": "Datos no publicados"
     },
     "data_download": {
         "title": "Descarga de datos",
@@ -341,8 +342,7 @@
             "organization_name": "Nombre de la Organización",
             "position": "Position",
             "country": "País de residencia",
-            "email": "Email",
-            "phone": "Teléfono de contacto"
+            "email": "Email"
         },
         "step2": {
             "title": "Propósito de la descarga",

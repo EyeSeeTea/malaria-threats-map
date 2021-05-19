@@ -36,14 +36,12 @@ const mapStateToProps = (state: State) => ({
     preventionMapType: selectPreventionFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
 });
-const mapDispatchToProps = {};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     map: mapboxgl.Map;
 };
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
 function Screenshot({ map, theme, title }: Props) {
     const { t } = useTranslation("common");
@@ -152,9 +150,9 @@ function Screenshot({ map, theme, title }: Props) {
 
             const pdfAsArray = convertDataURIToBinary(file);
 
-            PdfJs.disableWorker = true;
+            //PdfJs.disableWorker = true;
             PdfJs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.3.200/pdf.worker.js`;
-            PdfJs.getDocument(pdfAsArray).then((pdf: any) => {
+            PdfJs.getDocument(pdfAsArray).promise.then((pdf: any) => {
                 pdf.getPage(1).then((page: any) => {
                     const viewport = page.getViewport(2.5);
                     const canvas = document.createElement("canvas");
@@ -181,4 +179,4 @@ function Screenshot({ map, theme, title }: Props) {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Screenshot);
+export default connect(mapStateToProps)(Screenshot);

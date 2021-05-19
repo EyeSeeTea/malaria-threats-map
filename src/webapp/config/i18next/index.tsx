@@ -14,9 +14,6 @@ import legend_fr from "../../translations/fr/legend.json";
 import tour_en from "../../translations/en/tour.json";
 import tour_es from "../../translations/es/tour.json";
 import tour_fr from "../../translations/fr/tour.json";
-import mekong_en from "../../translations/en/mekong.json";
-import mekong_es from "../../translations/es/mekong.json";
-import mekong_fr from "../../translations/fr/mekong.json";
 import download_en from "../../translations/en/download.json";
 import download_es from "../../translations/es/download.json";
 import download_fr from "../../translations/fr/download.json";
@@ -56,7 +53,6 @@ i18next.init({
             disclaimerTab: disclaimerTab_en,
             legend: legend_en,
             tour: tour_en,
-            mekong: mekong_en,
             download: download_en,
             utils: utils_en,
             invasive: invasiveStory_en,
@@ -71,7 +67,6 @@ i18next.init({
             disclaimerTab: disclaimerTab_es,
             legend: legend_es,
             tour: tour_es,
-            mekong: mekong_es,
             download: download_es,
             utils: utils_es,
             invasive: invasiveStory_es,
@@ -86,7 +81,6 @@ i18next.init({
             disclaimerTab: disclaimerTab_fr,
             legend: legend_fr,
             tour: tour_fr,
-            mekong: mekong_fr,
             download: download_fr,
             utils: utils_fr,
             invasive: invasiveStory_fr,

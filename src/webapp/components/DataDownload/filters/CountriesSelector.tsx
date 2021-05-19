@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { selectCountryLayer } from "../../../store/reducers/country-layer-reducer";
 import { State } from "../../../store/types";
 import { Translation } from "../../../types/Translation";
 import IntegrationReactSelect, { OptionType } from "../../BasicSelect";
@@ -11,7 +10,6 @@ import { Divider, FilterWrapper } from "../../filters/Filters";
 import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({
-    countryLayer: selectCountryLayer(state),
     countries: selectCountries(state),
 });
 

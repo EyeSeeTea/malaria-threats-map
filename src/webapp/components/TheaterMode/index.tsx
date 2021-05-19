@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
-import { Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
+import { Paper, IconButton, Slider } from "@material-ui/core";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import CloseIcon from "@material-ui/icons/Close";
-import Slider from "@material-ui/core/Slider";
 import { setFiltersAction, setTheaterModeAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
@@ -71,7 +69,7 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
     const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
 
     useEffect(() => {
-        let interval: number;
+        let interval: NodeJS.Timeout;
         if (isPlaying) {
             interval = setInterval(() => {
                 setYear(year => {

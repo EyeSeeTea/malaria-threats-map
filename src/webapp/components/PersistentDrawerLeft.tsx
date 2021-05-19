@@ -29,7 +29,6 @@ import { colors } from "../constants/theme";
 import MapTypesSelector from "./MapTypesSelector";
 import MobileOptions from "./MobileOptions";
 import Loader from "./Loader";
-import config from "../config";
 
 interface ThemeProps {
     drawerWidth: string;
@@ -180,7 +179,7 @@ function PersistentDrawerLeft({
 
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 
-    const onChange = (_event: React.ChangeEvent<{}>, newValue: number) => {
+    const onChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         switch (newValue) {
             case 0:
                 setTheme("prevention");
@@ -248,41 +247,39 @@ function PersistentDrawerLeft({
                     </MapWrapper>
                     <Disclaimer />
                     <Hidden smUp>
-                        {!config.mekong && (
-                            <AppBar position="static" color="default">
-                                <Tabs
-                                    value={themes.indexOf(theme)}
-                                    onChange={onChange}
-                                    indicatorColor="primary"
-                                    textColor="primary"
-                                    variant="fullWidth"
-                                    aria-label="full width tabs example"
-                                    TabIndicatorProps={{
-                                        style: {
-                                            backgroundColor: colors[theme].N,
-                                        },
-                                    }}
-                                >
-                                    <StyledTab
-                                        color={theme === "prevention" ? colors.prevention.N : undefined}
-                                        icon={<PreventionIcon active={theme === "prevention"} size={36} />}
-                                    />
-                                    <StyledTab
-                                        color={theme === "diagnosis" ? colors.diagnosis.N : undefined}
-                                        icon={<DiagnosisIcon active={theme === "diagnosis"} size={36} />}
-                                    />
-                                    <StyledTab
-                                        color={theme === "treatment" ? colors.treatment.N : undefined}
-                                        icon={<TreatmentIcon active={theme === "treatment"} size={36} />}
-                                    />
-                                    <StyledTab
-                                        label=""
-                                        color={theme === "invasive" ? colors.invasive.N : undefined}
-                                        icon={<InvasiveIcon active={theme === "invasive"} size={36} />}
-                                    />
-                                </Tabs>
-                            </AppBar>
-                        )}
+                        <AppBar position="static" color="default">
+                            <Tabs
+                                value={themes.indexOf(theme)}
+                                onChange={onChange}
+                                indicatorColor="primary"
+                                textColor="primary"
+                                variant="fullWidth"
+                                aria-label="full width tabs example"
+                                TabIndicatorProps={{
+                                    style: {
+                                        backgroundColor: colors[theme].N,
+                                    },
+                                }}
+                            >
+                                <StyledTab
+                                    color={theme === "prevention" ? colors.prevention.N : undefined}
+                                    icon={<PreventionIcon active={theme === "prevention"} size={36} />}
+                                />
+                                <StyledTab
+                                    color={theme === "diagnosis" ? colors.diagnosis.N : undefined}
+                                    icon={<DiagnosisIcon active={theme === "diagnosis"} size={36} />}
+                                />
+                                <StyledTab
+                                    color={theme === "treatment" ? colors.treatment.N : undefined}
+                                    icon={<TreatmentIcon active={theme === "treatment"} size={36} />}
+                                />
+                                <StyledTab
+                                    label=""
+                                    color={theme === "invasive" ? colors.invasive.N : undefined}
+                                    icon={<InvasiveIcon active={theme === "invasive"} size={36} />}
+                                />
+                            </Tabs>
+                        </AppBar>
                         <MobileOptions />
                     </Hidden>
                 </PageWrapper>

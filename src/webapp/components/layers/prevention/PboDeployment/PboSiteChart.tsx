@@ -20,14 +20,12 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     preventionFilters: selectPreventionFilters(state),
 });
-const mapDispatchToProps = {};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     studies: PreventionStudy[];
 };
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
 const StyledHeaderCell = styled(TableCell)<{ borderLeft?: boolean }>`
     ${props => (props.borderLeft ? "border-left: 1px solid rgba(224, 224, 224, 1);" : "")}
@@ -115,22 +113,22 @@ const PboSiteChart = ({ studies }: Props) => {
                 <Table aria-label="simple table" size="small" className={classes.table}>
                     <TableHead className={classes.head}>
                         <TableRow>
-                            <StyledHeaderCell align={"center"}>{t(`Vector species`)}</StyledHeaderCell>
+                            <StyledHeaderCell align={"center"}>{t("Vector species")}</StyledHeaderCell>
                             <StyledHeaderCell align={"center"} borderLeft>
-                                {t(`Pyrethroid resistance status`)}
+                                {t("Pyrethroid resistance status")}
                             </StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
-                                {t(`Adj. mortality against pyrethroids between 10% and 80%`)}
+                                {t("Adj. mortality against pyrethroids between 10% and 80%")}
                             </StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
-                                {t(`Most recent pyrethroid susceptibility test results`)}
+                                {t("Most recent pyrethroid susceptibility test results")}
                             </StyledHeaderCell>
                             <StyledHeaderCell align={"center"} borderLeft>
-                                {t(`Conferred (at least in part) by mono-oxygenase`)}
+                                {t("Conferred (at least in part) by mono-oxygenase")}
                             </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"}>{t(`Mono-oxygenase measured by`)}</StyledHeaderCell>
+                            <StyledHeaderCell align={"center"}>{t("Mono-oxygenase measured by")}</StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
-                                {t(`Most recent mono-oxygenase involvement results`)}
+                                {t("Most recent mono-oxygenase involvement results")}
                             </StyledHeaderCell>
                         </TableRow>
                     </TableHead>
@@ -158,4 +156,4 @@ const PboSiteChart = ({ studies }: Props) => {
         </ChartContainer>
     );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(PboSiteChart);
+export default connect(mapStateToProps)(PboSiteChart);

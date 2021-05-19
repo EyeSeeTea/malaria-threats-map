@@ -9,8 +9,19 @@ import {
 import { MOLECULAR_MARKER_STATUS } from "./utils";
 import { MolecularMarkerColors } from "./molecularMarkerSymbols";
 import { useTranslation } from "react-i18next";
+import { State } from "../../../../store/types";
+import { connect } from "react-redux";
+import { selectTreatmentFilters } from "../../../../store/reducers/treatment-reducer";
+import { MOLECULAR_MARKERS } from "../../../filters/MolecularMarkerFilter";
 
-export default function MolecularMarkerLeyend() {
+const mapStateToProps = (state: State) => ({
+    treatmentFilters: selectTreatmentFilters(state),
+});
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type Props = StateProps;
+
+function MolecularMarkerLeyend({ treatmentFilters }: Props) {
     const { t } = useTranslation("common");
     const labels = [
         {
@@ -30,11 +41,12 @@ export default function MolecularMarkerLeyend() {
             color: MolecularMarkerColors[MOLECULAR_MARKER_STATUS.LOW][0],
         },
     ];
+
     return (
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("treatment.molecular_markers")}
+                    {t("treatment.molecular_markers")} ({MOLECULAR_MARKERS[treatmentFilters.molecularMarker - 1].label})
                 </LegendTitleTypography>
             </LegendTitleContainer>
             <LegendLabels labels={labels} />
@@ -42,3 +54,4 @@ export default function MolecularMarkerLeyend() {
         </LegendContainer>
     );
 }
+export default connect(mapStateToProps, null)(MolecularMarkerLeyend);
