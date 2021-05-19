@@ -3,7 +3,7 @@ import { themes } from "../../support/constants";
 describe("Open popup in synergist effect in susceptibility subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.parasiteGeneDeletions);
-        cy.get(":nth-child(8) > #country-button").click();
+        cy.openCountryMode();
         cy.resetMapZoom();
     });
 

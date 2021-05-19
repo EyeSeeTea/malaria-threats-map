@@ -16,6 +16,13 @@ declare namespace Cypress {
     interface Chainable {
         /**
          * Custom command to open summary report
+         * @example cy.openCountryMode('')
+         */
+         openCountryMode(): Chainable<Element>;
+    }
+    interface Chainable {
+        /**
+         * Custom command to open summary report
          * @example cy.openSummaryReport('')
          */
         openSummaryReport(): Chainable<Element>;

@@ -3,11 +3,9 @@ import { themes } from "../../support/constants";
 describe("Open popup in pyrethroid-PBO nets deployment subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.vectorInsecticideResistance);
-        cy.get(
-            ".sc-clIAKW > .makeStyles-root-31 > .css-2b097c-container > .MuiPaper-root > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input > .makeStyles-valueContainer-34"
-        ).click();
+        cy.contains("Insecticide resistance status").click();
         cy.findByText("Pyrethroid-PBO nets deployment").click();
-        cy.get(":nth-child(8) > #country-button").click();
+        cy.openCountryMode();
         cy.resetMapZoom();
     });
 
@@ -33,12 +31,10 @@ describe("Open popup in pyrethroid-PBO nets deployment subtheme", () => {
 describe("Open popup in insecticide resistance intensity subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.vectorInsecticideResistance);
-        cy.get(
-            ".sc-clIAKW > .makeStyles-root-31 > .css-2b097c-container > .MuiPaper-root > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input > .makeStyles-valueContainer-34"
-        ).click();
+        cy.contains("Insecticide resistance status").click();
         cy.findByText("Insecticide resistance intensity").click();
+        cy.openCountryMode();
         cy.resetMapZoom();
-        cy.get(":nth-child(8) > #country-button").click();
     });
 
     it("should open a popup to click on coordinates", () => {
@@ -53,12 +49,10 @@ describe("Open popup in insecticide resistance intensity subtheme", () => {
 describe("Open popup in resistance mechanisms detection subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.vectorInsecticideResistance);
-        cy.get(
-            ".sc-clIAKW > .makeStyles-root-31 > .css-2b097c-container > .MuiPaper-root > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input > .makeStyles-valueContainer-34"
-        ).click();
+        cy.contains("Insecticide resistance status").click();
         cy.findByText("Resistance mechanisms detection").click();
+        cy.openCountryMode();
         cy.resetMapZoom();
-        cy.get(":nth-child(8) > #country-button").click();
     });
 
     it("should open a popup to click on coordinates", () => {
@@ -73,8 +67,8 @@ describe("Open popup in resistance mechanisms detection subtheme", () => {
 describe("Open popup in insecticide resistance status subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.vectorInsecticideResistance);
+        cy.openCountryMode();
         cy.resetMapZoom();
-        cy.get(":nth-child(8) > #country-button").click();
     });
 
     it("should open a popup to click on coordinates", () => {
@@ -89,12 +83,10 @@ describe("Open popup in insecticide resistance status subtheme", () => {
 describe("Open popup in synergist effect in susceptibility subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.vectorInsecticideResistance);
-        cy.get(
-            ".sc-clIAKW > .makeStyles-root-31 > .css-2b097c-container > .MuiPaper-root > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input > .makeStyles-valueContainer-34"
-        ).click();
+        cy.contains("Insecticide resistance status").click();
         cy.findByText("Synergist effect in susceptibility").click();
+        cy.openCountryMode();
         cy.resetMapZoom();
-        cy.get(":nth-child(8) > #country-button").click();
     });
 
     it("should open a popup to click on coordinates", () => {

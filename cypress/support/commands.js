@@ -24,6 +24,10 @@ Cypress.Commands.add("openStoryMode", () => {
     cy.findByRole("button", { name: "Story mode" }).click();
 });
 
+Cypress.Commands.add("openCountryMode", () => {
+    cy.findByRole("button", { name: "Show studies per country" }).click();
+});
+
 Cypress.Commands.add("openSummaryReport", () => {
     cy.findByRole("button", { name: "Summary Report" }).click();
 });

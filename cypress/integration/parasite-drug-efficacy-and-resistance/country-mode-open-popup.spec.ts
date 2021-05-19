@@ -5,10 +5,8 @@ describe("Open popup in delayed parasite clearance subtheme", () => {
         cy.loadPage(themes.parasiteDrugEfficacy);
         cy.contains("Treatment failure").click();
         cy.findByText("Delayed parasite clearance").click();
+        cy.openCountryMode();
         cy.resetMapZoom();
-        //cy.clickOnMap(20, 320);
-        cy.findByRole("button", { name: "Country mode" }).click();
-        //cy.get(":nth-child(8) > #country-button").click();
     });
 
     it("should open a popup to click on coordinates", () => {
@@ -25,7 +23,7 @@ describe("Open popup in molecular markers subtheme", () => {
         cy.loadPage(themes.parasiteDrugEfficacy);
         cy.contains("Treatment failure").click();
         cy.findByText("Molecular markers of drug resistance").click();
-        cy.get(":nth-child(8) > #country-button").click();
+        cy.openCountryMode();
         cy.resetMapZoom();
     });
 
