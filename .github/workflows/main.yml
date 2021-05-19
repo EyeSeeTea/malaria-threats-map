@@ -41,7 +41,7 @@ jobs:
     name: Cypress tests
     strategy:
       matrix:
-        server: [staging, dev, prod]
+        server: [staging, prod]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

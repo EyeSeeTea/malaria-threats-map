@@ -27,7 +27,6 @@ import UseForm, { isPoliciesActive, isResearchActive, isToolsActive } from "./Us
 import Welcome from "./Welcome";
 import Filters from "./Filters";
 import { exportToCSV } from "./download";
-import { FlexGrow } from "../Chart";
 import styled from "styled-components";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import {
@@ -54,6 +53,7 @@ import { format } from "date-fns";
 import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
 import { emailRegexp } from "../Subscription";
+import { FlexGrow } from "../Chart";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
 
@@ -913,10 +913,6 @@ function DataDownload({
                             <Typography variant="h6" className={classes.title}>
                                 {t("common:data_download.title")}
                             </Typography>
-                            <FlexGrow />
-                            <Button autoFocus color="inherit" onClick={handleToggle}>
-                                {t("common:data_download.buttons.close")}
-                            </Button>
                         </Toolbar>
                     </Container>
                 </AppBar>
@@ -934,6 +930,10 @@ function DataDownload({
                 </Container>
                 <Container maxWidth={"md"}>
                     <DialogActions>
+                        <Button variant={"contained"} color={"primary"} onClick={handleToggle}>
+                            {t("common:data_download.buttons.close")}
+                        </Button>
+                        <FlexGrow />
                         <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                             {t("common:data_download.buttons.back")}
                         </Button>
@@ -950,6 +950,7 @@ function DataDownload({
                             startIcon={<CloudDownloadIcon />}
                             variant={"contained"}
                             color={"primary"}
+                            className={classes.button}
                             disabled={!isFormValid()}
                             onClick={() => downloadData()}
                         >
