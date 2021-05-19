@@ -21,7 +21,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { connect } from "react-redux";
 import { UseInfo } from "./index";
-import CountriesSelector from "./filters/CountriesSelector";
+import FullCountriesSelector from "./filters/FullCountriesSelector";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
     & span {
@@ -196,7 +196,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                     />
                 </MuiPickersUtilsProvider>
             </FormControl>
-            <CountriesSelector
+            <FullCountriesSelector
                 label={t("data_download.step2.countries")}
                 className={classes.countries}
                 includeGlobalOption

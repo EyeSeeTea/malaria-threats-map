@@ -35,6 +35,9 @@ import treatmentStory_fr from "../../translations/fr/treatmentStory.json";
 import utils_en from "../../translations/en/utils.json";
 import utils_es from "../../translations/es/utils.json";
 import utils_fr from "../../translations/fr/utils.json";
+import fullCountries_en from "../../translations/en/fullCountries.json";
+import fullCountries_es from "../../translations/es/fullCountries.json";
+import fullCountries_fr from "../../translations/fr/fullCountries.json";
 import { dispatchCustomEvent } from "../../utils/dom-utils";
 
 const ALLOWED_LANGUAGES = ["en", "fr", "es"];
@@ -51,6 +54,7 @@ i18next.init({
             common: common_en,
             disclaimer: disclaimer_en,
             disclaimerTab: disclaimerTab_en,
+            fullCountries: fullCountries_en,
             legend: legend_en,
             tour: tour_en,
             download: download_en,
@@ -65,6 +69,7 @@ i18next.init({
             common: common_es,
             disclaimer: disclaimer_es,
             disclaimerTab: disclaimerTab_es,
+            fullCountries: fullCountries_es,
             legend: legend_es,
             tour: tour_es,
             download: download_es,
@@ -79,6 +84,7 @@ i18next.init({
             common: common_fr,
             disclaimer: disclaimer_fr,
             disclaimerTab: disclaimerTab_fr,
+            fullCountries: fullCountries_fr,
             legend: legend_fr,
             tour: tour_fr,
             download: download_fr,
