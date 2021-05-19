@@ -53,6 +53,7 @@ import { format } from "date-fns";
 import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
 import { emailRegexp } from "../Subscription";
+import { FlexGrow } from "../Chart";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
 
@@ -929,6 +930,10 @@ function DataDownload({
                 </Container>
                 <Container maxWidth={"md"}>
                     <DialogActions>
+                        <Button variant={"contained"} color={"primary"} onClick={handleToggle}>
+                            {t("common:data_download.buttons.close")}
+                        </Button>
+                        <FlexGrow />
                         <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                             {t("common:data_download.buttons.back")}
                         </Button>
@@ -950,9 +955,6 @@ function DataDownload({
                             onClick={() => downloadData()}
                         >
                             {t("common:data_download.buttons.download")}
-                        </Button>
-                        <Button variant={"contained"} color={"primary"} onClick={handleToggle}>
-                            {t("common:data_download.buttons.close")}
                         </Button>
                     </DialogActions>
                 </Container>
