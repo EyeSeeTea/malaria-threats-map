@@ -39,9 +39,7 @@ describe("Open popup in treatment failure subtheme", () => {
 describe("Open popup in molecular markers subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.parasiteDrugEfficacy);
-        cy.get(
-            ".sc-clIAKW > .makeStyles-root-31 > .css-2b097c-container > .MuiPaper-root > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input > .makeStyles-valueContainer-34"
-        ).click();
+        cy.contains("Treatment failure").click();
         cy.findByText("Molecular markers of drug resistance").click();
         cy.resetMapZoom();
     });
@@ -71,9 +69,7 @@ describe("Open popup in molecular markers subtheme", () => {
 describe("Open popup in delayed parasite clearance subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.parasiteDrugEfficacy);
-        cy.get(
-            ".sc-clIAKW > .makeStyles-root-31 > .css-2b097c-container > .MuiPaper-root > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input > .makeStyles-valueContainer-34"
-        ).click();
+        cy.contains("Treatment failure").click();
         cy.findByText("Delayed parasite clearance").click();
         cy.resetMapZoom();
     });
