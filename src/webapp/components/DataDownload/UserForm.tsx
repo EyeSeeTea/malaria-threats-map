@@ -11,11 +11,10 @@ import {
     Select,
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import { State } from "../../store/types";
-import { selectCountries } from "../../store/reducers/translations-reducer";
 import { connect } from "react-redux";
 import { UserInfo } from "./index";
 import { emailRegexp } from "../Subscription";
+import { FullCountry } from "./filters/FullCountriesSelector";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -42,20 +41,15 @@ export const ORGANIZATION_TYPES = [
     "data_download.step1.organization_type_options.other",
 ];
 
-const mapStateToProps = (state: State) => ({
-    countries: selectCountries(state),
-});
-
-type OwnProps = {
+type Props = {
     userInfo: Partial<UserInfo>;
     onChange: (key: keyof UserInfo, value: any) => void;
 };
-type StateProps = ReturnType<typeof mapStateToProps>;
-type Props = StateProps & OwnProps;
 
-const UserForm = ({ countries: baseCountries, onChange, userInfo }: Props) => {
+const UserForm = ({ onChange, userInfo }: Props) => {
     const classes = useStyles({});
     const { t } = useTranslation("common");
+    const { t: tCountries } = useTranslation("fullCountries");
     const handleOrganizationTypeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         const newOrganizationType = event.target.value as string;
         onChange("organizationType", newOrganizationType);
@@ -68,12 +62,9 @@ const UserForm = ({ countries: baseCountries, onChange, userInfo }: Props) => {
 
     const organizationTypes = ORGANIZATION_TYPES.map(ot => t(ot)).sort();
 
-    const countries = baseCountries
-        .map(country => ({
-            ...country,
-            translation: t(country.VALUE_),
-        }))
-        .sort((t1, t2) => (t1.translation < t2.translation ? -1 : 1));
+    const baseCountries: FullCountry[] = tCountries("countries", { returnObjects: true });
+
+    const countries = baseCountries.sort((t1, t2) => (t1.name < t2.name ? -1 : 1));
 
     return (
         <Card className={classes.paper}>
@@ -132,8 +123,8 @@ const UserForm = ({ countries: baseCountries, onChange, userInfo }: Props) => {
                     <InputLabel>{t("data_download.step1.country") + "*"}</InputLabel>
                     <Select fullWidth value={userInfo.country} onChange={handleCountryChange}>
                         {countries.map(country => (
-                            <MenuItem key={country.VALUE_} value={country.VALUE_}>
-                                {country.translation}
+                            <MenuItem key={country.iso2} value={country.iso2}>
+                                {country.name}
                             </MenuItem>
                         ))}
                     </Select>
@@ -154,4 +145,4 @@ const UserForm = ({ countries: baseCountries, onChange, userInfo }: Props) => {
     );
 };
 
-export default connect(mapStateToProps)(UserForm);
+export default connect()(UserForm);
