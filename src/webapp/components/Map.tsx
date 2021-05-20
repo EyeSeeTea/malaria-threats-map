@@ -32,7 +32,6 @@ import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import {
-    setAnyAction,
     setRegionAction,
     setThemeAction,
     updateBoundsAction,
@@ -148,7 +147,6 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setTheme: setThemeAction,
-    setAny: setAnyAction,
     setRegion: setRegionAction,
     updateZoom: updateZoomAction,
     updateBounds: updateBoundsAction,

@@ -12,6 +12,7 @@ import {
 } from "../../../store/reducers/base-reducer";
 import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
+//, { GeoJSONSource, VideoSource }
 import * as R from "ramda";
 import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
@@ -69,7 +70,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
 type OwnProps = {
-    map: any;
+    map: mapboxgl.Map;
 };
 type Props = StateProps & OwnProps & DispatchProps;
 
@@ -153,7 +154,7 @@ class InvasiveLayer extends Component<Props> {
 
     filterSource = () => {
         const { studies, countryMode } = this.props;
-        const source = this.props.map.getSource(INVASIVE_SOURCE_ID);
+        const source: any = this.props.map.getSource(INVASIVE_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
@@ -161,6 +162,7 @@ class InvasiveLayer extends Component<Props> {
             const countryStudies = this.getCountryStudies(filteredStudies);
             const data = countryMode ? countryStudies : geoStudies;
             source.setData(studiesToGeoJson(data));
+            //.setData(studiesToGeoJson(data));
         }
     };
 
@@ -229,7 +231,7 @@ class InvasiveLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any, _a: any) => {
+    onClickListener = (e: any) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;

@@ -65,7 +65,7 @@ const mapDispatchToProps = {
 };
 
 type OwnProps = {
-    map: any;
+    map: mapboxgl.Map;
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -204,7 +204,7 @@ class CountrySelectorLayer extends Component<Props> {
         }
     };
 
-    onClickListener = (e: any, _a: any) => {
+    onClickListener = (e: any) => {
         const coordinates = [e.features[0].properties.CENTER_LON, e.features[0].properties.CENTER_LAT] as [
             number,
             number
