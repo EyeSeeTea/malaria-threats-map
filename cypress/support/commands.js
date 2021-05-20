@@ -13,7 +13,7 @@ Cypress.Commands.add("resetMapZoom", () => {
     cy.get(".mapboxgl-canvas").trigger("wheel", { deltaY: 800 });
     //Wait to load points in canvas
     //Points are not at the DOM then we wait by time
-    cy.wait(5000);
+    cy.wait(2000);
 });
 
 Cypress.Commands.add("clickOnMap", (x, y) => {

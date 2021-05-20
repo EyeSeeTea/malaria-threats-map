@@ -13,11 +13,6 @@ describe("Open popup in pyrethroid-PBO nets deployment subtheme", () => {
         cy.clickOnMap(540, 340);
         cy.clickOnMap(545, 330);
         cy.contains("Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment");
-    });
-
-    it("should contain all the Tombouctou study information", () => {
-        cy.clickOnMap(540, 340);
-        cy.clickOnMap(545, 330);
         cy.contains("Tombouctou");
         cy.contains("Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment");
         cy.contains("Number of sites that meet criteria:");

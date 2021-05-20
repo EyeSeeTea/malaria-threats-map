@@ -8,11 +8,6 @@ describe("Open popup in treatment failure subtheme", () => {
 
     it("should open a popup to click on coordinates", () => {
         cy.clickOnMap(550, 360);
-        cy.findByText("Study year(s):");
-    });
-
-    it("should contain all the Bouna, Zanzan, Côte d’Ivoire study information ", () => {
-        cy.clickOnMap(550, 360);
 
         //headings
         cy.findByText("Bouna, Zanzan, Côte d’Ivoire");
@@ -47,17 +42,11 @@ describe("Open popup in molecular markers subtheme", () => {
     it("should open a popup to click on coordinates", () => {
         cy.clickOnMap(550, 395);
         cy.contains("Multiple sites in Nanoro, Banfora, Niangoloko, Burkina Faso (2014-2014)");
-    });
 
-    it("should contain all the Multiple sites in Nanoro, Banfora, Niangoloko, Burkina Faso study information ", () => {
-        cy.clickOnMap(550, 395);
         cy.contains("Multiple sites in Nanoro, Banfora, Niangoloko, Burkina Faso (2014-2014)");
         cy.contains("In this 2014 study, the following Pfkelch13 mutations were observed among 114 samples");
         cy.contains("Medicines for Malaria Venture, Geneva");
-    });
 
-    it("should have an active link to the correct study", () => {
-        cy.clickOnMap(550, 395);
         cy.contains("Medicines for Malaria Venture, Geneva").should(
             "have.attr",
             "href",
@@ -76,11 +65,7 @@ describe("Open popup in delayed parasite clearance subtheme", () => {
 
     it("should open a popup to click on coordinates", () => {
         cy.clickOnMap(375, 380);
-        cy.contains("Paramaribo, Suriname");
-    });
 
-    it("should contain all the Paramaribo, Suriname study information ", () => {
-        cy.clickOnMap(375, 380);
         cy.contains("Paramaribo, Suriname");
         cy.contains("P. falciparum, Artemether-lumefantrine: 1 study(s) in 2011");
         cy.contains("Study year(s):");
@@ -96,10 +81,7 @@ describe("Open popup in delayed parasite clearance subtheme", () => {
         cy.contains("0.00%");
 
         cy.contains("Foundation for Scientific Research Suriname, Paramaribo");
-    });
 
-    it("should have an active link to the correct study", () => {
-        cy.clickOnMap(375, 380);
         cy.contains("Foundation for Scientific Research Suriname, Paramaribo").should(
             "have.attr",
             "href",
