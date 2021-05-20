@@ -30,7 +30,6 @@ import _ from "lodash";
 import { fetchCountryLayerRequest } from "../actions/country-layer-actions";
 import { ApiParams } from "../../../data/common/types";
 
-
 export const setThemeEpic = (
     action$: ActionsObservable<ActionType<typeof setThemeAction>>,
     state$: StateObservable<State>

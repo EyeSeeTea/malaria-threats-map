@@ -31,12 +31,7 @@ import { selectPreventionFilters, selectPreventionStudies } from "../store/reduc
 import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
-import {
-    setRegionAction,
-    setThemeAction,
-    updateBoundsAction,
-    updateZoomAction,
-} from "../store/actions/base-actions";
+import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
 import { Fade, Hidden } from "@material-ui/core";
 import Country from "./Country";
 import LeyendPopover from "./LegendPopover";

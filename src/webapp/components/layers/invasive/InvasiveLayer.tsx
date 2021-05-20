@@ -12,7 +12,6 @@ import {
 } from "../../../store/reducers/base-reducer";
 import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
-//, { GeoJSONSource, VideoSource }
 import * as R from "ramda";
 import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
