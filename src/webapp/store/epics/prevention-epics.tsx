@@ -1,5 +1,6 @@
 import { ActionsObservable, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
+import _ from "lodash";
 import { ActionTypeEnum } from "../actions";
 import { of } from "rxjs";
 import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
@@ -84,16 +85,16 @@ export const setPreventionInsecticideClassEpic = (
         .pipe(
             withLatestFrom(state$),
             switchMap(([action, state]) => {
-                return of(
+                const isTourOpen = state.malaria.tour.open;
+                const actions = _.compact([
                     setInsecticideTypes([]),
                     setType(state.prevention.filters.type || "MONO_OXYGENASES"),
                     setSpecies([]),
-                    logEventAction({
-                        category: "filter",
-                        action: "insecticideClass",
-                        label: action.payload,
-                    })
-                );
+                    isTourOpen
+                        ? null
+                        : logEventAction({ category: "filter", action: "insecticideClass", label: action.payload }),
+                ]);
+                return of(...actions);
             })
         );
 

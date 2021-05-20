@@ -165,13 +165,13 @@ class MalariaTour extends PureComponent<Props> {
 
     onClose = () => {
         this.setState({ open: false });
-        this.props.setTourOpen(false);
         this.setInsecticideClass("PYRETHROIDS");
         this.setInsecticideTypes([]);
         this.setSelection(null);
         this.setCountryMode(false);
         this.toggleFilters(false);
         localStorage.setItem("tour", "visited");
+        this.props.setTourOpen(false);
     };
 
     render() {
