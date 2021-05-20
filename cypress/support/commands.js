@@ -33,5 +33,5 @@ Cypress.Commands.add("openSummaryReport", () => {
 });
 
 Cypress.Commands.add("findByLegendTitle", title => {
-    cy.findByRole("group", { name: "Legend" }).findByText(title);
+    cy.findByRole("group", { name: "Legend" }).findByText(title, { exact: false });
 });

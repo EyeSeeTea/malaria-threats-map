@@ -52,7 +52,6 @@ describe("Open popup in insecticide resistance intensity subtheme", () => {
         cy.clickOnMap(680, 350);
         cy.findByText("Intensity concentration bioassay, WHO test kit bioassay");
         cy.findByText("Tesseney, Eritrea");
-        cy.contains("No citation data available");
         cy.contains("Acknowledgement for data curation");
         cy.contains("World Health Organization");
     });

@@ -38,6 +38,7 @@ describe("Open popup in treatment failure subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.parasiteDrugEfficacy);
         cy.contains("Treatment failure").click();
+        cy.openCountryMode();
         cy.resetMapZoom();
     });
 
