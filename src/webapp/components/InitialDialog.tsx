@@ -11,6 +11,7 @@ import LanguageSelectorSelect from "./LanguageSelectorSelect";
 import { useTranslation } from "react-i18next";
 import { Container, Typography } from "@material-ui/core";
 import { sendAnalytics } from "../utils/analytics";
+import { getAnalyticsPageView } from "../store/analytics";
 
 const FlexGrow = styled.div`
     flex-grow: 1;
@@ -62,6 +63,8 @@ function InitialDialog({ initialDialogOpen, setInitialDialogOpen, tour, setTourS
     }
     function logAndClose() {
         sendAnalytics({ type: "event", category: "homeItem", action: "exit" });
+        const pageView = getAnalyticsPageView({ page: "prevention" });
+        sendAnalytics({ type: "pageView", path: pageView.path });
         handleClose();
     }
 
