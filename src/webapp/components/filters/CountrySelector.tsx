@@ -37,7 +37,7 @@ const CountrySelector = ({ region, countries = [], setRegion }: Props) => {
             label: t(country.VALUE_ === "NA" ? "COUNTRY_NA" : country.VALUE_),
             value: country.VALUE_,
         }))
-        .filter(sug => sug.label !== null);
+        .filter(sug => sug.label);
 
     return (
         <FilterWrapper>
