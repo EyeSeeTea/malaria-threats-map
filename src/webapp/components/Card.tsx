@@ -81,8 +81,8 @@ const SimpleCard = ({ title, description, Icon, theme, setTheme, setRegion, onSe
         <Card
             className={classes.card}
             onClick={() => {
-                setTheme(theme, { fromHome: true });
                 onSelection();
+                setTheme(theme, { fromHome: true });
             }}
         >
             <Icon active style={{ maxWidth: "96px", marginTop: "24px" }} />
