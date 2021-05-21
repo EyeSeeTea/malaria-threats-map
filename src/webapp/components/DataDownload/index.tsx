@@ -784,7 +784,7 @@ function DataDownload({
             position: userInfo.position,
             country: userInfo.country,
             email: userInfo.email,
-            phoneNumber: "",
+            phoneNumber: "-",
             uses: useInfo.uses.map(use => t(`common:${use}`)).join(", "),
             researchInfo: useInfo.researchInfo || "",
             policiesInfo: useInfo.policiesInfo || "",
