@@ -38,6 +38,7 @@ import {
     updateBoundsAction,
     updateZoomAction,
 } from "../store/actions/base-actions";
+import { addNotificationAction } from "../store/actions/notifier-actions";
 import { Fade, Hidden } from "@material-ui/core";
 import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
@@ -152,6 +153,7 @@ const mapDispatchToProps = {
     setRegion: setRegionAction,
     updateZoom: updateZoomAction,
     updateBounds: updateBoundsAction,
+    addNotification: addNotificationAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -176,42 +178,47 @@ class Map extends React.Component<Props> {
     images: any[] = [];
 
     componentDidMount() {
-        this.map = new mapboxgl.Map({
-            container: this.mapContainer,
-            style: style,
-            center: [-16.629129, 28.291565],
-            maxZoom: 8.99999,
-            minZoom: 1,
-            zoom: 2,
-            maxBounds: undefined,
-            preserveDrawingBuffer: true,
-        });
-        this.map.dragRotate.disable();
-        this.map.touchZoomRotate.disableRotation();
+        if (!mapboxgl.supported()) {
+            this.props.addNotification("Your browser does not support Mapbox GL");
+        } 
+        else {
+            this.map = new mapboxgl.Map({
+                container: this.mapContainer,
+                style: style,
+                center: [-16.629129, 28.291565],
+                maxZoom: 8.99999,
+                minZoom: 1,
+                zoom: 2,
+                maxBounds: undefined,
+                preserveDrawingBuffer: true,
+            });
+            this.map.dragRotate.disable();
+            this.map.touchZoomRotate.disableRotation();
 
-        this.map.on("load", () => {
-            this.setState({ ready: true });
-            if (
-                this.props.setBounds &&
-                this.props.setBounds.length === 2 &&
-                !this.props.region.country &&
-                !this.props.region.subRegion &&
-                !this.props.region.region
-            ) {
-                const [[b0, b1], [b2, b3]] = this.props.setBounds;
-                this.map.fitBounds([b0, b1, b2, b3], {
-                    padding: 100,
-                });
+            this.map.on("load", () => {
+                this.setState({ ready: true });
+                if (
+                    this.props.setBounds &&
+                    this.props.setBounds.length === 2 &&
+                    !this.props.region.country &&
+                    !this.props.region.subRegion &&
+                    !this.props.region.region
+                ) {
+                    const [[b0, b1], [b2, b3]] = this.props.setBounds;
+                    this.map.fitBounds([b0, b1, b2, b3], {
+                        padding: 100,
+                    });
+                }
+            });
+            this.map.on("moveend", () => {
+                const cc = this.map.getBounds().toArray();
+                this.props.updateBounds(cc);
+            });
+
+            const pageView = getAnalyticsPageViewFromString({ page: this.props.theme });
+            if (pageView && !this.props.initialDialogOpen) {
+                sendAnalytics({ type: "pageView", ...pageView });
             }
-        });
-        this.map.on("moveend", () => {
-            const cc = this.map.getBounds().toArray();
-            this.props.updateBounds(cc);
-        });
-
-        const pageView = getAnalyticsPageViewFromString({ page: this.props.theme });
-        if (pageView && !this.props.initialDialogOpen) {
-            sendAnalytics({ type: "pageView", ...pageView });
         }
     }
 
@@ -328,6 +335,7 @@ class Map extends React.Component<Props> {
                 </Hidden>
             </React.Fragment>
         );
+    
     }
 }
 
