@@ -180,8 +180,7 @@ class Map extends React.Component<Props> {
     componentDidMount() {
         if (!mapboxgl.supported()) {
             this.props.addNotification("Your browser does not support Mapbox GL");
-        } 
-        else {
+        } else {
             this.map = new mapboxgl.Map({
                 container: this.mapContainer,
                 style: style,
@@ -335,7 +334,6 @@ class Map extends React.Component<Props> {
                 </Hidden>
             </React.Fragment>
         );
-    
     }
 }
 
