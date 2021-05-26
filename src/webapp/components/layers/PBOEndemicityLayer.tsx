@@ -8,7 +8,7 @@ import config from "../../config";
 export const PBO_ENDEMICITY_LAYER_ID = "pbo-endemicity-layer";
 const PBO_ENDEMICITY_SOURCE_ID = "pbo-endemicity-source";
 
-const layer: any = {
+const layer: mapboxgl.FillLayer = {
     id: PBO_ENDEMICITY_LAYER_ID,
     type: "fill",
     paint: {
@@ -16,8 +16,8 @@ const layer: any = {
         "fill-opacity": 0.8,
         "fill-outline-color": "#adadad",
     },
-    minZoom: 0,
-    maxZoom: 20,
+    minzoom: 0,
+    maxzoom: 20,
     source: PBO_ENDEMICITY_SOURCE_ID,
 };
 

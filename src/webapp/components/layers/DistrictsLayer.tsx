@@ -25,7 +25,7 @@ import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 const DISTRICTS_LAYER_ID = "districts-layer";
 const DISTRICTS_SOURCE_ID = "districts-source";
 
-const layer: any = {
+const layer: mapboxgl.FillLayer = {
     id: DISTRICTS_LAYER_ID,
     type: "fill",
     paint: {
@@ -43,8 +43,8 @@ const layer: any = {
         "fill-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.5, 0.7],
         "fill-outline-color": "rgba(0,0,0,0.1)",
     },
-    minZoom: 0,
-    maxZoom: 20,
+    minzoom: 0,
+    maxzoom: 20,
     source: DISTRICTS_SOURCE_ID,
 };
 

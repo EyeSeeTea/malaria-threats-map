@@ -7,7 +7,7 @@ import config from "../../config";
 const ENDEMICITY_LAYER_ID = "endemicity-layer";
 const ENDEMICITY_SOURCE_ID = "endemicity-source";
 
-const layer: any = {
+const layer: mapboxgl.FillLayer = {
     id: ENDEMICITY_LAYER_ID,
     type: "fill",
     paint: {
@@ -15,8 +15,8 @@ const layer: any = {
         "fill-opacity": 0.5,
         "fill-outline-color": "rgba(0,0,0,0.1)",
     },
-    minZoom: 0,
-    maxZoom: 20,
+    minzoom: 0,
+    maxzoom: 20,
     source: ENDEMICITY_SOURCE_ID,
 };
 
