@@ -65,6 +65,7 @@ import TourIcon from "./TourIcon";
 import ShareIcon from "./ShareIcon";
 import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
+import { WithTranslation, withTranslation } from "react-i18next";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
@@ -158,7 +159,7 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = StateProps & DispatchProps;
+type Props = StateProps & DispatchProps & WithTranslation;
 
 class Map extends React.Component<Props> {
     map: mapboxgl.Map;
@@ -179,46 +180,47 @@ class Map extends React.Component<Props> {
 
     componentDidMount() {
         if (!mapboxgl.supported()) {
-            this.props.addNotification("Your browser does not support Mapbox GL");
-        } else {
-            this.map = new mapboxgl.Map({
-                container: this.mapContainer,
-                style: style,
-                center: [-16.629129, 28.291565],
-                maxZoom: 8.99999,
-                minZoom: 1,
-                zoom: 2,
-                maxBounds: undefined,
-                preserveDrawingBuffer: true,
-            });
-            this.map.dragRotate.disable();
-            this.map.touchZoomRotate.disableRotation();
+            this.props.addNotification(this.props.t('WEBGL_error_message'));
+            return;
+        } 
+        this.map = new mapboxgl.Map({
+            container: this.mapContainer,
+            style: style,
+            center: [-16.629129, 28.291565],
+            maxZoom: 8.99999,
+            minZoom: 1,
+            zoom: 2,
+            maxBounds: undefined,
+            preserveDrawingBuffer: true,
+        });
+        this.map.dragRotate.disable();
+        this.map.touchZoomRotate.disableRotation();
 
-            this.map.on("load", () => {
-                this.setState({ ready: true });
-                if (
-                    this.props.setBounds &&
-                    this.props.setBounds.length === 2 &&
-                    !this.props.region.country &&
-                    !this.props.region.subRegion &&
-                    !this.props.region.region
-                ) {
-                    const [[b0, b1], [b2, b3]] = this.props.setBounds;
-                    this.map.fitBounds([b0, b1, b2, b3], {
-                        padding: 100,
-                    });
-                }
-            });
-            this.map.on("moveend", () => {
-                const cc = this.map.getBounds().toArray();
-                this.props.updateBounds(cc);
-            });
-
-            const pageView = getAnalyticsPageViewFromString({ page: this.props.theme });
-            if (pageView && !this.props.initialDialogOpen) {
-                sendAnalytics({ type: "pageView", ...pageView });
+        this.map.on("load", () => {
+            this.setState({ ready: true });
+            if (
+                this.props.setBounds &&
+                this.props.setBounds.length === 2 &&
+                !this.props.region.country &&
+                !this.props.region.subRegion &&
+                !this.props.region.region
+            ) {
+                const [[b0, b1], [b2, b3]] = this.props.setBounds;
+                this.map.fitBounds([b0, b1, b2, b3], {
+                    padding: 100,
+                });
             }
+        });
+        this.map.on("moveend", () => {
+            const cc = this.map.getBounds().toArray();
+            this.props.updateBounds(cc);
+        });
+
+        const pageView = getAnalyticsPageViewFromString({ page: this.props.theme });
+        if (pageView && !this.props.initialDialogOpen) {
+            sendAnalytics({ type: "pageView", ...pageView });
         }
+        
     }
 
     componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {
@@ -337,4 +339,4 @@ class Map extends React.Component<Props> {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Map);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation("common")(Map));
