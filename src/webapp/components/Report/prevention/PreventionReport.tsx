@@ -33,7 +33,7 @@ import { filterByCountries, filterBySpecies } from "../../layers/studies-filters
 import { exportToCSV } from "../../DataDownload/download";
 import { format } from "date-fns";
 import { getComparator, Order, stableSort } from "../utils";
-import { CellProps } from "../types";
+import { CellProps, useStyles } from "../types";
 import { sendAnalytics } from "../../../utils/analytics";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 
@@ -46,37 +46,6 @@ const StyledCell = styled(TableCell)<CellProps>`
     ${props => props.isRight && "text-align: right !important"};
     ${props => props.divider && "border-left: 1px solid rgba(224, 224, 224, 1)"}
 `;
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: "100%",
-        },
-        paper: {
-            width: "100%",
-        },
-        wrapper: {
-            padding: theme.spacing(0, 2),
-        },
-        table: {
-            minWidth: 750,
-        },
-        visuallyHidden: {
-            border: 0,
-            clip: "rect(0 0 0 0)",
-            height: 1,
-            margin: -1,
-            overflow: "hidden",
-            padding: 0,
-            position: "absolute",
-            top: 20,
-            width: 1,
-        },
-        cell: {
-            fontSize: 10,
-        },
-    })
-);
 
 interface EnhancedTableProps {
     classes: ReturnType<typeof useStyles>;
