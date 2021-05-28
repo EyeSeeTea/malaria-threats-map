@@ -11,7 +11,7 @@ import DiagnosisLayer from "./layers/diagnosis/DiagnosisLayer";
 import TreatmentLayer from "./layers/treatment/TreatmentLayer";
 import InvasiveLayer from "./layers/invasive/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
-import Filters from "./Filters";
+import Filters from "./filters/container/Filters";
 import MapTypesSelector from "./MapTypesSelector";
 import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";

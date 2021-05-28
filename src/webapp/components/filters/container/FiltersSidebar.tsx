@@ -1,32 +1,23 @@
 import React from "react";
 import { AppBar, Toolbar, IconButton, Tabs, Tab, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
-import { FilterIconSimple, GlobeIcon } from "./Icons";
+import { FilterIconSimple, GlobeIcon } from "../../Icons";
 import CloseIcon from "@material-ui/icons/ArrowBack";
-import CountrySelector from "./filters/CountrySelector";
-import ResistanceStatusFilters from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
+import CountrySelector from "../CountrySelector";
 import styled from "styled-components";
-import { DiagnosisMapType, InvasiveMapType, PreventionMapType, State, TreatmentMapType } from "../store/types";
-import { selectFiltersMode, selectLastUpdatedDates, selectTheme } from "../store/reducers/base-reducer";
-import { selectFilteredPreventionStudies, selectPreventionFilters } from "../store/reducers/prevention-reducer";
-import { selectDiagnosisFilters, selectFilteredDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
-import { selectFilteredTreatmentStudies, selectTreatmentFilters } from "../store/reducers/treatment-reducer";
-import { selectFilteredInvasiveStudies, selectInvasiveFilters } from "../store/reducers/invasive-reducer";
-import { setFiltersMode, setFiltersOpen } from "../store/actions/base-actions";
+import { State } from "../../../store/types";
+import { selectFiltersMode, selectLastUpdatedDates, selectTheme } from "../../../store/reducers/base-reducer";
+import { selectFilteredPreventionStudies, selectPreventionFilters } from "../../../store/reducers/prevention-reducer";
+import { selectDiagnosisFilters, selectFilteredDiagnosisStudies } from "../../../store/reducers/diagnosis-reducer";
+import { selectFilteredTreatmentStudies, selectTreatmentFilters } from "../../../store/reducers/treatment-reducer";
+import { selectFilteredInvasiveStudies, selectInvasiveFilters } from "../../../store/reducers/invasive-reducer";
+import { setFiltersMode, setFiltersOpen } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
-import IntensityStatusFilters from "./layers/prevention/IntensityStatus/IntensityStatusFilters";
-import ResistanceMechanismFilters from "./layers/prevention/ResistanceMechanisms/ResistanceMechanismFilters";
-import LevelOfInvolvementFilters from "./layers/prevention/Involvement/LevelOfInvolvementFilters";
-import PboDeploymentFilters from "./layers/prevention/PboDeployment/PboDeploymentFilters";
-import GeneDeletionFilters from "./layers/diagnosis/GeneDeletions/GeneDeletionFilters";
-import TreatmentFailureFilters from "./layers/treatment/TreatmentFailure/TreatmentFailureFilters";
-import DelayedParasiteClearanceFilters from "./layers/treatment/DelayedParasiteClearance/DelayedParasiteClearanceFilters";
-import MolecularMarkerFilters from "./layers/treatment/MolecularMarkers/MolecularMarkerFilters";
-import VectorOccuranceFilters from "./layers/invasive/VectorOccurance/VectorOccuranceFilters";
-import RegionSelector from "./filters/RegionSelector";
-import SubRegionSelector from "./filters/SubRegionSelector";
+import RegionSelector from "../../filters/RegionSelector";
+import SubRegionSelector from "../../filters/SubRegionSelector";
 import { SuccessSnackbar, WarningSnackbar } from "./Filters";
 import { useTranslation } from "react-i18next";
-import SiteSelector from "./filters/SiteSelector";
+import SiteSelector from "../../filters/SiteSelector";
+import FiltersContent from "./FiltersContent";
 
 const FiltersWrapper = styled.div`
     margin-top: 20px;
@@ -85,9 +76,6 @@ const FiltersSidebar = ({
     setFiltersOpen,
     setFiltersMode,
     preventionFilters,
-    diagnosisFilters,
-    treatmentFilters,
-    invasiveFilters,
     lastUpdatedDates,
 }: Props) => {
     const { t } = useTranslation("common");
@@ -117,53 +105,6 @@ const FiltersSidebar = ({
     };
 
     const value = tabs.indexOf(filtersMode);
-
-    function resolveFilters() {
-        switch (theme) {
-            case "prevention":
-                switch (preventionFilters.mapType) {
-                    case PreventionMapType.RESISTANCE_STATUS:
-                        return <ResistanceStatusFilters />;
-                    case PreventionMapType.INTENSITY_STATUS:
-                        return <IntensityStatusFilters />;
-                    case PreventionMapType.RESISTANCE_MECHANISM:
-                        return <ResistanceMechanismFilters />;
-                    case PreventionMapType.LEVEL_OF_INVOLVEMENT:
-                        return <LevelOfInvolvementFilters />;
-                    case PreventionMapType.PBO_DEPLOYMENT:
-                        return <PboDeploymentFilters />;
-                    default:
-                        return <div />;
-                }
-            case "diagnosis":
-                switch (diagnosisFilters.mapType) {
-                    case DiagnosisMapType.GENE_DELETIONS:
-                        return <GeneDeletionFilters />;
-                    default:
-                        return <div />;
-                }
-            case "treatment":
-                switch (treatmentFilters.mapType) {
-                    case TreatmentMapType.TREATMENT_FAILURE:
-                        return <TreatmentFailureFilters />;
-                    case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
-                        return <DelayedParasiteClearanceFilters />;
-                    case TreatmentMapType.MOLECULAR_MARKERS:
-                        return <MolecularMarkerFilters />;
-                    default:
-                        return <div />;
-                }
-            case "invasive":
-                switch (invasiveFilters.mapType) {
-                    case InvasiveMapType.VECTOR_OCCURANCE:
-                        return <VectorOccuranceFilters />;
-                    default:
-                        return <div />;
-                }
-            default:
-                return <div />;
-        }
-    }
 
     const themeSelector = theme as "prevention" | "diagnosis" | "treatment" | "invasive";
     return (
@@ -230,7 +171,7 @@ const FiltersSidebar = ({
             )}
             <FiltersWrapper>
                 {value === 0 ? (
-                    <>{resolveFilters()}</>
+                    <FiltersContent />
                 ) : (
                     <>
                         <CountrySelector />

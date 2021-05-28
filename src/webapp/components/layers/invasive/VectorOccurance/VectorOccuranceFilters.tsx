@@ -1,7 +1,7 @@
 import React from "react";
 import YearRangeSelector from "../../../YearRangeSelector";
 import VectorSpeciesFilter from "../../../filters/VectorSpeciesFilter";
-import { Snackbar } from "../../../Filters";
+import { Snackbar } from "../../../filters/container/Filters";
 import { Link } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 

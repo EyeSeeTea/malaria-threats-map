@@ -4,29 +4,20 @@ import { TransitionProps } from "@material-ui/core/transitions";
 import { AppBar, Fab, Paper, Toolbar, Typography, Dialog, IconButton, Slide } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
-import { DiagnosisMapType, InvasiveMapType, PreventionMapType, State, TreatmentMapType } from "../store/types";
-import { selectAreFiltersOpen, selectFilters, selectTheme } from "../store/reducers/base-reducer";
-import { selectFilteredPreventionStudies, selectPreventionFilters } from "../store/reducers/prevention-reducer";
-import { setPreventionMapType } from "../store/actions/prevention-actions";
+import { State } from "../../../store/types";
+import { selectAreFiltersOpen, selectFilters, selectTheme } from "../../../store/reducers/base-reducer";
+import { selectFilteredPreventionStudies } from "../../../store/reducers/prevention-reducer";
+import { setPreventionMapType } from "../../../store/actions/prevention-actions";
 import { connect } from "react-redux";
-import ResistanceStatusFilters from "./layers/prevention/ResistanceStatus/ResistanceStatusFilters";
-import IntensityStatusFilters from "./layers/prevention/IntensityStatus/IntensityStatusFilters";
-import ResistanceMechanismFilters from "./layers/prevention/ResistanceMechanisms/ResistanceMechanismFilters";
-import LevelOfInvolvementFilters from "./layers/prevention/Involvement/LevelOfInvolvementFilters";
-import GeneDeletionFilters from "./layers/diagnosis/GeneDeletions/GeneDeletionFilters";
-import { selectDiagnosisFilters, selectFilteredDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
-import PboDeploymentFilters from "./layers/prevention/PboDeployment/PboDeploymentFilters";
-import TreatmentFailureFilters from "./layers/treatment/TreatmentFailure/TreatmentFailureFilters";
-import { selectFilteredTreatmentStudies, selectTreatmentFilters } from "../store/reducers/treatment-reducer";
-import VectorOccuranceFilters from "./layers/invasive/VectorOccurance/VectorOccuranceFilters";
-import { selectFilteredInvasiveStudies, selectInvasiveFilters } from "../store/reducers/invasive-reducer";
-import DelayedParasiteClearanceFilters from "./layers/treatment/DelayedParasiteClearance/DelayedParasiteClearanceFilters";
-import MolecularMarkerFilters from "./layers/treatment/MolecularMarkers/MolecularMarkerFilters";
-import { setFiltersOpen } from "../store/actions/base-actions";
-import { dispatchCustomEvent } from "../utils/dom-utils";
+import { selectFilteredDiagnosisStudies } from "../../../store/reducers/diagnosis-reducer";
+import { selectFilteredTreatmentStudies } from "../../../store/reducers/treatment-reducer";
+import { selectFilteredInvasiveStudies } from "../../../store/reducers/invasive-reducer";
+import { setFiltersOpen } from "../../../store/actions/base-actions";
+import { dispatchCustomEvent } from "../../../utils/dom-utils";
 import { useTranslation } from "react-i18next";
-import { FilterIconSimple } from "./Icons";
-import { sendAnalytics } from "../utils/analytics";
+import { FilterIconSimple } from "../../Icons";
+import { sendAnalytics } from "../../../utils/analytics";
+import FiltersContent from "./FiltersContent";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -86,10 +77,6 @@ const mapStateToProps = (state: State) => ({
     filteredDiagnosisStudies: selectFilteredDiagnosisStudies(state),
     filteredTreatmentStudies: selectFilteredTreatmentStudies(state),
     filteredInvasiveStudies: selectFilteredInvasiveStudies(state),
-    preventionFilters: selectPreventionFilters(state),
-    diagnosisFilters: selectDiagnosisFilters(state),
-    treatmentFilters: selectTreatmentFilters(state),
-    invasiveFilters: selectInvasiveFilters(state),
     filtersOpen: selectAreFiltersOpen(state),
 });
 
@@ -108,10 +95,6 @@ function Filters({
     filteredDiagnosisStudies,
     filteredTreatmentStudies,
     filteredInvasiveStudies,
-    preventionFilters,
-    diagnosisFilters,
-    treatmentFilters,
-    invasiveFilters,
     filtersOpen,
     setFiltersOpen,
 }: Props) {
@@ -142,52 +125,6 @@ function Filters({
         setOpen(false);
     }
 
-    function resolveFilters() {
-        switch (theme) {
-            case "prevention":
-                switch (preventionFilters.mapType) {
-                    case PreventionMapType.RESISTANCE_STATUS:
-                        return <ResistanceStatusFilters />;
-                    case PreventionMapType.INTENSITY_STATUS:
-                        return <IntensityStatusFilters />;
-                    case PreventionMapType.RESISTANCE_MECHANISM:
-                        return <ResistanceMechanismFilters />;
-                    case PreventionMapType.LEVEL_OF_INVOLVEMENT:
-                        return <LevelOfInvolvementFilters />;
-                    case PreventionMapType.PBO_DEPLOYMENT:
-                        return <PboDeploymentFilters />;
-                    default:
-                        return <div />;
-                }
-            case "diagnosis":
-                switch (diagnosisFilters.mapType) {
-                    case DiagnosisMapType.GENE_DELETIONS:
-                        return <GeneDeletionFilters />;
-                    default:
-                        return <div />;
-                }
-            case "treatment":
-                switch (treatmentFilters.mapType) {
-                    case TreatmentMapType.TREATMENT_FAILURE:
-                        return <TreatmentFailureFilters />;
-                    case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
-                        return <DelayedParasiteClearanceFilters />;
-                    case TreatmentMapType.MOLECULAR_MARKERS:
-                        return <MolecularMarkerFilters />;
-                    default:
-                        return <div />;
-                }
-            case "invasive":
-                switch (invasiveFilters.mapType) {
-                    case InvasiveMapType.VECTOR_OCCURANCE:
-                        return <VectorOccuranceFilters />;
-                    default:
-                        return <div />;
-                }
-            default:
-                return <div />;
-        }
-    }
     dispatchCustomEvent("resize");
 
     const { t } = useTranslation("common");
@@ -250,7 +187,9 @@ function Filters({
                         </Typography>
                     </SuccessSnackbar>
                 )}
-                <FiltersWrapper>{resolveFilters()}</FiltersWrapper>
+                <FiltersWrapper>
+                    <FiltersContent />
+                </FiltersWrapper>
             </Dialog>
         </div>
     );
