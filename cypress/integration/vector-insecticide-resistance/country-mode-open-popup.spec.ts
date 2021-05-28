@@ -1,28 +1,5 @@
 import { themes } from "../../support/constants";
 
-describe("Open popup in pyrethroid-PBO nets deployment subtheme", () => {
-    beforeEach(() => {
-        cy.loadPage(themes.vectorInsecticideResistance);
-        cy.contains("Insecticide resistance status").click();
-        cy.findByText("Pyrethroid-PBO nets deployment").click();
-        cy.openCountryMode();
-        cy.resetMapZoom();
-    });
-
-    it("should open a popup to click on coordinates", () => {
-        cy.clickOnMap(540, 340);
-        cy.clickOnMap(545, 330);
-        cy.contains("Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment");
-        cy.contains("Tombouctou");
-        cy.contains("Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment");
-        cy.contains("Number of sites that meet criteria:");
-        cy.contains("Vector species that meet criteria:");
-        cy.contains("Most recent pyrethroid susceptibility test results:");
-        cy.contains("2010");
-        cy.contains("Most recent mono-oxygenase involvement results:");
-    });
-});
-
 describe("Open popup in insecticide resistance intensity subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.vectorInsecticideResistance);
