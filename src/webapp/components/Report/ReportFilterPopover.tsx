@@ -30,7 +30,7 @@ interface Props {
     setSpecies?: any;
 }
 
-export default function ReportFilterPopover({
+const ReportFilterPopover: React.FC<Props> = ({
     countries,
     setCountries,
     drugs,
@@ -39,7 +39,7 @@ export default function ReportFilterPopover({
     setPlasmodiumSpecie,
     species,
     setSpecies,
-}: Props) {
+}) => {
     const classes = useStyles({});
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
@@ -91,4 +91,6 @@ export default function ReportFilterPopover({
             </Popover>
         </div>
     );
-}
+};
+
+export default ReportFilterPopover;

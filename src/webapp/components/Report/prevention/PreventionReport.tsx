@@ -1,22 +1,14 @@
 import React from "react";
-import clsx from "clsx";
-import { createStyles, lighten, makeStyles, Theme } from "@material-ui/core/styles";
 import {
-    Button,
     Table,
     TableBody,
     TableContainer,
     TableHead,
     TablePagination,
     TableRow,
-    Toolbar,
     Typography,
     Paper,
-    IconButton,
-    Tooltip,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
 import { selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
@@ -33,7 +25,7 @@ import { StyledCell, useStyles, EnhancedTableProps } from "../types";
 import { sendAnalytics } from "../../../utils/analytics";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { TableHeadCell } from "../TableHeadCell";
-import ReportFilterPopover from "../ReportFilterPopover";
+import ReportToolbar from "../ReportToolbar";
 
 function EnhancedTableHead(props: EnhancedTableProps<Data>) {
     const { t } = useTranslation("common");
@@ -101,92 +93,6 @@ function EnhancedTableHead(props: EnhancedTableProps<Data>) {
         </TableHead>
     );
 }
-
-const useToolbarStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            paddingLeft: theme.spacing(2),
-            paddingRight: theme.spacing(1),
-        },
-        highlight:
-            theme.palette.type === "light"
-                ? {
-                      color: theme.palette.secondary.main,
-                      backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-                  }
-                : {
-                      color: theme.palette.text.primary,
-                      backgroundColor: theme.palette.secondary.dark,
-                  },
-        title: {
-            flex: "1 1 100%",
-        },
-        button: {
-            margin: theme.spacing(1),
-            paddingLeft: theme.spacing(4),
-            paddingRight: theme.spacing(4),
-        },
-    })
-);
-
-interface EnhancedTableToolbarProps {
-    numSelected: number;
-    countries: string[];
-    setCountries: any;
-    species: string[];
-    setSpecies: any;
-    onClick: any;
-}
-
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-    const { t } = useTranslation("common");
-    const classes = useToolbarStyles({});
-    const { numSelected, countries, setCountries, species, setSpecies, onClick } = props;
-
-    return (
-        <Toolbar
-            className={clsx(classes.root, {
-                [classes.highlight]: numSelected > 0,
-            })}
-        >
-            {numSelected > 0 ? (
-                <Typography className={classes.title} color="inherit" variant="subtitle1">
-                    {numSelected} selected
-                </Typography>
-            ) : (
-                <Typography className={classes.title} variant="h6" id="tableTitle">
-                    {t("report.prevention.title")}
-                </Typography>
-            )}
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-            ) : (
-                // <div />
-                <>
-                    <Button
-                        variant="contained"
-                        color="default"
-                        className={classes.button}
-                        startIcon={<CloudDownloadIcon />}
-                        onClick={onClick}
-                    >
-                        {t("data_download.buttons.download")}
-                    </Button>
-                    <ReportFilterPopover
-                        countries={countries}
-                        setCountries={setCountries}
-                        species={species}
-                        setSpecies={setSpecies}
-                    />
-                </>
-            )}
-        </Toolbar>
-    );
-};
 
 const mapStateToProps = (state: State) => ({
     studies: selectPreventionStudies(state),
@@ -406,7 +312,8 @@ function PreventionReport({ studies: baseStudies }: Props) {
         <div className={classes.root}>
             <Paper className={classes.paper}>
                 <div className={classes.wrapper}>
-                    <EnhancedTableToolbar
+                    <ReportToolbar
+                        title={t("report.prevention.title")}
                         numSelected={selected.length}
                         countries={countries}
                         setCountries={setCountries}
