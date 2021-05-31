@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
             overflow: "unset",
         },
         countries: {
-            margin: 0,
+            margin: "0 !important",
         },
     })
 );
