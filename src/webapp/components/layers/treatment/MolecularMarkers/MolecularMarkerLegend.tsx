@@ -46,7 +46,8 @@ function MolecularMarkerLeyend({ treatmentFilters }: Props) {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("common.treatment.molecular_markers")} ({MOLECULAR_MARKERS[treatmentFilters.molecularMarker - 1].label})
+                    {t("common.treatment.molecular_markers")} (
+                    {MOLECULAR_MARKERS[treatmentFilters.molecularMarker - 1].label})
                 </LegendTitleTypography>
             </LegendTitleContainer>
             <LegendLabels labels={labels} />

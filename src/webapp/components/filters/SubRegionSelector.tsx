@@ -12,7 +12,6 @@ import T from "../../translations/T";
 import { sendAnalytics } from "../../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 
-
 const mapStateToProps = (state: State) => ({
     region: selectRegion(state),
     subRegions: selectSubRegions(state),
@@ -37,7 +36,12 @@ class SubRegionSelector extends Component<Props> {
     render() {
         const { region, subRegions = [] } = this.props;
         const suggestions: any[] = (subRegions as Translation[]).map(subRegion => ({
-            label: localStorage.getItem("language") === "en" ? subRegion.EN : localStorage.getItem("language") === "es" ? subRegion.ES : subRegion.FR,
+            label:
+                localStorage.getItem("language") === "en"
+                    ? subRegion.EN
+                    : localStorage.getItem("language") === "es"
+                    ? subRegion.ES
+                    : subRegion.FR,
             value: subRegion.VALUE_,
         }));
 

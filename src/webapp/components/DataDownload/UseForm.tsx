@@ -182,7 +182,9 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                 </FormControl>
             )}
             <FormControl fullWidth className={classes.formControl}>
-                <FormLabel component="legend">{t("common.data_download.step2.date_use_options_content.date")}</FormLabel>
+                <FormLabel component="legend">
+                    {t("common.data_download.step2.date_use_options_content.date")}
+                </FormLabel>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                         disableToolbar

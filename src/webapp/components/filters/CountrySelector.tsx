@@ -32,10 +32,17 @@ const CountrySelector = ({ region, countries = [], setRegion }: Props) => {
         if (label) sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label });
         setRegion({ country: selection ? selection.value : undefined });
     };
-
     const suggestions: any[] = countries
         .map((country: Translation) => ({
-            label: t(country.VALUE_ === "NA" ? "COUNTRY_NA" : localStorage.getItem("language") === "en" ? country.EN : localStorage.getItem("language") === "es" ? country.ES : country.FR),
+            label: t(
+                country.VALUE_ === "NA"
+                    ? "COUNTRY_NA"
+                    : localStorage.getItem("language") === "en"
+                    ? country.EN
+                    : localStorage.getItem("language") === "es"
+                    ? country.ES
+                    : country.FR
+            ),
             value: country.VALUE_,
         }))
         .filter(sug => sug.label);

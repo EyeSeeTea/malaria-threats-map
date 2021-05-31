@@ -31,7 +31,7 @@ function Legend({ legendExpanded }: Props) {
             label: "prevention.legend.resistance_status.confirmed",
             color: "#d43501",
         },
-        {    
+        {
             label: "prevention.legend.resistance_status.possible",
             color: "#ff9502",
         },
@@ -51,7 +51,7 @@ function Legend({ legendExpanded }: Props) {
                         (min. adjusted mosquito mortality)
                     </LegendSubtitleTypography>
                 )}
-        </LegendTitleContainer>
+            </LegendTitleContainer>
             <LegendLabels labels={labels} />
             <LegendFooter />
         </LegendContainer>

@@ -178,7 +178,9 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
     const content = () => (
         <>
             <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${studies[0].VILLAGE_NAME}, ${t(studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2)}`}</Box>
+                <Box fontWeight="fontWeightBold">{`${studies[0].VILLAGE_NAME}, ${t(
+                    studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2
+                )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">{`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}</Typography>
             <Flex>

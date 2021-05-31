@@ -108,7 +108,9 @@ const ResistanceStatusCountryChart = ({ studies, setRegion, setCountryMode, prev
     return (
         <ChartContainer>
             <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${t(`common.${studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2}`)}`}</Box>
+                <Box fontWeight="fontWeightBold">{`${t(
+                    `common.${studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2}`
+                )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
                 {t("common.prevention.chart.resistance_status.content_1", {

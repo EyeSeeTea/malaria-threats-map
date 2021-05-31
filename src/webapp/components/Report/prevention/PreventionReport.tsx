@@ -357,7 +357,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
                     return {
                         ID: `${country}_${species}`,
                         ISO2: country,
-                        COUNTRY: t(`common.${country}`),
+                        COUNTRY: t(country),
                         COUNTRY_NUMBER: entries.length,
                         SPECIES: species,
                         INSECTICIDE_CLASSES: `${insecticideClasses.length}`,
@@ -461,7 +461,11 @@ function PreventionReport({ studies: baseStudies }: Props) {
     const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
     const sortedGroups = R.sort(
-        (a, b) => (t(`common.${a.ISO2 === "NA" ? "COUNTRY_NA" : a.ISO2}`) < t(`common.${b.ISO2 === "NA" ? "COUNTRY_NA" : b.ISO2}`) ? -1 : 1),
+        (a, b) =>
+            t(a.ISO2 === "NA" ? "COUNTRY_NA" : a.ISO2) <
+            t(b.ISO2 === "NA" ? "COUNTRY_NA" : b.ISO2)
+                ? -1
+                : 1,
         groups
     );
 

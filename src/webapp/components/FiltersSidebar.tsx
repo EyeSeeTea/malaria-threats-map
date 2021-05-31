@@ -204,7 +204,8 @@ const FiltersSidebar = ({
             {lastUpdatedDates[themeSelector] && (
                 <LastUpdatedContainer>
                     <Typography variant="body2" display="block" gutterBottom>
-                        <strong>{t("common.filters.last_updated")}</strong> {lastUpdatedDates[themeSelector].toLocaleDateString()}
+                        <strong>{t("common.filters.last_updated")}</strong>{" "}
+                        {lastUpdatedDates[themeSelector].toLocaleDateString()}
                     </Typography>
                 </LastUpdatedContainer>
             )}

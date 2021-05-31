@@ -34,7 +34,12 @@ class RegionSelector extends Component<Props> {
     render() {
         const { region, regions = [] } = this.props;
         const suggestions: any[] = (regions as Translation[]).map(region => ({
-            label: localStorage.getItem("language") === "en" ? region.EN : localStorage.getItem("language") === "es" ? region.ES : region.FR,
+            label:
+                localStorage.getItem("language") === "en"
+                    ? region.EN
+                    : localStorage.getItem("language") === "es"
+                    ? region.ES
+                    : region.FR,
             value: region.VALUE_,
         }));
 

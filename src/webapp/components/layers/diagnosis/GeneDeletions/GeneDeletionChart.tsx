@@ -87,7 +87,9 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                 })}
             </Typography>
             <div className={classes.root}>
-                <Typography variant={"caption"}>{t("common.diagnosis.chart.gene_deletions.deletions_confirmed")}</Typography>
+                <Typography variant={"caption"}>
+                    {t("common.diagnosis.chart.gene_deletions.deletions_confirmed")}
+                </Typography>
                 <Table aria-label="simple table" size="small" className={classes.table}>
                     <TableHead className={classes.head}>
                         <TableRow>

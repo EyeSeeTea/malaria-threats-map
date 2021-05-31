@@ -34,7 +34,6 @@ const Margin = styled.div`
 `;
 
 const PboDistrictChart = ({ studies }: Props) => {
-    //"common"
     const { t } = useTranslation();
     const titleTranslation = t("common.prevention.pbo_deployment_legend");
     const nSitesTranslation = t("common.prevention.chart.pbo_deployment.num_sites_criteria");

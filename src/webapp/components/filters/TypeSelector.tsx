@@ -25,7 +25,6 @@ type Props = StateProps & OwnProps;
 
 function TypeSelector({ onChange, value }: Props) {
     const { t } = useTranslation();
-    // const uniques = R.uniq(R.map(R.prop("TYPE"), studies)).sort();
 
     const suggestions: any[] = TYPES.map((specie: string) => ({
         label: specie,

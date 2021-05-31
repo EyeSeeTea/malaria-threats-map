@@ -226,7 +226,9 @@ const Subscription = ({ subscriptionOpen, setSubscriptionOpen, isSubmitting, sav
                                     <MenuItem value="whoro">
                                         {t("common.subscription.institutions.who_regional_office")}
                                     </MenuItem>
-                                    <MenuItem value="whohq">{t("common.subscription.institutions.who_headquarters")}</MenuItem>
+                                    <MenuItem value="whohq">
+                                        {t("common.subscription.institutions.who_headquarters")}
+                                    </MenuItem>
                                 </Select>
                             </FormControl>
                         </div>

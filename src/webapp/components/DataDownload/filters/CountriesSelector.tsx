@@ -55,7 +55,15 @@ function CountriesSelector({
     };
 
     const suggestions: any[] = countries.map((country: Translation) => ({
-        label: t(country.VALUE_ === "NA" ? "COUNTRY_NA" : localStorage.getItem("language") === "en" ? country.EN : localStorage.getItem("language") === "es" ? country.ES : country.FR),
+        label: t(
+            country.VALUE_ === "NA"
+                ? "COUNTRY_NA"
+                : localStorage.getItem("language") === "en"
+                ? country.EN
+                : localStorage.getItem("language") === "es"
+                ? country.ES
+                : country.FR
+        ),
         value: country.VALUE_,
     }));
 

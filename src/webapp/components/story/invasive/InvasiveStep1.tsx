@@ -58,7 +58,10 @@ const InvasiveStep1 = () => {
                     target="_blank"
                     color={"textSecondary"}
                 >
-                    <img src="https://apps.who.int/iris/rest/bitstreams/1283866/retrieve" alt={t("invasiveStory.step1.supporting")} />
+                    <img
+                        src="https://apps.who.int/iris/rest/bitstreams/1283866/retrieve"
+                        alt={t("invasiveStory.step1.supporting")}
+                    />
                 </Link>
             </Typography>
         </div>

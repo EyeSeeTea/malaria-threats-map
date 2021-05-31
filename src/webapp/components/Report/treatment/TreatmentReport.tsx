@@ -73,7 +73,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                                 ) : null}
                             </TableSortLabel>
                         ) : (
-                            t(`common.${headCell.label}`)
+                            t(headCell.label)
                         )}
                     </StyledCell>
                 ))}

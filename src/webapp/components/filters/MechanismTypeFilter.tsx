@@ -86,7 +86,6 @@ function MechanismTypeFilter({
 }: Props) {
     const classes = useStyles({});
     const { t } = useTranslation();
-    
     function handleChange(event: React.ChangeEvent<unknown>) {
         const newValue = (event.target as HTMLInputElement).value;
         setType(newValue);
