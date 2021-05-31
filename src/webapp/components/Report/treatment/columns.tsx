@@ -1,3 +1,5 @@
+import { HeadCell } from "../types";
+
 type NumberOrHyphen = number | string;
 
 export interface Data {
@@ -16,18 +18,7 @@ export interface Data {
     PERCENTILE_75: NumberOrHyphen;
 }
 
-interface HeadCell {
-    id: keyof Data;
-    numeric: boolean;
-    disablePadding: boolean;
-    label: string;
-    sortable?: boolean;
-    align?: "right" | "left";
-    divider?: boolean;
-    decimalPositions?: number;
-}
-
-export const headCells: HeadCell[] = [
+export const headCells: HeadCell<Data>[] = [
     {
         id: "COUNTRY",
         numeric: false,

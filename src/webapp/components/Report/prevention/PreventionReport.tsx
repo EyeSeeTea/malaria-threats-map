@@ -5,12 +5,10 @@ import {
     Button,
     Table,
     TableBody,
-    TableCell,
     TableContainer,
     TableHead,
     TablePagination,
     TableRow,
-    TableSortLabel,
     Toolbar,
     Typography,
     Paper,
@@ -24,7 +22,6 @@ import { State } from "../../../store/types";
 import { selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 import { COLUMNS, Data, ERROR_COLUMNS, GREY_COLUMNS, headCells } from "./columns";
 import { resolvePyrethroids } from "../resolvers/resistanceStatus";
 import { resolveMechanism } from "../resolvers/resistanceMechanism";
@@ -33,37 +30,14 @@ import { filterByCountries, filterBySpecies } from "../../layers/studies-filters
 import { exportToCSV } from "../../DataDownload/download";
 import { format } from "date-fns";
 import { getComparator, Order, stableSort } from "../utils";
-import { CellProps, useStyles } from "../types";
+import { StyledCell, useStyles, EnhancedTableProps } from "../types";
 import { sendAnalytics } from "../../../utils/analytics";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
+import { TableHeadCell } from "../TableHeadCell";
 
-const StyledCell = styled(TableCell)<CellProps>`
-    font-size: ${props => (props.isBold ? "12px" : "11.5px")} !important;
-    line-height: 1rem !important;
-    padding: 3px 6px !important;
-    font-weight: ${props => (props.isBold ? "bold" : "normal")} !important;
-    color: ${props => props.color || "inherit"} !important;
-    ${props => props.isRight && "text-align: right !important"};
-    ${props => props.divider && "border-left: 1px solid rgba(224, 224, 224, 1)"}
-`;
-
-interface EnhancedTableProps {
-    classes: ReturnType<typeof useStyles>;
-    numSelected: number;
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
-    onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
-    order: Order;
-    orderBy: string;
-    rowCount: number;
-}
-
-function EnhancedTableHead(props: EnhancedTableProps) {
+function EnhancedTableHead(props: EnhancedTableProps<Data>) {
     const { t } = useTranslation("common");
     const { classes, order, orderBy, onRequestSort } = props;
-
-    const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
-        onRequestSort(event, property);
-    };
 
     return (
         <TableHead>
@@ -114,30 +88,14 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             </TableRow>
             <TableRow>
                 {headCells.map(headCell => (
-                    <StyledCell
+                    <TableHeadCell
                         key={headCell.id}
-                        align={headCell.align || "left"}
-                        padding={headCell.disablePadding ? "none" : "default"}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                        divider={headCell.divider}
-                    >
-                        {headCell.sortable ? (
-                            <TableSortLabel
-                                active={orderBy === headCell.id}
-                                direction={orderBy === headCell.id ? order : "asc"}
-                                onClick={headCell.sortable ? createSortHandler(headCell.id) : () => {}}
-                            >
-                                {t(headCell.label)}
-                                {headCell.sortable && orderBy === headCell.id ? (
-                                    <span className={classes.visuallyHidden}>
-                                        {order === "desc" ? "sorted descending" : "sorted ascending"}
-                                    </span>
-                                ) : null}
-                            </TableSortLabel>
-                        ) : (
-                            t(headCell.label)
-                        )}
-                    </StyledCell>
+                        classes={classes}
+                        headCell={headCell}
+                        order={order}
+                        orderBy={orderBy}
+                        onRequestSort={onRequestSort}
+                    />
                 ))}
             </TableRow>
         </TableHead>

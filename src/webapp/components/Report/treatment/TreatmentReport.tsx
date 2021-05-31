@@ -9,7 +9,6 @@ import {
     TableHead,
     TablePagination,
     TableRow,
-    TableSortLabel,
     Toolbar,
     Typography,
     Paper,
@@ -38,44 +37,24 @@ import { isNull } from "../../../utils/number-utils";
 import { format } from "date-fns";
 import { sendAnalytics } from "../../../utils/analytics";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
+import { TableHeadCell } from "../TableHeadCell";
 
-function EnhancedTableHead(props: EnhancedTableProps) {
-    const { t } = useTranslation("common");
+function EnhancedTableHead(props: EnhancedTableProps<Data>) {
     const { classes, order, orderBy, onRequestSort } = props;
-
-    const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
-        onRequestSort(event, property);
-    };
 
     return (
         <TableHead>
             <TableRow>
                 {headCells.map(headCell => (
-                    <StyledCell
+                    <TableHeadCell
                         key={headCell.id}
-                        align={headCell.align || "left"}
-                        padding={headCell.disablePadding ? "none" : "default"}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                        divider={headCell.divider}
+                        classes={classes}
+                        headCell={headCell}
+                        order={order}
+                        orderBy={orderBy}
+                        onRequestSort={onRequestSort}
                         isBold
-                    >
-                        {headCell.sortable ? (
-                            <TableSortLabel
-                                active={orderBy === headCell.id}
-                                direction={orderBy === headCell.id ? order : "asc"}
-                                onClick={headCell.sortable ? createSortHandler(headCell.id) : () => {}}
-                            >
-                                {t(headCell.label)}
-                                {headCell.sortable && orderBy === headCell.id ? (
-                                    <span className={classes.visuallyHidden}>
-                                        {order === "desc" ? "sorted descending" : "sorted ascending"}
-                                    </span>
-                                ) : null}
-                            </TableSortLabel>
-                        ) : (
-                            t(headCell.label)
-                        )}
-                    </StyledCell>
+                    />
                 ))}
             </TableRow>
         </TableHead>

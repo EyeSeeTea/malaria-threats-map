@@ -1,3 +1,5 @@
+import { HeadCell } from "../types";
+
 export interface Data {
     ID: string;
     ISO2: string;
@@ -65,17 +67,7 @@ export const COLUMNS = [
     "ACE1R_PERCENT_SITES_DETECTED_NUMBER_SITES",
 ];
 
-interface HeadCell {
-    id: keyof Data;
-    numeric: boolean;
-    disablePadding: boolean;
-    label: string;
-    sortable?: boolean;
-    align?: "right" | "left" | "center";
-    divider?: boolean;
-}
-
-export const headCells: HeadCell[] = [
+export const headCells: HeadCell<Data>[] = [
     {
         id: "COUNTRY",
         numeric: false,
