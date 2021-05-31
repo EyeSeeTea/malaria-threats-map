@@ -64,7 +64,7 @@ export const emailRegexp = new RegExp(
 );
 
 const Subscription = ({ subscriptionOpen, setSubscriptionOpen, isSubmitting, saveContact }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const classes = useStyles({});
     const [email, setEmail] = React.useState<string>(null);
     const [firstName, setFirstName] = React.useState<string>(null);
@@ -112,7 +112,7 @@ const Subscription = ({ subscriptionOpen, setSubscriptionOpen, isSubmitting, sav
                 color={"default"}
                 className={classes.fab}
                 onClick={handleOpen}
-                title={t("icons.subscribe")}
+                title={t("common.icons.subscribe")}
             >
                 <SubscriptionIcon />
             </Fab>
@@ -127,16 +127,16 @@ const Subscription = ({ subscriptionOpen, setSubscriptionOpen, isSubmitting, sav
             >
                 <form id="ic_signupform">
                     <div>
-                        <Typography variant={"h5"}>{t("subscription.title")}</Typography>
+                        <Typography variant={"h5"}>{t("common.subscription.title")}</Typography>
                     </div>
                     <div>
                         <FormControl fullWidth margin={"dense"}>
                             <div data-validation-type="1" data-label="First Name">
                                 <TextField
                                     fullWidth
-                                    label={t("subscription.first_name")}
-                                    type={t("subscription.first_name")}
-                                    placeholder={t("subscription.first_name")}
+                                    label={t("common.subscription.first_name")}
+                                    type={t("common.subscription.first_name")}
+                                    placeholder={t("common.subscription.first_name")}
                                     name="data[fname]"
                                     required
                                     value={firstName}
@@ -148,9 +148,9 @@ const Subscription = ({ subscriptionOpen, setSubscriptionOpen, isSubmitting, sav
                             <div data-validation-type="1" data-label="Last Name">
                                 <TextField
                                     fullWidth
-                                    label={t("subscription.last_name")}
-                                    type={t("subscription.last_name")}
-                                    placeholder={t("subscription.last_name")}
+                                    label={t("common.subscription.last_name")}
+                                    type={t("common.subscription.last_name")}
+                                    placeholder={t("common.subscription.last_name")}
                                     name="data[lname]"
                                     required
                                     value={lastName}
@@ -162,9 +162,9 @@ const Subscription = ({ subscriptionOpen, setSubscriptionOpen, isSubmitting, sav
                             <div data-validation-type="1" data-label="Email">
                                 <TextField
                                     fullWidth
-                                    label={t("subscription.email")}
-                                    type={t("subscription.email")}
-                                    placeholder={t("subscription.email")}
+                                    label={t("common.subscription.email")}
+                                    type={t("common.subscription.email")}
+                                    placeholder={t("common.subscription.email")}
                                     required
                                     name="data[email]"
                                     value={email}
@@ -180,9 +180,9 @@ const Subscription = ({ subscriptionOpen, setSubscriptionOpen, isSubmitting, sav
                             >
                                 <TextField
                                     fullWidth
-                                    label={t("subscription.country")}
-                                    type={t("subscription.country")}
-                                    placeholder={t("subscription.country")}
+                                    label={t("common.subscription.country")}
+                                    type={t("common.subscription.country")}
+                                    placeholder={t("common.subscription.country")}
                                     required
                                     name="data[country]"
                                     value={country}
@@ -196,37 +196,37 @@ const Subscription = ({ subscriptionOpen, setSubscriptionOpen, isSubmitting, sav
                             data-label="Organization"
                         >
                             <FormControl fullWidth margin={"dense"}>
-                                <InputLabel id="organization-label">{t("subscription.organization")}</InputLabel>
+                                <InputLabel id="organization-label">{t("common.subscription.organization")}</InputLabel>
                                 <Select
                                     name="data[organization]"
                                     labelId="organization-label"
                                     value={organization}
                                     onChange={event => setOrganization(event.target.value as string)}
                                 >
-                                    <MenuItem value="nmcp">{t("subscription.institutions.nmcp")}</MenuItem>
+                                    <MenuItem value="nmcp">{t("common.subscription.institutions.nmcp")}</MenuItem>
                                     <MenuItem value="funding">
-                                        {t("subscription.institutions.funding_organization")}
+                                        {t("common.subscription.institutions.funding_organization")}
                                     </MenuItem>
                                     <MenuItem value="research">
-                                        {t("subscription.institutions.research_organization")}
+                                        {t("common.subscription.institutions.research_organization")}
                                     </MenuItem>
                                     <MenuItem value="collaboratingcenter">
-                                        {t("subscription.institutions.who_collaborating_centers")}
+                                        {t("common.subscription.institutions.who_collaborating_centers")}
                                     </MenuItem>
                                     <MenuItem value="privatesector">
-                                        {t("subscription.institutions.private_sector")}
+                                        {t("common.subscription.institutions.private_sector")}
                                     </MenuItem>
-                                    <MenuItem value="ngo">{t("subscription.institutions.ngo")}</MenuItem>
+                                    <MenuItem value="ngo">{t("common.subscription.institutions.ngo")}</MenuItem>
                                     <MenuItem value="media">
-                                        {t("subscription.institutions.media_organization")}
+                                        {t("common.subscription.institutions.media_organization")}
                                     </MenuItem>
                                     <MenuItem value="whoco">
-                                        {t("subscription.institutions.who_country_office")}
+                                        {t("common.subscription.institutions.who_country_office")}
                                     </MenuItem>
                                     <MenuItem value="whoro">
-                                        {t("subscription.institutions.who_regional_office")}
+                                        {t("common.subscription.institutions.who_regional_office")}
                                     </MenuItem>
-                                    <MenuItem value="whohq">{t("subscription.institutions.who_headquarters")}</MenuItem>
+                                    <MenuItem value="whohq">{t("common.subscription.institutions.who_headquarters")}</MenuItem>
                                 </Select>
                             </FormControl>
                         </div>
@@ -238,7 +238,7 @@ const Subscription = ({ subscriptionOpen, setSubscriptionOpen, isSubmitting, sav
                                 disabled={isSubmitting || !valid}
                                 onClick={() => submit()}
                             >
-                                {t("subscription.button")}
+                                {t("common.subscription.button")}
                             </Button>
                         </FormControl>
                     </div>

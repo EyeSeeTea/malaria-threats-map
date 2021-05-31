@@ -40,7 +40,7 @@ type OwnProps = {
 type Props = DispatchProps & StateProps & OwnProps;
 
 const TreatmentFailureCountryChart = ({ studies, setRegion, setCountryMode }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const nStudies = studies.length;
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
     const maxYear = sortedStudies[sortedStudies.length - 1].YEAR_START;
@@ -52,12 +52,10 @@ const TreatmentFailureCountryChart = ({ studies, setRegion, setCountryMode }: Pr
     return (
         <ChatContainer>
             <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${t(
-                    studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2
-                )}`}</Box>
+                <Box fontWeight="fontWeightBold">{`${t(studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2)}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
-                {t("treatment.chart.treatment_failure.content", {
+                {t("common.treatment.chart.treatment_failure.content", {
                     nStudies,
                     drug: t(sortedStudies[0].DRUG_NAME),
                     plasmodiumSpecies: t(sortedStudies[0].PLASMODIUM_SPECIES.replace(".", "%2E")),

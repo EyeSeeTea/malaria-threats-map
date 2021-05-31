@@ -10,7 +10,7 @@ import { DiagnosisCountryColors } from "./DiagnosisCountrySymbols";
 import { useTranslation } from "react-i18next";
 
 export default function DiagnosisCountryLegend() {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const labels = [
         {
             label: "legend.number_of_surveys",
@@ -21,7 +21,7 @@ export default function DiagnosisCountryLegend() {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("themes.diagnosis")}
+                    {t("common.themes.diagnosis")}
                 </LegendTitleTypography>
             </LegendTitleContainer>
             <LegendLabels labels={labels} />

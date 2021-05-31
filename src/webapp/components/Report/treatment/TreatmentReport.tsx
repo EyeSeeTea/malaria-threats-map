@@ -40,7 +40,7 @@ import { sendAnalytics } from "../../../utils/analytics";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const { classes, order, orderBy, onRequestSort } = props;
 
     const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
@@ -65,7 +65,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                                 direction={orderBy === headCell.id ? order : "asc"}
                                 onClick={headCell.sortable ? createSortHandler(headCell.id) : () => {}}
                             >
-                                {t(headCell.label)}
+                                {t(`common.${headCell.label}`)}
                                 {headCell.sortable && orderBy === headCell.id ? (
                                     <span className={classes.visuallyHidden}>
                                         {order === "desc" ? "sorted descending" : "sorted ascending"}
@@ -73,7 +73,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                                 ) : null}
                             </TableSortLabel>
                         ) : (
-                            t(headCell.label)
+                            t(`common.${headCell.label}`)
                         )}
                     </StyledCell>
                 ))}
@@ -121,7 +121,7 @@ interface EnhancedTableToolbarProps {
 }
 
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const classes = useToolbarStyles({});
     const {
         numSelected,
@@ -147,10 +147,10 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
             ) : (
                 <>
                     <Typography className={classes.title} variant="h6" id="tableTitle">
-                        {t("report.treatment.title")}
+                        {t("common.report.treatment.title")}
                         <br />
                         <Typography variant="body1" id="tableTitle">
-                            ({t(plasmodiumSpecie.replace(".", "%2E"))})
+                            ({t(`common.${plasmodiumSpecie.replace(".", "%2E")}`)})
                         </Typography>
                     </Typography>
                 </>
@@ -170,7 +170,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
                         startIcon={<CloudDownloadIcon />}
                         onClick={onClick}
                     >
-                        {t("data_download.buttons.download")}
+                        {t("common.data_download.buttons.download")}
                     </Button>
                     <FilterPopover
                         countries={countries}
@@ -196,7 +196,7 @@ type Props = StateProps & OwnProps;
 
 function TreatmentReport({ studies: baseStudies }: Props) {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [order, setOrder] = React.useState<Order>("desc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("DRUG");
     const [selected, setSelected] = React.useState<string[]>([]);
@@ -276,9 +276,9 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
                             return {
                                 ID: `${country}_${drug}`,
-                                COUNTRY: t(country),
+                                COUNTRY: t(`common.${country}`),
                                 ISO2: country,
-                                DRUG: t(drug),
+                                DRUG: t(`common.${drug}`),
                                 COUNTRY_NUMBER: nStudies,
                                 FOLLOW_UP: followUpDays,
                                 STUDY_YEARS: `${minYear} - ${maxYear}`,
@@ -346,7 +346,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
     const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
-    const sortedGroups = R.sort((a, b) => (t(a.COUNTRY) < t(b.COUNTRY) ? -1 : 1), groups);
+    const sortedGroups = R.sort((a, b) => (t(`common.${a.COUNTRY}`) < t(`common.${b.COUNTRY}`) ? -1 : 1), groups);
 
     const tablePage = stableSort(sortedGroups, getComparator(order, orderBy)).slice(
         page * rowsPerPage,

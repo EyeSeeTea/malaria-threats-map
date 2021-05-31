@@ -29,14 +29,14 @@ type Props = OwnProps;
 
 const YearsSelector = ({ value, onChange }: Props) => {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const handleChange = (selection: OptionType[]) => {
         onChange((selection || []).map(s => s.value));
     };
     return (
         <div className={classes.root}>
-            <FormLabel component="legend">{t("filters.years")}</FormLabel>
+            <FormLabel component="legend">{t("common.filters.years")}</FormLabel>
             <Divider />
             <IntegrationReactSelect
                 isMulti

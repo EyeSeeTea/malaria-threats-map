@@ -54,7 +54,7 @@ type Props = StateProps & DispatchProps;
 
 function Report({ isReportOpen, openReport, theme }: Props) {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const handleClickOpen = () => {
         sendAnalytics({ type: "event", category: "menu", action: "summary" });
@@ -84,7 +84,7 @@ function Report({ isReportOpen, openReport, theme }: Props) {
                 color={isReportOpen ? "primary" : "default"}
                 onClick={handleClickOpen}
                 className={classes.fab}
-                title={t("icons.summary")}
+                title={t("common.icons.summary")}
             >
                 <ReportIcon />
             </Fab>

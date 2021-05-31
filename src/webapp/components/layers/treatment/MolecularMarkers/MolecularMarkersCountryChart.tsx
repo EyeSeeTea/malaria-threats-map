@@ -29,7 +29,7 @@ type OwnProps = {
 type Props = DispatchProps & StateProps & OwnProps;
 
 const MolecularMarkersCountryChart = ({ studies, setRegion, setCountryMode, treatmentFilters }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const nStudies = studies.length;
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
     const maxYear = sortedStudies[sortedStudies.length - 1].YEAR_START;
@@ -42,12 +42,10 @@ const MolecularMarkersCountryChart = ({ studies, setRegion, setCountryMode, trea
     return (
         <ChartContainer>
             <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${t(
-                    studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2
-                )}`}</Box>
+                <Box fontWeight="fontWeightBold">{`${t(`countries.${studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2}`)}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
-                {t("treatment.chart.molecular_markers.content", {
+                {t("common.treatment.chart.molecular_markers.content", {
                     nStudies,
                     molecularMarker: t(molecularMarker),
                     years: formatYears(minYear, maxYear),

@@ -34,7 +34,7 @@ function CountriesSelector({
     label,
     className,
 }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const global = value.includes("GLOBAL");
     const onOptionChange = (selection: OptionType[] | OptionType | undefined) => {
         if (!selection) {
@@ -53,8 +53,9 @@ function CountriesSelector({
             }
         }
     };
+
     const suggestions: any[] = countries.map((country: Translation) => ({
-        label: t(country.VALUE_ === "NA" ? "COUNTRY_NA" : country.VALUE_),
+        label: t(country.VALUE_ === "NA" ? "COUNTRY_NA" : localStorage.getItem("language") === "en" ? country.EN : localStorage.getItem("language") === "es" ? country.ES : country.FR),
         value: country.VALUE_,
     }));
 
@@ -67,7 +68,7 @@ function CountriesSelector({
 
     return (
         <FilterWrapper className={className}>
-            <FormLabel component="legend">{label || <T i18nKey={"filters.countries"} />}</FormLabel>
+            <FormLabel component="legend">{label || <T i18nKey={"common.filters.countries"} />}</FormLabel>
             <Divider />
             <IntegrationReactSelect
                 isClearable

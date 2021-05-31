@@ -15,18 +15,19 @@ type Props = {
     onChange: (value: string[]) => void;
 };
 
-export interface FullCountry {
+/*export interface FullCountry {
     iso2: string;
     name: string;
+}*/
+export interface FullCountry {
+    [key: string]: string
 }
 
+
 function FullCountriesSelector({ onChange, value, includeGlobalOption, menuIsOpen, label, className }: Props) {
-    const { t } = useTranslation("fullCountries");
-
-    const baseCountries: FullCountry[] = t("countries", { returnObjects: true });
-
-    const countries = baseCountries.sort((t1, t2) => (t1.name < t2.name ? -1 : 1));
-
+    const { t } = useTranslation();
+    
+    const baseCountries: FullCountry = t("countries", { returnObjects: true });
     const global = value.includes("GLOBAL");
     const onOptionChange = (selection: OptionType[] | OptionType | undefined) => {
         if (!selection) {
@@ -45,9 +46,10 @@ function FullCountriesSelector({ onChange, value, includeGlobalOption, menuIsOpe
             }
         }
     };
-    const suggestions: any[] = countries.map((country: FullCountry) => ({
-        label: country.name,
-        value: country.iso2,
+
+    const suggestions: any[] = Object.entries(baseCountries).map(([iso, name]) => ({
+        label: name,
+        value: iso,
     }));
 
     const globalOption = {

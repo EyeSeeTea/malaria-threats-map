@@ -46,7 +46,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
 const Filters = ({ onChange, selections }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const onSetTheme = (value: string) => {
         onChange({
@@ -174,7 +174,7 @@ const Filters = ({ onChange, selections }: Props) => {
     return (
         <div>
             <Typography variant="subtitle1" color="textSecondary">
-                {t("data_download.dataset")}
+                {t("common.data_download.dataset")}
             </Typography>
             <Paper
                 style={{
@@ -195,7 +195,7 @@ const Filters = ({ onChange, selections }: Props) => {
             </Paper>
             <Divider />
             <Typography variant="subtitle1" color="textSecondary">
-                {t("data_download.step3.filters.additional")}
+                {t("common.data_download.step3.filters.additional")}
             </Typography>
             <Paper
                 style={{

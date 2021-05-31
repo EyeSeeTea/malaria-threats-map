@@ -26,15 +26,16 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const CountrySelector = ({ region, countries = [], setRegion }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const onChange = (selection: Option | undefined) => {
         const label = selection ? selection.value : undefined;
         if (label) sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label });
         setRegion({ country: selection ? selection.value : undefined });
     };
+
     const suggestions: any[] = countries
         .map((country: Translation) => ({
-            label: t(country.VALUE_ === "NA" ? "COUNTRY_NA" : country.VALUE_),
+            label: t(country.VALUE_ === "NA" ? "COUNTRY_NA" : localStorage.getItem("language") === "en" ? country.EN : localStorage.getItem("language") === "es" ? country.ES : country.FR),
             value: country.VALUE_,
         }))
         .filter(sug => sug.label);
@@ -42,12 +43,12 @@ const CountrySelector = ({ region, countries = [], setRegion }: Props) => {
     return (
         <FilterWrapper>
             <FormLabel component="legend">
-                <T i18nKey={"filters.country"} />
+                <T i18nKey={"common.filters.country"} />
             </FormLabel>
             <Divider />
             <IntegrationReactSelect
                 isClearable
-                placeholder={"Select Country"}
+                placeholder={t("common.filters.select_country")}
                 suggestions={suggestions.sort((s1, s2) => (s1.label > s2.label ? 1 : -1))}
                 onChange={onChange}
                 value={suggestions.find((s: any) => s.value === region.country) || null}

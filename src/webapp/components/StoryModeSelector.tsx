@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function StoryModeSelector({ storyMode, setStoryMode }: any) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const classes = useStyles({});
     const handleToggle = () => {
         const newStoryModel = !storyMode;
@@ -34,7 +34,7 @@ function StoryModeSelector({ storyMode, setStoryMode }: any) {
                 color={storyMode ? "primary" : "default"}
                 onClick={handleToggle}
                 className={classes.fab}
-                title={t("icons.story")}
+                title={t("common.icons.story")}
             >
                 <ImportContactsIcon />
             </Fab>

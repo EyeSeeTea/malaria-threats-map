@@ -39,7 +39,7 @@ const Wrapper = styled.div`
 const InitialDisclaimer = () => {
     const [open, setOpen] = React.useState(false);
     const classes = useStyles({});
-    const { t } = useTranslation(["disclaimer", "common"]);
+    const { t } = useTranslation();
 
     const handleClickOpen = () => {
         sendAnalytics({ type: "event", category: "menu", action: "disclaimer" });
@@ -57,7 +57,7 @@ const InitialDisclaimer = () => {
                 color={"default"}
                 className={classes.fab}
                 onClick={handleClickOpen}
-                title={t("common:icons.disclaimer")}
+                title={t("common.icons.disclaimer")}
             >
                 <DisclaimerIcon />
             </Fab>
@@ -71,7 +71,7 @@ const InitialDisclaimer = () => {
             >
                 <DialogActions>
                     <Wrapper>
-                        <Typography variant="h5">{t("common:icons.disclaimer")}</Typography>
+                        <Typography variant="h5">{t("common.icons.disclaimer")}</Typography>
                     </Wrapper>
                     <FlexGrow />
                     <IconButton onClick={handleClose}>
@@ -85,46 +85,46 @@ const InitialDisclaimer = () => {
                     }}
                 >
                     <Typography variant={"body2"}>
-                        <Trans i18nKey="disclaimer:p1a" t={t}>
+                        <Trans i18nKey="disclaimer.p1a" t={t}>
                             <strong>Data source:</strong> Global Malaria Programme
                         </Trans>
                     </Typography>
                     <Typography variant={"body2"} gutterBottom>
-                        <Trans i18nKey="disclaimer:p1b" t={t}>
+                        <Trans i18nKey="disclaimer.p1b" t={t}>
                             <strong>Map production:</strong> Global Malaria Programme. World Health Organization.
                         </Trans>
                     </Typography>
                     <Typography variant={"body2"} gutterBottom>
-                        <Link href={t("disclaimer:p1bLink")} target="_blank" rel="noopener noreferrer">
-                            {t("disclaimer:p1bLinkText")}
+                        <Link href={t("disclaimer.p1bLink")} target="_blank" rel="noopener noreferrer">
+                            {t("disclaimer.p1bLinkText")}
                         </Link>
-                        {t("disclaimer:p1c")}
+                        {t("disclaimer.p1c")}
                     </Typography>
 
                     <br />
                     <Typography variant={"body2"} gutterBottom>
-                        {t("disclaimer:p2")}
+                        {t("disclaimer.p2")}
                     </Typography>
                     <Typography variant={"body2"} gutterBottom>
-                        {t("disclaimer:p3a")}
-                        <Link href={t("disclaimer:p3aLink")} target="_blank" rel="noopener noreferrer">
-                            {t("disclaimer:p3b")}
+                        {t("disclaimer.p3a")}
+                        <Link href={t("disclaimer.p3aLink")} target="_blank" rel="noopener noreferrer">
+                            {t("disclaimer.p3b")}
                         </Link>
                     </Typography>
                     <br />
-                    <Typography variant={"body2"}>{t("disclaimer:p4a")}</Typography>
+                    <Typography variant={"body2"}>{t("disclaimer.p4a")}</Typography>
                     <Typography variant={"caption"} gutterBottom>
-                        {t("disclaimer:p4b")}
-                        <Link href={t("disclaimer:p4bLink")} target="_blank" rel="noopener noreferrer">
-                            {t("disclaimer:p4bLinkText")}
+                        {t("disclaimer.p4b")}
+                        <Link href={t("disclaimer.p4bLink")} target="_blank" rel="noopener noreferrer">
+                            {t("disclaimer.p4bLinkText")}
                         </Link>
                     </Typography>
                     <br />
                     <br />
                     <Typography variant={"body2"}>
-                        {t("disclaimer:p5a")}
-                        <Link href={t("disclaimer:p5aLink")} target="_blank" rel="noopener noreferrer">
-                            {t("disclaimer:p5aLinkText")}
+                        {t("disclaimer.p5a")}
+                        <Link href={t("disclaimer.p5aLink")} target="_blank" rel="noopener noreferrer">
+                            {t("disclaimer.p5aLinkText")}
                         </Link>
                     </Typography>
                 </DialogContent>

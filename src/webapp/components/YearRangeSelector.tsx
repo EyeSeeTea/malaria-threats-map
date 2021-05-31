@@ -59,7 +59,7 @@ type Props = OwnProps & DispatchProps & StateProps;
 
 const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = 2021 }: Props) => {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const handleChange = (event: any, newValue: number | number[]) => {
         const [start, end] = newValue as number[];
@@ -74,7 +74,7 @@ const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = 2021
 
     return (
         <div className={classes.root}>
-            <FormLabel component="legend">{t(`filters.years`)}</FormLabel>
+            <FormLabel component="legend">{t("common.filters.years")}</FormLabel>
             <Slider
                 className={classes.slider}
                 value={filters}
