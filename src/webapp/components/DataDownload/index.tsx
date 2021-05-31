@@ -849,7 +849,7 @@ function DataDownload({
             (researchActive ? useInfo.researchInfo : true) &&
             (policiesActive ? useInfo.policiesInfo : true) &&
             (toolsActive ? useInfo.toolsInfo : true) &&
-            useInfo.countries.length >0
+            useInfo.countries.length > 0
         );
     };
 
