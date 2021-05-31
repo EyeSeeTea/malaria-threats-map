@@ -25,7 +25,6 @@ import { useTranslation } from "react-i18next";
 import { COLUMNS, Data, ERROR_COLUMNS, GREY_COLUMNS, headCells } from "./columns";
 import { resolvePyrethroids } from "../resolvers/resistanceStatus";
 import { resolveMechanism } from "../resolvers/resistanceMechanism";
-import FilterPopover from "./FilterPopover";
 import { filterByCountries, filterBySpecies } from "../../layers/studies-filters";
 import { exportToCSV } from "../../DataDownload/download";
 import { format } from "date-fns";
@@ -34,6 +33,7 @@ import { StyledCell, useStyles, EnhancedTableProps } from "../types";
 import { sendAnalytics } from "../../../utils/analytics";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { TableHeadCell } from "../TableHeadCell";
+import ReportFilterPopover from "../ReportFilterPopover";
 
 function EnhancedTableHead(props: EnhancedTableProps<Data>) {
     const { t } = useTranslation("common");
@@ -176,7 +176,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
                     >
                         {t("data_download.buttons.download")}
                     </Button>
-                    <FilterPopover
+                    <ReportFilterPopover
                         countries={countries}
                         setCountries={setCountries}
                         species={species}

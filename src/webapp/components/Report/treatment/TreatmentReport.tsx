@@ -22,7 +22,7 @@ import { State } from "../../../store/types";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
 import { Data, headCells } from "./columns";
-import FilterPopover from "./FilterPopover";
+import ReportFilterPopover from "../ReportFilterPopover";
 import {
     filterByCountries,
     filterByDrugs,
@@ -151,7 +151,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
                     >
                         {t("data_download.buttons.download")}
                     </Button>
-                    <FilterPopover
+                    <ReportFilterPopover
                         countries={countries}
                         setCountries={setCountries}
                         drugs={drugs}
