@@ -3,14 +3,13 @@ import { connect } from "react-redux";
 import IntegrationReactSelect, { OptionType } from "../../BasicSelect";
 import FormLabel from "@material-ui/core/FormLabel";
 import T from "../../../translations/T";
-import { Divider, FilterWrapper } from "../../filters/Filters";
+import { Divider, FilterSimpleWrapper } from "../../filters/Filters";
 import { useTranslation } from "react-i18next";
 
 type Props = {
     includeGlobalOption?: boolean;
     menuIsOpen?: boolean;
     label?: string;
-    className?: string;
     value: string[];
     onChange: (value: string[]) => void;
 };
@@ -20,7 +19,7 @@ export interface FullCountry {
     name: string;
 }
 
-function FullCountriesSelector({ onChange, value, includeGlobalOption, menuIsOpen, label, className }: Props) {
+function FullCountriesSelector({ onChange, value, includeGlobalOption, menuIsOpen, label }: Props) {
     const { t } = useTranslation("fullCountries");
 
     const baseCountries: FullCountry[] = t("countries", { returnObjects: true });
@@ -58,7 +57,7 @@ function FullCountriesSelector({ onChange, value, includeGlobalOption, menuIsOpe
     const suggs = includeGlobalOption ? [...suggestions, globalOption] : suggestions;
 
     return (
-        <FilterWrapper className={className}>
+        <FilterSimpleWrapper>
             <FormLabel component="legend">{label || <T i18nKey={"filters.countries"} />}</FormLabel>
             <Divider />
             <IntegrationReactSelect
@@ -69,7 +68,7 @@ function FullCountriesSelector({ onChange, value, includeGlobalOption, menuIsOpe
                 value={global ? globalOption : suggs.filter(s => value.includes(s.value))}
                 menuIsOpen={menuIsOpen}
             />
-        </FilterWrapper>
+        </FilterSimpleWrapper>
     );
 }
 
