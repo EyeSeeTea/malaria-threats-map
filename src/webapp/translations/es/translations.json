@@ -248,8 +248,7 @@
                     "0": "Hay {{studies}} pruebas con los criterios especificados",
                     "1": "Hay {{studies}} pruebas con los criterios especificados",
                     "2": "Hay {{studies}} ensayo con los criterios especificados",
-                    "3": "Hay {{studies}} pruebas con los criterios especificados",
-                    "4": ""
+                    "3": "Hay {{studies}} pruebas con los criterios especificados"
                 },
                 "diagnosis": "Hay {{studies}} encuestas con los criterios especificados",
                 "treatment": "Hay {{studies}} estudios con los criterios especificados",
