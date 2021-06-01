@@ -591,7 +591,7 @@
             "STAGE_ORIGIN": "Estado y origen de los mosquitoes expuetos al insecticida en la prueba",
             "MOSQUITO_NUMBER": "Número total de mosquitos expuetos al insecticida en la prueba",
             "MECHANISM_STATUS": "Estado de detección del mecanismo de resistencia que la prueba tuvo como objetivo identificar",
-            "DATA_SOURCE": "Institucion o grupo que recogio los datos. \nNota: En caso de que los datos hayan sido extraidos des unapublicacion cientifica, esta variable mostrará \"Extracted from publication\"",
+            "DATA_SOURCE": "Institucion o grupo que recogio los datos. \nNota: En caso de que los datos hayan sido extraidos desde una publicacion cientifica, esta variable mostrará \"Extracted from publication\"",
             "CITATION": "Cita de la publicación donde se publicaron los datos",
             "CITATION_URL": "URL de la publicación donde se publicaron los datos",
             "DATA_CURATOR": "Instituto que compiló los datos. Parte de los datos en esta base de datos ha sido compilada por instituciones colaboradoras que compartieron sus colecciones de datos con la OMS. Esta columna indicará el nombre de la institución o grupo que compiló los datos."
