@@ -534,7 +534,7 @@
             "MOSQUITO_NUMBER": "Número total de mosquitos capturados",
             "BREEDING_HABITAT": "Hábitat de cría donde se capturaron los mosquitos",
             "ID_METHOD": "Método utilizado para identificar las especies de mosquitos",
-            "DATA_SOURCE": "",
+            "DATA_SOURCE": "Institucion o grupo que recogio los datos. \nNota: En caso de que los datos hayan sido extraidos desde una publicacion cientifica, esta variable mostrará \"Extracted from publication\"",
             "CITATION": "Cita de la publicación donde se publicaron los datos.",
             "CITATION_URL": "URL de la publicación donde se publicaron los datos",
             "DATA_CURATOR": "Instituto que compiló los datos. Parte de los datos en esta base de datos ha sido compilada por instituciones colaboradoras que compartieron sus colecciones de datos con la OMS. Esta columna indicará el nombre de la institución o grupo que compiló los datos.",
