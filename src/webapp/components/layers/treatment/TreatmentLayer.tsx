@@ -2,12 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { studiesToGeoJson } from "../layer-utils";
 import setupEffects from "../effects";
-import {
-    selectTreatmentFilters,
-    selectTreatmentStudies,
-    selectTreatmentStudiesLoading,
-    selectTreatmentStudiesError,
-} from "../../../store/reducers/treatment-reducer";
+import { selectTreatmentFilters, selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
 import {
     selectCountryMode,
     selectFilters,
@@ -55,8 +50,6 @@ const layer: any = (symbols: any) => ({
 
 const mapStateToProps = (state: State) => ({
     studies: selectTreatmentStudies(state),
-    studiesLoading: selectTreatmentStudiesLoading(state),
-    studiesError: selectTreatmentStudiesError(state),
     theme: selectTheme(state),
     filters: selectFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
@@ -125,11 +118,9 @@ class TreatmentLayer extends Component<Props> {
     }
 
     loadStudiesIfRequired() {
-        const { theme, studies, studiesLoading, studiesError } = this.props;
+        const { theme } = this.props;
 
-        const required = theme === TREATMENT && studies.length === 0 && !studiesLoading && !studiesError;
-
-        if (required) {
+        if (theme === TREATMENT) {
             this.props.fetchTreatmentStudies();
         }
     }

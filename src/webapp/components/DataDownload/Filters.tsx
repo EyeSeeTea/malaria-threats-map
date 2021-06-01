@@ -22,6 +22,9 @@ import MolecularMarkerSelector from "../filters/MolecularMarkerSelector";
 import { Paper, Typography } from "@material-ui/core";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { fetchPreventionStudiesRequest } from "../../store/actions/prevention-actions";
+import { fetchTreatmentStudiesRequest } from "../../store/actions/treatment-actions";
+import { fetchInvasiveStudiesRequest } from "../../store/actions/invasive-actions";
 
 const Divider = styled.div`
     height: 16px;
@@ -33,6 +36,9 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
+    fetchPreventionStudies: fetchPreventionStudiesRequest,
+    fetchTreatmentStudies: fetchTreatmentStudiesRequest,
+    fetchInvasiveStudies: fetchInvasiveStudiesRequest,
     setTheme: setThemeAction,
 };
 
@@ -45,7 +51,13 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
-const Filters = ({ onChange, selections }: Props) => {
+const Filters = ({
+    onChange,
+    selections,
+    fetchInvasiveStudies,
+    fetchPreventionStudies,
+    fetchTreatmentStudies,
+}: Props) => {
     const { t } = useTranslation("common");
 
     const onSetTheme = (value: string) => {
@@ -56,6 +68,7 @@ const Filters = ({ onChange, selections }: Props) => {
     };
 
     const onSetPreventionDataset = (value: string) => {
+        fetchPreventionStudies();
         onChange({
             ...selections,
             preventionDataset: value,
@@ -63,6 +76,7 @@ const Filters = ({ onChange, selections }: Props) => {
     };
 
     const onSetTreatmentDataset = (value: string) => {
+        fetchTreatmentStudies();
         onChange({
             ...selections,
             treatmentDataset: value,
@@ -70,6 +84,7 @@ const Filters = ({ onChange, selections }: Props) => {
     };
 
     const onSetInvasiveDataset = (value: string) => {
+        fetchInvasiveStudies();
         onChange({
             ...selections,
             invasiveDataset: value,
