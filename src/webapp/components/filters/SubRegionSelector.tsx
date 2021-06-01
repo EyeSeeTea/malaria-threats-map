@@ -36,12 +36,7 @@ class SubRegionSelector extends Component<Props> {
     render() {
         const { region, subRegions = [] } = this.props;
         const suggestions: any[] = (subRegions as Translation[]).map(subRegion => ({
-            label:
-                localStorage.getItem("language") === "en"
-                    ? subRegion.EN
-                    : localStorage.getItem("language") === "es"
-                    ? subRegion.ES
-                    : subRegion.FR,
+            label: subRegion.VALUE_,
             value: subRegion.VALUE_,
         }));
 

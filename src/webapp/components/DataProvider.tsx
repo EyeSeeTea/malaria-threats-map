@@ -44,9 +44,10 @@ const DataProvider: React.FC<Props> = ({ fetchTranslations, getLastUpdated, tran
                 [translation.VALUE_.replace(".", "%2E")]: translation.FR,
             };
         }, {});
-        i18next.addResourceBundle("en", "common", englishResources);
-        i18next.addResourceBundle("es", "common", spanishResources);
-        i18next.addResourceBundle("fr", "common", frenchResources);
+
+        i18next.addResourceBundle("en", "translation", englishResources);
+        i18next.addResourceBundle("es", "translation", spanishResources);
+        i18next.addResourceBundle("fr", "translation", frenchResources);
     }, [translations]);
 
     return <React.Fragment>{children}</React.Fragment>;
