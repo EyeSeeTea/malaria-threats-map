@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
-import { circleLayout, studiesToGeoJson } from "../layer-utils";
+import { circleLayout, studiesToGeoJson, getCountryStudies } from "../layer-utils";
 import diagnosisSymbols from "../symbols/diagnosis";
 import setupEffects from "../effects";
-import { selectDiagnosisFilters, selectDiagnosisStudies } from "../../../store/reducers/diagnosis-reducer";
+import {
+    selectDiagnosisFilters,
+    selectDiagnosisStudies,
+    selectDiagnosisStudiesLoading,
+    selectDiagnosisStudiesError,
+} from "../../../store/reducers/diagnosis-reducer";
 import {
     selectCountryMode,
     selectFilters,
@@ -43,6 +48,8 @@ const layer: any = (symbols: any) => ({
 
 const mapStateToProps = (state: State) => ({
     studies: selectDiagnosisStudies(state),
+    studiesLoading: selectDiagnosisStudiesLoading(state),
+    studiesError: selectDiagnosisStudiesError(state),
     theme: selectTheme(state),
     filters: selectFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
@@ -109,9 +116,11 @@ class DiagnosisLayer extends Component<Props> {
     }
 
     loadStudiesIfRequired() {
-        const { theme } = this.props;
+        const { theme, studies, studiesLoading, studiesError } = this.props;
 
-        if (theme === DIAGNOSIS) {
+        const required = theme === DIAGNOSIS && studies.length === 0 && !studiesLoading && !studiesError;
+
+        if (required) {
             this.props.fetchDiagnosisStudies();
         }
     }
@@ -161,49 +170,10 @@ class DiagnosisLayer extends Component<Props> {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = this.getCountryStudies(filteredStudies);
+            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, DIAGNOSIS);
             const data = countryMode ? countryStudies : geoStudies;
             source.setData(studiesToGeoJson(data));
         }
-    };
-
-    getCountryStudies = (studies: any[] = []) => {
-        const countryStudies = R.groupBy(
-            R.path<string>(["ISO2"]),
-            studies
-        );
-        const countries = this.props.countries
-            .map((country, index) => ({
-                ...country,
-                OBJECTID: index,
-                Latitude: country.CENTER_LAT,
-                Longitude: country.CENTER_LON,
-                STUDIES: (countryStudies[country.ISO_2_CODE] || []).length || 0,
-            }))
-            .filter(study => study.STUDIES !== 0);
-
-        const sortedCountries = R.sortBy(country => country.STUDIES, countries);
-        if (sortedCountries.length === 0) return [];
-
-        const getSize = (nStudies: number) => {
-            if (nStudies > 15) {
-                return 15;
-            } else if (nStudies > 10) {
-                return 12.5;
-            } else if (nStudies > 7) {
-                return 10;
-            } else if (nStudies > 5) {
-                return 7.5;
-            } else if (nStudies >= 0) {
-                return 5;
-            }
-        };
-
-        return countries.map(country => ({
-            ...country,
-            SIZE: getSize(country.STUDIES),
-            SIZE_HOVER: getSize(country.STUDIES) - 1,
-        }));
     };
 
     mountLayer(prevProps?: Props) {
@@ -216,7 +186,7 @@ class DiagnosisLayer extends Component<Props> {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = this.getCountryStudies(filteredStudies);
+            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, DIAGNOSIS);
 
             const data = countryMode ? countryStudies : geoStudies;
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { InvasiveMapType, State } from "../../../store/types";
-import { studiesToGeoJson } from "../layer-utils";
+import { studiesToGeoJson, getCountryStudies } from "../layer-utils";
 import setupEffects from "../effects";
 import {
     selectCountryMode,
@@ -15,7 +15,12 @@ import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
 import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
-import { selectInvasiveFilters, selectInvasiveStudies } from "../../../store/reducers/invasive-reducer";
+import {
+    selectInvasiveFilters,
+    selectInvasiveStudies,
+    selectInvasiveStudiesLoading,
+    selectInvasiveStudiesError,
+} from "../../../store/reducers/invasive-reducer";
 import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
 import { Hidden } from "@material-ui/core";
 import InvasiveSitePopover from "./InvasiveSitePopover";
@@ -43,6 +48,8 @@ const layer: any = (symbols: any) => ({
 
 const mapStateToProps = (state: State) => ({
     studies: selectInvasiveStudies(state),
+    studiesLoading: selectInvasiveStudiesLoading(state),
+    studiesError: selectInvasiveStudiesError(state),
     theme: selectTheme(state),
     filters: selectFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
@@ -102,9 +109,11 @@ class InvasiveLayer extends Component<Props> {
     }
 
     loadStudiesIfRequired() {
-        const { theme } = this.props;
+        const { theme, studies, studiesLoading, studiesError } = this.props;
 
-        if (theme === INVASIVE) {
+        const required = theme === INVASIVE && studies.length === 0 && !studiesLoading && !studiesError;
+
+        if (required) {
             this.props.fetchInvasiveStudies();
         }
     }
@@ -149,49 +158,10 @@ class InvasiveLayer extends Component<Props> {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = this.getCountryStudies(filteredStudies);
+            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, INVASIVE);
             const data = countryMode ? countryStudies : geoStudies;
             source.setData(studiesToGeoJson(data));
         }
-    };
-
-    getCountryStudies = (studies: any[] = []) => {
-        const countryStudies = R.groupBy(
-            R.path<string>(["ISO2"]),
-            studies
-        );
-        const countries = this.props.countries
-            .map((country, index) => ({
-                ...country,
-                OBJECTID: index,
-                Latitude: country.CENTER_LAT,
-                Longitude: country.CENTER_LON,
-                STUDIES: (countryStudies[country.ISO_2_CODE] || []).length || 0,
-            }))
-            .filter(study => study.STUDIES !== 0);
-
-        const sortedCountries = R.sortBy(country => country.STUDIES, countries);
-        if (sortedCountries.length === 0) return [];
-
-        const getSize = (nStudies: number) => {
-            if (nStudies > 50) {
-                return 15;
-            } else if (nStudies > 40) {
-                return 12.5;
-            } else if (nStudies > 30) {
-                return 10;
-            } else if (nStudies > 15) {
-                return 7.5;
-            } else if (nStudies >= 0) {
-                return 5;
-            }
-        };
-
-        return countries.map(country => ({
-            ...country,
-            SIZE: getSize(country.STUDIES),
-            SIZE_HOVER: getSize(country.STUDIES) - 1,
-        }));
     };
 
     mountLayer(prevProps?: Props) {
@@ -204,7 +174,7 @@ class InvasiveLayer extends Component<Props> {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = this.getCountryStudies(filteredStudies);
+            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, INVASIVE);
 
             const data = countryMode ? countryStudies : geoStudies;
             const source: any = {
