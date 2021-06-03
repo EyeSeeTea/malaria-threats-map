@@ -163,6 +163,8 @@ export type Download = {
     date: string;
     researchInfo: string;
     policiesInfo: string;
+    contactConsent: boolean;
+    organisationProjectConsent: boolean;
     toolsInfo: string;
     implementationCountries: string;
     theme: string;
@@ -176,6 +178,15 @@ export type Contact = {
     organization: string;
     country: string;
 };
+
+const initialUseInfo: Partial<UseInfo> = {
+    uses: [],
+    countries: [],
+    studyDate: new Date(),
+    contactConsent: false,
+    piConsent: false,
+};
+
 function DataDownload({
     isDataDownloadOpen,
     setDataDownloadOpen,
@@ -203,11 +214,7 @@ function DataDownload({
     const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({
         organizationType: t(`common.${ORGANIZATION_TYPES[0]}`),
     });
-    const [useInfo, setUseInfo] = React.useState<Partial<UseInfo>>({
-        uses: [],
-        countries: [],
-        studyDate: new Date(),
-    });
+    const [useInfo, setUseInfo] = React.useState<Partial<UseInfo>>(initialUseInfo);
 
     const [selections, setSelections] = React.useState({
         theme: "prevention",
@@ -233,11 +240,7 @@ function DataDownload({
         setUserInfo({
             organizationType: t(`common.${ORGANIZATION_TYPES[0]}`),
         });
-        setUseInfo({
-            uses: [],
-            countries: [],
-            studyDate: new Date(),
-        });
+        setUseInfo(initialUseInfo);
         setSelections({
             theme: "prevention",
             preventionDataset: undefined,
@@ -788,6 +791,8 @@ function DataDownload({
             uses: useInfo.uses.map(use => t(`common.${use}`)).join(", "),
             researchInfo: useInfo.researchInfo || "",
             policiesInfo: useInfo.policiesInfo || "",
+            contactConsent: useInfo.contactConsent,
+            organisationProjectConsent: useInfo.piConsent,
             toolsInfo: useInfo.toolsInfo || "",
             implementationCountries: useInfo.countries.join(", ") || "",
             date: useInfo.studyDate.toISOString().slice(0, 10),
@@ -844,8 +849,7 @@ function DataDownload({
             (researchActive ? useInfo.researchInfo : true) &&
             (policiesActive ? useInfo.policiesInfo : true) &&
             (toolsActive ? useInfo.toolsInfo : true) &&
-            useInfo.contactConsent &&
-            useInfo.piConsent
+            useInfo.countries.length > 0
         );
     };
 

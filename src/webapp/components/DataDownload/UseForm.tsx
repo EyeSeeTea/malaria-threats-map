@@ -38,9 +38,6 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: "24px",
             overflow: "unset",
         },
-        countries: {
-            margin: 0,
-        },
     })
 );
 const Snackbar = styled(Paper)`
@@ -197,8 +194,12 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                 </MuiPickersUtilsProvider>
             </FormControl>
             <FullCountriesSelector
+<<<<<<< HEAD
                 label={t("common.data_download.step2.countries")}
                 className={classes.countries}
+=======
+                label={t("data_download.step2.countries")}
+>>>>>>> ac954a9059a5dd15b5a7e986ee6f672fde2ac7b8
                 includeGlobalOption
                 value={useInfo.countries}
                 onChange={handleCountriesChange}
