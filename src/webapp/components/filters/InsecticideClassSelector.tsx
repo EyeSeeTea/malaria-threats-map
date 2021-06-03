@@ -1,9 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import FormLabel from "@material-ui/core/FormLabel";
-import { Divider, FilterWrapper } from "./Filters";
-import IntegrationReactSelect, { Option } from "../BasicSelect";
+import { Option } from "../BasicSelect";
 import { INSECTICIDE_CLASSES } from "./InsecticideClassFilter";
+import MultiSelector from "./MultiSelector";
 
 type OwnProps = {
     onChange: (selection: string[]) => void;
@@ -20,22 +19,8 @@ function InsecticideClassSelector({ value, onChange }: Props) {
         value: specie,
     }));
 
-    const onSelectionChange = (options: Option[]) => {
-        onChange((options || []).map(o => o.value));
-    };
-
     return (
-        <FilterWrapper>
-            <FormLabel component="legend">{t(`filters.insecticide_class`)}</FormLabel>
-            <Divider />
-            <IntegrationReactSelect
-                isMulti
-                isClearable
-                suggestions={suggestions}
-                onChange={onSelectionChange}
-                value={suggestions.filter(s => value.includes(s.value))}
-            />
-        </FilterWrapper>
+        <MultiSelector label={t("filters.insecticide_class")} options={suggestions} onChange={onChange} value={value} />
     );
 }
 export default InsecticideClassSelector;

@@ -1,14 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import IntegrationReactSelect, { Option } from "../BasicSelect";
 import { selectDrugs } from "../../store/reducers/translations-reducer";
 import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
 import * as R from "ramda";
-import { Divider, FilterWrapper } from "./Filters";
-import FormLabel from "@material-ui/core/FormLabel";
-import T from "../../translations/T";
 import { useTranslation } from "react-i18next";
+import MultiSelector from "./MultiSelector";
 
 const mapStateToProps = (state: State) => ({
     drugs: selectDrugs(state),
@@ -27,32 +24,14 @@ function DrugsSelector({ studies, onChange, value }: Props) {
     const { t } = useTranslation("common");
     const uniques = R.uniq(R.map(R.prop("DRUG_NAME"), studies)).filter(Boolean);
 
-    const suggestions: any[] = uniques.map((drug: string) => ({
+    const suggestions = uniques.map((drug: string) => ({
         label: t(drug),
         value: drug,
     }));
 
-    const onSelectionChange = (options: Option[] = []) => {
-        onChange((options || []).map(o => o.value));
-    };
+    const sortedSuggestions = R.sortBy(R.prop("label"), suggestions);
 
-    const selection = suggestions.filter(suggestion => value.includes(suggestion.value));
-
-    return (
-        <FilterWrapper>
-            <FormLabel component="legend">
-                <T i18nKey={`filters.drug`} />
-            </FormLabel>
-            <Divider />
-            <IntegrationReactSelect
-                isMulti
-                isClearable
-                suggestions={R.sortBy(R.prop("label"), suggestions)}
-                onChange={onSelectionChange}
-                value={selection}
-            />
-        </FilterWrapper>
-    );
+    return <MultiSelector label={t("filters.drug")} options={sortedSuggestions} onChange={onChange} value={value} />;
 }
 
 export default connect(mapStateToProps, null)(DrugsSelector);
