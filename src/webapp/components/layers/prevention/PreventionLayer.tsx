@@ -8,12 +8,7 @@ import resistanceStatusSymbols from "./ResistanceStatus/symbols";
 import { resolveResistanceStatus } from "./ResistanceStatus/utils";
 import { buildPreventionFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
-import {
-    selectPreventionFilters,
-    selectPreventionStudies,
-    selectPreventionStudiesLoading,
-    selectPreventionStudiesError,
-} from "../../../store/reducers/prevention-reducer";
+import { selectPreventionFilters, selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
 import {
     selectCountryMode,
     selectFilters,
@@ -52,8 +47,6 @@ const layer: any = (symbols: any) => ({
 
 const mapStateToProps = (state: State) => ({
     studies: selectPreventionStudies(state),
-    studiesLoading: selectPreventionStudiesLoading(state),
-    studiesError: selectPreventionStudiesError(state),
     theme: selectTheme(state),
     filters: selectFilters(state),
     preventionFilters: selectPreventionFilters(state),
@@ -137,11 +130,9 @@ class PreventionLayer extends Component<Props> {
         }
     }
     loadStudiesIfRequired() {
-        const { theme, studies, studiesLoading, studiesError } = this.props;
+        const { theme } = this.props;
 
-        const required = theme === PREVENTION && studies.length === 0 && !studiesLoading && !studiesError;
-
-        if (required) {
+        if (theme === PREVENTION) {
             this.props.fetchPreventionStudies();
         }
     }

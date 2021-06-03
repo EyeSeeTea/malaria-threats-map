@@ -34,20 +34,20 @@ export const getCountryStudies = (studies: any[] = [], countriesProp: CountryPro
 
     const sortedCountries = R.sortBy(country => country.STUDIES, countries);
     if (sortedCountries.length === 0) return [];
-    
+
     const getCorrectSizeFunction = (studyNumber: number) => {
         let size;
-        switch(layerName) {
-            case "invasive": 
+        switch (layerName) {
+            case "invasive":
                 size = invasivePreventionSize(studyNumber);
                 break;
-            case "prevention": 
+            case "prevention":
                 size = invasivePreventionSize(studyNumber);
                 break;
-            case "diagnosis": 
+            case "diagnosis":
                 size = diagnosisSize(studyNumber);
                 break;
-            case "treatment": 
+            case "treatment":
                 size = treatmentSize(studyNumber);
                 break;
         }

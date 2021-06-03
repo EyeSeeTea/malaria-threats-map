@@ -15,12 +15,7 @@ import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
 import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
-import {
-    selectInvasiveFilters,
-    selectInvasiveStudies,
-    selectInvasiveStudiesLoading,
-    selectInvasiveStudiesError,
-} from "../../../store/reducers/invasive-reducer";
+import { selectInvasiveFilters, selectInvasiveStudies } from "../../../store/reducers/invasive-reducer";
 import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
 import { Hidden } from "@material-ui/core";
 import InvasiveSitePopover from "./InvasiveSitePopover";
@@ -48,8 +43,6 @@ const layer: any = (symbols: any) => ({
 
 const mapStateToProps = (state: State) => ({
     studies: selectInvasiveStudies(state),
-    studiesLoading: selectInvasiveStudiesLoading(state),
-    studiesError: selectInvasiveStudiesError(state),
     theme: selectTheme(state),
     filters: selectFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
@@ -109,11 +102,9 @@ class InvasiveLayer extends Component<Props> {
     }
 
     loadStudiesIfRequired() {
-        const { theme, studies, studiesLoading, studiesError } = this.props;
+        const { theme } = this.props;
 
-        const required = theme === INVASIVE && studies.length === 0 && !studiesLoading && !studiesError;
-
-        if (required) {
+        if (theme === INVASIVE) {
             this.props.fetchInvasiveStudies();
         }
     }
