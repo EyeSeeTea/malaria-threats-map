@@ -41,7 +41,10 @@ export const createDataDownloadEntryEpic = (
                     return of(addNotificationAction("Successfully downloaded!"), addDataDownloadSuccessAction());
                 }),
                 catchError((_error: AjaxError) => {
-                    return of(addNotificationAction(`There was an error while trying to download: ${_error.message}`), addDataDownloadErrorAction());
+                    return of(
+                        addNotificationAction(`There was an error while trying to download: ${_error.message}`),
+                        addDataDownloadErrorAction()
+                    );
                 })
             );
         })

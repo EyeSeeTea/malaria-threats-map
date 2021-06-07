@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         paper: {
             backgroundColor: "#fafafa",
-        }
+        },
     })
 );
 
