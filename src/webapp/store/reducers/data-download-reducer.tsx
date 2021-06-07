@@ -1,9 +1,8 @@
-
 import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import {  DownloadState, State } from "../types";
+import { DownloadState, State } from "../types";
 import { Download } from "../../components/DataDownload";
 
 const initialDownload = {
@@ -24,16 +23,15 @@ const initialDownload = {
     toolsInfo: "",
     implementationCountries: "",
     theme: "",
-    dataset: "" 
+    dataset: "",
 };
 const initialState: DownloadState = Object.freeze({
     download: initialDownload,
     loading: false,
-    error: "",
 });
 
 export default createReducer<DownloadState>(initialState, {
-    [ActionTypeEnum.AddDownloadRequest]: (download: Download) => (state) => ({
+    [ActionTypeEnum.AddDownloadRequest]: (download: Download) => state => ({
         ...state,
         download,
         loading: true,
@@ -41,7 +39,6 @@ export default createReducer<DownloadState>(initialState, {
     [ActionTypeEnum.AddDownloadSuccess]: () => R.assoc("loading", false),
     [ActionTypeEnum.AddDownloadError]: () => state => ({
         ...state,
-        error: "There was a problem adding the download",
         loading: false,
     }),
 });

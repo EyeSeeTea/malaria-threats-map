@@ -92,7 +92,7 @@ const FiltersSidebar = ({
 }: Props) => {
     const { t } = useTranslation("common");
     const classes = useStyles({});
-    
+
     const filteredStudies = (() => {
         switch (theme) {
             case "prevention":

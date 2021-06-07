@@ -24,7 +24,6 @@ export interface State {
 export interface DownloadState {
     download: Download;
     loading: boolean;
-    error: string | null;
 }
 
 export interface RegionState {

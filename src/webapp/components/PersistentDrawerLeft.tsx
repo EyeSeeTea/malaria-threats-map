@@ -176,7 +176,6 @@ function PersistentDrawerLeft({
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const isOpen = filtersOpen || storyMode;
-    console.log(isOpen);
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 
     const onChange = (event: React.ChangeEvent<{}>, newValue: number) => {

@@ -10,7 +10,6 @@ import countryLayerReducer from "../store/reducers/country-layer-reducer";
 import districtsReducer from "../store/reducers/districts-reducer";
 import notificationsReducer from "../store/reducers/notifier-reducer";
 import dataDownloadReducer from "../store/reducers/data-download-reducer";
-
 import { State } from "./types";
 
 const rootReducer = () =>
@@ -24,7 +23,7 @@ const rootReducer = () =>
         countryLayer: countryLayerReducer,
         district: districtsReducer,
         notifications: notificationsReducer,
-        downloads: dataDownloadReducer
+        downloads: dataDownloadReducer,
     });
 
 export default rootReducer;
