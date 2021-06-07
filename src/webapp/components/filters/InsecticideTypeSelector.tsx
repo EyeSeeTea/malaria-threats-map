@@ -3,7 +3,7 @@ import * as R from "ramda";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
-import MultiSelector from "./MultiSelector";
+import MultiFilter from "./MultiFilter";
 import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({
@@ -29,7 +29,7 @@ function InsecticideTypeSelector({ studies, onChange, value }: Props) {
     }));
 
     return (
-        <MultiSelector label={t("filters.insecticide_type")} options={suggestions} onChange={onChange} value={value} />
+        <MultiFilter label={t("filters.insecticide_type")} options={suggestions} onChange={onChange} value={value} />
     );
 }
 export default connect(mapStateToProps, null)(InsecticideTypeSelector);

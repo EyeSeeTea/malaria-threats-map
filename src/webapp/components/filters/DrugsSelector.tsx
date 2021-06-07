@@ -5,7 +5,7 @@ import { selectDrugs } from "../../store/reducers/translations-reducer";
 import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
-import MultiSelector from "./MultiSelector";
+import MultiFilter from "./MultiFilter";
 
 const mapStateToProps = (state: State) => ({
     drugs: selectDrugs(state),
@@ -31,7 +31,7 @@ function DrugsSelector({ studies, onChange, value }: Props) {
 
     const sortedSuggestions = R.sortBy(R.prop("label"), suggestions);
 
-    return <MultiSelector label={t("filters.drug")} options={sortedSuggestions} onChange={onChange} value={value} />;
+    return <MultiFilter label={t("filters.drug")} options={sortedSuggestions} onChange={onChange} value={value} />;
 }
 
 export default connect(mapStateToProps, null)(DrugsSelector);

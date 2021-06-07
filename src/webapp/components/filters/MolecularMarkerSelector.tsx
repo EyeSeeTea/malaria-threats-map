@@ -1,6 +1,6 @@
 import React from "react";
 import { MOLECULAR_MARKERS } from "./MolecularMarkerFilter";
-import MultiSelector from "./MultiSelector";
+import MultiFilter from "./MultiFilter";
 import { useTranslation } from "react-i18next";
 
 type OwnProps = {
@@ -16,7 +16,7 @@ function MolecularMarkerSelector({ onChange, value }: Props) {
     const { t } = useTranslation("common");
 
     return (
-        <MultiSelector label={t("filters.molecular_marker")} options={suggestions} onChange={onChange} value={value} />
+        <MultiFilter label={t("filters.molecular_marker")} options={suggestions} onChange={onChange} value={value} />
     );
 }
 

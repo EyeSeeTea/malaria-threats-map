@@ -1,5 +1,5 @@
 import React from "react";
-import MultiSelector from "./MultiSelector";
+import MultiFilter from "./MultiFilter";
 import { useTranslation } from "react-i18next";
 
 type OwnProps = {
@@ -36,7 +36,7 @@ function PlasmodiumSpeciesSelector({ onChange, value }: Props) {
     const { t } = useTranslation("common");
 
     return (
-        <MultiSelector
+        <MultiFilter
             label={t("filters.plasmodium_species")}
             options={PLASMODIUM_SPECIES_SUGGESTIONS}
             onChange={onChange}

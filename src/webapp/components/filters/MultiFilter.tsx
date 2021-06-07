@@ -3,17 +3,23 @@ import { connect } from "react-redux";
 import IntegrationReactSelect, { Option } from "../BasicSelect";
 import { Divider, FilterWrapper } from "./Filters";
 import FormLabel from "@material-ui/core/FormLabel";
+import { sendMultiFilterAnalytics } from "../../utils/analytics";
 
 type MultiSelectorProps = {
     label: string;
     options: Option[];
     onChange: (selection: string[]) => void;
     value: string[];
+    analyticsAction?: string;
 };
 
-function MultiSelector({ label, options, onChange, value }: MultiSelectorProps) {
+function MultiFilter({ label, options, onChange, value, analyticsAction }: MultiSelectorProps) {
     const onSelectionChange = (options: Option[] = []) => {
         onChange((options || []).map(o => o.value));
+
+        if (analyticsAction) {
+            sendMultiFilterAnalytics(analyticsAction, value, options);
+        }
     };
 
     const selections = options.filter(option => value.includes(option.value));
@@ -33,4 +39,4 @@ function MultiSelector({ label, options, onChange, value }: MultiSelectorProps) 
     );
 }
 
-export default connect()(MultiSelector);
+export default connect()(MultiFilter);

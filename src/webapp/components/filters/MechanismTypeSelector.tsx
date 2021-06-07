@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { WHITELISTED_TYPES } from "./MechanismTypeFilter";
 import { BIOCHEMICAL_MECHANISM_TYPES, MOLECULAR_MECHANISM_TYPES } from "../DataDownload";
 import * as R from "ramda";
-import MultiSelector from "./MultiSelector";
+import MultiFilter from "./MultiFilter";
 
 type OwnProps = {
     onChange: (selection: string[]) => void;
@@ -35,8 +35,6 @@ function MechanismsTypeSelector({ onChange, value, dataset }: Props) {
         }))
     );
 
-    return (
-        <MultiSelector label={t("filters.mechanism_type")} options={suggestions} onChange={onChange} value={value} />
-    );
+    return <MultiFilter label={t("filters.mechanism_type")} options={suggestions} onChange={onChange} value={value} />;
 }
 export default MechanismsTypeSelector;

@@ -4,7 +4,7 @@ import { State } from "../../store/types";
 import { selectTypes } from "../../store/reducers/translations-reducer";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import { useTranslation } from "react-i18next";
-import MultiSelector from "./MultiSelector";
+import MultiFilter from "./MultiFilter";
 
 const TYPES: string[] = ["WHO_TEST_KIT_ADULTS", "CDC_BOTTLE_ADULTS"];
 
@@ -29,7 +29,7 @@ function TypeSelector({ onChange, value }: Props) {
         value: specie,
     }));
 
-    return <MultiSelector label={t("filters.test_type")} options={suggestions} onChange={onChange} value={value} />;
+    return <MultiFilter label={t("filters.test_type")} options={suggestions} onChange={onChange} value={value} />;
 }
 
 export default connect(mapStateToProps, null)(TypeSelector);

@@ -5,7 +5,7 @@ import { selectSpecies } from "../../store/reducers/translations-reducer";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
-import MultiSelector from "./MultiSelector";
+import MultiFilter from "./MultiFilter";
 
 const mapStateToProps = (state: State) => ({
     species: selectSpecies(state),
@@ -29,9 +29,7 @@ function SpeciesSelector({ studies, onChange, value }: Props) {
         value: specie,
     }));
 
-    return (
-        <MultiSelector label={t("filters.vector_species")} options={suggestions} onChange={onChange} value={value} />
-    );
+    return <MultiFilter label={t("filters.vector_species")} options={suggestions} onChange={onChange} value={value} />;
 }
 
 export default connect(mapStateToProps, null)(SpeciesSelector);

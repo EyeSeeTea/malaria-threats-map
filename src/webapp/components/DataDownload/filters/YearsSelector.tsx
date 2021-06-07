@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { range } from "../../YearRangeSelector";
-import MultiSelector from "../../filters/MultiSelector";
+import MultiFilter from "../../filters/MultiFilter";
 
 const min = 1988;
 const max = new Date().getFullYear();
@@ -29,8 +29,6 @@ const YearsSelector = ({ value, onChange }: Props) => {
         onChange((selection || []).map(s => +s));
     };
 
-    return (
-        <MultiSelector label={t("filters.years")} options={suggestions} onChange={handleChange} value={valueState} />
-    );
+    return <MultiFilter label={t("filters.years")} options={suggestions} onChange={handleChange} value={valueState} />;
 };
 export default YearsSelector;
