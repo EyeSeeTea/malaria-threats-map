@@ -68,6 +68,7 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.MalariaSetStoryModeStep]: (storyModeStep: number) => R.assoc("storyModeStep", storyModeStep || 0),
     [ActionTypeEnum.MalariaSetInitialDialogOpen]: (initialDialogOpen: boolean) =>
         R.assoc("initialDialogOpen", initialDialogOpen),
+    //MalariaState
     [ActionTypeEnum.SetFiltersOpen]: (filtersOpen: boolean) => R.assoc("filtersOpen", filtersOpen),
     [ActionTypeEnum.SetFiltersMode]: (filtersMode: string) => R.assoc("filtersMode", filtersMode || "filters"),
     [ActionTypeEnum.SetSelection]: (selection: SiteSelection) => R.assoc("selection", selection || null),

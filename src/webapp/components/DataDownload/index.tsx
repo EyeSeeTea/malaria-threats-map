@@ -54,6 +54,7 @@ import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
 import { emailRegexp } from "../Subscription";
 import { FlexGrow } from "../Chart";
+import Loader from "../Loader";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
 
@@ -95,6 +96,10 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         paper: {
             backgroundColor: "#fafafa",
+        },
+        backdrop: {
+            zIndex: theme.zIndex.drawer + 1,
+            color: "#fff",
         },
     })
 );
@@ -209,7 +214,6 @@ function DataDownload({
             });
         }
     }, [activeStep, isDataDownloadOpen, logEvent]);
-
     const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>({});
     const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({
         organizationType: t(ORGANIZATION_TYPES[0]),
@@ -291,10 +295,10 @@ function DataDownload({
 
     const resolveValue = (field: Option, study: any) => {
         if (field.value === "MM_TYPE") {
-            return MOLECULAR_MARKERS.find(mm => mm.value === Number(study[field.value])).label;
+            return MOLECULAR_MARKERS.find(mm => mm.value === Number(study[field.value]))?.label;
         }
         if (field.value === "PLASMODIUM_SPECIES") {
-            return PLASMODIUM_SPECIES_SUGGESTIONS.find(species => species.value === study[field.value]).label;
+            return PLASMODIUM_SPECIES_SUGGESTIONS.find(species => species.value === study[field.value])?.label;
         }
         if (["Latitude", "Longitude"].includes(field.value)) {
             return Number(study[field.value]).toFixed(6);
@@ -911,6 +915,7 @@ function DataDownload({
                     className: classes.paper,
                 }}
             >
+                <Loader />
                 <AppBar position={"relative"}>
                     <Container maxWidth={"md"}>
                         <Toolbar variant="dense">
@@ -956,7 +961,7 @@ function DataDownload({
                             color={"primary"}
                             className={classes.button}
                             disabled={!isFormValid()}
-                            onClick={() => downloadData()}
+                            onClick={() =>  downloadData()}
                         >
                             {t("common:data_download.buttons.download")}
                         </Button>

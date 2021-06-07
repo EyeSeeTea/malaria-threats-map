@@ -10,6 +10,14 @@ export const addDataDownloadRequestAction = createAction(ActionTypeEnum.AddDownl
     return (download: Download) => action(download);
 });
 
+export const addDataDownloadSuccessAction = createAction(ActionTypeEnum.AddDownloadSuccess, action => {
+    return () => action();
+});
+
+export const addDataDownloadErrorAction = createAction(ActionTypeEnum.AddDownloadError, action => {
+    return () => action();
+});
+
 export const addSubscriptionContactRequestAction = createAction(
     ActionTypeEnum.AddSubscriptionContactRequest,
     action => {
