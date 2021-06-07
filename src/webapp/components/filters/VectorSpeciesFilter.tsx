@@ -1,13 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import IntegrationReactSelect from "../BasicSelect";
 import { setInvasiveVectorSpecies } from "../../store/actions/invasive-actions";
 import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
-import FormLabel from "@material-ui/core/FormLabel";
-import T from "../../translations/T";
-import { Divider, FilterWrapper } from "./Filters";
-import { sendMultiFilterAnalytics } from "../../utils/analytics";
+import MultiFilter from "./MultiFilter";
+import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
@@ -47,32 +44,18 @@ export const VectorSpeciesKey: { [key: string]: string } = {
     AN_STEPHENSI_FORM_UNSPECIFIED: "NR",
 };
 
-class VectorSpeciesFilter extends Component<Props, any> {
-    onChange = (selection: any[]) => {
-        this.props.setVectorSpecies((selection || []).map(selection => selection.value));
-        sendMultiFilterAnalytics("vectorSpecies", this.props.invasiveFilters.vectorSpecies, selection);
-    };
+const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, setVectorSpecies }) => {
+    const { t } = useTranslation("common");
 
-    render() {
-        const selection = suggestions.filter(suggestion =>
-            this.props.invasiveFilters.vectorSpecies.includes(suggestion.value)
-        );
-        return (
-            <FilterWrapper>
-                <FormLabel component="legend">
-                    <T i18nKey={`filters.vector_species`} />
-                </FormLabel>
-                <Divider />
-                <IntegrationReactSelect
-                    isMulti
-                    isClearable
-                    suggestions={suggestions}
-                    onChange={this.onChange}
-                    value={selection}
-                />
-            </FilterWrapper>
-        );
-    }
-}
+    return (
+        <MultiFilter
+            label={t("filters.vector_species")}
+            options={suggestions}
+            onChange={setVectorSpecies}
+            value={invasiveFilters.vectorSpecies}
+            analyticsAction={"vectorSpecies"}
+        />
+    );
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(VectorSpeciesFilter);

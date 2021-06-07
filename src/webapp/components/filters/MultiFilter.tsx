@@ -30,7 +30,7 @@ function MultiFilter({ label, options, onChange, value, analyticsAction }: Multi
             <Divider />
             <IntegrationReactSelect
                 isMulti
-                isClearable={false}
+                isClearable
                 suggestions={options}
                 onChange={onSelectionChange}
                 value={selections}
