@@ -11,7 +11,7 @@ type OwnProps = {
 
 type Props = OwnProps;
 
-function InsecticideClassSelector({ value, onChange }: Props) {
+const InsecticideClassSelector: React.FC<Props> = ({ value, onChange }) => {
     const { t } = useTranslation("common");
 
     const suggestions: Option[] = INSECTICIDE_CLASSES.map((specie: string) => ({
@@ -22,5 +22,5 @@ function InsecticideClassSelector({ value, onChange }: Props) {
     return (
         <MultiFilter label={t("filters.insecticide_class")} options={suggestions} onChange={onChange} value={value} />
     );
-}
+};
 export default InsecticideClassSelector;

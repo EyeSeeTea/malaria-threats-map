@@ -32,7 +32,7 @@ const PLASMODIUM_SPECIES_SUGGESTIONS: any[] = [
     },
 ];
 
-function PlasmodiumSpeciesSelector({ onChange, value }: Props) {
+const PlasmodiumSpeciesSelector: React.FC<Props> = ({ onChange, value }) => {
     const { t } = useTranslation("common");
 
     return (
@@ -43,6 +43,6 @@ function PlasmodiumSpeciesSelector({ onChange, value }: Props) {
             value={value}
         />
     );
-}
+};
 
 export default PlasmodiumSpeciesSelector;

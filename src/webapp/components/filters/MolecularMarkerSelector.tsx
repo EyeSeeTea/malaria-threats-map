@@ -12,12 +12,12 @@ type Props = OwnProps;
 
 const suggestions = MOLECULAR_MARKERS.map(s => ({ ...s, value: `${s.value}` }));
 
-function MolecularMarkerSelector({ onChange, value }: Props) {
+const MolecularMarkerSelector: React.FC<Props> = ({ onChange, value }) => {
     const { t } = useTranslation("common");
 
     return (
         <MultiFilter label={t("filters.molecular_marker")} options={suggestions} onChange={onChange} value={value} />
     );
-}
+};
 
 export default MolecularMarkerSelector;

@@ -13,7 +13,7 @@ type OwnProps = {
 
 type Props = OwnProps;
 
-function MechanismsTypeSelector({ onChange, value, dataset }: Props) {
+const MechanismsTypeSelector: React.FC<Props> = ({ onChange, value, dataset }) => {
     const { t } = useTranslation("common");
 
     const types = (() => {
@@ -36,5 +36,5 @@ function MechanismsTypeSelector({ onChange, value, dataset }: Props) {
     );
 
     return <MultiFilter label={t("filters.mechanism_type")} options={suggestions} onChange={onChange} value={value} />;
-}
+};
 export default MechanismsTypeSelector;

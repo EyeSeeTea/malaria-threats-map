@@ -18,7 +18,7 @@ type OwnProps = {
 
 type Props = OwnProps;
 
-const YearsSelector = ({ value, onChange }: Props) => {
+const YearsSelector: React.FC<Props> = ({ value, onChange }) => {
     const { t } = useTranslation("common");
 
     const [valueState, setValueState] = useState([]);

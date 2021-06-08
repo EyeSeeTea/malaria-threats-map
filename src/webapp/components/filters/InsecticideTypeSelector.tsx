@@ -18,7 +18,7 @@ type OwnProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps & OwnProps;
 
-function InsecticideTypeSelector({ studies, onChange, value }: Props) {
+const InsecticideTypeSelector: React.FC<Props> = ({ studies, onChange, value }) => {
     const { t } = useTranslation("common");
 
     const uniques = R.uniq(R.map(R.prop("INSECTICIDE_TYPE"), studies)).sort();
@@ -31,5 +31,5 @@ function InsecticideTypeSelector({ studies, onChange, value }: Props) {
     return (
         <MultiFilter label={t("filters.insecticide_type")} options={suggestions} onChange={onChange} value={value} />
     );
-}
+};
 export default connect(mapStateToProps, null)(InsecticideTypeSelector);
