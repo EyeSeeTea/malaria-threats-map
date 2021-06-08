@@ -9,7 +9,7 @@ import {
     selectPreventionStudies,
 } from "../../store/reducers/prevention-reducer";
 import * as R from "ramda";
-import MultiFilter from "./MultiFilter";
+import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
 import { filterByInsecticideClass } from "../layers/studies-filters";
 

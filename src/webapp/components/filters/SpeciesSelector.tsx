@@ -5,7 +5,7 @@ import { selectSpecies } from "../../store/reducers/translations-reducer";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
-import MultiFilter from "./MultiFilter";
+import MultiFilter from "./common/MultiFilter";
 
 const mapStateToProps = (state: State) => ({
     species: selectSpecies(state),

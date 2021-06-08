@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import IntegrationReactSelect, { Option } from "../BasicSelect";
-import { Divider, FilterWrapper } from "./Filters";
+import IntegrationReactSelect, { Option } from "../../BasicSelect";
+import { Divider, FilterWrapper } from "../Filters";
 import FormLabel from "@material-ui/core/FormLabel";
-import { sendMultiFilterAnalytics } from "../../utils/analytics";
+import { sendMultiFilterAnalytics } from "../../../utils/analytics";
 
-type MultiSelectorProps = {
+type Props = {
     label: string;
     options: Option[];
     onChange: (selection: string[]) => void;
@@ -13,7 +13,7 @@ type MultiSelectorProps = {
     analyticsAction?: string;
 };
 
-function MultiFilter({ label, options, onChange, value, analyticsAction }: MultiSelectorProps) {
+function MultiFilter({ label, options, onChange, value, analyticsAction }: Props) {
     const onSelectionChange = (options: Option[] = []) => {
         onChange((options || []).map(o => o.value));
 

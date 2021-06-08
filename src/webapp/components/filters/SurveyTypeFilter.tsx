@@ -6,7 +6,7 @@ import { Translation } from "../../types/Translation";
 import { selectSurveyTypes } from "../../store/reducers/translations-reducer";
 import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
 import { setDiagnosisSurveyTypes } from "../../store/actions/diagnosis-actions";
-import MultiFilter from "./MultiFilter";
+import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({

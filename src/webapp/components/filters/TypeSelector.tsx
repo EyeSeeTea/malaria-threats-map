@@ -4,7 +4,7 @@ import { State } from "../../store/types";
 import { selectTypes } from "../../store/reducers/translations-reducer";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import { useTranslation } from "react-i18next";
-import MultiFilter from "./MultiFilter";
+import MultiFilter from "./common/MultiFilter";
 
 const TYPES: string[] = ["WHO_TEST_KIT_ADULTS", "CDC_BOTTLE_ADULTS"];
 

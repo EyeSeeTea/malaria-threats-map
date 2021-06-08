@@ -5,7 +5,7 @@ import { selectDrugs } from "../../store/reducers/translations-reducer";
 import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
-import MultiFilter from "./MultiFilter";
+import MultiFilter from "./common/MultiFilter";
 
 const mapStateToProps = (state: State) => ({
     drugs: selectDrugs(state),

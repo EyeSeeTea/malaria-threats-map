@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { setInvasiveVectorSpecies } from "../../store/actions/invasive-actions";
 import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
-import MultiFilter from "./MultiFilter";
+import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({

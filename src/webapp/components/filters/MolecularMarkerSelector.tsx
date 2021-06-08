@@ -1,6 +1,6 @@
 import React from "react";
 import { MOLECULAR_MARKERS } from "./MolecularMarkerFilter";
-import MultiFilter from "./MultiFilter";
+import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
 
 type OwnProps = {

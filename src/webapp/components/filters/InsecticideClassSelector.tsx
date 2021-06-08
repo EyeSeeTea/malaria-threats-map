@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Option } from "../BasicSelect";
 import { INSECTICIDE_CLASSES } from "./InsecticideClassFilter";
-import MultiFilter from "./MultiFilter";
+import MultiFilter from "./common/MultiFilter";
 
 type OwnProps = {
     onChange: (selection: string[]) => void;

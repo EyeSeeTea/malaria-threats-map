@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { range } from "../../YearRangeSelector";
-import MultiFilter from "../../filters/MultiFilter";
+import MultiFilter from "../../filters/common/MultiFilter";
 
 const min = 1988;
 const max = new Date().getFullYear();

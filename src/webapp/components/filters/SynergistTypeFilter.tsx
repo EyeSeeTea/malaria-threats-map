@@ -5,7 +5,7 @@ import { Translation } from "../../types/Translation";
 import { selectTypes } from "../../store/reducers/translations-reducer";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { setSynergistTypes } from "../../store/actions/prevention-actions";
-import MultiFilter from "./MultiFilter";
+import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({

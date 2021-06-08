@@ -3,7 +3,7 @@ import * as R from "ramda";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
-import MultiFilter from "./MultiFilter";
+import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { WHITELISTED_TYPES } from "./MechanismTypeFilter";
 import { BIOCHEMICAL_MECHANISM_TYPES, MOLECULAR_MECHANISM_TYPES } from "../DataDownload";
 import * as R from "ramda";
-import MultiFilter from "./MultiFilter";
+import MultiFilter from "./common/MultiFilter";
 
 type OwnProps = {
     onChange: (selection: string[]) => void;
