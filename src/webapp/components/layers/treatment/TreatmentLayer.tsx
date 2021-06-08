@@ -34,8 +34,8 @@ import { setSelection } from "../../../store/actions/base-actions";
 import { Hidden } from "@material-ui/core";
 import ChartModal from "../../ChartModal";
 import TreatmentSelectionChart from "./TreatmentSelectionChart";
-import TreatmentSitePopover from "./TreatmentSitePopover";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
+import SitePopover from "../common/SitePopover";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -324,7 +324,9 @@ class TreatmentLayer extends Component<Props> {
             this.props.theme === "treatment" && (
                 <>
                     <Hidden xsDown>
-                        <TreatmentSitePopover map={this.props.map} studies={filteredStudies} />
+                        <SitePopover map={this.props.map}>
+                            <TreatmentSelectionChart studies={filteredStudies} />
+                        </SitePopover>
                     </Hidden>
                     <Hidden smUp>
                         <ChartModal selection={selection}>

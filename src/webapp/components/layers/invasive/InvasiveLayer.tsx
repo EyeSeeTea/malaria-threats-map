@@ -23,12 +23,12 @@ import {
 } from "../../../store/reducers/invasive-reducer";
 import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
 import { Hidden } from "@material-ui/core";
-import InvasiveSitePopover from "./InvasiveSitePopover";
 import ChartModal from "../../ChartModal";
 import InvasiveSelectionChart from "./InvasiveSelectionChart";
 import { setSelection } from "../../../store/actions/base-actions";
 import { fetchInvasiveStudiesRequest } from "../../../store/actions/invasive-actions";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
+import SitePopover from "../common/SitePopover";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
@@ -288,7 +288,9 @@ class InvasiveLayer extends Component<Props> {
             this.props.theme === "invasive" && (
                 <>
                     <Hidden xsDown>
-                        <InvasiveSitePopover map={this.props.map} studies={filteredStudies} />
+                        <SitePopover map={this.props.map}>
+                            <InvasiveSelectionChart studies={filteredStudies} />
+                        </SitePopover>
                     </Hidden>
                     <Hidden smUp>
                         <ChartModal selection={selection}>

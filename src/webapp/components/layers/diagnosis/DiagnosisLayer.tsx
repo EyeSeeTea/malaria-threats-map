@@ -29,10 +29,10 @@ import {
 } from "../../../store/actions/diagnosis-actions";
 import { Hidden } from "@material-ui/core";
 import ChartModal from "../../ChartModal";
-import DiagnosisSitePopover from "./DiagnosisSitePopover";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
 import { setSelection } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
+import SitePopover from "../common/SitePopover";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -302,7 +302,9 @@ class DiagnosisLayer extends Component<Props> {
             this.props.theme === "diagnosis" && (
                 <>
                     <Hidden xsDown>
-                        <DiagnosisSitePopover map={this.props.map} studies={filteredStudies} />
+                        <SitePopover map={this.props.map}>
+                            <DiagnosisSelectionChart studies={filteredStudies} />
+                        </SitePopover>
                     </Hidden>
                     <Hidden smUp>
                         <ChartModal selection={selection}>
