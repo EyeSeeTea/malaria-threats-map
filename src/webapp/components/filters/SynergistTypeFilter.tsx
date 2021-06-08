@@ -37,7 +37,7 @@ const SynergistTypeFilter: React.FC<Props> = ({ preventionFilters, synergistType
             options={suggestions}
             onChange={setSynergistTypes}
             value={preventionFilters.synergistTypes}
-            analyticsAction={"testType"}
+            analyticsMultiFilterAction={"testType"}
         />
     );
 };

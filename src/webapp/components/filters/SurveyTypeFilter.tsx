@@ -36,7 +36,7 @@ const SurveyTypeFilter: React.FC<Props> = ({ diagnosisFilters, surveyTypes, setS
             options={suggestions}
             onChange={setSurveyTypes}
             value={diagnosisFilters.surveyTypes}
-            analyticsAction={"surveyType"}
+            analyticsMultiFilterAction={"surveyType"}
         />
     );
 };

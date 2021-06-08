@@ -99,7 +99,7 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
             options={suggestions}
             onChange={setSpecies}
             value={preventionFilters.species}
-            analyticsAction={"vectorSpecies"}
+            analyticsMultiFilterAction={"vectorSpecies"}
         />
     );
 };

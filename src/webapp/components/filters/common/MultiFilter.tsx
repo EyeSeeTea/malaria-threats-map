@@ -10,15 +10,15 @@ type Props = {
     options: Option[];
     onChange: (selection: string[]) => void;
     value: string[];
-    analyticsAction?: string;
+    analyticsMultiFilterAction?: string;
 };
 
-function MultiFilter({ label, options, onChange, value, analyticsAction }: Props) {
+function MultiFilter({ label, options, onChange, value, analyticsMultiFilterAction }: Props) {
     const onSelectionChange = (options: Option[] = []) => {
         onChange((options || []).map(o => o.value));
 
-        if (analyticsAction) {
-            sendMultiFilterAnalytics(analyticsAction, value, options);
+        if (analyticsMultiFilterAction) {
+            sendMultiFilterAnalytics(analyticsMultiFilterAction, value, options);
         }
     };
 

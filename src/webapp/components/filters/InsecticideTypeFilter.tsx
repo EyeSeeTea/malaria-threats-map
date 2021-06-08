@@ -48,7 +48,7 @@ const InsecticideTypeFilter: React.FC<Props> = ({ preventionFilters, studies, se
             options={suggestions}
             onChange={setInsecticideTypes}
             value={preventionFilters.insecticideTypes}
-            analyticsAction={"insecticideType"}
+            analyticsMultiFilterAction={"insecticideType"}
         />
     );
 };
