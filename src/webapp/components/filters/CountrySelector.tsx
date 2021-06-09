@@ -4,13 +4,10 @@ import { setRegionAction } from "../../store/actions/base-actions";
 import { selectRegion } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { Translation } from "../../types/Translation";
-import IntegrationReactSelect, { Option } from "../BasicSelect";
 import { selectCountries } from "../../store/reducers/translations-reducer";
-import FormLabel from "@material-ui/core/FormLabel";
-import { Divider, FilterWrapper } from "./Filters";
-import T from "../../translations/T";
-import { useTranslation } from "react-i18next";
 import { sendAnalytics } from "../../utils/analytics";
+import SingleFilter from "./common/SingleFilter";
+import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({
     region: selectRegion(state),
@@ -27,10 +24,9 @@ type Props = DispatchProps & StateProps;
 
 const CountrySelector = ({ region, countries = [], setRegion }: Props) => {
     const { t } = useTranslation("common");
-    const onChange = (selection: Option | undefined) => {
-        const label = selection ? selection.value : undefined;
-        if (label) sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label });
-        setRegion({ country: selection ? selection.value : undefined });
+    const onChange = (selection?: string) => {
+        if (selection) sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label: selection });
+        setRegion({ country: selection });
     };
     const suggestions: any[] = countries
         .map((country: Translation) => ({
@@ -40,19 +36,13 @@ const CountrySelector = ({ region, countries = [], setRegion }: Props) => {
         .filter(sug => sug.label);
 
     return (
-        <FilterWrapper>
-            <FormLabel component="legend">
-                <T i18nKey={"filters.country"} />
-            </FormLabel>
-            <Divider />
-            <IntegrationReactSelect
-                isClearable
-                placeholder={"Select Country"}
-                suggestions={suggestions.sort((s1, s2) => (s1.label > s2.label ? 1 : -1))}
-                onChange={onChange}
-                value={suggestions.find((s: any) => s.value === region.country) || null}
-            />
-        </FilterWrapper>
+        <SingleFilter
+            label={t("filters.country")}
+            placeholder={"Select Country"}
+            options={suggestions}
+            onChange={onChange}
+            value={region.country}
+        />
     );
 };
 
