@@ -7,7 +7,7 @@ import mapboxgl, { RasterSource } from "mapbox-gl";
 const LABELS_LAYER_ID = "labels-layer";
 const LABELS_SOURCE_ID = "labels-source";
 
-const layer: mapboxgl.AnyLayer = {
+const layer: mapboxgl.RasterLayer = {
     id: LABELS_LAYER_ID,
     type: "raster",
     source: LABELS_SOURCE_ID,
