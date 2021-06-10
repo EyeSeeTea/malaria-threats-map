@@ -1,0 +1,18 @@
+module.exports = {
+    testPathIgnorePatterns: ["/node_modules/", "/cypress"],
+    transformIgnorePatterns: ["/node_modules/"],
+    modulePaths: ["src"],
+    moduleDirectories: ["node_modules"],
+    transform: {
+        "^.+\\.[t|j]sx?$": "babel-jest",
+    },
+    testRegex: "((\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+    testEnvironment: "jsdom",
+    globals: {
+        window: true,
+        document: true,
+        navigator: true,
+        Element: true,
+    },
+};

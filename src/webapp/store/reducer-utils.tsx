@@ -1,0 +1,18 @@
+import { ActionTypeEnum } from "./actions";
+
+type Reducer<S, P> = (payload?: P) => (state: S) => S;
+interface CurriedReducer<S, P> {
+    (t1: P | undefined): (t2: S) => S;
+    (t1: P | undefined, t2: S): S;
+}
+
+export function createReducer<S, P = any>(
+    initialState: S,
+    reducers: Partial<Record<ActionTypeEnum, Reducer<S, P> | CurriedReducer<S, P>>>
+) {
+    return function (state: S = initialState, action: { type: ActionTypeEnum; payload?: P }) {
+        const reducer = reducers[action.type];
+        if (!reducer) return state;
+        return reducer(action.payload)(state);
+    };
+}
