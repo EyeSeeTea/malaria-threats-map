@@ -173,9 +173,9 @@ class Map extends React.Component<Props> {
 
     componentDidMount() {
         if (!mapboxgl.supported()) {
-            this.props.addNotification(this.props.t('WEBGL_error_message'));
+            this.props.addNotification(this.props.t("WEBGL_error_message"));
             return;
-        } 
+        }
         this.map = new mapboxgl.Map({
             container: this.mapContainer,
             style: style,
@@ -213,7 +213,6 @@ class Map extends React.Component<Props> {
         if (pageView && !this.props.initialDialogOpen) {
             sendAnalytics({ type: "pageView", ...pageView });
         }
-        
     }
 
     componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {
