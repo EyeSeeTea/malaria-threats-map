@@ -31,6 +31,7 @@ import { selectPreventionFilters, selectPreventionStudies } from "../store/reduc
 import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
+import { addNotificationAction } from "../store/actions/notifier-actions";
 import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
 import { Fade, Hidden } from "@material-ui/core";
 import Country from "./Country";
@@ -58,6 +59,7 @@ import TourIcon from "./TourIcon";
 import ShareIcon from "./ShareIcon";
 import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
+import { WithTranslation, withTranslation } from "react-i18next";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
@@ -145,11 +147,12 @@ const mapDispatchToProps = {
     setRegion: setRegionAction,
     updateZoom: updateZoomAction,
     updateBounds: updateBoundsAction,
+    addNotification: addNotificationAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = StateProps & DispatchProps;
+type Props = StateProps & DispatchProps & WithTranslation;
 
 class Map extends React.Component<Props> {
     map: mapboxgl.Map;
@@ -169,6 +172,10 @@ class Map extends React.Component<Props> {
     images: any[] = [];
 
     componentDidMount() {
+        if (!mapboxgl.supported()) {
+            this.props.addNotification(this.props.t("WEBGL_error_message"));
+            return;
+        }
         this.map = new mapboxgl.Map({
             container: this.mapContainer,
             style: style,
@@ -324,4 +331,4 @@ class Map extends React.Component<Props> {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Map);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation("common")(Map));

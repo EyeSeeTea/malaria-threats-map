@@ -442,5 +442,6 @@
     "feedbackIframeUrl": "https://extranet.who.int/dataform/828325?newtest=Y&lang=en",
     "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",
     "PROP_RELATED": "Percentage %",
-    "COUNTRY_NA": "Namibia"
+    "COUNTRY_NA": "Namibia",
+    "WEBGL_error_message": "Your browser does not support WebGL. You can enable WebGL in the advanced settings of your browser."
 }
