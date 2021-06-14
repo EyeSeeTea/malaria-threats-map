@@ -25,6 +25,10 @@ code {
     visibility: hidden;
 }
 
+.mapboxgl-ctrl {
+    display: none !important;
+}
+
 .highcharts-tooltip {
     max-width: 140px !important;
 }

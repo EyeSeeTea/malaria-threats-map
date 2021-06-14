@@ -1,5 +1,6 @@
 import { ActionsObservable, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
+import _ from "lodash";
 import { ActionTypeEnum } from "../actions";
 import { of } from "rxjs";
 import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
@@ -25,38 +26,51 @@ import { EpicDependencies } from "../../store/index";
 
 export const getPreventionStudiesEpic = (
     action$: ActionsObservable<ActionType<typeof fetchPreventionStudiesRequest>>,
-    _state$: StateObservable<State>,
+    state$: StateObservable<State>,
     { compositionRoot }: EpicDependencies
 ) =>
     action$.ofType(ActionTypeEnum.FetchPreventionStudiesRequest).pipe(
-        switchMap(() => {
-            return fromFuture(compositionRoot.prevention.getStudies()).pipe(
-                mergeMap((studies: PreventionStudy[]) => {
-                    return of(fetchPreventionStudiesSuccess(studies));
-                }),
-                catchError((error: Error) => of(addNotificationAction(error.message), fetchPreventionStudiesError()))
-            );
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            if (state.prevention.studies.length === 0 && !state.prevention.error) {
+                return fromFuture(compositionRoot.prevention.getStudies()).pipe(
+                    mergeMap((studies: PreventionStudy[]) => {
+                        return of(fetchPreventionStudiesSuccess(studies));
+                    }),
+                    catchError((error: Error) =>
+                        of(addNotificationAction(error.message), fetchPreventionStudiesError())
+                    )
+                );
+            } else {
+                return of(fetchPreventionStudiesSuccess(state.prevention.studies));
+            }
         })
     );
 
-export const setPreventionMapTypeEpic = (action$: ActionsObservable<ActionType<typeof setPreventionMapType>>) =>
+export const setPreventionMapTypeEpic = (
+    action$: ActionsObservable<ActionType<typeof setPreventionMapType>>,
+    state$: StateObservable<State>
+) =>
     action$.ofType(ActionTypeEnum.SetPreventionMapType).pipe(
-        switchMap(action => {
+        withLatestFrom(state$),
+        switchMap(([action, state]) => {
             const pageView = getAnalyticsPageView({ page: "prevention", section: action.payload });
-            const logPageView = logPageViewAction(pageView);
+            const isDialogOpen = state.malaria.initialDialogOpen;
+            const logPageView = isDialogOpen ? null : logPageViewAction(pageView);
 
             if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
-                return of(setType("MONO_OXYGENASES"), logPageView);
+                return of(..._.compact([setType("MONO_OXYGENASES"), logPageView]));
             } else if (action.payload === PreventionMapType.INTENSITY_STATUS) {
-                return of(setType(undefined), logPageView);
+                return of(..._.compact([setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
-                return of(setType(undefined), logPageView);
+                return of(..._.compact([setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
-                return of(setType("MONO_OXYGENASES"), logPageView);
+                return of(..._.compact([setType("MONO_OXYGENASES"), logPageView]));
             } else if (action.payload === PreventionMapType.PBO_DEPLOYMENT) {
-                return of(setType(undefined), logPageView);
+                return of(..._.compact([setType(undefined), logPageView]));
+            } else {
+                return of(..._.compact([setType(undefined), logPageView]));
             }
-            return of(setType(undefined), logPageView);
         })
     );
 
@@ -84,16 +98,16 @@ export const setPreventionInsecticideClassEpic = (
         .pipe(
             withLatestFrom(state$),
             switchMap(([action, state]) => {
-                return of(
+                const isTourOpen = state.malaria.tour.open;
+                const actions = _.compact([
                     setInsecticideTypes([]),
                     setType(state.prevention.filters.type || "MONO_OXYGENASES"),
                     setSpecies([]),
-                    logEventAction({
-                        category: "filter",
-                        action: "insecticideClass",
-                        label: action.payload,
-                    })
-                );
+                    isTourOpen
+                        ? null
+                        : logEventAction({ category: "filter", action: "insecticideClass", label: action.payload }),
+                ]);
+                return of(...actions);
             })
         );
 

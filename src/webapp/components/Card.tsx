@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { setRegionAction, setThemeAction } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 import { colors } from "../constants/theme";
+import { sendAnalytics } from "../utils/analytics";
+import { getAnalyticsPageView } from "../store/analytics";
 
 const ColorButton = withStyles((_theme: Theme) => ({
     root: {
@@ -81,8 +83,8 @@ const SimpleCard = ({ title, description, Icon, theme, setTheme, setRegion, onSe
         <Card
             className={classes.card}
             onClick={() => {
-                setTheme(theme, { fromHome: true });
                 onSelection();
+                setTheme(theme, { fromHome: true });
             }}
         >
             <Icon active style={{ maxWidth: "96px", marginTop: "24px" }} />
@@ -99,6 +101,10 @@ const SimpleCard = ({ title, description, Icon, theme, setTheme, setRegion, onSe
                             variant="contained"
                             size="large"
                             onClick={ev => {
+                                sendAnalytics({ type: "event", category: "homeItem", action: "mekong" });
+                                const pageView = getAnalyticsPageView({ page: "treatment" });
+                                sendAnalytics({ type: "pageView", path: pageView.path });
+
                                 setTheme("treatment", { fromHome: true });
                                 setRegion({
                                     subRegion: "GREATER_MEKONG",

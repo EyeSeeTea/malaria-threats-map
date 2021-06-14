@@ -1,4 +1,4 @@
-export default function setupEffects(map: any, source: string, layer: string) {
+export default function setupEffects(map: mapboxgl.Map, source: string, layer: string) {
     let hoveredStateId: any = null;
 
     map.on("mousemove", layer, (e: any) => {

@@ -28,6 +28,7 @@ import { getAnalyticsPageViewFromString } from "../analytics";
 import { sendAnalytics } from "../../utils/analytics";
 import _ from "lodash";
 import { fetchCountryLayerRequest } from "../actions/country-layer-actions";
+import { ApiParams } from "../../../data/common/types";
 
 export const setThemeEpic = (
     action$: ActionsObservable<ActionType<typeof setThemeAction>>,
@@ -38,9 +39,14 @@ export const setThemeEpic = (
         switchMap(([action, state]) => {
             const { meta } = action;
             const eventCategory = meta.fromHome ? "homeItem" : "theme_menu";
+            const isDialogOpen = state.malaria.initialDialogOpen;
             const base = [
-                logEventAction({ category: eventCategory, action: action.payload }),
-                logPageViewAction(getAnalyticsPageViewFromString({ page: action.payload })),
+                ...(isDialogOpen
+                    ? []
+                    : [
+                          logEventAction({ category: eventCategory, action: action.payload }),
+                          logPageViewAction(getAnalyticsPageViewFromString({ page: action.payload })),
+                      ]),
                 setSelection(null),
                 setStoryModeStepAction(0),
             ].filter(Boolean);
@@ -220,7 +226,7 @@ type Response = { features: { attributes: LastUpdated }[] } & ErrorResponse;
 export const getLastUpdatedEpic = (action$: ActionsObservable<ActionType<typeof getLastUpdatedRequestAction>>) =>
     action$.ofType(ActionTypeEnum.GetLastUpdatedRequest).pipe(
         switchMap(() => {
-            const params: { [key: string]: string } = {
+            const params: ApiParams = {
                 f: "json",
                 where: `1%3D1`,
                 outFields: "*",

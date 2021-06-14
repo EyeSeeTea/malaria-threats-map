@@ -7,7 +7,7 @@ import config from "../../config";
 const MEKONG_LAYER_ID = "mekong-layer";
 const MEKONG_SOURCE_ID = "mekong-source";
 
-const layer: any = {
+const layer: mapboxgl.FillLayer = {
     id: MEKONG_LAYER_ID,
     type: "fill",
     paint: {
@@ -15,8 +15,8 @@ const layer: any = {
         "fill-opacity": 0.5,
         "fill-outline-color": "rgba(0,0,0,0.1)",
     },
-    minZoom: 0,
-    maxZoom: 20,
+    minzoom: 0,
+    maxzoom: 20,
     source: MEKONG_SOURCE_ID,
 };
 

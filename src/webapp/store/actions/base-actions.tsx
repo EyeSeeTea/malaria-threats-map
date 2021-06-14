@@ -3,10 +3,6 @@ import { ActionTypeEnum } from "../actions";
 import { RegionState, SiteSelection } from "../types";
 import { AjaxError } from "rxjs/ajax";
 
-export const setAnyAction = createAction(ActionTypeEnum.MalariaSetAny, action => {
-    return (any: any) => action(any);
-});
-
 interface SetThemeOptions {
     fromHome?: boolean;
 }

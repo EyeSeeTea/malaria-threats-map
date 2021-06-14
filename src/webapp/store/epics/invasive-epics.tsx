@@ -2,7 +2,7 @@ import { ActionsObservable, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import { of } from "rxjs";
-import { catchError, mergeMap, switchMap } from "rxjs/operators";
+import { catchError, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
 import {
     fetchInvasiveStudiesError,
     fetchInvasiveStudiesRequest,
@@ -19,17 +19,22 @@ import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
 
 export const getInvasiveStudiesEpic = (
     action$: ActionsObservable<ActionType<typeof fetchInvasiveStudiesRequest>>,
-    _state$: StateObservable<State>,
+    state$: StateObservable<State>,
     { compositionRoot }: EpicDependencies
 ) =>
     action$.ofType(ActionTypeEnum.FetchInvasiveStudiesRequest).pipe(
-        switchMap(() => {
-            return fromFuture(compositionRoot.invasive.getStudies()).pipe(
-                mergeMap((studies: InvasiveStudy[]) => {
-                    return of(fetchInvasiveStudiesSuccess(studies));
-                }),
-                catchError((error: Error) => of(addNotificationAction(error.message), fetchInvasiveStudiesError()))
-            );
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            if (state.invasive.studies.length === 0 && !state.invasive.error) {
+                return fromFuture(compositionRoot.invasive.getStudies()).pipe(
+                    mergeMap((studies: InvasiveStudy[]) => {
+                        return of(fetchInvasiveStudiesSuccess(studies));
+                    }),
+                    catchError((error: Error) => of(addNotificationAction(error.message), fetchInvasiveStudiesError()))
+                );
+            } else {
+                return of(fetchInvasiveStudiesSuccess(state.invasive.studies));
+            }
         })
     );
 

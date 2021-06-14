@@ -4,12 +4,7 @@ import { State } from "../../../store/types";
 import { circleLayout, studiesToGeoJson } from "../layer-utils";
 import diagnosisSymbols from "../symbols/diagnosis";
 import setupEffects from "../effects";
-import {
-    selectDiagnosisFilters,
-    selectDiagnosisStudies,
-    selectDiagnosisStudiesLoading,
-    selectDiagnosisStudiesError,
-} from "../../../store/reducers/diagnosis-reducer";
+import { selectDiagnosisFilters, selectDiagnosisStudies } from "../../../store/reducers/diagnosis-reducer";
 import {
     selectCountryMode,
     selectFilters,
@@ -48,8 +43,6 @@ const layer: any = (symbols: any) => ({
 
 const mapStateToProps = (state: State) => ({
     studies: selectDiagnosisStudies(state),
-    studiesLoading: selectDiagnosisStudiesLoading(state),
-    studiesError: selectDiagnosisStudiesError(state),
     theme: selectTheme(state),
     filters: selectFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
@@ -69,7 +62,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
 type OwnProps = {
-    map: any;
+    map: mapboxgl.Map;
 };
 type Props = StateProps & DispatchProps & OwnProps;
 
@@ -116,11 +109,9 @@ class DiagnosisLayer extends Component<Props> {
     }
 
     loadStudiesIfRequired() {
-        const { theme, studies, studiesLoading, studiesError } = this.props;
+        const { theme } = this.props;
 
-        const required = theme === DIAGNOSIS && studies.length === 0 && !studiesLoading && !studiesError;
-
-        if (required) {
+        if (theme === DIAGNOSIS) {
             this.props.fetchDiagnosisStudies();
         }
     }
@@ -165,7 +156,7 @@ class DiagnosisLayer extends Component<Props> {
 
     filterSource = () => {
         const { studies, countryMode } = this.props;
-        const source = this.props.map.getSource(DIAGNOSIS_SOURCE_ID);
+        const source: any = this.props.map.getSource(DIAGNOSIS_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
@@ -242,7 +233,7 @@ class DiagnosisLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any, _a: any) => {
+    onClickListener = (e: any) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
