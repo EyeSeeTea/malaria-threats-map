@@ -66,11 +66,11 @@ function InsecticideClassFilter({ insecticideClasses = [], preventionFilters, se
     function handleChange(event: React.ChangeEvent<unknown>) {
         setInsecticideClass((event.target as HTMLInputElement).value);
     }
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     return (
         <FilterWrapper>
-            <FormLabel component="legend">{t(`filters.insecticide_class`)}</FormLabel>
+            <FormLabel component="legend">{t("common.filters.insecticide_class")}</FormLabel>
             <Divider />
             <Paper className={classes.group}>
                 <RadioGroup value={preventionFilters.insecticideClass} onChange={handleChange}>

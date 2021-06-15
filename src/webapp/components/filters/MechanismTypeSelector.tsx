@@ -16,7 +16,7 @@ type OwnProps = {
 type Props = OwnProps;
 
 function MechanismsTypeSelector({ onChange, value, dataset }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const types = (() => {
         switch (dataset) {
@@ -45,7 +45,7 @@ function MechanismsTypeSelector({ onChange, value, dataset }: Props) {
 
     return (
         <FilterWrapper>
-            <FormLabel component="legend">{t(`filters.mechanism_type`)}</FormLabel>
+            <FormLabel component="legend">{t("common.filters.mechanism_type")}</FormLabel>
             <Divider />
             <IntegrationReactSelect
                 isMulti

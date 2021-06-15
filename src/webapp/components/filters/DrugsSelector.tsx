@@ -24,11 +24,11 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps & OwnProps;
 
 function DrugsSelector({ studies, onChange, value }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const uniques = R.uniq(R.map(R.prop("DRUG_NAME"), studies)).filter(Boolean);
 
     const suggestions: any[] = uniques.map((drug: string) => ({
-        label: t(drug),
+        label: t(`common.${drug}`),
         value: drug,
     }));
 
@@ -41,7 +41,7 @@ function DrugsSelector({ studies, onChange, value }: Props) {
     return (
         <FilterWrapper>
             <FormLabel component="legend">
-                <T i18nKey={`filters.drug`} />
+                <T i18nKey={"common.filters.drug"} />
             </FormLabel>
             <Divider />
             <IntegrationReactSelect

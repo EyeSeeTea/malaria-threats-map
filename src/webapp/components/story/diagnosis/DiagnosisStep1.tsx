@@ -12,17 +12,17 @@ const useStyles = makeStyles(() =>
 );
 const DiagnosisStep1 = () => {
     const classes = useStyles({});
-    const { t } = useTranslation("diagnosis");
+    const { t } = useTranslation();
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step1.part1" t={t}>
+                <Trans i18nKey="diagnosisStory.step1.part1" t={t}>
                     <b> Gene deletions among malaria parasites causes false-negative diagnostic test results </b>
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step1.part2" t={t}>
+                <Trans i18nKey="diagnosisStory.step1.part2" t={t}>
                     Rapid diagnostic tests (RDT) are used for malaria diagnosis in most endemic areas. Detection of{" "}
                     <i> Plasmodium falciparum </i> - the most deadly malaria parasite globally - relies heavily on RDTs
                     that target an antigen called histidine-rich protein 2 (HRP2), as well as some cross-reactivity with
@@ -33,7 +33,7 @@ const DiagnosisStep1 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step1.part3" t={t}>
+                <Trans i18nKey="diagnosisStory.step1.part3" t={t}>
                     However, in 2010 a study sponsored by WHO and FIND found that some
                     <i> P. falciparum </i> parasites in Peru lacked the <i>pfhrp2</i> gene. Without this gene, the
                     parasite cannot produce HRP2 and cannot be detected by HRP2-based RDTs. This was the first report to
@@ -43,7 +43,7 @@ const DiagnosisStep1 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step1.see" t={t}>
+                <Trans i18nKey="diagnosisStory.step1.see" t={t}>
                     See:
                 </Trans>
                 <Link
@@ -51,7 +51,7 @@ const DiagnosisStep1 = () => {
                     target="_blank"
                     color={"textSecondary"}
                 >
-                    <Trans i18nKey="step1.part4" t={t}>
+                    <Trans i18nKey="diagnosisStory.step1.part4" t={t}>
                         Gamboa et al. (2010) A large proportion of <i>P. falciparum</i>
                         isolates in the Amazon region of Peru lack <i>pfhrp2</i> and pfhrp3: implications for malaria
                         rapid diagnostic tests. PLoS One. 5(1):e8091

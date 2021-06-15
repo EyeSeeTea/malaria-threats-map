@@ -23,7 +23,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps;
 
 function DelayedParasiteClearanceLeyend({ treatmentFilters }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [show, setShow] = React.useState(false);
 
     useEffect(() => {
@@ -55,7 +55,7 @@ function DelayedParasiteClearanceLeyend({ treatmentFilters }: Props) {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("treatment.delayed_parasite_clearance")}
+                    {t("common.treatment.delayed_parasite_clearance")}
                 </LegendTitleTypography>
                 <LegendSubtitleTypography>{show && <T i18nKey={treatmentFilters.drug}></T>}</LegendSubtitleTypography>
             </LegendTitleContainer>

@@ -31,7 +31,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 function PboDeploymentLegend({ legendExpanded }: Props) {
-    const { t } = useTranslation(["legend", "common"]);
+    const { t } = useTranslation();
     const labels = [
         {
             label: !legendExpanded
@@ -61,11 +61,11 @@ function PboDeploymentLegend({ legendExpanded }: Props) {
 
     const legend = () => (
         <LegendDescriptionText>
-            {t("legend:p1")}
-            <Link href={t("legend:p1Link")} target={"_blank"}>
-                {t("legend:p1a")}
+            {t("legend.p1")}
+            <Link href={t("legend.p1Link")} target={"_blank"}>
+                {t("legend.p1a")}
             </Link>
-            {t("legend:p1b")}
+            {t("legend.p1b")}
         </LegendDescriptionText>
     );
 
@@ -73,7 +73,7 @@ function PboDeploymentLegend({ legendExpanded }: Props) {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("common:prevention.pbo_deployment_legend")}
+                    {t("common.prevention.pbo_deployment_legend")}
                 </LegendTitleTypography>
             </LegendTitleContainer>
             {legendExpanded && (

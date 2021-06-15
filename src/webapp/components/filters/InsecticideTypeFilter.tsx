@@ -59,7 +59,7 @@ class InsecticideTypeFilter extends Component<Props, any> {
         return (
             <FilterWrapper>
                 <FormLabel component="legend">
-                    <T i18nKey={"filters.insecticide_type"} />
+                    <T i18nKey={"common.filters.insecticide_type"} />
                 </FormLabel>
                 <Divider />
                 <IntegrationReactSelect

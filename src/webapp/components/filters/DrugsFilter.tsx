@@ -65,7 +65,7 @@ class DrugsFilter extends Component<Props, any> {
         return (
             <FilterWrapper>
                 <FormLabel component="legend">
-                    <T i18nKey={`filters.drug`} />
+                    <T i18nKey={"common.filters.drug"} />
                 </FormLabel>
                 <Divider />
                 <IntegrationReactSelect suggestions={suggestions} onChange={this.onChange} value={selection} />

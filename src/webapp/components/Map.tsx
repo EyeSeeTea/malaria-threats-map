@@ -173,7 +173,7 @@ class Map extends React.Component<Props> {
 
     componentDidMount() {
         if (!mapboxgl.supported()) {
-            this.props.addNotification(this.props.t("WEBGL_error_message"));
+            this.props.addNotification(this.props.t("common.WEBGL_error_message"));
             return;
         }
         this.map = new mapboxgl.Map({
@@ -331,4 +331,4 @@ class Map extends React.Component<Props> {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation("common")(Map));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Map));

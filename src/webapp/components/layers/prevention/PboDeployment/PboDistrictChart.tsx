@@ -34,12 +34,12 @@ const Margin = styled.div`
 `;
 
 const PboDistrictChart = ({ studies }: Props) => {
-    const { t } = useTranslation("common");
-    const titleTranslation = t("Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment");
-    const nSitesTranslation = t("Number of sites that meet criteria");
-    const vectorSpeciesTranslation = t("Vector species that meet criteria");
-    const pyrethroidYearTranslation = t("Most recent pyrethroid susceptibility test results");
-    const monoOxygenaseYearTranslation = t("Most recent mono-oxygenase involvement results");
+    const { t } = useTranslation();
+    const titleTranslation = t("common.prevention.pbo_deployment_legend");
+    const nSitesTranslation = t("common.prevention.chart.pbo_deployment.num_sites_criteria");
+    const vectorSpeciesTranslation = t("common.prevention.chart.pbo_deployment.vector_species_criteria");
+    const pyrethroidYearTranslation = t("common.prevention.chart.pbo_deployment.most_recent_test_results");
+    const monoOxygenaseYearTranslation = t("common.prevention.chart.pbo_deployment.most_recent_mono_oxygenase_results");
     const studyObject = studies[0];
 
     const studiesBySiteID = R.groupBy(R.prop("SITE_ID"), studies);

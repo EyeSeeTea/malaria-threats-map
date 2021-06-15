@@ -106,7 +106,7 @@ class TypeFilter extends Component<Props, any> {
         return (
             <FilterWrapper>
                 <FormLabel component="legend">
-                    <T i18nKey={"filters.test_type"} />
+                    <T i18nKey={"common.filters.test_type"} />
                 </FormLabel>
                 <Divider />
                 <IntegrationReactSelect

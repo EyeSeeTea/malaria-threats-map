@@ -40,7 +40,7 @@ const nav = window.navigator as any;
 
 const ShareIcon = ({ addNotification, logEventAction }: Props) => {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     return (
         <React.Fragment>
@@ -60,7 +60,7 @@ const ShareIcon = ({ addNotification, logEventAction }: Props) => {
                             .then(() => console.log("Share complete"))
                             .error(() => console.error("Could not share at this time"));
                     }}
-                    title={t("icons.share")}
+                    title={t("common.icons.share")}
                 >
                     <Share />
                 </Fab>
@@ -77,7 +77,7 @@ const ShareIcon = ({ addNotification, logEventAction }: Props) => {
                         size="small"
                         color={"default"}
                         className={classes.fab}
-                        title={t("icons.share")}
+                        title={t("common.icons.share")}
                     >
                         <Share />
                     </Fab>

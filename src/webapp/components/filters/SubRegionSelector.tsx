@@ -10,6 +10,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 import { Divider, FilterWrapper } from "./Filters";
 import T from "../../translations/T";
 import { sendAnalytics } from "../../utils/analytics";
+import { WithTranslation, withTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({
     region: selectRegion(state),
@@ -22,7 +23,7 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type Props = DispatchProps & StateProps & WithTranslation;
 
 class SubRegionSelector extends Component<Props> {
     onChange = (selection: any) => {
@@ -42,12 +43,12 @@ class SubRegionSelector extends Component<Props> {
         return (
             <FilterWrapper>
                 <FormLabel component="legend">
-                    <T i18nKey={"filters.sub_region"} />
+                    <T i18nKey={"common.filters.sub_region"} />
                 </FormLabel>
                 <Divider />
                 <IntegrationReactSelect
                     isClearable
-                    placeholder={"Select Sub Region"}
+                    placeholder={this.props.t("common.filters.select_sub_region")}
                     suggestions={suggestions}
                     onChange={this.onChange}
                     value={suggestions.find((s: any) => s.value === region.subRegion) || null}
@@ -57,4 +58,4 @@ class SubRegionSelector extends Component<Props> {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubRegionSelector);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SubRegionSelector));

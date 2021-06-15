@@ -89,7 +89,7 @@ interface EnhancedTableProps {
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const { classes, order, orderBy, onRequestSort } = props;
 
     const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
@@ -101,10 +101,10 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             <TableRow>
                 <StyledCell isBold colSpan={3} />
                 <StyledCell isBold colSpan={8} divider>
-                    {t("report.prevention.resistance")}
+                    {t("common.report.prevention.resistance")}
                 </StyledCell>
                 <StyledCell isBold colSpan={7} divider>
-                    {t("report.prevention.mechanism")}
+                    {t("common.report.prevention.mechanism")}
                 </StyledCell>
             </TableRow>
             <TableRow>
@@ -158,7 +158,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                                 direction={orderBy === headCell.id ? order : "asc"}
                                 onClick={headCell.sortable ? createSortHandler(headCell.id) : () => {}}
                             >
-                                {t(headCell.label)}
+                                {t(`common.${headCell.label}`)}
                                 {headCell.sortable && orderBy === headCell.id ? (
                                     <span className={classes.visuallyHidden}>
                                         {order === "desc" ? "sorted descending" : "sorted ascending"}
@@ -166,7 +166,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                                 ) : null}
                             </TableSortLabel>
                         ) : (
-                            t(headCell.label)
+                            t(`common.${headCell.label}`)
                         )}
                     </StyledCell>
                 ))}
@@ -212,7 +212,7 @@ interface EnhancedTableToolbarProps {
 }
 
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const classes = useToolbarStyles({});
     const { numSelected, countries, setCountries, species, setSpecies, onClick } = props;
 
@@ -228,7 +228,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
                 </Typography>
             ) : (
                 <Typography className={classes.title} variant="h6" id="tableTitle">
-                    {t("report.prevention.title")}
+                    {t("common.report.prevention.title")}
                 </Typography>
             )}
             {numSelected > 0 ? (
@@ -247,7 +247,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
                         startIcon={<CloudDownloadIcon />}
                         onClick={onClick}
                     >
-                        {t("data_download.buttons.download")}
+                        {t("common.data_download.buttons.download")}
                     </Button>
                     <FilterPopover
                         countries={countries}
@@ -271,7 +271,7 @@ type Props = StateProps & OwnProps;
 
 function PreventionReport({ studies: baseStudies }: Props) {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [order, setOrder] = React.useState<Order>("desc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("PYRETHROIDS_AVERAGE_MORTALITY");
     const [selected, setSelected] = React.useState<string[]>([]);
@@ -582,7 +582,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
                         onChangePage={handleChangePage}
                         onChangeRowsPerPage={handleChangeRowsPerPage}
                     />
-                    <Typography variant={"body2"}>{t("data_download.footer")}</Typography>
+                    <Typography variant={"body2"}>{t("common.data_download.footer")}</Typography>
                     <br />
                 </div>
             </Paper>

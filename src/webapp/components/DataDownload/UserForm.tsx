@@ -28,17 +28,17 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const ORGANIZATION_TYPES = [
-    "data_download.step1.organization_type_options.university",
-    "data_download.step1.organization_type_options.ngos",
-    "data_download.step1.organization_type_options.agency",
-    "data_download.step1.organization_type_options.international",
-    "data_download.step1.organization_type_options.government",
-    "data_download.step1.organization_type_options.partnership",
-    "data_download.step1.organization_type_options.consultant",
-    "data_download.step1.organization_type_options.health",
-    "data_download.step1.organization_type_options.communications",
-    "data_download.step1.organization_type_options.private",
-    "data_download.step1.organization_type_options.other",
+    "common.data_download.step1.organization_type_options.university",
+    "common.data_download.step1.organization_type_options.ngos",
+    "common.data_download.step1.organization_type_options.agency",
+    "common.data_download.step1.organization_type_options.international",
+    "common.data_download.step1.organization_type_options.government",
+    "common.data_download.step1.organization_type_options.partnership",
+    "common.data_download.step1.organization_type_options.consultant",
+    "common.data_download.step1.organization_type_options.health",
+    "common.data_download.step1.organization_type_options.communications",
+    "common.data_download.step1.organization_type_options.private",
+    "common.data_download.step1.organization_type_options.other",
 ];
 
 type Props = {
@@ -48,8 +48,7 @@ type Props = {
 
 const UserForm = ({ onChange, userInfo }: Props) => {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
-    const { t: tCountries } = useTranslation("fullCountries");
+    const { t } = useTranslation();
     const handleOrganizationTypeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         const newOrganizationType = event.target.value as string;
         onChange("organizationType", newOrganizationType);
@@ -61,16 +60,13 @@ const UserForm = ({ onChange, userInfo }: Props) => {
     };
 
     const organizationTypes = ORGANIZATION_TYPES.map(ot => t(ot)).sort();
-
-    const baseCountries: FullCountry[] = tCountries("countries", { returnObjects: true });
-
-    const countries = baseCountries.sort((t1, t2) => (t1.name < t2.name ? -1 : 1));
+    const countries: FullCountry = t("countries", { returnObjects: true });
 
     return (
         <Card className={classes.paper}>
             <FormControl fullWidth className={classes.formControl}>
                 <TextField
-                    label={t("data_download.step1.first_name") + "*"}
+                    label={t("common.data_download.step1.first_name") + "*"}
                     InputLabelProps={{
                         shrink: true,
                     }}
@@ -80,7 +76,7 @@ const UserForm = ({ onChange, userInfo }: Props) => {
             </FormControl>
             <FormControl fullWidth className={classes.formControl}>
                 <TextField
-                    label={t("data_download.step1.last_name") + "*"}
+                    label={t("common.data_download.step1.last_name") + "*"}
                     InputLabelProps={{
                         shrink: true,
                     }}
@@ -90,7 +86,7 @@ const UserForm = ({ onChange, userInfo }: Props) => {
             </FormControl>
             <FormControl fullWidth className={classes.formControl}>
                 <TextField
-                    label={t("data_download.step1.position") + "*"}
+                    label={t("common.data_download.step1.position") + "*"}
                     InputLabelProps={{
                         shrink: true,
                     }}
@@ -100,7 +96,7 @@ const UserForm = ({ onChange, userInfo }: Props) => {
             </FormControl>
             <FormControl fullWidth className={classes.formControl}>
                 <TextField
-                    label={t("data_download.step1.organization_name") + "*"}
+                    label={t("common.data_download.step1.organization_name") + "*"}
                     InputLabelProps={{
                         shrink: true,
                     }}
@@ -109,7 +105,7 @@ const UserForm = ({ onChange, userInfo }: Props) => {
                 />
             </FormControl>
             <FormControl fullWidth className={classes.formControl}>
-                <InputLabel>{t("data_download.step1.organization_type") + "*"}</InputLabel>
+                <InputLabel>{t("common.data_download.step1.organization_type") + "*"}</InputLabel>
                 <Select fullWidth value={userInfo.organizationType} onChange={handleOrganizationTypeChange}>
                     {organizationTypes.map(type => (
                         <MenuItem key={type} value={type}>
@@ -120,11 +116,11 @@ const UserForm = ({ onChange, userInfo }: Props) => {
             </FormControl>
             {countries && (
                 <FormControl fullWidth className={classes.formControl}>
-                    <InputLabel>{t("data_download.step1.country") + "*"}</InputLabel>
+                    <InputLabel>{t("common.data_download.step1.country") + "*"}</InputLabel>
                     <Select fullWidth value={userInfo.country} onChange={handleCountryChange}>
-                        {countries.map(country => (
-                            <MenuItem key={country.iso2} value={country.iso2}>
-                                {country.name}
+                        {Object.entries(countries).map(([iso, name]) => (
+                            <MenuItem key={iso} value={iso}>
+                                {name}
                             </MenuItem>
                         ))}
                     </Select>
@@ -132,7 +128,7 @@ const UserForm = ({ onChange, userInfo }: Props) => {
             )}
             <FormControl fullWidth className={classes.formControl}>
                 <TextField
-                    label={t("data_download.step1.email") + "*"}
+                    label={t("common.data_download.step1.email") + "*"}
                     InputLabelProps={{
                         shrink: true,
                     }}

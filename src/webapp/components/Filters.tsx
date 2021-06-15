@@ -190,7 +190,7 @@ function Filters({
     }
     dispatchCustomEvent("resize");
 
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     return (
         <div>
@@ -202,7 +202,7 @@ function Filters({
                 className={classes.fab}
             >
                 <FilterIconSimple className={classes.extendedIcon} fontSize="small" onClick={handleClickOpen} />
-                <span onClick={handleClickOpen}>{t("filters.filters")}</span>
+                <span onClick={handleClickOpen}>{t("common.filters.filters")}</span>
             </Fab>
             <Dialog
                 fullScreen
@@ -227,7 +227,7 @@ function Filters({
                     <Toolbar>
                         <FilterIconSimple />
                         <Typography variant="h6" className={classes.title}>
-                            {t("filters.filters")}
+                            {t("common.filters.filters")}
                         </Typography>
                         <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
                             <CloseIcon />

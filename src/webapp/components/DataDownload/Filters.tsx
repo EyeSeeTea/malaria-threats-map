@@ -58,7 +58,7 @@ const Filters = ({
     fetchPreventionStudies,
     fetchTreatmentStudies,
 }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const onSetTheme = (value: string) => {
         onChange({
@@ -189,7 +189,7 @@ const Filters = ({
     return (
         <div>
             <Typography variant="subtitle1" color="textSecondary">
-                {t("data_download.dataset")}
+                {t("common.data_download.dataset")}
             </Typography>
             <Paper
                 style={{
@@ -210,7 +210,7 @@ const Filters = ({
             </Paper>
             <Divider />
             <Typography variant="subtitle1" color="textSecondary">
-                {t("data_download.step3.filters.additional")}
+                {t("common.data_download.step3.filters.additional")}
             </Typography>
             <Paper
                 style={{
