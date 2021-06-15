@@ -37,10 +37,10 @@ const Citation = ({ study, logOutboundLinkAction }: Props) => {
                 </Link>
             </Typography>
         </>
-    ) : !isNull(study.CITATION) ? (
-        <Typography variant="caption">{study.CITATION}</Typography>
-    ) : !isNull(study.INSTITUTION) ? (
-        <Typography variant="caption">{study.INSTITUTION}</Typography>
+    ) : !isNull(study.CITATION_LONG) ? (
+        <Typography variant="caption">{study.CITATION_LONG}</Typography>
+    ) : !isNull(study.INSTITUTE) ? (
+        <Typography variant="caption">{study.INSTITUTE}</Typography>
     ) : (
         <Typography variant="caption">{t("citation.unpublished_data")}</Typography>
     );

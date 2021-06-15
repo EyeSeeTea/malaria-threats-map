@@ -13,4 +13,5 @@ export interface Study {
     Longitude: string;
     INSTITUTION?: string;
     INSTITUTION_CITY?: string;
+    INSTITUTE: string;
 }
