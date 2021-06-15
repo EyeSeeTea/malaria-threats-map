@@ -29,7 +29,7 @@ type DispatchProps = typeof mapDispatchToProps;
 
 type OwnProps = {
     studies: TreatmentStudy[];
-    map: any;
+    map: mapboxgl.Map;
 };
 type Props = StateProps & DispatchProps & OwnProps;
 

@@ -28,6 +28,7 @@ import { getAnalyticsPageViewFromString } from "../analytics";
 import { sendAnalytics } from "../../utils/analytics";
 import _ from "lodash";
 import { fetchCountryLayerRequest } from "../actions/country-layer-actions";
+import { ApiParams } from "../../../data/common/types";
 
 export const setThemeEpic = (
     action$: ActionsObservable<ActionType<typeof setThemeAction>>,
@@ -225,7 +226,7 @@ type Response = { features: { attributes: LastUpdated }[] } & ErrorResponse;
 export const getLastUpdatedEpic = (action$: ActionsObservable<ActionType<typeof getLastUpdatedRequestAction>>) =>
     action$.ofType(ActionTypeEnum.GetLastUpdatedRequest).pipe(
         switchMap(() => {
-            const params: { [key: string]: string } = {
+            const params: ApiParams = {
                 f: "json",
                 where: `1%3D1`,
                 outFields: "*",
