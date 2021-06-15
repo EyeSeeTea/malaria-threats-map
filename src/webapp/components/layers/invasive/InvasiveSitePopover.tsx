@@ -27,7 +27,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 
 type OwnProps = {
     studies: InvasiveStudy[];
-    map: any;
+    map: mapboxgl.Map;
 };
 type Props = StateProps & DispatchProps & OwnProps;
 

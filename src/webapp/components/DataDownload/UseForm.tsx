@@ -38,9 +38,6 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: "24px",
             overflow: "unset",
         },
-        countries: {
-            margin: 0,
-        },
     })
 );
 const Snackbar = styled(Paper)`
@@ -200,7 +197,6 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
             </FormControl>
             <FullCountriesSelector
                 label={t("common.data_download.step2.countries")}
-                className={classes.countries}
                 includeGlobalOption
                 value={useInfo.countries}
                 onChange={handleCountriesChange}

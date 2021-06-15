@@ -24,11 +24,12 @@ import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { CountryFeature } from "../../../domain/entities/CountryLayer";
 import { fetchPreventionStudiesRequest } from "../../store/actions/prevention-actions";
 import { PREVENTION } from "./prevention/PreventionLayer";
+import mapboxgl from "mapbox-gl";
 
 const COUNTRY_SELECTOR_LAYER_ID = "country-selector-layer";
 const COUNTRY_SELECTOR_SOURCE_ID = "country-selector-source";
 
-const layer: any = {
+const layer: mapboxgl.FillLayer = {
     id: COUNTRY_SELECTOR_LAYER_ID,
     type: "fill",
     paint: {
@@ -48,8 +49,8 @@ const layer: any = {
         "fill-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.5, 0.7],
         "fill-outline-color": "rgba(0,0,0,0.1)",
     },
-    minZoom: 0,
-    maxZoom: 20,
+    minzoom: 0,
+    maxzoom: 20,
     source: COUNTRY_SELECTOR_SOURCE_ID,
 };
 

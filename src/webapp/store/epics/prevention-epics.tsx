@@ -26,17 +26,24 @@ import { EpicDependencies } from "../../store/index";
 
 export const getPreventionStudiesEpic = (
     action$: ActionsObservable<ActionType<typeof fetchPreventionStudiesRequest>>,
-    _state$: StateObservable<State>,
+    state$: StateObservable<State>,
     { compositionRoot }: EpicDependencies
 ) =>
     action$.ofType(ActionTypeEnum.FetchPreventionStudiesRequest).pipe(
-        switchMap(() => {
-            return fromFuture(compositionRoot.prevention.getStudies()).pipe(
-                mergeMap((studies: PreventionStudy[]) => {
-                    return of(fetchPreventionStudiesSuccess(studies));
-                }),
-                catchError((error: Error) => of(addNotificationAction(error.message), fetchPreventionStudiesError()))
-            );
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            if (state.prevention.studies.length === 0 && !state.prevention.error) {
+                return fromFuture(compositionRoot.prevention.getStudies()).pipe(
+                    mergeMap((studies: PreventionStudy[]) => {
+                        return of(fetchPreventionStudiesSuccess(studies));
+                    }),
+                    catchError((error: Error) =>
+                        of(addNotificationAction(error.message), fetchPreventionStudiesError())
+                    )
+                );
+            } else {
+                return of(fetchPreventionStudiesSuccess(state.prevention.studies));
+            }
         })
     );
 

@@ -2,12 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { studiesToGeoJson } from "../layer-utils";
 import setupEffects from "../effects";
-import {
-    selectTreatmentFilters,
-    selectTreatmentStudies,
-    selectTreatmentStudiesLoading,
-    selectTreatmentStudiesError,
-} from "../../../store/reducers/treatment-reducer";
+import { selectTreatmentFilters, selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
 import {
     selectCountryMode,
     selectFilters,
@@ -55,8 +50,6 @@ const layer: any = (symbols: any) => ({
 
 const mapStateToProps = (state: State) => ({
     studies: selectTreatmentStudies(state),
-    studiesLoading: selectTreatmentStudiesLoading(state),
-    studiesError: selectTreatmentStudiesError(state),
     theme: selectTheme(state),
     filters: selectFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
@@ -75,7 +68,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
 type OwnProps = {
-    map: any;
+    map: mapboxgl.Map;
 };
 type Props = StateProps & OwnProps & DispatchProps;
 
@@ -125,11 +118,9 @@ class TreatmentLayer extends Component<Props> {
     }
 
     loadStudiesIfRequired() {
-        const { theme, studies, studiesLoading, studiesError } = this.props;
+        const { theme } = this.props;
 
-        const required = theme === TREATMENT && studies.length === 0 && !studiesLoading && !studiesError;
-
-        if (required) {
+        if (theme === TREATMENT) {
             this.props.fetchTreatmentStudies();
         }
     }
@@ -186,7 +177,7 @@ class TreatmentLayer extends Component<Props> {
 
     filterSource = () => {
         const { studies, countryMode } = this.props;
-        const source = this.props.map.getSource(TREATMENT_SOURCE_ID);
+        const source: any = this.props.map.getSource(TREATMENT_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
@@ -264,7 +255,7 @@ class TreatmentLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any, _a: any) => {
+    onClickListener = (e: any) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
