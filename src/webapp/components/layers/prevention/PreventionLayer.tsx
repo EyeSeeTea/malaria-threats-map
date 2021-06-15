@@ -66,7 +66,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
 type OwnProps = {
-    map: any;
+    map: mapboxgl.Map;
 };
 type Props = StateProps & DispatchProps & OwnProps;
 
@@ -172,7 +172,7 @@ class PreventionLayer extends Component<Props> {
 
     filterSource = () => {
         const { studies, countryMode } = this.props;
-        const source = this.props.map.getSource(PREVENTION_SOURCE_ID);
+        const source: any = this.props.map.getSource(PREVENTION_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
@@ -209,7 +209,7 @@ class PreventionLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any, _a: any) => {
+    onClickListener = (e: any) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
