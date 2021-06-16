@@ -6,8 +6,6 @@ import * as ajax from "../ajax";
 import { of } from "rxjs";
 import {
     addDataDownloadRequestAction,
-    addDataDownloadSuccessAction,
-    addDataDownloadErrorAction,
     addSubscriptionContactErrorAction,
     addSubscriptionContactRequestAction,
     addSubscriptionContactSuccessAction,
@@ -38,13 +36,7 @@ export const createDataDownloadEntryEpic = (
         switchMap(action => {
             return ajax.postFull(config.backendUrl, action.payload).pipe(
                 mergeMap((_response: any) => {
-                    return of(addNotificationAction("Successfully downloaded!"), addDataDownloadSuccessAction());
-                }),
-                catchError((_error: AjaxError) => {
-                    return of(
-                        addNotificationAction(`There was an error while trying to download: ${_error.message}`),
-                        addDataDownloadErrorAction()
-                    );
+                    return of();
                 })
             );
         })

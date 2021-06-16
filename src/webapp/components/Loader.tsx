@@ -11,7 +11,6 @@ import { selectTreatmentStudiesLoading } from "../store/reducers/treatment-reduc
 import { connect } from "react-redux";
 import { selectDistrictsAreLoading } from "../store/reducers/districts-reducer";
 import { selectCountryLayerIsLoading } from "../store/reducers/country-layer-reducer";
-import { selectDownloadLoading } from "../store/reducers/data-download-reducer";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         backdrop: {
@@ -29,7 +28,6 @@ const mapStateToProps = (state: State) => ({
     invasiveLoading: selectInvasiveStudiesLoading(state),
     districtsLoading: selectDistrictsAreLoading(state),
     countriesLoading: selectCountryLayerIsLoading(state),
-    downloadLoading: selectDownloadLoading(state),
 });
 
 type OwnProps = {};
@@ -42,15 +40,13 @@ function SimpleBackdrop(props: Props) {
     const isLoading = () => {
         switch (props.theme) {
             case "prevention":
-                return (
-                    props.preventionLoading || props.districtsLoading || props.countriesLoading || props.downloadLoading
-                );
+                return props.preventionLoading || props.districtsLoading || props.countriesLoading;
             case "diagnosis":
                 return props.diagnosisLoading || props.countriesLoading;
             case "treatment":
-                return props.treatmentLoading || props.countriesLoading || props.downloadLoading;
+                return props.treatmentLoading || props.countriesLoading;
             case "invasive":
-                return props.invasiveLoading || props.countriesLoading || props.downloadLoading;
+                return props.invasiveLoading || props.countriesLoading;
             default:
                 return false;
         }

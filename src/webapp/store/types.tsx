@@ -6,7 +6,6 @@ import { PreventionStudy } from "../../domain/entities/PreventionStudy";
 import { TreatmentStudy } from "../../domain/entities/TreatmentStudy";
 import { InvasiveStudy } from "../../domain/entities/InvasiveStudy";
 import { CountryLayer, CountryProperties } from "../../domain/entities/CountryLayer";
-import { Download } from "../components/DataDownload";
 
 export interface State {
     malaria: MalariaState;
@@ -18,12 +17,6 @@ export interface State {
     countryLayer: CountryLayerState;
     district: DistrictsState;
     notifications: NotificationsState;
-    downloads: DownloadState;
-}
-
-export interface DownloadState {
-    download: Download;
-    loading: boolean;
 }
 
 export interface RegionState {

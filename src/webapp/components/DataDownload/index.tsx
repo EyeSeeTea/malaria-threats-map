@@ -26,7 +26,7 @@ import UserForm, { ORGANIZATION_TYPES } from "./UserForm";
 import UseForm, { isPoliciesActive, isResearchActive, isToolsActive } from "./UseForm";
 import Welcome from "./Welcome";
 import Filters from "./Filters";
-import { exportToCSV } from "./download";
+import { exportToCSV, Tab } from "./download";
 import styled from "styled-components";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import {
@@ -54,7 +54,8 @@ import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
 import { emailRegexp } from "../Subscription";
 import { FlexGrow } from "../Chart";
-import Loader from "../Loader";
+import SimpleLoader from "../SimpleLoader";
+import { setTimeout } from "timers";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
 
@@ -200,6 +201,8 @@ function DataDownload({
     const classes = useStyles({});
     const { t } = useTranslation(["disclaimerTab", "common", "download"]);
     const [activeStep, setActiveStep] = React.useState(0);
+    const [downloading, setDownloading] = React.useState(false);
+    const [messageLoader, setMessageLoader] = React.useState("");
 
     React.useEffect(() => {
         if (isDataDownloadOpen) {
@@ -358,6 +361,11 @@ function DataDownload({
         );
     };
 
+    const changeLoaderAndExportToCSV = (tabs: Tab[], filename: string) => {
+        setMessageLoader(t("common:data_download.loader.generating_file"));
+        exportToCSV(tabs, filename);
+    };
+
     const downloadPreventionData = () => {
         switch (selections.preventionDataset) {
             case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
@@ -421,7 +429,7 @@ function DataDownload({
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
                 break;
             }
             case "SYNERGIST-INSECTICIDE_BIOASSAY": {
@@ -485,7 +493,7 @@ function DataDownload({
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
                 break;
             }
             case "MOLECULAR_ASSAY": {
@@ -542,7 +550,7 @@ function DataDownload({
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
                 break;
             }
             case "BIOCHEMICAL_ASSAY": {
@@ -597,7 +605,7 @@ function DataDownload({
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
                 break;
             }
         }
@@ -656,7 +664,7 @@ function DataDownload({
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                exportToCSV(tabs, `MTM_${selections.treatmentDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${selections.treatmentDataset}_${dateString}`);
                 break;
             }
             case "MOLECULAR_MARKER_STUDY": {
@@ -715,7 +723,7 @@ function DataDownload({
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                exportToCSV(tabs, `MTM_${selections.treatmentDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${selections.treatmentDataset}_${dateString}`);
                 break;
             }
         }
@@ -775,50 +783,61 @@ function DataDownload({
                 },
             ];
             const dateString = format(new Date(), "yyyyMMdd");
-            exportToCSV(tabs, `MTM_${selections.invasiveDataset}_${dateString}`);
+            changeLoaderAndExportToCSV(tabs, `MTM_${selections.invasiveDataset}_${dateString}`);
         }
     };
 
     const downloadData = () => {
-        const request: Download = {
-            firstName: userInfo.firstName,
-            lastName: userInfo.lastName,
-            organizationType: t(`common:${userInfo.organizationType}`),
-            organizationName: userInfo.organizationName,
-            position: userInfo.position,
-            country: userInfo.country,
-            email: userInfo.email,
-            phoneNumber: "-",
-            uses: useInfo.uses.map(use => t(`common:${use}`)).join(", "),
-            researchInfo: useInfo.researchInfo || "",
-            policiesInfo: useInfo.policiesInfo || "",
-            contactConsent: useInfo.contactConsent,
-            organisationProjectConsent: useInfo.piConsent,
-            toolsInfo: useInfo.toolsInfo || "",
-            implementationCountries: useInfo.countries.join(", ") || "",
-            date: useInfo.studyDate.toISOString().slice(0, 10),
-            theme: selections.theme,
-            dataset: t(
-                `common:${selections.preventionDataset || selections.treatmentDataset || selections.invasiveDataset}`
-            ),
-        };
-        let dataset;
-        switch (selections.theme) {
-            case "prevention":
-                downloadPreventionData();
-                dataset = selections.preventionDataset;
-                break;
-            case "treatment":
-                downloadTreatmentData();
-                dataset = selections.treatmentDataset;
-                break;
-            case "invasive":
-                downloadInvasiveData();
-                dataset = selections.invasiveDataset;
-                break;
-        }
-        addDownload(request);
-        logEvent({ category: "Download", action: "download", label: dataset || undefined });
+        setDownloading(true);
+        setMessageLoader(t("common:data_download.loader.fetching_data"));
+
+        setTimeout(() => {
+            const request: Download = {
+                firstName: userInfo.firstName,
+                lastName: userInfo.lastName,
+                organizationType: t(`common:${userInfo.organizationType}`),
+                organizationName: userInfo.organizationName,
+                position: userInfo.position,
+                country: userInfo.country,
+                email: userInfo.email,
+                phoneNumber: "-",
+                uses: useInfo.uses.map(use => t(`common:${use}`)).join(", "),
+                researchInfo: useInfo.researchInfo || "",
+                policiesInfo: useInfo.policiesInfo || "",
+                contactConsent: useInfo.contactConsent,
+                organisationProjectConsent: useInfo.piConsent,
+                toolsInfo: useInfo.toolsInfo || "",
+                implementationCountries: useInfo.countries.join(", ") || "",
+                date: useInfo.studyDate.toISOString().slice(0, 10),
+                theme: selections.theme,
+                dataset: t(
+                    `common:${
+                        selections.preventionDataset || selections.treatmentDataset || selections.invasiveDataset
+                    }`
+                ),
+            };
+
+            let dataset;
+            switch (selections.theme) {
+                case "prevention":
+                    downloadPreventionData();
+                    dataset = selections.preventionDataset;
+                    break;
+                case "treatment":
+                    downloadTreatmentData();
+                    dataset = selections.treatmentDataset;
+                    break;
+                case "invasive":
+                    downloadInvasiveData();
+                    dataset = selections.invasiveDataset;
+                    break;
+            }
+            addDownload(request);
+
+            setDownloading(false);
+
+            logEvent({ category: "Download", action: "download", label: dataset || undefined });
+        }, 100);
     };
 
     const isWelcomeFormValid = () => {
@@ -912,7 +931,7 @@ function DataDownload({
                     className: classes.paper,
                 }}
             >
-                <Loader />
+                {downloading && <SimpleLoader message={messageLoader} />}
                 <AppBar position={"relative"}>
                     <Container maxWidth={"md"}>
                         <Toolbar variant="dense">
