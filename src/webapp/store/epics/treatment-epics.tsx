@@ -2,7 +2,7 @@ import { ActionsObservable, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import { of } from "rxjs";
-import { catchError, mergeMap, skip, switchMap } from "rxjs/operators";
+import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
 import {
     fetchTreatmentStudiesError,
     fetchTreatmentStudiesRequest,
@@ -20,19 +20,34 @@ import { fromFuture } from "./utils";
 import { EpicDependencies } from "../../store/index";
 import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
 
+function groupStudies(studies: TreatmentStudy[]) {
+    const filtered255Studies = studies.filter(study => study.DimensionID === 255 || study.DimensionID === 256);
+    return filtered255Studies.map(study => ({
+        ...study,
+        groupStudies: studies.filter(
+            relatedStudy => relatedStudy.DimensionID === 257 && relatedStudy.K13_CODE === study.Code
+        ),
+    }));
+}
+
 export const getTreatmentStudiesEpic = (
     action$: ActionsObservable<ActionType<typeof fetchTreatmentStudiesRequest>>,
-    _state$: StateObservable<State>,
+    state$: StateObservable<State>,
     { compositionRoot }: EpicDependencies
 ) =>
     action$.ofType(ActionTypeEnum.FetchTreatmentStudiesRequest).pipe(
-        switchMap(() => {
-            return fromFuture(compositionRoot.treatment.getStudies()).pipe(
-                mergeMap((studies: TreatmentStudy[]) => {
-                    return of(fetchTreatmentStudiesSuccess(studies));
-                }),
-                catchError((error: Error) => of(addNotificationAction(error.message), fetchTreatmentStudiesError()))
-            );
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            if (state.treatment.studies.length === 0 && !state.treatment.error) {
+                return fromFuture(compositionRoot.treatment.getStudies()).pipe(
+                    mergeMap((studies: TreatmentStudy[]) => {
+                        return of(fetchTreatmentStudiesSuccess(groupStudies(studies)));
+                    }),
+                    catchError((error: Error) => of(addNotificationAction(error.message), fetchTreatmentStudiesError()))
+                );
+            } else {
+                return of(fetchTreatmentStudiesSuccess(state.treatment.studies));
+            }
         })
     );
 

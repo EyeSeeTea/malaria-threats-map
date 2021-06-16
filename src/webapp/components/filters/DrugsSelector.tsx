@@ -21,7 +21,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps & OwnProps;
 
 const DrugsSelector: React.FC<Props> = ({ studies, onChange, value }) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const uniques = R.uniq(R.map(R.prop("DRUG_NAME"), studies)).filter(Boolean);
 
     const suggestions = uniques.map((drug: string) => ({
@@ -31,7 +31,9 @@ const DrugsSelector: React.FC<Props> = ({ studies, onChange, value }) => {
 
     const sortedSuggestions = R.sortBy(R.prop("label"), suggestions);
 
-    return <MultiFilter label={t("filters.drug")} options={sortedSuggestions} onChange={onChange} value={value} />;
+    return (
+        <MultiFilter label={t("common.filters.drug")} options={sortedSuggestions} onChange={onChange} value={value} />
+    );
 };
 
 export default connect(mapStateToProps, null)(DrugsSelector);

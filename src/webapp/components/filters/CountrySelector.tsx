@@ -23,11 +23,12 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const CountrySelector = ({ region, countries = [], setRegion }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const onChange = (selection?: string) => {
         if (selection) sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label: selection });
         setRegion({ country: selection });
     };
+
     const suggestions: any[] = countries
         .map((country: Translation) => ({
             label: t(country.VALUE_ === "NA" ? "COUNTRY_NA" : country.VALUE_),
@@ -37,8 +38,8 @@ const CountrySelector = ({ region, countries = [], setRegion }: Props) => {
 
     return (
         <SingleFilter
-            label={t("filters.country")}
-            placeholder={"Select Country"}
+            label={t("common.filters.country")}
+            placeholder={t("common.filters.select_country")}
             options={suggestions}
             onChange={onChange}
             value={region.country}

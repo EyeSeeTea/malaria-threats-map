@@ -24,24 +24,24 @@ type Props = DispatchProps & StateProps;
 
 const invasiveSuggestions: OptionType[] = [
     {
-        label: "invasive.vector_occurrance",
+        label: "common.invasive.vector_occurrance",
         value: InvasiveMapType.VECTOR_OCCURANCE,
     },
 ];
 
 function InvasiveMapTypesSelector({ setInvasiveMapType, setMapTitle, invasiveFilters }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const onChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;
         setInvasiveMapType(selection.value);
-        setMapTitle(t(selection.label));
+        setMapTitle(t(`common.${selection.label}`));
         sendAnalyticsMapMenuChange("invasive", selection.value);
     };
 
     React.useEffect(() => {
         const selection = invasiveSuggestions.find(s => s.value === invasiveFilters.mapType);
-        setMapTitle(t(selection.label));
+        setMapTitle(t(`common.${selection.label}`));
     });
 
     return (

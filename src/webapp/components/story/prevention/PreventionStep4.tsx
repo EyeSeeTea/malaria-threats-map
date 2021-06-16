@@ -13,18 +13,18 @@ const useStyles = makeStyles(() =>
 
 const PreventionStep4 = () => {
     const classes = useStyles({});
-    const { t } = useTranslation("prevention");
+    const { t } = useTranslation();
 
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step4.part1" t={t}>
+                <Trans i18nKey="preventionStory.step4.part1" t={t}>
                     <b>Increasing resistance underscores the urgent need for enhanced monitoring</b>
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step4.part2" t={t}>
+                <Trans i18nKey="preventionStory.step4.part2" t={t}>
                     <b>
                         Malaria vectors in some areas of Africa can now survive exposure to high concentrations of
                         insecticides, indicating intensified resistance.
@@ -33,7 +33,7 @@ const PreventionStep4 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step4.part3" t={t}>
+                <Trans i18nKey="preventionStory.step4.part3" t={t}>
                     Classical resistance tests measure the number of mosquitoes that survive exposure to a standard
                     concentration of insecticide. However, intensity of resistance in survivors and the mechanisms that
                     confer resistance are important. High intensity resistance warrants urgent action that should be
@@ -42,7 +42,7 @@ const PreventionStep4 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step4.part4" t={t}>
+                <Trans i18nKey="preventionStory.step4.part4" t={t}>
                     WHO test procedures were recently extended to include bioassays that measure resistance intensity
                     and metabolic mechanism involvement.
                 </Trans>
@@ -51,7 +51,7 @@ const PreventionStep4 = () => {
             <Link href="https://www.who.int/publications/i/item/9789241511575" target="_blank" color={"textSecondary"}>
                 <img
                     src="https://www.who.int/entity/malaria/publications/atoz/9789241511575_eng.JPG"
-                    alt={t("step4.prevention4")}
+                    alt={t("preventionStory.step4.prevention4")}
                 />
             </Link>
         </div>

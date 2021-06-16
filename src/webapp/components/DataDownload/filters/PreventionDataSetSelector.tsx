@@ -13,29 +13,29 @@ type Props = {
 
 const suggestions: OptionType[] = [
     {
-        label: "data_download.filters.prevention.datasets.discriminating_concentration_bioassays",
+        label: "common.data_download.filters.prevention.datasets.discriminating_concentration_bioassays",
         value: "DISCRIMINATING_CONCENTRATION_BIOASSAY",
     },
     {
-        label: "data_download.filters.prevention.datasets.intensity_concentration_bioassays",
+        label: "common.data_download.filters.prevention.datasets.intensity_concentration_bioassays",
         value: "INTENSITY_CONCENTRATION_BIOASSAY",
     },
     {
-        label: "data_download.filters.prevention.datasets.synergist_insecticide_bioassays",
+        label: "common.data_download.filters.prevention.datasets.synergist_insecticide_bioassays",
         value: "SYNERGIST-INSECTICIDE_BIOASSAY",
     },
     {
-        label: "data_download.filters.prevention.datasets.resistance_mechanism_assays_molecular",
+        label: "common.data_download.filters.prevention.datasets.resistance_mechanism_assays_molecular",
         value: "MOLECULAR_ASSAY",
     },
     {
-        label: "data_download.filters.prevention.datasets.resistance_mechanism_assays_biochemical",
+        label: "common.data_download.filters.prevention.datasets.resistance_mechanism_assays_biochemical",
         value: "BIOCHEMICAL_ASSAY",
     },
 ];
 
 const PreventionDataSetSelector = ({ value, onChange }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const valueOnChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;
         onChange(selection.value);
@@ -46,7 +46,7 @@ const PreventionDataSetSelector = ({ value, onChange }: Props) => {
     return (
         <FilterWrapper>
             <FormLabel component="legend">
-                <T i18nKey={`data_download.step3.filters.dataset`} /> *
+                <T i18nKey={"common.data_download.step3.filters.dataset"} /> *
             </FormLabel>
             <Divider />
             <IntegrationReactSelect

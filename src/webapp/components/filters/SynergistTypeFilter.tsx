@@ -22,7 +22,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const SynergistTypeFilter: React.FC<Props> = ({ preventionFilters, synergistTypes, setSynergistTypes }) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const suggestions: any[] = (synergistTypes as Translation[])
         .filter(translation => ["WHO_TEST_KIT_ADULTS", "CDC_BOTTLE_ADULTS"].includes(translation.VALUE_))
@@ -33,7 +33,7 @@ const SynergistTypeFilter: React.FC<Props> = ({ preventionFilters, synergistType
 
     return (
         <MultiFilter
-            label={t("filters.synergist_type")}
+            label={t("common.filters.synergist_type")}
             options={suggestions}
             onChange={setSynergistTypes}
             value={preventionFilters.synergistTypes}

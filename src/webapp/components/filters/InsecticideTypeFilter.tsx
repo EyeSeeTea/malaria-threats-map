@@ -29,7 +29,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const InsecticideTypeFilter: React.FC<Props> = ({ preventionFilters, studies, setInsecticideTypes }) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const filters = [filterByInsecticideClass(preventionFilters.insecticideClass)];
 
@@ -44,7 +44,7 @@ const InsecticideTypeFilter: React.FC<Props> = ({ preventionFilters, studies, se
 
     return (
         <MultiFilter
-            label={t("filters.insecticide_type")}
+            label={t("common.filters.insecticide_type")}
             options={suggestions}
             onChange={setInsecticideTypes}
             value={preventionFilters.insecticideTypes}

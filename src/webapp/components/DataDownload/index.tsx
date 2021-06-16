@@ -163,6 +163,8 @@ export type Download = {
     date: string;
     researchInfo: string;
     policiesInfo: string;
+    contactConsent: boolean;
+    organisationProjectConsent: boolean;
     toolsInfo: string;
     implementationCountries: string;
     theme: string;
@@ -176,6 +178,15 @@ export type Contact = {
     organization: string;
     country: string;
 };
+
+const initialUseInfo: Partial<UseInfo> = {
+    uses: [],
+    countries: [],
+    studyDate: new Date(),
+    contactConsent: false,
+    piConsent: false,
+};
+
 function DataDownload({
     isDataDownloadOpen,
     setDataDownloadOpen,
@@ -186,7 +197,7 @@ function DataDownload({
     addDownload,
 }: Props) {
     const classes = useStyles({});
-    const { t } = useTranslation(["disclaimerTab", "common", "download"]);
+    const { t } = useTranslation();
     const [activeStep, setActiveStep] = React.useState(0);
 
     React.useEffect(() => {
@@ -201,13 +212,9 @@ function DataDownload({
 
     const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>({});
     const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({
-        organizationType: t(ORGANIZATION_TYPES[0]),
+        organizationType: t(`common.${ORGANIZATION_TYPES[0]}`),
     });
-    const [useInfo, setUseInfo] = React.useState<Partial<UseInfo>>({
-        uses: [],
-        countries: [],
-        studyDate: new Date(),
-    });
+    const [useInfo, setUseInfo] = React.useState<Partial<UseInfo>>(initialUseInfo);
 
     const [selections, setSelections] = React.useState({
         theme: "prevention",
@@ -231,13 +238,9 @@ function DataDownload({
         setActiveStep(0);
         setWelcomeInfo({});
         setUserInfo({
-            organizationType: t(ORGANIZATION_TYPES[0]),
+            organizationType: t(`common.${ORGANIZATION_TYPES[0]}`),
         });
-        setUseInfo({
-            uses: [],
-            countries: [],
-            studyDate: new Date(),
-        });
+        setUseInfo(initialUseInfo);
         setSelections({
             theme: "prevention",
             preventionDataset: undefined,
@@ -332,13 +335,13 @@ function DataDownload({
             if (field.label === "ISO2") {
                 return study[field.value];
             } else {
-                return t(study[field.value] === "NA" ? "COUNTRY_NA" : study[field.value]);
+                return t(`common.${study[field.value] === "NA" ? "COUNTRY_NA" : study[field.value]}`);
             }
         }
         if (!isNaN(study[field.value])) {
             return study[field.value];
         } else {
-            return t(study[field.value]);
+            return t(`common.${study[field.value]}`);
         }
     };
 
@@ -397,10 +400,10 @@ function DataDownload({
                 ];
                 const tabs = [
                     {
-                        name: t("disclaimerTab:name"),
+                        name: t("disclaimerTab.name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer"),
+                                Disclaimer: t("disclaimerTab.disclaimer"),
                             },
                         ],
                     },
@@ -412,7 +415,7 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: t(`download:discrimination.${field}`),
+                            Description: t(`download.discrimination.${field}`),
                         })),
                     },
                 ];
@@ -461,10 +464,10 @@ function DataDownload({
                 ];
                 const tabs = [
                     {
-                        name: t("disclaimerTab:name"),
+                        name: t("disclaimerTab.name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer"),
+                                Disclaimer: t("disclaimerTab.disclaimer"),
                             },
                         ],
                     },
@@ -476,7 +479,7 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: t(`download:synergist.${field}`),
+                            Description: t(`download.synergist.${field}`),
                         })),
                     },
                 ];
@@ -518,10 +521,10 @@ function DataDownload({
                 ];
                 const tabs = [
                     {
-                        name: t("disclaimerTab:name"),
+                        name: t("disclaimerTab.name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer"),
+                                Disclaimer: t("disclaimerTab.disclaimer"),
                             },
                         ],
                     },
@@ -533,7 +536,7 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: t(`download:molecular_assay.${field}`),
+                            Description: t(`download.molecular_assay.${field}`),
                         })),
                     },
                 ];
@@ -573,10 +576,10 @@ function DataDownload({
                 ];
                 const tabs = [
                     {
-                        name: t("disclaimerTab:name"),
+                        name: t("disclaimerTab.name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer"),
+                                Disclaimer: t("disclaimerTab.disclaimer"),
                             },
                         ],
                     },
@@ -588,7 +591,7 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: t(`download:biochemical_assay.${field}`),
+                            Description: t(`download.biochemical_assay.${field}`),
                         })),
                     },
                 ];
@@ -632,10 +635,10 @@ function DataDownload({
                 ];
                 const tabs = [
                     {
-                        name: t("disclaimerTab:name"),
+                        name: t("disclaimerTab.name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer"),
+                                Disclaimer: t("disclaimerTab.disclaimer"),
                             },
                         ],
                     },
@@ -647,7 +650,7 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: t(`download:therapeutic_efficacy.${field}`),
+                            Description: t(`download.therapeutic_efficacy.${field}`),
                         })),
                     },
                 ];
@@ -687,10 +690,10 @@ function DataDownload({
                 ];
                 const tabs = [
                     {
-                        name: t("disclaimerTab:name"),
+                        name: t("disclaimerTab.name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer"),
+                                Disclaimer: t("disclaimerTab.disclaimer"),
                             },
                         ],
                     },
@@ -706,7 +709,7 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: t(`download:mm.${field}`),
+                            Description: t(`download.mm.${field}`),
                         })),
                     },
                 ];
@@ -751,10 +754,10 @@ function DataDownload({
             ];
             const tabs = [
                 {
-                    name: t("disclaimerTab:name"),
+                    name: t("disclaimerTab.name"),
                     studies: [
                         {
-                            Disclaimer: t("disclaimerTab:disclaimer"),
+                            Disclaimer: t("disclaimerTab.disclaimer"),
                         },
                     ],
                 },
@@ -766,7 +769,7 @@ function DataDownload({
                     name: "Glossary",
                     studies: fields.map(field => ({
                         "Variable name": field,
-                        Description: t(`download:invasive.${field}`),
+                        Description: t(`download.invasive.${field}`),
                     })),
                 },
             ];
@@ -779,21 +782,23 @@ function DataDownload({
         const request: Download = {
             firstName: userInfo.firstName,
             lastName: userInfo.lastName,
-            organizationType: t(`common:${userInfo.organizationType}`),
+            organizationType: t(`common.${userInfo.organizationType}`),
             organizationName: userInfo.organizationName,
             position: userInfo.position,
             country: userInfo.country,
             email: userInfo.email,
             phoneNumber: "-",
-            uses: useInfo.uses.map(use => t(`common:${use}`)).join(", "),
+            uses: useInfo.uses.map(use => t(`common.${use}`)).join(", "),
             researchInfo: useInfo.researchInfo || "",
             policiesInfo: useInfo.policiesInfo || "",
+            contactConsent: useInfo.contactConsent,
+            organisationProjectConsent: useInfo.piConsent,
             toolsInfo: useInfo.toolsInfo || "",
             implementationCountries: useInfo.countries.join(", ") || "",
             date: useInfo.studyDate.toISOString().slice(0, 10),
             theme: selections.theme,
             dataset: t(
-                `common:${selections.preventionDataset || selections.treatmentDataset || selections.invasiveDataset}`
+                `common.${selections.preventionDataset || selections.treatmentDataset || selections.invasiveDataset}`
             ),
         };
         let dataset;
@@ -844,8 +849,7 @@ function DataDownload({
             (researchActive ? useInfo.researchInfo : true) &&
             (policiesActive ? useInfo.policiesInfo : true) &&
             (toolsActive ? useInfo.toolsInfo : true) &&
-            useInfo.contactConsent &&
-            useInfo.piConsent
+            useInfo.countries.length > 0
         );
     };
 
@@ -894,7 +898,7 @@ function DataDownload({
                 color={isDataDownloadOpen ? "primary" : "default"}
                 onClick={handleToggle}
                 className={classes.fab}
-                title={t("common:icons.download")}
+                title={t("common.icons.download")}
             >
                 <CloudDownloadIcon />
             </Fab>
@@ -911,7 +915,7 @@ function DataDownload({
                     <Container maxWidth={"md"}>
                         <Toolbar variant="dense">
                             <Typography variant="h6" className={classes.title}>
-                                {t("common:data_download.title")}
+                                {t("common.data_download.title")}
                             </Typography>
                         </Toolbar>
                     </Container>
@@ -920,7 +924,7 @@ function DataDownload({
                     <Stepper alternativeLabel nonLinear activeStep={activeStep} className={classes.paper}>
                         {steps.map((label, _index) => (
                             <Step key={label}>
-                                <StepButton>{t(`common:${label}`)}</StepButton>
+                                <StepButton>{t(`common.${label}`)}</StepButton>
                             </Step>
                         ))}
                     </Stepper>
@@ -931,11 +935,11 @@ function DataDownload({
                 <Container maxWidth={"md"}>
                     <DialogActions>
                         <Button variant={"contained"} color={"primary"} onClick={handleToggle}>
-                            {t("common:data_download.buttons.close")}
+                            {t("common.data_download.buttons.close")}
                         </Button>
                         <FlexGrow />
                         <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                            {t("common:data_download.buttons.back")}
+                            {t("common.data_download.buttons.back")}
                         </Button>
                         <Button
                             variant="contained"
@@ -944,7 +948,7 @@ function DataDownload({
                             className={classes.button}
                             disabled={!isStepValid()}
                         >
-                            {t("common:data_download.buttons.next")}
+                            {t("common.data_download.buttons.next")}
                         </Button>
                         <Button
                             startIcon={<CloudDownloadIcon />}
@@ -954,7 +958,7 @@ function DataDownload({
                             disabled={!isFormValid()}
                             onClick={() => downloadData()}
                         >
-                            {t("common:data_download.buttons.download")}
+                            {t("common.data_download.buttons.download")}
                         </Button>
                     </DialogActions>
                 </Container>

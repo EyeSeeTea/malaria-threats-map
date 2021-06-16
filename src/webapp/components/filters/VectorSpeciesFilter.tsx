@@ -45,11 +45,11 @@ export const VectorSpeciesKey: { [key: string]: string } = {
 };
 
 const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, setVectorSpecies }) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     return (
         <MultiFilter
-            label={t("filters.vector_species")}
+            label={t("common.filters.vector_species")}
             options={suggestions}
             onChange={setVectorSpecies}
             value={invasiveFilters.vectorSpecies}

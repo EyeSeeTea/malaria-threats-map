@@ -16,7 +16,7 @@ interface TableHeadCellProps<T = TreatmentData | PreventionData> {
 }
 
 export function TableHeadCell<T>({ headCell, order, orderBy, onRequestSort, classes, isBold }: TableHeadCellProps<T>) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const createSortHandler = (property: keyof T) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);

@@ -7,7 +7,7 @@ interface Props {
 }
 
 function T({ i18nKey, args }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     return <>{t(i18nKey, args)}</>;
 }
 

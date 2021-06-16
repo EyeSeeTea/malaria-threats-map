@@ -28,7 +28,7 @@ import { TableHeadCell } from "../TableHeadCell";
 import ReportToolbar from "../ReportToolbar";
 
 function EnhancedTableHead(props: EnhancedTableProps<Data>) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const { classes, order, orderBy, onRequestSort } = props;
 
     return (
@@ -36,10 +36,10 @@ function EnhancedTableHead(props: EnhancedTableProps<Data>) {
             <TableRow>
                 <StyledCell isBold colSpan={3} />
                 <StyledCell isBold colSpan={8} divider>
-                    {t("report.prevention.resistance")}
+                    {t("common.report.prevention.resistance")}
                 </StyledCell>
                 <StyledCell isBold colSpan={7} divider>
-                    {t("report.prevention.mechanism")}
+                    {t("common.report.prevention.mechanism")}
                 </StyledCell>
             </TableRow>
             <TableRow>
@@ -104,7 +104,7 @@ type Props = StateProps & OwnProps;
 
 function PreventionReport({ studies: baseStudies }: Props) {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [order, setOrder] = React.useState<Order>("desc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("PYRETHROIDS_AVERAGE_MORTALITY");
     const [selected, setSelected] = React.useState<string[]>([]);
@@ -313,7 +313,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
             <Paper className={classes.paper}>
                 <div className={classes.wrapper}>
                     <ReportToolbar
-                        title={t("report.prevention.title")}
+                        title={t("common.report.prevention.title")}
                         numSelected={selected.length}
                         countries={countries}
                         setCountries={setCountries}
@@ -416,7 +416,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
                         onChangePage={handleChangePage}
                         onChangeRowsPerPage={handleChangeRowsPerPage}
                     />
-                    <Typography variant={"body2"}>{t("data_download.footer")}</Typography>
+                    <Typography variant={"body2"}>{t("common.data_download.footer")}</Typography>
                     <br />
                 </div>
             </Paper>

@@ -42,7 +42,7 @@ type OwnProps = {
 type Props = DispatchProps & StateProps & OwnProps;
 
 const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const groupedStudies = R.values(R.groupBy(R.prop("CITATION_URL"), baseStudies));
     const studies = groupedStudies[study];
@@ -61,11 +61,11 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
     }));
     const studyObject = simplifiedStudies[study];
     const translations = {
-        mortality: t("prevention.chart.resistance_intensity.mortality"),
-        mosquito_mortality: `${t("prevention.chart.resistance_intensity.mosquito_mortality")} (${t(
-            "prevention.chart.resistance_intensity.number_of_tests"
+        mortality: t("common.prevention.chart.resistance_intensity.mortality"),
+        mosquito_mortality: `${t("common.prevention.chart.resistance_intensity.mosquito_mortality")} (${t(
+            "common.prevention.chart.resistance_intensity.number_of_tests"
         )})`,
-        tested: t("prevention.chart.resistance_intensity.tested"),
+        tested: t("common.prevention.chart.resistance_intensity.tested"),
     };
     const content = () => (
         <>

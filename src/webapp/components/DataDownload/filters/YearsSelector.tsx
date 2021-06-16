@@ -19,7 +19,7 @@ type OwnProps = {
 type Props = OwnProps;
 
 const YearsSelector: React.FC<Props> = ({ value, onChange }) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const [valueState, setValueState] = useState([]);
 
@@ -29,6 +29,13 @@ const YearsSelector: React.FC<Props> = ({ value, onChange }) => {
         onChange((selection || []).map(s => +s));
     };
 
-    return <MultiFilter label={t("filters.years")} options={suggestions} onChange={handleChange} value={valueState} />;
+    return (
+        <MultiFilter
+            label={t("common.filters.years")}
+            options={suggestions}
+            onChange={handleChange}
+            value={valueState}
+        />
+    );
 };
 export default YearsSelector;

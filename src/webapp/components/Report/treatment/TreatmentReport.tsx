@@ -54,7 +54,7 @@ type Props = StateProps & OwnProps;
 
 function TreatmentReport({ studies: baseStudies }: Props) {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [order, setOrder] = React.useState<Order>("desc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("DRUG");
     const [selected, setSelected] = React.useState<string[]>([]);
@@ -134,9 +134,9 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
                             return {
                                 ID: `${country}_${drug}`,
-                                COUNTRY: t(country),
+                                COUNTRY: t(`common.${country}`),
                                 ISO2: country,
-                                DRUG: t(drug),
+                                DRUG: t(`common.${drug}`),
                                 COUNTRY_NUMBER: nStudies,
                                 FOLLOW_UP: followUpDays,
                                 STUDY_YEARS: `${minYear} - ${maxYear}`,
@@ -204,7 +204,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
     const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
-    const sortedGroups = R.sort((a, b) => (t(a.COUNTRY) < t(b.COUNTRY) ? -1 : 1), groups);
+    const sortedGroups = R.sort((a, b) => (t(`common.${a.COUNTRY}`) < t(`common.${b.COUNTRY}`) ? -1 : 1), groups);
 
     const tablePage = stableSort(sortedGroups, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
@@ -222,7 +222,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
             <Paper className={classes.paper}>
                 <div className={classes.wrapper}>
                     <ReportToolbar
-                        title={t("report.treatment.title")}
+                        title={t("common.report.treatment.title")}
                         subtitle={t(plasmodiumSpecie.replace(".", "%2E"))}
                         numSelected={selected.length}
                         countries={countries}

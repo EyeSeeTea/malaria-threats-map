@@ -63,7 +63,7 @@ const ReportFilterPopover: React.FC<Props> = ({
                 startIcon={<FilterListIcon />}
                 onClick={handleClick}
             >
-                <T i18nKey={"filters.filters"} />
+                <T i18nKey={"common.filters.filters"} />
             </Button>
             <Popover
                 id={id}

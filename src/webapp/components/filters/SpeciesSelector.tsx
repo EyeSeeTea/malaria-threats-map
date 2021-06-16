@@ -21,7 +21,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps & OwnProps;
 
 const SpeciesSelector: React.FC<Props> = ({ studies, onChange, value }) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const uniques = R.uniq(R.map(R.prop("SPECIES"), studies)).sort();
 
     const suggestions: any[] = uniques.map((specie: string) => ({
@@ -29,7 +29,14 @@ const SpeciesSelector: React.FC<Props> = ({ studies, onChange, value }) => {
         value: specie,
     }));
 
-    return <MultiFilter label={t("filters.vector_species")} options={suggestions} onChange={onChange} value={value} />;
+    return (
+        <MultiFilter
+            label={t("common.filters.vector_species")}
+            options={suggestions}
+            onChange={onChange}
+            value={value}
+        />
+    );
 };
 
 export default connect(mapStateToProps, null)(SpeciesSelector);

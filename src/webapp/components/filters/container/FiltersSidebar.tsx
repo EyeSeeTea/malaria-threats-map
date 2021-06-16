@@ -78,7 +78,7 @@ const FiltersSidebar = ({
     preventionFilters,
     lastUpdatedDates,
 }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const classes = useStyles({});
 
     const filteredStudies = (() => {
@@ -112,7 +112,7 @@ const FiltersSidebar = ({
             <AppBar position="static" className={classes.appBar}>
                 <Toolbar variant="dense">
                     <Typography variant="subtitle1" className={classes.title}>
-                        {t(`themes.${theme}`)}
+                        {t(`common.themes.${theme}`)}
                     </Typography>
                     <IconButton edge="start" color="inherit" onClick={handleClose} size={"small"} aria-label="close">
                         <CloseIcon fontSize={"small"} />
@@ -131,13 +131,13 @@ const FiltersSidebar = ({
                     <Tab
                         className={classes.tab}
                         icon={<FilterIconSimple />}
-                        label={t(`filters.tabs.filters`)}
+                        label={t("common.filters.tabs.filters")}
                         id={"filters-tab"}
                     />
                     <Tab
                         className={classes.tab}
                         icon={<GlobeIcon />}
-                        label={t(`filters.tabs.regions`)}
+                        label={t("common.filters.tabs.regions")}
                         id={"regions-tab"}
                     />
                 </Tabs>
@@ -145,7 +145,8 @@ const FiltersSidebar = ({
             {lastUpdatedDates[themeSelector] && (
                 <LastUpdatedContainer>
                     <Typography variant="body2" display="block" gutterBottom>
-                        <strong>Last Updated:</strong> {lastUpdatedDates[themeSelector].toLocaleDateString()}
+                        <strong>{t("common.filters.last_updated")}</strong>{" "}
+                        {lastUpdatedDates[themeSelector].toLocaleDateString()}
                     </Typography>
                 </LastUpdatedContainer>
             )}
@@ -153,13 +154,13 @@ const FiltersSidebar = ({
                 <>
                     {!filteredStudies.length ? (
                         <WarningSnackbar>
-                            <Typography variant="body2">{t(`filters.no_records`)}</Typography>
+                            <Typography variant="body2">{t("common.filters.no_records")}</Typography>
                         </WarningSnackbar>
                     ) : (
                         <SuccessSnackbar>
                             <Typography variant="body2">
                                 {t(
-                                    `filters.records.${theme}${
+                                    `common.filters.records.${theme}${
                                         theme === "prevention" ? `.${preventionFilters.mapType}` : ""
                                     }`,
                                     { studies: filteredStudies.length }

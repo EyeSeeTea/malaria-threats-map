@@ -61,7 +61,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const classes = useStyles({});
     const nStudies = studies.length;
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
@@ -74,33 +74,33 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
     return (
         <ChatContainer>
             <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${t(
-                    studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2
-                )}`}</Box>
+                <Box fontWeight="fontWeightBold">{t(studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2)}</Box>
             </Typography>
             <Typography variant="subtitle2">
-                {t("diagnosis.chart.gene_deletions.content_1", {
+                {t("common.diagnosis.chart.gene_deletions.content_1", {
                     nStudies,
                 })}
                 <i>{t(diagnosisFilters.deletionType).toLowerCase()}</i>
-                {t("diagnosis.chart.gene_deletions.content_2", {
+                {t("common.diagnosis.chart.gene_deletions.content_2", {
                     surveyTypes: formatList(surveyTypes.map(st => (t(st) === "DHS" ? t(st) : t(st).toLowerCase()))),
                     years: formatYears(minYear, maxYear),
                 })}
             </Typography>
             <div className={classes.root}>
-                <Typography variant={"caption"}>{t("diagnosis.chart.gene_deletions.deletions_confirmed")}</Typography>
+                <Typography variant={"caption"}>
+                    {t("common.diagnosis.chart.gene_deletions.deletions_confirmed")}
+                </Typography>
                 <Table aria-label="simple table" size="small" className={classes.table}>
                     <TableHead className={classes.head}>
                         <TableRow>
                             <StyledHeaderCell align={"center"}>
-                                {t("diagnosis.chart.gene_deletions.deletion_type")}
+                                {t("common.diagnosis.chart.gene_deletions.deletion_type")}
                             </StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
-                                {t("diagnosis.chart.gene_deletions.no_tested")}
+                                {t("common.diagnosis.chart.gene_deletions.no_tested")}
                             </StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
-                                {t("diagnosis.chart.gene_deletions.percentage")} {studyObject.YEAR_START}
+                                {t("common.diagnosis.chart.gene_deletions.percentage")} {studyObject.YEAR_START}
                             </StyledHeaderCell>
                         </TableRow>
                     </TableHead>

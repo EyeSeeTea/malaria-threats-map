@@ -12,7 +12,7 @@ type OwnProps = {
 type Props = OwnProps;
 
 const InsecticideClassSelector: React.FC<Props> = ({ value, onChange }) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const suggestions: Option[] = INSECTICIDE_CLASSES.map((specie: string) => ({
         label: t(specie),
@@ -20,7 +20,12 @@ const InsecticideClassSelector: React.FC<Props> = ({ value, onChange }) => {
     }));
 
     return (
-        <MultiFilter label={t("filters.insecticide_class")} options={suggestions} onChange={onChange} value={value} />
+        <MultiFilter
+            label={t("common.filters.insecticide_class")}
+            options={suggestions}
+            onChange={onChange}
+            value={value}
+        />
     );
 };
 export default InsecticideClassSelector;

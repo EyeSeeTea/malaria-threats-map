@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function Layers({ toogleEndemicityLayer, endemicityLayer }: any) {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const handleToggle = () => {
         const newValue = !endemicityLayer;
         if (newValue) sendAnalytics({ type: "event", category: "menu", action: "shade" });
@@ -32,7 +32,7 @@ function Layers({ toogleEndemicityLayer, endemicityLayer }: any) {
                 color={endemicityLayer ? "primary" : "default"}
                 onClick={handleToggle}
                 className={classes.fab}
-                title={t("icons.endemicity")}
+                title={t("common.icons.endemicity")}
             >
                 <LayersIcon />
             </Fab>

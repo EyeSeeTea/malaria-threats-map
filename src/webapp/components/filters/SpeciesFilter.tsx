@@ -40,7 +40,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter, region, setSpecies }) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const { mapType } = preventionFilters;
     const filtersMap: { [mapType: string]: any[] } = {
         [PreventionMapType.INTENSITY_STATUS]: [
@@ -95,7 +95,7 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
 
     return (
         <MultiFilter
-            label={t("filters.vector_species")}
+            label={t("common.filters.vector_species")}
             options={suggestions}
             onChange={setSpecies}
             value={preventionFilters.species}

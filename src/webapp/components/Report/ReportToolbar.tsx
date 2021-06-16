@@ -72,7 +72,7 @@ const ReportToolbar: React.FC<ReportToolbarProps> = ({
     setPlasmodiumSpecie,
     onClick,
 }) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const classes = useToolbarStyles({});
 
     return (
@@ -114,7 +114,7 @@ const ReportToolbar: React.FC<ReportToolbarProps> = ({
                         startIcon={<CloudDownloadIcon />}
                         onClick={onClick}
                     >
-                        {t("data_download.buttons.download")}
+                        {t("common.data_download.buttons.download")}
                     </Button>
                     <ReportFilterPopover
                         countries={countries}

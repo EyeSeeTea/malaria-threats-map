@@ -23,11 +23,11 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const diagnosisSuggestions: OptionType[] = [
-    { label: "diagnosis.gene_deletions", value: DiagnosisMapType.GENE_DELETIONS },
+    { label: "common.diagnosis.gene_deletions", value: DiagnosisMapType.GENE_DELETIONS },
 ];
 
 function DiagnosisMapTypesSelector({ setDiagnosisMapType, setMapTitle, diagnosisFilters }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const onChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;

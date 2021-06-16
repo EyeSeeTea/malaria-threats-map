@@ -23,7 +23,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const SurveyTypeFilter: React.FC<Props> = ({ diagnosisFilters, surveyTypes, setSurveyTypes }) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const suggestions: Option[] = (surveyTypes as Translation[]).map((country: Translation) => ({
         label: country.VALUE_,
@@ -32,7 +32,7 @@ const SurveyTypeFilter: React.FC<Props> = ({ diagnosisFilters, surveyTypes, setS
 
     return (
         <MultiFilter
-            label={t("filters.survey_type")}
+            label={t("common.filters.survey_type")}
             options={suggestions}
             onChange={setSurveyTypes}
             value={diagnosisFilters.surveyTypes}

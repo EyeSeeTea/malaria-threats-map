@@ -22,14 +22,16 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps & OwnProps;
 
 const TypeSelector: React.FC<Props> = ({ onChange, value }) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const suggestions: any[] = TYPES.map((specie: string) => ({
         label: specie,
         value: specie,
     }));
 
-    return <MultiFilter label={t("filters.test_type")} options={suggestions} onChange={onChange} value={value} />;
+    return (
+        <MultiFilter label={t("common.filters.test_type")} options={suggestions} onChange={onChange} value={value} />
+    );
 };
 
 export default connect(mapStateToProps, null)(TypeSelector);

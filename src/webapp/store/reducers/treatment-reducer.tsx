@@ -45,15 +45,6 @@ function updateDrug(drug: string) {
 function updateMolecularMarker(molecularMarker: number) {
     return updateFilter("molecularMarker", molecularMarker, 1);
 }
-function groupStudies(studies: TreatmentStudy[]) {
-    const filtered255Studies = studies.filter(study => study.DimensionID === 255 || study.DimensionID === 256);
-    return filtered255Studies.map(study => ({
-        ...study,
-        groupStudies: studies.filter(
-            relatedStudy => relatedStudy.DimensionID === 257 && relatedStudy.K13_CODE === study.Code
-        ),
-    }));
-}
 
 export default createReducer<TreatmentState>(initialState, {
     [ActionTypeEnum.FetchTreatmentStudiesRequest]: () => state => ({
@@ -63,7 +54,7 @@ export default createReducer<TreatmentState>(initialState, {
     [ActionTypeEnum.FetchTreatmentStudiesSuccess]: (studies: TreatmentStudy[]) => state => ({
         ...state,
         loading: false,
-        studies: groupStudies(studies),
+        studies: studies,
     }),
     [ActionTypeEnum.FetchTreatmentStudiesError]: () => state => ({
         ...state,

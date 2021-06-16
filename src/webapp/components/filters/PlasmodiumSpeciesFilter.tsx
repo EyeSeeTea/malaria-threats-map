@@ -62,7 +62,7 @@ class PlasmodiumSpeciesFilter extends Component<Props, any> {
         return (
             <FilterWrapper>
                 <FormLabel component="legend">
-                    <T i18nKey={`filters.plasmodium_species`} />
+                    <T i18nKey={"common.filters.plasmodium_species"} />
                 </FormLabel>
                 <Divider />
                 <IntegrationReactSelect

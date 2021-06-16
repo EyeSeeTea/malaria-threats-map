@@ -81,12 +81,12 @@ function MolecularMarkerFilter({ treatmentFilters, setMolecularMarker, logEventA
         logEventAction({ category: "filter", action: "molecularMarkers", label });
     }
 
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     return (
         <FilterWrapper>
             <FormLabel component="legend">
-                <T i18nKey={`filters.molecular_marker`} />
+                <T i18nKey={"common.filters.molecular_marker"} />
             </FormLabel>
             <Divider />
             <Paper className={classes.group}>

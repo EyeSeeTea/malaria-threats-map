@@ -25,7 +25,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 function Legend({ legendExpanded }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const labels = [
         {
             label: "prevention.legend.resistance_status.confirmed",
@@ -44,7 +44,7 @@ function Legend({ legendExpanded }: Props) {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("prevention.resistance_status")}
+                    {t("common.prevention.resistance_status")}
                 </LegendTitleTypography>
                 {legendExpanded && (
                     <LegendSubtitleTypography color="textPrimary" gutterBottom>
