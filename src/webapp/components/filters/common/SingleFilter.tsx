@@ -12,6 +12,7 @@ type OwnProps = {
     value: string;
     analyticsFilterAction?: string;
     placeholder?: string;
+    isClearable?: boolean;
 };
 
 const mapDispatchToProps = {
@@ -21,7 +22,16 @@ const mapDispatchToProps = {
 type DispatchProps = typeof mapDispatchToProps;
 type Props = OwnProps & DispatchProps;
 
-function SingleFilter({ label, options, onChange, value, analyticsFilterAction, logEventAction, placeholder }: Props) {
+function SingleFilter({
+    label,
+    options,
+    onChange,
+    value,
+    analyticsFilterAction,
+    logEventAction,
+    placeholder,
+    isClearable = true,
+}: Props) {
     const onSelectionChange = (option: Option | undefined) => {
         const selection = option?.value || undefined;
 
@@ -40,7 +50,7 @@ function SingleFilter({ label, options, onChange, value, analyticsFilterAction, 
             <Divider />
             <IntegrationReactSelect
                 isMulti={false}
-                isClearable
+                isClearable={isClearable}
                 placeholder={placeholder}
                 suggestions={options}
                 onChange={onSelectionChange}

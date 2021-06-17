@@ -1,12 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import IntegrationReactSelect from "../BasicSelect";
 import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
 import { setDiagnosisDeletionType } from "../../store/actions/diagnosis-actions";
-import { Divider, FilterWrapper } from "./Filters";
-import FormLabel from "@material-ui/core/FormLabel";
-import T from "../../translations/T";
+import SingleFilter from "./common/SingleFilter";
+import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
@@ -31,24 +29,18 @@ export const DELETION_TYPES = {
     },
 };
 
-class DeletionTypeFilter extends Component<Props, any> {
-    onChange = (selection: any) => {
-        this.props.setDeletionType(selection ? selection.value : null);
-    };
+const DeletionTypeFilter: React.FC<Props> = ({ setDeletionType, diagnosisFilters }) => {
+    const { t } = useTranslation();
+    const suggestions: any[] = Object.values(DELETION_TYPES);
 
-    render() {
-        const suggestions: any[] = Object.values(DELETION_TYPES);
-        const selection = suggestions.find(suggestion => this.props.diagnosisFilters.deletionType === suggestion.value);
-        return (
-            <FilterWrapper>
-                <FormLabel component="legend">
-                    <T i18nKey={"common.filters.deletion_type"} />
-                </FormLabel>
-                <Divider />
-                <IntegrationReactSelect suggestions={suggestions} onChange={this.onChange} value={selection} />
-            </FilterWrapper>
-        );
-    }
-}
+    return (
+        <SingleFilter
+            label={t("common.filters.deletion_type")}
+            options={suggestions}
+            onChange={setDeletionType}
+            value={diagnosisFilters.deletionType}
+        />
+    );
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeletionTypeFilter);

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectPatientType } from "../../store/reducers/translations-reducer";
@@ -12,12 +12,10 @@ import {
 } from "../layers/studies-filters";
 import * as R from "ramda";
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
-import { Divider, FilterWrapper } from "./Filters";
-import FormLabel from "@material-ui/core/FormLabel";
-import T from "../../translations/T";
 import { logEventAction } from "../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../domain/entities/DiagnosisStudy";
-import IntegrationReactSelect from "../BasicSelect";
+import SingleFilter from "./common/SingleFilter";
+import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({
     patientType: selectPatientType(state),
@@ -36,46 +34,34 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-class PatientTypeFilter extends Component<Props, any> {
-    onChange = (selection: any) => {
-        this.props.setPatientType(selection ? selection.value : null);
-        if (selection) this.props.logEventAction({ category: "filter", action: "patient", label: selection.value });
-    };
+const PatientTypeFilter: React.FC<Props> = ({ setPatientType, diagnosisFilters, studies, yearFilter, region }) => {
+    const { t } = useTranslation();
 
-    render() {
-        const { diagnosisFilters, studies, yearFilter, region } = this.props;
+    const filters = [
+        filterByDeletionType(diagnosisFilters.deletionType),
+        filterBySurveyTypes(diagnosisFilters.surveyTypes),
+        filterByYearRange(yearFilter),
+        filterByRegion(region),
+    ];
 
-        const filters = [
-            filterByDeletionType(diagnosisFilters.deletionType),
-            filterBySurveyTypes(diagnosisFilters.surveyTypes),
-            filterByYearRange(yearFilter),
-            filterByRegion(region),
-        ];
+    const filteredStudies: DiagnosisStudy[] = filters.reduce((studies, filter) => studies.filter(filter), studies);
 
-        const filteredStudies: DiagnosisStudy[] = filters.reduce((studies, filter) => studies.filter(filter), studies);
+    const uniques = R.uniq(R.map(R.prop("PATIENT_TYPE"), filteredStudies));
 
-        const uniques = R.uniq(R.map(R.prop("PATIENT_TYPE"), filteredStudies));
+    const suggestions: any[] = uniques.map((patientType: string) => ({
+        label: patientType,
+        value: patientType,
+    }));
 
-        const suggestions: any[] = uniques.map((patientType: string) => ({
-            label: patientType,
-            value: patientType,
-        }));
-        const selection = suggestions.find(suggestion => this.props.diagnosisFilters.patientType === suggestion.value);
-        return (
-            <FilterWrapper>
-                <FormLabel component="legend">
-                    <T i18nKey={"common.filters.patient_type"} />
-                </FormLabel>
-                <Divider />
-                <IntegrationReactSelect
-                    isClearable
-                    suggestions={suggestions}
-                    onChange={this.onChange}
-                    value={selection}
-                />
-            </FilterWrapper>
-        );
-    }
-}
+    return (
+        <SingleFilter
+            label={t("common.filters.patient_type")}
+            options={suggestions}
+            onChange={setPatientType}
+            value={diagnosisFilters.patientType}
+            analyticsFilterAction={"patient"}
+        />
+    );
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PatientTypeFilter);
