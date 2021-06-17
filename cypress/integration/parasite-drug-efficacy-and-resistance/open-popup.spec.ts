@@ -10,7 +10,7 @@ describe("Open popup in treatment failure subtheme", () => {
         cy.clickOnMap(550, 360);
 
         //headings
-        cy.findByText("Bouna, Zanzan, Côte d’Ivoire");
+        cy.findByText(/bouna, zanzan, côte d'ivoire/i);
         cy.contains("P. falciparum, Artemether-lumefantrine: 1 study(s) in 2019");
 
         //titles
