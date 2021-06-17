@@ -76,7 +76,7 @@ type OwnProps = {
 type Props = DispatchProps & StateProps & OwnProps;
 
 const IntensityStatusCountryChart = ({ studies, setRegion, setCountryMode, preventionFilters }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const nStudies = studies.length;
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
     const maxYear = sortedStudies[sortedStudies.length - 1].YEAR_START;
@@ -89,7 +89,7 @@ const IntensityStatusCountryChart = ({ studies, setRegion, setCountryMode, preve
     const data = Object.entries(R.groupBy((study: any) => study.RESISTANCE_INTENSITY, richStudies)).map(
         ([status, studies]: any[]) => {
             return {
-                name: t(`prevention.chart.resistance_intensity.${status}`),
+                name: t(`common.prevention.chart.resistance_intensity.${status}`),
                 y: studies.length,
                 color: (IntensityStatusColors[status] || IntensityStatusColors[INTENSITY_STATUS.UNKNOWN])[0],
             };
@@ -100,24 +100,24 @@ const IntensityStatusCountryChart = ({ studies, setRegion, setCountryMode, preve
         setCountryMode(false);
     };
     const translations = {
-        studies: t("chart.studies"),
-        resistance_intensity: t("prevention.resistance_intensity"),
-        number_of_tests: t("prevention.chart.resistance_intensity.number_of_tests"),
+        studies: t("common.chart.studies"),
+        resistance_intensity: t("common.prevention.resistance_intensity"),
+        number_of_tests: t("common.prevention.chart.resistance_intensity.number_of_tests"),
     };
     return (
         <ChartContainer>
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${t(
-                    studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2
+                    `common.${studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2}`
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
-                {t("prevention.chart.resistance_intensity.content_1", {
+                {t("common.prevention.chart.resistance_intensity.content_1", {
                     nStudies: nStudies,
                 })}
                 <i>Anopheles</i>
-                {t("prevention.chart.resistance_intensity.content_2", {
-                    insecticideClass: t(preventionFilters.insecticideClass),
+                {t("common.prevention.chart.resistance_intensity.content_2", {
+                    insecticideClass: t(`common.${preventionFilters.insecticideClass}`),
                     years: formatYears(minYear, maxYear),
                 })}
             </Typography>

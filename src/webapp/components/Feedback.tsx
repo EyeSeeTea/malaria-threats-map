@@ -49,7 +49,7 @@ type Props = DispatchProps & StateProps;
 
 const Feedback = ({ feedbackOpen, setFeedbackOpen }: Props) => {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const ref = useRef();
 
     useEffect(() => {
@@ -91,7 +91,7 @@ const Feedback = ({ feedbackOpen, setFeedbackOpen }: Props) => {
                 color={"default"}
                 className={classes.fab}
                 onClick={handleOpen}
-                title={t("icons.comments")}
+                title={t("common.icons.comments")}
             >
                 <FeedbackIcon />
             </Fab>
@@ -107,12 +107,12 @@ const Feedback = ({ feedbackOpen, setFeedbackOpen }: Props) => {
                 <ButtonWrapper>
                     <FlexGrow />
                     <Button variant="contained" color="primary" onClick={handleClose}>
-                        {t("data_download.buttons.close")}
+                        {t("common.data_download.buttons.close")}
                     </Button>
                 </ButtonWrapper>
                 <iframe
                     title={"feedback dialog"}
-                    src={t("feedbackIframeUrl")}
+                    src={t("common.feedbackIframeUrl")}
                     width={"100%"}
                     height={"800vh"}
                     frameBorder="0"

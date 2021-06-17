@@ -37,7 +37,7 @@ function InsecticideTypeSelector({ studies, onChange, value }: Props) {
     return (
         <FilterWrapper>
             <FormLabel component="legend">
-                <T i18nKey={`filters.insecticide_type`} />
+                <T i18nKey={"filters.insecticide_type"} />
             </FormLabel>
             <Divider />
             <IntegrationReactSelect

@@ -86,7 +86,7 @@ type OwnProps = {
 type Props = StateProps & OwnProps;
 
 const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const groupedStudies = R.values(R.groupBy(R.prop("CITATION_URL"), baseStudies));
     const studies = groupedStudies[study];
@@ -96,7 +96,7 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
         const base = `${study.YEAR_START}, ${t(study.INSECTICIDE_TYPE)} ${t(study.INSECTICIDE_CONC)}`;
         const syn =
             study.SYNERGIST_TYPE === "NO"
-                ? t("prevention.chart.synergist_involvement.no_synergist")
+                ? t("common.prevention.chart.synergist_involvement.no_synergist")
                 : `${t(study.SYNERGIST_TYPE)} ${t(study.SYNERGIST_CONC)}`;
         return {
             name: `${base}, ${syn}`,
@@ -107,11 +107,11 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
     });
     const studyObject = sortedStudies[study];
     const translations = {
-        mortality: t("prevention.chart.synergist_involvement.mortality"),
-        mosquito_mortality: `${t("prevention.chart.synergist_involvement.mosquito_mortality")} (${t(
-            "prevention.chart.synergist_involvement.number_of_tests"
+        mortality: t("common.prevention.chart.synergist_involvement.mortality"),
+        mosquito_mortality: `${t("common.prevention.chart.synergist_involvement.mosquito_mortality")} (${t(
+            "common.prevention.chart.synergist_involvement.number_of_tests"
         )})`,
-        tested: t("prevention.chart.synergist_involvement.tested"),
+        tested: t("common.prevention.chart.synergist_involvement.tested"),
     };
     const content = () => (
         <>

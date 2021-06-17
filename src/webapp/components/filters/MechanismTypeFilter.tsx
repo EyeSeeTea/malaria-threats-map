@@ -85,8 +85,7 @@ function MechanismTypeFilter({
     logEventAction,
 }: Props) {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
-
+    const { t } = useTranslation();
     function handleChange(event: React.ChangeEvent<unknown>) {
         const newValue = (event.target as HTMLInputElement).value;
         setType(newValue);
@@ -107,7 +106,7 @@ function MechanismTypeFilter({
 
     return (
         <FilterWrapper>
-            <FormLabel component="legend">{t(`filters.mechanism_type`)}</FormLabel>
+            <FormLabel component="legend">{t("common.filters.mechanism_type")}</FormLabel>
             <Divider />
             <Paper className={classes.group}>
                 <RadioGroup value={preventionFilters.type} onChange={handleChange}>

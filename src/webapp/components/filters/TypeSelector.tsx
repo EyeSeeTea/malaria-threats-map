@@ -24,8 +24,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps & OwnProps;
 
 function TypeSelector({ onChange, value }: Props) {
-    const { t } = useTranslation("common");
-    // const uniques = R.uniq(R.map(R.prop("TYPE"), studies)).sort();
+    const { t } = useTranslation();
 
     const suggestions: any[] = TYPES.map((specie: string) => ({
         label: specie,
@@ -40,7 +39,7 @@ function TypeSelector({ onChange, value }: Props) {
 
     return (
         <FilterWrapper>
-            <FormLabel component="legend">{t("filters.test_type")}</FormLabel>
+            <FormLabel component="legend">{t("common.filters.test_type")}</FormLabel>
             <Divider />
             <IntegrationReactSelect
                 isMulti

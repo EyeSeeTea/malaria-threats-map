@@ -43,7 +43,7 @@ class SynergistTypeFilter extends Component<Props, any> {
         return (
             <FilterWrapper>
                 <FormLabel component="legend">
-                    <T i18nKey={`filters.synergist_type`} />
+                    <T i18nKey={"common.filters.synergist_type"} />
                 </FormLabel>
                 <Divider />
                 <IntegrationReactSelect

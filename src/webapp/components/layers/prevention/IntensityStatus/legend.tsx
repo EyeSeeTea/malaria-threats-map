@@ -11,7 +11,7 @@ import { IntensityStatusColors } from "./symbols";
 import { useTranslation } from "react-i18next";
 
 export default function Legend() {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const labels = [
         {
             label: "prevention.legend.resistance_intensity.high_intensity",
@@ -38,7 +38,7 @@ export default function Legend() {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("prevention.resistance_intensity")}
+                    {t("common.prevention.resistance_intensity")}
                 </LegendTitleTypography>
             </LegendTitleContainer>
             <LegendLabels labels={labels} />

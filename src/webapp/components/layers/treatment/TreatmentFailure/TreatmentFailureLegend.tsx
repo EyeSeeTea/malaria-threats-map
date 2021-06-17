@@ -23,7 +23,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps;
 
 function TreatmentFailureLeyend({ treatmentFilters }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [show, setShow] = useState(false);
 
     useEffect(() => {
@@ -55,7 +55,7 @@ function TreatmentFailureLeyend({ treatmentFilters }: Props) {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("treatment.treatment_failure")}
+                    {t("common.treatment.treatment_failure")}
                 </LegendTitleTypography>
                 <LegendSubtitleTypography>{show && <T i18nKey={treatmentFilters.drug}></T>}</LegendSubtitleTypography>
             </LegendTitleContainer>

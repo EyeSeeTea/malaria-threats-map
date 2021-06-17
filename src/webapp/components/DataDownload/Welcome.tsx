@@ -18,7 +18,7 @@ type OwnProps = {
 };
 
 const Welcome = ({ onChange, welcomeInfo }: OwnProps) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const classes = useStyles({});
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange("agreement", event.target.checked);
@@ -26,28 +26,30 @@ const Welcome = ({ onChange, welcomeInfo }: OwnProps) => {
     return (
         <Card className={classes.paper}>
             <Typography variant={"body1"} style={{ fontWeight: "bold" }}>
-                {t("data_download.step0.p1")}
+                {t("common.data_download.step0.p1")}
             </Typography>
             <br />
-            <Typography variant={"body2"}>{t("data_download.step0.p2")}</Typography>
+            <Typography variant={"body2"}>{t("common.data_download.step0.p2")}</Typography>
             <br />
-            <Typography variant={"body2"}>{t("data_download.step0.p3")}</Typography>
+            <Typography variant={"body2"}>{t("common.data_download.step0.p3")}</Typography>
             <br />
             <Typography variant={"body2"}>
-                {t("data_download.step0.p4a")}
-                <Link href={t("data_download.step0.p4bLink")} target={"_blank"}>
-                    {t("data_download.step0.p4bLinkText")}
+                {t("common.data_download.step0.p4a")}
+                <Link href={t("common.data_download.step0.p4bLink")} target={"_blank"}>
+                    {t("common.data_download.step0.p4bLinkText")}
                 </Link>
-                {t("data_download.step0.p4c")}
+                {t("common.data_download.step0.p4c")}
             </Typography>
             <br />
-            <Typography variant={"body2"}>{t("data_download.step0.p5")}</Typography>
+            <Typography variant={"body2"}>{t("common.data_download.step0.p5")}</Typography>
             <br />
-            <Typography variant={"body2"}>{t("data_download.step0.p6")}</Typography>
+            <Typography variant={"body2"}>{t("common.data_download.step0.p6")}</Typography>
             <br />
             <Typography variant={"body2"}>
-                {t("data_download.step0.p7a")}
-                <Link href={`mailto:${t("data_download.step0.p7bEmail")}`}>{t("data_download.step0.p7bEmail")}</Link>
+                {t("common.data_download.step0.p7a")}
+                <Link href={`mailto:${t("common.data_download.step0.p7bEmail")}`}>
+                    {t("common.data_download.step0.p7bEmail")}
+                </Link>
             </Typography>
             <br />
             <FormControlLabel
@@ -56,9 +58,9 @@ const Welcome = ({ onChange, welcomeInfo }: OwnProps) => {
                 }
                 label={
                     <Typography variant={"body2"}>
-                        {t("data_download.step0.p8a")}
-                        <Link href={t("data_download.step0.p8bLink")} target={"_blank"}>
-                            {t("data_download.step0.p8bLinkText")}
+                        {t("common.data_download.step0.p8a")}
+                        <Link href={t("common.data_download.step0.p8bLink")} target={"_blank"}>
+                            {t("common.data_download.step0.p8bLinkText")}
                         </Link>
                     </Typography>
                 }

@@ -33,7 +33,7 @@ const DisclaimerTextButton = styled(DisclaimerText)`
 const Disclaimer = () => {
     const [open, setOpen] = React.useState(false);
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -43,12 +43,12 @@ const Disclaimer = () => {
         setOpen(false);
     };
 
-    const renderDisclaimer = () => <>{t("copyright.content")}</>;
+    const renderDisclaimer = () => <>{t("common.copyright.content")}</>;
 
     return (
         <div>
             <Hidden smUp>
-                <DisclaimerTextButton onClick={handleClickOpen}>{t("copyright.mobile")}</DisclaimerTextButton>
+                <DisclaimerTextButton onClick={handleClickOpen}>{t("common.copyright.mobile")}</DisclaimerTextButton>
                 <Dialog
                     fullWidth
                     open={open}

@@ -39,7 +39,7 @@ function SpeciesSelector({ studies, onChange, value }: Props) {
     return (
         <FilterWrapper>
             <FormLabel component="legend">
-                <T i18nKey={"filters.vector_species"} />
+                <T i18nKey={"common.filters.vector_species"} />
             </FormLabel>
             <Divider />
             <IntegrationReactSelect

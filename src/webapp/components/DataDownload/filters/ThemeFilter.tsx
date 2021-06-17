@@ -9,15 +9,15 @@ import { useTranslation } from "react-i18next";
 
 const THEMES = [
     {
-        label: "themes.prevention",
+        label: "common.themes.prevention",
         value: "prevention",
     },
     {
-        label: "themes.treatment",
+        label: "common.themes.treatment",
         value: "treatment",
     },
     {
-        label: "themes.invasive",
+        label: "common.themes.invasive",
         value: "invasive",
     },
 ];
@@ -32,12 +32,12 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps & OwnProps;
 
 function ThemeFilter({ value, onChange }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const suggs = THEMES.map(s => ({ label: t(s.label), value: s.value }));
     return (
         <FilterWrapper>
             <FormLabel component="legend">
-                <T i18nKey={"data_download.step3.filters.theme"} /> *
+                <T i18nKey={"common.data_download.step3.filters.theme"} /> *
             </FormLabel>
             <Divider />
             <IntegrationReactSelect

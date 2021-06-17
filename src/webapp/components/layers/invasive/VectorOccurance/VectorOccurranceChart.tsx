@@ -38,20 +38,20 @@ type OwnProps = {
 type Props = DispatchProps & StateProps & OwnProps;
 
 const VectorOccurrenceChart = ({ studies }: Props) => {
-    const { t } = useTranslation(["utils", "common"]);
+    const { t } = useTranslation();
     const translations = [
-        t("utils:Jan."),
-        t("utils:Feb."),
-        t("utils:Mar."),
-        t("utils:Apr."),
-        t("utils:May"),
-        t("utils:June"),
-        t("utils:July"),
-        t("utils:Aug."),
-        t("utils:Sept."),
-        t("utils:Oct."),
-        t("utils:Nov."),
-        t("utils:Dec."),
+        t("utils.Jan."),
+        t("utils.Feb."),
+        t("utils.Mar."),
+        t("utils.Apr."),
+        t("utils.May"),
+        t("utils.June"),
+        t("utils.July"),
+        t("utils.Aug."),
+        t("utils.Sept."),
+        t("utils.Oct."),
+        t("utils.Nov."),
+        t("utils.Dec."),
     ];
     const getMonthFromNumber = (month: number) => translations[month - 1];
 
@@ -81,9 +81,9 @@ const VectorOccurrenceChart = ({ studies }: Props) => {
 
     const duration = (unique ? start : partial) || "";
 
-    const samplingPeriod = t("common:invasive.chart.vector_occurrance.sampling_period");
-    const samplingMethod = t("common:invasive.chart.vector_occurrance.sampling_method");
-    const studyIdentificationMethod = t("common:invasive.chart.vector_occurrance.study_identification_method");
+    const samplingPeriod = t("common.invasive.chart.vector_occurrance.sampling_period");
+    const samplingMethod = t("common.invasive.chart.vector_occurrance.sampling_method");
+    const studyIdentificationMethod = t("common.invasive.chart.vector_occurrance.study_identification_method");
 
     return (
         <ChartContainer>
@@ -95,7 +95,7 @@ const VectorOccurrenceChart = ({ studies }: Props) => {
                 {(isNotNull(studyObject.VECTOR_SPECIES) || isNotNull(studyObject.VECTOR_SPECIES_COMPLEX)) && (
                     <Flex>
                         <Typography variant="body2">
-                            <b>{t("common:invasive.chart.vector_occurrance.species")}:&nbsp;</b>
+                            <b>{t("common.invasive.chart.vector_occurrance.species")}:&nbsp;</b>
                             {isNotNull(studyObject.VECTOR_SPECIES)
                                 ? studyObject.VECTOR_SPECIES
                                 : isNotNull(studyObject.VECTOR_SPECIES_COMPLEX)
@@ -115,7 +115,7 @@ const VectorOccurrenceChart = ({ studies }: Props) => {
                 <Flex>
                     <Typography variant="body2">
                         <b>{samplingMethod}:&nbsp;</b>
-                        {studyObject.SAMPLING_METHOD || t("common:invasive.chart.vector_occurrance.no_available")}
+                        {studyObject.SAMPLING_METHOD || t("common.invasive.chart.vector_occurrance.no_available")}
                     </Typography>
                 </Flex>
                 <Flex>
@@ -123,7 +123,7 @@ const VectorOccurrenceChart = ({ studies }: Props) => {
                         <b>{studyIdentificationMethod}:&nbsp;</b>
                         {studyObject.ID_METHOD
                             ? lowerCase(studyObject.ID_METHOD)
-                            : t("common:invasive.chart.vector_occurrance.no_available")}
+                            : t("common.invasive.chart.vector_occurrance.no_available")}
                     </Typography>
                 </Flex>
             </Margin>

@@ -13,7 +13,7 @@ type OwnProps = {
 type Props = OwnProps;
 
 function InsecticideClassSelector({ value, onChange }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const suggestions: Option[] = INSECTICIDE_CLASSES.map((specie: string) => ({
         label: t(specie),
@@ -26,7 +26,7 @@ function InsecticideClassSelector({ value, onChange }: Props) {
 
     return (
         <FilterWrapper>
-            <FormLabel component="legend">{t(`filters.insecticide_class`)}</FormLabel>
+            <FormLabel component="legend">{t("common.filters.insecticide_class")}</FormLabel>
             <Divider />
             <IntegrationReactSelect
                 isMulti

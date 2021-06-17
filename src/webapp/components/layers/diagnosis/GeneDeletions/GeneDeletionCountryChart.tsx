@@ -28,7 +28,7 @@ type OwnProps = {
 type Props = DispatchProps & StateProps & OwnProps;
 
 const GeneDeletionCountryChart = ({ studies, setRegion, setCountryMode, diagnosisFilters }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const nStudies = studies.length;
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
     const sortedStudies2 = R.sortBy(study => parseInt(study.YEAR_END), studies);
@@ -42,16 +42,14 @@ const GeneDeletionCountryChart = ({ studies, setRegion, setCountryMode, diagnosi
     return (
         <ChartContainer>
             <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${t(
-                    studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2
-                )}`}</Box>
+                <Box fontWeight="fontWeightBold">{t(studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2)}</Box>
             </Typography>
             <Typography variant="subtitle2">
-                {t("diagnosis.chart.gene_deletions.content_1", {
+                {t("common.diagnosis.chart.gene_deletions.content_1", {
                     nStudies,
                 })}{" "}
                 <i>P. falciparum</i>{" "}
-                {t("diagnosis.chart.gene_deletions.content_2", {
+                {t("common.diagnosis.chart.gene_deletions.content_2", {
                     deletionType: t(diagnosisFilters.deletionType).toLowerCase(),
                     surveyTypes: formatList(surveyTypes.map(st => t(st))),
                     years: formatYears(minYear, maxYear),

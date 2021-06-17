@@ -13,13 +13,13 @@ type Props = {
 
 const suggestions: OptionType[] = [
     {
-        label: "data_download.filters.invasive.datasets.invasive_vector_species",
+        label: "common.data_download.filters.invasive.datasets.invasive_vector_species",
         value: "INVASIVE_VECTOR_SPECIES",
     },
 ];
 
 const InvasiveDataSetSelector = ({ value, onChange }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const valueOnChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;
         onChange(selection.value);
@@ -30,7 +30,7 @@ const InvasiveDataSetSelector = ({ value, onChange }: Props) => {
     return (
         <FilterWrapper>
             <FormLabel component="legend">
-                <T i18nKey={`data_download.dataset`} /> *
+                <T i18nKey={"data_download.dataset"} /> *
             </FormLabel>
             <Divider />
             <IntegrationReactSelect

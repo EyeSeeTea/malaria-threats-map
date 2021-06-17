@@ -11,7 +11,7 @@ import { LEVEL_OF_INVOLVEMENT } from "./utils";
 import { useTranslation } from "react-i18next";
 
 export default function LevelOfInvolvementLegend() {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const labels = [
         {
             label: "prevention.legend.synergist_involvement.full_involvement",
@@ -30,7 +30,7 @@ export default function LevelOfInvolvementLegend() {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("prevention.synergist_involvement_legend")}
+                    {t("common.prevention.synergist_involvement_legend")}
                 </LegendTitleTypography>
             </LegendTitleContainer>
             <LegendLabels labels={labels} />
