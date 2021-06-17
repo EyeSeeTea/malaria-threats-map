@@ -66,7 +66,7 @@ const ResistanceStatusCountryChart = ({ studies, setRegion, setCountryMode, prev
         <ChartContainer>
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${t(
-                    `common.${studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2}`
+                    studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
@@ -75,7 +75,7 @@ const ResistanceStatusCountryChart = ({ studies, setRegion, setCountryMode, prev
                 })}
                 <i>Anopheles</i>
                 {t("common.prevention.chart.resistance_status.content_2", {
-                    insecticideClass: t(`common.${preventionFilters.insecticideClass}`),
+                    insecticideClass: t(preventionFilters.insecticideClass),
                     years: formatYears(minYear, maxYear),
                 })}
             </Typography>
