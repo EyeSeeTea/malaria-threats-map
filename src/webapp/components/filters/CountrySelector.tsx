@@ -8,6 +8,7 @@ import { selectCountries } from "../../store/reducers/translations-reducer";
 import { sendAnalytics } from "../../utils/analytics";
 import SingleFilter from "./common/SingleFilter";
 import { useTranslation } from "react-i18next";
+import { Option } from "../BasicSelect";
 
 const mapStateToProps = (state: State) => ({
     region: selectRegion(state),
@@ -29,7 +30,7 @@ const CountrySelector = ({ region, countries = [], setRegion }: Props) => {
         setRegion({ country: selection });
     };
 
-    const suggestions: any[] = countries
+    const suggestions: Option[] = countries
         .map((country: Translation) => ({
             label: t(country.VALUE_ === "NA" ? "COUNTRY_NA" : country.VALUE_),
             value: country.VALUE_,
