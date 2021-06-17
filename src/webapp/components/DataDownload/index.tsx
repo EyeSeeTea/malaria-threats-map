@@ -363,7 +363,10 @@ function DataDownload({
 
     const changeLoaderAndExportToCSV = (tabs: Tab[], filename: string) => {
         setMessageLoader(t("common:data_download.loader.generating_file"));
-        exportToCSV(tabs, filename);
+        setTimeout(() => {
+            exportToCSV(tabs, filename);
+            setDownloading(false);
+        }, 100);
     };
 
     const downloadPreventionData = () => {
@@ -833,8 +836,6 @@ function DataDownload({
                     break;
             }
             addDownload(request);
-
-            setDownloading(false);
 
             logEvent({ category: "Download", action: "download", label: dataset || undefined });
         }, 100);
