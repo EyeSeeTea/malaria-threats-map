@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { studiesToGeoJson } from "../layer-utils";
+import { studiesToGeoJson, getCountryStudies } from "../layer-utils";
 import setupEffects from "../effects";
 import { selectTreatmentFilters, selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
 import {
@@ -182,51 +182,10 @@ class TreatmentLayer extends Component<Props> {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = this.getCountryStudies(filteredStudies);
+            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, TREATMENT);
             const data = countryMode ? countryStudies : geoStudies;
             source.setData(studiesToGeoJson(data));
         }
-    };
-
-    getCountryStudies = (studies: any[] = []) => {
-        const countryStudies = R.groupBy(
-            R.path<string>(["ISO2"]),
-            studies
-        );
-        const countries = this.props.countries
-            .map((country, index) => ({
-                ...country,
-                OBJECTID: index,
-                Latitude: country.CENTER_LAT,
-                Longitude: country.CENTER_LON,
-                STUDIES: (countryStudies[country.ISO_2_CODE] || []).length || 0,
-            }))
-            .filter(study => study.STUDIES !== 0);
-
-        const sortedCountries = R.sortBy(country => country.STUDIES, countries);
-        if (sortedCountries.length === 0) return [];
-
-        const getSize = (nStudies: number) => {
-            if (nStudies > 10) {
-                return 15;
-            } else if (nStudies > 8) {
-                return 13;
-            } else if (nStudies > 6) {
-                return 11;
-            } else if (nStudies > 4) {
-                return 9;
-            } else if (nStudies > 2) {
-                return 7;
-            } else if (nStudies >= 0) {
-                return 5;
-            }
-        };
-
-        return countries.map(country => ({
-            ...country,
-            SIZE: getSize(country.STUDIES),
-            SIZE_HOVER: getSize(country.STUDIES) - 1,
-        }));
     };
 
     mountLayer(prevProps?: Props) {
@@ -239,7 +198,7 @@ class TreatmentLayer extends Component<Props> {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = this.getCountryStudies(filteredStudies);
+            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, TREATMENT);
 
             const data = countryMode ? countryStudies : geoStudies;
             const source: any = {
