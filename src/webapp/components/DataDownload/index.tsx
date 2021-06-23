@@ -294,7 +294,9 @@ function DataDownload({
             return MOLECULAR_MARKERS.find(mm => mm.value === Number(study[field.value])).label;
         }
         if (field.value === "PLASMODIUM_SPECIES") {
-            return PLASMODIUM_SPECIES_SUGGESTIONS.find(species => species.value === study[field.value]).label;
+            const value = PLASMODIUM_SPECIES_SUGGESTIONS.find(species => species.value === study[field.value]);
+
+            return value ? value.label : undefined;
         }
         if (["Latitude", "Longitude"].includes(field.value)) {
             return Number(study[field.value]).toFixed(6);
