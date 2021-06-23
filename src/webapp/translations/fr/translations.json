@@ -303,6 +303,10 @@
             "title": "Téléchargement de données",
             "footer": "(*) nombre total de sites pour lesquels des données ont été communiquées",
             "dataset": "Sélection des données",
+            "loader": {
+                "fetching_data": "Récupération des données ...",
+                "generating_file": "Génération du fichier ..."
+            },
             "buttons": {
                 "back": "Précédent",
                 "next": "Suivant",

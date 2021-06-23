@@ -94,8 +94,6 @@ export enum ActionTypeEnum {
     FetchDownloadsError = "downloads/FETCH_DOWNLOADS_ERROR",
 
     AddDownloadRequest = "downloads/ADD_DOWNLOAD_REQUEST",
-    AddDownloadSuccess = "downloads/ADD_DOWNLOAD_SUCCESS",
-    AddDownloadError = "downloads/ADD_DOWNLOAD_ERROR",
 
     AddSubscriptionContactRequest = "downloads/ADD_SUBSCRIPTION_CONTACT_REQUEST",
     AddSubscriptionContactSuccess = "downloads/ADD_SUBSCRIPTION_CONTACT_SUCCESS",

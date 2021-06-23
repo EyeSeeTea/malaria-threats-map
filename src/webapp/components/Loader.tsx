@@ -11,7 +11,6 @@ import { selectTreatmentStudiesLoading } from "../store/reducers/treatment-reduc
 import { connect } from "react-redux";
 import { selectDistrictsAreLoading } from "../store/reducers/districts-reducer";
 import { selectCountryLayerIsLoading } from "../store/reducers/country-layer-reducer";
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         backdrop: {

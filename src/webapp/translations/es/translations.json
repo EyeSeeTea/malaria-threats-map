@@ -303,6 +303,10 @@
             "title": "Descarga de datos",
             "footer": "(*) Número total de localizaciones que reportaron datos.",
             "dataset": "Selección de datos",
+            "loader": {
+                "fetching_data": "Recuperando datos ...",
+                "generating_file": "Generando el fichero ..."
+            },
             "buttons": {
                 "back": "Anterior",
                 "next": "Siguiente",

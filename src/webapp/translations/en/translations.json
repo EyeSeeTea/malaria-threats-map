@@ -303,6 +303,10 @@
             "title": "Data download",
             "footer": "(*) total number of sites for which data was reported",
             "dataset": "Data selection",
+            "loader": {
+                "fetching_data": "Fetching data ...",
+                "generating_file": "Generating file ..."
+            },
             "buttons": {
                 "back": "Back",
                 "next": "Next",
