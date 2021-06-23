@@ -84,18 +84,8 @@ describe("Open popup in insecticide resistance status subtheme", () => {
         cy.clickOnMap(550, 360);
         cy.findByText("Discriminating concentration bioassays, WHO test kit bioassay");
 
-        cy.findByText("Wecheau, Ghana");
-        cy.contains(
-            "Dadzie et al. (2017) Evaluation of piperonyl butoxide in enhancing the efficacy of pyrethroid insecticides against resistant Anopheles gambiae s.l. in Ghana. Malar J. 2017 Aug 17;16(1):342"
-        );
+        cy.findByText("Kampti Center (Kampti-Lobi), Burkina Faso");
         cy.findByText("Acknowledgement for data curation");
-        cy.contains("Acknowledgement for data curation");
-        cy.contains("World Health Organization");
-
-        cy.clickOnMap(550, 360);
-        cy.contains(
-            "Dadzie et al. (2017) Evaluation of piperonyl butoxide in enhancing the efficacy of pyrethroid insecticides against resistant Anopheles gambiae s.l. in Ghana. Malar J. 2017 Aug 17;16(1):342"
-        ).should("have.attr", "href", "https://www.ncbi.nlm.nih.gov/pubmed/28818077");
     });
 });
 

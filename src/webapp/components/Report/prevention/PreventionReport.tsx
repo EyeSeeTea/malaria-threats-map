@@ -1,100 +1,35 @@
 import React from "react";
-import clsx from "clsx";
-import { createStyles, lighten, makeStyles, Theme } from "@material-ui/core/styles";
 import {
-    Button,
     Table,
     TableBody,
-    TableCell,
     TableContainer,
     TableHead,
     TablePagination,
     TableRow,
-    TableSortLabel,
-    Toolbar,
     Typography,
     Paper,
-    IconButton,
-    Tooltip,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
 import { selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 import { COLUMNS, Data, ERROR_COLUMNS, GREY_COLUMNS, headCells } from "./columns";
 import { resolvePyrethroids } from "../resolvers/resistanceStatus";
 import { resolveMechanism } from "../resolvers/resistanceMechanism";
-import FilterPopover from "./FilterPopover";
 import { filterByCountries, filterBySpecies } from "../../layers/studies-filters";
 import { exportToCSV } from "../../DataDownload/download";
 import { format } from "date-fns";
 import { getComparator, Order, stableSort } from "../utils";
-import { CellProps } from "../types";
+import { StyledCell, useStyles, EnhancedTableProps } from "../types";
 import { sendAnalytics } from "../../../utils/analytics";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
+import { TableHeadCell } from "../TableHeadCell";
+import ReportToolbar from "../ReportToolbar";
 
-const StyledCell = styled(TableCell)<CellProps>`
-    font-size: ${props => (props.isBold ? "12px" : "11.5px")} !important;
-    line-height: 1rem !important;
-    padding: 3px 6px !important;
-    font-weight: ${props => (props.isBold ? "bold" : "normal")} !important;
-    color: ${props => props.color || "inherit"} !important;
-    ${props => props.isRight && "text-align: right !important"};
-    ${props => props.divider && "border-left: 1px solid rgba(224, 224, 224, 1)"}
-`;
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: "100%",
-        },
-        paper: {
-            width: "100%",
-        },
-        wrapper: {
-            padding: theme.spacing(0, 2),
-        },
-        table: {
-            minWidth: 750,
-        },
-        visuallyHidden: {
-            border: 0,
-            clip: "rect(0 0 0 0)",
-            height: 1,
-            margin: -1,
-            overflow: "hidden",
-            padding: 0,
-            position: "absolute",
-            top: 20,
-            width: 1,
-        },
-        cell: {
-            fontSize: 10,
-        },
-    })
-);
-
-interface EnhancedTableProps {
-    classes: ReturnType<typeof useStyles>;
-    numSelected: number;
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
-    onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
-    order: Order;
-    orderBy: string;
-    rowCount: number;
-}
-
-function EnhancedTableHead(props: EnhancedTableProps) {
+function EnhancedTableHead(props: EnhancedTableProps<Data>) {
     const { t } = useTranslation();
     const { classes, order, orderBy, onRequestSort } = props;
-
-    const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
-        onRequestSort(event, property);
-    };
 
     return (
         <TableHead>
@@ -145,121 +80,19 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             </TableRow>
             <TableRow>
                 {headCells.map(headCell => (
-                    <StyledCell
+                    <TableHeadCell
                         key={headCell.id}
-                        align={headCell.align || "left"}
-                        padding={headCell.disablePadding ? "none" : "default"}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                        divider={headCell.divider}
-                    >
-                        {headCell.sortable ? (
-                            <TableSortLabel
-                                active={orderBy === headCell.id}
-                                direction={orderBy === headCell.id ? order : "asc"}
-                                onClick={headCell.sortable ? createSortHandler(headCell.id) : () => {}}
-                            >
-                                {t(`common.${headCell.label}`)}
-                                {headCell.sortable && orderBy === headCell.id ? (
-                                    <span className={classes.visuallyHidden}>
-                                        {order === "desc" ? "sorted descending" : "sorted ascending"}
-                                    </span>
-                                ) : null}
-                            </TableSortLabel>
-                        ) : (
-                            t(`common.${headCell.label}`)
-                        )}
-                    </StyledCell>
+                        classes={classes}
+                        headCell={headCell}
+                        order={order}
+                        orderBy={orderBy}
+                        onRequestSort={onRequestSort}
+                    />
                 ))}
             </TableRow>
         </TableHead>
     );
 }
-
-const useToolbarStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            paddingLeft: theme.spacing(2),
-            paddingRight: theme.spacing(1),
-        },
-        highlight:
-            theme.palette.type === "light"
-                ? {
-                      color: theme.palette.secondary.main,
-                      backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-                  }
-                : {
-                      color: theme.palette.text.primary,
-                      backgroundColor: theme.palette.secondary.dark,
-                  },
-        title: {
-            flex: "1 1 100%",
-        },
-        button: {
-            margin: theme.spacing(1),
-            paddingLeft: theme.spacing(4),
-            paddingRight: theme.spacing(4),
-        },
-    })
-);
-
-interface EnhancedTableToolbarProps {
-    numSelected: number;
-    countries: string[];
-    setCountries: any;
-    species: string[];
-    setSpecies: any;
-    onClick: any;
-}
-
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-    const { t } = useTranslation();
-    const classes = useToolbarStyles({});
-    const { numSelected, countries, setCountries, species, setSpecies, onClick } = props;
-
-    return (
-        <Toolbar
-            className={clsx(classes.root, {
-                [classes.highlight]: numSelected > 0,
-            })}
-        >
-            {numSelected > 0 ? (
-                <Typography className={classes.title} color="inherit" variant="subtitle1">
-                    {numSelected} selected
-                </Typography>
-            ) : (
-                <Typography className={classes.title} variant="h6" id="tableTitle">
-                    {t("common.report.prevention.title")}
-                </Typography>
-            )}
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-            ) : (
-                // <div />
-                <>
-                    <Button
-                        variant="contained"
-                        color="default"
-                        className={classes.button}
-                        startIcon={<CloudDownloadIcon />}
-                        onClick={onClick}
-                    >
-                        {t("common.data_download.buttons.download")}
-                    </Button>
-                    <FilterPopover
-                        countries={countries}
-                        setCountries={setCountries}
-                        species={species}
-                        setSpecies={setSpecies}
-                    />
-                </>
-            )}
-        </Toolbar>
-    );
-};
 
 const mapStateToProps = (state: State) => ({
     studies: selectPreventionStudies(state),
@@ -479,7 +312,8 @@ function PreventionReport({ studies: baseStudies }: Props) {
         <div className={classes.root}>
             <Paper className={classes.paper}>
                 <div className={classes.wrapper}>
-                    <EnhancedTableToolbar
+                    <ReportToolbar
+                        title={t("common.report.prevention.title")}
                         numSelected={selected.length}
                         countries={countries}
                         setCountries={setCountries}

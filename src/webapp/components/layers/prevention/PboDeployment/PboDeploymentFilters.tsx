@@ -2,7 +2,7 @@ import React from "react";
 import InsecticideTypeFilter from "../../../filters/InsecticideTypeFilter";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
-import { Snackbar } from "../../../Filters";
+import { Snackbar } from "../../../filters/container/Filters";
 import { useTranslation } from "react-i18next";
 import { Link } from "@material-ui/core";
 

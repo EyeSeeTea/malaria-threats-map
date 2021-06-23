@@ -24,10 +24,10 @@ import {
 } from "../../../store/actions/prevention-actions";
 import { Hidden } from "@material-ui/core";
 import { setSelection } from "../../../store/actions/base-actions";
-import PreventionSitePopover from "./PreventionSitePopover";
 import PreventionSelectionChart from "./PreventionSelectionChart";
 import ChartModal from "../../ChartModal";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
+import SitePopover from "../common/SitePopover";
 
 export const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -311,7 +311,9 @@ class PreventionLayer extends Component<Props> {
             this.props.theme === "prevention" && (
                 <>
                     <Hidden xsDown>
-                        <PreventionSitePopover map={this.props.map} studies={filteredStudies} />
+                        <SitePopover map={this.props.map}>
+                            <PreventionSelectionChart studies={filteredStudies} />
+                        </SitePopover>
                     </Hidden>
                     <Hidden smUp>
                         <ChartModal selection={selection}>

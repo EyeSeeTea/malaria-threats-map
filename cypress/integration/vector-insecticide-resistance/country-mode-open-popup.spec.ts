@@ -13,7 +13,7 @@ describe("Open popup in insecticide resistance intensity subtheme", () => {
         cy.clickOnMap(515, 350);
         cy.contains("Senegal");
         cy.contains(
-            "173 test(s) on Anopheles malaria vectors via intensity concentration bioassay(s) with selected Pyrethroids from 2018 to 2019"
+            "178 test(s) on Anopheles malaria vectors via intensity concentration bioassay(s) with selected Pyrethroids from 2018 to 2019"
         );
     });
 });

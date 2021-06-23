@@ -14,50 +14,7 @@ import { selectPreventionFilters } from "../../../../store/reducers/prevention-r
 import { formatYears } from "../../../../utils/string-utils";
 import { Actions, ChartContainer, FlexGrow, ZoomButton } from "../../../Chart";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
-
-const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: "pie",
-        height: 250,
-        style: {
-            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
-        },
-    },
-    title: {
-        text: `<b>${translations.resistance_status}</b> (${translations.number_of_tests})`,
-    },
-    tooltip: {
-        pointFormat: "{series.name}: <b>{point.y}</b>",
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: "pointer",
-            dataLabels: {
-                enabled: true,
-                format: "<b>{point.name}</b>: {point.y}",
-            },
-        },
-    },
-    series: [
-        {
-            type: "pie",
-            innerSize: "50%",
-            name: translations.studies,
-            colorByPoint: true,
-            data,
-        },
-    ],
-    legend: {
-        enabled: true,
-    },
-    credits: {
-        enabled: false,
-    },
-});
+import statusCountryChartOptions from "../common/countryChartOptions";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -100,16 +57,16 @@ const ResistanceStatusCountryChart = ({ studies, setRegion, setCountryMode, prev
         setCountryMode(false);
     };
 
-    const translations = {
-        studies: t("common.chart.studies"),
-        resistance_status: t("common.prevention.resistance_status"),
-        number_of_tests: t("common.prevention.chart.resistance_status.number_of_tests"),
+    const labels = {
+        title: t("common.prevention.resistance_status"),
+        numberOfTests: t("common.prevention.chart.resistance_status.number_of_tests"),
+        chartStudies: t("common.chart.studies"),
     };
     return (
         <ChartContainer>
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${t(
-                    `common.${studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2}`
+                    studies[0].ISO2 === "NA" ? "COUNTRY_NA" : studies[0].ISO2
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
@@ -118,11 +75,11 @@ const ResistanceStatusCountryChart = ({ studies, setRegion, setCountryMode, prev
                 })}
                 <i>Anopheles</i>
                 {t("common.prevention.chart.resistance_status.content_2", {
-                    insecticideClass: t(`common.${preventionFilters.insecticideClass}`),
+                    insecticideClass: t(preventionFilters.insecticideClass),
                     years: formatYears(minYear, maxYear),
                 })}
             </Typography>
-            <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
+            <HighchartsReact highcharts={Highcharts} options={statusCountryChartOptions(data, labels)} />
             <Actions>
                 <FlexGrow />
                 <ZoomButton onClick={onClick} />
