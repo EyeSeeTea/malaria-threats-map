@@ -32,9 +32,9 @@ export const INSECTICIDE_CLASSES: string[] = [
 
 function InsecticideClassFilter({ insecticideClasses = [], preventionFilters, setInsecticideClass }: Props) {
     const { t } = useTranslation();
-    const handleChange =(event: React.ChangeEvent<unknown>) => {
+    const handleChange = (event: React.ChangeEvent<unknown>) => {
         setInsecticideClass((event.target as HTMLInputElement).value);
-    }
+    };
 
     return (
         <RadioGroupFilter

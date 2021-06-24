@@ -59,7 +59,7 @@ function MechanismTypeFilter({
         const newValue = (event.target as HTMLInputElement).value;
         setType(newValue);
         logEventAction({ category: "filter", action: "mechanismType", label: newValue });
-    }
+    };
 
     const filters = [filterByLevelOfInvolvement, filterByYearRange(yearFilter), filterByRegion(region)];
 

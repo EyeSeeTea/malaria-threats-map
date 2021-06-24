@@ -39,34 +39,35 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function MolecularMarkerFilter({ treatmentFilters, setMolecularMarker, logEventAction }: Props) { 
+function MolecularMarkerFilter({ treatmentFilters, setMolecularMarker, logEventAction }: Props) {
     const { t } = useTranslation();
     const handleChange = (event: React.ChangeEvent<unknown>) => {
-        const molecularMarker = MOLECULAR_MARKERS.find(marker => marker.label === (event.target as HTMLInputElement).value);
+        const molecularMarker = MOLECULAR_MARKERS.find(
+            marker => marker.label === (event.target as HTMLInputElement).value
+        );
         const label = molecularMarker.label;
         setMolecularMarker(molecularMarker.value);
         logEventAction({ category: "filter", action: "molecularMarkers", label });
-    }
+    };
 
-  const molecularMarkerTranslations = MOLECULAR_MARKERS.map((marker,index) => 
-  ({
-    OBJECTID: index,
-    Code: marker.label,
-    DATASET: marker.label,
-    FIELD: marker.label,
-    VALUE_: marker.label,
-    EN: marker.label,
-    FR: marker.label,
-    ES: marker.label,
-    ACTIVE: "yes",
-    NOTES: marker.label
-  }));
-  
+    const molecularMarkerTranslations = MOLECULAR_MARKERS.map((marker, index) => ({
+        OBJECTID: index,
+        Code: marker.label,
+        DATASET: marker.label,
+        FIELD: marker.label,
+        VALUE_: marker.label,
+        EN: marker.label,
+        FR: marker.label,
+        ES: marker.label,
+        ACTIVE: "yes",
+        NOTES: marker.label,
+    }));
+
     return (
-        <RadioGroupFilter 
+        <RadioGroupFilter
             label={t("common.filters.molecular_marker")}
-            options={molecularMarkerTranslations} 
-            handleChange={handleChange} 
+            options={molecularMarkerTranslations}
+            handleChange={handleChange}
             value={MOLECULAR_MARKERS.find(marker => marker.value === treatmentFilters.molecularMarker).label}
         />
     );
