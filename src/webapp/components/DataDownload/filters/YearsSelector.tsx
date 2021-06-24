@@ -1,24 +1,15 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import FormLabel from "@material-ui/core/FormLabel";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { range } from "../../YearRangeSelector";
-import { Divider } from "../../filters/Filters";
-import IntegrationReactSelect, { OptionType } from "../../BasicSelect";
+import MultiFilter from "../../filters/common/MultiFilter";
 
 const min = 1988;
 const max = new Date().getFullYear();
 
 const suggestions = range(min, max, true).map(year => ({
-    label: year,
-    value: year,
+    label: year.toString(),
+    value: year.toString(),
 }));
-
-const useStyles = makeStyles({
-    root: {
-        margin: "10px 20px",
-    },
-});
 
 type OwnProps = {
     value: number[];
@@ -27,25 +18,24 @@ type OwnProps = {
 
 type Props = OwnProps;
 
-const YearsSelector = ({ value, onChange }: Props) => {
-    const classes = useStyles({});
+const YearsSelector: React.FC<Props> = ({ value, onChange }) => {
     const { t } = useTranslation();
 
-    const handleChange = (selection: OptionType[]) => {
-        onChange((selection || []).map(s => s.value));
+    const [valueState, setValueState] = useState([]);
+
+    useEffect(() => setValueState(value.map(v => v.toString())), [value]);
+
+    const handleChange = (selection: string[]) => {
+        onChange((selection || []).map(s => +s));
     };
+
     return (
-        <div className={classes.root}>
-            <FormLabel component="legend">{t("common.filters.years")}</FormLabel>
-            <Divider />
-            <IntegrationReactSelect
-                isMulti
-                isClearable
-                suggestions={suggestions}
-                onChange={handleChange}
-                value={suggestions.filter(year => value.includes(year.value))}
-            />
-        </div>
+        <MultiFilter
+            label={t("common.filters.years")}
+            options={suggestions}
+            onChange={handleChange}
+            value={valueState}
+        />
     );
 };
 export default YearsSelector;

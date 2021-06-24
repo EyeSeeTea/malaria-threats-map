@@ -1,15 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import IntegrationReactSelect from "../BasicSelect";
 import { selectPlasmodiumSpecies } from "../../store/reducers/translations-reducer";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
 import { setTreatmentPlasmodiumSpecies } from "../../store/actions/treatment-actions";
-import { Divider, FilterWrapper } from "./Filters";
-import FormLabel from "@material-ui/core/FormLabel";
-import T from "../../translations/T";
 import { logEventAction } from "../../store/actions/base-actions";
-import { sendAnalytics } from "../../utils/analytics";
+import SingleFilter from "./common/SingleFilter";
+import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({
     plasmodiumSpecies: selectPlasmodiumSpecies(state),
@@ -48,31 +45,19 @@ export const PLASMODIUM_SPECIES_SUGGESTIONS: any[] = [
     },
 ];
 
-class PlasmodiumSpeciesFilter extends Component<Props, any> {
-    onChange = (selection: any) => {
-        this.props.setPlasmodiumSpecies(selection ? selection.value : undefined);
-        if (selection)
-            sendAnalytics({ type: "event", category: "filter", action: "plasmodiumSpecies", label: selection.value });
-    };
+const PlasmodiumSpeciesFilter: React.FC<Props> = ({ setPlasmodiumSpecies, treatmentFilters }) => {
+    const { t } = useTranslation();
 
-    render() {
-        const selection = PLASMODIUM_SPECIES_SUGGESTIONS.find(
-            suggestion => this.props.treatmentFilters.plasmodiumSpecies === suggestion.value
-        );
-        return (
-            <FilterWrapper>
-                <FormLabel component="legend">
-                    <T i18nKey={"common.filters.plasmodium_species"} />
-                </FormLabel>
-                <Divider />
-                <IntegrationReactSelect
-                    suggestions={PLASMODIUM_SPECIES_SUGGESTIONS}
-                    onChange={this.onChange}
-                    value={selection}
-                />
-            </FilterWrapper>
-        );
-    }
-}
+    return (
+        <SingleFilter
+            label={t("common.filters.plasmodium_species")}
+            options={PLASMODIUM_SPECIES_SUGGESTIONS}
+            onChange={setPlasmodiumSpecies}
+            value={treatmentFilters.plasmodiumSpecies}
+            analyticsFilterAction={"plasmodiumSpecies"}
+            isClearable={false}
+        />
+    );
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlasmodiumSpeciesFilter);

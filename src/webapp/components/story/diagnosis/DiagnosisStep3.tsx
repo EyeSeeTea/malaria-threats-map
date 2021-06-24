@@ -13,7 +13,6 @@ const useStyles = makeStyles(() =>
 const DiagnosisStep3 = () => {
     const classes = useStyles({});
     const { t } = useTranslation();
-    
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>

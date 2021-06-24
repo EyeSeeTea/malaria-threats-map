@@ -25,7 +25,7 @@ type Props = StateProps;
 function TreatmentFailureLeyend({ treatmentFilters }: Props) {
     const { t } = useTranslation();
     const [show, setShow] = useState(false);
-    console.log(treatmentFilters);
+
     useEffect(() => {
         setTimeout(() => setShow(true), 1000);
     }, []);

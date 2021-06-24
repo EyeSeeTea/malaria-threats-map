@@ -10,7 +10,6 @@
             "treatment": "Eficacia y resistencia a los medicamentos antipalúdicos",
             "invasive": "Especies vectoras invasoras",
             "mekong": "Subregión del Gran Mekong"
-
         },
         "themes_caps": {
             "prevention": "RESISTENCIA A INSECTICIDAS EN LOS VECTORES DE MALARIA",
@@ -249,8 +248,7 @@
                     "0": "Hay {{studies}} pruebas con los criterios especificados",
                     "1": "Hay {{studies}} pruebas con los criterios especificados",
                     "2": "Hay {{studies}} ensayo con los criterios especificados",
-                    "3": "Hay {{studies}} pruebas con los criterios especificados",
-                    "4": ""
+                    "3": "Hay {{studies}} pruebas con los criterios especificados"
                 },
                 "diagnosis": "Hay {{studies}} encuestas con los criterios especificados",
                 "treatment": "Hay {{studies}} estudios con los criterios especificados",
@@ -305,6 +303,10 @@
             "title": "Descarga de datos",
             "footer": "(*) Número total de localizaciones que reportaron datos.",
             "dataset": "Selección de datos",
+            "loader": {
+                "fetching_data": "Recuperando datos ...",
+                "generating_file": "Generando el fichero ..."
+            },
             "buttons": {
                 "back": "Anterior",
                 "next": "Siguiente",
@@ -468,10 +470,11 @@
             "share": "Compartir",
             "tour": "Visita guiada por la aplicación"
         },
-        "feedbackIframeUrl": "https://extranet.who.int/dataform/828325?newtest=Y&lang=es",
+        "feedbackIframeUrl": "https://extranet.who.int/dataformv3/index.php/828325?newtest=Y&lang=es",
         "TREATMENT_FAILURE_KM": "% de pacientes con fallo terapeutico, Kaplan-Meier",
         "PROP_RELATED": "%",
-        "COUNTRY_NA": "Namibia"
+        "COUNTRY_NA": "Namibia",
+        "WEBGL_error_message": "Su navegador no es compatible con WebGL. Puede habilitar WebGL en la configuración avanzada de su navegador."
     },
     "diagnosisStory": {
         "step1": {
@@ -535,7 +538,7 @@
             "MOSQUITO_NUMBER": "Número total de mosquitos capturados",
             "BREEDING_HABITAT": "Hábitat de cría donde se capturaron los mosquitos",
             "ID_METHOD": "Método utilizado para identificar las especies de mosquitos",
-            "DATA_SOURCE": "",
+            "DATA_SOURCE": "Institucion o grupo que recogio los datos. \nNota: En caso de que los datos hayan sido extraidos desde una publicacion cientifica, esta variable mostrará \"Extracted from publication\"",
             "CITATION": "Cita de la publicación donde se publicaron los datos.",
             "CITATION_URL": "URL de la publicación donde se publicaron los datos",
             "DATA_CURATOR": "Instituto que compiló los datos. Parte de los datos en esta base de datos ha sido compilada por instituciones colaboradoras que compartieron sus colecciones de datos con la OMS. Esta columna indicará el nombre de la institución o grupo que compiló los datos.",
@@ -592,7 +595,7 @@
             "STAGE_ORIGIN": "Estado y origen de los mosquitoes expuetos al insecticida en la prueba",
             "MOSQUITO_NUMBER": "Número total de mosquitos expuetos al insecticida en la prueba",
             "MECHANISM_STATUS": "Estado de detección del mecanismo de resistencia que la prueba tuvo como objetivo identificar",
-            "DATA_SOURCE": "Institucion o grupo que recogio los datos. \nNota: En caso de que los datos hayan sido extraidos des unapublicacion cientifica, esta variable mostrará \"Extracted from publication\"",
+            "DATA_SOURCE": "Institucion o grupo que recogio los datos. \nNota: En caso de que los datos hayan sido extraidos desde una publicacion cientifica, esta variable mostrará \"Extracted from publication\"",
             "CITATION": "Cita de la publicación donde se publicaron los datos",
             "CITATION_URL": "URL de la publicación donde se publicaron los datos",
             "DATA_CURATOR": "Instituto que compiló los datos. Parte de los datos en esta base de datos ha sido compilada por instituciones colaboradoras que compartieron sus colecciones de datos con la OMS. Esta columna indicará el nombre de la institución o grupo que compiló los datos."

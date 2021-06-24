@@ -60,9 +60,7 @@ const useStyles = makeStyles(theme => ({
 
 const PboSiteChart = ({ studies }: Props) => {
     const { t } = useTranslation();
-    const siteSubtitleTranslation = t(
-        "common.prevention.chart.pbo_deployment.subtitle"
-    );
+    const siteSubtitleTranslation = t("common.prevention.chart.pbo_deployment.subtitle");
 
     const classes = useStyles({});
 
@@ -113,7 +111,9 @@ const PboSiteChart = ({ studies }: Props) => {
                 <Table aria-label="simple table" size="small" className={classes.table}>
                     <TableHead className={classes.head}>
                         <TableRow>
-                            <StyledHeaderCell align={"center"}>{t("common.prevention.chart.pbo_deployment.vector_species")}</StyledHeaderCell>
+                            <StyledHeaderCell align={"center"}>
+                                {t("common.prevention.chart.pbo_deployment.vector_species")}
+                            </StyledHeaderCell>
                             <StyledHeaderCell align={"center"} borderLeft>
                                 {t("common.prevention.chart.pbo_deployment.pyrethroid_resistance_status")}
                             </StyledHeaderCell>
@@ -126,7 +126,9 @@ const PboSiteChart = ({ studies }: Props) => {
                             <StyledHeaderCell align={"center"} borderLeft>
                                 {t("common.prevention.chart.pbo_deployment.conferred_by_mono_oxygenase")}
                             </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"}>{t("common.prevention.chart.pbo_deployment.mono_oxygenase_measured_by")}</StyledHeaderCell>
+                            <StyledHeaderCell align={"center"}>
+                                {t("common.prevention.chart.pbo_deployment.mono_oxygenase_measured_by")}
+                            </StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
                                 {t("common.prevention.chart.pbo_deployment.most_recent_mono_oxygenase_results")}
                             </StyledHeaderCell>

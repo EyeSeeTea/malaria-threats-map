@@ -14,7 +14,6 @@ const useStyles = makeStyles(() =>
 const PBOStep2 = () => {
     const classes = useStyles({});
     const { t } = useTranslation();
-    
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>

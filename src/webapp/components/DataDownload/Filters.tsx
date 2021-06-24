@@ -4,9 +4,6 @@ import { State } from "../../store/types";
 import { selectTheme } from "../../store/reducers/base-reducer";
 import { setThemeAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
-import PreventionDataSetSelector from "./filters/PreventionDataSetSelector";
-import InvasiveDataSetSelector from "./filters/InvasiveDataSetSelector";
-import TreatmentDataSetSelector from "./filters/TreatmentDataSetSelector";
 import YearsSelector from "./filters/YearsSelector";
 import CountriesSelector from "./filters/CountriesSelector";
 import InsecticideClassSelector from "../filters/InsecticideClassSelector";
@@ -25,6 +22,7 @@ import { useTranslation } from "react-i18next";
 import { fetchPreventionStudiesRequest } from "../../store/actions/prevention-actions";
 import { fetchTreatmentStudiesRequest } from "../../store/actions/treatment-actions";
 import { fetchInvasiveStudiesRequest } from "../../store/actions/invasive-actions";
+import DataSetSelector from "./filters/DataSetSelector";
 
 const Divider = styled.div`
     height: 16px;
@@ -58,7 +56,7 @@ const Filters = ({
     fetchPreventionStudies,
     fetchTreatmentStudies,
 }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const onSetTheme = (value: string) => {
         onChange({
@@ -199,13 +197,13 @@ const Filters = ({
             >
                 <ThemeFilter value={theme} onChange={onSetTheme} />
                 {theme === "prevention" && (
-                    <PreventionDataSetSelector value={preventionDataset} onChange={onSetPreventionDataset} />
+                    <DataSetSelector theme={theme} value={preventionDataset} onChange={onSetPreventionDataset} />
                 )}
                 {theme === "treatment" && (
-                    <TreatmentDataSetSelector value={treatmentDataset} onChange={onSetTreatmentDataset} />
+                    <DataSetSelector theme={theme} value={treatmentDataset} onChange={onSetTreatmentDataset} />
                 )}
                 {theme === "invasive" && (
-                    <InvasiveDataSetSelector value={invasiveDataset} onChange={onSetInvasiveDataset} />
+                    <DataSetSelector theme={theme} value={invasiveDataset} onChange={onSetInvasiveDataset} />
                 )}
             </Paper>
             <Divider />

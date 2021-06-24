@@ -64,7 +64,7 @@ function SiteSelector({
                 return invasiveStudies;
         }
     })();
-   
+
     const SITES_SUGGESTIONS = R.uniqBy(
         study => study.value,
         studies.map(study => ({

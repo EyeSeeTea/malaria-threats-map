@@ -172,7 +172,13 @@ function Screenshot({ map, theme, title }: Props) {
     };
     return (
         <div>
-            <Fab size="small" color="default" onClick={handleClick} className={classes.fab} title={t("common.icons.image")}>
+            <Fab
+                size="small"
+                color="default"
+                onClick={handleClick}
+                className={classes.fab}
+                title={t("common.icons.image")}
+            >
                 <AddAPhotoIcon />
             </Fab>
         </div>

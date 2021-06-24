@@ -6,11 +6,12 @@ import * as R from "ramda";
 import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
 import { selectRegion } from "../../store/reducers/base-reducer";
 import { setRegionAction, setSelection } from "../../store/actions/base-actions";
+import { CountryLayer } from "../../../domain/entities/CountryLayer";
 
 const REGION_LAYER_ID = "regions-layer";
 const REGION_SOURCE_ID = "regions-source";
 
-const layer: any = {
+const layer: mapboxgl.FillLayer = {
     id: REGION_LAYER_ID,
     type: "fill",
     paint: {
@@ -21,8 +22,8 @@ const layer: any = {
     layout: {
         visibility: "none",
     },
-    minZoom: 0,
-    maxZoom: 20,
+    minzoom: 0,
+    maxzoom: 20,
     source: REGION_SOURCE_ID,
 };
 
@@ -37,7 +38,7 @@ const mapDispatchToProps = {
 };
 
 interface OwnProps {
-    map: any;
+    map: mapboxgl.Map;
 }
 
 const MEKONG_BOUNDS: [number, number, number, number] = [
@@ -55,9 +56,11 @@ class RegionLayer extends Component<Props> {
     componentDidUpdate(prevProps: Props) {
         const existing = this.props.map.getSource(REGION_SOURCE_ID);
         if (!existing && this.props.countryLayer) {
+            const mapboxSource = mapCountryLayer(this.props.countryLayer);
+
             this.props.map.addSource(REGION_SOURCE_ID, {
                 type: "geojson",
-                data: this.props.countryLayer,
+                data: mapboxSource,
             });
             this.props.map.addLayer(layer);
         }
@@ -218,3 +221,17 @@ class RegionLayer extends Component<Props> {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegionLayer);
+
+function mapCountryLayer(countryLayer: CountryLayer): GeoJSON.FeatureCollection<GeoJSON.Geometry> {
+    return {
+        type: "FeatureCollection",
+        features: countryLayer.features.map(feature => {
+            return {
+                type: "Feature",
+                id: feature.id,
+                geometry: feature.geometry,
+                properties: feature.properties,
+            };
+        }),
+    };
+}

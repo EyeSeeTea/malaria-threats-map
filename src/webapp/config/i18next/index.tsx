@@ -1,5 +1,6 @@
 import i18next from "i18next";
 import { dispatchCustomEvent } from "../../utils/dom-utils";
+
 import en_translations from "../../translations/en/translations.json";
 import es_translations from "../../translations/es/translations.json";
 import fr_translations from "../../translations/fr/translations.json";
@@ -14,15 +15,15 @@ i18next.init({
     lng: lng, // language to use
     resources: {
         en: {
-          translation: en_translations,
+            translation: en_translations,
         },
         es: {
-        translation: es_translations,
+            translation: es_translations,
         },
         fr: {
-        translation: fr_translations,
-        }
-      }
+            translation: fr_translations,
+        },
+    },
 });
 
 export const changeLanguage = (lng: string) => {

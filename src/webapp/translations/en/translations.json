@@ -248,8 +248,7 @@
                     "0": "There are {{studies}} bioassays found with the specified criteria",
                     "1": "There are {{studies}} bioassays found with the specified criteria",
                     "2": "There are {{studies}} assays found with the specified criteria",
-                    "3": "There are {{studies}} bioassays found with the specified criteria",
-                    "4": ""
+                    "3": "There are {{studies}} bioassays found with the specified criteria"
                 },
                 "diagnosis": "There are {{studies}} surveys found with the specified criteria",
                 "treatment": "There are {{studies}} studies found with the specified criteria",
@@ -304,6 +303,10 @@
             "title": "Data download",
             "footer": "(*) total number of sites for which data was reported",
             "dataset": "Data selection",
+            "loader": {
+                "fetching_data": "Fetching data ...",
+                "generating_file": "Generating file ..."
+            },
             "buttons": {
                 "back": "Back",
                 "next": "Next",
@@ -467,10 +470,11 @@
             "share": "Share",
             "tour": "Take a tour"
         },
-        "feedbackIframeUrl": "https://extranet.who.int/dataform/828325?newtest=Y&lang=en",
+        "feedbackIframeUrl": "https://extranet.who.int/dataformv3/index.php/828325?newtest=Y&lang=en",
         "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",
         "PROP_RELATED": "Percentage %",
-        "COUNTRY_NA": "Namibia"
+        "COUNTRY_NA": "Namibia",
+        "WEBGL_error_message": "Your browser does not support WebGL. You can enable WebGL in the advanced settings of your browser."
     },
     "diagnosisStory": {
         "step1": {
@@ -533,8 +537,8 @@
             "SAMPLING_METHOD": "Sampling method used to collect the mosquitoes",
             "MOSQUITO_NUMBER": "Total number of mosquitoes collected",
             "BREEDING_HABITAT": "Breeding habitat where the mosquitos were collected",
-            "ID_METHOD": "Method used to indentiy the species of the mosquitoes",
-            "DATA_SOURCE": "",
+            "ID_METHOD": "Method used to identify the species of the mosquitoes",
+            "DATA_SOURCE": "Institution or group that collected the data. \nNote: In the event that the data was extracted from a publication, this variable will saw \"Extracted from publication\"",
             "CITATION": "Citation of the publication where the data was published",
             "CITATION_URL": "URL of the publication where the data was published",
             "DATA_CURATOR": "Institute that compiled the data. Part of the data in this databases has been compiled by WHO's partner institutions and submited to or shared with WHO.This column will indicate the name of the institution or group that compiled the data.",
@@ -738,7 +742,7 @@
             "part2": "<0>65 of 89 malaria-endemic countries have reported pyrethroid resistance in at least one local vector since 2010</0>",
             "part3": "Resistance has been found in vectors from all six WHO regions and to all four classes of insecticide currently used in adult malaria vector control. Pyrethroid resistance is most commonly tested and reported.",
             "link": "https://www.who.int/publications/i/item/9789241514057",
-            "supporting": "supporting 3"
+            "prevention2": "prevention 2"
         },
         "step3": {
             "part1": "<0>Recent and complete data on insecticide resistance are lacking for many countries</0>",
@@ -1024,4 +1028,3 @@
         "ZW": "Zimbabwe"
     }
 }
-    

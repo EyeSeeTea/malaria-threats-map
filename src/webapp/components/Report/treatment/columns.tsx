@@ -1,3 +1,5 @@
+import { HeadCell } from "../types";
+
 type NumberOrHyphen = number | string;
 
 export interface Data {
@@ -16,36 +18,25 @@ export interface Data {
     PERCENTILE_75: NumberOrHyphen;
 }
 
-interface HeadCell {
-    id: keyof Data;
-    numeric: boolean;
-    disablePadding: boolean;
-    label: string;
-    sortable?: boolean;
-    align?: "right" | "left";
-    divider?: boolean;
-    decimalPositions?: number;
-}
-
-export const headCells: HeadCell[] = [
+export const headCells: HeadCell<Data>[] = [
     {
         id: "COUNTRY",
         numeric: false,
         disablePadding: false,
-        label: "report.treatment.country",
+        label: "common.report.treatment.country",
     },
     {
         id: "DRUG",
         numeric: false,
         disablePadding: false,
         divider: true,
-        label: "report.treatment.drug",
+        label: "common.report.treatment.drug",
     },
     {
         id: "FOLLOW_UP",
         numeric: true,
         disablePadding: false,
-        label: "report.treatment.follow",
+        label: "common.report.treatment.follow",
         sortable: true,
         align: "right",
         divider: true,
@@ -55,7 +46,7 @@ export const headCells: HeadCell[] = [
         id: "STUDY_YEARS",
         numeric: false,
         disablePadding: false,
-        label: "report.treatment.period",
+        label: "common.report.treatment.period",
         sortable: true,
         align: "right",
         divider: true,
@@ -64,7 +55,7 @@ export const headCells: HeadCell[] = [
         id: "NUMBER_OF_STUDIES",
         numeric: true,
         disablePadding: false,
-        label: "report.treatment.studies",
+        label: "common.report.treatment.studies",
         sortable: true,
         align: "right",
         divider: true,
@@ -74,7 +65,7 @@ export const headCells: HeadCell[] = [
         id: "MEDIAN",
         numeric: true,
         disablePadding: false,
-        label: "report.treatment.median",
+        label: "common.report.treatment.median",
         sortable: true,
         align: "right",
         divider: true,
@@ -104,7 +95,7 @@ export const headCells: HeadCell[] = [
         id: "PERCENTILE_25",
         numeric: true,
         disablePadding: false,
-        label: "report.treatment.percentile_25",
+        label: "common.report.treatment.percentile_25",
         sortable: true,
         align: "right",
         divider: true,
@@ -114,7 +105,7 @@ export const headCells: HeadCell[] = [
         id: "PERCENTILE_75",
         numeric: true,
         disablePadding: false,
-        label: "report.treatment.percentile_75",
+        label: "common.report.treatment.percentile_75",
         sortable: true,
         align: "right",
         divider: true,

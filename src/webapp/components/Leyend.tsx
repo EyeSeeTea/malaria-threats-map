@@ -74,7 +74,9 @@ export function LegendFooter() {
     const { t } = useTranslation();
     return (
         <LegendFooterContainer>
-            <LegendFooterTypography color="textSecondary">{t("common.legend.most_recent_data_shown")}</LegendFooterTypography>
+            <LegendFooterTypography color="textSecondary">
+                {t("common.legend.most_recent_data_shown")}
+            </LegendFooterTypography>
         </LegendFooterContainer>
     );
 }

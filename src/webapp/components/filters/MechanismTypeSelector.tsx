@@ -1,11 +1,9 @@
 import React from "react";
-import IntegrationReactSelect, { Option } from "../BasicSelect";
-import { Divider, FilterWrapper } from "./Filters";
-import FormLabel from "@material-ui/core/FormLabel";
 import { useTranslation } from "react-i18next";
 import { WHITELISTED_TYPES } from "./MechanismTypeFilter";
 import { BIOCHEMICAL_MECHANISM_TYPES, MOLECULAR_MECHANISM_TYPES } from "../DataDownload";
 import * as R from "ramda";
+import MultiFilter from "./common/MultiFilter";
 
 type OwnProps = {
     onChange: (selection: string[]) => void;
@@ -15,7 +13,7 @@ type OwnProps = {
 
 type Props = OwnProps;
 
-function MechanismsTypeSelector({ onChange, value, dataset }: Props) {
+const MechanismsTypeSelector: React.FC<Props> = ({ onChange, value, dataset }) => {
     const { t } = useTranslation();
 
     const types = (() => {
@@ -37,24 +35,13 @@ function MechanismsTypeSelector({ onChange, value, dataset }: Props) {
         }))
     );
 
-    const onSelectionChange = (options: Option[] = []) => {
-        onChange((options || []).map(o => o.value));
-    };
-
-    const selection = suggestions.filter(suggestion => value.includes(suggestion.value));
-
     return (
-        <FilterWrapper>
-            <FormLabel component="legend">{t("common.filters.mechanism_type")}</FormLabel>
-            <Divider />
-            <IntegrationReactSelect
-                isMulti
-                isClearable
-                suggestions={suggestions}
-                onChange={onSelectionChange}
-                value={selection}
-            />
-        </FilterWrapper>
+        <MultiFilter
+            label={t("common.filters.mechanism_type")}
+            options={suggestions}
+            onChange={onChange}
+            value={value}
+        />
     );
-}
+};
 export default MechanismsTypeSelector;

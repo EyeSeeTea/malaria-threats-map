@@ -15,17 +15,13 @@ type Props = {
 };
 
 export interface FullCountry {
-    iso2: string;
-    name: string;
+    [key: string]: string;
 }
 
-
 function FullCountriesSelector({ onChange, value, includeGlobalOption, menuIsOpen, label }: Props) {
-    const { t } = useTranslation("fullCountries");
+    const { t } = useTranslation();
 
-    const baseCountries: FullCountry[] = t("countries", { returnObjects: true });
-
-    const countries = baseCountries.sort((t1, t2) => (t1.name < t2.name ? -1 : 1));
+    const baseCountries: FullCountry = t("countries", { returnObjects: true });
     const global = value.includes("GLOBAL");
     const onOptionChange = (selection: OptionType[] | OptionType | undefined) => {
         if (!selection) {
@@ -44,7 +40,6 @@ function FullCountriesSelector({ onChange, value, includeGlobalOption, menuIsOpe
             }
         }
     };
-
     const suggestions: any[] = Object.entries(baseCountries).map(([iso, name]) => ({
         label: name,
         value: iso,

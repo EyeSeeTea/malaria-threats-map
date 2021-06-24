@@ -1,3 +1,5 @@
+import { HeadCell } from "../types";
+
 export interface Data {
     ID: string;
     ISO2: string;
@@ -65,28 +67,18 @@ export const COLUMNS = [
     "ACE1R_PERCENT_SITES_DETECTED_NUMBER_SITES",
 ];
 
-interface HeadCell {
-    id: keyof Data;
-    numeric: boolean;
-    disablePadding: boolean;
-    label: string;
-    sortable?: boolean;
-    align?: "right" | "left" | "center";
-    divider?: boolean;
-}
-
-export const headCells: HeadCell[] = [
+export const headCells: HeadCell<Data>[] = [
     {
         id: "COUNTRY",
         numeric: false,
         disablePadding: false,
-        label: "report.prevention.country",
+        label: "common.report.prevention.country",
     },
     {
         id: "INSECTICIDE_CLASSES",
         numeric: false,
         disablePadding: false,
-        label: "report.prevention.insecticide",
+        label: "common.report.prevention.insecticide",
         align: "center",
         divider: true,
     },
@@ -94,14 +86,14 @@ export const headCells: HeadCell[] = [
         id: "SPECIES",
         numeric: false,
         disablePadding: false,
-        label: "report.prevention.species",
+        label: "common.report.prevention.species",
         divider: true,
     },
     {
         id: "PYRETHROIDS_AVERAGE_MORTALITY",
         numeric: true,
         disablePadding: false,
-        label: "report.prevention.resistance_percentage",
+        label: "common.report.prevention.resistance_percentage",
         sortable: true,
         align: "right",
         divider: true,
@@ -110,7 +102,7 @@ export const headCells: HeadCell[] = [
         id: "PYRETHROIDS_LAST_YEAR",
         numeric: false,
         disablePadding: false,
-        label: "report.prevention.resistance_year",
+        label: "common.report.prevention.resistance_year",
         sortable: true,
         align: "right",
     },
@@ -118,7 +110,7 @@ export const headCells: HeadCell[] = [
         id: "ORGANOCHLORINES_AVERAGE_MORTALITY",
         numeric: true,
         disablePadding: false,
-        label: "report.prevention.resistance_percentage",
+        label: "common.report.prevention.resistance_percentage",
         sortable: true,
         align: "right",
         divider: true,
@@ -127,7 +119,7 @@ export const headCells: HeadCell[] = [
         id: "ORGANOCHLORINES_LAST_YEAR",
         numeric: false,
         disablePadding: false,
-        label: "report.prevention.resistance_year",
+        label: "common.report.prevention.resistance_year",
         sortable: true,
         align: "right",
     },
@@ -135,7 +127,7 @@ export const headCells: HeadCell[] = [
         id: "CARBAMATES_AVERAGE_MORTALITY",
         numeric: true,
         disablePadding: false,
-        label: "report.prevention.resistance_percentage",
+        label: "common.report.prevention.resistance_percentage",
         sortable: true,
         align: "right",
         divider: true,
@@ -144,7 +136,7 @@ export const headCells: HeadCell[] = [
         id: "CARBAMATES_LAST_YEAR",
         numeric: false,
         disablePadding: false,
-        label: "report.prevention.resistance_year",
+        label: "common.report.prevention.resistance_year",
         sortable: true,
         align: "right",
     },
@@ -152,7 +144,7 @@ export const headCells: HeadCell[] = [
         id: "ORGANOPHOSPHATES_AVERAGE_MORTALITY",
         numeric: true,
         disablePadding: false,
-        label: "report.prevention.resistance_percentage",
+        label: "common.report.prevention.resistance_percentage",
         sortable: true,
         align: "right",
         divider: true,
@@ -161,7 +153,7 @@ export const headCells: HeadCell[] = [
         id: "ORGANOPHOSPHATES_LAST_YEAR",
         numeric: false,
         disablePadding: false,
-        label: "report.prevention.resistance_year",
+        label: "common.report.prevention.resistance_year",
         sortable: true,
         align: "right",
     },
@@ -169,7 +161,7 @@ export const headCells: HeadCell[] = [
         id: "MONOXYGENASES_PERCENT_SITES_DETECTED",
         numeric: true,
         disablePadding: false,
-        label: "report.prevention.mechanism_percentage",
+        label: "common.report.prevention.mechanism_percentage",
         align: "right",
         divider: true,
     },
@@ -177,42 +169,42 @@ export const headCells: HeadCell[] = [
         id: "ESTERASES_PERCENT_SITES_DETECTED",
         numeric: true,
         disablePadding: false,
-        label: "report.prevention.mechanism_percentage",
+        label: "common.report.prevention.mechanism_percentage",
         align: "right",
     },
     {
         id: "GSTS_PERCENT_SITES_DETECTED",
         numeric: true,
         disablePadding: false,
-        label: "report.prevention.mechanism_percentage",
+        label: "common.report.prevention.mechanism_percentage",
         align: "right",
     },
     {
         id: "K1014S_PERCENT_SITES_DETECTED",
         numeric: true,
         disablePadding: false,
-        label: "report.prevention.mechanism_percentage",
+        label: "common.report.prevention.mechanism_percentage",
         align: "right",
     },
     {
         id: "K1014F_PERCENT_SITES_DETECTED",
         numeric: true,
         disablePadding: false,
-        label: "report.prevention.mechanism_percentage",
+        label: "common.report.prevention.mechanism_percentage",
         align: "right",
     },
     {
         id: "KDR_UNSPECIFIED_PERCENT_SITES_DETECTED",
         numeric: true,
         disablePadding: false,
-        label: "report.prevention.mechanism_percentage",
+        label: "common.report.prevention.mechanism_percentage",
         align: "right",
     },
     {
         id: "ACE1R_PERCENT_SITES_DETECTED",
         numeric: true,
         disablePadding: false,
-        label: "report.prevention.mechanism_percentage",
+        label: "common.report.prevention.mechanism_percentage",
         align: "right",
     },
 ];

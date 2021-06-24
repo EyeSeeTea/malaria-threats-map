@@ -179,7 +179,9 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                 </FormControl>
             )}
             <FormControl fullWidth className={classes.formControl}>
-                <FormLabel component="legend">{t("common.data_download.step2.date_use_options_content.date")}</FormLabel>
+                <FormLabel component="legend">
+                    {t("common.data_download.step2.date_use_options_content.date")}
+                </FormLabel>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                         disableToolbar
@@ -195,11 +197,15 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
             </FormControl>
             <FullCountriesSelector
 <<<<<<< HEAD
+<<<<<<< HEAD
                 label={t("common.data_download.step2.countries")}
                 className={classes.countries}
 =======
                 label={t("data_download.step2.countries")}
 >>>>>>> ac954a9059a5dd15b5a7e986ee6f672fde2ac7b8
+=======
+                label={t("common.data_download.step2.countries")}
+>>>>>>> b20818726dabe047c930b3dcbf578c4b72c2eefb
                 includeGlobalOption
                 value={useInfo.countries}
                 onChange={handleCountriesChange}

@@ -47,7 +47,9 @@ const Welcome = ({ onChange, welcomeInfo }: OwnProps) => {
             <br />
             <Typography variant={"body2"}>
                 {t("common.data_download.step0.p7a")}
-                <Link href={`mailto:${t("common.data_download.step0.p7bEmail")}`}>{t("common.data_download.step0.p7bEmail")}</Link>
+                <Link href={`mailto:${t("common.data_download.step0.p7bEmail")}`}>
+                    {t("common.data_download.step0.p7bEmail")}
+                </Link>
             </Typography>
             <br />
             <FormControlLabel
