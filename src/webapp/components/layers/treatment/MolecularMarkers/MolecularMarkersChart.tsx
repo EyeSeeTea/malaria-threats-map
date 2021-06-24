@@ -250,6 +250,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
     ];
     const title = titleItems.filter(Boolean).join(", ");
     const molecularMarker = t(MOLECULAR_MARKERS.find((m: any) => m.value === treatmentFilters.molecularMarker).label);
+
     const study = sortedStudies[sortedStudies.length - studyIndex - 1];
     const translations = {
         percentage: t("common.treatment.chart.molecular_markers.percentage"),

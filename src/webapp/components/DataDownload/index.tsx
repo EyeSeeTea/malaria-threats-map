@@ -295,7 +295,8 @@ function DataDownload({
 
     const resolveValue = (field: Option, study: any) => {
         if (field.value === "MM_TYPE") {
-            return MOLECULAR_MARKERS.find(mm => mm.value === Number(study[field.value])).label;
+            return MOLECULAR_MARKERS[Number(study[field.value])];
+            //MOLECULAR_MARKERS.find(mm => mm.value === Number(study[field.value])).label;
         }
         if (field.value === "PLASMODIUM_SPECIES") {
             const value = PLASMODIUM_SPECIES_SUGGESTIONS.find(species => species.value === study[field.value]);

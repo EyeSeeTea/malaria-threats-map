@@ -11,7 +11,6 @@ type OwnProps = {
 type Props = OwnProps;
 
 const suggestions = MOLECULAR_MARKERS.map(s => ({ ...s, value: `${s.value}` }));
-
 const MolecularMarkerSelector: React.FC<Props> = ({ onChange, value }) => {
     const { t } = useTranslation();
 

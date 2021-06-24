@@ -51,7 +51,7 @@ export const getTreatmentStudiesEpic = (
         })
     );
 
-export const setTreatmentThemeEpic = (action$: ActionsObservable<ActionType<typeof setTreatmentMapType>>) =>
+    export const setTreatmentThemeEpic = (action$: ActionsObservable<ActionType<typeof setTreatmentMapType>>) =>
     action$.ofType(ActionTypeEnum.SetTreatmentMapType).pipe(
         switchMap(action => {
             if (action.payload === 2) {
