@@ -4,9 +4,6 @@ import { State } from "../../store/types";
 import { selectTheme } from "../../store/reducers/base-reducer";
 import { setThemeAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
-import PreventionDataSetSelector from "./filters/PreventionDataSetSelector";
-import InvasiveDataSetSelector from "./filters/InvasiveDataSetSelector";
-import TreatmentDataSetSelector from "./filters/TreatmentDataSetSelector";
 import YearsSelector from "./filters/YearsSelector";
 import CountriesSelector from "./filters/CountriesSelector";
 import InsecticideClassSelector from "../filters/InsecticideClassSelector";
@@ -22,6 +19,10 @@ import MolecularMarkerSelector from "../filters/MolecularMarkerSelector";
 import { Paper, Typography } from "@material-ui/core";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { fetchPreventionStudiesRequest } from "../../store/actions/prevention-actions";
+import { fetchTreatmentStudiesRequest } from "../../store/actions/treatment-actions";
+import { fetchInvasiveStudiesRequest } from "../../store/actions/invasive-actions";
+import DataSetSelector from "./filters/DataSetSelector";
 
 const Divider = styled.div`
     height: 16px;
@@ -33,6 +34,9 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
+    fetchPreventionStudies: fetchPreventionStudiesRequest,
+    fetchTreatmentStudies: fetchTreatmentStudiesRequest,
+    fetchInvasiveStudies: fetchInvasiveStudiesRequest,
     setTheme: setThemeAction,
 };
 
@@ -45,8 +49,14 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
-const Filters = ({ onChange, selections }: Props) => {
-    const { t } = useTranslation("common");
+const Filters = ({
+    onChange,
+    selections,
+    fetchInvasiveStudies,
+    fetchPreventionStudies,
+    fetchTreatmentStudies,
+}: Props) => {
+    const { t } = useTranslation();
 
     const onSetTheme = (value: string) => {
         onChange({
@@ -56,6 +66,7 @@ const Filters = ({ onChange, selections }: Props) => {
     };
 
     const onSetPreventionDataset = (value: string) => {
+        fetchPreventionStudies();
         onChange({
             ...selections,
             preventionDataset: value,
@@ -63,6 +74,7 @@ const Filters = ({ onChange, selections }: Props) => {
     };
 
     const onSetTreatmentDataset = (value: string) => {
+        fetchTreatmentStudies();
         onChange({
             ...selections,
             treatmentDataset: value,
@@ -70,6 +82,7 @@ const Filters = ({ onChange, selections }: Props) => {
     };
 
     const onSetInvasiveDataset = (value: string) => {
+        fetchInvasiveStudies();
         onChange({
             ...selections,
             invasiveDataset: value,
@@ -174,7 +187,7 @@ const Filters = ({ onChange, selections }: Props) => {
     return (
         <div>
             <Typography variant="subtitle1" color="textSecondary">
-                {t("data_download.dataset")}
+                {t("common.data_download.dataset")}
             </Typography>
             <Paper
                 style={{
@@ -184,18 +197,18 @@ const Filters = ({ onChange, selections }: Props) => {
             >
                 <ThemeFilter value={theme} onChange={onSetTheme} />
                 {theme === "prevention" && (
-                    <PreventionDataSetSelector value={preventionDataset} onChange={onSetPreventionDataset} />
+                    <DataSetSelector theme={theme} value={preventionDataset} onChange={onSetPreventionDataset} />
                 )}
                 {theme === "treatment" && (
-                    <TreatmentDataSetSelector value={treatmentDataset} onChange={onSetTreatmentDataset} />
+                    <DataSetSelector theme={theme} value={treatmentDataset} onChange={onSetTreatmentDataset} />
                 )}
                 {theme === "invasive" && (
-                    <InvasiveDataSetSelector value={invasiveDataset} onChange={onSetInvasiveDataset} />
+                    <DataSetSelector theme={theme} value={invasiveDataset} onChange={onSetInvasiveDataset} />
                 )}
             </Paper>
             <Divider />
             <Typography variant="subtitle1" color="textSecondary">
-                {t("data_download.step3.filters.additional")}
+                {t("common.data_download.step3.filters.additional")}
             </Typography>
             <Paper
                 style={{

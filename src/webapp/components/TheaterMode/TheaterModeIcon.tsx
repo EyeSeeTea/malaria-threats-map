@@ -27,7 +27,7 @@ const mapDispatchToProps = {
 
 function TheaterModeIcon({ theaterMode, setTheaterMode }: any) {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     function setTheaterModeAndLog(value: boolean) {
         setTheaterMode(value);
@@ -41,7 +41,7 @@ function TheaterModeIcon({ theaterMode, setTheaterMode }: any) {
                 color={theaterMode ? "primary" : "default"}
                 onClick={() => setTheaterModeAndLog(!theaterMode)}
                 className={classes.fab}
-                title={t("icons.animation")}
+                title={t("common.icons.animation")}
             >
                 <TheaterIcon />
             </Fab>

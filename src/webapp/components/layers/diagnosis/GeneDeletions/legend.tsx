@@ -22,7 +22,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps;
 
 function Legend({ filters }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const labels = [
         {
             label: "diagnosis.legend.gene_deletions.confirmed",
@@ -37,7 +37,7 @@ function Legend({ filters }: Props) {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t(`diagnosis.legend.gene_deletions.${filters.deletionType}`)}
+                    {t(`common.diagnosis.legend.gene_deletions.${filters.deletionType}`)}
                 </LegendTitleTypography>
             </LegendTitleContainer>
             <LegendLabels labels={labels} />

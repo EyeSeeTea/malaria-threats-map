@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const TourIcon = () => {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     return (
         <React.Fragment>
@@ -42,7 +42,7 @@ const TourIcon = () => {
                     window.history.pushState({}, document.title, window.location.href.split("?")[0]);
                     window.location.reload();
                 }}
-                title={t("icons.tour")}
+                title={t("common.icons.tour")}
             >
                 <WizardIcon />
             </Fab>

@@ -10,7 +10,7 @@ import { PreventionCountryColors } from "./PreventionCountrySymbols";
 import { useTranslation } from "react-i18next";
 
 export default function PreventionCountryLegend() {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const labels = [
         {
             label: "legend.number_of_studies",
@@ -21,7 +21,7 @@ export default function PreventionCountryLegend() {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("themes.prevention")}
+                    {t("common.themes.prevention")}
                 </LegendTitleTypography>
             </LegendTitleContainer>
             <LegendLabels labels={labels} />

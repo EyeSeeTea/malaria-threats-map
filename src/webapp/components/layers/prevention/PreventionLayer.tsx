@@ -1,19 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
-import { studiesToGeoJson } from "../layer-utils";
+import { studiesToGeoJson, getCountryStudies } from "../layer-utils";
 import setupEffects from "../effects";
 import * as R from "ramda";
 import resistanceStatusSymbols from "./ResistanceStatus/symbols";
 import { resolveResistanceStatus } from "./ResistanceStatus/utils";
 import { buildPreventionFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
-import {
-    selectPreventionFilters,
-    selectPreventionStudies,
-    selectPreventionStudiesLoading,
-    selectPreventionStudiesError,
-} from "../../../store/reducers/prevention-reducer";
+import { selectPreventionFilters, selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
 import {
     selectCountryMode,
     selectFilters,
@@ -29,10 +24,10 @@ import {
 } from "../../../store/actions/prevention-actions";
 import { Hidden } from "@material-ui/core";
 import { setSelection } from "../../../store/actions/base-actions";
-import PreventionSitePopover from "./PreventionSitePopover";
 import PreventionSelectionChart from "./PreventionSelectionChart";
 import ChartModal from "../../ChartModal";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
+import SitePopover from "../common/SitePopover";
 
 export const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -52,8 +47,6 @@ const layer: any = (symbols: any) => ({
 
 const mapStateToProps = (state: State) => ({
     studies: selectPreventionStudies(state),
-    studiesLoading: selectPreventionStudiesLoading(state),
-    studiesError: selectPreventionStudiesError(state),
     theme: selectTheme(state),
     filters: selectFilters(state),
     preventionFilters: selectPreventionFilters(state),
@@ -73,7 +66,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
 type OwnProps = {
-    map: any;
+    map: mapboxgl.Map;
 };
 type Props = StateProps & DispatchProps & OwnProps;
 
@@ -137,11 +130,9 @@ class PreventionLayer extends Component<Props> {
         }
     }
     loadStudiesIfRequired() {
-        const { theme, studies, studiesLoading, studiesError } = this.props;
+        const { theme } = this.props;
 
-        const required = theme === PREVENTION && studies.length === 0 && !studiesLoading && !studiesError;
-
-        if (required) {
+        if (theme === PREVENTION) {
             this.props.fetchPreventionStudies();
         }
     }
@@ -181,54 +172,15 @@ class PreventionLayer extends Component<Props> {
 
     filterSource = () => {
         const { studies, countryMode } = this.props;
-        const source = this.props.map.getSource(PREVENTION_SOURCE_ID);
+        const source: any = this.props.map.getSource(PREVENTION_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = this.getCountryStudies(filteredStudies);
+            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, PREVENTION);
             const data = countryMode ? countryStudies : geoStudies;
             source.setData(studiesToGeoJson(data));
         }
-    };
-
-    getCountryStudies = (studies: any[] = []) => {
-        const countryStudies = R.groupBy(
-            R.path<string>(["ISO2"]),
-            studies
-        );
-        const countries = this.props.countries
-            .map((country, index) => ({
-                ...country,
-                OBJECTID: index,
-                Latitude: country.CENTER_LAT,
-                Longitude: country.CENTER_LON,
-                STUDIES: (countryStudies[country.ISO_2_CODE] || []).length || 0,
-            }))
-            .filter(study => study.STUDIES !== 0);
-
-        const sortedCountries = R.sortBy(country => country.STUDIES, countries);
-        if (sortedCountries.length === 0) return [];
-
-        const getSize = (nStudies: number) => {
-            if (nStudies > 50) {
-                return 15;
-            } else if (nStudies > 40) {
-                return 12.5;
-            } else if (nStudies > 30) {
-                return 10;
-            } else if (nStudies > 15) {
-                return 7.5;
-            } else if (nStudies >= 0) {
-                return 5;
-            }
-        };
-
-        return countries.map(country => ({
-            ...country,
-            SIZE: getSize(country.STUDIES),
-            SIZE_HOVER: getSize(country.STUDIES) - 1,
-        }));
     };
 
     mountLayer(prevProps?: Props) {
@@ -241,7 +193,7 @@ class PreventionLayer extends Component<Props> {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = this.getCountryStudies(filteredStudies);
+            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, PREVENTION);
 
             const data = countryMode ? countryStudies : geoStudies;
             const source: any = {
@@ -257,7 +209,7 @@ class PreventionLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any, _a: any) => {
+    onClickListener = (e: any) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -320,7 +272,9 @@ class PreventionLayer extends Component<Props> {
             this.props.theme === "prevention" && (
                 <>
                     <Hidden xsDown>
-                        <PreventionSitePopover map={this.props.map} studies={filteredStudies} />
+                        <SitePopover map={this.props.map}>
+                            <PreventionSelectionChart studies={filteredStudies} />
+                        </SitePopover>
                     </Hidden>
                     <Hidden smUp>
                         <ChartModal selection={selection}>

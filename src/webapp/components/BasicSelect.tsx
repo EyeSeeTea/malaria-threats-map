@@ -14,6 +14,7 @@ import { SingleValueProps } from "react-select/src/components/SingleValue";
 import { Omit } from "@material-ui/types";
 import { useTranslation } from "react-i18next";
 import * as R from "ramda";
+import { useFirstRender } from "./hooks/use-first-render";
 
 export interface OptionType {
     label: string;
@@ -123,17 +124,20 @@ function Control(props: ControlProps<OptionType, false>) {
 }
 
 function Option(props: OptionProps<OptionType, false>) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const value = props.children ? t(props.children.toString()) : "";
+    const isFirstRender = useFirstRender();
+    const isFocused = isFirstRender ? false : props.isFocused;
+
     //it doesn't have access to the control/selected value
     return (
         <MenuItem
             dense
             ref={props.innerRef}
-            selected={props.isFocused}
+            selected={isFocused}
             component="div"
             style={{
-                fontWeight: props.isSelected ? 500 : 400,
+                fontWeight: props.isSelected ? 800 : 400,
             }}
             {...props.innerProps}
             title={value}
@@ -157,7 +161,7 @@ function Placeholder(props: MuiPlaceholderProps) {
 }
 
 function SingleValue(props: SingleValueProps<OptionType>) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const value = props.children ? t(props.children.toString()) : "";
     return (
         <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
@@ -171,7 +175,7 @@ function ValueContainer(props: ValueContainerProps<OptionType, false>) {
 }
 
 function MultiValue(props: MultiValueProps<OptionType>) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const value = props.children ? t(props.children.toString()) : "";
     return (
         <Chip
@@ -211,7 +215,7 @@ export type Option = {
 };
 
 export default function IntegrationReactSelect({ suggestions = [], value, onChange, className, ...rest }: any) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const classes = useStyles(rest);
     const theme = useTheme();
 
@@ -242,7 +246,7 @@ export default function IntegrationReactSelect({ suggestions = [], value, onChan
                 options={R.sortBy<Option>(R.prop("label"), suggestions)}
                 value={value}
                 onChange={onChange}
-                placeholder={t("options.select") + "..."}
+                placeholder={t("common.options.select") + "..."}
                 {...rest}
             />
         </div>

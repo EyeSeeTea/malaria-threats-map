@@ -79,7 +79,7 @@ function StoryModeStepper({ theme, preventionFilters, setStoryMode, setStoryMode
     const classes = useStyles({});
     const steps = getSteps();
 
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const handleNext = () => {
         setStoryModeStep(storyModeStep + 1);
@@ -135,7 +135,7 @@ function StoryModeStepper({ theme, preventionFilters, setStoryMode, setStoryMode
                 <AppBar className={classes.appBar}>
                     <Toolbar variant="dense">
                         <Typography variant="subtitle1" className={classes.title}>
-                            {t(`themes.${theme}`)}
+                            {t(`common.themes.${theme}`)}
                         </Typography>
                         <FlexGrow />
                         <IconButton

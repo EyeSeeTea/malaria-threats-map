@@ -104,7 +104,7 @@ type OwnProps = {
 type Props = StateProps & OwnProps;
 
 const TreatmentFailureChart = ({ studies }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
     const years = R.uniq(sortedStudies.map(study => study.YEAR_START)).sort();
@@ -127,7 +127,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
 
     const series = keys.map(key => {
         return {
-            name: t(key.name),
+            name: t(`download.therapeutic_efficacy.${key.name}`),
             color: key.color,
             data: years.map(year => {
                 const yearFilters: any = studies.filter(study => parseInt(year) === parseInt(study.YEAR_START))[0];
@@ -141,7 +141,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     const titleItems = [
         studies[study].SITE_NAME,
         studies[study].PROVINCE,
-        t(studies[study].ISO2 === "NA" ? "COUNTRY_NA" : studies[study].ISO2),
+        t(`countries.${studies[study].ISO2 === "NA" ? "COUNTRY_NA" : studies[study].ISO2}`),
     ];
     const title = titleItems.filter(Boolean).join(", ");
     const {
@@ -162,17 +162,17 @@ const TreatmentFailureChart = ({ studies }: Props) => {
         Number.isNaN(parseFloat(value)) ? "N/A" : `${(parseFloat(value) * 100).toFixed(2)}%`;
 
     const translations = {
-        percentage: t("treatment.chart.treatment_failure.percentage"),
+        percentage: t("common.treatment.chart.treatment_failure.percentage"),
     };
-    const studyYears = t("treatment.chart.treatment_failure.study_years");
-    const numberOfPatients = t("treatment.chart.treatment_failure.number_of_patients");
-    const followUp = t("treatment.chart.treatment_failure.follow_up");
-    const confirmedResistPv = t("treatment.chart.treatment_failure.confirmed_resist_pv");
-    const positiveDay3 = t("treatment.chart.treatment_failure.positive_day_3");
-    const treatmentFailurePp = t("treatment.chart.treatment_failure.treatment_failure_pp");
-    const treatmentFailureKm = t("treatment.chart.treatment_failure.treatment_failure_km");
-    const days = t("treatment.chart.treatment_failure.days");
-    const t_studies = t("treatment.chart.treatment_failure.studies");
+    const studyYears = t("common.treatment.chart.treatment_failure.study_years");
+    const numberOfPatients = t("common.treatment.chart.treatment_failure.number_of_patients");
+    const followUp = t("common.treatment.chart.treatment_failure.follow_up");
+    const confirmedResistPv = t("common.treatment.chart.treatment_failure.confirmed_resist_pv");
+    const positiveDay3 = t("common.treatment.chart.treatment_failure.positive_day_3");
+    const treatmentFailurePp = t("common.treatment.chart.treatment_failure.treatment_failure_pp");
+    const treatmentFailureKm = t("common.treatment.chart.treatment_failure.treatment_failure_km");
+    const days = t("common.treatment.chart.treatment_failure.days");
+    const t_studies = t("common.treatment.chart.treatment_failure.studies");
 
     function renderInfo() {
         return (

@@ -3,30 +3,25 @@ import { connect } from "react-redux";
 import IntegrationReactSelect, { OptionType } from "../../BasicSelect";
 import FormLabel from "@material-ui/core/FormLabel";
 import T from "../../../translations/T";
-import { Divider, FilterWrapper } from "../../filters/Filters";
+import { Divider, FilterSimpleWrapper } from "../../filters/Filters";
 import { useTranslation } from "react-i18next";
 
 type Props = {
     includeGlobalOption?: boolean;
     menuIsOpen?: boolean;
     label?: string;
-    className?: string;
     value: string[];
     onChange: (value: string[]) => void;
 };
 
 export interface FullCountry {
-    iso2: string;
-    name: string;
+    [key: string]: string;
 }
 
-function FullCountriesSelector({ onChange, value, includeGlobalOption, menuIsOpen, label, className }: Props) {
-    const { t } = useTranslation("fullCountries");
+function FullCountriesSelector({ onChange, value, includeGlobalOption, menuIsOpen, label }: Props) {
+    const { t } = useTranslation();
 
-    const baseCountries: FullCountry[] = t("countries", { returnObjects: true });
-
-    const countries = baseCountries.sort((t1, t2) => (t1.name < t2.name ? -1 : 1));
-
+    const baseCountries: FullCountry = t("countries", { returnObjects: true });
     const global = value.includes("GLOBAL");
     const onOptionChange = (selection: OptionType[] | OptionType | undefined) => {
         if (!selection) {
@@ -45,9 +40,9 @@ function FullCountriesSelector({ onChange, value, includeGlobalOption, menuIsOpe
             }
         }
     };
-    const suggestions: any[] = countries.map((country: FullCountry) => ({
-        label: country.name,
-        value: country.iso2,
+    const suggestions: any[] = Object.entries(baseCountries).map(([iso, name]) => ({
+        label: name,
+        value: iso,
     }));
 
     const globalOption = {
@@ -58,7 +53,7 @@ function FullCountriesSelector({ onChange, value, includeGlobalOption, menuIsOpe
     const suggs = includeGlobalOption ? [...suggestions, globalOption] : suggestions;
 
     return (
-        <FilterWrapper className={className}>
+        <FilterSimpleWrapper>
             <FormLabel component="legend">{label || <T i18nKey={"filters.countries"} />}</FormLabel>
             <Divider />
             <IntegrationReactSelect
@@ -69,7 +64,7 @@ function FullCountriesSelector({ onChange, value, includeGlobalOption, menuIsOpe
                 value={global ? globalOption : suggs.filter(s => value.includes(s.value))}
                 menuIsOpen={menuIsOpen}
             />
-        </FilterWrapper>
+        </FilterSimpleWrapper>
     );
 }
 

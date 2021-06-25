@@ -26,7 +26,7 @@ import UserForm, { ORGANIZATION_TYPES } from "./UserForm";
 import UseForm, { isPoliciesActive, isResearchActive, isToolsActive } from "./UseForm";
 import Welcome from "./Welcome";
 import Filters from "./Filters";
-import { exportToCSV } from "./download";
+import { exportToCSV, Tab } from "./download";
 import styled from "styled-components";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import {
@@ -54,6 +54,8 @@ import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
 import { emailRegexp } from "../Subscription";
 import { FlexGrow } from "../Chart";
+import SimpleLoader from "../SimpleLoader";
+import { setTimeout } from "timers";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
 
@@ -196,8 +198,10 @@ function DataDownload({
     addDownload,
 }: Props) {
     const classes = useStyles({});
-    const { t } = useTranslation(["disclaimerTab", "common", "download"]);
+    const { t } = useTranslation();
     const [activeStep, setActiveStep] = React.useState(0);
+    const [downloading, setDownloading] = React.useState(false);
+    const [messageLoader, setMessageLoader] = React.useState("");
 
     React.useEffect(() => {
         if (isDataDownloadOpen) {
@@ -211,7 +215,7 @@ function DataDownload({
 
     const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>({});
     const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({
-        organizationType: t(ORGANIZATION_TYPES[0]),
+        organizationType: t(`common.${ORGANIZATION_TYPES[0]}`),
     });
     const [useInfo, setUseInfo] = React.useState<Partial<UseInfo>>(initialUseInfo);
 
@@ -237,7 +241,7 @@ function DataDownload({
         setActiveStep(0);
         setWelcomeInfo({});
         setUserInfo({
-            organizationType: t(ORGANIZATION_TYPES[0]),
+            organizationType: t(`common.${ORGANIZATION_TYPES[0]}`),
         });
         setUseInfo(initialUseInfo);
         setSelections({
@@ -293,7 +297,9 @@ function DataDownload({
             return MOLECULAR_MARKERS.find(mm => mm.value === Number(study[field.value])).label;
         }
         if (field.value === "PLASMODIUM_SPECIES") {
-            return PLASMODIUM_SPECIES_SUGGESTIONS.find(species => species.value === study[field.value]).label;
+            const value = PLASMODIUM_SPECIES_SUGGESTIONS.find(species => species.value === study[field.value]);
+
+            return value ? value.label : undefined;
         }
         if (["Latitude", "Longitude"].includes(field.value)) {
             return Number(study[field.value]).toFixed(6);
@@ -334,13 +340,13 @@ function DataDownload({
             if (field.label === "ISO2") {
                 return study[field.value];
             } else {
-                return t(study[field.value] === "NA" ? "COUNTRY_NA" : study[field.value]);
+                return t(`${study[field.value] === "NA" ? "COUNTRY_NA" : study[field.value]}`);
             }
         }
         if (!isNaN(study[field.value])) {
             return study[field.value];
         } else {
-            return t(study[field.value]);
+            return t(`${study[field.value]}`);
         }
     };
 
@@ -354,6 +360,14 @@ function DataDownload({
                 {}
             )
         );
+    };
+
+    const changeLoaderAndExportToCSV = (tabs: Tab[], filename: string) => {
+        setMessageLoader(t("common.data_download.loader.generating_file"));
+        setTimeout(() => {
+            exportToCSV(tabs, filename);
+            setDownloading(false);
+        }, 100);
     };
 
     const downloadPreventionData = () => {
@@ -399,10 +413,10 @@ function DataDownload({
                 ];
                 const tabs = [
                     {
-                        name: t("disclaimerTab:name"),
+                        name: t("disclaimerTab.name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer"),
+                                Disclaimer: t("disclaimerTab.disclaimer"),
                             },
                         ],
                     },
@@ -414,12 +428,12 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: t(`download:discrimination.${field}`),
+                            Description: t(`download.discrimination.${field}`),
                         })),
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
                 break;
             }
             case "SYNERGIST-INSECTICIDE_BIOASSAY": {
@@ -463,10 +477,10 @@ function DataDownload({
                 ];
                 const tabs = [
                     {
-                        name: t("disclaimerTab:name"),
+                        name: t("disclaimerTab.name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer"),
+                                Disclaimer: t("disclaimerTab.disclaimer"),
                             },
                         ],
                     },
@@ -478,12 +492,12 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: t(`download:synergist.${field}`),
+                            Description: t(`download.synergist.${field}`),
                         })),
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
                 break;
             }
             case "MOLECULAR_ASSAY": {
@@ -520,10 +534,10 @@ function DataDownload({
                 ];
                 const tabs = [
                     {
-                        name: t("disclaimerTab:name"),
+                        name: t("disclaimerTab.name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer"),
+                                Disclaimer: t("disclaimerTab.disclaimer"),
                             },
                         ],
                     },
@@ -535,12 +549,12 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: t(`download:molecular_assay.${field}`),
+                            Description: t(`download.molecular_assay.${field}`),
                         })),
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
                 break;
             }
             case "BIOCHEMICAL_ASSAY": {
@@ -575,10 +589,10 @@ function DataDownload({
                 ];
                 const tabs = [
                     {
-                        name: t("disclaimerTab:name"),
+                        name: t("disclaimerTab.name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer"),
+                                Disclaimer: t("disclaimerTab.disclaimer"),
                             },
                         ],
                     },
@@ -590,12 +604,12 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: t(`download:biochemical_assay.${field}`),
+                            Description: t(`download.biochemical_assay.${field}`),
                         })),
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                exportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
                 break;
             }
         }
@@ -634,10 +648,10 @@ function DataDownload({
                 ];
                 const tabs = [
                     {
-                        name: t("disclaimerTab:name"),
+                        name: t("disclaimerTab.name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer"),
+                                Disclaimer: t("disclaimerTab.disclaimer"),
                             },
                         ],
                     },
@@ -649,12 +663,12 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: t(`download:therapeutic_efficacy.${field}`),
+                            Description: t(`download.therapeutic_efficacy.${field}`),
                         })),
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                exportToCSV(tabs, `MTM_${selections.treatmentDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${selections.treatmentDataset}_${dateString}`);
                 break;
             }
             case "MOLECULAR_MARKER_STUDY": {
@@ -689,10 +703,10 @@ function DataDownload({
                 ];
                 const tabs = [
                     {
-                        name: t("disclaimerTab:name"),
+                        name: t("disclaimerTab.name"),
                         studies: [
                             {
-                                Disclaimer: t("disclaimerTab:disclaimer"),
+                                Disclaimer: t("disclaimerTab.disclaimer"),
                             },
                         ],
                     },
@@ -708,12 +722,12 @@ function DataDownload({
                         name: "Glossary",
                         studies: fields.map(field => ({
                             "Variable name": field,
-                            Description: t(`download:mm.${field}`),
+                            Description: t(`download.mm.${field}`),
                         })),
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                exportToCSV(tabs, `MTM_${selections.treatmentDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${selections.treatmentDataset}_${dateString}`);
                 break;
             }
         }
@@ -753,10 +767,10 @@ function DataDownload({
             ];
             const tabs = [
                 {
-                    name: t("disclaimerTab:name"),
+                    name: t("disclaimerTab.name"),
                     studies: [
                         {
-                            Disclaimer: t("disclaimerTab:disclaimer"),
+                            Disclaimer: t("disclaimerTab.disclaimer"),
                         },
                     ],
                 },
@@ -768,54 +782,63 @@ function DataDownload({
                     name: "Glossary",
                     studies: fields.map(field => ({
                         "Variable name": field,
-                        Description: t(`download:invasive.${field}`),
+                        Description: t(`download.invasive.${field}`),
                     })),
                 },
             ];
             const dateString = format(new Date(), "yyyyMMdd");
-            exportToCSV(tabs, `MTM_${selections.invasiveDataset}_${dateString}`);
+            changeLoaderAndExportToCSV(tabs, `MTM_${selections.invasiveDataset}_${dateString}`);
         }
     };
 
     const downloadData = () => {
-        const request: Download = {
-            firstName: userInfo.firstName,
-            lastName: userInfo.lastName,
-            organizationType: t(`common:${userInfo.organizationType}`),
-            organizationName: userInfo.organizationName,
-            position: userInfo.position,
-            country: userInfo.country,
-            email: userInfo.email,
-            uses: useInfo.uses.map(use => t(`common:${use}`)).join(", "),
-            researchInfo: useInfo.researchInfo || "",
-            policiesInfo: useInfo.policiesInfo || "",
-            contactConsent: useInfo.contactConsent,
-            organisationProjectConsent: useInfo.piConsent,
-            toolsInfo: useInfo.toolsInfo || "",
-            implementationCountries: useInfo.countries.join(", ") || "",
-            date: useInfo.studyDate.toISOString().slice(0, 10),
-            theme: selections.theme,
-            dataset: t(
-                `common:${selections.preventionDataset || selections.treatmentDataset || selections.invasiveDataset}`
-            ),
-        };
-        let dataset;
-        switch (selections.theme) {
-            case "prevention":
-                downloadPreventionData();
-                dataset = selections.preventionDataset;
-                break;
-            case "treatment":
-                downloadTreatmentData();
-                dataset = selections.treatmentDataset;
-                break;
-            case "invasive":
-                downloadInvasiveData();
-                dataset = selections.invasiveDataset;
-                break;
-        }
-        addDownload(request);
-        logEvent({ category: "Download", action: "download", label: dataset || undefined });
+        setDownloading(true);
+        setMessageLoader(t("common.data_download.loader.fetching_data"));
+
+        setTimeout(() => {
+            const request: Download = {
+                firstName: userInfo.firstName,
+                lastName: userInfo.lastName,
+                organizationType: t(`common.${userInfo.organizationType}`),
+                organizationName: userInfo.organizationName,
+                position: userInfo.position,
+                country: userInfo.country,
+                email: userInfo.email,
+                uses: useInfo.uses.map(use => t(`common.${use}`)).join(", "),
+                researchInfo: useInfo.researchInfo || "",
+                policiesInfo: useInfo.policiesInfo || "",
+                contactConsent: useInfo.contactConsent,
+                organisationProjectConsent: useInfo.piConsent,
+                toolsInfo: useInfo.toolsInfo || "",
+                implementationCountries: useInfo.countries.join(", ") || "",
+                date: useInfo.studyDate.toISOString().slice(0, 10),
+                theme: selections.theme,
+                dataset: t(
+                    `common.${
+                        selections.preventionDataset || selections.treatmentDataset || selections.invasiveDataset
+                    }`
+                ),
+            };
+
+            let dataset;
+            switch (selections.theme) {
+                case "prevention":
+                    downloadPreventionData();
+                    dataset = selections.preventionDataset;
+                    break;
+                case "treatment":
+                    downloadTreatmentData();
+                    dataset = selections.treatmentDataset;
+                    break;
+                case "invasive":
+                    downloadInvasiveData();
+                    dataset = selections.invasiveDataset;
+                    break;
+            }
+            addDownload(request);
+
+            logEvent({ category: "Download", action: "download", label: dataset || undefined });
+        }, 100);
     };
 
     const isWelcomeFormValid = () => {
@@ -846,7 +869,8 @@ function DataDownload({
             useInfo.studyDate &&
             (researchActive ? useInfo.researchInfo : true) &&
             (policiesActive ? useInfo.policiesInfo : true) &&
-            (toolsActive ? useInfo.toolsInfo : true)
+            (toolsActive ? useInfo.toolsInfo : true) &&
+            useInfo.countries.length > 0
         );
     };
 
@@ -895,7 +919,7 @@ function DataDownload({
                 color={isDataDownloadOpen ? "primary" : "default"}
                 onClick={handleToggle}
                 className={classes.fab}
-                title={t("common:icons.download")}
+                title={t("common.icons.download")}
             >
                 <CloudDownloadIcon />
             </Fab>
@@ -908,11 +932,12 @@ function DataDownload({
                     className: classes.paper,
                 }}
             >
+                {downloading && <SimpleLoader message={messageLoader} />}
                 <AppBar position={"relative"}>
                     <Container maxWidth={"md"}>
                         <Toolbar variant="dense">
                             <Typography variant="h6" className={classes.title}>
-                                {t("common:data_download.title")}
+                                {t("common.data_download.title")}
                             </Typography>
                         </Toolbar>
                     </Container>
@@ -921,7 +946,7 @@ function DataDownload({
                     <Stepper alternativeLabel nonLinear activeStep={activeStep} className={classes.paper}>
                         {steps.map((label, _index) => (
                             <Step key={label}>
-                                <StepButton>{t(`common:${label}`)}</StepButton>
+                                <StepButton>{t(`common.${label}`)}</StepButton>
                             </Step>
                         ))}
                     </Stepper>
@@ -932,11 +957,11 @@ function DataDownload({
                 <Container maxWidth={"md"}>
                     <DialogActions>
                         <Button variant={"contained"} color={"primary"} onClick={handleToggle}>
-                            {t("common:data_download.buttons.close")}
+                            {t("common.data_download.buttons.close")}
                         </Button>
                         <FlexGrow />
                         <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                            {t("common:data_download.buttons.back")}
+                            {t("common.data_download.buttons.back")}
                         </Button>
                         <Button
                             variant="contained"
@@ -945,7 +970,7 @@ function DataDownload({
                             className={classes.button}
                             disabled={!isStepValid()}
                         >
-                            {t("common:data_download.buttons.next")}
+                            {t("common.data_download.buttons.next")}
                         </Button>
                         <Button
                             startIcon={<CloudDownloadIcon />}
@@ -955,7 +980,7 @@ function DataDownload({
                             disabled={!isFormValid()}
                             onClick={() => downloadData()}
                         >
-                            {t("common:data_download.buttons.download")}
+                            {t("common.data_download.buttons.download")}
                         </Button>
                     </DialogActions>
                 </Container>
