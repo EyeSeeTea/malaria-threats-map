@@ -21,7 +21,7 @@ const valueOrUndefined = (value: string) => (isNull(value) ? undefined : value.t
 
 // TODO: Translations
 const Citation = ({ study, logOutboundLinkAction }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const logClick = React.useCallback(() => {
         logOutboundLinkAction(study.CITATION_URL);
     }, [study, logOutboundLinkAction]);
@@ -42,7 +42,7 @@ const Citation = ({ study, logOutboundLinkAction }: Props) => {
     ) : !isNull(study.INSTITUTE) ? (
         <Typography variant="caption">{study.INSTITUTE}</Typography>
     ) : (
-        <Typography variant="caption">{t("citation.unpublished_data")}</Typography>
+        <Typography variant="caption">{t("common.citation.unpublished_data")}</Typography>
     );
 };
 

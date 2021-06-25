@@ -71,10 +71,12 @@ const LegendFooterTypography = styled(Typography)`
 `;
 
 export function LegendFooter() {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     return (
         <LegendFooterContainer>
-            <LegendFooterTypography color="textSecondary">{t("legend.most_recent_data_shown")}</LegendFooterTypography>
+            <LegendFooterTypography color="textSecondary">
+                {t("common.legend.most_recent_data_shown")}
+            </LegendFooterTypography>
         </LegendFooterContainer>
     );
 }
@@ -86,13 +88,13 @@ interface LegendLabel {
 }
 
 export function LegendLabels({ labels }: { labels: LegendLabel[] }) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     return (
         <LegendEntries>
             {labels.map(label => (
                 <LegendEntry key={label.label}>
                     <LegendSymbol color={label.color} border={label.border} />
-                    <LegendText>{t(label.label)}</LegendText>
+                    <LegendText>{t(`common.${label.label}`)}</LegendText>
                 </LegendEntry>
             ))}
         </LegendEntries>

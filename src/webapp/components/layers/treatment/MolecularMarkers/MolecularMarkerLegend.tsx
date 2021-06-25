@@ -22,7 +22,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps;
 
 function MolecularMarkerLeyend({ treatmentFilters }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const labels = [
         {
             label: "treatment.legend.molecular_markers.high",
@@ -46,7 +46,8 @@ function MolecularMarkerLeyend({ treatmentFilters }: Props) {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("treatment.molecular_markers")} ({MOLECULAR_MARKERS[treatmentFilters.molecularMarker - 1].label})
+                    {t("common.treatment.molecular_markers")} (
+                    {MOLECULAR_MARKERS[treatmentFilters.molecularMarker - 1].label})
                 </LegendTitleTypography>
             </LegendTitleContainer>
             <LegendLabels labels={labels} />

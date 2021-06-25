@@ -4,7 +4,7 @@ import * as FileSaver from "file-saver";
 const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 const fileExtension = ".xlsx";
 
-type Tab = {
+export type Tab = {
     studies: any[];
     name: string;
 };

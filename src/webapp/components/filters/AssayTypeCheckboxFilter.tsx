@@ -83,11 +83,11 @@ function AssayTypeCheckboxFilter({ assayTypes, preventionFilters, setAssayTypes 
         .map(value => (assayTypes as Translation[]).find(type => type.VALUE_ === value))
         .filter(Boolean);
 
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     return (
         <FilterWrapper>
-            <FormLabel component="legend">{t("filters.assay_type")}</FormLabel>
+            <FormLabel component="legend">{t("common.filters.assay_type")}</FormLabel>
             <Divider />
             <Paper className={classes.group}>
                 <FormGroup>

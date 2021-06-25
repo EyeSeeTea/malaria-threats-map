@@ -44,14 +44,14 @@ type OwnProps = {
 type Props = StateProps & OwnProps;
 
 function Screenshot({ map, theme, title }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const classes = useStyles({});
 
     const handleClick = () => {
         sendAnalytics({ type: "event", category: "menu", action: "capture" });
         const mapCanvas = map.getCanvas();
 
-        const copyright = t("copyright.content");
+        const copyright = t("common.copyright.content");
 
         const imageObj1 = new Image();
         imageObj1.src = whoLogoWhite;
@@ -172,7 +172,13 @@ function Screenshot({ map, theme, title }: Props) {
     };
     return (
         <div>
-            <Fab size="small" color="default" onClick={handleClick} className={classes.fab} title={t("icons.image")}>
+            <Fab
+                size="small"
+                color="default"
+                onClick={handleClick}
+                className={classes.fab}
+                title={t("common.icons.image")}
+            >
                 <AddAPhotoIcon />
             </Fab>
         </div>

@@ -13,18 +13,18 @@ const useStyles = makeStyles(() =>
 
 const PBOStep3 = () => {
     const classes = useStyles({});
-    const { t } = useTranslation("pbo");
+    const { t } = useTranslation();
 
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step3.part1" t={t}>
+                <Trans i18nKey="PBOStory.step3.part1" t={t}>
                     <b>Prequalified Pyrethroid-PBO nets</b>
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step3.part2" t={t}>
+                <Trans i18nKey="PBOStory.step3.part2" t={t}>
                     The WHO prequalification process assesses vector control products for their safety, quality and
                     entomological efficacy against published evaluation standards. Currently prequalified new types of
                     ITNs have demonstrated that they are safe and effective for their intended use.
@@ -32,7 +32,7 @@ const PBOStep3 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"} className={classes.title}>
-                <Trans i18nKey="step3.part3" t={t}>
+                <Trans i18nKey="PBOStory.step3.part3" t={t}>
                     The list of WHO prequalified pyrethroid-PBO nets can be consulted in the official site:
                 </Trans>
                 <Link href={"https://www.who.int/pq-vector-control/prequalified-lists/en/"} target={"_blank"}>
@@ -41,13 +41,13 @@ const PBOStep3 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step3.part4" t={t}>
+                <Trans i18nKey="PBOStory.step3.part4" t={t}>
                     Questions remain on long-term durability of the synergist piperonyl butoxide (PBO) on net fabric.
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"} className={classes.title}>
-                <Trans i18nKey="step3.part5" t={t}>
+                <Trans i18nKey="PBOStory.step3.part5" t={t}>
                     For more information about Pyrethroid-PBO nets and their difference with pyrethroid-only nets please
                     consult:
                 </Trans>

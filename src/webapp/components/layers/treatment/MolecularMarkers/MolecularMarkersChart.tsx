@@ -213,7 +213,7 @@ type OwnProps = {
 type Props = DispatchProps & StateProps & OwnProps;
 
 const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [studyIndex, setStudy] = useState(0);
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const years = sortedStudies.map(study => parseInt(study.YEAR_START)).sort();
@@ -252,7 +252,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
     const molecularMarker = t(MOLECULAR_MARKERS.find((m: any) => m.value === treatmentFilters.molecularMarker).label);
     const study = sortedStudies[sortedStudies.length - studyIndex - 1];
     const translations = {
-        percentage: t("treatment.chart.molecular_markers.percentage"),
+        percentage: t("common.treatment.chart.molecular_markers.percentage"),
     };
 
     const pfkelch13 = () => {
@@ -263,13 +263,13 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
                     <Box fontWeight="fontWeightBold">{`${title} (${minYear}-${maxYear})`}</Box>
                 </Typography>
                 <Typography variant="body2">
-                    {t("treatment.chart.molecular_markers.site_content_1", {
+                    {t("common.treatment.chart.molecular_markers.site_content_1", {
                         year: study.YEAR_START,
                     })}{" "}
                     <i>{molecularMarker}</i>{" "}
-                    {t("treatment.chart.molecular_markers.site_content_2", {
+                    {t("common.treatment.chart.molecular_markers.site_content_2", {
                         nStudies: study.N,
-                        molecularMarker: t(molecularMarker),
+                        molecularMarker: t(`common.${molecularMarker}`),
                     })}
                 </Typography>
                 <Hidden smUp>
@@ -301,12 +301,12 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
 
     const formatValue = (value: number) => (Number.isNaN(value) ? "N/A" : `${(value * 100).toFixed(1)}%`);
 
-    const studyYears = t("treatment.chart.molecular_markers.study_years");
-    const t_studies = t("treatment.chart.molecular_markers.studies");
-    const nSamples = t("treatment.chart.molecular_markers.number_of_samples");
-    const mutationDetected = t("treatment.chart.molecular_markers.mutation_detected");
-    const t_wtStudy = t("treatment.chart.molecular_markers.wt_tudy");
-    const t_mcStudy = t("treatment.chart.molecular_markers.mc_study");
+    const studyYears = t("common.treatment.chart.molecular_markers.study_years");
+    const t_studies = t("common.treatment.chart.molecular_markers.studies");
+    const nSamples = t("common.treatment.chart.molecular_markers.number_of_samples");
+    const mutationDetected = t("common.treatment.chart.molecular_markers.mutation_detected");
+    const t_wtStudy = t("common.treatment.chart.molecular_markers.wt_tudy");
+    const t_mcStudy = t("common.treatment.chart.molecular_markers.mc_study");
 
     const pfcrt = () => {
         return (
@@ -370,7 +370,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
 
     const series3 = keys.map(key => {
         return {
-            name: t(key.name),
+            name: t(`common.${key.name}`),
             color: key.color,
             data: years.map(year => {
                 const yearFilters: any = studies.filter(study => year === parseInt(study.YEAR_START))[0];

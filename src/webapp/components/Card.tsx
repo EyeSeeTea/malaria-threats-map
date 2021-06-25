@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { colors } from "../constants/theme";
 import { sendAnalytics } from "../utils/analytics";
 import { getAnalyticsPageView } from "../store/analytics";
+import { useTranslation } from "react-i18next";
 
 const ColorButton = withStyles((_theme: Theme) => ({
     root: {
@@ -78,6 +79,7 @@ type Props = DispatchProps & OwnProp;
 
 const SimpleCard = ({ title, description, Icon, theme, setTheme, setRegion, onSelection, hasFooter }: Props) => {
     const classes = useStyles({});
+    const { t } = useTranslation();
 
     return (
         <Card
@@ -113,7 +115,7 @@ const SimpleCard = ({ title, description, Icon, theme, setTheme, setRegion, onSe
                                 ev.stopPropagation();
                             }}
                         >
-                            {"Greater Mekong Subregion"}
+                            {t("common.themes.mekong")}
                         </ColorButton>
                     </ButtonWrapper>
                 )}

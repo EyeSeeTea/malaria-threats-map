@@ -24,28 +24,28 @@ type Props = DispatchProps & StateProps;
 
 const preventionSuggestions: OptionType[] = [
     {
-        label: "prevention.resistance_status",
+        label: "common.prevention.resistance_status",
         value: PreventionMapType.RESISTANCE_STATUS,
     },
     {
-        label: "prevention.resistance_intensity",
+        label: "common.prevention.resistance_intensity",
         value: PreventionMapType.INTENSITY_STATUS,
     },
     {
-        label: "prevention.resistance_mechanism",
+        label: "common.prevention.resistance_mechanism",
         value: PreventionMapType.RESISTANCE_MECHANISM,
     },
     {
-        label: "prevention.synergist_involvement",
+        label: "common.prevention.synergist_involvement",
         value: PreventionMapType.LEVEL_OF_INVOLVEMENT,
     },
     {
-        label: "prevention.pbo_deployment",
+        label: "common.prevention.pbo_deployment",
         value: PreventionMapType.PBO_DEPLOYMENT,
     },
 ];
 function PreventionMapTypesSelector({ preventionFilters, setPreventionMapType, setMapTitle }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const onChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;
