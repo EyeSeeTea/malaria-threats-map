@@ -65,10 +65,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PboSiteChart = ({ studies }: Props) => {
-    const { t } = useTranslation("common");
-    const siteSubtitleTranslation = t(
-        "Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment by vector species"
-    );
+    const { t } = useTranslation();
+    const siteSubtitleTranslation = t("common.prevention.chart.pbo_deployment.subtitle");
 
     const classes = useStyles({});
 
@@ -94,8 +92,8 @@ const PboSiteChart = ({ studies }: Props) => {
             adjustedMortality:
                 mostRecentPyrethroidStudy !== undefined
                     ? mostRecentPyrethroidStudy === mostRecentByCriteria2
-                        ? "Yes"
-                        : "No"
+                        ? t("common.prevention.chart.pbo_deployment.yes")
+                        : t("common.prevention.chart.pbo_deployment.no")
                     : "-",
             pyrethroidMostRecentYear: mostRecentPyrethroidStudy ? mostRecentPyrethroidStudy.YEAR_START : "-",
             conferred: mostRecentMonoOxygenasesStudy ? t(mostRecentMonoOxygenasesStudy.MECHANISM_STATUS) : "-",
@@ -116,22 +114,26 @@ const PboSiteChart = ({ studies }: Props) => {
                 <Table aria-label="simple table" size="small" className={classes.table}>
                     <TableHead className={classes.head}>
                         <TableRow>
-                            <StyledHeaderCell align={"center"}>{t("Vector species")}</StyledHeaderCell>
-                            <StyledHeaderCell align={"center"} borderLeft>
-                                {t("Pyrethroid resistance status")}
-                            </StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
-                                {t("Adj. mortality against pyrethroids between 10% and 80%")}
-                            </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"}>
-                                {t("Most recent pyrethroid susceptibility test results")}
+                                {t("common.prevention.chart.pbo_deployment.vector_species")}
                             </StyledHeaderCell>
                             <StyledHeaderCell align={"center"} borderLeft>
-                                {t("Conferred (at least in part) by mono-oxygenase")}
+                                {t("common.prevention.chart.pbo_deployment.pyrethroid_resistance_status")}
                             </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"}>{t("Mono-oxygenase measured by")}</StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
-                                {t("Most recent mono-oxygenase involvement results")}
+                                {t("common.prevention.chart.pbo_deployment.adjusted_mortality")}
+                            </StyledHeaderCell>
+                            <StyledHeaderCell align={"center"}>
+                                {t("common.prevention.chart.pbo_deployment.most_recent_test_results")}
+                            </StyledHeaderCell>
+                            <StyledHeaderCell align={"center"} borderLeft>
+                                {t("common.prevention.chart.pbo_deployment.conferred_by_mono_oxygenase")}
+                            </StyledHeaderCell>
+                            <StyledHeaderCell align={"center"}>
+                                {t("common.prevention.chart.pbo_deployment.mono_oxygenase_measured_by")}
+                            </StyledHeaderCell>
+                            <StyledHeaderCell align={"center"}>
+                                {t("common.prevention.chart.pbo_deployment.most_recent_mono_oxygenase_results")}
                             </StyledHeaderCell>
                         </TableRow>
                     </TableHead>

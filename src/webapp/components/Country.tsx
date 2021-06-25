@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function Layers({ countryMode, setCountryMode, disabled }: any) {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const handleToggle = () => {
         const newCountryMode = !countryMode;
         const label = newCountryMode ? "country" : "site";
@@ -36,7 +36,7 @@ function Layers({ countryMode, setCountryMode, disabled }: any) {
                 className={classes.fab}
                 disabled={disabled}
                 aria-label={"Show studies per country"}
-                title={t("icons.visualization")}
+                title={t("common.icons.visualization")}
             >
                 <GlobeIcon />
             </Fab>

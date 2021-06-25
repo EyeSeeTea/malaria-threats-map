@@ -1,29 +1,10 @@
 import React from "react";
-import clsx from "clsx";
-import { createStyles, lighten, makeStyles, Theme } from "@material-ui/core/styles";
-import {
-    Button,
-    Table,
-    TableBody,
-    TableContainer,
-    TableHead,
-    TablePagination,
-    TableRow,
-    TableSortLabel,
-    Toolbar,
-    Typography,
-    Paper,
-    IconButton,
-    Tooltip,
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, Paper } from "@material-ui/core";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
 import { Data, headCells } from "./columns";
-import FilterPopover from "./FilterPopover";
 import {
     filterByCountries,
     filterByDrugs,
@@ -38,153 +19,30 @@ import { isNull } from "../../../utils/number-utils";
 import { format } from "date-fns";
 import { sendAnalytics } from "../../../utils/analytics";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
+import { TableHeadCell } from "../TableHeadCell";
+import ReportToolbar from "../ReportToolbar";
 
-function EnhancedTableHead(props: EnhancedTableProps) {
-    const { t } = useTranslation("common");
+function EnhancedTableHead(props: EnhancedTableProps<Data>) {
     const { classes, order, orderBy, onRequestSort } = props;
-
-    const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
-        onRequestSort(event, property);
-    };
 
     return (
         <TableHead>
             <TableRow>
                 {headCells.map(headCell => (
-                    <StyledCell
+                    <TableHeadCell
                         key={headCell.id}
-                        align={headCell.align || "left"}
-                        padding={headCell.disablePadding ? "none" : "default"}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                        divider={headCell.divider}
+                        classes={classes}
+                        headCell={headCell}
+                        order={order}
+                        orderBy={orderBy}
+                        onRequestSort={onRequestSort}
                         isBold
-                    >
-                        {headCell.sortable ? (
-                            <TableSortLabel
-                                active={orderBy === headCell.id}
-                                direction={orderBy === headCell.id ? order : "asc"}
-                                onClick={headCell.sortable ? createSortHandler(headCell.id) : () => {}}
-                            >
-                                {t(headCell.label)}
-                                {headCell.sortable && orderBy === headCell.id ? (
-                                    <span className={classes.visuallyHidden}>
-                                        {order === "desc" ? "sorted descending" : "sorted ascending"}
-                                    </span>
-                                ) : null}
-                            </TableSortLabel>
-                        ) : (
-                            t(headCell.label)
-                        )}
-                    </StyledCell>
+                    />
                 ))}
             </TableRow>
         </TableHead>
     );
 }
-
-const useToolbarStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            paddingLeft: theme.spacing(1),
-            paddingRight: theme.spacing(1),
-        },
-        highlight:
-            theme.palette.type === "light"
-                ? {
-                      color: theme.palette.secondary.main,
-                      backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-                  }
-                : {
-                      color: theme.palette.text.primary,
-                      backgroundColor: theme.palette.secondary.dark,
-                  },
-        title: {
-            flex: "1 1 100%",
-        },
-        button: {
-            margin: theme.spacing(1),
-            paddingLeft: theme.spacing(4),
-            paddingRight: theme.spacing(4),
-        },
-    })
-);
-
-interface EnhancedTableToolbarProps {
-    numSelected: number;
-    countries: string[];
-    setCountries: any;
-    drugs: string[];
-    setDrugs: any;
-    plasmodiumSpecie: string;
-    setPlasmodiumSpecie: any;
-    onClick: any;
-}
-
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-    const { t } = useTranslation("common");
-    const classes = useToolbarStyles({});
-    const {
-        numSelected,
-        countries,
-        setCountries,
-        drugs,
-        setDrugs,
-        plasmodiumSpecie,
-        setPlasmodiumSpecie,
-        onClick,
-    } = props;
-
-    return (
-        <Toolbar
-            className={clsx(classes.root, {
-                [classes.highlight]: numSelected > 0,
-            })}
-        >
-            {numSelected > 0 ? (
-                <Typography className={classes.title} color="inherit" variant="subtitle1">
-                    {numSelected} selected
-                </Typography>
-            ) : (
-                <>
-                    <Typography className={classes.title} variant="h6" id="tableTitle">
-                        {t("report.treatment.title")}
-                        <br />
-                        <Typography variant="body1" id="tableTitle">
-                            ({t(plasmodiumSpecie.replace(".", "%2E"))})
-                        </Typography>
-                    </Typography>
-                </>
-            )}
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-            ) : (
-                <>
-                    <Button
-                        variant="contained"
-                        color="default"
-                        className={classes.button}
-                        startIcon={<CloudDownloadIcon />}
-                        onClick={onClick}
-                    >
-                        {t("data_download.buttons.download")}
-                    </Button>
-                    <FilterPopover
-                        countries={countries}
-                        setCountries={setCountries}
-                        drugs={drugs}
-                        setDrugs={setDrugs}
-                        plasmodiumSpecie={plasmodiumSpecie}
-                        setPlasmodiumSpecie={setPlasmodiumSpecie}
-                    />
-                </>
-            )}
-        </Toolbar>
-    );
-};
 
 const mapStateToProps = (state: State) => ({
     studies: selectTreatmentStudies(state),
@@ -196,7 +54,7 @@ type Props = StateProps & OwnProps;
 
 function TreatmentReport({ studies: baseStudies }: Props) {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [order, setOrder] = React.useState<Order>("desc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("DRUG");
     const [selected, setSelected] = React.useState<string[]>([]);
@@ -276,9 +134,9 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
                             return {
                                 ID: `${country}_${drug}`,
-                                COUNTRY: t(country),
+                                COUNTRY: t(`common.${country}`),
                                 ISO2: country,
-                                DRUG: t(drug),
+                                DRUG: t(`common.${drug}`),
                                 COUNTRY_NUMBER: nStudies,
                                 FOLLOW_UP: followUpDays,
                                 STUDY_YEARS: `${minYear} - ${maxYear}`,
@@ -346,7 +204,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
     const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
-    const sortedGroups = R.sort((a, b) => (t(a.COUNTRY) < t(b.COUNTRY) ? -1 : 1), groups);
+    const sortedGroups = R.sort((a, b) => (t(`common.${a.COUNTRY}`) < t(`common.${b.COUNTRY}`) ? -1 : 1), groups);
 
     const tablePage = stableSort(sortedGroups, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
@@ -363,7 +221,9 @@ function TreatmentReport({ studies: baseStudies }: Props) {
         <div className={classes.root}>
             <Paper className={classes.paper}>
                 <div className={classes.wrapper}>
-                    <EnhancedTableToolbar
+                    <ReportToolbar
+                        title={t("common.report.treatment.title")}
+                        subtitle={t(plasmodiumSpecie.replace(".", "%2E"))}
                         numSelected={selected.length}
                         countries={countries}
                         setCountries={setCountries}

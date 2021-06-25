@@ -2,7 +2,6 @@ import styled from "styled-components";
 import TableCell from "@material-ui/core/TableCell";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React from "react";
-import { Data } from "./treatment/columns";
 import { Order } from "./utils";
 
 export type CellProps = {
@@ -53,12 +52,23 @@ export const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export interface EnhancedTableProps {
+export interface EnhancedTableProps<T> {
     classes: ReturnType<typeof useStyles>;
     numSelected: number;
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof T) => void;
     onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
     order: Order;
     orderBy: string;
     rowCount: number;
+}
+
+export interface HeadCell<T> {
+    id: keyof T;
+    numeric: boolean;
+    disablePadding: boolean;
+    label: string;
+    sortable?: boolean;
+    align?: "right" | "left" | "center";
+    divider?: boolean;
+    decimalPositions?: number;
 }

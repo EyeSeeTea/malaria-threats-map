@@ -13,17 +13,17 @@ const useStyles = makeStyles(() =>
 
 const InvasiveStep2 = () => {
     const classes = useStyles({});
-    const { t } = useTranslation("invasive");
+    const { t } = useTranslation();
     return (
         <div>
             <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="step2.part1" t={t}>
+                <Trans i18nKey="invasiveStory.step2.part1" t={t}>
                     <b>Timely detection of invasive vector species is crucial to contain their spread.</b>
                 </Trans>
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step2.part2" t={t}>
+                <Trans i18nKey="invasiveStory.step2.part2" t={t}>
                     <b>
                         Entomological surveillance systems provide critical information to inform the design and
                         implementation of vector control strategies.
@@ -32,7 +32,7 @@ const InvasiveStep2 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step2.part3" t={t}>
+                <Trans i18nKey="invasiveStory.step2.part3" t={t}>
                     Understanding vector species’ breeding and resting habitats, behaviour, feeding preferences and
                     resistance status is required to design effective interventions to prevent further spread of
                     invasive vector species and establishment in new geographical areas.
@@ -40,12 +40,12 @@ const InvasiveStep2 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step2.part4" t={t}>
+                <Trans i18nKey="invasiveStory.step2.part4" t={t}>
                     WHO recommends that all malaria endemic countries conduct entomological surveillance and report
                     detection of suspected invasive species to WHO by filling and sending the
                 </Trans>
-                <Link target="_blank" href={t("step2.link")} color={"textSecondary"}>
-                    <Trans i18nKey="step2.whoForm" t={t}>
+                <Link target="_blank" href={t("invasiveStory.step2.link")} color={"textSecondary"}>
+                    <Trans i18nKey="invasiveStory.step2.whoForm" t={t}>
                         WHO form to report detection of invasive Anopheles vector species to
                     </Trans>
                 </Link>
@@ -56,7 +56,7 @@ const InvasiveStep2 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Trans i18nKey="step2.part5" t={t}>
+                <Trans i18nKey="invasiveStory.step2.part5" t={t}>
                     Key indicators for entomological surveillance entomological surveillance are listed in chapter 5 of
                     the
                 </Trans>
@@ -65,7 +65,7 @@ const InvasiveStep2 = () => {
                     href="https://www.who.int/malaria/publications/atoz/9789241565578/en/"
                     color={"textSecondary"}
                 >
-                    <Trans i18nKey="step2.whoManual" t={t}>
+                    <Trans i18nKey="invasiveStory.step2.whoManual" t={t}>
                         WHO Malaria Surveillance, monitoring and evaluation: a reference manual.
                     </Trans>
                 </Link>

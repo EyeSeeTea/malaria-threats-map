@@ -30,7 +30,7 @@ export default function LanguageSelectorSelect(props: { section?: string }) {
         const { section } = props;
         if (section) sendAnalytics({ type: "event", category: section, action: "language", label: language });
     }
-    useTranslation("common");
+    useTranslation();
     const language = i18next.language || window.localStorage.i18nextLng;
 
     return (

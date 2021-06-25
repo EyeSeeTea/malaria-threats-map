@@ -85,7 +85,7 @@ type OwnProps = {
 
 const UseForm = ({ onChange, useInfo }: OwnProps) => {
     const classes = useStyles({});
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const handleUsesChange = (uses: string[]) => {
         onChange("uses", uses);
@@ -114,7 +114,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
     return (
         <Card className={classes.paper}>
             <FormControl fullWidth className={classes.formControl}>
-                <FormLabel component="legend">{t("data_download.step2.data_use")}</FormLabel>
+                <FormLabel component="legend">{t("common.data_download.step2.data_use")}</FormLabel>
                 <Divider />
                 {USES.map(use => (
                     <StyledFormControlLabel
@@ -132,14 +132,14 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                                 }
                             />
                         }
-                        label={t(use)}
+                        label={t(`common.${use}`)}
                     />
                 ))}
             </FormControl>
             {researchActive && (
                 <FormControl fullWidth className={classes.formControl}>
                     <TextField
-                        label={t("data_download.step2.date_use_options_content.research")}
+                        label={t("common.data_download.step2.date_use_options_content.research")}
                         multiline
                         rowsMax="3"
                         InputLabelProps={{
@@ -153,7 +153,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
             {policiesActive && (
                 <FormControl fullWidth className={classes.formControl}>
                     <TextField
-                        label={t("data_download.step2.date_use_options_content.policies")}
+                        label={t("common.data_download.step2.date_use_options_content.policies")}
                         multiline
                         rowsMax="3"
                         InputLabelProps={{
@@ -167,7 +167,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
             {toolsActive && (
                 <FormControl fullWidth className={classes.formControl}>
                     <TextField
-                        label={t("data_download.step2.date_use_options_content.tools")}
+                        label={t("common.data_download.step2.date_use_options_content.tools")}
                         multiline
                         rowsMax="3"
                         InputLabelProps={{
@@ -179,7 +179,9 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                 </FormControl>
             )}
             <FormControl fullWidth className={classes.formControl}>
-                <FormLabel component="legend">{t("data_download.step2.date_use_options_content.date")}</FormLabel>
+                <FormLabel component="legend">
+                    {t("common.data_download.step2.date_use_options_content.date")}
+                </FormLabel>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                         disableToolbar
@@ -194,22 +196,22 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                 </MuiPickersUtilsProvider>
             </FormControl>
             <FullCountriesSelector
-                label={t("data_download.step2.countries")}
+                label={t("common.data_download.step2.countries")}
                 includeGlobalOption
                 value={useInfo.countries}
                 onChange={handleCountriesChange}
             />
             <Snackbar>
-                {t("data_download.step2.message")}
+                {t("common.data_download.step2.message")}
                 <FormControlLabel
                     control={
                         <Checkbox checked={useInfo.contactConsent} onChange={handleConsent1Change} color="primary" />
                     }
-                    label={<Typography variant={"body2"}>{t("data_download.step2.consent1")}</Typography>}
+                    label={<Typography variant={"body2"}>{t("common.data_download.step2.consent1")}</Typography>}
                 />
                 <FormControlLabel
                     control={<Checkbox checked={useInfo.piConsent} onChange={handleConsent2Change} color="primary" />}
-                    label={<Typography variant={"body2"}>{t("data_download.step2.consent2")}</Typography>}
+                    label={<Typography variant={"body2"}>{t("common.data_download.step2.consent2")}</Typography>}
                 />
             </Snackbar>
         </Card>

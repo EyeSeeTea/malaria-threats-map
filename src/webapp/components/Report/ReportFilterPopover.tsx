@@ -3,10 +3,11 @@ import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
 import Button from "@material-ui/core/Button";
 import FilterListIcon from "@material-ui/icons/FilterList";
-import CountriesSelector from "../../DataDownload/filters/CountriesSelector";
-import T from "../../../translations/T";
-import DrugsSelector from "../../filters/DrugsSelector";
-import PlasmodiumSpecieSelector from "../../filters/PlasmodiumSpecieSelector";
+import CountriesSelector from "../DataDownload/filters/CountriesSelector";
+import T from "../../translations/T";
+import DrugsSelector from "../filters/DrugsSelector";
+import PlasmodiumSpecieSelector from "../filters/PlasmodiumSpecieSelector";
+import SpeciesSelector from "../filters/SpeciesSelector";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -21,20 +22,24 @@ const useStyles = makeStyles(() =>
 interface Props {
     countries: string[];
     setCountries: any;
-    drugs: string[];
-    setDrugs: any;
-    plasmodiumSpecie: string;
-    setPlasmodiumSpecie: any;
+    drugs?: string[];
+    setDrugs?: any;
+    plasmodiumSpecie?: string;
+    setPlasmodiumSpecie?: any;
+    species?: string[];
+    setSpecies?: any;
 }
 
-export default function FilterPopover({
+const ReportFilterPopover: React.FC<Props> = ({
     countries,
     setCountries,
     drugs,
     setDrugs,
     plasmodiumSpecie,
     setPlasmodiumSpecie,
-}: Props) {
+    species,
+    setSpecies,
+}) => {
     const classes = useStyles({});
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
@@ -58,7 +63,7 @@ export default function FilterPopover({
                 startIcon={<FilterListIcon />}
                 onClick={handleClick}
             >
-                <T i18nKey={"filters.filters"} />
+                <T i18nKey={"common.filters.filters"} />
             </Button>
             <Popover
                 id={id}
@@ -75,10 +80,17 @@ export default function FilterPopover({
                     horizontal: "right",
                 }}
             >
-                <PlasmodiumSpecieSelector onChange={setPlasmodiumSpecie} value={plasmodiumSpecie} />
-                <DrugsSelector onChange={setDrugs} value={drugs} />
+                {plasmodiumSpecie && setPlasmodiumSpecie && (
+                    <PlasmodiumSpecieSelector onChange={setPlasmodiumSpecie} value={plasmodiumSpecie} />
+                )}
+                {drugs && setDrugs && <DrugsSelector onChange={setDrugs} value={drugs} />}
+
                 <CountriesSelector onChange={setCountries} value={countries} />
+
+                {species && setSpecies && <SpeciesSelector onChange={setSpecies} value={species} />}
             </Popover>
         </div>
     );
-}
+};
+
+export default ReportFilterPopover;

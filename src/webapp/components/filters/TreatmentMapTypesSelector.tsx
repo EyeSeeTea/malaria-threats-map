@@ -24,21 +24,21 @@ type Props = DispatchProps & StateProps;
 
 const treatmentSuggestions: OptionType[] = [
     {
-        label: "treatment.treatment_failure",
+        label: "common.treatment.treatment_failure",
         value: TreatmentMapType.TREATMENT_FAILURE,
     },
     {
-        label: "treatment.delayed_parasite_clearance",
+        label: "common.treatment.delayed_parasite_clearance",
         value: TreatmentMapType.DELAYED_PARASITE_CLEARANCE,
     },
     {
-        label: "treatment.molecular_markers",
+        label: "common.treatment.molecular_markers",
         value: TreatmentMapType.MOLECULAR_MARKERS,
     },
 ];
 
 function TreatmentMapTypesSelector({ setTreatmentMapType, setMapTitle, treatmentFilters }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
 
     const onChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;

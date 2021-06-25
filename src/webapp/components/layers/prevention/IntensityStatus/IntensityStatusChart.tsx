@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import Highcharts, { DataLabelsFormatterCallbackFunction } from "highcharts";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import { Box, Hidden, Typography } from "@material-ui/core";
@@ -11,64 +11,12 @@ import { State } from "../../../../store/types";
 import Citation from "../../../charts/Citation";
 import * as R from "ramda";
 import Pagination from "../../../charts/Pagination";
-import { baseChart } from "../../../charts/chart-utils";
 import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
+import preventionChartOptions from "../common/preventionChartOptions";
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
-    ...baseChart,
-    title: {
-        text: translations.mosquito_mortality,
-    },
-    xAxis: {
-        type: "category",
-    },
-    yAxis: {
-        min: 0,
-        max: 100,
-        title: {
-            text: translations.mortality,
-        },
-    },
-    plotOptions: {
-        column: {
-            dataLabels: {
-                formatter: function () {
-                    // @ts-ignore
-                    return `${this.y}% (${this.point.number})`;
-                } as DataLabelsFormatterCallbackFunction,
-                enabled: true,
-            },
-            zones: [
-                {
-                    value: 97.001,
-                    color: "#D3D3D3",
-                },
-                {
-                    value: 100.001,
-                    color: "#2f4f4f",
-                },
-            ],
-        },
-    },
-    tooltip: {
-        formatter: function () {
-            const point = this.point as any;
-            return `
-<b><i>${point.species}</i></b><br>
-${translations.mortality} (%): ${point.y}<br>
-${translations.tested}: ${point.number}
-`;
-        },
-    },
-    series: [
-        {
-            maxPointWidth: 20,
-            type: "column",
-            name: translations.mortality,
-            data: data,
-        },
-    ],
+    ...preventionChartOptions(data, translations),
     legend: {
         enabled: false,
     },
@@ -94,7 +42,7 @@ type OwnProps = {
 type Props = DispatchProps & StateProps & OwnProps;
 
 const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const groupedStudies = R.values(R.groupBy(R.prop("CITATION_URL"), baseStudies));
     const studies = groupedStudies[study];
@@ -113,11 +61,11 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
     }));
     const studyObject = simplifiedStudies[study];
     const translations = {
-        mortality: t("prevention.chart.resistance_intensity.mortality"),
-        mosquito_mortality: `${t("prevention.chart.resistance_intensity.mosquito_mortality")} (${t(
-            "prevention.chart.resistance_intensity.number_of_tests"
+        mortality: t("common.prevention.chart.resistance_intensity.mortality"),
+        mosquito_mortality: `${t("common.prevention.chart.resistance_intensity.mosquito_mortality")} (${t(
+            "common.prevention.chart.resistance_intensity.number_of_tests"
         )})`,
-        tested: t("prevention.chart.resistance_intensity.tested"),
+        tested: t("common.prevention.chart.resistance_intensity.tested"),
     };
     const content = () => (
         <>
