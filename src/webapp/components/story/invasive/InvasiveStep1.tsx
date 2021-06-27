@@ -53,11 +53,7 @@ const InvasiveStep1 = () => {
             </Typography>
             <br />
             <Typography variant={"body2"}>
-                <Link
-                    href="https://www.who.int/publications/i/item/vector-alert-anopheles-stephensi-invasion-and-spread"
-                    target="_blank"
-                    color={"textSecondary"}
-                >
+                <Link href="https://apps.who.int/iris/handle/10665/326595" target="_blank" color={"textSecondary"}>
                     <img
                         src="https://apps.who.int/iris/rest/bitstreams/1283866/retrieve"
                         alt={t("invasiveStory.step1.supporting")}
