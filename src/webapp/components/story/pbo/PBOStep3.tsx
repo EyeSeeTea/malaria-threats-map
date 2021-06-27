@@ -35,8 +35,11 @@ const PBOStep3 = () => {
                 <Trans i18nKey="PBOStory.step3.part3" t={t}>
                     The list of WHO prequalified pyrethroid-PBO nets can be consulted in the official site:
                 </Trans>
-                <Link href={"https://www.who.int/pq-vector-control/prequalified-lists/en/"} target={"_blank"}>
-                    https://www.who.int/pq-vector-control/prequalified-lists/en/
+                <Link
+                    href={"https://extranet.who.int/pqweb/vector-control-products/prequalified-product-list"}
+                    target={"_blank"}
+                >
+                    https://extranet.who.int/pqweb/vector-control-products/prequalified-product-list
                 </Link>
             </Typography>
             <br />
@@ -52,10 +55,12 @@ const PBOStep3 = () => {
                     consult:
                 </Trans>
                 <Link
-                    href={"https://www.who.int/news-room/q-a-detail/new-types-of-insecticide-treated-nets"}
+                    href={
+                        "https://www.who.int/teams/global-malaria-programme/prevention/vector-control/new-types-of-insecticide-treated-nets"
+                    }
                     target={"_blank"}
                 >
-                    https://www.who.int/news-room/q-a-detail/new-types-of-insecticide-treated-nets
+                    https://www.who.int/teams/global-malaria-programme/prevention/vector-control/new-types-of-insecticide-treated-nets
                 </Link>
             </Typography>
         </div>
