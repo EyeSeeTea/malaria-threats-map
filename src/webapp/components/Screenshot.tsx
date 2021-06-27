@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import mapboxgl from "mapbox-gl";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
@@ -17,9 +17,10 @@ import { connect } from "react-redux";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 // @ts-ignore
 import * as PdfJs from "pdfjs-dist";
-import { convertDataURIToBinary, download } from "../utils/download-utils";
+import { convertDataURIToBinary } from "../utils/download-utils";
 import { format } from "date-fns";
 import { sendAnalytics } from "../utils/analytics";
+import SimpleLoader from "./SimpleLoader";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -46,8 +47,12 @@ type Props = StateProps & OwnProps;
 function Screenshot({ map, theme, title }: Props) {
     const { t } = useTranslation();
     const classes = useStyles({});
+    const [downloading, setDownloading] = React.useState(false);
+    const [messageLoader, setMessageLoader] = React.useState("");
 
     const handleClick = () => {
+        setMessageLoader(t("common.data_download.loader.generating_file"));
+        setDownloading(true)
         sendAnalytics({ type: "event", category: "menu", action: "capture" });
         const mapCanvas = map.getCanvas();
 
@@ -91,7 +96,7 @@ function Screenshot({ map, theme, title }: Props) {
             doc.addImage(img2, "JPEG", titleOffset, 10, 15, 15);
 
             doc.setFontSize(7);
-            doc.setFontType("normal");
+            doc.setFont("times", "normal");
             const lines = doc.splitTextToSize(copyright, 150);
             doc.text(10, 175, lines);
             const maxWidth = a4h - 2 * a4p;
@@ -142,16 +147,18 @@ function Screenshot({ map, theme, title }: Props) {
             doc.setFontSize(9);
             doc.text("@WHO 2019. All rights reserved", a4h - 60, 195);
 
+            const dateString = format(new Date(), "yyyyMMdd");
+            const fileName = `MTM_${title.toUpperCase()}_${dateString}`;
+
+            // If we wanted to save as PDF
+            doc.save(`${fileName}.pdf`);
+
             // Save the Data
             const file = doc.output("dataurlstring");
 
-            // If we wanted to save as PDF
-            //doc.save("Report.pdf");
-
             const pdfAsArray = convertDataURIToBinary(file);
 
-            //PdfJs.disableWorker = true;
-            PdfJs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.3.200/pdf.worker.js`;
+            PdfJs.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.worker.min.js";
             PdfJs.getDocument(pdfAsArray).promise.then((pdf: any) => {
                 pdf.getPage(1).then((page: any) => {
                     const viewport = page.getViewport(2.5);
@@ -160,10 +167,10 @@ function Screenshot({ map, theme, title }: Props) {
                     canvas.width = viewport.width;
                     canvas.height = viewport.height;
                     const renderContext = { canvasContext: context, viewport: viewport };
-                    page.render(renderContext).then(() => {
-                        const dateString = format(new Date(), "yyyyMMdd");
-                        const fileName = `MTM_${title.toUpperCase()}_${dateString}`;
-                        download(canvas, fileName);
+                    const renderTask = page.render(renderContext);
+                    renderTask.promise.then(() => {
+                        console.log('Page rendered');
+                        setDownloading(false);
                     });
                 });
             });
@@ -172,6 +179,7 @@ function Screenshot({ map, theme, title }: Props) {
     };
     return (
         <div>
+            {downloading && <SimpleLoader message={messageLoader} />}
             <Fab
                 size="small"
                 color="default"
