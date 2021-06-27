@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import mapboxgl from "mapbox-gl";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
@@ -96,7 +96,7 @@ function Screenshot({ map, theme, title }: Props) {
             doc.addImage(img2, "JPEG", titleOffset, 10, 15, 15);
 
             doc.setFontSize(7);
-            doc.setFont("times", "normal");
+            doc.setFont(undefined, "normal");
             const lines = doc.splitTextToSize(copyright, 150);
             doc.text(10, 175, lines);
             const maxWidth = a4h - 2 * a4p;
