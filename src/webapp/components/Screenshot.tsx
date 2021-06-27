@@ -52,7 +52,7 @@ function Screenshot({ map, theme, title }: Props) {
 
     const handleClick = () => {
         setMessageLoader(t("common.data_download.loader.generating_file"));
-        setDownloading(true)
+        setDownloading(true);
         sendAnalytics({ type: "event", category: "menu", action: "capture" });
         const mapCanvas = map.getCanvas();
 
@@ -158,7 +158,8 @@ function Screenshot({ map, theme, title }: Props) {
 
             const pdfAsArray = convertDataURIToBinary(file);
 
-            PdfJs.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.worker.min.js";
+            PdfJs.GlobalWorkerOptions.workerSrc =
+                "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.worker.min.js";
             PdfJs.getDocument(pdfAsArray).promise.then((pdf: any) => {
                 pdf.getPage(1).then((page: any) => {
                     const viewport = page.getViewport(2.5);
@@ -169,7 +170,7 @@ function Screenshot({ map, theme, title }: Props) {
                     const renderContext = { canvasContext: context, viewport: viewport };
                     const renderTask = page.render(renderContext);
                     renderTask.promise.then(() => {
-                        console.log('Page rendered');
+                        console.log("Page rendered");
                         setDownloading(false);
                     });
                 });
