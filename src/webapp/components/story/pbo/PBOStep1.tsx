@@ -64,11 +64,7 @@ const PBOStep1 = () => {
             </Typography>
             <br />
             <Images>
-                <Link
-                    href="https://apps.who.int/iris/bitstream/handle/10665/310862/9789241550499-eng.pdf?ua=1"
-                    target="_blank"
-                    color={"textSecondary"}
-                >
+                <Link href="https://apps.who.int/iris/handle/10665/310862" target="_blank" color={"textSecondary"}>
                     <img src={image1} alt="pbo 1" width={150} />
                 </Link>
                 <Link
