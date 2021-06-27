@@ -197,6 +197,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
             </FormControl>
             <FullCountriesSelector
                 label={t("common.data_download.step2.countries")}
+                includeGlobalOption
                 value={useInfo.countries}
                 onChange={handleCountriesChange}
             />
