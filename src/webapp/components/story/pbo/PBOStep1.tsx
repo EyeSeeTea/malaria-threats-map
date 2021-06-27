@@ -65,7 +65,7 @@ const PBOStep1 = () => {
             <br />
             <Images>
                 <Link
-                    href="https://apps.who.int/iris/bitstream/handle/10665/310862/9789241550499-eng.pdf?ua=1"
+                    href="https://apps.who.int/iris/handle/10665/310862"
                     target="_blank"
                     color={"textSecondary"}
                 >

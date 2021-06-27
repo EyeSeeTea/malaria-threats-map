@@ -690,7 +690,7 @@
             "part4": "L'OMS recommande que tous les pays d'endémie palustre effectuent une surveillance entomologique et signalent à l'OMS la détection d'espèces soupçonnées d'être invasives en remplissant et en envoyant le formulaire de l'OMS pour signaler la détection des espèces d’anophèles vectrices invasives",
             "whoForm": " formulaire de l'OMS pour signaler la détection d'espèces d’anophèles vectrices invasives à ",
             "part5": "Les indicateurs clés pour la surveillance entomologique sont énumérés au chapitre 5 du manuel de référence de l'OMS intitulé:",
-            "link": "https://www.who.int/fr/publications/i/item/vector-alert-anopheles-stephensi-invasion-and-spread",
+            "link": "https://cdn.who.int/media/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form-fr.xlsm",
             "whoManual": " lutte contre le paludisme: surveillance, suivi et évaluation. Un manuel de référence."
         },
         "step3": {
@@ -735,7 +735,7 @@
             "part2": "<0>Sur les 89 pays d’endémie palustre, 80 ont déclaré un suivi de la résistance aux insecticides entre 2010 et 2017. La quantité et la qualité des données varient selon les pays.</0>",
             "part3": "La prévention du paludisme est essentiellement basée sur des outils qui ciblent les vecteurs : les moustiquaires imprégnées à longue durée d’action et les pulvérisations intra-domiciliaires. La résistance des moustiques aux insecticides est une préoccupation majeure, en particulier la résistance aux pyréthrinoïdes, car ils sont la seule classe d'insecticides actuellement approuvée pour l’imprégnation des  moustiquaires.",
             "part4": "Le Plan mondial de l'OMS pour la gestion de la résistance aux insecticides chez les vecteurs du paludisme (GPIRM) appelle à maintenir l'efficacité de la lutte antivectorielle. Le suivi de la résistance est nécessaire pour orienter les stratégies de réduction et de gestion de la résistance aux insecticides.",
-            "link": "https://www.who.int/malaria/publications/atoz/gpirm/fr/",
+            "link": "https://apps.who.int/iris/handle/10665/44846",
             "prevention1": "justificative 1"
         },
         "step2": {
