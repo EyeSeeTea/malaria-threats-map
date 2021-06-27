@@ -168,8 +168,7 @@ function Screenshot({ map, theme, title }: Props) {
                     canvas.width = viewport.width;
                     canvas.height = viewport.height;
                     const renderContext = { canvasContext: context, viewport: viewport };
-                    const renderTask = page.render(renderContext);
-                    renderTask.promise.then(() => {
+                    page.render(renderContext).promise.then(() => {
                         console.log("Page rendered");
                         setDownloading(false);
                     });
