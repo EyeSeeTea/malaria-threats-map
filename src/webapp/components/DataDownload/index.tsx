@@ -160,7 +160,6 @@ export type Download = {
     position: string;
     country: string;
     email: string;
-    phoneNumber: string;
     uses: string;
     date: string;
     researchInfo: string;
@@ -805,7 +804,6 @@ function DataDownload({
                 position: userInfo.position,
                 country: userInfo.country,
                 email: userInfo.email,
-                phoneNumber: "-",
                 uses: useInfo.uses.map(use => t(`common.${use}`)).join(", "),
                 researchInfo: useInfo.researchInfo || "",
                 policiesInfo: useInfo.policiesInfo || "",

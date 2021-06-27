@@ -13,8 +13,14 @@ import TableRow from "@material-ui/core/TableRow";
 import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
 import { ChartContainer } from "../../../Chart";
 import * as R from "ramda";
-import { filterByAssayTypes, filterByInsecticideClass, filterByType } from "../../studies-filters";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
+import {
+    filterByCriteria1,
+    filterByCriteria3,
+    getMostRecent,
+    getMostRecentByCriteria2,
+    getMostRecentByCriteria3,
+} from "../utils";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -66,36 +72,33 @@ const PboSiteChart = ({ studies }: Props) => {
 
     const studiesBySpecies = R.groupBy(R.prop("SPECIES"), studies);
     const rows = Object.entries(studiesBySpecies).map(([species, specieStudies]) => {
-        const group1Studies = specieStudies
-            .filter(filterByAssayTypes(["DISCRIMINATING_CONCENTRATION_BIOASSAY"]))
-            .filter(filterByInsecticideClass("PYRETHROIDS"));
+        const group1Studies = filterByCriteria1(specieStudies);
 
-        const mostRecentPyrethroidStudies: any = R.reverse(R.sortBy(R.prop("YEAR_START"), group1Studies)) || [];
-        const mostRecentPyrethroidStudy = mostRecentPyrethroidStudies[0] || {};
-        const mortalityAdjusted = mostRecentPyrethroidStudy.MORTALITY_ADJUSTED
-            ? parseFloat(mostRecentPyrethroidStudy.MORTALITY_ADJUSTED)
-            : undefined;
+        const mostRecentByCriteria2 = getMostRecentByCriteria2(group1Studies);
+        const mostRecentPyrethroidStudy = mostRecentByCriteria2 || getMostRecent(group1Studies);
 
-        const group2Studies = specieStudies.filter(filterByType("MONO_OXYGENASES"));
+        const group2Studies = filterByCriteria3(specieStudies);
         const mostRecentMonoOxygenasesStudies: any = R.reverse(R.sortBy(R.prop("YEAR_START"), group2Studies)) || [];
-        const mostRecentMonoOxygenasesStudy = mostRecentMonoOxygenasesStudies[0] || {};
+        const mostRecentByCriteria3 = getMostRecentByCriteria3(group2Studies);
+        const mostRecentMonoOxygenasesStudy = mostRecentByCriteria3 || getMostRecent(group2Studies);
+
         const monoOxygenaseMeasuredBy = R.uniq(
             mostRecentMonoOxygenasesStudies.map((study: any) => t(study.ASSAY_TYPE))
         ).join(", ");
 
         return {
             species,
-            pyrethroidResistance: t(mostRecentPyrethroidStudy.RESISTANCE_STATUS) || "-",
+            pyrethroidResistance: mostRecentPyrethroidStudy ? t(mostRecentPyrethroidStudy.RESISTANCE_STATUS) : "-",
             adjustedMortality:
-                mortalityAdjusted !== undefined
-                    ? mortalityAdjusted > 0.1 && mortalityAdjusted <= 0.8
+                mostRecentPyrethroidStudy !== undefined
+                    ? mostRecentPyrethroidStudy === mostRecentByCriteria2
                         ? t("common.prevention.chart.pbo_deployment.yes")
                         : t("common.prevention.chart.pbo_deployment.no")
                     : "-",
-            pyrethroidMostRecentYear: mostRecentPyrethroidStudy.YEAR_START || "-",
-            conferred: t(mostRecentMonoOxygenasesStudy.MECHANISM_STATUS) || "-",
+            pyrethroidMostRecentYear: mostRecentPyrethroidStudy ? mostRecentPyrethroidStudy.YEAR_START : "-",
+            conferred: mostRecentMonoOxygenasesStudy ? t(mostRecentMonoOxygenasesStudy.MECHANISM_STATUS) : "-",
             monoOxygenaseMeasuredBy: monoOxygenaseMeasuredBy || "-",
-            monoOxygenaseMostRecentYear: mostRecentMonoOxygenasesStudy.YEAR_START || "-",
+            monoOxygenaseMostRecentYear: mostRecentMonoOxygenasesStudy ? mostRecentMonoOxygenasesStudy.YEAR_START : "-",
         };
     });
     const studyObject = studies[0];
