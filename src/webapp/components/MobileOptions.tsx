@@ -54,14 +54,14 @@ function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
     function handleClose() {
         setMobileOptionsOpen(false);
     }
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     return (
         <>
             <Dialog fullScreen open={areMobileOptionsOpen} onClose={handleClose} TransitionComponent={Transition}>
                 <AppBar className={classes.appBar}>
                     <Toolbar variant="dense">
                         <Typography variant="h6" className={classes.title}>
-                            {t("options.title")}
+                            {t("common.options.title")}
                         </Typography>
                         <FlexGrow />
                         <IconButton
@@ -77,7 +77,7 @@ function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
                 </AppBar>
                 <List>
                     <ListItem button>
-                        <ListItemText primary={t("options.select_language")} />
+                        <ListItemText primary={t("common.options.select_language")} />
                         <FlexGrow />
                         <LanguageSelectorSelect />
                     </ListItem>

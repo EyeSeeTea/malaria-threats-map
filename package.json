@@ -59,7 +59,7 @@
         "build": "cross-env-shell REACT_APP_ENV=staging react-scripts build",
         "build-prod": "cross-env-shell REACT_APP_ENV=prod react-scripts build",
         "build-dev": "cross-env-shell REACT_APP_ENV=dev react-scripts build",
-        "test": "cross-env-shell REACT_APP_ENV=staging jest --passWithNoTests",
+        "test": "react-scripts test --watchAll=false",
         "find-deadcode": "ts-prune",
         "eject": "react-scripts eject",
         "lint": "eslint src --ext .js,.jsx,.ts,.tsx",

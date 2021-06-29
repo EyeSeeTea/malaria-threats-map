@@ -4,6 +4,7 @@ import { ActionTypeEnum } from "../actions";
 import { catchError, mergeMap, switchMap } from "rxjs/operators";
 import * as ajax from "../../store/ajax";
 import { AjaxError } from "rxjs/ajax";
+import { ApiParams } from "../../../data/common/types";
 import { of } from "rxjs";
 import { fetchDistrictsError, fetchDistrictsRequest, fetchDistrictsSuccess } from "../actions/district-actions";
 
@@ -13,7 +14,7 @@ const DISTRICTS =
 export const getDistrictsEpic = (action$: ActionsObservable<ActionType<typeof fetchDistrictsRequest>>) =>
     action$.ofType(ActionTypeEnum.FetchDistrictsRequest).pipe(
         switchMap(action => {
-            const params: any = {
+            const params: ApiParams = {
                 f: "geojson",
                 where: encodeURIComponent(`ISO_2_CODE='${action.payload}' AND ENDDATE <> '12/31/9999 12:00:00 AM'`),
                 geometryPrecision: 3.0,

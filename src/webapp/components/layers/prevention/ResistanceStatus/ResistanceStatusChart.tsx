@@ -136,7 +136,7 @@ type OwnProps = {
 type Props = StateProps & OwnProps;
 
 const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const speciesOptions = R.uniq(R.map(s => s.SPECIES, baseStudies));
     const suggestions: any[] = speciesOptions.map((specie: string) => ({
@@ -177,11 +177,11 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     }));
     const studyObject = groupedStudies[study][0];
     const translations = {
-        mortality: t("prevention.chart.resistance_status.mortality"),
-        mosquito_mortality: `${t("prevention.chart.resistance_status.mosquito_mortality")} (${t(
-            "prevention.chart.resistance_status.number_of_tests"
+        mortality: t("common.prevention.chart.resistance_status.mortality"),
+        mosquito_mortality: `${t("common.prevention.chart.resistance_status.mosquito_mortality")} (${t(
+            "common.prevention.chart.resistance_status.number_of_tests"
         )})`,
-        tested: t("prevention.chart.resistance_status.tested"),
+        tested: t("common.prevention.chart.resistance_status.tested"),
     };
 
     const content = () => (
@@ -189,7 +189,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
             {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-                    studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2
+                    `${studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2}`
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">{`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}</Typography>

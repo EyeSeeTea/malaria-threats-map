@@ -102,7 +102,7 @@ type OwnProps = {
 type Props = StateProps & OwnProps;
 
 const ResistanceMechanismsChart = ({ studies }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
     const maxYear = parseInt(sortedStudies[0].YEAR_START);
@@ -132,14 +132,14 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
         {
             maxPointWidth: 20,
             type: "column",
-            name: t("prevention.chart.resistance_mechanism.DETECTED"),
+            name: t("common.prevention.chart.resistance_mechanism.DETECTED"),
             color: ResistanceMechanismColors[RESISTANCE_MECHANISM.CONFIRMED][0],
             data: detected,
         },
         {
             maxPointWidth: 20,
             type: "column",
-            name: t("prevention.chart.resistance_mechanism.NOT_DETECTED"),
+            name: t("common.prevention.chart.resistance_mechanism.NOT_DETECTED"),
             color: ResistanceMechanismColors[RESISTANCE_MECHANISM.NOT_CONFIRMED][0],
             data: notDetected,
         },
@@ -163,12 +163,12 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
         };
     });
     const translations = {
-        count: t("prevention.chart.resistance_mechanism.count"),
-        title: t("prevention.chart.resistance_mechanism.title"),
+        count: t("common.prevention.chart.resistance_mechanism.count"),
+        title: t("common.prevention.chart.resistance_mechanism.title"),
     };
     const translations2 = {
-        count: t("prevention.chart.resistance_mechanism.frequency"),
-        title: t("prevention.chart.resistance_mechanism.allelic"),
+        count: t("common.prevention.chart.resistance_mechanism.frequency"),
+        title: t("common.prevention.chart.resistance_mechanism.allelic"),
     };
 
     const series = R.filter(serie => R.any(data => !!data.y, serie.data), baseSeries);

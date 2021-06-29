@@ -11,7 +11,7 @@ import { InvasiveStatusColors } from "./vector-ocurrance-symbols";
 import { useTranslation } from "react-i18next";
 
 export default function VectorOcurranceLegend() {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const labels = [
         {
             label: "invasive.legend.vector_occurrance.invasive",
@@ -26,7 +26,7 @@ export default function VectorOcurranceLegend() {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("invasive.vector_occurrance")}
+                    {t("common.invasive.vector_occurrance")}
                 </LegendTitleTypography>
             </LegendTitleContainer>
             <LegendLabels labels={labels} />

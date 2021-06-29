@@ -10,7 +10,7 @@ import { TreatmentCountryColors } from "./treatment-country-symbols";
 import { useTranslation } from "react-i18next";
 
 export default function TreatmentCountryLegend() {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const labels = [
         {
             label: "legend.number_of_studies",
@@ -21,7 +21,7 @@ export default function TreatmentCountryLegend() {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("themes.treatment")}
+                    {t("common.themes.treatment")}
                 </LegendTitleTypography>
             </LegendTitleContainer>
             <LegendLabels labels={labels} />

@@ -54,7 +54,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 function InitialDialog({ initialDialogOpen, setInitialDialogOpen, tour, setTourStep }: Props) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     function handleClose() {
         if (tour.open) {
             setTourStep(tour.step + 1);
@@ -91,9 +91,9 @@ function InitialDialog({ initialDialogOpen, setInitialDialogOpen, tour, setTourS
                 <CenteredRow id="title">
                     <WhiteColumn>
                         <Typography variant="h2" color={"inherit"}>
-                            {t("title.title")}
+                            {t("common.title.title")}
                         </Typography>
-                        <Typography variant="h6">{t("title.subtitle")}</Typography>
+                        <Typography variant="h6">{t("common.title.subtitle")}</Typography>
                     </WhiteColumn>
                     <FlexGrow />
                     <LanguageWrapper>
@@ -102,31 +102,31 @@ function InitialDialog({ initialDialogOpen, setInitialDialogOpen, tour, setTourS
                 </CenteredRow>
                 <Row id="dialog">
                     <SimpleCard
-                        title={t("themes_caps.prevention")}
+                        title={t("common.themes_caps.prevention")}
                         theme="prevention"
-                        description={t("cards.prevention")}
+                        description={t("common.cards.prevention")}
                         Icon={PreventionIcon}
                         onSelection={handleClose}
                     />
                     <SimpleCard
-                        title={t("themes_caps.diagnosis")}
+                        title={t("common.themes_caps.diagnosis")}
                         theme="diagnosis"
-                        description={t("cards.diagnosis")}
+                        description={t("common.cards.diagnosis")}
                         Icon={DiagnosisIcon}
                         onSelection={handleClose}
                     />
                     <SimpleCard
-                        title={t("themes_caps.treatment")}
+                        title={t("common.themes_caps.treatment")}
                         theme="treatment"
-                        description={t("cards.treatment")}
+                        description={t("common.cards.treatment")}
                         Icon={TreatmentIcon}
                         onSelection={handleClose}
                         hasFooter
                     />
                     <SimpleCard
-                        title={t("themes_caps.invasive")}
+                        title={t("common.themes_caps.invasive")}
                         theme="invasive"
-                        description={t("cards.invasive")}
+                        description={t("common.cards.invasive")}
                         Icon={InvasiveIcon}
                         onSelection={handleClose}
                     />

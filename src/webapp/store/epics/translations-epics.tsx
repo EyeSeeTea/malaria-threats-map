@@ -12,17 +12,14 @@ import {
     fetchTranslationsRequestAction,
     fetchTranslationsSuccessAction,
 } from "../actions/translations-actions";
-
-interface Params {
-    [key: string]: string | number | boolean;
-}
+import { ApiParams } from "../../../data/common/types";
 
 export const getTreatmentStudiesEpic = (
     action$: ActionsObservable<ActionType<typeof fetchTranslationsRequestAction>>
 ) =>
     action$.ofType(ActionTypeEnum.FetchTranslationsRequest).pipe(
         switchMap(() => {
-            const params: Params = {
+            const params: ApiParams = {
                 f: "json",
                 where: "1%3D1",
                 outFields: "*",
