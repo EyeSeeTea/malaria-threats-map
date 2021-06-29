@@ -20,6 +20,12 @@ Cypress.Commands.add("clickOnMap", (x, y) => {
     cy.get(".mapboxgl-canvas").click(x, y);
 });
 
+Cypress.Commands.add("openSitePopup", name => {
+    cy.findByRole("button", { name: /filters/i }).click();
+    cy.findByText(/regions/i).click();
+    cy.findByText(/select site/i).type(`${name}{enter}`);
+});
+
 Cypress.Commands.add("openStoryMode", () => {
     cy.findByRole("button", { name: "Story mode" }).click();
 });
