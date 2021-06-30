@@ -61,11 +61,11 @@ function PboDeploymentLegend({ legendExpanded }: Props) {
 
     const legend = () => (
         <LegendDescriptionText>
-            {t("legend.p1")}
-            <Link href={t("legend.p1Link")} target={"_blank"}>
-                {t("legend.p1a")}
+            {t("common.prevention.legend.pbo_deployment.expanded.p1")}
+            <Link href={t("common.prevention.legend.pbo_deployment.expanded.p1Link")} target={"_blank"}>
+                {t("common.prevention.legend.pbo_deployment.expanded.p1a")}
             </Link>
-            {t("legend.p1b")}
+            {t("common.prevention.legend.pbo_deployment.expanded.p2")}
         </LegendDescriptionText>
     );
 
