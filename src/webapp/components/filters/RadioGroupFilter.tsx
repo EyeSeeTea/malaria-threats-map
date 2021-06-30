@@ -5,11 +5,10 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { Translation } from "../../types/Translation";
-import { useTranslation } from "react-i18next";
 import { Paper } from "@material-ui/core";
 import { Divider, FilterWrapper } from "./Filters";
 import FormLabel from "@material-ui/core/FormLabel";
+import { Option } from "../BasicSelect";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
     & span {
@@ -19,8 +18,8 @@ const StyledFormControlLabel = styled(FormControlLabel)`
 
 type RadioGroupProps = {
     label: string;
-    options: Translation[];
-    handleChange: (event: React.ChangeEvent<unknown>) => void;
+    options: Option[];
+    handleChange: (event: React.ChangeEvent<unknown>) => void; 
     value: string;
 };
 
@@ -43,7 +42,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function RadioGroupFilter({ label, options, handleChange, value }: RadioGroupProps) {
     const classes = useStyles({});
-    const { t } = useTranslation();
 
     return (
         <FilterWrapper>
@@ -51,12 +49,12 @@ function RadioGroupFilter({ label, options, handleChange, value }: RadioGroupPro
             <Divider />
             <Paper className={classes.group}>
                 <RadioGroup value={value} onChange={handleChange}>
-                    {options.map((insecticideClass: Translation) => (
+                    {options.map((option: Option) => (
                         <StyledFormControlLabel
-                            key={insecticideClass.VALUE_}
-                            value={insecticideClass.VALUE_}
+                            key={option.value}
+                            value={option.value}
                             control={<Radio color="primary" />}
-                            label={t(insecticideClass.VALUE_)}
+                            label={option.label}
                         />
                     ))}
                 </RadioGroup>

@@ -36,14 +36,20 @@ function InsecticideClassFilter({ insecticideClasses = [], preventionFilters, se
         setInsecticideClass((event.target as HTMLInputElement).value);
     };
 
+    const suggestions = (insecticideClasses as Translation[])
+        .filter(translation => translation.VALUE_ !== "NA")
+        .sort((a, b) =>
+            INSECTICIDE_CLASSES.indexOf(a.VALUE_) - INSECTICIDE_CLASSES.indexOf(b.VALUE_) > 0 ? 1 : -1
+        )
+        .map(insecticide => ({
+            value: insecticide.VALUE_,
+            label: t(insecticide.VALUE_),
+        }))
+
     return (
         <RadioGroupFilter
             label={t("common.filters.insecticide_class")}
-            options={(insecticideClasses as Translation[])
-                .filter(translation => translation.VALUE_ !== "NA")
-                .sort((a, b) =>
-                    INSECTICIDE_CLASSES.indexOf(a.VALUE_) - INSECTICIDE_CLASSES.indexOf(b.VALUE_) > 0 ? 1 : -1
-                )}
+            options={suggestions}
             handleChange={handleChange}
             value={preventionFilters.insecticideClass}
         />

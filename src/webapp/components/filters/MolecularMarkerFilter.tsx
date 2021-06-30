@@ -50,23 +50,15 @@ function MolecularMarkerFilter({ treatmentFilters, setMolecularMarker, logEventA
         logEventAction({ category: "filter", action: "molecularMarkers", label });
     };
 
-    const molecularMarkerTranslations = MOLECULAR_MARKERS.map((marker, index) => ({
-        OBJECTID: index,
-        Code: marker.label,
-        DATASET: marker.label,
-        FIELD: marker.label,
-        VALUE_: marker.label,
-        EN: marker.label,
-        FR: marker.label,
-        ES: marker.label,
-        ACTIVE: "yes",
-        NOTES: marker.label,
+    const options = MOLECULAR_MARKERS.map(marker => ({
+        value: marker.label,
+        label: t(marker.label),
     }));
-
+    
     return (
         <RadioGroupFilter
             label={t("common.filters.molecular_marker")}
-            options={molecularMarkerTranslations}
+            options={options}
             handleChange={handleChange}
             value={MOLECULAR_MARKERS.find(marker => marker.value === treatmentFilters.molecularMarker).label}
         />
