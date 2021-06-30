@@ -179,10 +179,10 @@ class Map extends React.Component<Props> {
         this.map = new mapboxgl.Map({
             container: this.mapContainer,
             style: style,
-            center: [-16.629129, 28.291565],
+            center: [0.0, 28.291565],
             maxZoom: 8.99999,
             minZoom: 1,
-            zoom: 1,
+            zoom: 1.5,
             maxBounds: undefined,
             preserveDrawingBuffer: true,
         });
