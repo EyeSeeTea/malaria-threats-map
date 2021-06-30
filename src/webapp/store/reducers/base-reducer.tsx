@@ -31,7 +31,7 @@ const initialState: MalariaState = Object.freeze({
         invasive: null,
     },
     initialDialogOpen: !query,
-    filtersOpen: false,
+    filtersOpen: true,
     filtersMode: "filters",
     selection: null,
     mobileOptionsOpen: false,

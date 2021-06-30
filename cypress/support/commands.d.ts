@@ -48,4 +48,11 @@ declare namespace Cypress {
          */
         clickOnMap(x: number, y: number): Chainable<Element>;
     }
+    interface Chainable {
+        /**
+         * open site popup
+         * @example cy.openSitePopup("Copargo")
+         */
+        openSitePopup(name: string): Chainable<Element>;
+    }
 }
