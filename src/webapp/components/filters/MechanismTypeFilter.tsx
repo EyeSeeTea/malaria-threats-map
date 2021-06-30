@@ -73,14 +73,16 @@ function MechanismTypeFilter({
         ? suggestions
         : WHITELISTED_TYPES.map(value => suggestions.find((type: any) => type.VALUE_ === value)).filter(Boolean);
 
-    const optionsToSend = filteredTypes.filter(translation => translation.VALUE_ !== "NA").map(mechanism => ({
-        value: mechanism.VALUE_,
-        label: t(mechanism.VALUE_),
-    }))
+    const options = filteredTypes
+        .filter(translation => translation.VALUE_ !== "NA")
+        .map(mechanism => ({
+            value: mechanism.VALUE_,
+            label: t(mechanism.VALUE_),
+        }));
     return (
         <RadioGroupFilter
             label={t("common.filters.mechanism_type")}
-            options={optionsToSend}
+            options={options}
             handleChange={handleChange}
             value={preventionFilters.type}
         />

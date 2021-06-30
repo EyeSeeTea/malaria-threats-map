@@ -19,7 +19,7 @@ const StyledFormControlLabel = styled(FormControlLabel)`
 type RadioGroupProps = {
     label: string;
     options: Option[];
-    handleChange: (event: React.ChangeEvent<unknown>) => void; 
+    handleChange: (event: React.ChangeEvent<unknown>) => void;
     value: string;
 };
 

@@ -54,7 +54,7 @@ function MolecularMarkerFilter({ treatmentFilters, setMolecularMarker, logEventA
         value: marker.label,
         label: t(marker.label),
     }));
-    
+
     return (
         <RadioGroupFilter
             label={t("common.filters.molecular_marker")}
