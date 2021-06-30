@@ -41,7 +41,8 @@
                     "Susceptible": "Sensible",
                     "mortality": "mortalité (%)",
                     "tested": "Études (n)",
-                    "mosquito_mortality": "% mortalité de moustique"
+                    "mosquito_mortality": "% mortalité de moustique",
+                    "type": "type"
                 },
                 "resistance_intensity": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",

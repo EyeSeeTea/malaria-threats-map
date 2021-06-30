@@ -41,7 +41,8 @@
                     "Susceptible": "Susceptible",
                     "mortality": "mortalidad (%)",
                     "tested": "Pruebas (n)",
-                    "mosquito_mortality": "% de mortalidad en los mosquitos"
+                    "mosquito_mortality": "% de mortalidad en los mosquitos",
+                    "type": "tipo"
                 },
                 "resistance_intensity": {
                     "content_1": "{{nStudies}} pruebas con vectores ",
