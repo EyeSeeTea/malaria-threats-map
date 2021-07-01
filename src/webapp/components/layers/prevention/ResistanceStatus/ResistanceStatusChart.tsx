@@ -10,7 +10,7 @@ import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import { ConfirmationStatusColors } from "./symbols";
 import * as R from "ramda";
-import Citation from "../../../charts/Citation";
+import Citation, { isNull } from "../../../charts/Citation";
 import Pagination from "../../../charts/Pagination";
 import Curation from "../../../Curation";
 import IntegrationReactSelect from "../../../BasicSelect";
@@ -86,11 +86,16 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
     tooltip: {
         formatter: function () {
             const point = this.point as any;
+
+            const bottomText = isNull(point.citationUrl)
+                ? `<br>${translations.type}: ${point.type}<br> ${point.citation}`
+                : "";
+
             return `
-<b><i>${point.species}</i></b><br>
-${translations.mortality} (%): ${point.y}<br>
-${translations.tested}: ${point.number}
-`;
+                <b><i>${point.species}</i></b><br>
+                ${translations.mortality} (%): ${point.y}<br>
+                ${translations.tested}: ${point.number}
+                ${bottomText}`;
         },
     },
     series: [
@@ -174,6 +179,9 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
         species: t(study.SPECIES),
         number: study.NUMBER,
+        type: t(study.TYPE),
+        citation: study.CITATION_LONG || study.INSTITUTE,
+        citationUrl: study.CITATION_URL,
     }));
     const studyObject = groupedStudies[study][0];
     const translations = {
@@ -182,7 +190,12 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
             "common.prevention.chart.resistance_status.number_of_tests"
         )})`,
         tested: t("common.prevention.chart.resistance_status.tested"),
+        type: t("common.prevention.chart.resistance_status.type"),
     };
+
+    const subtitle = !isNull(studyObject.CITATION_URL)
+        ? `${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`
+        : t(studyObject.ASSAY_TYPE);
 
     const content = () => (
         <>
@@ -192,7 +205,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
                     `${studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2}`
                 )}`}</Box>
             </Typography>
-            <Typography variant="subtitle2">{`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}</Typography>
+            <Typography variant="subtitle2">{subtitle}</Typography>
             {suggestions.length > 1 && (
                 <Flex>
                     <FormLabel component="legend">Species</FormLabel>
@@ -206,7 +219,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
                 </Flex>
             )}
             <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-            <Citation study={studyObject} />
+            <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
             <Curation study={studyObject} />
         </>
     );
