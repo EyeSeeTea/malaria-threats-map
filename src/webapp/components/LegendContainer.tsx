@@ -60,8 +60,7 @@ const LegendContainer = ({ children, legendExpanded, setLegendExpanded }: Props)
             </IconContainer>
             <ClickAwayListener mouseEvent="onMouseDown" onClickAway={() => setLegendExpanded(false)}>
                 <LegendContent small>{children}</LegendContent>
-                </ClickAwayListener>
-
+            </ClickAwayListener>
         </LegendContainerStyled>
     );
 };

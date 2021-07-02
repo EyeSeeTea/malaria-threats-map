@@ -7,6 +7,7 @@ import { Study } from "../../../domain/entities/Study";
 import { useState } from "react";
 import { useEffect } from "react";
 import styled from "styled-components";
+import _ from "lodash";
 
 const CitationUl = styled.div`
     margin: 0px;
@@ -40,9 +41,11 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup }: Props) => {
     useEffect(() => {
         if (allStudiesGroup) {
             setCitationLongs(
-                allStudiesGroup.filter(study => !isNull(study.CITATION_LONG)).map(study => study.CITATION_LONG)
+                _.uniq(allStudiesGroup.filter(study => !isNull(study.CITATION_LONG)).map(study => study.CITATION_LONG))
             );
-            setInstitutes(allStudiesGroup.filter(study => !isNull(study.INSTITUTE)).map(study => study.INSTITUTE));
+            setInstitutes(
+                _.uniq(allStudiesGroup.filter(study => !isNull(study.INSTITUTE)).map(study => study.INSTITUTE))
+            );
         } else {
             setCitationLongs([study.CITATION_LONG]);
             setInstitutes([study.INSTITUTE]);
