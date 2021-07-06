@@ -66,6 +66,9 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup }: Props) => {
                 </Typography>
             ) : citationLongs.length > 0 ? (
                 <CitationUl>
+                    <Typography variant="caption">
+                        <b>{t("common.citation.data_source")}</b>
+                    </Typography>
                     {citationLongs.map((citationLong, index) => {
                         return (
                             <li key={index}>
@@ -76,6 +79,9 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup }: Props) => {
                 </CitationUl>
             ) : institutes.length > 0 ? (
                 <CitationUl>
+                    <Typography variant="caption">
+                        <b>{t("common.citation.data_source")}</b>
+                    </Typography>
                     {institutes.map((institute, index) => {
                         return (
                             <li key={index}>
@@ -85,7 +91,7 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup }: Props) => {
                     })}
                 </CitationUl>
             ) : (
-                <Typography variant="caption">{t("common.citation.unpublished_data")}</Typography>
+                <Typography variant="caption">{t("common.citation.source_not_provided")}</Typography>
             )}
         </>
     );

@@ -302,7 +302,8 @@
             "select": "Sélectionner"
         },
         "citation": {
-            "unpublished_data": "Données non publiées"
+            "data_source": "Source de données",
+            "source_not_provided": "Source de données non fournie"
         },
         "data_download": {
             "title": "Téléchargement de données",
