@@ -9,7 +9,7 @@ describe("Open popup", () => {
         cy.openSitePopup("Kanasar & Khetusar");
 
         cy.findByText("An. stephensi s.l.");
-        cy.findByText("Kanasar & Khetusar");
+        cy.findAllByText("Kanasar & Khetusar");
         cy.findByText("1994");
         cy.findByText("NR");
         cy.findByText("morphology");

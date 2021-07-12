@@ -10,7 +10,7 @@ describe("Open popup in delayed parasite clearance subtheme", () => {
     });
 
     it("should open a popup to click on coordinates", () => {
-        cy.clickOnMap(545, 340);
+        cy.clickOnMap(500, 340);
         cy.contains("Mali");
         cy.contains(
             "therapeutic efficacy studies conducted on the efficacy of Artemether-lumefantrine against P. falciparum"
@@ -28,7 +28,7 @@ describe("Open popup in molecular markers subtheme", () => {
     });
 
     it("should open a popup to click on coordinates", () => {
-        cy.clickOnMap(545, 340);
+        cy.clickOnMap(500, 340);
         cy.contains("Mali");
         cy.contains("molecular marker studies conducted on Pfkelch13");
     });
@@ -43,7 +43,7 @@ describe("Open popup in treatment failure subtheme", () => {
     });
 
     it("should open a popup to click on coordinates", () => {
-        cy.clickOnMap(545, 340);
+        cy.clickOnMap(500, 340);
         cy.contains("Mali");
         cy.contains(
             "therapeutic efficacy studies conducted on the efficacy of Artemether-lumefantrine against P. falciparum"
