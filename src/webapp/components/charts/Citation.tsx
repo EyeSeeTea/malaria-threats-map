@@ -6,12 +6,8 @@ import { connect } from "react-redux";
 import { Study } from "../../../domain/entities/Study";
 import { useState } from "react";
 import { useEffect } from "react";
-import styled from "styled-components";
 import _ from "lodash";
-
-const CitationUl = styled.div`
-    margin: 0px;
-`;
+import CitationDataSources from "./CitationDataSources";
 
 const mapDispatchToProps = {
     logOutboundLinkAction: logOutboundLinkAction,
@@ -65,27 +61,11 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup }: Props) => {
                     </Link>
                 </Typography>
             ) : citationLongs.length > 0 ? (
-                <CitationUl>
-                    {citationLongs.map((citationLong, index) => {
-                        return (
-                            <li key={index}>
-                                <Typography variant="caption">{citationLong}</Typography>
-                            </li>
-                        );
-                    })}
-                </CitationUl>
+                <CitationDataSources dataSources={citationLongs} />
             ) : institutes.length > 0 ? (
-                <CitationUl>
-                    {institutes.map((institute, index) => {
-                        return (
-                            <li key={index}>
-                                <Typography variant="caption">{institute}</Typography>
-                            </li>
-                        );
-                    })}
-                </CitationUl>
+                <CitationDataSources dataSources={institutes} />
             ) : (
-                <Typography variant="caption">{t("common.citation.unpublished_data")}</Typography>
+                <Typography variant="caption">{t("common.citation.source_not_provided")}</Typography>
             )}
         </>
     );
