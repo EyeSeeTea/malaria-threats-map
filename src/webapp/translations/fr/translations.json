@@ -148,7 +148,6 @@
                 "gene_deletions": {
                     "content_1": "{{nStudies}} enquête(s) ",
                     "content_2": " par {{surveyTypes}} {{years}}",
-                    "DHS": "EDS",
                     "deletions_confirmed": "Délétions confirmées (% d'échantillons)",
                     "deletion_type": "Type de délétion",
                     "no_tested": "Nombre d'échantillons testés",

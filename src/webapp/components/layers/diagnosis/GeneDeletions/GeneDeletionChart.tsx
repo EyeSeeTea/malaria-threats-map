@@ -82,12 +82,7 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                 })}
                 <i>{t(diagnosisFilters.deletionType).toLowerCase()}</i>
                 {t("common.diagnosis.chart.gene_deletions.content_2", {
-                    surveyTypes: formatList(
-                        surveyTypes.map(st => {
-                            const dhs = t("common.diagnosis.chart.gene_deletions.DHS");
-                            return st.toLowerCase().replace(new RegExp(dhs, "i"), dhs);
-                        })
-                    ),
+                    surveyTypes: formatList(surveyTypes.map(st => (t(st) === "DHS" ? t(st) : t(st).toLowerCase()))),
                     years: formatYears(minYear, maxYear),
                 })}
             </Typography>
