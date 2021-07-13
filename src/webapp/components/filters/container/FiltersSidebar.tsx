@@ -175,9 +175,9 @@ const FiltersSidebar = ({
                     <FiltersContent />
                 ) : (
                     <>
-                        <CountrySelector />
                         <RegionSelector />
                         <SubRegionSelector />
+                        <CountrySelector />
                         <SiteSelector />
                     </>
                 )}
