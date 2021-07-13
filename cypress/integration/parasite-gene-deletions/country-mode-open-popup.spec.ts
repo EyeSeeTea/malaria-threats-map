@@ -8,7 +8,7 @@ describe("Open popup in synergist effect in susceptibility subtheme", () => {
     });
 
     it("should open a popup to click on coordinates", () => {
-        cy.clickOnMap(330, 380);
+        cy.clickOnMap(280, 380);
         cy.contains("Colombia");
         cy.contains("survey(s) P. falciparum by Convenience survey");
     });
