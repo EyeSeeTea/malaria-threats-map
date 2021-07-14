@@ -148,6 +148,7 @@
                 "gene_deletions": {
                     "content_1": "{{nStudies}} encuesta(s) ",
                     "content_2": " por {{surveyTypes}} {{years}}",
+                    "DHS": "DHS",
                     "deletions_confirmed": "Deleciones confirmadas (% de muestras)",
                     "deletion_type": "Tipo de deleción",
                     "no_tested": "No. muestras",
