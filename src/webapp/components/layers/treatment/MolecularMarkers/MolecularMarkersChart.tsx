@@ -17,62 +17,7 @@ import Citation from "../../../charts/Citation";
 import { formatYears, formatYears2 } from "../../../../utils/string-utils";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 
-const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: "pie",
-        height: 250,
-        style: {
-            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
-        },
-    },
-    title: {
-        text: "",
-    },
-    subtitle: {
-        text: "",
-    },
-    tooltip: {
-        pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
-        style: {
-            width: 150,
-        },
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: "pointer",
-            dataLabels: {
-                enabled: false,
-            },
-            showInLegend: true,
-        },
-    },
-    series: [
-        {
-            type: "pie",
-            innerSize: "50%",
-            text: translations.studies,
-            colorByPoint: true,
-            data,
-        },
-    ],
-    legend: {
-        itemStyle: {
-            fontSize: "9px",
-        },
-        margin: 0,
-        padding: 0,
-        enabled: true,
-        maxHeight: 70,
-    },
-    credits: {
-        enabled: false,
-    },
-});
-const options2: (data: any, categories: any[], translations: any) => Highcharts.Options = (
+const options: (data: any, categories: any[], translations: any) => Highcharts.Options = (
     data,
     categories,
     translations
@@ -129,7 +74,7 @@ const options2: (data: any, categories: any[], translations: any) => Highcharts.
     },
 });
 
-const options3: (data: any, categories: any[], translations: any) => Highcharts.Options = (
+const options2: (data: any, categories: any[], translations: any) => Highcharts.Options = (
     data,
     categories,
     translations
@@ -217,31 +162,31 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
     const [studyIndex, setStudy] = useState(0);
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const years = sortedStudies.map(study => parseInt(study.YEAR_START)).sort();
+    const pfkelch13Categories = years.map((year, index) => `${year} <br> n = ${sortedStudies[index].N}`)
     const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
     const maxYear = parseInt(sortedStudies[0].YEAR_START);
     const groupStudies = R.flatten(sortedStudies.map(study => study.groupStudies));
     const k13Groups = R.groupBy(R.prop("GENOTYPE"), groupStudies);
     const series = Object.keys(k13Groups).map((genotype: string) => {
         const studies: TreatmentStudy[] = k13Groups[genotype];
+        const data = R.reverse(sortedStudies).map(k13Study => {
+            const study = studies.find(study => k13Study.Code === study.K13_CODE);
+            return {
+                y: study ? parseFloat((study.PROPORTION * 100).toFixed(1)) : undefined,
+            };
+        });
         return {
             maxPointWidth: 20,
             type: "column",
             name: genotype,
             color: MutationColors[genotype] ? MutationColors[genotype].color : "000",
-            data: R.reverse(sortedStudies).map(k13Study => {
-                const study = studies.find(study => k13Study.Code === study.K13_CODE);
-                return {
-                    y: study ? parseFloat((study.PROPORTION * 100).toFixed(1)) : undefined,
-                };
-            }),
+            data,
         };
     });
-
-    const data = sortedStudies[sortedStudies.length - studyIndex - 1].groupStudies.map(study => ({
-        name: `${study.GENOTYPE}`,
-        y: Math.round(study.PROPORTION * 100),
-        color: MutationColors[study.GENOTYPE] ? MutationColors[study.GENOTYPE].color : "000",
-    }));
+    const seriesWithSortedWT = [
+        ...series.filter(x => x.name !== "WT"),
+        ...series.filter(x => x.name === "WT")
+      ];
 
     const titleItems = [
         studies[studyIndex].SITE_NAME,
@@ -273,18 +218,10 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
                     })}
                 </Typography>
                 <Hidden smUp>
-                    <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-                    <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations)} />
+                    <HighchartsReact highcharts={Highcharts} options={options(seriesWithSortedWT, pfkelch13Categories, translations)} />
                 </Hidden>
                 <Hidden xsDown>
-                    <Flex>
-                        <FlexCol>
-                            <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-                        </FlexCol>
-                        <FlexCol flex={2}>
-                            <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations)} />
-                        </FlexCol>
-                    </Flex>
+                    <HighchartsReact highcharts={Highcharts} options={options(seriesWithSortedWT, pfkelch13Categories, translations)} />
                 </Hidden>
 
                 <Citation study={study} />
@@ -394,7 +331,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
                     </Typography>
                     <Hidden smUp>
                         {pfcrt()}
-                        <HighchartsReact highcharts={Highcharts} options={options3(series3, years, translations)} />
+                        <HighchartsReact highcharts={Highcharts} options={options2(series3, years, translations)} />
                     </Hidden>
                     <Hidden xsDown>
                         <Flex>
@@ -403,12 +340,12 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
                                 {treatmentFilters.molecularMarker === 2 ? (
                                     <HighchartsReact
                                         highcharts={Highcharts}
-                                        options={options3(series3, years, translations)}
+                                        options={options2(series3, years, translations)}
                                     />
                                 ) : (
                                     <HighchartsReact
                                         highcharts={Highcharts}
-                                        options={options2(series, years, translations)}
+                                        options={options(seriesWithSortedWT, years, translations)}
                                     />
                                 )}
                             </FlexCol>
