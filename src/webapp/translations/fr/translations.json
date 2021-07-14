@@ -41,7 +41,8 @@
                     "Susceptible": "Sensible",
                     "mortality": "mortalité (%)",
                     "tested": "Études (n)",
-                    "mosquito_mortality": "% mortalité de moustique"
+                    "mosquito_mortality": "% mortalité de moustique",
+                    "type": "type"
                 },
                 "resistance_intensity": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
@@ -121,7 +122,11 @@
                         "eligible": "les sites où au moins une espèce de vecteur satisfait les trois critères recommandés par l'OMS",
                         "not_eligible": "les sites où l'une des espèces vectrices pour lesquelles des données sont disponibles enfreint au moins l'un des trois critères recommandés par l'OMS décrits ci-dessus, et aucune  espèce pour lesquelle des données sont disponibles ne satisfait les trois critères.",
                         "not_enough_data": "sites avec des données insuffisantes pour évaluer si les espèces vectorielles locales satisfont les trois critères",
-                        "no_data": "aucune donnée disponible"
+                        "no_data": "aucune donnée disponible",
+                        "p1": "Cette carte montre l'état de conformité des populations locales de vecteurs avec les ",
+                        "p1Link": "https://apps.who.int/iris/bitstream/handle/10665/258939/WHO-HTM-GMP-2017.17-eng.pdf?sequence=5",
+                        "p1a": "trois critères recommandés par l'OMS ",
+                        "p2": "sur différents sites ou zones géographiques. Le statut a été évalué sur la base des données incluses dans la base de données mondiale sur la résistance aux insecticides chez les vecteurs du paludisme. La carte montre l'état de conformité pour les espèces vectrices sélectionnées dans le volet de filtre. Si aucune espèce n'a été filtrée, la carte considère toutes les données disponibles pour évaluer les critères."
                     },
                     "link": "https://www.who.int/malaria/publications/atoz/9789241511575/fr/",
                     "link_text": "Procédures pour tester la résistance aux insecticides chez les moustiques vecteurs du paludisme – seconde édition",
@@ -297,7 +302,8 @@
             "select": "Sélectionner"
         },
         "citation": {
-            "unpublished_data": "Données non publiées"
+            "data_source": "Source de données",
+            "source_not_provided": "Source de données non fournie"
         },
         "data_download": {
             "title": "Téléchargement de données",

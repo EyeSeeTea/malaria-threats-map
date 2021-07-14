@@ -41,7 +41,8 @@
                     "Susceptible": "Susceptible",
                     "mortality": "mortality (%)",
                     "tested": "tested (n)",
-                    "mosquito_mortality": "% mosquito mortality"
+                    "mosquito_mortality": "% mosquito mortality",
+                    "type": "type"
                 },
                 "resistance_intensity": {
                     "content_1": "{{nStudies}} test(s) on ",
@@ -301,7 +302,8 @@
             "select": "Select"
         },
         "citation": {
-            "unpublished_data": "Unpublished data"
+            "data_source": "Data source",
+            "source_not_provided": "Source not provided"
         },
         "data_download": {
             "title": "Data download",

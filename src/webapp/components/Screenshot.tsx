@@ -20,6 +20,7 @@ import * as PdfJs from "pdfjs-dist";
 import { convertDataURIToBinary, download } from "../utils/download-utils";
 import { format } from "date-fns";
 import { sendAnalytics } from "../utils/analytics";
+import SimpleLoader from "./SimpleLoader";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -47,8 +48,12 @@ function Screenshot({ map, theme, title }: Props) {
     const { t } = useTranslation();
     const classes = useStyles({});
 
+    const [downloading, setDownloading] = React.useState(false);
+
     const handleClick = () => {
+        setDownloading(true);
         sendAnalytics({ type: "event", category: "menu", action: "capture" });
+
         const mapCanvas = map.getCanvas();
 
         const copyright = t("common.copyright.content");
@@ -91,7 +96,7 @@ function Screenshot({ map, theme, title }: Props) {
             doc.addImage(img2, "JPEG", titleOffset, 10, 15, 15);
 
             doc.setFontSize(7);
-            doc.setFontType("normal");
+            doc.setFont("normal");
             const lines = doc.splitTextToSize(copyright, 150);
             doc.text(10, 175, lines);
             const maxWidth = a4h - 2 * a4p;
@@ -151,19 +156,20 @@ function Screenshot({ map, theme, title }: Props) {
             const pdfAsArray = convertDataURIToBinary(file);
 
             //PdfJs.disableWorker = true;
-            PdfJs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.3.200/pdf.worker.js`;
+            PdfJs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.worker.js`;
             PdfJs.getDocument(pdfAsArray).promise.then((pdf: any) => {
                 pdf.getPage(1).then((page: any) => {
-                    const viewport = page.getViewport(2.5);
+                    const viewport = page.getViewport({ scale: 2.5 });
                     const canvas = document.createElement("canvas");
                     const context = canvas.getContext("2d");
                     canvas.width = viewport.width;
                     canvas.height = viewport.height;
                     const renderContext = { canvasContext: context, viewport: viewport };
-                    page.render(renderContext).then(() => {
+                    page.render(renderContext).promise.then(() => {
                         const dateString = format(new Date(), "yyyyMMdd");
                         const fileName = `MTM_${title.toUpperCase()}_${dateString}`;
                         download(canvas, fileName);
+                        setDownloading(false);
                     });
                 });
             });
@@ -172,6 +178,7 @@ function Screenshot({ map, theme, title }: Props) {
     };
     return (
         <div>
+            {downloading && <SimpleLoader message={t("common.data_download.loader.generating_file")} />}
             <Fab
                 size="small"
                 color="default"

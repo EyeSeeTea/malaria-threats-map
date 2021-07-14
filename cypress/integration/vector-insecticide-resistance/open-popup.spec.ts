@@ -5,11 +5,10 @@ describe("Open popup in pyrethroid-PBO nets deployment subtheme", () => {
         cy.loadPage(themes.vectorInsecticideResistance);
         cy.contains("Insecticide resistance status").click();
         cy.findByText("Pyrethroid-PBO nets deployment").click();
-        cy.resetMapZoom();
     });
 
     it("should open a popup to click on coordinates", () => {
-        cy.clickOnMap(375, 375);
+        cy.openSitePopup("Cesaree");
         cy.findByText("Cesaree, French Guiana");
 
         cy.contains("Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment by vector species");
@@ -36,11 +35,10 @@ describe("Open popup in insecticide resistance intensity subtheme", () => {
         cy.loadPage(themes.vectorInsecticideResistance);
         cy.contains("Insecticide resistance status").click();
         cy.findByText("Insecticide resistance intensity").click();
-        cy.resetMapZoom();
     });
 
     it("should open a popup to click on coordinates", () => {
-        cy.clickOnMap(680, 350);
+        cy.openSitePopup("Tesseney");
         cy.findByText("Intensity concentration bioassay, WHO test kit bioassay");
 
         cy.findByText("Tesseney, Eritrea");
@@ -54,11 +52,10 @@ describe("Open popup in resistance mechanisms detection subtheme", () => {
         cy.loadPage(themes.vectorInsecticideResistance);
         cy.contains("Insecticide resistance status").click();
         cy.findByText("Resistance mechanisms detection").click();
-        cy.resetMapZoom();
     });
 
     it("should open a popup to click on coordinates", () => {
-        cy.clickOnMap(650, 435);
+        cy.openSitePopup("Kitwe");
         cy.findByText("Biochemical assays, Mono oxygenases");
 
         cy.findByText("Kitwe, Zambia");
@@ -77,12 +74,11 @@ describe("Open popup in resistance mechanisms detection subtheme", () => {
 describe("Open popup in insecticide resistance status subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.vectorInsecticideResistance);
-        cy.resetMapZoom();
     });
 
     it("should open a popup to click on coordinates", () => {
-        cy.clickOnMap(550, 360);
-        cy.findByText("Discriminating concentration bioassays, WHO test kit bioassay");
+        cy.openSitePopup("Kampti Center");
+        cy.findByText("Discriminating concentration bioassays", { exact: false });
 
         cy.findByText("Kampti Center (Kampti-Lobi), Burkina Faso");
         cy.findByText("Acknowledgement for data curation");
@@ -94,11 +90,10 @@ describe("Open popup in synergist effect in susceptibility subtheme", () => {
         cy.loadPage(themes.vectorInsecticideResistance);
         cy.contains("Insecticide resistance status").click();
         cy.findByText("Synergist effect in susceptibility").click();
-        cy.resetMapZoom();
     });
 
     it("should open a popup to click on coordinates", () => {
-        cy.clickOnMap(658, 489);
+        cy.openSitePopup("Mamfene");
         cy.findByText("Synergist-insecticide bioassays, Mono oxygenases");
 
         cy.findByText("Mamfene, South Africa");

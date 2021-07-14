@@ -41,7 +41,7 @@ function InvasiveMapTypesSelector({ setInvasiveMapType, setMapTitle, invasiveFil
 
     React.useEffect(() => {
         const selection = invasiveSuggestions.find(s => s.value === invasiveFilters.mapType);
-        setMapTitle(t(`common.${selection.label}`));
+        setMapTitle(t(selection.label));
     });
 
     return (

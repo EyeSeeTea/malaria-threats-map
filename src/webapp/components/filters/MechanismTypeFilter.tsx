@@ -1,24 +1,17 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import styled from "styled-components";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
 import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
-import { Paper } from "@material-ui/core";
 import { selectTypes } from "../../store/reducers/translations-reducer";
 import { selectPreventionFilters, selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import { setType } from "../../store/actions/prevention-actions";
-import { Divider, FilterWrapper } from "./Filters";
-import FormLabel from "@material-ui/core/FormLabel";
 import { filterByLevelOfInvolvement, filterByRegion, filterByYearRange } from "../layers/studies-filters";
 import * as R from "ramda";
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import { logEventAction } from "../../store/actions/base-actions";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
+import RadioGroupFilter from "./RadioGroupFilter";
 
 export const WHITELISTED_TYPES = [
     "MONO_OXYGENASES",
@@ -29,29 +22,6 @@ export const WHITELISTED_TYPES = [
     "KDR_(MUTATION_UNSPECIFIED)",
     "ACE1R",
 ];
-
-const StyledFormControlLabel = styled(FormControlLabel)`
-    & span {
-        padding: 2px;
-    }
-`;
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            display: "flex",
-        },
-        formControl: {
-            margin: theme.spacing(3),
-        },
-        group: {
-            padding: theme.spacing(1, 2),
-        },
-        radio: {
-            padding: theme.spacing(0.5, 0),
-        },
-    })
-);
 
 const mapStateToProps = (state: State) => ({
     studies: selectPreventionStudies(state),
@@ -84,13 +54,12 @@ function MechanismTypeFilter({
     region,
     logEventAction,
 }: Props) {
-    const classes = useStyles({});
     const { t } = useTranslation();
-    function handleChange(event: React.ChangeEvent<unknown>) {
+    const handleChange = (event: React.ChangeEvent<unknown>) => {
         const newValue = (event.target as HTMLInputElement).value;
         setType(newValue);
         logEventAction({ category: "filter", action: "mechanismType", label: newValue });
-    }
+    };
 
     const filters = [filterByLevelOfInvolvement, filterByYearRange(yearFilter), filterByRegion(region)];
 
@@ -104,25 +73,19 @@ function MechanismTypeFilter({
         ? suggestions
         : WHITELISTED_TYPES.map(value => suggestions.find((type: any) => type.VALUE_ === value)).filter(Boolean);
 
+    const options = filteredTypes
+        .filter(translation => translation.VALUE_ !== "NA")
+        .map(mechanism => ({
+            value: mechanism.VALUE_,
+            label: t(mechanism.VALUE_),
+        }));
     return (
-        <FilterWrapper>
-            <FormLabel component="legend">{t("common.filters.mechanism_type")}</FormLabel>
-            <Divider />
-            <Paper className={classes.group}>
-                <RadioGroup value={preventionFilters.type} onChange={handleChange}>
-                    {filteredTypes
-                        .filter(translation => translation.VALUE_ !== "NA")
-                        .map((insecticideClass: Translation) => (
-                            <StyledFormControlLabel
-                                key={insecticideClass.VALUE_}
-                                value={insecticideClass.VALUE_}
-                                control={<Radio color="primary" />}
-                                label={t(insecticideClass.VALUE_)}
-                            />
-                        ))}
-                </RadioGroup>
-            </Paper>
-        </FilterWrapper>
+        <RadioGroupFilter
+            label={t("common.filters.mechanism_type")}
+            options={options}
+            handleChange={handleChange}
+            value={preventionFilters.type}
+        />
     );
 }
 
