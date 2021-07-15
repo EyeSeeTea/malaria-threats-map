@@ -5,7 +5,6 @@ import { createReducer } from "../reducer-utils";
 import { ActionTypeEnum } from "../actions";
 
 const query = window.location.search.substring(1);
-
 const isTourInitiallyOpen = localStorage.getItem("tour") !== "visited" && !query;
 
 const initialState: MalariaState = Object.freeze({
