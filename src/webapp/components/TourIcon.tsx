@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const TourIcon = () => {
     const classes = useStyles({});
     const { t } = useTranslation();
+    
     return (
         <React.Fragment>
             <Fab
