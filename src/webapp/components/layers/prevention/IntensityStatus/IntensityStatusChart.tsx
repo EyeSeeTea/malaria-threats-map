@@ -45,11 +45,14 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
     const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const groupedStudies = R.values(R.groupBy(R.prop("CITATION_URL"), baseStudies));
+
     const studies = groupedStudies[study];
+
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
         return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_INTENSITY}`;
     }, sortedStudies);
+
     const simplifiedStudies = R.values(cleanedStudies).map(
         (groupStudies: PreventionStudy[]) => R.sortBy(study => -parseInt(study.MORTALITY_ADJUSTED), groupStudies)[0]
     );
@@ -59,7 +62,8 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
         species: study.SPECIES,
         number: study.NUMBER,
     }));
-    const studyObject = simplifiedStudies[study];
+
+    const studyObject = simplifiedStudies[0];
     const translations = {
         mortality: t("common.prevention.chart.resistance_intensity.mortality"),
         mosquito_mortality: `${t("common.prevention.chart.resistance_intensity.mosquito_mortality")} (${t(
@@ -67,6 +71,7 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
         )})`,
         tested: t("common.prevention.chart.resistance_intensity.tested"),
     };
+
     const content = () => (
         <>
             {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
