@@ -9,9 +9,9 @@ declare namespace Cypress {
     interface Chainable {
         /**
          * Custom command to open story mode
-         * @example cy.openStoryMode('')
+         * @example cy.openCountryPopup('Mali')
          */
-         openCountryPopup(name: string): Chainable<Element>;
+        openCountryPopup(name: string): Chainable<Element>;
     }
     interface Chainable {
         /**
