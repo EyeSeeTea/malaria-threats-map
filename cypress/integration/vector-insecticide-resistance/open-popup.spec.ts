@@ -78,7 +78,7 @@ describe("Open popup in insecticide resistance status subtheme", () => {
 
     it("should open a popup to click on coordinates", () => {
         cy.openSitePopup("Kampti Center");
-        cy.findByText("Discriminating concentration bioassays, WHO test kit bioassay");
+        cy.findByText("Discriminating concentration bioassays", { exact: false });
 
         cy.findByText("Kampti Center (Kampti-Lobi), Burkina Faso");
         cy.findByText("Acknowledgement for data curation");

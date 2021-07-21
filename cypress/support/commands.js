@@ -21,9 +21,13 @@ Cypress.Commands.add("clickOnMap", (x, y) => {
 });
 
 Cypress.Commands.add("openSitePopup", name => {
-    cy.findByRole("button", { name: /filters/i }).click();
     cy.findByText(/regions/i).click();
     cy.findByText(/select site/i).type(`${name}{enter}`);
+});
+
+Cypress.Commands.add("openCountryPopup", name => {
+    cy.findByText(/regions/i).click();
+    cy.findByText(/select country/i).type(`${name}{enter}`);
 });
 
 Cypress.Commands.add("openStoryMode", () => {

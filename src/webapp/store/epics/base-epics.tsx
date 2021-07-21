@@ -154,7 +154,7 @@ export const setStoryModeStepEpic = (
                     case "diagnosis":
                         switch (action.payload) {
                             case 0:
-                                return of(setCountryModeAction(false), setRegionAction({ country: "PERU" }));
+                                return of(setCountryModeAction(false), setRegionAction({ country: "PE" }));
                             case 1:
                                 return of(setCountryModeAction(false), setRegionAction({ region: "AFRICA" }));
                             case 2:
@@ -187,7 +187,7 @@ export const setStoryModeStepEpic = (
                                     ])
                                 );
                             case 1:
-                                return of(setCountryModeAction(false), setRegionAction({ country: "PAKISTAN" }));
+                                return of(setCountryModeAction(false), setRegionAction({ country: "PK" }));
                             case 2:
                                 return of(setCountryModeAction(false));
                             default:

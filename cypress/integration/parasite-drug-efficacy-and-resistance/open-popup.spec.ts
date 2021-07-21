@@ -19,7 +19,6 @@ describe("Open popup in treatment failure subtheme", () => {
         cy.findByText("Positive after day 3:");
         cy.findByText("Patients with treatment failure, per protocol:");
         cy.findByText("Patients with treatment failure, Kaplan-Meier:");
-        cy.contains("Programme National de Lutte contre le Paludisme");
 
         //data
         cy.findByText("52");
