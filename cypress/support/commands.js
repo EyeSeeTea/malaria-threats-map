@@ -31,11 +31,12 @@ Cypress.Commands.add("openCountryPopup", name => {
 });
 
 Cypress.Commands.add("openStoryMode", () => {
+    cy.findByRole("button", { name: /filters/i }).click();
     cy.findByRole("button", { name: "Story mode" }).click();
 });
 
 Cypress.Commands.add("openCountryMode", () => {
-    cy.findByRole("button", { name: "Show studies per country" }).click();
+    cy.findByRole("button", { name: /Show studies per country/i }).click();
 });
 
 Cypress.Commands.add("openSummaryReport", () => {
