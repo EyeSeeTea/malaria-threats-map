@@ -159,7 +159,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
 
     const duration = formatYears2(YEAR_START, YEAR_END);
     const formatValue = (value: string) =>
-        Number.isNaN(parseFloat(value)) ? "N/A" : `${(parseFloat(value) * 100).toFixed(2)}%`;
+        Number.isNaN(parseFloat(value)) ? "N/A" : `${(parseFloat(value) * 100).toFixed(1)}%`;
 
     const translations = {
         percentage: t("common.treatment.chart.treatment_failure.percentage"),
