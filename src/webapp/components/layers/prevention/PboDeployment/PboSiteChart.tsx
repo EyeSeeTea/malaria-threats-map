@@ -117,7 +117,7 @@ const PboSiteChart = ({ studies }: Props) => {
                             <StyledHeaderCell align={"center"}>
                                 {t("common.prevention.chart.pbo_deployment.vector_species")}
                             </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"} borderLeft>
+                            <StyledHeaderCell align={"center"}>
                                 {t("common.prevention.chart.pbo_deployment.pyrethroid_resistance_status")}
                             </StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
@@ -126,7 +126,7 @@ const PboSiteChart = ({ studies }: Props) => {
                             <StyledHeaderCell align={"center"}>
                                 {t("common.prevention.chart.pbo_deployment.most_recent_test_results")}
                             </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"} borderLeft>
+                            <StyledHeaderCell align={"center"} >
                                 {t("common.prevention.chart.pbo_deployment.conferred_by_mono_oxygenase")}
                             </StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
@@ -142,12 +142,12 @@ const PboSiteChart = ({ studies }: Props) => {
                             return (
                                 <TableRow key={row.species}>
                                     <StyledBodyCell align={"center"}>{row.species}</StyledBodyCell>
-                                    <StyledBodyCell align={"center"} borderLeft>
+                                    <StyledBodyCell align={"center"} >
                                         {row.pyrethroidResistance}
                                     </StyledBodyCell>
                                     <StyledBodyCell align={"center"}>{row.adjustedMortality}</StyledBodyCell>
                                     <StyledBodyCell align={"center"}>{row.pyrethroidMostRecentYear}</StyledBodyCell>
-                                    <StyledBodyCell align={"center"} borderLeft>
+                                    <StyledBodyCell align={"center"} >
                                         {row.conferred}
                                     </StyledBodyCell>
                                     <StyledBodyCell align={"center"}>{row.monoOxygenaseMeasuredBy}</StyledBodyCell>
