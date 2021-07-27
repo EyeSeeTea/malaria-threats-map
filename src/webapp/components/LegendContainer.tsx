@@ -66,3 +66,4 @@ const LegendContainer = ({ children, legendExpanded, setLegendExpanded }: Props)
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LegendContainer);
+
