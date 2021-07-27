@@ -22,7 +22,7 @@ const layer: mapboxgl.FillLayer = {
 };
 
 const mapStateToProps = (state: State) => ({
-    endemicity: selectEndemicity(state),
+endemicity: selectEndemicity(state),
 });
 
 type Props = {
