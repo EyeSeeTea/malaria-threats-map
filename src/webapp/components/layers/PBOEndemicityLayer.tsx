@@ -31,6 +31,7 @@ type Props = {
 
 class PBOEndemicityLayer extends Component<Props> {
     componentDidMount(): void {
+        console.log("here!!");
         const source: any = {
             type: "geojson",
             data: `${config.mapServerUrl}/1/query?where=ENDEMICITY%3D0&f=geojson&geometryPrecision=2.5`,

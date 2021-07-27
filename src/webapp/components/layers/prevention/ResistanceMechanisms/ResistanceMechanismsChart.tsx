@@ -101,7 +101,7 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const ResistanceMechanismsChart = ({ studies }: Props) => {
+const ResistanceMechanismsChart = ({ studies, theme }: Props) => {
     const { t } = useTranslation();
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
@@ -193,7 +193,7 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
                     </FlexCol>
                 )}
             </Flex>
-            <Citation study={studies[0]} />
+            <Citation theme={theme} study={studies[0]} />
             <Curation study={studies[0]} />
         </>
     );

@@ -140,7 +140,7 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
+const ResistanceStatusChart = ({ studies: baseStudies, theme }: Props) => {
     const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const speciesOptions = R.uniq(R.map(s => s.SPECIES, baseStudies));
@@ -219,7 +219,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
                 </Flex>
             )}
             <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-            <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
+            <Citation theme={theme} study={studyObject} allStudiesGroup={groupedStudies[study]} />
             <Curation study={studyObject} />
         </>
     );
