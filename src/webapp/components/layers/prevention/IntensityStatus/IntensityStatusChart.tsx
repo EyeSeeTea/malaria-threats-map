@@ -43,7 +43,6 @@ type Props = DispatchProps & StateProps & OwnProps;
 
 const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
     const { t } = useTranslation();
-
     const [study, setStudy] = useState(0);
     const groupedStudies = R.values(R.groupBy(R.prop("CITATION_URL"), baseStudies));
     const studies = groupedStudies[study];
@@ -51,9 +50,11 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
         return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_INTENSITY}`;
     }, sortedStudies);
-    const simplifiedStudies = R.values(cleanedStudies).map(
-        (groupStudies: PreventionStudy[]) => R.sortBy(study => -parseInt(study.MORTALITY_ADJUSTED), groupStudies)[0]
-    ).sort((a,b) => a.INSECTICIDE_TYPE.localeCompare(b.INSECTICIDE_TYPE));
+    const simplifiedStudies = R.values(cleanedStudies)
+        .map(
+            (groupStudies: PreventionStudy[]) => R.sortBy(study => -parseInt(study.MORTALITY_ADJUSTED), groupStudies)[0]
+        )
+        .sort((a, b) => a.INSECTICIDE_TYPE.localeCompare(b.INSECTICIDE_TYPE));
 
     const data = simplifiedStudies.map(study => ({
         name: `${study.YEAR_START}, ${t(study.INSECTICIDE_INTENSITY)} ${t(study.INSECTICIDE_TYPE)}`,
@@ -61,7 +62,6 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
         species: study.SPECIES,
         number: study.NUMBER,
     }));
-
     const studyObject = simplifiedStudies[study];
     const translations = {
         mortality: t("common.prevention.chart.resistance_intensity.mortality"),
