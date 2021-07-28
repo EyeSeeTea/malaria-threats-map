@@ -33,7 +33,6 @@ const zones = [
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     ...preventionChartOptions(data, translations, zones),
-
 });
 
 const ChatContainer = styled.div<{ width?: string }>`
