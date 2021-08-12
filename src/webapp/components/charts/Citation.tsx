@@ -14,6 +14,7 @@ import CitationDataSources from "./CitationDataSources";
 const mapDispatchToProps = {
     logOutboundLinkAction: logOutboundLinkAction,
 };
+
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
 });
@@ -35,6 +36,7 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme }: Prop
     const logClick = React.useCallback(() => {
         logOutboundLinkAction(study.CITATION_URL);
     }, [study, logOutboundLinkAction]);
+
     const [citationLongs, setCitationLongs] = useState<string[]>([]);
     const [institutes, setInstitutes] = useState<string[]>([]);
 
