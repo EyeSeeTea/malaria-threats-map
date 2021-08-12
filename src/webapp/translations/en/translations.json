@@ -148,6 +148,7 @@
                 "gene_deletions": {
                     "content_1": "{{nStudies}} survey(s) ",
                     "content_2": " by {{surveyTypes}} {{years}}",
+                    "DHS": "DHS",
                     "deletions_confirmed": "Deletions confirmed (% of samples)",
                     "deletion_type": "Deletion type",
                     "no_tested": "No. tested",
@@ -476,7 +477,7 @@
             "share": "Share",
             "tour": "Take a tour"
         },
-        "feedbackIframeUrl": "https://extranet.who.int/dataformv3/index.php/828325?newtest=Y&lang=en",
+        "feedbackIframeUrl": "https://extranet.who.int/dataform/828325?newtest=Y&lang=en",
         "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",
         "PROP_RELATED": "Percentage %",
         "COUNTRY_NA": "Namibia",
@@ -813,7 +814,7 @@
         "step3": {
             "part1": "<0>Studies of molecular prevention provide essential data for detecting and tracking antimalarial drug resistance</0>",
             "part2": "<0>Molecular prevention for drug resistance are genetic changes in the malaria parasite found to be associated with resistance.</0>",
-            "part3": "Compared to efficacy studies, studies of molecular prevention have several practical advantages. For example, a large number of samples can be collected and rapidly analysed. Molecular prevention of drug resistance have been identified for different drugs, including <i>P. falciparum</i> resistance to chloroquine pipearquine, mefloquine, pyrimethamine, sulfadoxine, atovaquone and artemisinins.",
+            "part3": "Compared to efficacy studies, studies of molecular prevention have several practical advantages. For example, a large number of samples can be collected and rapidly analysed. Molecular prevention of drug resistance have been identified for different drugs, including <i>P. falciparum</i> resistance to chloroquine, piperaquine, mefloquine, pyrimethamine, sulfadoxine, atovaquone and artemisinins.",
             "part4": "For artemisinins, several mutations in the Kelch 13 (K13)-propeller domain have been found to be associated with delayed parasite clearance. This is an evolving field as more K13 mutations are discovered and we develop a better understanding of which mutations are of greatest influence."
         },
         "step4": {
