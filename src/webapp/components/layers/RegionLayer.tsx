@@ -173,9 +173,7 @@ class RegionLayer extends Component<Props> {
         const bounds = coordinates.reduce((bounds: any, coord: any) => {
             return bounds.extend(coord);
         }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
-        this.props.map.fitBounds(bounds, {
-            padding: 100,
-        });
+        this.props.map.fitBounds(bounds);
     };
 
     zoomToSite = (site: string, iso2: string, coords: [number, number]) => {

@@ -35,8 +35,6 @@ const SubRegionSelector: React.FC<Props> = ({ region, subRegions = [], setRegion
         value: subRegion.VALUE_,
     }));
 
-    console.log({ suggestions });
-
     return (
         <SingleFilter
             label={t("common.filters.sub_region")}
