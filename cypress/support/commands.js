@@ -1,4 +1,5 @@
 import "@testing-library/cypress/add-commands";
+//import { cy } from "date-fns/locale";
 
 Cypress.Commands.add("loadPage", theme => {
     cy.visit("/");
@@ -31,6 +32,7 @@ Cypress.Commands.add("openCountryPopup", name => {
 });
 
 Cypress.Commands.add("openStoryMode", () => {
+    cy.findByRole("button", { name: "Filters" }).click();
     cy.findByRole("button", { name: "Story mode" }).click();
 });
 
