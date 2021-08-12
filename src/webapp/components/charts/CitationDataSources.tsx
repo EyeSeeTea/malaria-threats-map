@@ -1,8 +1,9 @@
 import * as React from "react";
-import { Typography } from "@material-ui/core";
+import { Link,Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { isNull } from "./Citation";
 
 const CitationUl = styled.div`
     margin: 0px;
@@ -10,11 +11,12 @@ const CitationUl = styled.div`
 
 type Props = {
     dataSources: string[];
+    url?: string | null;
 };
 
-const CitationDataSources = ({ dataSources }: Props) => {
+const CitationDataSources = ({ dataSources, url }: Props) => {
     const { t } = useTranslation();
-
+    console.log(dataSources)
     return (
         <CitationUl>
             <Typography variant="caption">
@@ -23,7 +25,12 @@ const CitationDataSources = ({ dataSources }: Props) => {
             {dataSources.map((dataSource, index) => {
                 return (
                     <li key={index}>
+                        {!isNull(url) ? 
+                        <Link href={url} target="_blank">
                         <Typography variant="caption">{dataSource}</Typography>
+                    </Link>
+                        : <Typography variant="caption">{dataSource}</Typography>}
+                        
                     </li>
                 );
             })}

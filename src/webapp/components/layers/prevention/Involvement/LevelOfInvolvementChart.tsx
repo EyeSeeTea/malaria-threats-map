@@ -33,7 +33,7 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const LevelOfInvolvementChart = ({ studies: baseStudies, theme }: Props) => {
+const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
     const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const groupedStudies = R.values(R.groupBy(R.prop("CITATION_URL"), baseStudies));
@@ -71,7 +71,7 @@ const LevelOfInvolvementChart = ({ studies: baseStudies, theme }: Props) => {
             </Typography>
             <Typography variant="subtitle2">{`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}</Typography>
             <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-            <Citation theme={theme} study={studyObject} />
+            <Citation study={studyObject} />
             <Curation study={studyObject} />
         </>
     );

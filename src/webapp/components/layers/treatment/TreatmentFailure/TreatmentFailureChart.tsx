@@ -103,7 +103,7 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const TreatmentFailureChart = ({ studies, theme }: Props) => {
+const TreatmentFailureChart = ({ studies }: Props) => {
     const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
@@ -278,7 +278,7 @@ const TreatmentFailureChart = ({ studies, theme }: Props) => {
                     </FlexCol>
                 </Flex>
             </Hidden>
-            <Citation theme={theme} study={studies[study]} />
+            <Citation study={studies[study]} />
         </ChatContainer>
     );
 };
