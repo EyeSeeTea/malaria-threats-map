@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { Study } from "../../../domain/entities/Study";
 import { selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
-
 import { useState } from "react";
 import { useEffect } from "react";
 import _ from "lodash";
@@ -18,7 +17,6 @@ const mapDispatchToProps = {
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
 });
-
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
