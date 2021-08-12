@@ -14,9 +14,25 @@ import Pagination from "../../../charts/Pagination";
 import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import preventionChartOptions from "../common/preventionChartOptions";
+import { LevelOfInvolvementColors } from "./symbols";
+
+const zones = [
+    {
+        value: 90,
+        color: LevelOfInvolvementColors.NO_INVOLVEMENT[0],
+    },
+    {
+        value: 98,
+        color: LevelOfInvolvementColors.PARTIAL_INVOLVEMENT[0],
+    },
+    {
+        value: 100.001,
+        color: LevelOfInvolvementColors.FULL_INVOLVEMENT[0],
+    },
+];
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
-    ...preventionChartOptions(data, translations),
+    ...preventionChartOptions(data, translations, zones),
 });
 
 const ChatContainer = styled.div<{ width?: string }>`
