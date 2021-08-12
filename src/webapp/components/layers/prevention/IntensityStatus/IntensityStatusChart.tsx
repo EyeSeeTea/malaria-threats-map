@@ -59,7 +59,7 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
         species: study.SPECIES,
         number: study.NUMBER,
     }));
-    const studyObject = simplifiedStudies[study];
+    const studyObject = simplifiedStudies[0];
     const translations = {
         mortality: t("common.prevention.chart.resistance_intensity.mortality"),
         mosquito_mortality: `${t("common.prevention.chart.resistance_intensity.mosquito_mortality")} (${t(
