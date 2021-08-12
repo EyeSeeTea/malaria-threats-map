@@ -35,11 +35,9 @@ const valueOrUndefined = (value: string) => (isNull(value) ? undefined : value.t
 // TODO: Translations
 const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme  }: Props) => {
     const { t } = useTranslation();
-    console.log(theme)
     const logClick = React.useCallback(() => {
         logOutboundLinkAction(study.CITATION_URL);
     }, [study, logOutboundLinkAction]);
-    console.log(study)
     const [citationLongs, setCitationLongs] = useState<string[]>([]);
     const [institutes, setInstitutes] = useState<string[]>([]);
 
