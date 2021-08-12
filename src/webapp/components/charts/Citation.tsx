@@ -53,30 +53,22 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme }: Prop
     }, [study, allStudiesGroup]);
     return (
         <>
-            {theme !== "prevention" ? (
+            {!isNull(study.CITATION_URL) ? (
                 <Typography variant="caption">
-                    {!isNull(study.CITATION_URL) ? (
-                        <Link onClick={logClick} href={study.CITATION_URL} target="_blank">
-                            {valueOrUndefined(study.CITATION_LONG) ||
-                                valueOrUndefined(study.CITATION) ||
-                                valueOrUndefined(study.INSTITUTION) ||
-                                valueOrUndefined(study.CITATION_URL)}
-                            {study.INSTITUTION_CITY ? `, ${study.INSTITUTION_CITY}` : ``}
-                        </Link>
-                    ) : (
-                        <>
-                            {valueOrUndefined(study.CITATION_LONG) ||
-                                valueOrUndefined(study.CITATION) ||
-                                valueOrUndefined(study.INSTITUTION) ||
-                                valueOrUndefined(study.CITATION_URL)}
-                            {study.INSTITUTION_CITY ? `, ${study.INSTITUTION_CITY}` : ``}
-                        </>
-                    )}
+                    <Link onClick={logClick} href={study.CITATION_URL} target="_blank">
+                        {valueOrUndefined(study.CITATION_LONG) ||
+                            valueOrUndefined(study.CITATION) ||
+                            valueOrUndefined(study.INSTITUTION) ||
+                            valueOrUndefined(study.CITATION_URL)}
+                        {study.INSTITUTION_CITY ? `, ${study.INSTITUTION_CITY}` : ``}
+                    </Link>
                 </Typography>
-            ) : citationLongs.length > 0 && theme === "prevention" ? (
-                <CitationDataSources dataSources={citationLongs} url={study.CITATION_URL} />
-            ) : institutes.length > 0 && theme === "prevention" ? (
-                <CitationDataSources dataSources={institutes} url={study.CITATION_URL} />
+            ) : citationLongs.length > 0 && theme !== "treatment" ? (
+                <CitationDataSources dataSources={citationLongs} />
+            ) : institutes.length > 0 && theme !== "treatment" ? (
+                <CitationDataSources dataSources={institutes} />
+            ) : !isNull(study.INSTITUTION) && theme === "treatment" ? (
+                <Typography variant="caption">{study.INSTITUTION}</Typography>
             ) : (
                 <Typography variant="caption">{t("common.citation.source_not_provided")}</Typography>
             )}
