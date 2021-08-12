@@ -14,6 +14,7 @@ type Props = {
 
 const CitationDataSources = ({ dataSources }: Props) => {
     const { t } = useTranslation();
+
     return (
         <CitationUl>
             <Typography variant="caption">
