@@ -215,7 +215,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                         </Typography>
                     </Flex>
                 )}
-                {exists(POSITIVE_DAY_3) && (
+                {(exists(POSITIVE_DAY_3) && PLASMODIUM_SPECIES === "P._FALCIPARUM") && (
                     <Flex>
                         <Typography variant="body2">
                             <b>
