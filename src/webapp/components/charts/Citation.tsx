@@ -19,7 +19,6 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
 });
 
-
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
@@ -33,7 +32,7 @@ export const isNull = (value: string) => value === null || !value || value.trim(
 const valueOrUndefined = (value: string) => (isNull(value) ? undefined : value.trim());
 
 // TODO: Translations
-const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme  }: Props) => {
+const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme }: Props) => {
     const { t } = useTranslation();
     const logClick = React.useCallback(() => {
         logOutboundLinkAction(study.CITATION_URL);

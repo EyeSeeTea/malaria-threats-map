@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link,Typography } from "@material-ui/core";
+import { Link, Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import styled from "styled-components";
@@ -24,12 +24,13 @@ const CitationDataSources = ({ dataSources, url }: Props) => {
             {dataSources.map((dataSource, index) => {
                 return (
                     <li key={index}>
-                        {!isNull(url) ? 
-                        <Link href={url} target="_blank">
-                        <Typography variant="caption">{dataSource}</Typography>
-                    </Link>
-                        : <Typography variant="caption">{dataSource}</Typography>}
-                        
+                        {!isNull(url) ? (
+                            <Link href={url} target="_blank">
+                                <Typography variant="caption">{dataSource}</Typography>
+                            </Link>
+                        ) : (
+                            <Typography variant="caption">{dataSource}</Typography>
+                        )}
                     </li>
                 );
             })}
