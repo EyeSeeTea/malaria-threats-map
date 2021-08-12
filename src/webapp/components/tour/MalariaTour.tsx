@@ -132,7 +132,7 @@ class MalariaTour extends PureComponent<Props> {
     };
 
     toggleFilters = (value: boolean) => {
-        this.props.setFiltersOpen(value);
+        this.props.setFiltersOpen(!value);
     };
 
     setSelection = (selection: SiteSelection | null) => {

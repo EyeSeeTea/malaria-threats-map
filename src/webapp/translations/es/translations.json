@@ -148,6 +148,7 @@
                 "gene_deletions": {
                     "content_1": "{{nStudies}} encuesta(s) ",
                     "content_2": " por {{surveyTypes}} {{years}}",
+                    "DHS": "DHS",
                     "deletions_confirmed": "Deleciones confirmadas (% de muestras)",
                     "deletion_type": "Tipo de deleción",
                     "no_tested": "No. muestras",
@@ -476,7 +477,7 @@
             "share": "Compartir",
             "tour": "Visita guiada por la aplicación"
         },
-        "feedbackIframeUrl": "https://extranet.who.int/dataformv3/index.php/828325?newtest=Y&lang=es",
+        "feedbackIframeUrl": "https://extranet.who.int/dataform/828325?newtest=Y&lang=es",
         "TREATMENT_FAILURE_KM": "% de pacientes con fallo terapeutico, Kaplan-Meier",
         "PROP_RELATED": "%",
         "COUNTRY_NA": "Namibia",

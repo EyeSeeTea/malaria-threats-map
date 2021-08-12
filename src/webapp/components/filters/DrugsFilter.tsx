@@ -55,7 +55,7 @@ const DrugsFilter: React.FC<Props> = ({ setDrug, treatmentFilters, studies, year
 
     return (
         <SingleFilter
-            label={t("common.filters.plasmodium_species")}
+            label={t("common.filters.drug")}
             options={suggestions}
             onChange={setDrug}
             value={treatmentFilters.drug}
