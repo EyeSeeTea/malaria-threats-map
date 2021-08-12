@@ -1,5 +1,4 @@
 import "@testing-library/cypress/add-commands";
-//import { cy } from "date-fns/locale";
 
 Cypress.Commands.add("loadPage", theme => {
     cy.visit("/");
