@@ -23,9 +23,9 @@ describe("Open popup in treatment failure subtheme", () => {
         //data
         cy.findByText("52");
         cy.findByText("28 days");
-        cy.findByText("0.00%");
-        cy.findByText("5.80%");
-        cy.findByText("5.40%");
+        cy.findByText("0.0%");
+        cy.findAllByText("5.8%");
+        cy.findAllByText("5.4%");
     });
 });
 
@@ -62,8 +62,8 @@ describe("Open popup in delayed parasite clearance subtheme", () => {
 
         cy.contains("2011");
         cy.contains("28 days");
-        cy.contains("31.20%");
-        cy.contains("0.00%");
+        cy.contains("31.2%");
+        cy.contains("0.0%");
 
         cy.contains("Foundation for Scientific Research Suriname, Paramaribo");
 

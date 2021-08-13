@@ -31,6 +31,7 @@ Cypress.Commands.add("openCountryPopup", name => {
 });
 
 Cypress.Commands.add("openStoryMode", () => {
+    cy.findByRole("button", { name: "Filters" }).click();
     cy.findByRole("button", { name: "Story mode" }).click();
 });
 
