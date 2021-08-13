@@ -376,7 +376,11 @@ function PreventionReport({ studies: baseStudies }: Props) {
                                                     const isNumber = !Number.isNaN(number);
                                                     const percentage = ERROR_COLUMNS.includes(entry[0]);
                                                     const cell = entry[0].split("_")[0];
+
                                                     const active = (row as any)[`${cell}_N`];
+                                                    const active2 = (row as any)[`${entry[0]}_NUMBER_SITES`];
+                                                    const finalActive = active !== undefined ? active : active2;
+
                                                     const error =
                                                         percentage && entry[0].indexOf("AVERAGE") > -1 && number > 0;
                                                     const grey = GREY_COLUMNS.includes(entry[0]);
@@ -396,7 +400,11 @@ function PreventionReport({ studies: baseStudies }: Props) {
                                                             divider={header.divider}
                                                         >
                                                             {header && header.numeric && isNumber
-                                                                ? `${number.toFixed(1)}% ${active ? `(${active})` : ""}`
+                                                                ? `${number.toFixed(1)}% ${
+                                                                      finalActive !== undefined
+                                                                          ? `(${finalActive})`
+                                                                          : ""
+                                                                  }`
                                                                 : entry[1] || "-"}
                                                         </StyledCell>
                                                     );
