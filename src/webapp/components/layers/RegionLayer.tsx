@@ -126,6 +126,7 @@ class RegionLayer extends Component<Props> {
 
     zoomToRegion = (region: string) => {
         const { countryLayer } = this.props;
+        console.log(countryLayer)
         if (!countryLayer) return;
         const features = countryLayer.features.filter((feature: any) => {
             return (
@@ -143,6 +144,9 @@ class RegionLayer extends Component<Props> {
         const bounds = coordinates.reduce((bounds: any, coord: any) => {
             return bounds.extend(coord);
         }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+        /*this.props.map.flyTo({
+            center: features[0].geometry.coordinates
+            });*/
         this.props.map.fitBounds(bounds, {
             padding: 100,
         });
