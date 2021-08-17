@@ -57,7 +57,7 @@ const prodMapTile = {
 };
 
 const feedbackConfig = {
-    token: ["03242fc6b0c5a48582", "2e6b8d3e8337b5a0b95fe2"],
+    token: ["ghp_mKe29w1W0ww54C", "ah9NfIMlJdEpP2Mw3RU7FO"],
     createIssue: true,
     issues: { repository: "WorldHealthOrganization/malaria-threats-map", title: "[User feedback] {title}" },
     snapshots: { repository: "EyeSeeTeaBotTest/snapshots", branch: "master" },
