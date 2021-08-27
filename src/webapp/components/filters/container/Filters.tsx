@@ -137,6 +137,7 @@ function Filters({
                 size="small"
                 color={filtersOpen ? "primary" : "default"}
                 className={classes.fab}
+                title={t("common.icons.filters")}
             >
                 <FilterIconSimple className={classes.extendedIcon} fontSize="small" onClick={handleClickOpen} />
                 <span onClick={handleClickOpen}>{t("common.filters.filters")}</span>
