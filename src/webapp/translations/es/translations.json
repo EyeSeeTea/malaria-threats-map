@@ -475,7 +475,8 @@
             "comments": "Envíe sus comentarios",
             "help": "Ayuda",
             "share": "Compartir",
-            "tour": "Visita guiada por la aplicación"
+            "tour": "Visita guiada por la aplicación",
+            "filters": "Filtros"
         },
         "feedbackIframeUrl": "https://extranet.who.int/dataform/828325?newtest=Y&lang=es",
         "TREATMENT_FAILURE_KM": "% de pacientes con fallo terapeutico, Kaplan-Meier",

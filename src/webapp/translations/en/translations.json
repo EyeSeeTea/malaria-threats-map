@@ -475,7 +475,8 @@
             "comments": "Provide your feedback",
             "help": "Help",
             "share": "Share",
-            "tour": "Take a tour"
+            "tour": "Take a tour",
+            "filters": "Filters"
         },
         "feedbackIframeUrl": "https://extranet.who.int/dataform/828325?newtest=Y&lang=en",
         "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",

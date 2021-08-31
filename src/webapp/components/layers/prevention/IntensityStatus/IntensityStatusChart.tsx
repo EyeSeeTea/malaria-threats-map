@@ -50,16 +50,19 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
         return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_INTENSITY}`;
     }, sortedStudies);
-    const simplifiedStudies = R.values(cleanedStudies).map(
-        (groupStudies: PreventionStudy[]) => R.sortBy(study => -parseInt(study.MORTALITY_ADJUSTED), groupStudies)[0]
-    );
+    const simplifiedStudies = R.values(cleanedStudies)
+        .map(
+            (groupStudies: PreventionStudy[]) => R.sortBy(study => -parseInt(study.MORTALITY_ADJUSTED), groupStudies)[0]
+        )
+        .sort((a, b) => a.INSECTICIDE_TYPE.localeCompare(b.INSECTICIDE_TYPE));
+
     const data = simplifiedStudies.map(study => ({
         name: `${study.YEAR_START}, ${t(study.INSECTICIDE_INTENSITY)} ${t(study.INSECTICIDE_TYPE)}`,
         y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
         species: study.SPECIES,
         number: study.NUMBER,
     }));
-    const studyObject = simplifiedStudies[study];
+    const studyObject = simplifiedStudies[0];
     const translations = {
         mortality: t("common.prevention.chart.resistance_intensity.mortality"),
         mosquito_mortality: `${t("common.prevention.chart.resistance_intensity.mosquito_mortality")} (${t(
