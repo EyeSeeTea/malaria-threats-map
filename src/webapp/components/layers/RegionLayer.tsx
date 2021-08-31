@@ -112,13 +112,30 @@ class RegionLayer extends Component<Props> {
         const feature = countryLayer.features.find(
             (feature: any) => feature.properties.ADM0_NAME === country || feature.properties.ISO_2_CODE === country
         );
+
         if (!feature) return;
         const coordinates: any[] = R.chain((coords: any) => {
             return coords[0].length === 2 ? coords : coords[0];
         }, feature.geometry.coordinates);
-        const bounds = coordinates.reduce((bounds: any, coord: any) => {
-            return bounds.extend(coord);
-        }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+
+        const manualBounds: Record<string, mapboxgl.LngLatBounds> = {
+            RU: new mapboxgl.LngLatBounds(
+                { lng: 9.581379539867555, lat: 31.394361299606373 },
+                { lng: 227.99459783721954, lat: 82.57887256921276 }
+            ),
+            US: new mapboxgl.LngLatBounds(
+                { lng: -195.90829039443304, lat: 13.707605258632569 },
+                { lng: 21.522878407466067, lat: 79.52810148835542 }
+            ),
+        };
+
+        const bounds =
+            country in manualBounds
+                ? manualBounds[country]
+                : coordinates.reduce((bounds: any, coord: any) => {
+                      return bounds.extend(coord);
+                  }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+
         this.props.map.fitBounds(bounds, {
             padding: 100,
         });
@@ -126,7 +143,6 @@ class RegionLayer extends Component<Props> {
 
     zoomToRegion = (region: string) => {
         const { countryLayer } = this.props;
-        console.log(countryLayer)
         if (!countryLayer) return;
         const features = countryLayer.features.filter((feature: any) => {
             return (
@@ -134,6 +150,7 @@ class RegionLayer extends Component<Props> {
                 feature.properties.REGION_FULL === region.replace(/_/g, " ")
             );
         });
+
         if (!features.length) return;
         const coordinates: any[] = features.reduce((acc: any[], feature: any) => {
             const featureCoords = R.chain((coords: any) => {
@@ -141,12 +158,29 @@ class RegionLayer extends Component<Props> {
             }, feature.geometry.coordinates);
             return [...acc, ...featureCoords];
         }, []);
-        const bounds = coordinates.reduce((bounds: any, coord: any) => {
-            return bounds.extend(coord);
-        }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
-        /*this.props.map.flyTo({
-            center: features[0].geometry.coordinates
-            });*/
+
+        const manualBounds: Record<string, mapboxgl.LngLatBounds> = {
+            EUROPE: new mapboxgl.LngLatBounds(
+                { lng: 221.51049804341602, lat: 83.14945739166231 },
+                { lng: -39.31141982332926, lat: 13.554006098541365 }
+            ),
+            AMERICAS: new mapboxgl.LngLatBounds(
+                { lng: -260.0143172089143, lat: -56.429333951972694 },
+                { lng: 98.93099529108389, lat: 79.08317851451514 }
+            ),
+            WESTERN_PACIFIC: new mapboxgl.LngLatBounds(
+                { lng: 9.3559975411074, lat: -52.03107494123482 },
+                { lng: 267.81714939966497, lat: 64.51701020570798 }
+            ),
+        };
+
+        const bounds =
+            region in manualBounds
+                ? manualBounds[region]
+                : coordinates.reduce((bounds: any, coord: any) => {
+                      return bounds.extend(coord);
+                  }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+
         this.props.map.fitBounds(bounds, {
             padding: 100,
         });
