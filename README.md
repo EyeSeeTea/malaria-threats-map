@@ -21,7 +21,7 @@ $ yarn build-prod
 ## Development
 
 ```
-$ REACT_APP_BACKEND_URL=https://dev.eyeseetea.com/play yarn start
+$ REACT_APP_BACKEND_URL=http://localhost:8080 yarn start
 ```
 
 ## Tests
