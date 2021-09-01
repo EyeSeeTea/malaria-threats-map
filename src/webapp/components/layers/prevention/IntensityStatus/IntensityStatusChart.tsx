@@ -23,27 +23,24 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
 });
-const mapDispatchToProps = {};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     studies: PreventionStudy[];
 };
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
 const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
-    const { t } = useTranslation(); //same
-    const [study, setStudy] = useState(0);//same
-    const groupedStudies = R.values(R.groupBy(R.prop("CITATION_URL"), baseStudies));//same
-    const studies = groupedStudies[study];//same
-    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);//same
+    const { t } = useTranslation(); 
+    const [study, setStudy] = useState(0);
+    const groupedStudies = R.values(R.groupBy(R.prop("CITATION_URL"), baseStudies));
+    const studies = groupedStudies[study];
+    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     
-    //adding
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
         return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_INTENSITY}`;
     }, sortedStudies);
- //adding
+
     const simplifiedStudies = R.values(cleanedStudies)
         .map(
             (groupStudies: PreventionStudy[]) => R.sortBy(study => -parseInt(study.MORTALITY_ADJUSTED), groupStudies)[0]
@@ -70,4 +67,4 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
 
     );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(IntensityStatusChart);
+export default connect(mapStateToProps)(IntensityStatusChart);
