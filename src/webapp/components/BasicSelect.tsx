@@ -181,6 +181,7 @@ function MultiValue(props: MultiValueProps<OptionType>) {
         <Chip
             tabIndex={-1}
             label={value}
+            style={{ overflow: "hidden", textOverflow: "ellipsis" }}
             className={clsx(props.selectProps.classes.chip, {
                 [props.selectProps.classes.chipFocused]: props.isFocused,
             })}
