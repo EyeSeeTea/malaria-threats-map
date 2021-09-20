@@ -14,6 +14,7 @@ import Citation from "../../../charts/Citation";
 import { formatYears, formatYears2 } from "../../../../utils/string-utils";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../filters/PlasmodiumSpeciesFilter";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
+import _ from "lodash";
 
 const options: (data: any, categories: any[], translations: any) => Highcharts.Options = (
     data,
@@ -111,11 +112,26 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     const maxYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
     const minYear = parseInt(sortedStudies[0].YEAR_START);
 
-    const keys = [
-        { name: "POSITIVE_DAY_3", color: "#00994C" },
+    const {
+        YEAR_START,
+        YEAR_END,
+        PLASMODIUM_SPECIES,
+        DRUG_NAME,
+        N,
+        FOLLOW_UP,
+        CONFIRMED_RESIST_PV,
+        POSITIVE_DAY_3,
+        TREATMENT_FAILURE_KM,
+        TREATMENT_FAILURE_PP,
+    } = sortedStudies[study];
+
+    const keys = _([
+        PLASMODIUM_SPECIES === "P._FALCIPARUM" ? { name: "POSITIVE_DAY_3", color: "#00994C" } : undefined,
         { name: "TREATMENT_FAILURE_PP", color: "#BE4B48" },
         { name: "TREATMENT_FAILURE_KM", color: "#4b48be" },
-    ];
+    ])
+        .compact()
+        .value();
 
     const exists = (value: string) => {
         if (!value) {
@@ -144,18 +160,6 @@ const TreatmentFailureChart = ({ studies }: Props) => {
         t(`countries.${studies[study].ISO2 === "NA" ? "COUNTRY_NA" : studies[study].ISO2}`),
     ];
     const title = titleItems.filter(Boolean).join(", ");
-    const {
-        YEAR_START,
-        YEAR_END,
-        PLASMODIUM_SPECIES,
-        DRUG_NAME,
-        N,
-        FOLLOW_UP,
-        CONFIRMED_RESIST_PV,
-        POSITIVE_DAY_3,
-        TREATMENT_FAILURE_KM,
-        TREATMENT_FAILURE_PP,
-    } = sortedStudies[study];
 
     const duration = formatYears2(YEAR_START, YEAR_END);
     const formatValue = (value: string) =>
