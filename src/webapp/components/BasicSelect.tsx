@@ -49,6 +49,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         chip: {
             margin: theme.spacing(0.5, 0.25),
+            overflow: "hidden",
+            textOverflow: "ellipsis",
         },
         chipFocused: {
             backgroundColor: emphasize(
@@ -177,11 +179,11 @@ function ValueContainer(props: ValueContainerProps<OptionType, false>) {
 function MultiValue(props: MultiValueProps<OptionType>) {
     const { t } = useTranslation();
     const value = props.children ? t(props.children.toString()) : "";
+
     return (
         <Chip
             tabIndex={-1}
             label={value}
-            style={{ overflow: "hidden", textOverflow: "ellipsis" }}
             className={clsx(props.selectProps.classes.chip, {
                 [props.selectProps.classes.chipFocused]: props.isFocused,
             })}
