@@ -114,6 +114,11 @@ export const setSubscriptionOpenAction = createAction(
     action => (subscriptionOpen: boolean) => action(subscriptionOpen)
 );
 
+export const setUploadFileOpenAction = createAction(
+    ActionTypeEnum.SetUploadFileOpen,
+    action => (uploadFileOpen: boolean) => action(uploadFileOpen)
+);
+
 export const setFeedbackOpenAction = createAction(ActionTypeEnum.SetFeedbackOpen, action => (feedbackOpen: boolean) =>
     action(feedbackOpen)
 );

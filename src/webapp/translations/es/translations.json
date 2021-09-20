@@ -459,6 +459,13 @@
                 "who_headquarters": "OMS - Sede"
             }
         },
+        "uploadFile": {
+            "title": "Subir fichero",
+            "name": "Título",
+            "button": "Subir",
+            "dragAndDrop": "Arrastra y suelta el fichero a importar",
+            "fileError": "No se puede leer el fichero"
+        },
         "buttons": {
             "select_story_mode": "Seleccione el modo historia"
         },
@@ -472,6 +479,7 @@
             "summary": "Informe resumen",
             "disclaimer": "Aviso Legal",
             "subscribe": "Suscríbase",
+            "uploadFile": "Subir fichero",
             "comments": "Envíe sus comentarios",
             "help": "Ayuda",
             "share": "Compartir",

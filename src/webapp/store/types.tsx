@@ -57,6 +57,7 @@ export interface MalariaState {
     reportOpen: boolean;
     mapTitle: string;
     subscriptionOpen: boolean;
+    uploadFileOpen: boolean;
     feedbackOpen: boolean;
     theaterMode: boolean;
     legendExpanded: boolean;
