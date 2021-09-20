@@ -71,8 +71,13 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
     };
 
     return (
-        <IntensityInvolvementChart studyObject={studyObject} groupedStudies={groupedStudies} setStudy={setStudy} study={study} options={options(data, translations)}/>
-        
+        <IntensityInvolvementChart
+            studyObject={studyObject}
+            groupedStudies={groupedStudies}
+            setStudy={setStudy}
+            study={study}
+            options={options(data, translations)}
+        />
     );
 };
 export default connect(mapStateToProps)(LevelOfInvolvementChart);
