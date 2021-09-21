@@ -1,20 +1,15 @@
 import * as React from "react";
 import { useState } from "react";
 import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import styled from "styled-components";
-import { Box, Hidden, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import * as R from "ramda";
-import Citation from "../../../charts/Citation";
-import Pagination from "../../../charts/Pagination";
-import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import preventionChartOptions from "../common/preventionChartOptions";
 import { LevelOfInvolvementColors } from "./symbols";
+import IntensityInvolvementChart from "../common/IntensityInvolvementChart";
 
 const zones = [
     {
@@ -35,10 +30,6 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
     ...preventionChartOptions(data, translations, zones),
 });
 
-const ChatContainer = styled.div<{ width?: string }>`
-    width: ${props => props.width || "100%"};
-`;
-
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
 });
@@ -56,6 +47,7 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
     const studies = groupedStudies[study];
 
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
+
     const data = sortedStudies.map(study => {
         const base = `${study.YEAR_START}, ${t(study.INSECTICIDE_TYPE)} ${t(study.INSECTICIDE_CONC)}`;
         const syn =
@@ -77,29 +69,10 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
         )})`,
         tested: t("common.prevention.chart.synergist_involvement.tested"),
     };
-    const content = () => (
-        <>
-            {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
-            <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-                    studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2
-                )}`}</Box>
-            </Typography>
-            <Typography variant="subtitle2">{`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}</Typography>
-            <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-            <Citation study={studyObject} />
-            <Curation study={studyObject} />
-        </>
-    );
+
     return (
-        <>
-            <Hidden smUp>
-                <ChatContainer width={"100%"}>{content()}</ChatContainer>
-            </Hidden>
-            <Hidden xsDown>
-                <ChatContainer width={"500px"}>{content()}</ChatContainer>
-            </Hidden>
-        </>
+        <IntensityInvolvementChart studyObject={studyObject} groupedStudies={groupedStudies} setStudy={setStudy} study={study} options={options(data, translations)}/>
+        
     );
 };
 export default connect(mapStateToProps)(LevelOfInvolvementChart);
