@@ -31,12 +31,12 @@ type OwnProps = {
 type Props = StateProps & OwnProps;
 
 const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
-    const { t } = useTranslation(); 
+    const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const groupedStudies = R.values(R.groupBy(R.prop("CITATION_URL"), baseStudies));
     const studies = groupedStudies[study];
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
-    
+
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
         return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_INTENSITY}`;
     }, sortedStudies);
@@ -63,8 +63,13 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
     };
 
     return (
-        <IntensityInvolvementChart studyObject={studyObject} groupedStudies={groupedStudies} setStudy={setStudy} study={study} options={options(data, translations)}/>
-
+        <IntensityInvolvementChart
+            studyObject={studyObject}
+            groupedStudies={groupedStudies}
+            setStudy={setStudy}
+            study={study}
+            options={options(data, translations)}
+        />
     );
 };
 export default connect(mapStateToProps)(IntensityStatusChart);
