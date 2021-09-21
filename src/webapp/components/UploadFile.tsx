@@ -44,7 +44,7 @@ const UploadFile: React.FC<Props> = ({
 
     useEffect(() => {
         setValid(isNotNull(name) && isNotNull(comment) && file !== undefined);
-    }, [name, file]);
+    }, [name, file, comment]);
 
     useEffect(() => {
         setName("");
