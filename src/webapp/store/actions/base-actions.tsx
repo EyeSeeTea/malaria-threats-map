@@ -144,3 +144,15 @@ export const getLastUpdatedFailureAction = createAction(
     ActionTypeEnum.GetLastUpdatedFailure,
     action => (_error: AjaxError | string) => action()
 );
+
+export const uploadFileRequestAction = createAction(ActionTypeEnum.UploadFileRequest, action => (file: File) =>
+    action(file)
+);
+
+export const uploadFileSuccessAction = createAction(ActionTypeEnum.UploadFileSuccess, action => {
+    return () => action();
+});
+
+export const uploadFileErrorAction = createAction(ActionTypeEnum.UploadFileError, action => {
+    return () => action();
+});

@@ -17,6 +17,10 @@ import {
     setThemeAction,
     logPageViewAction,
     logOutboundLinkAction,
+    uploadFileRequestAction,
+    setUploadFileOpenAction,
+    uploadFileSuccessAction,
+    uploadFileErrorAction,
 } from "../actions/base-actions";
 import { PreventionMapType, State } from "../types";
 import * as ajax from "../ajax";
@@ -29,6 +33,8 @@ import { sendAnalytics } from "../../utils/analytics";
 import _ from "lodash";
 import { fetchCountryLayerRequest } from "../actions/country-layer-actions";
 import { ApiParams } from "../../../data/common/types";
+import { fromFuture } from "./utils";
+import { EpicDependencies } from "..";
 
 export const setThemeEpic = (
     action$: ActionsObservable<ActionType<typeof setThemeAction>>,
@@ -267,6 +273,29 @@ export const getLastUpdatedEpic = (action$: ActionsObservable<ActionType<typeof 
                 }),
                 catchError((error: AjaxError) =>
                     of(addNotificationAction(error.message), getLastUpdatedFailureAction(error))
+                )
+            );
+        })
+    );
+
+export const uploadFileEpic = (
+    action$: ActionsObservable<ActionType<typeof uploadFileRequestAction>>,
+    state$: StateObservable<State>,
+    { compositionRoot }: EpicDependencies
+) =>
+    action$.ofType(ActionTypeEnum.UploadFileRequest).pipe(
+        withLatestFrom(state$),
+        switchMap(([action]) => {
+            return fromFuture(compositionRoot.uploadFile.save(action.payload)).pipe(
+                mergeMap(() => {
+                    return of(
+                        addNotificationAction("File uploaded!"),
+                        setUploadFileOpenAction(false),
+                        uploadFileSuccessAction()
+                    );
+                }),
+                catchError((_error: Error) =>
+                    of(addNotificationAction("There was an error while uploading the file"), uploadFileErrorAction())
                 )
             );
         })

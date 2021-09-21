@@ -62,6 +62,7 @@ export interface MalariaState {
     theaterMode: boolean;
     legendExpanded: boolean;
     isSubmittingSubscription: boolean;
+    isUploadingFile: boolean;
 }
 
 export interface TranslationsState {

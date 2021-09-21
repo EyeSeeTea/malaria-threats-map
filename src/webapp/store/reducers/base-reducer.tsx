@@ -52,6 +52,7 @@ const initialState: MalariaState = Object.freeze({
     theaterMode: false,
     legendExpanded: false,
     isSubmittingSubscription: false,
+    isUploadingFile: false,
 });
 
 export default createReducer<MalariaState>(initialState, {
@@ -112,6 +113,9 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.AddSubscriptionContactRequest]: () => R.assoc("isSubmittingSubscription", true),
     [ActionTypeEnum.AddSubscriptionContactError]: () => R.assoc("isSubmittingSubscription", false),
     [ActionTypeEnum.AddSubscriptionContactSuccess]: () => R.assoc("isSubmittingSubscription", false),
+    [ActionTypeEnum.UploadFileRequest]: () => R.assoc("isUploadingFile", true),
+    [ActionTypeEnum.UploadFileSuccess]: () => R.assoc("isUploadingFile", false),
+    [ActionTypeEnum.UploadFileError]: () => R.assoc("isUploadingFile", false),
     [ActionTypeEnum.GetLastUpdatedSuccess]: (lastUpdatedDates: any) => R.assoc("lastUpdatedDates", lastUpdatedDates),
 });
 
@@ -149,5 +153,7 @@ export const selectTheaterMode = createSelector(selectMalariaState, R.prop("thea
 export const selectLegendExpanded = createSelector(selectMalariaState, R.prop("legendExpanded"));
 
 export const selectIsSubmittingSubscription = createSelector(selectMalariaState, R.prop("isSubmittingSubscription"));
+
+export const selectIsUploadingFile = createSelector(selectMalariaState, R.prop("isUploadingFile"));
 
 export const selectLastUpdatedDates = createSelector(selectMalariaState, R.prop("lastUpdatedDates"));

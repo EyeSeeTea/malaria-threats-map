@@ -5,10 +5,9 @@ import UploadIcon from "@material-ui/icons/CloudUpload";
 import DoneIcon from "@material-ui/icons/CloudDone";
 import Typography from "@material-ui/core/Typography";
 import { State } from "../store/types";
-import { setUploadFileOpenAction } from "../store/actions/base-actions";
-import { selectIsSubmittingSubscription, selectUploadFileOpen } from "../store/reducers/base-reducer";
+import { setUploadFileOpenAction, uploadFileRequestAction } from "../store/actions/base-actions";
+import { selectIsUploadingFile, selectUploadFileOpen } from "../store/reducers/base-reducer";
 import { connect } from "react-redux";
-import { addSubscriptionContactRequestAction } from "../store/actions/data-download-actions";
 import { useTranslation } from "react-i18next";
 import { sendAnalytics } from "../utils/analytics";
 import { addNotificationAction } from "../store/actions/notifier-actions";
@@ -17,19 +16,25 @@ import Dropzone, { DropzoneState } from "react-dropzone";
 
 const mapStateToProps = (state: State) => ({
     uploadFileOpen: selectUploadFileOpen(state),
-    isSubmitting: selectIsSubmittingSubscription(state),
+    isUploadingFile: selectIsUploadingFile(state),
 });
 
 const mapDispatchToProps = {
     setUploadFileOpen: setUploadFileOpenAction,
-    saveContact: addSubscriptionContactRequestAction,
+    uploadFile: uploadFileRequestAction,
     addNotification: addNotificationAction,
 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const UploadFile: React.FC<Props> = ({ uploadFileOpen, setUploadFileOpen, isSubmitting, addNotification }) => {
+const UploadFile: React.FC<Props> = ({
+    uploadFileOpen,
+    setUploadFileOpen,
+    uploadFile,
+    isUploadingFile,
+    addNotification,
+}) => {
     const { t } = useTranslation();
     const classes = useStyles({});
     const [name, setName] = React.useState<string>("");
@@ -66,7 +71,9 @@ const UploadFile: React.FC<Props> = ({ uploadFileOpen, setUploadFileOpen, isSubm
         //     file,
         // };
         // saveContact(contact);
-        // sendAnalytics({ type: "event", category: "menu", action: "upload file", label: "submit" });
+
+        uploadFile(file);
+        sendAnalytics({ type: "event", category: "menu", action: "upload file", label: "submit" });
     };
 
     return (
@@ -148,7 +155,7 @@ const UploadFile: React.FC<Props> = ({ uploadFileOpen, setUploadFileOpen, isSubm
                                 variant="contained"
                                 color="primary"
                                 type="button"
-                                disabled={isSubmitting || !valid}
+                                disabled={isUploadingFile || !valid}
                                 onClick={() => submit()}
                             >
                                 {t("common.uploadFile.button")}

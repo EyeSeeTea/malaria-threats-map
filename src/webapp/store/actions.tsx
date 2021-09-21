@@ -99,4 +99,8 @@ export enum ActionTypeEnum {
     AddSubscriptionContactRequest = "downloads/ADD_SUBSCRIPTION_CONTACT_REQUEST",
     AddSubscriptionContactSuccess = "downloads/ADD_SUBSCRIPTION_CONTACT_SUCCESS",
     AddSubscriptionContactError = "downloads/ADD_SUBSCRIPTION_CONTACT_ERROR",
+
+    UploadFileRequest = "uploadFile/REQUEST",
+    UploadFileSuccess = "uploadFile/SUCCESS",
+    UploadFileError = "uploadFile/ERROR",
 }
