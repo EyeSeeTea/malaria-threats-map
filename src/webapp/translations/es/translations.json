@@ -462,6 +462,7 @@
         "uploadFile": {
             "title": "Subir fichero",
             "name": "Título",
+            "comment": "Comentario",
             "button": "Subir",
             "dragAndDrop": "Arrastra y suelta el fichero a importar",
             "fileError": "No se puede leer el fichero"

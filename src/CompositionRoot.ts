@@ -10,7 +10,7 @@ import { InvasiveApiRepository } from "./data/repositories/InvasiveApiRepository
 import { GetInvasiveStudiesUseCase } from "./domain/usecases/GetInvasiveStudiesUseCase";
 import { CountryLayerApiRepository } from "./data/repositories/CountryLayerApiRepository";
 import { GetCountryLayerUseCase } from "./domain/usecases/GetCountryLayerUseCase";
-import { FileOnedriveRepository } from "./data/repositories/FileOnedriveRepository";
+import { SmtpJsEmailRepository } from "./data/repositories/SmtpJsEmailRepository";
 import { UploadFileUseCase } from "./domain/usecases/UploadFileUseCase";
 
 export class CompositionRoot {
@@ -19,7 +19,7 @@ export class CompositionRoot {
     private treatmentRepository = new TreatmentApiRepository(config.mapServerUrl);
     private invasiveRepository = new InvasiveApiRepository(config.mapServerUrl);
     private countryLayerRepository = new CountryLayerApiRepository(config.mapServerUrl);
-    private fileRepository = new FileOnedriveRepository();
+    private fileRepository = new SmtpJsEmailRepository();
 
     public get prevention() {
         return getExecute({

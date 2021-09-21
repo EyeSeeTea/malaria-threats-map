@@ -462,6 +462,7 @@
         "uploadFile": {
             "title": "Upload file",
             "name": "Title",
+            "comment": "Comment",
             "button": "Upload",
             "dragAndDrop": "Drag and drop file to import",
             "fileError": "Cannot read the file"

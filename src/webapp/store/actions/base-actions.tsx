@@ -2,6 +2,7 @@ import { createAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import { RegionState, SiteSelection } from "../types";
 import { AjaxError } from "rxjs/ajax";
+import { UploadFileData } from "../../../domain/usecases/UploadFileUseCase";
 
 interface SetThemeOptions {
     fromHome?: boolean;
@@ -145,8 +146,9 @@ export const getLastUpdatedFailureAction = createAction(
     action => (_error: AjaxError | string) => action()
 );
 
-export const uploadFileRequestAction = createAction(ActionTypeEnum.UploadFileRequest, action => (file: File) =>
-    action(file)
+export const uploadFileRequestAction = createAction(
+    ActionTypeEnum.UploadFileRequest,
+    action => (data: UploadFileData) => action(data)
 );
 
 export const uploadFileSuccessAction = createAction(ActionTypeEnum.UploadFileSuccess, action => {

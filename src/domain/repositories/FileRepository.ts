@@ -1,5 +1,5 @@
 import { FutureData } from "../common/FutureData";
 
-export interface FileRepository {
-    save(file: File): FutureData<void>;
+export interface EmailRepository {
+    send(subject:string, body:string, file: File): FutureData<void>;
 }

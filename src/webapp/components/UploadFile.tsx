@@ -38,12 +38,19 @@ const UploadFile: React.FC<Props> = ({
     const { t } = useTranslation();
     const classes = useStyles({});
     const [name, setName] = React.useState<string>("");
+    const [comment, setComment] = React.useState<string>("");
     const [file, setFile] = React.useState<File>();
     const [valid, setValid] = React.useState<boolean>(false);
 
     useEffect(() => {
-        setValid(isNotNull(name) && file !== undefined);
+        setValid(isNotNull(name) && isNotNull(comment) && file !== undefined);
     }, [name, file]);
+
+    useEffect(() => {
+        setName("");
+        setComment("");
+        setFile(undefined);
+    }, [uploadFileOpen]);
 
     const handleClose = () => {
         setUploadFileOpen(false);
@@ -66,13 +73,7 @@ const UploadFile: React.FC<Props> = ({
     };
 
     const submit = () => {
-        // const data {
-        //     name,
-        //     file,
-        // };
-        // saveContact(contact);
-
-        uploadFile(file);
+        uploadFile({ title: name, comment, file });
         sendAnalytics({ type: "event", category: "menu", action: "upload file", label: "submit" });
     };
 
@@ -112,6 +113,18 @@ const UploadFile: React.FC<Props> = ({
                                 required
                                 value={name}
                                 onChange={event => setName(event.target.value as string)}
+                            />
+                        </FormControl>
+                        <FormControl fullWidth margin={"dense"}>
+                            <TextField
+                                fullWidth
+                                label={t("common.uploadFile.comment")}
+                                type={t("common.uploadFile.comment")}
+                                placeholder={t("common.uploadFile.comment")}
+                                name="comment"
+                                required
+                                value={comment}
+                                onChange={event => setComment(event.target.value as string)}
                             />
                         </FormControl>
                         <FormControl fullWidth margin={"dense"}>

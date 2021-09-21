@@ -462,6 +462,7 @@
         "uploadFile": {
             "title": "Téléverser un fichier",
             "name": "Titre",
+            "comment": "Commenter",
             "button": "Téléverser",
             "dragAndDrop": "Glissez-déposez le fichier à importer",
             "fileError": "Impossible de lire le fichier"
