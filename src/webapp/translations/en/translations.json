@@ -459,6 +459,14 @@
                 "who_headquarters": "WHO Headquarters"
             }
         },
+        "uploadFile": {
+            "title": "Upload file",
+            "name": "Title",
+            "comment": "Comment",
+            "button": "Upload",
+            "dragAndDrop": "Drag and drop file to import",
+            "fileError": "Cannot read the file"
+        },
         "buttons": {
             "select_story_mode": "Select story mode"
         },
@@ -472,6 +480,7 @@
             "summary": "Summary Report",
             "disclaimer": "Disclaimer",
             "subscribe": "Subscribe",
+            "uploadFile": "Upload file",
             "comments": "Provide your feedback",
             "help": "Help",
             "share": "Share",
