@@ -290,7 +290,7 @@ class Map extends React.Component<Props> {
                             <Subscription />
                             <Feedback />
                             <TourIcon />
-                            <UploadFile />
+                            {["prevention", "diagnosis"].includes(theme) && <UploadFile />}
                             <Separator />
                             {showOptions && <LanguageSelectorSelect section="menu" />}
                         </TopRightContainer>
