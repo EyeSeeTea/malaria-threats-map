@@ -44,8 +44,14 @@ jobs:
         server: [staging, prod]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: cypress-io/github-action@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Increase max inodes
+        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+      - name: Run cypress tests
+        uses: cypress-io/github-action@v2
         env:
           REACT_APP_ENV: ${{ matrix.server }}
         with:
