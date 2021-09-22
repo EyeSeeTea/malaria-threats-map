@@ -66,7 +66,6 @@ const feedbackConfig = {
 
 const localFeedbackConfig = {
     ...feedbackConfig,
-    token: ["03242fc6b0c5a48582", "2e6b8d3e8337b5a0b95fe2"],
     issues: { repository: "EyeSeeTea/malaria-threats-map", title: "[User feedback] {title}" },
 };
 
