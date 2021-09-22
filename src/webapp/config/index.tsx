@@ -61,6 +61,13 @@ const feedbackConfig = {
     createIssue: true,
     issues: { repository: "WorldHealthOrganization/malaria-threats-map", title: "[User feedback] {title}" },
     snapshots: { repository: "EyeSeeTeaBotTest/snapshots", branch: "master" },
+    buttonPosition: "right",
+};
+
+const localFeedbackConfig = {
+    ...feedbackConfig,
+    token: ["03242fc6b0c5a48582", "2e6b8d3e8337b5a0b95fe2"],
+    issues: { repository: "EyeSeeTea/malaria-threats-map", title: "[User feedback] {title}" },
 };
 
 const configurations: { [key: string]: ConfigProps } = {
@@ -70,7 +77,7 @@ const configurations: { [key: string]: ConfigProps } = {
         backendUrl: process.env.REACT_APP_BACKEND_URL || `https://portal-uat.who.int/malthreats-api/`,
         gaAppId: "UA-191197789-1",
         env: "local",
-        feedback: feedbackConfig,
+        feedback: localFeedbackConfig,
     },
     dev: {
         ...stagingMapServer,
