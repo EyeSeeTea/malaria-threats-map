@@ -7,6 +7,19 @@ type ConfigProps = {
     gaAppId: string;
     env: string;
     hotjar?: { hjid: number; hjsv: number };
+    feedback?: {
+        token: string | string[];
+        createIssue?: boolean;
+        issues: {
+            title: string;
+            body?: string | undefined;
+            repository: string;
+        };
+        snapshots: {
+            repository: string;
+            branch: string;
+        };
+    };
 };
 
 const WHO_MALARIA_THREATS_MAP_STAGING =
@@ -43,6 +56,19 @@ const prodMapTile = {
     mapLabelsBaseUrl: BASEMAP_NONIC_LABEL,
 };
 
+const feedbackConfig = {
+    token: ["ghp_mKe29w1W0ww54C", "ah9NfIMlJdEpP2Mw3RU7FO"],
+    createIssue: true,
+    issues: { repository: "WorldHealthOrganization/malaria-threats-map", title: "[User feedback] {title}" },
+    snapshots: { repository: "EyeSeeTeaBotTest/snapshots", branch: "master" },
+    buttonPosition: "right",
+};
+
+const localFeedbackConfig = {
+    ...feedbackConfig,
+    issues: { repository: "EyeSeeTea/malaria-threats-map", title: "[User feedback] {title}" },
+};
+
 const configurations: { [key: string]: ConfigProps } = {
     local: {
         ...stagingMapServer,
@@ -50,6 +76,7 @@ const configurations: { [key: string]: ConfigProps } = {
         backendUrl: process.env.REACT_APP_BACKEND_URL || `https://portal-uat.who.int/malthreats-api/`,
         gaAppId: "UA-191197789-1",
         env: "local",
+        feedback: localFeedbackConfig,
     },
     dev: {
         ...stagingMapServer,
@@ -58,6 +85,7 @@ const configurations: { [key: string]: ConfigProps } = {
         gaAppId: "UA-191197789-2",
         env: "dev",
         hotjar: { hjid: 2287362, hjsv: 6 },
+        feedback: feedbackConfig,
     },
     staging: {
         ...stagingMapServer,
@@ -66,6 +94,7 @@ const configurations: { [key: string]: ConfigProps } = {
         gaAppId: "UA-191197789-1",
         env: "staging",
         hotjar: { hjid: 2280607, hjsv: 6 },
+        feedback: feedbackConfig,
     },
     prod: {
         ...prodMapServer,
@@ -74,6 +103,7 @@ const configurations: { [key: string]: ConfigProps } = {
         gaAppId: "UA-140410266-1",
         env: "prod",
         hotjar: { hjid: 2269048, hjsv: 6 },
+        feedback: feedbackConfig,
     },
 };
 
