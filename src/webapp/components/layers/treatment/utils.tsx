@@ -68,7 +68,7 @@ function getByMostRecentYearAndTreatmentFailure(group: any[]) {
     const enrichedGroup = group.map(study => ({
         ...study,
         TREATMENT_FAILURE:
-            study.TREATMENT_FAILURE_PP !== "NA" ? study.TREATMENT_FAILURE_PP : study.TREATMENT_FAILURE_KM,
+            study.TREATMENT_FAILURE_PP.trim() !== "NA" ? study.TREATMENT_FAILURE_PP : study.TREATMENT_FAILURE_KM,
     }));
     const filteredStudies = filterByMostRecentYear(enrichedGroup);
     // We sort remaining records by RESISTANCE INTENSITY
