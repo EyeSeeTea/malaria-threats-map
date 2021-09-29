@@ -32,7 +32,7 @@ const CountrySelector = ({ region, countries = [], setRegion }: Props) => {
 
     const suggestions: Option[] = countries
         .map((country: Translation) => ({
-            label: t(country.VALUE_ === "NA" ? "COUNTRY_NA" : country.VALUE_),
+            label: t(country.VALUE_ === "NA" ? "common.COUNTRY_NA" : country.VALUE_),
             value: country.VALUE_,
         }))
         .filter(sug => sug.label);

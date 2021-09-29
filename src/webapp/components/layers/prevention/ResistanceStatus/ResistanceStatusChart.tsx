@@ -202,7 +202,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
             {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-                    `${studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2}`
+                    `${studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2}`
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">{subtitle}</Typography>
