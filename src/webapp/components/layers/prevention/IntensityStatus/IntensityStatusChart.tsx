@@ -9,37 +9,9 @@ import * as R from "ramda";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import preventionChartOptions from "../common/preventionChartOptions";
 import IntensityInvolvementChart from "../common/IntensityInvolvementChart";
-import { IntensityStatusColors } from "./symbols";
-
-const zones = [
-    {
-        value: 0,
-        color: IntensityStatusColors.UNKNOWN[0],
-    },
-    {
-        value: 25,
-        color: IntensityStatusColors.SUSCEPTIBLE[0],
-    },
-    {
-        value: 50,
-        color: IntensityStatusColors.LOW_INTENSITY[0],
-    },
-    {
-        value: 75,
-        color: IntensityStatusColors.MODERATE_INTENSITY[0],
-    },
-    {
-        value: 98,
-        color: IntensityStatusColors.MODERATE_TO_HIGH_INTENSITY[0],
-    },
-    {
-        value: 100.001,
-        color: IntensityStatusColors.HIGH_INTENSITY[0],
-    },
-];
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
-    ...preventionChartOptions(data, translations, zones),
+    ...preventionChartOptions(data, translations),
     legend: {
         enabled: false,
     },
