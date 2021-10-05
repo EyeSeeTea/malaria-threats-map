@@ -340,7 +340,7 @@ function DataDownload({
             if (field.label === "ISO2") {
                 return study[field.value];
             } else {
-                return t(`${study[field.value] === "NA" ? "COUNTRY_NA" : study[field.value]}`);
+                return t(`${study[field.value] === "NA" ? "common.COUNTRY_NA" : study[field.value]}`);
             }
         }
         if (!isNaN(study[field.value])) {
