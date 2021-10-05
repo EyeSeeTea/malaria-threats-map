@@ -13,6 +13,7 @@ import config from "./webapp/config";
 declare global {
     interface Window {
         hj?: Hotjar;
+        $: { feedbackGithub(options: object): void };
     }
 }
 
@@ -21,10 +22,14 @@ interface Hotjar {
     debug: { on(): void; off(): void };
 }
 
-const { gaAppId, hotjar: hotjarConfig } = config;
+const { gaAppId, hotjar: hotjarConfig, feedback: feedbackConfig } = config;
 
 if (hotjarConfig) {
     initHotjar(hotjarConfig.hjid, hotjarConfig.hjsv, false);
+}
+
+if (feedbackConfig) {
+    window.$.feedbackGithub(feedbackConfig);
 }
 
 ReactGA.initialize(gaAppId, {

@@ -76,7 +76,7 @@ type OwnProps = {
 type Props = DispatchProps & StateProps & OwnProps;
 
 const ResistanceMechanismCountryChart = ({ studies, preventionFilters, setRegion, setCountryMode }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
     const maxYear = sortedStudies[sortedStudies.length - 1].YEAR_START;
     const minYear = sortedStudies[0].YEAR_START;
@@ -90,7 +90,7 @@ const ResistanceMechanismCountryChart = ({ studies, preventionFilters, setRegion
     const data = Object.entries(R.groupBy((study: any) => study.MECHANISM_STATUS, richStudies)).map(
         ([status, studies]: any[]) => {
             return {
-                name: t(`prevention.chart.resistance_mechanism.${status}`),
+                name: t(`common.prevention.chart.resistance_mechanism.${status}`),
                 y: studies.length,
                 color: (ResistanceMechanismColors[status] ||
                     ResistanceMechanismColors[RESISTANCE_MECHANISM.UNKNOWN])[0],
@@ -102,9 +102,9 @@ const ResistanceMechanismCountryChart = ({ studies, preventionFilters, setRegion
         setCountryMode(false);
     };
     const translations = {
-        studies: t("chart.studies"),
-        resistance_mechanism: t("prevention.resistance_mechanism"),
-        number_of_tests: t("prevention.chart.resistance_mechanism.number_of_tests"),
+        studies: t("common.chart.studies"),
+        resistance_mechanism: t("common.prevention.resistance_mechanism"),
+        number_of_tests: t("common.prevention.chart.resistance_mechanism.number_of_tests"),
     };
     return (
         <ChartContainer>
@@ -114,11 +114,11 @@ const ResistanceMechanismCountryChart = ({ studies, preventionFilters, setRegion
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
-                {t("prevention.chart.resistance_mechanism.content_1", {
+                {t("common.prevention.chart.resistance_mechanism.content_1", {
                     nStudies,
                 })}
                 <i>Anopheles</i>
-                {t("prevention.chart.resistance_mechanism.content_2", {
+                {t("common.prevention.chart.resistance_mechanism.content_2", {
                     insecticideClasses: preventionFilters.assayTypes.map(type => t(type)).join(", "),
                     type: t(preventionFilters.insecticideClass),
                     years: formatYears(minYear, maxYear),

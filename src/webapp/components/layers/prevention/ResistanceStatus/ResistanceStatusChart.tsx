@@ -10,7 +10,7 @@ import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import { ConfirmationStatusColors } from "./symbols";
 import * as R from "ramda";
-import Citation from "../../../charts/Citation";
+import Citation, { isNull } from "../../../charts/Citation";
 import Pagination from "../../../charts/Pagination";
 import Curation from "../../../Curation";
 import IntegrationReactSelect from "../../../BasicSelect";
@@ -86,11 +86,16 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
     tooltip: {
         formatter: function () {
             const point = this.point as any;
+
+            const bottomText = isNull(point.citationUrl)
+                ? `<br>${translations.type}: ${point.type}<br> ${point.citation}`
+                : "";
+
             return `
-<b><i>${point.species}</i></b><br>
-${translations.mortality} (%): ${point.y}<br>
-${translations.tested}: ${point.number}
-`;
+                <b><i>${point.species}</i></b><br>
+                ${translations.mortality} (%): ${point.y}<br>
+                ${translations.tested}: ${point.number}
+                ${bottomText}`;
         },
     },
     series: [
@@ -136,7 +141,7 @@ type OwnProps = {
 type Props = StateProps & OwnProps;
 
 const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const speciesOptions = R.uniq(R.map(s => s.SPECIES, baseStudies));
     const suggestions: any[] = speciesOptions.map((specie: string) => ({
@@ -162,8 +167,8 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
     }, sortedStudies);
 
-    const simplifiedStudies = R.sortBy(
-        R.prop("YEAR_START"),
+    const simplifiedStudies = R.sortWith(
+        [R.ascend(R.prop("YEAR_START")), R.ascend(R.prop("INSECTICIDE_TYPE"))],
         R.values(cleanedStudies).map(
             (groupStudies: PreventionStudy[]) =>
                 R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
@@ -174,25 +179,33 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
         species: t(study.SPECIES),
         number: study.NUMBER,
+        type: t(study.TYPE),
+        citation: study.CITATION_LONG || study.INSTITUTE,
+        citationUrl: study.CITATION_URL,
     }));
     const studyObject = groupedStudies[study][0];
     const translations = {
-        mortality: t("prevention.chart.resistance_status.mortality"),
-        mosquito_mortality: `${t("prevention.chart.resistance_status.mosquito_mortality")} (${t(
-            "prevention.chart.resistance_status.number_of_tests"
+        mortality: t("common.prevention.chart.resistance_status.mortality"),
+        mosquito_mortality: `${t("common.prevention.chart.resistance_status.mosquito_mortality")} (${t(
+            "common.prevention.chart.resistance_status.number_of_tests"
         )})`,
-        tested: t("prevention.chart.resistance_status.tested"),
+        tested: t("common.prevention.chart.resistance_status.tested"),
+        type: t("common.prevention.chart.resistance_status.type"),
     };
+
+    const subtitle = !isNull(studyObject.CITATION_URL)
+        ? `${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`
+        : t(studyObject.ASSAY_TYPE);
 
     const content = () => (
         <>
             {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-                    studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2
+                    `${studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2}`
                 )}`}</Box>
             </Typography>
-            <Typography variant="subtitle2">{`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}</Typography>
+            <Typography variant="subtitle2">{subtitle}</Typography>
             {suggestions.length > 1 && (
                 <Flex>
                     <FormLabel component="legend">Species</FormLabel>
@@ -206,7 +219,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
                 </Flex>
             )}
             <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-            <Citation study={studyObject} />
+            <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
             <Curation study={studyObject} />
         </>
     );

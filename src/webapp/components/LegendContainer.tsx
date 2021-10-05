@@ -58,7 +58,7 @@ const LegendContainer = ({ children, legendExpanded, setLegendExpanded }: Props)
                     {small ? <GrowIcon fontSize={"small"} /> : <ReduceIcon fontSize={"small"} />}
                 </IconButton>
             </IconContainer>
-            <ClickAwayListener onClickAway={() => setLegendExpanded(false)}>
+            <ClickAwayListener mouseEvent="onMouseDown" onClickAway={() => setLegendExpanded(false)}>
                 <LegendContent small>{children}</LegendContent>
             </ClickAwayListener>
         </LegendContainerStyled>

@@ -25,6 +25,7 @@ export enum ActionTypeEnum {
     SetReportOpen = "malaria/SET_REPORT_OPEN",
     SetMapTitle = "malaria/SET_MAP_TITLE",
     SetSubscriptionOpen = "malaria/SET_SUBSCRIPTION_OPEN",
+    SetUploadFileOpen = "malaria/SET_UPLOAD_FILE_OPEN",
     SetFeedbackOpen = "malaria/SET_FEEDBACK_OPEN",
     SetTheaterMode = "malaria/SET_THEATER_MODE_OPEN",
     SetLegendExpanded = "malaria/SET_LEGEND_EXPANDED",
@@ -94,10 +95,12 @@ export enum ActionTypeEnum {
     FetchDownloadsError = "downloads/FETCH_DOWNLOADS_ERROR",
 
     AddDownloadRequest = "downloads/ADD_DOWNLOAD_REQUEST",
-    AddDownloadSuccess = "downloads/ADD_DOWNLOAD_SUCCESS",
-    AddDownloadError = "downloads/ADD_DOWNLOAD_ERROR",
 
     AddSubscriptionContactRequest = "downloads/ADD_SUBSCRIPTION_CONTACT_REQUEST",
     AddSubscriptionContactSuccess = "downloads/ADD_SUBSCRIPTION_CONTACT_SUCCESS",
     AddSubscriptionContactError = "downloads/ADD_SUBSCRIPTION_CONTACT_ERROR",
+
+    UploadFileRequest = "uploadFile/REQUEST",
+    UploadFileSuccess = "uploadFile/SUCCESS",
+    UploadFileError = "uploadFile/ERROR",
 }

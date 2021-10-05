@@ -22,7 +22,7 @@ import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
 import { AppBar, Hidden, IconButton, Tab, Tabs, Toolbar } from "@material-ui/core";
 import StoryModeStepper from "./StoryModeStepper";
-import FiltersSidebar from "./FiltersSidebar";
+import FiltersSidebar from "./filters/container/FiltersSidebar";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { DiagnosisIcon, FilterIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import { colors } from "../constants/theme";

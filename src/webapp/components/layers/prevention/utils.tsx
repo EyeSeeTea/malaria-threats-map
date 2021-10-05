@@ -15,6 +15,7 @@ import CountrySymbols from "./Countries/PreventionCountrySymbols";
 import PreventionCountryLegend from "./Countries/PreventionCountryLegend";
 import LevelOfInvolvementLegend from "./Involvement/LevelOfInvolvementLegend";
 import PboDeploymentCountriesLegend from "./PboDeployment/PboDeploymentCountriesLegend";
+import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 
 export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters, countryMode: boolean) => {
     if (countryMode) {
@@ -60,13 +61,19 @@ export const resolveMapTypeLegend = (preventionFilters: PreventionFilters, count
     }
 };
 
-function filterByCriteria1(group: any[]) {
+export type PboCriteria = {
+    criteria1?: boolean;
+    criteria2?: boolean;
+    criteria3?: boolean;
+};
+
+export function filterByCriteria1(group: PreventionStudy[]) {
     const currentYear = new Date().getFullYear();
     const baseStudies = [
         filterByAssayTypes(["DISCRIMINATING_CONCENTRATION_BIOASSAY"]),
         filterByInsecticideClass("PYRETHROIDS"),
     ].reduce((studies, filter) => studies.filter(filter), group);
-    let filteredStudies = baseStudies.filter(filterByYearRange([currentYear - 3, currentYear - 1]));
+    let filteredStudies = baseStudies.filter(filterByYearRange([currentYear - 3, currentYear - 0]));
     if (filteredStudies.length === 0) {
         const maxYear = R.reduce(
             R.max,
@@ -78,49 +85,86 @@ function filterByCriteria1(group: any[]) {
     return filteredStudies;
 }
 
-function meetsCriteria1(group: any[], criteria: any) {
+export function getMostRecentByCriteria1(studies: PreventionStudy[]): PreventionStudy | undefined {
+    const studiesByCriteria1 = studies.filter(study => +study.MORTALITY_ADJUSTED < 0.9);
+
+    const sortedStudiesByYear = R.reverse(R.sortBy(R.prop("YEAR_START"), studiesByCriteria1));
+
+    return sortedStudiesByYear.length > 0 ? sortedStudiesByYear[0] : undefined;
+}
+
+function meetsCriteria1(group: PreventionStudy[], criteria: Record<string, PboCriteria>) {
     const filteredStudies = filterByCriteria1(group);
     const groupedStudies = R.groupBy(R.prop("SPECIES"), filteredStudies);
     Object.entries(groupedStudies).forEach(([species, studies]) => {
         if (!criteria[species]) {
             criteria[species] = {};
         }
-        criteria[species].criteria1 = R.any(study => study.MORTALITY_ADJUSTED < 0.9, studies);
+        criteria[species].criteria1 = getMostRecentByCriteria1(studies) !== undefined;
     });
     if (filteredStudies.length === 0) return;
-    return R.any(study => study.MORTALITY_ADJUSTED < 0.9, filteredStudies);
+    return getMostRecentByCriteria1(filteredStudies) !== undefined;
 }
 
-function meetsCriteria2(group: any[], criteria: any) {
+export function getMostRecentByCriteria2(studies: PreventionStudy[]): PreventionStudy | undefined {
+    const studiesByCriteria2 = studies.filter(
+        study => +study.MORTALITY_ADJUSTED >= 0.1 && +study.MORTALITY_ADJUSTED <= 0.8
+    );
+
+    const sortedStudiesByYear = R.reverse(R.sortBy(R.prop("YEAR_START"), studiesByCriteria2));
+
+    return sortedStudiesByYear.length > 0 ? sortedStudiesByYear[0] : undefined;
+}
+
+function meetsCriteria2(group: PreventionStudy[], criteria: Record<string, PboCriteria>) {
     const filteredStudies = filterByCriteria1(group);
     const groupedStudies = R.groupBy(R.prop("SPECIES"), filteredStudies);
     Object.entries(groupedStudies).forEach(([species, studies]) => {
         if (!criteria[species]) {
             criteria[species] = {};
         }
-        criteria[species].criteria2 = R.any(
-            study => study.MORTALITY_ADJUSTED >= 0.1 && study.MORTALITY_ADJUSTED <= 0.8,
-            studies
-        );
+        criteria[species].criteria2 = getMostRecentByCriteria2(studies) !== undefined;
     });
 
     if (filteredStudies.length === 0) return;
-    return R.any(study => study.MORTALITY_ADJUSTED >= 0.1 && study.MORTALITY_ADJUSTED <= 0.8, filteredStudies);
+    return getMostRecentByCriteria1(filteredStudies) !== undefined;
 }
-function meetsCriteria3(group: any[], criteria: any) {
+
+export function filterByCriteria3(group: PreventionStudy[]) {
     const filteredStudies = [
         filterByAssayTypes(["SYNERGIST-INSECTICIDE_BIOASSAY", "BIOCHEMICAL_ASSAY", "MOLECULAR_ASSAY"]),
         filterByType("MONO_OXYGENASES"),
     ].reduce((studies, filter) => studies.filter(filter), group);
+
+    return filteredStudies;
+}
+
+export function getMostRecentByCriteria3(studies: PreventionStudy[]): PreventionStudy | undefined {
+    const studiesByCriteria1 = studies.filter(study => study.MECHANISM_STATUS === "DETECTED");
+
+    const sortedStudiesByYear = R.reverse(R.sortBy(R.prop("YEAR_START"), studiesByCriteria1));
+
+    return sortedStudiesByYear.length > 0 ? sortedStudiesByYear[0] : undefined;
+}
+
+export function getMostRecent(studies: PreventionStudy[]): PreventionStudy | undefined {
+    const sortedStudiesByYear = R.reverse(R.sortBy(R.prop("YEAR_START"), studies));
+
+    return sortedStudiesByYear.length > 0 ? sortedStudiesByYear[0] : undefined;
+}
+
+function meetsCriteria3(group: PreventionStudy[], criteria: Record<string, PboCriteria>) {
+    const filteredStudies = filterByCriteria3(group);
+
     const groupedStudies = R.groupBy(R.prop("SPECIES"), filteredStudies);
     Object.entries(groupedStudies).forEach(([species, studies]) => {
         if (!criteria[species]) {
             criteria[species] = {};
         }
-        criteria[species].criteria3 = R.any(study => study.MECHANISM_STATUS === "DETECTED", studies);
+        criteria[species].criteria3 = getMostRecentByCriteria3(studies) !== undefined;
     });
     if (filteredStudies.length === 0) return;
-    return R.any(study => study.MECHANISM_STATUS === "DETECTED", filteredStudies);
+    return getMostRecentByCriteria3(filteredStudies) !== undefined;
 }
 
 const filterByMostRecentYear = (group: any[]) => {

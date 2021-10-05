@@ -11,7 +11,7 @@ import { RESISTANCE_MECHANISM } from "./utils";
 import { useTranslation } from "react-i18next";
 
 export default function Legend() {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const labels = [
         {
             label: "prevention.legend.resistance_mechanism.confirmed",
@@ -26,7 +26,7 @@ export default function Legend() {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("prevention.resistance_mechanism")}
+                    {t("common.prevention.resistance_mechanism")}
                 </LegendTitleTypography>
             </LegendTitleContainer>
             <LegendLabels labels={labels} />

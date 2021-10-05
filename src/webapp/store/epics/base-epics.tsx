@@ -17,6 +17,10 @@ import {
     setThemeAction,
     logPageViewAction,
     logOutboundLinkAction,
+    uploadFileRequestAction,
+    setUploadFileOpenAction,
+    uploadFileSuccessAction,
+    uploadFileErrorAction,
 } from "../actions/base-actions";
 import { PreventionMapType, State } from "../types";
 import * as ajax from "../ajax";
@@ -28,6 +32,9 @@ import { getAnalyticsPageViewFromString } from "../analytics";
 import { sendAnalytics } from "../../utils/analytics";
 import _ from "lodash";
 import { fetchCountryLayerRequest } from "../actions/country-layer-actions";
+import { ApiParams } from "../../../data/common/types";
+import { fromFuture } from "./utils";
+import { EpicDependencies } from "..";
 
 export const setThemeEpic = (
     action$: ActionsObservable<ActionType<typeof setThemeAction>>,
@@ -153,7 +160,7 @@ export const setStoryModeStepEpic = (
                     case "diagnosis":
                         switch (action.payload) {
                             case 0:
-                                return of(setCountryModeAction(false), setRegionAction({ country: "PERU" }));
+                                return of(setCountryModeAction(false), setRegionAction({ country: "PE" }));
                             case 1:
                                 return of(setCountryModeAction(false), setRegionAction({ region: "AFRICA" }));
                             case 2:
@@ -186,7 +193,7 @@ export const setStoryModeStepEpic = (
                                     ])
                                 );
                             case 1:
-                                return of(setCountryModeAction(false), setRegionAction({ country: "PAKISTAN" }));
+                                return of(setCountryModeAction(false), setRegionAction({ country: "PK" }));
                             case 2:
                                 return of(setCountryModeAction(false));
                             default:
@@ -225,7 +232,7 @@ type Response = { features: { attributes: LastUpdated }[] } & ErrorResponse;
 export const getLastUpdatedEpic = (action$: ActionsObservable<ActionType<typeof getLastUpdatedRequestAction>>) =>
     action$.ofType(ActionTypeEnum.GetLastUpdatedRequest).pipe(
         switchMap(() => {
-            const params: { [key: string]: string } = {
+            const params: ApiParams = {
                 f: "json",
                 where: `1%3D1`,
                 outFields: "*",
@@ -266,6 +273,29 @@ export const getLastUpdatedEpic = (action$: ActionsObservable<ActionType<typeof 
                 }),
                 catchError((error: AjaxError) =>
                     of(addNotificationAction(error.message), getLastUpdatedFailureAction(error))
+                )
+            );
+        })
+    );
+
+export const uploadFileEpic = (
+    action$: ActionsObservable<ActionType<typeof uploadFileRequestAction>>,
+    state$: StateObservable<State>,
+    { compositionRoot }: EpicDependencies
+) =>
+    action$.ofType(ActionTypeEnum.UploadFileRequest).pipe(
+        withLatestFrom(state$),
+        switchMap(([action]) => {
+            return fromFuture(compositionRoot.uploadFile.save(action.payload)).pipe(
+                mergeMap(() => {
+                    return of(
+                        addNotificationAction("File uploaded!"),
+                        setUploadFileOpenAction(false),
+                        uploadFileSuccessAction()
+                    );
+                }),
+                catchError((_error: Error) =>
+                    of(addNotificationAction("There was an error while uploading the file"), uploadFileErrorAction())
                 )
             );
         })

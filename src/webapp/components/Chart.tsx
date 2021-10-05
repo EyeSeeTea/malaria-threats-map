@@ -26,12 +26,12 @@ export const FlexGrow = styled.div`
 `;
 
 export function ZoomButton({ onClick }: { onClick: any }) {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     return (
         <Wrapper>
             <Button variant="contained" color="default" size="small" onClick={onClick}>
                 <ZoomIcon />
-                {t("chart.zoom")}
+                {t("common.chart.zoom")}
             </Button>
         </Wrapper>
     );

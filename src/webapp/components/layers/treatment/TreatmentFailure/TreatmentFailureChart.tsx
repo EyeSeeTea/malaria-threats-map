@@ -14,6 +14,7 @@ import Citation from "../../../charts/Citation";
 import { formatYears, formatYears2 } from "../../../../utils/string-utils";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../filters/PlasmodiumSpeciesFilter";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
+import _ from "lodash";
 
 const options: (data: any, categories: any[], translations: any) => Highcharts.Options = (
     data,
@@ -104,46 +105,13 @@ type OwnProps = {
 type Props = StateProps & OwnProps;
 
 const TreatmentFailureChart = ({ studies }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
     const years = R.uniq(sortedStudies.map(study => study.YEAR_START)).sort();
     const maxYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
     const minYear = parseInt(sortedStudies[0].YEAR_START);
 
-    const keys = [
-        { name: "POSITIVE_DAY_3", color: "#00994C" },
-        { name: "TREATMENT_FAILURE_PP", color: "#BE4B48" },
-        { name: "TREATMENT_FAILURE_KM", color: "#4b48be" },
-    ];
-
-    const exists = (value: string) => {
-        if (!value) {
-            return false;
-        }
-        const trimmed = value.trim();
-        return trimmed !== "N/A" && trimmed !== "NA" && trimmed !== null;
-    };
-
-    const series = keys.map(key => {
-        return {
-            name: t(key.name),
-            color: key.color,
-            data: years.map(year => {
-                const yearFilters: any = studies.filter(study => parseInt(year) === parseInt(study.YEAR_START))[0];
-                return yearFilters ? parseFloat((parseFloat(yearFilters[key.name] || "0") * 100).toFixed(2)) : 0;
-            }),
-        };
-    });
-
-    const siteDuration = formatYears(`${minYear}`, `${maxYear}`);
-
-    const titleItems = [
-        studies[study].SITE_NAME,
-        studies[study].PROVINCE,
-        t(studies[study].ISO2 === "NA" ? "COUNTRY_NA" : studies[study].ISO2),
-    ];
-    const title = titleItems.filter(Boolean).join(", ");
     const {
         YEAR_START,
         YEAR_END,
@@ -157,22 +125,58 @@ const TreatmentFailureChart = ({ studies }: Props) => {
         TREATMENT_FAILURE_PP,
     } = sortedStudies[study];
 
+    const keys = _([
+        PLASMODIUM_SPECIES === "P._FALCIPARUM" ? { name: "POSITIVE_DAY_3", color: "#00994C" } : undefined,
+        { name: "TREATMENT_FAILURE_PP", color: "#BE4B48" },
+        { name: "TREATMENT_FAILURE_KM", color: "#4b48be" },
+    ])
+        .compact()
+        .value();
+
+    const exists = (value: string) => {
+        if (!value) {
+            return false;
+        }
+        const trimmed = value.trim();
+        return trimmed !== "N/A" && trimmed !== "NA" && trimmed !== null;
+    };
+
+    const series = keys.map(key => {
+        return {
+            name: t(`download.therapeutic_efficacy.${key.name}`),
+            color: key.color,
+            data: years.map(year => {
+                const yearFilters: any = studies.filter(study => parseInt(year) === parseInt(study.YEAR_START))[0];
+                return yearFilters ? parseFloat((parseFloat(yearFilters[key.name] || "0") * 100).toFixed(2)) : 0;
+            }),
+        };
+    });
+
+    const siteDuration = formatYears(`${minYear}`, `${maxYear}`);
+
+    const titleItems = [
+        studies[study].SITE_NAME,
+        studies[study].PROVINCE,
+        t(`countries.${studies[study].ISO2 === "NA" ? "COUNTRY_NA" : studies[study].ISO2}`),
+    ];
+    const title = titleItems.filter(Boolean).join(", ");
+
     const duration = formatYears2(YEAR_START, YEAR_END);
     const formatValue = (value: string) =>
-        Number.isNaN(parseFloat(value)) ? "N/A" : `${(parseFloat(value) * 100).toFixed(2)}%`;
+        Number.isNaN(parseFloat(value)) ? "N/A" : `${(parseFloat(value) * 100).toFixed(1)}%`;
 
     const translations = {
-        percentage: t("treatment.chart.treatment_failure.percentage"),
+        percentage: t("common.treatment.chart.treatment_failure.percentage"),
     };
-    const studyYears = t("treatment.chart.treatment_failure.study_years");
-    const numberOfPatients = t("treatment.chart.treatment_failure.number_of_patients");
-    const followUp = t("treatment.chart.treatment_failure.follow_up");
-    const confirmedResistPv = t("treatment.chart.treatment_failure.confirmed_resist_pv");
-    const positiveDay3 = t("treatment.chart.treatment_failure.positive_day_3");
-    const treatmentFailurePp = t("treatment.chart.treatment_failure.treatment_failure_pp");
-    const treatmentFailureKm = t("treatment.chart.treatment_failure.treatment_failure_km");
-    const days = t("treatment.chart.treatment_failure.days");
-    const t_studies = t("treatment.chart.treatment_failure.studies");
+    const studyYears = t("common.treatment.chart.treatment_failure.study_years");
+    const numberOfPatients = t("common.treatment.chart.treatment_failure.number_of_patients");
+    const followUp = t("common.treatment.chart.treatment_failure.follow_up");
+    const confirmedResistPv = t("common.treatment.chart.treatment_failure.confirmed_resist_pv");
+    const positiveDay3 = t("common.treatment.chart.treatment_failure.positive_day_3");
+    const treatmentFailurePp = t("common.treatment.chart.treatment_failure.treatment_failure_pp");
+    const treatmentFailureKm = t("common.treatment.chart.treatment_failure.treatment_failure_km");
+    const days = t("common.treatment.chart.treatment_failure.days");
+    const t_studies = t("common.treatment.chart.treatment_failure.studies");
 
     function renderInfo() {
         return (
@@ -215,7 +219,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                         </Typography>
                     </Flex>
                 )}
-                {exists(POSITIVE_DAY_3) && (
+                {exists(POSITIVE_DAY_3) && PLASMODIUM_SPECIES === "P._FALCIPARUM" && (
                     <Flex>
                         <Typography variant="body2">
                             <b>

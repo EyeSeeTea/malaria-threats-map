@@ -13,8 +13,14 @@ import TableRow from "@material-ui/core/TableRow";
 import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
 import { ChartContainer } from "../../../Chart";
 import * as R from "ramda";
-import { filterByAssayTypes, filterByInsecticideClass, filterByType } from "../../studies-filters";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
+import {
+    filterByCriteria1,
+    filterByCriteria3,
+    getMostRecent,
+    getMostRecentByCriteria2,
+    getMostRecentByCriteria3,
+} from "../utils";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -59,45 +65,40 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PboSiteChart = ({ studies }: Props) => {
-    const { t } = useTranslation("common");
-    const siteSubtitleTranslation = t(
-        "Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment by vector species"
-    );
+    const { t } = useTranslation();
+    const siteSubtitleTranslation = t("common.prevention.chart.pbo_deployment.subtitle");
 
     const classes = useStyles({});
 
     const studiesBySpecies = R.groupBy(R.prop("SPECIES"), studies);
     const rows = Object.entries(studiesBySpecies).map(([species, specieStudies]) => {
-        const group1Studies = specieStudies
-            .filter(filterByAssayTypes(["DISCRIMINATING_CONCENTRATION_BIOASSAY"]))
-            .filter(filterByInsecticideClass("PYRETHROIDS"));
+        const group1Studies = filterByCriteria1(specieStudies);
 
-        const mostRecentPyrethroidStudies: any = R.reverse(R.sortBy(R.prop("YEAR_START"), group1Studies)) || [];
-        const mostRecentPyrethroidStudy = mostRecentPyrethroidStudies[0] || {};
-        const mortalityAdjusted = mostRecentPyrethroidStudy.MORTALITY_ADJUSTED
-            ? parseFloat(mostRecentPyrethroidStudy.MORTALITY_ADJUSTED)
-            : undefined;
+        const mostRecentByCriteria2 = getMostRecentByCriteria2(group1Studies);
+        const mostRecentPyrethroidStudy = mostRecentByCriteria2 || getMostRecent(group1Studies);
 
-        const group2Studies = specieStudies.filter(filterByType("MONO_OXYGENASES"));
+        const group2Studies = filterByCriteria3(specieStudies);
         const mostRecentMonoOxygenasesStudies: any = R.reverse(R.sortBy(R.prop("YEAR_START"), group2Studies)) || [];
-        const mostRecentMonoOxygenasesStudy = mostRecentMonoOxygenasesStudies[0] || {};
+        const mostRecentByCriteria3 = getMostRecentByCriteria3(group2Studies);
+        const mostRecentMonoOxygenasesStudy = mostRecentByCriteria3 || getMostRecent(group2Studies);
+
         const monoOxygenaseMeasuredBy = R.uniq(
             mostRecentMonoOxygenasesStudies.map((study: any) => t(study.ASSAY_TYPE))
         ).join(", ");
 
         return {
             species,
-            pyrethroidResistance: t(mostRecentPyrethroidStudy.RESISTANCE_STATUS) || "-",
+            pyrethroidResistance: mostRecentPyrethroidStudy ? t(mostRecentPyrethroidStudy.RESISTANCE_STATUS) : "-",
             adjustedMortality:
-                mortalityAdjusted !== undefined
-                    ? mortalityAdjusted > 0.1 && mortalityAdjusted <= 0.8
-                        ? "Yes"
-                        : "No"
+                mostRecentPyrethroidStudy !== undefined
+                    ? mostRecentPyrethroidStudy === mostRecentByCriteria2
+                        ? t("common.prevention.chart.pbo_deployment.yes")
+                        : t("common.prevention.chart.pbo_deployment.no")
                     : "-",
-            pyrethroidMostRecentYear: mostRecentPyrethroidStudy.YEAR_START || "-",
-            conferred: t(mostRecentMonoOxygenasesStudy.MECHANISM_STATUS) || "-",
+            pyrethroidMostRecentYear: mostRecentPyrethroidStudy ? mostRecentPyrethroidStudy.YEAR_START : "-",
+            conferred: mostRecentMonoOxygenasesStudy ? t(mostRecentMonoOxygenasesStudy.MECHANISM_STATUS) : "-",
             monoOxygenaseMeasuredBy: monoOxygenaseMeasuredBy || "-",
-            monoOxygenaseMostRecentYear: mostRecentMonoOxygenasesStudy.YEAR_START || "-",
+            monoOxygenaseMostRecentYear: mostRecentMonoOxygenasesStudy ? mostRecentMonoOxygenasesStudy.YEAR_START : "-",
         };
     });
     const studyObject = studies[0];
@@ -113,22 +114,26 @@ const PboSiteChart = ({ studies }: Props) => {
                 <Table aria-label="simple table" size="small" className={classes.table}>
                     <TableHead className={classes.head}>
                         <TableRow>
-                            <StyledHeaderCell align={"center"}>{t("Vector species")}</StyledHeaderCell>
-                            <StyledHeaderCell align={"center"} borderLeft>
-                                {t("Pyrethroid resistance status")}
-                            </StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
-                                {t("Adj. mortality against pyrethroids between 10% and 80%")}
-                            </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"}>
-                                {t("Most recent pyrethroid susceptibility test results")}
+                                {t("common.prevention.chart.pbo_deployment.vector_species")}
                             </StyledHeaderCell>
                             <StyledHeaderCell align={"center"} borderLeft>
-                                {t("Conferred (at least in part) by mono-oxygenase")}
+                                {t("common.prevention.chart.pbo_deployment.pyrethroid_resistance_status")}
                             </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"}>{t("Mono-oxygenase measured by")}</StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
-                                {t("Most recent mono-oxygenase involvement results")}
+                                {t("common.prevention.chart.pbo_deployment.adjusted_mortality")}
+                            </StyledHeaderCell>
+                            <StyledHeaderCell align={"center"}>
+                                {t("common.prevention.chart.pbo_deployment.most_recent_test_results")}
+                            </StyledHeaderCell>
+                            <StyledHeaderCell align={"center"} borderLeft>
+                                {t("common.prevention.chart.pbo_deployment.conferred_by_mono_oxygenase")}
+                            </StyledHeaderCell>
+                            <StyledHeaderCell align={"center"}>
+                                {t("common.prevention.chart.pbo_deployment.mono_oxygenase_measured_by")}
+                            </StyledHeaderCell>
+                            <StyledHeaderCell align={"center"}>
+                                {t("common.prevention.chart.pbo_deployment.most_recent_mono_oxygenase_results")}
                             </StyledHeaderCell>
                         </TableRow>
                     </TableHead>

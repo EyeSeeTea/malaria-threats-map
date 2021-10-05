@@ -9,9 +9,23 @@ declare namespace Cypress {
     interface Chainable {
         /**
          * Custom command to open story mode
+         * @example cy.openCountryPopup('Mali')
+         */
+        openCountryPopup(name: string): Chainable<Element>;
+    }
+    interface Chainable {
+        /**
+         * Custom command to open story mode
          * @example cy.openStoryMode('')
          */
         openStoryMode(): Chainable<Element>;
+    }
+    interface Chainable {
+        /**
+         * Custom command to open summary report
+         * @example cy.openCountryMode('')
+         */
+        openCountryMode(): Chainable<Element>;
     }
     interface Chainable {
         /**
@@ -40,5 +54,12 @@ declare namespace Cypress {
          * @example cy.clickOnMap(15, 40)
          */
         clickOnMap(x: number, y: number): Chainable<Element>;
+    }
+    interface Chainable {
+        /**
+         * open site popup
+         * @example cy.openSitePopup("Copargo")
+         */
+        openSitePopup(name: string): Chainable<Element>;
     }
 }

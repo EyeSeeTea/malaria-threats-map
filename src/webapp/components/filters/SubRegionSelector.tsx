@@ -1,15 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { setRegionAction } from "../../store/actions/base-actions";
 import { selectRegion } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { Translation } from "../../types/Translation";
-import IntegrationReactSelect from "../BasicSelect";
 import { selectSubRegions } from "../../store/reducers/translations-reducer";
-import FormLabel from "@material-ui/core/FormLabel";
-import { Divider, FilterWrapper } from "./Filters";
-import T from "../../translations/T";
 import { sendAnalytics } from "../../utils/analytics";
+import { useTranslation, WithTranslation, withTranslation } from "react-i18next";
+import SingleFilter from "./common/SingleFilter";
 
 const mapStateToProps = (state: State) => ({
     region: selectRegion(state),
@@ -22,39 +20,32 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type Props = DispatchProps & StateProps & WithTranslation;
 
-class SubRegionSelector extends Component<Props> {
-    onChange = (selection: any) => {
-        const label = selection ? selection.value : undefined;
-        if (label) sendAnalytics({ type: "event", category: "geoFilter", action: "subRegion", label });
-        this.props.setRegion({
-            subRegion: selection ? selection.value : undefined,
-        });
+const SubRegionSelector: React.FC<Props> = ({ region, subRegions = [], setRegion }) => {
+    const { t } = useTranslation();
+
+    const onChange = (selection?: string) => {
+        if (selection) sendAnalytics({ type: "event", category: "geoFilter", action: "subRegion", label: selection });
+        setRegion({ subRegion: selection });
     };
-    render() {
-        const { region, subRegions = [] } = this.props;
-        const suggestions: any[] = (subRegions as Translation[]).map(subRegion => ({
-            label: subRegion.VALUE_,
-            value: subRegion.VALUE_,
-        }));
 
-        return (
-            <FilterWrapper>
-                <FormLabel component="legend">
-                    <T i18nKey={"filters.sub_region"} />
-                </FormLabel>
-                <Divider />
-                <IntegrationReactSelect
-                    isClearable
-                    placeholder={"Select Sub Region"}
-                    suggestions={suggestions}
-                    onChange={this.onChange}
-                    value={suggestions.find((s: any) => s.value === region.subRegion) || null}
-                />
-            </FilterWrapper>
-        );
-    }
-}
+    const suggestions: any[] = (subRegions as Translation[]).map(subRegion => ({
+        label: subRegion.VALUE_,
+        value: subRegion.VALUE_,
+    }));
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubRegionSelector);
+    console.log({ suggestions });
+
+    return (
+        <SingleFilter
+            label={t("common.filters.sub_region")}
+            placeholder={t("common.filters.select_sub_region")}
+            options={suggestions}
+            onChange={onChange}
+            value={region.subRegion}
+        />
+    );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SubRegionSelector));

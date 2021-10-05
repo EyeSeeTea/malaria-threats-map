@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
-import { circleLayout, studiesToGeoJson } from "../layer-utils";
+import { circleLayout, studiesToGeoJson, getCountryStudies } from "../layer-utils";
 import diagnosisSymbols from "../symbols/diagnosis";
 import setupEffects from "../effects";
 import { selectDiagnosisFilters, selectDiagnosisStudies } from "../../../store/reducers/diagnosis-reducer";
@@ -24,10 +24,10 @@ import {
 } from "../../../store/actions/diagnosis-actions";
 import { Hidden } from "@material-ui/core";
 import ChartModal from "../../ChartModal";
-import DiagnosisSitePopover from "./DiagnosisSitePopover";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
 import { setSelection } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
+import SitePopover from "../common/SitePopover";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -62,7 +62,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
 type OwnProps = {
-    map: any;
+    map: mapboxgl.Map;
 };
 type Props = StateProps & DispatchProps & OwnProps;
 
@@ -156,54 +156,15 @@ class DiagnosisLayer extends Component<Props> {
 
     filterSource = () => {
         const { studies, countryMode } = this.props;
-        const source = this.props.map.getSource(DIAGNOSIS_SOURCE_ID);
+        const source: any = this.props.map.getSource(DIAGNOSIS_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = this.getCountryStudies(filteredStudies);
+            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, DIAGNOSIS);
             const data = countryMode ? countryStudies : geoStudies;
             source.setData(studiesToGeoJson(data));
         }
-    };
-
-    getCountryStudies = (studies: any[] = []) => {
-        const countryStudies = R.groupBy(
-            R.path<string>(["ISO2"]),
-            studies
-        );
-        const countries = this.props.countries
-            .map((country, index) => ({
-                ...country,
-                OBJECTID: index,
-                Latitude: country.CENTER_LAT,
-                Longitude: country.CENTER_LON,
-                STUDIES: (countryStudies[country.ISO_2_CODE] || []).length || 0,
-            }))
-            .filter(study => study.STUDIES !== 0);
-
-        const sortedCountries = R.sortBy(country => country.STUDIES, countries);
-        if (sortedCountries.length === 0) return [];
-
-        const getSize = (nStudies: number) => {
-            if (nStudies > 15) {
-                return 15;
-            } else if (nStudies > 10) {
-                return 12.5;
-            } else if (nStudies > 7) {
-                return 10;
-            } else if (nStudies > 5) {
-                return 7.5;
-            } else if (nStudies >= 0) {
-                return 5;
-            }
-        };
-
-        return countries.map(country => ({
-            ...country,
-            SIZE: getSize(country.STUDIES),
-            SIZE_HOVER: getSize(country.STUDIES) - 1,
-        }));
     };
 
     mountLayer(prevProps?: Props) {
@@ -216,7 +177,7 @@ class DiagnosisLayer extends Component<Props> {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = this.getCountryStudies(filteredStudies);
+            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, DIAGNOSIS);
 
             const data = countryMode ? countryStudies : geoStudies;
 
@@ -233,7 +194,7 @@ class DiagnosisLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any, _a: any) => {
+    onClickListener = (e: any) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -293,7 +254,9 @@ class DiagnosisLayer extends Component<Props> {
             this.props.theme === "diagnosis" && (
                 <>
                     <Hidden xsDown>
-                        <DiagnosisSitePopover map={this.props.map} studies={filteredStudies} />
+                        <SitePopover map={this.props.map}>
+                            <DiagnosisSelectionChart studies={filteredStudies} />
+                        </SitePopover>
                     </Hidden>
                     <Hidden smUp>
                         <ChartModal selection={selection}>

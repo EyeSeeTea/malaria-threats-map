@@ -1,79 +1,34 @@
 import * as React from "react";
 import { useState } from "react";
-import Highcharts, { DataLabelsFormatterCallbackFunction } from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import styled from "styled-components";
-import { Box, Hidden, Typography } from "@material-ui/core";
+import Highcharts from "highcharts";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import * as R from "ramda";
-import Citation from "../../../charts/Citation";
-import Pagination from "../../../charts/Pagination";
-import { baseChart } from "../../../charts/chart-utils";
-import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
+import preventionChartOptions from "../common/preventionChartOptions";
+import { LevelOfInvolvementColors } from "./symbols";
+import IntensityInvolvementChart from "../common/IntensityInvolvementChart";
+
+const zones = [
+    {
+        value: 90,
+        color: LevelOfInvolvementColors.NO_INVOLVEMENT[0],
+    },
+    {
+        value: 98,
+        color: LevelOfInvolvementColors.PARTIAL_INVOLVEMENT[0],
+    },
+    {
+        value: 100.001,
+        color: LevelOfInvolvementColors.FULL_INVOLVEMENT[0],
+    },
+];
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
-    ...baseChart,
-    title: {
-        text: translations.mosquito_mortality,
-    },
-    xAxis: {
-        type: "category",
-    },
-    yAxis: {
-        min: 0,
-        max: 100,
-        title: {
-            text: translations.mortality,
-        },
-    },
-    plotOptions: {
-        column: {
-            dataLabels: {
-                formatter: function () {
-                    // @ts-ignore
-                    return `${this.y}% (${this.point.number})`;
-                } as DataLabelsFormatterCallbackFunction,
-                enabled: true,
-            },
-            zones: [
-                {
-                    value: 97.001,
-                    color: "#D3D3D3",
-                },
-                {
-                    value: 100.001,
-                    color: "#2f4f4f",
-                },
-            ],
-        },
-    },
-    tooltip: {
-        formatter: function () {
-            const point = this.point as any;
-            return `
-<b><i>${point.species}</i></b><br>
-${translations.mortality} (%): ${point.y}<br>
-${translations.tested}: ${point.number}
-`;
-        },
-    },
-    series: [
-        {
-            maxPointWidth: 20,
-            type: "column",
-            name: translations.mortality,
-            data: data,
-        },
-    ],
+    ...preventionChartOptions(data, translations, zones),
 });
-
-const ChatContainer = styled.div<{ width?: string }>`
-    width: ${props => props.width || "100%"};
-`;
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -86,17 +41,18 @@ type OwnProps = {
 type Props = StateProps & OwnProps;
 
 const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
-    const { t } = useTranslation("common");
+    const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const groupedStudies = R.values(R.groupBy(R.prop("CITATION_URL"), baseStudies));
     const studies = groupedStudies[study];
 
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
+
     const data = sortedStudies.map(study => {
         const base = `${study.YEAR_START}, ${t(study.INSECTICIDE_TYPE)} ${t(study.INSECTICIDE_CONC)}`;
         const syn =
             study.SYNERGIST_TYPE === "NO"
-                ? t("prevention.chart.synergist_involvement.no_synergist")
+                ? t("common.prevention.chart.synergist_involvement.no_synergist")
                 : `${t(study.SYNERGIST_TYPE)} ${t(study.SYNERGIST_CONC)}`;
         return {
             name: `${base}, ${syn}`,
@@ -107,35 +63,21 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
     });
     const studyObject = sortedStudies[study];
     const translations = {
-        mortality: t("prevention.chart.synergist_involvement.mortality"),
-        mosquito_mortality: `${t("prevention.chart.synergist_involvement.mosquito_mortality")} (${t(
-            "prevention.chart.synergist_involvement.number_of_tests"
+        mortality: t("common.prevention.chart.synergist_involvement.mortality"),
+        mosquito_mortality: `${t("common.prevention.chart.synergist_involvement.mosquito_mortality")} (${t(
+            "common.prevention.chart.synergist_involvement.number_of_tests"
         )})`,
-        tested: t("prevention.chart.synergist_involvement.tested"),
+        tested: t("common.prevention.chart.synergist_involvement.tested"),
     };
-    const content = () => (
-        <>
-            {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
-            <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-                    studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2
-                )}`}</Box>
-            </Typography>
-            <Typography variant="subtitle2">{`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}</Typography>
-            <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-            <Citation study={studyObject} />
-            <Curation study={studyObject} />
-        </>
-    );
+
     return (
-        <>
-            <Hidden smUp>
-                <ChatContainer width={"100%"}>{content()}</ChatContainer>
-            </Hidden>
-            <Hidden xsDown>
-                <ChatContainer width={"500px"}>{content()}</ChatContainer>
-            </Hidden>
-        </>
+        <IntensityInvolvementChart
+            studyObject={studyObject}
+            groupedStudies={groupedStudies}
+            setStudy={setStudy}
+            study={study}
+            options={options(data, translations)}
+        />
     );
 };
 export default connect(mapStateToProps)(LevelOfInvolvementChart);

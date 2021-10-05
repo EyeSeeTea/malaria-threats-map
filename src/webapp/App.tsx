@@ -167,7 +167,7 @@ ReduxQuerySync({
         },
         filterOpen: {
             selector: (state: State) => state.malaria.filtersOpen,
-            action: (value: string) => setFiltersOpen(value === "true"),
+            action: (value: string) => setFiltersOpen(!value ? true : value === "true"),
         },
         filtersMode: {
             selector: (state: State) => state.malaria.filtersMode,

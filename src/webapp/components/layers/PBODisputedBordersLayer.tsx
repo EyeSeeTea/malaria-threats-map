@@ -8,7 +8,7 @@ import config from "../../config";
 const DISPUTED_BORDERS_ENDEMICITY_LAYER_ID = "disputed-borders-endemicity-layer";
 const DISPUTED_BORDERS_ENDEMICITY_SOURCE_ID = "disputed-borders-endemicity-source";
 
-const layer: any = {
+const layer: mapboxgl.FillLayer = {
     id: DISPUTED_BORDERS_ENDEMICITY_LAYER_ID,
     type: "fill",
     paint: {
@@ -16,8 +16,8 @@ const layer: any = {
         "fill-opacity": 0.8,
         "fill-outline-color": "rgba(0,0,0,0.15)",
     },
-    minZoom: 0,
-    maxZoom: 20,
+    minzoom: 0,
+    maxzoom: 20,
     source: DISPUTED_BORDERS_ENDEMICITY_SOURCE_ID,
 };
 

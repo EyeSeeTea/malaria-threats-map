@@ -31,7 +31,7 @@ const initialState: MalariaState = Object.freeze({
         invasive: null,
     },
     initialDialogOpen: !query,
-    filtersOpen: false,
+    filtersOpen: true,
     filtersMode: "filters",
     selection: null,
     mobileOptionsOpen: false,
@@ -47,10 +47,12 @@ const initialState: MalariaState = Object.freeze({
     reportOpen: false,
     mapTitle: "",
     subscriptionOpen: false,
+    uploadFileOpen: false,
     feedbackOpen: false,
     theaterMode: false,
     legendExpanded: false,
     isSubmittingSubscription: false,
+    isUploadingFile: false,
 });
 
 export default createReducer<MalariaState>(initialState, {
@@ -70,7 +72,22 @@ export default createReducer<MalariaState>(initialState, {
         R.assoc("initialDialogOpen", initialDialogOpen),
     [ActionTypeEnum.SetFiltersOpen]: (filtersOpen: boolean) => R.assoc("filtersOpen", filtersOpen),
     [ActionTypeEnum.SetFiltersMode]: (filtersMode: string) => R.assoc("filtersMode", filtersMode || "filters"),
-    [ActionTypeEnum.SetSelection]: (selection: SiteSelection) => R.assoc("selection", selection || null),
+    [ActionTypeEnum.SetSelection]: (selection: SiteSelection) => state => {
+        const propsHasChanged = () =>
+            state.selection?.ISO_2_CODE !== selection.ISO_2_CODE &&
+            state.selection?.SITE_ID !== selection.SITE_ID &&
+            state.selection?.coordinates !== selection.coordinates;
+
+        const newSelection =
+            (state.selection === null && selection !== null) || selection == null || propsHasChanged()
+                ? selection
+                : state.selection;
+
+        return {
+            ...state,
+            selection: newSelection,
+        };
+    },
     [ActionTypeEnum.SetMobileOptionsOpen]: (mobileOptionsOpen: boolean) =>
         R.assoc("mobileOptionsOpen", mobileOptionsOpen),
     [ActionTypeEnum.UpdateZoom]: (zoom: number) => R.assoc("zoom", zoom),
@@ -89,12 +106,16 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.SetReportOpen]: (reportOpen: boolean) => R.assoc("reportOpen", reportOpen),
     [ActionTypeEnum.SetMapTitle]: (mapTitle: string) => R.assoc("mapTitle", mapTitle),
     [ActionTypeEnum.SetSubscriptionOpen]: (subscriptionOpen: boolean) => R.assoc("subscriptionOpen", subscriptionOpen),
+    [ActionTypeEnum.SetUploadFileOpen]: (uploadFileOpen: boolean) => R.assoc("uploadFileOpen", uploadFileOpen),
     [ActionTypeEnum.SetFeedbackOpen]: (feedbackOpen: boolean) => R.assoc("feedbackOpen", feedbackOpen),
     [ActionTypeEnum.SetTheaterMode]: (theaterMode: boolean) => R.assoc("theaterMode", theaterMode),
     [ActionTypeEnum.SetLegendExpanded]: (legendExpanded: boolean) => R.assoc("legendExpanded", legendExpanded),
     [ActionTypeEnum.AddSubscriptionContactRequest]: () => R.assoc("isSubmittingSubscription", true),
     [ActionTypeEnum.AddSubscriptionContactError]: () => R.assoc("isSubmittingSubscription", false),
     [ActionTypeEnum.AddSubscriptionContactSuccess]: () => R.assoc("isSubmittingSubscription", false),
+    [ActionTypeEnum.UploadFileRequest]: () => R.assoc("isUploadingFile", true),
+    [ActionTypeEnum.UploadFileSuccess]: () => R.assoc("isUploadingFile", false),
+    [ActionTypeEnum.UploadFileError]: () => R.assoc("isUploadingFile", false),
     [ActionTypeEnum.GetLastUpdatedSuccess]: (lastUpdatedDates: any) => R.assoc("lastUpdatedDates", lastUpdatedDates),
 });
 
@@ -123,6 +144,8 @@ export const selectMapTitle = createSelector(selectMalariaState, R.prop("mapTitl
 
 export const selectIsSubscriptionOpen = createSelector(selectMalariaState, R.prop("subscriptionOpen"));
 
+export const selectUploadFileOpen = createSelector(selectMalariaState, R.prop("uploadFileOpen"));
+
 export const selectIsFeedbackOpen = createSelector(selectMalariaState, R.prop("feedbackOpen"));
 
 export const selectTheaterMode = createSelector(selectMalariaState, R.prop("theaterMode"));
@@ -130,5 +153,7 @@ export const selectTheaterMode = createSelector(selectMalariaState, R.prop("thea
 export const selectLegendExpanded = createSelector(selectMalariaState, R.prop("legendExpanded"));
 
 export const selectIsSubmittingSubscription = createSelector(selectMalariaState, R.prop("isSubmittingSubscription"));
+
+export const selectIsUploadingFile = createSelector(selectMalariaState, R.prop("isUploadingFile"));
 
 export const selectLastUpdatedDates = createSelector(selectMalariaState, R.prop("lastUpdatedDates"));

@@ -13,6 +13,7 @@ import * as R from "ramda";
 import { sendAnalytics } from "../../utils/analytics";
 import { Study } from "../../../domain/entities/Study";
 import IntegrationReactSelect from "../BasicSelect";
+import { useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -40,6 +41,7 @@ function SiteSelector({
     region,
     setRegion,
 }: Props) {
+    const { t } = useTranslation();
     const [input, setInput] = useState("");
     const onChange = (selection: any) => {
         const label = selection ? selection.value : undefined;
@@ -85,7 +87,7 @@ function SiteSelector({
             <Divider />
             <IntegrationReactSelect
                 isClearable
-                placeholder={"Select Site"}
+                placeholder={t("common.filters.select_site")}
                 suggestions={suggestions}
                 onChange={onChange}
                 onInputChange={setInput}

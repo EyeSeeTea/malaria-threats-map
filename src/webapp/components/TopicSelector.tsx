@@ -57,14 +57,14 @@ class ThemeSelector extends Component<Props> {
     render() {
         const { theme, setTheme, preventionError, diagnosisError, treatmentError, invasiveError } = this.props;
         return (
-            <Translation ns={"common"}>
+            <Translation>
                 {t => {
                     return (
                         <StyledPaper>
                             <ButtonGroup>
                                 <ThemeButton disabled={!!preventionError}>
                                     <StyledIconButton
-                                        title={t("themes.prevention")}
+                                        title={t("common.themes.prevention")}
                                         onClick={() => setTheme("prevention")}
                                         disabled={!!preventionError}
                                     >
@@ -73,7 +73,7 @@ class ThemeSelector extends Component<Props> {
                                 </ThemeButton>
                                 <ThemeButton disabled={!!diagnosisError}>
                                     <StyledIconButton
-                                        title={t("themes.diagnosis")}
+                                        title={t("common.themes.diagnosis")}
                                         onClick={() => setTheme("diagnosis")}
                                         disabled={!!diagnosisError}
                                     >
@@ -82,7 +82,7 @@ class ThemeSelector extends Component<Props> {
                                 </ThemeButton>
                                 <ThemeButton disabled={!!treatmentError}>
                                     <StyledIconButton
-                                        title={t("themes.treatment")}
+                                        title={t("common.themes.treatment")}
                                         onClick={() => setTheme("treatment")}
                                         disabled={!!treatmentError}
                                     >
@@ -91,7 +91,7 @@ class ThemeSelector extends Component<Props> {
                                 </ThemeButton>
                                 <ThemeButton disabled={!!invasiveError}>
                                     <StyledIconButton
-                                        title={t("themes.invasive")}
+                                        title={t("common.themes.invasive")}
                                         onClick={() => setTheme("invasive")}
                                         disabled={!!invasiveError}
                                     >
