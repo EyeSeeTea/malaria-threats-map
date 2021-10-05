@@ -43,7 +43,6 @@ import MalariaTour from "./tour/MalariaTour";
 import MekongLayer from "./layers/MekongLayer";
 import DataDownload from "./DataDownload";
 import CountrySelectorLayer from "./layers/CountrySelectorLayer";
-import LabelsLayer from "./layers/LabelsLayer";
 import DistrictsLayer from "./layers/DistrictsLayer";
 import PBOEndemicityLayer from "./layers/PBOEndemicityLayer";
 import DisputedBordersEndemicityLayer from "./layers/PBODisputedBordersLayer";
@@ -252,7 +251,6 @@ class Map extends React.Component<Props> {
                     </>
                 )}
                 {ready && <MekongLayer map={this.map} />}
-                {ready && <LabelsLayer map={this.map} />}
                 {ready && <DiagnosisLayer map={this.map} />}
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
