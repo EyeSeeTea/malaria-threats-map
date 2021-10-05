@@ -157,7 +157,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     const titleItems = [
         studies[study].SITE_NAME,
         studies[study].PROVINCE,
-        t(`countries.${studies[study].ISO2 === "NA" ? "COUNTRY_NA" : studies[study].ISO2}`),
+        t(`countries.${studies[study].ISO2 === "NA" ? "common.COUNTRY_NA" : studies[study].ISO2}`),
     ];
     const title = titleItems.filter(Boolean).join(", ");
 

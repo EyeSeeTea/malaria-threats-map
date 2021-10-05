@@ -55,7 +55,7 @@ function CountriesSelector({
     };
 
     const suggestions: any[] = countries.map((country: Translation) => ({
-        label: t(country.VALUE_ === "NA" ? "COUNTRY_NA" : country.VALUE_),
+        label: t(country.VALUE_ === "NA" ? "common.COUNTRY_NA" : country.VALUE_),
         value: country.VALUE_,
     }));
 
