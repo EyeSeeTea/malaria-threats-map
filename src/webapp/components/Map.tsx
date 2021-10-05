@@ -60,7 +60,6 @@ import ShareIcon from "./ShareIcon";
 import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
-import UploadFile from "./UploadFile";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
@@ -290,7 +289,7 @@ class Map extends React.Component<Props> {
                             <Subscription />
                             <Feedback />
                             <TourIcon />
-                            <UploadFile />
+                            {/* {["prevention", "diagnosis"].includes(theme) && <UploadFile />} */}
                             <Separator />
                             {showOptions && <LanguageSelectorSelect section="menu" />}
                         </TopRightContainer>

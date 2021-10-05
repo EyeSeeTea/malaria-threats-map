@@ -487,7 +487,7 @@
             "tour": "Guide-moi à travers l'application",
             "filters": "Filtres"
         },
-        "feedbackIframeUrl": "https://extranet.who.int/dataform/828325?newtest=Y&lang=fr",
+        "feedbackIframeUrl": "https://extranet.who.int/dataformv3/index.php/828325?newtest=Y&lang=fr",
         "TREATMENT_FAILURE_KM": "% de patients en échec thérapeutique, Kaplan-Meier",
         "PROP_RELATED": "Pourcentage %",
         "COUNTRY_NA": "Namibie",

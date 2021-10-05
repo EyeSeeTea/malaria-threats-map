@@ -246,7 +246,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
     const titleItems = [
         studies[studyIndex].SITE_NAME,
         studies[studyIndex].PROVINCE,
-        t(studies[studyIndex].ISO2 === "NA" ? "COUNTRY_NA" : studies[studyIndex].ISO2),
+        t(studies[studyIndex].ISO2 === "NA" ? "common.COUNTRY_NA" : studies[studyIndex].ISO2),
     ];
     const title = titleItems.filter(Boolean).join(", ");
     const molecularMarker = t(MOLECULAR_MARKERS.find((m: any) => m.value === treatmentFilters.molecularMarker).label);
