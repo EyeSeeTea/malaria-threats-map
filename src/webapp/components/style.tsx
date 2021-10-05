@@ -9,12 +9,6 @@ export const style: mapboxgl.Style = {
             tileSize: 256,
             attribution: "",
         },
-        "raster-labels": {
-            type: "raster",
-            tiles: [`${config.mapLabelsBaseUrl}/tile/{z}/{y}/{x}?blankTile=false`],
-            tileSize: 256,
-            attribution: "",
-        },
     },
     layers: [
         {

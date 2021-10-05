@@ -1,7 +1,6 @@
 type ConfigProps = {
     mapServerUrl: string;
     mapTilesBaseUrl: string;
-    mapLabelsBaseUrl: string;
     boundariesBaseUrl: string;
     backendUrl: string;
     gaAppId: string;
@@ -28,11 +27,9 @@ const WHO_MALARIA_THREATS_MAP = "https://extranet.who.int/gis/rest/services/MALA
 
 const BASEMAP_NONIC_UAT =
     "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/WHO_Basemap_Beta3/MapServer";
-const BASEMAP_NONIC_LABEL_UAT = "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_LABEL_UAT/MapServer";
 
 const BASEMAP_NONIC =
     "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/WHO_Basemap_Beta3/MapServer";
-const BASEMAP_NONIC_LABEL = "https://maps.who.int/arcgis/rest/services/Basemap/BASEMAP_NONIC_LABEL/MapServer";
 
 const BOUNDARIES_BASE_URL = `https://services.arcgis.com/5T5nSi527N4F7luB/ArcGIS/rest/services/POLIO_ADMINISTRATIVE_BOUNDARIES/FeatureServer/1/query?where=1%3D1&f=geojson&geometryPrecision=2.5`;
 
@@ -48,12 +45,10 @@ const prodMapServer = {
 
 const stagingMapTile = {
     mapTilesBaseUrl: BASEMAP_NONIC_UAT,
-    mapLabelsBaseUrl: BASEMAP_NONIC_LABEL_UAT,
 };
 
 const prodMapTile = {
     mapTilesBaseUrl: BASEMAP_NONIC,
-    mapLabelsBaseUrl: BASEMAP_NONIC_LABEL,
 };
 
 const feedbackConfig = {
