@@ -138,7 +138,7 @@ function Screenshot({ map, theme, title }: Props) {
 
             doc.setFontSize(10);
             doc.text("Data source: Malaria Threats Map", a4h - 130, 180);
-            doc.text("Map Production: Global Malaria Program", a4h - 130, 185);
+            doc.text("Map Production: Global Malaria Programme", a4h - 130, 185);
             doc.text("World Health Organization", a4h - 130, 190);
 
             const img = new Image();
