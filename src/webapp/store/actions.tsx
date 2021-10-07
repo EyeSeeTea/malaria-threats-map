@@ -26,6 +26,7 @@ export enum ActionTypeEnum {
     SetMapTitle = "malaria/SET_MAP_TITLE",
     SetSubscriptionOpen = "malaria/SET_SUBSCRIPTION_OPEN",
     SetUploadFileOpen = "malaria/SET_UPLOAD_FILE_OPEN",
+    SetDownloadFileOpen="malaria/SET_DOWNLOAD_FILE_OPEN",
     SetFeedbackOpen = "malaria/SET_FEEDBACK_OPEN",
     SetTheaterMode = "malaria/SET_THEATER_MODE_OPEN",
     SetLegendExpanded = "malaria/SET_LEGEND_EXPANDED",

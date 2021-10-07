@@ -120,6 +120,11 @@ export const setUploadFileOpenAction = createAction(
     action => (uploadFileOpen: boolean) => action(uploadFileOpen)
 );
 
+export const setDownloadFileOpenAction = createAction(
+    ActionTypeEnum.SetDownloadFileOpen,
+    action => (downloadFileOpen: boolean) => action(downloadFileOpen)
+);
+
 export const setFeedbackOpenAction = createAction(ActionTypeEnum.SetFeedbackOpen, action => (feedbackOpen: boolean) =>
     action(feedbackOpen)
 );

@@ -48,6 +48,7 @@ const initialState: MalariaState = Object.freeze({
     mapTitle: "",
     subscriptionOpen: false,
     uploadFileOpen: false,
+    downloadFileOpen: false,
     feedbackOpen: false,
     theaterMode: false,
     legendExpanded: false,
@@ -107,6 +108,7 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.SetMapTitle]: (mapTitle: string) => R.assoc("mapTitle", mapTitle),
     [ActionTypeEnum.SetSubscriptionOpen]: (subscriptionOpen: boolean) => R.assoc("subscriptionOpen", subscriptionOpen),
     [ActionTypeEnum.SetUploadFileOpen]: (uploadFileOpen: boolean) => R.assoc("uploadFileOpen", uploadFileOpen),
+    [ActionTypeEnum.SetDownloadFileOpen]: (downloadFileOpen: boolean) => R.assoc("downloadFileOpen", downloadFileOpen),
     [ActionTypeEnum.SetFeedbackOpen]: (feedbackOpen: boolean) => R.assoc("feedbackOpen", feedbackOpen),
     [ActionTypeEnum.SetTheaterMode]: (theaterMode: boolean) => R.assoc("theaterMode", theaterMode),
     [ActionTypeEnum.SetLegendExpanded]: (legendExpanded: boolean) => R.assoc("legendExpanded", legendExpanded),
@@ -145,6 +147,8 @@ export const selectMapTitle = createSelector(selectMalariaState, R.prop("mapTitl
 export const selectIsSubscriptionOpen = createSelector(selectMalariaState, R.prop("subscriptionOpen"));
 
 export const selectUploadFileOpen = createSelector(selectMalariaState, R.prop("uploadFileOpen"));
+
+export const selectDownloadFileOpen = createSelector(selectMalariaState, R.prop("downloadFileOpen"));
 
 export const selectIsFeedbackOpen = createSelector(selectMalariaState, R.prop("feedbackOpen"));
 

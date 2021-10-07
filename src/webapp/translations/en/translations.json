@@ -467,6 +467,13 @@
             "dragAndDrop": "Drag and drop file to import",
             "fileError": "Cannot read the file"
         },
+        "downloadFile": {
+            "title": "Download file",
+            "country": "Country",
+            "institution": "Institution",
+            "button": "Download",
+            "template": "Template Type"
+        },
         "buttons": {
             "select_story_mode": "Select story mode"
         },
@@ -481,6 +488,7 @@
             "disclaimer": "Disclaimer",
             "subscribe": "Subscribe",
             "uploadFile": "Upload file",
+            "downloadFile": "Download file",
             "comments": "Provide your feedback",
             "help": "Help",
             "share": "Share",
