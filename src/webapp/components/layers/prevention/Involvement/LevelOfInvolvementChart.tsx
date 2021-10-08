@@ -8,26 +8,10 @@ import { State } from "../../../../store/types";
 import * as R from "ramda";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import preventionChartOptions from "../common/preventionChartOptions";
-import { LevelOfInvolvementColors } from "./symbols";
 import IntensityInvolvementChart from "../common/IntensityInvolvementChart";
 
-const zones = [
-    {
-        value: 90,
-        color: LevelOfInvolvementColors.NO_INVOLVEMENT[0],
-    },
-    {
-        value: 98,
-        color: LevelOfInvolvementColors.PARTIAL_INVOLVEMENT[0],
-    },
-    {
-        value: 100.001,
-        color: LevelOfInvolvementColors.FULL_INVOLVEMENT[0],
-    },
-];
-
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
-    ...preventionChartOptions(data, translations, zones),
+    ...preventionChartOptions(data, translations),
 });
 
 const mapStateToProps = (state: State) => ({

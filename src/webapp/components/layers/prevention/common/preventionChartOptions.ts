@@ -1,10 +1,9 @@
 import { DataLabelsFormatterCallbackFunction } from "highcharts";
 import { baseChart } from "../../../charts/chart-utils";
 
-const preventionChartOptions: (data: any, translations: any, zones?: any) => Highcharts.Options = (
+const preventionChartOptions: (data: any, translations: any) => Highcharts.Options = (
     data,
-    translations,
-    zones
+    translations
 ) => ({
     ...baseChart,
     title: {
@@ -29,9 +28,7 @@ const preventionChartOptions: (data: any, translations: any, zones?: any) => Hig
                 } as DataLabelsFormatterCallbackFunction,
                 enabled: true,
             },
-            zones: zones
-                ? zones
-                : [
+            zones: [
                       {
                           value: 97.001,
                           color: "#D3D3D3",
