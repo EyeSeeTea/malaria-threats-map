@@ -48,7 +48,6 @@ const initialState: MalariaState = Object.freeze({
     mapTitle: "",
     subscriptionOpen: false,
     uploadFileOpen: false,
-    downloadFileOpen: false,
     feedbackOpen: false,
     theaterMode: false,
     legendExpanded: false,
@@ -146,8 +145,6 @@ export const selectMapTitle = createSelector(selectMalariaState, R.prop("mapTitl
 export const selectIsSubscriptionOpen = createSelector(selectMalariaState, R.prop("subscriptionOpen"));
 
 export const selectUploadFileOpen = createSelector(selectMalariaState, R.prop("uploadFileOpen"));
-
-export const selectDownloadFileOpen = createSelector(selectMalariaState, R.prop("downloadFileOpen"));
 
 export const selectIsFeedbackOpen = createSelector(selectMalariaState, R.prop("feedbackOpen"));
 
