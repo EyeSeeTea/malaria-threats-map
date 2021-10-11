@@ -467,6 +467,16 @@
             "dragAndDrop": "Arrastra y suelta el fichero a importar",
             "fileError": "No se puede leer el fichero"
         },
+        "downloadFile": {
+            "title": "Descargar plantilla",
+            "button": "Descargar",
+            "template": "Tipo de plantilla",
+            "template1": "Resultados de bioensayos con insecticidas sinérgicos",
+            "template2": "Resultados del bioensayo de concentración de intensidad",
+            "template3": "Resultados de bioensayos de concentración discriminativa",
+            "template4": "Resultados de bioensayos moleculares y bioquímicos",
+            "template5": "Pruebas de susceptibilidad de la OMS"
+        },
         "buttons": {
             "select_story_mode": "Seleccione el modo historia"
         },

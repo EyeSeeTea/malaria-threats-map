@@ -19,7 +19,6 @@ import {
     logOutboundLinkAction,
     uploadFileRequestAction,
     setUploadFileOpenAction,
-    setDownloadFileOpenAction,
     uploadFileSuccessAction,
     uploadFileErrorAction,
 } from "../actions/base-actions";

@@ -1,6 +1,17 @@
 import React, { useEffect } from "react";
 import Dialog from "@material-ui/core/Dialog";
-import { Button, createStyles, Fab, FormControl, makeStyles, TextField, Theme } from "@material-ui/core";
+import {
+    Button,
+    TextField,
+    InputLabel,
+    MenuItem,
+    Select,
+    createStyles,
+    Fab,
+    FormControl,
+    makeStyles,
+    Theme,
+} from "@material-ui/core";
 import UploadIcon from "@material-ui/icons/CloudUpload";
 import DoneIcon from "@material-ui/icons/CloudDone";
 import Typography from "@material-ui/core/Typography";
@@ -13,6 +24,8 @@ import { sendAnalytics } from "../utils/analytics";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import { isNotNull } from "../utils/number-utils";
 import Dropzone, { DropzoneState } from "react-dropzone";
+import { FullCountry } from "./DataDownload/filters/FullCountriesSelector";
+import { ORGANIZATION_TYPES } from "./DataDownload/UserForm";
 
 const mapStateToProps = (state: State) => ({
     uploadFileOpen: selectUploadFileOpen(state),
@@ -42,13 +55,52 @@ const UploadFile: React.FC<Props> = ({
     const [file, setFile] = React.useState<File>();
     const [valid, setValid] = React.useState<boolean>(false);
 
+    const [country, setCountry] = React.useState<string>("");
+    const [newOrganizationType, setNewOrganizationType] = React.useState<string>("");
+    const [templateType, setTemplateType] = React.useState<string>("");
+
+    const organizationTypes = ORGANIZATION_TYPES.map(ot => t(ot)).sort();
+    const countries: FullCountry = t("countries", { returnObjects: true });
+
+    const TEMPLATE_TYPES: { [key: string]: string } = {
+        "common.downloadFile.template1":
+            "https://cdn.who.int/media/docs/default-source/malaria/vector-control/who-standard-form-for-reporting-synergist-insecticide-bioassay-results.xlsx?sfvrsn=30ed3b0d_2",
+        "common.downloadFile.template2":
+            "https://cdn.who.int/media/docs/default-source/malaria/vector-control/who-standard-form-for-reporting-intensity-concentration-bioassay-results.xlsx?sfvrsn=b82e9f35_2",
+        "common.downloadFile.template3":
+            "https://cdn.who.int/media/docs/default-source/malaria/vector-control/who-standard-form-for-reporting-discriminating-concentration-bioassay-results.xlsx?sfvrsn=7273f2bb_2",
+        "common.downloadFile.template4":
+            "https://cdn.who.int/media/docs/default-source/malaria/vector-control/who-standard-form-for-reporting-molecular-and-biochemical-bioassay-results.xlsx?sfvrsn=b302dd0_4",
+        "common.downloadFile.template5":
+            "https://web-prod.who.int/docs/default-source/documents/publications/gmp/who-test-kit-catalogue-and-requisition-form-may2013.pdf",
+    };
+
+    const handleOrganizationTypeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        const newOrganizationType = event.target.value as string;
+        setNewOrganizationType(newOrganizationType);
+    };
+
+    const handleCountryChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        const newCountry = event.target.value as string;
+        setCountry(newCountry);
+    };
+
     useEffect(() => {
-        setValid(isNotNull(name) && isNotNull(comment) && file !== undefined);
-    }, [name, file, comment]);
+        setValid(
+            isNotNull(name) &&
+                isNotNull(comment) &&
+                isNotNull(country) &&
+                isNotNull(newOrganizationType) &&
+                file !== undefined
+        );
+    }, [name, file, comment, country, newOrganizationType]);
 
     useEffect(() => {
         setName("");
         setComment("");
+        setCountry("");
+        setNewOrganizationType("");
+        setTemplateType("");
         setFile(undefined);
     }, [uploadFileOpen]);
 
@@ -73,7 +125,7 @@ const UploadFile: React.FC<Props> = ({
     };
 
     const submit = () => {
-        uploadFile({ title: name, comment, file });
+        uploadFile({ title: name, comment, country, organizationType: newOrganizationType, file });
         sendAnalytics({ type: "event", category: "menu", action: "upload file", label: "submit" });
     };
 
@@ -103,6 +155,28 @@ const UploadFile: React.FC<Props> = ({
                         <Typography variant={"h5"}>{t("common.uploadFile.title")}</Typography>
                     </div>
                     <div>
+                        {countries && (
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel>{t("common.data_download.step1.country") + "*"}</InputLabel>
+                                <Select fullWidth value={country} onChange={handleCountryChange}>
+                                    {Object.entries(countries).map(([iso, name]) => (
+                                        <MenuItem key={iso} value={iso}>
+                                            {name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        )}
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel>{t("common.data_download.step1.organization_type") + "*"}</InputLabel>
+                            <Select fullWidth value={newOrganizationType} onChange={handleOrganizationTypeChange}>
+                                {organizationTypes.map(type => (
+                                    <MenuItem key={type} value={type}>
+                                        {type}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
                         <FormControl fullWidth margin={"dense"}>
                             <TextField
                                 fullWidth
@@ -176,6 +250,42 @@ const UploadFile: React.FC<Props> = ({
                         </FormControl>
                     </div>
                 </form>
+                <form id="ic_downloadTemplateForm">
+                    <div>
+                        <Typography variant={"h5"}>{t("common.downloadFile.title")}</Typography>
+                    </div>
+                    <div>
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel>{t("common.downloadFile.template") + "*"}</InputLabel>
+                            <Select
+                                fullWidth
+                                value={templateType}
+                                onChange={event => setTemplateType(event.target.value as string)}
+                            >
+                                {Object.keys(TEMPLATE_TYPES).map(type => (
+                                    <MenuItem key={type} value={type}>
+                                        {t(`${type}`)}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl fullWidth margin={"normal"}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                type="button"
+                                disabled={
+                                    country.length === 0 &&
+                                    newOrganizationType.length === 0 &&
+                                    templateType.length === 0
+                                }
+                                onClick={() => window.open(TEMPLATE_TYPES[templateType], "_blank")}
+                            >
+                                {t("common.downloadFile.button")}
+                            </Button>
+                        </FormControl>
+                    </div>
+                </form>
             </Dialog>
         </React.Fragment>
     );
@@ -212,6 +322,9 @@ const useStyles = makeStyles((theme: Theme) =>
             border: "dashed",
             borderColor: "#c8c8c8",
             cursor: "pointer",
+        },
+        formControl: {
+            margin: theme.spacing(1, 0),
         },
     })
 );

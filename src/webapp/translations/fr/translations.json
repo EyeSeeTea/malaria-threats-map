@@ -467,6 +467,16 @@
             "dragAndDrop": "Glissez-déposez le fichier à importer",
             "fileError": "Impossible de lire le fichier"
         },
+        "downloadFile": {
+            "title": "Télécharger le modèle",
+            "button": "Télécharger",
+            "template": "Type de modèle",
+            "template1": "Résultats du dosage biologique de l'insecticide Synergist",
+            "template2": "Résultats de l'essai biologique de concentration d'intensité",
+            "template3": "Résultats d'essais biologiques à concentration discriminante",
+            "template4": "Résultats d'essais biologiques moléculaires et biochimiques",
+            "template5": "Tests de sensibilité de l'OMS"
+        },
         "buttons": {
             "select_story_mode": "Sélectionnez le mode histoire"
         },

@@ -108,7 +108,6 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.SetMapTitle]: (mapTitle: string) => R.assoc("mapTitle", mapTitle),
     [ActionTypeEnum.SetSubscriptionOpen]: (subscriptionOpen: boolean) => R.assoc("subscriptionOpen", subscriptionOpen),
     [ActionTypeEnum.SetUploadFileOpen]: (uploadFileOpen: boolean) => R.assoc("uploadFileOpen", uploadFileOpen),
-    [ActionTypeEnum.SetDownloadFileOpen]: (downloadFileOpen: boolean) => R.assoc("downloadFileOpen", downloadFileOpen),
     [ActionTypeEnum.SetFeedbackOpen]: (feedbackOpen: boolean) => R.assoc("feedbackOpen", feedbackOpen),
     [ActionTypeEnum.SetTheaterMode]: (theaterMode: boolean) => R.assoc("theaterMode", theaterMode),
     [ActionTypeEnum.SetLegendExpanded]: (legendExpanded: boolean) => R.assoc("legendExpanded", legendExpanded),
