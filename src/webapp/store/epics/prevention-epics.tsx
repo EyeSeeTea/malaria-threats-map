@@ -15,8 +15,8 @@ import {
     setSpecies,
     setType,
 } from "../actions/prevention-actions";
-import { PreventionMapType, RegionState, State } from "../types";
-import { logEventAction, logPageViewAction, setRegionAction } from "../actions/base-actions";
+import { PreventionMapType, State } from "../types";
+import { logEventAction, logPageViewAction } from "../actions/base-actions";
 import { ASSAY_TYPES } from "../../components/filters/AssayTypeCheckboxFilter";
 import { addNotificationAction } from "../actions/notifier-actions";
 import { getAnalyticsPageView } from "../analytics";
@@ -58,31 +58,18 @@ export const setPreventionMapTypeEpic = (
             const isDialogOpen = state.malaria.initialDialogOpen;
             const logPageView = isDialogOpen ? null : logPageViewAction(pageView);
 
-            const initialRegionFilter: RegionState = {
-                country: "",
-                region: "",
-                subRegion: "",
-                site: "",
-                siteIso2: "",
-                siteCoordinates: undefined,
-            };
-
             if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
-                return of(
-                    ..._.compact([setType("MONO_OXYGENASES"), logPageView, setRegionAction(initialRegionFilter)])
-                );
+                return of(..._.compact([setType("MONO_OXYGENASES"), logPageView]));
             } else if (action.payload === PreventionMapType.INTENSITY_STATUS) {
-                return of(..._.compact([setType(undefined), logPageView, setRegionAction(initialRegionFilter)]));
+                return of(..._.compact([setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
-                return of(..._.compact([setType(undefined), logPageView, setRegionAction(initialRegionFilter)]));
+                return of(..._.compact([setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
-                return of(
-                    ..._.compact([setType("MONO_OXYGENASES"), logPageView, setRegionAction(initialRegionFilter)])
-                );
+                return of(..._.compact([setType("MONO_OXYGENASES"), logPageView]));
             } else if (action.payload === PreventionMapType.PBO_DEPLOYMENT) {
-                return of(..._.compact([setType(undefined), logPageView, setRegionAction(initialRegionFilter)]));
+                return of(..._.compact([setType(undefined), logPageView]));
             } else {
-                return of(..._.compact([setType(undefined), logPageView, setRegionAction(initialRegionFilter)]));
+                return of(..._.compact([setType(undefined), logPageView]));
             }
         })
     );
