@@ -1,10 +1,7 @@
 import { DataLabelsFormatterCallbackFunction } from "highcharts";
 import { baseChart } from "../../../charts/chart-utils";
 
-const preventionChartOptions: (data: any, translations: any) => Highcharts.Options = (
-    data,
-    translations
-) => ({
+const preventionChartOptions: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     ...baseChart,
     title: {
         text: translations.mosquito_mortality,
@@ -29,15 +26,15 @@ const preventionChartOptions: (data: any, translations: any) => Highcharts.Optio
                 enabled: true,
             },
             zones: [
-                      {
-                          value: 97.001,
-                          color: "#D3D3D3",
-                      },
-                      {
-                          value: 100.001,
-                          color: "#2f4f4f",
-                      },
-                  ],
+                {
+                    value: 97.001,
+                    color: "#D3D3D3",
+                },
+                {
+                    value: 100.001,
+                    color: "#2f4f4f",
+                },
+            ],
         },
     },
     tooltip: {
