@@ -45,7 +45,12 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
         .map(
             (groupStudies: PreventionStudy[]) => R.sortBy(study => -parseInt(study.MORTALITY_ADJUSTED), groupStudies)[0]
         )
-        .sort((a, b) => a.INSECTICIDE_TYPE.localeCompare(b.INSECTICIDE_TYPE));
+        .sort(
+            (a, b) =>
+                Number(a.YEAR_START) - Number(b.YEAR_START) ||
+                a.INSECTICIDE_TYPE.localeCompare(b.INSECTICIDE_TYPE) ||
+                Number(a.INSECTICIDE_INTENSITY) - Number(b.INSECTICIDE_INTENSITY)
+        );
 
     const data = simplifiedStudies.map(study => ({
         name: `${study.YEAR_START}, ${t(study.INSECTICIDE_INTENSITY)} ${t(study.INSECTICIDE_TYPE)}`,

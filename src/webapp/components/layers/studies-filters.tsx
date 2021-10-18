@@ -154,6 +154,14 @@ export const filterByMolecularMarkers = (molecularMarkers: string[]) => (study: 
     return !molecularMarkers.length || molecularMarkers.includes(study.MM_TYPE);
 };
 
+export const filterByExcludeLowerPatients = (value: boolean) => (study: any) => {
+    return (value && study.N > 20) || !value;
+};
+
+export const filterByExcludeLowerSamples = (value: boolean) => (study: any) => {
+    return (value && study.N > 20) || !value;
+};
+
 const filterByPBOStudies = (study: PreventionStudy) => {
     return (
         ((study.ASSAY_TYPE === "MOLECULAR_ASSAY" ||

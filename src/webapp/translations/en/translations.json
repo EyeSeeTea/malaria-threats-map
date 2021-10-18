@@ -282,7 +282,9 @@
             "select_region": "Select Region",
             "sub_region": "Subregion",
             "select_sub_region": "Select Subregion",
-            "select_site": "Select Site"
+            "select_site": "Select Site",
+            "exclude_lower_patients": "Exclude studies of less than 20 patients",
+            "exclude_lower_samples": "Exclude studies of less than 20 samples"
         },
         "legend": {
             "number_of_studies": "Number of studies",
@@ -487,7 +489,7 @@
             "tour": "Take a tour",
             "filters": "Filters"
         },
-        "feedbackIframeUrl": "https://extranet.who.int/dataform/828325?newtest=Y&lang=en",
+        "feedbackIframeUrl": "https://extranet.who.int/dataformv3/index.php/828325?newtest=Y&lang=en",
         "TREATMENT_FAILURE_KM": "% of patients with treatment failure, Kaplan-Meier",
         "PROP_RELATED": "Percentage %",
         "COUNTRY_NA": "Namibia",
