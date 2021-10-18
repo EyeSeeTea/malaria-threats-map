@@ -282,7 +282,9 @@
             "select_region": "Select Region",
             "sub_region": "Subregion",
             "select_sub_region": "Select Subregion",
-            "select_site": "Select Site"
+            "select_site": "Select Site",
+            "exclude_lower_patients": "Exclude studies of less than 20 patients",
+            "exclude_lower_samples": "Exclude studies of less than 20 samples"
         },
         "legend": {
             "number_of_studies": "Number of studies",
