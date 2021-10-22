@@ -49,8 +49,8 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme }: Prop
                 _.uniq(allStudiesGroup.filter(study => !isNull(study.INSTITUTE)).map(study => study.INSTITUTE))
             );
         } else {
-            setCitationLongs([study.CITATION_LONG]);
-            setInstitutes([study.INSTITUTE]);
+            setCitationLongs(study.CITATION_LONG ? [study.CITATION_LONG] : []);
+            setInstitutes(study.INSTITUTE ? [study.INSTITUTE] : []);
         }
     }, [study, allStudiesGroup]);
     return (
