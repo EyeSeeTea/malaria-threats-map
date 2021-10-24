@@ -78,7 +78,6 @@ const TabPanel = (props: TabPanelProps) => {
     );
 };
 
-
 const UploadFile: React.FC<Props> = ({
     uploadFileOpen,
     setUploadFileOpen,
@@ -194,10 +193,10 @@ const UploadFile: React.FC<Props> = ({
                     className: classes.paper,
                 }}
             >
-                    <Tabs value={value} onChange={handleTabChange} variant="fullWidth">
-                        <Tab value={0} icon={<UploadIcon />} />
-                        <Tab value={1} icon={<DownloadIcon />} />
-                    </Tabs>
+                <Tabs value={value} onChange={handleTabChange} variant="fullWidth">
+                    <Tab value={0} icon={<UploadIcon />} />
+                    <Tab value={1} icon={<DownloadIcon />} />
+                </Tabs>
 
                 <TabPanel value={value} index={0}>
                     <form id="ic_uploadfileForm">
@@ -210,7 +209,6 @@ const UploadFile: React.FC<Props> = ({
                                     fullWidth
                                     label={t("common.uploadFile.name")}
                                     type={t("common.uploadFile.name")}
-                                    id={t("common.uploadFile.name")}
                                     placeholder={t("common.uploadFile.name")}
                                     name="name"
                                     required
