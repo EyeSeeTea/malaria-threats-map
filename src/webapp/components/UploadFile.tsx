@@ -14,7 +14,6 @@ import {
     Tab,
     Tabs,
     Box,
-    Grow,
 } from "@material-ui/core";
 import UploadIcon from "@material-ui/icons/CloudUpload";
 import DownloadIcon from "@material-ui/icons/CloudDownload";
@@ -45,6 +44,40 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
+
+interface TabPanelProps {
+    children?: React.ReactNode;
+    index: number;
+    value: number;
+}
+
+const TabPanel = (props: TabPanelProps) => {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Typography
+                    component="div"
+                    role="tabpanel"
+                    hidden={value !== index}
+                    id={`scrollable-auto-tabpanel-${index}`}
+                    aria-labelledby={`scrollable-auto-tab-${index}`}
+                    {...other}
+                >
+                    <Box p={3}>{children}</Box>
+                </Typography>
+            )}
+        </div>
+    );
+};
+
 
 const UploadFile: React.FC<Props> = ({
     uploadFileOpen,
@@ -140,39 +173,6 @@ const UploadFile: React.FC<Props> = ({
         sendAnalytics({ type: "event", category: "menu", action: "upload file", label: "submit" });
     };
 
-    interface TabPanelProps {
-        children?: React.ReactNode;
-        index: number;
-        value: number;
-    }
-
-    const TabPanel = (props: TabPanelProps) => {
-        const { children, value, index, ...other } = props;
-
-        return (
-            <div
-                role="tabpanel"
-                hidden={value !== index}
-                id={`simple-tabpanel-${index}`}
-                aria-labelledby={`simple-tab-${index}`}
-                {...other}
-            >
-                {value === index && (
-                    <Typography
-                        component="div"
-                        role="tabpanel"
-                        hidden={value !== index}
-                        id={`scrollable-auto-tabpanel-${index}`}
-                        aria-labelledby={`scrollable-auto-tab-${index}`}
-                        {...other}
-                    >
-                        <Box p={3}>{children}</Box>
-                    </Typography>
-                )}
-            </div>
-        );
-    };
-
     return (
         <React.Fragment>
             <Fab
@@ -194,12 +194,10 @@ const UploadFile: React.FC<Props> = ({
                     className: classes.paper,
                 }}
             >
-                <Grow in={true}>
                     <Tabs value={value} onChange={handleTabChange} variant="fullWidth">
                         <Tab value={0} icon={<UploadIcon />} />
                         <Tab value={1} icon={<DownloadIcon />} />
                     </Tabs>
-                </Grow>
 
                 <TabPanel value={value} index={0}>
                     <form id="ic_uploadfileForm">
@@ -212,6 +210,7 @@ const UploadFile: React.FC<Props> = ({
                                     fullWidth
                                     label={t("common.uploadFile.name")}
                                     type={t("common.uploadFile.name")}
+                                    id={t("common.uploadFile.name")}
                                     placeholder={t("common.uploadFile.name")}
                                     name="name"
                                     required

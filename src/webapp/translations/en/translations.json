@@ -361,7 +361,7 @@
             },
             "step1": {
                 "title": " Personal contact details",
-                "first_name": "First Name",
+                "First Name": "First Name",
                 "last_name": "Family Name",
                 "organization_type": "Organization Type",
                 "organization_type_options": {
