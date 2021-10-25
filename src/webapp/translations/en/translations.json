@@ -381,7 +381,7 @@
                 },
                 "organization_name": "Organization Name",
                 "position": "Position",
-                "country": "Country of residency",
+                "country": "Country of Residency",
                 "email": "Email"
             },
             "step2": {
@@ -469,6 +469,16 @@
             "dragAndDrop": "Drag and drop file to import",
             "fileError": "Cannot read the file"
         },
+        "downloadFile": {
+            "title": "Download template",
+            "button": "Download",
+            "template": "Template Type",
+            "template1": "Synergist insecticide-bioassay results",
+            "template2": "Intensity concentration bioassay results",
+            "template3": "Discriminating concentration bioassay results",
+            "template4": "Molecular and biochemical bioassay results",
+            "template5": "WHO susceptibility tests"
+        },
         "buttons": {
             "select_story_mode": "Select story mode"
         },
@@ -482,7 +492,7 @@
             "summary": "Summary Report",
             "disclaimer": "Disclaimer",
             "subscribe": "Subscribe",
-            "uploadFile": "Upload file",
+            "uploadFile": "Upload file and download template",
             "comments": "Provide your feedback",
             "help": "Help",
             "share": "Share",
