@@ -37,6 +37,8 @@ import {
     setDiagnosisSurveyTypes,
 } from "./store/actions/diagnosis-actions";
 import {
+    setExcludeLowerPatients,
+    setExcludeLowerSamples,
     setMolecularMarker,
     setTreatmentDrug,
     setTreatmentMapType,
@@ -148,6 +150,14 @@ ReduxQuerySync({
         mmType: {
             selector: (state: State) => state.treatment.filters.molecularMarker,
             action: (value: string) => setMolecularMarker(parseInt(value)),
+        },
+        excludeLowerPatients: {
+            selector: (state: State) => state.treatment.filters.excludeLowerPatients,
+            action: (value: boolean) => setExcludeLowerPatients(value),
+        },
+        excludeLowerSamples: {
+            selector: (state: State) => state.treatment.filters.excludeLowerSamples,
+            action: (value: boolean) => setExcludeLowerSamples(value),
         },
         endemicity: {
             selector: (state: State) => state.malaria.endemicity,

@@ -138,14 +138,14 @@ function Screenshot({ map, theme, title }: Props) {
 
             doc.setFontSize(10);
             doc.text("Data source: Malaria Threats Map", a4h - 130, 180);
-            doc.text("Map Production: Global Malaria Program", a4h - 130, 185);
+            doc.text("Map Production: Global Malaria Programme", a4h - 130, 185);
             doc.text("World Health Organization", a4h - 130, 190);
 
             const img = new Image();
             img.src = whoLogoWhite;
             doc.addImage(img, "JPEG", a4h - 60, 175, 45, 13);
             doc.setFontSize(9);
-            doc.text("@WHO 2019. All rights reserved", a4h - 60, 195);
+            doc.text("@WHO 2021. All rights reserved", a4h - 60, 195);
 
             // Save the Data
             const file = doc.output("dataurlstring");
