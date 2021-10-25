@@ -139,7 +139,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
             {researchActive && (
                 <FormControl fullWidth className={classes.formControl}>
                     <TextField
-                        label={t("common.data_download.step2.date_use_options_content.research")}
+                        label={t("common.data_download.step2.date_use_options_content.research") + "*"}
                         multiline
                         rowsMax="3"
                         InputLabelProps={{
@@ -153,7 +153,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
             {policiesActive && (
                 <FormControl fullWidth className={classes.formControl}>
                     <TextField
-                        label={t("common.data_download.step2.date_use_options_content.policies")}
+                        label={t("common.data_download.step2.date_use_options_content.policies") + "*"}
                         multiline
                         rowsMax="3"
                         InputLabelProps={{
@@ -167,7 +167,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
             {toolsActive && (
                 <FormControl fullWidth className={classes.formControl}>
                     <TextField
-                        label={t("common.data_download.step2.date_use_options_content.tools")}
+                        label={t("common.data_download.step2.date_use_options_content.tools") + "*"}
                         multiline
                         rowsMax="3"
                         InputLabelProps={{
