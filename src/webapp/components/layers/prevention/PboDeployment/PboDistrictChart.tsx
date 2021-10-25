@@ -6,7 +6,8 @@ import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
-import { ChartContainer } from "../../../Chart";
+import { setCountryModeAction, setRegionAction } from "../../../../store/actions/base-actions";
+import { Actions, FlexGrow, ChartContainer, ZoomButton } from "../../../Chart";
 import * as R from "ramda";
 import { filterByAssayTypes, filterByProxyType, filterByType } from "../../studies-filters";
 import { evaluateDeploymentStatus } from "../utils";
@@ -18,11 +19,17 @@ const mapStateToProps = (state: State) => ({
     preventionFilters: selectPreventionFilters(state),
 });
 
+const mapDispatchToProps = {
+    setRegion: setRegionAction,
+    setCountryMode: setCountryModeAction,
+};
+
 type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     studies: PreventionStudy[];
 };
-type Props = StateProps & OwnProps;
+type Props = DispatchProps & StateProps & OwnProps;
 
 const Flex = styled.div`
     display: flex;
@@ -33,7 +40,7 @@ const Margin = styled.div`
     margin-bottom: 10px;
 `;
 
-const PboDistrictChart = ({ studies }: Props) => {
+const PboDistrictChart = ({ studies, setRegion, setCountryMode }: Props) => {
     const { t } = useTranslation();
     const titleTranslation = t("common.prevention.pbo_deployment_legend");
     const nSitesTranslation = t("common.prevention.chart.pbo_deployment.num_sites_criteria");
@@ -81,7 +88,12 @@ const PboDistrictChart = ({ studies }: Props) => {
     const group2Studies = [...group2aStudies, ...group2bStudies];
     const mostRecentMonoOxygenasesStudies: any = R.reverse(R.sortBy(R.prop("YEAR_START"), group2Studies)) || [];
     const mostRecentMonoOxygenasesStudy = mostRecentMonoOxygenasesStudies[0] || {};
+    const onClick = () => {
+        console.log(studies[0].ISO2)
 
+        setRegion({ country: studies[0].ISO2 });
+        setCountryMode(false);
+    };
     return (
         <ChartContainer>
             <Typography variant="subtitle1">
@@ -116,7 +128,12 @@ const PboDistrictChart = ({ studies }: Props) => {
                     </Typography>
                 </Flex>
             </Margin>
+            <Actions>
+                <FlexGrow />
+                <ZoomButton onClick={onClick} />
+            </Actions>
+
         </ChartContainer>
     );
 };
-export default connect(mapStateToProps)(PboDistrictChart);
+export default connect(mapStateToProps, mapDispatchToProps)(PboDistrictChart);
