@@ -282,7 +282,9 @@
             "select_region": "Select Region",
             "sub_region": "Subregion",
             "select_sub_region": "Select Subregion",
-            "select_site": "Select Site"
+            "select_site": "Select Site",
+            "exclude_lower_patients": "Exclude studies of less than 20 patients",
+            "exclude_lower_samples": "Exclude studies of less than 20 samples"
         },
         "legend": {
             "number_of_studies": "Number of studies",
@@ -295,7 +297,7 @@
         },
         "copyright": {
             "mobile": "Click here to read the disclaimer that applies to the above map",
-            "content": "The boundaries and names shown and the designations used on this map do not imply the expression of any opinion whatsoever on the part of the World Health Organization concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Dotted and dashed lines or grey areas on maps represent approximate border lines or areas for which there may not yet be full agreement. The borders of the map provided reflect the current political and geographic status as of the date of publication (2017). However, the technical health information is based on data accurate with respect to the year selected. The disconnect in this arrangement should be noted but no implications regarding political or terminological status should be drawn from this arrangement as it is purely a function of technical and graphical limitations. Data source: Global Malaria Programme. Map production: Global Malaria Programme. World Health Organization. WHO 2019. All rights reserved."
+            "content": "The boundaries and names shown and the designations used on this map do not imply the expression of any opinion whatsoever on the part of the World Health Organization concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Dotted and dashed lines or grey areas on maps represent approximate border lines or areas for which there may not yet be full agreement. The borders of the map provided reflect the current political and geographic status as of the date of publication (2021). However, the technical health information is based on data accurate with respect to the year selected. The disconnect in this arrangement should be noted but no implications regarding political or terminological status should be drawn from this arrangement as it is purely a function of technical and graphical limitations. Data source: Global Malaria Programme. Map production: Global Malaria Programme. World Health Organization. WHO 2021. All rights reserved."
         },
         "options": {
             "title": "Options",
@@ -352,7 +354,7 @@
                 "p4bLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions",
                 "p4c": ". By using the Datasets or any presentations of data derived from them, you agree to be bound by and adhere to these Terms and Conditions, as may be amended from time to time by WHO at its sole discretion. If any datasets are credited to a source other than WHO, then those materials are not covered by these Terms and Conditions, and permission should be sought from the source.",
                 "p5": "Please acknowledge the use of these datasets by including the following reference in your publications: WHO, Malaria Threats Map, year, date of access, acknowledgement of the countries having provided the underlying data (in the event that the source refers to ministries of health or national malaria control programs of specific countries).",
-                "p6": "The Global Malaria Program is keen on tracking and showcasing the use of the global databases. Therefore, we will ask you a few questions about the intended use of the data you wish to download.",
+                "p6": "The Global Malaria Programme is keen on tracking and showcasing the use of the global databases. Therefore, we will ask you a few questions about the intended use of the data you wish to download.",
                 "p7a": "If you have any questions, do not hesitate to contact us on: ",
                 "p7bEmail": "gmp-maps@who.int",
                 "p8a": "Check here to indicate that you have read and agree to the ",
@@ -379,7 +381,7 @@
                 },
                 "organization_name": "Organization Name",
                 "position": "Position",
-                "country": "Country of residency",
+                "country": "Country of Residency",
                 "email": "Email"
             },
             "step2": {
@@ -529,7 +531,7 @@
         "p1a": "<strong>Data source:</strong> Global Malaria Programme",
         "p1b": "<strong>Map production:</strong> Global Malaria Programme. World Health Organization.",
         "p1bLink": "https://www.who.int/about/copyright/",
-        "p1bLinkText": "© WHO 2019. ",
+        "p1bLinkText": "© WHO 2021. ",
         "p1c": "All rights reserved.",
         "p2": "Unless otherwise specifically stated, the information contained in this application has been made available to the World Health Organization (WHO) Global Malaria Programme by Ministries of Health or their development partners, or through extraction by WHO or contracted partners from publications in international peer-reviewed scientific journals. WHO therefore provides no assurance as to the validity, accuracy or completeness of this information.",
         "p3a": "The use of all images and files generated from this application is subject to the ",

@@ -127,6 +127,8 @@ export interface TreatmentFilters {
     plasmodiumSpecies: string;
     drug: string;
     molecularMarker: number;
+    excludeLowerPatients: boolean;
+    excludeLowerSamples: boolean;
 }
 
 export interface TreatmentState {
