@@ -25,11 +25,9 @@ const WHO_MALARIA_THREATS_MAP_STAGING =
     "https://extranet.who.int/gis/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer";
 const WHO_MALARIA_THREATS_MAP = "https://extranet.who.int/gis/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP/MapServer";
 
-const BASEMAP_NONIC_UAT =
-    "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/WHO_Basemap_Beta3/MapServer";
+const BASEMAP_NONIC_UAT = "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/basemap_test/MapServer";
 
-const BASEMAP_NONIC =
-    "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/WHO_Basemap_Beta3/MapServer";
+const BASEMAP_NONIC ="https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/basemap_test/MapServer";
 
 const BOUNDARIES_BASE_URL = `https://services.arcgis.com/5T5nSi527N4F7luB/ArcGIS/rest/services/POLIO_ADMINISTRATIVE_BOUNDARIES/FeatureServer/1/query?where=1%3D1&f=geojson&geometryPrecision=2.5`;
 
