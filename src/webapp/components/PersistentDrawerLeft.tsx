@@ -230,7 +230,7 @@ function PersistentDrawerLeft({
                     paper: classes.drawerPaper,
                 }}
             >
-                <>{storyMode && !filtersOpen ? <StoryModeStepper /> : <FiltersSidebar />}</>
+                <>{storyMode ? <StoryModeStepper /> : <FiltersSidebar />}</>
             </Drawer>
             <div
                 className={clsx(classes.content, {
