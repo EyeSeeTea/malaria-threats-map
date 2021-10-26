@@ -55,6 +55,14 @@ jobs:
       - name: Increase max inodes
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+          
+      - name: Install yarn
+        run: npm install -g yarn
+
       - name: Run cypress tests
         uses: cypress-io/github-action@v2
         env:
