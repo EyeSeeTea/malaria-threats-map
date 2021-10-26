@@ -16,7 +16,7 @@ export const getDistrictsEpic = (action$: ActionsObservable<ActionType<typeof fe
         switchMap(action => {
             const params: ApiParams = {
                 f: "geojson",
-                where: encodeURIComponent(`ISO_2_CODE='${action.payload}' AND ENDDATE <> '12/31/9999 12:00:00 AM'`),
+                where: encodeURIComponent(`ISO_2_CODE='${action.payload}' AND ENDDATE = '12/31/9999 12:00:00 AM'`),
                 geometryPrecision: 3.0,
                 outFields: "OBJECTID,GUID,CENTER_LAT,CENTER_LON",
             };
