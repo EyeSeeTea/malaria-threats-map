@@ -3,7 +3,7 @@ on: [push]
 jobs:
   unit-tests:
     name: Unit tests
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       REACT_APP_ENV: staging
     steps:
