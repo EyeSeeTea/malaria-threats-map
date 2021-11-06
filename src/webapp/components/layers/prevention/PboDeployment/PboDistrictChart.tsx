@@ -89,7 +89,7 @@ const PboDistrictChart = ({ studies, setRegion, setCountryMode }: Props) => {
     const mostRecentMonoOxygenasesStudies: any = R.reverse(R.sortBy(R.prop("YEAR_START"), group2Studies)) || [];
     const mostRecentMonoOxygenasesStudy = mostRecentMonoOxygenasesStudies[0] || {};
     const onClick = () => {
-        console.log(studies[0].ISO2)
+        console.log(studies[0].ISO2);
 
         setRegion({ country: studies[0].ISO2 });
         setCountryMode(false);
@@ -132,7 +132,6 @@ const PboDistrictChart = ({ studies, setRegion, setCountryMode }: Props) => {
                 <FlexGrow />
                 <ZoomButton onClick={onClick} />
             </Actions>
-
         </ChartContainer>
     );
 };

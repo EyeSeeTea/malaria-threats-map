@@ -139,7 +139,7 @@ class RegionLayer extends Component<Props> {
 
     zoomToRegion = (region: string) => {
         const { countryLayer } = this.props;
-        console.log(region)
+        console.log(region);
         if (!countryLayer) return;
         const features = countryLayer.features.filter((feature: any) => {
             return (

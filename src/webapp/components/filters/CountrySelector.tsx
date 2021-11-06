@@ -24,7 +24,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 const CountrySelector = ({ region, countries = [], setRegion }: Props) => {
-    console.log(region)
+    console.log(region);
     const { t } = useTranslation();
     const onChange = (selection?: string) => {
         if (selection) sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label: selection });

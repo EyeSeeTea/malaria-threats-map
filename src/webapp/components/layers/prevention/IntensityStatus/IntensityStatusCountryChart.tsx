@@ -53,7 +53,7 @@ const IntensityStatusCountryChart = ({ studies, setRegion, setCountryMode, preve
         }
     );
     const onClick = () => {
-        console.log(studies[0].ISO2)
+        console.log(studies[0].ISO2);
         setRegion({ country: studies[0].ISO2 });
         setCountryMode(false);
     };
