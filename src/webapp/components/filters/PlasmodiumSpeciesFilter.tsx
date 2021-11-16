@@ -27,22 +27,6 @@ export const PLASMODIUM_SPECIES_SUGGESTIONS: any[] = [
         label: "P. falciparum",
         value: "P._FALCIPARUM",
     },
-    {
-        label: "P. vivax",
-        value: "P._VIVAX",
-    },
-    {
-        label: "P. knowlesi",
-        value: "P._KNOWLESI",
-    },
-    {
-        label: "P. malariae",
-        value: "P._MALARIAE",
-    },
-    {
-        label: "P. ovale",
-        value: "P._OVALE",
-    },
 ];
 
 const PlasmodiumSpeciesFilter: React.FC<Props> = ({ setPlasmodiumSpecies, treatmentFilters }) => {
@@ -56,6 +40,7 @@ const PlasmodiumSpeciesFilter: React.FC<Props> = ({ setPlasmodiumSpecies, treatm
             value={treatmentFilters.plasmodiumSpecies}
             analyticsFilterAction={"plasmodiumSpecies"}
             isClearable={false}
+            isDisabled={true}
         />
     );
 };

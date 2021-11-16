@@ -13,6 +13,7 @@ type OwnProps = {
     analyticsFilterAction?: string;
     placeholder?: string;
     isClearable?: boolean;
+    isDisabled?: boolean;
 };
 
 const mapDispatchToProps = {
@@ -31,6 +32,7 @@ function SingleFilter({
     logEventAction,
     placeholder,
     isClearable = true,
+    isDisabled = false,
 }: Props) {
     const onSelectionChange = (option: Option | undefined) => {
         const selection = option?.value || undefined;
@@ -51,6 +53,7 @@ function SingleFilter({
             <IntegrationReactSelect
                 isMulti={false}
                 isClearable={isClearable}
+                isDisabled={isDisabled}
                 placeholder={placeholder}
                 suggestions={options}
                 onChange={onSelectionChange}

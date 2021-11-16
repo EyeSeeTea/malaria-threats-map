@@ -48,10 +48,12 @@ const DrugsFilter: React.FC<Props> = ({ setDrug, treatmentFilters, studies, year
 
     const uniques = R.uniq(R.map(R.prop("DRUG_NAME"), filteredStudies)).map(value => value.replace(".", "%2E"));
 
-    const suggestions: any[] = uniques.map((drug: string) => ({
-        label: drug,
-        value: drug,
-    }));
+    const suggestions: any[] = uniques
+        .filter((drug: string) => drug !== "DRUG_AQ+SP" && drug !== "DRUG_AP")
+        .map((drug: string) => ({
+            label: drug,
+            value: drug,
+        }));
 
     return (
         <SingleFilter
