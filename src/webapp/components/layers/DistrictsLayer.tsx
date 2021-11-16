@@ -102,8 +102,8 @@ class CountrySelectorLayer extends Component<Props> {
     }
 
     buildFilters = () => {
-        const { preventionFilters } = this.props;
-        return buildPreventionFilters(preventionFilters, [1900, new Date().getFullYear()], {});
+        const { preventionFilters, filters, region } = this.props;
+        return buildPreventionFilters(preventionFilters, filters, region);
     };
 
     filterStudies = (studies: PreventionStudy[]) => {

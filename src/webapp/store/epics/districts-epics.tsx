@@ -9,14 +9,14 @@ import { of } from "rxjs";
 import { fetchDistrictsError, fetchDistrictsRequest, fetchDistrictsSuccess } from "../actions/district-actions";
 
 const DISTRICTS =
-    "https://services.arcgis.com/5T5nSi527N4F7luB/ArcGIS/rest/services/POLIO_ADMINISTRATIVE_BOUNDARIES/FeatureServer/4";
+    "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Detailed_Boundary_ADM2/FeatureServer/0";
 
 export const getDistrictsEpic = (action$: ActionsObservable<ActionType<typeof fetchDistrictsRequest>>) =>
     action$.ofType(ActionTypeEnum.FetchDistrictsRequest).pipe(
         switchMap(action => {
             const params: ApiParams = {
                 f: "geojson",
-                where: encodeURIComponent(`ISO_2_CODE='${action.payload}' AND ENDDATE <> '12/31/9999 12:00:00 AM'`),
+                where: encodeURIComponent(`ISO_2_CODE='${action.payload}' AND ENDDATE = '12/31/9999 12:00:00 AM'`),
                 geometryPrecision: 3.0,
                 outFields: "OBJECTID,GUID,CENTER_LAT,CENTER_LON",
             };

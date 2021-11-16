@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import clsx from "clsx";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -172,10 +172,29 @@ function PersistentDrawerLeft({
     setFiltersOpen,
     drawerWidth = "400px",
     setTheme,
+    setStoryMode,
     theme,
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const isOpen = filtersOpen || storyMode;
+    const prevFilterOpenRef = useRef<boolean>();
+    const prevStoryModeRef = useRef<boolean>();
+
+    useEffect(() => {
+        prevFilterOpenRef.current = filtersOpen;
+        prevStoryModeRef.current = storyMode;
+    });
+    const prevFilterOpen = prevFilterOpenRef.current;
+    const prevStoryMode = prevStoryModeRef.current;
+
+    if (filtersOpen && storyMode) {
+        if (prevFilterOpen === filtersOpen) {
+            setFiltersOpen(!filtersOpen);
+        }
+        if (prevStoryMode === storyMode) {
+            setStoryMode(!storyMode);
+        }
+    }
 
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 

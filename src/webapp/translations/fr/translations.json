@@ -174,6 +174,7 @@
                     "percentage": "Pourcentage (%)",
                     "study_years": "Années d'étude(s)",
                     "number_of_patients": "Nombre de patients",
+                    "health_facility_name": "Nom de l'établissement de santé",
                     "follow_up": "Suivi",
                     "confirmed_resist_pv": "Patients avec une résistance confirmée",
                     "positive_day_3": "Positif après le 3ème jour",
@@ -349,7 +350,7 @@
                 "p3": "Les données contenues dans ces trois bases de données mondiales ont été mises à la disposition du Programme mondial de lutte contre le paludisme de l'Organisation mondiale de la santé (OMS) par les ministères de la santé ou leurs partenaires de développement, ou par leur extraction de publications scientifiques par l'OMS ou ses partenaires. Afin de créditer leurs contributions, une colonne contenant les sources des données est incluse dans chaque ensemble de données. Veuillez noter que tous les contributeurs ne nous ont pas permis de partager leurs données. Par conséquent, certaines des données de la carte des menaces de paludisme ne peuvent pas être téléchargées. Pour les données extraites des publications, veuillez noter que lorsque les valeurs des variables pertinentes n'ont pas été directement fournies dans les publications ou ont été analysées d’une manière différente de celle recommandée par l'OMS, les valeurs ont été calculées à partir des données déclarées.",
                 "p4a": "L'utilisation de toutes les données est soumise aux ",
                 "p4bLinkText": "Conditions d'utilisation des compilations, agrégations, évaluations et analyses de données de l'OMS",
-                "p4bLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions",
+                "p4bLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions",
                 "p4c": ". En utilisant les ensembles de données ou toute présentation de données qui en dérivent, vous acceptez d'être lié par ces conditions générales et de les respecter, conditions qui pourront être modifiées de temps à autre par l'OMS à sa seule discrétion.",
                 "p5": "Veuillez reconnaître l'utilisation de ces ensembles de données en incluant la référence suivante dans vos publications: OMS, Carte des menaces de paludisme (https://www.who.int/malaria/maps/threats/), date d'accès, reconnaissance des pays ayant fourni les données sous-jacentes (dans le cas où la source se réfère aux ministères de la santé ou programmes nationaux de lutte antipaludique de pays spécifiques).",
                 "p6": "Le programmes mondial de lutte antipaludique tient à suivre et à présenter l'utilisation des bases de données mondiales. Par conséquent, nous vous poserons quelques questions sur l'utilisation prévue des données que vous souhaitez télécharger.",
@@ -357,7 +358,7 @@
                 "p7bEmail": "gmp-maps@who.int",
                 "p8a": "Cochez ici pour indiquer que vous avez lu et accepté les ",
                 "p8bLinkText": "Conditions d'utilisation des compilations, agrégations, évaluations et analyses de données de l'OMS",
-                "p8bLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions"
+                "p8bLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions"
             },
             "step1": {
                 "title": "Coordonnées personnelles",
@@ -379,7 +380,7 @@
                 },
                 "organization_name": "Nom de l'organisation",
                 "position": "Position",
-                "country": "Pays de résidence",
+                "country": "Pays de Résidence",
                 "email": "Email"
             },
             "step2": {
@@ -467,6 +468,16 @@
             "dragAndDrop": "Glissez-déposez le fichier à importer",
             "fileError": "Impossible de lire le fichier"
         },
+        "downloadFile": {
+            "title": "Télécharger le modèle",
+            "button": "Télécharger",
+            "template": "Type de modèle",
+            "template1": "Résultats du dosage biologique de l'insecticide Synergist",
+            "template2": "Résultats de l'essai biologique de concentration d'intensité",
+            "template3": "Résultats d'essais biologiques à concentration discriminante",
+            "template4": "Résultats d'essais biologiques moléculaires et biochimiques",
+            "template5": "Tests de sensibilité de l'OMS"
+        },
         "buttons": {
             "select_story_mode": "Sélectionnez le mode histoire"
         },
@@ -480,7 +491,7 @@
             "summary": "Rapport sommaire",
             "disclaimer": "Avertissement",
             "subscribe": "Souscrire",
-            "uploadFile": "Téléverser un fichier",
+            "uploadFile": "Télécharger le fichier et télécharger le modèle",
             "comments": "Envoyez vos commentaires",
             "help": "Help",
             "share": "Partager",
@@ -523,7 +534,7 @@
         "p1c": "Tous droits réservés.",
         "p2": "Sauf indication contraire, les informations contenues dans cette demande ont été mises à la disposition du Programme mondial de lutte contre le paludisme de l'Organisation mondiale de la santé (OMS) par les ministères de la Santé ou leurs partenaires de développement; ou par leur extraction de publications scientifiques par l'OMS ou ses partenaires. L'OMS ne fournit donc aucune assurance quant à la validité, l'exactitude ou l'exhaustivité de ces informations.",
         "p3a": "L'utilisation des images et des fichiers générés à partir de cette application Web est soumise aux ",
-        "p3aLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions",
+        "p3aLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions",
         "p3b": "Conditions d'utilisation des compilations, agrégations, évaluations et analyses de données de l'OMS.",
         "p4a": "La citation suivante doit être visiblement placée à côté des images ou des fichiers générés à partir de cette application:",
         "p4b": "Source: ",

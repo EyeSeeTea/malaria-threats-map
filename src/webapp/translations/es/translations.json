@@ -173,6 +173,7 @@
                     "content": "{{nStudies}} estudios de eficacia terapéutica efectuados en la eficacia {{drug}} contra {{plasmodiumSpecies}} {{years}}",
                     "percentage": "%",
                     "study_years": "Año(s) del estudio",
+                    "health_facility_name": "Nombre del centro de salud",
                     "number_of_patients": "Número de pacientes",
                     "follow_up": "Duración del seguimiento",
                     "confirmed_resist_pv": "Pacientes con resistencia confirmada",
@@ -349,7 +350,7 @@
                 "p3": "Los datos  contenidos en estas tres bases de datos globales han sido puestos a disposición del  Programa Mundial sobre Paludismo de la Organización Mundial de la Salud (OMS) por los Ministerios de Salud o sus asociados en el desarrollo, o mediante su extracción de publicaciones científicas por parte de la OMS o sus socios. Para reconocer sus contribuciones, cada conjunto de datos incluye una columna con sus fuentes. Tenga en cuenta que no todos los contribuyentes nos han permitido compartir sus datos. Por lo tanto, algunos de los datos que usted puede ver en el Mapa de los desafíos de la malaria no están disponibles para descarga. En el caso de datos extraídos de las publicaciones, tenga en cuenta que cuando las publicaciones no proporcionan directamente los valores de las variables incluidas en las bases de datos globales, o cuando estos se calculan de manera diferente a la recomendada por la OMS, los valores de las bases de datos han sido calculados por la OMS a partir de los datos disponibles.",
                 "p4a": "El uso de los datos está sujeto a los ",
                 "p4bLinkText": "Términos y condiciones de uso para compilaciones, agregaciones, evaluaciones y análisis de datos de la OMS",
-                "p4bLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions",
+                "p4bLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions",
                 "p4c": ". Al utilizar los Conjuntos de datos o cualquier representación derivada de ellos, usted acepta respetar y adherirse a estos términos y condiciones, que pueden ser modificados por la OMS de vez en cuando a su exclusivo criterio.",
                 "p5": "Usted deberá reconocer el uso de estos conjuntos de datos incluyendo la siguiente referencia en sus publicaciones: OMS, Mapa de los desafíos de la malaria (https://www.who.int/malaria/maps/threats/), fecha de acceso, reconocimiento a los países que proporcionaron los datos subyacentes (en caso de que la fuente se refiera a los ministerios de salud o programas nacionales de control de la malaria de países específicos).",
                 "p6": "El Programa Mundial sobre el Paludismo de la OMS está interesado en hacer seguimiento y de mostrar la utilidad de las bases de datos globales. Por lo tanto, a continuación le haremos algunas preguntas sobre el propósito para el cual desea descargar datos.",
@@ -357,7 +358,7 @@
                 "p7bEmail": "gmp-maps@who.int",
                 "p8a": "Marque aquí para indicar que ha leído y acepta los ",
                 "p8bLinkText": "Términos y condiciones de uso para compilaciones, agregaciones, evaluaciones y análisis de datos de la OMS",
-                "p8bLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions"
+                "p8bLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions"
             },
             "step1": {
                 "title": "Datos de contacto",
@@ -379,7 +380,7 @@
                 },
                 "organization_name": "Nombre de la Organización",
                 "position": "Position",
-                "country": "País de residencia",
+                "country": "País de Residencia",
                 "email": "Email"
             },
             "step2": {
@@ -467,6 +468,16 @@
             "dragAndDrop": "Arrastra y suelta el fichero a importar",
             "fileError": "No se puede leer el fichero"
         },
+        "downloadFile": {
+            "title": "Descargar plantilla",
+            "button": "Descargar",
+            "template": "Tipo de plantilla",
+            "template1": "Resultados de bioensayos con insecticidas sinérgicos",
+            "template2": "Resultados del bioensayo de concentración de intensidad",
+            "template3": "Resultados de bioensayos de concentración discriminativa",
+            "template4": "Resultados de bioensayos moleculares y bioquímicos",
+            "template5": "Pruebas de susceptibilidad de la OMS"
+        },
         "buttons": {
             "select_story_mode": "Seleccione el modo historia"
         },
@@ -480,7 +491,7 @@
             "summary": "Informe resumen",
             "disclaimer": "Aviso Legal",
             "subscribe": "Suscríbase",
-            "uploadFile": "Subir fichero",
+            "uploadFile": "Subir fichero y descargar plantilla",
             "comments": "Envíe sus comentarios",
             "help": "Ayuda",
             "share": "Compartir",
@@ -523,7 +534,7 @@
         "p1c": "Todos los privilegios reservados.",
         "p2": "A menos que se especifique lo contrario, la información contenida en esta aplicación Web ha sido puesta a disposición del Programa Mundial sobre Paludismo de la Organización Mundial de la Salud (OMS) por los Ministerios de Salud o sus asociados en el desarrollo, o mediante su extracción de publicaciones científicas por parte de la OMS o sus socios. Por consiguiente, la OMS no garantiza la validez, exactitud o integridad de esta información.",
         "p3a": "El uso de imágenes y archivos generados a partir de esta aplicación está sujeto a los ",
-        "p3aLink": "https://www.who.int/about/who-we-are/publishing-policies/data-policy/terms-and-conditions",
+        "p3aLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions",
         "p3b": "Términos y condiciones de uso para compilaciones, agregaciones, evaluaciones y análisis de datos de la OMS.",
         "p4a": "La siguiente cita deberá proporcionarse visiblemente junto con las imágenes o archivos generados desde la aplicación.",
         "p4b": "Fuente: ",
