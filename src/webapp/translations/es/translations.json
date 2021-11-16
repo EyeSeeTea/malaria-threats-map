@@ -173,6 +173,7 @@
                     "content": "{{nStudies}} estudios de eficacia terapéutica efectuados en la eficacia {{drug}} contra {{plasmodiumSpecies}} {{years}}",
                     "percentage": "%",
                     "study_years": "Año(s) del estudio",
+                    "health_facility_name": "Nombre del centro de salud",
                     "number_of_patients": "Número de pacientes",
                     "follow_up": "Duración del seguimiento",
                     "confirmed_resist_pv": "Pacientes con resistencia confirmada",
