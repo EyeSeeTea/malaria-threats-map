@@ -37,22 +37,27 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme }: Prop
         logOutboundLinkAction(study.CITATION_URL);
     }, [study, logOutboundLinkAction]);
 
-    const [citationLongs, setCitationLongs] = useState<string[]>([]);
+    const [citations, setCitations] = useState<string[]>([]);
     const [institutes, setInstitutes] = useState<string[]>([]);
 
     useEffect(() => {
         if (allStudiesGroup) {
-            setCitationLongs(
+            setCitations(
                 _.uniq(allStudiesGroup.filter(study => !isNull(study.CITATION_LONG)).map(study => study.CITATION_LONG))
             );
             setInstitutes(
                 _.uniq(allStudiesGroup.filter(study => !isNull(study.INSTITUTE)).map(study => study.INSTITUTE))
             );
         } else {
-            setCitationLongs(study.CITATION_LONG ? [study.CITATION_LONG] : []);
+            if (theme === "invasive") {
+                setCitations(study.CITATION ? [study.CITATION] : []);
+            } else {
+                setCitations(study.CITATION_LONG ? [study.CITATION_LONG] : []);
+            }
+
             setInstitutes(study.INSTITUTE ? [study.INSTITUTE] : []);
         }
-    }, [study, allStudiesGroup]);
+    }, [study, allStudiesGroup, theme]);
     return (
         <>
             {!isNull(study.CITATION_URL) ? (
@@ -65,8 +70,8 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme }: Prop
                         {study.INSTITUTION_CITY ? `, ${study.INSTITUTION_CITY}` : ``}
                     </Link>
                 </Typography>
-            ) : citationLongs.length > 0 && theme !== "treatment" ? (
-                <CitationDataSources dataSources={citationLongs} />
+            ) : citations.length > 0 && theme !== "treatment" ? (
+                <CitationDataSources dataSources={citations} />
             ) : institutes.length > 0 && theme !== "treatment" ? (
                 <CitationDataSources dataSources={institutes} />
             ) : !isNull(study.INSTITUTION) && theme === "treatment" ? (
