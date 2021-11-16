@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { Box, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { selectSelection, selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
-import { setCountryModeAction, setRegionAction } from "../../../../store/actions/base-actions";
+import { setCountryModeAction } from "../../../../store/actions/base-actions";
 import { Actions, FlexGrow, ChartContainer, ZoomButton } from "../../../Chart";
 import * as R from "ramda";
 import { filterByAssayTypes, filterByProxyType, filterByType } from "../../studies-filters";
@@ -17,10 +17,10 @@ import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy"
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     preventionFilters: selectPreventionFilters(state),
+    selection: selectSelection(state),
 });
 
 const mapDispatchToProps = {
-    setRegion: setRegionAction,
     setCountryMode: setCountryModeAction,
 };
 
@@ -28,6 +28,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     studies: PreventionStudy[];
+    map?: mapboxgl.Map;
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
@@ -40,7 +41,7 @@ const Margin = styled.div`
     margin-bottom: 10px;
 `;
 
-const PboDistrictChart = ({ studies, setRegion, setCountryMode }: Props) => {
+const PboDistrictChart = ({ studies, selection, setCountryMode, map }: Props) => {
     const { t } = useTranslation();
     const titleTranslation = t("common.prevention.pbo_deployment_legend");
     const nSitesTranslation = t("common.prevention.chart.pbo_deployment.num_sites_criteria");
@@ -89,10 +90,15 @@ const PboDistrictChart = ({ studies, setRegion, setCountryMode }: Props) => {
     const mostRecentMonoOxygenasesStudies: any = R.reverse(R.sortBy(R.prop("YEAR_START"), group2Studies)) || [];
     const mostRecentMonoOxygenasesStudy = mostRecentMonoOxygenasesStudies[0] || {};
     const onClick = () => {
-        console.log(studies[0].ISO2);
-
-        setRegion({ country: studies[0].ISO2 });
         setCountryMode(false);
+        if (map && selection.coordinates) {
+            map.flyTo({
+                center: selection.coordinates,
+                zoom: 7,
+                essential: true,
+                maxDuration: 5000,
+            });
+        }
     };
     return (
         <ChartContainer>
