@@ -123,7 +123,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
         POSITIVE_DAY_3,
         TREATMENT_FAILURE_KM,
         TREATMENT_FAILURE_PP,
-        HEALTHFACILITY_NAME
+        HEALTHFACILITY_NAME,
     } = sortedStudies[study];
 
     const keys = _([
