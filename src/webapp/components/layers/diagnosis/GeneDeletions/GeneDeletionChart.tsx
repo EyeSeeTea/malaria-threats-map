@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { Box, makeStyles, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import Citation from "../../../charts/Citation";
@@ -91,6 +91,21 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                         })
                     ),
                     years: formatYears(minYear, maxYear),
+                })}
+            </Typography>
+            <Typography variant="subtitle2">{studyObject.SAMPLE_ORIGIN}</Typography>
+            <Typography variant="subtitle2">
+                <Trans
+                    i18nKey="common.diagnosis.chart.gene_deletions.content_3"
+                    values={{ pfPosSamples: studyObject.PF_POS_SAMPLES }}
+                    t={t}
+                >
+                    Number of <i>P. falciparum</i> positive samples from the study population:
+                </Trans>
+            </Typography>
+            <Typography variant="subtitle2">
+                {t("common.diagnosis.chart.gene_deletions.content_4", {
+                    typeSampleAnalyzed: studyObject.TYPE_SAMPL_ANALYZED,
                 })}
             </Typography>
             <div className={classes.root}>
