@@ -16,6 +16,7 @@ import { logEventAction } from "../../store/actions/base-actions";
 import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
 import SingleFilter from "./common/SingleFilter";
 import { useTranslation } from "react-i18next";
+import { OptionType } from "../BasicSelect";
 
 const mapStateToProps = (state: State) => ({
     drugs: selectDrugs(state),
@@ -48,17 +49,19 @@ const DrugsFilter: React.FC<Props> = ({ setDrug, treatmentFilters, studies, year
 
     const uniques = R.uniq(R.map(R.prop("DRUG_NAME"), filteredStudies)).map(value => value.replace(".", "%2E"));
 
-    const suggestions: any[] = uniques
-        .filter((drug: string) => drug !== "DRUG_AQ+SP" && drug !== "DRUG_AP")
-        .map((drug: string) => ({
-            label: drug,
-            value: drug,
-        }));
+    const suggestions: OptionType[] = uniques.map((drug: string) => ({
+        label: drug,
+        value: drug,
+    }));
 
     return (
         <SingleFilter
             label={t("common.filters.drug")}
-            options={suggestions}
+            options={
+                treatmentFilters.mapType === 1
+                    ? suggestions.filter((drug: OptionType) => drug.label !== "DRUG_AQ+SP" && drug.label !== "DRUG_AP")
+                    : suggestions
+            }
             onChange={setDrug}
             value={treatmentFilters.drug}
             analyticsFilterAction={"drug"}
