@@ -69,6 +69,7 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
     const maxYear = sortedStudies2[sortedStudies2.length - 1].YEAR_END;
     const minYear = sortedStudies[0].YEAR_START;
     const studyObject = studies[0];
+    console.log(studyObject);
     const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(type => t(type));
     const formatPercentage = (value: string) => `${(parseFloat(value) * 100).toFixed(1)}%`;
     return (
@@ -93,7 +94,7 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                     years: formatYears(minYear, maxYear),
                 })}
             </Typography>
-            <Typography variant="subtitle2">{studyObject.SAMPLE_ORIGIN}</Typography>
+            <Typography variant="subtitle2">{t(studyObject.SAMPLE_ORIGIN)}</Typography>
             <Typography variant="subtitle2">
                 <Trans
                     i18nKey="common.diagnosis.chart.gene_deletions.content_3"
@@ -105,7 +106,7 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
             </Typography>
             <Typography variant="subtitle2">
                 {t("common.diagnosis.chart.gene_deletions.content_4", {
-                    typeSampleAnalyzed: studyObject.TYPE_SAMPL_ANALYZED,
+                    typeSampleAnalyzed: t(studyObject.TYPE_SAMPL_ANALYZED),
                 })}
             </Typography>
             <div className={classes.root}>
