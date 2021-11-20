@@ -50,6 +50,7 @@ function SiteSelector({
             site: selection ? selection.value : undefined,
             siteIso2: selection ? selection.iso2 : undefined,
             siteCoordinates: selection ? selection.coords : undefined,
+            country: selection ? selection.iso2 : undefined
         });
     };
     const studies: Study[] = (() => {
