@@ -21,6 +21,10 @@ const ChatContainer = styled.div`
     width: 100%;
 `;
 
+const SpacedTypography = styled(Typography)`
+    margin-bottom: 5px;
+`;
+
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     diagnosisFilters: selectDiagnosisFilters(state),
@@ -69,7 +73,6 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
     const maxYear = sortedStudies2[sortedStudies2.length - 1].YEAR_END;
     const minYear = sortedStudies[0].YEAR_START;
     const studyObject = studies[0];
-    console.log(studyObject);
     const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(type => t(type));
     const formatPercentage = (value: string) => `${(parseFloat(value) * 100).toFixed(1)}%`;
     return (
@@ -79,7 +82,7 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                     {t(studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2)}
                 </Box>
             </Typography>
-            <Typography variant="subtitle2">
+            <SpacedTypography variant="subtitle2">
                 {t("common.diagnosis.chart.gene_deletions.content_1", {
                     nStudies,
                 })}
@@ -93,22 +96,28 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                     ),
                     years: formatYears(minYear, maxYear),
                 })}
-            </Typography>
-            <Typography variant="subtitle2">{t(studyObject.SAMPLE_ORIGIN)}</Typography>
-            <Typography variant="subtitle2">
+            </SpacedTypography>
+            <SpacedTypography variant="subtitle2">{t(studyObject.SAMPLE_ORIGIN)}</SpacedTypography>
+            <SpacedTypography variant="subtitle2">
                 <Trans
                     i18nKey="common.diagnosis.chart.gene_deletions.content_3"
                     values={{ pfPosSamples: studyObject.PF_POS_SAMPLES }}
                     t={t}
                 >
-                    Number of <i>P. falciparum</i> positive samples from the study population:
+                    <strong>
+                        Number of <i>P. falciparum</i> positive samples from the study population:
+                    </strong>
                 </Trans>
-            </Typography>
-            <Typography variant="subtitle2">
-                {t("common.diagnosis.chart.gene_deletions.content_4", {
-                    typeSampleAnalyzed: t(studyObject.TYPE_SAMPL_ANALYZED),
-                })}
-            </Typography>
+            </SpacedTypography>
+            <SpacedTypography variant="subtitle2">
+                <Trans
+                    i18nKey="common.diagnosis.chart.gene_deletions.content_4"
+                    values={{ typeSampleAnalyzed: t(studyObject.TYPE_SAMPL_ANALYZED) }}
+                    t={t}
+                >
+                    <strong>Type of sample analyzed:</strong>
+                </Trans>
+            </SpacedTypography>
             <div className={classes.root}>
                 <Typography variant={"caption"}>
                     {t("common.diagnosis.chart.gene_deletions.deletions_confirmed")}
