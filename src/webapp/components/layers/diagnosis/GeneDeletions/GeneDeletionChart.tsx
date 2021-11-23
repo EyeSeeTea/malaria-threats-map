@@ -15,6 +15,7 @@ import { formatList, formatYears } from "../../../../utils/string-utils";
 import * as R from "ramda";
 import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
 import { DiagnosisStudy } from "../../../../../domain/entities/DiagnosisStudy";
+import { exists } from "../../layer-utils";
 
 const ChatContainer = styled.div`
     max-width: 500px;
@@ -97,7 +98,8 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                     years: formatYears(minYear, maxYear),
                 })}
             </SpacedTypography>
-            <SpacedTypography variant="subtitle2">{t(studyObject.SAMPLE_ORIGIN)}</SpacedTypography>
+            {exists(studyObject.SAMPLE_ORIGIN) && <SpacedTypography variant="subtitle2">{t(studyObject.SAMPLE_ORIGIN)}</SpacedTypography>}
+            {exists(studyObject.PF_POS_SAMPLES) &&
             <SpacedTypography variant="subtitle2">
                 <Trans
                     i18nKey="common.diagnosis.chart.gene_deletions.content_3"
@@ -108,16 +110,18 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                         Number of <i>P. falciparum</i> positive samples from the study population:
                     </strong>
                 </Trans>
-            </SpacedTypography>
-            <SpacedTypography variant="subtitle2">
-                <Trans
-                    i18nKey="common.diagnosis.chart.gene_deletions.content_4"
-                    values={{ typeSampleAnalyzed: t(studyObject.TYPE_SAMPL_ANALYZED) }}
-                    t={t}
-                >
-                    <strong>Type of sample analyzed:</strong>
-                </Trans>
-            </SpacedTypography>
+            </SpacedTypography>}
+            {exists(studyObject.TYPE_SAMPL_ANALYZED) &&
+                <SpacedTypography variant="subtitle2">
+                    <Trans
+                        i18nKey="common.diagnosis.chart.gene_deletions.content_4"
+                        values={{ typeSampleAnalyzed: t(studyObject.TYPE_SAMPL_ANALYZED) }}
+                        t={t}
+                    >
+                        <strong>Type of sample analyzed:</strong>
+                    </Trans>
+                </SpacedTypography>
+            }
             <div className={classes.root}>
                 <Typography variant={"caption"}>
                     {t("common.diagnosis.chart.gene_deletions.deletions_confirmed")}

@@ -17,6 +17,14 @@ export const studiesToGeoJson = (studies: Study[]) => ({
     })),
 });
 
+export const exists = (value: string) => {
+    if (!value) {
+        return false;
+    }
+    const trimmed = value.trim();
+    return trimmed !== "N/A" && trimmed !== "NA" && trimmed !== null;
+};
+
 export const getCountryStudies = (studies: any[] = [], countriesProp: CountryProperties[], layerName: string) => {
     const countryStudies = R.groupBy(
         R.path<string>(["ISO2"]),
