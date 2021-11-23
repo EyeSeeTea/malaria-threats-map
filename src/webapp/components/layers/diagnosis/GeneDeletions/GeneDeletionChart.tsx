@@ -98,20 +98,23 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                     years: formatYears(minYear, maxYear),
                 })}
             </SpacedTypography>
-            {exists(studyObject.SAMPLE_ORIGIN) && <SpacedTypography variant="subtitle2">{t(studyObject.SAMPLE_ORIGIN)}</SpacedTypography>}
-            {exists(studyObject.PF_POS_SAMPLES) &&
-            <SpacedTypography variant="subtitle2">
-                <Trans
-                    i18nKey="common.diagnosis.chart.gene_deletions.content_3"
-                    values={{ pfPosSamples: studyObject.PF_POS_SAMPLES }}
-                    t={t}
-                >
-                    <strong>
-                        Number of <i>P. falciparum</i> positive samples from the study population:
-                    </strong>
-                </Trans>
-            </SpacedTypography>}
-            {exists(studyObject.TYPE_SAMPL_ANALYZED) &&
+            {exists(studyObject.SAMPLE_ORIGIN) && (
+                <SpacedTypography variant="subtitle2">{t(studyObject.SAMPLE_ORIGIN)}</SpacedTypography>
+            )}
+            {exists(studyObject.PF_POS_SAMPLES) && (
+                <SpacedTypography variant="subtitle2">
+                    <Trans
+                        i18nKey="common.diagnosis.chart.gene_deletions.content_3"
+                        values={{ pfPosSamples: studyObject.PF_POS_SAMPLES }}
+                        t={t}
+                    >
+                        <strong>
+                            Number of <i>P. falciparum</i> positive samples from the study population:
+                        </strong>
+                    </Trans>
+                </SpacedTypography>
+            )}
+            {exists(studyObject.TYPE_SAMPL_ANALYZED) && (
                 <SpacedTypography variant="subtitle2">
                     <Trans
                         i18nKey="common.diagnosis.chart.gene_deletions.content_4"
@@ -121,7 +124,7 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                         <strong>Type of sample analyzed:</strong>
                     </Trans>
                 </SpacedTypography>
-            }
+            )}
             <div className={classes.root}>
                 <Typography variant={"caption"}>
                     {t("common.diagnosis.chart.gene_deletions.deletions_confirmed")}
