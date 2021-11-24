@@ -79,6 +79,7 @@ class RegionLayer extends Component<Props> {
             this.zoomToCountry(region.country);
             this.highlightToCountry(region.country);
             this.showLayer();
+            region.site && this.zoomToSite(region.site, region.siteIso2, region.siteCoordinates);
         } else if (region.subRegion) {
             this.zoomToSubRegion(region.subRegion);
             this.highlightToSubRegion(region.subRegion);
@@ -221,9 +222,10 @@ class RegionLayer extends Component<Props> {
                 this.props.setSelection(selection);
             }, 100);
         });
+
         this.props.map.flyTo({
             center: coordinates,
-            zoom: 20,
+            zoom: 5,
             essential: true,
             maxDuration: 5000,
         });
