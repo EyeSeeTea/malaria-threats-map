@@ -48,6 +48,7 @@ const PboDistrictChart = ({ studies, selection, setCountryMode, map }: Props) =>
     const vectorSpeciesTranslation = t("common.prevention.chart.pbo_deployment.vector_species_criteria");
     const pyrethroidYearTranslation = t("common.prevention.chart.pbo_deployment.most_recent_test_results");
     const monoOxygenaseYearTranslation = t("common.prevention.chart.pbo_deployment.most_recent_mono_oxygenase_results");
+    const viewSitesTranslation = t("common.prevention.chart.pbo_deployment.view_sites");
     const studyObject = studies[0];
 
     const studiesBySiteID = R.groupBy(R.prop("SITE_ID"), studies);
@@ -136,7 +137,7 @@ const PboDistrictChart = ({ studies, selection, setCountryMode, map }: Props) =>
             </Margin>
             <Actions>
                 <FlexGrow />
-                <ZoomButton onClick={onClick} />
+                <ZoomButton onClick={onClick} text={viewSitesTranslation} />
             </Actions>
         </ChartContainer>
     );

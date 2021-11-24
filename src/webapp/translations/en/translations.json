@@ -87,7 +87,8 @@
                     "mono_oxygenase_measured_by": "Mono-oxygenase measured by",
                     "most_recent_mono_oxygenase_results": "Most recent mono-oxygenase involvement results",
                     "yes": "Yes",
-                    "no": "No"
+                    "no": "No",
+                    "view_sites": "View sites"
                 }
             },
             "legend": {
