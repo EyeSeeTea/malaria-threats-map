@@ -22,4 +22,5 @@ export interface TreatmentStudy extends Study {
     GENOTYPE: string;
     PROP_RELATED: number;
     Code: number;
+    HEALTHFACILITY_NAME: string;
 }

@@ -87,7 +87,8 @@
                     "mono_oxygenase_measured_by": "Mono-oxygénase mesurée par",
                     "most_recent_mono_oxygenase_results": "Résultats les plus récents d'implication de la mono-oxygénase",
                     "yes": "Oui",
-                    "no": "Non"
+                    "no": "Non",
+                    "view_sites": "Voir les sites"
                 }
             },
             "legend": {
@@ -174,6 +175,7 @@
                     "percentage": "Pourcentage (%)",
                     "study_years": "Années d'étude(s)",
                     "number_of_patients": "Nombre de patients",
+                    "health_facility_name": "Nom de l'établissement de santé",
                     "follow_up": "Suivi",
                     "confirmed_resist_pv": "Patients avec une résistance confirmée",
                     "positive_day_3": "Positif après le 3ème jour",

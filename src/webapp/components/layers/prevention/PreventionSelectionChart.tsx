@@ -33,6 +33,7 @@ type DispatchProps = typeof mapDispatchToProps;
 
 type OwnProps = {
     studies: PreventionStudy[];
+    map?: mapboxgl.Map;
 };
 type Props = StateProps & DispatchProps & OwnProps;
 
@@ -44,6 +45,7 @@ class PreventionSelectionChart extends Component<Props> {
             countryMode,
             selection,
             preventionFilters: { mapType },
+            map,
         } = this.props;
 
         if (!selection) {
@@ -73,7 +75,7 @@ class PreventionSelectionChart extends Component<Props> {
                     <ResistanceMechanismCountryChart studies={filteredStudies} />
                 )}
                 {countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
-                    <PboDistrictChart studies={filteredStudies} />
+                    <PboDistrictChart studies={filteredStudies} map={map} />
                 )}
                 {!countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
                     <ResistanceStatusChart studies={filteredStudies} />

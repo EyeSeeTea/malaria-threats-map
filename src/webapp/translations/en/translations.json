@@ -87,7 +87,8 @@
                     "mono_oxygenase_measured_by": "Mono-oxygenase measured by",
                     "most_recent_mono_oxygenase_results": "Most recent mono-oxygenase involvement results",
                     "yes": "Yes",
-                    "no": "No"
+                    "no": "No",
+                    "view_sites": "View sites"
                 }
             },
             "legend": {
@@ -134,7 +135,7 @@
                     "link_content_2": " (page 37-38). These recommendations will be updated as new evidence becomes available.",
                     "countries_legend": {
                         "at_least_one_site": "At least one site meets all three WHO-recommended criteria",
-                        "insufficient_to_judge": "Reported monitoring data is insufficient to judge edibility",
+                        "insufficient_to_judge": "Reported monitoring data is insufficient to judge eligibility",
                         "no_reports_available": "No reports on monitoring WHO-recommended criteria are available",
                         "not_malaria_endemic": "Not malaria endemic",
                         "not_applicable": "Not applicable"
@@ -173,6 +174,7 @@
                     "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against {{plasmodiumSpecies}} {{years}}",
                     "percentage": "Percentage (%)",
                     "study_years": "Study year(s)",
+                    "health_facility_name": "Health facility name",
                     "number_of_patients": "Number of patients",
                     "follow_up": "Follow-up",
                     "confirmed_resist_pv": "Patients with confirmed resistance",

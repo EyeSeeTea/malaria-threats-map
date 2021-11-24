@@ -25,13 +25,13 @@ export const FlexGrow = styled.div`
     flex-grow: 1;
 `;
 
-export function ZoomButton({ onClick }: { onClick: any }) {
+export function ZoomButton({ onClick, text }: { onClick: any; text?: string }) {
     const { t } = useTranslation();
     return (
         <Wrapper>
             <Button variant="contained" color="default" size="small" onClick={onClick}>
                 <ZoomIcon />
-                {t("common.chart.zoom")}
+                {text ?? t("common.chart.zoom")}
             </Button>
         </Wrapper>
     );

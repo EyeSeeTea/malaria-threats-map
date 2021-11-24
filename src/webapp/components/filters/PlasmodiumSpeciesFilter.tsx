@@ -56,6 +56,7 @@ const PlasmodiumSpeciesFilter: React.FC<Props> = ({ setPlasmodiumSpecies, treatm
             value={treatmentFilters.plasmodiumSpecies}
             analyticsFilterAction={"plasmodiumSpecies"}
             isClearable={false}
+            isDisabled={treatmentFilters.mapType === 1}
         />
     );
 };

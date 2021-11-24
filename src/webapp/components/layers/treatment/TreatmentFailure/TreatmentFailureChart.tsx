@@ -123,6 +123,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
         POSITIVE_DAY_3,
         TREATMENT_FAILURE_KM,
         TREATMENT_FAILURE_PP,
+        HEALTHFACILITY_NAME,
     } = sortedStudies[study];
 
     const keys = _([
@@ -168,6 +169,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     const translations = {
         percentage: t("common.treatment.chart.treatment_failure.percentage"),
     };
+    const healthFacilityName = t("common.treatment.chart.treatment_failure.health_facility_name");
     const studyYears = t("common.treatment.chart.treatment_failure.study_years");
     const numberOfPatients = t("common.treatment.chart.treatment_failure.number_of_patients");
     const followUp = t("common.treatment.chart.treatment_failure.follow_up");
@@ -181,6 +183,17 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     function renderInfo() {
         return (
             <Margin>
+                {exists(HEALTHFACILITY_NAME) && HEALTHFACILITY_NAME !== "Not applicable" && (
+                    <Flex>
+                        <Typography variant="body2">
+                            <b>
+                                {healthFacilityName}
+                                :&nbsp;
+                            </b>
+                            {HEALTHFACILITY_NAME}
+                        </Typography>
+                    </Flex>
+                )}
                 <Flex>
                     <Typography variant="body2">
                         <b>

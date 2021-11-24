@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { Box, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { selectSelection, selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
-import { ChartContainer } from "../../../Chart";
+import { setCountryModeAction } from "../../../../store/actions/base-actions";
+import { Actions, FlexGrow, ChartContainer, ZoomButton } from "../../../Chart";
 import * as R from "ramda";
 import { filterByAssayTypes, filterByProxyType, filterByType } from "../../studies-filters";
 import { evaluateDeploymentStatus } from "../utils";
@@ -16,13 +17,20 @@ import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy"
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     preventionFilters: selectPreventionFilters(state),
+    selection: selectSelection(state),
 });
 
+const mapDispatchToProps = {
+    setCountryMode: setCountryModeAction,
+};
+
 type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     studies: PreventionStudy[];
+    map?: mapboxgl.Map;
 };
-type Props = StateProps & OwnProps;
+type Props = DispatchProps & StateProps & OwnProps;
 
 const Flex = styled.div`
     display: flex;
@@ -33,13 +41,14 @@ const Margin = styled.div`
     margin-bottom: 10px;
 `;
 
-const PboDistrictChart = ({ studies }: Props) => {
+const PboDistrictChart = ({ studies, selection, setCountryMode, map }: Props) => {
     const { t } = useTranslation();
     const titleTranslation = t("common.prevention.pbo_deployment_legend");
     const nSitesTranslation = t("common.prevention.chart.pbo_deployment.num_sites_criteria");
     const vectorSpeciesTranslation = t("common.prevention.chart.pbo_deployment.vector_species_criteria");
     const pyrethroidYearTranslation = t("common.prevention.chart.pbo_deployment.most_recent_test_results");
     const monoOxygenaseYearTranslation = t("common.prevention.chart.pbo_deployment.most_recent_mono_oxygenase_results");
+    const viewSitesTranslation = t("common.prevention.chart.pbo_deployment.view_sites");
     const studyObject = studies[0];
 
     const studiesBySiteID = R.groupBy(R.prop("SITE_ID"), studies);
@@ -81,7 +90,17 @@ const PboDistrictChart = ({ studies }: Props) => {
     const group2Studies = [...group2aStudies, ...group2bStudies];
     const mostRecentMonoOxygenasesStudies: any = R.reverse(R.sortBy(R.prop("YEAR_START"), group2Studies)) || [];
     const mostRecentMonoOxygenasesStudy = mostRecentMonoOxygenasesStudies[0] || {};
-
+    const onClick = () => {
+        setCountryMode(false);
+        if (map && selection.coordinates) {
+            map.flyTo({
+                center: selection.coordinates,
+                zoom: 7,
+                essential: true,
+                maxDuration: 5000,
+            });
+        }
+    };
     return (
         <ChartContainer>
             <Typography variant="subtitle1">
@@ -116,7 +135,11 @@ const PboDistrictChart = ({ studies }: Props) => {
                     </Typography>
                 </Flex>
             </Margin>
+            <Actions>
+                <FlexGrow />
+                <ZoomButton onClick={onClick} text={viewSitesTranslation} />
+            </Actions>
         </ChartContainer>
     );
 };
-export default connect(mapStateToProps)(PboDistrictChart);
+export default connect(mapStateToProps, mapDispatchToProps)(PboDistrictChart);

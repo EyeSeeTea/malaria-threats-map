@@ -74,9 +74,7 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.SetFiltersMode]: (filtersMode: string) => R.assoc("filtersMode", filtersMode || "filters"),
     [ActionTypeEnum.SetSelection]: (selection: SiteSelection) => state => {
         const propsHasChanged = () =>
-            state.selection?.ISO_2_CODE !== selection.ISO_2_CODE &&
-            state.selection?.SITE_ID !== selection.SITE_ID &&
-            state.selection?.coordinates !== selection.coordinates;
+            state.selection?.SITE_ID !== selection.SITE_ID && state.selection?.coordinates !== selection.coordinates;
 
         const newSelection =
             (state.selection === null && selection !== null) || selection == null || propsHasChanged()
