@@ -87,7 +87,8 @@
                     "mono_oxygenase_measured_by": "Mono-oxigenasa medida por",
                     "most_recent_mono_oxygenase_results": "Resultados más recientes de afectación de mono-oxigenasa",
                     "yes": "Sí",
-                    "no": "No"
+                    "no": "No",
+                    "view_sites": "Ver sitios"
                 }
             },
             "legend": {
