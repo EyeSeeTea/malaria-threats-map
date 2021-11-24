@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import _ from "lodash";
 import CitationDataSources from "./CitationDataSources";
+import { isNull, isNotNull } from "../../utils/number-utils";
 
 const mapDispatchToProps = {
     logOutboundLinkAction: logOutboundLinkAction,
@@ -26,8 +27,6 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-export const isNull = (value: string) => value === null || !value || value.trim() === "NA" || value.trim() === "NR";
-
 const valueOrUndefined = (value: string) => (isNull(value) ? undefined : value.trim());
 
 // TODO: Translations
@@ -43,10 +42,10 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme }: Prop
     useEffect(() => {
         if (allStudiesGroup) {
             setCitations(
-                _.uniq(allStudiesGroup.filter(study => !isNull(study.CITATION_LONG)).map(study => study.CITATION_LONG))
+                _.uniq(allStudiesGroup.filter(study => isNotNull(study.CITATION_LONG)).map(study => study.CITATION_LONG))
             );
             setInstitutes(
-                _.uniq(allStudiesGroup.filter(study => !isNull(study.INSTITUTE)).map(study => study.INSTITUTE))
+                _.uniq(allStudiesGroup.filter(study => isNotNull(study.INSTITUTE)).map(study => study.INSTITUTE))
             );
         } else {
             if (theme === "invasive") {
@@ -60,7 +59,7 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme }: Prop
     }, [study, allStudiesGroup, theme]);
     return (
         <>
-            {!isNull(study.CITATION_URL) ? (
+            {isNotNull(study.CITATION_URL) ? (
                 <Typography variant="caption">
                     <Link onClick={logClick} href={study.CITATION_URL} target="_blank">
                         {valueOrUndefined(study.CITATION_LONG) ||
@@ -74,7 +73,7 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme }: Prop
                 <CitationDataSources dataSources={citations} />
             ) : institutes.length > 0 && theme !== "treatment" ? (
                 <CitationDataSources dataSources={institutes} />
-            ) : !isNull(study.INSTITUTION) && theme === "treatment" ? (
+            ) : isNotNull(study.INSTITUTION) && theme === "treatment" ? (
                 <Typography variant="caption">{study.INSTITUTION}</Typography>
             ) : (
                 <Typography variant="caption">{t("common.citation.source_not_provided")}</Typography>

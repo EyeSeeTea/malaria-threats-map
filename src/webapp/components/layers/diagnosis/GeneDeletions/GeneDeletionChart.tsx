@@ -15,7 +15,7 @@ import { formatList, formatYears } from "../../../../utils/string-utils";
 import * as R from "ramda";
 import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
 import { DiagnosisStudy } from "../../../../../domain/entities/DiagnosisStudy";
-import { exists } from "../../layer-utils";
+import { isNotNull } from "../../../../utils/number-utils";
 
 const ChatContainer = styled.div`
     max-width: 500px;
@@ -98,10 +98,10 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                     years: formatYears(minYear, maxYear),
                 })}
             </SpacedTypography>
-            {exists(studyObject.SAMPLE_ORIGIN) && (
+            {isNotNull(studyObject.SAMPLE_ORIGIN) && (
                 <SpacedTypography variant="subtitle2">{t(studyObject.SAMPLE_ORIGIN)}</SpacedTypography>
             )}
-            {exists(studyObject.PF_POS_SAMPLES) && (
+            {isNotNull(studyObject.PF_POS_SAMPLES) && (
                 <SpacedTypography variant="subtitle2">
                     <Trans
                         i18nKey="common.diagnosis.chart.gene_deletions.content_3"
@@ -114,7 +114,7 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                     </Trans>
                 </SpacedTypography>
             )}
-            {exists(studyObject.TYPE_SAMPL_ANALYZED) && (
+            {isNotNull(studyObject.TYPE_SAMPL_ANALYZED) && (
                 <SpacedTypography variant="subtitle2">
                     <Trans
                         i18nKey="common.diagnosis.chart.gene_deletions.content_4"

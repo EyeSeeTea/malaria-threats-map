@@ -15,7 +15,7 @@ import { exportToCSV } from "../../DataDownload/download";
 import { getComparator, Order, percentile, stableSort } from "../utils";
 import { selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
 import { EnhancedTableProps, StyledCell, useStyles } from "../types";
-import { isNull } from "../../../utils/number-utils";
+import { isNotNull } from "../../../utils/number-utils";
 import { format } from "date-fns";
 import { sendAnalytics } from "../../../utils/analytics";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
@@ -81,7 +81,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
     };
 
     const filters = [
-        (study: TreatmentStudy) => !isNull(study.DRUG_NAME),
+        (study: TreatmentStudy) => isNotNull(study.DRUG_NAME),
         filterByMolecularMarkerStudyDimension256(),
         filterByManyPlasmodiumSpecies([plasmodiumSpecie]),
         filterByCountries(countries),
@@ -118,7 +118,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                             const fallbackProp = "TREATMENT_FAILURE_KM";
 
                             const rawValues = followUpCountrySpeciesStudies.map((study: TreatmentStudy) =>
-                                !isNull(study[defaultProp]) ? study[defaultProp] : study[fallbackProp]
+                                isNotNull(study[defaultProp]) ? study[defaultProp] : study[fallbackProp]
                             );
 
                             const values = rawValues

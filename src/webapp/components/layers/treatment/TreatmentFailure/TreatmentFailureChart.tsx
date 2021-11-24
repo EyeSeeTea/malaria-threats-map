@@ -15,6 +15,7 @@ import { formatYears, formatYears2 } from "../../../../utils/string-utils";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../filters/PlasmodiumSpeciesFilter";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import _ from "lodash";
+import { isNotNull } from "../../../../utils/number-utils";
 
 const options: (data: any, categories: any[], translations: any) => Highcharts.Options = (
     data,
@@ -134,14 +135,6 @@ const TreatmentFailureChart = ({ studies }: Props) => {
         .compact()
         .value();
 
-    const exists = (value: string) => {
-        if (!value) {
-            return false;
-        }
-        const trimmed = value.trim();
-        return trimmed !== "N/A" && trimmed !== "NA" && trimmed !== null;
-    };
-
     const series = keys.map(key => {
         return {
             name: t(`download.therapeutic_efficacy.${key.name}`),
@@ -183,7 +176,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     function renderInfo() {
         return (
             <Margin>
-                {exists(HEALTHFACILITY_NAME) && HEALTHFACILITY_NAME !== "Not applicable" && (
+                {isNotNull(HEALTHFACILITY_NAME) && HEALTHFACILITY_NAME !== "Not applicable" && (
                     <Flex>
                         <Typography variant="body2">
                             <b>
@@ -221,7 +214,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                         {FOLLOW_UP} {days}
                     </Typography>
                 </Flex>
-                {exists(CONFIRMED_RESIST_PV) && (
+                {isNotNull(CONFIRMED_RESIST_PV) && (
                     <Flex>
                         <Typography variant="body2">
                             <b>
@@ -232,7 +225,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                         </Typography>
                     </Flex>
                 )}
-                {exists(POSITIVE_DAY_3) && PLASMODIUM_SPECIES === "P._FALCIPARUM" && (
+                {isNotNull(POSITIVE_DAY_3) && PLASMODIUM_SPECIES === "P._FALCIPARUM" && (
                     <Flex>
                         <Typography variant="body2">
                             <b>
@@ -243,7 +236,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                         </Typography>
                     </Flex>
                 )}
-                {exists(TREATMENT_FAILURE_PP) && (
+                {isNotNull(TREATMENT_FAILURE_PP) && (
                     <Flex>
                         <Typography variant="body2">
                             <b>
@@ -254,7 +247,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                         </Typography>
                     </Flex>
                 )}
-                {exists(TREATMENT_FAILURE_KM) && (
+                {isNotNull(TREATMENT_FAILURE_KM) && (
                     <Flex>
                         <Typography variant="body2">
                             <b>
