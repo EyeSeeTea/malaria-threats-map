@@ -149,6 +149,8 @@
                 "gene_deletions": {
                     "content_1": "{{nStudies}} encuesta(s) ",
                     "content_2": " por {{surveyTypes}} {{years}}",
+                    "content_3": "<strong>Número de muestras positives de <i> P. falciparum </i>en la población en estudio:</strong> {{pfPosSamples}}",
+                    "content_4": "<strong>Tipo de muestra analizada:</strong> {{typeSampleAnalyzed}}",
                     "DHS": "DHS",
                     "deletions_confirmed": "Deleciones confirmadas (% de muestras)",
                     "deletion_type": "Tipo de deleción",

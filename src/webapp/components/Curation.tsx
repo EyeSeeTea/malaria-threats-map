@@ -3,6 +3,7 @@ import { Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Study } from "../../domain/entities/Study";
+import { isNotNull } from "../utils/number-utils";
 
 const Margin = styled.div`
     margin-top: 10px;
@@ -14,11 +15,9 @@ type OwnProps = {
 };
 type Props = OwnProps;
 
-const isNull = (value: string) => value === "NA" || value === null || !value;
-
 const Curation = ({ study }: Props) => {
     const { t } = useTranslation();
-    return !isNull(study.INSTITUTE_CURATION || study.CURATION) ? (
+    return isNotNull(study.INSTITUTE_CURATION || study.CURATION) ? (
         <Margin>
             <Typography variant="caption">
                 <b>{t("common.invasive.chart.vector_occurrance.data_collection")}</b>
