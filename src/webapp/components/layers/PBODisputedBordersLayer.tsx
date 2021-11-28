@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import mapboxgl from "mapbox-gl";
 import { State } from "../../store/types";
 import { selectEndemicity } from "../../store/reducers/base-reducer";
-import config from "../../config";
 
 const DISPUTED_BORDERS_ENDEMICITY_LAYER_ID = "disputed-borders-endemicity-layer";
 const DISPUTED_BORDERS_ENDEMICITY_SOURCE_ID = "disputed-borders-endemicity-source";
@@ -33,7 +32,8 @@ class DisputedBordersEndemicityLayer extends Component<Props> {
     componentDidMount(): void {
         const source: any = {
             type: "geojson",
-            data: config.boundariesBaseUrl,
+            data:
+                "https://services.arcgis.com/5T5nSi527N4F7luB/ArcGIS/rest/services/Detailed_Boundary_Disputed_Areas/FeatureServer/0/query?where=1%3D1&f=geojson&geometryPrecision=2.5",
         };
         if (this.props.map.getSource(DISPUTED_BORDERS_ENDEMICITY_SOURCE_ID)) {
             this.showLayer();
