@@ -42,7 +42,9 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme }: Prop
     useEffect(() => {
         if (allStudiesGroup) {
             setCitations(
-                _.uniq(allStudiesGroup.filter(study => isNotNull(study.CITATION_LONG)).map(study => study.CITATION_LONG))
+                _.uniq(
+                    allStudiesGroup.filter(study => isNotNull(study.CITATION_LONG)).map(study => study.CITATION_LONG)
+                )
             );
             setInstitutes(
                 _.uniq(allStudiesGroup.filter(study => isNotNull(study.INSTITUTE)).map(study => study.INSTITUTE))
@@ -57,6 +59,7 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme }: Prop
             setInstitutes(study.INSTITUTE ? [study.INSTITUTE] : []);
         }
     }, [study, allStudiesGroup, theme]);
+
     return (
         <>
             {isNotNull(study.CITATION_URL) ? (
@@ -69,6 +72,8 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme }: Prop
                         {study.INSTITUTION_CITY ? `, ${study.INSTITUTION_CITY}` : ``}
                     </Link>
                 </Typography>
+            ) : citations.length === 1 && theme === "invasive" ? (
+                <Typography variant="caption">{citations[0]}</Typography>
             ) : citations.length > 0 && theme !== "treatment" ? (
                 <CitationDataSources dataSources={citations} />
             ) : institutes.length > 0 && theme !== "treatment" ? (
