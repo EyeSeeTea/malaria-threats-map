@@ -108,21 +108,15 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                         values={{ pfPosSamples: studyObject.PF_POS_SAMPLES }}
                         t={t}
                     >
-                        <strong>
-                            Number of <i>P. falciparum</i> positive samples from the study population:
-                        </strong>
+                        Number of <i>P. falciparum</i> positive samples from the study population:
                     </Trans>
                 </SpacedTypography>
             )}
             {isNotNull(studyObject.TYPE_SAMPL_ANALYZED) && (
                 <SpacedTypography variant="subtitle2">
-                    <Trans
-                        i18nKey="common.diagnosis.chart.gene_deletions.content_4"
-                        values={{ typeSampleAnalyzed: t(studyObject.TYPE_SAMPL_ANALYZED) }}
-                        t={t}
-                    >
-                        <strong>Type of sample analyzed:</strong>
-                    </Trans>
+                    {t("common.diagnosis.chart.gene_deletions.content_4", {
+                        typeSampleAnalyzed: t(studyObject.TYPE_SAMPL_ANALYZED),
+                    })}
                 </SpacedTypography>
             )}
             <div className={classes.root}>
