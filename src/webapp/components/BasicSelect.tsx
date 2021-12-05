@@ -142,7 +142,7 @@ function Option(props: OptionProps<OptionType, false>) {
                 fontWeight: props.isSelected ? 800 : 400,
             }}
             {...props.innerProps}
-            title={value}
+            title={t(value)}
         >
             <Typography variant="inherit" noWrap>
                 {value}
