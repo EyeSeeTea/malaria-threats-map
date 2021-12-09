@@ -42,10 +42,10 @@ interface OwnProps {
 }
 
 const MEKONG_BOUNDS: [number, number, number, number] = [
-    71.67568318434894,
-    -10.1059286413618565,
-    129.04037704012393,
-    38.602914952002706,
+    65.39066990951679,
+    -1.6114593755411022,
+    146.6850042235456,
+    45.83706104249836,
 ];
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -147,6 +147,7 @@ class RegionLayer extends Component<Props> {
                 feature.properties.REGION_FULL === region.replace(/_/g, " ")
             );
         });
+
         if (!features.length) return;
         const coordinates: any[] = features.reduce((acc: any[], feature: any) => {
             const featureCoords = R.chain((coords: any) => {
@@ -154,18 +155,19 @@ class RegionLayer extends Component<Props> {
             }, feature.geometry.coordinates);
             return [...acc, ...featureCoords];
         }, []);
+
         const manualBounds: Record<string, mapboxgl.LngLatBounds> = {
             EUROPE: new mapboxgl.LngLatBounds(
                 { lng: 221.51049804341602, lat: 83.14945739166231 },
                 { lng: -39.31141982332926, lat: 13.554006098541365 }
             ),
             AMERICAS: new mapboxgl.LngLatBounds(
-                { lng: -260.0143172089143, lat: -56.429333951972694 },
-                { lng: 98.93099529108389, lat: 79.08317851451514 }
+                { lng: -153.98461604374486, lat: -56.52632713139387 },
+                { lng: 2.3584705053495725, lat: 31.8801890706726 }
             ),
             WESTERN_PACIFIC: new mapboxgl.LngLatBounds(
-                { lng: 9.3559975411074, lat: -52.03107494123482 },
-                { lng: 267.81714939966497, lat: 64.51701020570798 }
+                { lng: 83.4316294942189, lat: -17.017362810518364 },
+                { lng: 189.60236725036026, lat: 46.287698110511286 }
             ),
         };
         const bounds =
@@ -175,16 +177,14 @@ class RegionLayer extends Component<Props> {
                       return bounds.extend(coord);
                   }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
         this.props.map.fitBounds(bounds, {
-            padding: 100,
+            padding: region === "AMERICAS" || region === "WESTERN_PACIFIC" ? 0 : 100,
         });
     };
 
     zoomToSubRegion = (subRegion: string) => {
         const { countryLayer } = this.props;
         if (subRegion === "GREATER_MEKONG") {
-            this.props.map.fitBounds(MEKONG_BOUNDS, {
-                padding: 100,
-            });
+            this.props.map.fitBounds(MEKONG_BOUNDS);
             return;
         }
         if (!countryLayer) return;
