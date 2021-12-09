@@ -134,9 +134,9 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
                             return {
                                 ID: `${country}_${drug}`,
-                                COUNTRY: t(`common.${country}`),
+                                COUNTRY: t(`countries.${country}`),
                                 ISO2: country,
-                                DRUG: t(`common.${drug}`),
+                                DRUG: t(drug),
                                 COUNTRY_NUMBER: nStudies,
                                 FOLLOW_UP: followUpDays,
                                 STUDY_YEARS: `${minYear} - ${maxYear}`,
