@@ -169,7 +169,8 @@
         },
         "treatment": {
             "treatment_failure": "Treatment failure",
-            "delayed_parasite_clearance": "Delayed parasite clearance",
+            "delayed_parasite_clearance": "Delayed parasite clearance (P.f)",
+            "delayed_parasite_clearance_italics": "Delayed parasite clearance (<i>P.f </i>)",
             "molecular_markers": "Molecular markers of drug resistance",
             "chart": {
                 "treatment_failure": {

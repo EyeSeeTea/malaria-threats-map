@@ -9,7 +9,7 @@ import {
 } from "../../../Leyend";
 import { DELAYED_PARASITE_CLEARANCE_STATUS } from "./utils";
 import { DelayedParasiteClearanceColors } from "./delayedParasiteClearanceSymbols";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import T from "../../../../translations/T";
 import { connect } from "react-redux";
 import { State } from "../../../../store/types";
@@ -55,7 +55,9 @@ function DelayedParasiteClearanceLeyend({ treatmentFilters }: Props) {
         <LegendContainer>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
-                    {t("common.treatment.delayed_parasite_clearance")}
+                    <Trans i18nKey="common.treatment.delayed_parasite_clearance_italics" t={t}>
+                        Delayed parasite clearance (<i>P.f</i>)
+                    </Trans>
                 </LegendTitleTypography>
                 <LegendSubtitleTypography>{show && <T i18nKey={treatmentFilters.drug}></T>}</LegendSubtitleTypography>
             </LegendTitleContainer>
