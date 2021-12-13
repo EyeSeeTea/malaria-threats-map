@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import _ from "lodash";
 import CitationDataSources from "./CitationDataSources";
+import { isNull, isNotNull } from "../../utils/number-utils";
 
 const mapDispatchToProps = {
     logOutboundLinkAction: logOutboundLinkAction,
@@ -26,8 +27,6 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-export const isNull = (value: string) => value === null || !value || value.trim() === "NA" || value.trim() === "NR";
-
 const valueOrUndefined = (value: string) => (isNull(value) ? undefined : value.trim());
 
 // TODO: Translations
@@ -37,25 +36,33 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme }: Prop
         logOutboundLinkAction(study.CITATION_URL);
     }, [study, logOutboundLinkAction]);
 
-    const [citationLongs, setCitationLongs] = useState<string[]>([]);
+    const [citations, setCitations] = useState<string[]>([]);
     const [institutes, setInstitutes] = useState<string[]>([]);
 
     useEffect(() => {
         if (allStudiesGroup) {
-            setCitationLongs(
-                _.uniq(allStudiesGroup.filter(study => !isNull(study.CITATION_LONG)).map(study => study.CITATION_LONG))
+            setCitations(
+                _.uniq(
+                    allStudiesGroup.filter(study => isNotNull(study.CITATION_LONG)).map(study => study.CITATION_LONG)
+                )
             );
             setInstitutes(
-                _.uniq(allStudiesGroup.filter(study => !isNull(study.INSTITUTE)).map(study => study.INSTITUTE))
+                _.uniq(allStudiesGroup.filter(study => isNotNull(study.INSTITUTE)).map(study => study.INSTITUTE))
             );
         } else {
-            setCitationLongs([study.CITATION_LONG]);
-            setInstitutes([study.INSTITUTE]);
+            if (theme === "invasive") {
+                setCitations(study.CITATION ? [study.CITATION] : []);
+            } else {
+                setCitations(study.CITATION_LONG ? [study.CITATION_LONG] : []);
+            }
+
+            setInstitutes(study.INSTITUTE ? [study.INSTITUTE] : []);
         }
-    }, [study, allStudiesGroup]);
+    }, [study, allStudiesGroup, theme]);
+
     return (
         <>
-            {!isNull(study.CITATION_URL) ? (
+            {isNotNull(study.CITATION_URL) ? (
                 <Typography variant="caption">
                     <Link onClick={logClick} href={study.CITATION_URL} target="_blank">
                         {valueOrUndefined(study.CITATION_LONG) ||
@@ -65,11 +72,13 @@ const Citation = ({ study, logOutboundLinkAction, allStudiesGroup, theme }: Prop
                         {study.INSTITUTION_CITY ? `, ${study.INSTITUTION_CITY}` : ``}
                     </Link>
                 </Typography>
-            ) : citationLongs.length > 0 && theme !== "treatment" ? (
-                <CitationDataSources dataSources={citationLongs} />
+            ) : citations.length === 1 && theme === "invasive" ? (
+                <Typography variant="caption">{citations[0]}</Typography>
+            ) : citations.length > 0 && theme !== "treatment" ? (
+                <CitationDataSources dataSources={citations} />
             ) : institutes.length > 0 && theme !== "treatment" ? (
                 <CitationDataSources dataSources={institutes} />
-            ) : !isNull(study.INSTITUTION) && theme === "treatment" ? (
+            ) : isNotNull(study.INSTITUTION) && theme === "treatment" ? (
                 <Typography variant="caption">{study.INSTITUTION}</Typography>
             ) : (
                 <Typography variant="caption">{t("common.citation.source_not_provided")}</Typography>

@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { Box, makeStyles, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import Citation from "../../../charts/Citation";
@@ -15,10 +15,15 @@ import { formatList, formatYears } from "../../../../utils/string-utils";
 import * as R from "ramda";
 import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
 import { DiagnosisStudy } from "../../../../../domain/entities/DiagnosisStudy";
+import { isNotNull } from "../../../../utils/number-utils";
 
 const ChatContainer = styled.div`
     max-width: 500px;
     width: 100%;
+`;
+
+const SpacedTypography = styled(Typography)`
+    margin-bottom: 5px;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -74,9 +79,11 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
     return (
         <ChatContainer>
             <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{t(studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2)}</Box>
+                <Box fontWeight="fontWeightBold">
+                    {t(studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2)}
+                </Box>
             </Typography>
-            <Typography variant="subtitle2">
+            <SpacedTypography variant="subtitle2">
                 {t("common.diagnosis.chart.gene_deletions.content_1", {
                     nStudies,
                 })}
@@ -90,7 +97,28 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                     ),
                     years: formatYears(minYear, maxYear),
                 })}
-            </Typography>
+            </SpacedTypography>
+            {isNotNull(studyObject.SAMPLE_ORIGIN) && (
+                <SpacedTypography variant="subtitle2">{t(studyObject.SAMPLE_ORIGIN)}</SpacedTypography>
+            )}
+            {isNotNull(studyObject.PF_POS_SAMPLES) && (
+                <SpacedTypography variant="subtitle2">
+                    <Trans
+                        i18nKey="common.diagnosis.chart.gene_deletions.content_3"
+                        values={{ pfPosSamples: studyObject.PF_POS_SAMPLES }}
+                        t={t}
+                    >
+                        Number of <i>P. falciparum</i> positive samples from the study population:
+                    </Trans>
+                </SpacedTypography>
+            )}
+            {isNotNull(studyObject.TYPE_SAMPL_ANALYZED) && (
+                <SpacedTypography variant="subtitle2">
+                    {t("common.diagnosis.chart.gene_deletions.content_4", {
+                        typeSampleAnalyzed: t(studyObject.TYPE_SAMPL_ANALYZED),
+                    })}
+                </SpacedTypography>
+            )}
             <div className={classes.root}>
                 <Typography variant={"caption"}>
                     {t("common.diagnosis.chart.gene_deletions.deletions_confirmed")}

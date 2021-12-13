@@ -32,6 +32,14 @@ export const setMolecularMarker = createAction(ActionTypeEnum.SetMolecularMarker
     return (molecularMarker: number) => action(molecularMarker);
 });
 
+export const setExcludeLowerPatients = createAction(ActionTypeEnum.SetExcludeLowerPatients, action => {
+    return (value: boolean) => action(value);
+});
+
+export const setExcludeLowerSamples = createAction(ActionTypeEnum.SetExcludeLowerSamples, action => {
+    return (value: boolean) => action(value);
+});
+
 export const setFilteredStudiesAction = createAction(ActionTypeEnum.SetTreatmentFilteredStudies, action => {
     return (filteredStudies: TreatmentStudy[]) => action(filteredStudies);
 });

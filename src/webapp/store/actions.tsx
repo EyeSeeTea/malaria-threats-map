@@ -66,6 +66,8 @@ export enum ActionTypeEnum {
     SetDrug = "treatment/SET_TREATMENT_DRUG",
     SetMolecularMarker = "treatment/SET_MOLECULAR_MARKER",
     SetTreatmentFilteredStudies = "treatment/SET_FILTER_STUDIES",
+    SetExcludeLowerPatients = "treatment/SET_EXCLUDE_LOWER_PATIENTS",
+    SetExcludeLowerSamples = "treatment/SET_EXCLUDE_LOWER_SAMPLES",
 
     FetchInvasiveStudiesRequest = "invasive/FETCH_INVASIVE_STUDIES_REQUEST",
     FetchInvasiveStudiesSuccess = "invasive/FETCH_INVASIVE_STUDIES_SUCCESS",

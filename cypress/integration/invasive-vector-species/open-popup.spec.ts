@@ -8,7 +8,7 @@ describe("Open popup", () => {
     it("should open a popup to click on coordinates", () => {
         cy.openSitePopup("Kanasar & Khetusar");
 
-        cy.findByText("An. stephensi s.l.");
+        cy.findByText("An. stephensi");
         cy.findAllByText("Kanasar & Khetusar");
         cy.findByText("1994");
         cy.findByText("NR");

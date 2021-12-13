@@ -16,6 +16,8 @@ import * as R from "ramda";
 import {
     filterByDimensionId,
     filterByDrug,
+    filterByExcludeLowerPatients,
+    filterByExcludeLowerSamples,
     filterByMolecularMarker,
     filterByMolecularMarkerStudy,
     filterByPlasmodiumSpecies,
@@ -83,7 +85,14 @@ class TreatmentLayer extends Component<Props> {
         this.loadStudiesIfRequired();
 
         const {
-            treatmentFilters: { mapType, plasmodiumSpecies, drug, molecularMarker },
+            treatmentFilters: {
+                mapType,
+                plasmodiumSpecies,
+                drug,
+                molecularMarker,
+                excludeLowerPatients,
+                excludeLowerSamples,
+            },
             countryMode,
             filters,
             region,
@@ -99,6 +108,8 @@ class TreatmentLayer extends Component<Props> {
         const molecularMarkerChange = prevProps.treatmentFilters.molecularMarker !== molecularMarker;
         const countryModeChange = prevProps.countryMode !== countryMode;
         const countriesChange = prevProps.countries.length !== countries.length;
+        const excludeLowerPatientsChange = prevProps.treatmentFilters.excludeLowerPatients !== excludeLowerPatients;
+        const excludeLowerSamplesChange = prevProps.treatmentFilters.excludeLowerSamples !== excludeLowerSamples;
         if (
             mapTypeChange ||
             yearChange ||
@@ -107,7 +118,9 @@ class TreatmentLayer extends Component<Props> {
             countriesChange ||
             plasmodiumSpeciesChange ||
             drugChange ||
-            molecularMarkerChange
+            molecularMarkerChange ||
+            excludeLowerPatientsChange ||
+            excludeLowerSamplesChange
         ) {
             if (this.popup) {
                 this.popup.remove();
@@ -149,6 +162,7 @@ class TreatmentLayer extends Component<Props> {
                     filterByDrug(treatmentFilters.drug),
                     filterByYearRange(filters),
                     filterByRegion(region),
+                    filterByExcludeLowerPatients(treatmentFilters.excludeLowerPatients),
                 ];
             case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
                 return [
@@ -157,6 +171,7 @@ class TreatmentLayer extends Component<Props> {
                     filterByDrug(treatmentFilters.drug),
                     filterByYearRange(filters),
                     filterByRegion(region),
+                    filterByExcludeLowerPatients(treatmentFilters.excludeLowerPatients),
                 ];
             case TreatmentMapType.MOLECULAR_MARKERS:
                 return [
@@ -164,6 +179,7 @@ class TreatmentLayer extends Component<Props> {
                     filterByMolecularMarker(treatmentFilters.molecularMarker),
                     filterByYearRange(filters),
                     filterByRegion(region),
+                    filterByExcludeLowerSamples(treatmentFilters.excludeLowerSamples),
                 ];
             default:
                 return [];

@@ -10,7 +10,8 @@ import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import { ConfirmationStatusColors } from "./symbols";
 import * as R from "ramda";
-import Citation, { isNull } from "../../../charts/Citation";
+import { isNull, isNotNull } from "../../../../utils/number-utils";
+import Citation from "../../../charts/Citation";
 import Pagination from "../../../charts/Pagination";
 import Curation from "../../../Curation";
 import IntegrationReactSelect from "../../../BasicSelect";
@@ -193,7 +194,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         type: t("common.prevention.chart.resistance_status.type"),
     };
 
-    const subtitle = !isNull(studyObject.CITATION_URL)
+    const subtitle = isNotNull(studyObject.CITATION_URL)
         ? `${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`
         : t(studyObject.ASSAY_TYPE);
 
@@ -202,7 +203,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
             {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-                    `${studyObject.ISO2 === "NA" ? "COUNTRY_NA" : studyObject.ISO2}`
+                    `${studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2}`
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">{subtitle}</Typography>

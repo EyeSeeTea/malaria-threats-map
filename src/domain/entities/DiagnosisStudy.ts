@@ -11,4 +11,7 @@ export interface DiagnosisStudy extends Study {
     PATIENT_TYPE: string;
     SURVEY_TYPE: string;
     Code: string;
+    SAMPLE_ORIGIN: string;
+    PF_POS_SAMPLES: string;
+    TYPE_SAMPL_ANALYZED: string;
 }

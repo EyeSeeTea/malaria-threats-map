@@ -15,6 +15,8 @@ const initialState: TreatmentState = Object.freeze({
         plasmodiumSpecies: "P._FALCIPARUM",
         drug: "DRUG_AL",
         molecularMarker: 1,
+        excludeLowerPatients: false,
+        excludeLowerSamples: false,
     },
 });
 
@@ -46,6 +48,14 @@ function updateMolecularMarker(molecularMarker: number) {
     return updateFilter("molecularMarker", molecularMarker, 1);
 }
 
+function updateExcludeLowerPatients(value: boolean) {
+    return updateFilter("excludeLowerPatients", value, false);
+}
+
+function updateExcludeLowerSamples(value: boolean) {
+    return updateFilter("excludeLowerSamples", value, false);
+}
+
 export default createReducer<TreatmentState>(initialState, {
     [ActionTypeEnum.FetchTreatmentStudiesRequest]: () => state => ({
         ...state,
@@ -65,6 +75,8 @@ export default createReducer<TreatmentState>(initialState, {
     [ActionTypeEnum.SetPlasmodiumSpecies]: updatePlasmodiumSpecies,
     [ActionTypeEnum.SetDrug]: updateDrug,
     [ActionTypeEnum.SetMolecularMarker]: updateMolecularMarker,
+    [ActionTypeEnum.SetExcludeLowerPatients]: updateExcludeLowerPatients,
+    [ActionTypeEnum.SetExcludeLowerSamples]: updateExcludeLowerSamples,
     [ActionTypeEnum.SetTreatmentFilteredStudies]: (filteredStudies: TreatmentStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
 });

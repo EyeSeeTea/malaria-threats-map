@@ -1,7 +1,22 @@
 import React, { useEffect } from "react";
 import Dialog from "@material-ui/core/Dialog";
-import { Button, createStyles, Fab, FormControl, makeStyles, TextField, Theme } from "@material-ui/core";
+import {
+    Button,
+    TextField,
+    InputLabel,
+    MenuItem,
+    Select,
+    createStyles,
+    Fab,
+    FormControl,
+    makeStyles,
+    Theme,
+    Tab,
+    Tabs,
+    Box,
+} from "@material-ui/core";
 import UploadIcon from "@material-ui/icons/CloudUpload";
+import DownloadIcon from "@material-ui/icons/CloudDownload";
 import DoneIcon from "@material-ui/icons/CloudDone";
 import Typography from "@material-ui/core/Typography";
 import { State } from "../store/types";
@@ -13,6 +28,8 @@ import { sendAnalytics } from "../utils/analytics";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import { isNotNull } from "../utils/number-utils";
 import Dropzone, { DropzoneState } from "react-dropzone";
+import { FullCountry } from "./DataDownload/filters/FullCountriesSelector";
+import { ORGANIZATION_TYPES } from "./DataDownload/UserForm";
 
 const mapStateToProps = (state: State) => ({
     uploadFileOpen: selectUploadFileOpen(state),
@@ -28,6 +45,39 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
+interface TabPanelProps {
+    children?: React.ReactNode;
+    index: number;
+    value: number;
+}
+
+const TabPanel = (props: TabPanelProps) => {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Typography
+                    component="div"
+                    role="tabpanel"
+                    hidden={value !== index}
+                    id={`scrollable-auto-tabpanel-${index}`}
+                    aria-labelledby={`scrollable-auto-tab-${index}`}
+                    {...other}
+                >
+                    <Box p={3}>{children}</Box>
+                </Typography>
+            )}
+        </div>
+    );
+};
+
 const UploadFile: React.FC<Props> = ({
     uploadFileOpen,
     setUploadFileOpen,
@@ -42,13 +92,58 @@ const UploadFile: React.FC<Props> = ({
     const [file, setFile] = React.useState<File>();
     const [valid, setValid] = React.useState<boolean>(false);
 
+    const [country, setCountry] = React.useState<string>("");
+    const [newOrganizationType, setNewOrganizationType] = React.useState<string>("");
+    const [templateType, setTemplateType] = React.useState<string>("");
+
+    const [value, setValue] = React.useState<any>(0);
+
+    const organizationTypes = ORGANIZATION_TYPES.map(ot => t(ot)).sort();
+    const countries: FullCountry = t("countries", { returnObjects: true });
+
+    const TEMPLATE_TYPES: { [key: string]: string } = {
+        "common.downloadFile.template1":
+            "https://cdn.who.int/media/docs/default-source/malaria/vector-control/who-standard-form-for-reporting-synergist-insecticide-bioassay-results.xlsx?sfvrsn=30ed3b0d_2",
+        "common.downloadFile.template2":
+            "https://cdn.who.int/media/docs/default-source/malaria/vector-control/who-standard-form-for-reporting-intensity-concentration-bioassay-results.xlsx?sfvrsn=b82e9f35_2",
+        "common.downloadFile.template3":
+            "https://cdn.who.int/media/docs/default-source/malaria/vector-control/who-standard-form-for-reporting-discriminating-concentration-bioassay-results.xlsx?sfvrsn=7273f2bb_2",
+        "common.downloadFile.template4":
+            "https://cdn.who.int/media/docs/default-source/malaria/vector-control/who-standard-form-for-reporting-molecular-and-biochemical-bioassay-results.xlsx?sfvrsn=b302dd0_4",
+        "common.downloadFile.template5":
+            "https://web-prod.who.int/docs/default-source/documents/publications/gmp/who-test-kit-catalogue-and-requisition-form-may2013.pdf",
+    };
+
+    const handleOrganizationTypeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        const newOrganizationType = event.target.value as string;
+        setNewOrganizationType(newOrganizationType);
+    };
+
+    const handleCountryChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        const newCountry = event.target.value as string;
+        setCountry(newCountry);
+    };
+
+    const handleTabChange = (event: React.ChangeEvent<{}>, newValue: any) => {
+        setValue(newValue);
+    };
+
     useEffect(() => {
-        setValid(isNotNull(name) && isNotNull(comment) && file !== undefined);
-    }, [name, file, comment]);
+        setValid(
+            isNotNull(name) &&
+                isNotNull(comment) &&
+                isNotNull(country) &&
+                isNotNull(newOrganizationType) &&
+                file !== undefined
+        );
+    }, [name, file, comment, country, newOrganizationType]);
 
     useEffect(() => {
         setName("");
         setComment("");
+        setCountry("");
+        setNewOrganizationType("");
+        setTemplateType("");
         setFile(undefined);
     }, [uploadFileOpen]);
 
@@ -73,7 +168,7 @@ const UploadFile: React.FC<Props> = ({
     };
 
     const submit = () => {
-        uploadFile({ title: name, comment, file });
+        uploadFile({ title: name, comment, country, organizationType: newOrganizationType, file });
         sendAnalytics({ type: "event", category: "menu", action: "upload file", label: "submit" });
     };
 
@@ -91,91 +186,158 @@ const UploadFile: React.FC<Props> = ({
             </Fab>
             <Dialog
                 fullWidth
-                maxWidth={"xs"}
+                maxWidth={"sm"}
                 open={uploadFileOpen}
                 onClose={handleClose}
                 PaperProps={{
                     className: classes.paper,
                 }}
             >
-                <form id="ic_uploadfileForm">
-                    <div>
-                        <Typography variant={"h5"}>{t("common.uploadFile.title")}</Typography>
-                    </div>
-                    <div>
-                        <FormControl fullWidth margin={"dense"}>
-                            <TextField
-                                fullWidth
-                                label={t("common.uploadFile.name")}
-                                type={t("common.uploadFile.name")}
-                                placeholder={t("common.uploadFile.name")}
-                                name="name"
-                                required
-                                value={name}
-                                onChange={event => setName(event.target.value as string)}
-                            />
-                        </FormControl>
-                        <FormControl fullWidth margin={"dense"}>
-                            <TextField
-                                fullWidth
-                                label={t("common.uploadFile.comment")}
-                                type={t("common.uploadFile.comment")}
-                                placeholder={t("common.uploadFile.comment")}
-                                name="comment"
-                                required
-                                value={comment}
-                                onChange={event => setComment(event.target.value as string)}
-                            />
-                        </FormControl>
-                        <FormControl fullWidth margin={"dense"}>
-                            <Dropzone
-                                accept={[
-                                    "application/vnd.ms-excel",
-                                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                ]}
-                                onDrop={handleUploadFile}
-                                multiple={false}
-                            >
-                                {({ getRootProps, getInputProps }: DropzoneState) => (
-                                    <section>
-                                        <div
-                                            {...getRootProps({
-                                                className: classes.dropzone,
-                                            })}
-                                        >
-                                            <input {...getInputProps()} />
-                                            <div className={classes.dropzoneTextStyle} hidden={file !== undefined}>
-                                                <p className={classes.dropzoneParagraph}>
-                                                    {t("common.uploadFile.dragAndDrop")}
-                                                </p>
-                                                <br />
-                                                <UploadIcon className={classes.uploadIcon} />
+                <Tabs value={value} onChange={handleTabChange} variant="fullWidth">
+                    <Tab value={0} icon={<UploadIcon />} />
+                    <Tab value={1} icon={<DownloadIcon />} />
+                </Tabs>
+
+                <TabPanel value={value} index={0}>
+                    <form id="ic_uploadfileForm">
+                        <div>
+                            <Typography variant={"h5"}>{t("common.uploadFile.title")}</Typography>
+                        </div>
+                        <div>
+                            <FormControl fullWidth margin={"dense"}>
+                                <TextField
+                                    fullWidth
+                                    label={t("common.uploadFile.name")}
+                                    type={t("common.uploadFile.name")}
+                                    placeholder={t("common.uploadFile.name")}
+                                    name="name"
+                                    required
+                                    value={name}
+                                    onChange={event => setName(event.target.value as string)}
+                                />
+                            </FormControl>
+                            <FormControl fullWidth margin={"dense"}>
+                                <TextField
+                                    fullWidth
+                                    label={t("common.uploadFile.comment")}
+                                    type={t("common.uploadFile.comment")}
+                                    placeholder={t("common.uploadFile.comment")}
+                                    name="comment"
+                                    required
+                                    value={comment}
+                                    onChange={event => setComment(event.target.value as string)}
+                                />
+                            </FormControl>
+                            {countries && (
+                                <FormControl fullWidth className={classes.formControl}>
+                                    <InputLabel>{t("common.data_download.step1.country") + "*"}</InputLabel>
+                                    <Select fullWidth value={country} onChange={handleCountryChange}>
+                                        {Object.entries(countries).map(([iso, name]) => (
+                                            <MenuItem key={iso} value={iso}>
+                                                {name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            )}
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel>{t("common.data_download.step1.organization_type") + "*"}</InputLabel>
+                                <Select fullWidth value={newOrganizationType} onChange={handleOrganizationTypeChange}>
+                                    {organizationTypes.map(type => (
+                                        <MenuItem key={type} value={type}>
+                                            {type}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl fullWidth margin={"dense"}>
+                                <Dropzone
+                                    accept={[
+                                        "application/vnd.ms-excel",
+                                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                    ]}
+                                    onDrop={handleUploadFile}
+                                    multiple={false}
+                                >
+                                    {({ getRootProps, getInputProps }: DropzoneState) => (
+                                        <section>
+                                            <div
+                                                {...getRootProps({
+                                                    className: classes.dropzone,
+                                                })}
+                                            >
+                                                <input {...getInputProps()} />
+                                                <div className={classes.dropzoneTextStyle} hidden={file !== undefined}>
+                                                    <p className={classes.dropzoneParagraph}>
+                                                        {t("common.uploadFile.dragAndDrop")}
+                                                    </p>
+                                                    <br />
+                                                    <UploadIcon className={classes.uploadIcon} />
+                                                </div>
+                                                <div className={classes.dropzoneTextStyle} hidden={file === undefined}>
+                                                    {file !== undefined && (
+                                                        <p className={classes.dropzoneParagraph}>{file.name}</p>
+                                                    )}
+                                                    <br />
+                                                    <DoneIcon className={classes.uploadIcon} />
+                                                </div>
                                             </div>
-                                            <div className={classes.dropzoneTextStyle} hidden={file === undefined}>
-                                                {file !== undefined && (
-                                                    <p className={classes.dropzoneParagraph}>{file.name}</p>
-                                                )}
-                                                <br />
-                                                <DoneIcon className={classes.uploadIcon} />
-                                            </div>
-                                        </div>
-                                    </section>
-                                )}
-                            </Dropzone>
-                        </FormControl>
-                        <FormControl fullWidth margin={"normal"}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                type="button"
-                                disabled={isUploadingFile || !valid}
-                                onClick={() => submit()}
-                            >
-                                {t("common.uploadFile.button")}
-                            </Button>
-                        </FormControl>
-                    </div>
-                </form>
+                                        </section>
+                                    )}
+                                </Dropzone>
+                            </FormControl>
+                            <FormControl fullWidth margin={"normal"}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    type="button"
+                                    disabled={isUploadingFile || !valid}
+                                    onClick={() => submit()}
+                                >
+                                    {t("common.uploadFile.button")}
+                                </Button>
+                            </FormControl>
+                        </div>
+                    </form>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <form id="ic_downloadTemplateForm">
+                        <div>
+                            <Typography variant={"h5"}>{t("common.downloadFile.title")}</Typography>
+                        </div>
+                        <div>
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel>{t("common.downloadFile.template") + "*"}</InputLabel>
+                                <Select
+                                    fullWidth
+                                    value={templateType}
+                                    onChange={event => setTemplateType(event.target.value as string)}
+                                >
+                                    {Object.keys(TEMPLATE_TYPES).map(type => (
+                                        <MenuItem key={type} value={type}>
+                                            {t(`${type}`)}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl fullWidth margin={"normal"}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    type="button"
+                                    disabled={
+                                        country.length === 0 &&
+                                        newOrganizationType.length === 0 &&
+                                        templateType.length === 0
+                                    }
+                                    onClick={() => window.open(TEMPLATE_TYPES[templateType], "_blank")}
+                                >
+                                    {t("common.downloadFile.button")}
+                                </Button>
+                            </FormControl>
+                        </div>
+                    </form>
+                </TabPanel>
             </Dialog>
         </React.Fragment>
     );
@@ -212,6 +374,9 @@ const useStyles = makeStyles((theme: Theme) =>
             border: "dashed",
             borderColor: "#c8c8c8",
             cursor: "pointer",
+        },
+        formControl: {
+            margin: theme.spacing(1, 0),
         },
     })
 );

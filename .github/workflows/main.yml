@@ -1,9 +1,11 @@
 name: Application testing
-on: [push]
+on:
+  push:
+  workflow_dispatch: 
 jobs:
   unit-tests:
     name: Unit tests
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       REACT_APP_ENV: staging
     steps:
@@ -14,6 +16,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "12.x"
+          
+      - name: Install yarn
+        run: npm install -g yarn
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -42,13 +47,21 @@ jobs:
     strategy:
       matrix:
         server: [staging, prod]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Increase max inodes
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+          
+      - name: Install yarn
+        run: npm install -g yarn
 
       - name: Run cypress tests
         uses: cypress-io/github-action@v2

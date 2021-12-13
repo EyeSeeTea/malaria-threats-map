@@ -181,6 +181,14 @@ const options3: (data: any, categories: any[], translations: any) => Highcharts.
     },
 });
 
+const exists = (value: string) => {
+    if (!value) {
+        return false;
+    }
+    const trimmed = value.trim();
+    return trimmed !== "N/A" && trimmed !== "NA" && trimmed !== null;
+};
+
 const ChatContainer = styled.div`
     max-width: 500px;
     width: 100%;
@@ -246,7 +254,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
     const titleItems = [
         studies[studyIndex].SITE_NAME,
         studies[studyIndex].PROVINCE,
-        t(studies[studyIndex].ISO2 === "NA" ? "COUNTRY_NA" : studies[studyIndex].ISO2),
+        t(studies[studyIndex].ISO2 === "NA" ? "common.COUNTRY_NA" : studies[studyIndex].ISO2),
     ];
     const title = titleItems.filter(Boolean).join(", ");
     const molecularMarker = t(MOLECULAR_MARKERS.find((m: any) => m.value === treatmentFilters.molecularMarker).label);
@@ -262,6 +270,12 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
                 <Typography variant="subtitle1">
                     <Box fontWeight="fontWeightBold">{`${title} (${minYear}-${maxYear})`}</Box>
                 </Typography>
+                {exists(study.HEALTHFACILITY_NAME) && study.HEALTHFACILITY_NAME !== "Not applicable" && (
+                    <>
+                        <Typography variant="subtitle2">{study.HEALTHFACILITY_NAME}</Typography>
+                        <br />
+                    </>
+                )}
                 <Typography variant="body2">
                     {t("common.treatment.chart.molecular_markers.site_content_1", {
                         year: study.YEAR_START,

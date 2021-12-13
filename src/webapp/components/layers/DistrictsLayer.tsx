@@ -102,8 +102,8 @@ class CountrySelectorLayer extends Component<Props> {
     }
 
     buildFilters = () => {
-        const { preventionFilters } = this.props;
-        return buildPreventionFilters(preventionFilters, [1900, new Date().getFullYear()], {});
+        const { preventionFilters, filters, region } = this.props;
+        return buildPreventionFilters(preventionFilters, filters, region);
     };
 
     filterStudies = (studies: PreventionStudy[]) => {
@@ -225,7 +225,7 @@ class CountrySelectorLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, selection } = this.props;
+        const { studies, selection, map } = this.props;
         if (selection === null) {
             return <div />;
         }
@@ -237,12 +237,12 @@ class CountrySelectorLayer extends Component<Props> {
             <>
                 <Hidden xsDown>
                     <SitePopover map={this.props.map}>
-                        <PreventionSelectionChart studies={filteredStudies} />
+                        <PreventionSelectionChart studies={filteredStudies} map={map} />
                     </SitePopover>
                 </Hidden>
                 <Hidden smUp>
                     <ChartModal selection={selection}>
-                        <PreventionSelectionChart studies={filteredStudies} />
+                        <PreventionSelectionChart studies={filteredStudies} map={map} />
                     </ChartModal>
                 </Hidden>
             </>

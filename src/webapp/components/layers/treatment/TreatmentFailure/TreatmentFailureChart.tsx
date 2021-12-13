@@ -15,6 +15,7 @@ import { formatYears, formatYears2 } from "../../../../utils/string-utils";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../filters/PlasmodiumSpeciesFilter";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import _ from "lodash";
+import { isNotNull } from "../../../../utils/number-utils";
 
 const options: (data: any, categories: any[], translations: any) => Highcharts.Options = (
     data,
@@ -123,6 +124,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
         POSITIVE_DAY_3,
         TREATMENT_FAILURE_KM,
         TREATMENT_FAILURE_PP,
+        HEALTHFACILITY_NAME,
     } = sortedStudies[study];
 
     const keys = _([
@@ -132,14 +134,6 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     ])
         .compact()
         .value();
-
-    const exists = (value: string) => {
-        if (!value) {
-            return false;
-        }
-        const trimmed = value.trim();
-        return trimmed !== "N/A" && trimmed !== "NA" && trimmed !== null;
-    };
 
     const series = keys.map(key => {
         return {
@@ -157,7 +151,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     const titleItems = [
         studies[study].SITE_NAME,
         studies[study].PROVINCE,
-        t(`countries.${studies[study].ISO2 === "NA" ? "COUNTRY_NA" : studies[study].ISO2}`),
+        t(`countries.${studies[study].ISO2 === "NA" ? "common.COUNTRY_NA" : studies[study].ISO2}`),
     ];
     const title = titleItems.filter(Boolean).join(", ");
 
@@ -168,6 +162,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     const translations = {
         percentage: t("common.treatment.chart.treatment_failure.percentage"),
     };
+    const healthFacilityName = t("common.treatment.chart.treatment_failure.health_facility_name");
     const studyYears = t("common.treatment.chart.treatment_failure.study_years");
     const numberOfPatients = t("common.treatment.chart.treatment_failure.number_of_patients");
     const followUp = t("common.treatment.chart.treatment_failure.follow_up");
@@ -181,6 +176,17 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     function renderInfo() {
         return (
             <Margin>
+                {isNotNull(HEALTHFACILITY_NAME) && HEALTHFACILITY_NAME !== "Not applicable" && (
+                    <Flex>
+                        <Typography variant="body2">
+                            <b>
+                                {healthFacilityName}
+                                :&nbsp;
+                            </b>
+                            {HEALTHFACILITY_NAME}
+                        </Typography>
+                    </Flex>
+                )}
                 <Flex>
                     <Typography variant="body2">
                         <b>
@@ -208,7 +214,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                         {FOLLOW_UP} {days}
                     </Typography>
                 </Flex>
-                {exists(CONFIRMED_RESIST_PV) && (
+                {isNotNull(CONFIRMED_RESIST_PV) && (
                     <Flex>
                         <Typography variant="body2">
                             <b>
@@ -219,7 +225,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                         </Typography>
                     </Flex>
                 )}
-                {exists(POSITIVE_DAY_3) && PLASMODIUM_SPECIES === "P._FALCIPARUM" && (
+                {isNotNull(POSITIVE_DAY_3) && PLASMODIUM_SPECIES === "P._FALCIPARUM" && (
                     <Flex>
                         <Typography variant="body2">
                             <b>
@@ -230,7 +236,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                         </Typography>
                     </Flex>
                 )}
-                {exists(TREATMENT_FAILURE_PP) && (
+                {isNotNull(TREATMENT_FAILURE_PP) && (
                     <Flex>
                         <Typography variant="body2">
                             <b>
@@ -241,7 +247,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                         </Typography>
                     </Flex>
                 )}
-                {exists(TREATMENT_FAILURE_KM) && (
+                {isNotNull(TREATMENT_FAILURE_KM) && (
                     <Flex>
                         <Typography variant="body2">
                             <b>
