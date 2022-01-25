@@ -1,5 +1,6 @@
 type ConfigProps = {
     mapServerUrl: string;
+    featuresServerUrl: string;
     mapTilesBaseUrl: string;
     backendUrl: string;
     gaAppId: string;
@@ -28,12 +29,20 @@ const BASEMAP_NONIC_UAT = "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgi
 
 const BASEMAP_NONIC = "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/basemap_test/MapServer";
 
+const FEATURES_SERVER = "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services";
+
+const BOUNDARIES_BASE_URL = `https://services.arcgis.com/5T5nSi527N4F7luB/ArcGIS/rest/services/POLIO_ADMINISTRATIVE_BOUNDARIES/FeatureServer/1/query?where=1%3D1&f=geojson&geometryPrecision=2.5`;
+
 const stagingMapServer = {
     mapServerUrl: WHO_MALARIA_THREATS_MAP_STAGING,
+    featuresServerUrl: FEATURES_SERVER,
+    boundariesBaseUrl: BOUNDARIES_BASE_URL,
 };
 
 const prodMapServer = {
     mapServerUrl: WHO_MALARIA_THREATS_MAP,
+    featuresServerUrl: FEATURES_SERVER,
+    boundariesBaseUrl: BOUNDARIES_BASE_URL,
 };
 
 const stagingMapTile = {

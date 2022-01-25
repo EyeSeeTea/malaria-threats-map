@@ -9,6 +9,8 @@ type Country = {
     id: string;
     name: string;
     iso2Code: string;
+    region: string;
+    subregion: string;
     endemicity: boolean;
 };
 
@@ -19,19 +21,35 @@ export class CountryLayerApiRepository implements CountryLayerRepository {
         const params: ApiParams = {
             f: "geojson",
             where: `1=1`,
-            outFields: "OBJECTID,ADM0_SOVRN,ADM0_NAME,SUBREGION,REGION_FULL,CENTER_LAT,CENTER_LON,ISO_2_CODE",
+            outFields: "OBJECTID,ADM0_SOVRN,ADM0_NAME,CENTER_LAT,CENTER_LON,ISO_2_CODE",
         };
 
         return this.getBackendCountries().flatMap(backendCountries => {
             console.log({ backendCountries });
-            return request<CountryLayer>({ url: `${this.baseUrl}/3/query`, params }).map(countryLayer => {
+            return request<CountryLayer>({
+                url: `${this.baseUrl}/Detailed_Boundary_ADM0/FeatureServer/0/query`,
+                params,
+            }).map(countryLayer => {
                 const newCountryLayer = {
                     ...countryLayer,
                     features: countryLayer.features.map(f => {
                         const backendCountry = backendCountries.find(c => c.iso2Code === f.properties.ISO_2_CODE);
+
+                        if (!backendCountry) {
+                            console.log("Country non existed in backend", { f });
+                        }
+
                         const endemicity = backendCountry ? Number(backendCountry.endemicity) : 0;
 
-                        return { ...f, properties: { ...f.properties, ENDEMICITY: endemicity } };
+                        return {
+                            ...f,
+                            properties: {
+                                ...f.properties,
+                                REGION_FULL: backendCountry?.region,
+                                SUBREGION: backendCountry?.subregion,
+                                ENDEMICITY: endemicity,
+                            },
+                        };
                     }),
                 };
 
