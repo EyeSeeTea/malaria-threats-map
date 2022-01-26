@@ -53,9 +53,6 @@ export class CountryLayerApiRepository implements CountryLayerRepository {
                     }),
                 };
 
-                console.log({ countryLayer });
-                console.log({ newCountryLayer });
-
                 return newCountryLayer;
             });
         });
