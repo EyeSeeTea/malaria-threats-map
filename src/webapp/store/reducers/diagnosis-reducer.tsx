@@ -48,16 +48,16 @@ function updateDeletionType(deletionType: string) {
 }
 
 export default createReducer<DiagnosisState>(initialState, {
-    [ActionTypeEnum.FetchDiagnosisStudiesRequest]: () => state => ({
+    [ActionTypeEnum.FetchDiagnosisStudiesRequest]: () => (state: DiagnosisState) => ({
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchDiagnosisStudiesSuccess]: (studies: DiagnosisStudy[]) => state => ({
+    [ActionTypeEnum.FetchDiagnosisStudiesSuccess]: (studies: DiagnosisStudy[]) => (state: DiagnosisState) => ({
         ...state,
         loading: false,
         studies,
     }),
-    [ActionTypeEnum.FetchDiagnosisStudiesError]: () => state => ({
+    [ActionTypeEnum.FetchDiagnosisStudiesError]: () => (state: DiagnosisState) => ({
         ...state,
         error: "There was a problem loading studies",
         loading: false,

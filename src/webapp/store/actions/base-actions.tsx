@@ -120,12 +120,14 @@ export const setUploadFileOpenAction = createAction(
     action => (uploadFileOpen: boolean) => action(uploadFileOpen)
 );
 
-export const setFeedbackOpenAction = createAction(ActionTypeEnum.SetFeedbackOpen, action => (feedbackOpen: boolean) =>
-    action(feedbackOpen)
+export const setFeedbackOpenAction = createAction(
+    ActionTypeEnum.SetFeedbackOpen,
+    action => (feedbackOpen: boolean) => action(feedbackOpen)
 );
 
-export const setTheaterModeAction = createAction(ActionTypeEnum.SetTheaterMode, action => (theaterMode: boolean) =>
-    action(theaterMode)
+export const setTheaterModeAction = createAction(
+    ActionTypeEnum.SetTheaterMode,
+    action => (theaterMode: boolean) => action(theaterMode)
 );
 
 export const setLegendExpandedAction = createAction(

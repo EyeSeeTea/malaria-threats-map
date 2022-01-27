@@ -12,8 +12,9 @@ export const fetchDiagnosisStudiesSuccess = createAction(
     action => (studies: DiagnosisStudy[]) => action(studies)
 );
 
-export const fetchDiagnosisStudiesError = createAction(ActionTypeEnum.FetchDiagnosisStudiesError, action => () =>
-    action()
+export const fetchDiagnosisStudiesError = createAction(
+    ActionTypeEnum.FetchDiagnosisStudiesError,
+    action => () => action()
 );
 
 export const setDiagnosisSurveyTypes = createAction(ActionTypeEnum.SetSurveyTypes, action => {

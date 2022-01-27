@@ -88,7 +88,7 @@ function Screenshot({ map, theme, title }: Props) {
             const ratio = mapCanvas.width / mapCanvas.height;
 
             doc.setFontSize(24);
-            const textWidth2 = (doc.getStringUnitWidth(title) * doc.internal.getFontSize()) / doc.internal.scaleFactor;
+            const textWidth2 = (doc.getStringUnitWidth(title) * doc.getFontSize()) / doc.internal.scaleFactor;
             const titleOffset = (doc.internal.pageSize.width - textWidth2 - 25) / 2;
             doc.text(title, titleOffset + 25, 20);
             const img2 = new Image();
@@ -98,7 +98,7 @@ function Screenshot({ map, theme, title }: Props) {
             doc.setFontSize(7);
             doc.setFont("normal");
             const lines = doc.splitTextToSize(copyright, 150);
-            doc.text(10, 175, lines);
+            doc.text(lines, 10, 175);
             const maxWidth = a4h - 2 * a4p;
             const maxHeight = 135;
             let mapWidth, mapHeight;

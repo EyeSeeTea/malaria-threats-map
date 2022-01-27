@@ -61,16 +61,16 @@ function updateAssayTypes(assayTypes: string[]) {
 }
 
 export default createReducer<PreventionState>(initialState, {
-    [ActionTypeEnum.FetchPreventionStudiesRequest]: () => state => ({
+    [ActionTypeEnum.FetchPreventionStudiesRequest]: () => (state: PreventionState) => ({
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchPreventionStudiesSuccess]: (studies: PreventionStudy[]) => state => ({
+    [ActionTypeEnum.FetchPreventionStudiesSuccess]: (studies: PreventionStudy[]) => (state: PreventionState) => ({
         ...state,
         loading: false,
         studies,
     }),
-    [ActionTypeEnum.FetchPreventionStudiesError]: () => state => ({
+    [ActionTypeEnum.FetchPreventionStudiesError]: () => (state: PreventionState) => ({
         ...state,
         error: "There was a problem loading studies",
         loading: false,

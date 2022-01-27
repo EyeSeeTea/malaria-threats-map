@@ -12,8 +12,9 @@ export const fetchTreatmentStudiesSuccess = createAction(
     action => (studies: TreatmentStudy[]) => action(studies)
 );
 
-export const fetchTreatmentStudiesError = createAction(ActionTypeEnum.FetchTreatmentStudiesError, action => () =>
-    action()
+export const fetchTreatmentStudiesError = createAction(
+    ActionTypeEnum.FetchTreatmentStudiesError,
+    action => () => action()
 );
 
 export const setTreatmentMapType = createAction(ActionTypeEnum.SetTreatmentMapType, action => {

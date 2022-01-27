@@ -58,7 +58,7 @@ const initialState: MalariaState = Object.freeze({
 export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.MalariaSetTheme]: (theme: string) => R.assoc("theme", theme),
     [ActionTypeEnum.MalariaSetAny]: (any: any) => R.assoc("any", any),
-    [ActionTypeEnum.MalariaSetRegion]: (region: RegionState | null) => state => ({
+    [ActionTypeEnum.MalariaSetRegion]: (region: RegionState | null) => (state: MalariaState) => ({
         ...state,
         region: region ? { ...initialState.region, ...region } : null,
     }),
@@ -72,7 +72,7 @@ export default createReducer<MalariaState>(initialState, {
         R.assoc("initialDialogOpen", initialDialogOpen),
     [ActionTypeEnum.SetFiltersOpen]: (filtersOpen: boolean) => R.assoc("filtersOpen", filtersOpen),
     [ActionTypeEnum.SetFiltersMode]: (filtersMode: string) => R.assoc("filtersMode", filtersMode || "filters"),
-    [ActionTypeEnum.SetSelection]: (selection: SiteSelection) => state => {
+    [ActionTypeEnum.SetSelection]: (selection: SiteSelection) => (state: MalariaState) => {
         const propsHasChanged = () =>
             state.selection?.SITE_ID !== selection.SITE_ID && state.selection?.coordinates !== selection.coordinates;
 
@@ -92,11 +92,11 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.SetZoom]: (zoom: number) => R.assoc("setZoom", zoom),
     [ActionTypeEnum.UpdateBounds]: (bounds: Array<Array<number>>) => R.assoc("bounds", bounds),
     [ActionTypeEnum.SetBounds]: (bounds: Array<Array<number>>) => R.assoc("setBounds", bounds),
-    [ActionTypeEnum.SetTourOpen]: (open: boolean) => state => ({
+    [ActionTypeEnum.SetTourOpen]: (open: boolean) => (state: MalariaState) => ({
         ...state,
         tour: { ...initialState.tour, open },
     }),
-    [ActionTypeEnum.SetTourStep]: (step: number) => state => ({
+    [ActionTypeEnum.SetTourStep]: (step: number) => (state: MalariaState) => ({
         ...state,
         tour: { ...initialState.tour, step },
     }),

@@ -18,7 +18,7 @@ export default createReducer<TranslationsState>(initialState, {
             translations: response.features.map(feature => feature.attributes),
             loading: false,
             fields: R.groupBy(
-                R.path(["FIELD"]),
+                R.prop("FIELD"),
                 response.features.map(feature => feature.attributes)
             ),
         }),

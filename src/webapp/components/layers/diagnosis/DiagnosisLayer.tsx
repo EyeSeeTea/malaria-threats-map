@@ -121,10 +121,7 @@ class DiagnosisLayer extends Component<Props> {
     }
 
     setupGeoJsonData = (studies: any[]) => {
-        const groupedStudies = R.groupBy(
-            R.path<string>(["SITE_ID"]),
-            studies
-        );
+        const groupedStudies = R.groupBy(R.path<string>(["SITE_ID"]), studies);
         const filteredStudies = R.values(groupedStudies).map(group =>
             studySelector(group, this.props.diagnosisFilters.mapType, this.props.diagnosisFilters.deletionType)
         );

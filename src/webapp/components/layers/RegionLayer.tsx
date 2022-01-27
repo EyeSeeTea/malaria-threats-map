@@ -42,10 +42,7 @@ interface OwnProps {
 }
 
 const MEKONG_BOUNDS: [number, number, number, number] = [
-    65.39066990951679,
-    -1.6114593755411022,
-    146.6850042235456,
-    45.83706104249836,
+    65.39066990951679, -1.6114593755411022, 146.6850042235456, 45.83706104249836,
 ];
 
 type StateProps = ReturnType<typeof mapStateToProps>;

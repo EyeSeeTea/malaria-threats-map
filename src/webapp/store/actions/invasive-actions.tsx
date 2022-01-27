@@ -11,8 +11,9 @@ export const fetchInvasiveStudiesSuccess = createAction(
     action => (studies: InvasiveStudy[]) => action(studies)
 );
 
-export const fetchInvasiveStudiesError = createAction(ActionTypeEnum.FetchInvasiveStudiesError, action => () =>
-    action()
+export const fetchInvasiveStudiesError = createAction(
+    ActionTypeEnum.FetchInvasiveStudiesError,
+    action => () => action()
 );
 
 export const setInvasiveMapType = createAction(ActionTypeEnum.SetInvasiveMapType, action => {

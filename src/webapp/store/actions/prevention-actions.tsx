@@ -11,8 +11,9 @@ export const fetchPreventionStudiesSuccess = createAction(ActionTypeEnum.FetchPr
     return (studies: PreventionStudy[]) => action(studies);
 });
 
-export const fetchPreventionStudiesError = createAction(ActionTypeEnum.FetchPreventionStudiesError, action => () =>
-    action()
+export const fetchPreventionStudiesError = createAction(
+    ActionTypeEnum.FetchPreventionStudiesError,
+    action => () => action()
 );
 
 export const setPreventionMapType = createAction(ActionTypeEnum.SetPreventionMapType, action => {

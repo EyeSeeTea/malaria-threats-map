@@ -57,16 +57,16 @@ function updateExcludeLowerSamples(value: boolean) {
 }
 
 export default createReducer<TreatmentState>(initialState, {
-    [ActionTypeEnum.FetchTreatmentStudiesRequest]: () => state => ({
+    [ActionTypeEnum.FetchTreatmentStudiesRequest]: () => (state: TreatmentState) => ({
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchTreatmentStudiesSuccess]: (studies: TreatmentStudy[]) => state => ({
+    [ActionTypeEnum.FetchTreatmentStudiesSuccess]: (studies: TreatmentStudy[]) => (state: TreatmentState) => ({
         ...state,
         loading: false,
         studies: studies,
     }),
-    [ActionTypeEnum.FetchTreatmentStudiesError]: () => state => ({
+    [ActionTypeEnum.FetchTreatmentStudiesError]: () => (state: TreatmentState) => ({
         ...state,
         error: "There was a problem loading studies",
         loading: false,
