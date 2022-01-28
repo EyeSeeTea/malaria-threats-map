@@ -174,7 +174,7 @@
             "molecular_markers": "Marqueurs moléculaires de la résistance aux médicaments",
             "chart": {
                 "treatment_failure": {
-                    "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre {{plasmodiumSpecies}} {{years}}",
+                    "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre <i>{{plasmodiumSpecies}}</i> {{years}}",
                     "percentage": "Pourcentage (%)",
                     "study_years": "Années d'étude(s)",
                     "number_of_patients": "Nombre de patients",

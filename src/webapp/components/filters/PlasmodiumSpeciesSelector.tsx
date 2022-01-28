@@ -34,7 +34,6 @@ const PLASMODIUM_SPECIES_SUGGESTIONS: any[] = [
 
 const PlasmodiumSpeciesSelector: React.FC<Props> = ({ onChange, value }) => {
     const { t } = useTranslation();
-    console.log(value)
     return (
         <MultiFilter
             label={t("common.filters.plasmodium_species")}

@@ -57,14 +57,16 @@ const TreatmentFailureCountryChart = ({ studies, setRegion, setCountryMode }: Pr
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
-                <Trans 
+                <Trans
                     i18nKey="common.treatment.chart.treatment_failure.content"
                     t={t}
-                    values={{ nStudies: nStudies, 
-                        drug: t(sortedStudies[0].DRUG_NAME), 
-                        plasmodiumSpecies: t(sortedStudies[0].PLASMODIUM_SPECIES.replace(".", "%2E")), 
-                        years:formatYears(minYear, maxYear)  }} 
-                    />
+                    values={{
+                        nStudies: nStudies,
+                        drug: t(sortedStudies[0].DRUG_NAME),
+                        plasmodiumSpecies: t(sortedStudies[0].PLASMODIUM_SPECIES.replace(".", "%2E")),
+                        years: formatYears(minYear, maxYear),
+                    }}
+                />
             </Typography>
             <Actions>
                 <FlexGrow />

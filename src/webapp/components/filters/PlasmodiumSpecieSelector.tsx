@@ -45,7 +45,7 @@ function PlasmodiumSpecieSelector({ onChange, value }: Props) {
     return (
         <FilterWrapper>
             <FormLabel component="legend">
-            <T i18nKey={"common.filters.plasmodium_species"} />     
+                <T i18nKey={"common.filters.plasmodium_species"} />
             </FormLabel>
             <Divider />
             <IntegrationReactSelect

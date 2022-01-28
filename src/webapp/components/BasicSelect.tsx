@@ -82,6 +82,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     })
 );
+const plasmodiumOptions = ["P. falciparum", "P. vivax", "P. knowlesi", "P. malariae", "P. ovale"];
+
 
 function NoOptionsMessage(props: NoticeProps<OptionType, false>) {
     return (
@@ -128,11 +130,10 @@ function Control(props: ControlProps<OptionType, false>) {
 function Option(props: OptionProps<OptionType, false>) {
     const { t } = useTranslation();
     const value = props.children ? t(props.children.toString()) : "";
-    const plasmodiumOptions = ["P. falciparum", "P. vivax", "P. knowlesi", "P. malariae", "P. ovale"];
     const isFirstRender = useFirstRender();
     const isFocused = isFirstRender ? false : props.isFocused;
-    const plasmodiumStyles = plasmodiumOptions.includes(value) ? {fontStyle: "italic" } : {};
-    
+    const plasmodiumStyles = plasmodiumOptions.includes(value) ? { fontStyle: "italic" } : {};
+
     //it doesn't have access to the control/selected value
     return (
         <MenuItem
@@ -142,7 +143,7 @@ function Option(props: OptionProps<OptionType, false>) {
             component="div"
             style={{
                 fontWeight: props.isSelected ? 800 : 400,
-                ...plasmodiumStyles
+                ...plasmodiumStyles,
             }}
             {...props.innerProps}
             title={value}
@@ -168,7 +169,7 @@ function Placeholder(props: MuiPlaceholderProps) {
 function SingleValue(props: SingleValueProps<OptionType>) {
     const { t } = useTranslation();
     const value = props.children ? t(props.children.toString()) : "";
-    const plasmodiumOptions = ["P. falciparum", "P. vivax", "P. knowlesi", "P. malariae", "P. ovale"];
+
     return (
         <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
             {plasmodiumOptions.includes(value) ? <i>{value}</i> : value}
@@ -242,12 +243,6 @@ export default function IntegrationReactSelect({ suggestions = [], value, onChan
                 backgroundColor: state.isSelected ? "green" : "yellow",
             },
         }),
-        singleValue: (provided:any, state: any) => {
-            const opacity = state.isDisabled ? 0.5 : 1;
-            const transition = 'opacity 300ms';
-        
-            return { ...provided, opacity, transition, fontStyle: "italic" };
-          }
     };
 
     return (
