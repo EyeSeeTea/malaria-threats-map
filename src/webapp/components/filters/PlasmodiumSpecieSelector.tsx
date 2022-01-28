@@ -1,6 +1,7 @@
 import React from "react";
 import IntegrationReactSelect, { OptionType } from "../BasicSelect";
 import { Divider, FilterWrapper } from "./Filters";
+import { useTranslation, Trans } from "react-i18next";
 import FormLabel from "@material-ui/core/FormLabel";
 import T from "../../translations/T";
 import { ValueType } from "react-select/src/types";
@@ -36,6 +37,7 @@ const PLASMODIUM_SPECIES_SUGGESTIONS: any[] = [
 ];
 
 function PlasmodiumSpecieSelector({ onChange, value }: Props) {
+    const { t } = useTranslation();
     const onSelectionChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;
         onChange(selection.value);
@@ -45,7 +47,8 @@ function PlasmodiumSpecieSelector({ onChange, value }: Props) {
     return (
         <FilterWrapper>
             <FormLabel component="legend">
-                <T i18nKey={`common.filters.plasmodium_species`} />
+            <T i18nKey={`common.filters.plasmodium_species`} />
+            
             </FormLabel>
             <Divider />
             <IntegrationReactSelect
