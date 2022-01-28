@@ -27,7 +27,7 @@ export const formatList = (list: string[]) => {
     }
 };
 
-export const formatYears = (from: string, to: string) => {
+export const formatYears = (from: any, to: any) => {
     const lng = localStorage.getItem("language");
     if (lng === "es") {
         if (!from && !to) {

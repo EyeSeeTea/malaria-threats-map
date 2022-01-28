@@ -169,7 +169,6 @@ function SingleValue(props: SingleValueProps<OptionType>) {
     const { t } = useTranslation();
     const value = props.children ? t(props.children.toString()) : "";
     const plasmodiumOptions = ["P. falciparum", "P. vivax", "P. knowlesi", "P. malariae", "P. ovale"];
-    const plasmodiumStyles = plasmodiumOptions.includes(value) ? {fontStyle: "italic" } : {};
     return (
         <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
             {plasmodiumOptions.includes(value) ? <i>{value}</i> : value}
