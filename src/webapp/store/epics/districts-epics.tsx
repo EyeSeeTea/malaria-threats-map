@@ -9,7 +9,7 @@ import { of } from "rxjs";
 import { fetchDistrictsError, fetchDistrictsRequest, fetchDistrictsSuccess } from "../actions/district-actions";
 
 const DISTRICTS =
-    "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Detailed_Boundary_ADM2/FeatureServer/0";
+    "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Detailed_Boundary_ADM2/FeatureServer/2";
 
 export const getDistrictsEpic = (action$: ActionsObservable<ActionType<typeof fetchDistrictsRequest>>) =>
     action$.ofType(ActionTypeEnum.FetchDistrictsRequest).pipe(

@@ -24,7 +24,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const detailed_Boundary_ADM1 =
-    "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Detailed_Boundary_ADM2/FeatureServer/0";
+    "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Detailed_Boundary_ADM2/FeatureServer/2";
 
 class MekongLayer extends Component<any> {
     componentDidMount(): void {
