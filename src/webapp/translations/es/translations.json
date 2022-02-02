@@ -300,7 +300,7 @@
         },
         "copyright": {
             "mobile": "Haga clic aquí para leer la advertencia que se aplica al mapa de arriba",
-            "content": "Las denominaciones empleadas en esta publicación y la forma en que aparecen presentados los datos que contiene no implican, por parte de la Organización Mundial de la Salud, juicio alguno sobre la condición jurídica de países, territorios, ciudades o zonas, o de sus autoridades, ni con respecto al trazado de sus fronteras o límites. Las líneas de puntos, así como las líneas discontinuas y las áreas marcadas en gris, en los mapas representan de manera aproximada las fronteras y áreas respecto de las cuales puede que no haya pleno acuerdo. Las fronteras del mapa proporcionadas reflejan la situación política y geográfica actual a partir de la fecha de publicación (2021). Sin embargo, la información técnica sobre la salud se basa en datos precisos con respecto al año seleccionado. Debe destacarse la desconexión en esta disposición, pero no debe extraerse ninguna implicación de carácter político o terminológico de esta disposición, ya que es puramente una función de limitaciones técnicas y gráficas. Fuente de datos: Programa Mundial \nsobre Paludismo. Producción de mapas: Programa Mundial sobre Paludismo. Organización Mundial de la Salud."
+            "content": "Las denominaciones empleadas en esta publicación y la forma en que aparecen presentados los datos que contiene no implican, por parte de la Organización Mundial de la Salud, juicio alguno sobre la condición jurídica de países, territorios, ciudades o zonas, o de sus autoridades, ni con respecto al trazado de sus fronteras o límites. Las líneas de puntos, así como las líneas discontinuas y las áreas marcadas en gris, en los mapas representan de manera aproximada las fronteras y áreas respecto de las cuales puede que no haya pleno acuerdo. Las fronteras del mapa proporcionadas reflejan la situación política y geográfica actual a partir de la fecha de publicación ({{year}}). Sin embargo, la información técnica sobre la salud se basa en datos precisos con respecto al año seleccionado. Debe destacarse la desconexión en esta disposición, pero no debe extraerse ninguna implicación de carácter político o terminológico de esta disposición, ya que es puramente una función de limitaciones técnicas y gráficas. Fuente de datos: Programa Mundial \nsobre Paludismo. Producción de mapas: Programa Mundial sobre Paludismo. Organización Mundial de la Salud."
         },
         "options": {
             "title": "Opciones",
@@ -534,7 +534,7 @@
         "p1a": "<strong>Fuente de datos:</strong> Programa Mundial sobre el Paludismo",
         "p1b": "<strong>Elaboración de mapas:</strong> Programa mundial de paludismo. Organización Mundial de la Salud.",
         "p1bLink": "https://www.who.int/about/copyright/",
-        "p1bLinkText": "© WHO 2021. ",
+        "p1bLinkText": "© WHO {{year}}. ",
         "p1c": "Todos los privilegios reservados.",
         "p2": "A menos que se especifique lo contrario, la información contenida en esta aplicación Web ha sido puesta a disposición del Programa Mundial sobre Paludismo de la Organización Mundial de la Salud (OMS) por los Ministerios de Salud o sus asociados en el desarrollo, o mediante su extracción de publicaciones científicas por parte de la OMS o sus socios. Por consiguiente, la OMS no garantiza la validez, exactitud o integridad de esta información.",
         "p3a": "El uso de imágenes y archivos generados a partir de esta aplicación está sujeto a los ",

@@ -57,7 +57,7 @@ type OwnProps = {
 };
 type Props = OwnProps & DispatchProps & StateProps;
 
-const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = 2021 }: Props) => {
+const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = new Date().getFullYear() }: Props) => {
     const classes = useStyles({});
     const { t } = useTranslation();
 
