@@ -82,6 +82,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     })
 );
+const plasmodiumOptions = ["P. falciparum", "P. vivax", "P. knowlesi", "P. malariae", "P. ovale"];
+
 
 function NoOptionsMessage(props: NoticeProps<OptionType, false>) {
     return (
@@ -130,6 +132,7 @@ function Option(props: OptionProps<OptionType, false>) {
     const value = props.children ? t(props.children.toString()) : "";
     const isFirstRender = useFirstRender();
     const isFocused = isFirstRender ? false : props.isFocused;
+    const plasmodiumStyles = plasmodiumOptions.includes(value) ? { fontStyle: "italic" } : {};
 
     //it doesn't have access to the control/selected value
     return (
@@ -140,6 +143,7 @@ function Option(props: OptionProps<OptionType, false>) {
             component="div"
             style={{
                 fontWeight: props.isSelected ? 800 : 400,
+                ...plasmodiumStyles,
             }}
             {...props.innerProps}
             title={value}
@@ -165,9 +169,10 @@ function Placeholder(props: MuiPlaceholderProps) {
 function SingleValue(props: SingleValueProps<OptionType>) {
     const { t } = useTranslation();
     const value = props.children ? t(props.children.toString()) : "";
+
     return (
         <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
-            {value}
+            {plasmodiumOptions.includes(value) ? <i>{value}</i> : value}
         </Typography>
     );
 }

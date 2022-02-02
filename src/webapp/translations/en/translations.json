@@ -174,7 +174,7 @@
             "molecular_markers": "Molecular markers of drug resistance",
             "chart": {
                 "treatment_failure": {
-                    "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against {{plasmodiumSpecies}} {{years}}",
+                    "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against <i>{{plasmodiumSpecies}}</i> {{years}}",
                     "percentage": "Percentage (%)",
                     "study_years": "Study year(s)",
                     "health_facility_name": "Health facility name",
