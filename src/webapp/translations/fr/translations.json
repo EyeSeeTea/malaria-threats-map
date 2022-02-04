@@ -287,7 +287,9 @@
             "select_region": "Choisissez une région",
             "sub_region": "Sous-région",
             "select_sub_region": "Sélectionnez la sous-région",
-            "select_site": "Sélectionnez un site"
+            "select_site": "Sélectionnez un site",
+            "exclude_lower_patients": "Exclure les études portant sur moins de 20 patients",
+            "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons"
         },
         "legend": {
             "number_of_studies": "Nombre d'études",
