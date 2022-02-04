@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { DiagnosisMapType, InvasiveMapType, PreventionMapType, State, TreatmentMapType } from "../../../store/types";
 import { selectFilters, selectTheme } from "../../../store/reducers/base-reducer";
-import { selectPreventionFilters } from "../../../store/reducers/prevention-reducer";
+import { selectPreventionFilters, selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
 import { setPreventionMapType } from "../../../store/actions/prevention-actions";
 import { connect } from "react-redux";
 import ResistanceStatusFilters from "../../layers/prevention/ResistanceStatus/ResistanceStatusFilters";
@@ -26,6 +26,9 @@ const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
+    preventionStudies: selectPreventionStudies(state),
+
+
 });
 
 const mapDispatchToProps = {
@@ -43,14 +46,25 @@ const FiltersContent: React.FC<Props> = ({
     diagnosisFilters,
     treatmentFilters,
     invasiveFilters,
+    preventionStudies,
 }) => {
+    const [years, setYears] = useState({minYear: 1978, maxYear: new Date().getFullYear()});
+    useEffect(() => {
+        if(preventionStudies.length !== 0) {
+            const yearStartedStudies = preventionStudies.map(study => Number(study.YEAR_START));
+            const minYear = Math.min(...yearStartedStudies);
+            const maxYear = Math.max(...yearStartedStudies);
+            setYears({minYear, maxYear});
+        }
+    }, [preventionStudies]);
+
     switch (theme) {
         case "prevention":
             switch (preventionFilters.mapType) {
                 case PreventionMapType.RESISTANCE_STATUS:
-                    return <ResistanceStatusFilters />;
+                    return <ResistanceStatusFilters years={years} />;
                 case PreventionMapType.INTENSITY_STATUS:
-                    return <IntensityStatusFilters />;
+                    return <IntensityStatusFilters years={years} />;
                 case PreventionMapType.RESISTANCE_MECHANISM:
                     return <ResistanceMechanismFilters />;
                 case PreventionMapType.LEVEL_OF_INVOLVEMENT:
