@@ -15,10 +15,13 @@ type Props = OwnProps;
 const YearsSelector: React.FC<Props> = ({ value, onChange, minYear, maxYear }) => {
     const { t } = useTranslation();
 
-    const suggestions = minYear === 0 || maxYear === 0 ? [] : range(minYear, maxYear, true).map(year => ({
-        label: year.toString(),
-        value: year.toString(),
-    }));
+    const suggestions =
+        minYear === 0 || maxYear === 0
+            ? []
+            : range(minYear, maxYear, true).map(year => ({
+                  label: year.toString(),
+                  value: year.toString(),
+              }));
 
     const [valueState, setValueState] = useState([]);
 

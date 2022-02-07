@@ -20,5 +20,5 @@ const IntensityStatusFilters: React.FC<Props> = ({ years }) => {
             <YearRangeSelector minYear={years.minYear} maxYear={years.maxYear} />
         </div>
     );
-}
+};
 export default IntensityStatusFilters;

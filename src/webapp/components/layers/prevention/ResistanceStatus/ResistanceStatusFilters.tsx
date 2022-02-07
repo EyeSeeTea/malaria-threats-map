@@ -9,7 +9,7 @@ interface Props {
     years: Record<string, number>;
 }
 
-const ResistanceStatusFilters: React.FC<Props> = ({ years })  => {
+const ResistanceStatusFilters: React.FC<Props> = ({ years }) => {
     return (
         <div>
             <InsecticideClassFilter />
@@ -19,5 +19,5 @@ const ResistanceStatusFilters: React.FC<Props> = ({ years })  => {
             <YearRangeSelector minYear={years.minYear} maxYear={years.maxYear} />
         </div>
     );
-}
+};
 export default ResistanceStatusFilters;

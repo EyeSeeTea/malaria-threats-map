@@ -14,7 +14,7 @@ import PlasmodiumSpeciesSelector from "../filters/PlasmodiumSpeciesSelector";
 import SynergistTypesSelector from "../filters/SynergistTypesSelector";
 import InsecticideTypeSelector from "../filters/InsecticideTypeSelector";
 import MechanismTypeSelector from "../filters/MechanismTypeSelector";
-import { selectPreventionStudies, selectFilteredPreventionStudies } from "../../store/reducers/prevention-reducer";
+import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import { selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
 import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
 
@@ -37,9 +37,8 @@ const Divider = styled.div`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     preventionStudies: selectPreventionStudies(state),
-    filteredPreventionStudies: selectFilteredPreventionStudies(state),
     invasiveStudies: selectInvasiveStudies(state),
-    treatmentStudies: selectTreatmentStudies(state)
+    treatmentStudies: selectTreatmentStudies(state),
 });
 
 const mapDispatchToProps = {
@@ -66,40 +65,47 @@ const Filters = ({
     fetchTreatmentStudies,
     preventionStudies,
     invasiveStudies,
-    treatmentStudies
+    treatmentStudies,
 }: Props) => {
     const { t } = useTranslation();
-    const [yearRange, setYearRange] = useState({minYear: 1978, maxYear: new Date().getFullYear()});
+    const [yearRange, setYearRange] = useState({ minYear: 1978, maxYear: new Date().getFullYear() });
 
     useEffect(() => {
         let studySelected: Array<PreventionStudy | TreatmentStudy | InvasiveStudy> = [];
-        switch(selections.theme) {
-            case("prevention"):
+        switch (selections.theme) {
+            case "prevention":
                 studySelected = preventionStudies;
                 break;
-            case("treatment"):
+            case "treatment":
                 studySelected = treatmentStudies;
                 break;
-            case("invasive"):
+            case "invasive":
                 studySelected = invasiveStudies;
                 break;
         }
 
-            const yearStartedStudies = studySelected.filter(study => Number(study.YEAR_START) !== 0).map(study => Number(study.YEAR_START));
-            const minYear = yearStartedStudies.length > 0 ? Math.min(...yearStartedStudies) : 0;
-            const maxYear = yearStartedStudies.length > 0 ? Math.max(...yearStartedStudies) : 0;
-            setYearRange({minYear, maxYear});
-
-    }, [preventionStudies, treatmentStudies, invasiveStudies, 
-        selections.preventionDataset, selections.treatmentDataset, selections.invasiveDataset, 
-        selections.theme]);
+        const yearStartedStudies = studySelected
+            .filter(study => Number(study.YEAR_START) !== 0)
+            .map(study => Number(study.YEAR_START));
+        const minYear = yearStartedStudies.length > 0 ? Math.min(...yearStartedStudies) : 0;
+        const maxYear = yearStartedStudies.length > 0 ? Math.max(...yearStartedStudies) : 0;
+        setYearRange({ minYear, maxYear });
+    }, [
+        preventionStudies,
+        treatmentStudies,
+        invasiveStudies,
+        selections.preventionDataset,
+        selections.treatmentDataset,
+        selections.invasiveDataset,
+        selections.theme,
+    ]);
 
     const onSetTheme = (value: string) => {
         onChange({
             ...selections,
             theme: value,
             years: [],
-            countries: []
+            countries: [],
         });
     };
 
@@ -109,7 +115,7 @@ const Filters = ({
             ...selections,
             preventionDataset: value,
             years: [],
-            countries: []
+            countries: [],
         });
     };
 
@@ -306,7 +312,12 @@ const Filters = ({
                         )}
                     </>
                 )}
-                <YearsSelector value={years} onChange={onSetYears} minYear={yearRange.minYear} maxYear={yearRange.maxYear} />
+                <YearsSelector
+                    value={years}
+                    onChange={onSetYears}
+                    minYear={yearRange.minYear}
+                    maxYear={yearRange.maxYear}
+                />
                 <CountriesSelector value={countries} onChange={onSetCountries} />
             </Paper>
         </div>

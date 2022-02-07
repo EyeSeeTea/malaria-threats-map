@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { DiagnosisMapType, InvasiveMapType, PreventionMapType, State, TreatmentMapType } from "../../../store/types";
 import { selectFilters, selectTheme } from "../../../store/reducers/base-reducer";
 import { selectPreventionFilters, selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
@@ -27,8 +27,6 @@ const mapStateToProps = (state: State) => ({
     treatmentFilters: selectTreatmentFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
     preventionStudies: selectPreventionStudies(state),
-
-
 });
 
 const mapDispatchToProps = {
@@ -48,13 +46,13 @@ const FiltersContent: React.FC<Props> = ({
     invasiveFilters,
     preventionStudies,
 }) => {
-    const [years, setYears] = useState({minYear: 1978, maxYear: new Date().getFullYear()});
+    const [years, setYears] = useState({ minYear: 1978, maxYear: new Date().getFullYear() });
     useEffect(() => {
-        if(preventionStudies.length !== 0) {
+        if (preventionStudies.length !== 0) {
             const yearStartedStudies = preventionStudies.map(study => Number(study.YEAR_START));
             const minYear = Math.min(...yearStartedStudies);
             const maxYear = Math.max(...yearStartedStudies);
-            setYears({minYear, maxYear});
+            setYears({ minYear, maxYear });
         }
     }, [preventionStudies]);
 
