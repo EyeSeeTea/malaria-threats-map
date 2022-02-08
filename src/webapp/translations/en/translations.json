@@ -118,10 +118,12 @@
                     "eligible": "All criteria met",
                     "not_eligible": "At least one criteria is not met",
                     "not_enough_data": "More data needs to be collected to evaluate criteria",
+                    "no_data": "No data available",
                     "expanded": {
                         "eligible": "sites where at least one vector species meets the three WHO recommended criteria",
                         "not_eligible": "sites where one of the vector species for which data are available violates at least one of the three criteria, and none of the species for which data are available meet the three criteria.",
                         "not_enough_data": "sites with insufficient data to evaluate whether the local vector species meets the three criteria",
+                        "no_data": "no data available",
                         "p1": "This map shows the status of compliance of local vector populations with the ",
                         "p1Link": "https://apps.who.int/iris/bitstream/handle/10665/258939/WHO-HTM-GMP-2017.17-eng.pdf?sequence=5",
                         "p1a": "three WHO recommended criteria ",

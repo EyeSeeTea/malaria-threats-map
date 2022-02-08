@@ -51,6 +51,12 @@ function PboDeploymentLegend({ legendExpanded }: Props) {
                 : "prevention.legend.pbo_deployment.expanded.not_enough_data",
             color: PboDeploymentColors[PboDeploymentStatus.NOT_ENOUGH_DATA][0],
         },
+        {
+            label: !legendExpanded
+                ? "prevention.legend.pbo_deployment.no_data"
+                : "prevention.legend.pbo_deployment.expanded.no_data",
+            color: PboDeploymentColors[PboDeploymentStatus.NO_DATA][0],
+        },
     ];
 
     const legend = () => (

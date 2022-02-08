@@ -235,8 +235,11 @@ export function evaluateDeploymentStatus(group: any[]) {
     meetsCriteria1(group, criteria);
     meetsCriteria2(group, criteria);
     meetsCriteria3(group, criteria);
+    const criterias = Object.entries(criteria);
     let pboDeploymentStatus;
-    if (R.any((c: any) => c.criteria1 && c.criteria2 && c.criteria3, R.values(criteria))) {
+    if (criterias.length === 0) {
+        pboDeploymentStatus = PboDeploymentStatus.NO_DATA;
+    } else if (R.any((c: any) => c.criteria1 && c.criteria2 && c.criteria3, R.values(criteria))) {
         pboDeploymentStatus = PboDeploymentStatus.ELIGIBLE;
     } else if (
         R.any((c: any) => c.criteria1 === false || c.criteria2 === false || c.criteria3 === false, R.values(criteria))

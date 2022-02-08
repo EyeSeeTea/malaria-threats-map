@@ -130,6 +130,7 @@ class CountrySelectorLayer extends Component<Props> {
             const filteredStudies = R.values(groupedStudies).map(group =>
                 studySelector(group, PreventionMapType.PBO_DEPLOYMENT)
             );
+
             const studiesByCountry = R.groupBy(
                 R.path<string>(["ISO2"]),
                 filteredStudies
