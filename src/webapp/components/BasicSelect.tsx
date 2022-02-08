@@ -84,7 +84,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 const plasmodiumOptions = ["P. falciparum", "P. vivax", "P. knowlesi", "P. malariae", "P. ovale"];
 
-
 function NoOptionsMessage(props: NoticeProps<OptionType, false>) {
     return (
         <Typography color="textSecondary" className={props.selectProps.classes.noOptionsMessage} {...props.innerProps}>
