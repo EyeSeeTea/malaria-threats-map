@@ -5,7 +5,7 @@ import TypeFilter from "../../../filters/TypeFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
 
-export default function IntensityStatusFilters() {
+function IntensityStatusFilters() {
     return (
         <div>
             <InsecticideClassFilter />
@@ -16,3 +16,4 @@ export default function IntensityStatusFilters() {
         </div>
     );
 }
+export default IntensityStatusFilters;
