@@ -5,19 +5,16 @@ import TypeFilter from "../../../filters/TypeFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
 
-interface Props {
-    years: Record<string, number>;
-}
-
-const ResistanceStatusFilters: React.FC<Props> = ({ years }) => {
+function ResistanceStatusFilters() {
     return (
         <div>
             <InsecticideClassFilter />
             <InsecticideTypeFilter />
             <TypeFilter />
             <SpeciesFilter />
-            <YearRangeSelector minYear={years.minYear} maxYear={years.maxYear} />
+            <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />        
         </div>
     );
-};
+}
+
 export default ResistanceStatusFilters;
