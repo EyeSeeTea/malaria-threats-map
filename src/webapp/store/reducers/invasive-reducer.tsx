@@ -54,12 +54,15 @@ export default createReducer<InvasiveState>(initialState, {
 
 const selectInvasiveState = (state: State) => state.invasive;
 
-export const selectInvasiveStudies = createSelector(selectInvasiveState, R.prop("studies"));
+export const selectInvasiveStudies = createSelector(selectInvasiveState, invasiveState => invasiveState.studies);
 
-export const selectInvasiveStudiesLoading = createSelector(selectInvasiveState, R.prop("loading"));
+export const selectInvasiveStudiesLoading = createSelector(selectInvasiveState, invasiveState => invasiveState.loading);
 
-export const selectInvasiveStudiesError = createSelector(selectInvasiveState, R.prop("error"));
+export const selectInvasiveStudiesError = createSelector(selectInvasiveState, invasiveState => invasiveState.error);
 
-export const selectFilteredInvasiveStudies = createSelector(selectInvasiveState, R.prop("filteredStudies"));
+export const selectFilteredInvasiveStudies = createSelector(
+    selectInvasiveState,
+    invasiveState => invasiveState.filteredStudies
+);
 
-export const selectInvasiveFilters = createSelector(selectInvasiveState, R.prop("filters"));
+export const selectInvasiveFilters = createSelector(selectInvasiveState, invasiveState => invasiveState.filters);

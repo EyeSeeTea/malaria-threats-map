@@ -27,34 +27,34 @@ export default createReducer<TranslationsState>(initialState, {
 
 const selectTranslationsState = (state: State) => state.translations;
 
-export const selectTranslations = createSelector(selectTranslationsState, R.prop("translations"));
+export const selectTranslations = createSelector(selectTranslationsState, state => state.translations);
 
-export const selectTranslationsAreLoading = createSelector(selectTranslationsState, R.prop("loading"));
+export const selectTranslationsAreLoading = createSelector(selectTranslationsState, state => state.loading);
 
-const selectFields = createSelector(selectTranslationsState, R.prop("fields"));
+const selectFields = createSelector(selectTranslationsState, state => state.fields);
 
-export const selectInsecticideClasses = createSelector(selectFields, R.propOr([], "INSECTICIDE_CLASS"));
+export const selectInsecticideClasses = createSelector(selectFields, state => state.INSECTICIDE_CLASS || []);
 
-export const selectInsecticideTypes = createSelector(selectFields, R.propOr([], "INSECTICIDE_TYPE"));
+export const selectInsecticideTypes = createSelector(selectFields, state => state.INSECTICIDE_TYPE || []);
 
-export const selectAssayTypes = createSelector(selectFields, R.propOr([], "ASSAY_TYPE"));
+export const selectAssayTypes = createSelector(selectFields, state => state.ASSAY_TYPE || []);
 
-export const selectTypes = createSelector(selectFields, R.propOr([], "TYPE"));
+export const selectTypes = createSelector(selectFields, state => state.TYPE || []);
 
-export const selectSpecies = createSelector(selectFields, R.propOr([], "SPECIES"));
+export const selectSpecies = createSelector(selectFields, state => state.SPECIES || []);
 
-export const selectSurveyTypes = createSelector(selectFields, R.propOr([], "SURVEY_TYPE"));
+export const selectSurveyTypes = createSelector(selectFields, state => state.SURVEY_TYPE || []);
 
-export const selectPatientType = createSelector(selectFields, R.propOr([], "PATIENT_TYPE"));
+export const selectPatientType = createSelector(selectFields, state => state.PATIENT_TYPE || []);
 
 export const selectCountries = createSelector(selectTranslationsState, state => {
     const { COUNTRY_NAME = [] } = R.groupBy(R.path(["FIELD"]), state.translations);
     return COUNTRY_NAME;
 });
 
-export const selectPlasmodiumSpecies = createSelector(selectFields, R.propOr([], "PLASMODIUM_SPECIES"));
+export const selectPlasmodiumSpecies = createSelector(selectFields, state => state.PLASMODIUM_SPECIES || []);
 
-export const selectDrugs = createSelector(selectFields, R.propOr([], "DRUG_NAME"));
+export const selectDrugs = createSelector(selectFields, state => state.DRUG_NAME || []);
 
-export const selectSubRegions = createSelector(selectFields, R.propOr([], "SUBREGION"));
-export const selectRegions = createSelector(selectFields, R.propOr([], "REGION_FULL"));
+export const selectSubRegions = createSelector(selectFields, state => state.SUBREGION || []);
+export const selectRegions = createSelector(selectFields, state => state.REGION_FULL || []);

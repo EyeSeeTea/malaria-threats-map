@@ -119,39 +119,42 @@ export default createReducer<MalariaState>(initialState, {
 
 const selectMalariaState = (state: State) => state.malaria;
 
-export const selectTheme = createSelector(selectMalariaState, R.prop("theme"));
-export const selectStoryMode = createSelector(selectMalariaState, R.prop("storyMode"));
-export const selectAny = createSelector(selectMalariaState, R.prop("any"));
-export const selectEndemicity = createSelector(selectMalariaState, R.prop("endemicity"));
-export const selectCountryMode = createSelector(selectMalariaState, R.prop("countryMode"));
-export const selectFilters = createSelector(selectMalariaState, R.prop("filters"));
-export const selectRegion = createSelector(selectMalariaState, R.prop("region"));
-export const selectIsInitialDialogOpen = createSelector(selectMalariaState, R.prop("initialDialogOpen"));
-export const selectAreFiltersOpen = createSelector(selectMalariaState, R.prop("filtersOpen"));
-export const selectFiltersMode = createSelector(selectMalariaState, R.prop("filtersMode"));
-export const selectStoryModeStep = createSelector(selectMalariaState, R.prop("storyModeStep"));
-export const selectSelection = createSelector(selectMalariaState, R.prop("selection"));
-export const selectAreMobileOptionsOpen = createSelector(selectMalariaState, R.prop("mobileOptionsOpen"));
-export const selectSetZoom = createSelector(selectMalariaState, R.prop("setZoom"));
-export const selectSetBounds = createSelector(selectMalariaState, R.prop("setBounds"));
-export const selectTour = createSelector(selectMalariaState, R.prop("tour"));
-export const selectIsDataDownloadOpen = createSelector(selectMalariaState, R.prop("dataDownloadOpen"));
-export const selectIsReportOpen = createSelector(selectMalariaState, R.prop("reportOpen"));
+export const selectTheme = createSelector(selectMalariaState, state => state.theme);
+export const selectStoryMode = createSelector(selectMalariaState, state => state.storyMode);
+export const selectAny = createSelector(selectMalariaState, state => state.any);
+export const selectEndemicity = createSelector(selectMalariaState, state => state.endemicity);
+export const selectCountryMode = createSelector(selectMalariaState, state => state.countryMode);
+export const selectFilters = createSelector(selectMalariaState, state => state.filters);
+export const selectRegion = createSelector(selectMalariaState, state => state.region);
+export const selectIsInitialDialogOpen = createSelector(selectMalariaState, state => state.initialDialogOpen);
+export const selectAreFiltersOpen = createSelector(selectMalariaState, state => state.filtersOpen);
+export const selectFiltersMode = createSelector(selectMalariaState, state => state.filtersMode);
+export const selectStoryModeStep = createSelector(selectMalariaState, state => state.storyModeStep);
+export const selectSelection = createSelector(selectMalariaState, state => state.selection);
+export const selectAreMobileOptionsOpen = createSelector(selectMalariaState, state => state.mobileOptionsOpen);
+export const selectSetZoom = createSelector(selectMalariaState, state => state.setZoom);
+export const selectSetBounds = createSelector(selectMalariaState, state => state.setBounds);
+export const selectTour = createSelector(selectMalariaState, state => state.tour);
+export const selectIsDataDownloadOpen = createSelector(selectMalariaState, state => state.dataDownloadOpen);
+export const selectIsReportOpen = createSelector(selectMalariaState, state => state.reportOpen);
 
-export const selectMapTitle = createSelector(selectMalariaState, R.prop("mapTitle"));
+export const selectMapTitle = createSelector(selectMalariaState, state => state.mapTitle);
 
-export const selectIsSubscriptionOpen = createSelector(selectMalariaState, R.prop("subscriptionOpen"));
+export const selectIsSubscriptionOpen = createSelector(selectMalariaState, state => state.subscriptionOpen);
 
-export const selectUploadFileOpen = createSelector(selectMalariaState, R.prop("uploadFileOpen"));
+export const selectUploadFileOpen = createSelector(selectMalariaState, state => state.uploadFileOpen);
 
-export const selectIsFeedbackOpen = createSelector(selectMalariaState, R.prop("feedbackOpen"));
+export const selectIsFeedbackOpen = createSelector(selectMalariaState, state => state.feedbackOpen);
 
-export const selectTheaterMode = createSelector(selectMalariaState, R.prop("theaterMode"));
+export const selectTheaterMode = createSelector(selectMalariaState, state => state.theaterMode);
 
-export const selectLegendExpanded = createSelector(selectMalariaState, R.prop("legendExpanded"));
+export const selectLegendExpanded = createSelector(selectMalariaState, state => state.legendExpanded);
 
-export const selectIsSubmittingSubscription = createSelector(selectMalariaState, R.prop("isSubmittingSubscription"));
+export const selectIsSubmittingSubscription = createSelector(
+    selectMalariaState,
+    state => state.isSubmittingSubscription
+);
 
-export const selectIsUploadingFile = createSelector(selectMalariaState, R.prop("isUploadingFile"));
+export const selectIsUploadingFile = createSelector(selectMalariaState, state => state.isUploadingFile);
 
-export const selectLastUpdatedDates = createSelector(selectMalariaState, R.prop("lastUpdatedDates"));
+export const selectLastUpdatedDates = createSelector(selectMalariaState, state => state.lastUpdatedDates);

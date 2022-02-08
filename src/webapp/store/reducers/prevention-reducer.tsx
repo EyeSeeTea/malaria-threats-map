@@ -88,12 +88,12 @@ export default createReducer<PreventionState>(initialState, {
 
 const selectPreventionState = (state: State) => state.prevention;
 
-export const selectPreventionStudies = createSelector(selectPreventionState, R.prop("studies"));
+export const selectPreventionStudies = createSelector(selectPreventionState, state => state.studies);
 
-export const selectPreventionStudiesLoading = createSelector(selectPreventionState, R.prop("loading"));
+export const selectPreventionStudiesLoading = createSelector(selectPreventionState, state => state.loading);
 
-export const selectPreventionStudiesError = createSelector(selectPreventionState, R.prop("error"));
+export const selectPreventionStudiesError = createSelector(selectPreventionState, state => state.error);
 
-export const selectFilteredPreventionStudies = createSelector(selectPreventionState, R.prop("filteredStudies"));
+export const selectFilteredPreventionStudies = createSelector(selectPreventionState, state => state.filteredStudies);
 
-export const selectPreventionFilters = createSelector(selectPreventionState, R.prop("filters"));
+export const selectPreventionFilters = createSelector(selectPreventionState, state => state.filters);

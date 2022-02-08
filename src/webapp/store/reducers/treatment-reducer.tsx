@@ -83,12 +83,12 @@ export default createReducer<TreatmentState>(initialState, {
 
 const selectTreatmentState = (state: State) => state.treatment;
 
-export const selectTreatmentStudies = createSelector(selectTreatmentState, R.prop("studies"));
+export const selectTreatmentStudies = createSelector(selectTreatmentState, state => state.studies);
 
-export const selectTreatmentStudiesLoading = createSelector(selectTreatmentState, R.prop("loading"));
+export const selectTreatmentStudiesLoading = createSelector(selectTreatmentState, state => state.loading);
 
-export const selectTreatmentStudiesError = createSelector(selectTreatmentState, R.prop("error"));
+export const selectTreatmentStudiesError = createSelector(selectTreatmentState, state => state.error);
 
-export const selectFilteredTreatmentStudies = createSelector(selectTreatmentState, R.prop("filteredStudies"));
+export const selectFilteredTreatmentStudies = createSelector(selectTreatmentState, state => state.filteredStudies);
 
-export const selectTreatmentFilters = createSelector(selectTreatmentState, R.prop("filters"));
+export const selectTreatmentFilters = createSelector(selectTreatmentState, state => state.filters);
