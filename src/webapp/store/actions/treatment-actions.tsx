@@ -3,44 +3,24 @@ import { ActionTypeEnum } from "../actions";
 import { TreatmentMapType } from "../types";
 import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
 
-export const fetchTreatmentStudiesRequest = createAction(ActionTypeEnum.FetchTreatmentStudiesRequest, action => {
-    return () => action();
-});
+export const fetchTreatmentStudiesRequest = createAction(ActionTypeEnum.FetchTreatmentStudiesRequest)();
 
-export const fetchTreatmentStudiesSuccess = createAction(
-    ActionTypeEnum.FetchTreatmentStudiesSuccess,
-    action => (studies: TreatmentStudy[]) => action(studies)
-);
+export const fetchTreatmentStudiesSuccess = createAction(ActionTypeEnum.FetchTreatmentStudiesSuccess)<
+    TreatmentStudy[]
+>();
 
-export const fetchTreatmentStudiesError = createAction(
-    ActionTypeEnum.FetchTreatmentStudiesError,
-    action => () => action()
-);
+export const fetchTreatmentStudiesError = createAction(ActionTypeEnum.FetchTreatmentStudiesError)();
 
-export const setTreatmentMapType = createAction(ActionTypeEnum.SetTreatmentMapType, action => {
-    return (mapType: TreatmentMapType) => action(mapType);
-});
+export const setTreatmentMapType = createAction(ActionTypeEnum.SetTreatmentMapType)<TreatmentMapType>();
 
-export const setTreatmentPlasmodiumSpecies = createAction(ActionTypeEnum.SetPlasmodiumSpecies, action => {
-    return (plasmodiumSpecies: string) => action(plasmodiumSpecies);
-});
+export const setTreatmentPlasmodiumSpecies = createAction(ActionTypeEnum.SetPlasmodiumSpecies)<string>();
 
-export const setTreatmentDrug = createAction(ActionTypeEnum.SetDrug, action => {
-    return (drug: string) => action(drug);
-});
+export const setTreatmentDrug = createAction(ActionTypeEnum.SetDrug)<string>();
 
-export const setMolecularMarker = createAction(ActionTypeEnum.SetMolecularMarker, action => {
-    return (molecularMarker: number) => action(molecularMarker);
-});
+export const setMolecularMarker = createAction(ActionTypeEnum.SetMolecularMarker)<number>();
 
-export const setExcludeLowerPatients = createAction(ActionTypeEnum.SetExcludeLowerPatients, action => {
-    return (value: boolean) => action(value);
-});
+export const setExcludeLowerPatients = createAction(ActionTypeEnum.SetExcludeLowerPatients)<boolean>();
 
-export const setExcludeLowerSamples = createAction(ActionTypeEnum.SetExcludeLowerSamples, action => {
-    return (value: boolean) => action(value);
-});
+export const setExcludeLowerSamples = createAction(ActionTypeEnum.SetExcludeLowerSamples)<boolean>();
 
-export const setFilteredStudiesAction = createAction(ActionTypeEnum.SetTreatmentFilteredStudies, action => {
-    return (filteredStudies: TreatmentStudy[]) => action(filteredStudies);
-});
+export const setFilteredStudiesAction = createAction(ActionTypeEnum.SetTreatmentFilteredStudies)<TreatmentStudy[]>();

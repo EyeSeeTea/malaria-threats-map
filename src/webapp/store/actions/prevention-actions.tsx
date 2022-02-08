@@ -3,47 +3,28 @@ import { ActionTypeEnum } from "../actions";
 import { PreventionMapType } from "../types";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
-export const fetchPreventionStudiesRequest = createAction(ActionTypeEnum.FetchPreventionStudiesRequest, action => {
-    return () => action();
-});
+export const fetchPreventionStudiesRequest = createAction(ActionTypeEnum.FetchPreventionStudiesRequest)();
 
-export const fetchPreventionStudiesSuccess = createAction(ActionTypeEnum.FetchPreventionStudiesSuccess, action => {
-    return (studies: PreventionStudy[]) => action(studies);
-});
+export const fetchPreventionStudiesSuccess = createAction(ActionTypeEnum.FetchPreventionStudiesSuccess)<
+    PreventionStudy[]
+>();
 
-export const fetchPreventionStudiesError = createAction(
-    ActionTypeEnum.FetchPreventionStudiesError,
-    action => () => action()
-);
+export const fetchPreventionStudiesError = createAction(ActionTypeEnum.FetchPreventionStudiesError)();
 
-export const setPreventionMapType = createAction(ActionTypeEnum.SetPreventionMapType, action => {
-    return (mapType: PreventionMapType) => action(mapType);
-});
+export const setPreventionMapType = createAction(ActionTypeEnum.SetPreventionMapType)<PreventionMapType>();
 
-export const setInsecticideClass = createAction(ActionTypeEnum.SetInsecticideClass, action => {
-    return (insecticideClass: string) => action(insecticideClass);
-});
+export const setInsecticideClass = createAction(ActionTypeEnum.SetInsecticideClass)<string>();
 
-export const setInsecticideTypes = createAction(ActionTypeEnum.SetInsecticideTypes, action => {
-    return (insecticideTypes: string[]) => action(insecticideTypes);
-});
+export const setInsecticideTypes = createAction(ActionTypeEnum.SetInsecticideTypes)<string[]>();
 
-export const setAssayTypes = createAction(ActionTypeEnum.SetAssayTypes, action => {
-    return (assayTypes: string[]) => action(assayTypes);
-});
+export const setAssayTypes = createAction(ActionTypeEnum.SetAssayTypes)<string[]>();
 
-export const setType = createAction(ActionTypeEnum.SetType, action => {
-    return (type: string) => action(type);
-});
+export const setType = createAction(ActionTypeEnum.SetType)<string>();
 
-export const setSynergistTypes = createAction(ActionTypeEnum.SetSynergistTypes, action => {
-    return (type: string[]) => action(type);
-});
+export const setSynergistTypes = createAction(ActionTypeEnum.SetSynergistTypes)<string[]>();
 
-export const setSpecies = createAction(ActionTypeEnum.SetSpecies, action => {
-    return (species: string[]) => action(species);
-});
+export const setSpecies = createAction(ActionTypeEnum.SetSpecies)<string[]>();
 
-export const setPreventionFilteredStudiesAction = createAction(ActionTypeEnum.SetPreventionFilteredStudies, action => {
-    return (filteredStudies: PreventionStudy[]) => action(filteredStudies);
-});
+export const setPreventionFilteredStudiesAction = createAction(ActionTypeEnum.SetPreventionFilteredStudies)<
+    PreventionStudy[]
+>();
