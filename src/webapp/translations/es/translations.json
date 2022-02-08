@@ -118,12 +118,10 @@
                     "eligible": "Todos los criterios cumplidos",
                     "not_eligible": "Al menos un criterio no se cumple",
                     "not_enough_data": "Es necesario recopilar más datos para evaluar los criterios",
-                    "no_data": "No hay datos disponibles",
                     "expanded": {
                         "eligible": "sitios donde al menos una especie de vector cumple los tres criterios recomendados por la OMS",
                         "not_eligible": "sitios donde una de las especies de vectores para las que se dispone de datos viola al menos uno de los, y ninguna de las especies para las que se dispone de datos cumple los tres criterios.",
                         "not_enough_data": "sitios con datos insuficientes para evaluar si las especies de vectores locales cumplen con los tres criterios",
-                        "no_data": "datos no disponibles",
                         "p1": "Este mapa muestra el estado de cumplimiento de las poblaciones de vectores locales con la ",
                         "p1Link": "https://apps.who.int/iris/bitstream/handle/10665/258939/WHO-HTM-GMP-2017.17-eng.pdf?sequence=5",
                         "p1a": "tres criterios recomendados por la OMS ",

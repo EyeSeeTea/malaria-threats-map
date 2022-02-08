@@ -150,7 +150,6 @@ class PreventionLayer extends Component<Props> {
             studies
         );
         const filteredStudies = R.values(groupedStudies).map(group => studySelector(group, mapType));
-
         return filteredStudies.map(study => {
             const percentage = parseFloat(study["MORTALITY_ADJUSTED"]);
             return {
