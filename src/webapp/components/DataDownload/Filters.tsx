@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import _ from "lodash";
 import ThemeFilter from "./filters/ThemeFilter";
 import { State } from "../../store/types";
 import { selectTheme } from "../../store/reducers/base-reducer";
@@ -6,6 +7,8 @@ import { setThemeAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
 import YearsSelector from "./filters/YearsSelector";
 import CountriesSelector from "./filters/CountriesSelector";
+import CountriesSelectorDD from "./filters/CountriesSelectorDD";
+
 import InsecticideClassSelector from "../filters/InsecticideClassSelector";
 import SpeciesSelector from "../filters/SpeciesSelector";
 import TypeSelector from "../filters/TypeSelector";
@@ -69,6 +72,7 @@ const Filters = ({
 }: Props) => {
     const { t } = useTranslation();
     const [yearRange, setYearRange] = useState({ minYear: 1978, maxYear: new Date().getFullYear() });
+    const [countryOptions, setCountryOptions] = useState<Array<any>>([]);
 
     useEffect(() => {
         let studySelected: Array<PreventionStudy | TreatmentStudy | InvasiveStudy> = [];
@@ -83,10 +87,12 @@ const Filters = ({
                 studySelected = invasiveStudies;
                 break;
         }
-
         const yearStartedStudies = studySelected
             .filter(study => Number(study.YEAR_START) !== 0)
             .map(study => Number(study.YEAR_START));
+        const countriesStudies = _.uniq(studySelected.filter(study => study.COUNTRY_NAME !== "").map(study => study.COUNTRY_NAME));
+        console.log(countriesStudies)
+        setCountryOptions(countriesStudies)
         const minYear = yearStartedStudies.length > 0 ? Math.min(...yearStartedStudies) : 0;
         const maxYear = yearStartedStudies.length > 0 ? Math.max(...yearStartedStudies) : 0;
         setYearRange({ minYear, maxYear });
@@ -98,6 +104,7 @@ const Filters = ({
         selections.treatmentDataset,
         selections.invasiveDataset,
         selections.theme,
+        selections.countries,
     ]);
 
     const onSetTheme = (value: string) => {
@@ -318,10 +325,12 @@ const Filters = ({
                     minYear={yearRange.minYear}
                     maxYear={yearRange.maxYear}
                 />
-                <CountriesSelector value={countries} onChange={onSetCountries} />
+                <CountriesSelectorDD value={countries} countryOptions={countryOptions} onChange={onSetCountries} />
+
+                
             </Paper>
         </div>
     );
 };
-
+//<CountriesSelector value={countryOptions} onChange={onSetCountries} />
 export default connect(mapStateToProps, mapDispatchToProps)(Filters);
