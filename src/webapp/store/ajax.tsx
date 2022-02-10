@@ -35,6 +35,7 @@ const buildAjaxOptions = ({ method, path, customPath, body, headers }: AjaxOptio
     method,
     body,
     headers,
+    crossDomain: true,
     url: customPath ? path : `${config.mapServerUrl}${path}`,
 });
 
