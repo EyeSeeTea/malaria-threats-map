@@ -30,6 +30,7 @@ import DataSetSelector from "./filters/DataSetSelector";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
 import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
+import { filterByAssayTypes } from "../layers/studies-filters";
 
 const Divider = styled.div`
     height: 16px;
@@ -72,11 +73,13 @@ const Filters = ({
     const [yearRange, setYearRange] = useState({ minYear: 1978, maxYear: new Date().getFullYear() });
     const [countryOptions, setCountryOptions] = useState<Array<string>>([]);
 
-    const getSelectedStudy = useCallback(() => {
+    const getSelectedStudyWithDatasetFiltered = useCallback(() => {
         let studySelected: Array<PreventionStudy | TreatmentStudy | InvasiveStudy> = [];
+        let datasetSelected = "";
         switch (selections.theme) {
             case "prevention":
                 studySelected = preventionStudies;
+                datasetSelected = selections.preventionDataset;
                 break;
             case "treatment":
                 studySelected = treatmentStudies;
@@ -85,8 +88,16 @@ const Filters = ({
                 studySelected = invasiveStudies;
                 break;
         }
-        return studySelected;
-    }, [invasiveStudies, preventionStudies, treatmentStudies, selections.theme]);
+        //only the prevention theme uses the dataset to filter studies
+        const studiesFilteredByDataset =
+            datasetSelected !== ""
+                ? [filterByAssayTypes([datasetSelected])].reduce(
+                      (studies, filter) => studies.filter(filter),
+                      studySelected
+                  )
+                : studySelected;
+        return studiesFilteredByDataset;
+    }, [invasiveStudies, preventionStudies, treatmentStudies, selections.theme, selections.preventionDataset]);
 
     const getMinMaxYearAndSetYearRange = (yearStartedStudies: Array<number>) => {
         const minYear = yearStartedStudies.length > 0 ? Math.min(...yearStartedStudies) : 0;
@@ -96,7 +107,7 @@ const Filters = ({
 
     useEffect(() => {
         //when the selected theme or dataset changes, we recompute the available years and countries
-        const studySelected = getSelectedStudy();
+        const studySelected = getSelectedStudyWithDatasetFiltered();
         const yearStartedStudies = studySelected
             .filter(study => Number(study.YEAR_START) !== 0)
             .map(study => Number(study.YEAR_START));
@@ -112,7 +123,7 @@ const Filters = ({
         preventionStudies,
         invasiveStudies,
         treatmentStudies,
-        getSelectedStudy
+        getSelectedStudyWithDatasetFiltered,
     ]);
 
     /*
@@ -122,14 +133,14 @@ const Filters = ({
     then get preventionStudies that happened in 1981 and 1995 and those countries 
     */
     useEffect(() => {
-        const studySelected = getSelectedStudy();
+        const studySelected = getSelectedStudyWithDatasetFiltered();
         const studiesWithinSelectedYears = studySelected.filter(study =>
             selections.years.includes(Number(study.YEAR_START))
         );
         const nonZeroStudies = studiesWithinSelectedYears.length > 0 ? studiesWithinSelectedYears : studySelected;
         const countriesStudies = _.uniq(nonZeroStudies.filter(study => study.ISO2 !== "").map(study => study.ISO2));
         setCountryOptions(countriesStudies);
-    }, [selections.years, getSelectedStudy]);
+    }, [selections.years, getSelectedStudyWithDatasetFiltered]);
 
     /*
     if country was changed, then we the studies + dataset with only the country available 
@@ -138,7 +149,7 @@ const Filters = ({
     then get preventionStudies that happened in Afghanistan and get those years
     */
     useEffect(() => {
-        const studySelected = getSelectedStudy();
+        const studySelected = getSelectedStudyWithDatasetFiltered();
         const studiesWithinSelectedCountries = studySelected.filter(study => selections.countries.includes(study.ISO2));
         const nonZeroStudies =
             studiesWithinSelectedCountries.length > 0 ? studiesWithinSelectedCountries : studySelected;
@@ -146,7 +157,7 @@ const Filters = ({
             nonZeroStudies.filter(study => Number(study.YEAR_START) !== 0).map(study => Number(study.YEAR_START))
         );
         getMinMaxYearAndSetYearRange(yearStartedStudies);
-    }, [selections.countries, getSelectedStudy]);
+    }, [selections.countries, getSelectedStudyWithDatasetFiltered]);
 
     const onSetTheme = (value: string) => {
         onChange({
