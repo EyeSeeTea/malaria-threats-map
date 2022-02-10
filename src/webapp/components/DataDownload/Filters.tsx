@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import _ from "lodash";
 import ThemeFilter from "./filters/ThemeFilter";
 import { State } from "../../store/types";
@@ -7,8 +7,6 @@ import { setThemeAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
 import YearsSelector from "./filters/YearsSelector";
 import CountriesSelector from "./filters/CountriesSelector";
-import CountriesSelectorDD from "./filters/CountriesSelectorDD";
-
 import InsecticideClassSelector from "../filters/InsecticideClassSelector";
 import SpeciesSelector from "../filters/SpeciesSelector";
 import TypeSelector from "../filters/TypeSelector";
@@ -72,9 +70,9 @@ const Filters = ({
 }: Props) => {
     const { t } = useTranslation();
     const [yearRange, setYearRange] = useState({ minYear: 1978, maxYear: new Date().getFullYear() });
-    const [countryOptions, setCountryOptions] = useState<Array<any>>([]);
+    const [countryOptions, setCountryOptions] = useState<Array<string>>([]);
 
-    useEffect(() => {
+    const getSelectedStudy = useCallback(() => {
         let studySelected: Array<PreventionStudy | TreatmentStudy | InvasiveStudy> = [];
         switch (selections.theme) {
             case "prevention":
@@ -87,25 +85,68 @@ const Filters = ({
                 studySelected = invasiveStudies;
                 break;
         }
-        const yearStartedStudies = studySelected
-            .filter(study => Number(study.YEAR_START) !== 0)
-            .map(study => Number(study.YEAR_START));
-        const countriesStudies = _.uniq(studySelected.filter(study => study.COUNTRY_NAME !== "").map(study => study.COUNTRY_NAME));
-        console.log(countriesStudies)
-        setCountryOptions(countriesStudies)
+        return studySelected;
+    }, [invasiveStudies, preventionStudies, treatmentStudies, selections.theme]);
+
+    const getMinMaxYearAndSetYearRange = (yearStartedStudies: Array<number>) => {
         const minYear = yearStartedStudies.length > 0 ? Math.min(...yearStartedStudies) : 0;
         const maxYear = yearStartedStudies.length > 0 ? Math.max(...yearStartedStudies) : 0;
         setYearRange({ minYear, maxYear });
+    };
+
+    useEffect(() => {
+        //when the selected theme or dataset changes, we recompute the available years and countries
+        const studySelected = getSelectedStudy();
+        const yearStartedStudies = studySelected
+            .filter(study => Number(study.YEAR_START) !== 0)
+            .map(study => Number(study.YEAR_START));
+        getMinMaxYearAndSetYearRange(yearStartedStudies);
+
+        const countriesStudies = _.uniq(studySelected.filter(study => study.ISO2 !== "").map(study => study.ISO2));
+        setCountryOptions(countriesStudies);
     }, [
-        preventionStudies,
-        treatmentStudies,
-        invasiveStudies,
+        selections.theme,
         selections.preventionDataset,
         selections.treatmentDataset,
         selections.invasiveDataset,
-        selections.theme,
-        selections.countries,
+        preventionStudies,
+        invasiveStudies,
+        treatmentStudies,
+        getSelectedStudy
     ]);
+
+    /*
+    if year was changed, then we get the studies + dataset with only the year available 
+    and then those studies, compute the new country
+    so if studies = prevention and year selected is 1981 and 1995, 
+    then get preventionStudies that happened in 1981 and 1995 and those countries 
+    */
+    useEffect(() => {
+        const studySelected = getSelectedStudy();
+        const studiesWithinSelectedYears = studySelected.filter(study =>
+            selections.years.includes(Number(study.YEAR_START))
+        );
+        const nonZeroStudies = studiesWithinSelectedYears.length > 0 ? studiesWithinSelectedYears : studySelected;
+        const countriesStudies = _.uniq(nonZeroStudies.filter(study => study.ISO2 !== "").map(study => study.ISO2));
+        setCountryOptions(countriesStudies);
+    }, [selections.years, getSelectedStudy]);
+
+    /*
+    if country was changed, then we the studies + dataset with only the country available 
+    and then those studies, compute the new years available
+    so if studies = prevention and country was Afghanistan
+    then get preventionStudies that happened in Afghanistan and get those years
+    */
+    useEffect(() => {
+        const studySelected = getSelectedStudy();
+        const studiesWithinSelectedCountries = studySelected.filter(study => selections.countries.includes(study.ISO2));
+        const nonZeroStudies =
+            studiesWithinSelectedCountries.length > 0 ? studiesWithinSelectedCountries : studySelected;
+        const yearStartedStudies = _.uniq(
+            nonZeroStudies.filter(study => Number(study.YEAR_START) !== 0).map(study => Number(study.YEAR_START))
+        );
+        getMinMaxYearAndSetYearRange(yearStartedStudies);
+    }, [selections.countries, getSelectedStudy]);
 
     const onSetTheme = (value: string) => {
         onChange({
@@ -131,6 +172,8 @@ const Filters = ({
         onChange({
             ...selections,
             treatmentDataset: value,
+            years: [],
+            countries: [],
         });
     };
 
@@ -139,6 +182,8 @@ const Filters = ({
         onChange({
             ...selections,
             invasiveDataset: value,
+            years: [],
+            countries: [],
         });
     };
 
@@ -325,12 +370,10 @@ const Filters = ({
                     minYear={yearRange.minYear}
                     maxYear={yearRange.maxYear}
                 />
-                <CountriesSelectorDD value={countries} countryOptions={countryOptions} onChange={onSetCountries} />
-
-                
+                <CountriesSelector value={countries} countryOptions={countryOptions} onChange={onSetCountries} />
             </Paper>
         </div>
     );
 };
-//<CountriesSelector value={countryOptions} onChange={onSetCountries} />
+
 export default connect(mapStateToProps, mapDispatchToProps)(Filters);
