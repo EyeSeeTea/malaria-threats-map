@@ -1,7 +1,7 @@
-import { ActionsObservable, StateObservable } from "redux-observable";
+import { ofType, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
 import {
     fetchTreatmentStudiesError,
@@ -31,11 +31,12 @@ function groupStudies(studies: TreatmentStudy[]) {
 }
 
 export const getTreatmentStudiesEpic = (
-    action$: ActionsObservable<ActionType<typeof fetchTreatmentStudiesRequest>>,
+    action$: Observable<ActionType<typeof fetchTreatmentStudiesRequest>>,
     state$: StateObservable<State>,
     { compositionRoot }: EpicDependencies
 ) =>
-    action$.ofType(ActionTypeEnum.FetchTreatmentStudiesRequest).pipe(
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchTreatmentStudiesRequest),
         withLatestFrom(state$),
         switchMap(([, state]) => {
             if (state.treatment.studies.length === 0 && !state.treatment.error) {
@@ -51,8 +52,9 @@ export const getTreatmentStudiesEpic = (
         })
     );
 
-export const setTreatmentThemeEpic = (action$: ActionsObservable<ActionType<typeof setTreatmentMapType>>) =>
-    action$.ofType(ActionTypeEnum.SetTreatmentMapType).pipe(
+export const setTreatmentThemeEpic = (action$: Observable<ActionType<typeof setTreatmentMapType>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetTreatmentMapType),
         switchMap(action => {
             if (action.payload === 2) {
                 return of(setMolecularMarker(0));
@@ -61,10 +63,9 @@ export const setTreatmentThemeEpic = (action$: ActionsObservable<ActionType<type
         })
     );
 
-export const setPlasmodiumSpeciesEpic = (
-    action$: ActionsObservable<ActionType<typeof setTreatmentPlasmodiumSpecies>>
-) =>
-    action$.ofType(ActionTypeEnum.SetPlasmodiumSpecies).pipe(
+export const setPlasmodiumSpeciesEpic = (action$: Observable<ActionType<typeof setTreatmentPlasmodiumSpecies>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetPlasmodiumSpecies),
         switchMap(action => {
             if (action.payload === "P._FALCIPARUM") {
                 return of(setTreatmentDrug("DRUG_AL"));
@@ -75,8 +76,9 @@ export const setPlasmodiumSpeciesEpic = (
         })
     );
 
-export const setTreatmentMapTypeEpic = (action$: ActionsObservable<ActionType<typeof setTreatmentMapType>>) =>
-    action$.ofType(ActionTypeEnum.SetTreatmentMapType).pipe(
+export const setTreatmentMapTypeEpic = (action$: Observable<ActionType<typeof setTreatmentMapType>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetTreatmentMapType),
         switchMap(action => {
             const pageView = getAnalyticsPageView({ page: "treatment", section: action.payload });
             const logPageView = logPageViewAction(pageView);
@@ -92,17 +94,15 @@ export const setTreatmentMapTypeEpic = (action$: ActionsObservable<ActionType<ty
     );
 
 export const setTreatmentPlasmodiumSpeciesEpic = (
-    action$: ActionsObservable<ActionType<typeof setTreatmentPlasmodiumSpecies>>
+    action$: Observable<ActionType<typeof setTreatmentPlasmodiumSpecies>>
 ) =>
-    action$
-        .ofType(ActionTypeEnum.SetPlasmodiumSpecies)
-        .pipe(skip(1))
-        .pipe(
-            switchMap(action => {
-                if (["P._FALCIPARUM", "P._KNOWLESI", "P._OVALE"].includes(action.payload)) {
-                    return of(setTreatmentDrug("DRUG_AL"));
-                } else {
-                    return of(setTreatmentDrug("DRUG_CQ"));
-                }
-            })
-        );
+    action$.pipe(skip(1)).pipe(
+        ofType(ActionTypeEnum.SetPlasmodiumSpecies),
+        switchMap(action => {
+            if (["P._FALCIPARUM", "P._KNOWLESI", "P._OVALE"].includes(action.payload)) {
+                return of(setTreatmentDrug("DRUG_AL"));
+            } else {
+                return of(setTreatmentDrug("DRUG_CQ"));
+            }
+        })
+    );

@@ -1,4 +1,3 @@
-import * as R from "ramda";
 import { catchError, map } from "rxjs/operators";
 import { ajax, AjaxError, AjaxResponse } from "rxjs/ajax";
 import config from "../config";
@@ -17,7 +16,7 @@ interface RequestParams {
     [key: string]: string | number | boolean;
 }
 
-const extractResponse = (res: AjaxResponse) => {
+const extractResponse = <T extends unknown>(res: AjaxResponse<T>) => {
     return res.response;
 };
 
@@ -39,26 +38,24 @@ const buildAjaxOptions = ({ method, path, customPath, body, headers }: AjaxOptio
     url: customPath ? path : `${config.mapServerUrl}${path}`,
 });
 
-const makeRequestAndHandleUnauthorized = (config: AjaxOptions) =>
-    ajax(buildAjaxOptions(config)).pipe(map(extractResponse), catchError(handleUnauthorized));
+const makeRequestAndHandleUnauthorized = <T extends unknown>(config: AjaxOptions) =>
+    ajax<T>(buildAjaxOptions(config)).pipe(map(extractResponse), catchError(handleUnauthorized));
 
-export const get = R.curry((path: string) =>
-    makeRequestAndHandleUnauthorized({
+export const get = <T extends unknown>(path: string) =>
+    makeRequestAndHandleUnauthorized<T>({
         method: "GET",
         path,
-    })
-);
+    });
 
-export const getFull = R.curry((path: string) =>
-    makeRequestAndHandleUnauthorized({
+export const getFull = <T extends unknown>(path: string) =>
+    makeRequestAndHandleUnauthorized<T>({
         method: "GET",
         path,
         customPath: true,
-    })
-);
+    });
 
-export const postFull = (path: string, request: any) =>
-    makeRequestAndHandleUnauthorized({
+export const postFull = <T extends unknown>(path: string, request: any) =>
+    makeRequestAndHandleUnauthorized<T>({
         method: "POST",
         path,
         body: request,
@@ -68,8 +65,8 @@ export const postFull = (path: string, request: any) =>
         customPath: true,
     });
 
-export const patchFull = (path: string, request: any) =>
-    makeRequestAndHandleUnauthorized({
+export const patchFull = <T extends unknown>(path: string, request: any) =>
+    makeRequestAndHandleUnauthorized<T>({
         method: "PATCH",
         path,
         body: request,

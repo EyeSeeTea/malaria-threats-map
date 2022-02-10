@@ -1,8 +1,8 @@
-import { ActionsObservable, StateObservable } from "redux-observable";
+import { ofType, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import _ from "lodash";
 import { ActionTypeEnum } from "../actions";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
 import {
     fetchPreventionStudiesError,
@@ -25,11 +25,12 @@ import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { EpicDependencies } from "../../store/index";
 
 export const getPreventionStudiesEpic = (
-    action$: ActionsObservable<ActionType<typeof fetchPreventionStudiesRequest>>,
+    action$: Observable<ActionType<typeof fetchPreventionStudiesRequest>>,
     state$: StateObservable<State>,
     { compositionRoot }: EpicDependencies
 ) =>
-    action$.ofType(ActionTypeEnum.FetchPreventionStudiesRequest).pipe(
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchPreventionStudiesRequest),
         withLatestFrom(state$),
         switchMap(([, state]) => {
             if (state.prevention.studies.length === 0 && !state.prevention.error) {
@@ -48,10 +49,11 @@ export const getPreventionStudiesEpic = (
     );
 
 export const setPreventionMapTypeEpic = (
-    action$: ActionsObservable<ActionType<typeof setPreventionMapType>>,
+    action$: Observable<ActionType<typeof setPreventionMapType>>,
     state$: StateObservable<State>
 ) =>
-    action$.ofType(ActionTypeEnum.SetPreventionMapType).pipe(
+    action$.pipe(
+        ofType(ActionTypeEnum.SetPreventionMapType),
         withLatestFrom(state$),
         switchMap(([action, state]) => {
             const pageView = getAnalyticsPageView({ page: "prevention", section: action.payload });
@@ -74,8 +76,9 @@ export const setPreventionMapTypeEpic = (
         })
     );
 
-export const setPreventionTypeEpic = (action$: ActionsObservable<ActionType<typeof setType>>) =>
-    action$.ofType(ActionTypeEnum.SetType).pipe(
+export const setPreventionTypeEpic = (action$: Observable<ActionType<typeof setType>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetType),
         switchMap(action => {
             const kdr = ["KDR_L1014S", "KDR_L1014F", "KDR_(MUTATION_UNSPECIFIED)"];
             if (kdr.includes(action.payload)) {
@@ -89,45 +92,39 @@ export const setPreventionTypeEpic = (action$: ActionsObservable<ActionType<type
     );
 
 export const setPreventionInsecticideClassEpic = (
-    action$: ActionsObservable<ActionType<typeof setInsecticideClass>>,
+    action$: Observable<ActionType<typeof setInsecticideClass>>,
     state$: StateObservable<State>
 ) =>
-    action$
-        .ofType(ActionTypeEnum.SetInsecticideClass)
-        .pipe(skip(1))
-        .pipe(
-            withLatestFrom(state$),
-            switchMap(([action, state]) => {
-                const isTourOpen = state.malaria.tour.open;
-                const actions = _.compact([
-                    setInsecticideTypes([]),
-                    setType(state.prevention.filters.type || "MONO_OXYGENASES"),
-                    setSpecies([]),
-                    isTourOpen
-                        ? null
-                        : logEventAction({ category: "filter", action: "insecticideClass", label: action.payload }),
-                ]);
-                return of(...actions);
-            })
-        );
+    action$.pipe(skip(1)).pipe(
+        ofType(ActionTypeEnum.SetInsecticideClass),
+        withLatestFrom(state$),
+        switchMap(([action, state]) => {
+            const isTourOpen = state.malaria.tour.open;
+            const actions = _.compact([
+                setInsecticideTypes([]),
+                setType(state.prevention.filters.type || "MONO_OXYGENASES"),
+                setSpecies([]),
+                isTourOpen
+                    ? null
+                    : logEventAction({ category: "filter", action: "insecticideClass", label: action.payload }),
+            ]);
+            return of(...actions);
+        })
+    );
 
-export const setPreventionInsecticideTypeEpic = (action$: ActionsObservable<ActionType<typeof setInsecticideTypes>>) =>
-    action$
-        .ofType(ActionTypeEnum.SetInsecticideTypes)
-        .pipe(skip(1))
-        .pipe(
-            switchMap(() => {
-                const actions: any[] = [setType(undefined), setSpecies([])];
-                return of(...actions);
-            })
-        );
+export const setPreventionInsecticideTypeEpic = (action$: Observable<ActionType<typeof setInsecticideTypes>>) =>
+    action$.pipe(skip(1)).pipe(
+        ofType(ActionTypeEnum.SetInsecticideTypes),
+        switchMap(() => {
+            const actions: any[] = [setType(undefined), setSpecies([])];
+            return of(...actions);
+        })
+    );
 
-export const setPreventionTypeResetEpic = (action$: ActionsObservable<ActionType<typeof setType>>) =>
-    action$
-        .ofType(ActionTypeEnum.SetType)
-        .pipe(skip(1))
-        .pipe(
-            switchMap(_action => {
-                return of(setSpecies([]));
-            })
-        );
+export const setPreventionTypeResetEpic = (action$: Observable<ActionType<typeof setType>>) =>
+    action$.pipe(skip(1)).pipe(
+        ofType(ActionTypeEnum.SetType),
+        switchMap(_action => {
+            return of(setSpecies([]));
+        })
+    );

@@ -1,8 +1,7 @@
-import { ActionsObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import * as ajax from "../../store/ajax";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { catchError, mergeMap, switchMap } from "rxjs/operators";
 import { AjaxError } from "rxjs/ajax";
 import { TranslationResponse } from "../../types/Translation";
@@ -13,11 +12,11 @@ import {
     fetchTranslationsSuccessAction,
 } from "../actions/translations-actions";
 import { ApiParams } from "../../../data/common/types";
+import { ofType } from "redux-observable";
 
-export const getTreatmentStudiesEpic = (
-    action$: ActionsObservable<ActionType<typeof fetchTranslationsRequestAction>>
-) =>
-    action$.ofType(ActionTypeEnum.FetchTranslationsRequest).pipe(
+export const getTreatmentStudiesEpic = (action$: Observable<ActionType<typeof fetchTranslationsRequestAction>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchTranslationsRequest),
         switchMap(() => {
             const params: ApiParams = {
                 f: "json",
@@ -27,7 +26,7 @@ export const getTreatmentStudiesEpic = (
             const query: string = Object.keys(params)
                 .map(key => `${key}=${params[key]}`)
                 .join("&");
-            return ajax.get(`/${MapServerConfig.layers.translations}/query?${query}`).pipe(
+            return ajax.get<TranslationResponse>(`/${MapServerConfig.layers.translations}/query?${query}`).pipe(
                 mergeMap((response: TranslationResponse) => {
                     return of(fetchTranslationsSuccessAction(response));
                 }),
