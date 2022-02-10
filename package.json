@@ -65,13 +65,8 @@
         "prettify": "prettier \"./**/*.{js,jsx,json,css,ts,tsx}\" --write",
         "cy:verify": "cypress verify",
         "cy:open": "cypress open",
-        "cy:run": "cypress run"
-    },
-    "husky": {
-        "hooks": {
-            "pre-push": "yarn prettify && yarn lint",
-            "post-merge": "./.githooks/dep-check"
-        }
+        "cy:run": "cypress run",
+        "prepare": "husky install"
     },
     "browserslist": {
         "production": [
@@ -116,7 +111,7 @@
         "eslint-plugin-prettier": "4.0.0",
         "eslint-plugin-react": "^7.28.0",
         "eslint-plugin-react-hooks": "^4.3.0",
-        "husky": "4.3.8",
+        "husky": "^7.0.0",
         "typescript": "4.4.4"
     }
 }
