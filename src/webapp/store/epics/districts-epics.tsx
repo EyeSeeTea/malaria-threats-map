@@ -1,18 +1,23 @@
-import { ActionsObservable } from "redux-observable";
+import { ActionsObservable, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import { catchError, mergeMap, switchMap } from "rxjs/operators";
 import * as ajax from "../../store/ajax";
 import { AjaxError } from "rxjs/ajax";
 import { ApiParams } from "../../../data/common/types";
-import { from, of } from "rxjs";
+import { of } from "rxjs";
 import { fetchDistrictsError, fetchDistrictsRequest, fetchDistrictsSuccess } from "../actions/district-actions";
-import getDistrictsURL from "../../utils/getDistrictsUrl";
+import { EpicDependencies } from "../../store/index";
+import { State } from "../types";
 
-export const getDistrictsEpic = (action$: ActionsObservable<ActionType<typeof fetchDistrictsRequest>>) =>
+export const getDistrictsEpic = (
+    action$: ActionsObservable<ActionType<typeof fetchDistrictsRequest>>,
+    _state$: StateObservable<State>,
+    { compositionRoot }: EpicDependencies
+) =>
     action$.ofType(ActionTypeEnum.FetchDistrictsRequest).pipe(
         switchMap(action => {
-            return getDistricts(action.payload).pipe(
+            return getDistricts(compositionRoot.districtsUrl, action.payload).pipe(
                 mergeMap((response: any) => {
                     return of(fetchDistrictsSuccess(response));
                 }),
@@ -21,7 +26,7 @@ export const getDistrictsEpic = (action$: ActionsObservable<ActionType<typeof fe
         })
     );
 
-function getDistricts(iso2Code: string) {
+function getDistricts(districtsUrl: string, iso2Code: string) {
     const params: ApiParams = {
         f: "geojson",
         where: encodeURIComponent(`ISO_2_CODE='${iso2Code}' AND ENDDATE = '12/31/9999 12:00:00 AM'`),
@@ -33,9 +38,5 @@ function getDistricts(iso2Code: string) {
         .map(key => `${key}=${params[key]}`)
         .join("&");
 
-    return from(getDistrictsURL()).pipe(
-        switchMap(url => {
-            return ajax.getFull(`${url}/query?${query}`);
-        })
-    );
+    return ajax.getFull(`${districtsUrl}/query?${query}`);
 }
