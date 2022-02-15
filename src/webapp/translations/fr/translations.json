@@ -118,12 +118,10 @@
                     "eligible": "Tous les critères remplis",
                     "not_eligible": "Au moins un critère n'est pas rempli",
                     "not_enough_data": "Davantage de données doivent être collectées pour évaluer les critères",
-                    "no_data": "Pas de données disponibles",
                     "expanded": {
                         "eligible": "les sites où au moins une espèce de vecteur satisfait les trois critères recommandés par l'OMS",
                         "not_eligible": "les sites où l'une des espèces vectrices pour lesquelles des données sont disponibles enfreint au moins l'un des trois critères recommandés par l'OMS décrits ci-dessus, et aucune  espèce pour lesquelle des données sont disponibles ne satisfait les trois critères.",
                         "not_enough_data": "sites avec des données insuffisantes pour évaluer si les espèces vectorielles locales satisfont les trois critères",
-                        "no_data": "aucune donnée disponible",
                         "p1": "Cette carte montre l'état de conformité des populations locales de vecteurs avec les ",
                         "p1Link": "https://apps.who.int/iris/bitstream/handle/10665/258939/WHO-HTM-GMP-2017.17-eng.pdf?sequence=5",
                         "p1a": "trois critères recommandés par l'OMS ",
@@ -174,7 +172,7 @@
             "molecular_markers": "Marqueurs moléculaires de la résistance aux médicaments",
             "chart": {
                 "treatment_failure": {
-                    "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre {{plasmodiumSpecies}} {{years}}",
+                    "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre <i>{{plasmodiumSpecies}}</i> {{years}}",
                     "percentage": "Pourcentage (%)",
                     "study_years": "Années d'étude(s)",
                     "number_of_patients": "Nombre de patients",
@@ -287,7 +285,9 @@
             "select_region": "Choisissez une région",
             "sub_region": "Sous-région",
             "select_sub_region": "Sélectionnez la sous-région",
-            "select_site": "Sélectionnez un site"
+            "select_site": "Sélectionnez un site",
+            "exclude_lower_patients": "Exclure les études portant sur moins de 20 patients",
+            "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons"
         },
         "legend": {
             "number_of_studies": "Nombre d'études",
@@ -300,7 +300,7 @@
         },
         "copyright": {
             "mobile": "Cliquez ici pour lire l'avertissement qui s'applique à la carte ci-dessus",
-            "content": "Les appellations employées dans la présente publication et la présentation des données qui y figurent \nn’impliquent de la part de l’Organisation mondiale de la Santé aucune prise de position quant au statut juridique des \npays, territoires, villes ou zones, ou de leurs autorités, ni quant au tracé de leurs frontières ou limites. Les lignes \ndiscontinues et en pointillé, ainsi que les zones en gris, sur les cartes représentent des frontières et zones \napproximatives dont le tracé peut ne pas avoir fait l'objet d'un accord définitif. Les limites de la carte fournies \nreflètent l'état politique et géographique à la date de publication (2021). Cependant, les informations techniques sur \nla santé sont basées sur des données précises par rapport à l'année sélectionnée. La déconnexion dans cet arrangement \ndoit être notée, mais aucune implication concernant le statut politique ou terminologique ne doit être tirée de cet \narrangement car il est purement fonction des limitations techniques et graphiques. Source des données: Programme mondial \ncontre le paludisme. Production de cartes: Programme mondial contre le paludisme. Organisation mondiale de la santé."
+            "content": "Les appellations employées dans la présente publication et la présentation des données qui y figurent \nn’impliquent de la part de l’Organisation mondiale de la Santé aucune prise de position quant au statut juridique des \npays, territoires, villes ou zones, ou de leurs autorités, ni quant au tracé de leurs frontières ou limites. Les lignes \ndiscontinues et en pointillé, ainsi que les zones en gris, sur les cartes représentent des frontières et zones \napproximatives dont le tracé peut ne pas avoir fait l'objet d'un accord définitif. Les limites de la carte fournies \nreflètent l'état politique et géographique à la date de publication ({{year}}). Cependant, les informations techniques sur \nla santé sont basées sur des données précises par rapport à l'année sélectionnée. La déconnexion dans cet arrangement \ndoit être notée, mais aucune implication concernant le statut politique ou terminologique ne doit être tirée de cet \narrangement car il est purement fonction des limitations techniques et graphiques. Source des données: Programme mondial \ncontre le paludisme. Production de cartes: Programme mondial contre le paludisme. Organisation mondiale de la santé."
         },
         "options": {
             "title": "Options",
@@ -534,7 +534,7 @@
         "p1a": "<strong>Source des données:</strong> Programme mondial contre le paludisme.",
         "p1b": "<strong>Production de cartes:</strong> Programme mondial contre le paludisme. Organisation mondiale de la santé.",
         "p1bLink": "https://www.who.int/about/copyright/",
-        "p1bLinkText": "© WHO 2021. ",
+        "p1bLinkText": "© WHO {{year}}. ",
         "p1c": "Tous droits réservés.",
         "p2": "Sauf indication contraire, les informations contenues dans cette demande ont été mises à la disposition du Programme mondial de lutte contre le paludisme de l'Organisation mondiale de la santé (OMS) par les ministères de la Santé ou leurs partenaires de développement; ou par leur extraction de publications scientifiques par l'OMS ou ses partenaires. L'OMS ne fournit donc aucune assurance quant à la validité, l'exactitude ou l'exhaustivité de ces informations.",
         "p3a": "L'utilisation des images et des fichiers générés à partir de cette application Web est soumise aux ",

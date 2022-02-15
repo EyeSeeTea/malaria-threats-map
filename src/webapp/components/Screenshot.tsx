@@ -56,7 +56,7 @@ function Screenshot({ map, theme, title }: Props) {
 
         const mapCanvas = map.getCanvas();
 
-        const copyright = t("common.copyright.content");
+        const copyright = t("common.copyright.content", { year: new Date().getFullYear() });
 
         const imageObj1 = new Image();
         imageObj1.src = whoLogoWhite;
@@ -145,7 +145,7 @@ function Screenshot({ map, theme, title }: Props) {
             img.src = whoLogoWhite;
             doc.addImage(img, "JPEG", a4h - 60, 175, 45, 13);
             doc.setFontSize(9);
-            doc.text("@WHO 2021. All rights reserved", a4h - 60, 195);
+            doc.text(`@WHO ${new Date().getFullYear()}. All rights reserved`, a4h - 60, 195);
 
             // Save the Data
             const file = doc.output("dataurlstring");

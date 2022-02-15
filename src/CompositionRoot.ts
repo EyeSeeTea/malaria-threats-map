@@ -18,7 +18,7 @@ export class CompositionRoot {
     private diagnosisRepository = new DiagnosisApiRepository(config.mapServerUrl);
     private treatmentRepository = new TreatmentApiRepository(config.mapServerUrl);
     private invasiveRepository = new InvasiveApiRepository(config.mapServerUrl);
-    private countryLayerRepository = new CountryLayerApiRepository(config.mapServerUrl);
+    private countryLayerRepository = new CountryLayerApiRepository(config.featuresServerUrl, config.backendUrl);
     private fileRepository = new SmtpJsEmailRepository();
 
     public get prevention() {

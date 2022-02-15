@@ -96,7 +96,7 @@ const InitialDisclaimer = () => {
                     </Typography>
                     <Typography variant={"body2"} gutterBottom>
                         <Link href={t("disclaimer.p1bLink")} target="_blank" rel="noopener noreferrer">
-                            {t("disclaimer.p1bLinkText")}
+                            {t("disclaimer.p1bLinkText", { year: new Date().getFullYear() })}
                         </Link>
                         {t("disclaimer.p1c")}
                     </Typography>
