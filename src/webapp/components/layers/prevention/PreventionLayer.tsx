@@ -95,7 +95,6 @@ class PreventionLayer extends Component<Props> {
             region,
             countries,
         } = this.props;
-
         this.mountLayer(prevProps);
         this.renderLayer();
         const mapTypeChange = prevProps.preventionFilters.mapType !== mapType;

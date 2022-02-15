@@ -19,6 +19,7 @@ type OwnProps = {
     label?: string;
     className?: string;
     value: string[];
+    countryOptions?: string[];
     onChange: (value: string[]) => void;
 };
 
@@ -33,6 +34,7 @@ function CountriesSelector({
     menuIsOpen,
     label,
     className,
+    countryOptions,
 }: Props) {
     const { t } = useTranslation();
     const global = value.includes("GLOBAL");
@@ -54,7 +56,14 @@ function CountriesSelector({
         }
     };
 
-    const suggestions: any[] = countries.map((country: Translation) => ({
+    const countriesToUse =
+        countryOptions !== undefined
+            ? countryOptions
+                  .map(value => (countries as Translation[]).find(type => type.VALUE_ === value))
+                  .filter(Boolean)
+            : countries;
+
+    const suggestions: any[] = countriesToUse.map((country: Translation) => ({
         label: t(country.VALUE_ === "NA" ? "common.COUNTRY_NA" : country.VALUE_),
         value: country.VALUE_,
     }));
