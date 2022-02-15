@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectRegion } from "../../store/reducers/base-reducer";
+import getDistrictsURL from "../../utils/getDistrictsUrl";
 
 const MEKONG_LAYER_ID = "mekong-layer";
 const MEKONG_SOURCE_ID = "mekong-source";
@@ -23,15 +24,15 @@ const mapStateToProps = (state: State) => ({
     region: selectRegion(state),
 });
 
-const detailed_Boundary_ADM1 =
-    "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services/Detailed_Boundary_ADM2/FeatureServer/0";
-
 class MekongLayer extends Component<any> {
-    componentDidMount(): void {
+    async componentDidMount(): Promise<void> {
         const { region } = this.props;
+
+        const url = await getDistrictsURL();
+
         const source: any = {
             type: "geojson",
-            data: `${detailed_Boundary_ADM1}/query?where=iso_2_code='CN' AND ADM1_NAME<>'yunnan'&f=geojson`,
+            data: `${url}/query?where=iso_2_code='CN' AND ADM1_NAME<>'yunnan'&f=geojson`,
         };
         this.props.map.addSource(MEKONG_SOURCE_ID, source);
         this.props.map.addLayer(layer);
