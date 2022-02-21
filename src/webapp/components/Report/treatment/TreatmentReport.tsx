@@ -306,7 +306,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                         count={groups.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
-                        onChangePage={handleChangePage}
+                        onPageChange={handleChangePage}
                         onChangeRowsPerPage={handleChangeRowsPerPage}
                     />
                 </div>

@@ -18,10 +18,7 @@ export const studiesToGeoJson = (studies: Study[]) => ({
 });
 
 export const getCountryStudies = (studies: any[] = [], countriesProp: CountryProperties[], layerName: string) => {
-    const countryStudies = R.groupBy(
-        R.path<string>(["ISO2"]),
-        studies
-    );
+    const countryStudies = R.groupBy(R.path<string>(["ISO2"]), studies);
     const countries = countriesProp
         .map((country, index) => ({
             ...country,

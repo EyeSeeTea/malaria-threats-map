@@ -1,7 +1,6 @@
-import { ActionsObservable, StateObservable } from "redux-observable";
+import { ofType, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
-import { ActionTypeEnum } from "../../store/actions";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
 import {
     fetchDiagnosisStudiesError,
@@ -17,13 +16,15 @@ import { getAnalyticsPageView } from "../analytics";
 import { fromFuture } from "./utils";
 import { EpicDependencies } from "../../store/index";
 import { DiagnosisStudy } from "../../../domain/entities/DiagnosisStudy";
+import { ActionTypeEnum } from "../actions";
 
 export const getDiagnosisStudiesEpic = (
-    action$: ActionsObservable<ActionType<typeof fetchDiagnosisStudiesRequest>>,
+    action$: Observable<ActionType<typeof fetchDiagnosisStudiesRequest>>,
     state$: StateObservable<State>,
     { compositionRoot }: EpicDependencies
 ) =>
-    action$.ofType(ActionTypeEnum.FetchDiagnosisStudiesRequest).pipe(
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchDiagnosisStudiesRequest),
         withLatestFrom(state$),
         switchMap(([, state]) => {
             if (state.diagnosis.studies.length === 0 && !state.diagnosis.error) {
@@ -39,8 +40,9 @@ export const getDiagnosisStudiesEpic = (
         })
     );
 
-export const setDiagnosisThemeEpic = (action$: ActionsObservable<ActionType<typeof setThemeAction>>) =>
-    action$.ofType(ActionTypeEnum.MalariaSetTheme).pipe(
+export const setDiagnosisThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaSetTheme),
         switchMap($action => {
             if ($action.payload !== "diagnosis") {
                 return of();
@@ -49,8 +51,9 @@ export const setDiagnosisThemeEpic = (action$: ActionsObservable<ActionType<type
         })
     );
 
-export const setDiagnosisMapTypeEpic = (action$: ActionsObservable<ActionType<typeof setDiagnosisMapType>>) =>
-    action$.ofType(ActionTypeEnum.SetDiagnosisMapType).pipe(
+export const setDiagnosisMapTypeEpic = (action$: Observable<ActionType<typeof setDiagnosisMapType>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetDiagnosisMapType),
         switchMap(action => {
             const pageView = getAnalyticsPageView({ page: "diagnosis", section: action.payload });
             const logPageView = logPageViewAction(pageView);
@@ -62,18 +65,16 @@ export const setDiagnosisMapTypeEpic = (action$: ActionsObservable<ActionType<ty
         })
     );
 
-export const setDiagnosisDeletionTypeEpic = (action$: ActionsObservable<ActionType<typeof setDiagnosisDeletionType>>) =>
-    action$
-        .ofType(ActionTypeEnum.SetDeletionType)
-        .pipe(skip(1))
-        .pipe(
-            switchMap(action => {
-                return of(
-                    logEventAction({
-                        category: "filter",
-                        action: "deletionType",
-                        label: action.payload,
-                    })
-                );
-            })
-        );
+export const setDiagnosisDeletionTypeEpic = (action$: Observable<ActionType<typeof setDiagnosisDeletionType>>) =>
+    action$.pipe(skip(1)).pipe(
+        ofType(ActionTypeEnum.SetDeletionType),
+        switchMap(action => {
+            return of(
+                logEventAction({
+                    category: "filter",
+                    action: "deletionType",
+                    label: action.payload,
+                })
+            );
+        })
+    );

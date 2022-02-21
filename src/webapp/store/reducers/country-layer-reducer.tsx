@@ -24,8 +24,8 @@ export default createReducer<CountryLayerState>(initialState, {
 
 const selectCountryLayerState = (state: State) => state.countryLayer;
 
-export const selectCountryLayer = createSelector(selectCountryLayerState, R.prop("layer"));
+export const selectCountryLayer = createSelector(selectCountryLayerState, state => state.layer);
 
-export const selectCountries = createSelector(selectCountryLayerState, R.prop("countries"));
+export const selectCountries = createSelector(selectCountryLayerState, state => state.countries);
 
-export const selectCountryLayerIsLoading = createSelector(selectCountryLayerState, R.prop("loading"));
+export const selectCountryLayerIsLoading = createSelector(selectCountryLayerState, state => state.loading);

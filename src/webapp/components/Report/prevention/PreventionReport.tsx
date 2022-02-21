@@ -424,7 +424,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
                         count={groups.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
-                        onChangePage={handleChangePage}
+                        onPageChange={handleChangePage}
                         onChangeRowsPerPage={handleChangeRowsPerPage}
                     />
                     <Typography variant={"body2"}>{t("common.data_download.footer")}</Typography>

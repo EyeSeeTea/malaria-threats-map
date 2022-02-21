@@ -32,8 +32,7 @@ class DisputedBordersEndemicityLayer extends Component<Props> {
     componentDidMount(): void {
         const source: any = {
             type: "geojson",
-            data:
-                "https://services.arcgis.com/5T5nSi527N4F7luB/ArcGIS/rest/services/Detailed_Boundary_Disputed_Areas/FeatureServer/0/query?where=1%3D1&f=geojson&geometryPrecision=2.5",
+            data: "https://services.arcgis.com/5T5nSi527N4F7luB/ArcGIS/rest/services/Detailed_Boundary_Disputed_Areas/FeatureServer/0/query?where=1%3D1&f=geojson&geometryPrecision=2.5",
         };
         if (this.props.map.getSource(DISPUTED_BORDERS_ENDEMICITY_SOURCE_ID)) {
             this.showLayer();

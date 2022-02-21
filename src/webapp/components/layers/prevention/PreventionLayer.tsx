@@ -144,10 +144,7 @@ class PreventionLayer extends Component<Props> {
 
     setupGeoJsonData = (studies: any[]) => {
         const { mapType } = this.props.preventionFilters;
-        const groupedStudies = R.groupBy(
-            R.path<string>(["SITE_ID"]),
-            studies
-        );
+        const groupedStudies = R.groupBy(R.path<string>(["SITE_ID"]), studies);
         const filteredStudies = R.values(groupedStudies).map(group => studySelector(group, mapType));
         
         return filteredStudies.map(study => {

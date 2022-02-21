@@ -1,7 +1,7 @@
-import { ActionsObservable, StateObservable } from "redux-observable";
+import { ofType, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { catchError, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
 import {
     fetchInvasiveStudiesError,
@@ -18,11 +18,12 @@ import { EpicDependencies } from "../../store/index";
 import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
 
 export const getInvasiveStudiesEpic = (
-    action$: ActionsObservable<ActionType<typeof fetchInvasiveStudiesRequest>>,
+    action$: Observable<ActionType<typeof fetchInvasiveStudiesRequest>>,
     state$: StateObservable<State>,
     { compositionRoot }: EpicDependencies
 ) =>
-    action$.ofType(ActionTypeEnum.FetchInvasiveStudiesRequest).pipe(
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchInvasiveStudiesRequest),
         withLatestFrom(state$),
         switchMap(([, state]) => {
             if (state.invasive.studies.length === 0 && !state.invasive.error) {
@@ -38,8 +39,9 @@ export const getInvasiveStudiesEpic = (
         })
     );
 
-export const setTreatmentMapTypeEpic = (action$: ActionsObservable<ActionType<typeof setInvasiveMapType>>) =>
-    action$.ofType(ActionTypeEnum.SetInvasiveMapType).pipe(
+export const setTreatmentMapTypeEpic = (action$: Observable<ActionType<typeof setInvasiveMapType>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetInvasiveMapType),
         switchMap(action => {
             const pageView = getAnalyticsPageView({ page: "invasive", section: action.payload });
             const logPageView = logPageViewAction(pageView);
@@ -50,8 +52,9 @@ export const setTreatmentMapTypeEpic = (action$: ActionsObservable<ActionType<ty
         })
     );
 
-export const setInvasiveThemeEpic = (action$: ActionsObservable<ActionType<typeof setThemeAction>>) =>
-    action$.ofType(ActionTypeEnum.MalariaSetTheme).pipe(
+export const setInvasiveThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaSetTheme),
         switchMap($action => {
             if ($action.payload !== "invasive") {
                 return of();

@@ -1,8 +1,7 @@
-import { ActionsObservable, StateObservable } from "redux-observable";
+import { ofType, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
-import { ActionTypeEnum } from "../actions";
 import { catchError, mergeMap, switchMap } from "rxjs/operators";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 import {
     fetchCountryLayerError,
     fetchCountryLayerRequest,
@@ -12,13 +11,15 @@ import { CountryLayer } from "../../../domain/entities/CountryLayer";
 import { fromFuture } from "./utils";
 import { State } from "../types";
 import { EpicDependencies } from "..";
+import { ActionTypeEnum } from "../actions";
 
 export const getCountriesEpic = (
-    action$: ActionsObservable<ActionType<typeof fetchCountryLayerRequest>>,
+    action$: Observable<ActionType<typeof fetchCountryLayerRequest>>,
     _state$: StateObservable<State>,
     { compositionRoot }: EpicDependencies
 ) =>
-    action$.ofType(ActionTypeEnum.FetchCountryLayerRequest).pipe(
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchCountryLayerRequest),
         switchMap(_action => {
             return fromFuture(compositionRoot.countryLayer.get()).pipe(
                 mergeMap((countryLayer: CountryLayer) => {

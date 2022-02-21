@@ -57,16 +57,16 @@ function updateExcludeLowerSamples(value: boolean) {
 }
 
 export default createReducer<TreatmentState>(initialState, {
-    [ActionTypeEnum.FetchTreatmentStudiesRequest]: () => state => ({
+    [ActionTypeEnum.FetchTreatmentStudiesRequest]: () => (state: TreatmentState) => ({
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchTreatmentStudiesSuccess]: (studies: TreatmentStudy[]) => state => ({
+    [ActionTypeEnum.FetchTreatmentStudiesSuccess]: (studies: TreatmentStudy[]) => (state: TreatmentState) => ({
         ...state,
         loading: false,
         studies: studies,
     }),
-    [ActionTypeEnum.FetchTreatmentStudiesError]: () => state => ({
+    [ActionTypeEnum.FetchTreatmentStudiesError]: () => (state: TreatmentState) => ({
         ...state,
         error: "There was a problem loading studies",
         loading: false,
@@ -83,12 +83,12 @@ export default createReducer<TreatmentState>(initialState, {
 
 const selectTreatmentState = (state: State) => state.treatment;
 
-export const selectTreatmentStudies = createSelector(selectTreatmentState, R.prop("studies"));
+export const selectTreatmentStudies = createSelector(selectTreatmentState, state => state.studies);
 
-export const selectTreatmentStudiesLoading = createSelector(selectTreatmentState, R.prop("loading"));
+export const selectTreatmentStudiesLoading = createSelector(selectTreatmentState, state => state.loading);
 
-export const selectTreatmentStudiesError = createSelector(selectTreatmentState, R.prop("error"));
+export const selectTreatmentStudiesError = createSelector(selectTreatmentState, state => state.error);
 
-export const selectFilteredTreatmentStudies = createSelector(selectTreatmentState, R.prop("filteredStudies"));
+export const selectFilteredTreatmentStudies = createSelector(selectTreatmentState, state => state.filteredStudies);
 
-export const selectTreatmentFilters = createSelector(selectTreatmentState, R.prop("filters"));
+export const selectTreatmentFilters = createSelector(selectTreatmentState, state => state.filters);

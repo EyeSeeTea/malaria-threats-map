@@ -18,7 +18,7 @@ describe("Open subthemes", () => {
     it("should open Delayed parasite clearance subtheme", () => {
         cy.contains(defaultSubtheme).click();
 
-        cy.findByText("Delayed parasite clearance").click();
+        cy.findByText("Delayed parasite clearance (P.f)").click();
 
         cy.findByLegendTitle("Delayed parasite clearance");
     });

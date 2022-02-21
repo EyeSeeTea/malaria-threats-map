@@ -1,21 +1,22 @@
-import { ActionsObservable, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import { catchError, mergeMap, switchMap } from "rxjs/operators";
 import * as ajax from "../../store/ajax";
 import { AjaxError } from "rxjs/ajax";
 import { ApiParams } from "../../../data/common/types";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { fetchDistrictsError, fetchDistrictsRequest, fetchDistrictsSuccess } from "../actions/district-actions";
+import { ofType, StateObservable } from "redux-observable";
 import { EpicDependencies } from "../../store/index";
 import { State } from "../types";
 
 export const getDistrictsEpic = (
-    action$: ActionsObservable<ActionType<typeof fetchDistrictsRequest>>,
+    action$: Observable<ActionType<typeof fetchDistrictsRequest>>,
     _state$: StateObservable<State>,
     { compositionRoot }: EpicDependencies
 ) =>
-    action$.ofType(ActionTypeEnum.FetchDistrictsRequest).pipe(
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchDistrictsRequest),
         switchMap(action => {
             return getDistricts(compositionRoot.districtsUrl, action.payload).pipe(
                 mergeMap((response: any) => {

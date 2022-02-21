@@ -1,7 +1,6 @@
-import { ActionsObservable, StateObservable } from "redux-observable";
+import { ofType, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
-import { ActionTypeEnum } from "../actions";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { catchError, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
 import {
     getLastUpdatedFailureAction,
@@ -35,12 +34,11 @@ import { fetchCountryLayerRequest } from "../actions/country-layer-actions";
 import { ApiParams } from "../../../data/common/types";
 import { fromFuture } from "./utils";
 import { EpicDependencies } from "..";
+import { ActionTypeEnum } from "../actions";
 
-export const setThemeEpic = (
-    action$: ActionsObservable<ActionType<typeof setThemeAction>>,
-    state$: StateObservable<State>
-) =>
-    action$.ofType(ActionTypeEnum.MalariaSetTheme).pipe(
+export const setThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>, state$: StateObservable<State>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaSetTheme),
         withLatestFrom(state$),
         switchMap(([action, state]) => {
             const { meta } = action;
@@ -72,10 +70,11 @@ export const setThemeEpic = (
     );
 
 export const setSelectionEpic = (
-    action$: ActionsObservable<ActionType<typeof setSelection>>,
+    action$: Observable<ActionType<typeof setSelection>>,
     state$: StateObservable<State>
 ) =>
-    action$.ofType(ActionTypeEnum.SetSelection).pipe(
+    action$.pipe(
+        ofType(ActionTypeEnum.SetSelection),
         withLatestFrom(state$),
         switchMap(([action, state]) => {
             if (!action.payload) return of();
@@ -85,11 +84,9 @@ export const setSelectionEpic = (
         })
     );
 
-export const logEvent = (
-    action$: ActionsObservable<ActionType<typeof logEventAction>>,
-    state$: StateObservable<State>
-) =>
-    action$.ofType(ActionTypeEnum.MalariaLogEvent).pipe(
+export const logEvent = (action$: Observable<ActionType<typeof logEventAction>>, state$: StateObservable<State>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaLogEvent),
         withLatestFrom(state$),
         switchMap(([action, _state]) => {
             sendAnalytics({ type: "event", ...action.payload });
@@ -98,10 +95,11 @@ export const logEvent = (
     );
 
 export const logPageView = (
-    action$: ActionsObservable<ActionType<typeof logPageViewAction>>,
+    action$: Observable<ActionType<typeof logPageViewAction>>,
     state$: StateObservable<State>
 ) =>
-    action$.ofType(ActionTypeEnum.MalariaLogPageView).pipe(
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaLogPageView),
         withLatestFrom(state$),
         switchMap(([action, _state]) => {
             sendAnalytics({ type: "pageView", ...action.payload });
@@ -110,10 +108,11 @@ export const logPageView = (
     );
 
 export const logOutboundLink = (
-    action$: ActionsObservable<ActionType<typeof logOutboundLinkAction>>,
+    action$: Observable<ActionType<typeof logOutboundLinkAction>>,
     state$: StateObservable<State>
 ) =>
-    action$.ofType(ActionTypeEnum.MalariaLogOutboundLink).pipe(
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaLogOutboundLink),
         withLatestFrom(state$),
         switchMap(([action, _state]) => {
             sendAnalytics({ type: "outboundLink", label: action.payload });
@@ -122,94 +121,92 @@ export const logOutboundLink = (
     );
 
 export const setStoryModeStepEpic = (
-    action$: ActionsObservable<
-        ActionType<typeof setStoryModeStepAction | typeof setStoryModeAction | typeof setThemeAction>
-    >,
+    action$: Observable<ActionType<typeof setStoryModeStepAction | typeof setStoryModeAction | typeof setThemeAction>>,
     state$: StateObservable<State>
 ) =>
-    action$
-        .ofType(
+    action$.pipe(
+        ofType(
             ActionTypeEnum.MalariaSetStoryModeStep,
             ActionTypeEnum.MalariaSetStoryMode,
             ActionTypeEnum.MalariaSetTheme
-        )
-        .pipe(
-            withLatestFrom(state$),
-            switchMap(([action, state]) => {
-                const theme = state.malaria.theme;
-                if (!state.malaria.storyMode) {
-                    return of();
-                }
-                switch (theme) {
-                    case "prevention":
-                        if (state.prevention.filters.mapType === PreventionMapType.PBO_DEPLOYMENT) {
-                            return of();
-                        }
-                        switch (action.payload) {
-                            case 0:
-                                return of(setCountryModeAction(true), setRegionAction({}));
-                            case 1:
-                                return of(setCountryModeAction(false), setRegionAction({}));
-                            case 2:
-                                return of(setCountryModeAction(false), setRegionAction({ region: "SOUTH-EAST_ASIA" }));
-                            case 3:
-                                return of(setCountryModeAction(false), setRegionAction({ region: "AFRICA" }));
-                            default:
-                                return of();
-                        }
-                    case "diagnosis":
-                        switch (action.payload) {
-                            case 0:
-                                return of(setCountryModeAction(false), setRegionAction({ country: "PE" }));
-                            case 1:
-                                return of(setCountryModeAction(false), setRegionAction({ region: "AFRICA" }));
-                            case 2:
-                                return of(setCountryModeAction(true), setRegionAction({}));
-                            default:
-                                return of();
-                        }
-                    case "treatment":
-                        switch (action.payload) {
-                            case 0:
-                                return of(setCountryModeAction(true), setRegionAction({}));
-                            case 1:
-                                return of(setCountryModeAction(true), setRegionAction({}));
-                            case 2:
-                                return of(setCountryModeAction(true), setRegionAction({}));
-                            case 3:
-                                return of(setCountryModeAction(false), setRegionAction({}));
-                            default:
-                                return of();
-                        }
-                    case "invasive":
-                        switch (action.payload) {
-                            case 0:
-                                return of(
-                                    setCountryModeAction(false),
-                                    setRegionAction({}),
-                                    setBoundsAction([
-                                        [23.73159810368128, -5.628262912580524],
-                                        [57.46049921128645, 22.484559914680688],
-                                    ])
-                                );
-                            case 1:
-                                return of(setCountryModeAction(false), setRegionAction({ country: "PK" }));
-                            case 2:
-                                return of(setCountryModeAction(false));
-                            default:
-                                return of();
-                        }
-                    default:
+        ),
+        withLatestFrom(state$),
+        switchMap(([action, state]) => {
+            const theme = state.malaria.theme;
+            if (!state.malaria.storyMode) {
+                return of();
+            }
+            switch (theme) {
+                case "prevention":
+                    if (state.prevention.filters.mapType === PreventionMapType.PBO_DEPLOYMENT) {
                         return of();
-                }
-            })
-        );
+                    }
+                    switch (action.payload) {
+                        case 0:
+                            return of(setCountryModeAction(true), setRegionAction({}));
+                        case 1:
+                            return of(setCountryModeAction(false), setRegionAction({}));
+                        case 2:
+                            return of(setCountryModeAction(false), setRegionAction({ region: "SOUTH-EAST_ASIA" }));
+                        case 3:
+                            return of(setCountryModeAction(false), setRegionAction({ region: "AFRICA" }));
+                        default:
+                            return of();
+                    }
+                case "diagnosis":
+                    switch (action.payload) {
+                        case 0:
+                            return of(setCountryModeAction(false), setRegionAction({ country: "PE" }));
+                        case 1:
+                            return of(setCountryModeAction(false), setRegionAction({ region: "AFRICA" }));
+                        case 2:
+                            return of(setCountryModeAction(true), setRegionAction({}));
+                        default:
+                            return of();
+                    }
+                case "treatment":
+                    switch (action.payload) {
+                        case 0:
+                            return of(setCountryModeAction(true), setRegionAction({}));
+                        case 1:
+                            return of(setCountryModeAction(true), setRegionAction({}));
+                        case 2:
+                            return of(setCountryModeAction(true), setRegionAction({}));
+                        case 3:
+                            return of(setCountryModeAction(false), setRegionAction({}));
+                        default:
+                            return of();
+                    }
+                case "invasive":
+                    switch (action.payload) {
+                        case 0:
+                            return of(
+                                setCountryModeAction(false),
+                                setRegionAction({}),
+                                setBoundsAction([
+                                    [23.73159810368128, -5.628262912580524],
+                                    [57.46049921128645, 22.484559914680688],
+                                ])
+                            );
+                        case 1:
+                            return of(setCountryModeAction(false), setRegionAction({ country: "PK" }));
+                        case 2:
+                            return of(setCountryModeAction(false));
+                        default:
+                            return of();
+                    }
+                default:
+                    return of();
+            }
+        })
+    );
 
 export const logStoryModeStepEpic = (
-    action$: ActionsObservable<ActionType<typeof setStoryModeStepAction>>,
+    action$: Observable<ActionType<typeof setStoryModeStepAction>>,
     state$: StateObservable<State>
 ) =>
-    action$.ofType(ActionTypeEnum.MalariaSetStoryModeStep).pipe(
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaSetStoryModeStep),
         withLatestFrom(state$),
         switchMap(([action, state]) => {
             const theme = state.malaria.theme;
@@ -229,8 +226,9 @@ export type LastUpdated = {
 };
 type Response = { features: { attributes: LastUpdated }[] } & ErrorResponse;
 
-export const getLastUpdatedEpic = (action$: ActionsObservable<ActionType<typeof getLastUpdatedRequestAction>>) =>
-    action$.ofType(ActionTypeEnum.GetLastUpdatedRequest).pipe(
+export const getLastUpdatedEpic = (action$: Observable<ActionType<typeof getLastUpdatedRequestAction>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.GetLastUpdatedRequest),
         switchMap(() => {
             const params: ApiParams = {
                 f: "json",
@@ -240,7 +238,7 @@ export const getLastUpdatedEpic = (action$: ActionsObservable<ActionType<typeof 
             const query: string = Object.keys(params)
                 .map(key => `${key}=${params[key]}`)
                 .join("&");
-            return ajax.get(`/${MapServerConfig.layers.updates}/query?${query}`).pipe(
+            return ajax.get<Response>(`/${MapServerConfig.layers.updates}/query?${query}`).pipe(
                 mergeMap((response: Response) => {
                     if (response.error) {
                         return of(
@@ -279,11 +277,12 @@ export const getLastUpdatedEpic = (action$: ActionsObservable<ActionType<typeof 
     );
 
 export const uploadFileEpic = (
-    action$: ActionsObservable<ActionType<typeof uploadFileRequestAction>>,
+    action$: Observable<ActionType<typeof uploadFileRequestAction>>,
     state$: StateObservable<State>,
     { compositionRoot }: EpicDependencies
 ) =>
-    action$.ofType(ActionTypeEnum.UploadFileRequest).pipe(
+    action$.pipe(
+        ofType(ActionTypeEnum.UploadFileRequest),
         withLatestFrom(state$),
         switchMap(([action]) => {
             return fromFuture(compositionRoot.uploadFile.save(action.payload)).pipe(
@@ -302,10 +301,11 @@ export const uploadFileEpic = (
     );
 
 export const setCountryModeEpic = (
-    action$: ActionsObservable<ActionType<typeof setCountryModeAction>>,
+    action$: Observable<ActionType<typeof setCountryModeAction>>,
     state$: StateObservable<State>
 ) =>
-    action$.ofType(ActionTypeEnum.MalariaSetCountryMode).pipe(
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaSetCountryMode),
         withLatestFrom(state$),
         switchMap(([_action, state]) => {
             const requestCountriesAction = requestCountriesIsRequired(state, () => state.malaria.countryMode)
@@ -326,10 +326,11 @@ export const setCountryModeEpic = (
     );
 
 export const setRegionEpic = (
-    action$: ActionsObservable<ActionType<typeof setRegionAction>>,
+    action$: Observable<ActionType<typeof setRegionAction>>,
     state$: StateObservable<State>
 ) =>
-    action$.ofType(ActionTypeEnum.MalariaSetRegion).pipe(
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaSetRegion),
         withLatestFrom(state$),
         switchMap(([_action, state]) => {
             const { region } = state.malaria;

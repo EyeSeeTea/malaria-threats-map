@@ -48,16 +48,16 @@ function updateDeletionType(deletionType: string) {
 }
 
 export default createReducer<DiagnosisState>(initialState, {
-    [ActionTypeEnum.FetchDiagnosisStudiesRequest]: () => state => ({
+    [ActionTypeEnum.FetchDiagnosisStudiesRequest]: () => (state: DiagnosisState) => ({
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchDiagnosisStudiesSuccess]: (studies: DiagnosisStudy[]) => state => ({
+    [ActionTypeEnum.FetchDiagnosisStudiesSuccess]: (studies: DiagnosisStudy[]) => (state: DiagnosisState) => ({
         ...state,
         loading: false,
         studies,
     }),
-    [ActionTypeEnum.FetchDiagnosisStudiesError]: () => state => ({
+    [ActionTypeEnum.FetchDiagnosisStudiesError]: () => (state: DiagnosisState) => ({
         ...state,
         error: "There was a problem loading studies",
         loading: false,
@@ -72,12 +72,18 @@ export default createReducer<DiagnosisState>(initialState, {
 
 const selectDiagnosisState = (state: State) => state.diagnosis;
 
-export const selectDiagnosisStudies = createSelector(selectDiagnosisState, R.prop("studies"));
+export const selectDiagnosisStudies = createSelector(selectDiagnosisState, diagnosisState => diagnosisState.studies);
 
-export const selectDiagnosisStudiesLoading = createSelector(selectDiagnosisState, R.prop("loading"));
+export const selectDiagnosisStudiesLoading = createSelector(
+    selectDiagnosisState,
+    diagnosisState => diagnosisState.loading
+);
 
-export const selectDiagnosisStudiesError = createSelector(selectDiagnosisState, R.prop("error"));
+export const selectDiagnosisStudiesError = createSelector(selectDiagnosisState, diagnosisState => diagnosisState.error);
 
-export const selectFilteredDiagnosisStudies = createSelector(selectDiagnosisState, R.prop("filteredStudies"));
+export const selectFilteredDiagnosisStudies = createSelector(
+    selectDiagnosisState,
+    diagnosisState => diagnosisState.filteredStudies
+);
 
-export const selectDiagnosisFilters = createSelector(selectDiagnosisState, R.prop("filters"));
+export const selectDiagnosisFilters = createSelector(selectDiagnosisState, diagnosisState => diagnosisState.filters);
