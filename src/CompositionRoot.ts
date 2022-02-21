@@ -12,6 +12,7 @@ import { CountryLayerApiRepository } from "./data/repositories/CountryLayerApiRe
 import { GetCountryLayerUseCase } from "./domain/usecases/GetCountryLayerUseCase";
 import { SmtpJsEmailRepository } from "./data/repositories/SmtpJsEmailRepository";
 import { UploadFileUseCase } from "./domain/usecases/UploadFileUseCase";
+import getDistrictsUrl from "./webapp/utils/getDistrictsUrl";
 
 export class CompositionRoot {
     private preventionRepository = new PreventionApiRepository(config.mapServerUrl);
@@ -20,6 +21,11 @@ export class CompositionRoot {
     private invasiveRepository = new InvasiveApiRepository(config.mapServerUrl);
     private countryLayerRepository = new CountryLayerApiRepository(config.featuresServerUrl, config.backendUrl);
     private fileRepository = new SmtpJsEmailRepository();
+    private _districtsUrl: string
+
+    constructor() {
+        this.initDistrictsUrl();
+    }
 
     public get prevention() {
         return getExecute({
@@ -55,6 +61,14 @@ export class CompositionRoot {
         return getExecute({
             save: new UploadFileUseCase(this.fileRepository),
         });
+    }
+
+    public get districtsUrl() {
+        return this._districtsUrl;
+    }
+
+    private async initDistrictsUrl(){
+        this._districtsUrl = await getDistrictsUrl()
     }
 }
 
