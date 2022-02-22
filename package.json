@@ -12,8 +12,8 @@
         "@mui/icons-material": "^5.4.2",
         "@mui/lab": "^5.0.0-alpha.70",
         "@mui/material": "^5.4.3",
-        "@mui/styles": "^5.4.2",
         "@mui/styled-engine": "npm:@mui/styled-engine-sc@5.4.2",
+        "@mui/styles": "^5.4.2",
         "@ungap/url-search-params": "^0.2.2",
         "axios": "^0.25.0",
         "babel-eslint": "^10.1.0",
@@ -91,6 +91,7 @@
         ]
     },
     "devDependencies": {
+        "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
         "@testing-library/cypress": "8.0.2",
         "@types/file-saver": "^2.0.5",
         "@types/jest": "27.4.0",
