@@ -6,7 +6,7 @@ import createStore from "./store";
 import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
 import { PreventionMapType, State } from "./store/types";
-import { createMuiTheme, Hidden } from "@material-ui/core";
+import { createTheme, Hidden } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 
 import {
@@ -236,7 +236,7 @@ ReduxQuerySync({
     initialTruth: "location",
 });
 
-export const theme = createMuiTheme({
+export const theme = createTheme({
     palette: {
         primary: {
             main: "#008dc9",
