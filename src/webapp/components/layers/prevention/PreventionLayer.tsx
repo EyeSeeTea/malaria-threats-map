@@ -22,7 +22,7 @@ import {
     fetchPreventionStudiesRequest,
     setPreventionFilteredStudiesAction,
 } from "../../../store/actions/prevention-actions";
-import { Hidden } from "@material-ui/core";
+import { Hidden } from "@mui/material";
 import { setSelection } from "../../../store/actions/base-actions";
 import PreventionSelectionChart from "./PreventionSelectionChart";
 import ChartModal from "../../ChartModal";
@@ -146,7 +146,7 @@ class PreventionLayer extends Component<Props> {
         const { mapType } = this.props.preventionFilters;
         const groupedStudies = R.groupBy(R.path<string>(["SITE_ID"]), studies);
         const filteredStudies = R.values(groupedStudies).map(group => studySelector(group, mapType));
-        
+
         return filteredStudies.map(study => {
             const percentage = parseFloat(study["MORTALITY_ADJUSTED"]);
             return {
@@ -267,7 +267,7 @@ class PreventionLayer extends Component<Props> {
         return (
             this.props.theme === "prevention" && (
                 <>
-                    <Hidden xsDown>
+                    <Hidden smDown>
                         <SitePopover map={this.props.map}>
                             <PreventionSelectionChart studies={filteredStudies} />
                         </SitePopover>

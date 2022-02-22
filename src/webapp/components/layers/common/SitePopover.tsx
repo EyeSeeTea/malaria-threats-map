@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
-import { ThemeProvider } from "@material-ui/styles";
+import { ThemeProvider } from "@mui/styles";
 import { store, theme } from "../../../App";
 import { connect, Provider } from "react-redux";
 import { State } from "../../../store/types";
@@ -10,6 +10,12 @@ import mapboxgl from "mapbox-gl";
 import { selectSelection } from "../../../store/reducers/base-reducer";
 import { dispatchCustomEvent } from "../../../utils/dom-utils";
 import { setSelection } from "../../../store/actions/base-actions";
+import { StyledEngineProvider, Theme } from "@mui/material";
+
+declare module "@mui/styles/defaultTheme" {
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface DefaultTheme extends Theme {}
+}
 
 const mapStateToProps = (state: State) => ({
     selection: selectSelection(state),
@@ -35,9 +41,11 @@ const SitePopover: React.FC<Props> = ({ map, selection, setSelection, children }
 
         ReactDOM.render(
             <I18nextProvider i18n={i18next}>
-                <ThemeProvider theme={theme}>
-                    <Provider store={store}>{children}</Provider>
-                </ThemeProvider>
+                <StyledEngineProvider injectFirst>
+                    <ThemeProvider theme={theme}>
+                        <Provider store={store}>{children}</Provider>
+                    </ThemeProvider>
+                </StyledEngineProvider>
             </I18nextProvider>,
             placeholder
         );

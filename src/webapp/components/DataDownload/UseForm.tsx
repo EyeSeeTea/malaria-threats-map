@@ -1,19 +1,11 @@
 import React from "react";
-import {
-    Card,
-    Checkbox,
-    createStyles,
-    FormControl,
-    makeStyles,
-    Paper,
-    TextField,
-    Theme,
-    Typography,
-} from "@material-ui/core";
+import { Card, Checkbox, FormControl, Paper, TextField, Theme, Typography } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import styled from "styled-components";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { useTranslation } from "react-i18next";
-import FormLabel from "@material-ui/core/FormLabel";
+import FormLabel from "@mui/material/FormLabel";
 import { Divider } from "../filters/Filters";
 import * as R from "ramda";
 import "date-fns";
@@ -132,7 +124,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                                 }
                             />
                         }
-                        label={t(`common.${use}`)}
+                        label={t<string>(`common.${use}`)}
                     />
                 ))}
             </FormControl>
@@ -141,7 +133,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                     <TextField
                         label={t("common.data_download.step2.date_use_options_content.research") + "*"}
                         multiline
-                        rowsMax="3"
+                        maxRows="3"
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -155,7 +147,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                     <TextField
                         label={t("common.data_download.step2.date_use_options_content.policies") + "*"}
                         multiline
-                        rowsMax="3"
+                        maxRows="3"
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -169,7 +161,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                     <TextField
                         label={t("common.data_download.step2.date_use_options_content.tools") + "*"}
                         multiline
-                        rowsMax="3"
+                        maxRows="3"
                         InputLabelProps={{
                             shrink: true,
                         }}

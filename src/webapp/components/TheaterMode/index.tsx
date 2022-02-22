@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Paper, IconButton, Slider } from "@material-ui/core";
-import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import PauseIcon from "@material-ui/icons/Pause";
-import CloseIcon from "@material-ui/icons/Close";
+import makeStyles from "@mui/styles/makeStyles";
+import { Paper, IconButton, Slider } from "@mui/material";
+import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import PauseIcon from "@mui/icons-material/Pause";
+import CloseIcon from "@mui/icons-material/Close";
 import { setFiltersAction, setTheaterModeAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
 import { State } from "../../store/types";

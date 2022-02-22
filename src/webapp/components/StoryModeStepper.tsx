@@ -1,7 +1,9 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Stepper, Step, StepLabel, Button, Paper, Typography, AppBar, Toolbar, IconButton } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import { Stepper, Step, StepLabel, Button, Paper, Typography, AppBar, Toolbar, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import styled from "styled-components";
 import { PreventionMapType, State } from "../store/types";
 import { selectFilters, selectStoryModeStep, selectTheme } from "../store/reducers/base-reducer";
@@ -167,7 +169,6 @@ function StoryModeStepper({ theme, preventionFilters, setStoryMode, setStoryMode
                             {storyModeStep > 0 && (
                                 <Button
                                     variant="contained"
-                                    color="default"
                                     onClick={handleBack}
                                     disabled={storyModeStep === 0}
                                     className={classes.button}

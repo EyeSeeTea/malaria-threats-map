@@ -1,6 +1,8 @@
 import React from "react";
-import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
-import WizardIcon from "@material-ui/icons/Explore";
+import { Fab, Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import WizardIcon from "@mui/icons-material/Explore";
 import { useTranslation } from "react-i18next";
 import { sendAnalytics } from "../utils/analytics";
 

@@ -6,7 +6,7 @@ import invasiveIcon from "../assets/img/invasive.svg";
 import invasiveBaseIcon from "../assets/img/invasive-base.svg";
 import styled, { css } from "styled-components";
 import { colors } from "../constants/theme";
-import { SvgIcon } from "@material-ui/core";
+import { SvgIcon } from "@mui/material";
 
 type Props = { active?: boolean; size?: number };
 

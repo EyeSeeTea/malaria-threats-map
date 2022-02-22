@@ -1,7 +1,7 @@
-import { IconButton } from "@material-ui/core";
+import { IconButton } from "@mui/material";
 import * as React from "react";
-import ArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
-import ArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
+import ArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import ArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import styled from "styled-components";
 import { sendAnalytics } from "../../utils/analytics";
 

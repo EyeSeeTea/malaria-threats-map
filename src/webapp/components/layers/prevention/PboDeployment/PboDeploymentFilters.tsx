@@ -4,7 +4,7 @@ import SpeciesFilter from "../../../filters/SpeciesFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
 import { Snackbar } from "../../../filters/container/Filters";
 import { useTranslation } from "react-i18next";
-import { Link } from "@material-ui/core";
+import { Link } from "@mui/material";
 
 export default function PboDeploymentFilters() {
     const { t } = useTranslation();

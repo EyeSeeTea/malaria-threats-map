@@ -1,7 +1,7 @@
 import React from "react";
 import IntegrationReactSelect, { OptionType } from "../BasicSelect";
 import { Divider, FilterWrapper } from "./Filters";
-import FormLabel from "@material-ui/core/FormLabel";
+import FormLabel from "@mui/material/FormLabel";
 import T from "../../translations/T";
 import { ValueType } from "react-select/src/types";
 

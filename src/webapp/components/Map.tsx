@@ -33,7 +33,7 @@ import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
-import { Fade, Hidden } from "@material-ui/core";
+import { Fade, Hidden } from "@mui/material";
 import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
 import Leyend from "./Leyend";
@@ -256,7 +256,7 @@ class Map extends React.Component<Props> {
                 {ready && <InvasiveLayer map={this.map} />}
                 <Fade in={showOptions}>
                     <SearchContainer>
-                        <Hidden xsDown>
+                        <Hidden smDown>
                             <div id={"third"}>
                                 <TopicSelector />
                             </div>
@@ -273,13 +273,13 @@ class Map extends React.Component<Props> {
                         <Hidden smUp>
                             <ShareIcon />
                         </Hidden>
-                        <Hidden xsDown>
+                        <Hidden smDown>
                             <Screenshot map={this.map} />
                             {["prevention", "treatment"].includes(theme) && <Report />}
                         </Hidden>
                     </SearchContainer>
                 </Fade>
-                <Hidden xsDown>
+                <Hidden smDown>
                     <Fade in={showOptions}>
                         <TopRightContainer>
                             <StoryModeSelector />
@@ -308,7 +308,7 @@ class Map extends React.Component<Props> {
                         <Hidden smUp>
                             <LeyendPopover />
                         </Hidden>
-                        <Hidden xsDown>
+                        <Hidden smDown>
                             <Leyend />
                         </Hidden>
                     </BottomRightContainer>
@@ -317,12 +317,12 @@ class Map extends React.Component<Props> {
                     <Hidden smUp>
                         <WhoLogo width={150} />
                     </Hidden>
-                    <Hidden xsDown>
+                    <Hidden smDown>
                         <WhoLogo />
                     </Hidden>
                 </BottomLeftContainer>
                 <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
-                <Hidden xsDown>
+                <Hidden smDown>
                     <InitialDialog />
                 </Hidden>
             </React.Fragment>

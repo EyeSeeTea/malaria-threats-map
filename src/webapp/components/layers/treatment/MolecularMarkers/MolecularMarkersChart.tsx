@@ -3,7 +3,7 @@ import { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, Hidden, Typography } from "@material-ui/core";
+import { Box, Hidden, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -290,7 +290,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
                     <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
                     <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations)} />
                 </Hidden>
-                <Hidden xsDown>
+                <Hidden smDown>
                     <Flex>
                         <FlexCol>
                             <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
@@ -410,7 +410,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
                         {pfcrt()}
                         <HighchartsReact highcharts={Highcharts} options={options3(series3, years, translations)} />
                     </Hidden>
-                    <Hidden xsDown>
+                    <Hidden smDown>
                         <Flex>
                             <FlexCol>{pfcrt()}</FlexCol>
                             <FlexCol>

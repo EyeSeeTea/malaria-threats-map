@@ -14,7 +14,7 @@ import { selectCountryMode, selectFilters, selectRegion, selectSelection } from 
 import { fetchDistrictsRequest } from "../../store/actions/district-actions";
 import mapboxgl from "mapbox-gl";
 import { buildPreventionFilters } from "./studies-filters";
-import { Hidden } from "@material-ui/core";
+import { Hidden } from "@mui/material";
 import ChartModal from "../ChartModal";
 import PreventionSelectionChart from "./prevention/PreventionSelectionChart";
 import { setSelection } from "../../store/actions/base-actions";
@@ -229,7 +229,7 @@ class CountrySelectorLayer extends Component<Props> {
         }
         return (
             <>
-                <Hidden xsDown>
+                <Hidden smDown>
                     <SitePopover map={this.props.map}>
                         <PreventionSelectionChart studies={filteredStudies} map={map} />
                     </SitePopover>

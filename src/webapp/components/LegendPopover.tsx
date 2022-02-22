@@ -1,8 +1,8 @@
 import React from "react";
-import Popover from "@material-ui/core/Popover";
+import Popover from "@mui/material/Popover";
 import Legend from "./Leyend";
-import { Fab } from "@material-ui/core";
-import ListIcon from "@material-ui/icons/List";
+import { Fab } from "@mui/material";
+import ListIcon from "@mui/icons-material/List";
 
 export default function LegendPopover() {
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);

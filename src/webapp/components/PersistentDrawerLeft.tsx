@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import clsx from "clsx";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import Drawer from "@mui/material/Drawer";
+import CssBaseline from "@mui/material/CssBaseline";
 import Map from "./Map";
 import Disclaimer from "./Disclaimer";
 import styled from "styled-components";
@@ -20,10 +22,10 @@ import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
-import { AppBar, Hidden, IconButton, Tab, Tabs, Toolbar } from "@material-ui/core";
+import { AppBar, Hidden, IconButton, Tab, Tabs, Toolbar } from "@mui/material";
 import StoryModeStepper from "./StoryModeStepper";
 import FiltersSidebar from "./filters/container/FiltersSidebar";
-import SettingsIcon from "@material-ui/icons/Settings";
+import SettingsIcon from "@mui/icons-material/Settings";
 import { DiagnosisIcon, FilterIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import { colors } from "../constants/theme";
 import MapTypesSelector from "./MapTypesSelector";
@@ -246,6 +248,7 @@ function PersistentDrawerLeft({
                                     className={classes.iconButton}
                                     aria-label="menu"
                                     onClick={() => setFiltersOpen(true)}
+                                    size="large"
                                 >
                                     <FilterIcon />
                                 </IconButton>
@@ -255,6 +258,7 @@ function PersistentDrawerLeft({
                                     className={classes.iconButton}
                                     aria-label="settings"
                                     onClick={() => setMobileOptionsOpen(true)}
+                                    size="large"
                                 >
                                     <SettingsIcon />
                                 </IconButton>

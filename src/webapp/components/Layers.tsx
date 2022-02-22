@@ -1,8 +1,10 @@
 import React from "react";
-import LayersIcon from "@material-ui/icons/Layers";
+import LayersIcon from "@mui/icons-material/Layers";
 import { State } from "../store/types";
 import { connect } from "react-redux";
-import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
+import { Fab, Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { selectEndemicity } from "../store/reducers/base-reducer";
 import { setFiltersAction, toggleEndemicityLayerAction } from "../store/actions/base-actions";
 import { useTranslation } from "react-i18next";

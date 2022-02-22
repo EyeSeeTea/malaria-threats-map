@@ -1,5 +1,5 @@
 import React from "react";
-import { TableSortLabel } from "@material-ui/core";
+import { TableSortLabel } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Data as TreatmentData } from "./treatment/columns";
 import { Data as PreventionData } from "./prevention/columns";
@@ -25,7 +25,7 @@ export function TableHeadCell<T>({ headCell, order, orderBy, onRequestSort, clas
     return (
         <StyledCell
             align={headCell.align || "left"}
-            padding={headCell.disablePadding ? "none" : "default"}
+            padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
             divider={headCell.divider}
             isBold={isBold}

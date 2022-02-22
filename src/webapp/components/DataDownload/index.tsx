@@ -1,23 +1,14 @@
 import React from "react";
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
-import {
-    AppBar,
-    Button,
-    Container,
-    createStyles,
-    DialogActions,
-    Fab,
-    makeStyles,
-    Theme,
-    Toolbar,
-    Typography,
-} from "@material-ui/core";
-import Dialog from "@material-ui/core/Dialog";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepButton from "@material-ui/core/StepButton";
+import { AppBar, Button, Container, DialogActions, Fab, Theme, Toolbar, Typography } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import Dialog from "@mui/material/Dialog";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepButton from "@mui/material/StepButton";
 import { selectIsDataDownloadOpen } from "../../store/reducers/base-reducer";
 import { logEventAction, setDataDownloadOpenAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";

@@ -1,10 +1,12 @@
 import React from "react";
 import { State } from "../store/types";
 import { connect } from "react-redux";
-import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
+import { Fab, Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { selectStoryMode } from "../store/reducers/base-reducer";
 import { setStoryModeAction } from "../store/actions/base-actions";
-import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import { dispatchCustomEvent } from "../utils/dom-utils";
 import { useTranslation } from "react-i18next";
 import { sendAnalytics } from "../utils/analytics";

@@ -6,8 +6,8 @@ import createStore from "./store";
 import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
 import { PreventionMapType, State } from "./store/types";
-import { createTheme, Hidden } from "@material-ui/core";
-import { ThemeProvider } from "@material-ui/styles";
+import { createTheme, Hidden, adaptV4Theme, Theme, StyledEngineProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/styles";
 
 import {
     setBoundsAction,
@@ -47,6 +47,11 @@ import {
 import { setInvasiveMapType, setInvasiveVectorSpecies } from "./store/actions/invasive-actions";
 import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
 import Notifier from "./components/Notifier";
+
+declare module "@mui/styles/defaultTheme" {
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface DefaultTheme extends Theme {}
+}
 
 export const { store } = createStore();
 
@@ -236,47 +241,51 @@ ReduxQuerySync({
     initialTruth: "location",
 });
 
-export const theme = createTheme({
-    palette: {
-        primary: {
-            main: "#008dc9",
-        },
-        secondary: {
-            main: "#d86422",
-        },
-    },
-    overrides: {
-        MuiFab: {
-            root: {
-                backgroundColor: "white",
+export const theme = createTheme(
+    adaptV4Theme({
+        palette: {
+            primary: {
+                main: "#008dc9",
+            },
+            secondary: {
+                main: "#d86422",
             },
         },
-        MuiButton: {
-            contained: {
-                backgroundColor: "white",
+        overrides: {
+            MuiFab: {
+                root: {
+                    backgroundColor: "white",
+                },
+            },
+            MuiButton: {
+                contained: {
+                    backgroundColor: "white",
+                },
             },
         },
-    },
-});
+    })
+);
 
 class App extends React.Component {
     render() {
         return (
-            <ThemeProvider theme={theme}>
-                <Provider store={store}>
-                    <DataProvider>
-                        <I18nextProvider i18n={i18next}>
-                            <Hidden smUp>
-                                <PersistentDrawerLeft drawerWidth={"100%"} />
-                            </Hidden>
-                            <Hidden xsDown>
-                                <PersistentDrawerLeft />
-                            </Hidden>
-                            <Notifier />
-                        </I18nextProvider>
-                    </DataProvider>
-                </Provider>
-            </ThemeProvider>
+            <StyledEngineProvider injectFirst>
+                <ThemeProvider theme={theme}>
+                    <Provider store={store}>
+                        <DataProvider>
+                            <I18nextProvider i18n={i18next}>
+                                <Hidden smUp>
+                                    <PersistentDrawerLeft drawerWidth={"100%"} />
+                                </Hidden>
+                                <Hidden smDown>
+                                    <PersistentDrawerLeft />
+                                </Hidden>
+                                <Notifier />
+                            </I18nextProvider>
+                        </DataProvider>
+                    </Provider>
+                </ThemeProvider>
+            </StyledEngineProvider>
         );
     }
 }

@@ -1,19 +1,10 @@
 import React, { useEffect } from "react";
-import Dialog from "@material-ui/core/Dialog";
-import {
-    Button,
-    createStyles,
-    Fab,
-    FormControl,
-    InputLabel,
-    makeStyles,
-    MenuItem,
-    Select,
-    TextField,
-    Theme,
-} from "@material-ui/core";
-import SubscriptionIcon from "@material-ui/icons/RssFeed";
-import Typography from "@material-ui/core/Typography";
+import Dialog from "@mui/material/Dialog";
+import { Button, Fab, FormControl, InputLabel, MenuItem, Select, TextField, Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import SubscriptionIcon from "@mui/icons-material/RssFeed";
+import Typography from "@mui/material/Typography";
 import { State } from "../store/types";
 import { setSubscriptionOpenAction } from "../store/actions/base-actions";
 import { selectIsSubmittingSubscription, selectIsSubscriptionOpen } from "../store/reducers/base-reducer";

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import styled from "styled-components";
-import { Paper } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
+import { Paper } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import { State } from "../store/types";
 import { connect } from "react-redux";
 import { setThemeAction } from "../store/actions/base-actions";

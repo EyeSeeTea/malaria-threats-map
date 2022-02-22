@@ -28,7 +28,7 @@ import { State, TreatmentMapType } from "../../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { fetchTreatmentStudiesRequest, setFilteredStudiesAction } from "../../../store/actions/treatment-actions";
 import { setSelection } from "../../../store/actions/base-actions";
-import { Hidden } from "@material-ui/core";
+import { Hidden } from "@mui/material";
 import ChartModal from "../../ChartModal";
 import TreatmentSelectionChart from "./TreatmentSelectionChart";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
@@ -286,7 +286,7 @@ class TreatmentLayer extends Component<Props> {
         return (
             this.props.theme === "treatment" && (
                 <>
-                    <Hidden xsDown>
+                    <Hidden smDown>
                         <SitePopover map={this.props.map}>
                             <TreatmentSelectionChart studies={filteredStudies} />
                         </SitePopover>

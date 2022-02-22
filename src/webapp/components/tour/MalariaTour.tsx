@@ -17,9 +17,9 @@ import {
     setTourStepAction,
 } from "../../store/actions/base-actions";
 import { setFilteredStudiesAction } from "../../store/actions/treatment-actions";
-import { Button, IconButton, withStyles } from "@material-ui/core";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import { Button, IconButton } from "@mui/material";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import styled from "styled-components";
 import Step1 from "./steps/Step1";
 import Step2 from "./steps/Step2";
@@ -34,11 +34,9 @@ import { dispatchCustomEvent } from "../../utils/dom-utils";
 import { setInsecticideClass, setInsecticideTypes, setSpecies } from "../../store/actions/prevention-actions";
 import Step6b from "./steps/Step6b";
 
-const styles = {
-    root: {
-        padding: 10,
-    },
-};
+const StyledTour = styled(Tour)`
+    padding: 10;
+`;
 
 const Flex = styled.div`
     margin-top: 10px;
@@ -175,7 +173,7 @@ class MalariaTour extends PureComponent<Props> {
     };
 
     render() {
-        const { theme, tour, setInitialDialogOpen, classes } = this.props;
+        const { theme, tour, setInitialDialogOpen } = this.props;
 
         // https://github.com/elrumordelaluz/reactour/issues/185
         setTimeout(() => {
@@ -341,8 +339,7 @@ class MalariaTour extends PureComponent<Props> {
         ];
 
         return (
-            <Tour
-                className={classes.root}
+            <StyledTour
                 steps={steps}
                 isOpen={this.props.tour.open}
                 onRequestClose={this.onClose}
@@ -360,4 +357,4 @@ class MalariaTour extends PureComponent<Props> {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MalariaTour));
+export default connect(mapStateToProps, mapDispatchToProps)(MalariaTour);

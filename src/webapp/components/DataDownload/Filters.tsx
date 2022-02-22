@@ -20,7 +20,7 @@ import { selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
 import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
 
 import MolecularMarkerSelector from "../filters/MolecularMarkerSelector";
-import { Paper, Typography } from "@material-ui/core";
+import { Paper, Typography } from "@mui/material";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { fetchPreventionStudiesRequest } from "../../store/actions/prevention-actions";

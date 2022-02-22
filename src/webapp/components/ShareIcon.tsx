@@ -1,6 +1,8 @@
 import React from "react";
-import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
-import Share from "@material-ui/icons/Share";
+import { Fab, Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import Share from "@mui/icons-material/Share";
 import { useTranslation } from "react-i18next";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import { connect } from "react-redux";

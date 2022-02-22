@@ -1,8 +1,10 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { TransitionProps } from "@material-ui/core/transitions";
-import { AppBar, Fab, Paper, Toolbar, Typography, Dialog, IconButton, Slide } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import { TransitionProps } from "@mui/material/transitions";
+import { AppBar, Fab, Paper, Toolbar, Typography, Dialog, IconButton, Slide } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import styled from "styled-components";
 import { State } from "../../../store/types";
 import { selectAreFiltersOpen, selectFilters, selectTheme } from "../../../store/reducers/base-reducer";
@@ -167,7 +169,7 @@ function Filters({
                         <Typography variant="h6" className={classes.title}>
                             {t("common.filters.filters")}
                         </Typography>
-                        <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+                        <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close" size="large">
                             <CloseIcon />
                         </IconButton>
                     </Toolbar>

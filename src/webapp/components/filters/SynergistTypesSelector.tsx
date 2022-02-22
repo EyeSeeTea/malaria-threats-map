@@ -5,7 +5,7 @@ import IntegrationReactSelect, { Option } from "../BasicSelect";
 import { selectSpecies } from "../../store/reducers/translations-reducer";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import * as R from "ramda";
-import FormLabel from "@material-ui/core/FormLabel";
+import FormLabel from "@mui/material/FormLabel";
 import { Divider, FilterWrapper } from "./Filters";
 import T from "../../translations/T";
 

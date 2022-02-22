@@ -22,7 +22,7 @@ import {
     fetchDiagnosisStudiesRequest,
     setDiagnosisFilteredStudiesAction,
 } from "../../../store/actions/diagnosis-actions";
-import { Hidden } from "@material-ui/core";
+import { Hidden } from "@mui/material";
 import ChartModal from "../../ChartModal";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
 import { setSelection } from "../../../store/actions/base-actions";
@@ -250,7 +250,7 @@ class DiagnosisLayer extends Component<Props> {
         return (
             this.props.theme === "diagnosis" && (
                 <>
-                    <Hidden xsDown>
+                    <Hidden smDown>
                         <SitePopover map={this.props.map}>
                             <DiagnosisSelectionChart studies={filteredStudies} />
                         </SitePopover>

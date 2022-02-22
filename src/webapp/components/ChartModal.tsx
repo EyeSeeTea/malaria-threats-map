@@ -1,8 +1,10 @@
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
-import { createStyles, DialogContent, makeStyles, Theme } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+import Dialog from "@mui/material/Dialog";
+import { DialogContent, Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { setPreventionFilteredStudiesAction } from "../store/actions/prevention-actions";

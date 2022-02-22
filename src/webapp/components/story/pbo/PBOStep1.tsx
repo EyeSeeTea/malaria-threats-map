@@ -1,6 +1,8 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
-import { createStyles, Link, makeStyles } from "@material-ui/core";
+import Typography from "@mui/material/Typography";
+import { Link } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import image1 from "../../../assets/img/pbo_page_1_1.png";
 import image2 from "../../../assets/img/pbo_page_1_2.png";
 import styled from "styled-components";

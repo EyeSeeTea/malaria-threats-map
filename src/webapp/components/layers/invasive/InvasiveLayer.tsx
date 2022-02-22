@@ -17,7 +17,7 @@ import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../stu
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectInvasiveFilters, selectInvasiveStudies } from "../../../store/reducers/invasive-reducer";
 import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
-import { Hidden } from "@material-ui/core";
+import { Hidden } from "@mui/material";
 import ChartModal from "../../ChartModal";
 import InvasiveSelectionChart from "./InvasiveSelectionChart";
 import { setSelection } from "../../../store/actions/base-actions";
@@ -237,7 +237,7 @@ class InvasiveLayer extends Component<Props> {
         return (
             this.props.theme === "invasive" && (
                 <>
-                    <Hidden xsDown>
+                    <Hidden smDown>
                         <SitePopover map={this.props.map}>
                             <InvasiveSelectionChart studies={filteredStudies} />
                         </SitePopover>

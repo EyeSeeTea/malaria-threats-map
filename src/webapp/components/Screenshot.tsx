@@ -1,7 +1,9 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import { Fab, Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import whoLogoWhite from "../assets/img/who-logo-blue.png";
 import prevention from "../assets/img/prevention.png";
 import diagnosis from "../assets/img/diagnosis.png";
