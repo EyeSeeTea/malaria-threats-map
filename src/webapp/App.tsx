@@ -6,7 +6,8 @@ import createStore from "./store";
 import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
 import { PreventionMapType, State } from "./store/types";
-import { createTheme, Hidden, adaptV4Theme, Theme, StyledEngineProvider } from "@mui/material";
+import { Hidden, Theme, StyledEngineProvider } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/styles";
 
 import {
@@ -241,30 +242,48 @@ ReduxQuerySync({
     initialTruth: "location",
 });
 
-export const theme = createTheme(
-    adaptV4Theme({
-        palette: {
-            primary: {
-                main: "#008dc9",
-            },
-            secondary: {
-                main: "#d86422",
+export const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#008dc9",
+        },
+        secondary: {
+            main: "#d86422",
+        },
+    },
+    components: {
+        MuiTextField: {
+            defaultProps: {
+                variant: "standard",
             },
         },
-        overrides: {
-            MuiFab: {
-                root: {
-                    backgroundColor: "white",
-                },
-            },
-            MuiButton: {
-                contained: {
-                    backgroundColor: "white",
-                },
+        MuiFormControl: {
+            defaultProps: {
+                variant: "standard",
             },
         },
-    })
-);
+        MuiSelect: {
+            defaultProps: {
+                variant: "standard",
+            },
+        },
+        //Does not work for the moment
+        // MuiFab: {
+        //     styleOverrides: {
+        //         root: {
+        //             backgroundColor: "red",
+        //         },
+        //     },
+        // },
+        // MuiButton: {
+        //     styleOverrides: {
+        //         contained: {
+        //             backgroundColor: "red",
+        //         },
+        //     },
+        // },
+    },
+});
 
 class App extends React.Component {
     render() {
