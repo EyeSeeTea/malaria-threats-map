@@ -96,9 +96,7 @@ function NoOptionsMessage(props: NoticeProps<OptionType, false>) {
 
 type InputComponentProps = Pick<BaseTextFieldProps, "inputRef"> & HTMLAttributes<HTMLDivElement>;
 
-function inputComponent({ inputRef, ...props }: InputComponentProps) {
-    return <div ref={inputRef} {...props} />;
-}
+const inputComponent = React.forwardRef((props: InputComponentProps, ref: any) => <div ref={ref} {...props} />);
 
 function Control(props: ControlProps<OptionType, false>) {
     const {
