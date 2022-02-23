@@ -286,20 +286,20 @@ function PersistentDrawerLeft({
                             >
                                 <StyledTab
                                     color={theme === "prevention" ? colors.prevention.N : undefined}
-                                    icon={<PreventionIcon active={theme === "prevention"} size={36} />}
+                                    icon={<PreventionIcon selected={theme === "prevention"} size={36} />}
                                 />
                                 <StyledTab
                                     color={theme === "diagnosis" ? colors.diagnosis.N : undefined}
-                                    icon={<DiagnosisIcon active={theme === "diagnosis"} size={36} />}
+                                    icon={<DiagnosisIcon selected={theme === "diagnosis"} size={36} />}
                                 />
                                 <StyledTab
                                     color={theme === "treatment" ? colors.treatment.N : undefined}
-                                    icon={<TreatmentIcon active={theme === "treatment"} size={36} />}
+                                    icon={<TreatmentIcon selected={theme === "treatment"} size={36} />}
                                 />
                                 <StyledTab
                                     label=""
                                     color={theme === "invasive" ? colors.invasive.N : undefined}
-                                    icon={<InvasiveIcon active={theme === "invasive"} size={36} />}
+                                    icon={<InvasiveIcon selected={theme === "invasive"} size={36} />}
                                 />
                             </Tabs>
                         </AppBar>

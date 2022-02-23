@@ -68,7 +68,7 @@ class ThemeSelector extends Component<Props> {
                                         onClick={() => setTheme("prevention")}
                                         disabled={!!preventionError}
                                     >
-                                        <PreventionIcon active={theme === "prevention" && !preventionError} />
+                                        <PreventionIcon selected={theme === "prevention" && !preventionError} />
                                     </StyledIconButton>
                                 </ThemeButton>
                                 <ThemeButton disabled={!!diagnosisError}>
@@ -77,7 +77,7 @@ class ThemeSelector extends Component<Props> {
                                         onClick={() => setTheme("diagnosis")}
                                         disabled={!!diagnosisError}
                                     >
-                                        <DiagnosisIcon active={theme === "diagnosis"} />
+                                        <DiagnosisIcon selected={theme === "diagnosis"} />
                                     </StyledIconButton>
                                 </ThemeButton>
                                 <ThemeButton disabled={!!treatmentError}>
@@ -86,7 +86,7 @@ class ThemeSelector extends Component<Props> {
                                         onClick={() => setTheme("treatment")}
                                         disabled={!!treatmentError}
                                     >
-                                        <TreatmentIcon active={theme === "treatment"} />
+                                        <TreatmentIcon selected={theme === "treatment"} />
                                     </StyledIconButton>
                                 </ThemeButton>
                                 <ThemeButton disabled={!!invasiveError}>
@@ -95,7 +95,7 @@ class ThemeSelector extends Component<Props> {
                                         onClick={() => setTheme("invasive")}
                                         disabled={!!invasiveError}
                                     >
-                                        <InvasiveIcon active={theme === "invasive"} />
+                                        <InvasiveIcon selected={theme === "invasive"} />
                                     </StyledIconButton>
                                 </ThemeButton>
                             </ButtonGroup>
