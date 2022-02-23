@@ -267,6 +267,11 @@ export const theme = createTheme({
                 variant: "standard",
             },
         },
+        MuiLink: {
+            defaultProps: {
+                underline: "hover",
+            },
+        },
         //Does not work for the moment
         // MuiFab: {
         //     styleOverrides: {
