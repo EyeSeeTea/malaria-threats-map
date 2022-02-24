@@ -2,7 +2,7 @@ import React from "react";
 import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
-import { Stepper, Step, StepLabel, Button, Paper, Typography, AppBar, Toolbar, IconButton } from "@mui/material";
+import { Step, StepLabel, Button, Paper, Typography, AppBar, Toolbar, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import styled from "styled-components";
 import { PreventionMapType, State } from "../store/types";
@@ -17,6 +17,7 @@ import InvasiveSteps from "./story/invasive/InvasiveSteps";
 import { useSwipeable, SwipeEventData } from "react-swipeable";
 import PBOSteps from "./story/pbo/PBOSteps";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
+import PaperStepper from "./PaperStepper/PaperStepper";
 
 const FlexGrow = styled.div`
     flex-grow: 1;
@@ -151,7 +152,7 @@ function StoryModeStepper({ theme, preventionFilters, setStoryMode, setStoryMode
                         </IconButton>
                     </Toolbar>
                 </AppBar>
-                <Stepper activeStep={storyModeStep}>
+                <PaperStepper activeStep={storyModeStep}>
                     {selectedSteps.map((step: any, index: number) => {
                         const stepProps: { completed?: boolean } = {};
                         const labelProps: { optional?: React.ReactNode } = {};
@@ -161,7 +162,7 @@ function StoryModeStepper({ theme, preventionFilters, setStoryMode, setStoryMode
                             </StyledStep>
                         );
                     })}
-                </Stepper>
+                </PaperStepper>
                 <div>
                     <div>
                         <Paper className={classes.paper}>{SelectedStep ? <SelectedStep /> : <div />}</Paper>

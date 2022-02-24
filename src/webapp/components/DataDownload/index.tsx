@@ -6,7 +6,6 @@ import { AppBar, Button, Container, DialogActions, Fab, Theme, Toolbar, Typograp
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import Dialog from "@mui/material/Dialog";
-import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 import { selectIsDataDownloadOpen } from "../../store/reducers/base-reducer";
@@ -47,6 +46,7 @@ import { emailRegexp } from "../Subscription";
 import { FlexGrow } from "../Chart";
 import SimpleLoader from "../SimpleLoader";
 import { setTimeout } from "timers";
+import PaperStepper from "../PaperStepper/PaperStepper";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
 
@@ -934,13 +934,13 @@ function DataDownload({
                     </Container>
                 </AppBar>
                 <Container maxWidth={"md"}>
-                    <Stepper alternativeLabel nonLinear activeStep={activeStep} className={classes.paper}>
+                    <PaperStepper alternativeLabel nonLinear activeStep={activeStep} className={classes.paper}>
                         {steps.map((label, _index) => (
                             <Step key={label}>
                                 <StepButton>{t(`common.${label}`)}</StepButton>
                             </Step>
                         ))}
-                    </Stepper>
+                    </PaperStepper>
                 </Container>
                 <Container maxWidth={"md"}>
                     <Wrapper>{renderStep()}</Wrapper>
