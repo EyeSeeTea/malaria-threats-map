@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
-import { ThemeProvider } from "@mui/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import { store, theme } from "../../../App";
 import { connect, Provider } from "react-redux";
 import { State } from "../../../store/types";
