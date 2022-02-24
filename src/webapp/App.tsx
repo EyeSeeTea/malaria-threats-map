@@ -7,8 +7,7 @@ import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
 import { PreventionMapType, State } from "./store/types";
 import { Hidden, Theme, StyledEngineProvider } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
-import { ThemeProvider } from "@mui/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import {
     setBoundsAction,
@@ -272,21 +271,6 @@ export const theme = createTheme({
                 underline: "hover",
             },
         },
-        //Does not work for the moment
-        // MuiFab: {
-        //     styleOverrides: {
-        //         root: {
-        //             backgroundColor: "red",
-        //         },
-        //     },
-        // },
-        // MuiButton: {
-        //     styleOverrides: {
-        //         contained: {
-        //             backgroundColor: "red",
-        //         },
-        //     },
-        // },
     },
 });
 
