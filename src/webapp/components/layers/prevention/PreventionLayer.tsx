@@ -27,7 +27,7 @@ import PreventionSelectionChart from "./PreventionSelectionChart";
 import ChartModal from "../../ChartModal";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import SitePopover from "../common/SitePopover";
-import Hidden from "../../../components/hidden/Hidden"
+import Hidden from "../../../components/hidden/Hidden";
 
 export const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";

@@ -6,7 +6,7 @@ import createStore from "./store";
 import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
 import { PreventionMapType, State } from "./store/types";
-import {  Theme, StyledEngineProvider } from "@mui/material";
+import { Theme, StyledEngineProvider } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import {

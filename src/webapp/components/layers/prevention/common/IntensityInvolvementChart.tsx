@@ -13,7 +13,6 @@ import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import Hidden from "../../../hidden/Hidden";
 
-
 const ChatContainer = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};
 `;
