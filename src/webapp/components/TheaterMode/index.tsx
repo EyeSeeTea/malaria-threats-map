@@ -130,6 +130,7 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
             )}
 
             <Slider
+                size="small"
                 className={classes.slider}
                 value={year}
                 valueLabelDisplay="on"
