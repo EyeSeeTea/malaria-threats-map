@@ -12,8 +12,6 @@ const Hidden: React.FC<HiddenProps> = ({ children, smUp, smDown }) => {
 
     const hidden = (smUp && isSmUp) || (smDown && isSmDown);
 
-    debugger;
-
     return hidden ? null : <React.Fragment>{children}</React.Fragment>;
 };
 
