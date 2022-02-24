@@ -22,7 +22,7 @@ import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
-import { AppBar, Hidden, IconButton, Tab, Tabs, Toolbar } from "@mui/material";
+import { AppBar, IconButton, Tab, Tabs, Toolbar } from "@mui/material";
 import StoryModeStepper from "./StoryModeStepper";
 import FiltersSidebar from "./filters/container/FiltersSidebar";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -31,6 +31,7 @@ import { colors } from "../constants/theme";
 import MapTypesSelector from "./MapTypesSelector";
 import MobileOptions from "./MobileOptions";
 import Loader from "./Loader";
+import Hidden from "./hidden/Hidden";
 
 interface ThemeProps {
     drawerWidth: string;

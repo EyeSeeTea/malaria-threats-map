@@ -2,10 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import Dialog from "@mui/material/Dialog";
 import CloseIcon from "@mui/icons-material/Close";
-import { DialogActions, DialogContent, Hidden, IconButton, Theme } from "@mui/material";
+import { DialogActions, DialogContent, IconButton, Theme } from "@mui/material";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import { useTranslation } from "react-i18next";
+import Hidden from "./hidden/Hidden";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

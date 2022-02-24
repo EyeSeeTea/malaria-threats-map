@@ -3,7 +3,7 @@ import { useState } from "react";
 import Highcharts, { DataLabelsFormatterCallbackFunction } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, Hidden, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -18,6 +18,7 @@ import IntegrationReactSelect from "../../../BasicSelect";
 import FormLabel from "@mui/material/FormLabel";
 import { sendAnalytics } from "../../../../utils/analytics";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
+import Hidden from "../../../hidden/Hidden";
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {

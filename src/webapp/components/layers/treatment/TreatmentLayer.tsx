@@ -28,11 +28,11 @@ import { State, TreatmentMapType } from "../../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { fetchTreatmentStudiesRequest, setFilteredStudiesAction } from "../../../store/actions/treatment-actions";
 import { setSelection } from "../../../store/actions/base-actions";
-import { Hidden } from "@mui/material";
 import ChartModal from "../../ChartModal";
 import TreatmentSelectionChart from "./TreatmentSelectionChart";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SitePopover from "../common/SitePopover";
+import Hidden from "../../hidden/Hidden";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";

@@ -2,7 +2,7 @@ import * as React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, Hidden, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -11,6 +11,8 @@ import Citation from "../../../charts/Citation";
 import Pagination from "../../../charts/Pagination";
 import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
+import Hidden from "../../../hidden/Hidden";
+
 
 const ChatContainer = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};

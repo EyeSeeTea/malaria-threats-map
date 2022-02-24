@@ -22,12 +22,12 @@ import {
     fetchDiagnosisStudiesRequest,
     setDiagnosisFilteredStudiesAction,
 } from "../../../store/actions/diagnosis-actions";
-import { Hidden } from "@mui/material";
 import ChartModal from "../../ChartModal";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
 import { setSelection } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
+import Hidden from "../../hidden/Hidden";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";

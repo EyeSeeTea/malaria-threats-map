@@ -6,7 +6,7 @@ import createStore from "./store";
 import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
 import { PreventionMapType, State } from "./store/types";
-import { Hidden, Theme, StyledEngineProvider } from "@mui/material";
+import {  Theme, StyledEngineProvider } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import {
@@ -47,6 +47,7 @@ import {
 import { setInvasiveMapType, setInvasiveVectorSpecies } from "./store/actions/invasive-actions";
 import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
 import Notifier from "./components/Notifier";
+import Hidden from "./components/hidden/Hidden";
 
 declare module "@mui/styles/defaultTheme" {
     // eslint-disable-next-line @typescript-eslint/no-empty-interface
