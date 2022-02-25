@@ -201,7 +201,7 @@ function PersistentDrawerLeft({
 
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 
-    const onChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    const onChange = (event: React.SyntheticEvent, newValue: number) => {
         switch (newValue) {
             case 0:
                 setTheme("prevention");
