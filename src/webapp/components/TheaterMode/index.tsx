@@ -107,7 +107,7 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
         return `${value}`;
     }
 
-    const handleChange = (event: any, newValue: number | number[]) => {
+    const handleChange = (event: Event, newValue: number | number[]) => {
         const value = newValue as number;
         sendAnalytics({ type: "event", category: "timeline", action: "drag", label: year.toString() });
         setYear(() => value);
