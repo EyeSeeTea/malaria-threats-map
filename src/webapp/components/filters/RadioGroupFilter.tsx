@@ -16,6 +16,9 @@ const StyledFormControlLabel = styled(FormControlLabel)`
     & span {
         padding: 2px;
     }
+    & svg {
+        left: 2px;
+    }
 `;
 
 type RadioGroupProps = {
@@ -55,7 +58,7 @@ function RadioGroupFilter({ label, options, handleChange, value }: RadioGroupPro
                         <StyledFormControlLabel
                             key={option.value}
                             value={option.value}
-                            control={<Radio color="primary" />}
+                            control={<Radio />}
                             label={option.label}
                         />
                     ))}
