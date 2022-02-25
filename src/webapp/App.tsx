@@ -250,6 +250,12 @@ export const theme = createTheme({
         secondary: {
             main: "#d86422",
         },
+        grey: {
+            // This is the unique simple approach in @mui v5 to change default and hover fab background-color
+            // set by theme, styled or makeStyles provoke color errors to assign color to primary
+            300: "#FFFFFF",
+            A100: "#e0e0e0",
+        },
     },
     components: {
         MuiTextField: {
