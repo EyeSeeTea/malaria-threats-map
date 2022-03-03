@@ -91,7 +91,7 @@ const SimpleCard = ({ title, description, Icon, theme, setTheme, setRegion, onSe
                 setTheme(theme, { fromHome: true });
             }}
         >
-            <Icon active style={{ maxWidth: "96px", marginTop: "24px" }} />
+            <Icon selected style={{ maxWidth: "96px", marginTop: "24px" }} />
             <StyledCardContent>
                 <Typography className={classes.pos} variant="h6" component="h2">
                     {title}
