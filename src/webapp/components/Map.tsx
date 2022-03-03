@@ -283,7 +283,7 @@ class Map extends React.Component<Props> {
                         <TopRightContainer>
                             <StoryModeSelector />
                             <InitialDisclaimer />
-                            
+
                             <Feedback />
                             <TourIcon />
                             {/* {["prevention", "diagnosis"].includes(theme) && <UploadFile />} */}
@@ -297,7 +297,7 @@ class Map extends React.Component<Props> {
                         <TopRightVerticalContainer>
                             <StoryModeSelector />
                             <InitialDisclaimer />
-                            
+
                             <Feedback />
                         </TopRightVerticalContainer>
                     </Fade>

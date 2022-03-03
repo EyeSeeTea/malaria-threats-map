@@ -443,27 +443,6 @@
                 "percentile_75": "Percentile 75"
             }
         },
-        "subscription": {
-            "title": "Suscríbase para recibir actualizaciones sobre estos cuatro desafíos en la lucha contra la malaria!",
-            "first_name": "Nombre",
-            "last_name": "Apellidos",
-            "email": "Email",
-            "country": "País",
-            "organization": "Organización",
-            "button": "Subscríbete",
-            "institutions": {
-                "nmcp": "PNLM",
-                "funding_organization": "Entidad financiadora",
-                "research_organization": "Centro de investigación",
-                "who_collaborating_centers": "Centro colaborador de la OMS",
-                "private_sector": "Sector privado",
-                "ngo": "ONG",
-                "media_organization": "Agencia de comunicación",
-                "who_country_office": "OMS - Oficina de país",
-                "who_regional_office": "OMS - Oficina Regional",
-                "who_headquarters": "OMS - Sede"
-            }
-        },
         "uploadFile": {
             "title": "Subir fichero",
             "name": "Título",
@@ -494,7 +473,6 @@
             "image": "Exportar mapa",
             "summary": "Informe resumen",
             "disclaimer": "Aviso Legal",
-            "subscribe": "Suscríbase",
             "uploadFile": "Subir fichero y descargar plantilla",
             "comments": "Envíe sus comentarios",
             "help": "Ayuda",
