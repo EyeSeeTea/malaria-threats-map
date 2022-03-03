@@ -56,6 +56,14 @@ const Wrapper = styled.div`
     margin: 16px 0;
 `;
 
+const GreyButton = styled(Button)`
+    background-color: transparent;
+    color: black;
+    &:hover {
+        background-color: #f5f5f5;
+    }
+`;
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         title: {
@@ -951,9 +959,9 @@ function DataDownload({
                             {t("common.data_download.buttons.close")}
                         </Button>
                         <FlexGrow />
-                        <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                        <GreyButton disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                             {t("common.data_download.buttons.back")}
-                        </Button>
+                        </GreyButton>
                         <Button
                             variant="contained"
                             color="primary"
