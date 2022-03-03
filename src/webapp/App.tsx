@@ -258,6 +258,15 @@ export const theme = createTheme({
         },
     },
     components: {
+        MuiCssBaseline: {
+            styleOverrides: {
+                body: {
+                    fontSize: "0.875rem",
+                    lineHeight: 1.43,
+                    letterSpacing: "0.01071em",
+                },
+            },
+        },
         MuiTextField: {
             defaultProps: {
                 variant: "standard",
