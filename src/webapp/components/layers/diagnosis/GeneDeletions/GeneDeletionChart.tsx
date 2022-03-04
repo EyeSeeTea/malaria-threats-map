@@ -81,8 +81,8 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
         <ChatContainer>
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">
-                {isNotNull(studyObject.TOOLTIP_SITENAME) && `${t(studyObject.TOOLTIP_SITENAME)}, `}
-                 {t(isNull(studyObject.ISO2) ? "common.COUNTRY_NA" : studyObject.ISO2)}
+                    {isNotNull(studyObject.TOOLTIP_SITENAME) && `${t(studyObject.TOOLTIP_SITENAME)}, `}
+                    {t(isNull(studyObject.ISO2) ? "common.COUNTRY_NA" : studyObject.ISO2)}
                 </Box>
             </Typography>
             <SpacedTypography variant="subtitle2">
