@@ -1,6 +1,8 @@
 import React from "react";
-import { makeStyles, Theme, withStyles } from "@material-ui/core/styles";
-import { Button, Card, CardContent, Typography } from "@material-ui/core";
+import { Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import withStyles from "@mui/styles/withStyles";
+import { Button, Card, CardContent, Typography } from "@mui/material";
 import styled from "styled-components";
 import { setRegionAction, setThemeAction } from "../store/actions/base-actions";
 import { connect } from "react-redux";
@@ -89,7 +91,7 @@ const SimpleCard = ({ title, description, Icon, theme, setTheme, setRegion, onSe
                 setTheme(theme, { fromHome: true });
             }}
         >
-            <Icon active style={{ maxWidth: "96px", marginTop: "24px" }} />
+            <Icon selected style={{ maxWidth: "96px", marginTop: "24px" }} />
             <StyledCardContent>
                 <Typography className={classes.pos} variant="h6" component="h2">
                     {title}

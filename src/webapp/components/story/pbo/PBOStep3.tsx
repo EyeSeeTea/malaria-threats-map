@@ -1,6 +1,8 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
-import { createStyles, makeStyles, Link } from "@material-ui/core";
+import Typography from "@mui/material/Typography";
+import { Link } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { useTranslation, Trans } from "react-i18next";
 
 const useStyles = makeStyles(() =>

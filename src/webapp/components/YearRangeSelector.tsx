@@ -1,6 +1,6 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Slider, FormLabel } from "@material-ui/core";
+import makeStyles from "@mui/styles/makeStyles";
+import { Slider, FormLabel } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import * as R from "ramda";
@@ -61,7 +61,7 @@ const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = new 
     const classes = useStyles({});
     const { t } = useTranslation();
 
-    const handleChange = (event: any, newValue: number | number[]) => {
+    const handleChange = (event: Event, newValue: number | number[]) => {
         const [start, end] = newValue as number[];
         const [prevStart, prevEnd] = filters;
         const label = `(${start}, ${end})`;
@@ -76,6 +76,7 @@ const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = new 
         <div className={classes.root}>
             <FormLabel component="legend">{t("common.filters.years")}</FormLabel>
             <Slider
+                size="small"
                 className={classes.slider}
                 value={filters}
                 onChange={handleChange}

@@ -1,18 +1,23 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { Paper } from "@material-ui/core";
+import { Paper } from "@mui/material";
 import { Divider, FilterWrapper } from "./Filters";
-import FormLabel from "@material-ui/core/FormLabel";
+import FormLabel from "@mui/material/FormLabel";
 import { Option } from "../BasicSelect";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
     & span {
         padding: 2px;
+    }
+    & svg {
+        left: 2px;
     }
 `;
 
@@ -53,7 +58,7 @@ function RadioGroupFilter({ label, options, handleChange, value }: RadioGroupPro
                         <StyledFormControlLabel
                             key={option.value}
                             value={option.value}
-                            control={<Radio color="primary" />}
+                            control={<Radio />}
                             label={option.label}
                         />
                     ))}

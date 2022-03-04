@@ -1,16 +1,8 @@
-import {
-    createStyles,
-    lighten,
-    makeStyles,
-    Theme,
-    Button,
-    Toolbar,
-    Typography,
-    IconButton,
-    Tooltip,
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import { lighten, Theme, Button, Toolbar, Typography, IconButton, Tooltip } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import React from "react";
@@ -38,7 +30,7 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
             paddingRight: theme.spacing(1),
         },
         highlight:
-            theme.palette.type === "light"
+            theme.palette.mode === "light"
                 ? {
                       color: theme.palette.secondary.main,
                       backgroundColor: lighten(theme.palette.secondary.light, 0.85),
@@ -100,7 +92,7 @@ const ReportToolbar: React.FC<ReportToolbarProps> = ({
             )}
             {numSelected > 0 ? (
                 <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
+                    <IconButton aria-label="delete" size="large">
                         <DeleteIcon />
                     </IconButton>
                 </Tooltip>
@@ -109,7 +101,6 @@ const ReportToolbar: React.FC<ReportToolbarProps> = ({
                 <>
                     <Button
                         variant="contained"
-                        color="default"
                         className={classes.button}
                         startIcon={<CloudDownloadIcon />}
                         onClick={onClick}

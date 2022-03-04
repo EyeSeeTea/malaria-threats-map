@@ -1,23 +1,13 @@
 import React from "react";
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
-import {
-    AppBar,
-    Button,
-    Container,
-    createStyles,
-    DialogActions,
-    Fab,
-    makeStyles,
-    Theme,
-    Toolbar,
-    Typography,
-} from "@material-ui/core";
-import Dialog from "@material-ui/core/Dialog";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepButton from "@material-ui/core/StepButton";
+import { AppBar, Button, Container, DialogActions, Fab, Theme, Toolbar, Typography } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import Dialog from "@mui/material/Dialog";
+import Step from "@mui/material/Step";
+import StepButton from "@mui/material/StepButton";
 import { selectIsDataDownloadOpen } from "../../store/reducers/base-reducer";
 import { logEventAction, setDataDownloadOpenAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
@@ -56,6 +46,7 @@ import { emailRegexp } from "../Subscription";
 import { FlexGrow } from "../Chart";
 import SimpleLoader from "../SimpleLoader";
 import { setTimeout } from "timers";
+import PaperStepper from "../PaperStepper/PaperStepper";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
 
@@ -63,6 +54,14 @@ export const BIOCHEMICAL_MECHANISM_TYPES = ["KDR_L1014S", "KDR_L1014F", "KDR_(MU
 
 const Wrapper = styled.div`
     margin: 16px 0;
+`;
+
+const GreyButton = styled(Button)`
+    background-color: transparent;
+    color: black;
+    &:hover {
+        background-color: #f5f5f5;
+    }
 `;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -943,13 +942,13 @@ function DataDownload({
                     </Container>
                 </AppBar>
                 <Container maxWidth={"md"}>
-                    <Stepper alternativeLabel nonLinear activeStep={activeStep} className={classes.paper}>
+                    <PaperStepper alternativeLabel nonLinear activeStep={activeStep} className={classes.paper}>
                         {steps.map((label, _index) => (
                             <Step key={label}>
                                 <StepButton>{t(`common.${label}`)}</StepButton>
                             </Step>
                         ))}
-                    </Stepper>
+                    </PaperStepper>
                 </Container>
                 <Container maxWidth={"md"}>
                     <Wrapper>{renderStep()}</Wrapper>
@@ -960,9 +959,9 @@ function DataDownload({
                             {t("common.data_download.buttons.close")}
                         </Button>
                         <FlexGrow />
-                        <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                        <GreyButton disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                             {t("common.data_download.buttons.back")}
-                        </Button>
+                        </GreyButton>
                         <Button
                             variant="contained"
                             color="primary"

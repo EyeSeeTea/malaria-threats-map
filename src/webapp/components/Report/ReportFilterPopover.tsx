@@ -1,8 +1,9 @@
 import React from "react";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
-import Popover from "@material-ui/core/Popover";
-import Button from "@material-ui/core/Button";
-import FilterListIcon from "@material-ui/icons/FilterList";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import Popover from "@mui/material/Popover";
+import Button from "@mui/material/Button";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import CountriesSelector from "../DataDownload/filters/CountriesSelector";
 import T from "../../translations/T";
 import DrugsSelector from "../filters/DrugsSelector";

@@ -21,7 +21,7 @@ export class CompositionRoot {
     private invasiveRepository = new InvasiveApiRepository(config.mapServerUrl);
     private countryLayerRepository = new CountryLayerApiRepository(config.featuresServerUrl, config.backendUrl);
     private fileRepository = new SmtpJsEmailRepository();
-    private _districtsUrl: string
+    private _districtsUrl: string;
 
     constructor() {
         this.initDistrictsUrl();
@@ -67,8 +67,8 @@ export class CompositionRoot {
         return this._districtsUrl;
     }
 
-    private async initDistrictsUrl(){
-        this._districtsUrl = await getDistrictsUrl()
+    private async initDistrictsUrl() {
+        this._districtsUrl = await getDistrictsUrl();
     }
 }
 

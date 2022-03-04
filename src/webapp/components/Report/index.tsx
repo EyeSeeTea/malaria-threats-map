@@ -1,8 +1,10 @@
 import React from "react";
-import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
-import ReportIcon from "@material-ui/icons/Description";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
+import { Fab, Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import ReportIcon from "@mui/icons-material/Description";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 import { State } from "../../store/types";
 import { selectIsReportOpen, selectTheme } from "../../store/reducers/base-reducer";
 import { setReportOpenAction } from "../../store/actions/base-actions";

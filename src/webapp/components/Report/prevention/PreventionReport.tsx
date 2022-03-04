@@ -8,7 +8,7 @@ import {
     TableRow,
     Typography,
     Paper,
-} from "@material-ui/core";
+} from "@mui/material";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
 import { selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
@@ -425,7 +425,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
                     />
                     <Typography variant={"body2"}>{t("common.data_download.footer")}</Typography>
                     <br />

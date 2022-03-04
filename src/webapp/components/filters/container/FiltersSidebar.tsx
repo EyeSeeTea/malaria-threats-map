@@ -1,7 +1,9 @@
 import React from "react";
-import { AppBar, Toolbar, IconButton, Tabs, Tab, createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
+import { AppBar, Toolbar, IconButton, Tabs, Tab, Theme, Typography } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { FilterIconSimple, GlobeIcon } from "../../Icons";
-import CloseIcon from "@material-ui/icons/ArrowBack";
+import CloseIcon from "@mui/icons-material/ArrowBack";
 import CountrySelector from "../CountrySelector";
 import styled from "styled-components";
 import { State } from "../../../store/types";
@@ -96,7 +98,7 @@ const FiltersSidebar = ({
         }
     })();
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setFiltersMode(tabs[newValue]);
     };
 

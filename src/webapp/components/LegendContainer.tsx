@@ -2,12 +2,12 @@ import { State } from "../store/types";
 import { selectLegendExpanded } from "../store/reducers/base-reducer";
 import { setLegendExpandedAction } from "../store/actions/base-actions";
 import React from "react";
-import { ClickAwayListener, IconButton } from "@material-ui/core";
-import GrowIcon from "@material-ui/icons/Info";
-import ReduceIcon from "@material-ui/icons/ExpandMore";
+import { ClickAwayListener, IconButton } from "@mui/material";
+import GrowIcon from "@mui/icons-material/Info";
+import ReduceIcon from "@mui/icons-material/ExpandMore";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import Paper from "@material-ui/core/Paper";
+import Paper from "@mui/material/Paper";
 
 const LegendContainerStyled = styled(Paper)<{ size?: number }>`
     padding: 8px;

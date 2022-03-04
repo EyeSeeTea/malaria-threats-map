@@ -1,7 +1,9 @@
 import React from "react";
-import Backdrop from "@material-ui/core/Backdrop";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { State } from "../store/types";
 import { selectTheme } from "../store/reducers/base-reducer";
 import { selectPreventionStudiesLoading } from "../store/reducers/prevention-reducer";

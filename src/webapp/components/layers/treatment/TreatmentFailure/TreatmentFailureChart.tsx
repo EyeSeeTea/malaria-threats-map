@@ -3,7 +3,7 @@ import { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, Hidden, Typography } from "@material-ui/core";
+import { Box, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -16,6 +16,7 @@ import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../filters/PlasmodiumSpeci
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import _ from "lodash";
 import { isNotNull } from "../../../../utils/number-utils";
+import Hidden from "../../../hidden/Hidden";
 
 const options: (data: any, categories: any[], translations: any) => Highcharts.Options = (
     data,
@@ -280,7 +281,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                 {renderInfo()}
                 <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
             </Hidden>
-            <Hidden xsDown>
+            <Hidden smDown>
                 <Flex>
                     <FlexCol>{renderInfo()}</FlexCol>
                     <FlexCol>

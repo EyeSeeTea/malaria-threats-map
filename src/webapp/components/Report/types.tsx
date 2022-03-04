@@ -1,6 +1,8 @@
 import styled from "styled-components";
-import TableCell from "@material-ui/core/TableCell";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import TableCell from "@mui/material/TableCell";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import React from "react";
 import { Order } from "./utils";
 

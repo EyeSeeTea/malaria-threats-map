@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, Paper } from "@material-ui/core";
+import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, Paper } from "@mui/material";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
 import * as R from "ramda";
@@ -307,7 +307,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
                     />
                 </div>
             </Paper>

@@ -1,7 +1,7 @@
 import React from "react";
 import { State } from "../../../store/types";
 import { connect } from "react-redux";
-import { FormLabel } from "@material-ui/core";
+import { FormLabel } from "@mui/material";
 import { Divider, FilterWrapper } from "../../filters/Filters";
 import T from "../../../translations/T";
 import IntegrationReactSelect from "../../BasicSelect";

@@ -1,21 +1,13 @@
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
-import CloseIcon from "@material-ui/icons/Close";
-import {
-    createStyles,
-    DialogActions,
-    Fab,
-    IconButton,
-    makeStyles,
-    Theme,
-    Typography,
-    DialogContent,
-    Link,
-} from "@material-ui/core";
+import Dialog from "@mui/material/Dialog";
+import CloseIcon from "@mui/icons-material/Close";
+import { DialogActions, Fab, IconButton, Theme, Typography, DialogContent, Link } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { useTranslation, Trans } from "react-i18next";
 import { FlexGrow } from "./Chart";
 import styled from "styled-components";
-import DisclaimerIcon from "@material-ui/icons/Error";
+import DisclaimerIcon from "@mui/icons-material/Error";
 import { sendAnalytics } from "../utils/analytics";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -74,7 +66,7 @@ const InitialDisclaimer = () => {
                         <Typography variant="h5">{t("common.icons.disclaimer")}</Typography>
                     </Wrapper>
                     <FlexGrow />
-                    <IconButton onClick={handleClose}>
+                    <IconButton onClick={handleClose} size="large">
                         <CloseIcon />
                     </IconButton>
                 </DialogActions>

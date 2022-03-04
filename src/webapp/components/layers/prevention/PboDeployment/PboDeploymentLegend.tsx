@@ -12,7 +12,7 @@ import { State } from "../../../../store/types";
 import { selectLegendExpanded } from "../../../../store/reducers/base-reducer";
 import { setLegendExpandedAction } from "../../../../store/actions/base-actions";
 import { connect } from "react-redux";
-import { Link } from "@material-ui/core";
+import { Link } from "@mui/material";
 import styled from "styled-components";
 
 const mapStateToProps = (state: State) => ({

@@ -1,17 +1,19 @@
 import React, { CSSProperties, HTMLAttributes } from "react";
 import clsx from "clsx";
 import Select, { OptionProps } from "react-select";
-import { createStyles, emphasize, makeStyles, Theme, useTheme } from "@material-ui/core/styles";
-import { Typography, Paper, Chip, MenuItem } from "@material-ui/core";
-import TextField, { BaseTextFieldProps } from "@material-ui/core/TextField";
-import CancelIcon from "@material-ui/icons/Cancel";
+import { emphasize, Theme, useTheme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import { Typography, Paper, Chip, MenuItem } from "@mui/material";
+import TextField, { BaseTextFieldProps } from "@mui/material/TextField";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { ValueContainerProps } from "react-select/src/components/containers";
 import { ControlProps } from "react-select/src/components/Control";
 import { MenuProps, NoticeProps } from "react-select/src/components/Menu";
 import { MultiValueProps } from "react-select/src/components/MultiValue";
 import { PlaceholderProps } from "react-select/src/components/Placeholder";
 import { SingleValueProps } from "react-select/src/components/SingleValue";
-import { Omit } from "@material-ui/types";
+import { DistributiveOmit } from "@mui/types";
 import { useTranslation } from "react-i18next";
 import * as R from "ramda";
 import { useFirstRender } from "./hooks/use-first-render";
@@ -54,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         chipFocused: {
             backgroundColor: emphasize(
-                theme.palette.type === "light" ? theme.palette.grey[300] : theme.palette.grey[700],
+                theme.palette.mode === "light" ? theme.palette.grey[300] : theme.palette.grey[700],
                 0.08
             ),
         },
@@ -94,9 +96,7 @@ function NoOptionsMessage(props: NoticeProps<OptionType, false>) {
 
 type InputComponentProps = Pick<BaseTextFieldProps, "inputRef"> & HTMLAttributes<HTMLDivElement>;
 
-function inputComponent({ inputRef, ...props }: InputComponentProps) {
-    return <div ref={inputRef} {...props} />;
-}
+const inputComponent = React.forwardRef((props: InputComponentProps, ref: any) => <div ref={ref} {...props} />);
 
 function Control(props: ControlProps<OptionType, false>) {
     const {
@@ -154,7 +154,7 @@ function Option(props: OptionProps<OptionType, false>) {
     );
 }
 
-type MuiPlaceholderProps = Omit<PlaceholderProps<OptionType, false>, "innerProps"> &
+type MuiPlaceholderProps = DistributiveOmit<PlaceholderProps<OptionType, false>, "innerProps"> &
     Partial<Pick<PlaceholderProps<OptionType, false>, "innerProps">>;
 function Placeholder(props: MuiPlaceholderProps) {
     const { selectProps, innerProps = {}, children } = props;

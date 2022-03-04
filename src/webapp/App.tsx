@@ -6,8 +6,8 @@ import createStore from "./store";
 import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
 import { PreventionMapType, State } from "./store/types";
-import { createMuiTheme, Hidden } from "@material-ui/core";
-import { ThemeProvider } from "@material-ui/styles";
+import { Theme, StyledEngineProvider } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import {
     setBoundsAction,
@@ -47,6 +47,12 @@ import {
 import { setInvasiveMapType, setInvasiveVectorSpecies } from "./store/actions/invasive-actions";
 import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
 import Notifier from "./components/Notifier";
+import Hidden from "./components/hidden/Hidden";
+
+declare module "@mui/styles/defaultTheme" {
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface DefaultTheme extends Theme {}
+}
 
 export const { store } = createStore();
 
@@ -236,7 +242,7 @@ ReduxQuerySync({
     initialTruth: "location",
 });
 
-export const theme = createMuiTheme({
+export const theme = createTheme({
     palette: {
         primary: {
             main: "#008dc9",
@@ -244,16 +250,41 @@ export const theme = createMuiTheme({
         secondary: {
             main: "#d86422",
         },
+        grey: {
+            // This is the unique simple approach in @mui v5 to change default and hover fab background-color
+            // set by theme, styled or makeStyles provoke color errors to assign color to primary
+            300: "#FFFFFF",
+            A100: "#e0e0e0",
+        },
     },
-    overrides: {
-        MuiFab: {
-            root: {
-                backgroundColor: "white",
+    components: {
+        MuiCssBaseline: {
+            styleOverrides: {
+                body: {
+                    fontSize: "0.875rem",
+                    lineHeight: 1.43,
+                    letterSpacing: "0.01071em",
+                },
             },
         },
-        MuiButton: {
-            contained: {
-                backgroundColor: "white",
+        MuiTextField: {
+            defaultProps: {
+                variant: "standard",
+            },
+        },
+        MuiFormControl: {
+            defaultProps: {
+                variant: "standard",
+            },
+        },
+        MuiSelect: {
+            defaultProps: {
+                variant: "standard",
+            },
+        },
+        MuiLink: {
+            defaultProps: {
+                underline: "hover",
             },
         },
     },
@@ -262,21 +293,23 @@ export const theme = createMuiTheme({
 class App extends React.Component {
     render() {
         return (
-            <ThemeProvider theme={theme}>
-                <Provider store={store}>
-                    <DataProvider>
-                        <I18nextProvider i18n={i18next}>
-                            <Hidden smUp>
-                                <PersistentDrawerLeft drawerWidth={"100%"} />
-                            </Hidden>
-                            <Hidden xsDown>
-                                <PersistentDrawerLeft />
-                            </Hidden>
-                            <Notifier />
-                        </I18nextProvider>
-                    </DataProvider>
-                </Provider>
-            </ThemeProvider>
+            <StyledEngineProvider injectFirst>
+                <ThemeProvider theme={theme}>
+                    <Provider store={store}>
+                        <DataProvider>
+                            <I18nextProvider i18n={i18next}>
+                                <Hidden smUp>
+                                    <PersistentDrawerLeft drawerWidth={"100%"} />
+                                </Hidden>
+                                <Hidden smDown>
+                                    <PersistentDrawerLeft />
+                                </Hidden>
+                                <Notifier />
+                            </I18nextProvider>
+                        </DataProvider>
+                    </Provider>
+                </ThemeProvider>
+            </StyledEngineProvider>
         );
     }
 }

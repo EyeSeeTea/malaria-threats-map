@@ -1,7 +1,9 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Stepper, Step, StepLabel, Button, Paper, Typography, AppBar, Toolbar, IconButton } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import { Step, StepLabel, Button, Paper, Typography, AppBar, Toolbar, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import styled from "styled-components";
 import { PreventionMapType, State } from "../store/types";
 import { selectFilters, selectStoryModeStep, selectTheme } from "../store/reducers/base-reducer";
@@ -15,6 +17,7 @@ import InvasiveSteps from "./story/invasive/InvasiveSteps";
 import { useSwipeable, SwipeEventData } from "react-swipeable";
 import PBOSteps from "./story/pbo/PBOSteps";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
+import PaperStepper from "./PaperStepper/PaperStepper";
 
 const FlexGrow = styled.div`
     flex-grow: 1;
@@ -149,7 +152,7 @@ function StoryModeStepper({ theme, preventionFilters, setStoryMode, setStoryMode
                         </IconButton>
                     </Toolbar>
                 </AppBar>
-                <Stepper activeStep={storyModeStep}>
+                <PaperStepper activeStep={storyModeStep}>
                     {selectedSteps.map((step: any, index: number) => {
                         const stepProps: { completed?: boolean } = {};
                         const labelProps: { optional?: React.ReactNode } = {};
@@ -159,7 +162,7 @@ function StoryModeStepper({ theme, preventionFilters, setStoryMode, setStoryMode
                             </StyledStep>
                         );
                     })}
-                </Stepper>
+                </PaperStepper>
                 <div>
                     <div>
                         <Paper className={classes.paper}>{SelectedStep ? <SelectedStep /> : <div />}</Paper>
@@ -167,7 +170,6 @@ function StoryModeStepper({ theme, preventionFilters, setStoryMode, setStoryMode
                             {storyModeStep > 0 && (
                                 <Button
                                     variant="contained"
-                                    color="default"
                                     onClick={handleBack}
                                     disabled={storyModeStep === 0}
                                     className={classes.button}

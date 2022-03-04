@@ -1,24 +1,25 @@
 import React, { useEffect } from "react";
-import Dialog from "@material-ui/core/Dialog";
+import Dialog from "@mui/material/Dialog";
 import {
     Button,
     TextField,
     InputLabel,
     MenuItem,
     Select,
-    createStyles,
     Fab,
     FormControl,
-    makeStyles,
     Theme,
     Tab,
     Tabs,
     Box,
-} from "@material-ui/core";
-import UploadIcon from "@material-ui/icons/CloudUpload";
-import DownloadIcon from "@material-ui/icons/CloudDownload";
-import DoneIcon from "@material-ui/icons/CloudDone";
-import Typography from "@material-ui/core/Typography";
+    SelectChangeEvent,
+} from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import UploadIcon from "@mui/icons-material/CloudUpload";
+import DownloadIcon from "@mui/icons-material/CloudDownload";
+import DoneIcon from "@mui/icons-material/CloudDone";
+import Typography from "@mui/material/Typography";
 import { State } from "../store/types";
 import { setUploadFileOpenAction, uploadFileRequestAction } from "../store/actions/base-actions";
 import { selectIsUploadingFile, selectUploadFileOpen } from "../store/reducers/base-reducer";
@@ -114,12 +115,12 @@ const UploadFile: React.FC<Props> = ({
             "https://web-prod.who.int/docs/default-source/documents/publications/gmp/who-test-kit-catalogue-and-requisition-form-may2013.pdf",
     };
 
-    const handleOrganizationTypeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const handleOrganizationTypeChange = (event: SelectChangeEvent) => {
         const newOrganizationType = event.target.value as string;
         setNewOrganizationType(newOrganizationType);
     };
 
-    const handleCountryChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const handleCountryChange = (event: SelectChangeEvent) => {
         const newCountry = event.target.value as string;
         setCountry(newCountry);
     };

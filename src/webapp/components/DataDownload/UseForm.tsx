@@ -1,27 +1,20 @@
 import React from "react";
-import {
-    Card,
-    Checkbox,
-    createStyles,
-    FormControl,
-    makeStyles,
-    Paper,
-    TextField,
-    Theme,
-    Typography,
-} from "@material-ui/core";
+import { Card, Checkbox, FormControl, Paper, TextField, Theme, Typography } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import styled from "styled-components";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { useTranslation } from "react-i18next";
-import FormLabel from "@material-ui/core/FormLabel";
+import FormLabel from "@mui/material/FormLabel";
 import { Divider } from "../filters/Filters";
 import * as R from "ramda";
 import "date-fns";
-import DateFnsUtils from "@date-io/date-fns";
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { connect } from "react-redux";
 import { UseInfo } from "./index";
 import FullCountriesSelector from "./filters/FullCountriesSelector";
+import DatePicker from "@mui/lab/DatePicker";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
     & span {
@@ -95,7 +88,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
         onChange("countries", countries);
     };
 
-    const handleDateChange = (date: Date | null) => {
+    const handleDateChange = (date: Date, _keyboardInputValue?: string) => {
         onChange("studyDate", date);
     };
 
@@ -132,7 +125,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                                 }
                             />
                         }
-                        label={t(`common.${use}`)}
+                        label={t<string>(`common.${use}`)}
                     />
                 ))}
             </FormControl>
@@ -141,7 +134,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                     <TextField
                         label={t("common.data_download.step2.date_use_options_content.research") + "*"}
                         multiline
-                        rowsMax="3"
+                        maxRows="3"
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -155,7 +148,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                     <TextField
                         label={t("common.data_download.step2.date_use_options_content.policies") + "*"}
                         multiline
-                        rowsMax="3"
+                        maxRows="3"
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -169,7 +162,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                     <TextField
                         label={t("common.data_download.step2.date_use_options_content.tools") + "*"}
                         multiline
-                        rowsMax="3"
+                        maxRows="3"
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -182,18 +175,14 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                 <FormLabel component="legend">
                     {t("common.data_download.step2.date_use_options_content.date")}
                 </FormLabel>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                        disableToolbar
-                        variant="inline"
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DatePicker
                         value={useInfo.studyDate}
-                        format="dd/MM/yyyy"
+                        inputFormat="dd/MM/yyyy"
                         onChange={handleDateChange}
-                        KeyboardButtonProps={{
-                            "aria-label": "change date",
-                        }}
+                        renderInput={props => <TextField {...props} />}
                     />
-                </MuiPickersUtilsProvider>
+                </LocalizationProvider>
             </FormControl>
             <FullCountriesSelector
                 label={t("common.data_download.step2.countries")}

@@ -1,17 +1,19 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import styled from "styled-components";
 import { State } from "../../store/types";
 import { selectAssayTypes } from "../../store/reducers/translations-reducer";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { connect } from "react-redux";
 import { setAssayTypes } from "../../store/actions/prevention-actions";
-import { Checkbox, FormGroup, Paper } from "@material-ui/core";
+import { Checkbox, FormGroup, Paper } from "@mui/material";
 import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
 import { Divider, FilterWrapper } from "./Filters";
-import FormLabel from "@material-ui/core/FormLabel";
+import FormLabel from "@mui/material/FormLabel";
 import { logEventAction } from "../../store/actions/base-actions";
 import { sendMultiFilterAnalytics } from "../../utils/analytics";
 
@@ -101,7 +103,7 @@ function AssayTypeCheckboxFilter({ assayTypes, preventionFilters, setAssayTypes 
                                     onChange={handleChange(type.VALUE_)}
                                 />
                             }
-                            label={t(type.VALUE_)}
+                            label={t<string>(type.VALUE_)}
                         />
                     ))}
                 </FormGroup>

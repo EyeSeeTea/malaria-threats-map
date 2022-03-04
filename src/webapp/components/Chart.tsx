@@ -1,5 +1,5 @@
-import { Button } from "@material-ui/core";
-import ZoomIcon from "@material-ui/icons/ZoomIn";
+import { Button } from "@mui/material";
+import ZoomIcon from "@mui/icons-material/ZoomIn";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -29,7 +29,7 @@ export function ZoomButton({ onClick, text }: { onClick: any; text?: string }) {
     const { t } = useTranslation();
     return (
         <Wrapper>
-            <Button variant="contained" color="default" size="small" onClick={onClick}>
+            <Button variant="contained" size="small" onClick={onClick}>
                 <ZoomIcon />
                 {text ?? t("common.chart.zoom")}
             </Button>

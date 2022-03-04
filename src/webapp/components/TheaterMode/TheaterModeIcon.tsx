@@ -1,7 +1,9 @@
 import React from "react";
-import TheaterIcon from "@material-ui/icons/PlayCircleFilled";
+import TheaterIcon from "@mui/icons-material/PlayCircleFilled";
 import { connect } from "react-redux";
-import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
+import { Fab, Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { setTheaterModeAction } from "../../store/actions/base-actions";
 import { State } from "../../store/types";
 import { selectTheaterMode } from "../../store/reducers/base-reducer";

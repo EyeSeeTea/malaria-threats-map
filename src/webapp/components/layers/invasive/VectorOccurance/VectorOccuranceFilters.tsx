@@ -2,7 +2,7 @@ import React from "react";
 import YearRangeSelector from "../../../YearRangeSelector";
 import VectorSpeciesFilter from "../../../filters/VectorSpeciesFilter";
 import { Snackbar } from "../../../filters/container/Filters";
-import { Link } from "@material-ui/core";
+import { Link } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 export default function VectorOccuranceFilters() {

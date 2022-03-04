@@ -1,5 +1,5 @@
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
+import Dialog from "@mui/material/Dialog";
 import SimpleCard from "./Card";
 import styled from "styled-components";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
@@ -9,7 +9,7 @@ import { setInitialDialogOpen, setThemeAction, setTourStepAction } from "../stor
 import { connect } from "react-redux";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
 import { useTranslation } from "react-i18next";
-import { Container, Typography } from "@material-ui/core";
+import { Container, Typography } from "@mui/material";
 import { sendAnalytics } from "../utils/analytics";
 import { getAnalyticsPageView } from "../store/analytics";
 

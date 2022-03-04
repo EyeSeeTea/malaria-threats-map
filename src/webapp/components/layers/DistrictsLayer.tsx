@@ -14,13 +14,13 @@ import { selectCountryMode, selectFilters, selectRegion, selectSelection } from 
 import { fetchDistrictsRequest } from "../../store/actions/district-actions";
 import mapboxgl from "mapbox-gl";
 import { buildPreventionFilters } from "./studies-filters";
-import { Hidden } from "@material-ui/core";
 import ChartModal from "../ChartModal";
 import PreventionSelectionChart from "./prevention/PreventionSelectionChart";
 import { setSelection } from "../../store/actions/base-actions";
 import { PboDeploymentStatus } from "./prevention/PboDeployment/PboDeploymentSymbols";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import SitePopover from "./common/SitePopover";
+import Hidden from "../hidden/Hidden";
 
 const DISTRICTS_LAYER_ID = "districts-layer";
 const DISTRICTS_SOURCE_ID = "districts-source";
@@ -229,7 +229,7 @@ class CountrySelectorLayer extends Component<Props> {
         }
         return (
             <>
-                <Hidden xsDown>
+                <Hidden smDown>
                     <SitePopover map={this.props.map}>
                         <PreventionSelectionChart studies={filteredStudies} map={map} />
                     </SitePopover>

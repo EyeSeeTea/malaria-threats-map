@@ -1,75 +1,85 @@
 name: Application testing
 on:
-  push:
-  workflow_dispatch: 
+    push:
+    workflow_dispatch:
 jobs:
-  unit-tests:
-    name: Unit tests
-    runs-on: self-hosted
-    env:
-      REACT_APP_ENV: staging
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-    
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: "12.x"
-          
-      - name: Install yarn
-        run: npm install -g yarn
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Cache yarn dependencies
-        uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Installing Dependencies
-        run: yarn install --frozen-lockfile --silent
-      
-      - name: Run jest tests
-        run: yarn test
-
-      - name: Run typescript tests
-        run: npx tsc
-
-  cypress:
-    name: Cypress tests
-    strategy:
-      matrix:
-        server: [staging, prod]
-    runs-on: self-hosted
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Increase max inodes
-        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: "12.x"
-          
-      - name: Install yarn
-        run: npm install -g yarn
-
-      - name: Run cypress tests
-        uses: cypress-io/github-action@v2
+    unit-tests:
+        name: Unit tests
+        runs-on: self-hosted
         env:
-          REACT_APP_ENV: ${{ matrix.server }}
-        with:
-          browser: chrome
-          headless: true
-          install-command: yarn install --frozen-lockfile --silent
-          start: yarn start
-          wait-on: 'http://localhost:3000'
+            REACT_APP_ENV: staging
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Setup Node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: "12.x"
+
+            - name: Install yarn
+              run: npm install -g yarn
+
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn cache dir)"
+
+            - name: Cache yarn dependencies
+              uses: actions/cache@v2
+              id: yarn-cache
+              with:
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
+
+            - name: Installing Dependencies
+              run: yarn install --frozen-lockfile --silent
+
+            - name: Run jest tests
+              run: yarn test
+
+            - name: Run typescript tests
+              run: npx tsc
+
+    cypress:
+        name: Cypress tests
+        strategy:
+            matrix:
+                server: [staging, prod]
+        runs-on: self-hosted
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Increase max inodes
+              run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+            - name: Setup Node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: "12.x"
+
+            - name: Install yarn
+              run: npm install -g yarn
+
+            - name: Run cypress tests
+              uses: cypress-io/github-action@v2
+              env:
+                  REACT_APP_ENV: ${{ matrix.server }}
+              with:
+                  browser: chrome
+                  headless: true
+                  install-command: yarn install --frozen-lockfile --silent
+                  start: yarn start
+                  wait-on: "http://localhost:3000"
+            - uses: actions/upload-artifact@v2
+              if: failure()
+              with:
+                  name: cypress-screenshots
+                  path: cypress/screenshots
+            - uses: actions/upload-artifact@v2
+              if: failure()
+              with:
+                  name: cypress-videos
+                  path: cypress/videos

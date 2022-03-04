@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { setRegionAction } from "../../store/actions/base-actions";
 import { selectRegion, selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
-import FormLabel from "@material-ui/core/FormLabel";
+import FormLabel from "@mui/material/FormLabel";
 import { Divider, FilterWrapper } from "./Filters";
 import { selectFilteredPreventionStudies } from "../../store/reducers/prevention-reducer";
 import { selectFilteredDiagnosisStudies } from "../../store/reducers/diagnosis-reducer";

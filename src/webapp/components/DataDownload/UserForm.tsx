@@ -1,15 +1,7 @@
 import React from "react";
-import {
-    Card,
-    createStyles,
-    FormControl,
-    InputLabel,
-    makeStyles,
-    MenuItem,
-    TextField,
-    Theme,
-    Select,
-} from "@material-ui/core";
+import { Card, FormControl, InputLabel, MenuItem, TextField, Theme, Select, SelectChangeEvent } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { useTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { UserInfo } from "./index";
@@ -49,12 +41,12 @@ type Props = {
 const UserForm = ({ onChange, userInfo }: Props) => {
     const classes = useStyles({});
     const { t } = useTranslation();
-    const handleOrganizationTypeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const handleOrganizationTypeChange = (event: SelectChangeEvent) => {
         const newOrganizationType = event.target.value as string;
         onChange("organizationType", newOrganizationType);
     };
 
-    const handleCountryChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const handleCountryChange = (event: SelectChangeEvent) => {
         const newCountry = event.target.value as string;
         onChange("country", newCountry);
     };

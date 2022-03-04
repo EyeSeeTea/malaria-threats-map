@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import clsx from "clsx";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import Drawer from "@mui/material/Drawer";
+import CssBaseline from "@mui/material/CssBaseline";
 import Map from "./Map";
 import Disclaimer from "./Disclaimer";
 import styled from "styled-components";
@@ -20,15 +22,16 @@ import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
-import { AppBar, Hidden, IconButton, Tab, Tabs, Toolbar } from "@material-ui/core";
+import { AppBar, IconButton, Tab, Tabs, Toolbar } from "@mui/material";
 import StoryModeStepper from "./StoryModeStepper";
 import FiltersSidebar from "./filters/container/FiltersSidebar";
-import SettingsIcon from "@material-ui/icons/Settings";
+import SettingsIcon from "@mui/icons-material/Settings";
 import { DiagnosisIcon, FilterIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import { colors } from "../constants/theme";
 import MapTypesSelector from "./MapTypesSelector";
 import MobileOptions from "./MobileOptions";
 import Loader from "./Loader";
+import Hidden from "./hidden/Hidden";
 
 interface ThemeProps {
     drawerWidth: string;
@@ -198,7 +201,7 @@ function PersistentDrawerLeft({
 
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 
-    const onChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    const onChange = (event: React.SyntheticEvent, newValue: number) => {
         switch (newValue) {
             case 0:
                 setTheme("prevention");
@@ -246,6 +249,7 @@ function PersistentDrawerLeft({
                                     className={classes.iconButton}
                                     aria-label="menu"
                                     onClick={() => setFiltersOpen(true)}
+                                    size="large"
                                 >
                                     <FilterIcon />
                                 </IconButton>
@@ -255,6 +259,7 @@ function PersistentDrawerLeft({
                                     className={classes.iconButton}
                                     aria-label="settings"
                                     onClick={() => setMobileOptionsOpen(true)}
+                                    size="large"
                                 >
                                     <SettingsIcon />
                                 </IconButton>
@@ -282,20 +287,20 @@ function PersistentDrawerLeft({
                             >
                                 <StyledTab
                                     color={theme === "prevention" ? colors.prevention.N : undefined}
-                                    icon={<PreventionIcon active={theme === "prevention"} size={36} />}
+                                    icon={<PreventionIcon selected={theme === "prevention"} size={36} />}
                                 />
                                 <StyledTab
                                     color={theme === "diagnosis" ? colors.diagnosis.N : undefined}
-                                    icon={<DiagnosisIcon active={theme === "diagnosis"} size={36} />}
+                                    icon={<DiagnosisIcon selected={theme === "diagnosis"} size={36} />}
                                 />
                                 <StyledTab
                                     color={theme === "treatment" ? colors.treatment.N : undefined}
-                                    icon={<TreatmentIcon active={theme === "treatment"} size={36} />}
+                                    icon={<TreatmentIcon selected={theme === "treatment"} size={36} />}
                                 />
                                 <StyledTab
                                     label=""
                                     color={theme === "invasive" ? colors.invasive.N : undefined}
-                                    icon={<InvasiveIcon active={theme === "invasive"} size={36} />}
+                                    icon={<InvasiveIcon selected={theme === "invasive"} size={36} />}
                                 />
                             </Tabs>
                         </AppBar>

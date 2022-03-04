@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { FilterWrapper } from "../Filters";
-import FormLabel from "@material-ui/core/FormLabel";
+import FormLabel from "@mui/material/FormLabel";
 import { logEventAction } from "../../../store/actions/base-actions";
-import { Checkbox } from "@material-ui/core";
+import { Checkbox } from "@mui/material";
 
 type OwnProps = {
     label: string;
