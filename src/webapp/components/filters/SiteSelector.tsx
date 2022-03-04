@@ -65,7 +65,7 @@ function SiteSelector({
                 return invasiveStudies;
         }
     })();
-
+    console.log(studies)
     const SITES_SUGGESTIONS = R.uniqBy(
         study => study.value,
         studies.map(study => ({
@@ -75,13 +75,13 @@ function SiteSelector({
             coords: [study.Latitude, study.Longitude],
         }))
     );
-
+    console.log(SITES_SUGGESTIONS)
     const suggestions = SITES_SUGGESTIONS.filter(
         suggestion => suggestion.label && suggestion.label.toLowerCase().startsWith(input.toLowerCase())
     )
         .sort((a, b) => (a.label < b.label ? -1 : 1))
         .slice(0, 10);
-
+    console.log(suggestions)
     return (
         <FilterWrapper>
             <FormLabel component="legend">Site</FormLabel>
