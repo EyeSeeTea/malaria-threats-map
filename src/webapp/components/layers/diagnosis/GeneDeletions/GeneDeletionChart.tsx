@@ -15,7 +15,7 @@ import { formatList, formatYears } from "../../../../utils/string-utils";
 import * as R from "ramda";
 import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
 import { DiagnosisStudy } from "../../../../../domain/entities/DiagnosisStudy";
-import { isNotNull } from "../../../../utils/number-utils";
+import { isNotNull, isNull } from "../../../../utils/number-utils";
 
 const ChatContainer = styled.div`
     max-width: 500px;
@@ -76,11 +76,13 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
     const studyObject = studies[0];
     const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(type => t(type));
     const formatPercentage = (value: string) => `${(parseFloat(value) * 100).toFixed(1)}%`;
+
     return (
         <ChatContainer>
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">
-                    {t(studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2)}
+                {isNotNull(studyObject.TOOLTIP_SITENAME) && `${t(studyObject.TOOLTIP_SITENAME)}, `}
+                 {t(isNull(studyObject.ISO2) ? "common.COUNTRY_NA" : studyObject.ISO2)}
                 </Box>
             </Typography>
             <SpacedTypography variant="subtitle2">
