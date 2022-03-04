@@ -78,8 +78,7 @@ function SiteSelector({
 
     const suggestions = SITES_SUGGESTIONS.filter(
         suggestion => suggestion.label && suggestion.label.toLowerCase().startsWith(input.toLowerCase())
-    )
-        .sort((a, b) => (a.label < b.label ? -1 : 1));
+    ).sort((a, b) => (a.label < b.label ? -1 : 1));
 
     return (
         <FilterWrapper>
