@@ -48,7 +48,6 @@ import PBOEndemicityLayer from "./layers/PBOEndemicityLayer";
 import DisputedBordersEndemicityLayer from "./layers/PBODisputedBordersLayer";
 import Screenshot from "./Screenshot";
 import Report from "./Report";
-import Subscription from "./Subscription";
 import Feedback from "./Feedback";
 import InitialDisclaimer from "./InitialDisclaimer";
 import TheaterMode from "./TheaterMode";
@@ -285,7 +284,7 @@ class Map extends React.Component<Props> {
                         <TopRightContainer>
                             <StoryModeSelector />
                             <InitialDisclaimer />
-                            <Subscription />
+                            
                             <Feedback />
                             <TourIcon />
                             {/* {["prevention", "diagnosis"].includes(theme) && <UploadFile />} */}
@@ -299,7 +298,7 @@ class Map extends React.Component<Props> {
                         <TopRightVerticalContainer>
                             <StoryModeSelector />
                             <InitialDisclaimer />
-                            <Subscription />
+                            
                             <Feedback />
                         </TopRightVerticalContainer>
                     </Fade>
