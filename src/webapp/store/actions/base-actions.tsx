@@ -51,6 +51,8 @@ export const setInitialDialogOpen = createAction(ActionTypeEnum.MalariaSetInitia
 
 export const setFiltersOpen = createAction(ActionTypeEnum.SetFiltersOpen)<boolean>();
 
+export const setTooltipOpen = createAction(ActionTypeEnum.SetTooltipOpen)<boolean>();
+
 export const setFiltersMode = createAction(ActionTypeEnum.SetFiltersMode)<string>();
 
 export const setSelection = createAction(ActionTypeEnum.SetSelection)<SiteSelection | null>();

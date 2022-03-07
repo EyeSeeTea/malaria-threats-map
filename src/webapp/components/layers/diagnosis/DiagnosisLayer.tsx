@@ -28,6 +28,7 @@ import { setSelection } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../hidden/Hidden";
+import PersistentDrawerRight from "../../PersistentDrawerRight";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -250,9 +251,11 @@ class DiagnosisLayer extends Component<Props> {
         return (
             this.props.theme === "diagnosis" && (
                 <>
+                <PersistentDrawerRight studies={filteredStudies} />
                     <Hidden smDown>
                         <SitePopover map={this.props.map}>
                             <DiagnosisSelectionChart studies={filteredStudies} />
+                            
                         </SitePopover>
                     </Hidden>
                     <Hidden smUp>

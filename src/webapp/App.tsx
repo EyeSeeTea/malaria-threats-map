@@ -46,6 +46,8 @@ import {
 } from "./store/actions/treatment-actions";
 import { setInvasiveMapType, setInvasiveVectorSpecies } from "./store/actions/invasive-actions";
 import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
+import PersistentDrawerRight from "./components/PersistentDrawerRight";
+
 import Notifier from "./components/Notifier";
 import Hidden from "./components/hidden/Hidden";
 
@@ -289,7 +291,16 @@ export const theme = createTheme({
         },
     },
 });
-
+/*
+<Hidden smUp>
+                                    <PersistentDrawerLeft drawerWidth={"100%"} />
+                                    <PersistentDrawerRight drawerWidth={"100%"} />
+                                </Hidden>
+                                <Hidden smDown>
+                                    <PersistentDrawerLeft />
+                                    <PersistentDrawerRight />
+                                </Hidden>
+*/
 class App extends React.Component {
     render() {
         return (

@@ -32,6 +32,7 @@ const initialState: MalariaState = Object.freeze({
     },
     initialDialogOpen: !query,
     filtersOpen: true,
+    tooltipOpen: false,
     filtersMode: "filters",
     selection: null,
     mobileOptionsOpen: false,
@@ -71,6 +72,7 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.MalariaSetInitialDialogOpen]: (initialDialogOpen: boolean) =>
         R.assoc("initialDialogOpen", initialDialogOpen),
     [ActionTypeEnum.SetFiltersOpen]: (filtersOpen: boolean) => R.assoc("filtersOpen", filtersOpen),
+    [ActionTypeEnum.SetTooltipOpen]: (tooltipOpen: boolean) => R.assoc("tooltipOpen", tooltipOpen),
     [ActionTypeEnum.SetFiltersMode]: (filtersMode: string) => R.assoc("filtersMode", filtersMode || "filters"),
     [ActionTypeEnum.SetSelection]: (selection: SiteSelection) => (state: MalariaState) => {
         const propsHasChanged = () =>
@@ -128,6 +130,7 @@ export const selectFilters = createSelector(selectMalariaState, state => state.f
 export const selectRegion = createSelector(selectMalariaState, state => state.region);
 export const selectIsInitialDialogOpen = createSelector(selectMalariaState, state => state.initialDialogOpen);
 export const selectAreFiltersOpen = createSelector(selectMalariaState, state => state.filtersOpen);
+export const selectIsTooltipOpen = createSelector(selectMalariaState, state => state.tooltipOpen);
 export const selectFiltersMode = createSelector(selectMalariaState, state => state.filtersMode);
 export const selectStoryModeStep = createSelector(selectMalariaState, state => state.storyModeStep);
 export const selectSelection = createSelector(selectMalariaState, state => state.selection);
