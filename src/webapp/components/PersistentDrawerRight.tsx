@@ -165,7 +165,6 @@ const mapDispatchToProps = {
 type OwnProps = {
     drawerWidth?: string;
     studies: DiagnosisStudy[]; //this is temporary, I would either take any type of study or just take the countryMode and study type
-
 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

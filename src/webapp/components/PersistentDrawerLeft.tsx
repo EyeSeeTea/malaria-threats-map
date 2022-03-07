@@ -10,9 +10,10 @@ import Disclaimer from "./Disclaimer";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { State } from "../store/types";
-import { selectAreFiltersOpen, selectFilters, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
+import { selectAreFiltersOpen, selectIsTooltipOpen, selectFilters, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
 import {
     setFiltersOpen,
+    setTooltipOpen,
     setMobileOptionsOpen,
     setStoryModeAction,
     setThemeAction,
@@ -71,8 +72,16 @@ const useStyles = makeStyles((theme: Theme) =>
             width: (props: ThemeProps) => props.drawerWidth,
             flexShrink: 0,
         },
+        tooltipDrawer: {
+            width: (props: ThemeProps) => -props.drawerWidth,
+            flexShrink: 0,
+        },
         drawerPaper: {
             width: (props: ThemeProps) => props.drawerWidth,
+            backgroundColor: "#f3f3f3",
+        },
+        tooltipDrawerPaper: {
+            width: (props: ThemeProps) => -props.drawerWidth,
             backgroundColor: "#f3f3f3",
         },
         drawerHeader: {
@@ -146,6 +155,7 @@ const StyledTab = styled(Tab)`
 
 const mapStateToProps = (state: State) => ({
     filtersOpen: selectAreFiltersOpen(state),
+    tooltipOpen: selectIsTooltipOpen(state),
     filters: selectFilters(state),
     theme: selectTheme(state),
     storyMode: selectStoryMode(state),
@@ -158,6 +168,7 @@ const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
     setPreventionMapType: setPreventionMapType,
     setFiltersOpen: setFiltersOpen,
+    setTooltipOpen: setTooltipOpen,
     setStoryMode: setStoryModeAction,
     setTheme: setThemeAction,
 };
@@ -177,9 +188,16 @@ function PersistentDrawerLeft({
     setTheme,
     setStoryMode,
     theme,
+    tooltipOpen,
+    setTooltipOpen,
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const isOpen = filtersOpen || storyMode;
+    console.log(isOpen)
+    const isTooltipOpen = tooltipOpen;
+    console.log(isOpen)
+
+
     const prevFilterOpenRef = useRef<boolean>();
     const prevStoryModeRef = useRef<boolean>();
 
@@ -227,7 +245,7 @@ function PersistentDrawerLeft({
             <Drawer
                 className={classes.drawer}
                 variant="persistent"
-                anchor="left"
+                anchor={"left"}
                 open={isOpen}
                 classes={{
                     paper: classes.drawerPaper,
@@ -237,7 +255,7 @@ function PersistentDrawerLeft({
             </Drawer>
             <div
                 className={clsx(classes.content, {
-                    [classes.contentShift]: isOpen,
+                    [classes.contentShift]: isTooltipOpen,
                 })}
             >
                 <div className={classes.drawerHeader} />
@@ -308,6 +326,17 @@ function PersistentDrawerLeft({
                     </Hidden>
                 </PageWrapper>
             </div>
+            <Drawer
+                className={classes.tooltipDrawer}
+                variant="persistent"
+                anchor={"right"}
+                open={isTooltipOpen}
+                classes={{
+                    paper: classes.tooltipDrawerPaper,
+                }}
+            >
+                <>{storyMode ? <StoryModeStepper /> : <FiltersSidebar />}</>
+            </Drawer>
         </div>
     );
 }

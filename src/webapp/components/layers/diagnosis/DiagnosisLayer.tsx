@@ -248,14 +248,14 @@ class DiagnosisLayer extends Component<Props> {
         if (filteredStudies.length === 0) {
             return <div />;
         }
+        //                    <PersistentDrawerRight studies={filteredStudies} />
+
         return (
             this.props.theme === "diagnosis" && (
                 <>
-                <PersistentDrawerRight studies={filteredStudies} />
                     <Hidden smDown>
                         <SitePopover map={this.props.map}>
                             <DiagnosisSelectionChart studies={filteredStudies} />
-                            
                         </SitePopover>
                     </Hidden>
                     <Hidden smUp>

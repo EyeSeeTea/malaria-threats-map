@@ -32,12 +32,10 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     tooltipOpen: selectIsTooltipOpen(state),
-
 });
 
 const mapDispatchToProps = {
     setTooltipOpen: setTooltipOpen,
-
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -86,7 +84,7 @@ const GeneDeletionChart = ({ studies, diagnosisFilters, tooltipOpen, setTooltipO
     const studyObject = studies[0];
     const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(type => t(type));
     const formatPercentage = (value: string) => `${(parseFloat(value) * 100).toFixed(1)}%`;
-    console.log(tooltipOpen)
+    console.log(tooltipOpen);
     return (
         <ChatContainer>
             <Button onClick={() => setTooltipOpen(!tooltipOpen)}>Click here to open sidebar</Button>
