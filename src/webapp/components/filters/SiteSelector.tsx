@@ -66,9 +66,11 @@ function SiteSelector({
         }
     })();
 
+    const sortedStudies = studies.sort((a, b) => (a.YEAR_START < b.YEAR_START ? 1 : -1));
+
     const SITES_SUGGESTIONS = R.uniqBy(
         study => study.value && study.label,
-        studies.map(study => ({
+        sortedStudies.map(study => ({
             label: study.SITE_NAME || study.VILLAGE_NAME,
             value: study.SITE_ID,
             iso2: study.ISO2,
