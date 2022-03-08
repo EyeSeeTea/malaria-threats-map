@@ -66,9 +66,11 @@ function SiteSelector({
         }
     })();
 
+    const sortedStudies = studies.sort((a, b) => (a.YEAR_START < b.YEAR_START ? 1 : -1));
+
     const SITES_SUGGESTIONS = R.uniqBy(
-        study => study.value,
-        studies.map(study => ({
+        study => study.value && study.label,
+        sortedStudies.map(study => ({
             label: study.SITE_NAME || study.VILLAGE_NAME,
             value: study.SITE_ID,
             iso2: study.ISO2,
@@ -78,9 +80,7 @@ function SiteSelector({
 
     const suggestions = SITES_SUGGESTIONS.filter(
         suggestion => suggestion.label && suggestion.label.toLowerCase().startsWith(input.toLowerCase())
-    )
-        .sort((a, b) => (a.label < b.label ? -1 : 1))
-        .slice(0, 10);
+    ).sort((a, b) => (a.label < b.label ? -1 : 1));
 
     return (
         <FilterWrapper>
