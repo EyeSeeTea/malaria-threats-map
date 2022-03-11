@@ -24,6 +24,7 @@ import { fetchInvasiveStudiesRequest } from "../../../store/actions/invasive-act
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../hidden/Hidden";
+import VectorOccurrancePopup from "./VectorOccurance/VectorOccurrancePopup";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
@@ -179,7 +180,7 @@ class InvasiveLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any) => {
+    onMouseOverListener = (e: any) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -194,9 +195,15 @@ class InvasiveLayer extends Component<Props> {
         }, 100);
     };
 
+    offMouseOverListener = () => {
+        setTimeout(() => {
+            this.props.setSelection(null);
+        }, 100);
+    };
+
     setupPopover = () => {
-        this.props.map.off("click", INVASIVE_LAYER_ID, this.onClickListener);
-        this.props.map.on("click", INVASIVE_LAYER_ID, this.onClickListener);
+        this.props.map.on("mouseover", INVASIVE_LAYER_ID, this.onMouseOverListener);
+        this.props.map.off("mouseover", INVASIVE_LAYER_ID, this.offMouseOverListener);
     };
 
     renderLayer = () => {
@@ -239,12 +246,12 @@ class InvasiveLayer extends Component<Props> {
                 <>
                     <Hidden smDown>
                         <SitePopover map={this.props.map}>
-                            <InvasiveSelectionChart studies={filteredStudies} />
+                            <VectorOccurrancePopup studies={filteredStudies} />
                         </SitePopover>
                     </Hidden>
                     <Hidden smUp>
                         <ChartModal selection={selection}>
-                            <InvasiveSelectionChart studies={filteredStudies} />
+                            <VectorOccurrancePopup studies={filteredStudies} />
                         </ChartModal>
                     </Hidden>
                 </>

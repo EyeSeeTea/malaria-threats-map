@@ -24,7 +24,9 @@ import {
 } from "../../../store/actions/diagnosis-actions";
 import ChartModal from "../../ChartModal";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
-import { setSelection } from "../../../store/actions/base-actions";
+import GeneDeletionPopup from "./GeneDeletions/GeneDeletionPopup";
+
+import { setSelection, setTooltipOpen } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../hidden/Hidden";
@@ -57,6 +59,7 @@ const mapDispatchToProps = {
     fetchDiagnosisStudies: fetchDiagnosisStudiesRequest,
     setFilteredStudies: setDiagnosisFilteredStudiesAction,
     setSelection: setSelection,
+    setTooltipOpen: setTooltipOpen
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -192,7 +195,7 @@ class DiagnosisLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any) => {
+    onMouseOverListener = (e: any) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -207,9 +210,19 @@ class DiagnosisLayer extends Component<Props> {
         }, 100);
     };
 
+    offMouseOverListener = () => {
+        setTimeout(() => {
+            this.props.setSelection(null);
+            //this.props.setTooltipOpen(false);
+        }, 100);
+    };
+
     setupPopover = () => {
-        this.props.map.off("click", DIAGNOSIS_LAYER_ID, this.onClickListener);
-        this.props.map.on("click", DIAGNOSIS_LAYER_ID, this.onClickListener);
+        this.props.map.on("mouseover", DIAGNOSIS_LAYER_ID, this.onMouseOverListener);
+        this.props.map.off("mouseover", DIAGNOSIS_LAYER_ID, this.offMouseOverListener);
+        //this.props.map.off("click", DIAGNOSIS_LAYER_ID, this.fffMouseOverListener);
+
+
     };
 
     renderLayer = () => {
@@ -226,6 +239,7 @@ class DiagnosisLayer extends Component<Props> {
         const { countryMode } = this.props;
         const layer = this.props.map.getLayer(DIAGNOSIS_LAYER_ID);
         const mapTypeSymbols = resolveMapTypeSymbols(countryMode);
+        console.log(mapTypeSymbols)
         if (layer && mapTypeSymbols) {
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-radius", mapTypeSymbols["circle-radius"]);
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-color", mapTypeSymbols["circle-color"]);
@@ -255,12 +269,12 @@ class DiagnosisLayer extends Component<Props> {
                 <>
                     <Hidden smDown>
                         <SitePopover map={this.props.map}>
-                            <DiagnosisSelectionChart studies={filteredStudies} />
+                            <GeneDeletionPopup studies={filteredStudies} />
                         </SitePopover>
                     </Hidden>
                     <Hidden smUp>
                         <ChartModal selection={selection}>
-                            <DiagnosisSelectionChart studies={filteredStudies} />
+                            <GeneDeletionPopup studies={filteredStudies} />
                         </ChartModal>
                     </Hidden>
                 </>

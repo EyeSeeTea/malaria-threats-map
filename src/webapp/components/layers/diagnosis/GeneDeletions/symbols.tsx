@@ -18,7 +18,7 @@ const geneDeletionsSymbols = {
     "circle-stroke-color": [
         "case",
         ["boolean", ["feature-state", "hover"], false],
-        "lightgrey",
+        "green",
         [
             "match",
             ["get", "DELETION_PERCENT"],

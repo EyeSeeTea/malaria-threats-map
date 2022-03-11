@@ -191,6 +191,7 @@
                     "site_content_2": " mutations were observed among {{nStudies}} samples",
                     "percentage": "Percentage (%)",
                     "studies": "Studies",
+                    "study": "Study",
                     "study_years": "Study year(s)",
                     "number_of_samples": "Number of samples",
                     "mutation_detected": "Samples with mutations detected",

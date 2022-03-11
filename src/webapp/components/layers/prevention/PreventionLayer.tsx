@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { State } from "../../../store/types";
+import { State, PreventionMapType } from "../../../store/types";
 import { studiesToGeoJson, getCountryStudies } from "../layer-utils";
 import setupEffects from "../effects";
 import * as R from "ramda";
@@ -28,6 +28,12 @@ import ChartModal from "../../ChartModal";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../../components/hidden/Hidden";
+import PboSitePopup from "./PboDeployment/PboSitePopup";
+import IntensityStatusPopup from "./IntensityStatus/IntensityStatusPopup";
+import LevelOfInvolvementPopup from "./Involvement/LevelOfInvolvementPopup";
+import ResistanceMechanismsPopup from "./ResistanceMechanisms/ResistanceMechanismsPopup";
+import ResistanceStatusPopup from "./ResistanceStatus/ResistanceStatusPopup";
+
 
 export const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -205,7 +211,7 @@ class PreventionLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any) => {
+    onMouseOverListener = (e: any) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -220,9 +226,16 @@ class PreventionLayer extends Component<Props> {
         }, 100);
     };
 
+    offMouseOverListener = () => {
+        setTimeout(() => {
+            this.props.setSelection(null);
+        }, 100);
+    };
+
     setupPopover = () => {
-        this.props.map.off("click", PREVENTION_LAYER_ID, this.onClickListener);
-        this.props.map.on("click", PREVENTION_LAYER_ID, this.onClickListener);
+        this.props.map.on("mouseover", PREVENTION_LAYER_ID, this.onMouseOverListener);
+        this.props.map.off("mouseover", PREVENTION_LAYER_ID, this.offMouseOverListener);
+
     };
 
     renderLayer = () => {
@@ -254,7 +267,7 @@ class PreventionLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, countryMode, selection } = this.props;
+        const { studies, countryMode, selection, preventionFilters: { mapType } } = this.props;
         if (selection === null) {
             return <div />;
         }
@@ -264,12 +277,27 @@ class PreventionLayer extends Component<Props> {
         if (filteredStudies.length === 0) {
             return <div />;
         }
+
         return (
             this.props.theme === "prevention" && (
                 <>
                     <Hidden smDown>
                         <SitePopover map={this.props.map}>
-                            <PreventionSelectionChart studies={filteredStudies} />
+                        {!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
+                            <PboSitePopup studies={filteredStudies} />
+                            )}
+                        {!countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
+                            <IntensityStatusPopup studies={filteredStudies} />
+                        )}
+                        {!countryMode && mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
+                            <LevelOfInvolvementPopup studies={filteredStudies} />
+                        )}
+                        {!countryMode && mapType === PreventionMapType.RESISTANCE_MECHANISM && (
+                            <ResistanceMechanismsPopup studies={filteredStudies} />
+                        )}
+                        {!countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
+                            <ResistanceStatusPopup studies={filteredStudies} />
+                        )}
                         </SitePopover>
                     </Hidden>
                     <Hidden smUp>

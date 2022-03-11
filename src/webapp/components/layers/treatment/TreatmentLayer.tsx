@@ -33,6 +33,9 @@ import TreatmentSelectionChart from "./TreatmentSelectionChart";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../hidden/Hidden";
+import MolecularMarkersPopup from "./MolecularMarkers/MolecularMarkersPopup";
+import TreatmentFailurePopup from "./TreatmentFailure/TreatmentFailurePopup";
+
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -227,7 +230,7 @@ class TreatmentLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any) => {
+    onMouseOverListener = (e: any) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -241,10 +244,16 @@ class TreatmentLayer extends Component<Props> {
             this.props.setSelection(selection);
         }, 100);
     };
+    offMouseOverListener = () => {
+        setTimeout(() => {
+            this.props.setSelection(null);
+        }, 100);
+    };
+
 
     setupPopover = () => {
-        this.props.map.off("click", TREATMENT_LAYER_ID, this.onClickListener);
-        this.props.map.on("click", TREATMENT_LAYER_ID, this.onClickListener);
+        this.props.map.on("mouseover", TREATMENT_LAYER_ID, this.onMouseOverListener);
+        this.props.map.off("mouseover", TREATMENT_LAYER_ID, this.offMouseOverListener);
     };
 
     renderLayer = () => {
@@ -273,7 +282,7 @@ class TreatmentLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, countryMode, selection } = this.props;
+        const { studies, countryMode, selection, treatmentFilters: {mapType} } = this.props;
         if (selection === null) {
             return <div />;
         }
@@ -283,16 +292,28 @@ class TreatmentLayer extends Component<Props> {
         if (filteredStudies.length === 0) {
             return <div />;
         }
+        
         return (
             this.props.theme === "treatment" && (
                 <>
                     <Hidden smDown>
                         <SitePopover map={this.props.map}>
-                            <TreatmentSelectionChart studies={filteredStudies} />
+                        {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
+                            <MolecularMarkersPopup studies={filteredStudies} />
+                        )}
+                        {!countryMode && (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE || mapType === TreatmentMapType.TREATMENT_FAILURE)  && (
+                            <TreatmentFailurePopup studies={filteredStudies} />
+                        )}
                         </SitePopover>
                     </Hidden>
                     <Hidden smUp>
                         <ChartModal selection={selection}>
+                            {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
+                                <MolecularMarkersPopup studies={filteredStudies} />
+                            )}
+                            {!countryMode && (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE || mapType === TreatmentMapType.TREATMENT_FAILURE)  && (
+                                <TreatmentFailurePopup studies={filteredStudies} />
+                            )}
                             <TreatmentSelectionChart studies={filteredStudies} />
                         </ChartModal>
                     </Hidden>

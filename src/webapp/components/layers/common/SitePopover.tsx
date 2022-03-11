@@ -9,7 +9,7 @@ import { State } from "../../../store/types";
 import mapboxgl from "mapbox-gl";
 import { selectSelection } from "../../../store/reducers/base-reducer";
 import { dispatchCustomEvent } from "../../../utils/dom-utils";
-import { setSelection } from "../../../store/actions/base-actions";
+import { setSelection, setTooltipOpen } from "../../../store/actions/base-actions";
 import { StyledEngineProvider, Theme } from "@mui/material";
 
 declare module "@mui/styles/defaultTheme" {
@@ -23,6 +23,7 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setSelection: setSelection,
+    setTooltipOpen: setTooltipOpen
 };
 type DispatchProps = typeof mapDispatchToProps;
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -32,7 +33,7 @@ type OwnProps = {
 };
 type Props = StateProps & DispatchProps & OwnProps & { children: React.ReactNode };
 
-const SitePopover: React.FC<Props> = ({ map, selection, setSelection, children }) => {
+const SitePopover: React.FC<Props> = ({ map, selection, setSelection, children, setTooltipOpen }) => {
     useEffect(() => {
         const placeholder = document.createElement("div");
         if (!selection) {
@@ -50,19 +51,21 @@ const SitePopover: React.FC<Props> = ({ map, selection, setSelection, children }
             placeholder
         );
 
-        const popup = new mapboxgl.Popup()
+        const popup = new mapboxgl.Popup({closeOnClick: true})
             .setLngLat(selection.coordinates)
             .setDOMContent(placeholder)
             .addTo(map)
             .on("close", () => {
                 setSelection(null);
-            });
+            })
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
 
         return () => {
             ReactDOM.unmountComponentAtNode(placeholder);
             popup.remove();
+            setTooltipOpen(false);
+
         };
     });
 

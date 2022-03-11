@@ -3,20 +3,19 @@ import { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import * as R from "ramda";
-import Pagination from "../../../charts/Pagination";
 import Citation from "../../../charts/Citation";
-import { formatYears, formatYears2 } from "../../../../utils/string-utils";
+import { formatYears } from "../../../../utils/string-utils";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../filters/PlasmodiumSpeciesFilter";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import _ from "lodash";
 import { isNotNull } from "../../../../utils/number-utils";
-import Hidden from "../../../hidden/Hidden";
+import { ChartContainer } from "../../../Chart";
 
 const options: (data: any, categories: any[], translations: any) => Highcharts.Options = (
     data,
@@ -73,27 +72,17 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
     },
 });
 
-const ChatContainer = styled.div`
-    max-width: 600px;
-    width: 100%;
-    @media all and (-ms-high-contrast: none) {
-        & {
-            width: 600px;
-        }
-    }
-`;
-
 const Flex = styled.div`
     display: flex;
-`;
-
-const FlexCol = styled.div<{ flex?: number }>`
-    flex: ${props => props.flex || 1};
 `;
 
 const Margin = styled.div`
     margin-top: 10px;
     margin-bottom: 10px;
+`;
+
+const FlexCol = styled.div<{ flex?: number }>`
+    flex: ${props => props.flex || 1};
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -109,23 +98,15 @@ type Props = StateProps & OwnProps;
 const TreatmentFailureChart = ({ studies }: Props) => {
     const { t } = useTranslation();
     const [study, setStudy] = useState(0);
+    const [showMore, setShowMore] = useState(false);
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
     const years = R.uniq(sortedStudies.map(study => study.YEAR_START)).sort();
     const maxYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
     const minYear = parseInt(sortedStudies[0].YEAR_START);
 
     const {
-        YEAR_START,
-        YEAR_END,
         PLASMODIUM_SPECIES,
         DRUG_NAME,
-        N,
-        FOLLOW_UP,
-        CONFIRMED_RESIST_PV,
-        POSITIVE_DAY_3,
-        TREATMENT_FAILURE_KM,
-        TREATMENT_FAILURE_PP,
-        HEALTHFACILITY_NAME,
     } = sortedStudies[study];
 
     const keys = _([
@@ -147,6 +128,20 @@ const TreatmentFailureChart = ({ studies }: Props) => {
         };
     });
 
+    const StyledButton = styled(Button)`
+        &.MuiButton-text {
+            text-transform: none;
+        }
+        &.MuiButton-root {
+            padding: 0;
+
+            &:hover {
+                border: none;
+                text-decoration: underline;
+            }
+        }
+        `;
+    
     const siteDuration = formatYears(`${minYear}`, `${maxYear}`);
 
     const titleItems = [
@@ -156,120 +151,18 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     ];
     const title = titleItems.filter(Boolean).join(", ");
 
-    const duration = formatYears2(YEAR_START, YEAR_END);
-    const formatValue = (value: string) =>
-        Number.isNaN(parseFloat(value)) ? "N/A" : `${(parseFloat(value) * 100).toFixed(1)}%`;
-
     const translations = {
         percentage: t("common.treatment.chart.treatment_failure.percentage"),
     };
-    const healthFacilityName = t("common.treatment.chart.treatment_failure.health_facility_name");
-    const studyYears = t("common.treatment.chart.treatment_failure.study_years");
-    const numberOfPatients = t("common.treatment.chart.treatment_failure.number_of_patients");
-    const followUp = t("common.treatment.chart.treatment_failure.follow_up");
-    const confirmedResistPv = t("common.treatment.chart.treatment_failure.confirmed_resist_pv");
-    const positiveDay3 = t("common.treatment.chart.treatment_failure.positive_day_3");
-    const treatmentFailurePp = t("common.treatment.chart.treatment_failure.treatment_failure_pp");
-    const treatmentFailureKm = t("common.treatment.chart.treatment_failure.treatment_failure_km");
-    const days = t("common.treatment.chart.treatment_failure.days");
-    const t_studies = t("common.treatment.chart.treatment_failure.studies");
 
-    function renderInfo() {
-        return (
-            <Margin>
-                {isNotNull(HEALTHFACILITY_NAME) && HEALTHFACILITY_NAME !== "Not applicable" && (
-                    <Flex>
-                        <Typography variant="body2">
-                            <b>
-                                {healthFacilityName}
-                                :&nbsp;
-                            </b>
-                            {HEALTHFACILITY_NAME}
-                        </Typography>
-                    </Flex>
-                )}
-                <Flex>
-                    <Typography variant="body2">
-                        <b>
-                            {studyYears}
-                            :&nbsp;
-                        </b>
-                        {duration}
-                    </Typography>
-                </Flex>
-                <Flex>
-                    <Typography variant="body2">
-                        <b>
-                            {numberOfPatients}
-                            :&nbsp;
-                        </b>
-                        {N}
-                    </Typography>
-                </Flex>
-                <Flex>
-                    <Typography variant="body2">
-                        <b>
-                            {followUp}
-                            :&nbsp;
-                        </b>
-                        {FOLLOW_UP} {days}
-                    </Typography>
-                </Flex>
-                {isNotNull(CONFIRMED_RESIST_PV) && (
-                    <Flex>
-                        <Typography variant="body2">
-                            <b>
-                                {confirmedResistPv}
-                                :&nbsp;
-                            </b>
-                            {formatValue(CONFIRMED_RESIST_PV)}
-                        </Typography>
-                    </Flex>
-                )}
-                {isNotNull(POSITIVE_DAY_3) && PLASMODIUM_SPECIES === "P._FALCIPARUM" && (
-                    <Flex>
-                        <Typography variant="body2">
-                            <b>
-                                {positiveDay3}
-                                :&nbsp;
-                            </b>
-                            {formatValue(POSITIVE_DAY_3)}
-                        </Typography>
-                    </Flex>
-                )}
-                {isNotNull(TREATMENT_FAILURE_PP) && (
-                    <Flex>
-                        <Typography variant="body2">
-                            <b>
-                                {treatmentFailurePp}
-                                :&nbsp;
-                            </b>
-                            {formatValue(TREATMENT_FAILURE_PP)}
-                        </Typography>
-                    </Flex>
-                )}
-                {isNotNull(TREATMENT_FAILURE_KM) && (
-                    <Flex>
-                        <Typography variant="body2">
-                            <b>
-                                {treatmentFailureKm}
-                                :&nbsp;
-                            </b>
-                            {formatValue(TREATMENT_FAILURE_KM)}
-                        </Typography>
-                    </Flex>
-                )}
-            </Margin>
-        );
-    }
+    const t_studies = t("common.treatment.chart.treatment_failure.studies");
 
     const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.find(
         (species: any) => species.value === PLASMODIUM_SPECIES
     ).label;
 
     return (
-        <ChatContainer>
-            <Pagination studies={studies} study={study} setStudy={setStudy} />
+        <ChartContainer>
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${title}`}</Box>
             </Typography>
@@ -277,20 +170,33 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                 <i>{plasmodiumSpecies}</i>
                 {`, ${t(DRUG_NAME)}: ${studies.length} ${t_studies} ${siteDuration}`}
             </Typography>
-            <Hidden smUp>
-                {renderInfo()}
-                <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
-            </Hidden>
-            <Hidden smDown>
-                <Flex>
-                    <FlexCol>{renderInfo()}</FlexCol>
-                    <FlexCol>
-                        <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
-                    </FlexCol>
+            <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
+            <Margin>
+                <Flex style={{flexDirection: "row", justifyContent: "space-between"}}>
+                        <Typography variant="body2">Additional information: </Typography>
+                        <StyledButton onClick={() => setShowMore(prev => !prev)}>Show {showMore ? "less" : "more"}</StyledButton>
                 </Flex>
-            </Hidden>
-            <Citation study={studies[study]} />
-        </ChatContainer>
+            </Margin>
+            {showMore && (
+                 <Margin>
+                 {sortedStudies.map((study, index) => 
+                    <Margin key={index}>
+                     <Flex>
+                     <FlexCol>
+                         <Typography variant="body2" fontWeight="fontWeightBold">{study.YEAR_START}</Typography>
+                     </FlexCol>
+                         <FlexCol>
+                         <Typography variant="body2">{isNotNull(study.HEALTHFACILITY_NAME) && study.HEALTHFACILITY_NAME !== "Not applicable" && `Study conducted at the ${study.HEALTHFACILITY_NAME}.`} {study.N} patients included in {study.FOLLOW_UP} day follow-up. Study conducted by:</Typography>
+                         <Citation study={study} />
+                         </FlexCol>
+                 </Flex>
+                 </Margin>
+
+                 )}
+             </Margin>
+            )}
+
+        </ChartContainer>
     );
 };
 export default connect(mapStateToProps)(TreatmentFailureChart);

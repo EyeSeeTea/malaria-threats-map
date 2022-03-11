@@ -16,6 +16,7 @@ import { isNotNull } from "../../../../utils/number-utils";
 import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import Hidden from "../../../hidden/Hidden";
+import { ChartContainer } from "../../../Chart";
 
 const Flex = styled.div`
     display: flex;
@@ -201,10 +202,10 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
     return (
         <>
             <Hidden smUp>
-                <ChatContainer width={"100%"}>{content()}</ChatContainer>
+                <ChartContainer >{content()}</ChartContainer>
             </Hidden>
             <Hidden smDown>
-                <ChatContainer width={"500px"}>{content()}</ChatContainer>
+                <ChartContainer>{content()}</ChartContainer>
             </Hidden>
         </>
     );

@@ -1,11 +1,10 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import { connect } from "react-redux";
 import { useTranslation, Trans } from "react-i18next";
-import { selectIsTooltipOpen, selectTheme } from "../../../../store/reducers/base-reducer";
-import { setTooltipOpen } from "../../../../store/actions/base-actions";
+import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import Citation from "../../../charts/Citation";
 import Table from "@mui/material/Table";
@@ -31,19 +30,14 @@ const SpacedTypography = styled(Typography)`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     diagnosisFilters: selectDiagnosisFilters(state),
-    tooltipOpen: selectIsTooltipOpen(state),
 });
 
-const mapDispatchToProps = {
-    setTooltipOpen: setTooltipOpen,
-};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
     studies: DiagnosisStudy[];
 };
-type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
 const StyledHeaderCell = styled(TableCell)`
     font-size: 0.875rem !important;
@@ -71,9 +65,10 @@ const useStyles = makeStyles(theme => ({
         color: theme.palette.common.white,
         backgroundColor: theme.palette.background.default,
     },
+    
 }));
 
-const GeneDeletionChart = ({ studies, diagnosisFilters, tooltipOpen, setTooltipOpen }: Props) => {
+const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
     const { t } = useTranslation();
     const classes = useStyles({});
     const nStudies = studies.length;
@@ -84,10 +79,8 @@ const GeneDeletionChart = ({ studies, diagnosisFilters, tooltipOpen, setTooltipO
     const studyObject = studies[0];
     const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(type => t(type));
     const formatPercentage = (value: string) => `${(parseFloat(value) * 100).toFixed(1)}%`;
-    console.log(tooltipOpen);
     return (
         <ChatContainer>
-            <Button onClick={() => setTooltipOpen(!tooltipOpen)}>Click here to open sidebar</Button>
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">
                     {t(studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2)}
@@ -182,4 +175,4 @@ const GeneDeletionChart = ({ studies, diagnosisFilters, tooltipOpen, setTooltipO
         </ChatContainer>
     );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(GeneDeletionChart);
+export default connect(mapStateToProps)(GeneDeletionChart);

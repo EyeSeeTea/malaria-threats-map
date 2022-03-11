@@ -12,9 +12,11 @@ import Pagination from "../../../charts/Pagination";
 import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import Hidden from "../../../hidden/Hidden";
+import { ChartContainer } from "../../../Chart";
 
 const ChatContainer = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};
+    padding: 20px;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -50,10 +52,10 @@ const IntensityInvolvementChart = ({ studyObject, options, groupedStudies, setSt
     return (
         <>
             <Hidden smUp>
-                <ChatContainer width={"100%"}>{content()}</ChatContainer>
+                <ChartContainer>{content()}</ChartContainer>
             </Hidden>
             <Hidden smDown>
-                <ChatContainer width={"500px"}>{content()}</ChatContainer>
+                <ChartContainer>{content()}</ChartContainer>
             </Hidden>
         </>
     );

@@ -10,7 +10,13 @@ import Disclaimer from "./Disclaimer";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { State } from "../store/types";
-import { selectAreFiltersOpen, selectIsTooltipOpen, selectFilters, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
+import {
+    selectAreFiltersOpen,
+    selectIsTooltipOpen,
+    selectFilters,
+    selectStoryMode,
+    selectTheme,
+} from "../store/reducers/base-reducer";
 import {
     setFiltersOpen,
     setTooltipOpen,
@@ -26,6 +32,7 @@ import { setPreventionMapType } from "../store/actions/prevention-actions";
 import { AppBar, IconButton, Tab, Tabs, Toolbar } from "@mui/material";
 import StoryModeStepper from "./StoryModeStepper";
 import FiltersSidebar from "./filters/container/FiltersSidebar";
+import StudyDetailsSidebar from "./StudyDetailsSidebar";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { DiagnosisIcon, FilterIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import { colors } from "../constants/theme";
@@ -33,6 +40,7 @@ import MapTypesSelector from "./MapTypesSelector";
 import MobileOptions from "./MobileOptions";
 import Loader from "./Loader";
 import Hidden from "./hidden/Hidden";
+import { dispatchCustomEvent } from "../utils/dom-utils";
 
 interface ThemeProps {
     drawerWidth: string;
@@ -48,40 +56,12 @@ const useStyles = makeStyles((theme: Theme) =>
             left: 0,
             bottom: 0,
         },
-        appBar: {
-            transition: theme.transitions.create(["margin", "width"], {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
-            }),
-        },
-        appBarShift: {
-            width: (props: ThemeProps) => `calc(100% - ${props.drawerWidth})`,
-            marginLeft: (props: ThemeProps) => props.drawerWidth,
-            transition: theme.transitions.create(["margin", "width"], {
-                easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-        },
-        menuButton: {
-            marginRight: theme.spacing(2),
-        },
-        hide: {
-            display: "none",
-        },
-        drawer: {
-            width: (props: ThemeProps) => props.drawerWidth,
-            flexShrink: 0,
-        },
         tooltipDrawer: {
-            width: (props: ThemeProps) => -props.drawerWidth,
-            flexShrink: 0,
-        },
-        drawerPaper: {
             width: (props: ThemeProps) => props.drawerWidth,
-            backgroundColor: "#f3f3f3",
+            flexShrink: 0,
         },
         tooltipDrawerPaper: {
-            width: (props: ThemeProps) => -props.drawerWidth,
+            width: (props: ThemeProps) => props.drawerWidth,
             backgroundColor: "#f3f3f3",
         },
         drawerHeader: {
@@ -96,30 +76,19 @@ const useStyles = makeStyles((theme: Theme) =>
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
             }),
-            marginLeft: `-${(props: ThemeProps) => props.drawerWidth}`,
+            marginRight: `${(props: ThemeProps) => props.drawerWidth}`,
         },
         contentShift: {
             transition: theme.transitions.create("margin", {
                 easing: theme.transitions.easing.easeOut,
                 duration: theme.transitions.duration.enteringScreen,
             }),
-            marginLeft: 0,
+            right: 0,
             position: "relative",
-        },
-        tab: {
-            minWidth: 0,
         },
         iconButton: {
             padding: 10,
             margin: theme.spacing(0, 1),
-        },
-        input: {
-            flex: 1,
-        },
-        divider: {
-            width: 1,
-            height: 28,
-            margin: 4,
         },
         toolbar: {
             padding: 0,
@@ -189,33 +158,18 @@ function PersistentDrawerLeft({
     setStoryMode,
     theme,
     tooltipOpen,
-    setTooltipOpen,
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const isOpen = filtersOpen || storyMode;
-    console.log(isOpen)
-    const isTooltipOpen = tooltipOpen;
-    console.log(isOpen)
+    console.log(isOpen);
 
-
-    const prevFilterOpenRef = useRef<boolean>();
-    const prevStoryModeRef = useRef<boolean>();
-
+    const [isTooltipOpen, setIsTooltipOpen] = React.useState(tooltipOpen);
     useEffect(() => {
-        prevFilterOpenRef.current = filtersOpen;
-        prevStoryModeRef.current = storyMode;
-    });
-    const prevFilterOpen = prevFilterOpenRef.current;
-    const prevStoryMode = prevStoryModeRef.current;
-
-    if (filtersOpen && storyMode) {
-        if (prevFilterOpen === filtersOpen) {
-            setFiltersOpen(!filtersOpen);
-        }
-        if (prevStoryMode === storyMode) {
-            setStoryMode(!storyMode);
-        }
-    }
+        setIsTooltipOpen(tooltipOpen);
+        setTimeout(() => dispatchCustomEvent("resize"), 100);
+    }, [tooltipOpen]);
+    //const isTooltipOpen = tooltipOpen
+    console.log(isTooltipOpen);
 
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 
@@ -237,12 +191,8 @@ function PersistentDrawerLeft({
                 break;
         }
     };
-
-    return (
-        <div className={`${classes.root}`}>
-            <Loader />
-            <CssBaseline />
-            <Drawer
+    /*
+    <Drawer
                 className={classes.drawer}
                 variant="persistent"
                 anchor={"left"}
@@ -253,6 +203,11 @@ function PersistentDrawerLeft({
             >
                 <>{storyMode ? <StoryModeStepper /> : <FiltersSidebar />}</>
             </Drawer>
+    */
+    return (
+        <div className={`${classes.root}`}>
+            <Loader />
+            <CssBaseline />
             <div
                 className={clsx(classes.content, {
                     [classes.contentShift]: isTooltipOpen,
@@ -335,7 +290,7 @@ function PersistentDrawerLeft({
                     paper: classes.tooltipDrawerPaper,
                 }}
             >
-                <>{storyMode ? <StoryModeStepper /> : <FiltersSidebar />}</>
+                <StudyDetailsSidebar />
             </Drawer>
         </div>
     );

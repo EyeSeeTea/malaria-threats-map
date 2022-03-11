@@ -191,6 +191,7 @@
                     "site_content_2": " en {{nStudies}} muestras",
                     "percentage": "%",
                     "studies": "Estudios",
+                    "study": "Estudio",
                     "study_years": "Año(s) del estudio",
                     "number_of_samples": "Número de muestras",
                     "mutation_detected": "Muestras con mutación detectada",

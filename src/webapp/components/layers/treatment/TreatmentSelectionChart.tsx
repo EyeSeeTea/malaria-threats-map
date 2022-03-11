@@ -49,15 +49,20 @@ class TreatmentSelectionChart extends Component<Props> {
         if (!filteredStudies.length || theme !== "treatment") {
             return <div />;
         }
+        /*
+            {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
+                            <MolecularMarkersChart studies={filteredStudies} />
+                        )}
+                {!countryMode && (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE || mapType === TreatmentMapType.TREATMENT_FAILURE)  && (
+                    <TreatmentFailureChart studies={filteredStudies} />
+                )}
+        */
         return (
             <>
                 {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
-                    <MolecularMarkersChart studies={filteredStudies} />
-                )}
-                {!countryMode && mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE && (
-                    <TreatmentFailureChart studies={filteredStudies} />
-                )}
-                {!countryMode && mapType === TreatmentMapType.TREATMENT_FAILURE && (
+                            <MolecularMarkersChart studies={filteredStudies} />
+                        )}
+                {!countryMode && (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE || mapType === TreatmentMapType.TREATMENT_FAILURE)  && (
                     <TreatmentFailureChart studies={filteredStudies} />
                 )}
                 {countryMode && mapType === TreatmentMapType.TREATMENT_FAILURE && (

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { connect } from "react-redux";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
@@ -14,7 +14,8 @@ import { ChartContainer } from "../../../Chart";
 import Curation from "../../../Curation";
 import { isNotNull } from "../../../../utils/number-utils";
 import { InvasiveStudy } from "../../../../../domain/entities/InvasiveStudy";
-
+import { selectIsTooltipOpen } from "../../../../store/reducers/base-reducer";
+import { setTooltipOpen } from "../../../../store/actions/base-actions";
 const Flex = styled.div`
     display: flex;
 `;
@@ -26,9 +27,14 @@ const Margin = styled.div`
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
+    tooltipOpen: selectIsTooltipOpen(state),
+
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    setTooltipOpen: setTooltipOpen,
+
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
@@ -37,7 +43,7 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const VectorOccurrenceChart = ({ studies }: Props) => {
+const VectorOccurrenceChart = ({ studies, tooltipOpen, setTooltipOpen }: Props) => {
     const { t } = useTranslation();
     const translations = [
         t("utils.Jan."),

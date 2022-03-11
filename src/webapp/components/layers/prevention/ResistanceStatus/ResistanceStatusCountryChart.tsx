@@ -20,6 +20,7 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     preventionFilters: selectPreventionFilters(state),
 });
+
 const mapDispatchToProps = {
     setRegion: setRegionAction,
     setCountryMode: setCountryModeAction,

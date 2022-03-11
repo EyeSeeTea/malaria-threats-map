@@ -11,6 +11,7 @@ const Wrapper = styled.div`
 export const ChartContainer = styled.div`
     max-width: 700px;
     width: 100%;
+    padding: 20px;
 `;
 
 export const Actions = styled.div`

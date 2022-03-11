@@ -8,6 +8,11 @@ import GeneDeletionChart from "./GeneDeletions/GeneDeletionChart";
 import GeneDeletionCountryChart from "./GeneDeletions/GeneDeletionCountryChart";
 import { selectDiagnosisFilters } from "../../../store/reducers/diagnosis-reducer";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
+import styled from "styled-components";
+
+const InfoContainer = styled.div`
+    padding: 20px;
+`;
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -48,14 +53,14 @@ class DiagnosisSelectionChart extends Component<Props> {
             return <div />;
         }
         return (
-            <>
+            <InfoContainer>
                 {!countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
                     <GeneDeletionChart studies={filteredStudies} />
                 )}
                 {countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
                     <GeneDeletionCountryChart studies={filteredStudies} />
                 )}
-            </>
+            </InfoContainer>
         );
     }
 }

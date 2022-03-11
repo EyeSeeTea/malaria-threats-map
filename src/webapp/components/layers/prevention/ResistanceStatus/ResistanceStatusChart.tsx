@@ -18,7 +18,7 @@ import IntegrationReactSelect from "../../../BasicSelect";
 import FormLabel from "@mui/material/FormLabel";
 import { sendAnalytics } from "../../../../utils/analytics";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
-import Hidden from "../../../hidden/Hidden";
+import { ChartContainer } from "../../../Chart";
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
@@ -115,10 +115,6 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
         enabled: false,
     },
 });
-
-const ChatContainer = styled.div<{ width?: string }>`
-    width: ${props => props.width || "100%"};
-`;
 
 const StyledSelect = styled(IntegrationReactSelect)`
     margin-bottom: 4px;
@@ -226,14 +222,31 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         </>
     );
     return (
-        <>
-            <Hidden smUp>
-                <ChatContainer width={"100%"}>{content()}</ChatContainer>
-            </Hidden>
-            <Hidden smDown>
-                <ChatContainer width={"500px"}>{content()}</ChatContainer>
-            </Hidden>
-        </>
+                <ChartContainer>
+                {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
+            <Typography variant="subtitle1">
+                <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
+                    `${studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2}`
+                )}`}</Box>
+            </Typography>
+            <Typography variant="subtitle2">{subtitle}</Typography>
+            {suggestions.length > 1 && (
+                <Flex>
+                    <FormLabel component="legend">Species</FormLabel>
+                    <StyledSelect
+                        isClearable
+                        isMulti
+                        suggestions={suggestions}
+                        onChange={onSpeciesChange}
+                        value={species}
+                    />
+                </Flex>
+            )}
+            <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
+            <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
+            <Curation study={studyObject} />
+                    
+                </ChartContainer>
     );
 };
 export default connect(mapStateToProps)(ResistanceStatusChart);
