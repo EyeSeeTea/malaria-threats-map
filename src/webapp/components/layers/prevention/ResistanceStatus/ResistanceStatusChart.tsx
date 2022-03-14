@@ -222,8 +222,8 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         </>
     );
     return (
-                <ChartContainer>
-                {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
+        <ChartContainer>
+            {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
                     `${studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2}`
@@ -245,8 +245,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
             <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
             <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
             <Curation study={studyObject} />
-                    
-                </ChartContainer>
+        </ChartContainer>
     );
 };
 export default connect(mapStateToProps)(ResistanceStatusChart);

@@ -39,10 +39,7 @@ const TreatmentFailurePopup = ({ studies }: Props) => {
     const maxYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
     const minYear = parseInt(sortedStudies[0].YEAR_START);
 
-    const {
-        PLASMODIUM_SPECIES,
-        DRUG_NAME,
-    } = sortedStudies[study];
+    const { PLASMODIUM_SPECIES, DRUG_NAME } = sortedStudies[study];
 
     const siteDuration = formatYears(`${minYear}`, `${maxYear}`);
 
@@ -69,7 +66,6 @@ const TreatmentFailurePopup = ({ studies }: Props) => {
                 {`, ${t(DRUG_NAME)}: ${studies.length} ${t_studies} ${siteDuration}`}
             </Typography>
             <ViewSummaryDataButton />
-
         </ChatContainer>
     );
 };

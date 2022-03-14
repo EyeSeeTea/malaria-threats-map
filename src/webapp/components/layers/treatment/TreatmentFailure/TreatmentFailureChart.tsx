@@ -104,10 +104,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     const maxYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
     const minYear = parseInt(sortedStudies[0].YEAR_START);
 
-    const {
-        PLASMODIUM_SPECIES,
-        DRUG_NAME,
-    } = sortedStudies[study];
+    const { PLASMODIUM_SPECIES, DRUG_NAME } = sortedStudies[study];
 
     const keys = _([
         PLASMODIUM_SPECIES === "P._FALCIPARUM" ? { name: "POSITIVE_DAY_3", color: "#00994C" } : undefined,
@@ -140,8 +137,8 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                 text-decoration: underline;
             }
         }
-        `;
-    
+    `;
+
     const siteDuration = formatYears(`${minYear}`, `${maxYear}`);
 
     const titleItems = [
@@ -172,30 +169,38 @@ const TreatmentFailureChart = ({ studies }: Props) => {
             </Typography>
             <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
             <Margin>
-                <Flex style={{flexDirection: "row", justifyContent: "space-between"}}>
-                        <Typography variant="body2">Additional information: </Typography>
-                        <StyledButton onClick={() => setShowMore(prev => !prev)}>Show {showMore ? "less" : "more"}</StyledButton>
+                <Flex style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                    <Typography variant="body2">Additional information: </Typography>
+                    <StyledButton onClick={() => setShowMore(prev => !prev)}>
+                        Show {showMore ? "less" : "more"}
+                    </StyledButton>
                 </Flex>
             </Margin>
             {showMore && (
-                 <Margin>
-                 {sortedStudies.map((study, index) => 
-                    <Margin key={index}>
-                     <Flex>
-                     <FlexCol>
-                         <Typography variant="body2" fontWeight="fontWeightBold">{study.YEAR_START}</Typography>
-                     </FlexCol>
-                         <FlexCol>
-                         <Typography variant="body2">{isNotNull(study.HEALTHFACILITY_NAME) && study.HEALTHFACILITY_NAME !== "Not applicable" && `Study conducted at the ${study.HEALTHFACILITY_NAME}.`} {study.N} patients included in {study.FOLLOW_UP} day follow-up. Study conducted by:</Typography>
-                         <Citation study={study} />
-                         </FlexCol>
-                 </Flex>
-                 </Margin>
-
-                 )}
-             </Margin>
+                <Margin>
+                    {sortedStudies.map((study, index) => (
+                        <Margin key={index}>
+                            <Flex>
+                                <FlexCol>
+                                    <Typography variant="body2" fontWeight="fontWeightBold">
+                                        {study.YEAR_START}
+                                    </Typography>
+                                </FlexCol>
+                                <FlexCol>
+                                    <Typography variant="body2">
+                                        {isNotNull(study.HEALTHFACILITY_NAME) &&
+                                            study.HEALTHFACILITY_NAME !== "Not applicable" &&
+                                            `Study conducted at the ${study.HEALTHFACILITY_NAME}.`}{" "}
+                                        {study.N} patients included in {study.FOLLOW_UP} day follow-up. Study conducted
+                                        by:
+                                    </Typography>
+                                    <Citation study={study} />
+                                </FlexCol>
+                            </Flex>
+                        </Margin>
+                    ))}
+                </Margin>
             )}
-
         </ChartContainer>
     );
 };

@@ -7,7 +7,6 @@ import { selectTheme } from "../../../store/reducers/base-reducer";
 import { Box, Typography } from "@mui/material";
 import ViewSummaryDataButton from "../../ViewSummaryDataButton";
 
-
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
 });
@@ -25,7 +24,7 @@ const PreventionPopupContent = ({ studyObject }: Props) => {
 
     return (
         <>
-        <Typography variant="subtitle1">
+            <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
                     studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2
                 )}`}</Box>
@@ -33,8 +32,7 @@ const PreventionPopupContent = ({ studyObject }: Props) => {
             <Typography variant="subtitle2">{`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}</Typography>
             <ViewSummaryDataButton />
         </>
-    )
+    );
 };
 
 export default connect(mapStateToProps)(PreventionPopupContent);
-

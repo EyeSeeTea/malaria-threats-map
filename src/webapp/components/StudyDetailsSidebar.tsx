@@ -1,10 +1,15 @@
 import React from "react";
-import { AppBar, Toolbar, IconButton, Theme, Typography} from "@mui/material";
+import { AppBar, Toolbar, IconButton, Theme, Typography } from "@mui/material";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import { State } from "../store/types";
-import { selectLastUpdatedDates, selectTheme, selectSelection, selectCountryMode } from "../store/reducers/base-reducer";
+import {
+    selectLastUpdatedDates,
+    selectTheme,
+    selectSelection,
+    selectCountryMode,
+} from "../store/reducers/base-reducer";
 import { selectFilteredPreventionStudies } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisFilters, selectFilteredDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectFilteredTreatmentStudies } from "../store/reducers/treatment-reducer";
@@ -24,9 +29,7 @@ import DiagnosisSelectionChart from "./layers/diagnosis/DiagnosisSelectionChart"
 import PreventionSelectionChart from "./layers/prevention/PreventionSelectionChart";
 import TreatmentSelectionChart from "./layers/treatment/TreatmentSelectionChart";
 
-
 //                <i>{t(diagnosisFilters.deletionType).toLowerCase()}</i>
-
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -67,9 +70,6 @@ const mapStateToProps = (state: State) => ({
     countryMode: selectCountryMode(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
-
-
-
 });
 const mapDispatchToProps = {
     setTooltipOpen: setTooltipOpen,
@@ -93,7 +93,7 @@ const StudyDetailsSidebar = ({
     countryMode,
     selection,
     diagnosisFilters: { mapType: diagnosisMapType },
-    invasiveFilters: { mapType: invasiveMapType }
+    invasiveFilters: { mapType: invasiveMapType },
 }: Props) => {
     const { t } = useTranslation();
     const classes = useStyles({});
@@ -122,19 +122,36 @@ const StudyDetailsSidebar = ({
     };
 
     const themeSelector = theme as "prevention" | "diagnosis" | "treatment" | "invasive";
-    const filteredStudiesDiagnosis = (selection !== null && filteredDiagnosisStudies !== null) && filteredDiagnosisStudies.filter((study: DiagnosisStudy) =>
-        countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
-    );
-    const filteredStudiesInvasives = (selection !== null && filteredInvasiveStudies !== null) && filteredInvasiveStudies.filter((study: InvasiveStudy) =>
-        countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
-    );
-    const filteredStudiesPrevention = (selection !== null && filteredPreventionStudies !== null) && filteredPreventionStudies.filter((study: PreventionStudy) =>
-        countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
-    );
-    const filteredStudiesTreatment = (selection !== null && filteredTreatmentStudies !== null) && filteredTreatmentStudies.filter((study: TreatmentStudy) =>
-        countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
-    );
-    if (!filteredStudiesDiagnosis.length &&  !filteredStudiesInvasives.length &&  !filteredStudiesPrevention.length &&  !filteredStudiesTreatment.length ) {
+    const filteredStudiesDiagnosis =
+        selection !== null &&
+        filteredDiagnosisStudies !== null &&
+        filteredDiagnosisStudies.filter((study: DiagnosisStudy) =>
+            countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
+        );
+    const filteredStudiesInvasives =
+        selection !== null &&
+        filteredInvasiveStudies !== null &&
+        filteredInvasiveStudies.filter((study: InvasiveStudy) =>
+            countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
+        );
+    const filteredStudiesPrevention =
+        selection !== null &&
+        filteredPreventionStudies !== null &&
+        filteredPreventionStudies.filter((study: PreventionStudy) =>
+            countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
+        );
+    const filteredStudiesTreatment =
+        selection !== null &&
+        filteredTreatmentStudies !== null &&
+        filteredTreatmentStudies.filter((study: TreatmentStudy) =>
+            countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
+        );
+    if (
+        !filteredStudiesDiagnosis.length &&
+        !filteredStudiesInvasives.length &&
+        !filteredStudiesPrevention.length &&
+        !filteredStudiesTreatment.length
+    ) {
         return <div />;
     }
 
@@ -146,7 +163,7 @@ const StudyDetailsSidebar = ({
 
     console.log(selection)
     console.log(countryMode)*/
-//<PreventionSelectionChart studies={filteredStudies} />
+    //<PreventionSelectionChart studies={filteredStudies} />
 
     return (
         <div id="sidebar">
@@ -160,20 +177,12 @@ const StudyDetailsSidebar = ({
                     </IconButton>
                 </Toolbar>
             </AppBar>
-            {themeSelector === "diagnosis" && (
-                <DiagnosisSelectionChart studies={filteredStudiesDiagnosis} />
-            )}
+            {themeSelector === "diagnosis" && <DiagnosisSelectionChart studies={filteredStudiesDiagnosis} />}
 
-            {themeSelector === "invasive" && (
-            <InvasiveSelectionChart studies={filteredStudiesInvasives} />
-                    )}
+            {themeSelector === "invasive" && <InvasiveSelectionChart studies={filteredStudiesInvasives} />}
 
-            {themeSelector === "prevention" && (
-                        <PreventionSelectionChart studies={filteredStudiesPrevention} />
-                                )}
-            {themeSelector === "treatment" && (
-                        <TreatmentSelectionChart studies={filteredStudiesTreatment} />
-                                )}
+            {themeSelector === "prevention" && <PreventionSelectionChart studies={filteredStudiesPrevention} />}
+            {themeSelector === "treatment" && <TreatmentSelectionChart studies={filteredStudiesTreatment} />}
         </div>
     );
 };

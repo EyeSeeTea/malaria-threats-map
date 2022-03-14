@@ -34,7 +34,6 @@ import LevelOfInvolvementPopup from "./Involvement/LevelOfInvolvementPopup";
 import ResistanceMechanismsPopup from "./ResistanceMechanisms/ResistanceMechanismsPopup";
 import ResistanceStatusPopup from "./ResistanceStatus/ResistanceStatusPopup";
 
-
 export const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
 const PREVENTION_SOURCE_ID = "prevention-source";
@@ -235,7 +234,6 @@ class PreventionLayer extends Component<Props> {
     setupPopover = () => {
         this.props.map.on("mouseover", PREVENTION_LAYER_ID, this.onMouseOverListener);
         this.props.map.off("mouseover", PREVENTION_LAYER_ID, this.offMouseOverListener);
-
     };
 
     renderLayer = () => {
@@ -267,7 +265,12 @@ class PreventionLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, countryMode, selection, preventionFilters: { mapType } } = this.props;
+        const {
+            studies,
+            countryMode,
+            selection,
+            preventionFilters: { mapType },
+        } = this.props;
         if (selection === null) {
             return <div />;
         }
@@ -283,21 +286,21 @@ class PreventionLayer extends Component<Props> {
                 <>
                     <Hidden smDown>
                         <SitePopover map={this.props.map}>
-                        {!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
-                            <PboSitePopup studies={filteredStudies} />
+                            {!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
+                                <PboSitePopup studies={filteredStudies} />
                             )}
-                        {!countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
-                            <IntensityStatusPopup studies={filteredStudies} />
-                        )}
-                        {!countryMode && mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
-                            <LevelOfInvolvementPopup studies={filteredStudies} />
-                        )}
-                        {!countryMode && mapType === PreventionMapType.RESISTANCE_MECHANISM && (
-                            <ResistanceMechanismsPopup studies={filteredStudies} />
-                        )}
-                        {!countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
-                            <ResistanceStatusPopup studies={filteredStudies} />
-                        )}
+                            {!countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
+                                <IntensityStatusPopup studies={filteredStudies} />
+                            )}
+                            {!countryMode && mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
+                                <LevelOfInvolvementPopup studies={filteredStudies} />
+                            )}
+                            {!countryMode && mapType === PreventionMapType.RESISTANCE_MECHANISM && (
+                                <ResistanceMechanismsPopup studies={filteredStudies} />
+                            )}
+                            {!countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
+                                <ResistanceStatusPopup studies={filteredStudies} />
+                            )}
                         </SitePopover>
                     </Hidden>
                     <Hidden smUp>

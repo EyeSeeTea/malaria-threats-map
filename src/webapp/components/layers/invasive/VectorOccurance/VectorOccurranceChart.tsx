@@ -28,12 +28,10 @@ const Margin = styled.div`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     tooltipOpen: selectIsTooltipOpen(state),
-
 });
 
 const mapDispatchToProps = {
     setTooltipOpen: setTooltipOpen,
-
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

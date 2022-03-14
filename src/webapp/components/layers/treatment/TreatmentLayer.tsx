@@ -36,7 +36,6 @@ import Hidden from "../../hidden/Hidden";
 import MolecularMarkersPopup from "./MolecularMarkers/MolecularMarkersPopup";
 import TreatmentFailurePopup from "./TreatmentFailure/TreatmentFailurePopup";
 
-
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
 const TREATMENT_SOURCE_ID = "treatment-source";
@@ -250,7 +249,6 @@ class TreatmentLayer extends Component<Props> {
         }, 100);
     };
 
-
     setupPopover = () => {
         this.props.map.on("mouseover", TREATMENT_LAYER_ID, this.onMouseOverListener);
         this.props.map.off("mouseover", TREATMENT_LAYER_ID, this.offMouseOverListener);
@@ -282,7 +280,12 @@ class TreatmentLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, countryMode, selection, treatmentFilters: {mapType} } = this.props;
+        const {
+            studies,
+            countryMode,
+            selection,
+            treatmentFilters: { mapType },
+        } = this.props;
         if (selection === null) {
             return <div />;
         }
@@ -292,18 +295,20 @@ class TreatmentLayer extends Component<Props> {
         if (filteredStudies.length === 0) {
             return <div />;
         }
-        
+
         return (
             this.props.theme === "treatment" && (
                 <>
                     <Hidden smDown>
                         <SitePopover map={this.props.map}>
-                        {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
-                            <MolecularMarkersPopup studies={filteredStudies} />
-                        )}
-                        {!countryMode && (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE || mapType === TreatmentMapType.TREATMENT_FAILURE)  && (
-                            <TreatmentFailurePopup studies={filteredStudies} />
-                        )}
+                            {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
+                                <MolecularMarkersPopup studies={filteredStudies} />
+                            )}
+                            {!countryMode &&
+                                (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE ||
+                                    mapType === TreatmentMapType.TREATMENT_FAILURE) && (
+                                    <TreatmentFailurePopup studies={filteredStudies} />
+                                )}
                         </SitePopover>
                     </Hidden>
                     <Hidden smUp>
@@ -311,9 +316,11 @@ class TreatmentLayer extends Component<Props> {
                             {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
                                 <MolecularMarkersPopup studies={filteredStudies} />
                             )}
-                            {!countryMode && (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE || mapType === TreatmentMapType.TREATMENT_FAILURE)  && (
-                                <TreatmentFailurePopup studies={filteredStudies} />
-                            )}
+                            {!countryMode &&
+                                (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE ||
+                                    mapType === TreatmentMapType.TREATMENT_FAILURE) && (
+                                    <TreatmentFailurePopup studies={filteredStudies} />
+                                )}
                             <TreatmentSelectionChart studies={filteredStudies} />
                         </ChartModal>
                     </Hidden>

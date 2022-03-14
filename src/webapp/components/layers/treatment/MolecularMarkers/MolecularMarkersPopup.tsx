@@ -32,7 +32,6 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     treatmentFilters: selectTreatmentFilters(state),
     tooltipOpen: selectIsTooltipOpen(state),
-
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -74,12 +73,14 @@ const MolecularMarkersPopup = ({ studies, treatmentFilters }: Props) => {
                     })}
                 </Typography>
                 <ViewSummaryDataButton />
-
             </>
         );
     };
 
-    const t_studies = studies.length === 1 ? t("common.treatment.chart.molecular_markers.study") : t("common.treatment.chart.molecular_markers.studies");
+    const t_studies =
+        studies.length === 1
+            ? t("common.treatment.chart.molecular_markers.study")
+            : t("common.treatment.chart.molecular_markers.studies");
 
     return (
         <ChatContainer>
@@ -94,7 +95,6 @@ const MolecularMarkersPopup = ({ studies, treatmentFilters }: Props) => {
                         <Box>{`${studies.length} ${t_studies} ${formatYears(`${minYear}`, `${maxYear}`)}`}</Box>
                     </Typography>
                     <ViewSummaryDataButton />
-
                 </>
             )}
         </ChatContainer>

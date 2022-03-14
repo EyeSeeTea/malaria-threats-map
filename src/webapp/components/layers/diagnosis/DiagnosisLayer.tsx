@@ -31,6 +31,7 @@ import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../hidden/Hidden";
 import PersistentDrawerRight from "../../PersistentDrawerRight";
+import { selectIsTooltipOpen } from "../../../store/reducers/base-reducer";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -53,13 +54,14 @@ const mapStateToProps = (state: State) => ({
     countries: selectCountries(state),
     countryMode: selectCountryMode(state),
     selection: selectSelection(state),
+    tooltipOpen: selectIsTooltipOpen(state),
 });
 
 const mapDispatchToProps = {
     fetchDiagnosisStudies: fetchDiagnosisStudiesRequest,
     setFilteredStudies: setDiagnosisFilteredStudiesAction,
     setSelection: setSelection,
-    setTooltipOpen: setTooltipOpen
+    setTooltipOpen: setTooltipOpen,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -220,9 +222,7 @@ class DiagnosisLayer extends Component<Props> {
     setupPopover = () => {
         this.props.map.on("mouseover", DIAGNOSIS_LAYER_ID, this.onMouseOverListener);
         this.props.map.off("mouseover", DIAGNOSIS_LAYER_ID, this.offMouseOverListener);
-        //this.props.map.off("click", DIAGNOSIS_LAYER_ID, this.fffMouseOverListener);
-
-
+        this.props.map.on("click", DIAGNOSIS_LAYER_ID, this.onMouseOverListener);
     };
 
     renderLayer = () => {
@@ -239,7 +239,7 @@ class DiagnosisLayer extends Component<Props> {
         const { countryMode } = this.props;
         const layer = this.props.map.getLayer(DIAGNOSIS_LAYER_ID);
         const mapTypeSymbols = resolveMapTypeSymbols(countryMode);
-        console.log(mapTypeSymbols)
+        console.log(mapTypeSymbols);
         if (layer && mapTypeSymbols) {
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-radius", mapTypeSymbols["circle-radius"]);
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-color", mapTypeSymbols["circle-color"]);
@@ -253,6 +253,9 @@ class DiagnosisLayer extends Component<Props> {
 
     render() {
         const { studies, countryMode, selection } = this.props;
+        console.log(selection)
+       // console.log(tooltipOpen)
+
         if (selection === null) {
             return <div />;
         }

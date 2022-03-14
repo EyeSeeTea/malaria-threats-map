@@ -21,13 +21,11 @@ const mapStateToProps = (state: State) => ({
     preventionFilters: selectPreventionFilters(state),
     countryMode: selectCountryMode(state),
     selection: selectSelection(state),
-
 });
 
 const mapDispatchToProps = {
     setFilteredStudies: setPreventionFilteredStudiesAction,
     setSelection: setSelection,
-
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

@@ -60,11 +60,13 @@ class TreatmentSelectionChart extends Component<Props> {
         return (
             <>
                 {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
-                            <MolecularMarkersChart studies={filteredStudies} />
-                        )}
-                {!countryMode && (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE || mapType === TreatmentMapType.TREATMENT_FAILURE)  && (
-                    <TreatmentFailureChart studies={filteredStudies} />
+                    <MolecularMarkersChart studies={filteredStudies} />
                 )}
+                {!countryMode &&
+                    (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE ||
+                        mapType === TreatmentMapType.TREATMENT_FAILURE) && (
+                        <TreatmentFailureChart studies={filteredStudies} />
+                    )}
                 {countryMode && mapType === TreatmentMapType.TREATMENT_FAILURE && (
                     <TreatmentFailureCountryChart studies={filteredStudies} />
                 )}

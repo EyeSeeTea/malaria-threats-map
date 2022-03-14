@@ -32,7 +32,6 @@ const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
 });
 
-
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
     studies: DiagnosisStudy[];
@@ -65,7 +64,6 @@ const useStyles = makeStyles(theme => ({
         color: theme.palette.common.white,
         backgroundColor: theme.palette.background.default,
     },
-    
 }));
 
 const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {

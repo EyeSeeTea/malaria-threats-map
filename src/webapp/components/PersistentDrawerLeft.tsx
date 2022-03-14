@@ -161,7 +161,7 @@ function PersistentDrawerLeft({
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const isOpen = filtersOpen || storyMode;
-    console.log(isOpen);
+   // console.log(isOpen);
 
     const [isTooltipOpen, setIsTooltipOpen] = React.useState(tooltipOpen);
     useEffect(() => {

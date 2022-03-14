@@ -29,9 +29,11 @@ const VectorOccurrencePopup = ({ studies }: Props) => {
     return (
         <>
             <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2)}`}</Box>
+                <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
+                    studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2
+                )}`}</Box>
             </Typography>
-            <ViewSummaryDataButton/>
+            <ViewSummaryDataButton />
         </>
     );
 };

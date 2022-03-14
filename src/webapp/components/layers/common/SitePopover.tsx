@@ -23,7 +23,7 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setSelection: setSelection,
-    setTooltipOpen: setTooltipOpen
+    setTooltipOpen: setTooltipOpen,
 };
 type DispatchProps = typeof mapDispatchToProps;
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -51,21 +51,20 @@ const SitePopover: React.FC<Props> = ({ map, selection, setSelection, children, 
             placeholder
         );
 
-        const popup = new mapboxgl.Popup({closeOnClick: true})
+        const popup = new mapboxgl.Popup({ closeOnClick: true })
             .setLngLat(selection.coordinates)
             .setDOMContent(placeholder)
             .addTo(map)
             .on("close", () => {
                 setSelection(null);
-            })
+            });
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
 
         return () => {
             ReactDOM.unmountComponentAtNode(placeholder);
             popup.remove();
-            setTooltipOpen(false);
-
+            //setTooltipOpen(false);
         };
     });
 

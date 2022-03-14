@@ -215,7 +215,6 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     treatmentFilters: selectTreatmentFilters(state),
     tooltipOpen: selectIsTooltipOpen(state),
-
 });
 const mapDispatchToProps = {
     setTooltipOpen: setTooltipOpen,

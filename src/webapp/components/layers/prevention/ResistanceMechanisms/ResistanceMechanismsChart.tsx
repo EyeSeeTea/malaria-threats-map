@@ -202,7 +202,7 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
     return (
         <>
             <Hidden smUp>
-                <ChartContainer >{content()}</ChartContainer>
+                <ChartContainer>{content()}</ChartContainer>
             </Hidden>
             <Hidden smDown>
                 <ChartContainer>{content()}</ChartContainer>
