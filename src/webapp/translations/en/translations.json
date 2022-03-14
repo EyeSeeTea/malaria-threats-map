@@ -443,27 +443,6 @@
                 "percentile_75": "Percentile 75th"
             }
         },
-        "subscription": {
-            "title": "Subscribe to receive Threats Updates!",
-            "first_name": "First name",
-            "last_name": "Last name",
-            "email": "Email",
-            "country": "Country",
-            "organization": "Organization",
-            "button": "Subscribe",
-            "institutions": {
-                "nmcp": "NMCP",
-                "funding_organization": "Funding Organization",
-                "research_organization": "Research Organization",
-                "who_collaborating_centers": "WHO Collaborating Centers",
-                "private_sector": "Private Sector",
-                "ngo": "NGO",
-                "media_organization": "Media Organization",
-                "who_country_office": "WHO Country Office",
-                "who_regional_office": "WHO Regional Office",
-                "who_headquarters": "WHO Headquarters"
-            }
-        },
         "uploadFile": {
             "title": "Upload file",
             "name": "Title",
@@ -494,7 +473,6 @@
             "image": "Export map",
             "summary": "Summary Report",
             "disclaimer": "Disclaimer",
-            "subscribe": "Subscribe",
             "uploadFile": "Upload file and download template",
             "comments": "Provide your feedback",
             "help": "Help",

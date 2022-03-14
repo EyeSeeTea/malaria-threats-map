@@ -56,12 +56,10 @@ export interface MalariaState {
     dataDownloadOpen: boolean;
     reportOpen: boolean;
     mapTitle: string;
-    subscriptionOpen: boolean;
     uploadFileOpen: boolean;
     feedbackOpen: boolean;
     theaterMode: boolean;
     legendExpanded: boolean;
-    isSubmittingSubscription: boolean;
     isUploadingFile: boolean;
 }
 
