@@ -261,11 +261,36 @@ const Filters = ({
         });
     };
 
+    const onSetYears = (value: number[]) => {
+        onChange({
+            ...selections,
+            years: value,
+        });
+    };
+
+    const onSetCountries = (value: string[]) => {
+        onChange({
+            ...selections,
+            countries: value,
+        });
+    };
+
     const {
         theme,
         preventionDataset,
         treatmentDataset,
         invasiveDataset,
+        insecticideClasses,
+        insecticideTypes,
+        synergistTypes,
+        mechanismTypes,
+        molecularMarkers,
+        types,
+        species,
+        plasmodiumSpecies,
+        drugs,
+        years,
+        countries,
     } = selections;
 
     return (
