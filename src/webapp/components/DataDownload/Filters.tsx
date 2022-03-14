@@ -261,36 +261,11 @@ const Filters = ({
         });
     };
 
-    const onSetYears = (value: number[]) => {
-        onChange({
-            ...selections,
-            years: value,
-        });
-    };
-
-    const onSetCountries = (value: string[]) => {
-        onChange({
-            ...selections,
-            countries: value,
-        });
-    };
-
     const {
         theme,
         preventionDataset,
         treatmentDataset,
         invasiveDataset,
-        insecticideClasses,
-        insecticideTypes,
-        synergistTypes,
-        mechanismTypes,
-        molecularMarkers,
-        types,
-        species,
-        plasmodiumSpecies,
-        drugs,
-        years,
-        countries,
     } = selections;
 
     return (
@@ -314,74 +289,6 @@ const Filters = ({
                 {theme === "invasive" && (
                     <DataSetSelector theme={theme} value={invasiveDataset} onChange={onSetInvasiveDataset} />
                 )}
-            </Paper>
-            <Divider />
-            <Typography variant="subtitle1" color="textSecondary">
-                {t("common.data_download.step3.filters.additional")}
-            </Typography>
-            <Paper
-                style={{
-                    paddingTop: "16px",
-                    paddingBottom: "16px",
-                }}
-            >
-                {theme === "prevention" && (
-                    <>
-                        {["INSECTICIDE_BIOASSAY"].includes(preventionDataset) ? (
-                            <>
-                                <SynergistTypesSelector onChange={onSetSynergistTypes} value={synergistTypes} />
-                            </>
-                        ) : ["MOLECULAR_ASSAY", "BIOCHEMICAL_ASSAY"].includes(preventionDataset) ? (
-                            <>
-                                <MechanismTypeSelector
-                                    dataset={preventionDataset}
-                                    value={mechanismTypes}
-                                    onChange={onSetMechanismTypes}
-                                />
-                            </>
-                        ) : ["DISCRIMINATING_CONCENTRATION_BIOASSAY", "INTENSITY_CONCENTRATION_BIOASSAY"].includes(
-                              preventionDataset
-                          ) ? (
-                            <>
-                                <InsecticideClassSelector
-                                    onChange={onSetInsecticideClasses}
-                                    value={insecticideClasses}
-                                />
-                                <InsecticideTypeSelector onChange={onSetInsecticideTypes} value={insecticideTypes} />
-                                <TypeSelector onChange={onSetTypes} value={types} />
-                            </>
-                        ) : (
-                            <></>
-                        )}
-                        {preventionDataset && <SpeciesSelector onChange={onSetSpecies} value={species} />}
-                    </>
-                )}
-                {theme === "treatment" && (
-                    <>
-                        {["THERAPEUTIC_EFFICACY_STUDY"].includes(treatmentDataset) ? (
-                            <>
-                                <PlasmodiumSpeciesSelector
-                                    onChange={onSetPlasmodiumSpecies}
-                                    value={plasmodiumSpecies}
-                                />
-                                <DrugsSelector onChange={onSetDrugs} value={drugs} />
-                            </>
-                        ) : ["MOLECULAR_MARKER_STUDY"].includes(treatmentDataset) ? (
-                            <>
-                                <MolecularMarkerSelector value={molecularMarkers} onChange={onSetMolecularMarkers} />
-                            </>
-                        ) : (
-                            <></>
-                        )}
-                    </>
-                )}
-                <YearsSelector
-                    value={years}
-                    onChange={onSetYears}
-                    minYear={yearRange.minYear}
-                    maxYear={yearRange.maxYear}
-                />
-                <CountriesSelector value={countries} countryOptions={countryOptions} onChange={onSetCountries} />
             </Paper>
         </div>
     );
