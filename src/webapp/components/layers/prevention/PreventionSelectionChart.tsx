@@ -8,9 +8,8 @@ import IntensityStatusChart from "./IntensityStatus/IntensityStatusChart";
 import LevelOfInvolvementChart from "./Involvement/LevelOfInvolvementChart";
 import ResistanceMechanismsChart from "./ResistanceMechanisms/ResistanceMechanismsChart";
 import { selectPreventionFilters } from "../../../store/reducers/prevention-reducer";
-import { selectCountryMode, selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
+import { selectCountryMode, selectTheme, selectViewData } from "../../../store/reducers/base-reducer";
 import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
-import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 import PboSiteChart from "./PboDeployment/PboSiteChart";
 import PboDistrictChart from "./PboDeployment/PboDistrictChart";
@@ -20,12 +19,12 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     preventionFilters: selectPreventionFilters(state),
     countryMode: selectCountryMode(state),
-    selection: selectSelection(state),
+    viewData: selectViewData(state)
+
 });
 
 const mapDispatchToProps = {
     setFilteredStudies: setPreventionFilteredStudiesAction,
-    setSelection: setSelection,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -43,19 +42,20 @@ class PreventionSelectionChart extends Component<Props> {
             theme,
             studies,
             countryMode,
-            selection,
+            viewData,
             preventionFilters: { mapType },
             map,
         } = this.props;
 
-        if (!selection) {
+        if (!viewData) {
             return <div />;
         }
         const filteredStudies = studies.filter(study =>
             countryMode
-                ? study.ISO2 === selection.ISO_2_CODE || study.ADMIN2_GUID === selection.SITE_ID
-                : study.SITE_ID === selection.SITE_ID
+                ? study.ISO2 === viewData.ISO_2_CODE || study.ADMIN2_GUID === viewData.SITE_ID
+                : study.SITE_ID === viewData.SITE_ID
         );
+        console.log(filteredStudies)
         if (!filteredStudies.length || theme !== "prevention") {
             return <div />;
         }

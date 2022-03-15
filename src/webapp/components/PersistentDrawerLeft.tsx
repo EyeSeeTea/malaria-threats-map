@@ -16,6 +16,7 @@ import {
     selectFilters,
     selectStoryMode,
     selectTheme,
+    selectViewData
 } from "../store/reducers/base-reducer";
 import {
     setFiltersOpen,
@@ -132,6 +133,7 @@ const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
+    viewData: selectViewData(state)
 });
 const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
@@ -158,18 +160,26 @@ function PersistentDrawerLeft({
     setStoryMode,
     theme,
     tooltipOpen,
+    setTooltipOpen,
+    viewData
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const isOpen = filtersOpen || storyMode;
-   // console.log(isOpen);
-
-    const [isTooltipOpen, setIsTooltipOpen] = React.useState(tooltipOpen);
+    console.log(tooltipOpen);
+    console.log(viewData)
+    //const [isTooltipOpen, setIsTooltipOpen] = React.useState(false);
+    //console.log(isTooltipOpen);
     useEffect(() => {
-        setIsTooltipOpen(tooltipOpen);
+        console.log("in here!!")
+        if(viewData !== undefined && tooltipOpen === false) {
+            setTooltipOpen(true);
+        }
+    }, [viewData]);
+    useEffect(() => {
         setTimeout(() => dispatchCustomEvent("resize"), 100);
-    }, [tooltipOpen]);
-    //const isTooltipOpen = tooltipOpen
-    console.log(isTooltipOpen);
+    }, [tooltipOpen])
+    //const isTooltipOpen = viewData === 
+ 
 
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 
@@ -210,7 +220,7 @@ function PersistentDrawerLeft({
             <CssBaseline />
             <div
                 className={clsx(classes.content, {
-                    [classes.contentShift]: isTooltipOpen,
+                    [classes.contentShift]: tooltipOpen,
                 })}
             >
                 <div className={classes.drawerHeader} />
@@ -285,7 +295,7 @@ function PersistentDrawerLeft({
                 className={classes.tooltipDrawer}
                 variant="persistent"
                 anchor={"right"}
-                open={isTooltipOpen}
+                open={tooltipOpen}
                 classes={{
                     paper: classes.tooltipDrawerPaper,
                 }}

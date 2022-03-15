@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import createStore from "./store";
 import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
-import { PreventionMapType, State } from "./store/types";
+import { PreventionMapType, SiteSelection, State } from "./store/types";
 import { Theme, StyledEngineProvider } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -21,6 +21,7 @@ import {
     setStoryModeStepAction,
     setThemeAction,
     toggleEndemicityLayerAction,
+    setViewData
 } from "./store/actions/base-actions";
 import {
     setAssayTypes,
@@ -47,8 +48,6 @@ import {
 } from "./store/actions/treatment-actions";
 import { setInvasiveMapType, setInvasiveVectorSpecies } from "./store/actions/invasive-actions";
 import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
-import PersistentDrawerRight from "./components/PersistentDrawerRight";
-
 import Notifier from "./components/Notifier";
 import Hidden from "./components/hidden/Hidden";
 
@@ -192,6 +191,10 @@ ReduxQuerySync({
             selector: (state: State) => state.malaria.tooltipOpen,
             action: (value: string) => setTooltipOpen(value === "true" ? true : false),
         },
+        setViewData: {
+            selector: (state: State) => state.malaria.viewData,
+            action: (value: SiteSelection | null) => setViewData(value),
+        },
         filtersMode: {
             selector: (state: State) => state.malaria.filtersMode,
             action: (value: string) => setFiltersMode(value),
@@ -296,16 +299,7 @@ export const theme = createTheme({
         },
     },
 });
-/*
-<Hidden smUp>
-                                    <PersistentDrawerLeft drawerWidth={"100%"} />
-                                    <PersistentDrawerRight drawerWidth={"100%"} />
-                                </Hidden>
-                                <Hidden smDown>
-                                    <PersistentDrawerLeft />
-                                    <PersistentDrawerRight />
-                                </Hidden>
-*/
+
 class App extends React.Component {
     render() {
         return (

@@ -14,8 +14,6 @@ import { ChartContainer } from "../../../Chart";
 import Curation from "../../../Curation";
 import { isNotNull } from "../../../../utils/number-utils";
 import { InvasiveStudy } from "../../../../../domain/entities/InvasiveStudy";
-import { selectIsTooltipOpen } from "../../../../store/reducers/base-reducer";
-import { setTooltipOpen } from "../../../../store/actions/base-actions";
 const Flex = styled.div`
     display: flex;
 `;
@@ -27,21 +25,16 @@ const Margin = styled.div`
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
-    tooltipOpen: selectIsTooltipOpen(state),
 });
 
-const mapDispatchToProps = {
-    setTooltipOpen: setTooltipOpen,
-};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     studies: InvasiveStudy[];
 };
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
-const VectorOccurrenceChart = ({ studies, tooltipOpen, setTooltipOpen }: Props) => {
+const VectorOccurrenceChart = ({ studies }: Props) => {
     const { t } = useTranslation();
     const translations = [
         t("utils.Jan."),
@@ -138,4 +131,4 @@ const VectorOccurrenceChart = ({ studies, tooltipOpen, setTooltipOpen }: Props) 
         </ChartContainer>
     );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(VectorOccurrenceChart);
+export default connect(mapStateToProps)(VectorOccurrenceChart);

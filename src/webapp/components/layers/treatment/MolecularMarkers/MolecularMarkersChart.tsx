@@ -17,8 +17,6 @@ import Citation from "../../../charts/Citation";
 import { formatYears, formatYears2 } from "../../../../utils/string-utils";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import Hidden from "../../../hidden/Hidden";
-import { selectIsTooltipOpen } from "../../../../store/reducers/base-reducer";
-import { setTooltipOpen } from "../../../../store/actions/base-actions";
 import { ChartContainer } from "../../../Chart";
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
@@ -214,20 +212,16 @@ const Margin = styled.div`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     treatmentFilters: selectTreatmentFilters(state),
-    tooltipOpen: selectIsTooltipOpen(state),
 });
-const mapDispatchToProps = {
-    setTooltipOpen: setTooltipOpen,
-};
+
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     studies: TreatmentStudy[];
 };
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = StateProps & OwnProps;
 
-const MolecularMarkersChart = ({ studies, treatmentFilters, tooltipOpen, setTooltipOpen }: Props) => {
+const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
     const { t } = useTranslation();
     const [studyIndex, setStudy] = useState(0);
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
@@ -441,4 +435,4 @@ const MolecularMarkersChart = ({ studies, treatmentFilters, tooltipOpen, setTool
         </ChartContainer>
     );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(MolecularMarkersChart);
+export default connect(mapStateToProps)(MolecularMarkersChart);

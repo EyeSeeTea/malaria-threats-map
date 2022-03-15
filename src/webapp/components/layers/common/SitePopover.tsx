@@ -33,7 +33,7 @@ type OwnProps = {
 };
 type Props = StateProps & DispatchProps & OwnProps & { children: React.ReactNode };
 
-const SitePopover: React.FC<Props> = ({ map, selection, setSelection, children, setTooltipOpen }) => {
+const SitePopover: React.FC<Props> = ({ map, selection, setSelection, children }) => {
     useEffect(() => {
         const placeholder = document.createElement("div");
         if (!selection) {
@@ -51,20 +51,18 @@ const SitePopover: React.FC<Props> = ({ map, selection, setSelection, children, 
             placeholder
         );
 
-        const popup = new mapboxgl.Popup({ closeOnClick: true })
+        const popup = new mapboxgl.Popup()
             .setLngLat(selection.coordinates)
             .setDOMContent(placeholder)
             .addTo(map)
-            .on("close", () => {
-                setSelection(null);
-            });
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
-
+        map.on('click', () => {
+            setSelection(null);
+            });
         return () => {
             ReactDOM.unmountComponentAtNode(placeholder);
             popup.remove();
-            //setTooltipOpen(false);
         };
     });
 

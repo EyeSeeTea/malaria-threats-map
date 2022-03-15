@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { InvasiveMapType, State } from "../../../store/types";
-import { selectCountryMode, selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
-import { setSelection } from "../../../store/actions/base-actions";
+import { selectCountryMode, selectViewData, selectTheme } from "../../../store/reducers/base-reducer";
 import { connect } from "react-redux";
 import VectorOccurrenceChart from "./VectorOccurance/VectorOccurranceChart";
 import { selectInvasiveFilters } from "../../../store/reducers/invasive-reducer";
@@ -12,12 +11,11 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     invasiveFilters: selectInvasiveFilters(state),
     countryMode: selectCountryMode(state),
-    selection: selectSelection(state),
+    viewData: selectViewData(state)
 });
 
 const mapDispatchToProps = {
     setFilteredStudies: setInvasiveFilteredStudiesAction,
-    setSelection: setSelection,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -28,20 +26,20 @@ type OwnProps = {
 };
 type Props = StateProps & DispatchProps & OwnProps;
 
-class PreventionSelectionChart extends Component<Props> {
+class InvasiveSelectionChart extends Component<Props> {
     render() {
         const {
             theme,
             studies,
             countryMode,
-            selection,
+            viewData,
             invasiveFilters: { mapType },
         } = this.props;
-        if (!selection) {
+        if (!viewData) {
             return <div />;
         }
         const filteredStudies = studies.filter(study =>
-            countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
+            countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
         );
         if (!filteredStudies.length || theme !== "invasive") {
             return <div />;
@@ -56,4 +54,4 @@ class PreventionSelectionChart extends Component<Props> {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PreventionSelectionChart);
+export default connect(mapStateToProps, mapDispatchToProps)(InvasiveSelectionChart);

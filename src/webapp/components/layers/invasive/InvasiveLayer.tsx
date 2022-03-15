@@ -19,7 +19,7 @@ import { selectInvasiveFilters, selectInvasiveStudies } from "../../../store/red
 import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
 import ChartModal from "../../ChartModal";
 import InvasiveSelectionChart from "./InvasiveSelectionChart";
-import { setSelection } from "../../../store/actions/base-actions";
+import { setSelection, setTooltipOpen } from "../../../store/actions/base-actions";
 import { fetchInvasiveStudiesRequest } from "../../../store/actions/invasive-actions";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import SitePopover from "../common/SitePopover";
@@ -57,6 +57,7 @@ const mapDispatchToProps = {
     fetchInvasiveStudies: fetchInvasiveStudiesRequest,
     setFilteredStudies: setInvasiveFilteredStudiesAction,
     setSelection: setSelection,
+    setTooltipOpen: setTooltipOpen,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -203,7 +204,7 @@ class InvasiveLayer extends Component<Props> {
 
     setupPopover = () => {
         this.props.map.on("mouseover", INVASIVE_LAYER_ID, this.onMouseOverListener);
-        this.props.map.off("mouseover", INVASIVE_LAYER_ID, this.offMouseOverListener);
+       // this.props.map.off("mouseover", INVASIVE_LAYER_ID, this.offMouseOverListener);
     };
 
     renderLayer = () => {
@@ -231,8 +232,10 @@ class InvasiveLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, countryMode, selection } = this.props;
+        const { studies, countryMode, selection, setTooltipOpen } = this.props;
+
         if (selection === null) {
+            setTooltipOpen(false);
             return <div />;
         }
         const filteredStudies = this.filterStudies(studies).filter(study =>

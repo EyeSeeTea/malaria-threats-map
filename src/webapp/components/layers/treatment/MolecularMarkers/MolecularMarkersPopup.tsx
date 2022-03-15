@@ -12,7 +12,6 @@ import { MOLECULAR_MARKERS } from "../../../filters/MolecularMarkerFilter";
 import { selectTreatmentFilters } from "../../../../store/reducers/treatment-reducer";
 import { formatYears } from "../../../../utils/string-utils";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
-import { selectIsTooltipOpen } from "../../../../store/reducers/base-reducer";
 import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 
 const exists = (value: string) => {
@@ -31,7 +30,6 @@ const ChatContainer = styled.div`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     treatmentFilters: selectTreatmentFilters(state),
-    tooltipOpen: selectIsTooltipOpen(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

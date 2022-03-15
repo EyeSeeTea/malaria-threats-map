@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { State, TreatmentMapType } from "../../../store/types";
-import { selectCountryMode, selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
+import { selectCountryMode, selectTheme, selectViewData } from "../../../store/reducers/base-reducer";
 import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
-import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 import MolecularMarkersChart from "./MolecularMarkers/MolecularMarkersChart";
 import TreatmentFailureChart from "./TreatmentFailure/TreatmentFailureChart";
@@ -15,12 +14,11 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     treatmentFilters: selectTreatmentFilters(state),
     countryMode: selectCountryMode(state),
-    selection: selectSelection(state),
+    viewData: selectViewData(state)
 });
 
 const mapDispatchToProps = {
     setFilteredStudies: setPreventionFilteredStudiesAction,
-    setSelection: setSelection,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -37,26 +35,19 @@ class TreatmentSelectionChart extends Component<Props> {
             theme,
             studies,
             countryMode,
-            selection,
+            viewData,
             treatmentFilters: { mapType },
         } = this.props;
-        if (!selection) {
+        if (!viewData) {
             return <div />;
         }
         const filteredStudies = studies.filter(study =>
-            countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
+            countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
         );
         if (!filteredStudies.length || theme !== "treatment") {
             return <div />;
         }
-        /*
-            {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
-                            <MolecularMarkersChart studies={filteredStudies} />
-                        )}
-                {!countryMode && (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE || mapType === TreatmentMapType.TREATMENT_FAILURE)  && (
-                    <TreatmentFailureChart studies={filteredStudies} />
-                )}
-        */
+
         return (
             <>
                 {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (

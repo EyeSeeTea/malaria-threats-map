@@ -11,6 +11,8 @@ import {
     selectRegion,
     selectSelection,
     selectTheme,
+    selectIsTooltipOpen,
+    selectViewData
 } from "../../../store/reducers/base-reducer";
 import * as R from "ramda";
 import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
@@ -30,8 +32,6 @@ import { setSelection, setTooltipOpen } from "../../../store/actions/base-action
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../hidden/Hidden";
-import PersistentDrawerRight from "../../PersistentDrawerRight";
-import { selectIsTooltipOpen } from "../../../store/reducers/base-reducer";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -55,6 +55,7 @@ const mapStateToProps = (state: State) => ({
     countryMode: selectCountryMode(state),
     selection: selectSelection(state),
     tooltipOpen: selectIsTooltipOpen(state),
+    viewData: selectViewData(state)
 });
 
 const mapDispatchToProps = {
@@ -87,6 +88,7 @@ class DiagnosisLayer extends Component<Props> {
             region,
             countryMode,
             countries,
+            viewData
         } = this.props;
 
         this.mountLayer(prevProps);
@@ -212,17 +214,8 @@ class DiagnosisLayer extends Component<Props> {
         }, 100);
     };
 
-    offMouseOverListener = () => {
-        setTimeout(() => {
-            this.props.setSelection(null);
-            //this.props.setTooltipOpen(false);
-        }, 100);
-    };
-
     setupPopover = () => {
         this.props.map.on("mouseover", DIAGNOSIS_LAYER_ID, this.onMouseOverListener);
-        this.props.map.off("mouseover", DIAGNOSIS_LAYER_ID, this.offMouseOverListener);
-        this.props.map.on("click", DIAGNOSIS_LAYER_ID, this.onMouseOverListener);
     };
 
     renderLayer = () => {
@@ -239,7 +232,6 @@ class DiagnosisLayer extends Component<Props> {
         const { countryMode } = this.props;
         const layer = this.props.map.getLayer(DIAGNOSIS_LAYER_ID);
         const mapTypeSymbols = resolveMapTypeSymbols(countryMode);
-        console.log(mapTypeSymbols);
         if (layer && mapTypeSymbols) {
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-radius", mapTypeSymbols["circle-radius"]);
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-color", mapTypeSymbols["circle-color"]);
@@ -252,11 +244,10 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, countryMode, selection } = this.props;
-        console.log(selection)
-       // console.log(tooltipOpen)
+        const { studies, countryMode, selection, setTooltipOpen } = this.props;
 
         if (selection === null) {
+            setTooltipOpen(false);
             return <div />;
         }
         const filteredStudies = this.filterStudies(studies).filter(study =>
@@ -265,7 +256,6 @@ class DiagnosisLayer extends Component<Props> {
         if (filteredStudies.length === 0) {
             return <div />;
         }
-        //                    <PersistentDrawerRight studies={filteredStudies} />
 
         return (
             this.props.theme === "diagnosis" && (

@@ -33,6 +33,8 @@ const initialState: MalariaState = Object.freeze({
     initialDialogOpen: !query,
     filtersOpen: true,
     tooltipOpen: false,
+    //openSidebar: false,
+    viewData: null,
     filtersMode: "filters",
     selection: null,
     mobileOptionsOpen: false,
@@ -74,6 +76,20 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.SetFiltersOpen]: (filtersOpen: boolean) => R.assoc("filtersOpen", filtersOpen),
     [ActionTypeEnum.SetTooltipOpen]: (tooltipOpen: boolean) => R.assoc("tooltipOpen", tooltipOpen),
     [ActionTypeEnum.SetFiltersMode]: (filtersMode: string) => R.assoc("filtersMode", filtersMode || "filters"),
+    [ActionTypeEnum.SetViewData]: (selection: SiteSelection) => (state: MalariaState) => {
+        const propsHasChanged = () =>
+            state.viewData?.SITE_ID !== selection.SITE_ID && state.viewData?.coordinates !== selection.coordinates;
+
+        const newSelection =
+            (state.viewData === null && selection !== null) || selection == null || propsHasChanged()
+                ? selection
+                : state.viewData;
+
+        return {
+            ...state,
+            viewData: newSelection,
+        };
+    },
     [ActionTypeEnum.SetSelection]: (selection: SiteSelection) => (state: MalariaState) => {
         const propsHasChanged = () =>
             state.selection?.SITE_ID !== selection.SITE_ID && state.selection?.coordinates !== selection.coordinates;
@@ -133,6 +149,8 @@ export const selectAreFiltersOpen = createSelector(selectMalariaState, state => 
 export const selectIsTooltipOpen = createSelector(selectMalariaState, state => state.tooltipOpen);
 export const selectFiltersMode = createSelector(selectMalariaState, state => state.filtersMode);
 export const selectStoryModeStep = createSelector(selectMalariaState, state => state.storyModeStep);
+export const selectViewData = createSelector(selectMalariaState, state => state.viewData);
+
 export const selectSelection = createSelector(selectMalariaState, state => state.selection);
 export const selectAreMobileOptionsOpen = createSelector(selectMalariaState, state => state.mobileOptionsOpen);
 export const selectSetZoom = createSelector(selectMalariaState, state => state.setZoom);

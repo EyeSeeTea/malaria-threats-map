@@ -22,7 +22,7 @@ import {
     fetchPreventionStudiesRequest,
     setPreventionFilteredStudiesAction,
 } from "../../../store/actions/prevention-actions";
-import { setSelection } from "../../../store/actions/base-actions";
+import { setSelection, setTooltipOpen } from "../../../store/actions/base-actions";
 import PreventionSelectionChart from "./PreventionSelectionChart";
 import ChartModal from "../../ChartModal";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
@@ -65,6 +65,7 @@ const mapDispatchToProps = {
     fetchPreventionStudies: fetchPreventionStudiesRequest,
     setFilteredStudies: setPreventionFilteredStudiesAction,
     setSelection: setSelection,
+    setTooltipOpen: setTooltipOpen,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -269,9 +270,11 @@ class PreventionLayer extends Component<Props> {
             studies,
             countryMode,
             selection,
+            setTooltipOpen,
             preventionFilters: { mapType },
         } = this.props;
         if (selection === null) {
+            setTooltipOpen(false);
             return <div />;
         }
         const filteredStudies = this.filterStudies(studies).filter(study =>

@@ -195,32 +195,6 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         ? `${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`
         : t(studyObject.ASSAY_TYPE);
 
-    const content = () => (
-        <>
-            {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
-            <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-                    `${studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2}`
-                )}`}</Box>
-            </Typography>
-            <Typography variant="subtitle2">{subtitle}</Typography>
-            {suggestions.length > 1 && (
-                <Flex>
-                    <FormLabel component="legend">Species</FormLabel>
-                    <StyledSelect
-                        isClearable
-                        isMulti
-                        suggestions={suggestions}
-                        onChange={onSpeciesChange}
-                        value={species}
-                    />
-                </Flex>
-            )}
-            <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-            <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
-            <Curation study={studyObject} />
-        </>
-    );
     return (
         <ChartContainer>
             {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}

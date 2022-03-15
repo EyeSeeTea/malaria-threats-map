@@ -27,7 +27,7 @@ import {
 import { State, TreatmentMapType } from "../../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { fetchTreatmentStudiesRequest, setFilteredStudiesAction } from "../../../store/actions/treatment-actions";
-import { setSelection } from "../../../store/actions/base-actions";
+import { setSelection, setTooltipOpen } from "../../../store/actions/base-actions";
 import ChartModal from "../../ChartModal";
 import TreatmentSelectionChart from "./TreatmentSelectionChart";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
@@ -66,6 +66,7 @@ const mapDispatchToProps = {
     fetchTreatmentStudies: fetchTreatmentStudiesRequest,
     setFilteredStudies: setFilteredStudiesAction,
     setSelection: setSelection,
+    setTooltipOpen: setTooltipOpen,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -251,7 +252,7 @@ class TreatmentLayer extends Component<Props> {
 
     setupPopover = () => {
         this.props.map.on("mouseover", TREATMENT_LAYER_ID, this.onMouseOverListener);
-        this.props.map.off("mouseover", TREATMENT_LAYER_ID, this.offMouseOverListener);
+        //this.props.map.off("mouseover", TREATMENT_LAYER_ID, this.offMouseOverListener);
     };
 
     renderLayer = () => {
@@ -284,9 +285,12 @@ class TreatmentLayer extends Component<Props> {
             studies,
             countryMode,
             selection,
+            setTooltipOpen,
             treatmentFilters: { mapType },
         } = this.props;
+
         if (selection === null) {
+            setTooltipOpen(false);
             return <div />;
         }
         const filteredStudies = this.filterStudies(studies).filter(study =>
