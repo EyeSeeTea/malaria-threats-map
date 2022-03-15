@@ -95,7 +95,6 @@ class PreventionLayer extends Component<Props> {
             region,
             countries,
         } = this.props;
-
         this.mountLayer(prevProps);
         this.renderLayer();
         const mapTypeChange = prevProps.preventionFilters.mapType !== mapType;
@@ -150,7 +149,7 @@ class PreventionLayer extends Component<Props> {
             studies
         );
         const filteredStudies = R.values(groupedStudies).map(group => studySelector(group, mapType));
-
+        
         return filteredStudies.map(study => {
             const percentage = parseFloat(study["MORTALITY_ADJUSTED"]);
             return {

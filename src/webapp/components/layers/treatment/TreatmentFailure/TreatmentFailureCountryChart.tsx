@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { Box, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import * as R from "ramda";
@@ -57,12 +57,16 @@ const TreatmentFailureCountryChart = ({ studies, setRegion, setCountryMode }: Pr
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">
-                {t("common.treatment.chart.treatment_failure.content", {
-                    nStudies,
-                    drug: t(sortedStudies[0].DRUG_NAME),
-                    plasmodiumSpecies: t(sortedStudies[0].PLASMODIUM_SPECIES.replace(".", "%2E")),
-                    years: formatYears(minYear, maxYear),
-                })}
+                <Trans
+                    i18nKey="common.treatment.chart.treatment_failure.content"
+                    t={t}
+                    values={{
+                        nStudies: nStudies,
+                        drug: t(sortedStudies[0].DRUG_NAME),
+                        plasmodiumSpecies: t(sortedStudies[0].PLASMODIUM_SPECIES.replace(".", "%2E")),
+                        years: formatYears(minYear, maxYear),
+                    }}
+                />
             </Typography>
             <Actions>
                 <FlexGrow />

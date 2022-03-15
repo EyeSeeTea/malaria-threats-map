@@ -43,7 +43,7 @@ const Disclaimer = () => {
         setOpen(false);
     };
 
-    const renderDisclaimer = () => <>{t("common.copyright.content")}</>;
+    const renderDisclaimer = () => <>{t("common.copyright.content", { year: new Date().getFullYear() })}</>;
 
     return (
         <div>

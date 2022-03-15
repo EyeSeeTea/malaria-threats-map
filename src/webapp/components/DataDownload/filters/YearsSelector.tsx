@@ -3,23 +3,25 @@ import { useTranslation } from "react-i18next";
 import { range } from "../../YearRangeSelector";
 import MultiFilter from "../../filters/common/MultiFilter";
 
-const min = 1988;
-const max = new Date().getFullYear();
-
-const suggestions = range(min, max, true).map(year => ({
-    label: year.toString(),
-    value: year.toString(),
-}));
-
 type OwnProps = {
     value: number[];
     onChange: (value: number[]) => void;
+    minYear?: number;
+    maxYear?: number;
 };
 
 type Props = OwnProps;
 
-const YearsSelector: React.FC<Props> = ({ value, onChange }) => {
+const YearsSelector: React.FC<Props> = ({ value, onChange, minYear, maxYear }) => {
     const { t } = useTranslation();
+
+    const suggestions =
+        minYear === 0 || maxYear === 0
+            ? []
+            : range(minYear, maxYear, true).map(year => ({
+                  label: year.toString(),
+                  value: year.toString(),
+              }));
 
     const [valueState, setValueState] = useState([]);
 
