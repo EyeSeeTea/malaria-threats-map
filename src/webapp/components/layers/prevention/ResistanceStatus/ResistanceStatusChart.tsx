@@ -139,7 +139,7 @@ type OwnProps = {
 type Props = StateProps & OwnProps;
 
 const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
-    console.log(baseStudies)
+    console.log(baseStudies);
     const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const speciesOptions = R.uniq(R.map(s => s.SPECIES, baseStudies));

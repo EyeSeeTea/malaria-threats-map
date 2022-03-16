@@ -210,6 +210,9 @@ class DiagnosisLayer extends Component<Props> {
 
     setupPopover = () => {
         this.props.map.on("mouseover", DIAGNOSIS_LAYER_ID, this.onMouseOverListener);
+        this.props.map.on("mouseenter", DIAGNOSIS_LAYER_ID, () => this.props.map.getCanvas().style.cursor = 'pointer');
+        this.props.map.on("mouseleave", DIAGNOSIS_LAYER_ID, () => this.props.map.getCanvas().style.cursor = '');
+
     };
 
     renderLayer = () => {
@@ -254,7 +257,7 @@ class DiagnosisLayer extends Component<Props> {
         return (
             this.props.theme === "diagnosis" && (
                 <SitePopover map={this.props.map}>
-                        <GeneDeletionPopup studies={filteredStudies} />
+                    <GeneDeletionPopup studies={filteredStudies} />
                 </SitePopover>
             )
         );

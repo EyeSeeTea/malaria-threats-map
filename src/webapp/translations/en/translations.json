@@ -297,7 +297,8 @@
         },
         "chart": {
             "studies": "Studies",
-            "zoom": "Zoom"
+            "zoom": "Zoom",
+            "view_summary": "View summary of the data"
         },
         "copyright": {
             "mobile": "Click here to read the disclaimer that applies to the above map",

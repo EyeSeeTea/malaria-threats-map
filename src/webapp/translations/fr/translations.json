@@ -297,7 +297,8 @@
         },
         "chart": {
             "studies": "Études",
-            "zoom": "Zoom"
+            "zoom": "Zoom",
+            "view_summary": "Afficher le résumé des données"
         },
         "copyright": {
             "mobile": "Cliquez ici pour lire l'avertissement qui s'applique à la carte ci-dessus",

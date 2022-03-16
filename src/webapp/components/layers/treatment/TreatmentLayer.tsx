@@ -241,15 +241,11 @@ class TreatmentLayer extends Component<Props> {
             this.props.setSelection(selection);
         }, 100);
     };
-    offMouseOverListener = () => {
-        setTimeout(() => {
-            this.props.setSelection(null);
-        }, 100);
-    };
 
     setupPopover = () => {
         this.props.map.on("mouseover", TREATMENT_LAYER_ID, this.onMouseOverListener);
-        //this.props.map.off("mouseover", TREATMENT_LAYER_ID, this.offMouseOverListener);
+        this.props.map.on("mouseenter", TREATMENT_LAYER_ID, () => this.props.map.getCanvas().style.cursor = 'pointer');
+        this.props.map.on("mouseleave", TREATMENT_LAYER_ID, () => this.props.map.getCanvas().style.cursor = '');
     };
 
     renderLayer = () => {

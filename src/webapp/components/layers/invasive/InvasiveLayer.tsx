@@ -193,16 +193,10 @@ class InvasiveLayer extends Component<Props> {
         }, 100);
     };
 
-    offMouseOverListener = () => {
-        setTimeout(() => {
-            this.props.setSelection(null);
-        }, 100);
-    };
-
     setupPopover = () => {
         this.props.map.on("mouseover", INVASIVE_LAYER_ID, this.onMouseOverListener);
-        // this.props.map.off("mouseover", INVASIVE_LAYER_ID, this.offMouseOverListener);
-    };
+        this.props.map.on("mouseenter", INVASIVE_LAYER_ID, () => this.props.map.getCanvas().style.cursor = 'pointer');
+        this.props.map.on("mouseleave", INVASIVE_LAYER_ID, () => this.props.map.getCanvas().style.cursor = '');    };
 
     renderLayer = () => {
         if (this.props.map.getLayer(INVASIVE_LAYER_ID)) {

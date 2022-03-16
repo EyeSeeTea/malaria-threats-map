@@ -47,7 +47,7 @@ const ViewSummaryDataButton = ({ setViewData, selection, setTooltipOpen, tooltip
         }
         setViewData(selection);
     };
-    return <StyledButton onClick={handleOnClick}>View summary of the data</StyledButton>;
+    return <StyledButton onClick={handleOnClick}>{t("common.chart.view_summary")}</StyledButton>;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewSummaryDataButton);
