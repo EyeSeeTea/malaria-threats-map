@@ -170,9 +170,9 @@ const TreatmentFailureChart = ({ studies }: Props) => {
             <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
             <Margin>
                 <Flex style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                    <Typography variant="body2">Additional information: </Typography>
+                    <Typography variant="body2">{t("common.treatment.chart.treatment_failure.additional_information")}</Typography>
                     <StyledButton onClick={() => setShowMore(prev => !prev)}>
-                        Show {showMore ? "less" : "more"}
+                    {t(`common.treatment.chart.treatment_failure.${showMore ? "show_less" : "show_more"}`)}
                     </StyledButton>
                 </Flex>
             </Margin>
@@ -189,10 +189,13 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                                 <FlexCol>
                                     <Typography variant="body2">
                                         {isNotNull(study.HEALTHFACILITY_NAME) &&
-                                            study.HEALTHFACILITY_NAME !== "Not applicable" &&
-                                            `Study conducted at the ${study.HEALTHFACILITY_NAME}.`}{" "}
-                                        {study.N} patients included in {study.FOLLOW_UP} day follow-up. Study conducted
-                                        by:
+                                            study.HEALTHFACILITY_NAME !== "Not applicable" &&<>
+                                        {t("common.treatment.chart.treatment_failure.addit_info_1", {
+                                                healthFacility: study.HEALTHFACILITY_NAME }
+                                            )}{" " }</>}
+                                            {t("common.treatment.chart.treatment_failure.addit_info_2", {
+                                                nPatients: study.N, followUp: study.FOLLOW_UP }
+                                            )}
                                     </Typography>
                                     <Citation study={study} />
                                 </FlexCol>

@@ -183,7 +183,12 @@
                     "treatment_failure_pp": "Patients avec un échec thérapeutique, selon le protocole",
                     "treatment_failure_km": "Patients avec un échec thérapeutique, Kaplan-Meier",
                     "days": "journées",
-                    "studies": "Étude(s)"
+                    "studies": "Étude(s)",
+                    "additional_information": "Informations Complémentaires:",
+                    "show_more": "Montre plus",
+                    "show_less": "Montrer moins",
+                    "addit_info_1": "Étude menée au {{healthFacility}}.",
+                    "addit_info_2": "{{nPatients}} patients inclus dans le suivi de {{followUp}} jours. Etude menée par:"
                 },
                 "molecular_markers": {
                     "content": "{{nStudies}} etudes de marqueur moléculaire effectuée sur {{molecularMarker}} {{years}}",

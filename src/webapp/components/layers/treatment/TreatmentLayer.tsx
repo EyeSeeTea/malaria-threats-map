@@ -244,8 +244,12 @@ class TreatmentLayer extends Component<Props> {
 
     setupPopover = () => {
         this.props.map.on("mouseover", TREATMENT_LAYER_ID, this.onMouseOverListener);
-        this.props.map.on("mouseenter", TREATMENT_LAYER_ID, () => this.props.map.getCanvas().style.cursor = 'pointer');
-        this.props.map.on("mouseleave", TREATMENT_LAYER_ID, () => this.props.map.getCanvas().style.cursor = '');
+        this.props.map.on(
+            "mouseenter",
+            TREATMENT_LAYER_ID,
+            () => (this.props.map.getCanvas().style.cursor = "pointer")
+        );
+        this.props.map.on("mouseleave", TREATMENT_LAYER_ID, () => (this.props.map.getCanvas().style.cursor = ""));
     };
 
     renderLayer = () => {

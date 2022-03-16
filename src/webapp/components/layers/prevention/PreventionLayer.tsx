@@ -225,8 +225,12 @@ class PreventionLayer extends Component<Props> {
 
     setupPopover = () => {
         this.props.map.on("mouseover", PREVENTION_LAYER_ID, this.onMouseOverListener);
-        this.props.map.on("mouseenter", PREVENTION_LAYER_ID, () => this.props.map.getCanvas().style.cursor = 'pointer');
-        this.props.map.on("mouseleave", PREVENTION_LAYER_ID, () => this.props.map.getCanvas().style.cursor = '');
+        this.props.map.on(
+            "mouseenter",
+            PREVENTION_LAYER_ID,
+            () => (this.props.map.getCanvas().style.cursor = "pointer")
+        );
+        this.props.map.on("mouseleave", PREVENTION_LAYER_ID, () => (this.props.map.getCanvas().style.cursor = ""));
     };
 
     renderLayer = () => {

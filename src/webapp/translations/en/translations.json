@@ -183,7 +183,12 @@
                     "treatment_failure_pp": "Patients with treatment failure, per protocol",
                     "treatment_failure_km": "Patients with treatment failure, Kaplan-Meier",
                     "days": "days",
-                    "studies": "study(s)"
+                    "studies": "study(s)",
+                    "additional_information": "Additional information:",
+                    "show_more": "Show more",
+                    "show_less": "Show less",
+                    "addit_info_1": "Study conducted at the {{healthFacility}}.",
+                    "addit_info_2": "{{nPatients}} patients included in {{followUp}} day follow-up. Study conducted by:"
                 },
                 "molecular_markers": {
                     "content": "{{nStudies}} molecular marker studies conducted on {{molecularMarker}} {{years}}",
