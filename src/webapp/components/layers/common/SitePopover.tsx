@@ -51,15 +51,12 @@ const SitePopover: React.FC<Props> = ({ map, selection, setSelection, children }
             placeholder
         );
 
-        const popup = new mapboxgl.Popup()
-            .setLngLat(selection.coordinates)
-            .setDOMContent(placeholder)
-            .addTo(map)
+        const popup = new mapboxgl.Popup().setLngLat(selection.coordinates).setDOMContent(placeholder).addTo(map);
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
-        map.on('click', () => {
+        map.on("click", () => {
             setSelection(null);
-            });
+        });
         return () => {
             ReactDOM.unmountComponentAtNode(placeholder);
             popup.remove();

@@ -51,7 +51,7 @@ function ChartModal({ children, selection, setSelection }: any) {
             fullWidth={true}
             maxWidth={"xl"}
             open={!!selection}
-           
+            onClose={closeModal}
             PaperProps={{
                 className: classes.paper,
             }}
@@ -63,7 +63,7 @@ function ChartModal({ children, selection, setSelection }: any) {
                 <IconButton
                     edge="start"
                     color="inherit"
-                  
+                    onClick={closeModal}
                     size={"small"}
                     aria-label="close"
                     className={classes.closeIcon}

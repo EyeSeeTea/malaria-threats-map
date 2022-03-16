@@ -17,13 +17,10 @@ import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../stu
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectInvasiveFilters, selectInvasiveStudies } from "../../../store/reducers/invasive-reducer";
 import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
-import ChartModal from "../../ChartModal";
-import InvasiveSelectionChart from "./InvasiveSelectionChart";
 import { setSelection, setTooltipOpen } from "../../../store/actions/base-actions";
 import { fetchInvasiveStudiesRequest } from "../../../store/actions/invasive-actions";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import SitePopover from "../common/SitePopover";
-import Hidden from "../../hidden/Hidden";
 import VectorOccurrancePopup from "./VectorOccurance/VectorOccurrancePopup";
 
 const INVASIVE = "invasive";
@@ -204,7 +201,7 @@ class InvasiveLayer extends Component<Props> {
 
     setupPopover = () => {
         this.props.map.on("mouseover", INVASIVE_LAYER_ID, this.onMouseOverListener);
-       // this.props.map.off("mouseover", INVASIVE_LAYER_ID, this.offMouseOverListener);
+        // this.props.map.off("mouseover", INVASIVE_LAYER_ID, this.offMouseOverListener);
     };
 
     renderLayer = () => {
@@ -246,18 +243,9 @@ class InvasiveLayer extends Component<Props> {
         }
         return (
             this.props.theme === "invasive" && (
-                <>
-                    <Hidden smDown>
-                        <SitePopover map={this.props.map}>
-                            <VectorOccurrancePopup studies={filteredStudies} />
-                        </SitePopover>
-                    </Hidden>
-                    <Hidden smUp>
-                        <ChartModal selection={selection}>
-                            <VectorOccurrancePopup studies={filteredStudies} />
-                        </ChartModal>
-                    </Hidden>
-                </>
+                <SitePopover map={this.props.map}>
+                    <VectorOccurrancePopup studies={filteredStudies} />
+                </SitePopover>
             )
         );
     }

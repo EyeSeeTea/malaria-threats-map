@@ -21,7 +21,7 @@ import {
     setStoryModeStepAction,
     setThemeAction,
     toggleEndemicityLayerAction,
-    setViewData
+    setViewData,
 } from "./store/actions/base-actions";
 import {
     setAssayTypes,

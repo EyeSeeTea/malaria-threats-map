@@ -12,7 +12,6 @@ import {
     selectSelection,
     selectTheme,
     selectIsTooltipOpen,
-    selectViewData
 } from "../../../store/reducers/base-reducer";
 import * as R from "ramda";
 import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
@@ -24,14 +23,11 @@ import {
     fetchDiagnosisStudiesRequest,
     setDiagnosisFilteredStudiesAction,
 } from "../../../store/actions/diagnosis-actions";
-import ChartModal from "../../ChartModal";
-import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
 import GeneDeletionPopup from "./GeneDeletions/GeneDeletionPopup";
 
 import { setSelection, setTooltipOpen } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
-import Hidden from "../../hidden/Hidden";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -55,7 +51,6 @@ const mapStateToProps = (state: State) => ({
     countryMode: selectCountryMode(state),
     selection: selectSelection(state),
     tooltipOpen: selectIsTooltipOpen(state),
-    viewData: selectViewData(state)
 });
 
 const mapDispatchToProps = {
@@ -88,7 +83,6 @@ class DiagnosisLayer extends Component<Props> {
             region,
             countryMode,
             countries,
-            viewData
         } = this.props;
 
         this.mountLayer(prevProps);
@@ -259,18 +253,9 @@ class DiagnosisLayer extends Component<Props> {
 
         return (
             this.props.theme === "diagnosis" && (
-                <>
-                    <Hidden smDown>
-                        <SitePopover map={this.props.map}>
-                            <GeneDeletionPopup studies={filteredStudies} />
-                        </SitePopover>
-                    </Hidden>
-                    <Hidden smUp>
-                        <ChartModal selection={selection}>
-                            <GeneDeletionPopup studies={filteredStudies} />
-                        </ChartModal>
-                    </Hidden>
-                </>
+                <SitePopover map={this.props.map}>
+                        <GeneDeletionPopup studies={filteredStudies} />
+                </SitePopover>
             )
         );
     }

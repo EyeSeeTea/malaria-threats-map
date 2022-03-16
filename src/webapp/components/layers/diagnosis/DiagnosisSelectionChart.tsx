@@ -17,7 +17,7 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     countryMode: selectCountryMode(state),
-    viewData: selectViewData(state)
+    viewData: selectViewData(state),
 });
 
 const mapDispatchToProps = {

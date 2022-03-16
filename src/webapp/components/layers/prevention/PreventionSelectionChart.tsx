@@ -19,8 +19,7 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     preventionFilters: selectPreventionFilters(state),
     countryMode: selectCountryMode(state),
-    viewData: selectViewData(state)
-
+    viewData: selectViewData(state),
 });
 
 const mapDispatchToProps = {
@@ -55,7 +54,7 @@ class PreventionSelectionChart extends Component<Props> {
                 ? study.ISO2 === viewData.ISO_2_CODE || study.ADMIN2_GUID === viewData.SITE_ID
                 : study.SITE_ID === viewData.SITE_ID
         );
-        console.log(filteredStudies)
+        console.log(filteredStudies);
         if (!filteredStudies.length || theme !== "prevention") {
             return <div />;
         }

@@ -9,7 +9,7 @@ import {
     selectTheme,
     selectSelection,
     selectCountryMode,
-    selectViewData
+    selectViewData,
 } from "../store/reducers/base-reducer";
 import { selectFilteredPreventionStudies } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisFilters, selectFilteredDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
@@ -71,12 +71,11 @@ const mapStateToProps = (state: State) => ({
     countryMode: selectCountryMode(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
-    viewData: selectViewData(state)
+    viewData: selectViewData(state),
 });
 const mapDispatchToProps = {
     setTooltipOpen: setTooltipOpen,
     setFiltersMode: setFiltersMode,
-    
 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
@@ -121,77 +120,48 @@ const StudyDetailsSidebar = ({
     const [filteredStudiesPrevention, setFilteredStudiesPrevention] = React.useState<Array<PreventionStudy>>([]);
     const [filteredStudiesTreatment, setFilteredStudiesTreatment] = React.useState<Array<TreatmentStudy>>([]);
 
-
     React.useEffect(() => {
-        console.log(selection)
-        console.log(viewData)
+        console.log(selection);
+        console.log(viewData);
         const diagnosis =
-        viewData !== undefined &&
-        filteredDiagnosisStudies !== null &&
-        filteredDiagnosisStudies.filter((study: DiagnosisStudy) =>
-            countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
-        );
+            viewData !== undefined &&
+            filteredDiagnosisStudies !== null &&
+            filteredDiagnosisStudies.filter((study: DiagnosisStudy) =>
+                countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
+            );
         setFilteredStudiesDiagnosis(diagnosis);
     }, [viewData]);
 
     React.useEffect(() => {
         const invasive =
-        viewData !== undefined &&
+            viewData !== undefined &&
             filteredInvasiveStudies !== null &&
             filteredInvasiveStudies.filter((study: InvasiveStudy) =>
                 countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
             );
-            setFilteredStudiesInvasive(invasive);
+        setFilteredStudiesInvasive(invasive);
     }, [viewData]);
 
     React.useEffect(() => {
         const treatment =
-        viewData !== undefined &&
-        filteredTreatmentStudies !== null &&
-        filteredTreatmentStudies.filter((study: TreatmentStudy) =>
-            countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
-        );
+            viewData !== undefined &&
+            filteredTreatmentStudies !== null &&
+            filteredTreatmentStudies.filter((study: TreatmentStudy) =>
+                countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
+            );
         setFilteredStudiesTreatment(treatment);
     }, [viewData]);
 
     React.useEffect(() => {
         const prevention =
-    viewData !== undefined &&
-        filteredPreventionStudies !== null &&
-        filteredPreventionStudies.filter((study: PreventionStudy) =>
-            countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
-        );
+            viewData !== undefined &&
+            filteredPreventionStudies !== null &&
+            filteredPreventionStudies.filter((study: PreventionStudy) =>
+                countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
+            );
         setFilteredStudiesPrevention(prevention);
     }, [viewData]);
-    
-/*
-the problem is the selected is not null so then it shows all the changes
-I want it to be like 
-step 1: hover 
-step 2: click on view summary of the data. If the sidebar is not open, open it
-if it is open, change the data
-view summary of data should only trigger data change 
-they have to be two different states:
-openSidebar which is triggered if view summary of data is null or not 
-and viewData which should put the selection data inside 
-when I click view summary, viewData should put the selection data inside and that is what the sidebar will look at 
-*/
-/*
-    const filteredStudiesPrevention =
-    viewData !== undefined &&
-        filteredPreventionStudies !== null &&
-        filteredPreventionStudies.filter((study: PreventionStudy) =>
-            countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
-        );
-    const filteredStudiesTreatment =
-        viewData !== undefined &&
-        filteredTreatmentStudies !== null &&
-        filteredTreatmentStudies.filter((study: TreatmentStudy) =>
-            countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
-        );
 
-        now selection should be only used for popup selection and viewData should be for sidebar data 
-*/
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setFiltersMode(tabs[newValue]);
     };
@@ -210,11 +180,11 @@ when I click view summary, viewData should put the selection data inside and tha
     ) {
         return <div />;
     }
-    
-   console.log(filteredStudiesDiagnosis)
-    console.log(filteredStudiesInvasives)
-    console.log(filteredStudiesPrevention)
-    console.log(filteredStudiesTreatment)
+
+    console.log(filteredStudiesDiagnosis);
+    console.log(filteredStudiesInvasives);
+    console.log(filteredStudiesPrevention);
+    console.log(filteredStudiesTreatment);
 
     return (
         <div id="sidebar">

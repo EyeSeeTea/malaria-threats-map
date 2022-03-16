@@ -12,7 +12,7 @@ export enum ActionTypeEnum {
     MalariaSetStoryModeStep = "malaria/SET_STORY_MODE_STEP",
     MalariaSetInitialDialogOpen = "malaria/SET_INITIAL_DIALOG_OPEN",
     SetFiltersOpen = "malaria/SET_FILTERS_OPEN",
-    
+
     SetTooltipOpen = "malaria/SET_TOOLTIP_OPEN",
     SetViewData = "malaria/SET_VIEW_DATA",
 

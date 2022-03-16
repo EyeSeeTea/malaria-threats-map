@@ -27,7 +27,6 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
 });
 
-
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
     studies: InvasiveStudy[];

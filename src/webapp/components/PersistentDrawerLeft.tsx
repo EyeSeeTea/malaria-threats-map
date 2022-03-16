@@ -16,7 +16,7 @@ import {
     selectFilters,
     selectStoryMode,
     selectTheme,
-    selectViewData
+    selectViewData,
 } from "../store/reducers/base-reducer";
 import {
     setFiltersOpen,
@@ -133,7 +133,7 @@ const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
-    viewData: selectViewData(state)
+    viewData: selectViewData(state),
 });
 const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
@@ -161,25 +161,24 @@ function PersistentDrawerLeft({
     theme,
     tooltipOpen,
     setTooltipOpen,
-    viewData
+    viewData,
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const isOpen = filtersOpen || storyMode;
     console.log(tooltipOpen);
-    console.log(viewData)
+    console.log(viewData);
     //const [isTooltipOpen, setIsTooltipOpen] = React.useState(false);
     //console.log(isTooltipOpen);
     useEffect(() => {
-        console.log("in here!!")
-        if(viewData !== undefined && tooltipOpen === false) {
+        console.log("in here!!");
+        if (viewData !== undefined && tooltipOpen === false) {
             setTooltipOpen(true);
         }
     }, [viewData]);
     useEffect(() => {
         setTimeout(() => dispatchCustomEvent("resize"), 100);
-    }, [tooltipOpen])
-    //const isTooltipOpen = viewData === 
- 
+    }, [tooltipOpen]);
+    //const isTooltipOpen = viewData ===
 
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 

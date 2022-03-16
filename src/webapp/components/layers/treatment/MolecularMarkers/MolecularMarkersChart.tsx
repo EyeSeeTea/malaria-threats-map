@@ -214,7 +214,6 @@ const mapStateToProps = (state: State) => ({
     treatmentFilters: selectTreatmentFilters(state),
 });
 
-
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
     studies: TreatmentStudy[];

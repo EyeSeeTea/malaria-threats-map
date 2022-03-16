@@ -139,6 +139,7 @@ type OwnProps = {
 type Props = StateProps & OwnProps;
 
 const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
+    console.log(baseStudies)
     const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const speciesOptions = R.uniq(R.map(s => s.SPECIES, baseStudies));
@@ -146,6 +147,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         label: specie,
         value: specie,
     }));
+
     const [species, setSpecies] = useState<any[]>(suggestions);
     const onSpeciesChange = (value: any) => {
         sendAnalytics({ type: "event", category: "popup", action: "filter" });
