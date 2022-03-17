@@ -27,7 +27,7 @@ import {
 import { State, TreatmentMapType } from "../../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { fetchTreatmentStudiesRequest, setFilteredStudiesAction } from "../../../store/actions/treatment-actions";
-import { setSelection, setTooltipOpen } from "../../../store/actions/base-actions";
+import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SitePopover from "../common/SitePopover";
 import MolecularMarkersPopup from "./MolecularMarkers/MolecularMarkersPopup";
@@ -63,7 +63,7 @@ const mapDispatchToProps = {
     fetchTreatmentStudies: fetchTreatmentStudiesRequest,
     setFilteredStudies: setFilteredStudiesAction,
     setSelection: setSelection,
-    setTooltipOpen: setTooltipOpen,
+    setSidebarOpen: setSidebarOpen,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -282,12 +282,12 @@ class TreatmentLayer extends Component<Props> {
             studies,
             countryMode,
             selection,
-            setTooltipOpen,
+            setSidebarOpen,
             treatmentFilters: { mapType },
         } = this.props;
 
         if (selection === null) {
-            setTooltipOpen(false);
+            setSidebarOpen(false);
             return <div />;
         }
         const filteredStudies = this.filterStudies(studies).filter(study =>

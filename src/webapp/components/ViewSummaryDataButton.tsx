@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { selectViewData, selectSelection, selectIsTooltipOpen } from "../store/reducers/base-reducer";
-import { setTooltipOpen } from "../store/actions/base-actions";
+import { selectViewData, selectSelection, selectIsSidebarOpen } from "../store/reducers/base-reducer";
+import { setSidebarOpen } from "../store/actions/base-actions";
 import { setViewData } from "../store/actions/base-actions";
 import { State } from "../store/types";
 import { connect } from "react-redux";
@@ -26,12 +26,12 @@ const StyledButton = styled(Button)`
 const mapStateToProps = (state: State) => ({
     viewData: selectViewData(state),
     selection: selectSelection(state),
-    tooltipOpen: selectIsTooltipOpen(state),
+    sidebarOpen: selectIsSidebarOpen(state),
 });
 
 const mapDispatchToProps = {
     setViewData: setViewData,
-    setTooltipOpen: setTooltipOpen,
+    setSidebarOpen: setSidebarOpen,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -39,11 +39,11 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const ViewSummaryDataButton = ({ setViewData, selection, setTooltipOpen, tooltipOpen }: Props) => {
+const ViewSummaryDataButton = ({ setViewData, selection, setSidebarOpen, sidebarOpen }: Props) => {
     const { t } = useTranslation();
     const handleOnClick = () => {
-        if (!tooltipOpen) {
-            setTooltipOpen(true);
+        if (!sidebarOpen) {
+            setSidebarOpen(true);
         }
         setViewData(selection);
     };

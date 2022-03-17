@@ -5,21 +5,20 @@ import makeStyles from "@mui/styles/makeStyles";
 import CloseIcon from "@mui/icons-material/Close";
 import { State } from "../store/types";
 import {
-    selectLastUpdatedDates,
     selectTheme,
     selectSelection,
     selectCountryMode,
     selectViewData,
 } from "../store/reducers/base-reducer";
 import { selectFilteredPreventionStudies } from "../store/reducers/prevention-reducer";
-import { selectDiagnosisFilters, selectFilteredDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
+import { selectFilteredDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectFilteredTreatmentStudies } from "../store/reducers/treatment-reducer";
-import { selectFilteredInvasiveStudies, selectInvasiveFilters } from "../store/reducers/invasive-reducer";
-import { setFiltersMode, setTooltipOpen } from "../store/actions/base-actions";
+import { selectFilteredInvasiveStudies } from "../store/reducers/invasive-reducer";
+import { setSidebarOpen } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 
-import { useTranslation, Trans } from "react-i18next";
-
+import { useTranslation } from "react-i18next";
+import { Study } from "../../domain/entities/Study";
 import { DiagnosisStudy } from "../../domain/entities/DiagnosisStudy";
 import { InvasiveStudy } from "../../domain/entities/InvasiveStudy";
 import { PreventionStudy } from "../../domain/entities/PreventionStudy";
@@ -29,8 +28,6 @@ import InvasiveSelectionChart from "./layers/invasive/InvasiveSelectionChart";
 import DiagnosisSelectionChart from "./layers/diagnosis/DiagnosisSelectionChart";
 import PreventionSelectionChart from "./layers/prevention/PreventionSelectionChart";
 import TreatmentSelectionChart from "./layers/treatment/TreatmentSelectionChart";
-
-//                <i>{t(diagnosisFilters.deletionType).toLowerCase()}</i>
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -66,22 +63,16 @@ const mapStateToProps = (state: State) => ({
     filteredDiagnosisStudies: selectFilteredDiagnosisStudies(state),
     filteredTreatmentStudies: selectFilteredTreatmentStudies(state),
     filteredInvasiveStudies: selectFilteredInvasiveStudies(state),
-    lastUpdatedDates: selectLastUpdatedDates(state),
     selection: selectSelection(state),
     countryMode: selectCountryMode(state),
-    diagnosisFilters: selectDiagnosisFilters(state),
-    invasiveFilters: selectInvasiveFilters(state),
     viewData: selectViewData(state),
 });
 const mapDispatchToProps = {
-    setTooltipOpen: setTooltipOpen,
-    setFiltersMode: setFiltersMode,
+    setSidebarOpen: setSidebarOpen,
 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
-
-const tabs = ["filters", "regions"];
 
 const StudyDetailsSidebar = ({
     theme,
@@ -89,14 +80,10 @@ const StudyDetailsSidebar = ({
     filteredDiagnosisStudies,
     filteredTreatmentStudies,
     filteredInvasiveStudies,
-    setTooltipOpen,
-    setFiltersMode,
-    lastUpdatedDates,
+    setSidebarOpen,
     countryMode,
     selection,
     viewData,
-    diagnosisFilters: { mapType: diagnosisMapType },
-    invasiveFilters: { mapType: invasiveMapType },
 }: Props) => {
     const { t } = useTranslation();
     const classes = useStyles({});
@@ -119,10 +106,8 @@ const StudyDetailsSidebar = ({
     const [filteredStudiesInvasives, setFilteredStudiesInvasive] = React.useState<Array<InvasiveStudy>>([]);
     const [filteredStudiesPrevention, setFilteredStudiesPrevention] = React.useState<Array<PreventionStudy>>([]);
     const [filteredStudiesTreatment, setFilteredStudiesTreatment] = React.useState<Array<TreatmentStudy>>([]);
-
+    
     React.useEffect(() => {
-        console.log(selection);
-        console.log(viewData);
         const diagnosis =
             viewData !== undefined &&
             filteredDiagnosisStudies !== null &&
@@ -162,12 +147,8 @@ const StudyDetailsSidebar = ({
         setFilteredStudiesPrevention(prevention);
     }, [viewData]);
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setFiltersMode(tabs[newValue]);
-    };
-
     const handleClose = () => {
-        setTooltipOpen(false);
+        setSidebarOpen(false);
     };
 
     const themeSelector = theme as "prevention" | "diagnosis" | "treatment" | "invasive";
@@ -180,11 +161,6 @@ const StudyDetailsSidebar = ({
     ) {
         return <div />;
     }
-
-    console.log(filteredStudiesDiagnosis);
-    console.log(filteredStudiesInvasives);
-    console.log(filteredStudiesPrevention);
-    console.log(filteredStudiesTreatment);
 
     return (
         <div id="sidebar">

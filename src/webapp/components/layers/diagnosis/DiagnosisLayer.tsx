@@ -11,7 +11,6 @@ import {
     selectRegion,
     selectSelection,
     selectTheme,
-    selectIsTooltipOpen,
 } from "../../../store/reducers/base-reducer";
 import * as R from "ramda";
 import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
@@ -25,7 +24,7 @@ import {
 } from "../../../store/actions/diagnosis-actions";
 import GeneDeletionPopup from "./GeneDeletions/GeneDeletionPopup";
 
-import { setSelection, setTooltipOpen } from "../../../store/actions/base-actions";
+import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
 
@@ -50,14 +49,13 @@ const mapStateToProps = (state: State) => ({
     countries: selectCountries(state),
     countryMode: selectCountryMode(state),
     selection: selectSelection(state),
-    tooltipOpen: selectIsTooltipOpen(state),
 });
 
 const mapDispatchToProps = {
     fetchDiagnosisStudies: fetchDiagnosisStudiesRequest,
     setFilteredStudies: setDiagnosisFilteredStudiesAction,
     setSelection: setSelection,
-    setTooltipOpen: setTooltipOpen,
+    setSidebarOpen: setSidebarOpen,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -244,10 +242,10 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, countryMode, selection, setTooltipOpen } = this.props;
+        const { studies, countryMode, selection, setSidebarOpen } = this.props;
 
         if (selection === null) {
-            setTooltipOpen(false);
+            setSidebarOpen(false);
             return <div />;
         }
         const filteredStudies = this.filterStudies(studies).filter(study =>

@@ -44,8 +44,7 @@ function ChartModal({ children, selection, setSelection }: any) {
     function closeModal() {
         setSelection(null);
     }
-    // onClose={closeModal}
-    //  onClick={closeModal}
+
     return (
         <Dialog
             fullWidth={true}

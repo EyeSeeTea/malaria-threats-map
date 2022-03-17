@@ -15,7 +15,7 @@ import {
     setFiltersAction,
     setFiltersMode,
     setFiltersOpen,
-    setTooltipOpen,
+    setSidebarOpen,
     setRegionAction,
     setStoryModeAction,
     setStoryModeStepAction,
@@ -187,9 +187,9 @@ ReduxQuerySync({
             selector: (state: State) => state.malaria.filtersOpen,
             action: (value: string) => setFiltersOpen(!value ? true : value === "true"),
         },
-        setTooltipOpen: {
-            selector: (state: State) => state.malaria.tooltipOpen,
-            action: (value: string) => setTooltipOpen(value === "true" ? true : false),
+        setSidebarOpen: {
+            selector: (state: State) => state.malaria.sidebarOpen,
+            action: (value: string) => setSidebarOpen(value === "true" ? true : false),
         },
         setViewData: {
             selector: (state: State) => state.malaria.viewData,

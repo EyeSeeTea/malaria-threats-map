@@ -1,7 +1,6 @@
 import * as React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import styled from "styled-components";
 import { Box, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -11,13 +10,7 @@ import Citation from "../../../charts/Citation";
 import Pagination from "../../../charts/Pagination";
 import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
-import Hidden from "../../../hidden/Hidden";
 import { ChartContainer } from "../../../Chart";
-
-const ChatContainer = styled.div<{ width?: string }>`
-    width: ${props => props.width || "100%"};
-    padding: 20px;
-`;
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -35,8 +28,8 @@ type Props = StateProps & OwnProps;
 
 const IntensityInvolvementChart = ({ studyObject, options, groupedStudies, setStudy, study }: Props) => {
     const { t } = useTranslation();
-    const content = () => (
-        <>
+    return (
+        <ChartContainer>
             {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
@@ -47,17 +40,7 @@ const IntensityInvolvementChart = ({ studyObject, options, groupedStudies, setSt
             <HighchartsReact highcharts={Highcharts} options={options} />
             <Citation study={studyObject} />
             <Curation study={studyObject} />
-        </>
-    );
-    return (
-        <>
-            <Hidden smUp>
-                <ChartContainer>{content()}</ChartContainer>
-            </Hidden>
-            <Hidden smDown>
-                <ChartContainer>{content()}</ChartContainer>
-            </Hidden>
-        </>
+        </ChartContainer>
     );
 };
 export default connect(mapStateToProps)(IntensityInvolvementChart);

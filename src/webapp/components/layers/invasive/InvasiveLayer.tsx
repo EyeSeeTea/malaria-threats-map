@@ -17,7 +17,7 @@ import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../stu
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectInvasiveFilters, selectInvasiveStudies } from "../../../store/reducers/invasive-reducer";
 import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
-import { setSelection, setTooltipOpen } from "../../../store/actions/base-actions";
+import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
 import { fetchInvasiveStudiesRequest } from "../../../store/actions/invasive-actions";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import SitePopover from "../common/SitePopover";
@@ -54,7 +54,7 @@ const mapDispatchToProps = {
     fetchInvasiveStudies: fetchInvasiveStudiesRequest,
     setFilteredStudies: setInvasiveFilteredStudiesAction,
     setSelection: setSelection,
-    setTooltipOpen: setTooltipOpen,
+    setSidebarOpen: setSidebarOpen,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -224,10 +224,10 @@ class InvasiveLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, countryMode, selection, setTooltipOpen } = this.props;
+        const { studies, countryMode, selection, setSidebarOpen } = this.props;
 
         if (selection === null) {
-            setTooltipOpen(false);
+            setSidebarOpen(false);
             return <div />;
         }
         const filteredStudies = this.filterStudies(studies).filter(study =>

@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 import { State } from "../store/types";
 import {
     selectAreFiltersOpen,
-    selectIsTooltipOpen,
+    selectIsSidebarOpen,
     selectFilters,
     selectStoryMode,
     selectTheme,
@@ -20,7 +20,7 @@ import {
 } from "../store/reducers/base-reducer";
 import {
     setFiltersOpen,
-    setTooltipOpen,
+    setSidebarOpen,
     setMobileOptionsOpen,
     setStoryModeAction,
     setThemeAction,
@@ -125,7 +125,7 @@ const StyledTab = styled(Tab)`
 
 const mapStateToProps = (state: State) => ({
     filtersOpen: selectAreFiltersOpen(state),
-    tooltipOpen: selectIsTooltipOpen(state),
+    sidebarOpen: selectIsSidebarOpen(state),
     filters: selectFilters(state),
     theme: selectTheme(state),
     storyMode: selectStoryMode(state),
@@ -139,7 +139,7 @@ const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
     setPreventionMapType: setPreventionMapType,
     setFiltersOpen: setFiltersOpen,
-    setTooltipOpen: setTooltipOpen,
+    setSidebarOpen: setSidebarOpen,
     setStoryMode: setStoryModeAction,
     setTheme: setThemeAction,
 };
@@ -159,27 +159,44 @@ function PersistentDrawerLeft({
     setTheme,
     setStoryMode,
     theme,
-    tooltipOpen,
-    setTooltipOpen,
+    sidebarOpen,
+    setSidebarOpen,
     viewData,
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const isOpen = filtersOpen || storyMode;
-    console.log(tooltipOpen);
-    console.log(viewData);
-    //const [isTooltipOpen, setIsTooltipOpen] = React.useState(false);
-    //console.log(isTooltipOpen);
+
     useEffect(() => {
-        console.log("in here!!");
-        if (viewData !== undefined && tooltipOpen === false) {
-            setTooltipOpen(true);
+        if (viewData !== undefined && sidebarOpen === false) {
+            setSidebarOpen(true);
         }
     }, [viewData]);
+
     useEffect(() => {
         setTimeout(() => dispatchCustomEvent("resize"), 100);
-    }, [tooltipOpen]);
-    //const isTooltipOpen = viewData ===
+    }, [sidebarOpen]);
 
+    /* Logic for switching out the filter sidebar or the story mode sidebar. I'm not sure if we want to keep it
+
+        const prevFilterOpenRef = useRef<boolean>();
+        const prevStoryModeRef = useRef<boolean>();
+
+        useEffect(() => {
+            prevFilterOpenRef.current = filtersOpen;
+            prevStoryModeRef.current = storyMode;
+        });
+        const prevFilterOpen = prevFilterOpenRef.current;
+        const prevStoryMode = prevStoryModeRef.current;
+
+        if (filtersOpen && storyMode) {
+            if (prevFilterOpen === filtersOpen) {
+                setFiltersOpen(!filtersOpen);
+            }
+            if (prevStoryMode === storyMode) {
+                setStoryMode(!storyMode);
+            }
+        }
+    */
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 
     const onChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -201,6 +218,7 @@ function PersistentDrawerLeft({
         }
     };
     /*
+    This is the left persistent drawer for the filter. Not sure if we want to keep it
     <Drawer
                 className={classes.drawer}
                 variant="persistent"
@@ -219,7 +237,7 @@ function PersistentDrawerLeft({
             <CssBaseline />
             <div
                 className={clsx(classes.content, {
-                    [classes.contentShift]: tooltipOpen,
+                    [classes.contentShift]: sidebarOpen,
                 })}
             >
                 <div className={classes.drawerHeader} />
@@ -294,7 +312,7 @@ function PersistentDrawerLeft({
                 className={classes.tooltipDrawer}
                 variant="persistent"
                 anchor={"right"}
-                open={tooltipOpen}
+                open={sidebarOpen}
                 classes={{
                     paper: classes.tooltipDrawerPaper,
                 }}

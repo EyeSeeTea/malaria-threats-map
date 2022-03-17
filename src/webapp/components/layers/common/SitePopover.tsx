@@ -9,7 +9,7 @@ import { State } from "../../../store/types";
 import mapboxgl from "mapbox-gl";
 import { selectSelection } from "../../../store/reducers/base-reducer";
 import { dispatchCustomEvent } from "../../../utils/dom-utils";
-import { setSelection, setTooltipOpen } from "../../../store/actions/base-actions";
+import { setSelection } from "../../../store/actions/base-actions";
 import { StyledEngineProvider, Theme } from "@mui/material";
 
 declare module "@mui/styles/defaultTheme" {
@@ -23,7 +23,6 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setSelection: setSelection,
-    setTooltipOpen: setTooltipOpen,
 };
 type DispatchProps = typeof mapDispatchToProps;
 type StateProps = ReturnType<typeof mapStateToProps>;
