@@ -59,9 +59,21 @@ import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
+import MenuIcon from '@mui/icons-material/Menu';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import { Button } from "@mui/material";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
-
+const StyledButton = styled(Button)`
+    &.MuiButton-root {
+        padding: 0;
+        color: black;
+        &:hover {
+            border: none;
+            cursor
+        }
+    }
+`;
 const Separator = styled.div`
     width: 20px;
 `;
@@ -71,10 +83,17 @@ const BaseContainer = styled.div`
     margin: 20px;
     outline: none;
 `;
-
+const TopBarContainer = styled.div`
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;
 const TopRightContainer = styled(BaseContainer)`
     position: absolute;
-    top: 0;
+    top: 10%;
     right: 0;
     display: flex;
     align-items: center;
@@ -112,7 +131,7 @@ const BottomMiddleContainer = styled(BaseContainer)`
 const SearchContainer = styled(BaseContainer)`
     pointer-events: none;
     position: absolute;
-    top: 0;
+    top: 10%;
     left: 0;
     display: flex;
     flex-direction: column;
@@ -254,6 +273,30 @@ class Map extends React.Component<Props> {
                 {ready && <DiagnosisLayer map={this.map} />}
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
+                <TopBarContainer>
+                    <div style={{display: "flex"}}>
+                        <div style={{padding: 15}}>
+                    <StyledButton onClick={() => console.log("menu")}>
+                        <MenuIcon />
+                        Menu
+                    </StyledButton>
+                    </div>
+                    <div style={{padding: 15}}>
+                        <StyledButton onClick={() => console.log("menu")}>Maps</StyledButton>
+                    </div>
+                    <div style={{padding: 15}}>
+                    <StyledButton onClick={() => console.log("menu")}>Dashboards</StyledButton>
+                    </div>
+                    <div style={{padding: 15}}>
+                    <StyledButton onClick={() => console.log("menu")}>Data Download</StyledButton>
+                    </div>
+                </div>
+                <Button variant="contained" style={{marginRight: 10 }}>
+                    <CameraAltIcon/>
+                    Screenshot
+                </Button>
+                            
+                </TopBarContainer>
                 <Fade in={showOptions}>
                     <SearchContainer>
                         <Hidden smDown>
