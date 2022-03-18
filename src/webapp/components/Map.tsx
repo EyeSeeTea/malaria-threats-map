@@ -59,19 +59,27 @@ import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
-import MenuIcon from '@mui/icons-material/Menu';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import MenuIcon from "@mui/icons-material/Menu";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { Button } from "@mui/material";
+import { Flex } from "./Chart";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const StyledButton = styled(Button)`
     &.MuiButton-root {
-        padding: 0;
+        padding: 15px;
         color: black;
         &:hover {
             border: none;
             cursor
         }
+    }
+`;
+
+const ScreenshotButton = styled(Button)`
+    &.MuiButton-root {
+        margin-right: 10px;
+        background-color: #00aaa4;
     }
 `;
 const Separator = styled.div`
@@ -248,7 +256,7 @@ class Map extends React.Component<Props> {
         const isPbo = theme === "prevention" && preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
         const isInvasive = theme === "invasive";
         const ready = this.map && this.state.ready;
-
+        const classes = { icon: { marginRight: 5 } };
         return (
             <React.Fragment>
                 <div
@@ -273,30 +281,23 @@ class Map extends React.Component<Props> {
                 {ready && <DiagnosisLayer map={this.map} />}
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
-                <TopBarContainer>
-                    <div style={{display: "flex"}}>
-                        <div style={{padding: 15}}>
-                    <StyledButton onClick={() => console.log("menu")}>
-                        <MenuIcon />
-                        Menu
-                    </StyledButton>
-                    </div>
-                    <div style={{padding: 15}}>
-                        <StyledButton onClick={() => console.log("menu")}>Maps</StyledButton>
-                    </div>
-                    <div style={{padding: 15}}>
-                    <StyledButton onClick={() => console.log("menu")}>Dashboards</StyledButton>
-                    </div>
-                    <div style={{padding: 15}}>
-                    <StyledButton onClick={() => console.log("menu")}>Data Download</StyledButton>
-                    </div>
-                </div>
-                <Button variant="contained" style={{marginRight: 10 }}>
-                    <CameraAltIcon/>
-                    Screenshot
-                </Button>
-                            
-                </TopBarContainer>
+                <Hidden smDown>
+                    <TopBarContainer>
+                        <Flex>
+                            <StyledButton>
+                                <MenuIcon style={classes.icon} />
+                                Menu
+                            </StyledButton>
+                            <StyledButton>Maps</StyledButton>
+                            <StyledButton>Dashboards</StyledButton>
+                            <StyledButton>Data Download</StyledButton>
+                        </Flex>
+                        <ScreenshotButton variant="contained">
+                            <CameraAltIcon style={classes.icon} />
+                            Screenshot
+                        </ScreenshotButton>
+                    </TopBarContainer>
+                </Hidden>
                 <Fade in={showOptions}>
                     <SearchContainer>
                         <Hidden smDown>
@@ -327,7 +328,7 @@ class Map extends React.Component<Props> {
                         <TopRightContainer>
                             <StoryModeSelector />
                             <InitialDisclaimer />
-                            
+
                             <Feedback />
                             <TourIcon />
                             {/* {["prevention", "diagnosis"].includes(theme) && <UploadFile />} */}
@@ -341,7 +342,7 @@ class Map extends React.Component<Props> {
                         <TopRightVerticalContainer>
                             <StoryModeSelector />
                             <InitialDisclaimer />
-                            
+
                             <Feedback />
                         </TopRightVerticalContainer>
                     </Fade>
