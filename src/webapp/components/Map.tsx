@@ -60,7 +60,6 @@ import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
 import MenuIcon from "@mui/icons-material/Menu";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { Button } from "@mui/material";
 import { Flex } from "./Chart";
 
@@ -76,12 +75,6 @@ const StyledButton = styled(Button)`
     }
 `;
 
-const ScreenshotButton = styled(Button)`
-    &.MuiButton-root {
-        margin-right: 10px;
-        background-color: #00aaa4;
-    }
-`;
 const Separator = styled.div`
     width: 20px;
 `;
@@ -292,10 +285,7 @@ class Map extends React.Component<Props> {
                             <StyledButton>Dashboards</StyledButton>
                             <StyledButton>Data Download</StyledButton>
                         </Flex>
-                        <ScreenshotButton variant="contained">
-                            <CameraAltIcon style={classes.icon} />
-                            Screenshot
-                        </ScreenshotButton>
+                        <Screenshot map={this.map} />
                     </TopBarContainer>
                 </Hidden>
                 <Fade in={showOptions}>
@@ -317,10 +307,7 @@ class Map extends React.Component<Props> {
                         <Hidden smUp>
                             <ShareIcon />
                         </Hidden>
-                        <Hidden smDown>
-                            <Screenshot map={this.map} />
-                            {["prevention", "treatment"].includes(theme) && <Report />}
-                        </Hidden>
+                        <Hidden smDown>{["prevention", "treatment"].includes(theme) && <Report />}</Hidden>
                     </SearchContainer>
                 </Fade>
                 <Hidden smDown>

@@ -1,9 +1,7 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import { Fab, Theme } from "@mui/material";
-import createStyles from "@mui/styles/createStyles";
-import makeStyles from "@mui/styles/makeStyles";
+import styled from "styled-components";
+import { Modal, Box, Button, CircularProgress, Typography } from "@mui/material";
 import whoLogoWhite from "../assets/img/who-logo-blue.png";
 import prevention from "../assets/img/prevention.png";
 import diagnosis from "../assets/img/diagnosis.png";
@@ -22,16 +20,38 @@ import * as PdfJs from "pdfjs-dist";
 import { convertDataURIToBinary, download } from "../utils/download-utils";
 import { format } from "date-fns";
 import { sendAnalytics } from "../utils/analytics";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import DownloadIcon from "@mui/icons-material/Download";
 import SimpleLoader from "./SimpleLoader";
+import { useWindowDimensions } from "./hooks/use-window-dimensions";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        fab: {
-            pointerEvents: "all",
-            margin: theme.spacing(0.5, 0),
+const ScreenshotButton = styled(Button)`
+    &.MuiButton-root {
+        margin-right: 10px;
+        background-color: #00aaa4;
+    }
+`;
+
+const CircularProgressWithLabel = () => {
+    const { t } = useTranslation();
+    const styles = {
+        progress: {
+            position: "absolute" as const,
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            display: "flex",
+            flexDirection: "column" as const,
+            alignItems: "center",
         },
-    })
-);
+    };
+    return (
+        <div style={styles.progress}>
+            <CircularProgress />
+            <Typography>{t("common.screenshot.generating_screenshot")}</Typography>
+        </div>
+    );
+};
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -48,12 +68,16 @@ type Props = StateProps & OwnProps;
 
 function Screenshot({ map, theme, title }: Props) {
     const { t } = useTranslation();
-    const classes = useStyles({});
-
+    const [open, setOpen] = React.useState(false);
     const [downloading, setDownloading] = React.useState(false);
+    const [generatingScreenshot, setGeneratingScreenshot] = React.useState(false);
+    const [file, setFile] = React.useState<string>("");
+    const { width, height } = useWindowDimensions();
+    PdfJs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.worker.js`;
 
     const handleClick = () => {
-        setDownloading(true);
+        setGeneratingScreenshot(true);
+        setOpen(true);
         sendAnalytics({ type: "event", category: "menu", action: "capture" });
 
         const mapCanvas = map.getCanvas();
@@ -148,49 +172,118 @@ function Screenshot({ map, theme, title }: Props) {
             doc.addImage(img, "JPEG", a4h - 60, 175, 45, 13);
             doc.setFontSize(9);
             doc.text(`@WHO ${new Date().getFullYear()}. All rights reserved`, a4h - 60, 195);
-
             // Save the Data
             const file = doc.output("dataurlstring");
+            setFile(file);
 
             // If we wanted to save as PDF
             //doc.save("Report.pdf");
-
             const pdfAsArray = convertDataURIToBinary(file);
-
-            //PdfJs.disableWorker = true;
-            PdfJs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.worker.js`;
+            setGeneratingScreenshot(false);
+            //PdfJs.disableWorker = true;2.7.570
             PdfJs.getDocument(pdfAsArray).promise.then((pdf: any) => {
                 pdf.getPage(1).then((page: any) => {
-                    const viewport = page.getViewport({ scale: 2.5 });
-                    const canvas = document.createElement("canvas");
+                    const canvas = document.getElementById("pdf") as HTMLCanvasElement;
                     const context = canvas.getContext("2d");
-                    canvas.width = viewport.width;
-                    canvas.height = viewport.height;
+                    canvas.width = width * 0.85;
+                    canvas.height = height * 0.8;
+                    //this helped me: https://stackoverflow.com/questions/13038146/pdf-js-scale-pdf-on-fixed-width
+                    const viewport = page.getViewport({ scale: canvas.width / page.getViewport({ scale: 1 }).width });
                     const renderContext = { canvasContext: context, viewport: viewport };
-                    page.render(renderContext).promise.then(() => {
-                        const dateString = format(new Date(), "yyyyMMdd");
-                        const fileName = `MTM_${title.toUpperCase()}_${dateString}`;
-                        download(canvas, fileName);
-                        setDownloading(false);
-                    });
+                    page.render(renderContext);
                 });
             });
             return;
         });
     };
+
+    const downloadScreenshot = () => {
+        setDownloading(true);
+        const pdfAsArray = convertDataURIToBinary(file);
+
+        //PdfJs.disableWorker = true;
+        PdfJs.getDocument(pdfAsArray).promise.then((pdf: any) => {
+            pdf.getPage(1).then((page: any) => {
+                const viewport = page.getViewport({ scale: 2.5 });
+                const canvas = document.createElement("canvas");
+                const context = canvas.getContext("2d");
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                const renderContext = { canvasContext: context, viewport: viewport };
+                page.render(renderContext).promise.then(() => {
+                    const dateString = format(new Date(), "yyyyMMdd");
+                    const fileName = `MTM_${title.toUpperCase()}_${dateString}`;
+                    download(canvas, fileName);
+                    setDownloading(false);
+                });
+            });
+        });
+        return;
+    };
+
+    const styles = {
+        box: {
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: width * 0.9,
+            height: height * 0.9,
+            bgcolor: "white",
+            border: "2px solid #000",
+            p: 4,
+            padding: 0,
+        },
+        canvas: {
+            position: "absolute" as const,
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            border: "2px solid #000",
+        },
+        progress: {
+            position: "absolute" as const,
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            display: "flex",
+            flexDirection: "column" as const,
+            alignItems: "center",
+        },
+        icon: { marginRight: 5 },
+        downloadScreenshot: { marginTop: 5, float: "right" as const },
+    };
+
     return (
-        <div>
-            {downloading && <SimpleLoader message={t("common.data_download.loader.generating_file")} />}
-            <Fab
-                size="small"
-                color="default"
-                onClick={handleClick}
-                className={classes.fab}
-                title={t("common.icons.image")}
+        <>
+            <ScreenshotButton variant="contained" onClick={handleClick}>
+                <CameraAltIcon style={styles.icon} />
+                {t("common.screenshot.screenshot")}
+            </ScreenshotButton>
+            <Modal
+                open={open}
+                onClose={() => setOpen(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
             >
-                <AddAPhotoIcon />
-            </Fab>
-        </div>
+                <Box sx={styles.box}>
+                    {downloading && <SimpleLoader message={t("common.data_download.loader.generating_file")} />}
+                    <ScreenshotButton
+                        variant="contained"
+                        onClick={downloadScreenshot}
+                        style={styles.downloadScreenshot}
+                    >
+                        <DownloadIcon style={styles.icon} />
+                        {t("common.screenshot.download_screenshot")}
+                    </ScreenshotButton>
+                    {generatingScreenshot ? (
+                        <CircularProgressWithLabel />
+                    ) : (
+                        <canvas id="pdf" style={styles.canvas}></canvas>
+                    )}
+                </Box>
+            </Modal>
+        </>
     );
 }
 

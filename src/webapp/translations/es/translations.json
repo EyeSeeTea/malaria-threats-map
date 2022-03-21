@@ -294,6 +294,11 @@
             "number_of_surveys": "Número de encuestas",
             "most_recent_data_shown": "Datos más recientes mostrados"
         },
+        "screenshot": {
+            "screenshot": "Captura de pantalla",
+            "download_screenshot": "Descargar captura de pantalla",
+            "generating_screenshot": "Generando captura de pantalla"
+        },
         "chart": {
             "studies": "Estudios",
             "zoom": "Zoom"
