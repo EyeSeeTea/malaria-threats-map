@@ -279,11 +279,11 @@ class Map extends React.Component<Props> {
                         <Flex>
                             <StyledButton>
                                 <MenuIcon style={classes.icon} />
-                                Menu
+                                {this.props.t("common.topbar.menu")}
                             </StyledButton>
-                            <StyledButton>Maps</StyledButton>
-                            <StyledButton>Dashboards</StyledButton>
-                            <StyledButton>Data Download</StyledButton>
+                            <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
+                            <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
+                            <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
                         </Flex>
                         <Screenshot map={this.map} />
                     </TopBarContainer>

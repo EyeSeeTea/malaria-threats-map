@@ -180,14 +180,13 @@ function Screenshot({ map, theme, title }: Props) {
             //doc.save("Report.pdf");
             const pdfAsArray = convertDataURIToBinary(file);
             setGeneratingScreenshot(false);
-            //PdfJs.disableWorker = true;2.7.570
+            //PdfJs.disableWorker = true;
             PdfJs.getDocument(pdfAsArray).promise.then((pdf: any) => {
                 pdf.getPage(1).then((page: any) => {
                     const canvas = document.getElementById("pdf") as HTMLCanvasElement;
                     const context = canvas.getContext("2d");
                     canvas.width = width * 0.85;
                     canvas.height = height * 0.8;
-                    //this helped me: https://stackoverflow.com/questions/13038146/pdf-js-scale-pdf-on-fixed-width
                     const viewport = page.getViewport({ scale: canvas.width / page.getViewport({ scale: 1 }).width });
                     const renderContext = { canvasContext: context, viewport: viewport };
                     page.render(renderContext);
@@ -201,7 +200,6 @@ function Screenshot({ map, theme, title }: Props) {
         setDownloading(true);
         const pdfAsArray = convertDataURIToBinary(file);
 
-        //PdfJs.disableWorker = true;
         PdfJs.getDocument(pdfAsArray).promise.then((pdf: any) => {
             pdf.getPage(1).then((page: any) => {
                 const viewport = page.getViewport({ scale: 2.5 });
@@ -232,7 +230,7 @@ function Screenshot({ map, theme, title }: Props) {
             bgcolor: "white",
             p: 4,
             padding: 0,
-            borderRadius: 5
+            borderRadius: 5,
         },
         canvas: {
             position: "absolute" as const,
@@ -240,7 +238,7 @@ function Screenshot({ map, theme, title }: Props) {
             left: "50%",
             transform: "translate(-50%, -50%)",
             border: "2px solid grey",
-            borderRadius: 5
+            borderRadius: 5,
         },
         progress: {
             position: "absolute" as const,

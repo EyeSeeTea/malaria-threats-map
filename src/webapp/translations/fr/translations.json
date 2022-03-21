@@ -289,6 +289,11 @@
             "exclude_lower_patients": "Exclure les études portant sur moins de 20 patients",
             "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons"
         },
+        "topbar": {
+            "menu": "Menu",
+            "maps": "Plans",
+            "dashboards": "Tableaux de bord"
+        },
         "legend": {
             "number_of_studies": "Nombre d'études",
             "number_of_surveys": "Nombre d'enquêtes",

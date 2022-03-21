@@ -289,6 +289,11 @@
             "exclude_lower_patients": "Exclude studies of less than 20 patients",
             "exclude_lower_samples": "Exclude studies of less than 20 samples"
         },
+        "topbar": {
+            "menu": "Menu",
+            "maps": "Maps",
+            "dashboards": "Dashboards"
+        },
         "legend": {
             "number_of_studies": "Number of studies",
             "number_of_surveys": "Number of surveys",
