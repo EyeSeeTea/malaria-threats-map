@@ -294,6 +294,13 @@
             "maps": "Plans",
             "dashboards": "Tableaux de bord"
         },
+        "sidebar": {
+            "home": "Maison",
+            "about": "Sur",
+            "contact": "Contact",
+            "language": "Langue",
+            "take_tour": "Faire un tour"
+        },
         "legend": {
             "number_of_studies": "Nombre d'études",
             "number_of_surveys": "Nombre d'enquêtes",

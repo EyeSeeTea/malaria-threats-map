@@ -294,6 +294,13 @@
             "maps": "Maps",
             "dashboards": "Dashboards"
         },
+        "sidebar": {
+            "home": "Home",
+            "about": "About",
+            "contact": "Contact",
+            "language": "Language",
+            "take_tour": "Take a tour"
+        },
         "legend": {
             "number_of_studies": "Number of studies",
             "number_of_surveys": "Number of surveys",

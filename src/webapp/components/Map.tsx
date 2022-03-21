@@ -33,7 +33,7 @@ import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
-import { Fade } from "@mui/material";
+import { Fade, Slide } from "@mui/material";
 import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
 import Leyend from "./Leyend";
@@ -60,8 +60,14 @@ import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Button } from "@mui/material";
+import { Button, Fab } from "@mui/material";
 import { Flex } from "./Chart";
+import HomeIcon from "@mui/icons-material/HomeOutlined";
+import InfoIcon from "@mui/icons-material/InfoOutlined";
+import EmailIcon from "@mui/icons-material/EmailOutlined";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import TourOutlinedIcon from "@mui/icons-material/TourOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const StyledButton = styled(Button)`
@@ -75,8 +81,23 @@ const StyledButton = styled(Button)`
     }
 `;
 
+const StyledFab = styled(Fab)`
+    &.Fab-root {
+        pointerevents: all;
+        margin: 0.5px;
+    }
+    margin-bottom: 10px;
+`;
+
 const Separator = styled.div`
     width: 20px;
+`;
+
+const SidebarIconDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-transform: uppercase;
 `;
 
 const BaseContainer = styled.div`
@@ -91,6 +112,19 @@ const TopBarContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 2;
+`;
+
+const SideBarContainer = styled.div`
+    position: absolute;
+    max-width: 300px;
+    height: 100%;
+    background-color: rgb(255, 255, 255, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 12px;
 `;
 const TopRightContainer = styled(BaseContainer)`
     position: absolute;
@@ -128,12 +162,12 @@ const BottomMiddleContainer = styled(BaseContainer)`
     bottom: 0;
     right: 0;
 `;
-
+//change the left percentage
 const SearchContainer = styled(BaseContainer)`
     pointer-events: none;
     position: absolute;
     top: 10%;
-    left: 0;
+    left: ${(props: { menuOpen: boolean }) => (props.menuOpen ? "10%" : "0")};
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -180,6 +214,7 @@ class Map extends React.Component<Props> {
         ready: false,
         theme: "prevention",
         style: style,
+        menuOpen: false,
         viewport: {
             latitude: 40,
             longitude: 0,
@@ -249,7 +284,14 @@ class Map extends React.Component<Props> {
         const isPbo = theme === "prevention" && preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
         const isInvasive = theme === "invasive";
         const ready = this.map && this.state.ready;
-        const classes = { icon: { marginRight: 5 } };
+        const classes = {
+            icon: { marginRight: 5 },
+            fab: {
+                pointerEvents: "all" as const,
+                margin: 0.5,
+            },
+        };
+        console.log(this.state.menuOpen);
         return (
             <React.Fragment>
                 <div
@@ -277,8 +319,12 @@ class Map extends React.Component<Props> {
                 <Hidden smDown>
                     <TopBarContainer>
                         <Flex>
-                            <StyledButton>
-                                <MenuIcon style={classes.icon} />
+                            <StyledButton onClick={() => this.setState({ menuOpen: !this.state.menuOpen })}>
+                                {this.state.menuOpen ? (
+                                    <CloseOutlinedIcon style={classes.icon} />
+                                ) : (
+                                    <MenuIcon style={classes.icon} />
+                                )}
                                 {this.props.t("common.topbar.menu")}
                             </StyledButton>
                             <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
@@ -288,8 +334,73 @@ class Map extends React.Component<Props> {
                         <Screenshot map={this.map} />
                     </TopBarContainer>
                 </Hidden>
+                {this.state.menuOpen && (
+                    <Slide in={true} direction="right" mountOnEnter unmountOnExit>
+                        <SideBarContainer>
+                            <SidebarIconDiv>
+                                <StyledFab
+                                    id="home-button"
+                                    size="small"
+                                    color={"default"}
+                                    title={this.props.t("common.icons.tour")}
+                                >
+                                    <HomeIcon color="primary" />
+                                </StyledFab>
+                                {this.props.t("common.sidebar.home")}
+                            </SidebarIconDiv>
+
+                            <SidebarIconDiv>
+                                <StyledFab
+                                    id="country-button"
+                                    size="small"
+                                    color={"default"}
+                                    title={this.props.t("common.icons.tour")}
+                                >
+                                    <InfoIcon color="primary" />
+                                </StyledFab>
+                                {this.props.t("common.sidebar.about")}
+                            </SidebarIconDiv>
+
+                            <SidebarIconDiv>
+                                <StyledFab
+                                    id="country-button"
+                                    size="small"
+                                    color={"default"}
+                                    title={this.props.t("common.icons.tour")}
+                                >
+                                    <EmailIcon color="primary" />
+                                </StyledFab>
+                                {this.props.t("common.sidebar.contact")}
+                            </SidebarIconDiv>
+
+                            <SidebarIconDiv>
+                                <StyledFab
+                                    id="country-button"
+                                    size="small"
+                                    color={"default"}
+                                    title={this.props.t("common.icons.tour")}
+                                >
+                                    <ChatBubbleOutlineIcon color="primary" />
+                                </StyledFab>
+                                {this.props.t("common.sidebar.language")}
+                            </SidebarIconDiv>
+
+                            <SidebarIconDiv>
+                                <StyledFab
+                                    id="country-button"
+                                    size="small"
+                                    color={"default"}
+                                    title={this.props.t("common.icons.tour")}
+                                >
+                                    <TourOutlinedIcon color="primary" />
+                                </StyledFab>
+                                {this.props.t("common.sidebar.take_tour")}
+                            </SidebarIconDiv>
+                        </SideBarContainer>
+                    </Slide>
+                )}
                 <Fade in={showOptions}>
-                    <SearchContainer>
+                    <SearchContainer menuOpen={this.state.menuOpen}>
                         <Hidden smDown>
                             <div id={"third"}>
                                 <TopicSelector />
