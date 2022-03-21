@@ -295,8 +295,8 @@
             "dashboards": "Tableros"
         },
         "sidebar": {
-            "home": "Home",
-            "about": "Casa",
+            "home": "Casa",
+            "about": "Sobre",
             "contact": "Contactar",
             "language": "Idioma",
             "take_tour": "Hacer un recorrido"

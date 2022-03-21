@@ -162,7 +162,7 @@ const BottomMiddleContainer = styled(BaseContainer)`
     bottom: 0;
     right: 0;
 `;
-//change the left percentage
+
 const SearchContainer = styled(BaseContainer)`
     pointer-events: none;
     position: absolute;
@@ -291,7 +291,7 @@ class Map extends React.Component<Props> {
                 margin: 0.5,
             },
         };
-        console.log(this.state.menuOpen);
+
         return (
             <React.Fragment>
                 <div
@@ -342,7 +342,7 @@ class Map extends React.Component<Props> {
                                     id="home-button"
                                     size="small"
                                     color={"default"}
-                                    title={this.props.t("common.icons.tour")}
+                                    title={this.props.t("common.sidebar.home")}
                                 >
                                     <HomeIcon color="primary" />
                                 </StyledFab>
@@ -351,10 +351,10 @@ class Map extends React.Component<Props> {
 
                             <SidebarIconDiv>
                                 <StyledFab
-                                    id="country-button"
+                                    id="about-button"
                                     size="small"
                                     color={"default"}
-                                    title={this.props.t("common.icons.tour")}
+                                    title={this.props.t("common.sidebar.about")}
                                 >
                                     <InfoIcon color="primary" />
                                 </StyledFab>
@@ -363,10 +363,10 @@ class Map extends React.Component<Props> {
 
                             <SidebarIconDiv>
                                 <StyledFab
-                                    id="country-button"
+                                    id="contact-button"
                                     size="small"
                                     color={"default"}
-                                    title={this.props.t("common.icons.tour")}
+                                    title={this.props.t("common.sidebar.contact")}
                                 >
                                     <EmailIcon color="primary" />
                                 </StyledFab>
@@ -375,10 +375,10 @@ class Map extends React.Component<Props> {
 
                             <SidebarIconDiv>
                                 <StyledFab
-                                    id="country-button"
+                                    id="language-button"
                                     size="small"
                                     color={"default"}
-                                    title={this.props.t("common.icons.tour")}
+                                    title={this.props.t("common.sidebar.language")}
                                 >
                                     <ChatBubbleOutlineIcon color="primary" />
                                 </StyledFab>
@@ -387,10 +387,10 @@ class Map extends React.Component<Props> {
 
                             <SidebarIconDiv>
                                 <StyledFab
-                                    id="country-button"
+                                    id="tour-button"
                                     size="small"
                                     color={"default"}
-                                    title={this.props.t("common.icons.tour")}
+                                    title={this.props.t("common.sidebar.take_tour")}
                                 >
                                     <TourOutlinedIcon color="primary" />
                                 </StyledFab>
