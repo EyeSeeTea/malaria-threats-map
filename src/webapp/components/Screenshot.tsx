@@ -230,16 +230,17 @@ function Screenshot({ map, theme, title }: Props) {
             width: width * 0.9,
             height: height * 0.9,
             bgcolor: "white",
-            border: "2px solid #000",
             p: 4,
             padding: 0,
+            borderRadius: 5
         },
         canvas: {
             position: "absolute" as const,
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            border: "2px solid #000",
+            border: "2px solid grey",
+            borderRadius: 5
         },
         progress: {
             position: "absolute" as const,
@@ -251,7 +252,7 @@ function Screenshot({ map, theme, title }: Props) {
             alignItems: "center",
         },
         icon: { marginRight: 5 },
-        downloadScreenshot: { marginTop: 5, float: "right" as const },
+        downloadScreenshot: { marginTop: 10, float: "right" as const },
     };
 
     return (
