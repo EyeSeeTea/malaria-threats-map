@@ -734,6 +734,12 @@
         "p1a": "three WHO recommended criteria",
         "p1b": "at different geographical sites or areas. The status has been evaluated based on data included in the Global database on insecticide resistance in malaria vectors. The map shows the status of compliance for the vector species selected on the filter pane. If no species have been filtered, the map considers all data available to evaluate the criteria."
     },
+    "mapActions":{
+        "theme": "SELECT THEME",
+        "mapType": "SELECT MAP TYPE",
+        "data": "FILTER DATA",
+        "location": "FILTER LOCATION (OPTIONAL)"
+    },
     "PBOStory": {
         "step1": {
             "part1": "<0>What are Pyrethroid-PBO nets?</0>",

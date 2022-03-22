@@ -735,6 +735,12 @@
         "p1a": "trois critères recommandés par l&apos;OMS",
         "p1b": "dans différents sites ou zones géographiques. Le statut a été évalué sur la base des données incluses dans la base de données mondiale sur la résistance aux insecticides des vecteurs du paludisme. La carte montre l&apos;état de conformité pour les espèces vectorielles sélectionnées dans le les filtres. Si aucune espèce n&apos;est sélectionnée, la carte considère toutes les données disponibles pour évaluer les critères."
     },
+    "mapActions": {
+        "theme": "SÉLECTIONNER LE THÈME",
+        "mapType": "SÉLECTIONNER LE TYPE DE CARTE",
+        "data": "FILTRER LES DONNÉES",
+        "location": "EMPLACEMENT DU FILTRE (FACULTATIF)"
+    },
     "PBOStory": {
         "step1": {
             "part1": "<0>Que sont les moustiquaires imprégnées d’un pyréthrinoïde et de PBO?</0>",

@@ -734,6 +734,12 @@
         "p1a": "tres criterios recomendados por la OMS",
         "p1b": "en diferentes áreas geográficas. El cumplimiento se ha evaluado utilizando los datos incluidos en la base de datos mundial sobre la resistencia a los insecticidas en los vectores de la malaria. El mapa muestra el estado de cumplimiento para las especies de vectores seleccionadas en el panel de filtros. Si no se ha seleccionado ninguna especie, el mapa considera todos los datos disponibles para evaluar los criterios."
     },
+    "mapActions": {
+        "theme": "SELECCIONA TEMA",
+        "mapType": "SELECCIONA TIPO DE MAPA",
+        "data": "FILTRO DE DATOS",
+        "location": "FILTRO DE LOCALIZACIÓN (OPCIONAL)"
+    },
     "PBOStory": {
         "step1": {
             "part1": "<0>¿Qué son los mosquiteros con piretroide y BOP? </0>",

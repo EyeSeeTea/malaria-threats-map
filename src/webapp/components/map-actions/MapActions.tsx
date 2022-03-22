@@ -11,6 +11,7 @@ import ActionGroupItem from "./ActionGroupItem";
 import styled from "styled-components";
 import TopicSelector from "../TopicSelector";
 import MapTypesSelector from "../MapTypesSelector";
+import { useTranslation } from "react-i18next";
 
 const RoundedCard = styled(Card)`
     padding: 0px;
@@ -23,22 +24,24 @@ const StyledList = styled(List)`
 `;
 
 const MapActions: React.FC = () => {
+    const { t } = useTranslation();
+
     return (
         <RoundedCard>
             <StyledList>
-                <ActionGroupItem title={"SELECT THEME"} actionGroupKey={"THEME"}>
+                <ActionGroupItem title={t("mapActions.theme")} actionGroupKey={"THEME"}>
                     <TopicSelector />
                 </ActionGroupItem>
                 <Divider />
-                <ActionGroupItem title={"SELECT MAP TYPE"} actionGroupKey={"MAP_TYPE"}>
+                <ActionGroupItem title={t("mapActions.mapType")} actionGroupKey={"MAP_TYPE"}>
                     <MapTypesSelector />
                 </ActionGroupItem>
                 <Divider />
-                <ActionGroupItem title={"FILTER DATA"} actionGroupKey={"DATA"}>
+                <ActionGroupItem title={t("mapActions.data")} actionGroupKey={"DATA"}>
                     <FiltersContent />
                 </ActionGroupItem>
                 <Divider />
-                <ActionGroupItem title={"FILTER LOCATION (OPTIONAL)"} actionGroupKey={"LOCATION"}>
+                <ActionGroupItem title={t("mapActions.location")} actionGroupKey={"LOCATION"}>
                     <>
                         <RegionSelector />
                         <SubRegionSelector />
