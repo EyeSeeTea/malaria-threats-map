@@ -24,7 +24,6 @@ import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
 import { AppBar, IconButton, Tab, Tabs, Toolbar } from "@mui/material";
 import StoryModeStepper from "./StoryModeStepper";
-import FiltersSidebar from "./filters/container/FiltersSidebar";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { DiagnosisIcon, FilterIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import { colors } from "../constants/theme";
@@ -179,7 +178,6 @@ function PersistentDrawerLeft({
     theme,
 }: Props) {
     const classes = useStyles({ drawerWidth });
-    const isOpen = filtersOpen || storyMode;
     const prevFilterOpenRef = useRef<boolean>();
     const prevStoryModeRef = useRef<boolean>();
 
@@ -224,20 +222,22 @@ function PersistentDrawerLeft({
         <div className={`${classes.root}`}>
             <Loader />
             <CssBaseline />
-            <Drawer
-                className={classes.drawer}
-                variant="persistent"
-                anchor="left"
-                open={isOpen}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-            >
-                <>{storyMode ? <StoryModeStepper /> : <FiltersSidebar />}</>
-            </Drawer>
+            {storyMode && (
+                <Drawer
+                    className={classes.drawer}
+                    variant="persistent"
+                    anchor="left"
+                    open={true}
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}
+                >
+                    <StoryModeStepper />
+                </Drawer>
+            )}
             <div
                 className={clsx(classes.content, {
-                    [classes.contentShift]: isOpen,
+                    [classes.contentShift]: storyMode,
                 })}
             >
                 <div className={classes.drawerHeader} />
