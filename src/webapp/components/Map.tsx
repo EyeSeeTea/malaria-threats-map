@@ -59,6 +59,7 @@ import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
+import Actions from "./actions/Actions";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
@@ -113,11 +114,21 @@ const SearchContainer = styled(BaseContainer)`
     pointer-events: none;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 350px;
     display: flex;
     flex-direction: column;
     align-items: start;
     z-index: 1;
+`;
+
+const FloatingActionsContainer = styled(BaseContainer)`
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 250px;
+    z-index: 99;
+    pointer-events: all;
 `;
 
 const Divider = styled.div`
@@ -279,12 +290,17 @@ class Map extends React.Component<Props> {
                         </Hidden>
                     </SearchContainer>
                 </Fade>
+                <Fade in={showOptions}>
+                    <FloatingActionsContainer>
+                        <Actions />
+                    </FloatingActionsContainer>
+                </Fade>
                 <Hidden smDown>
                     <Fade in={showOptions}>
                         <TopRightContainer>
                             <StoryModeSelector />
                             <InitialDisclaimer />
-                            
+
                             <Feedback />
                             <TourIcon />
                             {/* {["prevention", "diagnosis"].includes(theme) && <UploadFile />} */}
@@ -298,7 +314,7 @@ class Map extends React.Component<Props> {
                         <TopRightVerticalContainer>
                             <StoryModeSelector />
                             <InitialDisclaimer />
-                            
+
                             <Feedback />
                         </TopRightVerticalContainer>
                     </Fade>

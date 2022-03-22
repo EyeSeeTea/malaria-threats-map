@@ -28,6 +28,8 @@ export interface RegionState {
     siteCoordinates?: [number, number];
 }
 
+export type ActionGroup = "SELECT_THEME" | "SELECT_MAP_TYPE" | "FILTER_DATA" | "FILTER_LOCATION" ;
+
 export interface MalariaState {
     theme: string;
     any: any;
@@ -44,7 +46,8 @@ export interface MalariaState {
         invasive: Date | null;
     };
     initialDialogOpen: boolean;
-    filtersOpen: boolean;
+    actionGroupSelected: ActionGroup | null;
+    filtersOpen?: boolean;
     filtersMode: string;
     selection: SiteSelection | null;
     mobileOptionsOpen: boolean;
