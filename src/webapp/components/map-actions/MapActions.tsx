@@ -26,19 +26,19 @@ const MapActions: React.FC = () => {
     return (
         <RoundedCard>
             <StyledList>
-                <ActionGroupItem title={"SELECT THEME"} actionGroupKey={"SELECT_THEME"}>
+                <ActionGroupItem title={"SELECT THEME"} actionGroupKey={"THEME"}>
                     <TopicSelector />
                 </ActionGroupItem>
                 <Divider />
-                <ActionGroupItem title={"SELECT MAP TYPE"} actionGroupKey={"SELECT_MAP_TYPE"}>
+                <ActionGroupItem title={"SELECT MAP TYPE"} actionGroupKey={"MAP_TYPE"}>
                     <MapTypesSelector />
                 </ActionGroupItem>
                 <Divider />
-                <ActionGroupItem title={"FILTER DATA"} actionGroupKey={"FILTER_DATA"}>
+                <ActionGroupItem title={"FILTER DATA"} actionGroupKey={"DATA"}>
                     <FiltersContent />
                 </ActionGroupItem>
                 <Divider />
-                <ActionGroupItem title={"FILTER LOCATION (OPTIONAL)"} actionGroupKey={"FILTER_LOCATION"}>
+                <ActionGroupItem title={"FILTER LOCATION (OPTIONAL)"} actionGroupKey={"LOCATION"}>
                     <>
                         <RegionSelector />
                         <SubRegionSelector />

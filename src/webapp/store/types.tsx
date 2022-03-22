@@ -28,7 +28,7 @@ export interface RegionState {
     siteCoordinates?: [number, number];
 }
 
-export type ActionGroup = "SELECT_THEME" | "SELECT_MAP_TYPE" | "FILTER_DATA" | "FILTER_LOCATION";
+export type ActionGroup = "THEME" | "MAP_TYPE" | "DATA" | "LOCATION";
 
 export interface MalariaState {
     theme: string;
