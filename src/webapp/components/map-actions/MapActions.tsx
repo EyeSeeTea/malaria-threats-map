@@ -22,7 +22,7 @@ const StyledList = styled(List)`
     padding: 0px;
 `;
 
-const Actions: React.FC = () => {
+const MapActions: React.FC = () => {
     return (
         <RoundedCard>
             <StyledList>
@@ -51,4 +51,4 @@ const Actions: React.FC = () => {
     );
 };
 
-export default connect()(Actions);
+export default connect()(MapActions);
