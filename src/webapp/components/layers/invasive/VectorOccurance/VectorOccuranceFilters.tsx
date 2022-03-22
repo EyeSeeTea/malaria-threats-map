@@ -1,9 +1,9 @@
 import React from "react";
 import YearRangeSelector from "../../../YearRangeSelector";
 import VectorSpeciesFilter from "../../../filters/VectorSpeciesFilter";
-import { Snackbar } from "../../../filters/container/Filters";
 import { Link } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { Snackbar } from "../../common/Snackbar";
 
 export default function VectorOccuranceFilters() {
     const { t } = useTranslation();

@@ -4,7 +4,7 @@ import YearRangeSelector from "../../../YearRangeSelector";
 import SurveyTypeFilter from "../../../filters/SurveyTypeFilter";
 import PatientTypeFilter from "../../../filters/PatientTypeFilter";
 import DeletionTypeFilter from "../../../filters/DeletionTypeFilter";
-import { Snackbar } from "../../../filters/container/Filters";
+import { Snackbar } from "../../common/Snackbar";
 
 export default function GeneDeletionFilters() {
     const { t } = useTranslation();
