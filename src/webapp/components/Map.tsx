@@ -11,8 +11,6 @@ import DiagnosisLayer from "./layers/diagnosis/DiagnosisLayer";
 import TreatmentLayer from "./layers/treatment/TreatmentLayer";
 import InvasiveLayer from "./layers/invasive/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
-import MapTypesSelector from "./MapTypesSelector";
-import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";
 import WhoLogo from "./WhoLogo";
 import {
@@ -68,7 +66,7 @@ const Separator = styled.div`
 
 const BaseContainer = styled.div`
     max-width: 600px;
-    margin: 20px;
+    margin: 30px;
     outline: none;
 `;
 
@@ -125,13 +123,8 @@ const FloatingActionsContainer = styled(BaseContainer)`
     position: absolute;
     top: 0;
     left: 0;
-    min-width: 250px;
     z-index: 99;
     pointer-events: all;
-`;
-
-const Divider = styled.div`
-    height: 10px;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -267,12 +260,6 @@ class Map extends React.Component<Props> {
                 <Fade in={showOptions}>
                     <SearchContainer>
                         <Hidden smDown>
-                            <div id={"third"}>
-                                <TopicSelector />
-                            </div>
-                            <Divider />
-                            <MapTypesSelector />
-                            <Divider />
                             <MalariaTour />
                         </Hidden>
                         <TheaterModeIcon />
