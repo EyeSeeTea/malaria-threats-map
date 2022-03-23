@@ -123,7 +123,7 @@ const SideBarContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    padding: 12px;
+    padding: 5px;
 `;
 const TopRightContainer = styled(BaseContainer)`
     position: absolute;
@@ -151,7 +151,7 @@ const BottomRightContainer = styled(BaseContainer)`
 const BottomLeftContainer = styled(BaseContainer)`
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: ${(props: { menuOpen: boolean }) => (props.menuOpen ? "10%" : "0")};
 `;
 
 const BottomMiddleContainer = styled(BaseContainer)`
@@ -454,7 +454,7 @@ class Map extends React.Component<Props> {
                         </Hidden>
                     </BottomRightContainer>
                 </Fade>
-                <BottomLeftContainer>
+                <BottomLeftContainer menuOpen={this.state.menuOpen}>
                     <Hidden smUp>
                         <WhoLogo width={150} />
                     </Hidden>
