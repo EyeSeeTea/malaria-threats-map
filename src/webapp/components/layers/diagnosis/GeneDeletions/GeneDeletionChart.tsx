@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import { connect } from "react-redux";
 import { useTranslation, Trans } from "react-i18next";
-import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { selectTheme, selectSelection } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import Citation from "../../../charts/Citation";
 import Table from "@mui/material/Table";
@@ -17,10 +17,13 @@ import * as R from "ramda";
 import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
 import { DiagnosisStudy } from "../../../../../domain/entities/DiagnosisStudy";
 import { isNotNull } from "../../../../utils/number-utils";
+import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
+import { selectViewData } from "../../../../store/reducers/base-reducer";
 
 const ChatContainer = styled.div`
     max-width: 500px;
     width: 100%;
+    padding: ${(props: { popup: boolean }) => (props.popup ? "0" : "25px")};
 `;
 
 const SpacedTypography = styled(Typography)`
@@ -30,11 +33,14 @@ const SpacedTypography = styled(Typography)`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     diagnosisFilters: selectDiagnosisFilters(state),
+    selection: selectSelection(state),
+    viewData: selectViewData(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
     studies: DiagnosisStudy[];
+    popup: boolean;
 };
 type Props = StateProps & OwnProps;
 
@@ -66,7 +72,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
+const GeneDeletionChart = ({ studies, diagnosisFilters, selection, viewData, popup }: Props) => {
     const { t } = useTranslation();
     const classes = useStyles({});
     const nStudies = studies.length;
@@ -77,8 +83,9 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
     const studyObject = studies[0];
     const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(type => t(type));
     const formatPercentage = (value: string) => `${(parseFloat(value) * 100).toFixed(1)}%`;
+
     return (
-        <ChatContainer>
+        <ChatContainer popup={popup}>
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">
                     {t(studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2)}
@@ -99,77 +106,84 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                     years: formatYears(minYear, maxYear),
                 })}
             </SpacedTypography>
-            {isNotNull(studyObject.SAMPLE_ORIGIN) && (
-                <SpacedTypography variant="subtitle2">{t(studyObject.SAMPLE_ORIGIN)}</SpacedTypography>
+            {selection !== null && popup && <ViewSummaryDataButton />}
+            {viewData !== null && !popup && (
+                <>
+                    {isNotNull(studyObject.SAMPLE_ORIGIN) && (
+                        <SpacedTypography variant="subtitle2">{t(studyObject.SAMPLE_ORIGIN)}</SpacedTypography>
+                    )}
+                    {isNotNull(studyObject.PF_POS_SAMPLES) && (
+                        <SpacedTypography variant="subtitle2">
+                            <Trans
+                                i18nKey="common.diagnosis.chart.gene_deletions.content_3"
+                                values={{ pfPosSamples: studyObject.PF_POS_SAMPLES }}
+                                t={t}
+                            >
+                                Number of <i>P. falciparum</i> positive samples from the study population:
+                            </Trans>
+                        </SpacedTypography>
+                    )}
+                    {isNotNull(studyObject.TYPE_SAMPL_ANALYZED) && (
+                        <SpacedTypography variant="subtitle2">
+                            {t("common.diagnosis.chart.gene_deletions.content_4", {
+                                typeSampleAnalyzed: t(studyObject.TYPE_SAMPL_ANALYZED),
+                            })}
+                        </SpacedTypography>
+                    )}
+                    <div className={classes.root}>
+                        <Typography variant={"caption"}>
+                            {t("common.diagnosis.chart.gene_deletions.deletions_confirmed")}
+                        </Typography>
+                        <Table aria-label="simple table" size="small" className={classes.table}>
+                            <TableHead className={classes.head}>
+                                <TableRow>
+                                    <StyledHeaderCell align={"center"}>
+                                        {t("common.diagnosis.chart.gene_deletions.deletion_type")}
+                                    </StyledHeaderCell>
+                                    <StyledHeaderCell align={"center"}>
+                                        {t("common.diagnosis.chart.gene_deletions.no_tested")}
+                                    </StyledHeaderCell>
+                                    <StyledHeaderCell align={"center"}>
+                                        {t("common.diagnosis.chart.gene_deletions.percentage")} {studyObject.YEAR_START}
+                                    </StyledHeaderCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    <StyledBodyCell align={"center"}>HRP2</StyledBodyCell>
+                                    <StyledBodyCell align={"center"}>{studyObject.HRP2_TESTED || "N/A"}</StyledBodyCell>
+                                    <StyledBodyCell align={"center"}>
+                                        {!Number.isNaN(parseFloat(studyObject.HRP2_PROPORTION_DELETION))
+                                            ? formatPercentage(studyObject.HRP2_PROPORTION_DELETION)
+                                            : "N/A"}
+                                    </StyledBodyCell>
+                                </TableRow>
+                                <TableRow>
+                                    <StyledBodyCell align={"center"}>HRP3</StyledBodyCell>
+                                    <StyledBodyCell align={"center"}>{studyObject.HRP3_TESTED || "N/A"}</StyledBodyCell>
+                                    <StyledBodyCell align={"center"}>
+                                        {!Number.isNaN(parseFloat(studyObject.HRP3_PROPORTION_DELETION))
+                                            ? formatPercentage(studyObject.HRP3_PROPORTION_DELETION)
+                                            : "N/A"}
+                                    </StyledBodyCell>
+                                </TableRow>
+                                <TableRow>
+                                    <StyledBodyCell align={"center"}>HRP2 & 3</StyledBodyCell>
+                                    <StyledBodyCell align={"center"}>
+                                        {studyObject.HRP2_HRP3_TESTED || "N/A"}
+                                    </StyledBodyCell>
+                                    <StyledBodyCell align={"center"}>
+                                        {!Number.isNaN(parseFloat(studyObject.HRP2_HRP3_TESTED))
+                                            ? formatPercentage(studyObject.HRP2_HRP3_PROPORTION_DELETION)
+                                            : "N/A"}
+                                    </StyledBodyCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </div>
+                    <Citation study={studyObject} />
+                </>
             )}
-            {isNotNull(studyObject.PF_POS_SAMPLES) && (
-                <SpacedTypography variant="subtitle2">
-                    <Trans
-                        i18nKey="common.diagnosis.chart.gene_deletions.content_3"
-                        values={{ pfPosSamples: studyObject.PF_POS_SAMPLES }}
-                        t={t}
-                    >
-                        Number of <i>P. falciparum</i> positive samples from the study population:
-                    </Trans>
-                </SpacedTypography>
-            )}
-            {isNotNull(studyObject.TYPE_SAMPL_ANALYZED) && (
-                <SpacedTypography variant="subtitle2">
-                    {t("common.diagnosis.chart.gene_deletions.content_4", {
-                        typeSampleAnalyzed: t(studyObject.TYPE_SAMPL_ANALYZED),
-                    })}
-                </SpacedTypography>
-            )}
-            <div className={classes.root}>
-                <Typography variant={"caption"}>
-                    {t("common.diagnosis.chart.gene_deletions.deletions_confirmed")}
-                </Typography>
-                <Table aria-label="simple table" size="small" className={classes.table}>
-                    <TableHead className={classes.head}>
-                        <TableRow>
-                            <StyledHeaderCell align={"center"}>
-                                {t("common.diagnosis.chart.gene_deletions.deletion_type")}
-                            </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"}>
-                                {t("common.diagnosis.chart.gene_deletions.no_tested")}
-                            </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"}>
-                                {t("common.diagnosis.chart.gene_deletions.percentage")} {studyObject.YEAR_START}
-                            </StyledHeaderCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            <StyledBodyCell align={"center"}>HRP2</StyledBodyCell>
-                            <StyledBodyCell align={"center"}>{studyObject.HRP2_TESTED || "N/A"}</StyledBodyCell>
-                            <StyledBodyCell align={"center"}>
-                                {!Number.isNaN(parseFloat(studyObject.HRP2_PROPORTION_DELETION))
-                                    ? formatPercentage(studyObject.HRP2_PROPORTION_DELETION)
-                                    : "N/A"}
-                            </StyledBodyCell>
-                        </TableRow>
-                        <TableRow>
-                            <StyledBodyCell align={"center"}>HRP3</StyledBodyCell>
-                            <StyledBodyCell align={"center"}>{studyObject.HRP3_TESTED || "N/A"}</StyledBodyCell>
-                            <StyledBodyCell align={"center"}>
-                                {!Number.isNaN(parseFloat(studyObject.HRP3_PROPORTION_DELETION))
-                                    ? formatPercentage(studyObject.HRP3_PROPORTION_DELETION)
-                                    : "N/A"}
-                            </StyledBodyCell>
-                        </TableRow>
-                        <TableRow>
-                            <StyledBodyCell align={"center"}>HRP2 & 3</StyledBodyCell>
-                            <StyledBodyCell align={"center"}>{studyObject.HRP2_HRP3_TESTED || "N/A"}</StyledBodyCell>
-                            <StyledBodyCell align={"center"}>
-                                {!Number.isNaN(parseFloat(studyObject.HRP2_HRP3_TESTED))
-                                    ? formatPercentage(studyObject.HRP2_HRP3_PROPORTION_DELETION)
-                                    : "N/A"}
-                            </StyledBodyCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </div>
-            <Citation study={studyObject} />
         </ChatContainer>
     );
 };

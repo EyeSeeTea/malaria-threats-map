@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 import { DiagnosisMapType, State } from "../../../store/types";
-import { selectCountryMode, selectViewData, selectTheme } from "../../../store/reducers/base-reducer";
+import {
+    selectCountryMode,
+    selectViewData,
+    selectTheme,
+    selectRegion,
+    selectFilters,
+    selectSelection,
+} from "../../../store/reducers/base-reducer";
 import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
 import { connect } from "react-redux";
 import GeneDeletionChart from "./GeneDeletions/GeneDeletionChart";
@@ -8,9 +15,10 @@ import GeneDeletionCountryChart from "./GeneDeletions/GeneDeletionCountryChart";
 import { selectDiagnosisFilters } from "../../../store/reducers/diagnosis-reducer";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import styled from "styled-components";
+import { buildDiagnosisFilters } from "../studies-filters";
 
 const InfoContainer = styled.div`
-    padding: 20px;
+    padding: 0px;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -18,6 +26,9 @@ const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
     countryMode: selectCountryMode(state),
     viewData: selectViewData(state),
+    region: selectRegion(state),
+    filters: selectFilters(state),
+    selection: selectSelection(state),
 });
 
 const mapDispatchToProps = {
@@ -29,6 +40,7 @@ type DispatchProps = typeof mapDispatchToProps;
 
 type OwnProps = {
     studies: DiagnosisStudy[];
+    popup: boolean;
 };
 type Props = StateProps & DispatchProps & OwnProps;
 
@@ -39,26 +51,36 @@ class DiagnosisSelectionChart extends Component<Props> {
             studies,
             countryMode,
             viewData,
+            popup,
+            selection,
             diagnosisFilters: { mapType },
+            filters,
+            region,
         } = this.props;
-        if (!viewData) {
+        console.log("hello in DiagnosisSelectionChart");
+        const filterFf = buildDiagnosisFilters(this.props.diagnosisFilters, filters, region);
+        const ff = filterFf.reduce((studies, filter) => studies.filter(filter), studies);
+        console.log(ff);
+        /*if (!viewData) {
             return <div />;
-        }
-        const filteredStudies = studies.filter(study =>
-            countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
+        }*/
+        /*const filteredStudies = ff.filter(study =>
+            countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
-        if (!filteredStudies.length || theme !== "diagnosis") {
+        if (theme !== "diagnosis") {
             return <div />;
         }
+        console.log(filteredStudies)*/
+
         return (
-            <InfoContainer>
+            <>
                 {!countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
-                    <GeneDeletionChart studies={filteredStudies} />
+                    <GeneDeletionChart studies={studies} popup={popup} />
                 )}
                 {countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
-                    <GeneDeletionCountryChart studies={filteredStudies} />
+                    <GeneDeletionCountryChart studies={studies} />
                 )}
-            </InfoContainer>
+            </>
         );
     }
 }

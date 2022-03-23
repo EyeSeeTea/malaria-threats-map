@@ -4,12 +4,7 @@ import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import CloseIcon from "@mui/icons-material/Close";
 import { State } from "../store/types";
-import {
-    selectTheme,
-    selectSelection,
-    selectCountryMode,
-    selectViewData,
-} from "../store/reducers/base-reducer";
+import { selectTheme, selectSelection, selectCountryMode, selectViewData } from "../store/reducers/base-reducer";
 import { selectFilteredPreventionStudies } from "../store/reducers/prevention-reducer";
 import { selectFilteredDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectFilteredTreatmentStudies } from "../store/reducers/treatment-reducer";
@@ -106,7 +101,7 @@ const StudyDetailsSidebar = ({
     const [filteredStudiesInvasives, setFilteredStudiesInvasive] = React.useState<Array<InvasiveStudy>>([]);
     const [filteredStudiesPrevention, setFilteredStudiesPrevention] = React.useState<Array<PreventionStudy>>([]);
     const [filteredStudiesTreatment, setFilteredStudiesTreatment] = React.useState<Array<TreatmentStudy>>([]);
-    
+
     React.useEffect(() => {
         const diagnosis =
             viewData !== undefined &&
@@ -161,7 +156,7 @@ const StudyDetailsSidebar = ({
     ) {
         return <div />;
     }
-
+    console.log("hello in StudyDetailsSidebar");
     return (
         <div id="sidebar">
             <AppBar position="static" className={classes.appBar}>
@@ -174,7 +169,9 @@ const StudyDetailsSidebar = ({
                     </IconButton>
                 </Toolbar>
             </AppBar>
-            {themeSelector === "diagnosis" && <DiagnosisSelectionChart studies={filteredStudiesDiagnosis} />}
+            {themeSelector === "diagnosis" && (
+                <DiagnosisSelectionChart studies={filteredStudiesDiagnosis} popup={false} />
+            )}
 
             {themeSelector === "invasive" && <InvasiveSelectionChart studies={filteredStudiesInvasives} />}
 

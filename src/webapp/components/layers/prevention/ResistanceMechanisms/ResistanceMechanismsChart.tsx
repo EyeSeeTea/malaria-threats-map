@@ -173,26 +173,26 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
     const showAllelic = R.any(serie => R.any(data => data.y !== undefined, serie.data), series);
 
     return (
-    <ChartContainer><Typography variant="subtitle1">
-            <Box fontWeight="fontWeightBold">{`${studies[0].VILLAGE_NAME}, ${t(
-                studies[0].ISO2 === "NA" ? "common.COUNTRY_NA" : studies[0].ISO2
-            )}`}</Box>
-        </Typography>
-        <Typography variant="subtitle2">{`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}</Typography>
-        <Flex>
-            <FlexCol>
-                <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-            </FlexCol>
-            {showAllelic && (
+        <ChartContainer>
+            <Typography variant="subtitle1">
+                <Box fontWeight="fontWeightBold">{`${studies[0].VILLAGE_NAME}, ${t(
+                    studies[0].ISO2 === "NA" ? "common.COUNTRY_NA" : studies[0].ISO2
+                )}`}</Box>
+            </Typography>
+            <Typography variant="subtitle2">{`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}</Typography>
+            <Flex>
                 <FlexCol>
-                    <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations2)} />
+                    <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
                 </FlexCol>
-            )}
-        </Flex>
-        <Citation study={studies[0]} />
-        <Curation study={studies[0]} />
-    </ChartContainer>
-
+                {showAllelic && (
+                    <FlexCol>
+                        <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations2)} />
+                    </FlexCol>
+                )}
+            </Flex>
+            <Citation study={studies[0]} />
+            <Curation study={studies[0]} />
+        </ChartContainer>
     );
 };
 export default connect(mapStateToProps)(ResistanceMechanismsChart);

@@ -22,11 +22,11 @@ import {
     fetchDiagnosisStudiesRequest,
     setDiagnosisFilteredStudiesAction,
 } from "../../../store/actions/diagnosis-actions";
-import GeneDeletionPopup from "./GeneDeletions/GeneDeletionPopup";
 
 import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
+import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -243,7 +243,7 @@ class DiagnosisLayer extends Component<Props> {
 
     render() {
         const { studies, countryMode, selection, setSidebarOpen } = this.props;
-
+        console.log(selection);
         if (selection === null) {
             setSidebarOpen(false);
             return <div />;
@@ -251,14 +251,16 @@ class DiagnosisLayer extends Component<Props> {
         const filteredStudies = this.filterStudies(studies).filter(study =>
             countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
+        console.log(filteredStudies);
         if (filteredStudies.length === 0) {
             return <div />;
         }
+        //                    <GeneDeletionPopup studies={filteredStudies} />
 
         return (
             this.props.theme === "diagnosis" && (
                 <SitePopover map={this.props.map}>
-                    <GeneDeletionPopup studies={filteredStudies} />
+                    <DiagnosisSelectionChart studies={filteredStudies} popup={true} />
                 </SitePopover>
             )
         );

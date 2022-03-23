@@ -187,14 +187,6 @@ ReduxQuerySync({
             selector: (state: State) => state.malaria.filtersOpen,
             action: (value: string) => setFiltersOpen(!value ? true : value === "true"),
         },
-        setSidebarOpen: {
-            selector: (state: State) => state.malaria.sidebarOpen,
-            action: (value: string) => setSidebarOpen(value === "true" ? true : false),
-        },
-        setViewData: {
-            selector: (state: State) => state.malaria.viewData,
-            action: (value: SiteSelection | null) => setViewData(value),
-        },
         filtersMode: {
             selector: (state: State) => state.malaria.filtersMode,
             action: (value: string) => setFiltersMode(value),

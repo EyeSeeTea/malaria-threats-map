@@ -170,9 +170,11 @@ const TreatmentFailureChart = ({ studies }: Props) => {
             <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
             <Margin>
                 <Flex style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                    <Typography variant="body2">{t("common.treatment.chart.treatment_failure.additional_information")}</Typography>
+                    <Typography variant="body2">
+                        {t("common.treatment.chart.treatment_failure.additional_information")}
+                    </Typography>
                     <StyledButton onClick={() => setShowMore(prev => !prev)}>
-                    {t(`common.treatment.chart.treatment_failure.${showMore ? "show_less" : "show_more"}`)}
+                        {t(`common.treatment.chart.treatment_failure.${showMore ? "show_less" : "show_more"}`)}
                     </StyledButton>
                 </Flex>
             </Margin>
@@ -189,13 +191,17 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                                 <FlexCol>
                                     <Typography variant="body2">
                                         {isNotNull(study.HEALTHFACILITY_NAME) &&
-                                            study.HEALTHFACILITY_NAME !== "Not applicable" &&<>
-                                        {t("common.treatment.chart.treatment_failure.addit_info_1", {
-                                                healthFacility: study.HEALTHFACILITY_NAME }
-                                            )}{" " }</>}
-                                            {t("common.treatment.chart.treatment_failure.addit_info_2", {
-                                                nPatients: study.N, followUp: study.FOLLOW_UP }
+                                            study.HEALTHFACILITY_NAME !== "Not applicable" && (
+                                                <>
+                                                    {t("common.treatment.chart.treatment_failure.addit_info_1", {
+                                                        healthFacility: study.HEALTHFACILITY_NAME,
+                                                    })}{" "}
+                                                </>
                                             )}
+                                        {t("common.treatment.chart.treatment_failure.addit_info_2", {
+                                            nPatients: study.N,
+                                            followUp: study.FOLLOW_UP,
+                                        })}
                                     </Typography>
                                     <Citation study={study} />
                                 </FlexCol>
