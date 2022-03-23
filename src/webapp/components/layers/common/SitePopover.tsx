@@ -23,7 +23,7 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setSelection: setSelection,
-    setViewData: setViewData
+    setViewData: setViewData,
 };
 type DispatchProps = typeof mapDispatchToProps;
 type StateProps = ReturnType<typeof mapStateToProps>;

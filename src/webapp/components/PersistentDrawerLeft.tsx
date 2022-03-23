@@ -173,44 +173,42 @@ function PersistentDrawerLeft({
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const isOpen = filtersOpen || storyMode;
-    console.log(isOpen)
-    console.log(sidebarOpen)
+    console.log(isOpen);
+    console.log(sidebarOpen);
     useEffect(() => {
         if (viewData !== null && sidebarOpen === false) {
             setSidebarOpen(true);
         }
-        
     }, [viewData]);
 
     useEffect(() => {
-        console.log(sidebarOpen)
-        if(sidebarOpen !== null && isOpen !== null) {
+        console.log(sidebarOpen);
+        if (sidebarOpen !== null && isOpen !== null) {
             setTimeout(() => dispatchCustomEvent("resize"), 100);
-
         }
     }, [sidebarOpen]);
 
-   // Logic for switching out the filter sidebar or the story mode sidebar. I'm not sure if we want to keep it
+    // Logic for switching out the filter sidebar or the story mode sidebar. I'm not sure if we want to keep it
 
-        const prevFilterOpenRef = useRef<boolean>();
-        const prevStoryModeRef = useRef<boolean>();
+    const prevFilterOpenRef = useRef<boolean>();
+    const prevStoryModeRef = useRef<boolean>();
 
-        useEffect(() => {
-            prevFilterOpenRef.current = filtersOpen;
-            prevStoryModeRef.current = storyMode;
-        });
-        const prevFilterOpen = prevFilterOpenRef.current;
-        const prevStoryMode = prevStoryModeRef.current;
+    useEffect(() => {
+        prevFilterOpenRef.current = filtersOpen;
+        prevStoryModeRef.current = storyMode;
+    });
+    const prevFilterOpen = prevFilterOpenRef.current;
+    const prevStoryMode = prevStoryModeRef.current;
 
-        if (filtersOpen && storyMode) {
-            if (prevFilterOpen === filtersOpen) {
-                setFiltersOpen(!filtersOpen);
-            }
-            if (prevStoryMode === storyMode) {
-                setStoryMode(!storyMode);
-            }
+    if (filtersOpen && storyMode) {
+        if (prevFilterOpen === filtersOpen) {
+            setFiltersOpen(!filtersOpen);
         }
-    
+        if (prevStoryMode === storyMode) {
+            setStoryMode(!storyMode);
+        }
+    }
+
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 
     const onChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -249,19 +247,19 @@ function PersistentDrawerLeft({
         <div className={`${classes.root}`}>
             <Loader />
             <CssBaseline />
-            {isOpen &&
-            <Drawer
-                className={classes.drawer}
-                variant="persistent"
-                anchor={"left"}
-                open={isOpen}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-            >
-                <>{storyMode ? <StoryModeStepper /> : <FiltersSidebar />}</>
-            </Drawer>
-             }
+            {isOpen && (
+                <Drawer
+                    className={classes.drawer}
+                    variant="persistent"
+                    anchor={"left"}
+                    open={isOpen}
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}
+                >
+                    <>{storyMode ? <StoryModeStepper /> : <FiltersSidebar />}</>
+                </Drawer>
+            )}
             <div
                 className={clsx(classes.content, {
                     [classes.contentShift]: sidebarOpen,

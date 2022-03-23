@@ -9,6 +9,7 @@ import {
     selectRegion,
     selectSelection,
     selectTheme,
+    selectViewData
 } from "../../../store/reducers/base-reducer";
 import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
@@ -21,7 +22,9 @@ import { setSelection, setSidebarOpen } from "../../../store/actions/base-action
 import { fetchInvasiveStudiesRequest } from "../../../store/actions/invasive-actions";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import SitePopover from "../common/SitePopover";
-import VectorOccurrancePopup from "./VectorOccurance/VectorOccurrancePopup";
+import VectorOccurranceChart from "./VectorOccurance/VectorOccurranceChart";
+import InvasiveSelectionChart from "./InvasiveSelectionChart";
+
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
@@ -239,7 +242,7 @@ class InvasiveLayer extends Component<Props> {
         return (
             this.props.theme === "invasive" && (
                 <SitePopover map={this.props.map}>
-                    <VectorOccurrancePopup studies={filteredStudies} />
+                    <InvasiveSelectionChart studies={filteredStudies} popup={true} />
                 </SitePopover>
             )
         );

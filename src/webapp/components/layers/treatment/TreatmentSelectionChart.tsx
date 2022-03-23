@@ -26,6 +26,7 @@ type DispatchProps = typeof mapDispatchToProps;
 
 type OwnProps = {
     studies: TreatmentStudy[];
+    popup ?: boolean;
 };
 type Props = StateProps & DispatchProps & OwnProps;
 
@@ -36,6 +37,7 @@ class TreatmentSelectionChart extends Component<Props> {
             studies,
             countryMode,
             viewData,
+            popup,
             treatmentFilters: { mapType },
         } = this.props;
         if (!viewData) {
@@ -51,12 +53,12 @@ class TreatmentSelectionChart extends Component<Props> {
         return (
             <>
                 {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
-                    <MolecularMarkersChart studies={filteredStudies} />
+                    <MolecularMarkersChart studies={filteredStudies} popup={popup} />
                 )}
                 {!countryMode &&
                     (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE ||
                         mapType === TreatmentMapType.TREATMENT_FAILURE) && (
-                        <TreatmentFailureChart studies={filteredStudies} />
+                        <TreatmentFailureChart studies={filteredStudies} popup={popup} />
                     )}
                 {countryMode && mapType === TreatmentMapType.TREATMENT_FAILURE && (
                     <TreatmentFailureCountryChart studies={filteredStudies} />

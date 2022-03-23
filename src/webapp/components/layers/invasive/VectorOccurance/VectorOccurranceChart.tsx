@@ -3,7 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Box, Typography, Button } from "@mui/material";
 import { connect } from "react-redux";
-import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { selectTheme, selectSelection, selectViewData } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import * as R from "ramda";
 import Citation from "../../../charts/Citation";
@@ -14,6 +14,8 @@ import { ChartContainer } from "../../../Chart";
 import Curation from "../../../Curation";
 import { isNotNull } from "../../../../utils/number-utils";
 import { InvasiveStudy } from "../../../../../domain/entities/InvasiveStudy";
+import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
+
 const Flex = styled.div`
     display: flex;
 `;
@@ -25,15 +27,18 @@ const Margin = styled.div`
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
+    selection: selectSelection(state),
+    viewData: selectViewData(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
     studies: InvasiveStudy[];
+    popup?: boolean;
 };
 type Props = StateProps & OwnProps;
 
-const VectorOccurrenceChart = ({ studies }: Props) => {
+const VectorOccurrenceChart = ({ studies, popup, selection, viewData }: Props) => {
     const { t } = useTranslation();
     const translations = [
         t("utils.Jan."),
@@ -82,11 +87,14 @@ const VectorOccurrenceChart = ({ studies }: Props) => {
     const studyIdentificationMethod = t("common.invasive.chart.vector_occurrance.study_identification_method");
 
     return (
-        <ChartContainer>
+        <ChartContainer popup={popup}>
             {sortedStudies.length > 1 && <Pagination studies={studies} study={study} setStudy={setStudy} />}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}`}</Box>
             </Typography>
+            {selection !== null && popup && <ViewSummaryDataButton />}
+            {viewData !== null && !popup && (
+            <>
             <Margin>
                 {(isNotNull(studyObject.VECTOR_SPECIES) || isNotNull(studyObject.VECTOR_SPECIES_COMPLEX)) && (
                     <Flex>
@@ -127,6 +135,8 @@ const VectorOccurrenceChart = ({ studies }: Props) => {
                 <Citation study={studyObject} />
             </Margin>
             <Curation study={studyObject} />
+            </> 
+        )}
         </ChartContainer>
     );
 };

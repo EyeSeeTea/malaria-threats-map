@@ -22,7 +22,7 @@ type DispatchProps = typeof mapDispatchToProps;
 
 type OwnProps = {
     studies: DiagnosisStudy[];
-    popup: boolean;
+    popup?: boolean;
 };
 type Props = StateProps & DispatchProps & OwnProps;
 

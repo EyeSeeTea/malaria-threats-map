@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Box, Typography, Button } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { selectTheme, selectSelection, selectViewData } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import * as R from "ramda";
 import Citation from "../../../charts/Citation";
@@ -16,6 +16,7 @@ import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import _ from "lodash";
 import { isNotNull } from "../../../../utils/number-utils";
 import { ChartContainer } from "../../../Chart";
+import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 
 const options: (data: any, categories: any[], translations: any) => Highcharts.Options = (
     data,
@@ -87,15 +88,18 @@ const FlexCol = styled.div<{ flex?: number }>`
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
+    selection: selectSelection(state),
+    viewData: selectViewData(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
     studies: TreatmentStudy[];
+    popup?: boolean;
 };
 type Props = StateProps & OwnProps;
 
-const TreatmentFailureChart = ({ studies }: Props) => {
+const TreatmentFailureChart = ({ studies, selection, viewData, popup }: Props) => {
     const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const [showMore, setShowMore] = useState(false);
@@ -128,6 +132,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     const StyledButton = styled(Button)`
         &.MuiButton-text {
             text-transform: none;
+            color: #2fb3af;
         }
         &.MuiButton-root {
             padding: 0;
@@ -159,7 +164,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     ).label;
 
     return (
-        <ChartContainer>
+        <ChartContainer popup={popup}>
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${title}`}</Box>
             </Typography>
@@ -167,6 +172,9 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                 <i>{plasmodiumSpecies}</i>
                 {`, ${t(DRUG_NAME)}: ${studies.length} ${t_studies} ${siteDuration}`}
             </Typography>
+            {selection !== null && popup && <ViewSummaryDataButton />}
+            {viewData !== null && !popup && (
+            <> 
             <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
             <Margin>
                 <Flex style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -177,7 +185,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                         {t(`common.treatment.chart.treatment_failure.${showMore ? "show_less" : "show_more"}`)}
                     </StyledButton>
                 </Flex>
-            </Margin>
+            </Margin></>)}
             {showMore && (
                 <Margin>
                     {sortedStudies.map((study, index) => (
@@ -210,6 +218,7 @@ const TreatmentFailureChart = ({ studies }: Props) => {
                     ))}
                 </Margin>
             )}
+            
         </ChartContainer>
     );
 };

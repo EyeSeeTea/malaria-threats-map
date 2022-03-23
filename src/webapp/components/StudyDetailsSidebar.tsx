@@ -82,7 +82,7 @@ const StudyDetailsSidebar = ({
 }: Props) => {
     const { t } = useTranslation();
     const classes = useStyles({});
-    
+
     const filteredStudies = (() => {
         switch (theme) {
             case "prevention":
@@ -101,7 +101,7 @@ const StudyDetailsSidebar = ({
     const [filteredStudiesInvasives, setFilteredStudiesInvasive] = React.useState<Array<InvasiveStudy>>([]);
     const [filteredStudiesPrevention, setFilteredStudiesPrevention] = React.useState<Array<PreventionStudy>>([]);
     const [filteredStudiesTreatment, setFilteredStudiesTreatment] = React.useState<Array<TreatmentStudy>>([]);
-    
+
     React.useEffect(() => {
         const diagnosis =
             viewData !== null &&
@@ -170,7 +170,7 @@ const StudyDetailsSidebar = ({
                 </Toolbar>
             </AppBar>
             {themeSelector === "diagnosis" && (
-                <DiagnosisSelectionChart studies={filteredStudiesDiagnosis} popup={false} />
+                <DiagnosisSelectionChart studies={filteredStudiesDiagnosis} />
             )}
 
             {themeSelector === "invasive" && <InvasiveSelectionChart studies={filteredStudiesInvasives} />}

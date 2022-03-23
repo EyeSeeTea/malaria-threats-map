@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Box, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { selectTheme, selectSelection, selectViewData } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import * as R from "ramda";
 import { MutationColors } from "./utils";
@@ -16,8 +16,8 @@ import { selectTreatmentFilters } from "../../../../store/reducers/treatment-red
 import Citation from "../../../charts/Citation";
 import { formatYears, formatYears2 } from "../../../../utils/string-utils";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
-import Hidden from "../../../hidden/Hidden";
 import { ChartContainer } from "../../../Chart";
+import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
@@ -191,17 +191,8 @@ const exists = (value: string) => {
     return trimmed !== "N/A" && trimmed !== "NA" && trimmed !== null;
 };
 
-const ChatContainer = styled.div`
-    max-width: 500px;
-    width: 100%;
-`;
-
 const Flex = styled.div`
     display: flex;
-`;
-
-const FlexCol = styled.div<{ flex?: number }>`
-    flex: ${props => props.flex || 1};
 `;
 
 const Margin = styled.div`
@@ -212,15 +203,18 @@ const Margin = styled.div`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     treatmentFilters: selectTreatmentFilters(state),
+    selection: selectSelection(state),
+    viewData: selectViewData(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
     studies: TreatmentStudy[];
+    popup?: boolean;
 };
 type Props = StateProps & OwnProps;
 
-const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
+const MolecularMarkersChart = ({ studies, treatmentFilters, selection, viewData, popup }: Props) => {
     const { t } = useTranslation();
     const [studyIndex, setStudy] = useState(0);
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
@@ -286,22 +280,13 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
                         molecularMarker: t(`common.${molecularMarker}`),
                     })}
                 </Typography>
-                <Hidden smUp>
+                {selection !== null && popup && <ViewSummaryDataButton />}
+                {viewData !== null && !popup && (
+                <>
                     <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
                     <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations)} />
-                </Hidden>
-                <Hidden smDown>
-                    <Flex>
-                        <FlexCol>
-                            <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-                        </FlexCol>
-                        <FlexCol flex={2}>
-                            <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations)} />
-                        </FlexCol>
-                    </Flex>
-                </Hidden>
-
-                <Citation study={study} />
+                    <Citation study={study} />
+                </> )}
             </>
         );
     };
@@ -394,27 +379,23 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
     });
 
     return (
-        <ChartContainer>
+        <ChartContainer popup={popup}>
             {treatmentFilters.molecularMarker === 1 ? (
                 pfkelch13()
             ) : (
                 <>
-                    <Pagination studies={studies} study={studyIndex} setStudy={setStudy} />
+                   {viewData !== null && !popup && <Pagination studies={studies} study={studyIndex} setStudy={setStudy} />}
                     <Typography variant="subtitle1">
-                        <Box fontWeight="fontWeightBold">{`${title}`}</Box>
+                        <Box fontWeight="fontWeightBold">{title}</Box>
                     </Typography>
                     <Typography variant="subtitle2">
                         <Box>{`${studies.length} ${t_studies} ${formatYears(`${minYear}`, `${maxYear}`)}`}</Box>
                     </Typography>
-                    <Hidden smUp>
-                        {pfcrt()}
-                        <HighchartsReact highcharts={Highcharts} options={options3(series3, years, translations)} />
-                    </Hidden>
-                    <Hidden smDown>
-                        <Flex>
-                            <FlexCol>{pfcrt()}</FlexCol>
-                            <FlexCol>
-                                {treatmentFilters.molecularMarker === 2 ? (
+                    {selection !== null && popup && <ViewSummaryDataButton />}
+                    {viewData !== null && !popup && (
+                        <>
+                            {pfcrt()}
+                            {treatmentFilters.molecularMarker === 2 ? (
                                     <HighchartsReact
                                         highcharts={Highcharts}
                                         options={options3(series3, years, translations)}
@@ -425,10 +406,8 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
                                         options={options2(series, years, translations)}
                                     />
                                 )}
-                            </FlexCol>
-                        </Flex>
-                    </Hidden>
-                    <Citation study={study} />
+                    </>
+                    )}
                 </>
             )}
         </ChartContainer>

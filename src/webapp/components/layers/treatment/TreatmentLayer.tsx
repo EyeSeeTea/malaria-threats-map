@@ -30,8 +30,8 @@ import { fetchTreatmentStudiesRequest, setFilteredStudiesAction } from "../../..
 import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SitePopover from "../common/SitePopover";
-import MolecularMarkersPopup from "./MolecularMarkers/MolecularMarkersPopup";
-import TreatmentFailurePopup from "./TreatmentFailure/TreatmentFailurePopup";
+import MolecularMarkersChart from "./MolecularMarkers/MolecularMarkersChart";
+import TreatmentFailureChart from "./TreatmentFailure/TreatmentFailureChart";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -301,12 +301,12 @@ class TreatmentLayer extends Component<Props> {
             this.props.theme === "treatment" && (
                 <SitePopover map={this.props.map}>
                     {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
-                        <MolecularMarkersPopup studies={filteredStudies} />
+                        <MolecularMarkersChart studies={filteredStudies} popup={true} />
                     )}
                     {!countryMode &&
                         (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE ||
                             mapType === TreatmentMapType.TREATMENT_FAILURE) && (
-                            <TreatmentFailurePopup studies={filteredStudies} />
+                            <TreatmentFailureChart studies={filteredStudies} popup={true} />
                         )}
                 </SitePopover>
             )
