@@ -255,7 +255,6 @@ class DiagnosisLayer extends Component<Props> {
         if (filteredStudies.length === 0) {
             return <div />;
         }
-        //                    <GeneDeletionPopup studies={filteredStudies} />
 
         return (
             this.props.theme === "diagnosis" && (
