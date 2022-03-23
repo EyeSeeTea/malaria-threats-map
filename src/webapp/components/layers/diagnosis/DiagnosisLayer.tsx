@@ -11,6 +11,7 @@ import {
     selectRegion,
     selectSelection,
     selectTheme,
+    selectViewData
 } from "../../../store/reducers/base-reducer";
 import * as R from "ramda";
 import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
@@ -23,7 +24,7 @@ import {
     setDiagnosisFilteredStudiesAction,
 } from "../../../store/actions/diagnosis-actions";
 
-import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
+import { setSelection, setSidebarOpen,  } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
@@ -49,6 +50,8 @@ const mapStateToProps = (state: State) => ({
     countries: selectCountries(state),
     countryMode: selectCountryMode(state),
     selection: selectSelection(state),
+    viewData:  selectViewData(state)
+
 });
 
 const mapDispatchToProps = {
@@ -242,8 +245,12 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, countryMode, selection, setSidebarOpen } = this.props;
+        const { studies, countryMode, selection, viewData, setSidebarOpen } = this.props;
         console.log(selection);
+        console.log(viewData);
+        if(viewData === null) {
+            setSidebarOpen(false);
+        }
         if (selection === null) {
             setSidebarOpen(false);
             return <div />;

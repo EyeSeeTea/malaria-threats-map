@@ -71,6 +71,14 @@ const useStyles = makeStyles((theme: Theme) =>
             ...theme.mixins.toolbar,
             justifyContent: "flex-end",
         },
+        drawer: {
+            width: (props: ThemeProps) => props.drawerWidth,
+            flexShrink: 0,
+        },
+        drawerPaper: {
+            width: (props: ThemeProps) => props.drawerWidth,
+            backgroundColor: "#f3f3f3",
+        },
         content: {
             flexGrow: 1,
             transition: theme.transitions.create("margin", {
@@ -165,18 +173,24 @@ function PersistentDrawerLeft({
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const isOpen = filtersOpen || storyMode;
-
+    console.log(isOpen)
+    console.log(sidebarOpen)
     useEffect(() => {
-        if (viewData !== undefined && sidebarOpen === false) {
+        if (viewData !== null && sidebarOpen === false) {
             setSidebarOpen(true);
         }
+        
     }, [viewData]);
 
     useEffect(() => {
-        setTimeout(() => dispatchCustomEvent("resize"), 100);
+        console.log(sidebarOpen)
+        if(sidebarOpen !== null && isOpen !== null) {
+            setTimeout(() => dispatchCustomEvent("resize"), 100);
+
+        }
     }, [sidebarOpen]);
 
-    /* Logic for switching out the filter sidebar or the story mode sidebar. I'm not sure if we want to keep it
+   // Logic for switching out the filter sidebar or the story mode sidebar. I'm not sure if we want to keep it
 
         const prevFilterOpenRef = useRef<boolean>();
         const prevStoryModeRef = useRef<boolean>();
@@ -196,7 +210,7 @@ function PersistentDrawerLeft({
                 setStoryMode(!storyMode);
             }
         }
-    */
+    
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 
     const onChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -235,6 +249,19 @@ function PersistentDrawerLeft({
         <div className={`${classes.root}`}>
             <Loader />
             <CssBaseline />
+            {isOpen &&
+            <Drawer
+                className={classes.drawer}
+                variant="persistent"
+                anchor={"left"}
+                open={isOpen}
+                classes={{
+                    paper: classes.drawerPaper,
+                }}
+            >
+                <>{storyMode ? <StoryModeStepper /> : <FiltersSidebar />}</>
+            </Drawer>
+             }
             <div
                 className={clsx(classes.content, {
                     [classes.contentShift]: sidebarOpen,
@@ -309,12 +336,12 @@ function PersistentDrawerLeft({
                 </PageWrapper>
             </div>
             <Drawer
-                className={classes.tooltipDrawer}
+                className={classes.drawer}
                 variant="persistent"
                 anchor={"right"}
                 open={sidebarOpen}
                 classes={{
-                    paper: classes.tooltipDrawerPaper,
+                    paper: classes.drawerPaper,
                 }}
             >
                 <StudyDetailsSidebar />

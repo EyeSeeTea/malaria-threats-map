@@ -9,7 +9,7 @@ import { State } from "../../../store/types";
 import mapboxgl from "mapbox-gl";
 import { selectSelection } from "../../../store/reducers/base-reducer";
 import { dispatchCustomEvent } from "../../../utils/dom-utils";
-import { setSelection } from "../../../store/actions/base-actions";
+import { setSelection, setViewData } from "../../../store/actions/base-actions";
 import { StyledEngineProvider, Theme } from "@mui/material";
 
 declare module "@mui/styles/defaultTheme" {
@@ -23,6 +23,7 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setSelection: setSelection,
+    setViewData: setViewData
 };
 type DispatchProps = typeof mapDispatchToProps;
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -32,7 +33,7 @@ type OwnProps = {
 };
 type Props = StateProps & DispatchProps & OwnProps & { children: React.ReactNode };
 
-const SitePopover: React.FC<Props> = ({ map, selection, setSelection, children }) => {
+const SitePopover: React.FC<Props> = ({ map, selection, setSelection, setViewData, children }) => {
     useEffect(() => {
         const placeholder = document.createElement("div");
         if (!selection) {
@@ -55,6 +56,7 @@ const SitePopover: React.FC<Props> = ({ map, selection, setSelection, children }
         setTimeout(() => dispatchCustomEvent("resize"), 100);
         map.on("click", () => {
             setSelection(null);
+            setViewData(null);
         });
         return () => {
             ReactDOM.unmountComponentAtNode(placeholder);

@@ -82,7 +82,7 @@ const StudyDetailsSidebar = ({
 }: Props) => {
     const { t } = useTranslation();
     const classes = useStyles({});
-
+    
     const filteredStudies = (() => {
         switch (theme) {
             case "prevention":
@@ -101,10 +101,10 @@ const StudyDetailsSidebar = ({
     const [filteredStudiesInvasives, setFilteredStudiesInvasive] = React.useState<Array<InvasiveStudy>>([]);
     const [filteredStudiesPrevention, setFilteredStudiesPrevention] = React.useState<Array<PreventionStudy>>([]);
     const [filteredStudiesTreatment, setFilteredStudiesTreatment] = React.useState<Array<TreatmentStudy>>([]);
-
+    
     React.useEffect(() => {
         const diagnosis =
-            viewData !== undefined &&
+            viewData !== null &&
             filteredDiagnosisStudies !== null &&
             filteredDiagnosisStudies.filter((study: DiagnosisStudy) =>
                 countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
@@ -114,7 +114,7 @@ const StudyDetailsSidebar = ({
 
     React.useEffect(() => {
         const invasive =
-            viewData !== undefined &&
+            viewData !== null &&
             filteredInvasiveStudies !== null &&
             filteredInvasiveStudies.filter((study: InvasiveStudy) =>
                 countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
@@ -124,7 +124,7 @@ const StudyDetailsSidebar = ({
 
     React.useEffect(() => {
         const treatment =
-            viewData !== undefined &&
+            viewData !== null &&
             filteredTreatmentStudies !== null &&
             filteredTreatmentStudies.filter((study: TreatmentStudy) =>
                 countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
@@ -134,7 +134,7 @@ const StudyDetailsSidebar = ({
 
     React.useEffect(() => {
         const prevention =
-            viewData !== undefined &&
+            viewData !== null &&
             filteredPreventionStudies !== null &&
             filteredPreventionStudies.filter((study: PreventionStudy) =>
                 countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID

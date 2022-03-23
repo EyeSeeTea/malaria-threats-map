@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 const StyledButton = styled(Button)`
     &.MuiButton-text {
         text-transform: none;
+        color:#2FB3AF; 
     }
     &.MuiButton-root {
         padding: 0;

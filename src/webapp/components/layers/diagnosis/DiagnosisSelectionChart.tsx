@@ -38,7 +38,7 @@ class DiagnosisSelectionChart extends Component<Props> {
         return (
             <>
                 {!countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
-                    <GeneDeletionChart studies={studies} popup={popup}/>
+                    <GeneDeletionChart studies={studies} popup={popup} />
                 )}
                 {countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
                     <GeneDeletionCountryChart studies={studies} />
