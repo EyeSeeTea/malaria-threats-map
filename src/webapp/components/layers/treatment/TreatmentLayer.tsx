@@ -26,12 +26,11 @@ import {
 } from "../studies-filters";
 import { State, TreatmentMapType } from "../../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
-import { fetchTreatmentStudiesRequest, setFilteredStudiesAction } from "../../../store/actions/treatment-actions";
+import { fetchTreatmentStudiesRequest, setFilteredStudiesAction, setTreatmentStudySelection } from "../../../store/actions/treatment-actions";
 import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SitePopover from "../common/SitePopover";
-import MolecularMarkersChart from "./MolecularMarkers/MolecularMarkersChart";
-import TreatmentFailureChart from "./TreatmentFailure/TreatmentFailureChart";
+import TreatmentSelectionChart from "./TreatmentSelectionChart";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -61,6 +60,7 @@ const mapStateToProps = (state: State) => ({
 });
 const mapDispatchToProps = {
     fetchTreatmentStudies: fetchTreatmentStudiesRequest,
+    setTreatmentStudySelection: setTreatmentStudySelection,
     setFilteredStudies: setFilteredStudiesAction,
     setSelection: setSelection,
     setSidebarOpen: setSidebarOpen,
@@ -283,7 +283,6 @@ class TreatmentLayer extends Component<Props> {
             countryMode,
             selection,
             setSidebarOpen,
-            treatmentFilters: { mapType },
         } = this.props;
 
         if (selection === null) {
@@ -293,6 +292,9 @@ class TreatmentLayer extends Component<Props> {
         const filteredStudies = this.filterStudies(studies).filter(study =>
             countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
+
+        this.props.setTreatmentStudySelection(filteredStudies);
+
         if (filteredStudies.length === 0) {
             return <div />;
         }
@@ -300,14 +302,7 @@ class TreatmentLayer extends Component<Props> {
         return (
             this.props.theme === "treatment" && (
                 <SitePopover map={this.props.map}>
-                    {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
-                        <MolecularMarkersChart studies={filteredStudies} popup={true} />
-                    )}
-                    {!countryMode &&
-                        (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE ||
-                            mapType === TreatmentMapType.TREATMENT_FAILURE) && (
-                            <TreatmentFailureChart studies={filteredStudies} popup={true} />
-                        )}
+                    <TreatmentSelectionChart studies={filteredStudies} popup={true} />
                 </SitePopover>
             )
         );

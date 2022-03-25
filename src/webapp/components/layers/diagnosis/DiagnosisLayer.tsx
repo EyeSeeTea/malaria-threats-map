@@ -22,6 +22,7 @@ import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import {
     fetchDiagnosisStudiesRequest,
     setDiagnosisFilteredStudiesAction,
+    setDiagnosisStudySelection
 } from "../../../store/actions/diagnosis-actions";
 
 import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
@@ -56,6 +57,7 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     fetchDiagnosisStudies: fetchDiagnosisStudiesRequest,
     setFilteredStudies: setDiagnosisFilteredStudiesAction,
+    setDiagnosisStudySelection: setDiagnosisStudySelection,
     setSelection: setSelection,
     setSidebarOpen: setSidebarOpen,
 };
@@ -245,8 +247,6 @@ class DiagnosisLayer extends Component<Props> {
 
     render() {
         const { studies, countryMode, selection, viewData, setSidebarOpen } = this.props;
-        console.log(selection);
-        console.log(viewData);
         if (viewData === null) {
             setSidebarOpen(false);
         }
@@ -257,7 +257,9 @@ class DiagnosisLayer extends Component<Props> {
         const filteredStudies = this.filterStudies(studies).filter(study =>
             countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
-        console.log(filteredStudies);
+        
+        this.props.setDiagnosisStudySelection(filteredStudies);
+
         if (filteredStudies.length === 0) {
             return <div />;
         }

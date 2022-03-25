@@ -282,11 +282,12 @@ const MolecularMarkersChart = ({ studies, treatmentFilters, selection, viewData,
                 </Typography>
                 {selection !== null && popup && <ViewSummaryDataButton />}
                 {viewData !== null && !popup && (
-                <>
-                    <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-                    <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations)} />
-                    <Citation study={study} />
-                </> )}
+                    <>
+                        <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
+                        <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations)} />
+                        <Citation study={study} />
+                    </>
+                )}
             </>
         );
     };
@@ -384,7 +385,9 @@ const MolecularMarkersChart = ({ studies, treatmentFilters, selection, viewData,
                 pfkelch13()
             ) : (
                 <>
-                   {viewData !== null && !popup && <Pagination studies={studies} study={studyIndex} setStudy={setStudy} />}
+                    {viewData !== null && !popup && (
+                        <Pagination studies={studies} study={studyIndex} setStudy={setStudy} />
+                    )}
                     <Typography variant="subtitle1">
                         <Box fontWeight="fontWeightBold">{title}</Box>
                     </Typography>
@@ -396,17 +399,17 @@ const MolecularMarkersChart = ({ studies, treatmentFilters, selection, viewData,
                         <>
                             {pfcrt()}
                             {treatmentFilters.molecularMarker === 2 ? (
-                                    <HighchartsReact
-                                        highcharts={Highcharts}
-                                        options={options3(series3, years, translations)}
-                                    />
-                                ) : (
-                                    <HighchartsReact
-                                        highcharts={Highcharts}
-                                        options={options2(series, years, translations)}
-                                    />
-                                )}
-                    </>
+                                <HighchartsReact
+                                    highcharts={Highcharts}
+                                    options={options3(series3, years, translations)}
+                                />
+                            ) : (
+                                <HighchartsReact
+                                    highcharts={Highcharts}
+                                    options={options2(series, years, translations)}
+                                />
+                            )}
+                        </>
                     )}
                 </>
             )}

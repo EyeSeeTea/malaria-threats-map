@@ -8,7 +8,7 @@ import IntensityStatusChart from "./IntensityStatus/IntensityStatusChart";
 import LevelOfInvolvementChart from "./Involvement/LevelOfInvolvementChart";
 import ResistanceMechanismsChart from "./ResistanceMechanisms/ResistanceMechanismsChart";
 import { selectPreventionFilters } from "../../../store/reducers/prevention-reducer";
-import { selectCountryMode, selectTheme, selectViewData } from "../../../store/reducers/base-reducer";
+import { selectCountryMode, selectTheme, selectViewData, selectSelection } from "../../../store/reducers/base-reducer";
 import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
 import { connect } from "react-redux";
 import PboSiteChart from "./PboDeployment/PboSiteChart";
@@ -20,6 +20,7 @@ const mapStateToProps = (state: State) => ({
     preventionFilters: selectPreventionFilters(state),
     countryMode: selectCountryMode(state),
     viewData: selectViewData(state),
+    selection: selectSelection(state),
 });
 
 const mapDispatchToProps = {
@@ -32,64 +33,51 @@ type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     studies: PreventionStudy[];
     map?: mapboxgl.Map;
+    popup?: boolean;
 };
 type Props = StateProps & DispatchProps & OwnProps;
 
 class PreventionSelectionChart extends Component<Props> {
     render() {
         const {
-            theme,
             studies,
             countryMode,
-            viewData,
             preventionFilters: { mapType },
             map,
+            popup
         } = this.props;
-
-        if (!viewData) {
-            return <div />;
-        }
-        const filteredStudies = studies.filter(study =>
-            countryMode
-                ? study.ISO2 === viewData.ISO_2_CODE || study.ADMIN2_GUID === viewData.SITE_ID
-                : study.SITE_ID === viewData.SITE_ID
-        );
-
-        if (!filteredStudies.length || theme !== "prevention") {
-            return <div />;
-        }
 
         return (
             <div id="fifth-duo">
                 {countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
-                    <ResistanceStatusCountryChart studies={filteredStudies} />
+                    <ResistanceStatusCountryChart studies={studies} />
                 )}
                 {countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
-                    <IntensityStatusCountryChart studies={filteredStudies} />
+                    <IntensityStatusCountryChart studies={studies} />
                 )}
                 {countryMode && mapType === PreventionMapType.RESISTANCE_MECHANISM && (
-                    <ResistanceMechanismCountryChart studies={filteredStudies} />
+                    <ResistanceMechanismCountryChart studies={studies} />
                 )}
                 {countryMode && mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
-                    <ResistanceMechanismCountryChart studies={filteredStudies} />
+                    <ResistanceMechanismCountryChart studies={studies} />
                 )}
                 {countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
-                    <PboDistrictChart studies={filteredStudies} map={map} />
+                    <PboDistrictChart studies={studies} map={map} />
                 )}
                 {!countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
-                    <ResistanceStatusChart studies={filteredStudies} />
+                    <ResistanceStatusChart studies={studies} popup={popup} />
                 )}
                 {!countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
-                    <IntensityStatusChart studies={filteredStudies} />
+                    <IntensityStatusChart studies={studies} popup={popup} />
                 )}
                 {!countryMode && mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
-                    <LevelOfInvolvementChart studies={filteredStudies} />
+                    <LevelOfInvolvementChart studies={studies} popup={popup}/>
                 )}
                 {!countryMode && mapType === PreventionMapType.RESISTANCE_MECHANISM && (
-                    <ResistanceMechanismsChart studies={filteredStudies} />
+                    <ResistanceMechanismsChart studies={studies} popup={popup}/>
                 )}
                 {!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
-                    <PboSiteChart studies={filteredStudies} />
+                    <PboSiteChart studies={studies} popup={popup} />
                 )}
             </div>
         );

@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Box, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { selectTheme, selectSelection, selectViewData  } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import { ConfirmationStatusColors } from "./symbols";
 import * as R from "ramda";
@@ -19,6 +19,8 @@ import FormLabel from "@mui/material/FormLabel";
 import { sendAnalytics } from "../../../../utils/analytics";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import { ChartContainer } from "../../../Chart";
+import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
+
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
@@ -130,16 +132,18 @@ const Flex = styled.div`
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
+    selection: selectSelection(state),
+    viewData: selectViewData(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
     studies: PreventionStudy[];
+    popup?: boolean;
 };
 type Props = StateProps & OwnProps;
 
-const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
-    console.log(baseStudies);
+const ResistanceStatusChart = ({ studies: baseStudies, selection, viewData, popup }: Props) => {
     const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const speciesOptions = R.uniq(R.map(s => s.SPECIES, baseStudies));
@@ -147,7 +151,6 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         label: specie,
         value: specie,
     }));
-
     const [species, setSpecies] = useState<any[]>(suggestions);
     const onSpeciesChange = (value: any) => {
         sendAnalytics({ type: "event", category: "popup", action: "filter" });
@@ -157,7 +160,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         R.groupBy(
             R.prop("CITATION_URL"),
             baseStudies.filter(
-                study => !species || !species.length || species.map(s => s.value).includes(study.SPECIES)
+                study => species.map(s => s.value).includes(study.SPECIES)
             )
         )
     );
@@ -198,7 +201,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         : t(studyObject.ASSAY_TYPE);
 
     return (
-        <ChartContainer>
+        <ChartContainer popup={popup}>
             {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
@@ -206,6 +209,8 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">{subtitle}</Typography>
+            {selection !== null && popup && <ViewSummaryDataButton />}
+            {viewData !== null && !popup && (<>
             {suggestions.length > 1 && (
                 <Flex>
                     <FormLabel component="legend">Species</FormLabel>
@@ -221,6 +226,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
             <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
             <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
             <Curation study={studyObject} />
+            </>)}
         </ChartContainer>
     );
 };

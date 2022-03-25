@@ -4,16 +4,15 @@ import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import CloseIcon from "@mui/icons-material/Close";
 import { State } from "../store/types";
-import { selectTheme, selectSelection, selectCountryMode, selectViewData } from "../store/reducers/base-reducer";
-import { selectFilteredPreventionStudies } from "../store/reducers/prevention-reducer";
-import { selectFilteredDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
-import { selectFilteredTreatmentStudies } from "../store/reducers/treatment-reducer";
-import { selectFilteredInvasiveStudies } from "../store/reducers/invasive-reducer";
+import { selectTheme, selectSelection, selectViewData } from "../store/reducers/base-reducer";
+import { selectPreventionStudySelection } from "../store/reducers/prevention-reducer";
+import { selectDiagnosisStudySelection } from "../store/reducers/diagnosis-reducer";
+import { selectTreatmentStudySelection } from "../store/reducers/treatment-reducer";
+import { selectInvasiveStudySelection } from "../store/reducers/invasive-reducer";
 import { setSidebarOpen } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 
 import { useTranslation } from "react-i18next";
-import { Study } from "../../domain/entities/Study";
 import { DiagnosisStudy } from "../../domain/entities/DiagnosisStudy";
 import { InvasiveStudy } from "../../domain/entities/InvasiveStudy";
 import { PreventionStudy } from "../../domain/entities/PreventionStudy";
@@ -54,12 +53,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
-    filteredPreventionStudies: selectFilteredPreventionStudies(state),
-    filteredDiagnosisStudies: selectFilteredDiagnosisStudies(state),
-    filteredTreatmentStudies: selectFilteredTreatmentStudies(state),
-    filteredInvasiveStudies: selectFilteredInvasiveStudies(state),
+    preventionStudySelection: selectPreventionStudySelection(state),
+    diagnosisStudySelection: selectDiagnosisStudySelection(state),
+    treatmentStudySelection:selectTreatmentStudySelection(state),
+    invasiveStudySelection: selectInvasiveStudySelection(state),
     selection: selectSelection(state),
-    countryMode: selectCountryMode(state),
     viewData: selectViewData(state),
 });
 const mapDispatchToProps = {
@@ -71,75 +69,37 @@ type Props = DispatchProps & StateProps;
 
 const StudyDetailsSidebar = ({
     theme,
-    filteredPreventionStudies,
-    filteredDiagnosisStudies,
-    filteredTreatmentStudies,
-    filteredInvasiveStudies,
     setSidebarOpen,
-    countryMode,
-    selection,
+    preventionStudySelection,
+    diagnosisStudySelection,
+    treatmentStudySelection,
+    invasiveStudySelection,
     viewData,
 }: Props) => {
     const { t } = useTranslation();
     const classes = useStyles({});
-
-    const filteredStudies = (() => {
-        switch (theme) {
-            case "prevention":
-                return filteredPreventionStudies;
-            case "diagnosis":
-                return filteredDiagnosisStudies;
-            case "treatment":
-                return filteredTreatmentStudies;
-            case "invasive":
-                return filteredInvasiveStudies;
-            default:
-                return [];
-        }
-    })();
     const [filteredStudiesDiagnosis, setFilteredStudiesDiagnosis] = React.useState<Array<DiagnosisStudy>>([]);
     const [filteredStudiesInvasives, setFilteredStudiesInvasive] = React.useState<Array<InvasiveStudy>>([]);
     const [filteredStudiesPrevention, setFilteredStudiesPrevention] = React.useState<Array<PreventionStudy>>([]);
     const [filteredStudiesTreatment, setFilteredStudiesTreatment] = React.useState<Array<TreatmentStudy>>([]);
 
     React.useEffect(() => {
-        const diagnosis =
-            viewData !== null &&
-            filteredDiagnosisStudies !== null &&
-            filteredDiagnosisStudies.filter((study: DiagnosisStudy) =>
-                countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
-            );
-        setFilteredStudiesDiagnosis(diagnosis);
-    }, [viewData]);
-
-    React.useEffect(() => {
-        const invasive =
-            viewData !== null &&
-            filteredInvasiveStudies !== null &&
-            filteredInvasiveStudies.filter((study: InvasiveStudy) =>
-                countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
-            );
-        setFilteredStudiesInvasive(invasive);
-    }, [viewData]);
-
-    React.useEffect(() => {
-        const treatment =
-            viewData !== null &&
-            filteredTreatmentStudies !== null &&
-            filteredTreatmentStudies.filter((study: TreatmentStudy) =>
-                countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
-            );
-        setFilteredStudiesTreatment(treatment);
-    }, [viewData]);
-
-    React.useEffect(() => {
-        const prevention =
-            viewData !== null &&
-            filteredPreventionStudies !== null &&
-            filteredPreventionStudies.filter((study: PreventionStudy) =>
-                countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
-            );
-        setFilteredStudiesPrevention(prevention);
+        //I only update the new studies to be shown when viewData changes (ie. when the view summary of data button is pressed)
+        //so that the data doesn't change automatically when the user hovers over another popup
+        switch (theme) {
+            case "prevention":
+                 setFilteredStudiesPrevention(preventionStudySelection);
+                 break;
+            case "diagnosis":
+                setFilteredStudiesDiagnosis(diagnosisStudySelection);
+                break;
+            case "treatment":
+                setFilteredStudiesTreatment(treatmentStudySelection);
+                break;
+            case "invasive":
+                setFilteredStudiesInvasive(invasiveStudySelection);
+                break;
+        }
     }, [viewData]);
 
     const handleClose = () => {
@@ -156,7 +116,6 @@ const StudyDetailsSidebar = ({
     ) {
         return <div />;
     }
-    console.log("hello in StudyDetailsSidebar");
     return (
         <div id="sidebar">
             <AppBar position="static" className={classes.appBar}>
@@ -169,12 +128,8 @@ const StudyDetailsSidebar = ({
                     </IconButton>
                 </Toolbar>
             </AppBar>
-            {themeSelector === "diagnosis" && (
-                <DiagnosisSelectionChart studies={filteredStudiesDiagnosis} />
-            )}
-
+            {themeSelector === "diagnosis" && <DiagnosisSelectionChart studies={filteredStudiesDiagnosis} />}
             {themeSelector === "invasive" && <InvasiveSelectionChart studies={filteredStudiesInvasives} />}
-
             {themeSelector === "prevention" && <PreventionSelectionChart studies={filteredStudiesPrevention} />}
             {themeSelector === "treatment" && <TreatmentSelectionChart studies={filteredStudiesTreatment} />}
         </div>

@@ -10,6 +10,7 @@ const initialState: TreatmentState = Object.freeze({
     error: null,
     loading: false,
     filteredStudies: [],
+    studySelection: [],
     filters: {
         mapType: TreatmentMapType.TREATMENT_FAILURE,
         plasmodiumSpecies: "P._FALCIPARUM",
@@ -79,6 +80,8 @@ export default createReducer<TreatmentState>(initialState, {
     [ActionTypeEnum.SetExcludeLowerSamples]: updateExcludeLowerSamples,
     [ActionTypeEnum.SetTreatmentFilteredStudies]: (filteredStudies: TreatmentStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
+    [ActionTypeEnum.SetTreatmentStudySelection]: (filteredStudies: TreatmentStudy[]) => R.assoc("studySelection", filteredStudies),
+
 });
 
 const selectTreatmentState = (state: State) => state.treatment;
@@ -92,3 +95,6 @@ export const selectTreatmentStudiesError = createSelector(selectTreatmentState, 
 export const selectFilteredTreatmentStudies = createSelector(selectTreatmentState, state => state.filteredStudies);
 
 export const selectTreatmentFilters = createSelector(selectTreatmentState, state => state.filters);
+
+export const selectTreatmentStudySelection = createSelector(selectTreatmentState, state => state.studySelection);
+

@@ -79,6 +79,7 @@ export interface DiagnosisState {
     loading: boolean;
     filteredStudies: DiagnosisStudy[];
     filters: DiagnosisFilters;
+    studySelection: DiagnosisStudy[];
 }
 
 export interface DiagnosisFilters {
@@ -116,6 +117,7 @@ export interface PreventionState {
     loading: boolean;
     filteredStudies: PreventionStudy[];
     filters: PreventionFilters;
+    studySelection: PreventionStudy[];
 }
 
 export enum TreatmentMapType {
@@ -139,6 +141,8 @@ export interface TreatmentState {
     loading: boolean;
     filteredStudies: TreatmentStudy[];
     filters: TreatmentFilters;
+    studySelection: TreatmentStudy[];
+
 }
 
 export enum InvasiveMapType {
@@ -156,6 +160,7 @@ export interface InvasiveState {
     loading: boolean;
     filteredStudies: InvasiveStudy[];
     filters: InvasiveFilters;
+    studySelection: InvasiveStudy[];
 }
 
 export interface CountryLayerState {

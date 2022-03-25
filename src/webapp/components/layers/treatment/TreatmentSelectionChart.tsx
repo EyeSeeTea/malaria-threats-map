@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { State, TreatmentMapType } from "../../../store/types";
-import { selectCountryMode, selectTheme, selectViewData } from "../../../store/reducers/base-reducer";
+import { selectCountryMode, selectTheme } from "../../../store/reducers/base-reducer";
 import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
 import { connect } from "react-redux";
 import MolecularMarkersChart from "./MolecularMarkers/MolecularMarkersChart";
@@ -14,7 +14,6 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     treatmentFilters: selectTreatmentFilters(state),
     countryMode: selectCountryMode(state),
-    viewData: selectViewData(state),
 });
 
 const mapDispatchToProps = {
@@ -26,48 +25,37 @@ type DispatchProps = typeof mapDispatchToProps;
 
 type OwnProps = {
     studies: TreatmentStudy[];
-    popup ?: boolean;
+    popup?: boolean;
 };
 type Props = StateProps & DispatchProps & OwnProps;
 
 class TreatmentSelectionChart extends Component<Props> {
     render() {
         const {
-            theme,
             studies,
             countryMode,
-            viewData,
             popup,
             treatmentFilters: { mapType },
         } = this.props;
-        if (!viewData) {
-            return <div />;
-        }
-        const filteredStudies = studies.filter(study =>
-            countryMode ? study.ISO2 === viewData.ISO_2_CODE : study.SITE_ID === viewData.SITE_ID
-        );
-        if (!filteredStudies.length || theme !== "treatment") {
-            return <div />;
-        }
 
         return (
             <>
                 {!countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
-                    <MolecularMarkersChart studies={filteredStudies} popup={popup} />
+                    <MolecularMarkersChart studies={studies} popup={popup} />
                 )}
                 {!countryMode &&
                     (mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE ||
                         mapType === TreatmentMapType.TREATMENT_FAILURE) && (
-                        <TreatmentFailureChart studies={filteredStudies} popup={popup} />
+                        <TreatmentFailureChart studies={studies} popup={popup} />
                     )}
                 {countryMode && mapType === TreatmentMapType.TREATMENT_FAILURE && (
-                    <TreatmentFailureCountryChart studies={filteredStudies} />
+                    <TreatmentFailureCountryChart studies={studies} />
                 )}
                 {countryMode && mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE && (
-                    <TreatmentFailureCountryChart studies={filteredStudies} />
+                    <TreatmentFailureCountryChart studies={studies} />
                 )}
                 {countryMode && mapType === TreatmentMapType.MOLECULAR_MARKERS && (
-                    <MolecularMarkersCountryChart studies={filteredStudies} />
+                    <MolecularMarkersCountryChart studies={studies} />
                 )}
             </>
         );

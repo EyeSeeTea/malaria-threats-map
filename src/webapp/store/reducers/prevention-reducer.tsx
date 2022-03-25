@@ -10,6 +10,7 @@ const initialState: PreventionState = Object.freeze({
     error: null,
     loading: false,
     filteredStudies: [],
+    studySelection: [],
     filters: {
         mapType: PreventionMapType.RESISTANCE_STATUS,
         insecticideClass: "PYRETHROIDS",
@@ -84,6 +85,7 @@ export default createReducer<PreventionState>(initialState, {
     [ActionTypeEnum.SetSpecies]: updateSpecies,
     [ActionTypeEnum.SetPreventionFilteredStudies]: (filteredStudies: PreventionStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
+    [ActionTypeEnum.SetPreventionStudySelection]: (filteredStudies: PreventionStudy[]) => R.assoc("studySelection", filteredStudies),
 });
 
 const selectPreventionState = (state: State) => state.prevention;
@@ -97,3 +99,5 @@ export const selectPreventionStudiesError = createSelector(selectPreventionState
 export const selectFilteredPreventionStudies = createSelector(selectPreventionState, state => state.filteredStudies);
 
 export const selectPreventionFilters = createSelector(selectPreventionState, state => state.filters);
+
+export const selectPreventionStudySelection = createSelector(selectPreventionState, state => state.studySelection);

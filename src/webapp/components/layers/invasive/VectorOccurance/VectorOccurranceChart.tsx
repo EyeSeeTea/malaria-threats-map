@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { selectTheme, selectSelection, selectViewData } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
@@ -88,55 +88,56 @@ const VectorOccurrenceChart = ({ studies, popup, selection, viewData }: Props) =
 
     return (
         <ChartContainer popup={popup}>
-            {sortedStudies.length > 1 && <Pagination studies={studies} study={study} setStudy={setStudy} />}
+            {viewData !== null && !popup && sortedStudies.length > 1 && <Pagination studies={studies} study={study} setStudy={setStudy} />}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}`}</Box>
             </Typography>
             {selection !== null && popup && <ViewSummaryDataButton />}
             {viewData !== null && !popup && (
-            <>
-            <Margin>
-                {(isNotNull(studyObject.VECTOR_SPECIES) || isNotNull(studyObject.VECTOR_SPECIES_COMPLEX)) && (
-                    <Flex>
-                        <Typography variant="body2">
-                            <b>{t("common.invasive.chart.vector_occurrance.species")}:&nbsp;</b>
-                            {isNotNull(studyObject.VECTOR_SPECIES)
-                                ? studyObject.VECTOR_SPECIES
-                                : isNotNull(studyObject.VECTOR_SPECIES_COMPLEX)
-                                ? studyObject.VECTOR_SPECIES_COMPLEX
-                                : ""}
-                        </Typography>
-                    </Flex>
-                )}
-                {duration && (
-                    <Flex>
-                        <Typography variant="body2">
-                            <b>{samplingPeriod}:&nbsp;</b>
-                            {duration}
-                        </Typography>
-                    </Flex>
-                )}
-                <Flex>
-                    <Typography variant="body2">
-                        <b>{samplingMethod}:&nbsp;</b>
-                        {studyObject.SAMPLING_METHOD || t("common.invasive.chart.vector_occurrance.no_available")}
-                    </Typography>
-                </Flex>
-                <Flex>
-                    <Typography variant="body2">
-                        <b>{studyIdentificationMethod}:&nbsp;</b>
-                        {studyObject.ID_METHOD
-                            ? lowerCase(studyObject.ID_METHOD)
-                            : t("common.invasive.chart.vector_occurrance.no_available")}
-                    </Typography>
-                </Flex>
-            </Margin>
-            <Margin>
-                <Citation study={studyObject} />
-            </Margin>
-            <Curation study={studyObject} />
-            </> 
-        )}
+                <>
+                    <Margin>
+                        {(isNotNull(studyObject.VECTOR_SPECIES) || isNotNull(studyObject.VECTOR_SPECIES_COMPLEX)) && (
+                            <Flex>
+                                <Typography variant="body2">
+                                    <b>{t("common.invasive.chart.vector_occurrance.species")}:&nbsp;</b>
+                                    {isNotNull(studyObject.VECTOR_SPECIES)
+                                        ? studyObject.VECTOR_SPECIES
+                                        : isNotNull(studyObject.VECTOR_SPECIES_COMPLEX)
+                                        ? studyObject.VECTOR_SPECIES_COMPLEX
+                                        : ""}
+                                </Typography>
+                            </Flex>
+                        )}
+                        {duration && (
+                            <Flex>
+                                <Typography variant="body2">
+                                    <b>{samplingPeriod}:&nbsp;</b>
+                                    {duration}
+                                </Typography>
+                            </Flex>
+                        )}
+                        <Flex>
+                            <Typography variant="body2">
+                                <b>{samplingMethod}:&nbsp;</b>
+                                {studyObject.SAMPLING_METHOD ||
+                                    t("common.invasive.chart.vector_occurrance.no_available")}
+                            </Typography>
+                        </Flex>
+                        <Flex>
+                            <Typography variant="body2">
+                                <b>{studyIdentificationMethod}:&nbsp;</b>
+                                {studyObject.ID_METHOD
+                                    ? lowerCase(studyObject.ID_METHOD)
+                                    : t("common.invasive.chart.vector_occurrance.no_available")}
+                            </Typography>
+                        </Flex>
+                    </Margin>
+                    <Margin>
+                        <Citation study={studyObject} />
+                    </Margin>
+                    <Curation study={studyObject} />
+                </>
+            )}
         </ChartContainer>
     );
 };

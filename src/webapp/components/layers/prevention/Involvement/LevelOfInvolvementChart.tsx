@@ -21,10 +21,11 @@ const mapStateToProps = (state: State) => ({
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
     studies: PreventionStudy[];
+    popup?: boolean;
 };
 type Props = StateProps & OwnProps;
 
-const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
+const LevelOfInvolvementChart = ({ studies: baseStudies, popup }: Props) => {
     const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const groupedStudies = R.values(R.groupBy(R.prop("CITATION_URL"), baseStudies));
@@ -61,6 +62,7 @@ const LevelOfInvolvementChart = ({ studies: baseStudies }: Props) => {
             setStudy={setStudy}
             study={study}
             options={options(data, translations)}
+            popup={popup}
         />
     );
 };

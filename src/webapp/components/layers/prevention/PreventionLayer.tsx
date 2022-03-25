@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { State, PreventionMapType } from "../../../store/types";
+import { State } from "../../../store/types";
 import { studiesToGeoJson, getCountryStudies } from "../layer-utils";
 import setupEffects from "../effects";
 import * as R from "ramda";
@@ -21,16 +21,12 @@ import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import {
     fetchPreventionStudiesRequest,
     setPreventionFilteredStudiesAction,
+    setPreventionStudySelection
 } from "../../../store/actions/prevention-actions";
 import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import SitePopover from "../common/SitePopover";
-import PboSitePopup from "./PboDeployment/PboSitePopup";
-import IntensityStatusPopup from "./IntensityStatus/IntensityStatusPopup";
-import LevelOfInvolvementPopup from "./Involvement/LevelOfInvolvementPopup";
-import ResistanceMechanismsPopup from "./ResistanceMechanisms/ResistanceMechanismsPopup";
-import ResistanceStatusPopup from "./ResistanceStatus/ResistanceStatusPopup";
-
+import PreventionSelectionChart from "./PreventionSelectionChart";
 export const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
 const PREVENTION_SOURCE_ID = "prevention-source";
@@ -61,6 +57,7 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     fetchPreventionStudies: fetchPreventionStudiesRequest,
     setFilteredStudies: setPreventionFilteredStudiesAction,
+    setPreventionStudySelection: setPreventionStudySelection,
     setSelection: setSelection,
     setSidebarOpen: setSidebarOpen,
 };
@@ -267,15 +264,18 @@ class PreventionLayer extends Component<Props> {
             countryMode,
             selection,
             setSidebarOpen,
-            preventionFilters: { mapType },
         } = this.props;
-        if (selection === null) {
+
+    if (selection === null) {
             setSidebarOpen(false);
             return <div />;
         }
         const filteredStudies = this.filterStudies(studies).filter(study =>
             countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
+
+        this.props.setPreventionStudySelection(filteredStudies);
+
         if (filteredStudies.length === 0) {
             return <div />;
         }
@@ -283,21 +283,7 @@ class PreventionLayer extends Component<Props> {
         return (
             this.props.theme === "prevention" && (
                 <SitePopover map={this.props.map}>
-                    {!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
-                        <PboSitePopup studies={filteredStudies} />
-                    )}
-                    {!countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
-                        <IntensityStatusPopup studies={filteredStudies} />
-                    )}
-                    {!countryMode && mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
-                        <LevelOfInvolvementPopup studies={filteredStudies} />
-                    )}
-                    {!countryMode && mapType === PreventionMapType.RESISTANCE_MECHANISM && (
-                        <ResistanceMechanismsPopup studies={filteredStudies} />
-                    )}
-                    {!countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
-                        <ResistanceStatusPopup studies={filteredStudies} />
-                    )}
+                     <PreventionSelectionChart studies={filteredStudies} popup={true}/>
                 </SitePopover>
             )
         );

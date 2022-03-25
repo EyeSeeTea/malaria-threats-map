@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { selectTheme, selectSelection, selectViewData } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -22,15 +22,20 @@ import {
     getMostRecentByCriteria2,
     getMostRecentByCriteria3,
 } from "../utils";
+import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
+
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     preventionFilters: selectPreventionFilters(state),
+    selection: selectSelection(state),
+    viewData: selectViewData(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
     studies: PreventionStudy[];
+    popup?: boolean;
 };
 type Props = StateProps & OwnProps;
 
@@ -65,7 +70,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const PboSiteChart = ({ studies }: Props) => {
+const PboSiteChart = ({ studies, popup, selection, viewData }: Props) => {
     const { t } = useTranslation();
     const siteSubtitleTranslation = t("common.prevention.chart.pbo_deployment.subtitle");
 
@@ -104,13 +109,16 @@ const PboSiteChart = ({ studies }: Props) => {
     });
     const studyObject = studies[0];
     return (
-        <ChartContainer>
+        <ChartContainer popup={popup}>
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
                     studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">{siteSubtitleTranslation}</Typography>
+            {selection !== null && popup && <ViewSummaryDataButton />}
+            {viewData !== null && !popup && (
+            <>
             <div className={classes.root}>
                 <Table aria-label="simple table" size="small" className={classes.table}>
                     <TableHead className={classes.head}>
@@ -159,6 +167,7 @@ const PboSiteChart = ({ studies }: Props) => {
                     </TableBody>
                 </Table>
             </div>
+            </> )}
         </ChartContainer>
     );
 };

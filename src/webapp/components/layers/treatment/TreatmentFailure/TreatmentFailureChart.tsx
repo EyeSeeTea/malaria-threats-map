@@ -174,18 +174,20 @@ const TreatmentFailureChart = ({ studies, selection, viewData, popup }: Props) =
             </Typography>
             {selection !== null && popup && <ViewSummaryDataButton />}
             {viewData !== null && !popup && (
-            <> 
-            <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
-            <Margin>
-                <Flex style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                    <Typography variant="body2">
-                        {t("common.treatment.chart.treatment_failure.additional_information")}
-                    </Typography>
-                    <StyledButton onClick={() => setShowMore(prev => !prev)}>
-                        {t(`common.treatment.chart.treatment_failure.${showMore ? "show_less" : "show_more"}`)}
-                    </StyledButton>
-                </Flex>
-            </Margin></>)}
+                <>
+                    <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
+                    <Margin>
+                        <Flex style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                            <Typography variant="body2">
+                                {t("common.treatment.chart.treatment_failure.additional_information")}
+                            </Typography>
+                            <StyledButton onClick={() => setShowMore(prev => !prev)}>
+                                {t(`common.treatment.chart.treatment_failure.${showMore ? "show_less" : "show_more"}`)}
+                            </StyledButton>
+                        </Flex>
+                    </Margin>
+                </>
+            )}
             {showMore && (
                 <Margin>
                     {sortedStudies.map((study, index) => (
@@ -218,7 +220,6 @@ const TreatmentFailureChart = ({ studies, selection, viewData, popup }: Props) =
                     ))}
                 </Margin>
             )}
-            
         </ChartContainer>
     );
 };

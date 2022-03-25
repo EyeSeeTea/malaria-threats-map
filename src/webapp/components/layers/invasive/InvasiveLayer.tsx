@@ -9,7 +9,6 @@ import {
     selectRegion,
     selectSelection,
     selectTheme,
-    selectViewData
 } from "../../../store/reducers/base-reducer";
 import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
@@ -17,14 +16,12 @@ import * as R from "ramda";
 import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectInvasiveFilters, selectInvasiveStudies } from "../../../store/reducers/invasive-reducer";
-import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
+import { setInvasiveFilteredStudiesAction, setInvasiveStudySelection } from "../../../store/actions/invasive-actions";
 import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
 import { fetchInvasiveStudiesRequest } from "../../../store/actions/invasive-actions";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import SitePopover from "../common/SitePopover";
-import VectorOccurranceChart from "./VectorOccurance/VectorOccurranceChart";
 import InvasiveSelectionChart from "./InvasiveSelectionChart";
-
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
@@ -56,6 +53,7 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     fetchInvasiveStudies: fetchInvasiveStudiesRequest,
     setFilteredStudies: setInvasiveFilteredStudiesAction,
+    setInvasiveStudySelection: setInvasiveStudySelection,
     setSelection: setSelection,
     setSidebarOpen: setSidebarOpen,
 };
@@ -228,7 +226,6 @@ class InvasiveLayer extends Component<Props> {
 
     render() {
         const { studies, countryMode, selection, setSidebarOpen } = this.props;
-
         if (selection === null) {
             setSidebarOpen(false);
             return <div />;
@@ -236,6 +233,9 @@ class InvasiveLayer extends Component<Props> {
         const filteredStudies = this.filterStudies(studies).filter(study =>
             countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
+
+        this.props.setInvasiveStudySelection(filteredStudies);
+
         if (filteredStudies.length === 0) {
             return <div />;
         }

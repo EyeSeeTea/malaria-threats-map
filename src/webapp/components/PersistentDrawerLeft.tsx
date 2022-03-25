@@ -173,22 +173,19 @@ function PersistentDrawerLeft({
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const isOpen = filtersOpen || storyMode;
-    console.log(isOpen);
-    console.log(sidebarOpen);
     useEffect(() => {
         if (viewData !== null && sidebarOpen === false) {
             setSidebarOpen(true);
         }
+        // eslint-disable-next-line
     }, [viewData]);
 
     useEffect(() => {
-        console.log(sidebarOpen);
         if (sidebarOpen !== null && isOpen !== null) {
             setTimeout(() => dispatchCustomEvent("resize"), 100);
         }
+        // eslint-disable-next-line
     }, [sidebarOpen]);
-
-    // Logic for switching out the filter sidebar or the story mode sidebar. I'm not sure if we want to keep it
 
     const prevFilterOpenRef = useRef<boolean>();
     const prevStoryModeRef = useRef<boolean>();

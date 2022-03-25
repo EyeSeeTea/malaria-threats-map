@@ -28,3 +28,7 @@ export const setSpecies = createAction(ActionTypeEnum.SetSpecies)<string[]>();
 export const setPreventionFilteredStudiesAction = createAction(ActionTypeEnum.SetPreventionFilteredStudies)<
     PreventionStudy[]
 >();
+
+export const setPreventionStudySelection = createAction(ActionTypeEnum.SetPreventionStudySelection)<
+    PreventionStudy[]
+>();

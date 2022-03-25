@@ -24,3 +24,7 @@ export const setExcludeLowerPatients = createAction(ActionTypeEnum.SetExcludeLow
 export const setExcludeLowerSamples = createAction(ActionTypeEnum.SetExcludeLowerSamples)<boolean>();
 
 export const setFilteredStudiesAction = createAction(ActionTypeEnum.SetTreatmentFilteredStudies)<TreatmentStudy[]>();
+
+export const setTreatmentStudySelection = createAction(ActionTypeEnum.SetTreatmentStudySelection)<
+TreatmentStudy[]
+>();

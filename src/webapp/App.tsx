@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import createStore from "./store";
 import DataProvider from "./components/DataProvider";
 import ReduxQuerySync from "./store/query-middleware";
-import { PreventionMapType, SiteSelection, State } from "./store/types";
+import { PreventionMapType, State } from "./store/types";
 import { Theme, StyledEngineProvider } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -15,13 +15,11 @@ import {
     setFiltersAction,
     setFiltersMode,
     setFiltersOpen,
-    setSidebarOpen,
     setRegionAction,
     setStoryModeAction,
     setStoryModeStepAction,
     setThemeAction,
     toggleEndemicityLayerAction,
-    setViewData,
 } from "./store/actions/base-actions";
 import {
     setAssayTypes,

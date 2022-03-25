@@ -4,16 +4,19 @@ import HighchartsReact from "highcharts-react-official";
 import { Box, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { selectTheme, selectSelection, selectViewData } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import Citation from "../../../charts/Citation";
 import Pagination from "../../../charts/Pagination";
 import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import { ChartContainer } from "../../../Chart";
+import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
+    selection: selectSelection(state),
+    viewData: selectViewData(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -23,23 +26,28 @@ type OwnProps = {
     study: number;
     setStudy: React.Dispatch<React.SetStateAction<number>>;
     options: Highcharts.Options;
+    popup?: boolean;
 };
 type Props = StateProps & OwnProps;
 
-const IntensityInvolvementChart = ({ studyObject, options, groupedStudies, setStudy, study }: Props) => {
+const IntensityInvolvementChart = ({ studyObject, options, groupedStudies, setStudy, study, selection, viewData, popup }: Props) => {
     const { t } = useTranslation();
     return (
-        <ChartContainer>
-            {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
+        <ChartContainer popup={popup}>
+            {viewData !== null && !popup && groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
                     studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">{`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}</Typography>
-            <HighchartsReact highcharts={Highcharts} options={options} />
-            <Citation study={studyObject} />
-            <Curation study={studyObject} />
+            {selection !== null && popup && <ViewSummaryDataButton />}
+            {viewData !== null && !popup && (
+            <>
+                <HighchartsReact highcharts={Highcharts} options={options} />
+                <Citation study={studyObject} />
+                <Curation study={studyObject} />
+            </>)}
         </ChartContainer>
     );
 };

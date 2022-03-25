@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Box, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { selectTheme, selectSelection, selectViewData } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import Citation from "../../../charts/Citation";
 import * as R from "ramda";
@@ -16,6 +16,7 @@ import { isNotNull } from "../../../../utils/number-utils";
 import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import { ChartContainer } from "../../../Chart";
+import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 
 const Flex = styled.div`
     display: flex;
@@ -90,15 +91,18 @@ const options2: (data: any, categories: any[], translations: any) => Highcharts.
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
+    selection: selectSelection(state),
+    viewData: selectViewData(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
     studies: PreventionStudy[];
+    popup?: boolean;
 };
 type Props = StateProps & OwnProps;
 
-const ResistanceMechanismsChart = ({ studies }: Props) => {
+const ResistanceMechanismsChart = ({ studies, selection, viewData, popup }: Props) => {
     const { t } = useTranslation();
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
@@ -173,13 +177,16 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
     const showAllelic = R.any(serie => R.any(data => data.y !== undefined, serie.data), series);
 
     return (
-        <ChartContainer>
+        <ChartContainer popup={popup}>
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studies[0].VILLAGE_NAME}, ${t(
                     studies[0].ISO2 === "NA" ? "common.COUNTRY_NA" : studies[0].ISO2
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">{`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}</Typography>
+            {selection !== null && popup && <ViewSummaryDataButton />}
+            {viewData !== null && !popup && (
+            <>
             <Flex>
                 <FlexCol>
                     <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
@@ -192,6 +199,7 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
             </Flex>
             <Citation study={studies[0]} />
             <Curation study={studies[0]} />
+            </>)}
         </ChartContainer>
     );
 };
