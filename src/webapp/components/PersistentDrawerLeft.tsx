@@ -27,7 +27,6 @@ import StoryModeStepper from "./StoryModeStepper";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { DiagnosisIcon, FilterIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import { colors } from "../constants/theme";
-import MapTypesSelector from "./MapTypesSelector";
 import MobileOptions from "./MobileOptions";
 import Loader from "./Loader";
 import Hidden from "./hidden/Hidden";
@@ -253,7 +252,7 @@ function PersistentDrawerLeft({
                                 >
                                     <FilterIcon />
                                 </IconButton>
-                                <MapTypesSelector />
+
                                 <IconButton
                                     color="default"
                                     className={classes.iconButton}
