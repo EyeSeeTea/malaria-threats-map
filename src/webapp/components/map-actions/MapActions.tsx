@@ -17,6 +17,7 @@ const RoundedCard = styled(Card)`
     padding: 0px;
     border-radius: 12px;
     width: 311px;
+    overflow: visible;
 `;
 
 const StyledList = styled(List)`

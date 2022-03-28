@@ -50,6 +50,7 @@ const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, setVectorSpecie
     return (
         <MultiFilter
             label={t("common.filters.vector_species")}
+            placeholder={t("common.filters.select_vector_species")}
             options={suggestions}
             onChange={setVectorSpecies}
             value={invasiveFilters.vectorSpecies}

@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { setRegionAction } from "../../store/actions/base-actions";
 import { selectRegion, selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
-import FormLabel from "@mui/material/FormLabel";
-import { Divider, FilterWrapper } from "./Filters";
 import { selectFilteredPreventionStudies } from "../../store/reducers/prevention-reducer";
 import { selectFilteredDiagnosisStudies } from "../../store/reducers/diagnosis-reducer";
 import { selectFilteredTreatmentStudies } from "../../store/reducers/treatment-reducer";
@@ -12,8 +10,8 @@ import { selectFilteredInvasiveStudies } from "../../store/reducers/invasive-red
 import * as R from "ramda";
 import { sendAnalytics } from "../../utils/analytics";
 import { Study } from "../../../domain/entities/Study";
-import IntegrationReactSelect from "../BasicSelect";
 import { useTranslation } from "react-i18next";
+import SingleFilter from "./common/SingleFilter";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -42,16 +40,9 @@ function SiteSelector({
     setRegion,
 }: Props) {
     const { t } = useTranslation();
-    const [input, setInput] = useState("");
-    const onChange = (selection: any) => {
-        const label = selection ? selection.value : undefined;
-        if (label) sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label });
-        setRegion({
-            site: selection ? selection.value : undefined,
-            siteIso2: selection ? selection.iso2 : undefined,
-            siteCoordinates: selection ? selection.coords : undefined,
-            country: selection ? selection.iso2 : undefined,
-        });
+    const onChange = (selection?: string) => {
+        if (selection) sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label: selection });
+        setRegion({ site: selection });
     };
     const studies: Study[] = (() => {
         switch (theme) {
@@ -76,25 +67,16 @@ function SiteSelector({
         }))
     );
 
-    const suggestions = SITES_SUGGESTIONS.filter(
-        suggestion => suggestion.label && suggestion.label.toLowerCase().startsWith(input.toLowerCase())
-    )
-        .sort((a, b) => (a.label < b.label ? -1 : 1))
-        .slice(0, 10);
+    const suggestions = SITES_SUGGESTIONS.sort((a, b) => (a.label < b.label ? -1 : 1)).slice(0, 10);
 
     return (
-        <FilterWrapper>
-            <FormLabel component="legend">Site</FormLabel>
-            <Divider />
-            <IntegrationReactSelect
-                isClearable
-                placeholder={t("common.filters.select_site")}
-                suggestions={suggestions}
-                onChange={onChange}
-                onInputChange={setInput}
-                value={SITES_SUGGESTIONS.find((s: any) => s.value === region.site) || null}
-            />
-        </FilterWrapper>
+        <SingleFilter
+            label={t("common.filters.site")}
+            placeholder={t("common.filters.select_site")}
+            options={suggestions}
+            onChange={onChange}
+            value={region.site}
+        />
     );
 }
 
