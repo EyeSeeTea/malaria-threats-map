@@ -10,7 +10,7 @@ import styled from "styled-components";
 
 const StyledButton = styled(Button)`
     color: black;
-    padding: 16px;
+    padding: 15px 20px;
 `;
 
 const Title = styled.span`

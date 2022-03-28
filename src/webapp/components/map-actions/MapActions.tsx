@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next";
 const RoundedCard = styled(Card)`
     padding: 0px;
     border-radius: 12px;
-    width: 300px;
+    width: 311px;
 `;
 
 const StyledList = styled(List)`

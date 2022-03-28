@@ -7,9 +7,10 @@
         "themes": {
             "prevention": "Vector insecticide resistance",
             "diagnosis": "Parasite pfhrp2/3 gene deletions",
-            "treatment": "Parasite drug efficacy and resistance",
+            "treatment": "Antimalarial drug efficacy and resistance",
             "invasive": "Invasive vector species",
-            "mekong": "Greater Mekong Subregion"
+            "mekong": "Greater Mekong Subregion",
+            "learnMore": "Learn More"
         },
         "themes_caps": {
             "prevention": "VECTOR INSECTICIDE RESISTANCE",
@@ -25,11 +26,17 @@
         },
         "prevention": {
             "resistance_status": "Insecticide resistance status",
+            "resistance_status_subtitle": "Results of discriminating concentration bioassays",
             "resistance_intensity": "Insecticide resistance intensity",
+            "resistance_intensity_subtitle": "Results of intensity concentration bioassays",
             "resistance_mechanism": "Resistance mechanisms detection",
+            "resistance_mechanism_subtitle": "Results of molecular assays, biochemical assays and synergist-insecticide bioassays",
             "synergist_involvement": "Synergist effect in susceptibility",
+            "synergist_involvement_subtitle": "Results of synergist-insecticide bioassays (mono oxygenases only)",
             "synergist_involvement_legend": "Effect of synergy in susceptibility",
+            "synergist_involvement_legend_subtitle": "Effect of synergy in susceptibility",
             "pbo_deployment": "Pyrethroid-PBO nets deployment",
+            "pbo_deployment_subtitle": "See whether sites meet the WHO criteria for Pyrethroid-PBO net deployment",
             "pbo_deployment_legend": "Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment by vector species",
             "chart": {
                 "resistance_status": {
@@ -167,9 +174,12 @@
         },
         "treatment": {
             "treatment_failure": "Treatment failure",
+            "treatment_failure_subtitle": "Results of therapeutic efficacy studies",
             "delayed_parasite_clearance": "Delayed parasite clearance (P.f)",
+            "delayed_parasite_clearance_subtitle": "Results of therapeutic efficacy studies",
             "delayed_parasite_clearance_italics": "Delayed parasite clearance (<i>P.f </i>)",
             "molecular_markers": "Molecular markers of drug resistance",
+            "molecular_markers_subtitle": "Results of studies of molecular prevention",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against <i>{{plasmodiumSpecies}}</i> {{years}}",

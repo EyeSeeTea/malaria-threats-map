@@ -9,7 +9,8 @@
             "diagnosis": "Deleción del gen pfhrp2/3 del parásito",
             "treatment": "Eficacia y resistencia a los medicamentos antipalúdicos",
             "invasive": "Especies vectoras invasoras",
-            "mekong": "Subregión del Gran Mekong"
+            "mekong": "Subregión del Gran Mekong",
+            "learnMore": "Aprende más"
         },
         "themes_caps": {
             "prevention": "RESISTENCIA A INSECTICIDAS EN LOS VECTORES DE MALARIA",
@@ -25,11 +26,16 @@
         },
         "prevention": {
             "resistance_status": "Estado de la resistencia a insecticidas",
+            "resistance_status_subtitle": "Estado de la resistencia a insecticidas",
             "resistance_intensity": "Intensidad de la resistencia a insecticidas",
+            "resistance_intensity_subtitle": "Intensidad de la resistencia a insecticidas",
             "resistance_mechanism": "Mecanismos de la resistencia a insecticidas",
+            "resistance_mechanism_subtitle": "Mecanismos de la resistencia a insecticidas",
             "synergist_involvement": "Efecto sinérgico en susceptibilidad",
+            "synergist_involvement_subtitle": "Efecto sinérgico en susceptibilidad",
             "synergist_involvement_legend": "Efecto de la sinergia en susceptibilidad",
             "pbo_deployment": "Despliegue de mosquiteros PBO-piretroide",
+            "pbo_deployment_subtitle": "Despliegue de mosquiteros PBO-piretroide",
             "pbo_deployment_legend": "Cumplimiento de los criterios recomendados por la OMS para el despliegue de mosquiteros con PBO y piretroide",
             "chart": {
                 "resistance_status": {
@@ -167,9 +173,12 @@
         },
         "treatment": {
             "treatment_failure": "Fallo terapeutico",
+            "treatment_failure_subtitle": "Fallo terapeutico",
             "delayed_parasite_clearance": "Eliminación tardía de parásitos (P.f)",
+            "delayed_parasite_clearance_subtitle": "Eliminación tardía de parásitos (P.f)",
             "delayed_parasite_clearance_italics": "Eliminación tardía de parásitos (<i>P.f </i>)",
             "molecular_markers": "Marcadores moleculares de resistencia a los medicamentos",
+            "molecular_markers_subtitle": "Marcadores moleculares de resistencia a los medicamentos",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} estudios de eficacia terapéutica efectuados en la eficacia {{drug}} contra <i>{{plasmodiumSpecies}}</i> {{years}}",
