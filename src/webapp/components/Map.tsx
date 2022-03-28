@@ -57,6 +57,7 @@ import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
 import MapActions from "./map-actions/MapActions";
+import { dispatchCustomEvent } from "../utils/dom-utils";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
@@ -215,6 +216,8 @@ class Map extends React.Component<Props> {
         if (pageView && !this.props.initialDialogOpen) {
             sendAnalytics({ type: "pageView", ...pageView });
         }
+
+        setTimeout(() => dispatchCustomEvent("resize"), 100);
     }
 
     componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {
