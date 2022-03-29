@@ -499,7 +499,7 @@
             "select_story_mode": "Select story mode"
         },
         "icons": {
-            "animation": "Temporal animation",
+            "animation": "Play animation",
             "endemicity": "Shade non-endemic countries",
             "visualization": "Country/site mode",
             "story": "Story mode",

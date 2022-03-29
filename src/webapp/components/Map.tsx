@@ -48,7 +48,6 @@ import Report from "./Report";
 import Feedback from "./Feedback";
 import InitialDisclaimer from "./InitialDisclaimer";
 import TheaterMode from "./TheaterMode";
-import TheaterModeIcon from "./TheaterMode/TheaterModeIcon";
 import InitialDialog from "./InitialDialog";
 import TourIcon from "./TourIcon";
 import ShareIcon from "./ShareIcon";
@@ -265,7 +264,6 @@ class Map extends React.Component<Props> {
                         <Hidden smDown>
                             <MalariaTour />
                         </Hidden>
-                        <TheaterModeIcon />
                         <Layers />
                         <Country disabled={isInvasive} />
                         {!isMobile && <DataDownload />}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Slider, FormLabel, styled as muiStyled } from "@mui/material";
+import { Slider, FormLabel, styled as MuiStyled, Divider as MuiDivider } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import * as R from "ramda";
@@ -9,21 +9,23 @@ import { setFiltersAction } from "../store/actions/base-actions";
 import { sendAnalytics } from "../utils/analytics";
 import { Divider, FilterColumContainer } from "./filters/Filters";
 import styled from "styled-components";
+import TheaterMode from "./TheaterMode/TheaterMode";
 
 const Row = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     font-size: 10px;
-    margin-top: 5px;
+    margin: 15px 0px;
+    padding: 0px 15px;
 `;
 
-const StyledSlider = muiStyled(Slider)(() => ({
+const StyledSlider = MuiStyled(Slider)(() => ({
     color: "#2fb3af",
     display: "table",
     margin: "0 auto",
-    padding: "5px 0px",
-    width: "90%",
+    padding: "0px 0px 8px 0px",
+    width: "80%",
     "& .MuiSlider-valueLabel": {
         fontSize: 10,
         fontWeight: "bold",
@@ -82,8 +84,8 @@ const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = new 
     };
 
     return (
-        <FilterColumContainer padding={"10px"}>
-            <FormLabel component="legend" sx={{ marginBottom: "20px" }}>
+        <FilterColumContainer padding="0px">
+            <FormLabel component="legend" sx={{ marginBottom: "20px", padding: "10px" }}>
                 {t("common.filters.years")}
             </FormLabel>
             <Divider />
@@ -103,6 +105,8 @@ const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = new 
                     return <span key={year}>{year}</span>;
                 })}
             </Row>
+            <MuiDivider />
+            <TheaterMode />
         </FilterColumContainer>
     );
 };
