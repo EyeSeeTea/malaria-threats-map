@@ -26,16 +26,16 @@
         },
         "prevention": {
             "resistance_status": "État de résistance aux insecticides",
-            "resistance_status_subtitle": "État de résistance aux insecticides",
+            "resistance_status_subtitle": "Résultats d'essais biologiques de concentration discriminante",
             "resistance_intensity": "Intensité de la résistance aux insecticides",
-            "resistance_intensity_subtitle": "Intensité de la résistance aux insecticides",
+            "resistance_intensity_subtitle": "Résultats des essais biologiques de concentration d'intensité",
             "resistance_mechanism": "Mécanismes de résistance aux insecticides",
-            "resistance_mechanism_subtitle": "Mécanismes de résistance aux insecticides",
+            "resistance_mechanism_subtitle": "Résultats d'essais moléculaires, d'essais biochimiques et d'essais biologiques synergiste-insecticide",
             "synergist_involvement": "Effet synergiste de la susceptibilité",
             "synergist_involvement_subtitle": "Effet synergiste de la susceptibilité",
             "synergist_involvement_legend": "Effet de la synergie sur la susceptibilité",
             "pbo_deployment": "Déploiement de moustiquaires  PBO-pyréthroïde",
-            "pbo_deployment_subtitle": "Déploiement de moustiquaires  PBO-pyréthroïde",
+            "pbo_deployment_subtitle": "Voir si les sites répondent aux critères de l'OMS pour le déploiement de la moustiquaire Pyrethroid-PBO",
             "pbo_deployment_legend": "Conformité aux critères recommandés par l'OMS pour le  déploiementde moustiquaires avec PBO et pyréthroïde",
             "chart": {
                 "resistance_status": {
@@ -173,12 +173,12 @@
         },
         "treatment": {
             "treatment_failure": "Échec du traitement",
-            "treatment_failure_subtitle": "Échec du traitement",
+            "treatment_failure_subtitle": "Résultats des études d'efficacité thérapeutique",
             "delayed_parasite_clearance": "Retard dans l'élimination des parasites (P.f)",
-            "delayed_parasite_clearance_subtitle": "Retard dans l'élimination des parasites (P.f)",
+            "delayed_parasite_clearance_subtitle": "Résultats des études d'efficacité thérapeutique",
             "delayed_parasite_clearance_italics": "Retard dans l'élimination des parasites (<i>P.f </i>)",
             "molecular_markers": "Marqueurs moléculaires de la résistance aux médicaments",
-            "molecular_markers_subtitle": "Marqueurs moléculaires de la résistance aux médicaments",
+            "molecular_markers_subtitle": "Résultats des études de prévention moléculaire",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre <i>{{plasmodiumSpecies}}</i> {{years}}",

@@ -26,16 +26,16 @@
         },
         "prevention": {
             "resistance_status": "Estado de la resistencia a insecticidas",
-            "resistance_status_subtitle": "Estado de la resistencia a insecticidas",
+            "resistance_status_subtitle": "Resultados de bioensayos de concentración discriminatoria",
             "resistance_intensity": "Intensidad de la resistencia a insecticidas",
-            "resistance_intensity_subtitle": "Intensidad de la resistencia a insecticidas",
+            "resistance_intensity_subtitle": "Resultados de bioensayos de concentración de intensidad",
             "resistance_mechanism": "Mecanismos de la resistencia a insecticidas",
-            "resistance_mechanism_subtitle": "Mecanismos de la resistencia a insecticidas",
+            "resistance_mechanism_subtitle": "Resultados de ensayos moleculares, ensayos bioquímicos y bioensayos sinergistas-insecticidas",
             "synergist_involvement": "Efecto sinérgico en susceptibilidad",
-            "synergist_involvement_subtitle": "Efecto sinérgico en susceptibilidad",
+            "synergist_involvement_subtitle": "Resultados de bioensayos de insecticidas sinérgicos (solo monooxigenasas)",
             "synergist_involvement_legend": "Efecto de la sinergia en susceptibilidad",
             "pbo_deployment": "Despliegue de mosquiteros PBO-piretroide",
-            "pbo_deployment_subtitle": "Despliegue de mosquiteros PBO-piretroide",
+            "pbo_deployment_subtitle": "Ver si los sitios cumplen con los criterios de la OMS para el despliegue de redes PBO-piretroide",
             "pbo_deployment_legend": "Cumplimiento de los criterios recomendados por la OMS para el despliegue de mosquiteros con PBO y piretroide",
             "chart": {
                 "resistance_status": {
@@ -173,12 +173,12 @@
         },
         "treatment": {
             "treatment_failure": "Fallo terapeutico",
-            "treatment_failure_subtitle": "Fallo terapeutico",
+            "treatment_failure_subtitle": "Resultados de los estudios de eficacia terapéutica",
             "delayed_parasite_clearance": "Eliminación tardía de parásitos (P.f)",
-            "delayed_parasite_clearance_subtitle": "Eliminación tardía de parásitos (P.f)",
+            "delayed_parasite_clearance_subtitle": "Resultados de los estudios de eficacia terapéutica",
             "delayed_parasite_clearance_italics": "Eliminación tardía de parásitos (<i>P.f </i>)",
             "molecular_markers": "Marcadores moleculares de resistencia a los medicamentos",
-            "molecular_markers_subtitle": "Marcadores moleculares de resistencia a los medicamentos",
+            "molecular_markers_subtitle": "Resultados de estudios de prevención molecular",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} estudios de eficacia terapéutica efectuados en la eficacia {{drug}} contra <i>{{plasmodiumSpecies}}</i> {{years}}",
@@ -485,7 +485,7 @@
             "fileError": "No se puede leer el fichero"
         },
         "downloadFile": {
-            "title": "Descargar plantilla",
+            "title": "Descargar plantilla", 
             "button": "Descargar",
             "template": "Tipo de plantilla",
             "template1": "Resultados de bioensayos con insecticidas sinérgicos",
