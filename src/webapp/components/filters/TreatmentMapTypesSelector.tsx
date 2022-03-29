@@ -21,7 +21,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const treatmentSuggestions: ListSelectorItem[] = [
+export const treatmentSuggestions: ListSelectorItem[] = [
     {
         title: "common.treatment.treatment_failure",
         subtitle: "common.treatment.treatment_failure_subtitle",

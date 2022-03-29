@@ -752,7 +752,8 @@
     },
     "mapActions": {
         "theme": "SELECCIONA TEMA",
-        "mapType": "SELECCIONA TIPO DE MAPA",
+        "selectMapType": "SELECCIONA TIPO DE MAPA",
+        "mapType": "Mapa",
         "data": "FILTRO DE DATOS",
         "location": "FILTRO DE LOCALIZACIÓN (OPCIONAL)"
     },

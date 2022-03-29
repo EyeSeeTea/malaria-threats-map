@@ -21,7 +21,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const preventionSuggestions: ListSelectorItem[] = [
+export const preventionSuggestions: ListSelectorItem[] = [
     {
         title: "common.prevention.resistance_status",
         subtitle: "common.prevention.resistance_status_subtitle",

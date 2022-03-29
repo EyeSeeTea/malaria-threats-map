@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import { Card, Divider, List } from "@mui/material";
 import { connect } from "react-redux";
@@ -12,6 +12,16 @@ import styled from "styled-components";
 import TopicSelector from "../TopicSelector";
 import MapTypesSelector from "../MapTypesSelector";
 import { useTranslation } from "react-i18next";
+import { selectTheme } from "../../store/reducers/base-reducer";
+import { State } from "../../store/types";
+import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
+import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
+import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
+import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
+import { preventionSuggestions } from "../filters/PreventionMapTypesSelector";
+import { diagnosisSuggestions } from "../filters/DiagnosisMapTypesSelector";
+import { invasiveSuggestions } from "../filters/InvasiveMapTypesSelector";
+import { treatmentSuggestions } from "../filters/TreatmentMapTypesSelector";
 
 const RoundedCard = styled(Card)`
     padding: 0px;
@@ -24,25 +34,90 @@ const StyledList = styled(List)`
     padding: 0px;
 `;
 
-const MapActions: React.FC = () => {
+const Label = styled.span`
+    font-weight: bold;
+`;
+
+const mapStateToProps = (state: State) => ({
+    theme: selectTheme(state),
+    preventionFilters: selectPreventionFilters(state),
+    invasiveFilters: selectInvasiveFilters(state),
+    diagnosisFilters: selectDiagnosisFilters(state),
+    treatmentFilters: selectTreatmentFilters(state),
+});
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+
+const MapActions: React.FC<StateProps> = ({
+    theme,
+    preventionFilters,
+    invasiveFilters,
+    diagnosisFilters,
+    treatmentFilters,
+}) => {
     const { t } = useTranslation();
+
+    // const currentFilters = useMemo(() => {
+    //     switch (theme) {
+    //         case "prevention": {
+    //             return preventionFilters;
+    //         }
+    //         case "diagnosis": {
+    //             return diagnosisFilters;
+    //         }
+    //         case "invasive": {
+    //             return invasiveFilters;
+    //         }
+    //         case "treatment": {
+    //             return treatmentFilters;
+    //         }
+    //     }
+    // }, []);
+
+    const selectedMapType = useMemo(() => {
+        switch (theme) {
+            case "prevention": {
+                return preventionSuggestions[preventionFilters.mapType].title;
+            }
+            case "diagnosis": {
+                return diagnosisSuggestions[diagnosisFilters.mapType].title;
+            }
+            case "invasive": {
+                return invasiveSuggestions[invasiveFilters.mapType].title;
+            }
+            case "treatment": {
+                return treatmentSuggestions[treatmentFilters.mapType].title;
+            }
+        }
+    }, [theme, preventionFilters.mapType, diagnosisFilters.mapType, invasiveFilters.mapType, treatmentFilters.mapType]);
 
     return (
         <RoundedCard>
             <StyledList>
-                <ActionGroupItem title={t("mapActions.theme")} actionGroupKey={"THEME"}>
+                <ActionGroupItem placeholder={t("mapActions.theme")} actionGroupKey={"THEME"}>
                     <TopicSelector />
                 </ActionGroupItem>
                 <Divider />
-                <ActionGroupItem title={t("mapActions.mapType")} actionGroupKey={"MAP_TYPE"}>
-                    <MapTypesSelector />
+                <ActionGroupItem
+                    placeholder={t("mapActions.selectMapType")}
+                    value={
+                        selectedMapType && (
+                            <span>
+                                <Label>{t("mapActions.mapType")}:&nbsp;</Label>
+                                {t(selectedMapType)}
+                            </span>
+                        )
+                    }
+                    actionGroupKey={"MAP_TYPE"}
+                >
+                    {theme !== "diagnosis" && theme !== "invasive" && <MapTypesSelector />}
                 </ActionGroupItem>
                 <Divider />
-                <ActionGroupItem title={t("mapActions.data")} actionGroupKey={"DATA"}>
+                <ActionGroupItem placeholder={t("mapActions.data")} actionGroupKey={"DATA"}>
                     <FiltersContent />
                 </ActionGroupItem>
                 <Divider />
-                <ActionGroupItem title={t("mapActions.location")} actionGroupKey={"LOCATION"}>
+                <ActionGroupItem placeholder={t("mapActions.location")} actionGroupKey={"LOCATION"}>
                     <>
                         <RegionSelector />
                         <SubRegionSelector />
@@ -55,4 +130,4 @@ const MapActions: React.FC = () => {
     );
 };
 
-export default connect()(MapActions);
+export default connect(mapStateToProps)(MapActions);

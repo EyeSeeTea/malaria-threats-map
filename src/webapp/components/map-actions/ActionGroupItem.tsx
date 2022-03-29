@@ -11,12 +11,18 @@ import styled from "styled-components";
 const StyledButton = styled(Button)`
     color: black;
     padding: 15px 20px;
+    text-transform: none;
 `;
 
-const Title = styled.span`
+const Placeholder = styled.span`
     text-align: start;
     flex-grow: 1;
-    font-weight: bold;
+    font-weight_bold
+`;
+
+const Value = styled.span`
+    text-align: start;
+    flex-grow: 1;
 `;
 
 const TitleContainer = styled(ListItem)`
@@ -32,7 +38,8 @@ const mapDispatchToProps = {
 };
 
 type OwnProps = {
-    title: string;
+    placeholder: string;
+    value?: ReactNode;
     actionGroupKey: ActionGroup;
     children?: ReactNode | undefined;
 };
@@ -42,35 +49,37 @@ type DispatchProps = typeof mapDispatchToProps;
 type ActionGroupProps = DispatchProps & StateProps & OwnProps;
 
 const ActionGroupItem: React.FC<ActionGroupProps> = ({
-    title,
+    placeholder,
+    value,
     actionGroupKey,
     children,
     actionGroupSelected,
     setActionGroupSelected,
 }) => {
-    const [openCollapse, setOpenCollapse] = React.useState(false);
+    const [expanded, setExpanded] = React.useState(false);
 
     const handleExpand = () => {
-        setOpenCollapse(!openCollapse);
-        setActionGroupSelected(actionGroupKey);
+        if (children) {
+            setExpanded(!expanded);
+            setActionGroupSelected(actionGroupKey);
+        }
     };
 
-    React.useEffect(
-        () => setOpenCollapse(actionGroupSelected === actionGroupKey),
-        [actionGroupSelected, actionGroupKey]
-    );
+    React.useEffect(() => setExpanded(actionGroupSelected === actionGroupKey), [actionGroupSelected, actionGroupKey]);
 
     return (
         <React.Fragment>
             <TitleContainer onClick={handleExpand} disableGutters>
                 <StyledButton fullWidth={true}>
-                    <Title>{title}</Title>
-                    {openCollapse ? <ExpandLess /> : <ExpandMore />}
+                    {value && !expanded ? <Value>{value}</Value> : <Placeholder>{placeholder}</Placeholder>}
+                    {children ? expanded ? <ExpandLess /> : <ExpandMore /> : null}
                 </StyledButton>
             </TitleContainer>
-            <Collapse in={openCollapse} timeout="auto" unmountOnExit key={actionGroupKey}>
-                {children}
-            </Collapse>
+            {children && (
+                <Collapse in={expanded} timeout="auto" unmountOnExit key={actionGroupKey}>
+                    {children}
+                </Collapse>
+            )}
         </React.Fragment>
     );
 };

@@ -21,7 +21,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const diagnosisSuggestions: ListSelectorItem[] = [
+export const diagnosisSuggestions: ListSelectorItem[] = [
     { title: "common.diagnosis.gene_deletions", value: DiagnosisMapType.GENE_DELETIONS },
 ];
 

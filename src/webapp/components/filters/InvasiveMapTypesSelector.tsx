@@ -21,7 +21,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const invasiveSuggestions: ListSelectorItem[] = [
+export const invasiveSuggestions: ListSelectorItem[] = [
     {
         title: "common.invasive.vector_occurrance",
         value: InvasiveMapType.VECTOR_OCCURANCE,
