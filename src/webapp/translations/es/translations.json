@@ -751,7 +751,8 @@
         "p1b": "en diferentes áreas geográficas. El cumplimiento se ha evaluado utilizando los datos incluidos en la base de datos mundial sobre la resistencia a los insecticidas en los vectores de la malaria. El mapa muestra el estado de cumplimiento para las especies de vectores seleccionadas en el panel de filtros. Si no se ha seleccionado ninguna especie, el mapa considera todos los datos disponibles para evaluar los criterios."
     },
     "mapActions": {
-        "theme": "SELECCIONA TEMA",
+        "selectTheme": "SELECCIONA TEMA",
+        "theme": "TEMA",
         "selectMapType": "SELECCIONA TIPO DE MAPA",
         "mapType": "Mapa",
         "data": "FILTRO DE DATOS",

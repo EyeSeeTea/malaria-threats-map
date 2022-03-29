@@ -22,6 +22,7 @@ import { preventionSuggestions } from "../filters/PreventionMapTypesSelector";
 import { diagnosisSuggestions } from "../filters/DiagnosisMapTypesSelector";
 import { invasiveSuggestions } from "../filters/InvasiveMapTypesSelector";
 import { treatmentSuggestions } from "../filters/TreatmentMapTypesSelector";
+import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "../Icons";
 
 const RoundedCard = styled(Card)`
     padding: 0px;
@@ -36,6 +37,19 @@ const StyledList = styled(List)`
 
 const Label = styled.span`
     font-weight: bold;
+`;
+
+const Value = styled.span`
+    font-weight: normal;
+`;
+
+const Row = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -74,6 +88,49 @@ const MapActions: React.FC<StateProps> = ({
     //     }
     // }, []);
 
+    const themeValue = useMemo(() => {
+        switch (theme) {
+            case "prevention": {
+                return (
+                    <Row>
+                        <Label>{t("mapActions.theme")}:&nbsp;</Label>
+                        <PreventionIcon selected size={30} />
+                        <Value>{t("common.themes.prevention")}</Value>
+                    </Row>
+                );
+            }
+            case "diagnosis": {
+                return (
+                    <Row>
+                        <Label>{t("mapActions.theme")}:&nbsp;</Label>
+                        <DiagnosisIcon selected size={30} />
+                        <Value>{t("common.themes.diagnosis")}</Value>
+                    </Row>
+                );
+            }
+            case "invasive": {
+                return (
+                    <Row>
+                        <Label>{t("mapActions.theme")}:&nbsp;</Label>
+                        <InvasiveIcon selected size={30} />
+                        <Value>{t("common.themes.invasive")}</Value>
+                    </Row>
+                );
+            }
+            case "treatment": {
+                return (
+                    <Row>
+                        <Label>{t("mapActions.theme")}:&nbsp;</Label>
+                        <TreatmentIcon selected size={30} />
+                        <Value>{t("common.themes.treatment")}</Value>
+                    </Row>
+                );
+            }
+        }
+
+        return;
+    }, [theme, t]);
+
     const selectedMapType = useMemo(() => {
         switch (theme) {
             case "prevention": {
@@ -94,7 +151,7 @@ const MapActions: React.FC<StateProps> = ({
     return (
         <RoundedCard>
             <StyledList>
-                <ActionGroupItem placeholder={t("mapActions.theme")} actionGroupKey={"THEME"}>
+                <ActionGroupItem placeholder={t("mapActions.selectTheme")} actionGroupKey={"THEME"} value={themeValue}>
                     <TopicSelector />
                 </ActionGroupItem>
                 <Divider />
@@ -104,7 +161,7 @@ const MapActions: React.FC<StateProps> = ({
                         selectedMapType && (
                             <span>
                                 <Label>{t("mapActions.mapType")}:&nbsp;</Label>
-                                {t(selectedMapType)}
+                                <Value>{t(selectedMapType)}</Value>
                             </span>
                         )
                     }
