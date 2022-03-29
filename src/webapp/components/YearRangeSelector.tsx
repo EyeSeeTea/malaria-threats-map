@@ -1,6 +1,5 @@
 import React from "react";
-import makeStyles from "@mui/styles/makeStyles";
-import { Slider, FormLabel } from "@mui/material";
+import { Slider, FormLabel, styled as muiStyled } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import * as R from "ramda";
@@ -8,34 +7,38 @@ import { State } from "../store/types";
 import { selectFilters } from "../store/reducers/base-reducer";
 import { setFiltersAction } from "../store/actions/base-actions";
 import { sendAnalytics } from "../utils/analytics";
+import { Divider, FilterColumContainer } from "./filters/Filters";
+import styled from "styled-components";
 
-export function range(start: number, end: number, reverse?: boolean) {
-    const years = Array(end - start + 1)
-        .fill(1)
-        .map((_, idx) => start + idx);
-    return reverse ? R.reverse(years) : years;
-}
-const marks = (start: number, end: number) =>
-    range(start, end).map(year =>
-        year % 5 === 0
-            ? {
-                  value: year,
-                  label: year.toString(),
-              }
-            : {
-                  value: year,
-              }
-    );
+const Row = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 10px;
+    margin-top: 5px;
+`;
 
-const useStyles = makeStyles({
-    root: {
-        margin: "0px 24px",
+const StyledSlider = muiStyled(Slider)(() => ({
+    color: "#2fb3af",
+    display: "table",
+    margin: "0 auto",
+    padding: "5px 0px",
+    width: "90%",
+    "& .MuiSlider-valueLabel": {
+        fontSize: 10,
+        fontWeight: "bold",
+        backgroundColor: "unset",
+        color: "#2fb3af",
+        top: "-2px",
+        "&:before": {
+            display: "none",
+        },
+        "& *": {
+            background: "transparent",
+            color: "#2fb3af",
+        },
     },
-    slider: {
-        marginBottom: 20,
-        marginTop: 8,
-    },
-});
+}));
 
 function valuetext(value: number) {
     return `${value}°C`;
@@ -57,8 +60,14 @@ type OwnProps = {
 };
 type Props = OwnProps & DispatchProps & StateProps;
 
+export function range(start: number, end: number, reverse?: boolean) {
+    const years = Array(end - start + 1)
+        .fill(1)
+        .map((_, idx) => start + idx);
+    return reverse ? R.reverse(years) : years;
+}
+
 const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = new Date().getFullYear() }: Props) => {
-    const classes = useStyles({});
     const { t } = useTranslation();
 
     const handleChange = (event: Event, newValue: number | number[]) => {
@@ -73,22 +82,28 @@ const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = new 
     };
 
     return (
-        <div className={classes.root}>
-            <FormLabel component="legend">{t("common.filters.years")}</FormLabel>
-            <Slider
+        <FilterColumContainer padding={"10px"}>
+            <FormLabel component="legend" sx={{ marginBottom: "20px" }}>
+                {t("common.filters.years")}
+            </FormLabel>
+            <Divider />
+            <StyledSlider
                 size="small"
-                className={classes.slider}
                 value={filters}
                 onChange={handleChange}
-                valueLabelDisplay="auto"
+                valueLabelDisplay="on"
                 aria-labelledby="range-slider"
                 getAriaValueText={valuetext}
-                marks={marks(minYear, maxYear)}
                 step={1}
                 min={minYear}
                 max={maxYear}
             />
-        </div>
+            <Row>
+                {[minYear, maxYear - 10, maxYear].map(year => {
+                    return <span key={year}>{year}</span>;
+                })}
+            </Row>
+        </FilterColumContainer>
     );
 };
 export default connect(mapStateToProps, mapDispatchToProps)(YearRangeSelector);
