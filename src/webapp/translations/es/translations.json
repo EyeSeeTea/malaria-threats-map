@@ -485,7 +485,7 @@
             "fileError": "No se puede leer el fichero"
         },
         "downloadFile": {
-            "title": "Descargar plantilla", 
+            "title": "Descargar plantilla",
             "button": "Descargar",
             "template": "Tipo de plantilla",
             "template1": "Resultados de bioensayos con insecticidas sinérgicos",
