@@ -20,6 +20,7 @@ import {
     setUploadFileOpenAction,
     uploadFileSuccessAction,
     uploadFileErrorAction,
+    setActionGroupSelected,
 } from "../actions/base-actions";
 import { PreventionMapType, State } from "../types";
 import * as ajax from "../ajax";
@@ -57,12 +58,16 @@ export const setThemeEpic = (action$: Observable<ActionType<typeof setThemeActio
 
             switch (action.payload) {
                 case "invasive":
-                    return of(...[setCountryModeAction(false), ...base]);
+                    return of(...[setCountryModeAction(false), setActionGroupSelected("DATA"), ...base]);
                 case "prevention":
                     if (state.prevention.filters.mapType === PreventionMapType.PBO_DEPLOYMENT) {
-                        return of(...[setCountryModeAction(false), ...base]);
+                        return of(...[setCountryModeAction(false), setActionGroupSelected("MAP_TYPE"), ...base]);
                     }
-                    return of(...base);
+                    return of(setActionGroupSelected("MAP_TYPE"), ...base);
+                case "diagnosis":
+                    return of(...[setActionGroupSelected("DATA"), ...base]);
+                case "treatment":
+                    return of(...[setActionGroupSelected("MAP_TYPE"), ...base]);
                 default:
                     return of(...base);
             }
