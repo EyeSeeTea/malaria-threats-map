@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useCallback } from "react";
 
 import { connect } from "react-redux";
 import FiltersContent from "../filters/container/FiltersContent";
@@ -6,11 +6,16 @@ import ActionGroupItem from "./ActionGroupItem";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { selectFilters, selectTheme } from "../../store/reducers/base-reducer";
-import { State } from "../../store/types";
+import { PreventionMapType, State, TreatmentMapType } from "../../store/types";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
 import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
+import { selectTranslations } from "../../store/reducers/translations-reducer";
+import _ from "lodash";
+import { suggestions } from "../filters/VectorSpeciesFilter";
+import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
+import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
 
 const Label = styled.span`
     font-weight: bold;
@@ -27,6 +32,7 @@ const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
     yearFilters: selectFilters(state),
+    translations: selectTranslations(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -38,26 +44,98 @@ const DataMapActions: React.FC<StateProps> = ({
     diagnosisFilters,
     treatmentFilters,
     yearFilters,
+    translations,
 }) => {
     const { t } = useTranslation();
 
-    const selectedFilters = useMemo(() => {
+    const preventionFiltersValue = useCallback(() => {
         const years = yearFilters.join("-");
-        switch (theme) {
-            case "prevention": {
-                return `${t(preventionFilters.insecticideClass)} | ${years}`;
+        const insecticideClass = t(preventionFilters.insecticideClass);
+        const insecticideTypes = preventionFilters.insecticideTypes.map(item => t(item));
+        const type = t(preventionFilters.type);
+        const species = preventionFilters.species.map(item => t(item));
+        const assayTypes = preventionFilters.assayTypes.map(item => t(item));
+        const synergistTypes = preventionFilters.synergistTypes.map(item => t(item));
+
+        switch (preventionFilters.mapType) {
+            case PreventionMapType.RESISTANCE_STATUS: {
+                return _.compact([insecticideClass, ...insecticideTypes, type, ...species, years]).join(" | ");
             }
-            case "diagnosis": {
-                return years;
+            case PreventionMapType.INTENSITY_STATUS: {
+                return _.compact([insecticideClass, ...insecticideTypes, type, ...species, years]).join(" | ");
             }
-            case "invasive": {
-                return years;
+            case PreventionMapType.RESISTANCE_MECHANISM: {
+                return _.compact([type, ...assayTypes, ...species, years]).join(" | ");
             }
-            case "treatment": {
-                return years;
+            case PreventionMapType.LEVEL_OF_INVOLVEMENT: {
+                return _.compact([type, ...synergistTypes, ...species, years]).join(" | ");
+            }
+            case PreventionMapType.PBO_DEPLOYMENT: {
+                return _.compact([...insecticideTypes, ...species, years]).join(" | ");
             }
         }
-    }, [theme, yearFilters, preventionFilters, diagnosisFilters, invasiveFilters, treatmentFilters, t]);
+    }, [yearFilters, preventionFilters, t]);
+
+    const treatmentFiltersValue = useCallback(() => {
+        const years = yearFilters.join("-");
+        const exlude = treatmentFilters.excludeLowerPatients ? t("common.filters.exclude_lower_patients") : undefined;
+
+        switch (treatmentFilters.mapType) {
+            case TreatmentMapType.TREATMENT_FAILURE:
+            case TreatmentMapType.DELAYED_PARASITE_CLEARANCE: {
+                const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.find(
+                    item => item.value === treatmentFilters.plasmodiumSpecies
+                );
+                const drug = t(treatmentFilters.drug);
+
+                return _.compact([plasmodiumSpecies?.label, drug, exlude, years]).join(" | ");
+            }
+            case TreatmentMapType.MOLECULAR_MARKERS: {
+                const molecularMarker = MOLECULAR_MARKERS.find(item => item.value === treatmentFilters.molecularMarker);
+
+                return _.compact([molecularMarker?.label, exlude, years]).join(" | ");
+            }
+        }
+    }, [yearFilters, treatmentFilters, t]);
+
+    const selectedFilters = useMemo(() => {
+        if (!translations) return;
+
+        const years = yearFilters.join("-");
+
+        switch (theme) {
+            case "prevention": {
+                return preventionFiltersValue();
+            }
+            case "diagnosis": {
+                const deletionType = t(diagnosisFilters.deletionType);
+                const surveyTypes = diagnosisFilters.surveyTypes.map(item => t(item));
+                const patientType = t(diagnosisFilters.patientType);
+
+                return _.compact([deletionType, ...surveyTypes, patientType, years]).join(" | ");
+            }
+            case "invasive": {
+                const vectorSpecies = invasiveFilters.vectorSpecies.map(item => {
+                    const vectorSpecie = suggestions.find(sug => sug.value === item);
+                    return vectorSpecie.label;
+                });
+
+                return _.compact([...vectorSpecies, years]).join(" | ");
+            }
+            case "treatment": {
+                return treatmentFiltersValue();
+            }
+        }
+    }, [
+        theme,
+        translations,
+        preventionFiltersValue,
+        yearFilters,
+        diagnosisFilters,
+        invasiveFilters,
+        treatmentFiltersValue,
+        t,
+    ]);
 
     return (
         <ActionGroupItem

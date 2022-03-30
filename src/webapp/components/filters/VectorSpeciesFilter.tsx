@@ -18,7 +18,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const suggestions = [
+export const suggestions = [
     {
         label: "An. stephensi type form",
         value: "AN_STEPHENSI_TYPE_FORM",
