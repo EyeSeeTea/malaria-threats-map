@@ -57,6 +57,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ items, value, onChange }) =
                         key={item.title}
                         selected={selectedIndex === index}
                         onClick={event => handleListItemClick(event, index)}
+                        onMouseOver={event => handleListItemClick(event, index)}
                     >
                         <ListItemText primary={item.title} secondary={item.subtitle} />
                     </SelectableListItem>
