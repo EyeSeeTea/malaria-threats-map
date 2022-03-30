@@ -298,6 +298,7 @@
             "sub_region": "Subregion",
             "select_sub_region": "Select Subregion",
             "select_site": "Select Site",
+            "site": "Site",
             "exclude_lower_patients": "Exclude studies of less than 20 patients",
             "exclude_lower_samples": "Exclude studies of less than 20 samples"
         },
@@ -756,7 +757,8 @@
         "selectMapType": "SELECT MAP TYPE",
         "mapType": "Map",
         "data": "FILTER DATA",
-        "location": "FILTER LOCATION (OPTIONAL)"
+        "selectLocation": "FILTER LOCATION (OPTIONAL)",
+        "location": "Location"
     },
     "PBOStory": {
         "step1": {

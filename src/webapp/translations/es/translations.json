@@ -298,6 +298,7 @@
             "sub_region": "Subregión",
             "select_sub_region": "Seleccionar subregión",
             "select_site": "Seleccionar sitio",
+            "site": "Sitio",
             "exclude_lower_patients": "Excluir estudios de menos de 20 pacientes",
             "exclude_lower_samples": "Excluir estudios de menos de 20 muestras"
         },
@@ -752,11 +753,12 @@
     },
     "mapActions": {
         "selectTheme": "SELECCIONA TEMA",
-        "theme": "TEMA",
+        "theme": "Tema",
         "selectMapType": "SELECCIONA TIPO DE MAPA",
         "mapType": "Mapa",
         "data": "FILTRO DE DATOS",
-        "location": "FILTRO DE LOCALIZACIÓN (OPCIONAL)"
+        "selectLocation": "FILTRO DE LOCALIZACIÓN (OPCIONAL)",
+        "location": "Localización"
     },
     "PBOStory": {
         "step1": {

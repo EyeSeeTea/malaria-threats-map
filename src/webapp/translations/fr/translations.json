@@ -298,6 +298,7 @@
             "sub_region": "Sous-région",
             "select_sub_region": "Sélectionnez la sous-région",
             "select_site": "Sélectionnez un site",
+            "site": "Site",
             "exclude_lower_patients": "Exclure les études portant sur moins de 20 patients",
             "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons"
         },
@@ -757,7 +758,8 @@
         "selectMapType": "SÉLECTIONNER LE TYPE DE CARTE",
         "mapType": "Carte",
         "data": "FILTRER LES DONNÉES",
-        "location": "EMPLACEMENT DU FILTRE (FACULTATIF)"
+        "selectLocation": "EMPLACEMENT DU FILTRE (FACULTATIF)",
+        "location": "Emplacement"
     },
     "PBOStory": {
         "step1": {

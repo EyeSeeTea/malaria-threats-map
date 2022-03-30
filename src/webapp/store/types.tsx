@@ -24,6 +24,7 @@ export interface RegionState {
     region?: string;
     subRegion?: string;
     site?: string;
+    siteLabel?: string;
     siteIso2?: string;
     siteCoordinates?: [number, number];
 }

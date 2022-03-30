@@ -40,10 +40,7 @@ function SiteSelector({
     setRegion,
 }: Props) {
     const { t } = useTranslation();
-    const onChange = (selection?: string) => {
-        if (selection) sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label: selection });
-        setRegion({ site: selection });
-    };
+
     const studies: Study[] = (() => {
         switch (theme) {
             case "prevention":
@@ -68,6 +65,18 @@ function SiteSelector({
     );
 
     const suggestions = SITES_SUGGESTIONS.sort((a, b) => (a.label < b.label ? -1 : 1)).slice(0, 10);
+
+    const onChange = (selection?: string) => {
+        const site = suggestions.find(site => site.value === selection);
+        if (site) sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label: selection });
+        setRegion({
+            site: site ? site.value : undefined,
+            siteLabel: site ? site.label : undefined,
+            siteIso2: site ? site.iso2 : undefined,
+            siteCoordinates: site ? [+site.coords[0], +site.coords[1]] : undefined,
+            country: site ? site.iso2 : undefined,
+        });
+    };
 
     return (
         <SingleFilter

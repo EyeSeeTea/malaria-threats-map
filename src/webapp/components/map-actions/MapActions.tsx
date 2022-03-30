@@ -12,7 +12,7 @@ import styled from "styled-components";
 import TopicSelector from "../TopicSelector";
 import MapTypesSelector from "../MapTypesSelector";
 import { useTranslation } from "react-i18next";
-import { selectTheme } from "../../store/reducers/base-reducer";
+import { selectRegion, selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
@@ -58,6 +58,7 @@ const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
+    region: selectRegion(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -68,6 +69,7 @@ const MapActions: React.FC<StateProps> = ({
     invasiveFilters,
     diagnosisFilters,
     treatmentFilters,
+    region,
 }) => {
     const { t } = useTranslation();
 
@@ -148,6 +150,18 @@ const MapActions: React.FC<StateProps> = ({
         }
     }, [theme, preventionFilters.mapType, diagnosisFilters.mapType, invasiveFilters.mapType, treatmentFilters.mapType]);
 
+    const selectedRegion = useMemo(() => {
+        return region.region !== ""
+            ? region.region
+            : region.subRegion !== ""
+            ? region.subRegion
+            : region.siteLabel !== ""
+            ? region.siteLabel
+            : region.country !== ""
+            ? region.country
+            : undefined;
+    }, [region]);
+
     return (
         <RoundedCard>
             <StyledList>
@@ -174,7 +188,18 @@ const MapActions: React.FC<StateProps> = ({
                     <FiltersContent />
                 </ActionGroupItem>
                 <Divider />
-                <ActionGroupItem placeholder={t("mapActions.location")} actionGroupKey={"LOCATION"}>
+                <ActionGroupItem
+                    placeholder={t("mapActions.selectLocation")}
+                    actionGroupKey={"LOCATION"}
+                    value={
+                        selectedRegion && (
+                            <span>
+                                <Label>{t("mapActions.location")}:&nbsp;</Label>
+                                <Value>{t(selectedRegion)}</Value>
+                            </span>
+                        )
+                    }
+                >
                     <>
                         <RegionSelector />
                         <SubRegionSelector />
