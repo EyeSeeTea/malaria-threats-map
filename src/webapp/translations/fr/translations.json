@@ -757,7 +757,8 @@
         "theme": "Thème",
         "selectMapType": "SÉLECTIONNER LE TYPE DE CARTE",
         "mapType": "Carte",
-        "data": "FILTRER LES DONNÉES",
+        "selectData": "FILTRER LES DONNÉES",
+        "data": "Données",
         "selectLocation": "EMPLACEMENT DU FILTRE (FACULTATIF)",
         "location": "Emplacement"
     },

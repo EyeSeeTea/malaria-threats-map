@@ -756,7 +756,8 @@
         "theme": "Theme",
         "selectMapType": "SELECT MAP TYPE",
         "mapType": "Map",
-        "data": "FILTER DATA",
+        "selectData": "FILTER DATA",
+        "data": "Data",
         "selectLocation": "FILTER LOCATION (OPTIONAL)",
         "location": "Location"
     },
