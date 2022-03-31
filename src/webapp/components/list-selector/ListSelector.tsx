@@ -37,9 +37,10 @@ interface ListSelectorProps {
     items: ListSelectorItem[];
     value: ListSelectorItem;
     onChange: (selection: ListSelectorItem) => void;
+    onMouseOver?: (selection: ListSelectorItem) => void;
 }
 
-const ListSelector: React.FC<ListSelectorProps> = ({ items, value, onChange }) => {
+const ListSelector: React.FC<ListSelectorProps> = ({ items, value, onChange, onMouseOver }) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
 
     React.useEffect(() => setSelectedIndex(items.indexOf(value)), [value, items]);
@@ -47,6 +48,14 @@ const ListSelector: React.FC<ListSelectorProps> = ({ items, value, onChange }) =
     const handleListItemClick = (_event: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number) => {
         setSelectedIndex(index);
         onChange(items[index]);
+    };
+
+    const handleListItemMouseOver = (_event: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number) => {
+        setSelectedIndex(index);
+
+        if (onMouseOver) {
+            onMouseOver(items[index]);
+        }
     };
 
     return (
@@ -57,7 +66,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({ items, value, onChange }) =
                         key={item.title}
                         selected={selectedIndex === index}
                         onClick={event => handleListItemClick(event, index)}
-                        onMouseOver={event => handleListItemClick(event, index)}
+                        onMouseOver={event => handleListItemMouseOver(event, index)}
                     >
                         <ListItemText primary={item.title} secondary={item.subtitle} />
                     </SelectableListItem>

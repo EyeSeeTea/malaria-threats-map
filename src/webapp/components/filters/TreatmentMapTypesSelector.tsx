@@ -4,7 +4,7 @@ import { State, TreatmentMapType } from "../../store/types";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
 import { setTreatmentMapType } from "../../store/actions/treatment-actions";
 import { useTranslation } from "react-i18next";
-import { setMapTitleAction } from "../../store/actions/base-actions";
+import { setActionGroupSelected, setMapTitleAction } from "../../store/actions/base-actions";
 import { sendAnalyticsMapMenuChange } from "../../store/analytics";
 import ListSelector, { ListSelectorItem } from "../list-selector/ListSelector";
 
@@ -15,6 +15,7 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     setTreatmentMapType: setTreatmentMapType,
     setMapTitle: setMapTitleAction,
+    setActionGroupSelected: setActionGroupSelected,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -39,13 +40,23 @@ export const treatmentSuggestions: ListSelectorItem[] = [
     },
 ];
 
-function TreatmentMapTypesSelector({ setTreatmentMapType, setMapTitle, treatmentFilters }: Props) {
+function TreatmentMapTypesSelector({
+    setTreatmentMapType,
+    setMapTitle,
+    treatmentFilters,
+    setActionGroupSelected,
+}: Props) {
     const { t } = useTranslation();
 
     const onChange = (selection: ListSelectorItem) => {
         setTreatmentMapType(selection.value as TreatmentMapType);
         setMapTitle(t(selection.title));
         sendAnalyticsMapMenuChange("treatment", selection.value as TreatmentMapType);
+        setActionGroupSelected("DATA");
+    };
+
+    const onMouseOver = (selection: ListSelectorItem) => {
+        setTreatmentMapType(selection.value as TreatmentMapType);
     };
 
     React.useEffect(() => {
@@ -60,7 +71,7 @@ function TreatmentMapTypesSelector({ setTreatmentMapType, setMapTitle, treatment
 
     const value = React.useMemo(() => items.find(s => s.value === treatmentFilters.mapType), [treatmentFilters, items]);
 
-    return <ListSelector items={items} onChange={onChange} value={value} />;
+    return <ListSelector items={items} onChange={onChange} onMouseOver={onMouseOver} value={value} />;
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TreatmentMapTypesSelector);

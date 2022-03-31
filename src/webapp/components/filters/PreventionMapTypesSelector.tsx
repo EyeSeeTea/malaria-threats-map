@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { PreventionMapType, State } from "../../store/types";
 import { setPreventionMapType } from "../../store/actions/prevention-actions";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
-import { setMapTitleAction } from "../../store/actions/base-actions";
+import { setActionGroupSelected, setMapTitleAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
 import { sendAnalyticsMapMenuChange } from "../../store/analytics";
 import ListSelector, { ListSelectorItem } from "../list-selector/ListSelector";
@@ -15,6 +15,7 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     setPreventionMapType: setPreventionMapType,
     setMapTitle: setMapTitleAction,
+    setActionGroupSelected: setActionGroupSelected,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -48,13 +49,23 @@ export const preventionSuggestions: ListSelectorItem[] = [
         value: PreventionMapType.PBO_DEPLOYMENT,
     },
 ];
-function PreventionMapTypesSelector({ preventionFilters, setPreventionMapType, setMapTitle }: Props) {
+function PreventionMapTypesSelector({
+    preventionFilters,
+    setPreventionMapType,
+    setMapTitle,
+    setActionGroupSelected,
+}: Props) {
     const { t } = useTranslation();
 
     const onChange = (selection: ListSelectorItem) => {
         setPreventionMapType(selection.value as PreventionMapType);
         setMapTitle(t(selection.title));
         sendAnalyticsMapMenuChange("prevention", selection.value as PreventionMapType);
+        setActionGroupSelected("DATA");
+    };
+
+    const onMouseOver = (selection: ListSelectorItem) => {
+        setPreventionMapType(selection.value as PreventionMapType);
     };
 
     React.useEffect(() => {
@@ -72,7 +83,7 @@ function PreventionMapTypesSelector({ preventionFilters, setPreventionMapType, s
         [preventionFilters, items]
     );
 
-    return <ListSelector items={items} onChange={onChange} value={value} />;
+    return <ListSelector items={items} onChange={onChange} onMouseOver={onMouseOver} value={value} />;
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreventionMapTypesSelector);

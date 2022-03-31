@@ -56,16 +56,13 @@ const ActionGroupItem: React.FC<ActionGroupProps> = ({
     actionGroupSelected,
     setActionGroupSelected,
 }) => {
-    const [expanded, setExpanded] = React.useState(false);
+    const expanded = React.useMemo(() => actionGroupSelected === actionGroupKey, [actionGroupSelected, actionGroupKey]);
 
     const handleExpand = () => {
         if (children) {
-            setExpanded(!expanded);
-            setActionGroupSelected(actionGroupKey);
+            setActionGroupSelected(!expanded ? actionGroupKey : null);
         }
     };
-
-    React.useEffect(() => setExpanded(actionGroupSelected === actionGroupKey), [actionGroupSelected, actionGroupKey]);
 
     return (
         <React.Fragment>
