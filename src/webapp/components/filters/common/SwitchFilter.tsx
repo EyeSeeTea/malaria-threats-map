@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import {  FilterRowContainer } from "../Filters";
+import { FilterRowContainer } from "../Filters";
 import FormLabel from "@mui/material/FormLabel";
 import { logEventAction } from "../../../store/actions/base-actions";
-import {  Switch } from "@mui/material";
+import { Switch } from "@mui/material";
 
 type OwnProps = {
     label: string;
