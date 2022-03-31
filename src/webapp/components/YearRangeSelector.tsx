@@ -21,7 +21,6 @@ const Row = styled.div`
 `;
 
 const StyledSlider = MuiStyled(Slider)(() => ({
-    color: "#2fb3af",
     display: "table",
     margin: "0 auto",
     padding: "0px 0px 8px 0px",
@@ -90,6 +89,7 @@ const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = new 
             </FormLabel>
             <Divider />
             <StyledSlider
+                color="primary"
                 size="small"
                 value={filters}
                 onChange={handleChange}

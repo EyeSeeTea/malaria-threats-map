@@ -38,7 +38,7 @@ function TheaterMode({ theaterMode, setTheaterMode }: any) {
         <Row>
             <Typography>{t("common.icons.animation")}</Typography>
             <IconButton title={t("common.icons.animation")} onClick={() => setTheaterModeAndLog(!theaterMode)}>
-                <TheaterIcon htmlColor={"#2fb3af"} />
+                <TheaterIcon color="primary" />
             </IconButton>
         </Row>
     );
