@@ -42,6 +42,7 @@ type OwnProps = {
     value?: ReactNode;
     actionGroupKey: ActionGroup;
     children?: ReactNode | undefined;
+    childrenMaxHeight?: string;
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -55,6 +56,7 @@ const ActionGroupItem: React.FC<ActionGroupProps> = ({
     children,
     actionGroupSelected,
     setActionGroupSelected,
+    childrenMaxHeight,
 }) => {
     const expanded = React.useMemo(() => actionGroupSelected === actionGroupKey, [actionGroupSelected, actionGroupKey]);
 
@@ -73,7 +75,13 @@ const ActionGroupItem: React.FC<ActionGroupProps> = ({
                 </StyledButton>
             </TitleContainer>
             {children && (
-                <Collapse in={expanded} timeout="auto" unmountOnExit key={actionGroupKey}>
+                <Collapse
+                    in={expanded}
+                    timeout="auto"
+                    unmountOnExit
+                    key={actionGroupKey}
+                    sx={{ maxHeight: childrenMaxHeight, overflow: childrenMaxHeight ? "scroll" : undefined }}
+                >
                     {children}
                 </Collapse>
             )}

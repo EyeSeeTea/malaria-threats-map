@@ -139,6 +139,7 @@ const DataMapActions: React.FC<StateProps> = ({
 
     return (
         <ActionGroupItem
+            childrenMaxHeight={"500px"}
             placeholder={t("mapActions.selectData")}
             actionGroupKey={"DATA"}
             value={
