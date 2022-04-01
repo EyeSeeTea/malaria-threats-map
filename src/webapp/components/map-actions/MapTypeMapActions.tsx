@@ -64,6 +64,7 @@ const MapTypeMapActions: React.FC<StateProps> = ({
 
     return (
         <ActionGroupItem
+            childrenMaxHeight={"420px"}
             placeholder={t("mapActions.selectMapType")}
             value={
                 selectedMapType && (
