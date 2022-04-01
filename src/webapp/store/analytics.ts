@@ -8,7 +8,6 @@ const analyticsPaths = {
         [PreventionMapType.INTENSITY_STATUS]: "insecticideResistanceIntensity",
         [PreventionMapType.RESISTANCE_MECHANISM]: "resistance",
         [PreventionMapType.LEVEL_OF_INVOLVEMENT]: "metabolic",
-        [PreventionMapType.PBO_DEPLOYMENT]: "pyrethroid",
     },
     diagnosis: {
         [DiagnosisMapType.GENE_DELETIONS]: "gene",
