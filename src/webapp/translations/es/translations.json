@@ -29,8 +29,6 @@
             "resistance_mechanism": "Mecanismos de la resistencia a insecticidas",
             "synergist_involvement": "Efecto sinérgico en susceptibilidad",
             "synergist_involvement_legend": "Efecto de la sinergia en susceptibilidad",
-            "pbo_deployment": "Despliegue de mosquiteros PBO-piretroide",
-            "pbo_deployment_legend": "Cumplimiento de los criterios recomendados por la OMS para el despliegue de mosquiteros con PBO y piretroide",
             "chart": {
                 "resistance_status": {
                     "content_1": "{{nStudies}} pruebas con vectores ",
@@ -74,21 +72,6 @@
                     "number_of_tests": "Número de pruebas",
                     "mosquito_mortality": "% de mortalidad en los mosquitos",
                     "no_synergist": "No sinergista"
-                },
-                "pbo_deployment": {
-                    "subtitle": "Cumplimiento de los criterios recomendados por la OMS para el despliegue de redes piretroides-PBO por especies de vectores",
-                    "vector_species": "Especies de vectores",
-                    "vector_species_criteria": "Especies de vectores que cumplen con los criterios",
-                    "num_sites_criteria": "Número de sitios que cumplen con los criterios",
-                    "pyrethroid_resistance_status": "Estado de resistencia a piretroides",
-                    "adjusted_mortality": "Mortalidad ajustada frente a piretroides entre el 10% y el 80%",
-                    "most_recent_test_results": "Resultados de las pruebas de susceptibilidad a piretroides más recientes",
-                    "conferred_by_mono_oxygenase": "Conferida (al menos en parte) por mono-oxigenasa",
-                    "mono_oxygenase_measured_by": "Mono-oxigenasa medida por",
-                    "most_recent_mono_oxygenase_results": "Resultados más recientes de afectación de mono-oxigenasa",
-                    "yes": "Sí",
-                    "no": "No",
-                    "view_sites": "Ver sitios"
                 }
             },
             "legend": {
@@ -113,31 +96,6 @@
                     "full_involvement": "Participación total",
                     "partial_involvement": "Participación parcial",
                     "no_involvement": "Sin participación"
-                },
-                "pbo_deployment": {
-                    "eligible": "Todos los criterios cumplidos",
-                    "not_eligible": "Al menos un criterio no se cumple",
-                    "not_enough_data": "Es necesario recopilar más datos para evaluar los criterios",
-                    "expanded": {
-                        "eligible": "sitios donde al menos una especie de vector cumple los tres criterios recomendados por la OMS",
-                        "not_eligible": "sitios donde una de las especies de vectores para las que se dispone de datos viola al menos uno de los, y ninguna de las especies para las que se dispone de datos cumple los tres criterios.",
-                        "not_enough_data": "sitios con datos insuficientes para evaluar si las especies de vectores locales cumplen con los tres criterios",
-                        "p1": "Este mapa muestra el estado de cumplimiento de las poblaciones de vectores locales con la ",
-                        "p1Link": "https://apps.who.int/iris/bitstream/handle/10665/258939/WHO-HTM-GMP-2017.17-eng.pdf?sequence=5",
-                        "p1a": "tres criterios recomendados por la OMS ",
-                        "p2": "en diferentes sitios o áreas geográficas. El estado se ha evaluado con base en los datos incluidos en la base de datos mundial sobre la resistencia a los insecticidas en los vectores de la malaria. El mapa muestra el estado de cumplimiento de las especies de vectores seleccionadas en el panel de filtros. Si no se ha filtrado ninguna especie, el mapa considera todos los datos disponibles para evaluar los criterios."
-                    },
-                    "link": "https://www.who.int/malaria/publications/atoz/9789241511575/es/",
-                    "link_text": "Procedimientos de las pruebas para la vigilancia de la resistencia a los insecticidas en los mosquitos vectores del paludismo, Segunda edición",
-                    "link_content_1": "Más información sobre las recomendaciones de la OMS para el despliegue de mosquiteros con PBO y piretroide está disponible en los ",
-                    "link_content_2": ". Estas recomendaciones se actualizarán a medida que se obtenga nueva evidencia cientifica.",
-                    "countries_legend": {
-                        "at_least_one_site": "Al menos un sitio cumple con los tres criterios recomendados por la OMS",
-                        "insufficient_to_judge": "Los datos de seguimiento informados son insuficientes para juzgar la comestibilidad",
-                        "no_reports_available": "No se dispone de informes sobre el seguimiento de los criterios recomendados por la OMS.",
-                        "not_malaria_endemic": "La malaria no es endémica",
-                        "not_applicable": "No aplica"
-                    }
                 }
             }
         },
