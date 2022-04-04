@@ -58,6 +58,7 @@ import ShareIcon from "./ShareIcon";
 import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
+import Admin0BaseLayer from "./layers/Admin0BaseLayer";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
@@ -235,6 +236,7 @@ class Map extends React.Component<Props> {
                     ref={el => (this.mapContainer = el)}
                     style={{ position: "absolute", bottom: 0, top: 0, right: 0, left: 0 }}
                 />
+                 {ready && <Admin0BaseLayer map={this.map} />}
                 {ready && <EndemicityLayer map={this.map} />}
                 {isPbo && countryMode ? (
                     <>
