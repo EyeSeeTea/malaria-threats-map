@@ -63,7 +63,6 @@ export enum ActionTypeEnum {
     SetDiagnosisFilteredStudies = "diagnosis/SET_FILTER_STUDIES",
     SetDiagnosisStudySelection = "diagnosis/SET_STUDY_SELECTION",
 
-
     FetchTreatmentStudiesRequest = "treatment/FETCH_TREATMENT_STUDIES_REQUEST",
     FetchTreatmentStudiesSuccess = "treatment/FETCH_TREATMENT_STUDIES_SUCCESS",
     FetchTreatmentStudiesError = "treatment/FETCH_TREATMENT_STUDIES_ERROR",
@@ -77,7 +76,6 @@ export enum ActionTypeEnum {
     SetExcludeLowerSamples = "treatment/SET_EXCLUDE_LOWER_SAMPLES",
     SetTreatmentStudySelection = "treatment/SET_STUDY_SELECTION",
 
-
     FetchInvasiveStudiesRequest = "invasive/FETCH_INVASIVE_STUDIES_REQUEST",
     FetchInvasiveStudiesSuccess = "invasive/FETCH_INVASIVE_STUDIES_SUCCESS",
     FetchInvasiveStudiesError = "invasive/FETCH_INVASIVE_STUDIES_ERROR",
@@ -86,7 +84,6 @@ export enum ActionTypeEnum {
     SetInvasiveVectorSpecies = "invasive/SET_INVASIVE_VECTOR_SPECIES",
     SetInvasiveFilteredStudies = "invasive/SET_FILTER_STUDIES",
     SetInvasiveStudySelection = "invasive/SET_STUDY_SELECTION",
-
 
     FetchTranslationsRequest = "translations/FETCH_TRANSLATIONS_REQUEST",
     FetchTranslationsSuccess = "translations/FETCH_TRANSLATIONS_SUCCESS",

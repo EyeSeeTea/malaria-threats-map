@@ -24,7 +24,6 @@ import {
 } from "../utils";
 import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 
-
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     preventionFilters: selectPreventionFilters(state),
@@ -118,56 +117,63 @@ const PboSiteChart = ({ studies, popup, selection, viewData }: Props) => {
             <Typography variant="subtitle2">{siteSubtitleTranslation}</Typography>
             {selection !== null && popup && <ViewSummaryDataButton />}
             {viewData !== null && !popup && (
-            <>
-            <div className={classes.root}>
-                <Table aria-label="simple table" size="small" className={classes.table}>
-                    <TableHead className={classes.head}>
-                        <TableRow>
-                            <StyledHeaderCell align={"center"}>
-                                {t("common.prevention.chart.pbo_deployment.vector_species")}
-                            </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"} borderLeft>
-                                {t("common.prevention.chart.pbo_deployment.pyrethroid_resistance_status")}
-                            </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"}>
-                                {t("common.prevention.chart.pbo_deployment.adjusted_mortality")}
-                            </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"}>
-                                {t("common.prevention.chart.pbo_deployment.most_recent_test_results")}
-                            </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"} borderLeft>
-                                {t("common.prevention.chart.pbo_deployment.conferred_by_mono_oxygenase")}
-                            </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"}>
-                                {t("common.prevention.chart.pbo_deployment.mono_oxygenase_measured_by")}
-                            </StyledHeaderCell>
-                            <StyledHeaderCell align={"center"}>
-                                {t("common.prevention.chart.pbo_deployment.most_recent_mono_oxygenase_results")}
-                            </StyledHeaderCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map(row => {
-                            return (
-                                <TableRow key={row.species}>
-                                    <StyledBodyCell align={"center"}>{row.species}</StyledBodyCell>
-                                    <StyledBodyCell align={"center"} borderLeft>
-                                        {row.pyrethroidResistance}
-                                    </StyledBodyCell>
-                                    <StyledBodyCell align={"center"}>{row.adjustedMortality}</StyledBodyCell>
-                                    <StyledBodyCell align={"center"}>{row.pyrethroidMostRecentYear}</StyledBodyCell>
-                                    <StyledBodyCell align={"center"} borderLeft>
-                                        {row.conferred}
-                                    </StyledBodyCell>
-                                    <StyledBodyCell align={"center"}>{row.monoOxygenaseMeasuredBy}</StyledBodyCell>
-                                    <StyledBodyCell align={"center"}>{row.monoOxygenaseMostRecentYear}</StyledBodyCell>
+                <>
+                    <div className={classes.root}>
+                        <Table aria-label="simple table" size="small" className={classes.table}>
+                            <TableHead className={classes.head}>
+                                <TableRow>
+                                    <StyledHeaderCell align={"center"}>
+                                        {t("common.prevention.chart.pbo_deployment.vector_species")}
+                                    </StyledHeaderCell>
+                                    <StyledHeaderCell align={"center"} borderLeft>
+                                        {t("common.prevention.chart.pbo_deployment.pyrethroid_resistance_status")}
+                                    </StyledHeaderCell>
+                                    <StyledHeaderCell align={"center"}>
+                                        {t("common.prevention.chart.pbo_deployment.adjusted_mortality")}
+                                    </StyledHeaderCell>
+                                    <StyledHeaderCell align={"center"}>
+                                        {t("common.prevention.chart.pbo_deployment.most_recent_test_results")}
+                                    </StyledHeaderCell>
+                                    <StyledHeaderCell align={"center"} borderLeft>
+                                        {t("common.prevention.chart.pbo_deployment.conferred_by_mono_oxygenase")}
+                                    </StyledHeaderCell>
+                                    <StyledHeaderCell align={"center"}>
+                                        {t("common.prevention.chart.pbo_deployment.mono_oxygenase_measured_by")}
+                                    </StyledHeaderCell>
+                                    <StyledHeaderCell align={"center"}>
+                                        {t("common.prevention.chart.pbo_deployment.most_recent_mono_oxygenase_results")}
+                                    </StyledHeaderCell>
                                 </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </div>
-            </> )}
+                            </TableHead>
+                            <TableBody>
+                                {rows.map(row => {
+                                    return (
+                                        <TableRow key={row.species}>
+                                            <StyledBodyCell align={"center"}>{row.species}</StyledBodyCell>
+                                            <StyledBodyCell align={"center"} borderLeft>
+                                                {row.pyrethroidResistance}
+                                            </StyledBodyCell>
+                                            <StyledBodyCell align={"center"}>{row.adjustedMortality}</StyledBodyCell>
+                                            <StyledBodyCell align={"center"}>
+                                                {row.pyrethroidMostRecentYear}
+                                            </StyledBodyCell>
+                                            <StyledBodyCell align={"center"} borderLeft>
+                                                {row.conferred}
+                                            </StyledBodyCell>
+                                            <StyledBodyCell align={"center"}>
+                                                {row.monoOxygenaseMeasuredBy}
+                                            </StyledBodyCell>
+                                            <StyledBodyCell align={"center"}>
+                                                {row.monoOxygenaseMostRecentYear}
+                                            </StyledBodyCell>
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    </div>
+                </>
+            )}
         </ChartContainer>
     );
 };

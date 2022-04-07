@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Box, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { selectTheme, selectSelection, selectViewData  } from "../../../../store/reducers/base-reducer";
+import { selectTheme, selectSelection, selectViewData } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import { ConfirmationStatusColors } from "./symbols";
 import * as R from "ramda";
@@ -20,7 +20,6 @@ import { sendAnalytics } from "../../../../utils/analytics";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import { ChartContainer } from "../../../Chart";
 import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
-
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
@@ -159,9 +158,7 @@ const ResistanceStatusChart = ({ studies: baseStudies, selection, viewData, popu
     const groupedStudies = R.values(
         R.groupBy(
             R.prop("CITATION_URL"),
-            baseStudies.filter(
-                study => species.map(s => s.value).includes(study.SPECIES)
-            )
+            baseStudies.filter(study => species.map(s => s.value).includes(study.SPECIES))
         )
     );
     const studies = groupedStudies[study];
@@ -210,23 +207,25 @@ const ResistanceStatusChart = ({ studies: baseStudies, selection, viewData, popu
             </Typography>
             <Typography variant="subtitle2">{subtitle}</Typography>
             {selection !== null && popup && <ViewSummaryDataButton />}
-            {viewData !== null && !popup && (<>
-            {suggestions.length > 1 && (
-                <Flex>
-                    <FormLabel component="legend">Species</FormLabel>
-                    <StyledSelect
-                        isClearable
-                        isMulti
-                        suggestions={suggestions}
-                        onChange={onSpeciesChange}
-                        value={species}
-                    />
-                </Flex>
+            {viewData !== null && !popup && (
+                <>
+                    {suggestions.length > 1 && (
+                        <Flex>
+                            <FormLabel component="legend">Species</FormLabel>
+                            <StyledSelect
+                                isClearable
+                                isMulti
+                                suggestions={suggestions}
+                                onChange={onSpeciesChange}
+                                value={species}
+                            />
+                        </Flex>
+                    )}
+                    <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
+                    <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
+                    <Curation study={studyObject} />
+                </>
             )}
-            <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-            <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
-            <Curation study={studyObject} />
-            </>)}
         </ChartContainer>
     );
 };

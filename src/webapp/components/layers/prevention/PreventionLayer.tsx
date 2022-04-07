@@ -21,7 +21,7 @@ import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import {
     fetchPreventionStudiesRequest,
     setPreventionFilteredStudiesAction,
-    setPreventionStudySelection
+    setPreventionStudySelection,
 } from "../../../store/actions/prevention-actions";
 import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
@@ -259,14 +259,9 @@ class PreventionLayer extends Component<Props> {
     };
 
     render() {
-        const {
-            studies,
-            countryMode,
-            selection,
-            setSidebarOpen,
-        } = this.props;
+        const { studies, countryMode, selection, setSidebarOpen } = this.props;
 
-    if (selection === null) {
+        if (selection === null) {
             setSidebarOpen(false);
             return <div />;
         }
@@ -283,7 +278,7 @@ class PreventionLayer extends Component<Props> {
         return (
             this.props.theme === "prevention" && (
                 <SitePopover map={this.props.map}>
-                     <PreventionSelectionChart studies={filteredStudies} popup={true}/>
+                    <PreventionSelectionChart studies={filteredStudies} popup={true} />
                 </SitePopover>
             )
         );

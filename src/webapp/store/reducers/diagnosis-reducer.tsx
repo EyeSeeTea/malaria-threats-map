@@ -69,7 +69,8 @@ export default createReducer<DiagnosisState>(initialState, {
     [ActionTypeEnum.SetDeletionType]: updateDeletionType,
     [ActionTypeEnum.SetDiagnosisFilteredStudies]: (filteredStudies: DiagnosisStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
-    [ActionTypeEnum.SetDiagnosisStudySelection]: (filteredStudies: DiagnosisStudy[]) => R.assoc("studySelection", filteredStudies),
+    [ActionTypeEnum.SetDiagnosisStudySelection]: (filteredStudies: DiagnosisStudy[]) =>
+        R.assoc("studySelection", filteredStudies),
 });
 
 const selectDiagnosisState = (state: State) => state.diagnosis;
@@ -91,4 +92,3 @@ export const selectFilteredDiagnosisStudies = createSelector(
 export const selectDiagnosisFilters = createSelector(selectDiagnosisState, diagnosisState => diagnosisState.filters);
 
 export const selectDiagnosisStudySelection = createSelector(selectDiagnosisState, state => state.studySelection);
-

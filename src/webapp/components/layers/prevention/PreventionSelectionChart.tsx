@@ -44,7 +44,7 @@ class PreventionSelectionChart extends Component<Props> {
             countryMode,
             preventionFilters: { mapType },
             map,
-            popup
+            popup,
         } = this.props;
 
         return (
@@ -71,10 +71,10 @@ class PreventionSelectionChart extends Component<Props> {
                     <IntensityStatusChart studies={studies} popup={popup} />
                 )}
                 {!countryMode && mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
-                    <LevelOfInvolvementChart studies={studies} popup={popup}/>
+                    <LevelOfInvolvementChart studies={studies} popup={popup} />
                 )}
                 {!countryMode && mapType === PreventionMapType.RESISTANCE_MECHANISM && (
-                    <ResistanceMechanismsChart studies={studies} popup={popup}/>
+                    <ResistanceMechanismsChart studies={studies} popup={popup} />
                 )}
                 {!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
                     <PboSiteChart studies={studies} popup={popup} />

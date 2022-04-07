@@ -17,6 +17,4 @@ export const setInvasiveFilteredStudiesAction = createAction(ActionTypeEnum.SetI
     InvasiveStudy[]
 >();
 
-export const setInvasiveStudySelection = createAction(ActionTypeEnum.SetInvasiveStudySelection)<
-    InvasiveStudy[]
->();
+export const setInvasiveStudySelection = createAction(ActionTypeEnum.SetInvasiveStudySelection)<InvasiveStudy[]>();

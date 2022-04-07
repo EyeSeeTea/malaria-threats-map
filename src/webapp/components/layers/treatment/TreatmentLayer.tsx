@@ -26,7 +26,11 @@ import {
 } from "../studies-filters";
 import { State, TreatmentMapType } from "../../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
-import { fetchTreatmentStudiesRequest, setFilteredStudiesAction, setTreatmentStudySelection } from "../../../store/actions/treatment-actions";
+import {
+    fetchTreatmentStudiesRequest,
+    setFilteredStudiesAction,
+    setTreatmentStudySelection,
+} from "../../../store/actions/treatment-actions";
 import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SitePopover from "../common/SitePopover";
@@ -278,12 +282,7 @@ class TreatmentLayer extends Component<Props> {
     };
 
     render() {
-        const {
-            studies,
-            countryMode,
-            selection,
-            setSidebarOpen,
-        } = this.props;
+        const { studies, countryMode, selection, setSidebarOpen } = this.props;
 
         if (selection === null) {
             setSidebarOpen(false);

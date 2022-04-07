@@ -30,11 +30,22 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const IntensityInvolvementChart = ({ studyObject, options, groupedStudies, setStudy, study, selection, viewData, popup }: Props) => {
+const IntensityInvolvementChart = ({
+    studyObject,
+    options,
+    groupedStudies,
+    setStudy,
+    study,
+    selection,
+    viewData,
+    popup,
+}: Props) => {
     const { t } = useTranslation();
     return (
         <ChartContainer popup={popup}>
-            {viewData !== null && !popup && groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
+            {viewData !== null && !popup && groupedStudies.length > 1 && (
+                <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />
+            )}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
                     studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2
@@ -43,11 +54,12 @@ const IntensityInvolvementChart = ({ studyObject, options, groupedStudies, setSt
             <Typography variant="subtitle2">{`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}</Typography>
             {selection !== null && popup && <ViewSummaryDataButton />}
             {viewData !== null && !popup && (
-            <>
-                <HighchartsReact highcharts={Highcharts} options={options} />
-                <Citation study={studyObject} />
-                <Curation study={studyObject} />
-            </>)}
+                <>
+                    <HighchartsReact highcharts={Highcharts} options={options} />
+                    <Citation study={studyObject} />
+                    <Curation study={studyObject} />
+                </>
+            )}
         </ChartContainer>
     );
 };

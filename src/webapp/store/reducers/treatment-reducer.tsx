@@ -80,8 +80,8 @@ export default createReducer<TreatmentState>(initialState, {
     [ActionTypeEnum.SetExcludeLowerSamples]: updateExcludeLowerSamples,
     [ActionTypeEnum.SetTreatmentFilteredStudies]: (filteredStudies: TreatmentStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
-    [ActionTypeEnum.SetTreatmentStudySelection]: (filteredStudies: TreatmentStudy[]) => R.assoc("studySelection", filteredStudies),
-
+    [ActionTypeEnum.SetTreatmentStudySelection]: (filteredStudies: TreatmentStudy[]) =>
+        R.assoc("studySelection", filteredStudies),
 });
 
 const selectTreatmentState = (state: State) => state.treatment;
@@ -97,4 +97,3 @@ export const selectFilteredTreatmentStudies = createSelector(selectTreatmentStat
 export const selectTreatmentFilters = createSelector(selectTreatmentState, state => state.filters);
 
 export const selectTreatmentStudySelection = createSelector(selectTreatmentState, state => state.studySelection);
-

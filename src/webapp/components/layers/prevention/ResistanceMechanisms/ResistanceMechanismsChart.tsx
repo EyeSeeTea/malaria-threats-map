@@ -186,20 +186,24 @@ const ResistanceMechanismsChart = ({ studies, selection, viewData, popup }: Prop
             <Typography variant="subtitle2">{`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}</Typography>
             {selection !== null && popup && <ViewSummaryDataButton />}
             {viewData !== null && !popup && (
-            <>
-            <Flex>
-                <FlexCol>
-                    <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-                </FlexCol>
-                {showAllelic && (
-                    <FlexCol>
-                        <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations2)} />
-                    </FlexCol>
-                )}
-            </Flex>
-            <Citation study={studies[0]} />
-            <Curation study={studies[0]} />
-            </>)}
+                <>
+                    <Flex>
+                        <FlexCol>
+                            <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
+                        </FlexCol>
+                        {showAllelic && (
+                            <FlexCol>
+                                <HighchartsReact
+                                    highcharts={Highcharts}
+                                    options={options2(series, years, translations2)}
+                                />
+                            </FlexCol>
+                        )}
+                    </Flex>
+                    <Citation study={studies[0]} />
+                    <Curation study={studies[0]} />
+                </>
+            )}
         </ChartContainer>
     );
 };

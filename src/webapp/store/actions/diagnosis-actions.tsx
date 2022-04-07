@@ -23,6 +23,4 @@ export const setDiagnosisFilteredStudiesAction = createAction(ActionTypeEnum.Set
     DiagnosisStudy[]
 >();
 
-export const setDiagnosisStudySelection = createAction(ActionTypeEnum.SetDiagnosisStudySelection)<
-DiagnosisStudy[]
->();
+export const setDiagnosisStudySelection = createAction(ActionTypeEnum.SetDiagnosisStudySelection)<DiagnosisStudy[]>();

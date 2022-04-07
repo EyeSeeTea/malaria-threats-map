@@ -88,7 +88,9 @@ const VectorOccurrenceChart = ({ studies, popup, selection, viewData }: Props) =
 
     return (
         <ChartContainer popup={popup}>
-            {viewData !== null && !popup && sortedStudies.length > 1 && <Pagination studies={studies} study={study} setStudy={setStudy} />}
+            {viewData !== null && !popup && sortedStudies.length > 1 && (
+                <Pagination studies={studies} study={study} setStudy={setStudy} />
+            )}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}`}</Box>
             </Typography>

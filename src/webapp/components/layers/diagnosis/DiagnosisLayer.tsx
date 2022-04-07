@@ -22,7 +22,7 @@ import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import {
     fetchDiagnosisStudiesRequest,
     setDiagnosisFilteredStudiesAction,
-    setDiagnosisStudySelection
+    setDiagnosisStudySelection,
 } from "../../../store/actions/diagnosis-actions";
 
 import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
@@ -257,7 +257,7 @@ class DiagnosisLayer extends Component<Props> {
         const filteredStudies = this.filterStudies(studies).filter(study =>
             countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
-        
+
         this.props.setDiagnosisStudySelection(filteredStudies);
 
         if (filteredStudies.length === 0) {

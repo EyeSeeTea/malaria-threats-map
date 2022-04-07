@@ -55,7 +55,7 @@ const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     preventionStudySelection: selectPreventionStudySelection(state),
     diagnosisStudySelection: selectDiagnosisStudySelection(state),
-    treatmentStudySelection:selectTreatmentStudySelection(state),
+    treatmentStudySelection: selectTreatmentStudySelection(state),
     invasiveStudySelection: selectInvasiveStudySelection(state),
     selection: selectSelection(state),
     viewData: selectViewData(state),
@@ -88,8 +88,8 @@ const StudyDetailsSidebar = ({
         //so that the data doesn't change automatically when the user hovers over another popup
         switch (theme) {
             case "prevention":
-                 setFilteredStudiesPrevention(preventionStudySelection);
-                 break;
+                setFilteredStudiesPrevention(preventionStudySelection);
+                break;
             case "diagnosis":
                 setFilteredStudiesDiagnosis(diagnosisStudySelection);
                 break;

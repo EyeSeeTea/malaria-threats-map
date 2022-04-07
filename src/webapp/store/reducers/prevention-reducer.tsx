@@ -85,7 +85,8 @@ export default createReducer<PreventionState>(initialState, {
     [ActionTypeEnum.SetSpecies]: updateSpecies,
     [ActionTypeEnum.SetPreventionFilteredStudies]: (filteredStudies: PreventionStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
-    [ActionTypeEnum.SetPreventionStudySelection]: (filteredStudies: PreventionStudy[]) => R.assoc("studySelection", filteredStudies),
+    [ActionTypeEnum.SetPreventionStudySelection]: (filteredStudies: PreventionStudy[]) =>
+        R.assoc("studySelection", filteredStudies),
 });
 
 const selectPreventionState = (state: State) => state.prevention;
