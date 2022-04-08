@@ -12,8 +12,6 @@ import { selectCountryMode, selectSelection, selectTheme } from "../../../store/
 import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
 import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
-import PboSiteChart from "./PboDeployment/PboSiteChart";
-import PboDistrictChart from "./PboDeployment/PboDistrictChart";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 
 const mapStateToProps = (state: State) => ({
@@ -33,7 +31,6 @@ type DispatchProps = typeof mapDispatchToProps;
 
 type OwnProps = {
     studies: PreventionStudy[];
-    map?: mapboxgl.Map;
 };
 type Props = StateProps & DispatchProps & OwnProps;
 
@@ -45,7 +42,6 @@ class PreventionSelectionChart extends Component<Props> {
             countryMode,
             selection,
             preventionFilters: { mapType },
-            map,
         } = this.props;
 
         if (!selection) {
@@ -74,9 +70,6 @@ class PreventionSelectionChart extends Component<Props> {
                 {countryMode && mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
                     <ResistanceMechanismCountryChart studies={filteredStudies} />
                 )}
-                {countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
-                    <PboDistrictChart studies={filteredStudies} map={map} />
-                )}
                 {!countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
                     <ResistanceStatusChart studies={filteredStudies} />
                 )}
@@ -88,9 +81,6 @@ class PreventionSelectionChart extends Component<Props> {
                 )}
                 {!countryMode && mapType === PreventionMapType.RESISTANCE_MECHANISM && (
                     <ResistanceMechanismsChart studies={filteredStudies} />
-                )}
-                {!countryMode && mapType === PreventionMapType.PBO_DEPLOYMENT && (
-                    <PboSiteChart studies={filteredStudies} />
                 )}
             </div>
         );

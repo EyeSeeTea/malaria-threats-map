@@ -73,12 +73,6 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
             filterByYearRange(yearFilter),
             filterByRegion(region),
         ],
-        [PreventionMapType.PBO_DEPLOYMENT]: [
-            filterByInsecticideClass(preventionFilters.insecticideClass),
-            filterByInsecticideTypes(preventionFilters.insecticideTypes),
-            filterByYearRange(yearFilter),
-            filterByRegion(region),
-        ],
     };
 
     const filteredStudies: PreventionStudy[] = filtersMap[mapType].reduce(
