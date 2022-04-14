@@ -5,9 +5,10 @@ import WhoFrench from "../assets/img/WHO-FR-W-H.png";
 const WhoLogo = ({ color = "#fff", width = 175 }) => {
     const lng = localStorage.getItem("language");
     if (lng === "es") {
-        return <img src={WhoSpanish} width={width} alt="WHO spanish logo" />;
+        //the English SVG is a bit bigger so I adjust the image width so they all look even
+        return <img src={WhoSpanish} width={width+45} alt="WHO spanish logo" />;
     } else if (lng === "fr") {
-        return <img src={WhoFrench} width={width} alt="WHO french logo" />;
+        return <img src={WhoFrench} width={width+45} alt="WHO french logo" />;
     } else {
         return (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580.82 177.96" width={width}>
