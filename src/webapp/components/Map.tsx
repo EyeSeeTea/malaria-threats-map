@@ -59,6 +59,8 @@ import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Admin0BaseLayer from "./layers/Admin0BaseLayer";
+import Admin1BaseLayer from "./layers/Admin1BaseLayer";
+import Admin2BaseLayer from "./layers/Admin2BaseLayer";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
@@ -236,7 +238,9 @@ class Map extends React.Component<Props> {
                     ref={el => (this.mapContainer = el)}
                     style={{ position: "absolute", bottom: 0, top: 0, right: 0, left: 0 }}
                 />
-                 {ready && <Admin0BaseLayer map={this.map} />}
+                {ready && <Admin0BaseLayer map={this.map} />}
+                {ready && <Admin1BaseLayer map={this.map} />}
+                {ready && <Admin2BaseLayer map={this.map} />}
                 {ready && <EndemicityLayer map={this.map} />}
                 {isPbo && countryMode ? (
                     <>

@@ -12,8 +12,8 @@ const layer: mapboxgl.LineLayer = {
     type: "line",
     paint: {
         "line-width": 1,
-        "line-opacity": 0.8,
-        "line-color": "#f8bbd0",
+        "line-opacity": 0.9,
+        "line-color": "#f06292",
     },
     minzoom: 0,
     maxzoom: 20,
