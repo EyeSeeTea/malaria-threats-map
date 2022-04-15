@@ -16,6 +16,12 @@ import MapTypesSelector from "./MapTypesSelector";
 import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";
 import WhoLogo from "./WhoLogo";
+import HomeIcon from "./LeftSidebarIcons/HomeIcon";
+import AboutIcon from "./LeftSidebarIcons/AboutIcon";
+import TakeATourIcon from "./LeftSidebarIcons/TakeATourIcon";
+import LanguageIcon from "./LeftSidebarIcons/LanguageIcon";
+
+
 import {
     selectAny,
     selectCountryMode,
@@ -33,7 +39,8 @@ import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
-import { Fade, Slide, Button, Fab } from "@mui/material";
+import { Fade, Button, Fab, Drawer, Typography, IconButton } from "@mui/material";
+import { Menu as MenuIcon, EmailOutlined as EmailIcon, CloseOutlined as CloseOutlinedIcon } from "@mui/icons-material";
 import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
 import Leyend from "./Leyend";
@@ -59,16 +66,12 @@ import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
-import MenuIcon from "@mui/icons-material/Menu";
 import { Flex } from "./Chart";
-import HomeIcon from "@mui/icons-material/HomeOutlined";
-import InfoIcon from "@mui/icons-material/InfoOutlined";
-import EmailIcon from "@mui/icons-material/EmailOutlined";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import TourOutlinedIcon from "@mui/icons-material/TourOutlined";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
+const drawerWidth = 100;
+
 const StyledButton = styled(Button)`
     &.MuiButton-root {
         padding: 15px;
@@ -103,30 +106,11 @@ const BaseContainer = styled.div`
     max-width: 600px;
     margin: 20px;
     outline: none;
-`;
-const TopBarContainer = styled.div`
     position: absolute;
-    width: 100%;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 2;
+
 `;
 
-const SideBarContainer = styled.div`
-    position: absolute;
-    max-width: 300px;
-    height: 100%;
-    background-color: rgb(255, 255, 255, 0.7);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    padding: 5px;
-`;
 const TopRightContainer = styled(BaseContainer)`
-    position: absolute;
     top: 10%;
     right: 0;
     display: flex;
@@ -134,7 +118,6 @@ const TopRightContainer = styled(BaseContainer)`
 `;
 
 const TopRightVerticalContainer = styled(BaseContainer)`
-    position: absolute;
     top: 0;
     right: 0;
     display: flex;
@@ -143,39 +126,69 @@ const TopRightVerticalContainer = styled(BaseContainer)`
 `;
 
 const BottomRightContainer = styled(BaseContainer)`
-    position: absolute;
     bottom: 0;
     right: 0;
 `;
 
 const BottomLeftContainer = styled(BaseContainer)`
-    position: absolute;
     bottom: 0;
-    left: ${(props: { menuOpen: boolean }) => (props.menuOpen ? "10%" : "0")};
 `;
 
 const BottomMiddleContainer = styled(BaseContainer)`
-    position: absolute;
     margin: 10px auto;
-    left: 0;
     bottom: 0;
     right: 0;
 `;
-
 const SearchContainer = styled(BaseContainer)`
     pointer-events: none;
-    position: absolute;
     top: 10%;
-    left: ${(props: { menuOpen: boolean }) => (props.menuOpen ? "10%" : "0")};
     display: flex;
     flex-direction: column;
     align-items: start;
     z-index: 1;
 `;
 
+const TopBarContainer = styled.div`
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 4;
+`;
+
+const SideBarContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 80%;
+`;
+
+const TopBarWrapper = styled.div`
+    position: relative;
+    z-index: 1400;
+`;
+
 const Divider = styled.div`
     height: 10px;
 `;
+
+const PushoverContainer = styled.div`
+    margin-left: ${(props: { menuOpen: boolean }) => (props.menuOpen ? `${drawerWidth}px` : "0")};
+`;
+
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+display: 'flex',
+alignItems: 'center',
+padding: theme.spacing(0, 1),
+// necessary for content to be below app bar
+...theme.mixins.toolbar,
+justifyContent: 'flex-end',
+}));
+
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -261,7 +274,7 @@ class Map extends React.Component<Props> {
             const cc = this.map.getBounds().toArray();
             this.props.updateBounds(cc);
         });
-
+        
         const pageView = getAnalyticsPageViewFromString({ page: this.props.theme });
         if (pageView && !this.props.initialDialogOpen) {
             sendAnalytics({ type: "pageView", ...pageView });
@@ -316,26 +329,47 @@ class Map extends React.Component<Props> {
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
                 <Hidden smDown>
-                    <TopBarContainer>
-                        <Flex>
+                    <TopBarWrapper>
+                        <TopBarContainer>
+                            <Flex>
                             <StyledButton onClick={() => this.setState({ menuOpen: !this.state.menuOpen })}>
-                                {this.state.menuOpen ? (
-                                    <CloseOutlinedIcon style={classes.icon} />
-                                ) : (
-                                    <MenuIcon style={classes.icon} />
-                                )}
-                                {this.props.t("common.topbar.menu")}
-                            </StyledButton>
-                            <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
-                            <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
-                            <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
-                        </Flex>
-                        <Screenshot map={this.map} />
-                    </TopBarContainer>
+                                    {this.state.menuOpen ? (
+                                        <CloseOutlinedIcon style={classes.icon} />
+                                    ) : (
+                                        <MenuIcon style={classes.icon} />
+                                    )}
+                                    {this.props.t("common.topbar.menu")}
+                                </StyledButton>
+
+                                <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
+                                <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
+                                <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
+                            </Flex>
+                            <Screenshot map={this.map} />
+                        </TopBarContainer>
+                    </TopBarWrapper>
                 </Hidden>
-                {this.state.menuOpen && (
-                    <Slide in={true} direction="right" mountOnEnter unmountOnExit>
-                        <SideBarContainer>
+                    <Drawer
+                    sx={{
+                        width: drawerWidth,
+                        backgroundColor: "#00000029",
+                        flexShrink: 0,
+                        '& .MuiDrawer-paper': {
+                          width: drawerWidth,
+                          boxSizing: 'border-box',
+                        },
+                      }}
+                    variant="persistent"
+                    anchor="left"
+                    open={this.state.menuOpen}
+                  >
+                      <DrawerHeader>
+                        <IconButton onClick={() => this.setState({menuOpen: false})}>
+                            <CloseOutlinedIcon/>
+                        </IconButton>
+                        </DrawerHeader>
+        <Divider />
+                    <SideBarContainer>
                             <SidebarIconDiv>
                                 <StyledFab
                                     id="home-button"
@@ -343,9 +377,9 @@ class Map extends React.Component<Props> {
                                     color={"default"}
                                     title={this.props.t("common.sidebar.home")}
                                 >
-                                    <HomeIcon color="primary" />
+                                    <HomeIcon />
                                 </StyledFab>
-                                {this.props.t("common.sidebar.home")}
+                               <Typography variant="caption"> {this.props.t("common.sidebar.home")}</Typography>
                             </SidebarIconDiv>
 
                             <SidebarIconDiv>
@@ -355,9 +389,9 @@ class Map extends React.Component<Props> {
                                     color={"default"}
                                     title={this.props.t("common.sidebar.about")}
                                 >
-                                    <InfoIcon color="primary" />
+                                    <AboutIcon />
                                 </StyledFab>
-                                {this.props.t("common.sidebar.about")}
+                                <Typography variant="caption"> {this.props.t("common.sidebar.about")}</Typography>
                             </SidebarIconDiv>
 
                             <SidebarIconDiv>
@@ -369,7 +403,20 @@ class Map extends React.Component<Props> {
                                 >
                                     <EmailIcon color="primary" />
                                 </StyledFab>
-                                {this.props.t("common.sidebar.contact")}
+                                <Typography variant="caption"> {this.props.t("common.sidebar.contact")}</Typography>
+
+                            </SidebarIconDiv>
+
+                            <SidebarIconDiv>
+                                <StyledFab
+                                    id="contact-button"
+                                    size="small"
+                                    color={"default"}
+                                    title={this.props.t("common.sidebar.share_data")}
+                                >
+                                    <EmailIcon color="primary" />
+                                </StyledFab>
+                                <Typography variant="caption"> {this.props.t("common.sidebar.share_data")}</Typography>
                             </SidebarIconDiv>
 
                             <SidebarIconDiv>
@@ -379,9 +426,9 @@ class Map extends React.Component<Props> {
                                     color={"default"}
                                     title={this.props.t("common.sidebar.language")}
                                 >
-                                    <ChatBubbleOutlineIcon color="primary" />
+                                    <LanguageIcon />
                                 </StyledFab>
-                                {this.props.t("common.sidebar.language")}
+                                <Typography variant="caption"> {this.props.t("common.sidebar.language")}</Typography>
                             </SidebarIconDiv>
 
                             <SidebarIconDiv>
@@ -391,35 +438,38 @@ class Map extends React.Component<Props> {
                                     color={"default"}
                                     title={this.props.t("common.sidebar.take_tour")}
                                 >
-                                    <TourOutlinedIcon color="primary" />
+                                    <TakeATourIcon />
                                 </StyledFab>
-                                {this.props.t("common.sidebar.take_tour")}
+                                <Typography variant="caption"> {this.props.t("common.sidebar.take_tour")}</Typography>
                             </SidebarIconDiv>
-                        </SideBarContainer>
-                    </Slide>
-                )}
+                            </SideBarContainer>
+
+                  </Drawer>
                 <Fade in={showOptions}>
-                    <SearchContainer menuOpen={this.state.menuOpen}>
-                        <Hidden smDown>
-                            <div id={"third"}>
-                                <TopicSelector />
-                            </div>
-                            <Divider />
-                            <MapTypesSelector />
-                            <Divider />
-                            <Filters />
-                            <MalariaTour />
-                        </Hidden>
-                        <TheaterModeIcon />
-                        <Layers />
-                        <Country disabled={isInvasive} />
-                        {!isMobile && <DataDownload />}
-                        <Hidden smUp>
-                            <ShareIcon />
-                        </Hidden>
-                        <Hidden smDown>{["prevention", "treatment"].includes(theme) && <Report />}</Hidden>
-                    </SearchContainer>
+                    <PushoverContainer menuOpen={this.state.menuOpen}>
+                        <SearchContainer>
+                            <Hidden smDown>
+                                <div id={"third"}>
+                                    <TopicSelector />
+                                </div>
+                                <Divider />
+                                <MapTypesSelector />
+                                <Divider />
+                                <Filters />
+                                <MalariaTour />
+                            </Hidden>
+                            <TheaterModeIcon />
+                            <Layers />
+                            <Country disabled={isInvasive} />
+                            {!isMobile && <DataDownload />}
+                            <Hidden smUp>
+                                <ShareIcon />
+                            </Hidden>
+                            <Hidden smDown>{["prevention", "treatment"].includes(theme) && <Report />}</Hidden>
+                        </SearchContainer>
+                    </PushoverContainer>
                 </Fade>
+                
                 <Hidden smDown>
                     <Fade in={showOptions}>
                         <TopRightContainer>
@@ -454,14 +504,16 @@ class Map extends React.Component<Props> {
                         </Hidden>
                     </BottomRightContainer>
                 </Fade>
-                <BottomLeftContainer menuOpen={this.state.menuOpen}>
-                    <Hidden smUp>
-                        <WhoLogo width={150} />
-                    </Hidden>
-                    <Hidden smDown>
-                        <WhoLogo />
-                    </Hidden>
-                </BottomLeftContainer>
+                <PushoverContainer menuOpen={this.state.menuOpen}>
+                    <BottomLeftContainer>
+                        <Hidden smUp>
+                            <WhoLogo width={150} />
+                        </Hidden>
+                        <Hidden smDown>
+                            <WhoLogo />
+                        </Hidden>
+                    </BottomLeftContainer>
+                </PushoverContainer>
                 <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
                 <Hidden smDown>
                     <InitialDialog />
