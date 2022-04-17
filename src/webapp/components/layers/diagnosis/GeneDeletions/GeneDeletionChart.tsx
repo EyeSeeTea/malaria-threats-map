@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import { connect } from "react-redux";
 import { useTranslation, Trans } from "react-i18next";
-import { selectTheme, selectSelection } from "../../../../store/reducers/base-reducer";
+import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import Citation from "../../../charts/Citation";
 import Table from "@mui/material/Table";
@@ -17,7 +17,6 @@ import * as R from "ramda";
 import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
 import { DiagnosisStudy } from "../../../../../domain/entities/DiagnosisStudy";
 import { isNotNull } from "../../../../utils/number-utils";
-import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 import { selectViewData } from "../../../../store/reducers/base-reducer";
 
 const ChatContainer = styled.div`
@@ -33,7 +32,6 @@ const SpacedTypography = styled(Typography)`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     diagnosisFilters: selectDiagnosisFilters(state),
-    selection: selectSelection(state),
     viewData: selectViewData(state),
 });
 
@@ -72,7 +70,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const GeneDeletionChart = ({ studies, diagnosisFilters, selection, viewData, popup }: Props) => {
+const GeneDeletionChart = ({ studies, diagnosisFilters, viewData, popup }: Props) => {
     const { t } = useTranslation();
     const classes = useStyles({});
     const nStudies = studies.length;
@@ -106,7 +104,6 @@ const GeneDeletionChart = ({ studies, diagnosisFilters, selection, viewData, pop
                     years: formatYears(minYear, maxYear),
                 })}
             </SpacedTypography>
-            {selection !== null && popup && <ViewSummaryDataButton />}
             {viewData !== null && !popup && (
                 <>
                     {isNotNull(studyObject.SAMPLE_ORIGIN) && (

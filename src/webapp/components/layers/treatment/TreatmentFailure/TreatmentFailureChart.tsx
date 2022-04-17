@@ -82,6 +82,21 @@ const Margin = styled.div`
     margin-bottom: 10px;
 `;
 
+const StyledButton = styled(Button)`
+        &.MuiButton-text {
+            text-transform: none;
+            color: #2fb3af;
+        }
+        &.MuiButton-root {
+            padding: 0;
+
+            &:hover {
+                border: none;
+                text-decoration: underline;
+            }
+        }
+    `;
+
 const FlexCol = styled.div<{ flex?: number }>`
     flex: ${props => props.flex || 1};
 `;
@@ -129,21 +144,6 @@ const TreatmentFailureChart = ({ studies, selection, viewData, popup }: Props) =
         };
     });
 
-    const StyledButton = styled(Button)`
-        &.MuiButton-text {
-            text-transform: none;
-            color: #2fb3af;
-        }
-        &.MuiButton-root {
-            padding: 0;
-
-            &:hover {
-                border: none;
-                text-decoration: underline;
-            }
-        }
-    `;
-
     const siteDuration = formatYears(`${minYear}`, `${maxYear}`);
 
     const titleItems = [
@@ -172,7 +172,6 @@ const TreatmentFailureChart = ({ studies, selection, viewData, popup }: Props) =
                 <i>{plasmodiumSpecies}</i>
                 {`, ${t(DRUG_NAME)}: ${studies.length} ${t_studies} ${siteDuration}`}
             </Typography>
-            {selection !== null && popup && <ViewSummaryDataButton />}
             {viewData !== null && !popup && (
                 <>
                     <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />

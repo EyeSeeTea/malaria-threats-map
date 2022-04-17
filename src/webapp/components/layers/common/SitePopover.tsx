@@ -7,9 +7,9 @@ import { store, theme } from "../../../App";
 import { connect, Provider } from "react-redux";
 import { State } from "../../../store/types";
 import mapboxgl from "mapbox-gl";
-import { selectSelection } from "../../../store/reducers/base-reducer";
+import { selectSelection, selectViewData, selectIsSidebarOpen } from "../../../store/reducers/base-reducer";
 import { dispatchCustomEvent } from "../../../utils/dom-utils";
-import { setSelection, setViewData } from "../../../store/actions/base-actions";
+import { setSelection, setViewData, setSidebarOpen } from "../../../store/actions/base-actions";
 import { StyledEngineProvider, Theme } from "@mui/material";
 
 declare module "@mui/styles/defaultTheme" {
@@ -19,11 +19,14 @@ declare module "@mui/styles/defaultTheme" {
 
 const mapStateToProps = (state: State) => ({
     selection: selectSelection(state),
+    viewData: selectViewData(state),
+    sidebarOpen: selectIsSidebarOpen(state),
 });
 
 const mapDispatchToProps = {
     setSelection: setSelection,
     setViewData: setViewData,
+    setSidebarOpen: setSidebarOpen
 };
 type DispatchProps = typeof mapDispatchToProps;
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -33,7 +36,7 @@ type OwnProps = {
 };
 type Props = StateProps & DispatchProps & OwnProps & { children: React.ReactNode };
 
-const SitePopover: React.FC<Props> = ({ map, selection, setSelection, setViewData, children }) => {
+const SitePopover: React.FC<Props> = ({ map, selection, sidebarOpen, setSidebarOpen, setSelection, setViewData, children }) => {
     useEffect(() => {
         const placeholder = document.createElement("div");
         if (!selection) {
@@ -51,13 +54,30 @@ const SitePopover: React.FC<Props> = ({ map, selection, setSelection, setViewDat
             placeholder
         );
 
-        const popup = new mapboxgl.Popup().setLngLat(selection.coordinates).setDOMContent(placeholder).addTo(map);
+        const popup = new mapboxgl.Popup({closeOnClick: true}).setLngLat(selection.coordinates).setDOMContent(placeholder).addTo(map);
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
-        map.on("click", () => {
-            setSelection(null);
-            setViewData(null);
+        map.on("click", "diagnosis-layer", (e: any) => {
+            e.preventDefault()
+            if (!sidebarOpen) {
+                setSidebarOpen(true);
+            }
+            setTimeout(() => {
+                setViewData(selection);
+            }, 100);
         });
+
+        map.on("click", (e: any) => {
+            if (e.defaultPrevented === false) {
+                console.log('hide taskbar');
+                setTimeout(() => {
+                    setSelection(null);
+                    setViewData(null);
+                }, 100);
+                
+              }
+        });
+
         return () => {
             ReactDOM.unmountComponentAtNode(placeholder);
             popup.remove();

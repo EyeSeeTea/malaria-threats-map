@@ -12,6 +12,7 @@ import {
     selectSelection,
     selectTheme,
     selectViewData,
+    selectIsSidebarOpen
 } from "../../../store/reducers/base-reducer";
 import * as R from "ramda";
 import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
@@ -25,7 +26,7 @@ import {
     setDiagnosisStudySelection,
 } from "../../../store/actions/diagnosis-actions";
 
-import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
+import { setSelection, setSidebarOpen, setViewData } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
@@ -52,6 +53,8 @@ const mapStateToProps = (state: State) => ({
     countryMode: selectCountryMode(state),
     selection: selectSelection(state),
     viewData: selectViewData(state),
+    sidebarOpen: selectIsSidebarOpen(state),
+
 });
 
 const mapDispatchToProps = {
@@ -60,6 +63,7 @@ const mapDispatchToProps = {
     setDiagnosisStudySelection: setDiagnosisStudySelection,
     setSelection: setSelection,
     setSidebarOpen: setSidebarOpen,
+    setViewData: setViewData
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -212,6 +216,7 @@ class DiagnosisLayer extends Component<Props> {
 
     setupPopover = () => {
         this.props.map.on("mouseover", DIAGNOSIS_LAYER_ID, this.onMouseOverListener);
+
         this.props.map.on(
             "mouseenter",
             DIAGNOSIS_LAYER_ID,
