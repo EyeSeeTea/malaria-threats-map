@@ -7,7 +7,6 @@ import { State } from "../../../../store/types";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
 import { InvasiveStudy } from "../../../../../domain/entities/InvasiveStudy";
-import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -33,7 +32,6 @@ const VectorOccurrencePopup = ({ studies }: Props) => {
                     studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2
                 )}`}</Box>
             </Typography>
-            <ViewSummaryDataButton />
         </>
     );
 };

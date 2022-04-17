@@ -26,17 +26,27 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     setSelection: setSelection,
     setViewData: setViewData,
-    setSidebarOpen: setSidebarOpen
+    setSidebarOpen: setSidebarOpen,
 };
 type DispatchProps = typeof mapDispatchToProps;
 type StateProps = ReturnType<typeof mapStateToProps>;
 
 type OwnProps = {
     map: any;
+    layer: string;
 };
 type Props = StateProps & DispatchProps & OwnProps & { children: React.ReactNode };
 
-const SitePopover: React.FC<Props> = ({ map, selection, sidebarOpen, setSidebarOpen, setSelection, setViewData, children }) => {
+const SitePopover: React.FC<Props> = ({
+    map,
+    layer,
+    selection,
+    sidebarOpen,
+    setSidebarOpen,
+    setSelection,
+    setViewData,
+    children,
+}) => {
     useEffect(() => {
         const placeholder = document.createElement("div");
         if (!selection) {
@@ -54,28 +64,29 @@ const SitePopover: React.FC<Props> = ({ map, selection, sidebarOpen, setSidebarO
             placeholder
         );
 
-        const popup = new mapboxgl.Popup({closeOnClick: true}).setLngLat(selection.coordinates).setDOMContent(placeholder).addTo(map);
+        const popup = new mapboxgl.Popup({ closeOnClick: true })
+            .setLngLat(selection.coordinates)
+            .setDOMContent(placeholder)
+            .addTo(map);
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
-        map.on("click", "diagnosis-layer", (e: any) => {
-            e.preventDefault()
+        map.on("click", layer, (e: any) => {
+            e.preventDefault();
             if (!sidebarOpen) {
                 setSidebarOpen(true);
             }
-            setTimeout(() => {
-                setViewData(selection);
+           setTimeout(() => {
+            setViewData(selection);
             }, 100);
         });
 
         map.on("click", (e: any) => {
             if (e.defaultPrevented === false) {
-                console.log('hide taskbar');
                 setTimeout(() => {
                     setSelection(null);
                     setViewData(null);
                 }, 100);
-                
-              }
+            }
         });
 
         return () => {

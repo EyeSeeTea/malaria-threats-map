@@ -8,7 +8,7 @@ import IntensityStatusChart from "./IntensityStatus/IntensityStatusChart";
 import LevelOfInvolvementChart from "./Involvement/LevelOfInvolvementChart";
 import ResistanceMechanismsChart from "./ResistanceMechanisms/ResistanceMechanismsChart";
 import { selectPreventionFilters } from "../../../store/reducers/prevention-reducer";
-import { selectCountryMode, selectTheme, selectViewData, selectSelection } from "../../../store/reducers/base-reducer";
+import { selectCountryMode, selectTheme, selectViewData } from "../../../store/reducers/base-reducer";
 import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
 import { connect } from "react-redux";
 import PboSiteChart from "./PboDeployment/PboSiteChart";
@@ -20,7 +20,6 @@ const mapStateToProps = (state: State) => ({
     preventionFilters: selectPreventionFilters(state),
     countryMode: selectCountryMode(state),
     viewData: selectViewData(state),
-    selection: selectSelection(state),
 });
 
 const mapDispatchToProps = {

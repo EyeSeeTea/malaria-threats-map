@@ -14,7 +14,6 @@ import { ChartContainer } from "../../../Chart";
 import Curation from "../../../Curation";
 import { isNotNull } from "../../../../utils/number-utils";
 import { InvasiveStudy } from "../../../../../domain/entities/InvasiveStudy";
-import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 
 const Flex = styled.div`
     display: flex;
@@ -38,7 +37,7 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const VectorOccurrenceChart = ({ studies, popup, selection, viewData }: Props) => {
+const VectorOccurrenceChart = ({ studies, popup, viewData }: Props) => {
     const { t } = useTranslation();
     const translations = [
         t("utils.Jan."),
@@ -94,7 +93,6 @@ const VectorOccurrenceChart = ({ studies, popup, selection, viewData }: Props) =
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}`}</Box>
             </Typography>
-            {selection !== null && popup && <ViewSummaryDataButton />}
             {viewData !== null && !popup && (
                 <>
                     <Margin>

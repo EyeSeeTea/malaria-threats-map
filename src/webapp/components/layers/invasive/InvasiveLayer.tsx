@@ -228,6 +228,7 @@ class InvasiveLayer extends Component<Props> {
         const { studies, countryMode, selection, setSidebarOpen } = this.props;
         if (selection === null) {
             setSidebarOpen(false);
+            this.props.setInvasiveStudySelection([]);
             return <div />;
         }
         const filteredStudies = this.filterStudies(studies).filter(study =>
@@ -241,7 +242,7 @@ class InvasiveLayer extends Component<Props> {
         }
         return (
             this.props.theme === "invasive" && (
-                <SitePopover map={this.props.map}>
+                <SitePopover map={this.props.map} layer={INVASIVE_LAYER_ID}>
                     <InvasiveSelectionChart studies={filteredStudies} popup={true} />
                 </SitePopover>
             )

@@ -7,7 +7,14 @@ export const InvasiveStatusColors: { [key: string]: string[] } = {
 };
 
 const vectorOcurranceSymbols = {
-    "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
+    "circle-radius": [
+        "case",
+        ["boolean", ["feature-state", "hover"], false],
+        7,
+        ["boolean", ["feature-state", "click"], false],
+        7,
+        6,
+    ],
     "circle-color": [
         "match",
         ["get", "INVASIVE_STATUS"],
@@ -21,7 +28,9 @@ const vectorOcurranceSymbols = {
     "circle-stroke-color": [
         "case",
         ["boolean", ["feature-state", "hover"], false],
-        "lightgrey",
+        "#2FB3AF",
+        ["boolean", ["feature-state", "click"], false],
+        "#2FB3AF",
         [
             "match",
             ["get", "INVASIVE_STATUS"],
@@ -32,8 +41,22 @@ const vectorOcurranceSymbols = {
             InvasiveStatusColors[INVASIVE_STATUS.UNKNOWN][1],
         ],
     ],
-    "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
-    "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
+    "circle-stroke-width": [
+        "case",
+        ["boolean", ["feature-state", "hover"], false],
+        5,
+        ["boolean", ["feature-state", "click"], false],
+        5,
+        1,
+    ],
+    "circle-stroke-opacity": [
+        "case",
+        ["boolean", ["feature-state", "hover"], false],
+        0.7,
+        ["boolean", ["feature-state", "click"], false],
+        0.7,
+        0.7,
+    ],
 };
 
 export default vectorOcurranceSymbols;

@@ -4,7 +4,7 @@ export default function setupEffects(map: mapboxgl.Map, source: string, layer: s
 
     map.on("mousemove", layer, (e: any) => {
         if (e.features.length > 0) {
-           if (hoveredStateId) {
+            if (hoveredStateId) {
                 map.setFeatureState({ source: source, id: hoveredStateId }, { hover: false });
             }
             hoveredStateId = e.features[0].properties.OBJECTID;
@@ -29,11 +29,10 @@ export default function setupEffects(map: mapboxgl.Map, source: string, layer: s
 
     map.on("click", (e: any) => {
         if (e.defaultPrevented === false) {
-        if (clickedStateId) {
-            map.setFeatureState({ source: source, id: clickedStateId }, { click: false });
+            if (clickedStateId) {
+                map.setFeatureState({ source: source, id: clickedStateId }, { click: false });
+            }
+            clickedStateId = null;
         }
-        clickedStateId = null;
-    }
-
     });
 }

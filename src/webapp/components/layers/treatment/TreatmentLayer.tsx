@@ -286,6 +286,7 @@ class TreatmentLayer extends Component<Props> {
 
         if (selection === null) {
             setSidebarOpen(false);
+            this.props.setTreatmentStudySelection([]);
             return <div />;
         }
         const filteredStudies = this.filterStudies(studies).filter(study =>
@@ -300,7 +301,7 @@ class TreatmentLayer extends Component<Props> {
 
         return (
             this.props.theme === "treatment" && (
-                <SitePopover map={this.props.map}>
+                <SitePopover map={this.props.map} layer={TREATMENT_LAYER_ID}>
                     <TreatmentSelectionChart studies={filteredStudies} popup={true} />
                 </SitePopover>
             )

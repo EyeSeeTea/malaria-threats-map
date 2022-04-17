@@ -12,7 +12,6 @@ import {
     selectSelection,
     selectTheme,
     selectViewData,
-    selectIsSidebarOpen
 } from "../../../store/reducers/base-reducer";
 import * as R from "ramda";
 import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
@@ -26,7 +25,7 @@ import {
     setDiagnosisStudySelection,
 } from "../../../store/actions/diagnosis-actions";
 
-import { setSelection, setSidebarOpen, setViewData } from "../../../store/actions/base-actions";
+import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
@@ -53,8 +52,6 @@ const mapStateToProps = (state: State) => ({
     countryMode: selectCountryMode(state),
     selection: selectSelection(state),
     viewData: selectViewData(state),
-    sidebarOpen: selectIsSidebarOpen(state),
-
 });
 
 const mapDispatchToProps = {
@@ -63,7 +60,6 @@ const mapDispatchToProps = {
     setDiagnosisStudySelection: setDiagnosisStudySelection,
     setSelection: setSelection,
     setSidebarOpen: setSidebarOpen,
-    setViewData: setViewData
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -252,11 +248,13 @@ class DiagnosisLayer extends Component<Props> {
 
     render() {
         const { studies, countryMode, selection, viewData, setSidebarOpen } = this.props;
+
         if (viewData === null) {
             setSidebarOpen(false);
         }
         if (selection === null) {
             setSidebarOpen(false);
+            this.props.setDiagnosisStudySelection([]);
             return <div />;
         }
         const filteredStudies = this.filterStudies(studies).filter(study =>
@@ -271,7 +269,7 @@ class DiagnosisLayer extends Component<Props> {
 
         return (
             this.props.theme === "diagnosis" && (
-                <SitePopover map={this.props.map}>
+                <SitePopover map={this.props.map} layer={DIAGNOSIS_LAYER_ID}>
                     <DiagnosisSelectionChart studies={filteredStudies} popup={true} />
                 </SitePopover>
             )

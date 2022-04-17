@@ -4,18 +4,16 @@ import HighchartsReact from "highcharts-react-official";
 import { Box, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { selectTheme, selectSelection, selectViewData } from "../../../../store/reducers/base-reducer";
+import { selectTheme, selectViewData } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import Citation from "../../../charts/Citation";
 import Pagination from "../../../charts/Pagination";
 import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import { ChartContainer } from "../../../Chart";
-import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
-    selection: selectSelection(state),
     viewData: selectViewData(state),
 });
 
@@ -36,7 +34,6 @@ const IntensityInvolvementChart = ({
     groupedStudies,
     setStudy,
     study,
-    selection,
     viewData,
     popup,
 }: Props) => {
@@ -52,7 +49,6 @@ const IntensityInvolvementChart = ({
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">{`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}</Typography>
-            {selection !== null && popup && <ViewSummaryDataButton />}
             {viewData !== null && !popup && (
                 <>
                     <HighchartsReact highcharts={Highcharts} options={options} />

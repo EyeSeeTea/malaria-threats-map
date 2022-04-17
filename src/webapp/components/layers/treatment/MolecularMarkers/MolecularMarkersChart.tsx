@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Box, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { selectTheme, selectSelection, selectViewData } from "../../../../store/reducers/base-reducer";
+import { selectTheme, selectViewData } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import * as R from "ramda";
 import { MutationColors } from "./utils";
@@ -17,7 +17,6 @@ import Citation from "../../../charts/Citation";
 import { formatYears, formatYears2 } from "../../../../utils/string-utils";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import { ChartContainer } from "../../../Chart";
-import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
@@ -203,7 +202,6 @@ const Margin = styled.div`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     treatmentFilters: selectTreatmentFilters(state),
-    selection: selectSelection(state),
     viewData: selectViewData(state),
 });
 
@@ -214,7 +212,7 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const MolecularMarkersChart = ({ studies, treatmentFilters, selection, viewData, popup }: Props) => {
+const MolecularMarkersChart = ({ studies, treatmentFilters, viewData, popup }: Props) => {
     const { t } = useTranslation();
     const [studyIndex, setStudy] = useState(0);
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
@@ -260,7 +258,9 @@ const MolecularMarkersChart = ({ studies, treatmentFilters, selection, viewData,
     const pfkelch13 = () => {
         return (
             <>
-                <Pagination studies={studies} study={studyIndex} setStudy={setStudy} />
+                {viewData !== null && !popup && (
+                        <Pagination studies={studies} study={studyIndex} setStudy={setStudy} />
+                    )}
                 <Typography variant="subtitle1">
                     <Box fontWeight="fontWeightBold">{`${title} (${minYear}-${maxYear})`}</Box>
                 </Typography>
@@ -280,7 +280,6 @@ const MolecularMarkersChart = ({ studies, treatmentFilters, selection, viewData,
                         molecularMarker: t(`common.${molecularMarker}`),
                     })}
                 </Typography>
-                {selection !== null && popup && <ViewSummaryDataButton />}
                 {viewData !== null && !popup && (
                     <>
                         <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
@@ -394,7 +393,6 @@ const MolecularMarkersChart = ({ studies, treatmentFilters, selection, viewData,
                     <Typography variant="subtitle2">
                         <Box>{`${studies.length} ${t_studies} ${formatYears(`${minYear}`, `${maxYear}`)}`}</Box>
                     </Typography>
-                    {selection !== null && popup && <ViewSummaryDataButton />}
                     {viewData !== null && !popup && (
                         <>
                             {pfcrt()}

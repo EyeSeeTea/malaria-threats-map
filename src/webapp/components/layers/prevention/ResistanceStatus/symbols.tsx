@@ -5,7 +5,14 @@ export const ConfirmationStatusColors: { [key: string]: string[] } = {
 };
 
 const resistanceStatusSymbols = {
-    "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
+    "circle-radius": [
+        "case",
+        ["boolean", ["feature-state", "hover"], false],
+        7,
+        ["boolean", ["feature-state", "click"], false],
+        7,
+        6,
+    ],
     "circle-color": [
         "match",
         ["get", "CONFIRMATION_STATUS"],
@@ -21,7 +28,9 @@ const resistanceStatusSymbols = {
     "circle-stroke-color": [
         "case",
         ["boolean", ["feature-state", "hover"], false],
-        "lightgrey",
+        "#2FB3AF",
+        ["boolean", ["feature-state", "click"], false],
+        "#2FB3AF",
         [
             "match",
             ["get", "CONFIRMATION_STATUS"],
@@ -34,8 +43,22 @@ const resistanceStatusSymbols = {
             /* other */ "#111",
         ],
     ],
-    "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
-    "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
+    "circle-stroke-width": [
+        "case",
+        ["boolean", ["feature-state", "hover"], false],
+        5,
+        ["boolean", ["feature-state", "click"], false],
+        5,
+        1,
+    ],
+    "circle-stroke-opacity": [
+        "case",
+        ["boolean", ["feature-state", "hover"], false],
+        0.7,
+        ["boolean", ["feature-state", "click"], false],
+        0.7,
+        0.7,
+    ],
 };
 
 export default resistanceStatusSymbols;

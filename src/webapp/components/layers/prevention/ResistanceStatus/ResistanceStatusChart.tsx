@@ -2,7 +2,6 @@ import * as React from "react";
 import { useState } from "react";
 import Highcharts, { DataLabelsFormatterCallbackFunction } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import styled from "styled-components";
 import { Box, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -14,12 +13,8 @@ import { isNull, isNotNull } from "../../../../utils/number-utils";
 import Citation from "../../../charts/Citation";
 import Pagination from "../../../charts/Pagination";
 import Curation from "../../../Curation";
-import IntegrationReactSelect from "../../../BasicSelect";
-import FormLabel from "@mui/material/FormLabel";
-import { sendAnalytics } from "../../../../utils/analytics";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import { ChartContainer } from "../../../Chart";
-import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
@@ -117,18 +112,6 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
     },
 });
 
-const StyledSelect = styled(IntegrationReactSelect)`
-    margin-bottom: 4px;
-    margin-left: 16px;
-`;
-
-const Flex = styled.div`
-    margin-top: 8px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-`;
-
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     selection: selectSelection(state),
@@ -142,25 +125,10 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const ResistanceStatusChart = ({ studies: baseStudies, selection, viewData, popup }: Props) => {
+const ResistanceStatusChart = ({ studies: baseStudies, viewData, popup }: Props) => {
     const { t } = useTranslation();
     const [study, setStudy] = useState(0);
-    const speciesOptions = R.uniq(R.map(s => s.SPECIES, baseStudies));
-    const suggestions: any[] = speciesOptions.map((specie: string) => ({
-        label: specie,
-        value: specie,
-    }));
-    const [species, setSpecies] = useState<any[]>(suggestions);
-    const onSpeciesChange = (value: any) => {
-        sendAnalytics({ type: "event", category: "popup", action: "filter" });
-        setSpecies(value);
-    };
-    const groupedStudies = R.values(
-        R.groupBy(
-            R.prop("CITATION_URL"),
-            baseStudies.filter(study => species.map(s => s.value).includes(study.SPECIES))
-        )
-    );
+    const groupedStudies = R.values(R.groupBy(R.prop("CITATION_URL"), baseStudies));
     const studies = groupedStudies[study];
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
@@ -174,6 +142,7 @@ const ResistanceStatusChart = ({ studies: baseStudies, selection, viewData, popu
                 R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
         )
     );
+
     const data = simplifiedStudies.map(study => ({
         name: `${study.YEAR_START}, ${t(study.INSECTICIDE_TYPE)} ${t(study.INSECTICIDE_CONC)}`,
         y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
@@ -206,21 +175,8 @@ const ResistanceStatusChart = ({ studies: baseStudies, selection, viewData, popu
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">{subtitle}</Typography>
-            {selection !== null && popup && <ViewSummaryDataButton />}
             {viewData !== null && !popup && (
                 <>
-                    {suggestions.length > 1 && (
-                        <Flex>
-                            <FormLabel component="legend">Species</FormLabel>
-                            <StyledSelect
-                                isClearable
-                                isMulti
-                                suggestions={suggestions}
-                                onChange={onSpeciesChange}
-                                value={species}
-                            />
-                        </Flex>
-                    )}
                     <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
                     <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
                     <Curation study={studyObject} />

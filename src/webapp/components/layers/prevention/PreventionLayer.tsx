@@ -260,9 +260,9 @@ class PreventionLayer extends Component<Props> {
 
     render() {
         const { studies, countryMode, selection, setSidebarOpen } = this.props;
-
         if (selection === null) {
             setSidebarOpen(false);
+            this.props.setPreventionStudySelection([]);
             return <div />;
         }
         const filteredStudies = this.filterStudies(studies).filter(study =>
@@ -277,7 +277,7 @@ class PreventionLayer extends Component<Props> {
 
         return (
             this.props.theme === "prevention" && (
-                <SitePopover map={this.props.map}>
+                <SitePopover map={this.props.map} layer={PREVENTION_LAYER_ID}>
                     <PreventionSelectionChart studies={filteredStudies} popup={true} />
                 </SitePopover>
             )

@@ -16,7 +16,6 @@ import { isNotNull } from "../../../../utils/number-utils";
 import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import { ChartContainer } from "../../../Chart";
-import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 
 const Flex = styled.div`
     display: flex;
@@ -102,7 +101,7 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const ResistanceMechanismsChart = ({ studies, selection, viewData, popup }: Props) => {
+const ResistanceMechanismsChart = ({ studies, viewData, popup }: Props) => {
     const { t } = useTranslation();
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
@@ -176,6 +175,7 @@ const ResistanceMechanismsChart = ({ studies, selection, viewData, popup }: Prop
 
     const showAllelic = R.any(serie => R.any(data => data.y !== undefined, serie.data), series);
 
+
     return (
         <ChartContainer popup={popup}>
             <Typography variant="subtitle1">
@@ -184,7 +184,6 @@ const ResistanceMechanismsChart = ({ studies, selection, viewData, popup }: Prop
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">{`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}</Typography>
-            {selection !== null && popup && <ViewSummaryDataButton />}
             {viewData !== null && !popup && (
                 <>
                     <Flex>

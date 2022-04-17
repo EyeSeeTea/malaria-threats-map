@@ -230,7 +230,7 @@ class CountrySelectorLayer extends Component<Props> {
         return (
             <>
                 <Hidden smDown>
-                    <SitePopover map={this.props.map}>
+                    <SitePopover map={this.props.map} layer={DISTRICTS_LAYER_ID}>
                         <PreventionSelectionChart studies={filteredStudies} map={map} />
                     </SitePopover>
                 </Hidden>

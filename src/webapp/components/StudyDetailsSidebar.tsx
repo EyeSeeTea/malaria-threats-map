@@ -84,7 +84,7 @@ const StudyDetailsSidebar = ({
     const [filteredStudiesTreatment, setFilteredStudiesTreatment] = React.useState<Array<TreatmentStudy>>([]);
 
     React.useEffect(() => {
-        //I only update the new studies to be shown when viewData changes (ie. when the view summary of data button is pressed)
+        //I only update the new studies to be shown when viewData changes (ie. when you click on a study circle)
         //so that the data doesn't change automatically when the user hovers over another popup
         switch (theme) {
             case "prevention":

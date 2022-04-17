@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Box, Typography, Button } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { selectTheme, selectSelection, selectViewData } from "../../../../store/reducers/base-reducer";
+import { selectTheme, selectViewData } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import * as R from "ramda";
 import Citation from "../../../charts/Citation";
@@ -16,7 +16,6 @@ import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import _ from "lodash";
 import { isNotNull } from "../../../../utils/number-utils";
 import { ChartContainer } from "../../../Chart";
-import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 
 const options: (data: any, categories: any[], translations: any) => Highcharts.Options = (
     data,
@@ -83,19 +82,19 @@ const Margin = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-        &.MuiButton-text {
-            text-transform: none;
-            color: #2fb3af;
-        }
-        &.MuiButton-root {
-            padding: 0;
+    &.MuiButton-text {
+        text-transform: none;
+        color: #2fb3af;
+    }
+    &.MuiButton-root {
+        padding: 0;
 
-            &:hover {
-                border: none;
-                text-decoration: underline;
-            }
+        &:hover {
+            border: none;
+            text-decoration: underline;
         }
-    `;
+    }
+`;
 
 const FlexCol = styled.div<{ flex?: number }>`
     flex: ${props => props.flex || 1};
@@ -103,7 +102,6 @@ const FlexCol = styled.div<{ flex?: number }>`
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
-    selection: selectSelection(state),
     viewData: selectViewData(state),
 });
 
@@ -114,7 +112,7 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const TreatmentFailureChart = ({ studies, selection, viewData, popup }: Props) => {
+const TreatmentFailureChart = ({ studies, viewData, popup }: Props) => {
     const { t } = useTranslation();
     const [study, setStudy] = useState(0);
     const [showMore, setShowMore] = useState(false);

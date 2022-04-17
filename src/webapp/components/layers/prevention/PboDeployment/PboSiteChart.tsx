@@ -22,7 +22,6 @@ import {
     getMostRecentByCriteria2,
     getMostRecentByCriteria3,
 } from "../utils";
-import ViewSummaryDataButton from "../../../ViewSummaryDataButton";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -69,7 +68,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const PboSiteChart = ({ studies, popup, selection, viewData }: Props) => {
+const PboSiteChart = ({ studies, popup, viewData }: Props) => {
     const { t } = useTranslation();
     const siteSubtitleTranslation = t("common.prevention.chart.pbo_deployment.subtitle");
 
@@ -115,7 +114,6 @@ const PboSiteChart = ({ studies, popup, selection, viewData }: Props) => {
                 )}`}</Box>
             </Typography>
             <Typography variant="subtitle2">{siteSubtitleTranslation}</Typography>
-            {selection !== null && popup && <ViewSummaryDataButton />}
             {viewData !== null && !popup && (
                 <>
                     <div className={classes.root}>
