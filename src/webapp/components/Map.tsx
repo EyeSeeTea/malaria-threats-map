@@ -62,6 +62,10 @@ import Hidden from "./hidden/Hidden";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Button } from "@mui/material";
 import { Flex } from "./Chart";
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Box from '@mui/material/Box';
+//            font-weight: bold;
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const StyledButton = styled(Button)`
@@ -70,7 +74,12 @@ const StyledButton = styled(Button)`
         color: black;
         &:hover {
             border: none;
-            cursor
+            color: #2FB3AF;
+            font-weight: bold;
+            border-bottom: 5px solid #2FB3AF;
+            border-radius: 0;
+            cursor;
+            transition: none;
         }
     }
 `;
@@ -84,14 +93,7 @@ const BaseContainer = styled.div`
     margin: 20px;
     outline: none;
 `;
-const TopBarContainer = styled.div`
-    position: absolute;
-    width: 100%;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`;
+
 const TopRightContainer = styled(BaseContainer)`
     position: absolute;
     top: 10%;
@@ -142,6 +144,15 @@ const SearchContainer = styled(BaseContainer)`
 
 const Divider = styled.div`
     height: 10px;
+`;
+const StyledToolbar = styled(Toolbar)`
+&.MuiToolbar-root{
+    padding: 0;
+    @media (min-width: 600px) {
+        padding: 0;
+        min-height: 60px;
+    }
+}
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -275,8 +286,10 @@ class Map extends React.Component<Props> {
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
                 <Hidden smDown>
-                    <TopBarContainer>
-                        <Flex>
+                <Box>
+                    <AppBar position="sticky" sx={{backgroundColor: "white"}}>
+                        <StyledToolbar>
+                        <Box sx={{ flexGrow: 1, display: { xs: 'flex'} }}>
                             <StyledButton>
                                 <MenuIcon style={classes.icon} />
                                 {this.props.t("common.topbar.menu")}
@@ -284,9 +297,14 @@ class Map extends React.Component<Props> {
                             <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
                             <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
                             <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
-                        </Flex>
+                        </Box>
+                        <Box sx={{ flexGrow: 0 }}>
                         <Screenshot map={this.map} />
-                    </TopBarContainer>
+                        </Box>
+
+                        </StyledToolbar>
+                    </AppBar>
+                    </Box>
                 </Hidden>
                 <Fade in={showOptions}>
                     <SearchContainer>
