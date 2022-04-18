@@ -169,7 +169,7 @@ class Map extends React.Component<Props> {
         }
         this.map = new mapboxgl.Map({
             container: this.mapContainer,
-            style: style,
+            style: "mapbox://styles/jdivins/cl1kro7d0002p14o60yigofj2",
             center: [0.0, 28.291565],
             maxZoom: 8.99999,
             minZoom: 1,
