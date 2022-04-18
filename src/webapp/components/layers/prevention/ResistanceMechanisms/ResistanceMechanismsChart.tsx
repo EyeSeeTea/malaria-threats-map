@@ -175,7 +175,6 @@ const ResistanceMechanismsChart = ({ studies, viewData, popup }: Props) => {
 
     const showAllelic = R.any(serie => R.any(data => data.y !== undefined, serie.data), series);
 
-
     return (
         <ChartContainer popup={popup}>
             <Typography variant="subtitle1">

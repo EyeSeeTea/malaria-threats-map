@@ -248,10 +248,12 @@ class DiagnosisLayer extends Component<Props> {
 
     render() {
         const { studies, countryMode, selection, viewData, setSidebarOpen } = this.props;
+        console.log(selection)
+        console.log(viewData)
 
-        if (viewData === null) {
+        /*if (viewData === null) {
             setSidebarOpen(false);
-        }
+        }*/
         if (selection === null) {
             setSidebarOpen(false);
             this.props.setDiagnosisStudySelection([]);

@@ -72,6 +72,7 @@ const useStyles = makeStyles(theme => ({
 
 const GeneDeletionChart = ({ studies, diagnosisFilters, viewData, popup }: Props) => {
     const { t } = useTranslation();
+    console.log(studies)
     const classes = useStyles({});
     const nStudies = studies.length;
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
@@ -79,8 +80,10 @@ const GeneDeletionChart = ({ studies, diagnosisFilters, viewData, popup }: Props
     const maxYear = sortedStudies2[sortedStudies2.length - 1].YEAR_END;
     const minYear = sortedStudies[0].YEAR_START;
     const studyObject = studies[0];
+    console.log(studyObject)
     const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(type => t(type));
     const formatPercentage = (value: string) => `${(parseFloat(value) * 100).toFixed(1)}%`;
+    console.log(t(studyObject.ISO2));
 
     return (
         <ChatContainer popup={popup}>

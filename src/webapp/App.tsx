@@ -8,6 +8,7 @@ import ReduxQuerySync from "./store/query-middleware";
 import { PreventionMapType, State } from "./store/types";
 import { Theme, StyledEngineProvider } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { DiagnosisStudy } from "../domain/entities/DiagnosisStudy";
 
 import {
     setBoundsAction,
@@ -15,11 +16,14 @@ import {
     setFiltersAction,
     setFiltersMode,
     setFiltersOpen,
+    setSidebarOpen,
     setRegionAction,
     setStoryModeAction,
     setStoryModeStepAction,
     setThemeAction,
     toggleEndemicityLayerAction,
+    setViewData,
+    setSelection
 } from "./store/actions/base-actions";
 import {
     setAssayTypes,
@@ -35,6 +39,7 @@ import {
     setDiagnosisMapType,
     setDiagnosisPatientType,
     setDiagnosisSurveyTypes,
+    setDiagnosisStudySelection
 } from "./store/actions/diagnosis-actions";
 import {
     setExcludeLowerPatients,
@@ -185,11 +190,97 @@ ReduxQuerySync({
             selector: (state: State) => state.malaria.filtersOpen,
             action: (value: string) => setFiltersOpen(!value ? true : value === "true"),
         },
+        sidebarOpen: {
+            selector: (state: State) => state.malaria.sidebarOpen,
+            action: (value: string) => setSidebarOpen(!value ? true : value === "true"),
+        },
+        viewData: {
+            selector: (state: State) => {
+                console.log(state.malaria.viewData)
+                let site = null;
+                if(state.malaria.viewData !== null) {
+                    site = encodeURI(
+                        JSON.stringify({
+                            siteIso2: state.malaria.viewData.ISO_2_CODE,
+                            site: state.malaria.viewData.SITE_ID,
+                            siteCoordinates: state.malaria.viewData.coordinates,
+                        })
+                    );
+                }
+                return site;
+                },
+            action: (value: string) => {
+                console.log(value)
+                if(value !== undefined && value !== null && value !== "null") {
+                    const { siteIso2, site, siteCoordinates } = JSON.parse(decodeURIComponent(value));
+                return setViewData({
+                    ISO_2_CODE: siteIso2,
+                    SITE_ID: site,
+                    coordinates: siteCoordinates,
+                });
+                }
+                else return setViewData(null);
+                
+            },
+        },
+        selection: {
+            selector: (state: State) => {
+                let site = null;
+                if(state.malaria.selection !== null) {
+                    site = encodeURI(
+                        JSON.stringify({
+                            siteIso2: state.malaria.selection.ISO_2_CODE,
+                            site: state.malaria.selection.SITE_ID,
+                            siteCoordinates: state.malaria.selection.coordinates,
+                        })
+                    );
+                }
+                return site;
+                },
+            action: (value: string) => {
+                if(value !== undefined && value !== null && value !== "null") {
+                    const { siteIso2, site, siteCoordinates } = JSON.parse(decodeURIComponent(value));
+                return setSelection({
+                    ISO_2_CODE: siteIso2,
+                    SITE_ID: site,
+                    coordinates: siteCoordinates,
+                });
+                }
+                else return setSelection(null);
+                
+            },
+        },
+        selectDiagnosisStudySelection: {
+           //try first with the diagnosis study kind of info 
+            selector: (state: State) => {
+               // console.log(state.diagnosis.studySelection)
+                let site;
+                if(state.diagnosis.studySelection.length > 0) {
+                    console.log(state.diagnosis.studySelection)
+                    site = `${encodeURI(
+                        JSON.stringify(state.diagnosis.studySelection)
+                    )}`;
+                    //console.log(site)
+                }
+                else site = [];
+
+                return site;
+            },
+            action: (value: string) => {
+                //console.log(value)
+                if(value !== undefined && value.length > 0 && value !== null && value !== "null") {
+                    const result = JSON.parse(decodeURIComponent(value));
+                    return setDiagnosisStudySelection(result);
+                }
+                else return setDiagnosisStudySelection([]);
+
+            }
+        },
         filtersMode: {
             selector: (state: State) => state.malaria.filtersMode,
             action: (value: string) => setFiltersMode(value),
         },
-        years: {
+    years: {
             selector: (state: State) => state.malaria.filters,
             action: (value: string) =>
                 setFiltersAction(value ? value.split(",").map(value => parseInt(value)) : undefined),
@@ -238,6 +329,7 @@ ReduxQuerySync({
                 }
             },
         },
+
     },
     initialTruth: "location",
 });

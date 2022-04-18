@@ -173,7 +173,11 @@ function PersistentDrawerLeft({
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const isOpen = filtersOpen || storyMode;
+    console.log(viewData)
+    console.log(sidebarOpen)
+
     useEffect(() => {
+        // 
         if (viewData !== null && sidebarOpen === false) {
             setSidebarOpen(true);
         }

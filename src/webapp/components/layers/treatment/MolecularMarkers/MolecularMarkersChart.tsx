@@ -258,9 +258,7 @@ const MolecularMarkersChart = ({ studies, treatmentFilters, viewData, popup }: P
     const pfkelch13 = () => {
         return (
             <>
-                {viewData !== null && !popup && (
-                        <Pagination studies={studies} study={studyIndex} setStudy={setStudy} />
-                    )}
+                {viewData !== null && !popup && <Pagination studies={studies} study={studyIndex} setStudy={setStudy} />}
                 <Typography variant="subtitle1">
                     <Box fontWeight="fontWeightBold">{`${title} (${minYear}-${maxYear})`}</Box>
                 </Typography>
