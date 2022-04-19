@@ -1,6 +1,6 @@
 import React, { CSSProperties, HTMLAttributes } from "react";
 import clsx from "clsx";
-import Select, { OptionProps } from "react-select";
+import Select, { IndicatorProps, OptionProps } from "react-select";
 import { emphasize, Theme, useTheme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -17,6 +17,8 @@ import { DistributiveOmit } from "@mui/types";
 import { useTranslation } from "react-i18next";
 import * as R from "ramda";
 import { useFirstRender } from "./hooks/use-first-render";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ClearIcon from "@mui/icons-material/Clear";
 
 export interface OptionType {
     label: string;
@@ -53,6 +55,8 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: theme.spacing(0.5, 0.25),
             overflow: "hidden",
             textOverflow: "ellipsis",
+            background: "white",
+            borderRadius: "5px",
         },
         chipFocused: {
             backgroundColor: emphasize(
@@ -98,6 +102,12 @@ type InputComponentProps = Pick<BaseTextFieldProps, "inputRef"> & HTMLAttributes
 
 const inputComponent = React.forwardRef((props: InputComponentProps, ref: any) => <div ref={ref} {...props} />);
 
+const DropdownIndicator = () => <ArrowDropDownIcon />;
+
+const ClearIndicator = (props: IndicatorProps<OptionType, false>) => (
+    <ClearIcon color="disabled" sx={{ fontSize: 15 }} onClick={props.clearValue} />
+);
+
 function Control(props: ControlProps<OptionType, false>) {
     const {
         children,
@@ -107,22 +117,20 @@ function Control(props: ControlProps<OptionType, false>) {
     } = props;
 
     return (
-        <Paper className={classes.inputPaper}>
-            <TextField
-                fullWidth
-                InputProps={{
-                    inputComponent,
-                    inputProps: {
-                        className: classes.input,
-                        ref: innerRef,
-                        children,
-                        ...innerProps,
-                    },
-                    disableUnderline: true,
-                }}
-                {...TextFieldProps}
-            />
-        </Paper>
+        <TextField
+            fullWidth
+            InputProps={{
+                inputComponent,
+                inputProps: {
+                    className: classes.input,
+                    ref: innerRef,
+                    children,
+                    ...innerProps,
+                },
+                disableUnderline: true,
+            }}
+            {...TextFieldProps}
+        />
     );
 }
 
@@ -159,7 +167,7 @@ type MuiPlaceholderProps = DistributiveOmit<PlaceholderProps<OptionType, false>,
 function Placeholder(props: MuiPlaceholderProps) {
     const { selectProps, innerProps = {}, children } = props;
     return (
-        <Typography color="textSecondary" className={selectProps.classes.placeholder} {...innerProps}>
+        <Typography color="textPrimary" className={selectProps.classes.placeholder} {...innerProps}>
             {children}
         </Typography>
     );
@@ -214,6 +222,8 @@ const components = {
     Placeholder,
     SingleValue,
     ValueContainer,
+    DropdownIndicator,
+    ClearIndicator,
 };
 
 export type Option = {

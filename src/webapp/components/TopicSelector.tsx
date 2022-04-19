@@ -1,28 +1,27 @@
-import React, { Component } from "react";
+import React from "react";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import styled from "styled-components";
-import { Paper } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
+import { Box, Button, Grid, IconButton } from "@mui/material";
 import { State } from "../store/types";
 import { connect } from "react-redux";
-import { setThemeAction } from "../store/actions/base-actions";
+import { setActionGroupSelected, setThemeAction } from "../store/actions/base-actions";
 import { selectTheme } from "../store/reducers/base-reducer";
-import { Translation } from "react-i18next";
 import { selectPreventionStudiesError } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisStudiesError } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudiesError } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudiesError } from "../store/reducers/invasive-reducer";
+import { useTranslation } from "react-i18next";
 
-const ButtonGroup = styled.div`
-    display: flex;
-    justify-content: space-around;
-    font-size: 90%;
+const GridContainer = styled(Grid)`
+    padding: 10px 20px;
 `;
 
-const StyledPaper = styled(Paper)`
-    min-width: 250px;
-    padding: 8px;
-    pointer-events: all;
+const GridItem = styled(Grid)`
+    padding: 8px 0px;
+`;
+
+const StyledIconButton = styled(IconButton)`
+    padding: 8px 40px 4px 40px !important;
 `;
 
 const ThemeButton = styled.div<{ disabled?: boolean }>`
@@ -31,10 +30,36 @@ const ThemeButton = styled.div<{ disabled?: boolean }>`
     text-align: center;
     cursor: ${props => (props.disabled ? "not-allowed" : "")};
     opacity: ${props => (props.disabled ? 0.7 : 1)};
+    background: #f5f5f5;
+    border-radius: 10px;
+    &.Mui-selected {
+        background-color: #e2e2e2;
+    }
+    &.Mui-selected:hover {
+        background-color: #e2e2e2;
+    }
+    height: 152px;
+    padding 4px;
 `;
 
-const StyledIconButton = styled(IconButton)`
-    padding: 8px !important;
+const Title = styled.span`
+    color: black;
+    font-size: 13px;
+    letter-spacing: 0px;
+    margin: 0px;
+    text-transform: none;
+    font-weight: 300;
+    line-height: 16px;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+`;
+
+const LearnMoreButton = styled(Button)`
+    color: #487299;
+    font-size: 13px;
+    text-decoration: underline;
+    padding: 2px 8px;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -47,64 +72,106 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setTheme: setThemeAction,
+    setActionGroupSelected: setActionGroupSelected,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-class ThemeSelector extends Component<Props> {
-    render() {
-        const { theme, setTheme, preventionError, diagnosisError, treatmentError, invasiveError } = this.props;
-        return (
-            <Translation>
-                {t => {
-                    return (
-                        <StyledPaper>
-                            <ButtonGroup>
-                                <ThemeButton disabled={!!preventionError}>
-                                    <StyledIconButton
-                                        title={t("common.themes.prevention")}
-                                        onClick={() => setTheme("prevention")}
-                                        disabled={!!preventionError}
-                                    >
-                                        <PreventionIcon selected={theme === "prevention" && !preventionError} />
-                                    </StyledIconButton>
-                                </ThemeButton>
-                                <ThemeButton disabled={!!diagnosisError}>
-                                    <StyledIconButton
-                                        title={t("common.themes.diagnosis")}
-                                        onClick={() => setTheme("diagnosis")}
-                                        disabled={!!diagnosisError}
-                                    >
-                                        <DiagnosisIcon selected={theme === "diagnosis"} />
-                                    </StyledIconButton>
-                                </ThemeButton>
-                                <ThemeButton disabled={!!treatmentError}>
-                                    <StyledIconButton
-                                        title={t("common.themes.treatment")}
-                                        onClick={() => setTheme("treatment")}
-                                        disabled={!!treatmentError}
-                                    >
-                                        <TreatmentIcon selected={theme === "treatment"} />
-                                    </StyledIconButton>
-                                </ThemeButton>
-                                <ThemeButton disabled={!!invasiveError}>
-                                    <StyledIconButton
-                                        title={t("common.themes.invasive")}
-                                        onClick={() => setTheme("invasive")}
-                                        disabled={!!invasiveError}
-                                    >
-                                        <InvasiveIcon selected={theme === "invasive"} />
-                                    </StyledIconButton>
-                                </ThemeButton>
-                            </ButtonGroup>
-                        </StyledPaper>
-                    );
-                }}
-            </Translation>
-        );
-    }
-}
+const ThemeSelector: React.FC<Props> = ({
+    theme,
+    setTheme,
+    preventionError,
+    diagnosisError,
+    treatmentError,
+    invasiveError,
+    setActionGroupSelected,
+}) => {
+    const { t } = useTranslation();
+
+    const handlePreventionClick = React.useCallback(() => {
+        setActionGroupSelected("MAP_TYPE");
+        setTheme("prevention");
+    }, [setTheme, setActionGroupSelected]);
+
+    const handleInvasiveClick = React.useCallback(() => {
+        setTheme("invasive");
+        setActionGroupSelected("DATA");
+    }, [setTheme, setActionGroupSelected]);
+
+    const handleDiagnosisClick = React.useCallback(() => {
+        setTheme("diagnosis");
+        setActionGroupSelected("DATA");
+    }, [setTheme, setActionGroupSelected]);
+
+    const handleTreatmentClick = React.useCallback(() => {
+        setTheme("treatment");
+        setActionGroupSelected("MAP_TYPE");
+    }, [setTheme, setActionGroupSelected]);
+
+    return (
+        <Box sx={{ flexGrow: 1 }}>
+            <GridContainer container spacing={1}>
+                <GridItem item xs={6}>
+                    <ThemeButton disabled={!!preventionError}>
+                        <StyledIconButton
+                            disableRipple
+                            disabled={!!preventionError}
+                            title={t("common.themes.prevention")}
+                            onClick={handlePreventionClick}
+                        >
+                            <PreventionIcon selected={theme === "prevention" && !preventionError} />
+                        </StyledIconButton>
+                        <Title>{t("common.themes.prevention")}</Title>
+                        <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton>
+                    </ThemeButton>
+                </GridItem>
+                <GridItem item xs={6}>
+                    <ThemeButton disabled={!!invasiveError}>
+                        <StyledIconButton
+                            disableRipple
+                            title={t("common.themes.invasive")}
+                            disabled={!!invasiveError}
+                            onClick={handleInvasiveClick}
+                        >
+                            <InvasiveIcon selected={theme === "invasive"} />
+                        </StyledIconButton>
+                        <Title>{t("common.themes.invasive")}</Title>
+                        <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton>
+                    </ThemeButton>
+                </GridItem>
+                <GridItem item xs={6}>
+                    <ThemeButton disabled={!!treatmentError}>
+                        <StyledIconButton
+                            disableRipple
+                            title={t("common.themes.treatment")}
+                            disabled={!!treatmentError}
+                            onClick={handleTreatmentClick}
+                        >
+                            <TreatmentIcon selected={theme === "treatment"} />
+                        </StyledIconButton>
+                        <Title>{t("common.themes.treatment")}</Title>
+                        <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton>
+                    </ThemeButton>
+                </GridItem>
+                <GridItem item xs={6}>
+                    <ThemeButton disabled={!!diagnosisError}>
+                        <StyledIconButton
+                            disableRipple
+                            disabled={!!diagnosisError}
+                            title={t("common.themes.diagnosis")}
+                            onClick={handleDiagnosisClick}
+                        >
+                            <DiagnosisIcon selected={theme === "diagnosis"} />
+                        </StyledIconButton>
+                        <Title>{t("common.themes.diagnosis")}</Title>
+                        <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton>
+                    </ThemeButton>
+                </GridItem>
+            </GridContainer>
+        </Box>
+    );
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThemeSelector);

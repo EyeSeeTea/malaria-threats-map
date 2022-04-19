@@ -24,9 +24,12 @@ export interface RegionState {
     region?: string;
     subRegion?: string;
     site?: string;
+    siteLabel?: string;
     siteIso2?: string;
     siteCoordinates?: [number, number];
 }
+
+export type ActionGroup = "THEME" | "MAP_TYPE" | "DATA" | "LOCATION";
 
 export interface MalariaState {
     theme: string;
@@ -44,7 +47,8 @@ export interface MalariaState {
         invasive: Date | null;
     };
     initialDialogOpen: boolean;
-    filtersOpen: boolean;
+    actionGroupSelected: ActionGroup | null;
+    filtersOpen?: boolean;
     filtersMode: string;
     selection: SiteSelection | null;
     mobileOptionsOpen: boolean;

@@ -1,19 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
 import IntegrationReactSelect, { Option } from "../../BasicSelect";
-import { Divider, FilterWrapper } from "../Filters";
+import { FilterRowContainer } from "../Filters";
 import FormLabel from "@mui/material/FormLabel";
 import { sendMultiFilterAnalytics } from "../../../utils/analytics";
 
 type Props = {
     label: string;
     options: Option[];
+    placeholder?: string;
     onChange: (selection: string[]) => void;
     value: string[];
     analyticsMultiFilterAction?: string;
 };
 
-function MultiFilter({ label, options, onChange, value, analyticsMultiFilterAction }: Props) {
+function MultiFilter({ label, options, onChange, value, analyticsMultiFilterAction, placeholder }: Props) {
     const onSelectionChange = (options: Option[] = []) => {
         onChange((options || []).map(o => o.value));
 
@@ -25,17 +26,21 @@ function MultiFilter({ label, options, onChange, value, analyticsMultiFilterActi
     const selections = options.filter(option => value.includes(option.value));
 
     return (
-        <FilterWrapper>
-            <FormLabel component="legend">{label}</FormLabel>
-            <Divider />
+        <FilterRowContainer>
+            {selections && selections.length > 0 && (
+                <FormLabel color="primary" component="legend">
+                    {`${label}:`}&nbsp;
+                </FormLabel>
+            )}
             <IntegrationReactSelect
                 isMulti
-                isClearable
+                isClearable={false}
+                placeholder={placeholder}
                 suggestions={options}
                 onChange={onSelectionChange}
                 value={selections}
             />
-        </FilterWrapper>
+        </FilterRowContainer>
     );
 }
 

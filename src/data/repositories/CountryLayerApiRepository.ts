@@ -59,7 +59,7 @@ export class CountryLayerApiRepository implements CountryLayerRepository {
     }
 
     private getBackendCountries(): FutureData<Country[]> {
-        return request<Country[]>({ url: `${this.backedBaseUrl}/countries` }).flatMapError(error => {
+        return request<Country[]>({ url: `${this.backedBaseUrl}` }).flatMapError(error => {
             console.log("error loading countries from backend", error);
             return Future.success([]);
         });
