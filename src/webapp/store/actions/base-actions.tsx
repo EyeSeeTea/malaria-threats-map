@@ -1,6 +1,6 @@
 import { createAction, createCustomAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import { RegionState, SiteSelection } from "../types";
+import { ActionGroup, RegionState, SiteSelection } from "../types";
 import { AjaxError } from "rxjs/ajax";
 import { UploadFileData } from "../../../domain/usecases/UploadFileUseCase";
 
@@ -48,6 +48,8 @@ export const setStoryModeAction = createAction(ActionTypeEnum.MalariaSetStoryMod
 export const setStoryModeStepAction = createAction(ActionTypeEnum.MalariaSetStoryModeStep)<number>();
 
 export const setInitialDialogOpen = createAction(ActionTypeEnum.MalariaSetInitialDialogOpen)<boolean>();
+
+export const setActionGroupSelected = createAction(ActionTypeEnum.MalariaActionGroupSelected)<ActionGroup | null>();
 
 export const setFiltersOpen = createAction(ActionTypeEnum.SetFiltersOpen)<boolean>();
 

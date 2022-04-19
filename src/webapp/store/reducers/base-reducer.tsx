@@ -1,6 +1,6 @@
 import * as R from "ramda";
 import { createSelector } from "reselect";
-import { MalariaState, RegionState, SiteSelection, State } from "../types";
+import { ActionGroup, MalariaState, RegionState, SiteSelection, State } from "../types";
 import { createReducer } from "../reducer-utils";
 import { ActionTypeEnum } from "../actions";
 
@@ -31,6 +31,7 @@ const initialState: MalariaState = Object.freeze({
         invasive: null,
     },
     initialDialogOpen: !query,
+    actionGroupSelected: null,
     filtersOpen: true,
     sidebarOpen: false,
     viewData: null,
@@ -72,6 +73,7 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.MalariaSetStoryModeStep]: (storyModeStep: number) => R.assoc("storyModeStep", storyModeStep || 0),
     [ActionTypeEnum.MalariaSetInitialDialogOpen]: (initialDialogOpen: boolean) =>
         R.assoc("initialDialogOpen", initialDialogOpen),
+    [ActionTypeEnum.MalariaActionGroupSelected]: (value: ActionGroup | null) => R.assoc("actionGroupSelected", value),
     [ActionTypeEnum.SetFiltersOpen]: (filtersOpen: boolean) => R.assoc("filtersOpen", filtersOpen),
     [ActionTypeEnum.SetSidebarOpen]: (sidebarOpen: boolean) => R.assoc("sidebarOpen", sidebarOpen),
     [ActionTypeEnum.SetFiltersMode]: (filtersMode: string) => R.assoc("filtersMode", filtersMode || "filters"),
@@ -144,6 +146,7 @@ export const selectCountryMode = createSelector(selectMalariaState, state => sta
 export const selectFilters = createSelector(selectMalariaState, state => state.filters);
 export const selectRegion = createSelector(selectMalariaState, state => state.region);
 export const selectIsInitialDialogOpen = createSelector(selectMalariaState, state => state.initialDialogOpen);
+export const selectActionGroupSelected = createSelector(selectMalariaState, state => state.actionGroupSelected);
 export const selectAreFiltersOpen = createSelector(selectMalariaState, state => state.filtersOpen);
 export const selectIsSidebarOpen = createSelector(selectMalariaState, state => state.sidebarOpen);
 export const selectFiltersMode = createSelector(selectMalariaState, state => state.filtersMode);

@@ -100,7 +100,11 @@ const StudyDetailsSidebar = ({
                 setFilteredStudiesInvasive(invasiveStudySelection);
                 break;
         }
-    }, [viewData]);
+    //only having viewData be in the useEffect is necessary because we don't want to set the studies whenever the selection changes,
+    //only when we click on the dot/viewData changes 
+}, 
+ // eslint-disable-next-line
+[viewData]);
 
     const handleClose = () => {
         setSidebarOpen(false);

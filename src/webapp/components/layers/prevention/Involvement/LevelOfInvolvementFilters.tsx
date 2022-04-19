@@ -8,8 +8,8 @@ export default function LevelOfInvolvementFilters() {
     return (
         <div>
             <MechanismTypeFilter fromDb />
-            <SpeciesFilter />
             <SynergistTypeFilter />
+            <SpeciesFilter />
             <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
         </div>
     );

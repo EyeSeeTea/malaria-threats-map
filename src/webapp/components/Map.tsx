@@ -11,9 +11,6 @@ import DiagnosisLayer from "./layers/diagnosis/DiagnosisLayer";
 import TreatmentLayer from "./layers/treatment/TreatmentLayer";
 import InvasiveLayer from "./layers/invasive/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
-import Filters from "./filters/container/Filters";
-import MapTypesSelector from "./MapTypesSelector";
-import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";
 import WhoLogo from "./WhoLogo";
 import {
@@ -48,11 +45,9 @@ import PBOEndemicityLayer from "./layers/PBOEndemicityLayer";
 import DisputedBordersEndemicityLayer from "./layers/PBODisputedBordersLayer";
 import Screenshot from "./Screenshot";
 import Report from "./Report";
-import Subscription from "./Subscription";
 import Feedback from "./Feedback";
 import InitialDisclaimer from "./InitialDisclaimer";
 import TheaterMode from "./TheaterMode";
-import TheaterModeIcon from "./TheaterMode/TheaterModeIcon";
 import InitialDialog from "./InitialDialog";
 import TourIcon from "./TourIcon";
 import ShareIcon from "./ShareIcon";
@@ -60,6 +55,8 @@ import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
+import MapActions from "./map-actions/MapActions";
+import { dispatchCustomEvent } from "../utils/dom-utils";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
@@ -69,7 +66,7 @@ const Separator = styled.div`
 
 const BaseContainer = styled.div`
     max-width: 600px;
-    margin: 20px;
+    margin: 30px;
     outline: none;
 `;
 
@@ -114,15 +111,20 @@ const SearchContainer = styled(BaseContainer)`
     pointer-events: none;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 350px;
     display: flex;
     flex-direction: column;
     align-items: start;
     z-index: 1;
 `;
 
-const Divider = styled.div`
-    height: 10px;
+const FloatingActionsContainer = styled(BaseContainer)`
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    pointer-events: all;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -213,6 +215,8 @@ class Map extends React.Component<Props> {
         if (pageView && !this.props.initialDialogOpen) {
             sendAnalytics({ type: "pageView", ...pageView });
         }
+
+        setTimeout(() => dispatchCustomEvent("resize"), 100);
     }
 
     componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {
@@ -258,16 +262,8 @@ class Map extends React.Component<Props> {
                 <Fade in={showOptions}>
                     <SearchContainer>
                         <Hidden smDown>
-                            <div id={"third"}>
-                                <TopicSelector />
-                            </div>
-                            <Divider />
-                            <MapTypesSelector />
-                            <Divider />
-                            <Filters />
                             <MalariaTour />
                         </Hidden>
-                        <TheaterModeIcon />
                         <Layers />
                         <Country disabled={isInvasive} />
                         {!isMobile && <DataDownload />}
@@ -280,12 +276,17 @@ class Map extends React.Component<Props> {
                         </Hidden>
                     </SearchContainer>
                 </Fade>
+                <Fade in={showOptions}>
+                    <FloatingActionsContainer>
+                        <MapActions />
+                    </FloatingActionsContainer>
+                </Fade>
                 <Hidden smDown>
                     <Fade in={showOptions}>
                         <TopRightContainer>
                             <StoryModeSelector />
                             <InitialDisclaimer />
-                            <Subscription />
+
                             <Feedback />
                             <TourIcon />
                             {/* {["prevention", "diagnosis"].includes(theme) && <UploadFile />} */}
@@ -299,7 +300,7 @@ class Map extends React.Component<Props> {
                         <TopRightVerticalContainer>
                             <StoryModeSelector />
                             <InitialDisclaimer />
-                            <Subscription />
+
                             <Feedback />
                         </TopRightVerticalContainer>
                     </Fade>

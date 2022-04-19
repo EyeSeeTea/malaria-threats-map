@@ -56,6 +56,7 @@ const PatientTypeFilter: React.FC<Props> = ({ setPatientType, diagnosisFilters, 
     return (
         <SingleFilter
             label={t("common.filters.patient_type")}
+            placeholder={t("common.filters.select_patient_type")}
             options={suggestions}
             onChange={setPatientType}
             value={diagnosisFilters.patientType}

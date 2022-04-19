@@ -4,6 +4,7 @@ import IntegrationReactSelect from "./BasicSelect";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import { sendAnalytics } from "../utils/analytics";
+import { Paper } from "@mui/material";
 
 const LANGUAGES = [
     {
@@ -34,11 +35,13 @@ export default function LanguageSelectorSelect(props: { section?: string }) {
     const language = i18next.language || window.localStorage.i18nextLng;
 
     return (
-        <IntegrationReactSelect
-            id={"language"}
-            suggestions={LANGUAGES}
-            onChange={handleChange}
-            value={LANGUAGES.find(lg => lg.value === language)}
-        />
+        <Paper sx={{ padding: 1 }}>
+            <IntegrationReactSelect
+                id={"language"}
+                suggestions={LANGUAGES}
+                onChange={handleChange}
+                value={LANGUAGES.find(lg => lg.value === language)}
+            />
+        </Paper>
     );
 }

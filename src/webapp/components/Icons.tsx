@@ -13,6 +13,7 @@ type Props = { selected?: boolean; size?: number };
 const baseIcon = css<Props>`
     max-width: ${props => props.size || 48}px;
     border-radius: 50%;
+    margin: 0px 5px;
 `;
 
 const TreatmentSVG = ({ ...rest }: Props) => <img alt="" {...rest} src={treatmentIcon} />;

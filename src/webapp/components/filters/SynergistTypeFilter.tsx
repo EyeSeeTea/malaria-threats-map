@@ -34,6 +34,7 @@ const SynergistTypeFilter: React.FC<Props> = ({ preventionFilters, synergistType
     return (
         <MultiFilter
             label={t("common.filters.synergist_type")}
+            placeholder={t("common.filters.select_synergist_type")}
             options={suggestions}
             onChange={setSynergistTypes}
             value={preventionFilters.synergistTypes}

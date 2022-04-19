@@ -245,7 +245,7 @@ ReduxQuerySync({
 export const theme = createTheme({
     palette: {
         primary: {
-            main: "#008dc9",
+            main: "#2fb3af",
         },
         secondary: {
             main: "#d86422",

@@ -7,9 +7,10 @@
         "themes": {
             "prevention": "Vector insecticide resistance",
             "diagnosis": "Parasite pfhrp2/3 gene deletions",
-            "treatment": "Parasite drug efficacy and resistance",
+            "treatment": "Antimalarial drug efficacy and resistance",
             "invasive": "Invasive vector species",
-            "mekong": "Greater Mekong Subregion"
+            "mekong": "Greater Mekong Subregion",
+            "learnMore": "Learn More"
         },
         "themes_caps": {
             "prevention": "VECTOR INSECTICIDE RESISTANCE",
@@ -25,11 +26,16 @@
         },
         "prevention": {
             "resistance_status": "Insecticide resistance status",
+            "resistance_status_subtitle": "Results of discriminating concentration bioassays",
             "resistance_intensity": "Insecticide resistance intensity",
+            "resistance_intensity_subtitle": "Results of intensity concentration bioassays",
             "resistance_mechanism": "Resistance mechanisms detection",
+            "resistance_mechanism_subtitle": "Results of molecular assays, biochemical assays and synergist-insecticide bioassays",
             "synergist_involvement": "Synergist effect in susceptibility",
+            "synergist_involvement_subtitle": "Results of synergist-insecticide bioassays (mono oxygenases only)",
             "synergist_involvement_legend": "Effect of synergy in susceptibility",
             "pbo_deployment": "Pyrethroid-PBO nets deployment",
+            "pbo_deployment_subtitle": "See whether sites meet the WHO criteria for Pyrethroid-PBO net deployment",
             "pbo_deployment_legend": "Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment by vector species",
             "chart": {
                 "resistance_status": {
@@ -167,9 +173,12 @@
         },
         "treatment": {
             "treatment_failure": "Treatment failure",
+            "treatment_failure_subtitle": "Results of therapeutic efficacy studies",
             "delayed_parasite_clearance": "Delayed parasite clearance (P.f)",
+            "delayed_parasite_clearance_subtitle": "Results of therapeutic efficacy studies",
             "delayed_parasite_clearance_italics": "Delayed parasite clearance (<i>P.f </i>)",
             "molecular_markers": "Molecular markers of drug resistance",
+            "molecular_markers_subtitle": "Results of studies of molecular prevention",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against <i>{{plasmodiumSpecies}}</i> {{years}}",
@@ -253,10 +262,6 @@
             "filters": "Filters",
             "pfhrp23_note": "Across surveys, the criteria for selecting samples to test for <i>pfhrp 2/3</i> deletions varies; therefore, refer to the full report cited for more details.",
             "last_updated": "Last Updated:",
-            "tabs": {
-                "filters": "Filters",
-                "regions": "Regions"
-            },
             "no_records": "There are no studies available with the specified criteria",
             "records": {
                 "prevention": {
@@ -271,27 +276,35 @@
             },
             "insecticide_class": "Insecticide class",
             "insecticide_type": "Insecticide type",
+            "select_insecticide_type": "Select insecticide type",
             "test_type": "Test type",
+            "select_test_type": "Select test type",
             "vector_species": "Vector species",
+            "select_vector_species": "Select vector species",
             "plasmodium_species": "Plasmodium species",
             "drug": "Drug",
             "molecular_marker": "Molecular marker",
             "mechanism_type": "Mechanism type",
             "assay_type": "Assay type",
             "synergist_type": "Test type",
+            "select_synergist_type": "Select test type",
             "synergist_types": "Synergist types",
             "deletion_type": "Deletion type",
+            "select_deletion_type": "Select deletion type",
             "survey_type": "Survey type",
+            "select_survey_type": "Select survey type",
             "patient_type": "Patient type",
+            "select_patient_type": "Select patient type",
             "years": "Years",
             "country": "Country",
             "select_country": "Select Country",
             "countries": "Countries",
-            "region": "WHO Region",
+            "region": "Region",
             "select_region": "Select Region",
             "sub_region": "Subregion",
             "select_sub_region": "Select Subregion",
             "select_site": "Select Site",
+            "site": "Site",
             "exclude_lower_patients": "Exclude studies of less than 20 patients",
             "exclude_lower_samples": "Exclude studies of less than 20 samples"
         },
@@ -493,7 +506,7 @@
             "select_story_mode": "Select story mode"
         },
         "icons": {
-            "animation": "Temporal animation",
+            "animation": "Play animation",
             "endemicity": "Shade non-endemic countries",
             "visualization": "Country/site mode",
             "story": "Story mode",
@@ -744,6 +757,16 @@
         "p1Link": "https://apps.who.int/iris/bitstream/handle/10665/258939/WHO-HTM-GMP-2017.17-eng.pdf?sequence=5",
         "p1a": "three WHO recommended criteria",
         "p1b": "at different geographical sites or areas. The status has been evaluated based on data included in the Global database on insecticide resistance in malaria vectors. The map shows the status of compliance for the vector species selected on the filter pane. If no species have been filtered, the map considers all data available to evaluate the criteria."
+    },
+    "mapActions": {
+        "selectTheme": "SELECT THEME",
+        "theme": "Theme",
+        "selectMapType": "SELECT MAP TYPE",
+        "mapType": "Map",
+        "selectData": "FILTER DATA",
+        "data": "Data",
+        "selectLocation": "FILTER LOCATION (OPTIONAL)",
+        "location": "Location"
     },
     "PBOStory": {
         "step1": {
