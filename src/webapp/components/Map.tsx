@@ -33,7 +33,8 @@ import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
-import { Fade } from "@mui/material";
+import { Fade, Button, AppBar, Toolbar, Box } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
 import Leyend from "./Leyend";
@@ -59,22 +60,19 @@ import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
-import MenuIcon from "@mui/icons-material/Menu";
-import { Button } from "@mui/material";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Box from "@mui/material/Box";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const StyledButton = styled(Button)`
     &.MuiButton-root {
         padding: 15px;
         color: black;
+        letter-spacing: 0.235px;
         &:hover {
             border: none;
             color: #2FB3AF;
             font-weight: bold;
             padding-bottom: 10px;
+            letter-spacing: 0;
             border-bottom: 5px solid #2FB3AF;
             border-radius: 0;
             cursor;
@@ -260,7 +258,12 @@ class Map extends React.Component<Props> {
         const isPbo = theme === "prevention" && preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
         const isInvasive = theme === "invasive";
         const ready = this.map && this.state.ready;
-        const classes = { icon: { marginRight: 5 }, menuOptionBox: { flexGrow: 1, display: { xs: "flex" } }, screenshotBox: { flexGrow: 0 }, appBar: { backgroundColor: "white" }};
+        const classes = {
+            icon: { marginRight: 5 },
+            menuOptionBox: { flexGrow: 1, display: { xs: "flex" } },
+            screenshotBox: { flexGrow: 0 },
+            appBar: { backgroundColor: "white" },
+        };
         return (
             <React.Fragment>
                 <div
@@ -298,7 +301,6 @@ class Map extends React.Component<Props> {
                                     <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
                                     <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
                                     <StyledButton>{this.props.t("common.topbar.stories")}</StyledButton>
-
                                 </Box>
                                 <Box sx={classes.screenshotBox}>
                                     <Screenshot map={this.map} />

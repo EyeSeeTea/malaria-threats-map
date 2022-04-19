@@ -294,13 +294,12 @@
             "maps": "Mapas",
             "dashboards": "Tableros",
             "stories": "Cuentos"
-
         },
         "legend": {
             "number_of_studies": "Número de estudios",
             "number_of_surveys": "Número de encuestas",
             "most_recent_data_shown": "Datos más recientes mostrados"
-    },
+        },
         "screenshot": {
             "screenshot": "Captura de pantalla",
             "download_screenshot": "Descargar captura de pantalla",
