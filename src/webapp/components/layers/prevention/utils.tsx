@@ -3,18 +3,15 @@ import resistanceStatusSymbols from "./ResistanceStatus/symbols";
 import intensityStatusSymbols from "./IntensityStatus/symbols";
 import resistanceMechanismSymbols from "./ResistanceMechanisms/symbols";
 import levelOfInvolvementSymbols from "./Involvement/symbols";
-import PboDeploymentSymbols, { PboDeploymentStatus } from "./PboDeployment/PboDeploymentSymbols";
 import { default as ResistanceStatusLegend } from "./ResistanceStatus/legend";
 import { default as IntensityStatusLegend } from "./IntensityStatus/legend";
 import { default as ResistanceMechanismsLegend } from "./ResistanceMechanisms/legend";
 import { PreventionFilters, PreventionMapType } from "../../../store/types";
-import PboDeploymentLegend from "./PboDeployment/PboDeploymentLegend";
 import * as R from "ramda";
 import { filterByAssayTypes, filterByInsecticideClass, filterByType, filterByYearRange } from "../studies-filters";
 import CountrySymbols from "./Countries/PreventionCountrySymbols";
 import PreventionCountryLegend from "./Countries/PreventionCountryLegend";
 import LevelOfInvolvementLegend from "./Involvement/LevelOfInvolvementLegend";
-import PboDeploymentCountriesLegend from "./PboDeployment/PboDeploymentCountriesLegend";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 
 export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters, countryMode: boolean) => {
@@ -30,8 +27,6 @@ export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters, coun
             return resistanceMechanismSymbols;
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return levelOfInvolvementSymbols;
-        case PreventionMapType.PBO_DEPLOYMENT:
-            return PboDeploymentSymbols;
         default:
             return;
     }
@@ -39,11 +34,7 @@ export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters, coun
 
 export const resolveMapTypeLegend = (preventionFilters: PreventionFilters, countryMode: boolean) => {
     if (countryMode) {
-        if (countryMode && preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT) {
-            return <PboDeploymentCountriesLegend />;
-        } else {
-            return <PreventionCountryLegend />;
-        }
+        <PreventionCountryLegend />;
     }
     switch (preventionFilters.mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
@@ -54,8 +45,6 @@ export const resolveMapTypeLegend = (preventionFilters: PreventionFilters, count
             return <ResistanceMechanismsLegend />;
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return <LevelOfInvolvementLegend />;
-        case PreventionMapType.PBO_DEPLOYMENT:
-            return <PboDeploymentLegend />;
         default:
             return <span />;
     }
@@ -93,19 +82,6 @@ export function getMostRecentByCriteria1(studies: PreventionStudy[]): Prevention
     return sortedStudiesByYear.length > 0 ? sortedStudiesByYear[0] : undefined;
 }
 
-function meetsCriteria1(group: PreventionStudy[], criteria: Record<string, PboCriteria>) {
-    const filteredStudies = filterByCriteria1(group);
-    const groupedStudies = R.groupBy(R.prop("SPECIES"), filteredStudies);
-    Object.entries(groupedStudies).forEach(([species, studies]) => {
-        if (!criteria[species]) {
-            criteria[species] = {};
-        }
-        criteria[species].criteria1 = getMostRecentByCriteria1(studies) !== undefined;
-    });
-    if (filteredStudies.length === 0) return;
-    return getMostRecentByCriteria1(filteredStudies) !== undefined;
-}
-
 export function getMostRecentByCriteria2(studies: PreventionStudy[]): PreventionStudy | undefined {
     const studiesByCriteria2 = studies.filter(
         study => +study.MORTALITY_ADJUSTED >= 0.1 && +study.MORTALITY_ADJUSTED <= 0.8
@@ -114,20 +90,6 @@ export function getMostRecentByCriteria2(studies: PreventionStudy[]): Prevention
     const sortedStudiesByYear = R.reverse(R.sortBy(R.prop("YEAR_START"), studiesByCriteria2));
 
     return sortedStudiesByYear.length > 0 ? sortedStudiesByYear[0] : undefined;
-}
-
-function meetsCriteria2(group: PreventionStudy[], criteria: Record<string, PboCriteria>) {
-    const filteredStudies = filterByCriteria1(group);
-    const groupedStudies = R.groupBy(R.prop("SPECIES"), filteredStudies);
-    Object.entries(groupedStudies).forEach(([species, studies]) => {
-        if (!criteria[species]) {
-            criteria[species] = {};
-        }
-        criteria[species].criteria2 = getMostRecentByCriteria2(studies) !== undefined;
-    });
-
-    if (filteredStudies.length === 0) return;
-    return getMostRecentByCriteria1(filteredStudies) !== undefined;
 }
 
 export function filterByCriteria3(group: PreventionStudy[]) {
@@ -151,20 +113,6 @@ export function getMostRecent(studies: PreventionStudy[]): PreventionStudy | und
     const sortedStudiesByYear = R.reverse(R.sortBy(R.prop("YEAR_START"), studies));
 
     return sortedStudiesByYear.length > 0 ? sortedStudiesByYear[0] : undefined;
-}
-
-function meetsCriteria3(group: PreventionStudy[], criteria: Record<string, PboCriteria>) {
-    const filteredStudies = filterByCriteria3(group);
-
-    const groupedStudies = R.groupBy(R.prop("SPECIES"), filteredStudies);
-    Object.entries(groupedStudies).forEach(([species, studies]) => {
-        if (!criteria[species]) {
-            criteria[species] = {};
-        }
-        criteria[species].criteria3 = getMostRecentByCriteria3(studies) !== undefined;
-    });
-    if (filteredStudies.length === 0) return;
-    return getMostRecentByCriteria3(filteredStudies) !== undefined;
 }
 
 const filterByMostRecentYear = (group: any[]) => {
@@ -230,24 +178,6 @@ function getByMostRecentYearAndInvolvement(group: any[]) {
     return filteredSortedStudies[0];
 }
 
-export function evaluateDeploymentStatus(group: any[]) {
-    const criteria = {};
-    meetsCriteria1(group, criteria);
-    meetsCriteria2(group, criteria);
-    meetsCriteria3(group, criteria);
-    let pboDeploymentStatus;
-    if (R.any((c: any) => c.criteria1 && c.criteria2 && c.criteria3, R.values(criteria))) {
-        pboDeploymentStatus = PboDeploymentStatus.ELIGIBLE;
-    } else if (
-        R.any((c: any) => c.criteria1 === false || c.criteria2 === false || c.criteria3 === false, R.values(criteria))
-    ) {
-        pboDeploymentStatus = PboDeploymentStatus.NOT_ELIGIBLE;
-    } else {
-        pboDeploymentStatus = PboDeploymentStatus.NOT_ENOUGH_DATA;
-    }
-    return { criteria, pboDeploymentStatus };
-}
-
 export const studySelector = (group: any[], mapType: PreventionMapType) => {
     switch (mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
@@ -258,14 +188,6 @@ export const studySelector = (group: any[], mapType: PreventionMapType) => {
             return getByMostRecentYearAndResistanceMechanism(group);
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return getByMostRecentYearAndInvolvement(group);
-        case PreventionMapType.PBO_DEPLOYMENT: {
-            const { criteria, pboDeploymentStatus } = evaluateDeploymentStatus(group);
-            return {
-                ...group[0],
-                criteria,
-                PBO_DEPLOYMENT_STATUS: pboDeploymentStatus,
-            };
-        }
         default:
             return group[0];
     }
