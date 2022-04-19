@@ -292,7 +292,9 @@
         "topbar": {
             "menu": "Menu",
             "maps": "Plans",
-            "dashboards": "Tableaux de bord"
+            "dashboards": "Tableaux de bord",
+            "stories": "Histoires"
+
         },
         "legend": {
             "number_of_studies": "Nombre d'études",

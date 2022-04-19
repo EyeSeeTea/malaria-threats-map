@@ -61,11 +61,9 @@ import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Button } from "@mui/material";
-import { Flex } from "./Chart";
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Box from '@mui/material/Box';
-//            font-weight: bold;
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Box from "@mui/material/Box";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const StyledButton = styled(Button)`
@@ -76,6 +74,7 @@ const StyledButton = styled(Button)`
             border: none;
             color: #2FB3AF;
             font-weight: bold;
+            padding-bottom: 10px;
             border-bottom: 5px solid #2FB3AF;
             border-radius: 0;
             cursor;
@@ -145,14 +144,15 @@ const SearchContainer = styled(BaseContainer)`
 const Divider = styled.div`
     height: 10px;
 `;
+
 const StyledToolbar = styled(Toolbar)`
-&.MuiToolbar-root{
-    padding: 0;
-    @media (min-width: 600px) {
+    &.MuiToolbar-root {
         padding: 0;
-        min-height: 60px;
+        @media (min-width: 600px) {
+            padding: 0;
+            min-height: 50px;
+        }
     }
-}
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -260,7 +260,7 @@ class Map extends React.Component<Props> {
         const isPbo = theme === "prevention" && preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
         const isInvasive = theme === "invasive";
         const ready = this.map && this.state.ready;
-        const classes = { icon: { marginRight: 5 } };
+        const classes = { icon: { marginRight: 5 }, menuOptionBox: { flexGrow: 1, display: { xs: "flex" } }, screenshotBox: { flexGrow: 0 }, appBar: { backgroundColor: "white" }};
         return (
             <React.Fragment>
                 <div
@@ -286,24 +286,25 @@ class Map extends React.Component<Props> {
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
                 <Hidden smDown>
-                <Box>
-                    <AppBar position="sticky" sx={{backgroundColor: "white"}}>
-                        <StyledToolbar>
-                        <Box sx={{ flexGrow: 1, display: { xs: 'flex'} }}>
-                            <StyledButton>
-                                <MenuIcon style={classes.icon} />
-                                {this.props.t("common.topbar.menu")}
-                            </StyledButton>
-                            <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
-                            <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
-                            <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
-                        </Box>
-                        <Box sx={{ flexGrow: 0 }}>
-                        <Screenshot map={this.map} />
-                        </Box>
+                    <Box>
+                        <AppBar position="sticky" sx={classes.appBar}>
+                            <StyledToolbar>
+                                <Box sx={classes.menuOptionBox}>
+                                    <StyledButton>
+                                        <MenuIcon style={classes.icon} />
+                                        {this.props.t("common.topbar.menu")}
+                                    </StyledButton>
+                                    <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
+                                    <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
+                                    <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
+                                    <StyledButton>{this.props.t("common.topbar.stories")}</StyledButton>
 
-                        </StyledToolbar>
-                    </AppBar>
+                                </Box>
+                                <Box sx={classes.screenshotBox}>
+                                    <Screenshot map={this.map} />
+                                </Box>
+                            </StyledToolbar>
+                        </AppBar>
                     </Box>
                 </Hidden>
                 <Fade in={showOptions}>

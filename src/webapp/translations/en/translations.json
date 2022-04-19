@@ -292,7 +292,8 @@
         "topbar": {
             "menu": "Menu",
             "maps": "Maps",
-            "dashboards": "Dashboards"
+            "dashboards": "Dashboards",
+            "stories": "Stories"
         },
         "legend": {
             "number_of_studies": "Number of studies",
