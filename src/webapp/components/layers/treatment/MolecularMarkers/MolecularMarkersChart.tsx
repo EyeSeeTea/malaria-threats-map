@@ -258,30 +258,29 @@ const MolecularMarkersChart = ({ studies, treatmentFilters, viewData, popup }: P
     const pfkelch13 = () => {
         return (
             <>
-                {viewData !== null && !popup && (
-                        <Pagination studies={studies} study={studyIndex} setStudy={setStudy} />
-                    )}
+                {viewData !== null && !popup && <Pagination studies={studies} study={studyIndex} setStudy={setStudy} />}
                 <Typography variant="subtitle1">
                     <Box fontWeight="fontWeightBold">{`${title} (${minYear}-${maxYear})`}</Box>
                 </Typography>
-                {exists(study.HEALTHFACILITY_NAME) && study.HEALTHFACILITY_NAME !== "Not applicable" && (
-                    <>
-                        <Typography variant="subtitle2">{study.HEALTHFACILITY_NAME}</Typography>
-                        <br />
-                    </>
-                )}
-                <Typography variant="body2">
-                    {t("common.treatment.chart.molecular_markers.site_content_1", {
-                        year: study.YEAR_START,
-                    })}{" "}
-                    <i>{molecularMarker}</i>{" "}
-                    {t("common.treatment.chart.molecular_markers.site_content_2", {
-                        nStudies: study.N,
-                        molecularMarker: t(`common.${molecularMarker}`),
-                    })}
-                </Typography>
                 {viewData !== null && !popup && (
                     <>
+                        {exists(study.HEALTHFACILITY_NAME) && study.HEALTHFACILITY_NAME !== "Not applicable" && (
+                            <>
+                                <Typography variant="subtitle2">{study.HEALTHFACILITY_NAME}</Typography>
+                                <br />
+                            </>
+                        )}
+                        <Typography variant="body2">
+                            {t("common.treatment.chart.molecular_markers.site_content_1", {
+                                year: study.YEAR_START,
+                            })}{" "}
+                            <i>{molecularMarker}</i>{" "}
+                            {t("common.treatment.chart.molecular_markers.site_content_2", {
+                                nStudies: study.N,
+                                molecularMarker: t(`common.${molecularMarker}`),
+                            })}
+                        </Typography>
+
                         <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
                         <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations)} />
                         <Citation study={study} />

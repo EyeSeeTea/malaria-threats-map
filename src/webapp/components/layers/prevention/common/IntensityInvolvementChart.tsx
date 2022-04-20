@@ -48,9 +48,11 @@ const IntensityInvolvementChart = ({
                     studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2
                 )}`}</Box>
             </Typography>
-            <Typography variant="subtitle2">{`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}</Typography>
             {viewData !== null && !popup && (
                 <>
+                    <Typography variant="subtitle2">{`${t(studyObject.ASSAY_TYPE)}, ${t(
+                        studyObject.TYPE
+                    )}`}</Typography>
                     <HighchartsReact highcharts={Highcharts} options={options} />
                     <Citation study={studyObject} />
                     <Curation study={studyObject} />

@@ -113,9 +113,9 @@ const PboSiteChart = ({ studies, popup, viewData }: Props) => {
                     studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2
                 )}`}</Box>
             </Typography>
-            <Typography variant="subtitle2">{siteSubtitleTranslation}</Typography>
             {viewData !== null && !popup && (
                 <>
+                    <Typography variant="subtitle2">{siteSubtitleTranslation}</Typography>
                     <div className={classes.root}>
                         <Table aria-label="simple table" size="small" className={classes.table}>
                             <TableHead className={classes.head}>

@@ -175,7 +175,6 @@ const ResistanceMechanismsChart = ({ studies, viewData, popup }: Props) => {
 
     const showAllelic = R.any(serie => R.any(data => data.y !== undefined, serie.data), series);
 
-
     return (
         <ChartContainer popup={popup}>
             <Typography variant="subtitle1">
@@ -183,9 +182,9 @@ const ResistanceMechanismsChart = ({ studies, viewData, popup }: Props) => {
                     studies[0].ISO2 === "NA" ? "common.COUNTRY_NA" : studies[0].ISO2
                 )}`}</Box>
             </Typography>
-            <Typography variant="subtitle2">{`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}</Typography>
             {viewData !== null && !popup && (
                 <>
+                    <Typography variant="subtitle2">{`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}</Typography>
                     <Flex>
                         <FlexCol>
                             <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />

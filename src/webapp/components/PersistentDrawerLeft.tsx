@@ -314,19 +314,19 @@ function PersistentDrawerLeft({
                     </Hidden>
                 </PageWrapper>
             </div>
-            {sidebarOpen && 
-            <Drawer
-            className={classes.drawer}
-            variant="persistent"
-            anchor={"right"}
-            open={sidebarOpen}
-            classes={{
-                paper: classes.drawerPaper,
-            }}
-        >
-            <StudyDetailsSidebar />
-        </Drawer>}
-            
+            {sidebarOpen && (
+                <Drawer
+                    className={classes.drawer}
+                    variant="persistent"
+                    anchor={"right"}
+                    open={sidebarOpen}
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}
+                >
+                    <StudyDetailsSidebar />
+                </Drawer>
+            )}
         </div>
     );
 }

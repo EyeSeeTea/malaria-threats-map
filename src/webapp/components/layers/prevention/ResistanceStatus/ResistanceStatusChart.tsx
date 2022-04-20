@@ -174,9 +174,9 @@ const ResistanceStatusChart = ({ studies: baseStudies, viewData, popup }: Props)
                     `${studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2}`
                 )}`}</Box>
             </Typography>
-            <Typography variant="subtitle2">{subtitle}</Typography>
             {viewData !== null && !popup && (
                 <>
+                    <Typography variant="subtitle2">{subtitle}</Typography>
                     <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
                     <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
                     <Curation study={studyObject} />

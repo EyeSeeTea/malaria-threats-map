@@ -166,12 +166,12 @@ const TreatmentFailureChart = ({ studies, viewData, popup }: Props) => {
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${title}`}</Box>
             </Typography>
-            <Typography variant="body2">
-                <i>{plasmodiumSpecies}</i>
-                {`, ${t(DRUG_NAME)}: ${studies.length} ${t_studies} ${siteDuration}`}
-            </Typography>
             {viewData !== null && !popup && (
                 <>
+                    <Typography variant="body2">
+                        <i>{plasmodiumSpecies}</i>
+                        {`, ${t(DRUG_NAME)}: ${studies.length} ${t_studies} ${siteDuration}`}
+                    </Typography>
                     <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
                     <Margin>
                         <Flex style={{ flexDirection: "row", justifyContent: "space-between" }}>

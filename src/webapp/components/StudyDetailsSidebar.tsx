@@ -83,28 +83,30 @@ const StudyDetailsSidebar = ({
     const [filteredStudiesPrevention, setFilteredStudiesPrevention] = React.useState<Array<PreventionStudy>>([]);
     const [filteredStudiesTreatment, setFilteredStudiesTreatment] = React.useState<Array<TreatmentStudy>>([]);
 
-    React.useEffect(() => {
-        //I only update the new studies to be shown when viewData changes (ie. when you click on a study circle)
-        //so that the data doesn't change automatically when the user hovers over another popup
-        switch (theme) {
-            case "prevention":
-                setFilteredStudiesPrevention(preventionStudySelection);
-                break;
-            case "diagnosis":
-                setFilteredStudiesDiagnosis(diagnosisStudySelection);
-                break;
-            case "treatment":
-                setFilteredStudiesTreatment(treatmentStudySelection);
-                break;
-            case "invasive":
-                setFilteredStudiesInvasive(invasiveStudySelection);
-                break;
-        }
-    //only having viewData be in the useEffect is necessary because we don't want to set the studies whenever the selection changes,
-    //only when we click on the dot/viewData changes 
-}, 
- // eslint-disable-next-line
-[viewData]);
+    React.useEffect(
+        () => {
+            //I only update the new studies to be shown when viewData changes (ie. when you click on a study circle)
+            //so that the data doesn't change automatically when the user hovers over another popup
+            switch (theme) {
+                case "prevention":
+                    setFilteredStudiesPrevention(preventionStudySelection);
+                    break;
+                case "diagnosis":
+                    setFilteredStudiesDiagnosis(diagnosisStudySelection);
+                    break;
+                case "treatment":
+                    setFilteredStudiesTreatment(treatmentStudySelection);
+                    break;
+                case "invasive":
+                    setFilteredStudiesInvasive(invasiveStudySelection);
+                    break;
+            }
+            //only having viewData be in the useEffect is necessary because we don't want to set the studies whenever the selection changes,
+            //only when we click on the dot/viewData changes
+        },
+        // eslint-disable-next-line
+        [viewData]
+    );
 
     const handleClose = () => {
         setSidebarOpen(false);

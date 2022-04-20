@@ -75,8 +75,8 @@ const SitePopover: React.FC<Props> = ({
             if (!sidebarOpen) {
                 setSidebarOpen(true);
             }
-           setTimeout(() => {
-            setViewData(selection);
+            setTimeout(() => {
+                setViewData(selection);
             }, 100);
         });
 
