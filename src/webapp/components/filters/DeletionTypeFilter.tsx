@@ -36,6 +36,7 @@ const DeletionTypeFilter: React.FC<Props> = ({ setDeletionType, diagnosisFilters
     return (
         <SingleFilter
             label={t("common.filters.deletion_type")}
+            placeholder={t("common.filters.select_deletion_type")}
             options={suggestions}
             onChange={setDeletionType}
             value={diagnosisFilters.deletionType}

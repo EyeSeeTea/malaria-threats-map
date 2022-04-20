@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import IntegrationReactSelect, { Option } from "../../BasicSelect";
-import { Divider, FilterWrapper } from "../Filters";
 import FormLabel from "@mui/material/FormLabel";
 import { logEventAction } from "../../../store/actions/base-actions";
+import { FilterRowContainer } from "../Filters";
 
 type OwnProps = {
     label: string;
@@ -47,9 +47,12 @@ function SingleFilter({
     const selection = options.find((s: Option) => s.value === value) || null;
 
     return (
-        <FilterWrapper>
-            <FormLabel component="legend">{label}</FormLabel>
-            <Divider />
+        <FilterRowContainer>
+            {selection && (
+                <FormLabel color="primary" component="legend">
+                    {`${label}:`}&nbsp;
+                </FormLabel>
+            )}
             <IntegrationReactSelect
                 isMulti={false}
                 isClearable={isClearable}
@@ -59,7 +62,7 @@ function SingleFilter({
                 onChange={onSelectionChange}
                 value={selection}
             />
-        </FilterWrapper>
+        </FilterRowContainer>
     );
 }
 

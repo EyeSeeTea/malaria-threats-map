@@ -29,6 +29,7 @@ const ScreenshotButton = styled(Button)`
     &.MuiButton-root {
         margin-right: 10px;
         background-color: #2fb3af;
+        color: white;
     }
 `;
 

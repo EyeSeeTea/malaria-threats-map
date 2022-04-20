@@ -9,7 +9,8 @@
             "diagnosis": "Deleción del gen pfhrp2/3 del parásito",
             "treatment": "Eficacia y resistencia a los medicamentos antipalúdicos",
             "invasive": "Especies vectoras invasoras",
-            "mekong": "Subregión del Gran Mekong"
+            "mekong": "Subregión del Gran Mekong",
+            "learnMore": "Aprende más"
         },
         "themes_caps": {
             "prevention": "RESISTENCIA A INSECTICIDAS EN LOS VECTORES DE MALARIA",
@@ -25,11 +26,16 @@
         },
         "prevention": {
             "resistance_status": "Estado de la resistencia a insecticidas",
+            "resistance_status_subtitle": "Resultados de bioensayos de concentración discriminatoria",
             "resistance_intensity": "Intensidad de la resistencia a insecticidas",
+            "resistance_intensity_subtitle": "Resultados de bioensayos de concentración de intensidad",
             "resistance_mechanism": "Mecanismos de la resistencia a insecticidas",
+            "resistance_mechanism_subtitle": "Resultados de ensayos moleculares, ensayos bioquímicos y bioensayos sinergistas-insecticidas",
             "synergist_involvement": "Efecto sinérgico en susceptibilidad",
+            "synergist_involvement_subtitle": "Resultados de bioensayos de insecticidas sinérgicos (solo monooxigenasas)",
             "synergist_involvement_legend": "Efecto de la sinergia en susceptibilidad",
             "pbo_deployment": "Despliegue de mosquiteros PBO-piretroide",
+            "pbo_deployment_subtitle": "Ver si los sitios cumplen con los criterios de la OMS para el despliegue de redes PBO-piretroide",
             "pbo_deployment_legend": "Cumplimiento de los criterios recomendados por la OMS para el despliegue de mosquiteros con PBO y piretroide",
             "chart": {
                 "resistance_status": {
@@ -167,9 +173,12 @@
         },
         "treatment": {
             "treatment_failure": "Fallo terapeutico",
+            "treatment_failure_subtitle": "Resultados de los estudios de eficacia terapéutica",
             "delayed_parasite_clearance": "Eliminación tardía de parásitos (P.f)",
+            "delayed_parasite_clearance_subtitle": "Resultados de los estudios de eficacia terapéutica",
             "delayed_parasite_clearance_italics": "Eliminación tardía de parásitos (<i>P.f </i>)",
             "molecular_markers": "Marcadores moleculares de resistencia a los medicamentos",
+            "molecular_markers_subtitle": "Resultados de estudios de prevención molecular",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} estudios de eficacia terapéutica efectuados en la eficacia {{drug}} contra <i>{{plasmodiumSpecies}}</i> {{years}}",
@@ -247,10 +256,6 @@
             "filters": "Filtros",
             "pfhrp23_note": "Entre las encuestas, los criterios para seleccionar muestras para probar las eliminaciones de <i> pfhrp 2/3 </i> varían; por lo tanto, consulte el informe completo citado para obtener más detalles.",
             "last_updated": "Última actualización:",
-            "tabs": {
-                "filters": "Filtros",
-                "regions": "Regiones"
-            },
             "no_records": "No hay registros disponibles con los criterios especificados",
             "records": {
                 "prevention": {
@@ -265,8 +270,11 @@
             },
             "insecticide_class": "Clase de insecticida",
             "insecticide_type": "Tipo de insecticida",
+            "select_insecticide_type": "Seleccionar tipo de insecticida",
             "test_type": "Tipo de ensayo",
+            "select_test_type": "Seleccionar tipo de ensayo",
             "vector_species": "Especies vectoras",
+            "select_vector_species": "Seleccionar sspecies vectoras",
             "plasmodium_species": "Especie de plasmodium",
             "drug": "Tratamiento",
             "molecular_marker": "Marcador molecular",
@@ -274,18 +282,23 @@
             "assay_type": "Tipo de ensayo",
             "synergist_type": "Tipo de test",
             "synergist_types": "Tipos sinergistas",
+            "select_synergist_type": "Seleccionar tipos sinergistas",
             "deletion_type": "Tipo de deleción",
+            "select_deletion_type": "Seleccionar tipo de deleción",
             "survey_type": "Tipo de encuesta",
+            "select_survey_type": "Seleccionar tipo de encuesta",
             "patient_type": "Tipos de pacientes",
+            "select_patient_type": "Seleccionar tipos de pacientes",
             "years": "Años",
             "country": "País",
             "select_country": "Seleccionar país",
             "countries": "Países",
-            "region": "WHO Región",
+            "region": "Región",
             "select_region": "Seleccione región",
             "sub_region": "Subregión",
             "select_sub_region": "Seleccionar subregión",
             "select_site": "Seleccionar sitio",
+            "site": "Sitio",
             "exclude_lower_patients": "Excluir estudios de menos de 20 pacientes",
             "exclude_lower_samples": "Excluir estudios de menos de 20 muestras"
         },
@@ -748,6 +761,16 @@
         "p1Link": "https://apps.who.int/iris/bitstream/handle/10665/258939/WHO-HTM-GMP-2017.17-eng.pdf?sequence=5",
         "p1a": "tres criterios recomendados por la OMS",
         "p1b": "en diferentes áreas geográficas. El cumplimiento se ha evaluado utilizando los datos incluidos en la base de datos mundial sobre la resistencia a los insecticidas en los vectores de la malaria. El mapa muestra el estado de cumplimiento para las especies de vectores seleccionadas en el panel de filtros. Si no se ha seleccionado ninguna especie, el mapa considera todos los datos disponibles para evaluar los criterios."
+    },
+    "mapActions": {
+        "selectTheme": "SELECCIONA TEMA",
+        "theme": "Tema",
+        "selectMapType": "SELECCIONA TIPO DE MAPA",
+        "mapType": "Mapa",
+        "selectData": "FILTRO DE DATOS",
+        "data": "Datos",
+        "selectLocation": "FILTRO DE LOCALIZACIÓN (OPCIONAL)",
+        "location": "Localización"
     },
     "PBOStory": {
         "step1": {

@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { FilterColumContainer } from "../Filters";
+import { FilterRowContainer } from "../Filters";
 import FormLabel from "@mui/material/FormLabel";
 import { logEventAction } from "../../../store/actions/base-actions";
-import { Checkbox } from "@mui/material";
+import { Switch } from "@mui/material";
 
 type OwnProps = {
     label: string;
@@ -19,7 +19,7 @@ const mapDispatchToProps = {
 type DispatchProps = typeof mapDispatchToProps;
 type Props = OwnProps & DispatchProps;
 
-function CheckBoxFilter({ label, onChange, value, analyticsFilterAction, logEventAction }: Props) {
+function SwitchFilter({ label, onChange, value, analyticsFilterAction, logEventAction }: Props) {
     const onSelectionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange(event.target.checked);
 
@@ -29,11 +29,11 @@ function CheckBoxFilter({ label, onChange, value, analyticsFilterAction, logEven
     };
 
     return (
-        <FilterColumContainer>
+        <FilterRowContainer>
             <FormLabel component="legend">{label}</FormLabel>
-            <Checkbox color="primary" checked={value} onChange={onSelectionChange} />
-        </FilterColumContainer>
+            <Switch color="primary" checked={value} onChange={onSelectionChange} />
+        </FilterRowContainer>
     );
 }
 
-export default connect(null, mapDispatchToProps)(CheckBoxFilter);
+export default connect(null, mapDispatchToProps)(SwitchFilter);

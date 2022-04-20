@@ -45,6 +45,7 @@ const InsecticideTypeFilter: React.FC<Props> = ({ preventionFilters, studies, se
     return (
         <MultiFilter
             label={t("common.filters.insecticide_type")}
+            placeholder={t("common.filters.select_insecticide_type")}
             options={suggestions}
             onChange={setInsecticideTypes}
             value={preventionFilters.insecticideTypes}

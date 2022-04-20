@@ -18,7 +18,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const suggestions = [
+export const suggestions = [
     {
         label: "An. stephensi type form",
         value: "AN_STEPHENSI_TYPE_FORM",
@@ -50,6 +50,7 @@ const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, setVectorSpecie
     return (
         <MultiFilter
             label={t("common.filters.vector_species")}
+            placeholder={t("common.filters.select_vector_species")}
             options={suggestions}
             onChange={setVectorSpecies}
             value={invasiveFilters.vectorSpecies}
