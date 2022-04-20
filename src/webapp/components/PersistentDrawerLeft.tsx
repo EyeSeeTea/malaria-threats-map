@@ -55,14 +55,6 @@ const useStyles = makeStyles((theme: Theme) =>
             left: 0,
             bottom: 0,
         },
-        tooltipDrawer: {
-            width: (props: ThemeProps) => props.drawerWidth,
-            flexShrink: 0,
-        },
-        tooltipDrawerPaper: {
-            width: (props: ThemeProps) => props.drawerWidth,
-            backgroundColor: "#f3f3f3",
-        },
         drawerHeader: {
             display: "flex",
             alignItems: "center",
@@ -243,7 +235,7 @@ function PersistentDrawerLeft({
             )}
             <div
                 className={clsx(classes.content, {
-                    [classes.contentShift]: storyMode,
+                    [classes.contentShift]: storyMode || sidebarOpen,
                 })}
             >
                 <div className={classes.drawerHeader} />
