@@ -9,7 +9,7 @@ import { selectPreventionStudySelection } from "../store/reducers/prevention-red
 import { selectDiagnosisStudySelection } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudySelection } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudySelection } from "../store/reducers/invasive-reducer";
-import { setSidebarOpen } from "../store/actions/base-actions";
+import { setSidebarOpen, setSelection, setViewData } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 
 import { useTranslation } from "react-i18next";
@@ -62,6 +62,8 @@ const mapStateToProps = (state: State) => ({
 });
 const mapDispatchToProps = {
     setSidebarOpen: setSidebarOpen,
+    setSelection: setSelection,
+    setViewData: setViewData,
 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
@@ -75,6 +77,8 @@ const StudyDetailsSidebar = ({
     treatmentStudySelection,
     invasiveStudySelection,
     viewData,
+    setViewData,
+    setSelection,
 }: Props) => {
     const { t } = useTranslation();
     const classes = useStyles({});
@@ -110,6 +114,8 @@ const StudyDetailsSidebar = ({
 
     const handleClose = () => {
         setSidebarOpen(false);
+        setSelection(null);
+        setViewData(null);
     };
 
     const themeSelector = theme as "prevention" | "diagnosis" | "treatment" | "invasive";

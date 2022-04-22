@@ -15,6 +15,7 @@ import {
     selectRegion,
     selectSelection,
     selectTheme,
+    selectIsSidebarOpen,
 } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
 import { selectCountries } from "../../../store/reducers/country-layer-reducer";
@@ -23,10 +24,12 @@ import {
     setPreventionFilteredStudiesAction,
     setPreventionStudySelection,
 } from "../../../store/actions/prevention-actions";
-import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
+import { setSelection, setSidebarOpen, setViewData } from "../../../store/actions/base-actions";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import SitePopover from "../common/SitePopover";
 import PreventionSelectionChart from "./PreventionSelectionChart";
+import Hidden from "../../hidden/Hidden";
+
 export const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
 const PREVENTION_SOURCE_ID = "prevention-source";
@@ -52,6 +55,7 @@ const mapStateToProps = (state: State) => ({
     countries: selectCountries(state),
     countryMode: selectCountryMode(state),
     selection: selectSelection(state),
+    sidebarOpen: selectIsSidebarOpen(state),
 });
 
 const mapDispatchToProps = {
@@ -60,6 +64,7 @@ const mapDispatchToProps = {
     setPreventionStudySelection: setPreventionStudySelection,
     setSelection: setSelection,
     setSidebarOpen: setSidebarOpen,
+    setViewData: setViewData,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -228,6 +233,14 @@ class PreventionLayer extends Component<Props> {
             () => (this.props.map.getCanvas().style.cursor = "pointer")
         );
         this.props.map.on("mouseleave", PREVENTION_LAYER_ID, () => (this.props.map.getCanvas().style.cursor = ""));
+        this.props.map.on("click", () => {
+            if (!this.props.sidebarOpen) {
+                this.props.setSidebarOpen(true);
+            }
+            setTimeout(() => {
+                this.props.setViewData(this.props.selection);
+            }, 100);
+        });
     };
 
     renderLayer = () => {
@@ -277,9 +290,11 @@ class PreventionLayer extends Component<Props> {
 
         return (
             this.props.theme === "prevention" && (
-                <SitePopover map={this.props.map} layer={PREVENTION_LAYER_ID}>
-                    <PreventionSelectionChart studies={filteredStudies} popup={true} />
-                </SitePopover>
+                <Hidden smDown>
+                    <SitePopover map={this.props.map} layer={PREVENTION_LAYER_ID}>
+                        <PreventionSelectionChart studies={filteredStudies} popup={true} />
+                    </SitePopover>
+                </Hidden>
             )
         );
     }

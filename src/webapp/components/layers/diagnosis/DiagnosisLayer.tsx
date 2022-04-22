@@ -12,6 +12,7 @@ import {
     selectSelection,
     selectTheme,
     selectViewData,
+    selectIsSidebarOpen,
 } from "../../../store/reducers/base-reducer";
 import * as R from "ramda";
 import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
@@ -25,10 +26,11 @@ import {
     setDiagnosisStudySelection,
 } from "../../../store/actions/diagnosis-actions";
 
-import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
+import { setSelection, setSidebarOpen, setViewData } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
+import Hidden from "../../hidden/Hidden";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -52,6 +54,7 @@ const mapStateToProps = (state: State) => ({
     countryMode: selectCountryMode(state),
     selection: selectSelection(state),
     viewData: selectViewData(state),
+    sidebarOpen: selectIsSidebarOpen(state),
 });
 
 const mapDispatchToProps = {
@@ -60,6 +63,7 @@ const mapDispatchToProps = {
     setDiagnosisStudySelection: setDiagnosisStudySelection,
     setSelection: setSelection,
     setSidebarOpen: setSidebarOpen,
+    setViewData: setViewData,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -212,12 +216,20 @@ class DiagnosisLayer extends Component<Props> {
 
     setupPopover = () => {
         this.props.map.on("mouseover", DIAGNOSIS_LAYER_ID, this.onMouseOverListener);
-
+        this.props.map.on("click", () => {
+            if (!this.props.sidebarOpen) {
+                this.props.setSidebarOpen(true);
+            }
+            setTimeout(() => {
+                this.props.setViewData(this.props.selection);
+            }, 100);
+        });
         this.props.map.on(
             "mouseenter",
             DIAGNOSIS_LAYER_ID,
             () => (this.props.map.getCanvas().style.cursor = "pointer")
         );
+
         this.props.map.on("mouseleave", DIAGNOSIS_LAYER_ID, () => (this.props.map.getCanvas().style.cursor = ""));
     };
 
@@ -269,9 +281,11 @@ class DiagnosisLayer extends Component<Props> {
 
         return (
             this.props.theme === "diagnosis" && (
-                <SitePopover map={this.props.map} layer={DIAGNOSIS_LAYER_ID}>
-                    <DiagnosisSelectionChart studies={filteredStudies} popup={true} />
-                </SitePopover>
+                <Hidden smDown>
+                    <SitePopover map={this.props.map} layer={DIAGNOSIS_LAYER_ID}>
+                        <DiagnosisSelectionChart studies={filteredStudies} popup={true} />
+                    </SitePopover>
+                </Hidden>
             )
         );
     }

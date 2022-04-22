@@ -63,7 +63,7 @@ const SitePopover: React.FC<Props> = ({
             </I18nextProvider>,
             placeholder
         );
-
+        //{ closeOnClick: true }
         const popup = new mapboxgl.Popup({ closeOnClick: true })
             .setLngLat(selection.coordinates)
             .setDOMContent(placeholder)

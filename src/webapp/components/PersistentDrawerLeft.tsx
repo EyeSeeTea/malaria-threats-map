@@ -168,7 +168,7 @@ function PersistentDrawerLeft({
             setSidebarOpen(true);
         }
         // eslint-disable-next-line
-    }, [viewData]);
+    }, [viewData, sidebarOpen]);
 
     useEffect(() => {
         if (sidebarOpen !== null && storyMode !== null) {

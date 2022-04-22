@@ -9,6 +9,7 @@ import {
     selectRegion,
     selectSelection,
     selectTheme,
+    selectIsSidebarOpen,
 } from "../../../store/reducers/base-reducer";
 import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
@@ -31,10 +32,11 @@ import {
     setFilteredStudiesAction,
     setTreatmentStudySelection,
 } from "../../../store/actions/treatment-actions";
-import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
+import { setSelection, setSidebarOpen, setViewData } from "../../../store/actions/base-actions";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SitePopover from "../common/SitePopover";
 import TreatmentSelectionChart from "./TreatmentSelectionChart";
+import Hidden from "../../hidden/Hidden";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -61,6 +63,7 @@ const mapStateToProps = (state: State) => ({
     countries: selectCountries(state),
     countryMode: selectCountryMode(state),
     selection: selectSelection(state),
+    sidebarOpen: selectIsSidebarOpen(state),
 });
 const mapDispatchToProps = {
     fetchTreatmentStudies: fetchTreatmentStudiesRequest,
@@ -68,6 +71,7 @@ const mapDispatchToProps = {
     setFilteredStudies: setFilteredStudiesAction,
     setSelection: setSelection,
     setSidebarOpen: setSidebarOpen,
+    setViewData: setViewData,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -254,6 +258,14 @@ class TreatmentLayer extends Component<Props> {
             () => (this.props.map.getCanvas().style.cursor = "pointer")
         );
         this.props.map.on("mouseleave", TREATMENT_LAYER_ID, () => (this.props.map.getCanvas().style.cursor = ""));
+        this.props.map.on("click", () => {
+            if (!this.props.sidebarOpen) {
+                this.props.setSidebarOpen(true);
+            }
+            setTimeout(() => {
+                this.props.setViewData(this.props.selection);
+            }, 100);
+        });
     };
 
     renderLayer = () => {
@@ -301,9 +313,11 @@ class TreatmentLayer extends Component<Props> {
 
         return (
             this.props.theme === "treatment" && (
-                <SitePopover map={this.props.map} layer={TREATMENT_LAYER_ID}>
-                    <TreatmentSelectionChart studies={filteredStudies} popup={true} />
-                </SitePopover>
+                <Hidden smDown>
+                    <SitePopover map={this.props.map} layer={TREATMENT_LAYER_ID}>
+                        <TreatmentSelectionChart studies={filteredStudies} popup={true} />
+                    </SitePopover>
+                </Hidden>
             )
         );
     }

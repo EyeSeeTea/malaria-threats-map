@@ -9,6 +9,7 @@ import {
     selectRegion,
     selectSelection,
     selectTheme,
+    selectIsSidebarOpen,
 } from "../../../store/reducers/base-reducer";
 import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
@@ -17,11 +18,12 @@ import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../stu
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectInvasiveFilters, selectInvasiveStudies } from "../../../store/reducers/invasive-reducer";
 import { setInvasiveFilteredStudiesAction, setInvasiveStudySelection } from "../../../store/actions/invasive-actions";
-import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
+import { setSelection, setSidebarOpen, setViewData } from "../../../store/actions/base-actions";
 import { fetchInvasiveStudiesRequest } from "../../../store/actions/invasive-actions";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import SitePopover from "../common/SitePopover";
 import InvasiveSelectionChart from "./InvasiveSelectionChart";
+import Hidden from "../../hidden/Hidden";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
@@ -48,6 +50,7 @@ const mapStateToProps = (state: State) => ({
     countries: selectCountries(state),
     countryMode: selectCountryMode(state),
     selection: selectSelection(state),
+    sidebarOpen: selectIsSidebarOpen(state),
 });
 
 const mapDispatchToProps = {
@@ -56,6 +59,7 @@ const mapDispatchToProps = {
     setInvasiveStudySelection: setInvasiveStudySelection,
     setSelection: setSelection,
     setSidebarOpen: setSidebarOpen,
+    setViewData: setViewData,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -198,6 +202,14 @@ class InvasiveLayer extends Component<Props> {
         this.props.map.on("mouseover", INVASIVE_LAYER_ID, this.onMouseOverListener);
         this.props.map.on("mouseenter", INVASIVE_LAYER_ID, () => (this.props.map.getCanvas().style.cursor = "pointer"));
         this.props.map.on("mouseleave", INVASIVE_LAYER_ID, () => (this.props.map.getCanvas().style.cursor = ""));
+        this.props.map.on("click", () => {
+            if (!this.props.sidebarOpen) {
+                this.props.setSidebarOpen(true);
+            }
+            setTimeout(() => {
+                this.props.setViewData(this.props.selection);
+            }, 100);
+        });
     };
 
     renderLayer = () => {
@@ -242,9 +254,11 @@ class InvasiveLayer extends Component<Props> {
         }
         return (
             this.props.theme === "invasive" && (
-                <SitePopover map={this.props.map} layer={INVASIVE_LAYER_ID}>
-                    <InvasiveSelectionChart studies={filteredStudies} popup={true} />
-                </SitePopover>
+                <Hidden smDown>
+                    <SitePopover map={this.props.map} layer={INVASIVE_LAYER_ID}>
+                        <InvasiveSelectionChart studies={filteredStudies} popup={true} />
+                    </SitePopover>
+                </Hidden>
             )
         );
     }
