@@ -9,7 +9,8 @@
             "diagnosis": "Délétion de pfhrp2/3 gènes parasites",
             "treatment": "Efficacité et résistance aux antipaludiques",
             "invasive": "Espèces vectorielles invasives",
-            "mekong": "Sous-région du Grand Mékong"
+            "mekong": "Sous-région du Grand Mékong",
+            "learnMore": "Apprendre encore plus"
         },
         "themes_caps": {
             "prevention": "RÉSISTANCE AUX INSECTICIDES",
@@ -25,11 +26,16 @@
         },
         "prevention": {
             "resistance_status": "État de résistance aux insecticides",
+            "resistance_status_subtitle": "Résultats d'essais biologiques de concentration discriminante",
             "resistance_intensity": "Intensité de la résistance aux insecticides",
+            "resistance_intensity_subtitle": "Résultats des essais biologiques de concentration d'intensité",
             "resistance_mechanism": "Mécanismes de résistance aux insecticides",
+            "resistance_mechanism_subtitle": "Résultats d'essais moléculaires, d'essais biochimiques et d'essais biologiques synergiste-insecticide",
             "synergist_involvement": "Effet synergiste de la susceptibilité",
+            "synergist_involvement_subtitle": "Effet synergiste de la susceptibilité",
             "synergist_involvement_legend": "Effet de la synergie sur la susceptibilité",
             "pbo_deployment": "Déploiement de moustiquaires  PBO-pyréthroïde",
+            "pbo_deployment_subtitle": "Voir si les sites répondent aux critères de l'OMS pour le déploiement de la moustiquaire Pyrethroid-PBO",
             "pbo_deployment_legend": "Conformité aux critères recommandés par l'OMS pour le  déploiementde moustiquaires avec PBO et pyréthroïde",
             "chart": {
                 "resistance_status": {
@@ -167,9 +173,12 @@
         },
         "treatment": {
             "treatment_failure": "Échec du traitement",
+            "treatment_failure_subtitle": "Résultats des études d'efficacité thérapeutique",
             "delayed_parasite_clearance": "Retard dans l'élimination des parasites (P.f)",
+            "delayed_parasite_clearance_subtitle": "Résultats des études d'efficacité thérapeutique",
             "delayed_parasite_clearance_italics": "Retard dans l'élimination des parasites (<i>P.f </i>)",
             "molecular_markers": "Marqueurs moléculaires de la résistance aux médicaments",
+            "molecular_markers_subtitle": "Résultats des études de prévention moléculaire",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre <i>{{plasmodiumSpecies}}</i> {{years}}",
@@ -247,10 +256,6 @@
             "filters": "Filtres",
             "pfhrp23_note": "Dans les enquêtes, les critères de sélection des échantillons à tester pour les suppressions de <i> pfhrp 2/3 </i> varient; par conséquent, reportez-vous au rapport complet cité pour plus de détails.",
             "last_updated": "Dernière mise à jour:",
-            "tabs": {
-                "filters": "Filtres",
-                "regions": "Régions"
-            },
             "no_records": "Aucun enregistrement n'est disponible avec les critères spécifiés",
             "records": {
                 "prevention": {
@@ -265,34 +270,43 @@
             },
             "insecticide_class": "Classe d'insecticide",
             "insecticide_type": "Type d'insecticide",
+            "select_insecticide_type": "Sélectionnez type d'insecticide",
             "test_type": "Type de test",
+            "select_test_type": "Sélectionnez type de test",
             "vector_species": "Espèces vectorielles",
+            "select_vector_species": "Sélectionnez espèces vectorielles",
             "plasmodium_species": "Espèces de plasmodium",
             "drug": "Médicament",
             "molecular_marker": "Marqueur moléculaire",
             "mechanism_type": "Type de mécanisme",
             "assay_type": "Type d'analyse",
             "synergist_type": "Type de test",
+            "select_synergist_type": "Sélectionnez type de test",
             "synergist_types": "Types du mécanismes métaboliques",
             "deletion_type": "Type de délétion",
+            "select_deletion_type": "Sélectionnez type de délétion",
             "survey_type": "Type d'enquête",
+            "select_survey_type": "Sélectionnez type d'enquête",
             "patient_type": "Type de patient",
+            "select_patient_type": "Sélectionnez type de patient",
             "years": "Années",
             "country": "Pays",
             "select_country": "Choisissez le pays",
             "countries": "Pays",
-            "region": "WHO Région",
+            "region": "Région",
             "select_region": "Choisissez une région",
             "sub_region": "Sous-région",
             "select_sub_region": "Sélectionnez la sous-région",
             "select_site": "Sélectionnez un site",
+            "site": "Site",
             "exclude_lower_patients": "Exclure les études portant sur moins de 20 patients",
             "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons"
         },
         "topbar": {
             "menu": "Menu",
             "maps": "Plans",
-            "dashboards": "Tableaux de bord"
+            "dashboards": "Tableaux de bord",
+            "stories": "Histoires"
         },
         "sidebar": {
             "home": "Maison",
@@ -756,6 +770,16 @@
         "p1Link": "https://apps.who.int/iris/bitstream/handle/10665/258939/WHO-HTM-GMP-2017.17-eng.pdf?sequence=5",
         "p1a": "trois critères recommandés par l&apos;OMS",
         "p1b": "dans différents sites ou zones géographiques. Le statut a été évalué sur la base des données incluses dans la base de données mondiale sur la résistance aux insecticides des vecteurs du paludisme. La carte montre l&apos;état de conformité pour les espèces vectorielles sélectionnées dans le les filtres. Si aucune espèce n&apos;est sélectionnée, la carte considère toutes les données disponibles pour évaluer les critères."
+    },
+    "mapActions": {
+        "selectTheme": "SÉLECTIONNER LE THÈME",
+        "theme": "Thème",
+        "selectMapType": "SÉLECTIONNER LE TYPE DE CARTE",
+        "mapType": "Carte",
+        "selectData": "FILTRER LES DONNÉES",
+        "data": "Données",
+        "selectLocation": "EMPLACEMENT DU FILTRE (FACULTATIF)",
+        "location": "Emplacement"
     },
     "PBOStory": {
         "step1": {

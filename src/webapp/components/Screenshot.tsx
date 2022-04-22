@@ -28,7 +28,8 @@ import { useWindowDimensions } from "./hooks/use-window-dimensions";
 const ScreenshotButton = styled(Button)`
     &.MuiButton-root {
         margin-right: 10px;
-        background-color: #00aaa4;
+        background-color: #2fb3af;
+        color: white;
     }
 `;
 

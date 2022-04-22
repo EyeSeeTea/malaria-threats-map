@@ -33,6 +33,7 @@ const SurveyTypeFilter: React.FC<Props> = ({ diagnosisFilters, surveyTypes, setS
     return (
         <MultiFilter
             label={t("common.filters.survey_type")}
+            placeholder={t("common.filters.select_survey_type")}
             options={suggestions}
             onChange={setSurveyTypes}
             value={diagnosisFilters.surveyTypes}

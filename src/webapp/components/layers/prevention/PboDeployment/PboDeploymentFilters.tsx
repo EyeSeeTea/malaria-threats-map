@@ -2,9 +2,9 @@ import React from "react";
 import InsecticideTypeFilter from "../../../filters/InsecticideTypeFilter";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
-import { Snackbar } from "../../../filters/container/Filters";
 import { useTranslation } from "react-i18next";
 import { Link } from "@mui/material";
+import { Snackbar } from "../../common/Snackbar";
 
 export default function PboDeploymentFilters() {
     const { t } = useTranslation();

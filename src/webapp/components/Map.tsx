@@ -11,16 +11,14 @@ import DiagnosisLayer from "./layers/diagnosis/DiagnosisLayer";
 import TreatmentLayer from "./layers/treatment/TreatmentLayer";
 import InvasiveLayer from "./layers/invasive/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
-import Filters from "./filters/container/Filters";
-import MapTypesSelector from "./MapTypesSelector";
-import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";
 import WhoLogo from "./WhoLogo";
 import HomeIcon from "./LeftSidebarIcons/HomeIcon";
 import AboutIcon from "./LeftSidebarIcons/AboutIcon";
 import TakeATourIcon from "./LeftSidebarIcons/TakeATourIcon";
 import LanguageIcon from "./LeftSidebarIcons/LanguageIcon";
-
+import ContactIcon from "./LeftSidebarIcons/ContactIcon";
+import ShareDataIcon from "./LeftSidebarIcons/ShareDataIcon";
 
 import {
     selectAny,
@@ -39,8 +37,8 @@ import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
-import { Fade, Button, Fab, Drawer, Typography, IconButton } from "@mui/material";
-import { Menu as MenuIcon, EmailOutlined as EmailIcon, CloseOutlined as CloseOutlinedIcon } from "@mui/icons-material";
+import { Fade, Button, Fab, AppBar, Drawer, Typography, IconButton, Toolbar, Box, Divider } from "@mui/material";
+import { Menu as MenuIcon, CloseOutlined as CloseOutlinedIcon } from "@mui/icons-material";
 import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
 import Leyend from "./Leyend";
@@ -58,7 +56,6 @@ import Report from "./Report";
 import Feedback from "./Feedback";
 import InitialDisclaimer from "./InitialDisclaimer";
 import TheaterMode from "./TheaterMode";
-import TheaterModeIcon from "./TheaterMode/TheaterModeIcon";
 import InitialDialog from "./InitialDialog";
 import TourIcon from "./TourIcon";
 import ShareIcon from "./ShareIcon";
@@ -67,7 +64,8 @@ import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
 import { Flex } from "./Chart";
-
+import MapActions from "./map-actions/MapActions";
+import { dispatchCustomEvent } from "../utils/dom-utils";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const drawerWidth = 100;
@@ -76,9 +74,17 @@ const StyledButton = styled(Button)`
     &.MuiButton-root {
         padding: 15px;
         color: black;
+        letter-spacing: 0.235px;
         &:hover {
             border: none;
-            cursor
+            color: #2FB3AF;
+            font-weight: bold;
+            padding-bottom: 10px;
+            letter-spacing: 0;
+            border-bottom: 5px solid #2FB3AF;
+            border-radius: 0;
+            cursor;
+            transition: none;
         }
     }
 `;
@@ -104,10 +110,15 @@ const SidebarIconDiv = styled.div`
 
 const BaseContainer = styled.div`
     max-width: 600px;
-    margin: 20px;
+    margin: 30px;
     outline: none;
     position: absolute;
+`;
 
+const BaseFlexAlignStartContainer = styled(BaseContainer)`
+    display: flex;
+    align-items: start;
+    flex-direction: column;
 `;
 
 const TopRightContainer = styled(BaseContainer)`
@@ -117,12 +128,16 @@ const TopRightContainer = styled(BaseContainer)`
     align-items: center;
 `;
 
-const TopRightVerticalContainer = styled(BaseContainer)`
+const TopRightVerticalContainer = styled(BaseFlexAlignStartContainer)`
     top: 0;
     right: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
+`;
+
+const SearchContainer = styled(BaseFlexAlignStartContainer)`
+    pointer-events: none;
+    top: 7%;
+    margin-left: 360px;
+    z-index: 1;
 `;
 
 const BottomRightContainer = styled(BaseContainer)`
@@ -139,23 +154,11 @@ const BottomMiddleContainer = styled(BaseContainer)`
     bottom: 0;
     right: 0;
 `;
-const SearchContainer = styled(BaseContainer)`
-    pointer-events: none;
-    top: 10%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    z-index: 1;
-`;
 
-const TopBarContainer = styled.div`
-    position: absolute;
-    width: 100%;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 4;
+const FloatingActionContainer = styled(BaseContainer)`
+    top: 7%;
+    z-index: 99;
+    pointer-events: all;
 `;
 
 const SideBarContainer = styled.div`
@@ -166,29 +169,37 @@ const SideBarContainer = styled.div`
     height: 80%;
 `;
 
-const TopBarWrapper = styled.div`
-    position: relative;
-    z-index: 1400;
-`;
-
-const Divider = styled.div`
-    height: 10px;
+const StyledToolbar = styled(Toolbar)`
+    &.MuiToolbar-root {
+        padding: 0;
+        @media (min-width: 600px) {
+            padding: 0;
+            min-height: 50px;
+        }
+    }
 `;
 
 const PushoverContainer = styled.div`
-    margin-left: ${(props: { menuOpen: boolean }) => (props.menuOpen ? `${drawerWidth}px` : "0")};
+    margin-left: ${(props: { menuOpen: boolean; initialMargin?: number }) =>
+        props.menuOpen ? `${props.initialMargin ? drawerWidth + props.initialMargin : drawerWidth}px` : "0"};
 `;
 
+const MenuTypography = styled(Typography)`
+    padding-right: 17px;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    letter-spacing: 0.235;
+`;
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-display: 'flex',
-alignItems: 'center',
-padding: theme.spacing(0, 1),
-// necessary for content to be below app bar
-...theme.mixins.toolbar,
-justifyContent: 'flex-end',
+const DrawerHeader = styled("div")(({ theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-end",
 }));
-
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -274,11 +285,13 @@ class Map extends React.Component<Props> {
             const cc = this.map.getBounds().toArray();
             this.props.updateBounds(cc);
         });
-        
+
         const pageView = getAnalyticsPageViewFromString({ page: this.props.theme });
         if (pageView && !this.props.initialDialogOpen) {
             sendAnalytics({ type: "pageView", ...pageView });
         }
+
+        setTimeout(() => dispatchCustomEvent("resize"), 100);
     }
 
     componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {
@@ -302,6 +315,9 @@ class Map extends React.Component<Props> {
                 pointerEvents: "all" as const,
                 margin: 0.5,
             },
+            menuOptionBox: { flexGrow: 1, display: { xs: "flex" } },
+            screenshotBox: { flexGrow: 0 },
+            appBar: { backgroundColor: "white", zIndex: 1400 },
         };
 
         return (
@@ -329,136 +345,127 @@ class Map extends React.Component<Props> {
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
                 <Hidden smDown>
-                    <TopBarWrapper>
-                        <TopBarContainer>
-                            <Flex>
-                            <StyledButton onClick={() => this.setState({ menuOpen: !this.state.menuOpen })}>
-                                    {this.state.menuOpen ? (
-                                        <CloseOutlinedIcon style={classes.icon} />
-                                    ) : (
-                                        <MenuIcon style={classes.icon} />
-                                    )}
-                                    {this.props.t("common.topbar.menu")}
-                                </StyledButton>
-
-                                <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
-                                <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
-                                <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
-                            </Flex>
-                            <Screenshot map={this.map} />
-                        </TopBarContainer>
-                    </TopBarWrapper>
+                    <Box>
+                        <AppBar position="sticky" sx={classes.appBar}>
+                            <StyledToolbar>
+                                <Box sx={classes.menuOptionBox}>
+                                    <Flex style={{ alignItems: "center" }}>
+                                        <IconButton onClick={() => this.setState({ menuOpen: !this.state.menuOpen })}>
+                                            {this.state.menuOpen ? <CloseOutlinedIcon /> : <MenuIcon />}
+                                        </IconButton>
+                                        <MenuTypography variant="h6">
+                                            {this.props.t("common.topbar.menu")}
+                                        </MenuTypography>
+                                    </Flex>
+                                    <Divider orientation="vertical" flexItem />
+                                    <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
+                                    <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
+                                    <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
+                                    <StyledButton>{this.props.t("common.topbar.stories")}</StyledButton>
+                                </Box>
+                                <Box sx={classes.screenshotBox}>
+                                    <Screenshot map={this.map} />
+                                </Box>
+                            </StyledToolbar>
+                        </AppBar>
+                    </Box>
                 </Hidden>
-                    <Drawer
+                <Drawer
                     sx={{
                         width: drawerWidth,
-                        backgroundColor: "#00000029",
+                        backgroundColor: "#EFF3F7",
+                        boxShadow: "0px 3px 26px #00000029",
                         flexShrink: 0,
-                        '& .MuiDrawer-paper': {
-                          width: drawerWidth,
-                          boxSizing: 'border-box',
+                        "& .MuiDrawer-paper": {
+                            width: drawerWidth,
+                            boxSizing: "border-box",
                         },
-                      }}
+                    }}
                     variant="persistent"
                     anchor="left"
                     open={this.state.menuOpen}
-                  >
-                      <DrawerHeader>
-                        <IconButton onClick={() => this.setState({menuOpen: false})}>
-                            <CloseOutlinedIcon/>
-                        </IconButton>
-                        </DrawerHeader>
-        <Divider />
+                >
+                    <DrawerHeader></DrawerHeader>
                     <SideBarContainer>
-                            <SidebarIconDiv>
-                                <StyledFab
-                                    id="home-button"
-                                    size="small"
-                                    color={"default"}
-                                    title={this.props.t("common.sidebar.home")}
-                                >
-                                    <HomeIcon />
-                                </StyledFab>
-                               <Typography variant="caption"> {this.props.t("common.sidebar.home")}</Typography>
-                            </SidebarIconDiv>
+                        <SidebarIconDiv>
+                            <StyledFab
+                                id="home-button"
+                                size="small"
+                                color={"default"}
+                                title={this.props.t("common.sidebar.home")}
+                            >
+                                <HomeIcon />
+                            </StyledFab>
+                            <Typography variant="caption"> {this.props.t("common.sidebar.home")}</Typography>
+                        </SidebarIconDiv>
 
-                            <SidebarIconDiv>
-                                <StyledFab
-                                    id="about-button"
-                                    size="small"
-                                    color={"default"}
-                                    title={this.props.t("common.sidebar.about")}
-                                >
-                                    <AboutIcon />
-                                </StyledFab>
-                                <Typography variant="caption"> {this.props.t("common.sidebar.about")}</Typography>
-                            </SidebarIconDiv>
+                        <SidebarIconDiv>
+                            <StyledFab
+                                id="about-button"
+                                size="small"
+                                color={"default"}
+                                title={this.props.t("common.sidebar.about")}
+                            >
+                                <AboutIcon />
+                            </StyledFab>
+                            <Typography variant="caption"> {this.props.t("common.sidebar.about")}</Typography>
+                        </SidebarIconDiv>
 
-                            <SidebarIconDiv>
-                                <StyledFab
-                                    id="contact-button"
-                                    size="small"
-                                    color={"default"}
-                                    title={this.props.t("common.sidebar.contact")}
-                                >
-                                    <EmailIcon color="primary" />
-                                </StyledFab>
-                                <Typography variant="caption"> {this.props.t("common.sidebar.contact")}</Typography>
+                        <SidebarIconDiv>
+                            <StyledFab
+                                id="contact-button"
+                                size="small"
+                                color={"default"}
+                                title={this.props.t("common.sidebar.contact")}
+                            >
+                                <ContactIcon />
+                            </StyledFab>
+                            <Typography variant="caption"> {this.props.t("common.sidebar.contact")}</Typography>
+                        </SidebarIconDiv>
 
-                            </SidebarIconDiv>
+                        <SidebarIconDiv>
+                            <StyledFab
+                                id="contact-button"
+                                size="small"
+                                color={"default"}
+                                title={this.props.t("common.sidebar.share_data")}
+                            >
+                                <ShareDataIcon />
+                            </StyledFab>
+                            <Typography variant="caption"> {this.props.t("common.sidebar.share_data")}</Typography>
+                        </SidebarIconDiv>
 
-                            <SidebarIconDiv>
-                                <StyledFab
-                                    id="contact-button"
-                                    size="small"
-                                    color={"default"}
-                                    title={this.props.t("common.sidebar.share_data")}
-                                >
-                                    <EmailIcon color="primary" />
-                                </StyledFab>
-                                <Typography variant="caption"> {this.props.t("common.sidebar.share_data")}</Typography>
-                            </SidebarIconDiv>
+                        <SidebarIconDiv>
+                            <StyledFab
+                                id="language-button"
+                                size="small"
+                                color={"default"}
+                                title={this.props.t("common.sidebar.language")}
+                            >
+                                <LanguageIcon />
+                            </StyledFab>
+                            <Typography variant="caption"> {this.props.t("common.sidebar.language")}</Typography>
+                        </SidebarIconDiv>
 
-                            <SidebarIconDiv>
-                                <StyledFab
-                                    id="language-button"
-                                    size="small"
-                                    color={"default"}
-                                    title={this.props.t("common.sidebar.language")}
-                                >
-                                    <LanguageIcon />
-                                </StyledFab>
-                                <Typography variant="caption"> {this.props.t("common.sidebar.language")}</Typography>
-                            </SidebarIconDiv>
-
-                            <SidebarIconDiv>
-                                <StyledFab
-                                    id="tour-button"
-                                    size="small"
-                                    color={"default"}
-                                    title={this.props.t("common.sidebar.take_tour")}
-                                >
-                                    <TakeATourIcon />
-                                </StyledFab>
-                                <Typography variant="caption"> {this.props.t("common.sidebar.take_tour")}</Typography>
-                            </SidebarIconDiv>
-                            </SideBarContainer>
-
-                  </Drawer>
+                        <SidebarIconDiv>
+                            <StyledFab
+                                id="tour-button"
+                                size="small"
+                                color={"default"}
+                                title={this.props.t("common.sidebar.take_tour")}
+                            >
+                                <TakeATourIcon />
+                            </StyledFab>
+                            <Typography variant="caption"> {this.props.t("common.sidebar.take_tour")}</Typography>
+                        </SidebarIconDiv>
+                    </SideBarContainer>
+                </Drawer>
                 <Fade in={showOptions}>
                     <PushoverContainer menuOpen={this.state.menuOpen}>
                         <SearchContainer>
                             <Hidden smDown>
-                                <div id={"third"}>
-                                    <TopicSelector />
-                                </div>
-                                <Divider />
-                                <MapTypesSelector />
-                                <Divider />
-                                <Filters />
                                 <MalariaTour />
                             </Hidden>
-                            <TheaterModeIcon />
                             <Layers />
                             <Country disabled={isInvasive} />
                             {!isMobile && <DataDownload />}
@@ -469,7 +476,13 @@ class Map extends React.Component<Props> {
                         </SearchContainer>
                     </PushoverContainer>
                 </Fade>
-                
+                <Fade in={showOptions}>
+                    <PushoverContainer menuOpen={this.state.menuOpen}>
+                        <FloatingActionContainer>
+                            <MapActions />
+                        </FloatingActionContainer>
+                    </PushoverContainer>
+                </Fade>
                 <Hidden smDown>
                     <Fade in={showOptions}>
                         <TopRightContainer>
