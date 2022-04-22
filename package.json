@@ -39,6 +39,7 @@
         "react-i18next": "^11.15.4",
         "react-is": "17.0.2",
         "react-redux": "^7.2.6",
+        "react-router-dom": "^6.3.0",
         "react-scripts": "4.0.3",
         "react-select": "^4.3.0",
         "react-swipeable": "^6.2.0",

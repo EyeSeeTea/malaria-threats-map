@@ -48,6 +48,7 @@ import { setInvasiveMapType, setInvasiveVectorSpecies } from "./store/actions/in
 import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
 import Notifier from "./components/Notifier";
 import Hidden from "./components/hidden/Hidden";
+import { Router } from "./pages/Router";
 
 declare module "@mui/styles/defaultTheme" {
     // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -56,7 +57,7 @@ declare module "@mui/styles/defaultTheme" {
 
 export const { store } = createStore();
 
-ReduxQuerySync({
+/*ReduxQuerySync({
     store,
     params: {
         theme: {
@@ -241,7 +242,7 @@ ReduxQuerySync({
     },
     initialTruth: "location",
 });
-
+*/
 export const theme = createTheme({
     palette: {
         primary: {
@@ -298,13 +299,7 @@ class App extends React.Component {
                     <Provider store={store}>
                         <DataProvider>
                             <I18nextProvider i18n={i18next}>
-                                <Hidden smUp>
-                                    <PersistentDrawerLeft drawerWidth={"100%"} />
-                                </Hidden>
-                                <Hidden smDown>
-                                    <PersistentDrawerLeft />
-                                </Hidden>
-                                <Notifier />
+                                <Router />
                             </I18nextProvider>
                         </DataProvider>
                     </Provider>
