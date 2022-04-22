@@ -43,7 +43,6 @@ import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
 import Leyend from "./Leyend";
 import StoryModeSelector from "./StoryModeSelector";
-import LanguageSelectorSelect from "./LanguageSelectorSelect";
 import MalariaTour from "./tour/MalariaTour";
 import MekongLayer from "./layers/MekongLayer";
 import DataDownload from "./DataDownload";
@@ -66,6 +65,9 @@ import Hidden from "./hidden/Hidden";
 import { Flex } from "./Chart";
 import MapActions from "./map-actions/MapActions";
 import { dispatchCustomEvent } from "../utils/dom-utils";
+
+import { changeLanguage } from "../config/i18next";
+import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const drawerWidth = 100;
@@ -245,6 +247,8 @@ class Map extends React.Component<Props> {
             bearing: 0,
             pitch: 0,
         },
+        open: false,
+        selectedValue: LANGUAGES[0].value,
     };
     images: any[] = [];
 
@@ -318,6 +322,15 @@ class Map extends React.Component<Props> {
             menuOptionBox: { flexGrow: 1, display: { xs: "flex" } },
             screenshotBox: { flexGrow: 0 },
             appBar: { backgroundColor: "white", zIndex: 1400 },
+        };
+
+        const handleClickOpen = () => {
+            this.setState({ open: true });
+        };
+
+        const handleClose = (value: string) => {
+            changeLanguage(value);
+            this.setState({ open: false, selectedValue: value });
         };
 
         return (
@@ -396,7 +409,10 @@ class Map extends React.Component<Props> {
                             >
                                 <HomeIcon />
                             </StyledFab>
-                            <Typography variant="caption"> {this.props.t("common.sidebar.home")}</Typography>
+                            <Typography variant="caption" align="center">
+                                {" "}
+                                {this.props.t("common.sidebar.home")}
+                            </Typography>
                         </SidebarIconDiv>
 
                         <SidebarIconDiv>
@@ -408,7 +424,10 @@ class Map extends React.Component<Props> {
                             >
                                 <AboutIcon />
                             </StyledFab>
-                            <Typography variant="caption"> {this.props.t("common.sidebar.about")}</Typography>
+                            <Typography variant="caption" align="center">
+                                {" "}
+                                {this.props.t("common.sidebar.about")}
+                            </Typography>
                         </SidebarIconDiv>
 
                         <SidebarIconDiv>
@@ -432,19 +451,27 @@ class Map extends React.Component<Props> {
                             >
                                 <ShareDataIcon />
                             </StyledFab>
-                            <Typography variant="caption"> {this.props.t("common.sidebar.share_data")}</Typography>
+                            <Typography variant="caption" align="center">
+                                {" "}
+                                {this.props.t("common.sidebar.share_data")}
+                            </Typography>
                         </SidebarIconDiv>
 
                         <SidebarIconDiv>
-                            <StyledFab
-                                id="language-button"
-                                size="small"
-                                color={"default"}
-                                title={this.props.t("common.sidebar.language")}
-                            >
-                                <LanguageIcon />
-                            </StyledFab>
-                            <Typography variant="caption"> {this.props.t("common.sidebar.language")}</Typography>
+                            <IconButton onClick={handleClickOpen} disableRipple>
+                                <StyledFab
+                                    id="language-button"
+                                    size="small"
+                                    color={"default"}
+                                    title={this.props.t("common.sidebar.language")}
+                                >
+                                    <LanguageIcon />
+                                </StyledFab>
+                            </IconButton>
+                            <Typography variant="caption" align="center">
+                                {" "}
+                                {this.props.t("common.sidebar.language")}
+                            </Typography>
                         </SidebarIconDiv>
 
                         <SidebarIconDiv>
@@ -456,7 +483,10 @@ class Map extends React.Component<Props> {
                             >
                                 <TakeATourIcon />
                             </StyledFab>
-                            <Typography variant="caption"> {this.props.t("common.sidebar.take_tour")}</Typography>
+                            <Typography variant="caption" align="center">
+                                {" "}
+                                {this.props.t("common.sidebar.take_tour")}
+                            </Typography>
                         </SidebarIconDiv>
                     </SideBarContainer>
                 </Drawer>
@@ -493,7 +523,6 @@ class Map extends React.Component<Props> {
                             <TourIcon />
                             {/* {["prevention", "diagnosis"].includes(theme) && <UploadFile />} */}
                             <Separator />
-                            {showOptions && <LanguageSelectorSelect section="menu" />}
                         </TopRightContainer>
                     </Fade>
                 </Hidden>
@@ -531,6 +560,11 @@ class Map extends React.Component<Props> {
                 <Hidden smDown>
                     <InitialDialog />
                 </Hidden>
+                <LanguageSelectorDialog
+                    selectedValue={this.state.selectedValue}
+                    open={this.state.open}
+                    onClose={handleClose}
+                />
             </React.Fragment>
         );
     }
