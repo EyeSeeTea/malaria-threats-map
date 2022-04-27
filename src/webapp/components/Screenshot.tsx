@@ -33,6 +33,18 @@ const ScreenshotButton = styled(Button)`
     }
 `;
 
+const StyledBox = styled(Box)`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: ${props => `${props.width}px`};
+    height: ${props => `${props.height}px`};
+    background-color: white;
+    padding: 4px;
+    border-radius: 5px;
+`;
+
 const ProgressDiv = styled.div`
     position: absolute;
     top: 50%;
@@ -41,6 +53,15 @@ const ProgressDiv = styled.div`
     display: flex;
     flexdirection: column;
     alignitems: center;
+`;
+
+const StyledCanvas = styled.canvas`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid grey;
+    borderradius: 5px;
 `;
 
 const CircularProgressWithLabel = () => {
@@ -221,26 +242,6 @@ function Screenshot({ map, theme, title }: Props) {
     };
 
     const styles = {
-        box: {
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: width * 0.9,
-            height: height * 0.9,
-            bgcolor: "white",
-            p: 4,
-            padding: 0,
-            borderRadius: 5,
-        },
-        canvas: {
-            position: "absolute" as const,
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            border: "2px solid grey",
-            borderRadius: 5,
-        },
         icon: { marginRight: 5 },
         downloadScreenshot: { marginTop: 10, float: "right" as const },
     };
@@ -257,7 +258,7 @@ function Screenshot({ map, theme, title }: Props) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={styles.box}>
+                <StyledBox width={width * 0.9} height={height * 0.9}>
                     {downloading && <SimpleLoader message={t("common.data_download.loader.generating_file")} />}
                     <ScreenshotButton
                         variant="contained"
@@ -267,12 +268,8 @@ function Screenshot({ map, theme, title }: Props) {
                         <DownloadIcon style={styles.icon} />
                         {t("common.screenshot.download_screenshot")}
                     </ScreenshotButton>
-                    {generatingScreenshot ? (
-                        <CircularProgressWithLabel />
-                    ) : (
-                        <canvas id="pdf" style={styles.canvas}></canvas>
-                    )}
-                </Box>
+                    {generatingScreenshot ? <CircularProgressWithLabel /> : <StyledCanvas id="pdf"></StyledCanvas>}
+                </StyledBox>
             </Modal>
         </>
     );
