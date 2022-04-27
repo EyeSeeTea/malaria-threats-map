@@ -16,6 +16,7 @@ import * as R from "ramda";
 import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
 import { DiagnosisStudy } from "../../../../../domain/entities/DiagnosisStudy";
 import { isNotNull, isNull } from "../../../../utils/number-utils";
+import Pagination from "../../../charts/Pagination";
 
 const ChatContainer = styled.div`
     max-width: 500px;
@@ -67,18 +68,20 @@ const useStyles = makeStyles(theme => ({
 
 const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
     const { t } = useTranslation();
+    const [study, setStudy] = React.useState(0);
     const classes = useStyles({});
     const nStudies = studies.length;
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
     const sortedStudies2 = R.sortBy(study => parseInt(study.YEAR_END), studies);
     const maxYear = sortedStudies2[sortedStudies2.length - 1].YEAR_END;
     const minYear = sortedStudies[0].YEAR_START;
-    const studyObject = studies[0];
+    const studyObject = React.useMemo(() => studies[study], [studies, study]);
     const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(type => t(type));
     const formatPercentage = (value: string) => `${(parseFloat(value) * 100).toFixed(1)}%`;
 
     return (
         <ChatContainer>
+            <Pagination studies={studies} study={study} setStudy={setStudy} />
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">
                     {isNotNull(studyObject.TOOLTIP_SITENAME) && `${t(studyObject.TOOLTIP_SITENAME)}, `}
