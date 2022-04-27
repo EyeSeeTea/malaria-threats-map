@@ -1,33 +1,10 @@
 import React, { ReactNode } from "react";
 
-import { Button, Collapse, ListItem } from "@mui/material";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { ActionGroup, State } from "../../store/types";
 import { selectActionGroupSelected } from "../../store/reducers/base-reducer";
 import { setActionGroupSelected } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
-import styled from "styled-components";
-
-const StyledButton = styled(Button)`
-    color: black;
-    padding: 15px 20px;
-    text-transform: none;
-`;
-
-const Placeholder = styled.span`
-    text-align: start;
-    flex-grow: 1;
-    font-weight_bold
-`;
-
-const Value = styled.span`
-    text-align: start;
-    flex-grow: 1;
-`;
-
-const TitleContainer = styled(ListItem)`
-    padding: 0px;
-`;
+import ExpandableContainer from "../DataDownload/ExpandableContainer";
 
 const mapStateToProps = (state: State) => ({
     actionGroupSelected: selectActionGroupSelected(state),
@@ -60,32 +37,20 @@ const ActionGroupItem: React.FC<ActionGroupProps> = ({
 }) => {
     const expanded = React.useMemo(() => actionGroupSelected === actionGroupKey, [actionGroupSelected, actionGroupKey]);
 
-    const handleExpand = () => {
-        if (children) {
-            setActionGroupSelected(!expanded ? actionGroupKey : null);
-        }
+    const handleExpand = (value: boolean) => {
+        setActionGroupSelected(value ? actionGroupKey : null);
     };
 
     return (
-        <React.Fragment>
-            <TitleContainer onClick={handleExpand} disableGutters>
-                <StyledButton fullWidth={true}>
-                    {value && !expanded ? <Value>{value}</Value> : <Placeholder>{placeholder}</Placeholder>}
-                    {children ? expanded ? <ExpandLess /> : <ExpandMore /> : null}
-                </StyledButton>
-            </TitleContainer>
-            {children && (
-                <Collapse
-                    in={expanded}
-                    timeout="auto"
-                    unmountOnExit
-                    key={actionGroupKey}
-                    sx={{ maxHeight: childrenMaxHeight, overflow: childrenMaxHeight ? "scroll" : undefined }}
-                >
-                    {children}
-                </Collapse>
-            )}
-        </React.Fragment>
+        <ExpandableContainer
+            onExpand={handleExpand}
+            expanded={expanded}
+            placeholder={placeholder}
+            value={value}
+            childrenMaxHeight={childrenMaxHeight}
+        >
+            {children}
+        </ExpandableContainer>
     );
 };
 
