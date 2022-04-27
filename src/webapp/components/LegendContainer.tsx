@@ -13,7 +13,7 @@ const LegendContainerStyled = styled(Paper)<{ size?: number }>`
     padding: 8px;
     display: flex;
     flex-direction: column;
-    max-width: ${props => props.size | 200}px;
+    max-width: ${props => props.size | 313}px;
     width: 100%;
     font-size: 12px;
     box-shadow: none !important;
