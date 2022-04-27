@@ -33,24 +33,24 @@ const ScreenshotButton = styled(Button)`
     }
 `;
 
+const ProgressDiv = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flexdirection: column;
+    alignitems: center;
+`;
+
 const CircularProgressWithLabel = () => {
     const { t } = useTranslation();
-    const styles = {
-        progress: {
-            position: "absolute" as const,
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            display: "flex",
-            flexDirection: "column" as const,
-            alignItems: "center",
-        },
-    };
+
     return (
-        <div style={styles.progress}>
+        <ProgressDiv>
             <CircularProgress />
             <Typography>{t("common.screenshot.generating_screenshot")}</Typography>
-        </div>
+        </ProgressDiv>
     );
 };
 
@@ -240,15 +240,6 @@ function Screenshot({ map, theme, title }: Props) {
             transform: "translate(-50%, -50%)",
             border: "2px solid grey",
             borderRadius: 5,
-        },
-        progress: {
-            position: "absolute" as const,
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            display: "flex",
-            flexDirection: "column" as const,
-            alignItems: "center",
         },
         icon: { marginRight: 5 },
         downloadScreenshot: { marginTop: 10, float: "right" as const },
