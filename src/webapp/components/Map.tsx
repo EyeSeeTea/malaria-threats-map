@@ -295,12 +295,7 @@ class Map extends React.Component<Props> {
                     </BottomRightContainer>
                 </Fade>
                 <BottomLeftContainer>
-                    <Hidden smUp>
-                        <WhoLogo width={150} />
-                    </Hidden>
-                    <Hidden xsDown>
-                        <WhoLogo />
-                    </Hidden>
+                    <WhoLogo />
                 </BottomLeftContainer>
                 <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
                 <Hidden xsDown>
