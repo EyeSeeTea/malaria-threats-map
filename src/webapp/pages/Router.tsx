@@ -6,16 +6,14 @@ import { HomePage } from "./home/HomePage";
 
 export const Router: React.FC = React.memo(() => {
     return (
-        <Container>
-            <HashRouter>
-                <Routes>
-                <Route path="/" element={<HomePage />} />
+        <HashRouter>
+            <Routes>
+            <Route path="/" element={<HomePage />} />
 
-                    {/* Default route */}
-                    <Route element={<HomePage />} />
-                </Routes>
-            </HashRouter>
-        </Container>
+                {/* Default route */}
+                <Route element={<HomePage />} />
+            </Routes>
+        </HashRouter>
     );
 });
 

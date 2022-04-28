@@ -3,8 +3,7 @@ import Dialog from "@mui/material/Dialog";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { Container, Typography } from "@mui/material";
-import { Fade, Button, AppBar, Toolbar, Box } from "@mui/material";
+import { Fade, Button, AppBar, Toolbar, Box, Container, Typography } from "@mui/material";
 import HomepageMap from "../../assets/img/homepage-map.png";
 
 const FlexGrow = styled.div`
@@ -44,7 +43,7 @@ const StyledToolbar = styled(Toolbar)`
 
 const StyledButton = styled(Button)`
     &.MuiButton-root {
-        padding: 15px 20px;
+        padding: 15px 40px;
         color: black;
         letter-spacing: 0.235px;
         &:hover {
@@ -74,10 +73,8 @@ export const HomePage = () => {
         appBar: { backgroundColor: "white" },
     };
     //            <img src={HomepageMap} width={1330} alt="WHO spanish logo" />;
-
-    return (
-        <React.Fragment>
-            <div style={{ position: "absolute", bottom: 0, top: 0, right: 0, left: 0 }}>
+/*
+<div style={{ position: "absolute", bottom: 0, top: 0, right: 0, left: 0 }}>
             <Box>
                 <AppBar position="sticky" sx={classes.appBar}>
                     <StyledToolbar>
@@ -94,12 +91,44 @@ export const HomePage = () => {
                     </StyledToolbar>
                 </AppBar>
             </Box>
-            <div style={{display: "block", left: 0, width: "100%", background: `linear-gradient(90deg, #BBD7E8 0%, #BBD7E800 100%), url(${HomepageMap}`, height: 717, opacity: 1}}>
+            </div>
 
-
+*/
+    return (
+            <React.Fragment>
+                <div style={{display: "block", position: "relative", backgroundAttachment: "fixed", margin: 0, left: 0, width: "100%", background: `linear-gradient(90deg, #BBD7E8 0%, #BBD7E800 100%), url(${HomepageMap}`, height: 717, opacity: 1}}>
+            
+                <div style={{ position: "relative", bottom: 0, top: 0, right: 0, left: 0 }}>
+            <Box>
+                <AppBar position="sticky" sx={classes.appBar}>
+                    <StyledToolbar>
+                        <Box sx={classes.menuOptionBox}>
+                            <StyledButton>Home</StyledButton>
+                            <StyledButton>Tools</StyledButton>
+                            <StyledButton>About</StyledButton>
+                            <StyledButton>Contact</StyledButton>
+                            <StyledButton>Share Data</StyledButton>
+                        </Box>
+                        <Box sx={classes.screenshotBox}>
+                        <StyledButton>English</StyledButton>
+                        </Box>
+                    </StyledToolbar>
+                </AppBar>
+            </Box>
+            </div>
+            <div style={{
+                width: "60%", 
+                marginTop: 100, 
+                marginLeft: 90 }}>
+            <Typography variant="h2" color={"inherit"} sx={{textTransform: "uppercase"}}>
+                Malaria <br/><strong>Threats Map</strong>
+            </Typography>
+            <Typography variant="h6" color={"inherit"} style={{marginTop: 10}}>
+            Explore data from the WHO Global Malaria Programme databases
+            </Typography>
             </div>
             </div>
-        </React.Fragment>
+            </React.Fragment>
     );
 }
 //            <h1>Hello! </h1>
