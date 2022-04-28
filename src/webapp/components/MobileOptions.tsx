@@ -3,6 +3,7 @@ import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import Dialog from "@mui/material/Dialog";
+import Button from "@mui/material/Button";
 import ListItemText from "@mui/material/ListItemText";
 import ListItem from "@mui/material/ListItem";
 import List from "@mui/material/List";
@@ -17,7 +18,8 @@ import { setMobileOptionsOpen } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { Typography } from "@mui/material";
-import LanguageSelectorSelect from "./LanguageSelectorSelect";
+import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
+import { changeLanguage } from "../config/i18next";
 import { useTranslation } from "react-i18next";
 
 const FlexGrow = styled.div`
@@ -52,10 +54,22 @@ type Props = DispatchProps & StateProps;
 
 function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
     const classes = useStyles({});
+    const [isLanguageOpen, setIsLanguageOpen] = React.useState(false);
+    const [selectedValue, setSelectedValue] = React.useState(LANGUAGES[0].value);
 
     function handleClose() {
         setMobileOptionsOpen(false);
     }
+
+    const handleButtonClickOpen = () => {
+        setIsLanguageOpen(true);
+    };
+
+    const handleClickClose = (value: string) => {
+        changeLanguage(value);
+        setIsLanguageOpen(false);
+        setSelectedValue(value);
+    };
     const { t } = useTranslation();
     return (
         <>
@@ -79,9 +93,16 @@ function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
                 </AppBar>
                 <List>
                     <ListItem button>
-                        <ListItemText primary={t("common.options.select_language")} />
+                        <ListItemText primary={t("common.options.language")} />
                         <FlexGrow />
-                        <LanguageSelectorSelect />
+                        <Button onClick={handleButtonClickOpen} variant="contained">
+                            {t("common.options.select_language")}
+                        </Button>
+                        <LanguageSelectorDialog
+                            selectedValue={selectedValue}
+                            open={isLanguageOpen}
+                            onClose={handleClickClose}
+                        />
                     </ListItem>
                 </List>
             </Dialog>

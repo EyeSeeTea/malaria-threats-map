@@ -50,7 +50,7 @@ type Props = {
 };
 const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
     const { t } = useTranslation();
-    
+
     return (
         <Drawer
             sx={{
@@ -115,11 +115,16 @@ const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
                 </SidebarIconDiv>
 
                 <SidebarIconDiv>
-                <IconButton onClick={handleClickOpen} disableRipple>
-                    <StyledFab id="language-button" size="small" color={"default"} title={t("common.sidebar.language")}>
-                        <LanguageIcon />
-                    </StyledFab>
-                </IconButton>
+                    <IconButton onClick={handleClickOpen} disableRipple>
+                        <StyledFab
+                            id="language-button"
+                            size="small"
+                            color={"default"}
+                            title={t("common.sidebar.language")}
+                        >
+                            <LanguageIcon />
+                        </StyledFab>
+                    </IconButton>
                     <Typography variant="caption" align="center">
                         {" "}
                         {t("common.sidebar.language")}

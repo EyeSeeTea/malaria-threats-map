@@ -337,6 +337,7 @@
         "options": {
             "title": "Opciones",
             "select_language": "Seleccione Idioma",
+            "language": "Idioma",
             "select": "Seleccione"
         },
         "citation": {

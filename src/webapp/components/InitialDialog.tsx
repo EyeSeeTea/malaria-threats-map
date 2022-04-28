@@ -7,7 +7,6 @@ import { State } from "../store/types";
 import { selectIsInitialDialogOpen, selectTour } from "../store/reducers/base-reducer";
 import { setInitialDialogOpen, setThemeAction, setTourStepAction } from "../store/actions/base-actions";
 import { connect } from "react-redux";
-import LanguageSelectorSelect from "./LanguageSelectorSelect";
 import { useTranslation } from "react-i18next";
 import { Container, Typography } from "@mui/material";
 import { sendAnalytics } from "../utils/analytics";
@@ -28,10 +27,6 @@ const CenteredRow = styled(Row)`
 const Column = styled.div`
     padding-left: 10px;
     padding-right: 10px;
-`;
-
-const LanguageWrapper = styled.div`
-    max-width: 200px;
 `;
 
 const WhiteColumn = styled(Column)`
@@ -96,9 +91,6 @@ function InitialDialog({ initialDialogOpen, setInitialDialogOpen, tour, setTourS
                         <Typography variant="h6">{t("common.title.subtitle")}</Typography>
                     </WhiteColumn>
                     <FlexGrow />
-                    <LanguageWrapper>
-                        <LanguageSelectorSelect section="homeItem" />
-                    </LanguageWrapper>
                 </CenteredRow>
                 <Row id="dialog">
                     <SimpleCard
