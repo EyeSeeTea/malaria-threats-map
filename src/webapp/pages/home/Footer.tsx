@@ -62,7 +62,6 @@ const Footer = ({ t }: FooterProps) => {
 
     const aboutWhoGmp = [t("common.footer.about_who_gmp.resource1"), t("common.footer.about_who_gmp.resource2")];
 
-
     return (
         <React.Fragment>
             <FooterDiv>
@@ -72,12 +71,12 @@ const Footer = ({ t }: FooterProps) => {
                         {t("common.footer.policies.title")}
                     </FooterHeader>
                     <Link href="#" underline="none" variant="h6" textAlign="left" color="#343434">
-                    {t("common.footer.policies.disclaimer")}
+                        {t("common.footer.policies.disclaimer")}
                     </Link>
                 </div>
                 <Flex>
                     <FooterHeader gutterBottom variant="body1">
-                    {t("common.footer.other_who_resources.title")}
+                        {t("common.footer.other_who_resources.title")}
                     </FooterHeader>
                     {otherWhoResources.map((resource, id) => (
                         <Link
@@ -95,7 +94,7 @@ const Footer = ({ t }: FooterProps) => {
                 </Flex>
                 <Flex>
                     <FooterHeader gutterBottom variant="body1">
-                    {t("common.footer.about_who_gmp.title")}
+                        {t("common.footer.about_who_gmp.title")}
                     </FooterHeader>
                     {aboutWhoGmp.map((resource, id) => (
                         <Link
@@ -111,14 +110,14 @@ const Footer = ({ t }: FooterProps) => {
                         </Link>
                     ))}
                     <StyledNewsletterButton size="large" variant="contained">
-                    {t("common.footer.subscribe_newsletter")}
+                        {t("common.footer.subscribe_newsletter")}
                     </StyledNewsletterButton>
                 </Flex>
             </FooterDiv>
             <Divider variant="fullWidth" />
             <PrivacyCopyrightDiv>
                 <Link href="#" underline="none" variant="body1" textAlign="center" color="#343434">
-                {t("common.footer.privacy")}
+                    {t("common.footer.privacy")}
                 </Link>
                 <Typography variant="body1" textAlign="center" color="#343434">
                     © 2021 WHO

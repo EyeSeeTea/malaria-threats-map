@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Typography, Paper, Button } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import { useTranslation, TFunction } from "react-i18next";
 
 interface ThemePaperProps {
     icon: string;
@@ -10,6 +10,7 @@ interface ThemePaperProps {
     subtitle: string;
     color: string;
     colorOpaque: string;
+    t: TFunction<"translation", undefined>;
 }
 
 const StyledPaper = styled(Paper)`

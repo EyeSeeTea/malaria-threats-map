@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useTranslation, Trans } from "react-i18next";
-import { Button, AppBar, Toolbar, Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 
 import HomepageMap from "../../assets/img/homepage-map.png";
 import PreventionIcon from "../../assets/img/prevention-icon.svg";
@@ -13,40 +13,10 @@ import Dashboards from "../../assets/img/dashboards.png";
 import DataDownload from "../../assets/img/data_download.png";
 import Maps from "../../assets/img/maps.png";
 
-import LanguageSelectorSelect from "../../components/LanguageSelectorSelect";
 import ThemePaper from "./ThemePaper";
 import MediaCard from "./MediaCard";
 import Footer from "./Footer";
-
-const StyledToolbar = styled(Toolbar)`
-    &.MuiToolbar-root {
-        width: 85%;
-        margin: auto;
-        @media (min-width: 600px) {
-            padding: 0 70px;
-            min-height: 50px;
-        }
-    }
-`;
-
-const StyledButton = styled(Button)`
-    &.MuiButton-root {
-        padding: 15px 40px;
-        color: black;
-        letter-spacing: 0.235px;
-        &:hover {
-            border: none;
-            color: #2FB3AF;
-            font-weight: bold;
-            padding-bottom: 10px;
-            letter-spacing: 0;
-            border-bottom: 5px solid #2FB3AF;
-            border-radius: 0;
-            cursor;
-            transition: none;
-        }
-    }
-`;
+import Header from "./Header";
 
 const StyledBanner = styled.div`
     display: block;
@@ -59,14 +29,6 @@ const StyledBanner = styled.div`
     background-position: right;
     height: 720px;
     opacity: 1;
-`;
-
-const StickyMenu = styled.div`
-    position: relative;
-    bottom: 0;
-    top: 0;
-    right: 0;
-    left: 0;
 `;
 
 const ContentDiv = styled.div`
@@ -105,44 +67,20 @@ const themePaperColors = {
 
 export const HomePage = () => {
     const { t } = useTranslation();
-    const classes = {
-        icon: { marginRight: 5 },
-        menuOptionBox: { flexGrow: 1, display: { xs: "flex" }, width: "60%", margin: "auto" },
-        languageSelectorBox: { flexGrow: 0 },
-        appBar: { backgroundColor: "white" },
-    };
 
     return (
         <React.Fragment>
             <StyledBanner>
-                <StickyMenu>
-                    <Box>
-                        <AppBar position="sticky" sx={classes.appBar}>
-                            <StyledToolbar>
-                                <Box sx={classes.menuOptionBox}>
-                                    <StyledButton>{t("common.homepage.menu.home")}</StyledButton>
-                                    <StyledButton>{t("common.homepage.menu.tools")}</StyledButton>
-                                    <StyledButton>{t("common.homepage.menu.about")}</StyledButton>
-                                    <StyledButton>{t("common.homepage.menu.contact")}</StyledButton>
-                                    <StyledButton>{t("common.homepage.menu.share_data")}</StyledButton>
-                                </Box>
-                                <Box sx={classes.languageSelectorBox}>
-                                    <LanguageSelectorSelect section="homeItem" />
-                                </Box>
-                            </StyledToolbar>
-                        </AppBar>
-                    </Box>
-                </StickyMenu>
-
+                <Header t={t} />
                 <ContentDiv>
                     <TitleBannerDiv>
                         <Typography variant="h2" color={"inherit"} sx={{ textTransform: "uppercase" }}>
                             <Trans i18nKey="common.homepage.title" t={t}>
-                            Malaria <br /> <strong>Threats Map</strong>
+                                Malaria <br /> <strong>Threats Map</strong>
                             </Trans>
                         </Typography>
                         <Typography variant="h5" color={"inherit"} sx={{ marginTop: 10 }}>
-                        {t("common.homepage.subtitle")}
+                            {t("common.homepage.subtitle")}
                         </Typography>
                     </TitleBannerDiv>
 
@@ -185,6 +123,7 @@ export const HomePage = () => {
                         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                             <Grid item xs={2} sm={4} md={6}>
                                 <ThemePaper
+                                    t={t}
                                     icon={PreventionIcon}
                                     altText="Prevention Icon"
                                     title={t("common.themes.prevention")}
@@ -195,6 +134,7 @@ export const HomePage = () => {
                             </Grid>
                             <Grid item xs={2} sm={4} md={6}>
                                 <ThemePaper
+                                    t={t}
                                     icon={InvasiveIcon}
                                     altText="Invasive Icon"
                                     title={t("common.themes.invasive")}
@@ -205,6 +145,7 @@ export const HomePage = () => {
                             </Grid>
                             <Grid item xs={2} sm={4} md={6}>
                                 <ThemePaper
+                                    t={t}
                                     icon={TreatmentIcon}
                                     altText="Treatment Icon"
                                     title={t("common.themes.treatment")}
@@ -215,6 +156,7 @@ export const HomePage = () => {
                             </Grid>
                             <Grid item xs={2} sm={4} md={6}>
                                 <ThemePaper
+                                    t={t}
                                     icon={DiagnosisIcon}
                                     altText="Diagnosis Icon"
                                     title={t("common.themes.diagnosis")}
