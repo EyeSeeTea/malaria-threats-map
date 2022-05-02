@@ -8,7 +8,7 @@ export const Router: React.FC = React.memo(() => {
     return (
         <HashRouter>
             <Routes>
-            <Route path="/" element={<HomePage />} />
+                <Route path="/" element={<HomePage />} />
 
                 {/* Default route */}
                 <Route element={<HomePage />} />
