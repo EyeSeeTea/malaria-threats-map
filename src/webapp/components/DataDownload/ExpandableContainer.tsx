@@ -28,7 +28,7 @@ const TitleContainer = styled(ListItem)`
 
 type ExpandableContainerProps = {
     key?: string;
-    placeholder: string;
+    placeholder?: string;
     value?: ReactNode;
     expanded: boolean;
     children?: ReactNode | undefined;
@@ -63,7 +63,11 @@ const ExpandableContainer: React.FC<ExpandableContainerProps> = ({
         <React.Fragment>
             <TitleContainer onClick={handleExpand} disableGutters>
                 <StyledButton fullWidth={true}>
-                    {value && !expandedState ? <Value>{value}</Value> : <Placeholder>{placeholder}</Placeholder>}
+                    {value && (!expandedState || !placeholder) ? (
+                        <Value>{value}</Value>
+                    ) : (
+                        <Placeholder>{placeholder}</Placeholder>
+                    )}
                     {children ? expandedState ? <ExpandLess /> : <ExpandMore /> : null}
                 </StyledButton>
             </TitleContainer>

@@ -1,14 +1,10 @@
 import React from "react";
 import { TreatmentFilters, TreatmentMapType } from "../../../store/types";
-import TreatmentFailureLeyend from "./TreatmentFailure/TreatmentFailureLegend";
-import DelayedParasiteClearanceLeyend from "./DelayedParasiteClearance/DelayedParasiteClearanceLegend";
-import MolecularMarkerLegend from "./MolecularMarkers/MolecularMarkerLegend";
 import treatmentLayerSymbols from "./TreatmentFailure/treatmentLayerSymbols";
 import delayedParasiteClearanceSymbols from "./DelayedParasiteClearance/delayedParasiteClearanceSymbols";
 import molecularMarkerSymbols from "./MolecularMarkers/molecularMarkerSymbols";
 import * as R from "ramda";
 import { TREATMENT_FAILURE_STATUS } from "./TreatmentFailure/utils";
-import TreatmentCountryLegend from "./Countries/TreatmentCountryLegend";
 import treatmentCountrySymbols from "./Countries/treatment-country-symbols";
 import { DELAYED_PARASITE_CLEARANCE_STATUS } from "./DelayedParasiteClearance/utils";
 import { MOLECULAR_MARKER_STATUS } from "./MolecularMarkers/utils";
@@ -24,22 +20,6 @@ export const resolveMapTypeSymbols = (treatmentFilters: TreatmentFilters, countr
             return delayedParasiteClearanceSymbols;
         case TreatmentMapType.MOLECULAR_MARKERS:
             return molecularMarkerSymbols;
-        default:
-            return <span />;
-    }
-};
-
-export const resolveMapTypeLegend = (treatmentFilters: TreatmentFilters, countryMode: boolean) => {
-    if (countryMode) {
-        return <TreatmentCountryLegend />;
-    }
-    switch (treatmentFilters.mapType) {
-        case TreatmentMapType.TREATMENT_FAILURE:
-            return <TreatmentFailureLeyend />;
-        case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
-            return <DelayedParasiteClearanceLeyend />;
-        case TreatmentMapType.MOLECULAR_MARKERS:
-            return <MolecularMarkerLegend />;
         default:
             return <span />;
     }

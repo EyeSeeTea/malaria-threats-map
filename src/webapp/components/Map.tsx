@@ -32,8 +32,7 @@ import { addNotificationAction } from "../store/actions/notifier-actions";
 import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
 import { Fade } from "@mui/material";
 import Country from "./Country";
-import LeyendPopover from "./LegendPopover";
-import Leyend from "./Leyend";
+import LeyendPopover from "./legend/LegendPopover";
 import StoryModeSelector from "./StoryModeSelector";
 import LanguageSelectorSelect from "./LanguageSelectorSelect";
 import MalariaTour from "./tour/MalariaTour";
@@ -58,6 +57,7 @@ import Hidden from "./hidden/Hidden";
 import MapActions from "./map-actions/MapActions";
 import { dispatchCustomEvent } from "../utils/dom-utils";
 import LastUpdated from "./last-updated/LastUpdated";
+import FloatingLegend from "./legend/FloatingLegendContainer";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
@@ -88,10 +88,10 @@ const TopRightVerticalContainer = styled(BaseContainer)`
     align-items: start;
 `;
 
-const BottomRightContainer = styled(BaseContainer)`
+const LegendContainer = styled(BaseContainer)`
     position: absolute;
-    bottom: 0;
-    right: 0;
+    top: 80px;
+    right: 10px;
 `;
 
 const BottomLeftContainer = styled(BaseContainer)`
@@ -307,15 +307,15 @@ class Map extends React.Component<Props> {
                     </Fade>
                 </Hidden>
                 <Fade in={showOptions}>
-                    <BottomRightContainer id={"legend"}>
+                    <LegendContainer id={"legend"}>
                         <Hidden smUp>
                             <LeyendPopover />
                         </Hidden>
                         <Hidden smDown>
-                            <Leyend />
+                            <FloatingLegend />
                         </Hidden>
                         <LastUpdated />
-                    </BottomRightContainer>
+                    </LegendContainer>
                 </Fade>
                 <BottomLeftContainer>
                     <Hidden smUp>

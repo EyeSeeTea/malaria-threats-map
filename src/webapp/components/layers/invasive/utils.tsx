@@ -1,25 +1,10 @@
-import { InvasiveFilters, InvasiveMapType } from "../../../store/types";
-import TreatmentCountryLegend from "../treatment/Countries/TreatmentCountryLegend";
-import React from "react";
-import VectorOcurranceLegend from "./VectorOccurance/VectorOcurranceLegend";
+import { InvasiveMapType } from "../../../store/types";
 import vectorOcurranceSymbols from "./VectorOccurance/vector-ocurrance-symbols";
 import * as R from "ramda";
 import { INVASIVE_STATUS } from "./VectorOccurance/utils";
 
 export const resolveMapTypeSymbols = () => {
     return vectorOcurranceSymbols;
-};
-
-export const resolveMapTypeLegend = (invasiveFilters: InvasiveFilters, countryMode: boolean) => {
-    if (countryMode) {
-        return <TreatmentCountryLegend />;
-    }
-    switch (invasiveFilters.mapType) {
-        case InvasiveMapType.VECTOR_OCCURANCE:
-            return <VectorOcurranceLegend />;
-        default:
-            return <span />;
-    }
 };
 
 const filterByMostRecentYear = (group: any[]) => {
