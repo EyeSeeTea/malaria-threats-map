@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Button, AppBar, Toolbar, Box } from "@mui/material";
 import { TFunction } from "react-i18next";
-import LanguageSelectorSelect from "../../components/LanguageSelectorSelect";
+import LanguageSelectorSelect from "../components/LanguageSelectorSelect";
+import { Link } from "react-router-dom";
+
 
 const StickyMenu = styled.div`
     position: relative;
@@ -55,24 +57,24 @@ const Header = ({ t }: HeaderProps) => {
     };
     return (
         <StickyMenu>
-                    <Box>
-                        <AppBar position="sticky" sx={classes.appBar}>
-                            <StyledToolbar>
-                                <Box sx={classes.menuOptionBox}>
-                                    <StyledButton>{t("common.homepage.menu.home")}</StyledButton>
-                                    <StyledButton>{t("common.homepage.menu.tools")}</StyledButton>
-                                    <StyledButton>{t("common.homepage.menu.about")}</StyledButton>
-                                    <StyledButton>{t("common.homepage.menu.contact")}</StyledButton>
-                                    <StyledButton>{t("common.homepage.menu.share_data")}</StyledButton>
-                                </Box>
-                                <Box sx={classes.languageSelectorBox}>
-                                    <LanguageSelectorSelect section="homeItem" />
-                                </Box>
-                            </StyledToolbar>
-                        </AppBar>
-                    </Box>
-                </StickyMenu>
-    )
-}
+            <Box>
+                <AppBar position="sticky" sx={classes.appBar}>
+                    <StyledToolbar>
+                        <Box sx={classes.menuOptionBox}>
+                            <StyledButton>{t("common.homepage.menu.home")}</StyledButton>
+                            <StyledButton>{t("common.homepage.menu.tools")}</StyledButton>
+                            <StyledButton><Link to="/about" replace>{t("common.homepage.menu.about")}</Link></StyledButton>
+                            <StyledButton>{t("common.homepage.menu.contact")}</StyledButton>
+                            <StyledButton>{t("common.homepage.menu.share_data")}</StyledButton>
+                        </Box>
+                        <Box sx={classes.languageSelectorBox}>
+                            <LanguageSelectorSelect section="homeItem" />
+                        </Box>
+                    </StyledToolbar>
+                </AppBar>
+            </Box>
+        </StickyMenu>
+    );
+};
 
 export default Header;

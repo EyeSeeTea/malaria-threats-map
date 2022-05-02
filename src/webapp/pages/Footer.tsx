@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Button, Typography, Link, Divider } from "@mui/material";
-import WhoLogoBlue from "../../assets/img/who-logo-blue.png";
+import WhoLogoBlue from "../assets/img/who-logo-blue.png";
 import { TFunction } from "react-i18next";
 
 const FooterDiv = styled.div`

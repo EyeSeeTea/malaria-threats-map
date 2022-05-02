@@ -1,22 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 import { useTranslation, Trans } from "react-i18next";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, Divider } from "@mui/material";
 
 import HomepageMap from "../../assets/img/homepage-map.png";
 import PreventionIcon from "../../assets/img/prevention-icon.svg";
 import TreatmentIcon from "../../assets/img/treatment-icon.svg";
 import DiagnosisIcon from "../../assets/img/diagnosis-icon.svg";
 import InvasiveIcon from "../../assets/img/invasive-icon.svg";
-import Divider from "@mui/material/Divider";
 import Dashboards from "../../assets/img/dashboards.png";
 import DataDownload from "../../assets/img/data_download.png";
 import Maps from "../../assets/img/maps.png";
 
 import ThemePaper from "./ThemePaper";
 import MediaCard from "./MediaCard";
-import Footer from "./Footer";
-import Header from "./Header";
+import Footer from "../Footer";
+import Header from "../Header";
 
 const StyledBanner = styled.div`
     display: block;

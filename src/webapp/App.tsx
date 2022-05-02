@@ -54,7 +54,7 @@ declare module "@mui/styles/defaultTheme" {
 
 export const { store } = createStore();
 
-ReduxQuerySync({
+/*ReduxQuerySync({
     store,
     params: {
         theme: {
@@ -238,7 +238,7 @@ ReduxQuerySync({
         },
     },
     initialTruth: "location",
-});
+});*/
 
 export const theme = createTheme({
     palette: {
