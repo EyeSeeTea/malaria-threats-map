@@ -45,9 +45,6 @@ import {
     setTreatmentPlasmodiumSpecies,
 } from "./store/actions/treatment-actions";
 import { setInvasiveMapType, setInvasiveVectorSpecies } from "./store/actions/invasive-actions";
-import PersistentDrawerLeft from "./components/PersistentDrawerLeft";
-import Notifier from "./components/Notifier";
-import Hidden from "./components/hidden/Hidden";
 import { Router } from "./pages/Router";
 
 declare module "@mui/styles/defaultTheme" {
@@ -57,7 +54,7 @@ declare module "@mui/styles/defaultTheme" {
 
 export const { store } = createStore();
 
-/*ReduxQuerySync({
+ReduxQuerySync({
     store,
     params: {
         theme: {
@@ -242,7 +239,7 @@ export const { store } = createStore();
     },
     initialTruth: "location",
 });
-*/
+
 export const theme = createTheme({
     palette: {
         primary: {
