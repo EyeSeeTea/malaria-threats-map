@@ -119,7 +119,7 @@ const TopRightVerticalContainer = styled(BaseFlexAlignStartContainer)`
 const SearchContainer = styled(BaseFlexAlignStartContainer)`
     pointer-events: none;
     top: 7%;
-    margin-left: 360px;
+    left: 360px;
     z-index: 1;
     right: 16px;
     display: flex;
