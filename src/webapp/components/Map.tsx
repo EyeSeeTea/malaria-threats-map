@@ -63,6 +63,7 @@ import LeftSidebarMenu from "./LeftSidebarMenu/LeftSidebarMenu";
 
 import { changeLanguage } from "../config/i18next";
 import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
+import LastUpdated from "./last-updated/LastUpdated";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const drawerWidth = 100;
@@ -120,6 +121,10 @@ const SearchContainer = styled(BaseFlexAlignStartContainer)`
     top: 7%;
     margin-left: 360px;
     z-index: 1;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
 `;
 
 const BottomRightContainer = styled(BaseContainer)`
@@ -154,8 +159,8 @@ const StyledToolbar = styled(Toolbar)`
 `;
 
 const PushoverContainer = styled.div`
-    margin-left: ${(props: { menuOpen: boolean; initialMargin?: number }) =>
-        props.menuOpen ? `${props.initialMargin ? drawerWidth + props.initialMargin : drawerWidth}px` : "0"};
+    margin-left: ${(props: { menuOpen: boolean }) =>
+        props.menuOpen ? `${drawerWidth}px` : "0"};
 `;
 
 const MenuTypography = styled(Typography)`
@@ -401,6 +406,7 @@ class Map extends React.Component<Props> {
                         <Hidden smDown>
                             <Leyend />
                         </Hidden>
+                        <LastUpdated />
                     </BottomRightContainer>
                 </Fade>
                 <PushoverContainer menuOpen={this.state.menuOpen}>
