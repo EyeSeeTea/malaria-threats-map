@@ -55,24 +55,24 @@ const Header = ({ t }: HeaderProps) => {
     };
     return (
         <StickyMenu>
-                    <Box>
-                        <AppBar position="sticky" sx={classes.appBar}>
-                            <StyledToolbar>
-                                <Box sx={classes.menuOptionBox}>
-                                    <StyledButton>{t("common.homepage.menu.home")}</StyledButton>
-                                    <StyledButton>{t("common.homepage.menu.tools")}</StyledButton>
-                                    <StyledButton>{t("common.homepage.menu.about")}</StyledButton>
-                                    <StyledButton>{t("common.homepage.menu.contact")}</StyledButton>
-                                    <StyledButton>{t("common.homepage.menu.share_data")}</StyledButton>
-                                </Box>
-                                <Box sx={classes.languageSelectorBox}>
-                                    <LanguageSelectorSelect section="homeItem" />
-                                </Box>
-                            </StyledToolbar>
-                        </AppBar>
-                    </Box>
-                </StickyMenu>
-    )
-}
+            <Box>
+                <AppBar position="sticky" sx={classes.appBar}>
+                    <StyledToolbar>
+                        <Box sx={classes.menuOptionBox}>
+                            <StyledButton>{t("common.homepage.menu.home")}</StyledButton>
+                            <StyledButton>{t("common.homepage.menu.tools")}</StyledButton>
+                            <StyledButton>{t("common.homepage.menu.about")}</StyledButton>
+                            <StyledButton>{t("common.homepage.menu.contact")}</StyledButton>
+                            <StyledButton>{t("common.homepage.menu.share_data")}</StyledButton>
+                        </Box>
+                        <Box sx={classes.languageSelectorBox}>
+                            <LanguageSelectorSelect section="homeItem" />
+                        </Box>
+                    </StyledToolbar>
+                </AppBar>
+            </Box>
+        </StickyMenu>
+    );
+};
 
 export default Header;

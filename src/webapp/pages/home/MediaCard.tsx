@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, CardActions, CardContent, CardMedia, Button, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 interface MediaCardProps {
     title: string;
@@ -18,7 +19,6 @@ const StyledCardButton = styled(Button)`
         width: 250px;
         font-weight: bold;
         text-align: center;
-        margin: auto;
     }
 `;
 
@@ -35,7 +35,12 @@ const StyledCardActions = styled(CardActions)`
 const StyledCardContent = styled(CardContent)`
     padding: 20px 50px;
 `;
-const MediaCard = ({ title, subtitle, buttonText, image, altText }: MediaCardProps) => {
+
+const StyledLink = styled(Link)`
+    margin: auto;
+`;
+
+const MediaCard = ({ title, subtitle, buttonText, image, altText, buttonLink }: MediaCardProps) => {
     return (
         <StyledCard>
             <CardMedia
@@ -59,9 +64,11 @@ const MediaCard = ({ title, subtitle, buttonText, image, altText }: MediaCardPro
                 </Typography>
             </StyledCardContent>
             <StyledCardActions>
-                <StyledCardButton size="large" variant="contained">
-                    {buttonText}
-                </StyledCardButton>
+                <StyledLink to={buttonLink || "#"} replace>
+                    <StyledCardButton size="large" variant="contained">
+                        {buttonText}
+                    </StyledCardButton>
+                </StyledLink>
             </StyledCardActions>
         </StyledCard>
     );
