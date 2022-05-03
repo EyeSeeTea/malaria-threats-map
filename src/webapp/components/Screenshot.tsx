@@ -25,7 +25,17 @@ import DownloadIcon from "@mui/icons-material/Download";
 import SimpleLoader from "./SimpleLoader";
 import { useWindowDimensions } from "./hooks/use-window-dimensions";
 
-const ScreenshotButton = styled(Button)`
+const iconStyles = `
+margin-right: 5px;
+`;
+
+const screenshotStyles = `
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+`;
+
+const OpenScreenshotButton = styled(Button)`
     &.MuiButton-root {
         margin-right: 10px;
         background-color: #2fb3af;
@@ -33,11 +43,14 @@ const ScreenshotButton = styled(Button)`
     }
 `;
 
+const StyledScreenshotButton = styled(OpenScreenshotButton)`
+    margin-top: 10px;
+    float: right;
+`;
+
 const StyledBox = styled(Box)`
-    position: absolute;
+    ${screenshotStyles}
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: ${props => `${props.width}px`};
     height: ${props => `${props.height}px`};
     background-color: white;
@@ -46,22 +59,26 @@ const StyledBox = styled(Box)`
 `;
 
 const ProgressDiv = styled.div`
-    position: absolute;
+    ${screenshotStyles}
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     display: flex;
-    flexdirection: column;
-    alignitems: center;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const StyledCanvas = styled.canvas`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    ${screenshotStyles}
+    top: 52%;
     border: 2px solid grey;
-    borderradius: 5px;
+    border-radius: 5px;
+`;
+
+const StyledCamaraIcon = styled(CameraAltIcon)`
+    ${iconStyles}
+`;
+
+const StyledDownloadIcon = styled(DownloadIcon)`
+    ${iconStyles}
 `;
 
 const CircularProgressWithLabel = () => {
@@ -207,9 +224,11 @@ function Screenshot({ map, theme, title }: Props) {
                 pdf.getPage(1).then((page: any) => {
                     const canvas = document.getElementById("pdf") as HTMLCanvasElement;
                     const context = canvas.getContext("2d");
-                    canvas.width = width * 0.85;
+                    canvas.width = width * 0.7;
                     canvas.height = height * 0.8;
-                    const viewport = page.getViewport({ scale: canvas.width / page.getViewport({ scale: 1 }).width });
+                    const viewport = page.getViewport({
+                        scale: canvas.width / page.getViewport({ scale: 0.96 }).width,
+                    });
                     const renderContext = { canvasContext: context, viewport: viewport };
                     page.render(renderContext);
                 });
@@ -241,17 +260,12 @@ function Screenshot({ map, theme, title }: Props) {
         return;
     };
 
-    const styles = {
-        icon: { marginRight: 5 },
-        downloadScreenshot: { marginTop: 10, float: "right" as const },
-    };
-
     return (
         <>
-            <ScreenshotButton variant="contained" onClick={handleClick}>
-                <CameraAltIcon style={styles.icon} />
+            <OpenScreenshotButton variant="contained" onClick={handleClick}>
+                <StyledCamaraIcon />
                 {t("common.screenshot.screenshot")}
-            </ScreenshotButton>
+            </OpenScreenshotButton>
             <Modal
                 open={open}
                 onClose={() => setOpen(false)}
@@ -260,14 +274,10 @@ function Screenshot({ map, theme, title }: Props) {
             >
                 <StyledBox width={width * 0.9} height={height * 0.9}>
                     {downloading && <SimpleLoader message={t("common.data_download.loader.generating_file")} />}
-                    <ScreenshotButton
-                        variant="contained"
-                        onClick={downloadScreenshot}
-                        style={styles.downloadScreenshot}
-                    >
-                        <DownloadIcon style={styles.icon} />
+                    <StyledScreenshotButton variant="contained" onClick={downloadScreenshot}>
+                        <StyledDownloadIcon />
                         {t("common.screenshot.download_screenshot")}
-                    </ScreenshotButton>
+                    </StyledScreenshotButton>
                     {generatingScreenshot ? <CircularProgressWithLabel /> : <StyledCanvas id="pdf"></StyledCanvas>}
                 </StyledBox>
             </Modal>
