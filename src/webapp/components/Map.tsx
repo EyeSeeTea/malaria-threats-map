@@ -57,6 +57,7 @@ import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
 import MapActions from "./map-actions/MapActions";
 import { dispatchCustomEvent } from "../utils/dom-utils";
+import LastUpdated from "./last-updated/LastUpdated";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
@@ -81,7 +82,7 @@ const TopRightContainer = styled(BaseContainer)`
 const TopRightVerticalContainer = styled(BaseContainer)`
     position: absolute;
     top: 0;
-    right: 0;
+    right: 16px;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -313,6 +314,7 @@ class Map extends React.Component<Props> {
                         <Hidden smDown>
                             <Leyend />
                         </Hidden>
+                        <LastUpdated />
                     </BottomRightContainer>
                 </Fade>
                 <BottomLeftContainer>
