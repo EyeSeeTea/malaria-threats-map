@@ -7,7 +7,7 @@ import LanguageIcon from "./Icons/LanguageIcon";
 import ContactIcon from "./Icons/ContactIcon";
 import ShareDataIcon from "./Icons/ShareDataIcon";
 
-import { Fab, Drawer, Typography } from "@mui/material";
+import { Fab, Drawer, Typography, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 const drawerWidth = 100;
@@ -46,9 +46,11 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 type Props = {
     isMenuOpen: boolean;
+    handleClickOpen: () => void;
 };
-const LeftSidebarMenu = ({ isMenuOpen }: Props) => {
+const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
     const { t } = useTranslation();
+
     return (
         <Drawer
             sx={{
@@ -113,9 +115,16 @@ const LeftSidebarMenu = ({ isMenuOpen }: Props) => {
                 </SidebarIconDiv>
 
                 <SidebarIconDiv>
-                    <StyledFab id="language-button" size="small" color={"default"} title={t("common.sidebar.language")}>
-                        <LanguageIcon />
-                    </StyledFab>
+                    <IconButton onClick={handleClickOpen} disableRipple>
+                        <StyledFab
+                            id="language-button"
+                            size="small"
+                            color={"default"}
+                            title={t("common.sidebar.language")}
+                        >
+                            <LanguageIcon />
+                        </StyledFab>
+                    </IconButton>
                     <Typography variant="caption" align="center">
                         {" "}
                         {t("common.sidebar.language")}

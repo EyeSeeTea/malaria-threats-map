@@ -37,7 +37,6 @@ import Country from "./Country";
 import LeyendPopover from "./LegendPopover";
 import Leyend from "./Leyend";
 import StoryModeSelector from "./StoryModeSelector";
-import LanguageSelectorSelect from "./LanguageSelectorSelect";
 import MalariaTour from "./tour/MalariaTour";
 import MekongLayer from "./layers/MekongLayer";
 import DataDownload from "./DataDownload";
@@ -61,6 +60,9 @@ import { Flex } from "./Chart";
 import MapActions from "./map-actions/MapActions";
 import { dispatchCustomEvent } from "../utils/dom-utils";
 import LeftSidebarMenu from "./LeftSidebarMenu/LeftSidebarMenu";
+
+import { changeLanguage } from "../config/i18next";
+import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const drawerWidth = 100;
@@ -208,6 +210,8 @@ class Map extends React.Component<Props> {
             bearing: 0,
             pitch: 0,
         },
+        open: false,
+        selectedValue: LANGUAGES[0].value,
     };
     images: any[] = [];
 
@@ -283,6 +287,15 @@ class Map extends React.Component<Props> {
             appBar: { backgroundColor: "white", zIndex: 1400 },
         };
 
+        const handleClickOpen = () => {
+            this.setState({ open: true });
+        };
+
+        const handleClose = (value: string) => {
+            changeLanguage(value);
+            this.setState({ open: false, selectedValue: value });
+        };
+
         return (
             <React.Fragment>
                 <div
@@ -333,7 +346,7 @@ class Map extends React.Component<Props> {
                         </AppBar>
                     </Box>
                 </Hidden>
-                <LeftSidebarMenu isMenuOpen={this.state.menuOpen} />
+                <LeftSidebarMenu isMenuOpen={this.state.menuOpen} handleClickOpen={handleClickOpen} />
                 <Fade in={showOptions}>
                     <PushoverContainer menuOpen={this.state.menuOpen}>
                         <SearchContainer>
@@ -367,7 +380,6 @@ class Map extends React.Component<Props> {
                             <TourIcon />
                             {/* {["prevention", "diagnosis"].includes(theme) && <UploadFile />} */}
                             <Separator />
-                            {showOptions && <LanguageSelectorSelect section="menu" />}
                         </TopRightContainer>
                     </Fade>
                 </Hidden>
@@ -405,6 +417,11 @@ class Map extends React.Component<Props> {
                 <Hidden smDown>
                     <InitialDialog />
                 </Hidden>
+                <LanguageSelectorDialog
+                    selectedValue={this.state.selectedValue}
+                    open={this.state.open}
+                    onClose={handleClose}
+                />
             </React.Fragment>
         );
     }
