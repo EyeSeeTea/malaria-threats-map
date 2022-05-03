@@ -8,12 +8,12 @@ const FooterDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    margin: 40px 0;
+    margin: 58px 0 34px 0;
+    flex: 1 auto;
 `;
 
 const WhoLogoImg = styled.img`
-    max-width: 100%;
-    height: 55px;
+    height: 100%;
 `;
 
 const Flex = styled.div`
@@ -22,8 +22,8 @@ const Flex = styled.div`
 `;
 
 const PrivacyCopyrightDiv = styled.div`
-    padding: 25px 0;
-    width: 85%;
+    padding: 22px 0;
+    width: 1170px;
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -38,11 +38,11 @@ const FooterHeader = styled(Typography)`
 const StyledNewsletterButton = styled(Button)`
     &.MuiButton-root {
         color: white;
-        font-size: 1rem;
+        font-size: 16px;
         background-color: #343434;
         font-weight: bold;
         text-align: center;
-        margin: auto 0;
+        margin: 0;
     }
 `;
 
@@ -65,17 +65,17 @@ const Footer = ({ t }: FooterProps) => {
     return (
         <React.Fragment>
             <FooterDiv>
-                <WhoLogoImg src={WhoLogoBlue} alt="WHO Logo Blue" />
+                <WhoLogoImg src={WhoLogoBlue} alt="WHO Logo Blue" width={200} />
                 <div>
-                    <FooterHeader gutterBottom variant="body1">
+                    <FooterHeader gutterBottom variant="body2">
                         {t("common.footer.policies.title")}
                     </FooterHeader>
-                    <Link href="#" underline="none" variant="h6" textAlign="left" color="#343434">
+                    <Link href="#" underline="none" variant="body1" textAlign="left" color="#343434">
                         {t("common.footer.policies.disclaimer")}
                     </Link>
                 </div>
                 <Flex>
-                    <FooterHeader gutterBottom variant="body1">
+                    <FooterHeader gutterBottom variant="body2">
                         {t("common.footer.other_who_resources.title")}
                     </FooterHeader>
                     {otherWhoResources.map((resource, id) => (
@@ -83,7 +83,7 @@ const Footer = ({ t }: FooterProps) => {
                             key={id}
                             href="#"
                             underline="none"
-                            variant="h6"
+                            variant="body1"
                             textAlign="left"
                             color="#343434"
                             style={{ margin: "5px 0" }}
@@ -92,23 +92,25 @@ const Footer = ({ t }: FooterProps) => {
                         </Link>
                     ))}
                 </Flex>
-                <Flex>
-                    <FooterHeader gutterBottom variant="body1">
-                        {t("common.footer.about_who_gmp.title")}
-                    </FooterHeader>
-                    {aboutWhoGmp.map((resource, id) => (
-                        <Link
-                            key={id}
-                            href="#"
-                            underline="none"
-                            variant="h6"
-                            textAlign="left"
-                            color="#343434"
-                            style={{ margin: "5px 0" }}
-                        >
-                            {resource}
-                        </Link>
-                    ))}
+                <Flex style={{ justifyContent: "space-between" }}>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                        <FooterHeader gutterBottom variant="body2">
+                            {t("common.footer.about_who_gmp.title")}
+                        </FooterHeader>
+                        {aboutWhoGmp.map((resource, id) => (
+                            <Link
+                                key={id}
+                                href="#"
+                                underline="none"
+                                variant="body1"
+                                textAlign="left"
+                                color="#343434"
+                                style={{ margin: "5px 0" }}
+                            >
+                                {resource}
+                            </Link>
+                        ))}
+                    </div>
                     <StyledNewsletterButton size="large" variant="contained">
                         {t("common.footer.subscribe_newsletter")}
                     </StyledNewsletterButton>

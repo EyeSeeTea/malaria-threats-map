@@ -23,13 +23,13 @@ const StyledCardButton = styled(Button)`
 `;
 
 const StyledCard = styled(Card)`
-    max-width: 430px;
+    max-width: 356px;
     border-radius: 15px;
     box-shadow: 0px 4px 10px #00000033;
 `;
 
 const StyledCardActions = styled(CardActions)`
-    padding-bottom: 35px;
+    padding-bottom: 30px;
 `;
 
 const StyledCardContent = styled(CardContent)`
@@ -54,12 +54,7 @@ const MediaCard = ({ title, subtitle, buttonText, image, altText, buttonLink }: 
                 <Typography gutterBottom variant="h5" component="div" textAlign="center" fontWeight="bold">
                     {title}
                 </Typography>
-                <Typography
-                    variant="h6"
-                    color="text.secondary"
-                    textAlign="center"
-                    sx={{ color: "black", fontSize: 18 }}
-                >
+                <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ color: "black" }}>
                     {subtitle}
                 </Typography>
             </StyledCardContent>

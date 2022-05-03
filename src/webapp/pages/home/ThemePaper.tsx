@@ -54,11 +54,11 @@ const ThemePaper = ({ icon, altText, title, subtitle, color, colorOpaque }: Them
 
     return (
         <div>
-            <StyledPaper elevation={0} square color={color}>
+            <StyledPaper elevation={0} square color={color} style={{ height: 200 }}>
                 <Flex>
                     <img src={icon} alt={altText} />
                     <div style={{ paddingLeft: 40 }}>
-                        <ThemeTitle gutterBottom variant="h4" textAlign="left">
+                        <ThemeTitle gutterBottom variant="h4" textAlign="left" style={{ fontSize: 30 }}>
                             {title}
                         </ThemeTitle>
                         <Typography gutterBottom variant="body1" component="div" textAlign="left">
@@ -67,7 +67,7 @@ const ThemePaper = ({ icon, altText, title, subtitle, color, colorOpaque }: Them
                     </div>
                 </Flex>
             </StyledPaper>
-            <StyledPaper elevation={0} square color={colorOpaque}>
+            <StyledPaper elevation={0} square color={colorOpaque} style={{ height: 80 }}>
                 <FlexSpaceBetween>
                     <FlexColumn>
                         <Typography gutterBottom variant="body1" component="div" textAlign="left">

@@ -32,7 +32,7 @@ const StyledBanner = styled.div`
 `;
 
 const ContentDiv = styled.div`
-    width: 80%;
+    width: 1170px;
     margin: auto;
 `;
 
@@ -41,7 +41,7 @@ const TitleBannerDiv = styled.div`
 `;
 
 const MediaCardDiv = styled.div`
-    margin-top: 81px;
+    margin-top: 67px;
     margin-bottom: 60px;
     display: flex;
     justify-content: space-between;
@@ -50,7 +50,7 @@ const MediaCardDiv = styled.div`
 const HeaderDiv = styled.div`
     width: 80%;
     margin: auto;
-    padding-top: 20px;
+    padding-top: 30px;
     padding-bottom: 40px;
 `;
 
@@ -74,12 +74,12 @@ export const HomePage = () => {
                 <Header t={t} />
                 <ContentDiv>
                     <TitleBannerDiv>
-                        <Typography variant="h2" color={"inherit"} sx={{ textTransform: "uppercase" }}>
+                        <Typography variant="h2" color={"inherit"} sx={{ textTransform: "uppercase", fontSize: 66 }}>
                             <Trans i18nKey="common.homepage.title" t={t}>
                                 Malaria <br /> <strong>Threats Map</strong>
                             </Trans>
                         </Typography>
-                        <Typography variant="h5" color={"inherit"} sx={{ marginTop: 10 }}>
+                        <Typography variant="h5" color={"inherit"} sx={{ marginTop: "27px" }}>
                             {t("common.homepage.subtitle")}
                         </Typography>
                     </TitleBannerDiv>
@@ -114,14 +114,14 @@ export const HomePage = () => {
                             variant="h4"
                             component="div"
                             textAlign="center"
-                            sx={{ fontWeight: "bold", lineHeight: "60px" }}
+                            sx={{ fontWeight: "bold", lineHeight: "50px", fontSize: 30 }}
                         >
                             {t("common.homepage.header")}
                         </Typography>
                     </HeaderDiv>
 
                     <Box sx={{ flexGrow: 1 }}>
-                        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+                        <Grid container spacing={{ xs: 2, md: 5 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                             <Grid item xs={2} sm={4} md={6}>
                                 <ThemePaper
                                     t={t}
@@ -169,7 +169,7 @@ export const HomePage = () => {
                         </Grid>
                     </Box>
                 </ContentDiv>
-                <Divider variant="fullWidth" style={{ marginTop: 100 }} />
+                <Divider variant="fullWidth" style={{ marginTop: 83 }} />
                 <Footer t={t} />
             </StyledBanner>
         </React.Fragment>
