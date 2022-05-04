@@ -4,7 +4,7 @@ import { ActionGroup, State } from "../../store/types";
 import { selectActionGroupSelected } from "../../store/reducers/base-reducer";
 import { setActionGroupSelected } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
-import ExpandableContainer from "../DataDownload/ExpandableContainer";
+import ExpandableContainer from "../expandable-container/ExpandableContainer";
 
 const mapStateToProps = (state: State) => ({
     actionGroupSelected: selectActionGroupSelected(state),
