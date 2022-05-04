@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, CardActions, CardContent, CardMedia, Button, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 interface MediaCardProps {
     title: string;
@@ -18,24 +19,28 @@ const StyledCardButton = styled(Button)`
         width: 250px;
         font-weight: bold;
         text-align: center;
-        margin: auto;
     }
 `;
 
 const StyledCard = styled(Card)`
-    max-width: 430px;
+    max-width: 356px;
     border-radius: 15px;
     box-shadow: 0px 4px 10px #00000033;
 `;
 
 const StyledCardActions = styled(CardActions)`
-    padding-bottom: 35px;
+    padding-bottom: 30px;
 `;
 
 const StyledCardContent = styled(CardContent)`
     padding: 20px 50px;
 `;
-const MediaCard = ({ title, subtitle, buttonText, image, altText }: MediaCardProps) => {
+
+const StyledLink = styled(Link)`
+    margin: auto;
+`;
+
+const MediaCard = ({ title, subtitle, buttonText, image, altText, buttonLink }: MediaCardProps) => {
     return (
         <StyledCard>
             <CardMedia
@@ -49,19 +54,16 @@ const MediaCard = ({ title, subtitle, buttonText, image, altText }: MediaCardPro
                 <Typography gutterBottom variant="h5" component="div" textAlign="center" fontWeight="bold">
                     {title}
                 </Typography>
-                <Typography
-                    variant="h6"
-                    color="text.secondary"
-                    textAlign="center"
-                    sx={{ color: "black", fontSize: 18 }}
-                >
+                <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ color: "black" }}>
                     {subtitle}
                 </Typography>
             </StyledCardContent>
             <StyledCardActions>
-                <StyledCardButton size="large" variant="contained">
-                    {buttonText}
-                </StyledCardButton>
+                <StyledLink to={buttonLink || "#"} replace>
+                    <StyledCardButton size="large" variant="contained">
+                        {buttonText}
+                    </StyledCardButton>
+                </StyledLink>
             </StyledCardActions>
         </StyledCard>
     );
