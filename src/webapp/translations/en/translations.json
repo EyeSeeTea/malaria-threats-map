@@ -196,7 +196,8 @@
                     "help": {
                         "p1": "This map presents data from <1>hrp2 surveys</1>. Each dot on the map represents a study site containing one or more studies. The colour of the dot shows whether hrp2 deletions have been detected based on the most recent results.",
                         "p2": "",
-                        "footer": "Data source: Publications and unpublished reports and information from country offices."
+                        "footer": "Data source: Publications and unpublished reports and information from country offices.",
+                        "question": "Across surveys, the criteria for selecting samples to test for pfhrp 2/3 deletions varies; therefore, refer to the full report cited for more details."
                     }
                 }
             }
@@ -297,7 +298,8 @@
                     "help": {
                         "p1": "This map represents data from <1>vector surveillance of Anopheles mosquitoes</1>. Each dot on the map represents a study site containing one or more studies. The colour of the dot shows whether the species is invasive or native to the area.",
                         "p2": "",
-                        "footer": "Data source: Publications and unpublished reports and information from country offices."
+                        "footer": "Data source: Publications and unpublished reports and information from country offices.",
+                        "question": "Please report the detection of invasive Anopheles vector species using this <2 href='/'>reporting form</2>."
                     }
                 }
             }

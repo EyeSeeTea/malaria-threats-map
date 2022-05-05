@@ -196,7 +196,8 @@
                     "help": {
                         "p1": "Cette carte présente les données des <1>enquêtes hrp2</1>. Chaque point sur la carte représente un site d'étude contenant une ou plusieurs études. La couleur du point indique si des suppressions hrp2 ont été détectées en fonction de la résultats les plus récents.",
                         "p2": "",
-                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays."
+                        "footer": "Source des données: publications et rapports non publiés et informations des bureaux de pays.",
+                        "question": "D'une enquête à l'autre, les critères de sélection des échantillons pour tester les suppressions de pfhrp 2/3 varient; par conséquent, reportez-vous au rapport complet cité pour plus de détails."
                     }
                 }
             }
@@ -297,7 +298,8 @@
                     "help": {
                         "p1": "Cette carte représente les données de la <1>surveillance vectorielle des moustiques anophèles</1>. Chaque point sur la carte représente un site d'étude contenant une ou plusieurs études. La couleur du point indique si l'espèce est envahissante ou originaire de la région.",
                         "p2": "",
-                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays."
+                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays.",
+                        "question": "Veuillez signaler la détection d'espèces vectrices anophèles envahissantes en utilisant ce <2 href='/'>formulaire de signalement</2>."
                     }
                 }
             }

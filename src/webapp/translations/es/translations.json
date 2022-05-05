@@ -196,7 +196,8 @@
                     "help": {
                         "p1": "Este mapa presenta datos de <1>encuestas hrp2</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. El color del punto muestra si se han detectado eliminaciones de hrp2 en función de la resultados más recientes.",
                         "p2": "",
-                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país.",
+                        "question": "En las encuestas, los criterios para seleccionar muestras para analizar las deleciones de pfhrp 2/3 varían; por lo tanto, consulte el informe completo citado para obtener más detalles."
                     }
                 }
             }
@@ -297,7 +298,8 @@
                     "help": {
                         "p1": "Este mapa representa datos de la <1>vigilancia de vectores de mosquitos Anopheles</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. El color del punto muestra si la especie es invasora o nativa de la zona.",
                         "p2": "",
-                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país.",
+                        "question": "Informe la detección de especies de vectores invasoras de Anopheles mediante este <2 href='/'>formulario de notificación</2>."
                     }
                 }
             }

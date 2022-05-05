@@ -15,6 +15,7 @@ import styled from "styled-components";
 import { Button, Collapse, Divider } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Trans, useTranslation } from "react-i18next";
+import QuestionIcon from "../QuestionIcon";
 
 const StyledButton = styled(Button)`
     color: black;
@@ -43,6 +44,13 @@ const Subtitle = styled.span`
 const Footer = styled.span`
     color: grey;
     font-size: 11px;
+`;
+
+const Question = styled.div`
+    margin-top: 8px;
+    font-size: 11px;
+    display: flex;
+    flex-direction: row;
 `;
 
 const HelpContainer = styled.div`
@@ -165,6 +173,17 @@ const Legend: React.FC<Props> = ({
                     <Footer>
                         <Subtitle>{t(`${mapTypeHelpKey}.footer`)}</Subtitle>
                     </Footer>
+                    {(theme === "invasive" || theme === "diagnosis") && (
+                        <Question>
+                            <QuestionIcon />
+                            <span style={{ marginLeft: "6px" }}>
+                                <Trans i18nKey={`${mapTypeHelpKey}.question`} t={t}>
+                                    Please report the detection of invasive Anopheles vector species using this{" "}
+                                    <a href="/">reporting form</a>.
+                                </Trans>
+                            </span>
+                        </Question>
+                    )}
                 </Collapse>
             </Body>
         </React.Fragment>
