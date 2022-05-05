@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 const LegendEntries = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 0px 20px 0px 20px;
 `;
 
 const LegendEntry = styled.div`

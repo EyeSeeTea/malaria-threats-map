@@ -1,5 +1,7 @@
+import i18next from "i18next";
 import {
     DiagnosisFilters,
+    DiagnosisMapType,
     InvasiveFilters,
     InvasiveMapType,
     PreventionFilters,
@@ -28,6 +30,92 @@ import { MOLECULAR_MARKER_STATUS } from "../layers/treatment/MolecularMarkers/ut
 import { TreatmentFailureColors } from "../layers/treatment/TreatmentFailure/treatmentLayerSymbols";
 import { TREATMENT_FAILURE_STATUS } from "../layers/treatment/TreatmentFailure/utils";
 import { LegendLabel } from "./LegendContent";
+
+import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
+
+export function getLegendTitle(
+    theme: string,
+    preventionFilters: PreventionFilters,
+    diagnosisFilters: DiagnosisFilters,
+    treatmentFilters: TreatmentFilters,
+    invasiveFilters: InvasiveFilters,
+    countryMode: boolean
+): string {
+    switch (theme) {
+        case "prevention":
+            return getPreventionLegendTitle(preventionFilters, countryMode);
+        case "diagnosis":
+            return getDiagnosisLegendTitle(diagnosisFilters, countryMode);
+        case "treatment":
+            return getTreatmentLegendTitle(treatmentFilters, countryMode);
+        case "invasive":
+            return getInvasiveLegendTitle(invasiveFilters, countryMode);
+        default:
+            return "";
+    }
+}
+
+function getPreventionLegendTitle(filters: PreventionFilters, countryMode: boolean): string {
+    if (countryMode) {
+        if (filters.mapType === PreventionMapType.PBO_DEPLOYMENT) {
+            return i18next.t("common.prevention.pbo_deployment_legend");
+        } else {
+            return i18next.t("common.themes.prevention");
+        }
+    }
+
+    switch (filters.mapType) {
+        case PreventionMapType.RESISTANCE_STATUS:
+            return i18next.t("common.prevention.resistance_status");
+        case PreventionMapType.INTENSITY_STATUS:
+            return i18next.t("common.prevention.resistance_intensity");
+        case PreventionMapType.RESISTANCE_MECHANISM:
+            return i18next.t("common.prevention.resistance_mechanism");
+        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+            return i18next.t("common.prevention.synergist_involvement_legend");
+        case PreventionMapType.PBO_DEPLOYMENT:
+            return i18next.t("common.prevention.pbo_deployment_legend");
+        default:
+            return "";
+    }
+}
+
+function getDiagnosisLegendTitle(filters: DiagnosisFilters, countryMode: boolean) {
+    if (countryMode) {
+        return i18next.t("common.themes.diagnosis");
+    }
+    return i18next.t(`common.diagnosis.legend.gene_deletions.${filters.deletionType}`);
+}
+
+function getTreatmentLegendTitle(filters: TreatmentFilters, countryMode: boolean): string {
+    if (countryMode) {
+        return i18next.t("common.themes.treatment");
+    }
+
+    switch (filters.mapType) {
+        case TreatmentMapType.TREATMENT_FAILURE:
+            return `${i18next.t("common.treatment.treatment_failure")}\n${i18next.t(filters.drug)}`;
+        case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
+            return `${i18next.t("common.treatment.delayed_parasite_clearance")}\n${i18next.t(filters.drug)}`;
+        case TreatmentMapType.MOLECULAR_MARKERS:
+            return `${i18next.t("common.treatment.molecular_markers")} (
+                ${MOLECULAR_MARKERS[filters.molecularMarker - 1].label})`;
+        default:
+            return "";
+    }
+}
+
+function getInvasiveLegendTitle(filters: InvasiveFilters, countryMode: boolean): string {
+    if (countryMode) {
+        return i18next.t("common.themes.treatment");
+    }
+    switch (filters.mapType) {
+        case InvasiveMapType.VECTOR_OCCURANCE:
+            return i18next.t("common.invasive.vector_occurrance");
+        default:
+            return "";
+    }
+}
 
 export function getLegendLabels(
     theme: string,
@@ -298,5 +386,74 @@ function getInvasiveLegendLabels(filters: InvasiveFilters, countryMode: boolean)
             ];
         default:
             return [];
+    }
+}
+
+export function getLegendMapTypeHelpKey(
+    theme: string,
+    preventionFilters: PreventionFilters,
+    diagnosisFilters: DiagnosisFilters,
+    treatmentFilters: TreatmentFilters,
+    invasiveFilters: InvasiveFilters
+): string {
+    switch (theme) {
+        case "prevention":
+            return getPreventionLegendMapTypeHelpKey(preventionFilters);
+        case "diagnosis":
+            return getDiagnosisLegendMapTypeHelpKey(diagnosisFilters);
+        case "treatment":
+            return getTreatmentLegendMapTypeHelpKey(treatmentFilters);
+        case "invasive":
+            return getInvasiveLegendMapTypeHelpKey(invasiveFilters);
+        default:
+            return "";
+    }
+}
+
+function getPreventionLegendMapTypeHelpKey(filters: PreventionFilters): string {
+    switch (filters.mapType) {
+        case PreventionMapType.RESISTANCE_STATUS:
+            return "common.prevention.legend.resistance_status.help";
+        case PreventionMapType.INTENSITY_STATUS:
+            return "common.prevention.legend.resistance_intensity.help";
+        case PreventionMapType.RESISTANCE_MECHANISM:
+            return "common.prevention.legend.resistance_mechanism.help";
+        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+            return "common.prevention.legend.synergist_involvement.help";
+        case PreventionMapType.PBO_DEPLOYMENT:
+            return "common.prevention.legend.pbo_deployment.help";
+        default:
+            return "";
+    }
+}
+
+function getDiagnosisLegendMapTypeHelpKey(filters: DiagnosisFilters) {
+    switch (filters.mapType) {
+        case DiagnosisMapType.GENE_DELETIONS:
+            return "common.diagnosis.legend.gene_deletions.help";
+        default:
+            return "";
+    }
+}
+
+function getTreatmentLegendMapTypeHelpKey(filters: TreatmentFilters): string {
+    switch (filters.mapType) {
+        case TreatmentMapType.TREATMENT_FAILURE:
+            return "common.treatment.legend.treatment_failure.help";
+        case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
+            return "common.treatment.legend.delayed_parasite_clearance.help";
+        case TreatmentMapType.MOLECULAR_MARKERS:
+            return "common.treatment.legend.molecular_markers.help";
+        default:
+            return "";
+    }
+}
+
+function getInvasiveLegendMapTypeHelpKey(filters: InvasiveFilters): string {
+    switch (filters.mapType) {
+        case InvasiveMapType.VECTOR_OCCURANCE:
+            return "common.invasive.legend.vector_occurrance.help";
+        default:
+            return "";
     }
 }
