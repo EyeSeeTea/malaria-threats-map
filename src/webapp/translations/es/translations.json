@@ -103,22 +103,42 @@
                     "moderate_to_high_intensity": "Moderada a alta",
                     "moderate_intensity": "Moderada",
                     "low_intensity": "Baja",
-                    "susceptible": "Susceptible"
+                    "susceptible": "Susceptible",
+                    "help": {
+                        "p1": "Este mapa contiene datos de <1>bioensayos de concentración de intensidad</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En sitios donde los estudios muestran niveles variables de intensidad de resistencia, el color de el punto está determinado por los resultados más recientes.",
+                        "p2": "Para obtener información sobre cómo se define cada nivel, consulte el <1 href='/'>manual de la OMS para el control de la resistencia</1>.",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
+                    }
                 },
                 "resistance_status": {
                     "confirmed": "Confirmado (0 to <90%)",
                     "possible": "Posible (90 to <98%)",
-                    "susceptible": "Susceptible (≥98%)"
+                    "susceptible": "Susceptible (≥98%)",
+                    "help": {
+                        "p1": "Este mapa contiene datos de <1>bioensayos de concentración discriminatoria</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En sitios donde los estudios muestran niveles variables de intensidad de resistencia, el color de el punto está determinado por los resultados más recientes.",
+                        "p2": "Para obtener información sobre cómo se define cada nivel, consulte el <1 href='/'>manual de la OMS para el control de la resistencia</1>.",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
+                    }
                 },
                 "resistance_mechanism": {
                     "confirmed": "Detectado",
-                    "not_confirmed": "No detectado"
+                    "not_confirmed": "No detectado",
+                    "help": {
+                        "p1": "Este mapa contiene datos de <1>ensayos moleculares, bioquímicos y bioensayos de insecticidas sinérgicos</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. El color del punto muestra si Se ha detectado o no un marcador molecular asociado con la resistencia a los insecticidas en los mosquitos recolectados en el sitio. El color del punto está determinado por los resultados más recientes.",
+                        "p2": "",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
+                    }
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "Mortalidad por mosquito",
                     "full_involvement": "Participación total",
                     "partial_involvement": "Participación parcial",
-                    "no_involvement": "Sin participación"
+                    "no_involvement": "Sin participación",
+                    "help": {
+                        "p1": "Este mapa presenta datos de <1>bioensayos de insecticidas sinérgicos</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En los sitios donde los estudios muestran resultados variables, el color del punto está determinada por los resultados más recientes.",
+                        "p2": "Para obtener información sobre cómo se clasifica la participación de los sinergistas, consulte el <1 href='/'>Manual de la OMS para el control de la resistencia</1>.",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
+                    }
                 },
                 "pbo_deployment": {
                     "eligible": "Todos los criterios cumplidos",
@@ -143,6 +163,11 @@
                         "no_reports_available": "No se dispone de informes sobre el seguimiento de los criterios recomendados por la OMS.",
                         "not_malaria_endemic": "La malaria no es endémica",
                         "not_applicable": "No aplica"
+                    },
+                    "help": {
+                        "p1": "Este mapa contiene datos de <1>bioensayos de concentración discriminatoria</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En sitios donde los estudios muestran niveles variables de intensidad de resistencia, el color de el punto está determinado por los resultados más recientes.",
+                        "p2": "",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
                     }
                 }
             }
@@ -167,7 +192,13 @@
                     "HRP2_HRP3_PROPORTION_DELETION": "Deleciones del gen pfhrp2/3",
                     "HRP2_PROPORTION_DELETION": "Deleciones del gen pfhrp2",
                     "confirmed": "Confirmado",
-                    "not_identified": "No detectado"
+                    "not_identified": "No detectado",
+                    "help": {
+                        "p1": "Este mapa presenta datos de <1>encuestas hrp2</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. El color del punto muestra si se han detectado eliminaciones de hrp2 en función de la resultados más recientes.",
+                        "p2": "",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país.",
+                        "question": "En las encuestas, los criterios para seleccionar muestras para analizar las deleciones de pfhrp 2/3 varían; por lo tanto, consulte el informe completo citado para obtener más detalles."
+                    }
                 }
             }
         },
@@ -219,20 +250,35 @@
                     "medium_high": "10% - 20%",
                     "medium": "5% - 10%",
                     "low": "< 5%",
-                    "unknown": "Datos no disponibles"
+                    "unknown": "Datos no disponibles",
+                    "help": {
+                        "p1": "Este mapa presenta datos de <1>eficacia de estudios terapéuticos</1>. El color del punto está determinado por el porcentaje de pacientes con fracaso del tratamiento. Los resultados más recientes se presentan de forma predeterminada.",
+                        "p2": "Las directrices de la OMS para el tratamiento de la malaria recomiendan cambiar el tratamiento de primera línea si la tasa de fracaso del tratamiento supera el 10 %.",
+                        "footer": "Fuente de datos: Base de datos mundial de la OMS sobre eficacia y resistencia a los medicamentos antipalúdicos."
+                    }
                 },
                 "delayed_parasite_clearance": {
                     "high": "> 20%",
                     "medium_high": "10% - 20%",
                     "medium": "5% - 10%",
                     "low": "< 5%",
-                    "unknown": "Datos no disponibles"
+                    "unknown": "Datos no disponibles",
+                    "help": {
+                        "p1": "Este mapa presenta datos de <1>eficacia de estudios terapéuticos</1>. El color del punto está determinado por el porcentaje de pacientes con parásitos en el día 3. Los resultados más recientes se presentan de forma predeterminada.",
+                        "p2": "",
+                        "footer": "Fuente de datos: Base de datos mundial de la OMS sobre eficacia y resistencia a los medicamentos antipalúdicos."
+                    }
                 },
                 "molecular_markers": {
                     "high": "> 80%",
                     "medium_high": "51% - 80%",
                     "medium": "10% - 50%",
-                    "low": "< 10%"
+                    "low": "< 10%",
+                    "help": {
+                        "p1": "Este mapa presenta datos de <1>estudios de marcadores moleculares</1>. El color del punto está determinado por el porcentaje de muestras que tienen mutaciones moleculares. Los resultados más recientes se presentan de forma predeterminada.",
+                        "p2": "",
+                        "footer": "Fuente de datos: Base de datos mundial de la OMS sobre eficacia y resistencia a los medicamentos antipalúdicos."
+                    }
                 }
             }
         },
@@ -254,7 +300,13 @@
                     "native": "Nativa",
                     "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
                     "link_text": "formulario de reporte",
-                    "link_content_1": "Si ha detectado especies invasoras de vectores de Anopheles, infórmenos a través del "
+                    "link_content_1": "Si ha detectado especies invasoras de vectores de Anopheles, infórmenos a través del ",
+                    "help": {
+                        "p1": "Este mapa representa datos de la <1>vigilancia de vectores de mosquitos Anopheles</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. El color del punto muestra si la especie es invasora o nativa de la zona.",
+                        "p2": "",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país.",
+                        "question": "Informe la detección de especies de vectores invasoras de Anopheles mediante este <2 href='/'>formulario de notificación</2>."
+                    }
                 }
             }
         },
@@ -308,10 +360,30 @@
             "exclude_lower_patients": "Excluir estudios de menos de 20 pacientes",
             "exclude_lower_samples": "Excluir estudios de menos de 20 muestras"
         },
+        "topbar": {
+            "menu": "Menú",
+            "maps": "Mapas",
+            "dashboards": "Tableros",
+            "stories": "Cuentos"
+        },
+        "sidebar": {
+            "home": "Casa",
+            "about": "Sobre",
+            "contact": "Contactar",
+            "share_data": "Compartir datos",
+            "language": "Idioma",
+            "take_tour": "Hacer un recorrido"
+        },
         "legend": {
+            "subtitle": "Determinado por los datos más recientes en un sitio",
             "number_of_studies": "Número de estudios",
             "number_of_surveys": "Número de encuestas",
             "most_recent_data_shown": "Datos más recientes mostrados"
+        },
+        "screenshot": {
+            "screenshot": "Captura de pantalla",
+            "download_screenshot": "Descargar captura de pantalla",
+            "generating_screenshot": "Generando captura de pantalla"
         },
         "chart": {
             "studies": "Estudios",
@@ -324,7 +396,8 @@
         },
         "options": {
             "title": "Opciones",
-            "select_language": "Seleccione idioma",
+            "select_language": "Seleccione Idioma",
+            "language": "Idioma",
             "select": "Seleccione"
         },
         "citation": {
