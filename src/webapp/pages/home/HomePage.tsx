@@ -8,8 +8,8 @@ import PreventionIcon from "../../assets/img/prevention-icon.svg";
 import TreatmentIcon from "../../assets/img/treatment-icon.svg";
 import DiagnosisIcon from "../../assets/img/diagnosis-icon.svg";
 import InvasiveIcon from "../../assets/img/invasive-icon.svg";
-import Dashboards from "../../assets/img/dashboards.png";
-import DataDownload from "../../assets/img/data_download.png";
+import Dashboards from "../../assets/img/home-page/dashboards.png";
+import DataDownload from "../../assets/img/home-page/data_download.png";
 import Maps from "../../assets/img/maps.png";
 
 import ThemePaper from "./ThemePaper";
