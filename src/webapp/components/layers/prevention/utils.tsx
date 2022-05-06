@@ -1,20 +1,12 @@
-import React from "react";
 import resistanceStatusSymbols from "./ResistanceStatus/symbols";
 import intensityStatusSymbols from "./IntensityStatus/symbols";
 import resistanceMechanismSymbols from "./ResistanceMechanisms/symbols";
 import levelOfInvolvementSymbols from "./Involvement/symbols";
 import PboDeploymentSymbols, { PboDeploymentStatus } from "./PboDeployment/PboDeploymentSymbols";
-import { default as ResistanceStatusLegend } from "./ResistanceStatus/legend";
-import { default as IntensityStatusLegend } from "./IntensityStatus/legend";
-import { default as ResistanceMechanismsLegend } from "./ResistanceMechanisms/legend";
 import { PreventionFilters, PreventionMapType } from "../../../store/types";
-import PboDeploymentLegend from "./PboDeployment/PboDeploymentLegend";
 import * as R from "ramda";
 import { filterByAssayTypes, filterByInsecticideClass, filterByType, filterByYearRange } from "../studies-filters";
 import CountrySymbols from "./Countries/PreventionCountrySymbols";
-import PreventionCountryLegend from "./Countries/PreventionCountryLegend";
-import LevelOfInvolvementLegend from "./Involvement/LevelOfInvolvementLegend";
-import PboDeploymentCountriesLegend from "./PboDeployment/PboDeploymentCountriesLegend";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 
 export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters, countryMode: boolean) => {
@@ -34,30 +26,6 @@ export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters, coun
             return PboDeploymentSymbols;
         default:
             return;
-    }
-};
-
-export const resolveMapTypeLegend = (preventionFilters: PreventionFilters, countryMode: boolean) => {
-    if (countryMode) {
-        if (countryMode && preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT) {
-            return <PboDeploymentCountriesLegend />;
-        } else {
-            return <PreventionCountryLegend />;
-        }
-    }
-    switch (preventionFilters.mapType) {
-        case PreventionMapType.RESISTANCE_STATUS:
-            return <ResistanceStatusLegend />;
-        case PreventionMapType.INTENSITY_STATUS:
-            return <IntensityStatusLegend />;
-        case PreventionMapType.RESISTANCE_MECHANISM:
-            return <ResistanceMechanismsLegend />;
-        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
-            return <LevelOfInvolvementLegend />;
-        case PreventionMapType.PBO_DEPLOYMENT:
-            return <PboDeploymentLegend />;
-        default:
-            return <span />;
     }
 };
 

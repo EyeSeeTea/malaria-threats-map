@@ -103,22 +103,42 @@
                     "moderate_to_high_intensity": "Moderate to high",
                     "moderate_intensity": "Moderate",
                     "low_intensity": "Low",
-                    "susceptible": "Susceptible"
+                    "susceptible": "Susceptible",
+                    "help": {
+                        "p1": "This map contains data from <1>intensity concentration bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying levels of resistance intensity, the colour of the dot is determined by the most recent results.",
+                        "p2": "For information on how each level is defined, please consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
+                        "footer": "Data source: Publications and unpublished reports and information from country offices."
+                    }
                 },
                 "resistance_status": {
                     "confirmed": "Confirmed (0 to <90%)",
                     "possible": "Possible (90 to <98%)",
-                    "susceptible": "Susceptible (≥98%)"
+                    "susceptible": "Susceptible (≥98%)",
+                    "help": {
+                        "p1": "This map contains data from <1>discriminating concentration bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying levels of resistance intensity, the colour of the dot is determined by the most recent results.",
+                        "p2": "For information on how each level is defined, please consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
+                        "footer": "Data source: Publications and unpublished reports and information from country offices."
+                    }
                 },
                 "resistance_mechanism": {
                     "confirmed": "Detected",
-                    "not_confirmed": "Not detected"
+                    "not_confirmed": "Not detected",
+                    "help": {
+                        "p1": "This map contains data from <1>molecular assays, biochemical assays and synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. The colour of the dot shows whether or not a molecular marker associated with insecticide resistance has been detected in mosquitoes collected on the site. The colour of the dot is determined by the most recent results.",
+                        "p2": "",
+                        "footer": "Data source: Publications and unpublished reports and information from country offices."
+                    }
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "mortality (%)",
                     "full_involvement": "Full Involvement",
                     "partial_involvement": "Partial Involvement",
-                    "no_involvement": "No Involvement"
+                    "no_involvement": "No Involvement",
+                    "help": {
+                        "p1": "This map presents data from <1>synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying results, the colour of the dot is determined by the most recent results.",
+                        "p2": "For information on how synergist involvement is graded consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
+                        "footer": "Data source: Publications and unpublished reports and information from country offices."
+                    }
                 },
                 "pbo_deployment": {
                     "eligible": "All criteria met",
@@ -143,6 +163,11 @@
                         "no_reports_available": "No reports on monitoring WHO-recommended criteria are available",
                         "not_malaria_endemic": "Not malaria endemic",
                         "not_applicable": "Not applicable"
+                    },
+                    "help": {
+                        "p1": "This map contains data from <1>discriminating concentration bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying levels of resistance intensity, the colour of the dot is determined by the most recent results.",
+                        "p2": "",
+                        "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
                 }
             }
@@ -167,7 +192,13 @@
                     "HRP2_HRP3_PROPORTION_DELETION": "pfhrp2/3 gene deletions",
                     "HRP2_PROPORTION_DELETION": "pfhrp2 gene deletions",
                     "confirmed": "Detected",
-                    "not_identified": "Not detected"
+                    "not_identified": "Not detected",
+                    "help": {
+                        "p1": "This map presents data from <1>hrp2 surveys</1>. Each dot on the map represents a study site containing one or more studies. The colour of the dot shows whether hrp2 deletions have been detected based on the most recent results.",
+                        "p2": "",
+                        "footer": "Data source: Publications and unpublished reports and information from country offices.",
+                        "question": "Across surveys, the criteria for selecting samples to test for pfhrp 2/3 deletions varies; therefore, refer to the full report cited for more details."
+                    }
                 }
             }
         },
@@ -213,20 +244,35 @@
                     "medium_high": "10% - 20%",
                     "medium": "5% - 10%",
                     "low": "< 5%",
-                    "unknown": "Data not available"
+                    "unknown": "Data not available",
+                    "help": {
+                        "p1": "This map presents data from <1>therapeutic efficacy studies</1>. The colour of the dot is determined by the percentage of patients with treatment failure. The most recent results are presented by default.",
+                        "p2": "WHO guidelines for the treatment of malaria recommend that first-line treatment should be changed if the treatment failure rate exceeds 10%.",
+                        "footer": "Data source: WHO Global database on antimalarial drug efficacy and resistance."
+                    }
                 },
                 "delayed_parasite_clearance": {
                     "high": "> 20%",
                     "medium_high": "10% - 20%",
                     "medium": "5% - 10%",
                     "low": "< 5%",
-                    "unknown": "Data not available"
+                    "unknown": "Data not available",
+                    "help": {
+                        "p1": "This map presents data from <1>therapeutic efficacy studies</1>. The colour of the dot is determined by the percentage of patients with parasites on day 3. The most recent results are presented by default.",
+                        "p2": "",
+                        "footer": "Data source: WHO Global database on antimalarial drug efficacy and resistance."
+                    }
                 },
                 "molecular_markers": {
                     "high": "> 80%",
                     "medium_high": "51% - 80%",
                     "medium": "10% - 50%",
-                    "low": "< 10%"
+                    "low": "< 10%",
+                    "help": {
+                        "p1": "This map presents data from <1>molecular marker studies</1>. The colour of the dot is determined by the percentage of samples which have molecular mutations. The most recent results are presented by default.",
+                        "p2": "",
+                        "footer": "Data source: WHO Global database on antimalarial drug efficacy and resistance."
+                    }
                 }
             }
         },
@@ -248,7 +294,13 @@
                     "native": "Native",
                     "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
                     "link_text": "reporting form",
-                    "link_content_1": "If you have detected invasive Anopheles vector species please report to us through the "
+                    "link_content_1": "If you have detected invasive Anopheles vector species please report to us through the ",
+                    "help": {
+                        "p1": "This map represents data from <1>vector surveillance of Anopheles mosquitoes</1>. Each dot on the map represents a study site containing one or more studies. The colour of the dot shows whether the species is invasive or native to the area.",
+                        "p2": "",
+                        "footer": "Data source: Publications and unpublished reports and information from country offices.",
+                        "question": "Please report the detection of invasive Anopheles vector species using this <2 href='/'>reporting form</2>."
+                    }
                 }
             }
         },
@@ -317,6 +369,7 @@
             "take_tour": "Take a tour"
         },
         "legend": {
+            "subtitle": "Determined by the most recent data in a site",
             "number_of_studies": "Number of studies",
             "number_of_surveys": "Number of surveys",
             "most_recent_data_shown": "Most recent data shown"

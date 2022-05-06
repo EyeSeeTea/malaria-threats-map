@@ -34,8 +34,7 @@ import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction }
 import { Fade, Button, AppBar, Typography, IconButton, Toolbar, Box, Divider } from "@mui/material";
 import { Menu as MenuIcon, CloseOutlined as CloseOutlinedIcon } from "@mui/icons-material";
 import Country from "./Country";
-import LeyendPopover from "./LegendPopover";
-import Leyend from "./Leyend";
+import LeyendPopover from "./legend/LegendPopover";
 import StoryModeSelector from "./StoryModeSelector";
 import MalariaTour from "./tour/MalariaTour";
 import MekongLayer from "./layers/MekongLayer";
@@ -64,6 +63,7 @@ import LeftSidebarMenu from "./LeftSidebarMenu/LeftSidebarMenu";
 import { changeLanguage } from "../config/i18next";
 import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
 import LastUpdated from "./last-updated/LastUpdated";
+import FloatingLegend from "./legend/FloatingLegendContainer";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const drawerWidth = 100;
@@ -127,9 +127,10 @@ const SearchContainer = styled(BaseFlexAlignStartContainer)`
     align-items: start;
 `;
 
-const BottomRightContainer = styled(BaseContainer)`
-    bottom: 0;
-    right: 0;
+const LegendContainer = styled(BaseContainer)`
+    position: absolute;
+    top: 80px;
+    right: 10px;
 `;
 
 const BottomLeftContainer = styled(BaseContainer)`
@@ -159,8 +160,7 @@ const StyledToolbar = styled(Toolbar)`
 `;
 
 const PushoverContainer = styled.div`
-    margin-left: ${(props: { menuOpen: boolean }) =>
-        props.menuOpen ? `${drawerWidth}px` : "0"};
+    margin-left: ${(props: { menuOpen: boolean }) => (props.menuOpen ? `${drawerWidth}px` : "0")};
 `;
 
 const MenuTypography = styled(Typography)`
@@ -399,15 +399,15 @@ class Map extends React.Component<Props> {
                     </Fade>
                 </Hidden>
                 <Fade in={showOptions}>
-                    <BottomRightContainer id={"legend"}>
+                    <LegendContainer id={"legend"}>
                         <Hidden smUp>
                             <LeyendPopover />
                         </Hidden>
                         <Hidden smDown>
-                            <Leyend />
+                            <FloatingLegend />
                         </Hidden>
                         <LastUpdated />
-                    </BottomRightContainer>
+                    </LegendContainer>
                 </Fade>
                 <PushoverContainer menuOpen={this.state.menuOpen}>
                     <BottomLeftContainer>

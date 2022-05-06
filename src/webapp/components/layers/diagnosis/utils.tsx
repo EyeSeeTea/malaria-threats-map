@@ -1,24 +1,14 @@
-import React from "react";
 import pfhrp2Symbols from "./GeneDeletions/symbols";
-import Pfhrp2Legend from "./GeneDeletions/legend";
 import { DiagnosisMapType } from "../../../store/types";
 import * as R from "ramda";
 import { DIAGNOSIS_STATUS } from "./GeneDeletions/utils";
 import DiagnosisCountrySymbols from "./Countries/DiagnosisCountrySymbols";
-import DiagnosisCountryLegend from "./Countries/DiagnosisCountryLegend";
 
 export const resolveMapTypeSymbols = (countryMode: boolean) => {
     if (countryMode) {
         return DiagnosisCountrySymbols;
     }
     return pfhrp2Symbols;
-};
-
-export const resolveMapTypeLegend = (countryMode: boolean) => {
-    if (countryMode) {
-        return <DiagnosisCountryLegend />;
-    }
-    return <Pfhrp2Legend />;
 };
 
 const filterByMostRecentYear = (group: any[]) => {
