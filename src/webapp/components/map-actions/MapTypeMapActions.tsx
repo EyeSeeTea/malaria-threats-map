@@ -15,6 +15,7 @@ import { preventionSuggestions } from "../filters/PreventionMapTypesSelector";
 import { diagnosisSuggestions } from "../filters/DiagnosisMapTypesSelector";
 import { invasiveSuggestions } from "../filters/InvasiveMapTypesSelector";
 import { treatmentSuggestions } from "../filters/TreatmentMapTypesSelector";
+import { setMapTitleAction } from "../../store/actions/base-actions";
 
 const Label = styled.span`
     font-weight: bold;
@@ -34,14 +35,20 @@ const mapStateToProps = (state: State) => ({
     yearFilters: selectFilters(state),
 });
 
+const mapDispatchToProps = {
+    setMapTitle: setMapTitleAction,
+};
+type DispatchProps = typeof mapDispatchToProps;
 type StateProps = ReturnType<typeof mapStateToProps>;
+type Props = DispatchProps & StateProps;
 
-const MapTypeMapActions: React.FC<StateProps> = ({
+const MapTypeMapActions: React.FC<Props> = ({
     theme,
     preventionFilters,
     invasiveFilters,
     diagnosisFilters,
     treatmentFilters,
+    setMapTitle,
 }) => {
     const { t } = useTranslation();
 
@@ -62,6 +69,10 @@ const MapTypeMapActions: React.FC<StateProps> = ({
         }
     }, [theme, preventionFilters.mapType, diagnosisFilters.mapType, invasiveFilters.mapType, treatmentFilters.mapType]);
 
+    React.useEffect(() => {
+        setMapTitle(t(selectedMapType));
+    }, [selectedMapType, t, setMapTitle]);
+
     return (
         <ActionGroupItem
             childrenMaxHeight={"420px"}
@@ -81,4 +92,4 @@ const MapTypeMapActions: React.FC<StateProps> = ({
     );
 };
 
-export default connect(mapStateToProps)(MapTypeMapActions);
+export default connect(mapStateToProps, mapDispatchToProps)(MapTypeMapActions);

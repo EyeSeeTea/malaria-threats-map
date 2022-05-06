@@ -13,6 +13,7 @@ import InvasiveLayer from "./layers/invasive/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
 import RegionLayer from "./layers/RegionLayer";
 import WhoLogo from "./WhoLogo";
+
 import {
     selectAny,
     selectCountryMode,
@@ -30,11 +31,11 @@ import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
-import { Fade } from "@mui/material";
+import { Fade, Button, AppBar, Typography, IconButton, Toolbar, Box, Divider } from "@mui/material";
+import { Menu as MenuIcon, CloseOutlined as CloseOutlinedIcon } from "@mui/icons-material";
 import Country from "./Country";
 import LeyendPopover from "./legend/LegendPopover";
 import StoryModeSelector from "./StoryModeSelector";
-import LanguageSelectorSelect from "./LanguageSelectorSelect";
 import MalariaTour from "./tour/MalariaTour";
 import MekongLayer from "./layers/MekongLayer";
 import DataDownload from "./DataDownload";
@@ -54,12 +55,37 @@ import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
+import { Flex } from "./Chart";
 import MapActions from "./map-actions/MapActions";
 import { dispatchCustomEvent } from "../utils/dom-utils";
+import LeftSidebarMenu from "./LeftSidebarMenu/LeftSidebarMenu";
+
+import { changeLanguage } from "../config/i18next";
+import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
 import LastUpdated from "./last-updated/LastUpdated";
 import FloatingLegend from "./legend/FloatingLegendContainer";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
+const drawerWidth = 100;
+
+const StyledButton = styled(Button)`
+    &.MuiButton-root {
+        padding: 15px;
+        color: black;
+        letter-spacing: 0.235px;
+        &:hover {
+            border: none;
+            color: #2FB3AF;
+            font-weight: bold;
+            padding-bottom: 10px;
+            letter-spacing: 0;
+            border-bottom: 5px solid #2FB3AF;
+            border-radius: 0;
+            cursor;
+            transition: none;
+        }
+    }
+`;
 
 const Separator = styled.div`
     width: 20px;
@@ -69,19 +95,32 @@ const BaseContainer = styled.div`
     max-width: 600px;
     margin: 30px;
     outline: none;
+    position: absolute;
+`;
+
+const BaseFlexAlignStartContainer = styled(BaseContainer)`
+    display: flex;
+    align-items: start;
+    flex-direction: column;
 `;
 
 const TopRightContainer = styled(BaseContainer)`
-    position: absolute;
-    top: 0;
+    top: 10%;
     right: 0;
     display: flex;
     align-items: center;
 `;
 
-const TopRightVerticalContainer = styled(BaseContainer)`
-    position: absolute;
+const TopRightVerticalContainer = styled(BaseFlexAlignStartContainer)`
     top: 0;
+    right: 0;
+`;
+
+const SearchContainer = styled(BaseFlexAlignStartContainer)`
+    pointer-events: none;
+    top: 7%;
+    left: 360px;
+    z-index: 1;
     right: 16px;
     display: flex;
     flex-direction: column;
@@ -95,37 +134,41 @@ const LegendContainer = styled(BaseContainer)`
 `;
 
 const BottomLeftContainer = styled(BaseContainer)`
-    position: absolute;
     bottom: 0;
-    left: 0;
 `;
 
 const BottomMiddleContainer = styled(BaseContainer)`
-    position: absolute;
     margin: 10px auto;
-    left: 0;
     bottom: 0;
     right: 0;
 `;
 
-const SearchContainer = styled(BaseContainer)`
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    left: 350px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    z-index: 1;
-`;
-
-const FloatingActionsContainer = styled(BaseContainer)`
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    left: 0;
+const FloatingActionContainer = styled(BaseContainer)`
+    top: 7%;
     z-index: 99;
     pointer-events: all;
+`;
+
+const StyledToolbar = styled(Toolbar)`
+    &.MuiToolbar-root {
+        padding: 0;
+        @media (min-width: 600px) {
+            padding: 0;
+            min-height: 50px;
+        }
+    }
+`;
+
+const PushoverContainer = styled.div`
+    margin-left: ${(props: { menuOpen: boolean }) => (props.menuOpen ? `${drawerWidth}px` : "0")};
+`;
+
+const MenuTypography = styled(Typography)`
+    padding-right: 17px;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    letter-spacing: 0.235;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -164,6 +207,7 @@ class Map extends React.Component<Props> {
         ready: false,
         theme: "prevention",
         style: style,
+        menuOpen: false,
         viewport: {
             latitude: 40,
             longitude: 0,
@@ -171,6 +215,8 @@ class Map extends React.Component<Props> {
             bearing: 0,
             pitch: 0,
         },
+        open: false,
+        selectedValue: LANGUAGES[0].value,
     };
     images: any[] = [];
 
@@ -235,6 +281,25 @@ class Map extends React.Component<Props> {
         const isPbo = theme === "prevention" && preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
         const isInvasive = theme === "invasive";
         const ready = this.map && this.state.ready;
+        const classes = {
+            icon: { marginRight: 5 },
+            fab: {
+                pointerEvents: "all" as const,
+                margin: 0.5,
+            },
+            menuOptionBox: { flexGrow: 1, display: { xs: "flex" } },
+            screenshotBox: { flexGrow: 0 },
+            appBar: { backgroundColor: "white", zIndex: 1400 },
+        };
+
+        const handleClickOpen = () => {
+            this.setState({ open: true });
+        };
+
+        const handleClose = (value: string) => {
+            changeLanguage(value);
+            this.setState({ open: false, selectedValue: value });
+        };
 
         return (
             <React.Fragment>
@@ -260,27 +325,55 @@ class Map extends React.Component<Props> {
                 {ready && <DiagnosisLayer map={this.map} />}
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
+                <Hidden smDown>
+                    <Box>
+                        <AppBar position="sticky" sx={classes.appBar}>
+                            <StyledToolbar>
+                                <Box sx={classes.menuOptionBox}>
+                                    <Flex style={{ alignItems: "center" }}>
+                                        <IconButton onClick={() => this.setState({ menuOpen: !this.state.menuOpen })}>
+                                            {this.state.menuOpen ? <CloseOutlinedIcon /> : <MenuIcon />}
+                                        </IconButton>
+                                        <MenuTypography variant="h6">
+                                            {this.props.t("common.topbar.menu")}
+                                        </MenuTypography>
+                                    </Flex>
+                                    <Divider orientation="vertical" flexItem />
+                                    <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
+                                    <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
+                                    <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
+                                    <StyledButton>{this.props.t("common.topbar.stories")}</StyledButton>
+                                </Box>
+                                <Box sx={classes.screenshotBox}>
+                                    <Screenshot map={this.map} />
+                                </Box>
+                            </StyledToolbar>
+                        </AppBar>
+                    </Box>
+                </Hidden>
+                <LeftSidebarMenu isMenuOpen={this.state.menuOpen} handleClickOpen={handleClickOpen} />
                 <Fade in={showOptions}>
-                    <SearchContainer>
-                        <Hidden smDown>
-                            <MalariaTour />
-                        </Hidden>
-                        <Layers />
-                        <Country disabled={isInvasive} />
-                        {!isMobile && <DataDownload />}
-                        <Hidden smUp>
-                            <ShareIcon />
-                        </Hidden>
-                        <Hidden smDown>
-                            <Screenshot map={this.map} />
-                            {["prevention", "treatment"].includes(theme) && <Report />}
-                        </Hidden>
-                    </SearchContainer>
+                    <PushoverContainer menuOpen={this.state.menuOpen}>
+                        <SearchContainer>
+                            <Hidden smDown>
+                                <MalariaTour />
+                            </Hidden>
+                            <Layers />
+                            <Country disabled={isInvasive} />
+                            {!isMobile && <DataDownload />}
+                            <Hidden smUp>
+                                <ShareIcon />
+                            </Hidden>
+                            <Hidden smDown>{["prevention", "treatment"].includes(theme) && <Report />}</Hidden>
+                        </SearchContainer>
+                    </PushoverContainer>
                 </Fade>
                 <Fade in={showOptions}>
-                    <FloatingActionsContainer>
-                        <MapActions />
-                    </FloatingActionsContainer>
+                    <PushoverContainer menuOpen={this.state.menuOpen}>
+                        <FloatingActionContainer>
+                            <MapActions />
+                        </FloatingActionContainer>
+                    </PushoverContainer>
                 </Fade>
                 <Hidden smDown>
                     <Fade in={showOptions}>
@@ -292,7 +385,6 @@ class Map extends React.Component<Props> {
                             <TourIcon />
                             {/* {["prevention", "diagnosis"].includes(theme) && <UploadFile />} */}
                             <Separator />
-                            {showOptions && <LanguageSelectorSelect section="menu" />}
                         </TopRightContainer>
                     </Fade>
                 </Hidden>
@@ -317,18 +409,25 @@ class Map extends React.Component<Props> {
                         <LastUpdated />
                     </LegendContainer>
                 </Fade>
-                <BottomLeftContainer>
-                    <Hidden smUp>
-                        <WhoLogo width={150} />
-                    </Hidden>
-                    <Hidden smDown>
-                        <WhoLogo />
-                    </Hidden>
-                </BottomLeftContainer>
+                <PushoverContainer menuOpen={this.state.menuOpen}>
+                    <BottomLeftContainer>
+                        <Hidden smUp>
+                            <WhoLogo width={150} />
+                        </Hidden>
+                        <Hidden smDown>
+                            <WhoLogo />
+                        </Hidden>
+                    </BottomLeftContainer>
+                </PushoverContainer>
                 <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
                 <Hidden smDown>
                     <InitialDialog />
                 </Hidden>
+                <LanguageSelectorDialog
+                    selectedValue={this.state.selectedValue}
+                    open={this.state.open}
+                    onClose={handleClose}
+                />
             </React.Fragment>
         );
     }

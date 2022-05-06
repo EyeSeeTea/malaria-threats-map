@@ -354,11 +354,30 @@
             "exclude_lower_patients": "Excluir estudios de menos de 20 pacientes",
             "exclude_lower_samples": "Excluir estudios de menos de 20 muestras"
         },
+        "topbar": {
+            "menu": "Menú",
+            "maps": "Mapas",
+            "dashboards": "Tableros",
+            "stories": "Cuentos"
+        },
+        "sidebar": {
+            "home": "Casa",
+            "about": "Sobre",
+            "contact": "Contactar",
+            "share_data": "Compartir datos",
+            "language": "Idioma",
+            "take_tour": "Hacer un recorrido"
+        },
         "legend": {
             "subtitle": "Determinado por los datos más recientes en un sitio",
             "number_of_studies": "Número de estudios",
             "number_of_surveys": "Número de encuestas",
             "most_recent_data_shown": "Datos más recientes mostrados"
+        },
+        "screenshot": {
+            "screenshot": "Captura de pantalla",
+            "download_screenshot": "Descargar captura de pantalla",
+            "generating_screenshot": "Generando captura de pantalla"
         },
         "chart": {
             "studies": "Estudios",
@@ -370,7 +389,8 @@
         },
         "options": {
             "title": "Opciones",
-            "select_language": "Seleccione idioma",
+            "select_language": "Seleccione Idioma",
+            "language": "Idioma",
             "select": "Seleccione"
         },
         "citation": {
