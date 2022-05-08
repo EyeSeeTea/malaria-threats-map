@@ -161,22 +161,42 @@
                     "moderate_to_high_intensity": "Moyen Fort",
                     "moderate_intensity": "Moyen",
                     "low_intensity": "Faible",
-                    "susceptible": "Sensible"
+                    "susceptible": "Sensible",
+                    "help": {
+                        "p1": "Cette carte contient des données provenant de <1>tests biologiques de concentration d'intensité</1>. Chaque point sur la carte représente un site d'étude contenant une ou plusieurs études. Dans les sites où les études montrent différents niveaux d'intensité de résistance, la couleur de le point est déterminé par les résultats les plus récents.",
+                        "p2": "Pour plus d'informations sur la définition de chaque niveau, veuillez consulter le <1 href='/'>manuel de l'OMS pour la surveillance de la résistance</1>.",
+                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays."
+                    }
                 },
                 "resistance_status": {
                     "confirmed": "Confirmée (0 to <90%)",
                     "possible": "Suspectée (90 to <98%)",
-                    "susceptible": "Sensible (≥98%)"
+                    "susceptible": "Sensible (≥98%)",
+                    "help": {
+                        "p1": "Cette carte contient des données provenant de <1>tests biologiques de concentration discriminante</1>. Chaque point sur la carte représente un site d'étude contenant une ou plusieurs études. Dans les sites où les études montrent différents niveaux d'intensité de résistance, la couleur de le point est déterminé par les résultats les plus récents.",
+                        "p2": "Pour plus d'informations sur la définition de chaque niveau, veuillez consulter le <1 href='/'>manuel de l'OMS pour la surveillance de la résistance</1>.",
+                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays."
+                    }
                 },
                 "resistance_mechanism": {
                     "confirmed": "Détecté",
-                    "not_confirmed": "Non détecté"
+                    "not_confirmed": "Non détecté",
+                    "help": {
+                        "p1": "Cette carte contient des données provenant de <1>dosages moléculaires, biochimiques et de bioessais synergistes-insecticides</1>. Chaque point sur la carte représente un site d'étude contenant une ou plusieurs études. La couleur du point indique si ou non un marqueur moléculaire associé à la résistance aux insecticides a été détecté chez les moustiques collectés sur le site. La couleur du point est déterminée par les résultats les plus récents.",
+                        "p2": "",
+                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays."
+                    }
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "Mortalité de moustique",
                     "full_involvement": "Implication totale",
                     "partial_involvement": "Implication partielle",
-                    "no_involvement": "Pas d'implication"
+                    "no_involvement": "Pas d'implication",
+                    "help": {
+                        "p1": "This map presents data from <1>synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying results, the colour of the dot is determined by the most recent results.",
+                        "p2": "For information on how synergist involvement is graded consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
+                        "footer": "Data source: Publications and unpublished reports and information from country offices."
+                    }
                 },
                 "pbo_deployment": {
                     "eligible": "Tous les critères remplis",
@@ -201,6 +221,11 @@
                         "no_reports_available": "Aucun rapport sur la surveillance des critères recommandés par l'OMS n'est disponible",
                         "not_malaria_endemic": "Pas de paludisme endémique",
                         "not_applicable": "N'est pas applicable"
+                    },
+                    "help": {
+                        "p1": "Cette carte contient des données provenant de <1>tests biologiques de concentration discriminante</1>. Chaque point sur la carte représente un site d'étude contenant une ou plusieurs études. Dans les sites où les études montrent différents niveaux d'intensité de résistance, la couleur de le point est déterminé par les résultats les plus récents.",
+                        "p2": "",
+                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays."
                     }
                 }
             }
@@ -225,7 +250,13 @@
                     "HRP2_HRP3_PROPORTION_DELETION": "Délétions du gène pfhrp2/3",
                     "HRP2_PROPORTION_DELETION": "Délétions du gène pfhrp2",
                     "confirmed": "Confirmée",
-                    "not_identified": "Non identifiée"
+                    "not_identified": "Non identifiée",
+                    "help": {
+                        "p1": "Cette carte présente les données des <1>enquêtes hrp2</1>. Chaque point sur la carte représente un site d'étude contenant une ou plusieurs études. La couleur du point indique si des suppressions hrp2 ont été détectées en fonction de la résultats les plus récents.",
+                        "p2": "",
+                        "footer": "Source des données: publications et rapports non publiés et informations des bureaux de pays.",
+                        "question": "D'une enquête à l'autre, les critères de sélection des échantillons pour tester les suppressions de pfhrp 2/3 varient; par conséquent, reportez-vous au rapport complet cité pour plus de détails."
+                    }
                 }
             }
         },
@@ -271,20 +302,35 @@
                     "medium_high": "10% - 20%",
                     "medium": "5% - 10%",
                     "low": "< 5%",
-                    "unknown": "Données non disponibles"
+                    "unknown": "Données non disponibles",
+                    "help": {
+                        "p1": "Cette carte présente les données des <1>études d'efficacité thérapeutique</1>. La couleur du point est déterminée par le pourcentage de patients en échec thérapeutique. Les résultats les plus récents sont présentés par défaut.",
+                        "p2": "Les directives de l'OMS pour le traitement du paludisme recommandent de modifier le traitement de première intention si le taux d'échec thérapeutique dépasse 10 %.",
+                        "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
+                    }
                 },
                 "delayed_parasite_clearance": {
                     "high": "> 20%",
                     "medium_high": "10% - 20%",
                     "medium": "5% - 10%",
                     "low": "< 5%",
-                    "unknown": "Données non disponibles"
+                    "unknown": "Données non disponibles",
+                    "help": {
+                        "p1": "Cette carte présente les données des <1>études d'efficacité thérapeutique</1>. La couleur du point est déterminée par le pourcentage de patients parasités au jour 3. Les résultats les plus récents sont présentés par défaut.",
+                        "p2": "",
+                        "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
+                    }
                 },
                 "molecular_markers": {
                     "high": "> 80%",
                     "medium_high": "51% - 80%",
                     "medium": "10% - 50%",
-                    "low": "< 10%"
+                    "low": "< 10%",
+                    "help": {
+                        "p1": "Cette carte présente les données d'<1>études de marqueurs moléculaires</1>. La couleur du point est déterminée par le pourcentage d'échantillons présentant des mutations moléculaires. Les résultats les plus récents sont présentés par défaut.",
+                        "p2": "",
+                        "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
+                    }
                 }
             }
         },
@@ -306,7 +352,13 @@
                     "native": "Autochtone",
                     "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
                     "link_text": "formulaire de rapport",
-                    "link_content_1": "Si vous avez détecté une espèce invasive vecteur Anopheles, veuillez nous en informer via le "
+                    "link_content_1": "Si vous avez détecté une espèce invasive vecteur Anopheles, veuillez nous en informer via le ",
+                    "help": {
+                        "p1": "Cette carte représente les données de la <1>surveillance vectorielle des moustiques anophèles</1>. Chaque point sur la carte représente un site d'étude contenant une ou plusieurs études. La couleur du point indique si l'espèce est envahissante ou originaire de la région.",
+                        "p2": "",
+                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays.",
+                        "question": "Veuillez signaler la détection d'espèces vectrices anophèles envahissantes en utilisant ce <2 href='/'>formulaire de signalement</2>."
+                    }
                 }
             }
         },
@@ -360,10 +412,30 @@
             "exclude_lower_patients": "Exclure les études portant sur moins de 20 patients",
             "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons"
         },
+        "topbar": {
+            "menu": "Menu",
+            "maps": "Plans",
+            "dashboards": "Tableaux de bord",
+            "stories": "Histoires"
+        },
+        "sidebar": {
+            "home": "Maison",
+            "about": "Sur",
+            "contact": "Contact",
+            "share_data": "Partager des données",
+            "language": "Langue",
+            "take_tour": "Faire un tour"
+        },
         "legend": {
+            "subtitle": "Déterminé par les données les plus récentes d'un site",
             "number_of_studies": "Nombre d'études",
             "number_of_surveys": "Nombre d'enquêtes",
             "most_recent_data_shown": "Données les plus récentes affichées"
+        },
+        "screenshot": {
+            "screenshot": "Capture d'écran",
+            "download_screenshot": "Télécharger la capture d'écran",
+            "generating_screenshot": "Génération de capture d'écran"
         },
         "chart": {
             "studies": "Études",
@@ -376,6 +448,7 @@
         "options": {
             "title": "Options",
             "select_language": "Choisir la langue",
+            "language": "Langue",
             "select": "Sélectionner"
         },
         "citation": {

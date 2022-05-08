@@ -1,6 +1,6 @@
 import React from "react";
 import Popover from "@mui/material/Popover";
-import Legend from "./Leyend";
+import Legend from "./Legend";
 import { Fab } from "@mui/material";
 import ListIcon from "@mui/icons-material/List";
 

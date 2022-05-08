@@ -1,9 +1,7 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import { Fab, Theme } from "@mui/material";
-import createStyles from "@mui/styles/createStyles";
-import makeStyles from "@mui/styles/makeStyles";
+import styled from "styled-components";
+import { Modal, Box, Button, CircularProgress, Typography } from "@mui/material";
 import whoLogoWhite from "../assets/img/who-logo-blue.png";
 import prevention from "../assets/img/prevention.png";
 import diagnosis from "../assets/img/diagnosis.png";
@@ -22,16 +20,77 @@ import * as PdfJs from "pdfjs-dist";
 import { convertDataURIToBinary, download } from "../utils/download-utils";
 import { format } from "date-fns";
 import { sendAnalytics } from "../utils/analytics";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import DownloadIcon from "@mui/icons-material/Download";
 import SimpleLoader from "./SimpleLoader";
+import { useWindowDimensions } from "./hooks/use-window-dimensions";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        fab: {
-            pointerEvents: "all",
-            margin: theme.spacing(0.5, 0),
-        },
-    })
-);
+const iconStyles = `
+margin-right: 5px;
+`;
+
+const screenshotStyles = `
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+`;
+
+const OpenScreenshotButton = styled(Button)`
+    &.MuiButton-root {
+        margin-right: 10px;
+        background-color: #2fb3af;
+        color: white;
+    }
+`;
+
+const StyledScreenshotButton = styled(OpenScreenshotButton)`
+    margin-top: 10px;
+    float: right;
+`;
+
+const StyledBox = styled(Box)`
+    ${screenshotStyles}
+    top: 50%;
+    width: ${props => `${props.width}px`};
+    height: ${props => `${props.height}px`};
+    background-color: white;
+    padding: 4px;
+    border-radius: 5px;
+`;
+
+const ProgressDiv = styled.div`
+    ${screenshotStyles}
+    top: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const StyledCanvas = styled.canvas`
+    ${screenshotStyles}
+    top: 52%;
+    border: 2px solid grey;
+    border-radius: 5px;
+`;
+
+const StyledCamaraIcon = styled(CameraAltIcon)`
+    ${iconStyles}
+`;
+
+const StyledDownloadIcon = styled(DownloadIcon)`
+    ${iconStyles}
+`;
+
+const CircularProgressWithLabel = () => {
+    const { t } = useTranslation();
+
+    return (
+        <ProgressDiv>
+            <CircularProgress />
+            <Typography>{t("common.screenshot.generating_screenshot")}</Typography>
+        </ProgressDiv>
+    );
+};
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -48,12 +107,16 @@ type Props = StateProps & OwnProps;
 
 function Screenshot({ map, theme, title }: Props) {
     const { t } = useTranslation();
-    const classes = useStyles({});
-
+    const [open, setOpen] = React.useState(false);
     const [downloading, setDownloading] = React.useState(false);
+    const [generatingScreenshot, setGeneratingScreenshot] = React.useState(false);
+    const [file, setFile] = React.useState<string>("");
+    const { width, height } = useWindowDimensions();
+    PdfJs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.worker.js`;
 
     const handleClick = () => {
-        setDownloading(true);
+        setGeneratingScreenshot(true);
+        setOpen(true);
         sendAnalytics({ type: "event", category: "menu", action: "capture" });
 
         const mapCanvas = map.getCanvas();
@@ -148,49 +211,77 @@ function Screenshot({ map, theme, title }: Props) {
             doc.addImage(img, "JPEG", a4h - 60, 175, 45, 13);
             doc.setFontSize(9);
             doc.text(`@WHO ${new Date().getFullYear()}. All rights reserved`, a4h - 60, 195);
-
             // Save the Data
             const file = doc.output("dataurlstring");
+            setFile(file);
 
             // If we wanted to save as PDF
             //doc.save("Report.pdf");
-
             const pdfAsArray = convertDataURIToBinary(file);
-
+            setGeneratingScreenshot(false);
             //PdfJs.disableWorker = true;
-            PdfJs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.worker.js`;
             PdfJs.getDocument(pdfAsArray).promise.then((pdf: any) => {
                 pdf.getPage(1).then((page: any) => {
-                    const viewport = page.getViewport({ scale: 2.5 });
-                    const canvas = document.createElement("canvas");
+                    const canvas = document.getElementById("pdf") as HTMLCanvasElement;
                     const context = canvas.getContext("2d");
-                    canvas.width = viewport.width;
-                    canvas.height = viewport.height;
-                    const renderContext = { canvasContext: context, viewport: viewport };
-                    page.render(renderContext).promise.then(() => {
-                        const dateString = format(new Date(), "yyyyMMdd");
-                        const fileName = `MTM_${title.toUpperCase()}_${dateString}`;
-                        download(canvas, fileName);
-                        setDownloading(false);
+                    canvas.width = width * 0.7;
+                    canvas.height = height * 0.8;
+                    const viewport = page.getViewport({
+                        scale: canvas.width / page.getViewport({ scale: 0.96 }).width,
                     });
+                    const renderContext = { canvasContext: context, viewport: viewport };
+                    page.render(renderContext);
                 });
             });
             return;
         });
     };
+
+    const downloadScreenshot = () => {
+        setDownloading(true);
+        const pdfAsArray = convertDataURIToBinary(file);
+
+        PdfJs.getDocument(pdfAsArray).promise.then((pdf: any) => {
+            pdf.getPage(1).then((page: any) => {
+                const viewport = page.getViewport({ scale: 2.5 });
+                const canvas = document.createElement("canvas");
+                const context = canvas.getContext("2d");
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                const renderContext = { canvasContext: context, viewport: viewport };
+                page.render(renderContext).promise.then(() => {
+                    const dateString = format(new Date(), "yyyyMMdd");
+                    const fileName = `MTM_${title.toUpperCase()}_${dateString}`;
+                    download(canvas, fileName);
+                    setDownloading(false);
+                });
+            });
+        });
+        return;
+    };
+
     return (
-        <div>
-            {downloading && <SimpleLoader message={t("common.data_download.loader.generating_file")} />}
-            <Fab
-                size="small"
-                color="default"
-                onClick={handleClick}
-                className={classes.fab}
-                title={t("common.icons.image")}
+        <>
+            <OpenScreenshotButton variant="contained" onClick={handleClick}>
+                <StyledCamaraIcon />
+                {t("common.screenshot.screenshot")}
+            </OpenScreenshotButton>
+            <Modal
+                open={open}
+                onClose={() => setOpen(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
             >
-                <AddAPhotoIcon />
-            </Fab>
-        </div>
+                <StyledBox width={width * 0.9} height={height * 0.9}>
+                    {downloading && <SimpleLoader message={t("common.data_download.loader.generating_file")} />}
+                    <StyledScreenshotButton variant="contained" onClick={downloadScreenshot}>
+                        <StyledDownloadIcon />
+                        {t("common.screenshot.download_screenshot")}
+                    </StyledScreenshotButton>
+                    {generatingScreenshot ? <CircularProgressWithLabel /> : <StyledCanvas id="pdf"></StyledCanvas>}
+                </StyledBox>
+            </Modal>
+        </>
     );
 }
 
