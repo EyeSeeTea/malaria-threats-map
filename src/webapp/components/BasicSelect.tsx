@@ -30,16 +30,21 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             pointerEvents: "all",
             flexGrow: 1,
-            minWidth: 150,
+            minWidth: 80,
+            padding: 2,
+            backgroundColor: "#2FB3AF", //new
+            borderRadius: 5
         },
         inputPaper: {
             padding: theme.spacing(0.5, 1.5),
         },
+
         input: {
             cursor: "pointer",
             display: "flex",
             padding: 0,
             height: "auto",
+            color: "white", //new
             "& span": {
                 backgroundColor: "transparent",
             },
@@ -48,7 +53,8 @@ const useStyles = makeStyles((theme: Theme) =>
             display: "flex",
             flex: 1,
             alignItems: "center",
-            overflow: "hidden",
+            //overflow: "hidden",
+            justifyContent: "center", //new
             flexWrap: (props: { isMulti?: boolean }) => (props.isMulti ? "wrap" : "nowrap"),
         },
         chip: {
@@ -68,7 +74,8 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(1, 2),
         },
         singleValue: {
-            fontSize: 16,
+            fontSize: 14,
+            fontWeight: "bold",
         },
         placeholder: {
             position: "absolute",
@@ -88,6 +95,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     })
 );
+
 const plasmodiumOptions = ["P. falciparum", "P. vivax", "P. knowlesi", "P. malariae", "P. ovale"];
 
 function NoOptionsMessage(props: NoticeProps<OptionType, false>) {
@@ -269,3 +277,5 @@ export default function IntegrationReactSelect({ suggestions = [], value, onChan
         </div>
     );
 }
+
+

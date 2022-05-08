@@ -2,8 +2,26 @@ import React from "react";
 import styled from "styled-components";
 import { Button, AppBar, Toolbar, Box } from "@mui/material";
 import { TFunction } from "react-i18next";
-import LanguageSelectorSelect from "../../components/LanguageSelectorSelect";
+import IntegrationReactSelect from "../../components/BasicSelect";
+import { changeLanguage } from "../../config/i18next";
 
+const LANGUAGES = [
+    {
+        value: "en",
+        label: "Eng",
+        code: "en",
+    },
+    {
+        value: "es",
+        label: "Esp",
+        code: "es",
+    },
+    {
+        value: "fr",
+        label: "Fran",
+        code: "fr",
+    },
+];
 const StickyMenu = styled.div`
     position: relative;
     bottom: 0;
@@ -47,6 +65,12 @@ interface HeaderProps {
 }
 
 const Header = ({ t }: HeaderProps) => {
+    const [language, setLanguage] = React.useState(LANGUAGES[0].value)
+    function handleChange(selection: any) {
+        const language = selection.value;
+        changeLanguage(language);
+        setLanguage(language)
+    }
     const classes = {
         icon: { marginRight: 5 },
         menuOptionBox: { flexGrow: 1, display: { xs: "flex" }, width: "60%", margin: "auto" },
@@ -66,7 +90,12 @@ const Header = ({ t }: HeaderProps) => {
                             <StyledButton>{t("common.homepage.menu.share_data")}</StyledButton>
                         </Box>
                         <Box sx={classes.languageSelectorBox}>
-                            <LanguageSelectorSelect section="homeItem" />
+                        <IntegrationReactSelect
+                            id={"language"}
+                            suggestions={LANGUAGES}
+                            onChange={handleChange}
+                            value={LANGUAGES.find(lg => lg.value === language)}
+                        />
                         </Box>
                     </StyledToolbar>
                 </AppBar>
