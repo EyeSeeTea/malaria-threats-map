@@ -30,9 +30,9 @@ const StyledBanner = styled.div`
     height: 720px;
     opacity: 1;
 `;
-
+// 1170px 
 const ContentDiv = styled.div`
-    width: 1170px;
+    width: ${window.innerWidth * 0.83}px;
     margin: auto;
 `;
 
@@ -45,6 +45,14 @@ const MediaCardDiv = styled.div`
     margin-bottom: 60px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    @media(max-width: 1024px) {
+        flex-wrap: wrap;
+    }
+    @media(max-width: 768px) {
+        justify-content: center;
+
+    }
 `;
 
 const HeaderDiv = styled.div`
@@ -67,7 +75,7 @@ const themePaperColors = {
 
 export const HomePage = () => {
     const { t } = useTranslation();
-
+    console.log(window.innerWidth)
     return (
         <React.Fragment>
             <StyledBanner>
@@ -121,8 +129,8 @@ export const HomePage = () => {
                     </HeaderDiv>
 
                     <Box sx={{ flexGrow: 1 }}>
-                        <Grid container spacing={{ xs: 2, md: 5 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                            <Grid item xs={2} sm={4} md={6}>
+                        <Grid container spacing={{ xs: 2, md: 5 }} columns={{ xs: 4, sm: 8, md: 12, lg: 12 }}>
+                            <Grid item xs={4} sm={8} md={6} lg={6}>
                                 <ThemePaper
                                     t={t}
                                     icon={PreventionIcon}
@@ -133,7 +141,7 @@ export const HomePage = () => {
                                     colorOpaque={themePaperColors.preventionColorOpaque}
                                 />
                             </Grid>
-                            <Grid item xs={2} sm={4} md={6}>
+                            <Grid item xs={4} sm={8} md={6} lg={6}>
                                 <ThemePaper
                                     t={t}
                                     icon={InvasiveIcon}
@@ -144,7 +152,7 @@ export const HomePage = () => {
                                     colorOpaque={themePaperColors.invasiveColorOpaque}
                                 />
                             </Grid>
-                            <Grid item xs={2} sm={4} md={6}>
+                            <Grid item xs={4} sm={8} md={6} lg={6}>
                                 <ThemePaper
                                     t={t}
                                     icon={TreatmentIcon}
@@ -155,7 +163,7 @@ export const HomePage = () => {
                                     colorOpaque={themePaperColors.treatmentColorOpaque}
                                 />
                             </Grid>
-                            <Grid item xs={2} sm={4} md={6}>
+                            <Grid item xs={4} sm={8} md={6} lg={6}>
                                 <ThemePaper
                                     t={t}
                                     icon={DiagnosisIcon}

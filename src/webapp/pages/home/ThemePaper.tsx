@@ -17,7 +17,7 @@ const StyledPaper = styled(Paper)`
     background-color: ${props => props.color};
     display: flex;
     flex-direction: column;
-    padding: ${props => (props.color === "#5CCDCE" ? "40px 25px" : "40px")};
+    padding: ${props => (props.color === "#5CCDCE" ? `${window.innerHeight * 0.04}px 25px` : `${window.innerHeight * 0.04}px`)};
 `;
 
 const ThemeTitle = styled(Typography)`
@@ -48,24 +48,25 @@ const StyledCardButton = styled(Button)`
         margin: auto 0;
     }
 `;
-
+const StyledImage = styled.img`
+width: 100%;
+max-width: 150px;
+max-height: 150px;`
 const ThemePaper = ({ icon, altText, title, subtitle, color, colorOpaque }: ThemePaperProps) => {
     const { t } = useTranslation();
 
     return (
         <div>
-            <StyledPaper elevation={0} square color={color} style={{ height: 200 }}>
-                <Flex>
-                    <img src={icon} alt={altText} />
+            <StyledPaper elevation={0} square color={color} style={{ flexDirection: "row" }}>
+                    <StyledImage src={icon} alt={altText} />
                     <div style={{ paddingLeft: 40 }}>
-                        <ThemeTitle gutterBottom variant="h4" textAlign="left" style={{ fontSize: 30 }}>
+                        <ThemeTitle gutterBottom variant="h5" textAlign="left">
                             {title}
                         </ThemeTitle>
                         <Typography gutterBottom variant="body1" component="div" textAlign="left">
                             {subtitle}
                         </Typography>
                     </div>
-                </Flex>
             </StyledPaper>
             <StyledPaper elevation={0} square color={colorOpaque} style={{ height: 80 }}>
                 <FlexSpaceBetween>

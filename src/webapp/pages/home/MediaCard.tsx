@@ -26,6 +26,9 @@ const StyledCard = styled(Card)`
     max-width: 356px;
     border-radius: 15px;
     box-shadow: 0px 4px 10px #00000033;
+    @media(max-width: 1024px) {
+        margin-top: 20px;
+    }
 `;
 
 const StyledCardActions = styled(CardActions)`

@@ -8,13 +8,15 @@ const FooterDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    flex-wrap: wrap;
     margin: 58px 0 34px 0;
     flex: 1 auto;
 `;
 
-const WhoLogoImg = styled.img`
-    height: 100%;
-`;
+const StyledImage = styled.img`
+    width: 100%;
+    max-width: 150px;
+    max-height: 50px;`
 
 const Flex = styled.div`
     display: flex;
@@ -65,7 +67,7 @@ const Footer = ({ t }: FooterProps) => {
     return (
         <React.Fragment>
             <FooterDiv>
-                <WhoLogoImg src={WhoLogoBlue} alt="WHO Logo Blue" width={200} />
+                <StyledImage src={WhoLogoBlue} alt="WHO Logo Blue" />
                 <div>
                     <FooterHeader gutterBottom variant="body2">
                         {t("common.footer.policies.title")}
@@ -79,7 +81,7 @@ const Footer = ({ t }: FooterProps) => {
                         {t("common.footer.other_who_resources.title")}
                     </FooterHeader>
                     {otherWhoResources.map((resource, id) => (
-                        <Link
+                        <Link 
                             key={id}
                             href="#"
                             underline="none"
@@ -93,7 +95,7 @@ const Footer = ({ t }: FooterProps) => {
                     ))}
                 </Flex>
                 <Flex style={{ justifyContent: "space-between" }}>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
+                    <Flex>
                         <FooterHeader gutterBottom variant="body2">
                             {t("common.footer.about_who_gmp.title")}
                         </FooterHeader>
@@ -110,7 +112,7 @@ const Footer = ({ t }: FooterProps) => {
                                 {resource}
                             </Link>
                         ))}
-                    </div>
+                    </Flex>
                     <StyledNewsletterButton size="large" variant="contained">
                         {t("common.footer.subscribe_newsletter")}
                     </StyledNewsletterButton>

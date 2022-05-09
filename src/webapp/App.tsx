@@ -4,7 +4,7 @@ import i18next from "i18next";
 import { Provider } from "react-redux";
 import createStore from "./store";
 import DataProvider from "./components/DataProvider";
-import { Theme, StyledEngineProvider } from "@mui/material";
+import { Theme, StyledEngineProvider, responsiveFontSizes } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Router } from "./pages/Router";
 
@@ -15,7 +15,7 @@ declare module "@mui/styles/defaultTheme" {
 
 export const { store } = createStore();
 
-export const theme = createTheme({
+export let theme = createTheme({
     palette: {
         primary: {
             main: "#2fb3af",
@@ -62,6 +62,8 @@ export const theme = createTheme({
         },
     },
 });
+
+theme = responsiveFontSizes(theme); 
 
 class App extends React.Component {
     render() {

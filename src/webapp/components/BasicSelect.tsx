@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
             minWidth: 80,
             padding: 2,
             backgroundColor: "#2FB3AF", //new
-            borderRadius: 5
+            borderRadius: 5,
         },
         inputPaper: {
             padding: theme.spacing(0.5, 1.5),
@@ -277,5 +277,3 @@ export default function IntegrationReactSelect({ suggestions = [], value, onChan
         </div>
     );
 }
-
-

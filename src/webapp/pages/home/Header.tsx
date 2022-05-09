@@ -60,45 +60,53 @@ const StyledButton = styled(Button)`
     }
 `;
 
+const LanguageSelectorBox = styled(Box)`
+    flex-grow: 0;`;
+
+const MenuOptionBox = styled(Box)`
+flex-grow: 1;
+width: 60%; 
+margin: auto;
+@media (min-width: 600px) {
+    display: flex;
+}`;
+
+    const StyledAppBar = styled(AppBar)`
+    background-color: white;`;
+
 interface HeaderProps {
     t: TFunction<"translation", undefined>;
 }
 
 const Header = ({ t }: HeaderProps) => {
-    const [language, setLanguage] = React.useState(LANGUAGES[0].value)
+    const [language, setLanguage] = React.useState(LANGUAGES[0].value);
     function handleChange(selection: any) {
         const language = selection.value;
         changeLanguage(language);
-        setLanguage(language)
+        setLanguage(language);
     }
-    const classes = {
-        icon: { marginRight: 5 },
-        menuOptionBox: { flexGrow: 1, display: { xs: "flex" }, width: "60%", margin: "auto" },
-        languageSelectorBox: { flexGrow: 0 },
-        appBar: { backgroundColor: "white" },
-    };
     return (
         <StickyMenu>
             <Box>
-                <AppBar position="sticky" sx={classes.appBar}>
+                <StyledAppBar position="sticky">
                     <StyledToolbar>
-                        <Box sx={classes.menuOptionBox}>
+                        <MenuOptionBox>
                             <StyledButton>{t("common.homepage.menu.home")}</StyledButton>
                             <StyledButton>{t("common.homepage.menu.tools")}</StyledButton>
                             <StyledButton>{t("common.homepage.menu.about")}</StyledButton>
                             <StyledButton>{t("common.homepage.menu.contact")}</StyledButton>
                             <StyledButton>{t("common.homepage.menu.share_data")}</StyledButton>
-                        </Box>
-                        <Box sx={classes.languageSelectorBox}>
-                        <IntegrationReactSelect
-                            id={"language"}
-                            suggestions={LANGUAGES}
-                            onChange={handleChange}
-                            value={LANGUAGES.find(lg => lg.value === language)}
-                        />
-                        </Box>
+                        </MenuOptionBox>
+                        <LanguageSelectorBox>
+                            <IntegrationReactSelect
+                                id={"language"}
+                                suggestions={LANGUAGES}
+                                onChange={handleChange}
+                                value={LANGUAGES.find(lg => lg.value === language)}
+                            />
+                        </LanguageSelectorBox>
                     </StyledToolbar>
-                </AppBar>
+                </StyledAppBar>
             </Box>
         </StickyMenu>
     );
