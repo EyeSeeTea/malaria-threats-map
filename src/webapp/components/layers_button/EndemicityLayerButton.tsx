@@ -7,25 +7,31 @@ import { toggleEndemicityLayerAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
 import { sendAnalytics } from "../../utils/analytics";
 import styled from "styled-components";
+import EndemicImage from "../../assets/img/endemic.png";
 
-const StyledButton = styled(Button)<{ selected: boolean }>`
-    background: ${props => (props.selected ? "grey" : "palevioletred")};
+const StyledButton = styled(Button)`
     text-transform: none;
-    width: 80px;
-    height: 80px;
+    padding: 0px;
     border-radius: 12px;
 `;
 
 const Row = styled.div`
-    padding: 8px;
+    padding: 8px 0px 8px 8px;
     display: flex;
     flex-direction: row;
 `;
 
 const Title = styled.span`
-    padding: 8px;
+    padding: 8px 0px 8px 8px;
     font-size: 16px;
     width: 120px;
+`;
+
+const Image = styled.img`
+    border-radius: 12px;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -38,21 +44,30 @@ const mapDispatchToProps = {
 
 type DispatchProps = typeof mapDispatchToProps;
 type StateProps = ReturnType<typeof mapStateToProps>;
-type Props = DispatchProps & StateProps;
+type OwnProps = {
+    onClick?: () => void;
+};
+type Props = DispatchProps & StateProps & OwnProps;
 
-const EndemicityLayerButton: React.FC<Props> = ({ toogleEndemicityLayer, endemicityLayer }) => {
+const EndemicityLayerButton: React.FC<Props> = ({ toogleEndemicityLayer, endemicityLayer, onClick }) => {
     const { t } = useTranslation();
     const handleToggle = () => {
         const newValue = !endemicityLayer;
         if (newValue) sendAnalytics({ type: "event", category: "menu", action: "shade" });
         toogleEndemicityLayer(newValue);
+
+        if (onClick) {
+            onClick();
+        }
     };
 
     console.log({ endemicityLayer });
 
     return (
         <Row>
-            <StyledButton onClick={handleToggle} selected={endemicityLayer} />
+            <StyledButton onClick={handleToggle}>
+                <Image src={EndemicImage} />
+            </StyledButton>
             <Title> {t("common.icons.endemicity")}</Title>
         </Row>
     );
