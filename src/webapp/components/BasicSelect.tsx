@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
             flexGrow: 1,
             minWidth: 80,
             padding: 2,
-            backgroundColor: "#2FB3AF", //new
+            backgroundColor: "#2FB3AF", 
             borderRadius: 5,
         },
         inputPaper: {
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
             display: "flex",
             padding: 0,
             height: "auto",
-            color: "white", //new
+            color: "white",
             "& span": {
                 backgroundColor: "transparent",
             },
@@ -53,8 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
             display: "flex",
             flex: 1,
             alignItems: "center",
-            //overflow: "hidden",
-            justifyContent: "center", //new
+            justifyContent: "center", 
             flexWrap: (props: { isMulti?: boolean }) => (props.isMulti ? "wrap" : "nowrap"),
         },
         chip: {

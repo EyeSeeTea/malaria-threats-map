@@ -61,18 +61,21 @@ const StyledButton = styled(Button)`
 `;
 
 const LanguageSelectorBox = styled(Box)`
-    flex-grow: 0;`;
+    flex-grow: 0;
+`;
 
 const MenuOptionBox = styled(Box)`
-flex-grow: 1;
-width: 60%; 
-margin: auto;
-@media (min-width: 600px) {
-    display: flex;
-}`;
+    flex-grow: 1;
+    width: 60%;
+    margin: auto;
+    @media (min-width: 600px) {
+        display: flex;
+    }
+`;
 
-    const StyledAppBar = styled(AppBar)`
-    background-color: white;`;
+const StyledAppBar = styled(AppBar)`
+    background-color: white;
+`;
 
 interface HeaderProps {
     t: TFunction<"translation", undefined>;

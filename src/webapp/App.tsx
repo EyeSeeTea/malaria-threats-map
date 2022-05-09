@@ -63,7 +63,7 @@ export let theme = createTheme({
     },
 });
 
-theme = responsiveFontSizes(theme); 
+theme = responsiveFontSizes(theme);
 
 class App extends React.Component {
     render() {

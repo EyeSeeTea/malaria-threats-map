@@ -30,7 +30,7 @@ const StyledBanner = styled.div`
     height: 720px;
     opacity: 1;
 `;
-// 1170px 
+
 const ContentDiv = styled.div`
     width: ${window.innerWidth * 0.83}px;
     margin: auto;
@@ -46,12 +46,11 @@ const MediaCardDiv = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    @media(max-width: 1024px) {
+    @media (max-width: 1024px) {
         flex-wrap: wrap;
     }
-    @media(max-width: 768px) {
+    @media (max-width: 768px) {
         justify-content: center;
-
     }
 `;
 
@@ -61,6 +60,10 @@ const HeaderDiv = styled.div`
     padding-top: 30px;
     padding-bottom: 40px;
 `;
+
+const StyledDivider = styled(Divider)`
+margin-top: 83px;
+`
 
 const themePaperColors = {
     preventionColor: "#5ABE86",
@@ -75,19 +78,19 @@ const themePaperColors = {
 
 export const HomePage = () => {
     const { t } = useTranslation();
-    console.log(window.innerWidth)
+
     return (
         <React.Fragment>
             <StyledBanner>
                 <Header t={t} />
                 <ContentDiv>
                     <TitleBannerDiv>
-                        <Typography variant="h2" color={"inherit"} sx={{ textTransform: "uppercase", fontSize: 66 }}>
+                        <Typography variant="h2" color={"inherit"} textTransform="uppercase" fontSize={66}>
                             <Trans i18nKey="common.homepage.title" t={t}>
                                 Malaria <br /> <strong>Threats Map</strong>
                             </Trans>
                         </Typography>
-                        <Typography variant="h5" color={"inherit"} sx={{ marginTop: "27px" }}>
+                        <Typography variant="h5" color={"inherit"} marginTop="27px">
                             {t("common.homepage.subtitle")}
                         </Typography>
                     </TitleBannerDiv>
@@ -122,7 +125,9 @@ export const HomePage = () => {
                             variant="h4"
                             component="div"
                             textAlign="center"
-                            sx={{ fontWeight: "bold", lineHeight: "50px", fontSize: 30 }}
+                            fontWeight="bold"
+                            lineHeight="50px"
+                            fontSize="30px"
                         >
                             {t("common.homepage.header")}
                         </Typography>
@@ -177,7 +182,7 @@ export const HomePage = () => {
                         </Grid>
                     </Box>
                 </ContentDiv>
-                <Divider variant="fullWidth" style={{ marginTop: 83 }} />
+                <StyledDivider variant="fullWidth" />
                 <Footer t={t} />
             </StyledBanner>
         </React.Fragment>

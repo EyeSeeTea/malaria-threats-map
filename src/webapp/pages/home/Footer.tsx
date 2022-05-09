@@ -16,7 +16,8 @@ const FooterDiv = styled.div`
 const StyledImage = styled.img`
     width: 100%;
     max-width: 150px;
-    max-height: 50px;`
+    max-height: 50px;
+`;
 
 const Flex = styled.div`
     display: flex;
@@ -81,7 +82,7 @@ const Footer = ({ t }: FooterProps) => {
                         {t("common.footer.other_who_resources.title")}
                     </FooterHeader>
                     {otherWhoResources.map((resource, id) => (
-                        <Link 
+                        <Link
                             key={id}
                             href="#"
                             underline="none"
@@ -124,7 +125,7 @@ const Footer = ({ t }: FooterProps) => {
                     {t("common.footer.privacy")}
                 </Link>
                 <Typography variant="body1" textAlign="center" color="#343434">
-                    © 2021 WHO
+                {t("disclaimer.p1bLinkText", { year: new Date().getFullYear() })}
                 </Typography>
             </PrivacyCopyrightDiv>
         </React.Fragment>
