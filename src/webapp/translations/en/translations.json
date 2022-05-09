@@ -28,7 +28,7 @@
             "resistance_intensity": "Insecticide resistance intensity",
             "resistance_mechanism": "Resistance mechanisms detection",
             "synergist_involvement": "Synergist effect in susceptibility",
-            "synergist_involvement_legend": "Effect of synergy in susceptibility",
+            "synergist_involvement_legend": "Effect of the synergist in restoring susceptibility to the insecticide",
             "chart": {
                 "resistance_status": {
                     "content_1": "{{nStudies}} test(s) on ",

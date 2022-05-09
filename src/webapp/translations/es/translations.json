@@ -28,7 +28,7 @@
             "resistance_intensity": "Intensidad de la resistencia a insecticidas",
             "resistance_mechanism": "Mecanismos de la resistencia a insecticidas",
             "synergist_involvement": "Efecto sinérgico en susceptibilidad",
-            "synergist_involvement_legend": "Efecto de la sinergia en susceptibilidad",
+            "synergist_involvement_legend": "Efecto del sinergista en la restauración de la susceptibilidad al insecticida",
             "chart": {
                 "resistance_status": {
                     "content_1": "{{nStudies}} pruebas con vectores ",

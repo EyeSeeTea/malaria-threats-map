@@ -36,6 +36,6 @@ describe("Open subthemes", () => {
 
         cy.findByText("Synergist effect in susceptibility").click();
 
-        cy.findByLegendTitle("Effect of synergy in susceptibility");
+        cy.findByLegendTitle("Effect of the synergist in restoring susceptibility to the insecticide");
     });
 });
