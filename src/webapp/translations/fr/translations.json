@@ -33,7 +33,7 @@
                 "resistance_status": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
                     "content_2": " du paludisme via détermination de la dose diagnostique(s) avec {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# de tests",
+                    "number_of_tests": "nombre testé",
                     "Confirmed": "Confirmée",
                     "Possible": "Suspectée",
                     "Susceptible": "Sensible",
@@ -45,7 +45,7 @@
                 "resistance_intensity": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
                     "content_2": " du paludisme via détermination de l'intensité de la résistance(s) avec {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# de tests",
+                    "number_of_tests": "nombre testé",
                     "HIGH_INTENSITY": "Fort",
                     "MODERATE_TO_HIGH_INTENSITY": "Moyen Fort",
                     "MODERATE_INTENSITY": "Moyen",
@@ -58,7 +58,7 @@
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
                     "content_2": " du paludisme via {{insecticideClasses}} avec {{type}} {{years}}",
-                    "number_of_tests": "# de tests",
+                    "number_of_tests": "nombre testé",
                     "DETECTED": "Détecté",
                     "NOT_DETECTED": "Non détecté",
                     "title": "Nombre d'essais de mécanismes",
@@ -69,7 +69,7 @@
                 "synergist_involvement": {
                     "mortality": "mortalité (%)",
                     "tested": "Études (n)",
-                    "number_of_tests": "# de tests",
+                    "number_of_tests": "nombre testé",
                     "mosquito_mortality": "% mortalité de moustique",
                     "no_synergist": "Pas de synergistes"
                 }

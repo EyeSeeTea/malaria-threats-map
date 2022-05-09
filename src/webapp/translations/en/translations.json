@@ -33,7 +33,7 @@
                 "resistance_status": {
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via discriminating concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# of tests",
+                    "number_of_tests": "number tested",
                     "Confirmed": "Confirmed",
                     "Possible": "Possible",
                     "Susceptible": "Susceptible",
@@ -45,7 +45,7 @@
                 "resistance_intensity": {
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via intensity concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# of tests",
+                    "number_of_tests": "number tested",
                     "HIGH_INTENSITY": "High Intensity",
                     "MODERATE_TO_HIGH_INTENSITY": "Moderate to High Intensity",
                     "MODERATE_INTENSITY": "Moderate Intensity",
@@ -58,7 +58,7 @@
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via {{insecticideClasses}} with selected {{type}} {{years}}",
-                    "number_of_tests": "# of tests",
+                    "number_of_tests": "number tested",
                     "DETECTED": "Detected",
                     "NOT_DETECTED": "Not detected",
                     "title": "Number of mechanism assays",
@@ -69,7 +69,7 @@
                 "synergist_involvement": {
                     "mortality": "mortality (%)",
                     "tested": "Tested (n)",
-                    "number_of_tests": "# of tests",
+                    "number_of_tests": "number tested",
                     "mosquito_mortality": "% mosquito mortality",
                     "no_synergist": "No synergist"
                 }
