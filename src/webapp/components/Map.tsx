@@ -1,7 +1,7 @@
 import React from "react";
 import { style } from "./style";
 import styled from "styled-components";
-import Layers from "./Layers";
+import LayersButton from "./layers_button/LayersButton";
 import mapboxgl from "mapbox-gl";
 import { isMobile } from "react-device-detect";
 import { PreventionMapType, State } from "../store/types";
@@ -135,6 +135,8 @@ const LegendContainer = styled(BaseContainer)`
 
 const BottomLeftContainer = styled(BaseContainer)`
     bottom: 0;
+    display: flex;
+    flex-direction: row;
 `;
 
 const BottomMiddleContainer = styled(BaseContainer)`
@@ -358,7 +360,7 @@ class Map extends React.Component<Props> {
                             <Hidden smDown>
                                 <MalariaTour />
                             </Hidden>
-                            <Layers />
+
                             <Country disabled={isInvasive} />
                             {!isMobile && <DataDownload />}
                             <Hidden smUp>
@@ -411,6 +413,8 @@ class Map extends React.Component<Props> {
                 </Fade>
                 <PushoverContainer menuOpen={this.state.menuOpen}>
                     <BottomLeftContainer>
+                        <LayersButton />
+                        <Box width={20} />
                         <Hidden smUp>
                             <WhoLogo width={150} />
                         </Hidden>
