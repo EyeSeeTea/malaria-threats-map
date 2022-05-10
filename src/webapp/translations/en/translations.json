@@ -186,6 +186,8 @@
                     "species": "Species",
                     "sampling_period": "Sampling period",
                     "sampling_method": "Sampling method",
+                    "stage": "Vector stage found",
+                    "breeding_habitat": "Larval habitat",
                     "study_identification_method": "Species identification method",
                     "data_collection": "Acknowledgement for data curation",
                     "no_available": "Not available"

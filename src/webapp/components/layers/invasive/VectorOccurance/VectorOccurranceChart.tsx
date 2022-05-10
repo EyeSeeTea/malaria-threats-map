@@ -120,6 +120,20 @@ const VectorOccurrenceChart = ({ studies }: Props) => {
                 </Flex>
                 <Flex>
                     <Typography variant="body2">
+                        <b>{t("common.invasive.chart.vector_occurrance.stage")}:&nbsp;</b>
+                        {studyObject.STAGE || t("common.invasive.chart.vector_occurrance.no_available")}
+                    </Typography>
+                </Flex>
+                {(studyObject.STAGE === "inmatures" || studyObject.STAGE === "inmatures and adults") && (
+                    <Flex>
+                        <Typography variant="body2">
+                            <b>{t("common.invasive.chart.vector_occurrance.breeding_habitat")}:&nbsp;</b>
+                            {studyObject.BREEDING_HABITAT || t("common.invasive.chart.vector_occurrance.no_available")}
+                        </Typography>
+                    </Flex>
+                )}
+                <Flex>
+                    <Typography variant="body2">
                         <b>{studyIdentificationMethod}:&nbsp;</b>
                         {studyObject.ID_METHOD
                             ? lowerCase(studyObject.ID_METHOD)

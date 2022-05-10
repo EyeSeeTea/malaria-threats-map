@@ -186,6 +186,8 @@
                     "species": "Espèces",
                     "sampling_period": "Période d’échantillonnage",
                     "sampling_method": "Méthode d’échantillonnage",
+                    "stage": "Stade vecteur trouvé",
+                    "breeding_habitat": "Habitat larvaire",
                     "study_identification_method": "Méthode d’identification des espèces",
                     "data_collection": "Remerciements pour la collecte de données",
                     "no_available": "Indisponible"
