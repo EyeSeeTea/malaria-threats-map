@@ -46,7 +46,7 @@ describe("Open popup in delayed parasite clearance subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.parasiteDrugEfficacy);
         cy.contains("Treatment failure").click();
-        cy.findByText("Delayed parasite clearance").click();
+        cy.findByText("Delayed parasite clearance", { exact: false }).click();
     });
 
     it("should open a popup to click on coordinates", () => {
