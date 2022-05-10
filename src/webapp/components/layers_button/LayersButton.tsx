@@ -5,7 +5,6 @@ import EndemicityLayerButton from "./EndemicityLayerButton";
 import styled from "styled-components";
 import LayersImage from "../../assets/img/layers.png";
 import LayersIcon from "@mui/icons-material/Layers";
-import { margin } from "@mui/system";
 import { useTranslation } from "react-i18next";
 
 const RoundedCard = styled(Card)`
