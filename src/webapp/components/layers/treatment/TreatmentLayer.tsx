@@ -203,7 +203,9 @@ class TreatmentLayer extends Component<Props> {
 
     mountLayer(prevProps?: Props) {
         const { studies, treatmentFilters, countryMode } = this.props;
+        console.log("studies-layer-before", studies);
         if (!prevProps || (prevProps.studies.length !== studies.length && studies.length)) {
+            console.log("studies-layer", studies);
             if (this.props.map.getSource(TREATMENT_SOURCE_ID)) {
                 this.props.map.removeLayer(TREATMENT_LAYER_ID);
                 this.props.map.removeSource(TREATMENT_SOURCE_ID);

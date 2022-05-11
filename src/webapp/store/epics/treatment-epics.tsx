@@ -21,6 +21,7 @@ import { EpicDependencies } from "../../store/index";
 import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
 
 function groupStudies(studies: TreatmentStudy[]) {
+    console.log("groupStudies", studies);
     const filtered255Studies = studies.filter(study => study.DimensionID === 255 || study.DimensionID === 256);
     return filtered255Studies.map(study => ({
         ...study,
@@ -42,6 +43,7 @@ export const getTreatmentStudiesEpic = (
             if (state.treatment.studies.length === 0 && !state.treatment.error) {
                 return fromFuture(compositionRoot.treatment.getStudies()).pipe(
                     mergeMap((studies: TreatmentStudy[]) => {
+                        console.log("studies-epic", studies);
                         return of(fetchTreatmentStudiesSuccess(groupStudies(studies)));
                     }),
                     catchError((error: Error) => of(addNotificationAction(error.message), fetchTreatmentStudiesError()))

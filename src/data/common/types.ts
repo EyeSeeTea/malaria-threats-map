@@ -1,3 +1,5 @@
+import { TreatmentStudy } from "../../domain/entities/TreatmentStudy";
+
 export interface ApiParams {
     [key: string]: string | number | boolean;
 }
@@ -7,6 +9,11 @@ export interface ApiResponse<T> {
     features: Feature<T>[];
     fieldAliases: FieldAlias[];
     fields: Field[];
+}
+
+export interface XmartResponse<T> {
+    '@odata.context': string;
+    value: TreatmentStudy[];
 }
 
 interface Feature<T> {
