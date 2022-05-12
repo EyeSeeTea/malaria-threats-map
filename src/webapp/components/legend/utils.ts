@@ -19,7 +19,6 @@ import { IntensityStatusColors } from "../layers/prevention/IntensityStatus/symb
 import { INTENSITY_STATUS } from "../layers/prevention/IntensityStatus/utils";
 import { LevelOfInvolvementColors } from "../layers/prevention/Involvement/symbols";
 import { LEVEL_OF_INVOLVEMENT } from "../layers/prevention/Involvement/utils";
-import { PboDeploymentColors, PboDeploymentStatus } from "../layers/prevention/PboDeployment/PboDeploymentSymbols";
 import { ResistanceMechanismColors } from "../layers/prevention/ResistanceMechanisms/symbols";
 import { RESISTANCE_MECHANISM } from "../layers/prevention/ResistanceMechanisms/utils";
 import { TreatmentCountryColors } from "../layers/treatment/Countries/treatment-country-symbols";
@@ -57,11 +56,7 @@ export function getLegendTitle(
 
 function getPreventionLegendTitle(filters: PreventionFilters, countryMode: boolean): string {
     if (countryMode) {
-        if (filters.mapType === PreventionMapType.PBO_DEPLOYMENT) {
-            return i18next.t("common.prevention.pbo_deployment_legend");
-        } else {
-            return i18next.t("common.themes.prevention");
-        }
+        return i18next.t("common.themes.prevention");
     }
 
     switch (filters.mapType) {
@@ -73,8 +68,6 @@ function getPreventionLegendTitle(filters: PreventionFilters, countryMode: boole
             return i18next.t("common.prevention.resistance_mechanism");
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return i18next.t("common.prevention.synergist_involvement_legend");
-        case PreventionMapType.PBO_DEPLOYMENT:
-            return i18next.t("common.prevention.pbo_deployment_legend");
         default:
             return "";
     }
@@ -141,38 +134,12 @@ export function getLegendLabels(
 
 function getPreventionLegendLebels(filters: PreventionFilters, countryMode: boolean): LegendLabel[] {
     if (countryMode) {
-        if (filters.mapType === PreventionMapType.PBO_DEPLOYMENT) {
-            return [
-                {
-                    label: "prevention.legend.pbo_deployment.countries_legend.at_least_one_site",
-                    color: PboDeploymentColors[PboDeploymentStatus.ELIGIBLE][0],
-                },
-                {
-                    label: "prevention.legend.pbo_deployment.countries_legend.insufficient_to_judge",
-                    color: PboDeploymentColors[PboDeploymentStatus.NOT_ENOUGH_DATA][0],
-                },
-                {
-                    label: "prevention.legend.pbo_deployment.countries_legend.no_reports_available",
-                    color: PboDeploymentColors[PboDeploymentStatus.NOT_ELIGIBLE][0],
-                },
-                {
-                    label: "prevention.legend.pbo_deployment.countries_legend.not_malaria_endemic",
-                    color: "#FFFFFF",
-                    border: true,
-                },
-                {
-                    label: "prevention.legend.pbo_deployment.countries_legend.not_applicable",
-                    color: "#AAAAAA",
-                },
-            ];
-        } else {
-            return [
-                {
-                    label: "legend.number_of_studies",
-                    color: PreventionCountryColors.COUNTRIES[0],
-                },
-            ];
-        }
+        return [
+            {
+                label: "legend.number_of_studies",
+                color: PreventionCountryColors.COUNTRIES[0],
+            },
+        ];
     }
 
     switch (filters.mapType) {
@@ -238,22 +205,6 @@ function getPreventionLegendLebels(filters: PreventionFilters, countryMode: bool
                 {
                     label: "prevention.legend.synergist_involvement.no_involvement",
                     color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT][0],
-                },
-            ];
-        case PreventionMapType.PBO_DEPLOYMENT:
-            return [
-                {
-                    label: "prevention.legend.pbo_deployment.eligible",
-
-                    color: PboDeploymentColors[PboDeploymentStatus.ELIGIBLE][0],
-                },
-                {
-                    label: "prevention.legend.pbo_deployment.not_eligible",
-                    color: PboDeploymentColors[PboDeploymentStatus.NOT_ELIGIBLE][0],
-                },
-                {
-                    label: "prevention.legend.pbo_deployment.not_enough_data",
-                    color: PboDeploymentColors[PboDeploymentStatus.NOT_ENOUGH_DATA][0],
                 },
             ];
         default:
@@ -420,8 +371,6 @@ function getPreventionLegendMapTypeHelpKey(filters: PreventionFilters): string {
             return "common.prevention.legend.resistance_mechanism.help";
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return "common.prevention.legend.synergist_involvement.help";
-        case PreventionMapType.PBO_DEPLOYMENT:
-            return "common.prevention.legend.pbo_deployment.help";
         default:
             return "";
     }
