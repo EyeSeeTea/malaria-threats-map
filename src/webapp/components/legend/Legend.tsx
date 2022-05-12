@@ -73,7 +73,6 @@ const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
-    countryMode: selectCountryMode(state),
     translations: selectTranslations(state),
 });
 
@@ -91,7 +90,6 @@ const Legend: React.FC<Props> = ({
     diagnosisFilters,
     treatmentFilters,
     invasiveFilters,
-    countryMode,
     translations,
 }) => {
     const [expanded, setExpanded] = React.useState<boolean>(false);
@@ -108,30 +106,18 @@ const Legend: React.FC<Props> = ({
     React.useEffect(() => {
         if (!translations) return;
 
-        return setTitle(
-            getLegendTitle(theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters, countryMode)
-        );
-    }, [theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters, countryMode, translations]);
+        return setTitle(getLegendTitle(theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters));
+    }, [theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters, translations]);
 
     React.useEffect(() => {
         return setMapTypeHelpKey(
             getLegendMapTypeHelpKey(theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters)
         );
-    }, [theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters, countryMode]);
+    }, [theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters]);
 
     React.useEffect(
-        () =>
-            setLabels(
-                getLegendLabels(
-                    theme,
-                    preventionFilters,
-                    diagnosisFilters,
-                    treatmentFilters,
-                    invasiveFilters,
-                    countryMode
-                )
-            ),
-        [theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters, countryMode]
+        () => setLabels(getLegendLabels(theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters)),
+        [theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters]
     );
 
     console.log({ mapTypeHelpKey });

@@ -34,8 +34,7 @@ export function getLegendTitle(
     preventionFilters: PreventionFilters,
     diagnosisFilters: DiagnosisFilters,
     treatmentFilters: TreatmentFilters,
-    invasiveFilters: InvasiveFilters,
-    countryMode: boolean
+    invasiveFilters: InvasiveFilters
 ): string {
     switch (theme) {
         case "prevention":
@@ -45,7 +44,7 @@ export function getLegendTitle(
         case "treatment":
             return getTreatmentLegendTitle(treatmentFilters);
         case "invasive":
-            return getInvasiveLegendTitle(invasiveFilters, countryMode);
+            return getInvasiveLegendTitle(invasiveFilters);
         default:
             return "";
     }
@@ -84,10 +83,7 @@ function getTreatmentLegendTitle(filters: TreatmentFilters): string {
     }
 }
 
-function getInvasiveLegendTitle(filters: InvasiveFilters, countryMode: boolean): string {
-    if (countryMode) {
-        return i18next.t("common.themes.treatment");
-    }
+function getInvasiveLegendTitle(filters: InvasiveFilters): string {
     switch (filters.mapType) {
         case InvasiveMapType.VECTOR_OCCURANCE:
             return i18next.t("common.invasive.vector_occurrance");
@@ -101,8 +97,7 @@ export function getLegendLabels(
     preventionFilters: PreventionFilters,
     diagnosisFilters: DiagnosisFilters,
     treatmentFilters: TreatmentFilters,
-    invasiveFilters: InvasiveFilters,
-    countryMode: boolean
+    invasiveFilters: InvasiveFilters
 ): LegendLabel[] {
     switch (theme) {
         case "prevention":
@@ -112,7 +107,7 @@ export function getLegendLabels(
         case "treatment":
             return getTreatmentLegendLabels(treatmentFilters);
         case "invasive":
-            return getInvasiveLegendLabels(invasiveFilters, countryMode);
+            return getInvasiveLegendLabels(invasiveFilters);
         default:
             return [];
     }
@@ -275,15 +270,7 @@ function getTreatmentLegendLabels(filters: TreatmentFilters): LegendLabel[] {
     }
 }
 
-function getInvasiveLegendLabels(filters: InvasiveFilters, countryMode: boolean): LegendLabel[] {
-    if (countryMode) {
-        return [
-            {
-                label: "legend.number_of_studies",
-                color: "#000",
-            },
-        ];
-    }
+function getInvasiveLegendLabels(filters: InvasiveFilters): LegendLabel[] {
     switch (filters.mapType) {
         case InvasiveMapType.VECTOR_OCCURANCE:
             return [
