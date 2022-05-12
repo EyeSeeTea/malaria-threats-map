@@ -14,7 +14,6 @@ import { DiagnosisStatusColors } from "../layers/diagnosis/GeneDeletions/symbols
 import { DIAGNOSIS_STATUS } from "../layers/diagnosis/GeneDeletions/utils";
 import { INVASIVE_STATUS } from "../layers/invasive/VectorOccurance/utils";
 import { InvasiveStatusColors } from "../layers/invasive/VectorOccurance/vector-ocurrance-symbols";
-import { PreventionCountryColors } from "../layers/prevention/Countries/PreventionCountrySymbols";
 import { IntensityStatusColors } from "../layers/prevention/IntensityStatus/symbols";
 import { INTENSITY_STATUS } from "../layers/prevention/IntensityStatus/utils";
 import { LevelOfInvolvementColors } from "../layers/prevention/Involvement/symbols";
@@ -42,7 +41,7 @@ export function getLegendTitle(
 ): string {
     switch (theme) {
         case "prevention":
-            return getPreventionLegendTitle(preventionFilters, countryMode);
+            return getPreventionLegendTitle(preventionFilters);
         case "diagnosis":
             return getDiagnosisLegendTitle(diagnosisFilters, countryMode);
         case "treatment":
@@ -54,11 +53,7 @@ export function getLegendTitle(
     }
 }
 
-function getPreventionLegendTitle(filters: PreventionFilters, countryMode: boolean): string {
-    if (countryMode) {
-        return i18next.t("common.themes.prevention");
-    }
-
+function getPreventionLegendTitle(filters: PreventionFilters): string {
     switch (filters.mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
             return i18next.t("common.prevention.resistance_status");
@@ -120,7 +115,7 @@ export function getLegendLabels(
 ): LegendLabel[] {
     switch (theme) {
         case "prevention":
-            return getPreventionLegendLebels(preventionFilters, countryMode);
+            return getPreventionLegendLebels(preventionFilters);
         case "diagnosis":
             return getDiagnosisLegendLabels(diagnosisFilters, countryMode);
         case "treatment":
@@ -132,16 +127,7 @@ export function getLegendLabels(
     }
 }
 
-function getPreventionLegendLebels(filters: PreventionFilters, countryMode: boolean): LegendLabel[] {
-    if (countryMode) {
-        return [
-            {
-                label: "legend.number_of_studies",
-                color: PreventionCountryColors.COUNTRIES[0],
-            },
-        ];
-    }
-
+function getPreventionLegendLebels(filters: PreventionFilters): LegendLabel[] {
     switch (filters.mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
             return [
