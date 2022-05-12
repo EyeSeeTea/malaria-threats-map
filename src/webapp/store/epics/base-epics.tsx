@@ -8,7 +8,6 @@ import {
     getLastUpdatedSuccessAction,
     logEventAction,
     setBoundsAction,
-    setCountryModeAction,
     setRegionAction,
     setSelection,
     setStoryModeAction,
@@ -21,7 +20,7 @@ import {
     uploadFileSuccessAction,
     uploadFileErrorAction,
 } from "../actions/base-actions";
-import { PreventionMapType, State } from "../types";
+import { State } from "../types";
 import * as ajax from "../ajax";
 import { MapServerConfig } from "../../constants/constants";
 import { addNotificationAction } from "../actions/notifier-actions";
@@ -55,17 +54,7 @@ export const setThemeEpic = (action$: Observable<ActionType<typeof setThemeActio
                 setStoryModeStepAction(0),
             ].filter(Boolean);
 
-            switch (action.payload) {
-                case "invasive":
-                    return of(...[setCountryModeAction(false), ...base]);
-                case "prevention":
-                    if (state.prevention.filters.mapType === PreventionMapType.PBO_DEPLOYMENT) {
-                        return of(...[setCountryModeAction(false), ...base]);
-                    }
-                    return of(...base);
-                default:
-                    return of(...base);
-            }
+            return of(...base);
         })
     );
 
@@ -138,42 +127,39 @@ export const setStoryModeStepEpic = (
             }
             switch (theme) {
                 case "prevention":
-                    if (state.prevention.filters.mapType === PreventionMapType.PBO_DEPLOYMENT) {
-                        return of();
-                    }
                     switch (action.payload) {
                         case 0:
-                            return of(setCountryModeAction(true), setRegionAction({}));
+                            return of(setRegionAction({}));
                         case 1:
-                            return of(setCountryModeAction(false), setRegionAction({}));
+                            return of(setRegionAction({}));
                         case 2:
-                            return of(setCountryModeAction(false), setRegionAction({ region: "SOUTH-EAST_ASIA" }));
+                            return of(setRegionAction({ region: "SOUTH-EAST_ASIA" }));
                         case 3:
-                            return of(setCountryModeAction(false), setRegionAction({ region: "AFRICA" }));
+                            return of(setRegionAction({ region: "AFRICA" }));
                         default:
                             return of();
                     }
                 case "diagnosis":
                     switch (action.payload) {
                         case 0:
-                            return of(setCountryModeAction(false), setRegionAction({ country: "PE" }));
+                            return of(setRegionAction({ country: "PE" }));
                         case 1:
-                            return of(setCountryModeAction(false), setRegionAction({ region: "AFRICA" }));
+                            return of(setRegionAction({ region: "AFRICA" }));
                         case 2:
-                            return of(setCountryModeAction(true), setRegionAction({}));
+                            return of(setRegionAction({}));
                         default:
                             return of();
                     }
                 case "treatment":
                     switch (action.payload) {
                         case 0:
-                            return of(setCountryModeAction(true), setRegionAction({}));
+                            return of(setRegionAction({}));
                         case 1:
-                            return of(setCountryModeAction(true), setRegionAction({}));
+                            return of(setRegionAction({}));
                         case 2:
-                            return of(setCountryModeAction(true), setRegionAction({}));
+                            return of(setRegionAction({}));
                         case 3:
-                            return of(setCountryModeAction(false), setRegionAction({}));
+                            return of(setRegionAction({}));
                         default:
                             return of();
                     }
@@ -181,7 +167,6 @@ export const setStoryModeStepEpic = (
                     switch (action.payload) {
                         case 0:
                             return of(
-                                setCountryModeAction(false),
                                 setRegionAction({}),
                                 setBoundsAction([
                                     [23.73159810368128, -5.628262912580524],
@@ -189,9 +174,7 @@ export const setStoryModeStepEpic = (
                                 ])
                             );
                         case 1:
-                            return of(setCountryModeAction(false), setRegionAction({ country: "PK" }));
-                        case 2:
-                            return of(setCountryModeAction(false));
+                            return of(setRegionAction({ country: "PK" }));
                         default:
                             return of();
                     }
@@ -297,31 +280,6 @@ export const uploadFileEpic = (
                     of(addNotificationAction("There was an error while uploading the file"), uploadFileErrorAction())
                 )
             );
-        })
-    );
-
-export const setCountryModeEpic = (
-    action$: Observable<ActionType<typeof setCountryModeAction>>,
-    state$: StateObservable<State>
-) =>
-    action$.pipe(
-        ofType(ActionTypeEnum.MalariaSetCountryMode),
-        withLatestFrom(state$),
-        switchMap(([_action, state]) => {
-            const requestCountriesAction = requestCountriesIsRequired(state, () => state.malaria.countryMode)
-                ? fetchCountryLayerRequest()
-                : undefined;
-
-            const setRegionIsRequired =
-                !state.malaria.countryMode &&
-                state.malaria.theme === "prevention" &&
-                state.prevention.filters.mapType === PreventionMapType.PBO_DEPLOYMENT
-                    ? setRegionAction({})
-                    : undefined;
-
-            const actions = _.compact([requestCountriesAction, setRegionIsRequired]);
-
-            return of(...actions);
         })
     );
 

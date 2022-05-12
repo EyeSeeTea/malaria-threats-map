@@ -92,9 +92,6 @@
             "synergist_involvement": "Synergist effect in susceptibility",
             "synergist_involvement_subtitle": "Results of synergist-insecticide bioassays (mono oxygenases only)",
             "synergist_involvement_legend": "Effect of synergy in susceptibility",
-            "pbo_deployment": "Pyrethroid-PBO nets deployment",
-            "pbo_deployment_subtitle": "See whether sites meet the WHO criteria for Pyrethroid-PBO net deployment",
-            "pbo_deployment_legend": "Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment by vector species",
             "chart": {
                 "resistance_status": {
                     "content_1": "{{nStudies}} test(s) on ",
@@ -138,21 +135,6 @@
                     "number_of_tests": "# of tests",
                     "mosquito_mortality": "% mosquito mortality",
                     "no_synergist": "No synergist"
-                },
-                "pbo_deployment": {
-                    "subtitle": "Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment by vector species",
-                    "vector_species": "Vector species",
-                    "vector_species_criteria": "Vector species that meet criteria",
-                    "num_sites_criteria": "Number of sites that meet criteria",
-                    "pyrethroid_resistance_status": "Pyrethroid resistance status",
-                    "adjusted_mortality": "Adj. mortality against pyrethroids between 10% and 80%",
-                    "most_recent_test_results": "Most recent pyrethroid susceptibility test results",
-                    "conferred_by_mono_oxygenase": "Conferred (at least in part) by mono-oxygenase",
-                    "mono_oxygenase_measured_by": "Mono-oxygenase measured by",
-                    "most_recent_mono_oxygenase_results": "Most recent mono-oxygenase involvement results",
-                    "yes": "Yes",
-                    "no": "No",
-                    "view_sites": "View sites"
                 }
             },
             "legend": {
@@ -195,36 +177,6 @@
                     "help": {
                         "p1": "This map presents data from <1>synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying results, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how synergist involvement is graded consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
-                        "footer": "Data source: Publications and unpublished reports and information from country offices."
-                    }
-                },
-                "pbo_deployment": {
-                    "eligible": "All criteria met",
-                    "not_eligible": "At least one criteria is not met",
-                    "not_enough_data": "More data needs to be collected to evaluate criteria",
-                    "expanded": {
-                        "eligible": "sites where at least one vector species meets the three WHO recommended criteria",
-                        "not_eligible": "sites where one of the vector species for which data are available violates at least one of the three criteria, and none of the species for which data are available meet the three criteria.",
-                        "not_enough_data": "sites with insufficient data to evaluate whether the local vector species meets the three criteria",
-                        "p1": "This map shows the status of compliance of local vector populations with the ",
-                        "p1Link": "https://apps.who.int/iris/bitstream/handle/10665/258939/WHO-HTM-GMP-2017.17-eng.pdf?sequence=5",
-                        "p1a": "three WHO recommended criteria ",
-                        "p2": "at different geographical sites or areas. The status has been evaluated based on data included in the Global database on insecticide resistance in malaria vectors. The map shows the status of compliance for the vector species selected on the filter pane. If no species have been filtered, the map considers all data available to evaluate the criteria."
-                    },
-                    "link": "https://www.who.int/malaria/publications/atoz/9789241550499/en/",
-                    "link_text": "WHO Guidelines for Malaria Vector Control",
-                    "link_content_1": "More information on the WHO recommendations for the deployment of Pyrethroid-PBO nets can be found in the ",
-                    "link_content_2": " (page 37-38). These recommendations will be updated as new evidence becomes available.",
-                    "countries_legend": {
-                        "at_least_one_site": "At least one site meets all three WHO-recommended criteria",
-                        "insufficient_to_judge": "Reported monitoring data is insufficient to judge eligibility",
-                        "no_reports_available": "No reports on monitoring WHO-recommended criteria are available",
-                        "not_malaria_endemic": "Not malaria endemic",
-                        "not_applicable": "Not applicable"
-                    },
-                    "help": {
-                        "p1": "This map contains data from <1>discriminating concentration bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying levels of resistance intensity, the colour of the dot is determined by the most recent results.",
-                        "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
                 }
@@ -891,28 +843,6 @@
         "data": "Data",
         "selectLocation": "FILTER LOCATION (OPTIONAL)",
         "location": "Location"
-    },
-    "PBOStory": {
-        "step1": {
-            "part1": "<0>What are Pyrethroid-PBO nets?</0>",
-            "part2": "Pyrethroid PBO nets are mosquito nets that include both a pyrethroid insecticide and the synergist PBO. PBO acts by inhibiting certain metabolic enzymes (e.g. mixed-function oxidases) within the mosquito that detoxify or sequester insecticides before they can have a toxic effect on the mosquito.",
-            "part3": "<0>Are they recommended by WHO as a public health intervention?</0>",
-            "part4": "Pyrethroid-PBO nets prequalified by WHO are conditionally recommended for deployment instead of pyrethroid-only LLINs where the principal malaria vector(s) exhibit pyrethroid resistance that is: a) confirmed, b) of intermediate level, and c) conferred (at least in part) by a monooxygenase-based resistance mechanism, as determined by standard procedures.",
-            "part5": "This recommendation was exceptionally granted in 2017 based on the epidemiological data from one cluster RCT and will remain conditional until data from at least one more trial conducted over 2 years have confirmed the enhanced impact on malaria that was demonstrated in the first study."
-        },
-        "step2": {
-            "part1": "<0>Considerations for the deployment of Pyrethroid-PBO nets</0>",
-            "part2": "Deployment of pyrethroid-PBO nets must only be considered in situations where coverage with effective vector control (primarily LLINs or IRS) will not be reduced; the primary goal must remain the achievement and maintenance of universal coverage for all people at risk of malaria.",
-            "part3": "Their deployment should be guided by whether geographical areas of operational relevance (e.g. districts or provinces) – rather than the whole country – meet the criteria specified by WHO and should be considered in the context of resource availability and potential for deployment of alternative malaria control interventions.",
-            "part4": "Pyrethroid-PBO nets should not be considered a tool that can alone effectively manage insecticide resistance in malaria vectors."
-        },
-        "step3": {
-            "part1": "<0>Prequalified Pyrethroid-PBO nets</0>",
-            "part2": "The WHO prequalification process assesses vector control products for their safety, quality and entomological efficacy against published evaluation standards. Currently prequalified new types of ITNs have demonstrated that they are safe and effective for their intended use.",
-            "part3": "The list of WHO prequalified pyrethroid-PBO nets can be consulted in the official site: ",
-            "part4": "Questions remain on long-term durability of the synergist piperonyl butoxide (PBO) on net fabric.",
-            "part5": "For more information about Pyrethroid-PBO nets and their difference with pyrethroid-only nets please consult: "
-        }
     },
     "preventionStory": {
         "step1": {
