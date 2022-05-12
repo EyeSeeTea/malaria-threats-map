@@ -9,7 +9,6 @@ import {
     TreatmentFilters,
     TreatmentMapType,
 } from "../../store/types";
-import { DiagnosisCountryColors } from "../layers/diagnosis/Countries/DiagnosisCountrySymbols";
 import { DiagnosisStatusColors } from "../layers/diagnosis/GeneDeletions/symbols";
 import { DIAGNOSIS_STATUS } from "../layers/diagnosis/GeneDeletions/utils";
 import { INVASIVE_STATUS } from "../layers/invasive/VectorOccurance/utils";
@@ -43,7 +42,7 @@ export function getLegendTitle(
         case "prevention":
             return getPreventionLegendTitle(preventionFilters);
         case "diagnosis":
-            return getDiagnosisLegendTitle(diagnosisFilters, countryMode);
+            return getDiagnosisLegendTitle(diagnosisFilters);
         case "treatment":
             return getTreatmentLegendTitle(treatmentFilters, countryMode);
         case "invasive":
@@ -68,10 +67,7 @@ function getPreventionLegendTitle(filters: PreventionFilters): string {
     }
 }
 
-function getDiagnosisLegendTitle(filters: DiagnosisFilters, countryMode: boolean) {
-    if (countryMode) {
-        return i18next.t("common.themes.diagnosis");
-    }
+function getDiagnosisLegendTitle(filters: DiagnosisFilters) {
     return i18next.t(`common.diagnosis.legend.gene_deletions.${filters.deletionType}`);
 }
 
@@ -117,7 +113,7 @@ export function getLegendLabels(
         case "prevention":
             return getPreventionLegendLebels(preventionFilters);
         case "diagnosis":
-            return getDiagnosisLegendLabels(diagnosisFilters, countryMode);
+            return getDiagnosisLegendLabels(diagnosisFilters);
         case "treatment":
             return getTreatmentLegendLabels(treatmentFilters, countryMode);
         case "invasive":
@@ -198,15 +194,7 @@ function getPreventionLegendLebels(filters: PreventionFilters): LegendLabel[] {
     }
 }
 
-function getDiagnosisLegendLabels(filters: DiagnosisFilters, countryMode: boolean): LegendLabel[] {
-    if (countryMode) {
-        return [
-            {
-                label: "legend.number_of_surveys",
-                color: DiagnosisCountryColors.COUNTRIES[0],
-            },
-        ];
-    }
+function getDiagnosisLegendLabels(_: DiagnosisFilters): LegendLabel[] {
     return [
         {
             label: "diagnosis.legend.gene_deletions.confirmed",

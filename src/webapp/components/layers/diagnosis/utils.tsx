@@ -2,14 +2,8 @@ import pfhrp2Symbols from "./GeneDeletions/symbols";
 import { DiagnosisMapType } from "../../../store/types";
 import * as R from "ramda";
 import { DIAGNOSIS_STATUS } from "./GeneDeletions/utils";
-import DiagnosisCountrySymbols from "./Countries/DiagnosisCountrySymbols";
 
-export const resolveMapTypeSymbols = (countryMode: boolean) => {
-    if (countryMode) {
-        return DiagnosisCountrySymbols;
-    }
-    return pfhrp2Symbols;
-};
+export const resolveMapTypeSymbols = () => pfhrp2Symbols;
 
 const filterByMostRecentYear = (group: any[]) => {
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), group);
