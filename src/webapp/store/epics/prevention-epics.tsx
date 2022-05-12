@@ -68,8 +68,6 @@ export const setPreventionMapTypeEpic = (
                 return of(..._.compact([setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
                 return of(..._.compact([setType("MONO_OXYGENASES"), logPageView]));
-            } else if (action.payload === PreventionMapType.PBO_DEPLOYMENT) {
-                return of(..._.compact([setType(undefined), logPageView]));
             } else {
                 return of(..._.compact([setType(undefined), logPageView]));
             }

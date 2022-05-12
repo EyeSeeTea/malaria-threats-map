@@ -10,7 +10,6 @@ import ResistanceMechanismFilters from "../../layers/prevention/ResistanceMechan
 import LevelOfInvolvementFilters from "../../layers/prevention/Involvement/LevelOfInvolvementFilters";
 import GeneDeletionFilters from "../../layers/diagnosis/GeneDeletions/GeneDeletionFilters";
 import { selectDiagnosisFilters } from "../../../store/reducers/diagnosis-reducer";
-import PboDeploymentFilters from "../../layers/prevention/PboDeployment/PboDeploymentFilters";
 import TreatmentFailureFilters from "../../layers/treatment/TreatmentFailure/TreatmentFailureFilters";
 import { selectTreatmentFilters } from "../../../store/reducers/treatment-reducer";
 import VectorOccuranceFilters from "../../layers/invasive/VectorOccurance/VectorOccuranceFilters";
@@ -55,8 +54,6 @@ const FiltersContent: React.FC<Props> = ({
                     return <ResistanceMechanismFilters />;
                 case PreventionMapType.LEVEL_OF_INVOLVEMENT:
                     return <LevelOfInvolvementFilters />;
-                case PreventionMapType.PBO_DEPLOYMENT:
-                    return <PboDeploymentFilters />;
                 default:
                     return <div />;
             }

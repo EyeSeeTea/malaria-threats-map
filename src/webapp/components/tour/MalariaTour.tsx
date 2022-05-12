@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import {
     logEventAction,
     setBoundsAction,
-    setCountryModeAction,
     setFiltersMode,
     setFiltersOpen,
     setInitialDialogOpen,
@@ -97,7 +96,6 @@ const mapDispatchToProps = {
     setRegion: setRegionAction,
     setSelection: setSelection,
     setFiltersMode: setFiltersMode,
-    setCountryMode: setCountryModeAction,
     setFilteredStudies: setFilteredStudiesAction,
     setInsecticideClass,
     setInsecticideTypes,
@@ -141,10 +139,6 @@ class MalariaTour extends PureComponent<Props> {
         this.props.setFiltersMode(mode);
     };
 
-    setCountryMode = (countryMode: boolean) => {
-        this.props.setCountryMode(countryMode);
-    };
-
     setRegion = (country: string) => {
         this.props.setRegion({ country });
     };
@@ -166,7 +160,6 @@ class MalariaTour extends PureComponent<Props> {
         this.setInsecticideClass("PYRETHROIDS");
         this.setInsecticideTypes([]);
         this.setSelection(null);
-        this.setCountryMode(false);
         this.toggleFilters(false);
         localStorage.setItem("tour", "visited");
         this.props.setTourOpen(false);
@@ -273,7 +266,6 @@ class MalariaTour extends PureComponent<Props> {
             {
                 selector: "#fifth-duo",
                 content: ({ goTo }) => {
-                    this.setCountryMode(false);
                     const selection = (() => {
                         switch (theme) {
                             case "prevention":
@@ -313,7 +305,6 @@ class MalariaTour extends PureComponent<Props> {
                 selector: "#country-button",
                 content: options => {
                     this.setSelection(null);
-                    this.setCountryMode(true);
                     return <Step8 {...options} {...baseProps} step={11} back={9} />;
                 },
             },

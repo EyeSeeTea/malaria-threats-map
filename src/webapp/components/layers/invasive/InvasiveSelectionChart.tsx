@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { InvasiveMapType, State } from "../../../store/types";
-import { selectCountryMode, selectTheme } from "../../../store/reducers/base-reducer";
+import { selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
+import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 import VectorOccurrenceChart from "./VectorOccurance/VectorOccurranceChart";
 import { selectInvasiveFilters } from "../../../store/reducers/invasive-reducer";
@@ -10,7 +11,7 @@ import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     invasiveFilters: selectInvasiveFilters(state),
-    countryMode: selectCountryMode(state),
+    selection: selectSelection(state),
 });
 
 const mapDispatchToProps = {
@@ -31,17 +32,20 @@ class InvasiveSelectionChart extends Component<Props> {
         const {
             theme,
             studies,
-            countryMode,
             popup,
+            selection,
             invasiveFilters: { mapType },
         } = this.props;
-
-        if (theme !== "invasive") {
+        if (!selection) {
+            return <div />;
+        }
+        const filteredStudies = studies.filter(study => study.SITE_ID === selection.SITE_ID);
+        if (!filteredStudies.length || theme !== "invasive") {
             return <div />;
         }
         return (
             <>
-                {!countryMode && mapType === InvasiveMapType.VECTOR_OCCURANCE && (
+                {mapType === InvasiveMapType.VECTOR_OCCURANCE && (
                     <VectorOccurrenceChart studies={studies} popup={popup} />
                 )}
             </>

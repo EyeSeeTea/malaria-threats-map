@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
-import { circleLayout, studiesToGeoJson, getCountryStudies } from "../layer-utils";
+import { circleLayout, studiesToGeoJson } from "../layer-utils";
 import diagnosisSymbols from "../symbols/diagnosis";
 import setupEffects from "../effects";
 import { selectDiagnosisFilters, selectDiagnosisStudies } from "../../../store/reducers/diagnosis-reducer";
 import {
-    selectCountryMode,
     selectFilters,
     selectRegion,
     selectSelection,
@@ -19,7 +18,6 @@ import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
 import { buildDiagnosisFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { DIAGNOSIS_STATUS } from "./GeneDeletions/utils";
-import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import {
     fetchDiagnosisStudiesRequest,
     setDiagnosisFilteredStudiesAction,
@@ -50,8 +48,6 @@ const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     region: selectRegion(state),
-    countries: selectCountries(state),
-    countryMode: selectCountryMode(state),
     selection: selectSelection(state),
     viewData: selectViewData(state),
     sidebarOpen: selectIsSidebarOpen(state),
@@ -87,8 +83,6 @@ class DiagnosisLayer extends Component<Props> {
             diagnosisFilters: { mapType, surveyTypes, patientType, deletionType },
             filters,
             region,
-            countryMode,
-            countries,
         } = this.props;
 
         this.mountLayer(prevProps);
@@ -99,17 +93,13 @@ class DiagnosisLayer extends Component<Props> {
         const patientTypeChange = prevProps.diagnosisFilters.patientType !== patientType;
         const deletionTypeChange = prevProps.diagnosisFilters.deletionType !== deletionType;
         const countryChange = prevProps.region !== region;
-        const countryModeChange = prevProps.countryMode !== countryMode;
-        const countriesChange = prevProps.countries.length !== countries.length;
         if (
             mapTypeChange ||
             yearChange ||
             countryChange ||
             surveyTypesChange ||
             patientTypeChange ||
-            deletionTypeChange ||
-            countryModeChange ||
-            countriesChange
+            deletionTypeChange
         ) {
             this.filterSource();
             this.applyMapTypeSymbols();
@@ -160,20 +150,18 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     filterSource = () => {
-        const { studies, countryMode } = this.props;
+        const { studies } = this.props;
         const source: any = this.props.map.getSource(DIAGNOSIS_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, DIAGNOSIS);
-            const data = countryMode ? countryStudies : geoStudies;
-            source.setData(studiesToGeoJson(data));
+            source.setData(studiesToGeoJson(geoStudies));
         }
     };
 
     mountLayer(prevProps?: Props) {
-        const { studies, countryMode } = this.props;
+        const { studies } = this.props;
         if (!prevProps || prevProps.studies.length !== studies.length) {
             if (this.props.map.getSource(DIAGNOSIS_SOURCE_ID)) {
                 this.props.map.removeLayer(DIAGNOSIS_LAYER_ID);
@@ -182,16 +170,13 @@ class DiagnosisLayer extends Component<Props> {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, DIAGNOSIS);
-
-            const data = countryMode ? countryStudies : geoStudies;
 
             const source: any = {
                 type: "geojson",
-                data: studiesToGeoJson(data),
+                data: studiesToGeoJson(geoStudies),
             };
             this.props.map.addSource(DIAGNOSIS_SOURCE_ID, source);
-            this.props.map.addLayer(layer(resolveMapTypeSymbols(countryMode)));
+            this.props.map.addLayer(layer(resolveMapTypeSymbols()));
 
             setupEffects(this.props.map, DIAGNOSIS_SOURCE_ID, DIAGNOSIS_LAYER_ID);
             this.setupPopover();
@@ -244,9 +229,8 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     applyMapTypeSymbols = () => {
-        const { countryMode } = this.props;
         const layer = this.props.map.getLayer(DIAGNOSIS_LAYER_ID);
-        const mapTypeSymbols = resolveMapTypeSymbols(countryMode);
+        const mapTypeSymbols = resolveMapTypeSymbols();
         if (layer && mapTypeSymbols) {
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-radius", mapTypeSymbols["circle-radius"]);
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-color", mapTypeSymbols["circle-color"]);
@@ -259,8 +243,7 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, countryMode, selection, viewData, setSidebarOpen } = this.props;
-
+        const { studies, selection, viewData, setSidebarOpen, sidebarOpen } = this.props;
         if (viewData === null) {
             setSidebarOpen(false);
         }
@@ -269,11 +252,7 @@ class DiagnosisLayer extends Component<Props> {
             this.props.setDiagnosisStudySelection([]);
             return <div />;
         }
-        const filteredStudies = this.filterStudies(studies).filter(study =>
-            countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
-        );
-
-        this.props.setDiagnosisStudySelection(filteredStudies);
+        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === selection.SITE_ID);
 
         if (filteredStudies.length === 0) {
             return <div />;

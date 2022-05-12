@@ -5,7 +5,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import { Step, StepLabel, Button, Paper, Typography, AppBar, Toolbar, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import styled from "styled-components";
-import { PreventionMapType, State } from "../store/types";
+import { State } from "../store/types";
 import { selectFilters, selectStoryModeStep, selectTheme } from "../store/reducers/base-reducer";
 import { setStoryModeAction, setStoryModeStepAction } from "../store/actions/base-actions";
 import { connect } from "react-redux";
@@ -15,7 +15,6 @@ import { useTranslation } from "react-i18next";
 import TreatmentSteps from "./story/treatment/TreatmentSteps";
 import InvasiveSteps from "./story/invasive/InvasiveSteps";
 import { useSwipeable, SwipeEventData } from "react-swipeable";
-import PBOSteps from "./story/pbo/PBOSteps";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import PaperStepper from "./PaperStepper/PaperStepper";
 
@@ -78,7 +77,7 @@ type Props = DispatchProps & StateProps;
 
 type Steps = { [value: string]: any[] };
 
-function StoryModeStepper({ theme, preventionFilters, setStoryMode, setStoryModeStep, storyModeStep }: Props) {
+function StoryModeStepper({ theme, setStoryMode, setStoryModeStep, storyModeStep }: Props) {
     const classes = useStyles({});
     const steps = getSteps();
 
@@ -115,16 +114,12 @@ function StoryModeStepper({ theme, preventionFilters, setStoryMode, setStoryMode
 
     const themeMap = {
         invasive: InvasiveSteps,
-        pbo: PBOSteps,
         diagnosis: DiagnosisSteps,
         treatment: TreatmentSteps,
         prevention: PreventionSteps,
     } as Steps;
 
-    const selectedSteps =
-        themeMap[
-            theme === "prevention" && preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT ? "pbo" : theme
-        ];
+    const selectedSteps = themeMap[theme];
 
     const SelectedStep = selectedSteps[storyModeStep];
 

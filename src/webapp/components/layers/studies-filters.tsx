@@ -8,7 +8,6 @@ import {
     RegionState,
 } from "../../store/types";
 import { isSynergyst } from "./prevention/ResistanceMechanisms/ResistanceMechanismFilters";
-import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 export const filterByYearRange =
     (years: number[], allowEmpty = false) =>
@@ -164,16 +163,6 @@ export const filterByExcludeLowerSamples = (value: boolean) => (study: any) => {
     return (value && study.N > 20) || !value;
 };
 
-const filterByPBOStudies = (study: PreventionStudy) => {
-    return (
-        ((study.ASSAY_TYPE === "MOLECULAR_ASSAY" ||
-            study.ASSAY_TYPE === "BIOCHEMICAL_ASSAY" ||
-            study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY") &&
-            study.TYPE === "MONO_OXYGENASES") ||
-        (study.ASSAY_TYPE === "DISCRIMINATING_CONCENTRATION_BIOASSAY" && study.INSECTICIDE_CLASS === "PYRETHROIDS")
-    );
-};
-
 export const buildPreventionFilters = (
     preventionFilters: PreventionFilters,
     filters: number[],
@@ -219,14 +208,6 @@ export const buildPreventionFilters = (
                 filterByType(preventionFilters.type),
                 filterBySpecies(preventionFilters.species),
                 filterByTypeSynergist(preventionFilters.synergistTypes),
-                filterByYearRange(filters),
-                filterByRegion(region),
-            ];
-        case PreventionMapType.PBO_DEPLOYMENT:
-            return [
-                filterByPBOStudies,
-                filterByInsecticideTypes(preventionFilters.insecticideTypes),
-                filterBySpecies(preventionFilters.species),
                 filterByYearRange(filters),
                 filterByRegion(region),
             ];

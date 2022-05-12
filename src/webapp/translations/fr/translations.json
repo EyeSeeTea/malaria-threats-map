@@ -34,9 +34,6 @@
             "synergist_involvement": "Effet synergiste de la susceptibilité",
             "synergist_involvement_subtitle": "Effet synergiste de la susceptibilité",
             "synergist_involvement_legend": "Effet de la synergie sur la susceptibilité",
-            "pbo_deployment": "Déploiement de moustiquaires  PBO-pyréthroïde",
-            "pbo_deployment_subtitle": "Voir si les sites répondent aux critères de l'OMS pour le déploiement de la moustiquaire Pyrethroid-PBO",
-            "pbo_deployment_legend": "Conformité aux critères recommandés par l'OMS pour le  déploiementde moustiquaires avec PBO et pyréthroïde",
             "chart": {
                 "resistance_status": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
@@ -80,21 +77,6 @@
                     "number_of_tests": "# de tests",
                     "mosquito_mortality": "% mortalité de moustique",
                     "no_synergist": "Pas de synergistes"
-                },
-                "pbo_deployment": {
-                    "subtitle": "Conformité avec les critères recommandés par l'OMS pour le déploiement de moustiquaires pyréthroïdes-PBO par espèce vectorielle",
-                    "vector_species": "Espèces vectorielles",
-                    "vector_species_criteria": "Espèces vectorielles qui répondent aux critères",
-                    "num_sites_criteria": "Nombre de sites répondant aux critères",
-                    "pyrethroid_resistance_status": "Statut de résistance aux pyréthroïdes",
-                    "adjusted_mortality": "Mortalité ajustée contre les pyréthrinoïdes entre 10% et 80%",
-                    "most_recent_test_results": "Résultats des tests de sensibilité aux pyréthrinoïdes les plus récents",
-                    "conferred_by_mono_oxygenase": "Conféré (au moins en partie) par la mono-oxygénase",
-                    "mono_oxygenase_measured_by": "Mono-oxygénase mesurée par",
-                    "most_recent_mono_oxygenase_results": "Résultats les plus récents d'implication de la mono-oxygénase",
-                    "yes": "Oui",
-                    "no": "Non",
-                    "view_sites": "Voir les sites"
                 }
             },
             "legend": {
@@ -138,36 +120,6 @@
                         "p1": "This map presents data from <1>synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying results, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how synergist involvement is graded consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
-                    }
-                },
-                "pbo_deployment": {
-                    "eligible": "Tous les critères remplis",
-                    "not_eligible": "Au moins un critère n'est pas rempli",
-                    "not_enough_data": "Davantage de données doivent être collectées pour évaluer les critères",
-                    "expanded": {
-                        "eligible": "les sites où au moins une espèce de vecteur satisfait les trois critères recommandés par l'OMS",
-                        "not_eligible": "les sites où l'une des espèces vectrices pour lesquelles des données sont disponibles enfreint au moins l'un des trois critères recommandés par l'OMS décrits ci-dessus, et aucune  espèce pour lesquelle des données sont disponibles ne satisfait les trois critères.",
-                        "not_enough_data": "sites avec des données insuffisantes pour évaluer si les espèces vectorielles locales satisfont les trois critères",
-                        "p1": "Cette carte montre l'état de conformité des populations locales de vecteurs avec les ",
-                        "p1Link": "https://apps.who.int/iris/bitstream/handle/10665/258939/WHO-HTM-GMP-2017.17-eng.pdf?sequence=5",
-                        "p1a": "trois critères recommandés par l'OMS ",
-                        "p2": "sur différents sites ou zones géographiques. Le statut a été évalué sur la base des données incluses dans la base de données mondiale sur la résistance aux insecticides chez les vecteurs du paludisme. La carte montre l'état de conformité pour les espèces vectrices sélectionnées dans le volet de filtre. Si aucune espèce n'a été filtrée, la carte considère toutes les données disponibles pour évaluer les critères."
-                    },
-                    "link": "https://www.who.int/malaria/publications/atoz/9789241511575/fr/",
-                    "link_text": "Procédures pour tester la résistance aux insecticides chez les moustiques vecteurs du paludisme – seconde édition",
-                    "link_content_1": "Plus de information sur les recommandations de l'OMS pour le déploiement de moustiquaires avec pBO et pyréthrinoïde sont disponibles dans les ",
-                    "link_content_2": ". Ces recommandations seront mises à jour à mesure que de nouvelles preuves scientifiques deviennent disponibles.",
-                    "countries_legend": {
-                        "at_least_one_site": "Au moins un site répond aux trois critères recommandés par l'OMS",
-                        "insufficient_to_judge": "Les données de surveillance rapportées sont insuffisantes pour juger de la comestibilité",
-                        "no_reports_available": "Aucun rapport sur la surveillance des critères recommandés par l'OMS n'est disponible",
-                        "not_malaria_endemic": "Pas de paludisme endémique",
-                        "not_applicable": "N'est pas applicable"
-                    },
-                    "help": {
-                        "p1": "Cette carte contient des données provenant de <1>tests biologiques de concentration discriminante</1>. Chaque point sur la carte représente un site d'étude contenant une ou plusieurs études. Dans les sites où les études montrent différents niveaux d'intensité de résistance, la couleur de le point est déterminé par les résultats les plus récents.",
-                        "p2": "",
-                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays."
                     }
                 }
             }
@@ -841,28 +793,6 @@
         "data": "Données",
         "selectLocation": "EMPLACEMENT DU FILTRE (FACULTATIF)",
         "location": "Emplacement"
-    },
-    "PBOStory": {
-        "step1": {
-            "part1": "<0>Que sont les moustiquaires imprégnées d’un pyréthrinoïde et de PBO?</0>",
-            "part2": "Les moustiquaires imprégnées d’un pyréthrinoïde et de PBO sont des moustiquaires contenant à la fois un insecticide pyréthrinoïde et le synergiste PBO. Le PBO agit en inhibant certaines enzymes métaboliques dans le moustique (par exemple les oxydases à fonctions mixtes) qui détoxifient ou séquestrent les insecticides avant qu'ils puissent avoir un effet toxique sur le moustique.",
-            "part3": "<0>Sont-ils recommandés par l'OMS comme intervention de santé publique?</0>",
-            "part4": "Les moustiquaires imprégnées d’un pyréthrinoïde et de PBO préqualifiées par l’OMS font l’objet d’une recommandation soumise à conditions : elles peuvent être déployées à la place des moustiquaires à imprégnation durable traitées par un pyréthrinoïde uniquement lorsque le principal ou les principaux vecteur(s) du paludisme présente(nt) une résistance aux pyréthrinoïdes qui est : a) confirmée, b) de niveau intermédiaire et c) due (au moins en partie) à un mécanisme de résistance impliquant les monooxygénases, déterminé par les procédures standard.",
-            "part5": "Cette recommandation a été exceptionnellement accordée en 2017 sur la base des données épidémiologiques d'un ECR en cluster et restera conditionnelle jusqu'à ce que les données d'au moins un autre essai, mené sur 2 ans, aient confirmé le même impact sur le paludisme qui a été démontré par le première étude."
-        },
-        "step2": {
-            "part1": "<0>Considérations pour le déploiement des moustiquaires imprégnées d’un pyréthrinoïde et de PBO</0>",
-            "part2": "Le déploiement de moustiquaires imprégnées d’un pyréthrinoïde et de PBO ne doit être envisagé que dans les situations où la couverture par une outil de lutte antivectorielle efficace (principalement des MILDA ou des PID) ne sera pas réduite; l'objectif principal doit rester la réalisation et le maintien d'une couverture universelle pour toutes les personnes à risque de paludisme.",
-            "part3": "Il faut évaluer leur déploiement zone par zone de relevance opérationnelle (par exemple districts ou provinces), en évaluant s'ils satisfont les critères recommandés par l'OMS, au lieu de les considérer pour le pays dans son ensemble. Le déploiement devrait être considéré dans le contexte de la disponibilité des ressources et l'évaluer par rapport à d'autres interventions de lutte contre le paludisme.",
-            "part4": "Les moustiquaires aux pyréthroïdes-PBO ne doivent pas être considérées comme un outil capable lui seul de gérer efficacement la résistance aux insecticides chez les vecteurs du paludisme."
-        },
-        "step3": {
-            "part1": "<0>Moustiquaires imprégnées d’un pyréthrinoïde et de PBO préqualifiés par la OMS</0>",
-            "part2": "Le processus de préqualification de l'OMS évalue les produits de lutte antivectorielle pour leur sécurité, leur qualité et leur efficacité entomologique par rapport aux normes d'évaluation publiées. Les nouveaux types de MILDA actuellement préqualifiés ont démontré qu'ils sont sûrs et efficaces pour l'usage auquel ils sont destinés.",
-            "part3": "La liste des moustiquaires pyréthroïdes-PBO préqualifiées par l'OMS peut être consultée sur le site: ",
-            "part4": "La durée du synergiste de butoxyde de pipéronyle (PBO) imprégné dans le matériau des moustiquaires n'est pas encore connue.",
-            "part5": "Pour plus d'informations sur les moustiquaires pyréthroïdes-PBO et leur différence avec les moustiquaires de pyréthroïdes uniquement, veuillez consulter: "
-        }
     },
     "preventionStory": {
         "step1": {

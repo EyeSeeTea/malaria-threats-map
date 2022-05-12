@@ -81,6 +81,7 @@ const StudyDetailsSidebar = ({
     setSelection,
 }: Props) => {
     const { t } = useTranslation();
+    console.log(viewData);
     const classes = useStyles({});
     const [filteredStudiesDiagnosis, setFilteredStudiesDiagnosis] = React.useState<Array<DiagnosisStudy>>([]);
     const [filteredStudiesInvasives, setFilteredStudiesInvasive] = React.useState<Array<InvasiveStudy>>([]);
