@@ -178,7 +178,7 @@ class PreventionLayer extends Component<Props> {
                 data: studiesToGeoJson(geoStudies),
             };
             this.props.map.addSource(PREVENTION_SOURCE_ID, source);
-            this.props.map.addLayer(layer(resolveMapTypeSymbols(preventionFilters, false)));
+            this.props.map.addLayer(layer(resolveMapTypeSymbols(preventionFilters)));
 
             setupEffects(this.props.map, PREVENTION_SOURCE_ID, PREVENTION_LAYER_ID);
             this.setupPopover();
@@ -222,7 +222,7 @@ class PreventionLayer extends Component<Props> {
     applyMapTypeSymbols = () => {
         const { preventionFilters } = this.props;
         const layer = this.props.map.getLayer(PREVENTION_LAYER_ID);
-        const mapTypeSymbols = resolveMapTypeSymbols(preventionFilters, false);
+        const mapTypeSymbols = resolveMapTypeSymbols(preventionFilters);
         if (layer && mapTypeSymbols) {
             this.props.map.setPaintProperty(PREVENTION_LAYER_ID, "circle-radius", mapTypeSymbols["circle-radius"]);
             this.props.map.setPaintProperty(PREVENTION_LAYER_ID, "circle-color", mapTypeSymbols["circle-color"]);

@@ -5,13 +5,9 @@ import levelOfInvolvementSymbols from "./Involvement/symbols";
 import { PreventionFilters, PreventionMapType } from "../../../store/types";
 import * as R from "ramda";
 import { filterByAssayTypes, filterByInsecticideClass, filterByType, filterByYearRange } from "../studies-filters";
-import CountrySymbols from "./Countries/PreventionCountrySymbols";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 
-export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters, countryMode: boolean) => {
-    if (countryMode) {
-        return CountrySymbols;
-    }
+export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters) => {
     switch (preventionFilters.mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
             return resistanceStatusSymbols;
