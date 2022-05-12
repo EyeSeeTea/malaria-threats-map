@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import { DiagnosisMapType, State } from "../../../store/types";
-import { selectCountryMode, selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
+import { selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
 import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
 import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 import GeneDeletionChart from "./GeneDeletions/GeneDeletionChart";
-import GeneDeletionCountryChart from "./GeneDeletions/GeneDeletionCountryChart";
 import { selectDiagnosisFilters } from "../../../store/reducers/diagnosis-reducer";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     diagnosisFilters: selectDiagnosisFilters(state),
-    countryMode: selectCountryMode(state),
     selection: selectSelection(state),
 });
 
@@ -34,29 +32,18 @@ class DiagnosisSelectionChart extends Component<Props> {
         const {
             theme,
             studies,
-            countryMode,
             selection,
             diagnosisFilters: { mapType },
         } = this.props;
         if (!selection) {
             return <div />;
         }
-        const filteredStudies = studies.filter(study =>
-            countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
-        );
+        const filteredStudies = studies.filter(study => study.SITE_ID === selection.SITE_ID);
+
         if (!filteredStudies.length || theme !== "diagnosis") {
             return <div />;
         }
-        return (
-            <>
-                {!countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
-                    <GeneDeletionChart studies={filteredStudies} />
-                )}
-                {countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
-                    <GeneDeletionCountryChart studies={filteredStudies} />
-                )}
-            </>
-        );
+        return <>{mapType === DiagnosisMapType.GENE_DELETIONS && <GeneDeletionChart studies={filteredStudies} />}</>;
     }
 }
 
