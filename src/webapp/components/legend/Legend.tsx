@@ -2,7 +2,7 @@ import React from "react";
 
 import { State } from "../../store/types";
 import { connect } from "react-redux";
-import { selectCountryMode, selectFilters, selectTheme } from "../../store/reducers/base-reducer";
+import { selectFilters, selectTheme } from "../../store/reducers/base-reducer";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { setPreventionMapType } from "../../store/actions/prevention-actions";
 import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
