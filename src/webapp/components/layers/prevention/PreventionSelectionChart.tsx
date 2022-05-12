@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import { PreventionMapType, State } from "../../../store/types";
-import ResistanceStatusCountryChart from "./ResistanceStatus/ResistanceStatusCountryChart";
-import IntensityStatusCountryChart from "./IntensityStatus/IntensityStatusCountryChart";
-import ResistanceMechanismCountryChart from "./ResistanceMechanisms/ResistanceMechanismCountryChart";
 import ResistanceStatusChart from "./ResistanceStatus/ResistanceStatusChart";
 import IntensityStatusChart from "./IntensityStatus/IntensityStatusChart";
 import LevelOfInvolvementChart from "./Involvement/LevelOfInvolvementChart";
 import ResistanceMechanismsChart from "./ResistanceMechanisms/ResistanceMechanismsChart";
 import { selectPreventionFilters } from "../../../store/reducers/prevention-reducer";
-import { selectCountryMode, selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
+import { selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
 import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
 import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
@@ -17,7 +14,6 @@ import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     preventionFilters: selectPreventionFilters(state),
-    countryMode: selectCountryMode(state),
     selection: selectSelection(state),
 });
 
@@ -39,7 +35,6 @@ class PreventionSelectionChart extends Component<Props> {
         const {
             theme,
             studies,
-            countryMode,
             selection,
             preventionFilters: { mapType },
         } = this.props;
@@ -47,39 +42,19 @@ class PreventionSelectionChart extends Component<Props> {
         if (!selection) {
             return <div />;
         }
-        const filteredStudies = studies.filter(study =>
-            countryMode
-                ? study.ISO2 === selection.ISO_2_CODE || study.ADMIN2_GUID === selection.SITE_ID
-                : study.SITE_ID === selection.SITE_ID
-        );
+        const filteredStudies = studies.filter(study => study.SITE_ID === selection.SITE_ID);
         if (!filteredStudies.length || theme !== "prevention") {
             return <div />;
         }
 
         return (
             <div id="fifth-duo">
-                {countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
-                    <ResistanceStatusCountryChart studies={filteredStudies} />
-                )}
-                {countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
-                    <IntensityStatusCountryChart studies={filteredStudies} />
-                )}
-                {countryMode && mapType === PreventionMapType.RESISTANCE_MECHANISM && (
-                    <ResistanceMechanismCountryChart studies={filteredStudies} />
-                )}
-                {countryMode && mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
-                    <ResistanceMechanismCountryChart studies={filteredStudies} />
-                )}
-                {!countryMode && mapType === PreventionMapType.RESISTANCE_STATUS && (
-                    <ResistanceStatusChart studies={filteredStudies} />
-                )}
-                {!countryMode && mapType === PreventionMapType.INTENSITY_STATUS && (
-                    <IntensityStatusChart studies={filteredStudies} />
-                )}
-                {!countryMode && mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
+                {mapType === PreventionMapType.RESISTANCE_STATUS && <ResistanceStatusChart studies={filteredStudies} />}
+                {mapType === PreventionMapType.INTENSITY_STATUS && <IntensityStatusChart studies={filteredStudies} />}
+                {mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
                     <LevelOfInvolvementChart studies={filteredStudies} />
                 )}
-                {!countryMode && mapType === PreventionMapType.RESISTANCE_MECHANISM && (
+                {mapType === PreventionMapType.RESISTANCE_MECHANISM && (
                     <ResistanceMechanismsChart studies={filteredStudies} />
                 )}
             </div>
