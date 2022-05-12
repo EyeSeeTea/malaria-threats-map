@@ -19,7 +19,6 @@ import { LevelOfInvolvementColors } from "../layers/prevention/Involvement/symbo
 import { LEVEL_OF_INVOLVEMENT } from "../layers/prevention/Involvement/utils";
 import { ResistanceMechanismColors } from "../layers/prevention/ResistanceMechanisms/symbols";
 import { RESISTANCE_MECHANISM } from "../layers/prevention/ResistanceMechanisms/utils";
-import { TreatmentCountryColors } from "../layers/treatment/Countries/treatment-country-symbols";
 import { DelayedParasiteClearanceColors } from "../layers/treatment/DelayedParasiteClearance/delayedParasiteClearanceSymbols";
 import { DELAYED_PARASITE_CLEARANCE_STATUS } from "../layers/treatment/DelayedParasiteClearance/utils";
 import { MolecularMarkerColors } from "../layers/treatment/MolecularMarkers/molecularMarkerSymbols";
@@ -44,7 +43,7 @@ export function getLegendTitle(
         case "diagnosis":
             return getDiagnosisLegendTitle(diagnosisFilters);
         case "treatment":
-            return getTreatmentLegendTitle(treatmentFilters, countryMode);
+            return getTreatmentLegendTitle(treatmentFilters);
         case "invasive":
             return getInvasiveLegendTitle(invasiveFilters, countryMode);
         default:
@@ -71,11 +70,7 @@ function getDiagnosisLegendTitle(filters: DiagnosisFilters) {
     return i18next.t(`common.diagnosis.legend.gene_deletions.${filters.deletionType}`);
 }
 
-function getTreatmentLegendTitle(filters: TreatmentFilters, countryMode: boolean): string {
-    if (countryMode) {
-        return i18next.t("common.themes.treatment");
-    }
-
+function getTreatmentLegendTitle(filters: TreatmentFilters): string {
     switch (filters.mapType) {
         case TreatmentMapType.TREATMENT_FAILURE:
             return `${i18next.t("common.treatment.treatment_failure")}\n${i18next.t(filters.drug)}`;
@@ -115,7 +110,7 @@ export function getLegendLabels(
         case "diagnosis":
             return getDiagnosisLegendLabels(diagnosisFilters);
         case "treatment":
-            return getTreatmentLegendLabels(treatmentFilters, countryMode);
+            return getTreatmentLegendLabels(treatmentFilters);
         case "invasive":
             return getInvasiveLegendLabels(invasiveFilters, countryMode);
         default:
@@ -207,15 +202,7 @@ function getDiagnosisLegendLabels(_: DiagnosisFilters): LegendLabel[] {
     ];
 }
 
-function getTreatmentLegendLabels(filters: TreatmentFilters, countryMode: boolean): LegendLabel[] {
-    if (countryMode) {
-        return [
-            {
-                label: "legend.number_of_studies",
-                color: TreatmentCountryColors.COUNTRIES[0],
-            },
-        ];
-    }
+function getTreatmentLegendLabels(filters: TreatmentFilters): LegendLabel[] {
     switch (filters.mapType) {
         case TreatmentMapType.TREATMENT_FAILURE:
             return [
@@ -293,7 +280,7 @@ function getInvasiveLegendLabels(filters: InvasiveFilters, countryMode: boolean)
         return [
             {
                 label: "legend.number_of_studies",
-                color: TreatmentCountryColors.COUNTRIES[0],
+                color: "#000",
             },
         ];
     }

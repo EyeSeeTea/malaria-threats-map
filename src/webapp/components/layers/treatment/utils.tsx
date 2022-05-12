@@ -5,14 +5,10 @@ import delayedParasiteClearanceSymbols from "./DelayedParasiteClearance/delayedP
 import molecularMarkerSymbols from "./MolecularMarkers/molecularMarkerSymbols";
 import * as R from "ramda";
 import { TREATMENT_FAILURE_STATUS } from "./TreatmentFailure/utils";
-import treatmentCountrySymbols from "./Countries/treatment-country-symbols";
 import { DELAYED_PARASITE_CLEARANCE_STATUS } from "./DelayedParasiteClearance/utils";
 import { MOLECULAR_MARKER_STATUS } from "./MolecularMarkers/utils";
 
-export const resolveMapTypeSymbols = (treatmentFilters: TreatmentFilters, countryMode: boolean) => {
-    if (countryMode) {
-        return treatmentCountrySymbols;
-    }
+export const resolveMapTypeSymbols = (treatmentFilters: TreatmentFilters) => {
     switch (treatmentFilters.mapType) {
         case TreatmentMapType.TREATMENT_FAILURE:
             return treatmentLayerSymbols;
