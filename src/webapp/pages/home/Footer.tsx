@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Button, Typography, Link, Divider } from "@mui/material";
-import WhoLogoBlue from "../../assets/img/who-logo-blue.png";
+//import WhoLogoBlue from "../../assets/img/who-logo-blue.png";
 import { TFunction } from "react-i18next";
 import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
+import WhoLogoBlue from "../../components/WhoLogoBlue";
 
 const FooterDiv = styled.div`
     display: flex;
@@ -14,11 +15,6 @@ const FooterDiv = styled.div`
     flex: 1 auto;
 `;
 
-const StyledImage = styled.img`
-    width: 100%;
-    max-width: 150px;
-    max-height: 50px;
-`;
 
 const Flex = styled.div`
     display: flex;
@@ -60,7 +56,7 @@ interface FooterProps {
 
 const Footer = ({ t }: FooterProps) => {
     const { width } = useWindowDimensions();
-    
+
     //I'll remove this once I get the actual links
     const otherWhoResources = [
         t("common.footer.other_who_resources.resource1"),
@@ -75,7 +71,7 @@ const Footer = ({ t }: FooterProps) => {
     return (
         <React.Fragment>
             <FooterDiv>
-                <StyledImage src={WhoLogoBlue} alt="WHO Logo Blue" />
+                <WhoLogoBlue />
                 <div>
                     <FooterHeader gutterBottom variant="body2">
                         {t("common.footer.policies.title")}

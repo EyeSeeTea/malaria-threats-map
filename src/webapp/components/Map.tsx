@@ -58,10 +58,9 @@ import { changeLanguage } from "../config/i18next";
 import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
 import LastUpdated from "./last-updated/LastUpdated";
 import FloatingLegend from "./legend/FloatingLegendContainer";
-/*
+
 import {
     setBoundsAction,
-    setCountryModeAction,
     setFiltersAction,
     setFiltersMode,
     setFiltersOpen,
@@ -93,12 +92,14 @@ import {
     setTreatmentPlasmodiumSpecies,
 } from "../store/actions/treatment-actions";
 import { setInvasiveMapType, setInvasiveVectorSpecies } from "../store/actions/invasive-actions";
-import ReduxQuerySync from "../store/query-middleware";*/
-import createStore from "../store";
+import { PreventionMapType } from "../store/types";
+import ReduxQuerySync from "../store/query-middleware";
 //import { store } from "../App";
+import createStore from "../store";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const drawerWidth = 100;
+export const { store } = createStore();
 
 const StyledButton = styled(Button)`
     &.MuiButton-root {
@@ -118,9 +119,6 @@ const StyledButton = styled(Button)`
         }
     }
 `;
-
-//where do I get the store from the provider? The app.tsx send the store along so I don't want to duplicate it here
-export const { store } = createStore();
 
 const Separator = styled.div`
     width: 20px;
@@ -298,7 +296,7 @@ class Map extends React.Component<Props> {
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
 
-        /*ReduxQuerySync({
+        ReduxQuerySync({
             store: store,
             params: {
                 theme: {
@@ -411,10 +409,6 @@ class Map extends React.Component<Props> {
                     selector: (state: State) => state.malaria.endemicity,
                     action: (value: string) => toggleEndemicityLayerAction(value === "true"),
                 },
-                countryMode: {
-                    selector: (state: State) => state.malaria.countryMode,
-                    action: (value: string) => setCountryModeAction(value === "true"),
-                },
                 storyMode: {
                     selector: (state: State) => state.malaria.storyMode,
                     action: (value: string) => setStoryModeAction(value === "true"),
@@ -484,7 +478,7 @@ class Map extends React.Component<Props> {
                 },
             },
             initialTruth: "location",
-        });*/
+        });
     }
 
     componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {
