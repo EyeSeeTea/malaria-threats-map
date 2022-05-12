@@ -66,7 +66,6 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.MalariaSetFilters]: (filters: number[] | undefined) =>
         R.assoc("filters", filters || initialState.filters),
     [ActionTypeEnum.MalariaToogleEndemicityLayer]: (visible: boolean) => R.assoc("endemicity", visible),
-    [ActionTypeEnum.MalariaSetCountryMode]: (countryMode: boolean) => R.assoc("countryMode", countryMode),
     [ActionTypeEnum.MalariaSetStoryMode]: (storyMode: boolean) => R.assoc("storyMode", storyMode),
     [ActionTypeEnum.MalariaSetStoryModeStep]: (storyModeStep: number) => R.assoc("storyModeStep", storyModeStep || 0),
     [ActionTypeEnum.MalariaSetInitialDialogOpen]: (initialDialogOpen: boolean) =>
@@ -125,7 +124,6 @@ export const selectTheme = createSelector(selectMalariaState, state => state.the
 export const selectStoryMode = createSelector(selectMalariaState, state => state.storyMode);
 export const selectAny = createSelector(selectMalariaState, state => state.any);
 export const selectEndemicity = createSelector(selectMalariaState, state => state.endemicity);
-export const selectCountryMode = createSelector(selectMalariaState, state => state.countryMode);
 export const selectFilters = createSelector(selectMalariaState, state => state.filters);
 export const selectRegion = createSelector(selectMalariaState, state => state.region);
 export const selectIsInitialDialogOpen = createSelector(selectMalariaState, state => state.initialDialogOpen);

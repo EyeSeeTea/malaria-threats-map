@@ -41,8 +41,6 @@ export const setFiltersAction = createAction(ActionTypeEnum.MalariaSetFilters)<n
 
 export const toggleEndemicityLayerAction = createAction(ActionTypeEnum.MalariaToogleEndemicityLayer)<boolean>();
 
-export const setCountryModeAction = createAction(ActionTypeEnum.MalariaSetCountryMode)<boolean>();
-
 export const setStoryModeAction = createAction(ActionTypeEnum.MalariaSetStoryMode)<boolean>();
 
 export const setStoryModeStepAction = createAction(ActionTypeEnum.MalariaSetStoryModeStep)<number>();
