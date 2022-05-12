@@ -17,6 +17,7 @@ import ThemePaper from "./ThemePaper";
 import MediaCard from "./MediaCard";
 import Footer from "./Footer";
 import Header from "./Header";
+import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
 
 const StyledBanner = styled.div`
     display: block;
@@ -30,9 +31,12 @@ const StyledBanner = styled.div`
     height: 720px;
     opacity: 1;
 `;
-
-const ContentDiv = styled.div`
-    width: ${window.innerWidth * 0.83}px;
+interface Props {
+    windowWidth: number;
+  }
+  
+const ContentDiv = styled.div<Props>`
+    width: ${props =>  `${props.windowWidth * 0.83}px`};
     margin: auto;
 `;
 
@@ -65,7 +69,7 @@ const StyledDivider = styled(Divider)`
 margin-top: 83px;
 `
 
-const themePaperColors = {
+export const themePaperColors = {
     preventionColor: "#5ABE86",
     preventionColorOpaque: "rgb(90, 190, 134, 0.9)",
     invasiveColor: "#5CC579",
@@ -78,12 +82,14 @@ const themePaperColors = {
 
 export const HomePage = () => {
     const { t } = useTranslation();
+    const { width } = useWindowDimensions();
 
+    
     return (
         <React.Fragment>
             <StyledBanner>
                 <Header t={t} />
-                <ContentDiv>
+                <ContentDiv windowWidth={width}>
                     <TitleBannerDiv>
                         <Typography variant="h2" color={"inherit"} textTransform="uppercase" fontSize={66}>
                             <Trans i18nKey="common.homepage.title" t={t}>

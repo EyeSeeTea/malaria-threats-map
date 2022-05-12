@@ -2,8 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { Button, AppBar, Toolbar, Box } from "@mui/material";
 import { TFunction } from "react-i18next";
-import IntegrationReactSelect from "../../components/BasicSelect";
+import { HomepageIntegrationReactSelect } from "../../components/BasicSelect";
 import { changeLanguage } from "../../config/i18next";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 const LANGUAGES = [
     {
@@ -82,12 +84,15 @@ interface HeaderProps {
 }
 
 const Header = ({ t }: HeaderProps) => {
-    const [language, setLanguage] = React.useState(LANGUAGES[0].value);
+    const [language, setLanguage] = React.useState(i18next.language || window.localStorage.i18nextLng);
     function handleChange(selection: any) {
         const language = selection.value;
         changeLanguage(language);
         setLanguage(language);
     }
+
+    useTranslation();
+    
     return (
         <StickyMenu>
             <Box>
@@ -101,7 +106,7 @@ const Header = ({ t }: HeaderProps) => {
                             <StyledButton>{t("common.homepage.menu.share_data")}</StyledButton>
                         </MenuOptionBox>
                         <LanguageSelectorBox>
-                            <IntegrationReactSelect
+                            <HomepageIntegrationReactSelect
                                 id={"language"}
                                 suggestions={LANGUAGES}
                                 onChange={handleChange}

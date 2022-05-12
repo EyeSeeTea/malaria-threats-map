@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button, Typography, Link, Divider } from "@mui/material";
 import WhoLogoBlue from "../../assets/img/who-logo-blue.png";
 import { TFunction } from "react-i18next";
+import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
 
 const FooterDiv = styled.div`
     display: flex;
@@ -23,10 +24,13 @@ const Flex = styled.div`
     display: flex;
     flex-direction: column;
 `;
+interface PrivacyProps {
+    windowWidth: number;
+  }
 
-const PrivacyCopyrightDiv = styled.div`
+  const PrivacyCopyrightDiv = styled.div<PrivacyProps>`
     padding: 22px 0;
-    width: 1170px;
+    width: ${props => `${props.windowWidth * 0.83}px`};
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -53,7 +57,10 @@ interface FooterProps {
     t: TFunction<"translation", undefined>;
 }
 
+
 const Footer = ({ t }: FooterProps) => {
+    const { width } = useWindowDimensions();
+    
     //I'll remove this once I get the actual links
     const otherWhoResources = [
         t("common.footer.other_who_resources.resource1"),
@@ -120,7 +127,7 @@ const Footer = ({ t }: FooterProps) => {
                 </Flex>
             </FooterDiv>
             <Divider variant="fullWidth" />
-            <PrivacyCopyrightDiv>
+            <PrivacyCopyrightDiv windowWidth={width}>
                 <Link href="#" underline="none" variant="body1" textAlign="center" color="#343434">
                     {t("common.footer.privacy")}
                 </Link>

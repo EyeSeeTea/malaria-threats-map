@@ -64,7 +64,7 @@ import { changeLanguage } from "../config/i18next";
 import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
 import LastUpdated from "./last-updated/LastUpdated";
 import FloatingLegend from "./legend/FloatingLegendContainer";
-
+/*
 import {
     setBoundsAction,
     setCountryModeAction,
@@ -99,8 +99,9 @@ import {
     setTreatmentPlasmodiumSpecies,
 } from "../store/actions/treatment-actions";
 import { setInvasiveMapType, setInvasiveVectorSpecies } from "../store/actions/invasive-actions";
-import ReduxQuerySync from "../store/query-middleware";
+import ReduxQuerySync from "../store/query-middleware";*/
 import createStore from "../store";
+//import { store } from "../App";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const drawerWidth = 100;
@@ -305,8 +306,8 @@ class Map extends React.Component<Props> {
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
 
-        ReduxQuerySync({
-            store,
+        /*ReduxQuerySync({
+            store: store,
             params: {
                 theme: {
                     selector: (state: State) => state.malaria.theme,
@@ -491,7 +492,7 @@ class Map extends React.Component<Props> {
                 },
             },
             initialTruth: "location",
-        });
+        });*/
     }
 
     componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {

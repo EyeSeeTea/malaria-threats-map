@@ -42,16 +42,25 @@ const StyledCardContent = styled(CardContent)`
 const StyledLink = styled(Link)`
     margin: auto;
 `;
+interface StyledCardMediaProps {
+    image: string;
+}
+const StyledCardMedia = styled(CardMedia).attrs<StyledCardMediaProps>(props => ({
+    component: "img",
+    height: "230",
+    image: props.image,
+  }))`
+    width: 94%; 
+    margin: auto; 
+    padding: 10px; 
+    border-radius: 25px 25px 0 0;
+  `;
 
-const MediaCard = ({ title, subtitle, buttonText, image, altText, buttonLink }: MediaCardProps) => {
+const MediaCard = ({ title, subtitle, buttonText, image, buttonLink }: MediaCardProps) => {
     return (
         <StyledCard>
-            <CardMedia
-                component="img"
-                height="230"
+            <StyledCardMedia
                 image={image}
-                alt={altText}
-                style={{ width: "94%", margin: "auto", padding: 10, borderRadius: "25px 25px 0 0" }}
             />
             <StyledCardContent>
                 <Typography gutterBottom variant="h5" component="div" textAlign="center" fontWeight="bold">
@@ -62,7 +71,7 @@ const MediaCard = ({ title, subtitle, buttonText, image, altText, buttonLink }: 
                 </Typography>
             </StyledCardContent>
             <StyledCardActions>
-                <StyledLink to={buttonLink || "#"} replace>
+                <StyledLink to={buttonLink || "#"}>
                     <StyledCardButton size="large" variant="contained">
                         {buttonText}
                     </StyledCardButton>
