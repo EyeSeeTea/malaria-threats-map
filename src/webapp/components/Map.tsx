@@ -32,7 +32,6 @@ import { addNotificationAction } from "../store/actions/notifier-actions";
 import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
 import { Fade, Button, AppBar, Typography, IconButton, Toolbar, Box, Divider } from "@mui/material";
 import { Menu as MenuIcon, CloseOutlined as CloseOutlinedIcon } from "@mui/icons-material";
-import Country from "./Country";
 import LeyendPopover from "./legend/LegendPopover";
 import StoryModeSelector from "./StoryModeSelector";
 import MalariaTour from "./tour/MalariaTour";
@@ -271,7 +270,6 @@ class Map extends React.Component<Props> {
     render() {
         const { theme, initialDialogOpen } = this.props;
         const showOptions = isMobile || !initialDialogOpen;
-        const isInvasive = theme === "invasive";
         const ready = this.map && this.state.ready;
         const classes = {
             icon: { marginRight: 5 },
@@ -341,7 +339,6 @@ class Map extends React.Component<Props> {
                                 <MalariaTour />
                             </Hidden>
                             <Layers />
-                            <Country disabled={isInvasive} />
                             {!isMobile && <DataDownload />}
                             <Hidden smUp>
                                 <ShareIcon />
