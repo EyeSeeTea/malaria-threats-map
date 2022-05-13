@@ -1,6 +1,7 @@
 {
     "common": {
         "layers": "Layers",
+        "mekong_link": "Go to the Greather Mekong Layer",
         "title": {
             "title": "Malaria Threats Map",
             "subtitle": "Tracking biological challenges to malaria control and elimination"
