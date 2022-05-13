@@ -283,11 +283,6 @@ class Map extends React.Component<Props> {
         this.map.flyTo({ zoom: newZoom });
     }
 
-    fullscreen() {
-        const e = this.mapContainer;
-        e.requestFullscreen();
-    }
-
     render() {
         const { theme, initialDialogOpen } = this.props;
         const showOptions = isMobile || !initialDialogOpen;
@@ -425,10 +420,10 @@ class Map extends React.Component<Props> {
                     <MapFab size="small" onClick={() => this.zoom(1.25)}>
                         <ZoomInIcon />
                     </MapFab>
-                    <MapFab size="small" onClick={() => this.zoom(0.80)}>
+                    <MapFab size="small" onClick={() => this.zoom(0.8)}>
                         <ZoomOutIcon />
                     </MapFab>
-                    <MapFab size="small" onClick={() => this.fullscreen()}>
+                    <MapFab size="small" onClick={() => this.mapContainer.requestFullscreen()}>
                         <MapOnlyIcon />
                     </MapFab>
                 </BottomRightContainer>
