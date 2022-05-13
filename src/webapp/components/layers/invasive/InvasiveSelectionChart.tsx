@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { InvasiveMapType, State } from "../../../store/types";
-import { selectCountryMode, selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
+import { selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
 import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 import VectorOccurrenceChart from "./VectorOccurance/VectorOccurranceChart";
@@ -11,7 +11,6 @@ import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     invasiveFilters: selectInvasiveFilters(state),
-    countryMode: selectCountryMode(state),
     selection: selectSelection(state),
 });
 
@@ -33,25 +32,18 @@ class PreventionSelectionChart extends Component<Props> {
         const {
             theme,
             studies,
-            countryMode,
             selection,
             invasiveFilters: { mapType },
         } = this.props;
         if (!selection) {
             return <div />;
         }
-        const filteredStudies = studies.filter(study =>
-            countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
-        );
+        const filteredStudies = studies.filter(study => study.SITE_ID === selection.SITE_ID);
         if (!filteredStudies.length || theme !== "invasive") {
             return <div />;
         }
         return (
-            <>
-                {!countryMode && mapType === InvasiveMapType.VECTOR_OCCURANCE && (
-                    <VectorOccurrenceChart studies={filteredStudies} />
-                )}
-            </>
+            <>{mapType === InvasiveMapType.VECTOR_OCCURANCE && <VectorOccurrenceChart studies={filteredStudies} />}</>
         );
     }
 }

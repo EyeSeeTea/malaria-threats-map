@@ -4,7 +4,7 @@ import styled from "styled-components";
 import LayersButton from "./layers_button/LayersButton";
 import mapboxgl from "mapbox-gl";
 import { isMobile } from "react-device-detect";
-import { PreventionMapType, State } from "../store/types";
+import { State } from "../store/types";
 import { connect } from "react-redux";
 import PreventionLayer from "./layers/prevention/PreventionLayer";
 import DiagnosisLayer from "./layers/diagnosis/DiagnosisLayer";
@@ -16,7 +16,6 @@ import WhoLogo from "./WhoLogo";
 
 import {
     selectAny,
-    selectCountryMode,
     selectIsInitialDialogOpen,
     selectRegion,
     selectSetBounds,
@@ -25,7 +24,7 @@ import {
     selectTheme,
     selectTour,
 } from "../store/reducers/base-reducer";
-import { selectPreventionFilters, selectPreventionStudies } from "../store/reducers/prevention-reducer";
+import { selectPreventionStudies } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
@@ -33,16 +32,11 @@ import { addNotificationAction } from "../store/actions/notifier-actions";
 import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
 import { Fade, Button, AppBar, Typography, IconButton, Toolbar, Box, Divider } from "@mui/material";
 import { Menu as MenuIcon, CloseOutlined as CloseOutlinedIcon } from "@mui/icons-material";
-import Country from "./Country";
 import LeyendPopover from "./legend/LegendPopover";
 import StoryModeSelector from "./StoryModeSelector";
 import MalariaTour from "./tour/MalariaTour";
 import MekongLayer from "./layers/MekongLayer";
 import DataDownload from "./DataDownload";
-import CountrySelectorLayer from "./layers/CountrySelectorLayer";
-import DistrictsLayer from "./layers/DistrictsLayer";
-import PBOEndemicityLayer from "./layers/PBOEndemicityLayer";
-import DisputedBordersEndemicityLayer from "./layers/PBODisputedBordersLayer";
 import Screenshot from "./Screenshot";
 import Report from "./Report";
 import Feedback from "./Feedback";
@@ -179,14 +173,12 @@ const mapStateToProps = (state: State) => ({
     setZoom: selectSetZoom(state),
     setBounds: selectSetBounds(state),
     region: selectRegion(state),
-    countryMode: selectCountryMode(state),
     theaterMode: selectTheaterMode(state),
     preventionStudies: selectPreventionStudies(state),
     diagnosisStudies: selectDiagnosisStudies(state),
     treatmentStudies: selectTreatmentStudies(state),
     invasiveStudies: selectInvasiveStudies(state),
     initialDialogOpen: selectIsInitialDialogOpen(state),
-    preventionFilters: selectPreventionFilters(state),
     tour: selectTour(state),
 });
 
@@ -278,10 +270,8 @@ class Map extends React.Component<Props> {
     }
 
     render() {
-        const { theme, initialDialogOpen, countryMode, preventionFilters } = this.props;
+        const { theme, initialDialogOpen } = this.props;
         const showOptions = isMobile || !initialDialogOpen;
-        const isPbo = theme === "prevention" && preventionFilters.mapType === PreventionMapType.PBO_DEPLOYMENT;
-        const isInvasive = theme === "invasive";
         const ready = this.map && this.state.ready;
         const classes = {
             icon: { marginRight: 5 },
@@ -310,19 +300,9 @@ class Map extends React.Component<Props> {
                     style={{ position: "absolute", bottom: 0, top: 0, right: 0, left: 0 }}
                 />
                 {ready && <EndemicityLayer map={this.map} />}
-                {isPbo && countryMode ? (
-                    <>
-                        {ready && <CountrySelectorLayer map={this.map} />}
-                        {ready && <DistrictsLayer map={this.map} />}
-                        {ready && <PBOEndemicityLayer map={this.map} />}
-                        {ready && <DisputedBordersEndemicityLayer map={this.map} />}
-                    </>
-                ) : (
-                    <>
-                        {ready && <RegionLayer map={this.map} />}
-                        {ready && <PreventionLayer map={this.map} />}
-                    </>
-                )}
+
+                {ready && <RegionLayer map={this.map} />}
+                {ready && <PreventionLayer map={this.map} />}
                 {ready && <MekongLayer map={this.map} />}
                 {ready && <DiagnosisLayer map={this.map} />}
                 {ready && <TreatmentLayer map={this.map} />}
@@ -360,8 +340,6 @@ class Map extends React.Component<Props> {
                             <Hidden smDown>
                                 <MalariaTour />
                             </Hidden>
-
-                            <Country disabled={isInvasive} />
                             {!isMobile && <DataDownload />}
                             <Hidden smUp>
                                 <ShareIcon />

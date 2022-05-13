@@ -11,7 +11,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import {
     setBoundsAction,
-    setCountryModeAction,
     setFiltersAction,
     setFiltersMode,
     setFiltersOpen,
@@ -168,10 +167,6 @@ ReduxQuerySync({
         endemicity: {
             selector: (state: State) => state.malaria.endemicity,
             action: (value: string) => toggleEndemicityLayerAction(value === "true"),
-        },
-        countryMode: {
-            selector: (state: State) => state.malaria.countryMode,
-            action: (value: string) => setCountryModeAction(value === "true"),
         },
         storyMode: {
             selector: (state: State) => state.malaria.storyMode,

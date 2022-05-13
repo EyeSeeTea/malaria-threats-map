@@ -43,11 +43,6 @@ export const preventionSuggestions: ListSelectorItem[] = [
         subtitle: "common.prevention.synergist_involvement_subtitle",
         value: PreventionMapType.LEVEL_OF_INVOLVEMENT,
     },
-    {
-        title: "common.prevention.pbo_deployment",
-        subtitle: "common.prevention.pbo_deployment_subtitle",
-        value: PreventionMapType.PBO_DEPLOYMENT,
-    },
 ];
 function PreventionMapTypesSelector({
     preventionFilters,
