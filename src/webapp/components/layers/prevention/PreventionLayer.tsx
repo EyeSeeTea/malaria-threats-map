@@ -266,6 +266,8 @@ class PreventionLayer extends Component<Props> {
         }
         const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === selection.SITE_ID);
 
+        this.props.setPreventionStudySelection(filteredStudies);
+
         if (filteredStudies.length === 0) {
             return <div />;
         }

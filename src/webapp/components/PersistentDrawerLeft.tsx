@@ -17,6 +17,7 @@ import {
     selectStoryMode,
     selectTheme,
     selectViewData,
+    selectSelection
 } from "../store/reducers/base-reducer";
 import {
     setFiltersOpen,
@@ -132,6 +133,7 @@ const mapStateToProps = (state: State) => ({
     treatmentFilters: selectTreatmentFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
     viewData: selectViewData(state),
+    selectSelection: selectSelection(state)
 });
 const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
@@ -159,17 +161,17 @@ function PersistentDrawerLeft({
     theme,
     sidebarOpen,
     setSidebarOpen,
+    selectSelection,
     viewData,
 }: Props) {
     const classes = useStyles({ drawerWidth });
-
     useEffect(() => {
         if (viewData !== null && sidebarOpen === false) {
             setSidebarOpen(true);
         }
         // eslint-disable-next-line
-    }, [viewData, sidebarOpen]);
-
+    }, [viewData]);
+//sidebarOpen
     useEffect(() => {
         if (sidebarOpen !== null && storyMode !== null) {
             setTimeout(() => dispatchCustomEvent("resize"), 100);
@@ -195,6 +197,7 @@ function PersistentDrawerLeft({
             setStoryMode(!storyMode);
         }
     }
+    console.log(sidebarOpen)
 
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 

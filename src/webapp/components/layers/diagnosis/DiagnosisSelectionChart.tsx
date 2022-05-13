@@ -26,10 +26,12 @@ class DiagnosisSelectionChart extends Component<Props> {
         const {
             studies,
             popup,
+            selection,
             diagnosisFilters: { mapType },
         } = this.props;
+        //const filteredStudies = studies.filter(study => study.SITE_ID === selection.SITE_ID);
         return (
-            <>{mapType === DiagnosisMapType.GENE_DELETIONS && <GeneDeletionChart studies={studies} popup={popup} />}</>
+            <>{<GeneDeletionChart studies={studies} popup={popup} />}</>
         );
     }
 }

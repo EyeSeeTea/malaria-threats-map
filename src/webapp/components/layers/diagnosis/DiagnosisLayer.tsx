@@ -199,23 +199,33 @@ class DiagnosisLayer extends Component<Props> {
         }, 100);
     };
 
+    onMouseLeaveListener = (e: any) => {
+        this.props.map.getCanvas().style.cursor = "";
+        setTimeout(() => {
+            this.props.setSelection(null);
+            if (this.props.sidebarOpen) {
+                setSidebarOpen(true);
+            }
+        }, 100);
+    };
+
     setupPopover = () => {
         this.props.map.on("mouseover", DIAGNOSIS_LAYER_ID, this.onMouseOverListener);
-        this.props.map.on("click", () => {
+       /* this.props.map.on("click", () => {
             if (!this.props.sidebarOpen) {
                 this.props.setSidebarOpen(true);
             }
             setTimeout(() => {
                 this.props.setViewData(this.props.selection);
             }, 100);
-        });
-        this.props.map.on(
+        });*/
+       /* this.props.map.on(
             "mouseenter",
             DIAGNOSIS_LAYER_ID,
             () => (this.props.map.getCanvas().style.cursor = "pointer")
-        );
+        );*/
 
-        this.props.map.on("mouseleave", DIAGNOSIS_LAYER_ID, () => (this.props.map.getCanvas().style.cursor = ""));
+        this.props.map.on("mouseout", DIAGNOSIS_LAYER_ID, this.onMouseLeaveListener);
     };
 
     renderLayer = () => {
@@ -244,15 +254,24 @@ class DiagnosisLayer extends Component<Props> {
 
     render() {
         const { studies, selection, viewData, setSidebarOpen, sidebarOpen } = this.props;
-        if (viewData === null) {
+        /*if (viewData === null) {
             setSidebarOpen(false);
-        }
-        if (selection === null) {
+        }*/
+        console.log(selection)
+        console.log(viewData)
+        console.log(sidebarOpen)
+        //selection === null
+       if (viewData === null && selection === null) {
             setSidebarOpen(false);
             this.props.setDiagnosisStudySelection([]);
             return <div />;
         }
+        if(selection === null) {
+            return <div />;
+        }
         const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === selection.SITE_ID);
+
+        this.props.setDiagnosisStudySelection(filteredStudies);
 
         if (filteredStudies.length === 0) {
             return <div />;
