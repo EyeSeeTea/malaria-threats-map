@@ -1,5 +1,6 @@
 {
     "common": {
+        "layers": "couches",
         "title": {
             "title": "Carte des menaces du paludisme",
             "subtitle": "Suivi des défis biologiques liés à la lutte et à l'élimination du paludisme"

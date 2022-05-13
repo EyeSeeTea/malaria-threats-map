@@ -1,5 +1,6 @@
 {
     "common": {
+        "layers": "Layers",
         "title": {
             "title": "Malaria Threats Map",
             "subtitle": "Tracking biological challenges to malaria control and elimination"
