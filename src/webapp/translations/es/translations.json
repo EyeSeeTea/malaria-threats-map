@@ -230,7 +230,7 @@
             "plasmodium_species": "Especie de plasmodium",
             "drug": "Tratamiento",
             "molecular_marker": "Marcador molecular",
-            "mechanism_type": "Tipo de sinergista",
+            "mechanism_type": "Tipo de sinergia",
             "assay_type": "Tipo de ensayo",
             "synergist_type": "Tipo de test",
             "synergist_types": "Tipos sinergistas",
