@@ -41,6 +41,7 @@ const StyledCardContent = styled(CardContent)`
 
 const StyledLink = styled(Link)`
     margin: auto;
+    color: inherit;
 `;
 interface StyledCardMediaProps {
     image: string;
