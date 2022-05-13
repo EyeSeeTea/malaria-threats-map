@@ -30,8 +30,9 @@ import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
-import { Fade, Button, AppBar, Typography, IconButton, Toolbar, Box, Divider } from "@mui/material";
-import { Menu as MenuIcon, CloseOutlined as CloseOutlinedIcon } from "@mui/icons-material";
+import { Fade, Button, AppBar, Typography, IconButton, Toolbar, Box, Divider, Fab } from "@mui/material";
+import { Menu as MenuIcon, CloseOutlined as CloseOutlinedIcon,
+         Add as ZoomInIcon, Remove as ZoomOutIcon, OpenInFull as MapOnlyIcon } from "@mui/icons-material";
 import LeyendPopover from "./legend/LegendPopover";
 import StoryModeSelector from "./StoryModeSelector";
 import MalariaTour from "./tour/MalariaTour";
@@ -133,8 +134,10 @@ const BottomLeftContainer = styled(BaseContainer)`
     flex-direction: row;
 `;
 
-const BottomMiddleContainer = styled(BaseContainer)`
-    margin: 10px auto;
+const BottomRightContainer = styled(BaseContainer)`
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
     bottom: 0;
     right: 0;
 `;
@@ -165,6 +168,11 @@ const MenuTypography = styled(Typography)`
     font-size: 0.875rem;
     line-height: 1.75;
     letter-spacing: 0.235;
+`;
+
+// A Fab ("floating action button") looks like a rounded button.
+const MapFab = styled(Fab)`
+    margin: 5px;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -267,6 +275,17 @@ class Map extends React.Component<Props> {
                 padding: 100,
             });
         }
+    }
+
+    zoom(factor: number) {
+        const newZoom = this.map.getZoom() * factor;
+        this.setState({ viewport: { ...this.state.viewport, zoom: newZoom } });
+        this.map.flyTo({ zoom: newZoom });
+    }
+
+    fullscreen() {
+        const e = this.mapContainer;
+        e.requestFullscreen();
     }
 
     render() {
@@ -401,7 +420,18 @@ class Map extends React.Component<Props> {
                         </Hidden>
                     </BottomLeftContainer>
                 </PushoverContainer>
-                <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
+                <BottomRightContainer>
+                    {this.props.theaterMode ? <TheaterMode /> : <div />}
+                    <MapFab size="small" onClick={() => this.zoom(1.25)}>
+                        <ZoomInIcon />
+                    </MapFab>
+                    <MapFab size="small" onClick={() => this.zoom(0.80)}>
+                        <ZoomOutIcon />
+                    </MapFab>
+                    <MapFab size="small" onClick={() => this.fullscreen()}>
+                        <MapOnlyIcon />
+                    </MapFab>
+                </BottomRightContainer>
                 <Hidden smDown>
                     <InitialDialog />
                 </Hidden>
