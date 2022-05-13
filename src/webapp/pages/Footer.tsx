@@ -1,29 +1,30 @@
 import React from "react";
 import styled from "styled-components";
 import { Button, Typography, Link, Divider } from "@mui/material";
-import WhoLogoBlue from "../assets/img/who-logo-blue.png";
 import { TFunction } from "react-i18next";
+import { useWindowDimensions } from "../components/hooks/use-window-dimensions";
+import WhoLogoBlue from "../components/WhoLogoBlue";
 
 const FooterDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    flex-wrap: wrap;
     margin: 58px 0 34px 0;
     flex: 1 auto;
-`;
-
-const WhoLogoImg = styled.img`
-    height: 100%;
 `;
 
 const Flex = styled.div`
     display: flex;
     flex-direction: column;
 `;
+interface PrivacyProps {
+    windowWidth: number;
+}
 
-const PrivacyCopyrightDiv = styled.div`
+const PrivacyCopyrightDiv = styled.div<PrivacyProps>`
     padding: 22px 0;
-    width: 1170px;
+    width: ${props => `${props.windowWidth * 0.83}px`};
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -51,6 +52,8 @@ interface FooterProps {
 }
 
 const Footer = ({ t }: FooterProps) => {
+    const { width } = useWindowDimensions();
+
     //I'll remove this once I get the actual links
     const otherWhoResources = [
         t("common.footer.other_who_resources.resource1"),
@@ -65,7 +68,7 @@ const Footer = ({ t }: FooterProps) => {
     return (
         <React.Fragment>
             <FooterDiv>
-                <WhoLogoImg src={WhoLogoBlue} alt="WHO Logo Blue" width={200} />
+                <WhoLogoBlue />
                 <div>
                     <FooterHeader gutterBottom variant="body2">
                         {t("common.footer.policies.title")}
@@ -93,7 +96,7 @@ const Footer = ({ t }: FooterProps) => {
                     ))}
                 </Flex>
                 <Flex style={{ justifyContent: "space-between" }}>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
+                    <Flex>
                         <FooterHeader gutterBottom variant="body2">
                             {t("common.footer.about_who_gmp.title")}
                         </FooterHeader>
@@ -110,19 +113,19 @@ const Footer = ({ t }: FooterProps) => {
                                 {resource}
                             </Link>
                         ))}
-                    </div>
+                    </Flex>
                     <StyledNewsletterButton size="large" variant="contained">
                         {t("common.footer.subscribe_newsletter")}
                     </StyledNewsletterButton>
                 </Flex>
             </FooterDiv>
             <Divider variant="fullWidth" />
-            <PrivacyCopyrightDiv>
+            <PrivacyCopyrightDiv windowWidth={width}>
                 <Link href="#" underline="none" variant="body1" textAlign="center" color="#343434">
                     {t("common.footer.privacy")}
                 </Link>
                 <Typography variant="body1" textAlign="center" color="#343434">
-                    © 2021 WHO
+                    {t("disclaimer.p1bLinkText", { year: new Date().getFullYear() })}
                 </Typography>
             </PrivacyCopyrightDiv>
         </React.Fragment>

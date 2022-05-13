@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Typography, Paper, Button } from "@mui/material";
 import { useTranslation, TFunction } from "react-i18next";
+import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
+import { themePaperColors } from "./HomePage";
 
 interface ThemePaperProps {
     icon: string;
@@ -12,12 +14,28 @@ interface ThemePaperProps {
     colorOpaque: string;
     t: TFunction<"translation", undefined>;
 }
-
-const StyledPaper = styled(Paper)`
+interface StyledPaperProps {
+    color: string;
+    windowHeight: number;
+}
+const StyledPaper = styled(Paper)<StyledPaperProps>`
     background-color: ${props => props.color};
     display: flex;
+    padding: ${props =>
+        props.color === themePaperColors.treatmentColor
+            ? `${props.windowHeight * 0.04}px 25px`
+            : `${props.windowHeight * 0.04}px`};
+
+    @media (max-width: 1024px) {
+        padding: ${props =>
+            props.color === themePaperColors.treatmentColor
+                ? `${props.windowHeight * 0.04}px 25px 20px 20px`
+                : `${props.windowHeight * 0.04}px`};
+    }
+`;
+
+const BottomPaper = styled(StyledPaper)`
     flex-direction: column;
-    padding: ${props => (props.color === "#5CCDCE" ? "40px 25px" : "40px")};
 `;
 
 const ThemeTitle = styled(Typography)`
@@ -29,6 +47,9 @@ const Flex = styled.div`
     display: flex;
 `;
 
+const ThemeInfoDiv = styled.div`
+    padding-left: 40px;
+`;
 const FlexSpaceBetween = styled(Flex)`
     justify-content: space-between;
 `;
@@ -40,34 +61,41 @@ const FlexColumn = styled(Flex)`
 const StyledCardButton = styled(Button)`
     &.MuiButton-root {
         color: white;
-        font-size: 1rem;
         background-color: #343434;
-        width: 250px;
+        width: 180px;
         font-weight: bold;
         text-align: center;
         margin: auto 0;
     }
 `;
 
+const StyledImage = styled.img`
+    width: 100%;
+    max-width: 150px;
+    max-height: 150px;
+    @media (max-width: 1024px) {
+        height: 100px;
+    }
+`;
+
 const ThemePaper = ({ icon, altText, title, subtitle, color, colorOpaque }: ThemePaperProps) => {
     const { t } = useTranslation();
+    const { height } = useWindowDimensions();
 
     return (
         <div>
-            <StyledPaper elevation={0} square color={color} style={{ height: 200 }}>
-                <Flex>
-                    <img src={icon} alt={altText} />
-                    <div style={{ paddingLeft: 40 }}>
-                        <ThemeTitle gutterBottom variant="h4" textAlign="left" style={{ fontSize: 30 }}>
-                            {title}
-                        </ThemeTitle>
-                        <Typography gutterBottom variant="body1" component="div" textAlign="left">
-                            {subtitle}
-                        </Typography>
-                    </div>
-                </Flex>
+            <StyledPaper elevation={0} square color={color} windowHeight={height}>
+                <StyledImage src={icon} alt={altText} />
+                <ThemeInfoDiv>
+                    <ThemeTitle gutterBottom variant="h5" textAlign="left">
+                        {title}
+                    </ThemeTitle>
+                    <Typography gutterBottom variant="body1" component="div" textAlign="left">
+                        {subtitle}
+                    </Typography>
+                </ThemeInfoDiv>
             </StyledPaper>
-            <StyledPaper elevation={0} square color={colorOpaque} style={{ height: 80 }}>
+            <BottomPaper elevation={0} square color={colorOpaque} windowHeight={height}>
                 <FlexSpaceBetween>
                     <FlexColumn>
                         <Typography gutterBottom variant="body1" component="div" textAlign="left">
@@ -81,7 +109,7 @@ const ThemePaper = ({ icon, altText, title, subtitle, color, colorOpaque }: Them
                         {t("common.homepage.media_cards.read_story")}
                     </StyledCardButton>
                 </FlexSpaceBetween>
-            </StyledPaper>
+            </BottomPaper>
         </div>
     );
 };

@@ -25,6 +25,75 @@ export interface OptionType {
     value: any;
 }
 
+const useHomepageStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            pointerEvents: "all",
+            flexGrow: 1,
+            minWidth: 80,
+            padding: 2,
+            backgroundColor: "#2FB3AF",
+            borderRadius: 5,
+        },
+        inputPaper: {
+            padding: theme.spacing(0.5, 1.5),
+        },
+
+        input: {
+            cursor: "pointer",
+            display: "flex",
+            padding: 0,
+            height: "auto",
+            color: "white",
+            "& span": {
+                backgroundColor: "transparent",
+            },
+        },
+        valueContainer: {
+            display: "flex",
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            flexWrap: (props: { isMulti?: boolean }) => (props.isMulti ? "wrap" : "nowrap"),
+        },
+        chip: {
+            margin: theme.spacing(0.5, 0.25),
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            background: "white",
+            borderRadius: "5px",
+        },
+        chipFocused: {
+            backgroundColor: emphasize(
+                theme.palette.mode === "light" ? theme.palette.grey[300] : theme.palette.grey[700],
+                0.08
+            ),
+        },
+        noOptionsMessage: {
+            padding: theme.spacing(1, 2),
+        },
+        singleValue: {
+            fontSize: 14,
+            fontWeight: "bold",
+        },
+        placeholder: {
+            position: "absolute",
+            left: 2,
+            bottom: 6,
+            fontSize: 16,
+        },
+        paper: {
+            position: "absolute",
+            zIndex: 1,
+            marginTop: theme.spacing(1),
+            left: 0,
+            right: 0,
+        },
+        divider: {
+            height: theme.spacing(2),
+        },
+    })
+);
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -234,6 +303,45 @@ export type Option = {
 export default function IntegrationReactSelect({ suggestions = [], value, onChange, className, ...rest }: any) {
     const { t } = useTranslation();
     const classes = useStyles(rest);
+    const theme = useTheme();
+
+    const selectStyles = {
+        input: (base: CSSProperties) => ({
+            ...base,
+            isFocused: true,
+            color: theme.palette.text.primary,
+            "& input": {
+                font: "inherit",
+            },
+        }),
+        option: (base: any, state: any) => ({
+            ...base,
+            backgroundColor: state.isSelected ? "red" : "blue",
+            ":active": {
+                backgroundColor: state.isSelected ? "green" : "yellow",
+            },
+        }),
+    };
+
+    return (
+        <div className={`${classes.root} ${className}`} role="listbox">
+            <Select
+                classes={classes}
+                styles={selectStyles}
+                components={components}
+                options={R.sortBy<Option>(R.prop("label"), suggestions)}
+                value={value}
+                onChange={onChange}
+                placeholder={t("common.options.select") + "..."}
+                {...rest}
+            />
+        </div>
+    );
+}
+
+export function HomepageIntegrationReactSelect({ suggestions = [], value, onChange, className, ...rest }: any) {
+    const { t } = useTranslation();
+    const classes = useHomepageStyles(rest);
     const theme = useTheme();
 
     const selectStyles = {

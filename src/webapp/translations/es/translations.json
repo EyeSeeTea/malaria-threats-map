@@ -92,9 +92,6 @@
             "synergist_involvement": "Efecto sinérgico en susceptibilidad",
             "synergist_involvement_subtitle": "Resultados de bioensayos de insecticidas sinérgicos (solo monooxigenasas)",
             "synergist_involvement_legend": "Efecto de la sinergia en susceptibilidad",
-            "pbo_deployment": "Despliegue de mosquiteros PBO-piretroide",
-            "pbo_deployment_subtitle": "Ver si los sitios cumplen con los criterios de la OMS para el despliegue de redes PBO-piretroide",
-            "pbo_deployment_legend": "Cumplimiento de los criterios recomendados por la OMS para el despliegue de mosquiteros con PBO y piretroide",
             "chart": {
                 "resistance_status": {
                     "content_1": "{{nStudies}} pruebas con vectores ",
@@ -138,21 +135,6 @@
                     "number_of_tests": "Número de pruebas",
                     "mosquito_mortality": "% de mortalidad en los mosquitos",
                     "no_synergist": "No sinergista"
-                },
-                "pbo_deployment": {
-                    "subtitle": "Cumplimiento de los criterios recomendados por la OMS para el despliegue de redes piretroides-PBO por especies de vectores",
-                    "vector_species": "Especies de vectores",
-                    "vector_species_criteria": "Especies de vectores que cumplen con los criterios",
-                    "num_sites_criteria": "Número de sitios que cumplen con los criterios",
-                    "pyrethroid_resistance_status": "Estado de resistencia a piretroides",
-                    "adjusted_mortality": "Mortalidad ajustada frente a piretroides entre el 10% y el 80%",
-                    "most_recent_test_results": "Resultados de las pruebas de susceptibilidad a piretroides más recientes",
-                    "conferred_by_mono_oxygenase": "Conferida (al menos en parte) por mono-oxigenasa",
-                    "mono_oxygenase_measured_by": "Mono-oxigenasa medida por",
-                    "most_recent_mono_oxygenase_results": "Resultados más recientes de afectación de mono-oxigenasa",
-                    "yes": "Sí",
-                    "no": "No",
-                    "view_sites": "Ver sitios"
                 }
             },
             "legend": {
@@ -161,46 +143,41 @@
                     "moderate_to_high_intensity": "Moderada a alta",
                     "moderate_intensity": "Moderada",
                     "low_intensity": "Baja",
-                    "susceptible": "Susceptible"
+                    "susceptible": "Susceptible",
+                    "help": {
+                        "p1": "Este mapa contiene datos de <1>bioensayos de concentración de intensidad</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En sitios donde los estudios muestran niveles variables de intensidad de resistencia, el color de el punto está determinado por los resultados más recientes.",
+                        "p2": "Para obtener información sobre cómo se define cada nivel, consulte el <1 href='/'>manual de la OMS para el control de la resistencia</1>.",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
+                    }
                 },
                 "resistance_status": {
                     "confirmed": "Confirmado (0 to <90%)",
                     "possible": "Posible (90 to <98%)",
-                    "susceptible": "Susceptible (≥98%)"
+                    "susceptible": "Susceptible (≥98%)",
+                    "help": {
+                        "p1": "Este mapa contiene datos de <1>bioensayos de concentración discriminatoria</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En sitios donde los estudios muestran niveles variables de intensidad de resistencia, el color de el punto está determinado por los resultados más recientes.",
+                        "p2": "Para obtener información sobre cómo se define cada nivel, consulte el <1 href='/'>manual de la OMS para el control de la resistencia</1>.",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
+                    }
                 },
                 "resistance_mechanism": {
                     "confirmed": "Detectado",
-                    "not_confirmed": "No detectado"
+                    "not_confirmed": "No detectado",
+                    "help": {
+                        "p1": "Este mapa contiene datos de <1>ensayos moleculares, bioquímicos y bioensayos de insecticidas sinérgicos</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. El color del punto muestra si Se ha detectado o no un marcador molecular asociado con la resistencia a los insecticidas en los mosquitos recolectados en el sitio. El color del punto está determinado por los resultados más recientes.",
+                        "p2": "",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
+                    }
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "Mortalidad por mosquito",
                     "full_involvement": "Participación total",
                     "partial_involvement": "Participación parcial",
-                    "no_involvement": "Sin participación"
-                },
-                "pbo_deployment": {
-                    "eligible": "Todos los criterios cumplidos",
-                    "not_eligible": "Al menos un criterio no se cumple",
-                    "not_enough_data": "Es necesario recopilar más datos para evaluar los criterios",
-                    "expanded": {
-                        "eligible": "sitios donde al menos una especie de vector cumple los tres criterios recomendados por la OMS",
-                        "not_eligible": "sitios donde una de las especies de vectores para las que se dispone de datos viola al menos uno de los, y ninguna de las especies para las que se dispone de datos cumple los tres criterios.",
-                        "not_enough_data": "sitios con datos insuficientes para evaluar si las especies de vectores locales cumplen con los tres criterios",
-                        "p1": "Este mapa muestra el estado de cumplimiento de las poblaciones de vectores locales con la ",
-                        "p1Link": "https://apps.who.int/iris/bitstream/handle/10665/258939/WHO-HTM-GMP-2017.17-eng.pdf?sequence=5",
-                        "p1a": "tres criterios recomendados por la OMS ",
-                        "p2": "en diferentes sitios o áreas geográficas. El estado se ha evaluado con base en los datos incluidos en la base de datos mundial sobre la resistencia a los insecticidas en los vectores de la malaria. El mapa muestra el estado de cumplimiento de las especies de vectores seleccionadas en el panel de filtros. Si no se ha filtrado ninguna especie, el mapa considera todos los datos disponibles para evaluar los criterios."
-                    },
-                    "link": "https://www.who.int/malaria/publications/atoz/9789241511575/es/",
-                    "link_text": "Procedimientos de las pruebas para la vigilancia de la resistencia a los insecticidas en los mosquitos vectores del paludismo, Segunda edición",
-                    "link_content_1": "Más información sobre las recomendaciones de la OMS para el despliegue de mosquiteros con PBO y piretroide está disponible en los ",
-                    "link_content_2": ". Estas recomendaciones se actualizarán a medida que se obtenga nueva evidencia cientifica.",
-                    "countries_legend": {
-                        "at_least_one_site": "Al menos un sitio cumple con los tres criterios recomendados por la OMS",
-                        "insufficient_to_judge": "Los datos de seguimiento informados son insuficientes para juzgar la comestibilidad",
-                        "no_reports_available": "No se dispone de informes sobre el seguimiento de los criterios recomendados por la OMS.",
-                        "not_malaria_endemic": "La malaria no es endémica",
-                        "not_applicable": "No aplica"
+                    "no_involvement": "Sin participación",
+                    "help": {
+                        "p1": "Este mapa presenta datos de <1>bioensayos de insecticidas sinérgicos</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En los sitios donde los estudios muestran resultados variables, el color del punto está determinada por los resultados más recientes.",
+                        "p2": "Para obtener información sobre cómo se clasifica la participación de los sinergistas, consulte el <1 href='/'>Manual de la OMS para el control de la resistencia</1>.",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
                     }
                 }
             }
@@ -225,7 +202,13 @@
                     "HRP2_HRP3_PROPORTION_DELETION": "Deleciones del gen pfhrp2/3",
                     "HRP2_PROPORTION_DELETION": "Deleciones del gen pfhrp2",
                     "confirmed": "Confirmado",
-                    "not_identified": "No detectado"
+                    "not_identified": "No detectado",
+                    "help": {
+                        "p1": "Este mapa presenta datos de <1>encuestas hrp2</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. El color del punto muestra si se han detectado eliminaciones de hrp2 en función de la resultados más recientes.",
+                        "p2": "",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país.",
+                        "question": "En las encuestas, los criterios para seleccionar muestras para analizar las deleciones de pfhrp 2/3 varían; por lo tanto, consulte el informe completo citado para obtener más detalles."
+                    }
                 }
             }
         },
@@ -271,20 +254,35 @@
                     "medium_high": "10% - 20%",
                     "medium": "5% - 10%",
                     "low": "< 5%",
-                    "unknown": "Datos no disponibles"
+                    "unknown": "Datos no disponibles",
+                    "help": {
+                        "p1": "Este mapa presenta datos de <1>eficacia de estudios terapéuticos</1>. El color del punto está determinado por el porcentaje de pacientes con fracaso del tratamiento. Los resultados más recientes se presentan de forma predeterminada.",
+                        "p2": "Las directrices de la OMS para el tratamiento de la malaria recomiendan cambiar el tratamiento de primera línea si la tasa de fracaso del tratamiento supera el 10 %.",
+                        "footer": "Fuente de datos: Base de datos mundial de la OMS sobre eficacia y resistencia a los medicamentos antipalúdicos."
+                    }
                 },
                 "delayed_parasite_clearance": {
                     "high": "> 20%",
                     "medium_high": "10% - 20%",
                     "medium": "5% - 10%",
                     "low": "< 5%",
-                    "unknown": "Datos no disponibles"
+                    "unknown": "Datos no disponibles",
+                    "help": {
+                        "p1": "Este mapa presenta datos de <1>eficacia de estudios terapéuticos</1>. El color del punto está determinado por el porcentaje de pacientes con parásitos en el día 3. Los resultados más recientes se presentan de forma predeterminada.",
+                        "p2": "",
+                        "footer": "Fuente de datos: Base de datos mundial de la OMS sobre eficacia y resistencia a los medicamentos antipalúdicos."
+                    }
                 },
                 "molecular_markers": {
                     "high": "> 80%",
                     "medium_high": "51% - 80%",
                     "medium": "10% - 50%",
-                    "low": "< 10%"
+                    "low": "< 10%",
+                    "help": {
+                        "p1": "Este mapa presenta datos de <1>estudios de marcadores moleculares</1>. El color del punto está determinado por el porcentaje de muestras que tienen mutaciones moleculares. Los resultados más recientes se presentan de forma predeterminada.",
+                        "p2": "",
+                        "footer": "Fuente de datos: Base de datos mundial de la OMS sobre eficacia y resistencia a los medicamentos antipalúdicos."
+                    }
                 }
             }
         },
@@ -306,7 +304,13 @@
                     "native": "Nativa",
                     "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
                     "link_text": "formulario de reporte",
-                    "link_content_1": "Si ha detectado especies invasoras de vectores de Anopheles, infórmenos a través del "
+                    "link_content_1": "Si ha detectado especies invasoras de vectores de Anopheles, infórmenos a través del ",
+                    "help": {
+                        "p1": "Este mapa representa datos de la <1>vigilancia de vectores de mosquitos Anopheles</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. El color del punto muestra si la especie es invasora o nativa de la zona.",
+                        "p2": "",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país.",
+                        "question": "Informe la detección de especies de vectores invasoras de Anopheles mediante este <2 href='/'>formulario de notificación</2>."
+                    }
                 }
             }
         },
@@ -360,10 +364,30 @@
             "exclude_lower_patients": "Excluir estudios de menos de 20 pacientes",
             "exclude_lower_samples": "Excluir estudios de menos de 20 muestras"
         },
+        "topbar": {
+            "menu": "Menú",
+            "maps": "Mapas",
+            "dashboards": "Tableros",
+            "stories": "Cuentos"
+        },
+        "sidebar": {
+            "home": "Casa",
+            "about": "Sobre",
+            "contact": "Contactar",
+            "share_data": "Compartir datos",
+            "language": "Idioma",
+            "take_tour": "Hacer un recorrido"
+        },
         "legend": {
+            "subtitle": "Determinado por los datos más recientes en un sitio",
             "number_of_studies": "Número de estudios",
             "number_of_surveys": "Número de encuestas",
             "most_recent_data_shown": "Datos más recientes mostrados"
+        },
+        "screenshot": {
+            "screenshot": "Captura de pantalla",
+            "download_screenshot": "Descargar captura de pantalla",
+            "generating_screenshot": "Generando captura de pantalla"
         },
         "chart": {
             "studies": "Estudios",
@@ -375,7 +399,8 @@
         },
         "options": {
             "title": "Opciones",
-            "select_language": "Seleccione idioma",
+            "select_language": "Seleccione Idioma",
+            "language": "Idioma",
             "select": "Seleccione"
         },
         "citation": {
@@ -818,28 +843,6 @@
         "data": "Datos",
         "selectLocation": "FILTRO DE LOCALIZACIÓN (OPCIONAL)",
         "location": "Localización"
-    },
-    "PBOStory": {
-        "step1": {
-            "part1": "<0>¿Qué son los mosquiteros con piretroide y BOP? </0>",
-            "part2": "Los mosquiteros con piretroide y BOP son mosquiteros que incluyen tanto un insecticida piretroide como el sinergista BOP. El BOP actúa inhibiendo ciertas enzimas metabólicas dentro del mosquito (por ejemplo, oxidasas de función mixta) que desintoxican o secuestran los insecticidas antes de que puedan tener un efecto tóxico en el mosquito.",
-            "part3": "<0>¿Los recomienda la OMS como intervención de salud pública?</0>",
-            "part4": "La OMS recomienda condicionalmente el despliegue de los mosquiteros con piretroides-BOP precalificados por la OMS, en lugar de los mosquiteros que solo contienen piretroide, en aquellos lugares donde los vectores principales del paludismo presentan resistencia a los piretroides que sea: a) confirmada; b) de nivel intermedio, y c) conferida, al menos en parte, por un mecanismo de resistencia basado en la monoxigenasa, determinado mediante procedimientos estándar.",
-            "part5": "Esta recomendación se otorgó excepcionalmente en 2017 con base a los datos epidemiológicos de un ensayo clínico randomizado en clusters y seguirá siendo condicional hasta que los datos de al menos otro ensayo, realizado durante un periodo de 2 años, confirmen el impacto epidemiológico demostrado por el primer ensayo."
-        },
-        "step2": {
-            "part1": "<0>Consideraciones para el despliegue de mosquiteros con piretroide y BOP</0>",
-            "part2": "El despliegue de redes de piretroides-PBO solo debe considerarse en situaciones en las que no se reducirá la cobertura con un control de vectores efectivo (principalmente MTILD o IRS); El objetivo principal debe seguir siendo el logro y el mantenimiento de la cobertura universal para todas las personas en riesgo de contraer paludismo.",
-            "part3": "Su despliegue debe considerarse zona por zona (por ejemplo, distritos o provincias) evaluado si cada una de ellas cumplen los criterios recomendados por la OMS; en lugar de desplegarse en el país completo. Es importante considerar su despliegue en el contexto de la disponibilidad de recursos y evaluándolo frente a otras intervenciones de control de la malaria.",
-            "part4": "Los mosquiteros con piretroide no deben considerarse como una herramienta que por sí sola consiga controlar eficazmente la resistencia a los insecticidas en los vectores de la malaria."
-        },
-        "step3": {
-            "part1": "<0> Mosquiteros con piretroide y BOP precalificados por la OMS</0>",
-            "part2": "El proceso de precalificación de la OMS evalúa los productos de control de vectores por su seguridad, calidad y eficacia entomológica según los criterios oficiales de evaluación. Los nuevos tipos de mosquiteros actualmente precalificados han demostrado ser seguros y eficaces para el uso previsto.",
-            "part3": "La lista de mosquiteros con piretroide y BOP precalificados por la OMS puede la siguiente página: ",
-            "part4": "Aún no se conoce la duración del sinergista piperonil butóxido (PBO) impregnado en el material del mosquitero.",
-            "part5": "Para obtener más información sobre los mosquiteros con piretroide y BOP, y su diferencia con los mosquiteros que solo contienen piretroides, consulte: "
-        }
     },
     "preventionStory": {
         "step1": {

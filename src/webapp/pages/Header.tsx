@@ -2,10 +2,30 @@ import React from "react";
 import styled from "styled-components";
 import { Button, AppBar, Toolbar, Box } from "@mui/material";
 import { TFunction } from "react-i18next";
-import LanguageSelectorSelect from "../components/LanguageSelectorSelect";
 import { Link } from "react-router-dom";
 
+import { HomepageIntegrationReactSelect } from "../components/BasicSelect";
+import { changeLanguage } from "../config/i18next";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
+const LANGUAGES = [
+    {
+        value: "en",
+        label: "Eng",
+        code: "en",
+    },
+    {
+        value: "es",
+        label: "Esp",
+        code: "es",
+    },
+    {
+        value: "fr",
+        label: "Fran",
+        code: "fr",
+    },
+];
 const StickyMenu = styled.div`
     position: relative;
     bottom: 0;
@@ -44,34 +64,59 @@ const StyledButton = styled(Button)`
     }
 `;
 
+const LanguageSelectorBox = styled(Box)`
+    flex-grow: 0;
+`;
+
+const MenuOptionBox = styled(Box)`
+    flex-grow: 1;
+    width: 60%;
+    margin: auto;
+    @media (min-width: 600px) {
+        display: flex;
+    }
+`;
+
+const StyledAppBar = styled(AppBar)`
+    background-color: white;
+`;
+
 interface HeaderProps {
     t: TFunction<"translation", undefined>;
 }
 
 const Header = ({ t }: HeaderProps) => {
-    const classes = {
-        icon: { marginRight: 5 },
-        menuOptionBox: { flexGrow: 1, display: { xs: "flex" }, width: "60%", margin: "auto" },
-        languageSelectorBox: { flexGrow: 0 },
-        appBar: { backgroundColor: "white" },
-    };
+    const [language, setLanguage] = React.useState(i18next.language || window.localStorage.i18nextLng);
+    function handleChange(selection: any) {
+        const language = selection.value;
+        changeLanguage(language);
+        setLanguage(language);
+    }
+
+    useTranslation();
+
     return (
         <StickyMenu>
             <Box>
-                <AppBar position="sticky" sx={classes.appBar}>
+                <StyledAppBar position="sticky">
                     <StyledToolbar>
-                        <Box sx={classes.menuOptionBox}>
+                        <MenuOptionBox>
                             <StyledButton>{t("common.homepage.menu.home")}</StyledButton>
                             <StyledButton>{t("common.homepage.menu.tools")}</StyledButton>
                             <StyledButton><Link to="/about" replace>{t("common.homepage.menu.about")}</Link></StyledButton>
                             <StyledButton>{t("common.homepage.menu.contact")}</StyledButton>
                             <StyledButton>{t("common.homepage.menu.share_data")}</StyledButton>
-                        </Box>
-                        <Box sx={classes.languageSelectorBox}>
-                            <LanguageSelectorSelect section="homeItem" />
-                        </Box>
+                        </MenuOptionBox>
+                        <LanguageSelectorBox>
+                            <HomepageIntegrationReactSelect
+                                id={"language"}
+                                suggestions={LANGUAGES}
+                                onChange={handleChange}
+                                value={LANGUAGES.find(lg => lg.value === language)}
+                            />
+                        </LanguageSelectorBox>
                     </StyledToolbar>
-                </AppBar>
+                </StyledAppBar>
             </Box>
         </StickyMenu>
     );

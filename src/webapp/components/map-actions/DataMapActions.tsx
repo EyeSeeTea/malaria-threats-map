@@ -70,9 +70,6 @@ const DataMapActions: React.FC<StateProps> = ({
             case PreventionMapType.LEVEL_OF_INVOLVEMENT: {
                 return _.compact([type, ...synergistTypes, ...species, years]).join(" | ");
             }
-            case PreventionMapType.PBO_DEPLOYMENT: {
-                return _.compact([...insecticideTypes, ...species, years]).join(" | ");
-            }
         }
     }, [yearFilters, preventionFilters, t]);
 

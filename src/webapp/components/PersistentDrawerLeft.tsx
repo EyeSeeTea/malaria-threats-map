@@ -5,7 +5,6 @@ import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
-import Map from "./Map";
 import Disclaimer from "./Disclaimer";
 import styled from "styled-components";
 import { connect } from "react-redux";
@@ -30,6 +29,7 @@ import { colors } from "../constants/theme";
 import MobileOptions from "./MobileOptions";
 import Loader from "./Loader";
 import Hidden from "./hidden/Hidden";
+import MapContainer from "./MapContainer";
 
 interface ThemeProps {
     drawerWidth: string;
@@ -266,7 +266,7 @@ function PersistentDrawerLeft({
                         </AppBar>
                     </Hidden>
                     <MapWrapper>
-                        <Map />
+                        <MapContainer />
                     </MapWrapper>
                     <Disclaimer />
                     <Hidden smUp>
