@@ -13,7 +13,14 @@ import DataGraphic from "../../assets/img/about-page/data-graphic.svg";
 import OverviewMaps from "../../assets/img/about-page/about-overview-maps.svg";
 import OverviewResearchEfforts from "../../assets/img/about-page/about-overview-research-efforts.png";
 import OverviewCountries from "../../assets/img/about-page/about-overview-countries.png";
-
+import DonorsOption from "../../assets/img/about-page/about-page-donors-option.png";
+import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
+import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
+import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
+import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 
 const StyledBanner = styled.div`
     display: block;
@@ -28,9 +35,13 @@ const StyledBanner = styled.div`
     opacity: 1;
 `;
 
-const ContentDiv = styled.div`
-    width: 1170px;
-    margin: auto;
+interface Props {
+    windowWidth: number;
+}
+
+const ContentDiv = styled.div<Props>`
+width: ${props => `${props.windowWidth * 0.83}px`};
+margin: auto;
 `;
 
 const TitleBannerDiv = styled.div`
@@ -60,25 +71,63 @@ const HeaderDiv = styled.div`
 
 export const AboutPage = () => {
     const { t } = useTranslation();
+    const { width } = useWindowDimensions();
+    const [alignment, setAlignment] = React.useState<string | null>('left');
+
+    const handleAlignment = (
+      event: React.MouseEvent<HTMLElement>,
+      newAlignment: string | null,
+    ) => {
+      setAlignment(newAlignment);
+    };
 /*
 <Divider variant="fullWidth" style={{ marginTop: 100 }} />
                 <Footer t={t} />
 */
+// marginTop: "83", marginBottom: "83"s
+const typesOfPeople = {
+    controlProgram: {
+        quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
+        quoteName: "Name",
+        globalFund: "Global Fund"
+    },
+    ngos: {
+        quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
+        quoteName: "Name",
+        globalFund: "Global Fund"
+    },
+    donors: {
+        quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
+        quoteName: "Name",
+        globalFund: "Global Fund"
+    },
+    whoStaff: {
+        quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
+        quoteName: "Name",
+        globalFund: "Global Fund"
+    },
+    researchers: {
+        quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
+        quoteName: "Name",
+        globalFund: "Global Fund"
+    }
+};
+
     return (
         <React.Fragment>
             <StyledBanner>
                 <Header t={t} />
-                <ContentDiv>
+                <ContentDiv windowWidth={width}>
                     <TitleBannerDiv>
-                        <Typography variant="h3" color={"inherit"} sx={{ textTransform: "uppercase", fontSize: 46 }}>
+                        <Typography variant="h3" color={"inherit"} textTransform="uppercase" fontSize={46}>
                             Learn More About  <br /> <strong>The Malaria Threats Map</strong>
                         </Typography>
                     </TitleBannerDiv>
                 </ContentDiv>
                 
             </StyledBanner>
-            <ContentDiv style={{display: "flex"}}>
-                    <MediaCardDiv>
+            <ContentDiv style={{display: "flex", margin: "64px auto"}} windowWidth={width}>
+                    <MediaCardDiv style={{marginRight: 30}}>
                     <Typography variant="h4" fontWeight="bold" color={"inherit"}>
                         Where does the data come from?
                         </Typography>
@@ -88,8 +137,9 @@ export const AboutPage = () => {
                     </MediaCardDiv>
                 <img src={DataGraphic} width={644} />
                 </ContentDiv>
-                <div style={{backgroundColor: "#F7F7F7", marginTop: "83", marginBottom: "83"}}>
-                    <ContentDiv style={{marginTop: "83"}}>
+
+                <div style={{backgroundColor: "#F7F7F7"}}>
+                    <ContentDiv style={{padding: "64px auto", backgroundColor: "#F7F7F7"}} windowWidth={width}>
                         <Typography variant="h4" fontWeight="bold" color={"inherit"}>
                         Watch: Find out about the functionality of the maps within the MTM
                     </Typography>
@@ -104,6 +154,53 @@ export const AboutPage = () => {
                     </MediaCardDiv1>
                     </ContentDiv>
                 </div>
+
+                <ContentDiv style={{display: "flex"}} windowWidth={width}>
+                    <MediaCardDiv style={{marginTop: 58}}>
+                    <Typography variant="h4" fontWeight="bold" color={"inherit"}>
+                    Thousands of people use the Malaria Threats Map to understand challenges to malaria control and elimination, access data and guide decision-making.
+                        </Typography>
+                        <div style={{ margin: "50px auto"}}>
+                            <ToggleButtonGroup
+                                value={alignment}
+                                exclusive
+                                onChange={handleAlignment}
+                                aria-label="text alignment"
+                                color="primary"
+                                >
+                                <ToggleButton value="left" aria-label="left aligned">
+                                    <Typography variant="body1" fontWeight="bold" color={"inherit"}>National Malaria Control Programmes</Typography>
+                                </ToggleButton>
+                                <ToggleButton value="center" aria-label="centered">
+                                    <Typography variant="body1" fontWeight="bold" color={"inherit"}>NGOS</Typography>
+                                </ToggleButton>
+                                <ToggleButton value="right" aria-label="right aligned">
+                                    <Typography variant="body1" fontWeight="bold" color={"inherit"}>Donors</Typography>
+                                </ToggleButton>
+                                <ToggleButton value="justify" aria-label="justified">
+                                    <Typography variant="body1" fontWeight="bold" color={"inherit"}>WHO Staff</Typography>
+                                </ToggleButton>
+                                <ToggleButton value="justify" aria-label="justified">
+                                    <Typography variant="body1" fontWeight="bold" color={"inherit"}>Researchers</Typography>
+                                </ToggleButton>
+                            </ToggleButtonGroup>
+                        </div>
+                        <div style={{display: "flex", justifyContent: "space-between"}}>
+                        <img src={DonorsOption} width={475} />
+                        <MediaCardDiv style={{marginLeft: 30}}>
+                    <Typography variant="h6" fontWeight="bold" color={"inherit"}>
+                        Donors
+                        </Typography>
+                        <Typography variant="body2" color={"#343434"} margin="16px 0">
+                        “The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.”                        </Typography>
+                        <div style={{display: "flex", alignItems: "flex-end", justifyContent: "flex-end"}}>
+                        <Typography variant="body2" color="#343434" style={{padding: "4px 20px 20px 20px"}}>Name</Typography>
+                        <Typography variant="body2" color="#636463" fontWeight="bold" style={{padding: "4px 20px 20px 20px"}}>Global Fund</Typography>
+                        </div>
+                    </MediaCardDiv>
+                        </div>
+                    </MediaCardDiv>
+                </ContentDiv>
         </React.Fragment>
     );
 };

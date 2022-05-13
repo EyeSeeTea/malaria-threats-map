@@ -14,8 +14,8 @@ import Maps from "../../assets/img/maps.png";
 
 import ThemePaper from "./ThemePaper";
 import MediaCard from "./MediaCard";
-import Footer from "./Footer";
-import Header from "./Header";
+import Footer from "../Footer";
+import Header from "../Header";
 import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
 
 const StyledBanner = styled.div`
