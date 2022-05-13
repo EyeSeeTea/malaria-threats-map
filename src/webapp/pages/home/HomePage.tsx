@@ -33,10 +33,10 @@ const StyledBanner = styled.div`
 `;
 interface Props {
     windowWidth: number;
-  }
-  
+}
+
 const ContentDiv = styled.div<Props>`
-    width: ${props =>  `${props.windowWidth * 0.83}px`};
+    width: ${props => `${props.windowWidth * 0.83}px`};
     margin: auto;
 `;
 
@@ -66,8 +66,8 @@ const HeaderDiv = styled.div`
 `;
 
 const StyledDivider = styled(Divider)`
-margin-top: 83px;
-`
+    margin-top: 83px;
+`;
 
 export const themePaperColors = {
     preventionColor: "#5ABE86",
@@ -84,7 +84,6 @@ export const HomePage = () => {
     const { t } = useTranslation();
     const { width } = useWindowDimensions();
 
-    
     return (
         <React.Fragment>
             <StyledBanner>

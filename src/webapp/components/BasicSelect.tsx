@@ -32,7 +32,7 @@ const useHomepageStyles = makeStyles((theme: Theme) =>
             flexGrow: 1,
             minWidth: 80,
             padding: 2,
-            backgroundColor: "#2FB3AF", 
+            backgroundColor: "#2FB3AF",
             borderRadius: 5,
         },
         inputPaper: {
@@ -53,7 +53,7 @@ const useHomepageStyles = makeStyles((theme: Theme) =>
             display: "flex",
             flex: 1,
             alignItems: "center",
-            justifyContent: "center", 
+            justifyContent: "center",
             flexWrap: (props: { isMulti?: boolean }) => (props.isMulti ? "wrap" : "nowrap"),
         },
         chip: {

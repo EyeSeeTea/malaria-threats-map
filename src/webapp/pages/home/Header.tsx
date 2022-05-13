@@ -92,7 +92,7 @@ const Header = ({ t }: HeaderProps) => {
     }
 
     useTranslation();
-    
+
     return (
         <StickyMenu>
             <Box>

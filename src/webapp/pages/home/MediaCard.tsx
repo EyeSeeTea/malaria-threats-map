@@ -49,19 +49,17 @@ const StyledCardMedia = styled(CardMedia).attrs<StyledCardMediaProps>(props => (
     component: "img",
     height: "230",
     image: props.image,
-  }))`
-    width: 94%; 
-    margin: auto; 
-    padding: 10px; 
+}))`
+    width: 94%;
+    margin: auto;
+    padding: 10px;
     border-radius: 25px 25px 0 0;
-  `;
+`;
 
 const MediaCard = ({ title, subtitle, buttonText, image, buttonLink }: MediaCardProps) => {
     return (
         <StyledCard>
-            <StyledCardMedia
-                image={image}
-            />
+            <StyledCardMedia image={image} />
             <StyledCardContent>
                 <Typography gutterBottom variant="h5" component="div" textAlign="center" fontWeight="bold">
                     {title}

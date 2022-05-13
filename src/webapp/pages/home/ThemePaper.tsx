@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Typography, Paper, Button } from "@mui/material";
 import { useTranslation, TFunction } from "react-i18next";
 import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
-import {themePaperColors } from "./HomePage";
+import { themePaperColors } from "./HomePage";
 
 interface ThemePaperProps {
     icon: string;
@@ -22,11 +22,15 @@ const StyledPaper = styled(Paper)<StyledPaperProps>`
     background-color: ${props => props.color};
     display: flex;
     padding: ${props =>
-        props.color === themePaperColors.treatmentColor ? `${props.windowHeight * 0.04}px 25px` : `${props.windowHeight * 0.04}px`};
+        props.color === themePaperColors.treatmentColor
+            ? `${props.windowHeight * 0.04}px 25px`
+            : `${props.windowHeight * 0.04}px`};
 
     @media (max-width: 1024px) {
         padding: ${props =>
-            props.color === themePaperColors.treatmentColor ? `${props.windowHeight * 0.04}px 25px 20px 20px` : `${props.windowHeight * 0.04}px`};
+            props.color === themePaperColors.treatmentColor
+                ? `${props.windowHeight * 0.04}px 25px 20px 20px`
+                : `${props.windowHeight * 0.04}px`};
     }
 `;
 
@@ -69,7 +73,7 @@ const StyledImage = styled.img`
     width: 100%;
     max-width: 150px;
     max-height: 150px;
-    @media(max-width: 1024px) {
+    @media (max-width: 1024px) {
         height: 100px;
     }
 `;

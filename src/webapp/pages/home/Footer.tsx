@@ -15,16 +15,15 @@ const FooterDiv = styled.div`
     flex: 1 auto;
 `;
 
-
 const Flex = styled.div`
     display: flex;
     flex-direction: column;
 `;
 interface PrivacyProps {
     windowWidth: number;
-  }
+}
 
-  const PrivacyCopyrightDiv = styled.div<PrivacyProps>`
+const PrivacyCopyrightDiv = styled.div<PrivacyProps>`
     padding: 22px 0;
     width: ${props => `${props.windowWidth * 0.83}px`};
     margin: auto;
@@ -52,7 +51,6 @@ const StyledNewsletterButton = styled(Button)`
 interface FooterProps {
     t: TFunction<"translation", undefined>;
 }
-
 
 const Footer = ({ t }: FooterProps) => {
     const { width } = useWindowDimensions();
@@ -128,7 +126,7 @@ const Footer = ({ t }: FooterProps) => {
                     {t("common.footer.privacy")}
                 </Link>
                 <Typography variant="body1" textAlign="center" color="#343434">
-                {t("disclaimer.p1bLinkText", { year: new Date().getFullYear() })}
+                    {t("disclaimer.p1bLinkText", { year: new Date().getFullYear() })}
                 </Typography>
             </PrivacyCopyrightDiv>
         </React.Fragment>

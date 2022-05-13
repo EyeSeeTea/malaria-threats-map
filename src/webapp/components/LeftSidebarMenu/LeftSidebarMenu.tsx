@@ -11,7 +11,6 @@ import { Fab, Drawer, Typography, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-
 const drawerWidth = 100;
 
 const StyledFab = styled(Fab)`
@@ -81,13 +80,13 @@ const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
             <SideBarContainer>
                 <SidebarIconDiv>
                     <StyledLink to="/">
-                    <StyledFab id="home-button" size="small" color={"default"} title={t("common.sidebar.home")}>
-                        <HomeIcon />
-                    </StyledFab>
-                    <Typography variant="caption" align="center">
-                        {" "}
-                        {t("common.sidebar.home")}
-                    </Typography>
+                        <StyledFab id="home-button" size="small" color={"default"} title={t("common.sidebar.home")}>
+                            <HomeIcon />
+                        </StyledFab>
+                        <Typography variant="caption" align="center">
+                            {" "}
+                            {t("common.sidebar.home")}
+                        </Typography>
                     </StyledLink>
                 </SidebarIconDiv>
 

@@ -19,10 +19,10 @@ const StyledSpanFrenImage = styled(StyledImage)`
 
 const WhoLogoBlue = () => {
     const lng = localStorage.getItem("language");
-    
+
     switch (lng) {
         case "es":
-            return <StyledSpanFrenImage src={WhoSpanish}  alt="WHO spanish logo" />;
+            return <StyledSpanFrenImage src={WhoSpanish} alt="WHO spanish logo" />;
         case "fr":
             return <StyledSpanFrenImage src={WhoFrench} alt="WHO french logo" />;
         default:
