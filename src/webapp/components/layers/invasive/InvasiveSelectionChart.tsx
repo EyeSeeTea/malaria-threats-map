@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { InvasiveMapType, State } from "../../../store/types";
 import { selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
-import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 import VectorOccurrenceChart from "./VectorOccurance/VectorOccurranceChart";
 import { selectInvasiveFilters } from "../../../store/reducers/invasive-reducer";

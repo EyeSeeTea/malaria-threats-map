@@ -64,7 +64,7 @@ const SitePopover: React.FC<Props> = ({
             placeholder
         );
 
-        const popup = new mapboxgl.Popup({ closeOnClick: true })
+        const popup = new mapboxgl.Popup({ closeOnClick: false })
             .setLngLat(selection.coordinates)
             .setDOMContent(placeholder)
             .addTo(map);
@@ -80,15 +80,30 @@ const SitePopover: React.FC<Props> = ({
                 setViewData(selection);
             }, 100);
         });
+        map.on("mouseenter", layer, (e: any) => {
+            setTimeout(() => {
+                setSelection(selection);
+            }, 100);
+        });
+        map.on("mouseleave", layer, (e: any) => {
+            setTimeout(() => {
+                setSelection(null);
+            }, 100);
+        });
+        map.on("mouseleave",  (e: any) => {
+            setTimeout(() => {
+                setSelection(null);
+            }, 100);
+        });
 
-       /* map.on("click", (e: any) => {
+        map.on("click", (e: any) => {
             if (e.defaultPrevented === false) {
                 setTimeout(() => {
                     setSelection(null);
                     setViewData(null);
                 }, 100);
             }
-        });*/
+        });
 
         return () => {
             ReactDOM.unmountComponentAtNode(placeholder);

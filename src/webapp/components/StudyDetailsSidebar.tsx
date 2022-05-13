@@ -87,11 +87,11 @@ const StudyDetailsSidebar = ({
     const [filteredStudiesInvasives, setFilteredStudiesInvasive] = React.useState<Array<InvasiveStudy>>([]);
     const [filteredStudiesPrevention, setFilteredStudiesPrevention] = React.useState<Array<PreventionStudy>>([]);
     const [filteredStudiesTreatment, setFilteredStudiesTreatment] = React.useState<Array<TreatmentStudy>>([]);
-    console.log(diagnosisStudySelection)
     React.useEffect(
         () => {
             //I only update the new studies to be shown when viewData changes (ie. when you click on a study circle)
             //so that the data doesn't change automatically when the user hovers over another popup
+            console.log(diagnosisStudySelection)
 
         
             switch (theme) {
@@ -114,10 +114,10 @@ const StudyDetailsSidebar = ({
         // eslint-disable-next-line
         [viewData]
     );
-    /*console.log(filteredStudiesDiagnosis)
+    console.log(filteredStudiesDiagnosis)
     console.log(filteredStudiesInvasives)
     console.log(filteredStudiesPrevention)
-    console.log(filteredStudiesTreatment)*/
+    console.log(filteredStudiesTreatment)
 
 
     const handleClose = () => {

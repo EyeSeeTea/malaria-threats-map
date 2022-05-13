@@ -161,7 +161,6 @@ function PersistentDrawerLeft({
     theme,
     sidebarOpen,
     setSidebarOpen,
-    selectSelection,
     viewData,
 }: Props) {
     const classes = useStyles({ drawerWidth });
