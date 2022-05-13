@@ -28,12 +28,12 @@
             "resistance_intensity": "Intensité de la résistance aux insecticides",
             "resistance_mechanism": "Mécanismes de résistance aux insecticides",
             "synergist_involvement": "Effet synergiste de la susceptibilité",
-            "synergist_involvement_legend": "Effet de la synergie sur la susceptibilité",
+            "synergist_involvement_legend": "Effet du synergiste dans la restauration de la sensibilité à l'insecticide",
             "chart": {
                 "resistance_status": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
                     "content_2": " du paludisme via détermination de la dose diagnostique(s) avec {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# de tests",
+                    "number_of_tests": "nombre testé",
                     "Confirmed": "Confirmée",
                     "Possible": "Suspectée",
                     "Susceptible": "Sensible",
@@ -45,7 +45,7 @@
                 "resistance_intensity": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
                     "content_2": " du paludisme via détermination de l'intensité de la résistance(s) avec {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# de tests",
+                    "number_of_tests": "nombre testé",
                     "HIGH_INTENSITY": "Fort",
                     "MODERATE_TO_HIGH_INTENSITY": "Moyen Fort",
                     "MODERATE_INTENSITY": "Moyen",
@@ -58,7 +58,7 @@
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
                     "content_2": " du paludisme via {{insecticideClasses}} avec {{type}} {{years}}",
-                    "number_of_tests": "# de tests",
+                    "number_of_tests": "nombre testé",
                     "DETECTED": "Détecté",
                     "NOT_DETECTED": "Non détecté",
                     "title": "Nombre d'essais de mécanismes",
@@ -69,7 +69,7 @@
                 "synergist_involvement": {
                     "mortality": "mortalité (%)",
                     "tested": "Études (n)",
-                    "number_of_tests": "# de tests",
+                    "number_of_tests": "nombre testé",
                     "mosquito_mortality": "% mortalité de moustique",
                     "no_synergist": "Pas de synergistes"
                 }
@@ -186,6 +186,8 @@
                     "species": "Espèces",
                     "sampling_period": "Période d’échantillonnage",
                     "sampling_method": "Méthode d’échantillonnage",
+                    "stage": "Stade vecteur trouvé",
+                    "breeding_habitat": "Habitat larvaire",
                     "study_identification_method": "Méthode d’identification des espèces",
                     "data_collection": "Remerciements pour la collecte de données",
                     "no_available": "Indisponible"
@@ -228,7 +230,7 @@
             "plasmodium_species": "Espèces de plasmodium",
             "drug": "Médicament",
             "molecular_marker": "Marqueur moléculaire",
-            "mechanism_type": "Type de mécanisme",
+            "mechanism_type": "Type de synergie",
             "assay_type": "Type d'analyse",
             "synergist_type": "Type de test",
             "synergist_types": "Types du mécanismes métaboliques",

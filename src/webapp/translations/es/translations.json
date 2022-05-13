@@ -28,7 +28,7 @@
             "resistance_intensity": "Intensidad de la resistencia a insecticidas",
             "resistance_mechanism": "Mecanismos de la resistencia a insecticidas",
             "synergist_involvement": "Efecto sinérgico en susceptibilidad",
-            "synergist_involvement_legend": "Efecto de la sinergia en susceptibilidad",
+            "synergist_involvement_legend": "Efecto del sinergista en la restauración de la susceptibilidad al insecticida",
             "chart": {
                 "resistance_status": {
                     "content_1": "{{nStudies}} pruebas con vectores ",
@@ -186,6 +186,8 @@
                     "species": "Especies",
                     "sampling_period": "Período de recolección",
                     "sampling_method": "Método de recolección",
+                    "stage": "Etapa vectorial encontrada",
+                    "breeding_habitat": "Hábitat larvario",
                     "study_identification_method": "Método de identificación de especies",
                     "data_collection": "Agrademicimientos por la recopilación de datos",
                     "no_available": "No disponible"
@@ -228,7 +230,7 @@
             "plasmodium_species": "Especie de plasmodium",
             "drug": "Tratamiento",
             "molecular_marker": "Marcador molecular",
-            "mechanism_type": "Tipo de mecanismo",
+            "mechanism_type": "Tipo de sinergia",
             "assay_type": "Tipo de ensayo",
             "synergist_type": "Tipo de test",
             "synergist_types": "Tipos sinergistas",

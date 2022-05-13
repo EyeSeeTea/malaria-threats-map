@@ -28,12 +28,12 @@
             "resistance_intensity": "Insecticide resistance intensity",
             "resistance_mechanism": "Resistance mechanisms detection",
             "synergist_involvement": "Synergist effect in susceptibility",
-            "synergist_involvement_legend": "Effect of synergy in susceptibility",
+            "synergist_involvement_legend": "Effect of the synergist in restoring susceptibility to the insecticide",
             "chart": {
                 "resistance_status": {
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via discriminating concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# of tests",
+                    "number_of_tests": "number tested",
                     "Confirmed": "Confirmed",
                     "Possible": "Possible",
                     "Susceptible": "Susceptible",
@@ -45,7 +45,7 @@
                 "resistance_intensity": {
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via intensity concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# of tests",
+                    "number_of_tests": "number tested",
                     "HIGH_INTENSITY": "High Intensity",
                     "MODERATE_TO_HIGH_INTENSITY": "Moderate to High Intensity",
                     "MODERATE_INTENSITY": "Moderate Intensity",
@@ -58,7 +58,7 @@
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via {{insecticideClasses}} with selected {{type}} {{years}}",
-                    "number_of_tests": "# of tests",
+                    "number_of_tests": "number tested",
                     "DETECTED": "Detected",
                     "NOT_DETECTED": "Not detected",
                     "title": "Number of mechanism assays",
@@ -69,7 +69,7 @@
                 "synergist_involvement": {
                     "mortality": "mortality (%)",
                     "tested": "Tested (n)",
-                    "number_of_tests": "# of tests",
+                    "number_of_tests": "number tested",
                     "mosquito_mortality": "% mosquito mortality",
                     "no_synergist": "No synergist"
                 }
@@ -186,6 +186,8 @@
                     "species": "Species",
                     "sampling_period": "Sampling period",
                     "sampling_method": "Sampling method",
+                    "stage": "Vector stage found",
+                    "breeding_habitat": "Larval habitat",
                     "study_identification_method": "Species identification method",
                     "data_collection": "Acknowledgement for data curation",
                     "no_available": "Not available"
@@ -228,7 +230,7 @@
             "plasmodium_species": "Plasmodium species",
             "drug": "Drug",
             "molecular_marker": "Molecular marker",
-            "mechanism_type": "Mechanism type",
+            "mechanism_type": "Type of synergy",
             "assay_type": "Assay type",
             "synergist_type": "Test type",
             "synergist_types": "Synergist types",
