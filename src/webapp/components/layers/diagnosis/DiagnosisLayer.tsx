@@ -203,9 +203,6 @@ class DiagnosisLayer extends Component<Props> {
         this.props.map.getCanvas().style.cursor = "";
         setTimeout(() => {
             this.props.setSelection(null);
-            if (this.props.sidebarOpen) {
-                setSidebarOpen(true);
-            }
         }, 100);
     };
 
@@ -260,21 +257,23 @@ class DiagnosisLayer extends Component<Props> {
         console.log(selection)
         console.log(viewData)
         console.log(sidebarOpen)
+        let filteredStudies: DiagnosisStudy[] = [];
         //selection === null
        if (viewData === null && selection === null) {
+           console.log("hello!")
             setSidebarOpen(false);
             this.props.setDiagnosisStudySelection([]);
             return <div />;
         }
-        if(selection === null) {
-            return <div />;
-        }
-        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === selection.SITE_ID);
+        if(selection !== null) {
+            //return <div />;
+            filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === selection.SITE_ID);
 
-        this.props.setDiagnosisStudySelection(filteredStudies);
-
-        if (filteredStudies.length === 0) {
-            return <div />;
+            this.props.setDiagnosisStudySelection(filteredStudies);
+    
+            if (filteredStudies.length === 0) {
+                return <div />;
+            }
         }
 
         return (

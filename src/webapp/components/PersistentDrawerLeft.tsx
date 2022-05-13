@@ -166,6 +166,7 @@ function PersistentDrawerLeft({
 }: Props) {
     const classes = useStyles({ drawerWidth });
     useEffect(() => {
+        console.log("persistent hello!")
         if (viewData !== null && sidebarOpen === false) {
             setSidebarOpen(true);
         }

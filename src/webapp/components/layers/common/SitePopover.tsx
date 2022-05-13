@@ -71,6 +71,7 @@ const SitePopover: React.FC<Props> = ({
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
         map.on("click", layer, (e: any) => {
+            console.log("popup clicks!!")
             e.preventDefault();
             if (!sidebarOpen) {
                 setSidebarOpen(true);
@@ -80,14 +81,14 @@ const SitePopover: React.FC<Props> = ({
             }, 100);
         });
 
-        map.on("click", (e: any) => {
+       /* map.on("click", (e: any) => {
             if (e.defaultPrevented === false) {
                 setTimeout(() => {
                     setSelection(null);
                     setViewData(null);
                 }, 100);
             }
-        });
+        });*/
 
         return () => {
             ReactDOM.unmountComponentAtNode(placeholder);
