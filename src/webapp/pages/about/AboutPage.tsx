@@ -14,6 +14,7 @@ import OverviewMaps from "../../assets/img/about-page/about-overview-maps.svg";
 import OverviewResearchEfforts from "../../assets/img/about-page/about-overview-research-efforts.png";
 import OverviewCountries from "../../assets/img/about-page/about-overview-countries.png";
 import DonorsOption from "../../assets/img/about-page/about-page-donors-option.png";
+import UXTesting from "../../assets/img/about-page/about-page-ux-testing.png";
 import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -72,12 +73,45 @@ const HeaderDiv = styled.div`
 export const AboutPage = () => {
     const { t } = useTranslation();
     const { width } = useWindowDimensions();
-    const [alignment, setAlignment] = React.useState<string | null>('left');
-
+    const typesOfPeople = {
+        controlProgram: {
+            name: "National Malaria Control Programmes",
+            quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
+            quoteName: "Name",
+            globalFund: "Global Fund"
+        },
+        ngos: {
+            name: "NGOs",
+            quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
+            quoteName: "Name",
+            globalFund: "Global Fund"
+        },
+        donors: {
+            name: "Donors",
+            quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
+            quoteName: "Name",
+            globalFund: "Global Fund"
+        },
+        whoStaff: {
+            name: "WHO Staff",
+            quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
+            quoteName: "Name",
+            globalFund: "Global Fund"
+        },
+        researchers: {
+            name: "Researchers",
+            quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
+            quoteName: "Name",
+            globalFund: "Global Fund"
+        }
+    };
+    const [alignment, setAlignment] = React.useState<any>("Donors");
+    console.log(alignment)
     const handleAlignment = (
       event: React.MouseEvent<HTMLElement>,
-      newAlignment: string | null,
+      newAlignment: string,
     ) => {
+        console.log(newAlignment);
       setAlignment(newAlignment);
     };
 /*
@@ -85,33 +119,6 @@ export const AboutPage = () => {
                 <Footer t={t} />
 */
 // marginTop: "83", marginBottom: "83"s
-const typesOfPeople = {
-    controlProgram: {
-        quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
-        quoteName: "Name",
-        globalFund: "Global Fund"
-    },
-    ngos: {
-        quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
-        quoteName: "Name",
-        globalFund: "Global Fund"
-    },
-    donors: {
-        quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
-        quoteName: "Name",
-        globalFund: "Global Fund"
-    },
-    whoStaff: {
-        quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
-        quoteName: "Name",
-        globalFund: "Global Fund"
-    },
-    researchers: {
-        quote: "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.",
-        quoteName: "Name",
-        globalFund: "Global Fund"
-    }
-};
 
     return (
         <React.Fragment>
@@ -168,38 +175,56 @@ const typesOfPeople = {
                                 aria-label="text alignment"
                                 color="primary"
                                 >
-                                <ToggleButton value="left" aria-label="left aligned">
+                                <ToggleButton value={"National Malaria Control Programmes"} aria-label="left aligned">
                                     <Typography variant="body1" fontWeight="bold" color={"inherit"}>National Malaria Control Programmes</Typography>
                                 </ToggleButton>
-                                <ToggleButton value="center" aria-label="centered">
+                                <ToggleButton value={Object.keys(typesOfPeople)[1]} aria-label="centered">
                                     <Typography variant="body1" fontWeight="bold" color={"inherit"}>NGOS</Typography>
                                 </ToggleButton>
-                                <ToggleButton value="right" aria-label="right aligned">
+                                <ToggleButton value={Object.keys(typesOfPeople)[2]} aria-label="right aligned">
                                     <Typography variant="body1" fontWeight="bold" color={"inherit"}>Donors</Typography>
                                 </ToggleButton>
-                                <ToggleButton value="justify" aria-label="justified">
+                                <ToggleButton value={Object.keys(typesOfPeople)[3]} aria-label="justified">
                                     <Typography variant="body1" fontWeight="bold" color={"inherit"}>WHO Staff</Typography>
                                 </ToggleButton>
-                                <ToggleButton value="justify" aria-label="justified">
+                                <ToggleButton value={Object.keys(typesOfPeople)[4]} aria-label="justified">
                                     <Typography variant="body1" fontWeight="bold" color={"inherit"}>Researchers</Typography>
                                 </ToggleButton>
                             </ToggleButtonGroup>
                         </div>
                         <div style={{display: "flex", justifyContent: "space-between"}}>
-                        <img src={DonorsOption} width={475} />
-                        <MediaCardDiv style={{marginLeft: 30}}>
+                        <img src={DonorsOption} width={475} height={250} />
+                        <div style={{display: "flex", flexDirection: "column", justifyContent: "space-between", marginLeft: 30, marginTop: 20}}>
                     <Typography variant="h6" fontWeight="bold" color={"inherit"}>
-                        Donors
+                       Donors
                         </Typography>
                         <Typography variant="body2" color={"#343434"} margin="16px 0">
-                        “The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.”                        </Typography>
+                        The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM.
+                         </Typography>
                         <div style={{display: "flex", alignItems: "flex-end", justifyContent: "flex-end"}}>
                         <Typography variant="body2" color="#343434" style={{padding: "4px 20px 20px 20px"}}>Name</Typography>
                         <Typography variant="body2" color="#636463" fontWeight="bold" style={{padding: "4px 20px 20px 20px"}}>Global Fund</Typography>
                         </div>
-                    </MediaCardDiv>
+                    </div>
                         </div>
                     </MediaCardDiv>
+                    <Divider variant="middle" />
+                </ContentDiv>
+
+                <ContentDiv style={{display: "flex",height: 478, backgroundColor: "#BBD7E8", alignItems: "center", margin: "64px auto", justifyContent: "space-between"}} windowWidth={width}>
+                <div style={{alignItems: "center",display: "flex",width: "80%", margin: "auto"}}>
+                <img src={UXTesting} width={151} height={151}/>
+
+                    <div style={{display: "flex", flexDirection: "column", marginLeft: 30, flex: 1,justifyContent: "space-evenly", height: "50%"  }}>
+                    <Typography variant="h4" fontWeight="bold" color={"inherit"}>
+                    User experience testing
+                        </Typography>
+                        <Typography variant="body2" color={"inherit"}>
+                        We have recently undertaken a process of user experience testing and are grateful to all who willingly gave of their time to contribute to the improvement of the MTM for all its users.                        </Typography>
+                        <Typography variant="body2" color={"inherit"}>
+                        This user testing has led to the addition of the home, about and contact pages, the creation of the dashboards, a dedicated download interface, and a more streamlined map interface. We have also identified additional areas of improvement, which we are working on. These include increased guidance to facilitate decision-making, and additional map layers. We want to make this tool the best it can be so that together we have the resources to control and eliminate malaria.                        </Typography>
+                    </div>
+                    </div>
                 </ContentDiv>
         </React.Fragment>
     );
