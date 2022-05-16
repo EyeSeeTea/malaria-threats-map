@@ -6,8 +6,6 @@ import { connect } from "react-redux";
 import {
     logEventAction,
     setBoundsAction,
-    setFiltersMode,
-    setFiltersOpen,
     setInitialDialogOpen,
     setRegionAction,
     setSelection,
@@ -91,11 +89,9 @@ const mapDispatchToProps = {
     setTourOpen: setTourOpenAction,
     setTourStep: setTourStepAction,
     setInitialDialogOpen: setInitialDialogOpen,
-    setFiltersOpen: setFiltersOpen,
     setBounds: setBoundsAction,
     setRegion: setRegionAction,
     setSelection: setSelection,
-    setFiltersMode: setFiltersMode,
     setFilteredStudies: setFilteredStudiesAction,
     setInsecticideClass,
     setInsecticideTypes,
@@ -127,16 +123,8 @@ class MalariaTour extends PureComponent<Props> {
         this.props.setTheme(theme);
     };
 
-    toggleFilters = (value: boolean) => {
-        this.props.setFiltersOpen(!value);
-    };
-
     setSelection = (selection: SiteSelection | null) => {
         this.props.setSelection(selection);
-    };
-
-    setFiltersMode = (mode: string) => {
-        this.props.setFiltersMode(mode);
     };
 
     setRegion = (country: string) => {
@@ -160,7 +148,6 @@ class MalariaTour extends PureComponent<Props> {
         this.setInsecticideClass("PYRETHROIDS");
         this.setInsecticideTypes([]);
         this.setSelection(null);
-        this.toggleFilters(false);
         localStorage.setItem("tour", "visited");
         this.props.setTourOpen(false);
     };
@@ -184,7 +171,6 @@ class MalariaTour extends PureComponent<Props> {
                 selector: "#title",
                 content: options => {
                     setInitialDialogOpen(true);
-                    this.toggleFilters(false);
                     return <Step1 {...options} {...baseProps} step={0} />;
                 },
                 // @ts-ignore
@@ -194,7 +180,6 @@ class MalariaTour extends PureComponent<Props> {
                 selector: "#language",
                 content: options => {
                     setInitialDialogOpen(true);
-                    this.toggleFilters(false);
                     return <Step2 {...options} {...baseProps} step={1} />;
                 },
                 // @ts-ignore
@@ -204,7 +189,6 @@ class MalariaTour extends PureComponent<Props> {
                 selector: "#dialog",
                 content: options => {
                     setInitialDialogOpen(true);
-                    this.toggleFilters(false);
                     return <Step3 {...options} {...baseProps} step={2} />;
                 },
             },
@@ -213,7 +197,6 @@ class MalariaTour extends PureComponent<Props> {
                 content: options => {
                     setInitialDialogOpen(false);
                     this.setTheme("prevention");
-                    this.toggleFilters(false);
                     return <Step4 {...options} {...baseProps} step={3} />;
                 },
                 // @ts-ignore
@@ -223,8 +206,6 @@ class MalariaTour extends PureComponent<Props> {
                 selector: "#sidebar",
                 content: ({ goTo }) => {
                     setInitialDialogOpen(false);
-                    this.toggleFilters(true);
-                    this.setFiltersMode("regions");
                     setTimeout(() => goTo(5), 200);
                     return <div />;
                 },
@@ -233,14 +214,12 @@ class MalariaTour extends PureComponent<Props> {
                 selector: "#sidebar",
                 content: options => {
                     setInitialDialogOpen(false);
-                    this.toggleFilters(true);
                     return <Step5 {...options} {...baseProps} step={5} back={2} />;
                 },
             },
             {
                 selector: "#sidebar",
                 content: ({ goTo }) => {
-                    this.setFiltersMode("filters");
                     setTimeout(() => goTo(7), 200);
                     return <div />;
                 },

@@ -10,13 +10,8 @@ import Disclaimer from "./Disclaimer";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { State } from "../store/types";
-import { selectAreFiltersOpen, selectFilters, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
-import {
-    setFiltersOpen,
-    setMobileOptionsOpen,
-    setStoryModeAction,
-    setThemeAction,
-} from "../store/actions/base-actions";
+import { selectFilters, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
+import { setMobileOptionsOpen, setStoryModeAction, setThemeAction } from "../store/actions/base-actions";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
@@ -112,7 +107,6 @@ const StyledTab = styled(Tab)`
 `;
 
 const mapStateToProps = (state: State) => ({
-    filtersOpen: selectAreFiltersOpen(state),
     filters: selectFilters(state),
     theme: selectTheme(state),
     storyMode: selectStoryMode(state),
@@ -124,7 +118,6 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
     setPreventionMapType: setPreventionMapType,
-    setFiltersOpen: setFiltersOpen,
     setStoryMode: setStoryModeAction,
     setTheme: setThemeAction,
 };
@@ -138,28 +131,21 @@ type Props = DispatchProps & StateProps & OwnProps;
 function PersistentDrawerLeft({
     setMobileOptionsOpen,
     storyMode,
-    filtersOpen,
-    setFiltersOpen,
     drawerWidth = "400px",
     setTheme,
     setStoryMode,
     theme,
 }: Props) {
     const classes = useStyles({ drawerWidth });
-    const prevFilterOpenRef = useRef<boolean>();
     const prevStoryModeRef = useRef<boolean>();
 
     useEffect(() => {
-        prevFilterOpenRef.current = filtersOpen;
         prevStoryModeRef.current = storyMode;
     });
-    const prevFilterOpen = prevFilterOpenRef.current;
+
     const prevStoryMode = prevStoryModeRef.current;
 
-    if (filtersOpen && storyMode) {
-        if (prevFilterOpen === filtersOpen) {
-            setFiltersOpen(!filtersOpen);
-        }
+    if (storyMode) {
         if (prevStoryMode === storyMode) {
             setStoryMode(!storyMode);
         }
@@ -213,12 +199,7 @@ function PersistentDrawerLeft({
                     <Hidden smUp>
                         <AppBar position="static" color="default">
                             <Toolbar className={classes.toolbar}>
-                                <IconButton
-                                    className={classes.iconButton}
-                                    aria-label="menu"
-                                    onClick={() => setFiltersOpen(true)}
-                                    size="large"
-                                >
+                                <IconButton className={classes.iconButton} aria-label="menu" size="large">
                                     <FilterIcon />
                                 </IconButton>
 

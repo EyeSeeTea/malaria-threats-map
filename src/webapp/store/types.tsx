@@ -48,8 +48,6 @@ export interface MalariaState {
     };
     initialDialogOpen: boolean;
     actionGroupSelected: ActionGroup | null;
-    filtersOpen?: boolean;
-    filtersMode: string;
     selection: SiteSelection | null;
     mobileOptionsOpen: boolean;
     zoom: number;
