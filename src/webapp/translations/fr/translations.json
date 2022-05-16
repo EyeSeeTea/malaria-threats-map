@@ -1,6 +1,7 @@
 {
     "common": {
         "layers": "couches",
+        "mekong_link": "Aller à la couche du Grand Mékong",
         "title": {
             "title": "Carte des menaces du paludisme",
             "subtitle": "Suivi des défis biologiques liés à la lutte et à l'élimination du paludisme"
