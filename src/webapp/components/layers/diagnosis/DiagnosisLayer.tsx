@@ -29,7 +29,6 @@ import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
 import Hidden from "../../hidden/Hidden";
-import mapboxgl from "mapbox-gl";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -200,27 +199,23 @@ class DiagnosisLayer extends Component<Props> {
         }, 100);
     };
 
-
-    onMouseLeaveListener = (e: any) => {
-        this.props.map.getCanvas().style.cursor = "";
-        setTimeout(() => {
-            this.props.setSelection(null);
-        }, 100);
-
-
-    };
-    onClickListener = (e: any) => {
-        setTimeout(() => {
-            this.props.setViewData(this.props.selection);
-        }, 100);
-
-    };
-
     setupPopover = () => {
-        this.props.map.on("click", DIAGNOSIS_LAYER_ID, this.onClickListener);
-        this.props.map.on("mouseenter", DIAGNOSIS_LAYER_ID, this.onMouseOverListener);
+        this.props.map.on("mouseover", DIAGNOSIS_LAYER_ID, this.onMouseOverListener);
+        this.props.map.on("click", () => {
+            if (!this.props.sidebarOpen) {
+                this.props.setSidebarOpen(true);
+            }
+            setTimeout(() => {
+                this.props.setViewData(this.props.selection);
+            }, 100);
+        });
+        this.props.map.on(
+            "mouseenter",
+            DIAGNOSIS_LAYER_ID,
+            () => (this.props.map.getCanvas().style.cursor = "pointer")
+        );
 
-        this.props.map.on("mouseleave", DIAGNOSIS_LAYER_ID, this.onMouseLeaveListener);
+        this.props.map.on("mouseleave", DIAGNOSIS_LAYER_ID, () => (this.props.map.getCanvas().style.cursor = ""));
     };
 
     renderLayer = () => {
@@ -249,31 +244,20 @@ class DiagnosisLayer extends Component<Props> {
 
     render() {
         const { studies, selection, viewData, setSidebarOpen, sidebarOpen } = this.props;
-        /*if (viewData === null) {
-            setSidebarOpen(false);
-        }*/
-        console.log(selection)
-        console.log(viewData)
-        console.log(sidebarOpen)
-        let filteredStudies: DiagnosisStudy[] = [];
         if (viewData === null) {
             setSidebarOpen(false);
         }
-       if (selection === null) {
-            //setSidebarOpen(false);
+        if (selection === null) {
+            setSidebarOpen(false);
             this.props.setDiagnosisStudySelection([]);
             return <div />;
         }
-
-         filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === selection.SITE_ID);
-
-
+        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === selection.SITE_ID);
         this.props.setDiagnosisStudySelection(filteredStudies);
-
         if (filteredStudies.length === 0) {
             return <div />;
         }
-    //}
+
         return (
             this.props.theme === "diagnosis" && (
                 <Hidden smDown>

@@ -64,35 +64,19 @@ const SitePopover: React.FC<Props> = ({
             placeholder
         );
 
-        const popup = new mapboxgl.Popup({ closeOnClick: false })
+        const popup = new mapboxgl.Popup({ closeOnClick: true })
             .setLngLat(selection.coordinates)
             .setDOMContent(placeholder)
             .addTo(map);
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
         map.on("click", layer, (e: any) => {
-            console.log("popup clicks!!")
             e.preventDefault();
             if (!sidebarOpen) {
                 setSidebarOpen(true);
             }
             setTimeout(() => {
                 setViewData(selection);
-            }, 100);
-        });
-        map.on("mouseenter", layer, (e: any) => {
-            setTimeout(() => {
-                setSelection(selection);
-            }, 100);
-        });
-        map.on("mouseleave", layer, (e: any) => {
-            setTimeout(() => {
-                setSelection(null);
-            }, 100);
-        });
-        map.on("mouseleave",  (e: any) => {
-            setTimeout(() => {
-                setSelection(null);
             }, 100);
         });
 

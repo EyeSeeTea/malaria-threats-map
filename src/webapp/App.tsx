@@ -59,7 +59,9 @@ declare module "@mui/styles/defaultTheme" {
 }
 
 export const { store } = createStore();
-
+const isNotNull = (value: string) => {
+    return value !== undefined && value !== null && value !== "null";
+}
 ReduxQuerySync({
     store,
     params: {
@@ -191,7 +193,7 @@ ReduxQuerySync({
         },
         viewData: {
             selector: (state: State) => {
-                console.log(state.malaria.viewData)
+                //console.log(state.malaria.viewData)
                 let site = null;
                 if(state.malaria.viewData !== null) {
                     site = encodeURI(
@@ -205,8 +207,8 @@ ReduxQuerySync({
                 return site;
                 },
             action: (value: string) => {
-                console.log(value)
-                if(value !== undefined && value !== null && value !== "null") {
+                //console.log(value)
+                if(isNotNull(value)) {
                     const { siteIso2, site, siteCoordinates } = JSON.parse(decodeURIComponent(value));
                 return setViewData({
                     ISO_2_CODE: siteIso2,
@@ -233,7 +235,7 @@ ReduxQuerySync({
                 return site;
                 },
             action: (value: string) => {
-                if(value !== undefined && value !== null && value !== "null") {
+                if(isNotNull(value)) {
                     const { siteIso2, site, siteCoordinates } = JSON.parse(decodeURIComponent(value));
                 return setSelection({
                     ISO_2_CODE: siteIso2,
@@ -248,22 +250,19 @@ ReduxQuerySync({
         selectDiagnosisStudySelection: {
            //try first with the diagnosis study kind of info 
             selector: (state: State) => {
-               // console.log(state.diagnosis.studySelection)
                 let site;
                 if(state.diagnosis.studySelection.length > 0) {
                     console.log(state.diagnosis.studySelection)
                     site = `${encodeURI(
                         JSON.stringify(state.diagnosis.studySelection)
                     )}`;
-                    //console.log(site)
                 }
                 else site = [];
 
                 return site;
             },
             action: (value: string) => {
-                //console.log(value)
-                if(value !== undefined && value.length > 0 && value !== null && value !== "null") {
+                if(isNotNull(value) && value.length > 0) {
                     const result = JSON.parse(decodeURIComponent(value));
                     return setDiagnosisStudySelection(result);
                 }
