@@ -9,7 +9,7 @@ import { selectPreventionStudySelection } from "../store/reducers/prevention-red
 import { selectDiagnosisStudySelection } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudySelection } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudySelection } from "../store/reducers/invasive-reducer";
-import { setSidebarOpen } from "../store/actions/base-actions";
+import { setSidebarOpen, setSelection, setViewData } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 
 import { useTranslation } from "react-i18next";
@@ -62,6 +62,8 @@ const mapStateToProps = (state: State) => ({
 });
 const mapDispatchToProps = {
     setSidebarOpen: setSidebarOpen,
+    setSelection: setSelection,
+    setViewData: setViewData,
 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
@@ -75,35 +77,53 @@ const StudyDetailsSidebar = ({
     treatmentStudySelection,
     invasiveStudySelection,
     viewData,
+    setViewData,
+    setSelection,
 }: Props) => {
     const { t } = useTranslation();
+    //console.log(viewData);
     const classes = useStyles({});
     const [filteredStudiesDiagnosis, setFilteredStudiesDiagnosis] = React.useState<Array<DiagnosisStudy>>([]);
     const [filteredStudiesInvasives, setFilteredStudiesInvasive] = React.useState<Array<InvasiveStudy>>([]);
     const [filteredStudiesPrevention, setFilteredStudiesPrevention] = React.useState<Array<PreventionStudy>>([]);
     const [filteredStudiesTreatment, setFilteredStudiesTreatment] = React.useState<Array<TreatmentStudy>>([]);
+    React.useEffect(
+        () => {
+            //I only update the new studies to be shown when viewData changes (ie. when you click on a study circle)
+            //so that the data doesn't change automatically when the user hovers over another popup
+            console.log(diagnosisStudySelection)
 
-    React.useEffect(() => {
-        //I only update the new studies to be shown when viewData changes (ie. when you click on a study circle)
-        //so that the data doesn't change automatically when the user hovers over another popup
-        switch (theme) {
-            case "prevention":
-                setFilteredStudiesPrevention(preventionStudySelection);
-                break;
-            case "diagnosis":
-                setFilteredStudiesDiagnosis(diagnosisStudySelection);
-                break;
-            case "treatment":
-                setFilteredStudiesTreatment(treatmentStudySelection);
-                break;
-            case "invasive":
-                setFilteredStudiesInvasive(invasiveStudySelection);
-                break;
-        }
-    }, [viewData]);
+        
+            switch (theme) {
+                case "prevention":
+                    setFilteredStudiesPrevention(preventionStudySelection);
+                    break;
+                case "diagnosis":
+                    setFilteredStudiesDiagnosis(diagnosisStudySelection);
+                    break;
+                case "treatment":
+                    setFilteredStudiesTreatment(treatmentStudySelection);
+                    break;
+                case "invasive":
+                    setFilteredStudiesInvasive(invasiveStudySelection);
+                    break;
+            }
+            //only having viewData be in the useEffect is necessary because we don't want to set the studies whenever the selection changes,
+            //only when we click on the dot/viewData changes
+        },
+        // eslint-disable-next-line
+        [viewData]
+    );
+    console.log(filteredStudiesDiagnosis)
+    console.log(filteredStudiesInvasives)
+    console.log(filteredStudiesPrevention)
+    console.log(filteredStudiesTreatment)
+
 
     const handleClose = () => {
         setSidebarOpen(false);
+        setSelection(null);
+        setViewData(null);
     };
 
     const themeSelector = theme as "prevention" | "diagnosis" | "treatment" | "invasive";

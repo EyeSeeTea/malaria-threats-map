@@ -73,12 +73,6 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
             filterByYearRange(yearFilter),
             filterByRegion(region),
         ],
-        [PreventionMapType.PBO_DEPLOYMENT]: [
-            filterByInsecticideClass(preventionFilters.insecticideClass),
-            filterByInsecticideTypes(preventionFilters.insecticideTypes),
-            filterByYearRange(yearFilter),
-            filterByRegion(region),
-        ],
     };
 
     const filteredStudies: PreventionStudy[] = filtersMap[mapType].reduce(
@@ -96,6 +90,7 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
     return (
         <MultiFilter
             label={t("common.filters.vector_species")}
+            placeholder={t("common.filters.select_vector_species")}
             options={suggestions}
             onChange={setSpecies}
             value={preventionFilters.species}

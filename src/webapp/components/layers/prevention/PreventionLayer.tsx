@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
-import { studiesToGeoJson, getCountryStudies } from "../layer-utils";
+import { studiesToGeoJson } from "../layer-utils";
 import setupEffects from "../effects";
 import * as R from "ramda";
 import resistanceStatusSymbols from "./ResistanceStatus/symbols";
@@ -10,23 +10,24 @@ import { buildPreventionFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectPreventionFilters, selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
 import {
-    selectCountryMode,
     selectFilters,
     selectRegion,
     selectSelection,
     selectTheme,
+    selectIsSidebarOpen,
 } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
-import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import {
     fetchPreventionStudiesRequest,
     setPreventionFilteredStudiesAction,
     setPreventionStudySelection,
 } from "../../../store/actions/prevention-actions";
-import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
+import { setSelection, setSidebarOpen, setViewData } from "../../../store/actions/base-actions";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import SitePopover from "../common/SitePopover";
 import PreventionSelectionChart from "./PreventionSelectionChart";
+import Hidden from "../../hidden/Hidden";
+
 export const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
 const PREVENTION_SOURCE_ID = "prevention-source";
@@ -49,9 +50,8 @@ const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     preventionFilters: selectPreventionFilters(state),
     region: selectRegion(state),
-    countries: selectCountries(state),
-    countryMode: selectCountryMode(state),
     selection: selectSelection(state),
+    sidebarOpen: selectIsSidebarOpen(state),
 });
 
 const mapDispatchToProps = {
@@ -60,6 +60,7 @@ const mapDispatchToProps = {
     setPreventionStudySelection: setPreventionStudySelection,
     setSelection: setSelection,
     setSidebarOpen: setSidebarOpen,
+    setViewData: setViewData,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -90,10 +91,8 @@ class PreventionLayer extends Component<Props> {
                 assayTypes,
                 synergistTypes,
             },
-            countryMode,
             filters,
             region,
-            countries,
         } = this.props;
         this.mountLayer(prevProps);
         this.renderLayer();
@@ -106,8 +105,6 @@ class PreventionLayer extends Component<Props> {
         const speciesChange = prevProps.preventionFilters.species.length !== species.length;
         const assayTypesChange = prevProps.preventionFilters.assayTypes.length !== assayTypes.length;
         const synergistTypesChange = prevProps.preventionFilters.synergistTypes.length !== synergistTypes.length;
-        const countryModeChange = prevProps.countryMode !== countryMode;
-        const countriesChange = prevProps.countries.length !== countries.length;
         if (
             mapTypeChange ||
             yearChange ||
@@ -117,9 +114,7 @@ class PreventionLayer extends Component<Props> {
             typeChange ||
             speciesChange ||
             assayTypesChange ||
-            synergistTypesChange ||
-            countryModeChange ||
-            countriesChange
+            synergistTypesChange
         ) {
             if (this.popup) {
                 this.popup.remove();
@@ -167,20 +162,18 @@ class PreventionLayer extends Component<Props> {
     };
 
     filterSource = () => {
-        const { studies, countryMode } = this.props;
+        const { studies } = this.props;
         const source: any = this.props.map.getSource(PREVENTION_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, PREVENTION);
-            const data = countryMode ? countryStudies : geoStudies;
-            source.setData(studiesToGeoJson(data));
+            source.setData(studiesToGeoJson(geoStudies));
         }
     };
 
     mountLayer(prevProps?: Props) {
-        const { studies, preventionFilters, countryMode } = this.props;
+        const { studies, preventionFilters } = this.props;
         if (!prevProps || (prevProps.studies.length !== studies.length && studies.length)) {
             if (this.props.map.getSource(PREVENTION_SOURCE_ID)) {
                 this.props.map.removeLayer(PREVENTION_LAYER_ID);
@@ -189,15 +182,13 @@ class PreventionLayer extends Component<Props> {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, PREVENTION);
 
-            const data = countryMode ? countryStudies : geoStudies;
             const source: any = {
                 type: "geojson",
-                data: studiesToGeoJson(data),
+                data: studiesToGeoJson(geoStudies),
             };
             this.props.map.addSource(PREVENTION_SOURCE_ID, source);
-            this.props.map.addLayer(layer(resolveMapTypeSymbols(preventionFilters, countryMode)));
+            this.props.map.addLayer(layer(resolveMapTypeSymbols(preventionFilters)));
 
             setupEffects(this.props.map, PREVENTION_SOURCE_ID, PREVENTION_LAYER_ID);
             this.setupPopover();
@@ -228,6 +219,14 @@ class PreventionLayer extends Component<Props> {
             () => (this.props.map.getCanvas().style.cursor = "pointer")
         );
         this.props.map.on("mouseleave", PREVENTION_LAYER_ID, () => (this.props.map.getCanvas().style.cursor = ""));
+        this.props.map.on("click", () => {
+            if (!this.props.sidebarOpen) {
+                this.props.setSidebarOpen(true);
+            }
+            setTimeout(() => {
+                this.props.setViewData(this.props.selection);
+            }, 100);
+        });
     };
 
     renderLayer = () => {
@@ -244,9 +243,9 @@ class PreventionLayer extends Component<Props> {
     };
 
     applyMapTypeSymbols = () => {
-        const { preventionFilters, countryMode } = this.props;
+        const { preventionFilters } = this.props;
         const layer = this.props.map.getLayer(PREVENTION_LAYER_ID);
-        const mapTypeSymbols = resolveMapTypeSymbols(preventionFilters, countryMode);
+        const mapTypeSymbols = resolveMapTypeSymbols(preventionFilters);
         if (layer && mapTypeSymbols) {
             this.props.map.setPaintProperty(PREVENTION_LAYER_ID, "circle-radius", mapTypeSymbols["circle-radius"]);
             this.props.map.setPaintProperty(PREVENTION_LAYER_ID, "circle-color", mapTypeSymbols["circle-color"]);
@@ -259,15 +258,13 @@ class PreventionLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, countryMode, selection, setSidebarOpen } = this.props;
+        const { studies, selection, setSidebarOpen } = this.props;
         if (selection === null) {
             setSidebarOpen(false);
             this.props.setPreventionStudySelection([]);
             return <div />;
         }
-        const filteredStudies = this.filterStudies(studies).filter(study =>
-            countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
-        );
+        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === selection.SITE_ID);
 
         this.props.setPreventionStudySelection(filteredStudies);
 
@@ -277,9 +274,11 @@ class PreventionLayer extends Component<Props> {
 
         return (
             this.props.theme === "prevention" && (
-                <SitePopover map={this.props.map} layer={PREVENTION_LAYER_ID}>
-                    <PreventionSelectionChart studies={filteredStudies} popup={true} />
-                </SitePopover>
+                <Hidden smDown>
+                    <SitePopover map={this.props.map} layer={PREVENTION_LAYER_ID}>
+                        <PreventionSelectionChart studies={filteredStudies} popup={true} />
+                    </SitePopover>
+                </Hidden>
             )
         );
     }

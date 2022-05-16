@@ -114,7 +114,7 @@ type Props = StateProps & OwnProps;
 
 const TreatmentFailureChart = ({ studies, viewData, popup }: Props) => {
     const { t } = useTranslation();
-    const [study, setStudy] = useState(0);
+    const study = 0;
     const [showMore, setShowMore] = useState(false);
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
     const years = R.uniq(sortedStudies.map(study => study.YEAR_START)).sort();
@@ -166,12 +166,12 @@ const TreatmentFailureChart = ({ studies, viewData, popup }: Props) => {
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${title}`}</Box>
             </Typography>
-            <Typography variant="body2">
-                <i>{plasmodiumSpecies}</i>
-                {`, ${t(DRUG_NAME)}: ${studies.length} ${t_studies} ${siteDuration}`}
-            </Typography>
             {viewData !== null && !popup && (
                 <>
+                    <Typography variant="body2">
+                        <i>{plasmodiumSpecies}</i>
+                        {`, ${t(DRUG_NAME)}: ${studies.length} ${t_studies} ${siteDuration}`}
+                    </Typography>
                     <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
                     <Margin>
                         <Flex style={{ flexDirection: "row", justifyContent: "space-between" }}>

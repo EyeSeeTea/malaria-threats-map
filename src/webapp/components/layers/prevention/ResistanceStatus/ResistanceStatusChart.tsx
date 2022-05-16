@@ -168,15 +168,15 @@ const ResistanceStatusChart = ({ studies: baseStudies, viewData, popup }: Props)
 
     return (
         <ChartContainer popup={popup}>
-            {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
+            {viewData !== null && !popup && groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
                     `${studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2}`
                 )}`}</Box>
             </Typography>
-            <Typography variant="subtitle2">{subtitle}</Typography>
             {viewData !== null && !popup && (
                 <>
+                    <Typography variant="subtitle2">{subtitle}</Typography>
                     <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
                     <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
                     <Curation study={studyObject} />

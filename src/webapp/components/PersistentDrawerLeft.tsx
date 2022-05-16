@@ -17,6 +17,7 @@ import {
     selectStoryMode,
     selectTheme,
     selectViewData,
+    selectSelection
 } from "../store/reducers/base-reducer";
 import {
     setFiltersOpen,
@@ -32,16 +33,14 @@ import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
 import { AppBar, IconButton, Tab, Tabs, Toolbar } from "@mui/material";
 import StoryModeStepper from "./StoryModeStepper";
-import FiltersSidebar from "./filters/container/FiltersSidebar";
-import StudyDetailsSidebar from "./StudyDetailsSidebar";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { DiagnosisIcon, FilterIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import { colors } from "../constants/theme";
-import MapTypesSelector from "./MapTypesSelector";
 import MobileOptions from "./MobileOptions";
 import Loader from "./Loader";
 import Hidden from "./hidden/Hidden";
 import { dispatchCustomEvent } from "../utils/dom-utils";
+import StudyDetailsSidebar from "./StudyDetailsSidebar";
 
 interface ThemeProps {
     drawerWidth: string;
@@ -56,14 +55,6 @@ const useStyles = makeStyles((theme: Theme) =>
             right: 0,
             left: 0,
             bottom: 0,
-        },
-        tooltipDrawer: {
-            width: (props: ThemeProps) => props.drawerWidth,
-            flexShrink: 0,
-        },
-        tooltipDrawerPaper: {
-            width: (props: ThemeProps) => props.drawerWidth,
-            backgroundColor: "#f3f3f3",
         },
         drawerHeader: {
             display: "flex",
@@ -142,6 +133,7 @@ const mapStateToProps = (state: State) => ({
     treatmentFilters: selectTreatmentFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
     viewData: selectViewData(state),
+    selectSelection: selectSelection(state)
 });
 const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
@@ -172,24 +164,20 @@ function PersistentDrawerLeft({
     viewData,
 }: Props) {
     const classes = useStyles({ drawerWidth });
-    const isOpen = filtersOpen || storyMode;
-    console.log(viewData)
-    console.log(sidebarOpen)
-
     useEffect(() => {
-        // 
+        console.log("persistent hello!")
         if (viewData !== null && sidebarOpen === false) {
             setSidebarOpen(true);
         }
         // eslint-disable-next-line
     }, [viewData]);
-
+//sidebarOpen
     useEffect(() => {
-        if (sidebarOpen !== null && isOpen !== null) {
+        if (sidebarOpen !== null && storyMode !== null) {
             setTimeout(() => dispatchCustomEvent("resize"), 100);
         }
         // eslint-disable-next-line
-    }, [sidebarOpen]);
+    }, [storyMode, sidebarOpen]);
 
     const prevFilterOpenRef = useRef<boolean>();
     const prevStoryModeRef = useRef<boolean>();
@@ -209,6 +197,7 @@ function PersistentDrawerLeft({
             setStoryMode(!storyMode);
         }
     }
+    console.log(sidebarOpen)
 
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 
@@ -230,40 +219,26 @@ function PersistentDrawerLeft({
                 break;
         }
     };
-    /*
-    This is the left persistent drawer for the filter. Not sure if we want to keep it
-    <Drawer
-                className={classes.drawer}
-                variant="persistent"
-                anchor={"left"}
-                open={isOpen}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-            >
-                <>{storyMode ? <StoryModeStepper /> : <FiltersSidebar />}</>
-            </Drawer>
-    */
     return (
         <div className={`${classes.root}`}>
             <Loader />
             <CssBaseline />
-            {isOpen && (
+            {storyMode && (
                 <Drawer
                     className={classes.drawer}
                     variant="persistent"
-                    anchor={"left"}
-                    open={isOpen}
+                    anchor="left"
+                    open={true}
                     classes={{
                         paper: classes.drawerPaper,
                     }}
                 >
-                    <>{storyMode ? <StoryModeStepper /> : <FiltersSidebar />}</>
+                    <StoryModeStepper />
                 </Drawer>
             )}
             <div
                 className={clsx(classes.content, {
-                    [classes.contentShift]: sidebarOpen,
+                    [classes.contentShift]: storyMode || sidebarOpen,
                 })}
             >
                 <div className={classes.drawerHeader} />
@@ -279,7 +254,7 @@ function PersistentDrawerLeft({
                                 >
                                     <FilterIcon />
                                 </IconButton>
-                                <MapTypesSelector />
+
                                 <IconButton
                                     color="default"
                                     className={classes.iconButton}
@@ -334,17 +309,19 @@ function PersistentDrawerLeft({
                     </Hidden>
                 </PageWrapper>
             </div>
-            <Drawer
-                className={classes.drawer}
-                variant="persistent"
-                anchor={"right"}
-                open={sidebarOpen}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-            >
-                <StudyDetailsSidebar />
-            </Drawer>
+            {sidebarOpen && (
+                <Drawer
+                    className={classes.drawer}
+                    variant="persistent"
+                    anchor={"right"}
+                    open={sidebarOpen}
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}
+                >
+                    <StudyDetailsSidebar />
+                </Drawer>
+            )}
         </div>
     );
 }

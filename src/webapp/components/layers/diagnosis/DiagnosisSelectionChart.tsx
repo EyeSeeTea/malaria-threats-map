@@ -1,15 +1,14 @@
 import React, { Component } from "react";
-import { DiagnosisMapType, State } from "../../../store/types";
-import { selectCountryMode } from "../../../store/reducers/base-reducer";
+import { State } from "../../../store/types";
+import { selectSelection} from "../../../store/reducers/base-reducer";
 import { connect } from "react-redux";
 import GeneDeletionChart from "./GeneDeletions/GeneDeletionChart";
-import GeneDeletionCountryChart from "./GeneDeletions/GeneDeletionCountryChart";
 import { selectDiagnosisFilters } from "../../../store/reducers/diagnosis-reducer";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 
 const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
-    countryMode: selectCountryMode(state),
+    selection: selectSelection(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -24,20 +23,10 @@ class DiagnosisSelectionChart extends Component<Props> {
     render() {
         const {
             studies,
-            countryMode,
             popup,
-            diagnosisFilters: { mapType },
         } = this.props;
-
         return (
-            <>
-                {!countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
-                    <GeneDeletionChart studies={studies} popup={popup} />
-                )}
-                {countryMode && mapType === DiagnosisMapType.GENE_DELETIONS && (
-                    <GeneDeletionCountryChart studies={studies} />
-                )}
-            </>
+            <>{<GeneDeletionChart studies={studies} popup={popup} />}</>
         );
     }
 }

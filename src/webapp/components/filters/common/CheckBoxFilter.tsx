@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { FilterWrapper } from "../Filters";
+import { FilterColumContainer } from "../Filters";
 import FormLabel from "@mui/material/FormLabel";
 import { logEventAction } from "../../../store/actions/base-actions";
 import { Checkbox } from "@mui/material";
@@ -29,10 +29,10 @@ function CheckBoxFilter({ label, onChange, value, analyticsFilterAction, logEven
     };
 
     return (
-        <FilterWrapper>
+        <FilterColumContainer>
             <FormLabel component="legend">{label}</FormLabel>
             <Checkbox color="primary" checked={value} onChange={onSelectionChange} />
-        </FilterWrapper>
+        </FilterColumContainer>
     );
 }
 

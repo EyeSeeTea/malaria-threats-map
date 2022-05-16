@@ -24,9 +24,12 @@ export interface RegionState {
     region?: string;
     subRegion?: string;
     site?: string;
+    siteLabel?: string;
     siteIso2?: string;
     siteCoordinates?: [number, number];
 }
+
+export type ActionGroup = "THEME" | "MAP_TYPE" | "DATA" | "LOCATION";
 
 export interface MalariaState {
     theme: string;
@@ -44,8 +47,9 @@ export interface MalariaState {
         invasive: Date | null;
     };
     initialDialogOpen: boolean;
-    filtersOpen: boolean;
     sidebarOpen: boolean;
+    actionGroupSelected: ActionGroup | null;
+    filtersOpen?: boolean;
     filtersMode: string;
     viewData: SiteSelection | null;
     selection: SiteSelection | null;
@@ -98,7 +102,6 @@ export enum PreventionMapType {
     INTENSITY_STATUS,
     RESISTANCE_MECHANISM,
     LEVEL_OF_INVOLVEMENT,
-    PBO_DEPLOYMENT,
 }
 
 export interface PreventionFilters {

@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { studiesToGeoJson, getCountryStudies } from "../layer-utils";
+import { studiesToGeoJson } from "../layer-utils";
 import setupEffects from "../effects";
 import { selectTreatmentFilters, selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
 import {
-    selectCountryMode,
     selectFilters,
     selectRegion,
     selectSelection,
     selectTheme,
+    selectIsSidebarOpen,
 } from "../../../store/reducers/base-reducer";
-import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
 import {
@@ -31,10 +30,11 @@ import {
     setFilteredStudiesAction,
     setTreatmentStudySelection,
 } from "../../../store/actions/treatment-actions";
-import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
+import { setSelection, setSidebarOpen, setViewData } from "../../../store/actions/base-actions";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SitePopover from "../common/SitePopover";
 import TreatmentSelectionChart from "./TreatmentSelectionChart";
+import Hidden from "../../hidden/Hidden";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -58,9 +58,8 @@ const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
     region: selectRegion(state),
-    countries: selectCountries(state),
-    countryMode: selectCountryMode(state),
     selection: selectSelection(state),
+    sidebarOpen: selectIsSidebarOpen(state),
 });
 const mapDispatchToProps = {
     fetchTreatmentStudies: fetchTreatmentStudiesRequest,
@@ -68,6 +67,7 @@ const mapDispatchToProps = {
     setFilteredStudies: setFilteredStudiesAction,
     setSelection: setSelection,
     setSidebarOpen: setSidebarOpen,
+    setViewData: setViewData,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -97,11 +97,10 @@ class TreatmentLayer extends Component<Props> {
                 excludeLowerPatients,
                 excludeLowerSamples,
             },
-            countryMode,
             filters,
             region,
-            countries,
         } = this.props;
+
         this.mountLayer(prevProps);
         this.renderLayer();
         const mapTypeChange = prevProps.treatmentFilters.mapType !== mapType;
@@ -110,16 +109,12 @@ class TreatmentLayer extends Component<Props> {
         const plasmodiumSpeciesChange = prevProps.treatmentFilters.plasmodiumSpecies !== plasmodiumSpecies;
         const drugChange = prevProps.treatmentFilters.drug !== drug;
         const molecularMarkerChange = prevProps.treatmentFilters.molecularMarker !== molecularMarker;
-        const countryModeChange = prevProps.countryMode !== countryMode;
-        const countriesChange = prevProps.countries.length !== countries.length;
         const excludeLowerPatientsChange = prevProps.treatmentFilters.excludeLowerPatients !== excludeLowerPatients;
         const excludeLowerSamplesChange = prevProps.treatmentFilters.excludeLowerSamples !== excludeLowerSamples;
         if (
             mapTypeChange ||
             yearChange ||
             countryChange ||
-            countryModeChange ||
-            countriesChange ||
             plasmodiumSpeciesChange ||
             drugChange ||
             molecularMarkerChange ||
@@ -193,20 +188,18 @@ class TreatmentLayer extends Component<Props> {
     };
 
     filterSource = () => {
-        const { studies, countryMode } = this.props;
+        const { studies } = this.props;
         const source: any = this.props.map.getSource(TREATMENT_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, TREATMENT);
-            const data = countryMode ? countryStudies : geoStudies;
-            source.setData(studiesToGeoJson(data));
+            source.setData(studiesToGeoJson(geoStudies));
         }
     };
 
     mountLayer(prevProps?: Props) {
-        const { studies, treatmentFilters, countryMode } = this.props;
+        const { studies, treatmentFilters } = this.props;
         if (!prevProps || (prevProps.studies.length !== studies.length && studies.length)) {
             if (this.props.map.getSource(TREATMENT_SOURCE_ID)) {
                 this.props.map.removeLayer(TREATMENT_LAYER_ID);
@@ -215,15 +208,12 @@ class TreatmentLayer extends Component<Props> {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, TREATMENT);
-
-            const data = countryMode ? countryStudies : geoStudies;
             const source: any = {
                 type: "geojson",
-                data: studiesToGeoJson(data),
+                data: studiesToGeoJson(geoStudies),
             };
             this.props.map.addSource(TREATMENT_SOURCE_ID, source);
-            this.props.map.addLayer(layer(resolveMapTypeSymbols(treatmentFilters, countryMode)));
+            this.props.map.addLayer(layer(resolveMapTypeSymbols(treatmentFilters)));
 
             setupEffects(this.props.map, TREATMENT_SOURCE_ID, TREATMENT_LAYER_ID);
             this.setupPopover();
@@ -254,6 +244,14 @@ class TreatmentLayer extends Component<Props> {
             () => (this.props.map.getCanvas().style.cursor = "pointer")
         );
         this.props.map.on("mouseleave", TREATMENT_LAYER_ID, () => (this.props.map.getCanvas().style.cursor = ""));
+        this.props.map.on("click", () => {
+            if (!this.props.sidebarOpen) {
+                this.props.setSidebarOpen(true);
+            }
+            setTimeout(() => {
+                this.props.setViewData(this.props.selection);
+            }, 100);
+        });
     };
 
     renderLayer = () => {
@@ -267,9 +265,9 @@ class TreatmentLayer extends Component<Props> {
     };
 
     applyMapTypeSymbols = () => {
-        const { treatmentFilters, countryMode } = this.props;
+        const { treatmentFilters } = this.props;
         const layer = this.props.map.getLayer(TREATMENT_LAYER_ID);
-        const mapTypeSymbols: { [key: string]: any } = resolveMapTypeSymbols(treatmentFilters, countryMode);
+        const mapTypeSymbols: { [key: string]: any } = resolveMapTypeSymbols(treatmentFilters);
         if (layer && mapTypeSymbols) {
             this.props.map.setPaintProperty(TREATMENT_LAYER_ID, "circle-radius", mapTypeSymbols["circle-radius"]);
             this.props.map.setPaintProperty(TREATMENT_LAYER_ID, "circle-color", mapTypeSymbols["circle-color"]);
@@ -282,16 +280,13 @@ class TreatmentLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, countryMode, selection, setSidebarOpen } = this.props;
-
+        const { studies, selection, setSidebarOpen } = this.props;
         if (selection === null) {
             setSidebarOpen(false);
             this.props.setTreatmentStudySelection([]);
             return <div />;
         }
-        const filteredStudies = this.filterStudies(studies).filter(study =>
-            countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
-        );
+        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === selection.SITE_ID);
 
         this.props.setTreatmentStudySelection(filteredStudies);
 
@@ -301,9 +296,11 @@ class TreatmentLayer extends Component<Props> {
 
         return (
             this.props.theme === "treatment" && (
-                <SitePopover map={this.props.map} layer={TREATMENT_LAYER_ID}>
-                    <TreatmentSelectionChart studies={filteredStudies} popup={true} />
-                </SitePopover>
+                <Hidden smDown>
+                    <SitePopover map={this.props.map} layer={TREATMENT_LAYER_ID}>
+                        <TreatmentSelectionChart studies={filteredStudies} popup={true} />
+                    </SitePopover>
+                </Hidden>
             )
         );
     }

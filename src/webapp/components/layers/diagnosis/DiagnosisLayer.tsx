@@ -1,34 +1,35 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
-import { circleLayout, studiesToGeoJson, getCountryStudies } from "../layer-utils";
+import { circleLayout, studiesToGeoJson } from "../layer-utils";
 import diagnosisSymbols from "../symbols/diagnosis";
 import setupEffects from "../effects";
 import { selectDiagnosisFilters, selectDiagnosisStudies } from "../../../store/reducers/diagnosis-reducer";
 import {
-    selectCountryMode,
     selectFilters,
     selectRegion,
     selectSelection,
     selectTheme,
     selectViewData,
+    selectIsSidebarOpen,
 } from "../../../store/reducers/base-reducer";
 import * as R from "ramda";
 import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
 import { buildDiagnosisFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { DIAGNOSIS_STATUS } from "./GeneDeletions/utils";
-import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import {
     fetchDiagnosisStudiesRequest,
     setDiagnosisFilteredStudiesAction,
     setDiagnosisStudySelection,
 } from "../../../store/actions/diagnosis-actions";
 
-import { setSelection, setSidebarOpen } from "../../../store/actions/base-actions";
+import { setSelection, setSidebarOpen, setViewData } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
+import Hidden from "../../hidden/Hidden";
+import mapboxgl from "mapbox-gl";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -48,10 +49,9 @@ const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     region: selectRegion(state),
-    countries: selectCountries(state),
-    countryMode: selectCountryMode(state),
     selection: selectSelection(state),
     viewData: selectViewData(state),
+    sidebarOpen: selectIsSidebarOpen(state),
 });
 
 const mapDispatchToProps = {
@@ -60,6 +60,7 @@ const mapDispatchToProps = {
     setDiagnosisStudySelection: setDiagnosisStudySelection,
     setSelection: setSelection,
     setSidebarOpen: setSidebarOpen,
+    setViewData: setViewData,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -83,8 +84,6 @@ class DiagnosisLayer extends Component<Props> {
             diagnosisFilters: { mapType, surveyTypes, patientType, deletionType },
             filters,
             region,
-            countryMode,
-            countries,
         } = this.props;
 
         this.mountLayer(prevProps);
@@ -95,17 +94,13 @@ class DiagnosisLayer extends Component<Props> {
         const patientTypeChange = prevProps.diagnosisFilters.patientType !== patientType;
         const deletionTypeChange = prevProps.diagnosisFilters.deletionType !== deletionType;
         const countryChange = prevProps.region !== region;
-        const countryModeChange = prevProps.countryMode !== countryMode;
-        const countriesChange = prevProps.countries.length !== countries.length;
         if (
             mapTypeChange ||
             yearChange ||
             countryChange ||
             surveyTypesChange ||
             patientTypeChange ||
-            deletionTypeChange ||
-            countryModeChange ||
-            countriesChange
+            deletionTypeChange
         ) {
             this.filterSource();
             this.applyMapTypeSymbols();
@@ -156,20 +151,18 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     filterSource = () => {
-        const { studies, countryMode } = this.props;
+        const { studies } = this.props;
         const source: any = this.props.map.getSource(DIAGNOSIS_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, DIAGNOSIS);
-            const data = countryMode ? countryStudies : geoStudies;
-            source.setData(studiesToGeoJson(data));
+            source.setData(studiesToGeoJson(geoStudies));
         }
     };
 
     mountLayer(prevProps?: Props) {
-        const { studies, countryMode } = this.props;
+        const { studies } = this.props;
         if (!prevProps || prevProps.studies.length !== studies.length) {
             if (this.props.map.getSource(DIAGNOSIS_SOURCE_ID)) {
                 this.props.map.removeLayer(DIAGNOSIS_LAYER_ID);
@@ -178,16 +171,13 @@ class DiagnosisLayer extends Component<Props> {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, DIAGNOSIS);
-
-            const data = countryMode ? countryStudies : geoStudies;
 
             const source: any = {
                 type: "geojson",
-                data: studiesToGeoJson(data),
+                data: studiesToGeoJson(geoStudies),
             };
             this.props.map.addSource(DIAGNOSIS_SOURCE_ID, source);
-            this.props.map.addLayer(layer(resolveMapTypeSymbols(countryMode)));
+            this.props.map.addLayer(layer(resolveMapTypeSymbols()));
 
             setupEffects(this.props.map, DIAGNOSIS_SOURCE_ID, DIAGNOSIS_LAYER_ID);
             this.setupPopover();
@@ -210,15 +200,27 @@ class DiagnosisLayer extends Component<Props> {
         }, 100);
     };
 
-    setupPopover = () => {
-        this.props.map.on("mouseover", DIAGNOSIS_LAYER_ID, this.onMouseOverListener);
 
-        this.props.map.on(
-            "mouseenter",
-            DIAGNOSIS_LAYER_ID,
-            () => (this.props.map.getCanvas().style.cursor = "pointer")
-        );
-        this.props.map.on("mouseleave", DIAGNOSIS_LAYER_ID, () => (this.props.map.getCanvas().style.cursor = ""));
+    onMouseLeaveListener = (e: any) => {
+        this.props.map.getCanvas().style.cursor = "";
+        setTimeout(() => {
+            this.props.setSelection(null);
+        }, 100);
+
+
+    };
+    onClickListener = (e: any) => {
+        setTimeout(() => {
+            this.props.setViewData(this.props.selection);
+        }, 100);
+
+    };
+
+    setupPopover = () => {
+        this.props.map.on("click", DIAGNOSIS_LAYER_ID, this.onClickListener);
+        this.props.map.on("mouseenter", DIAGNOSIS_LAYER_ID, this.onMouseOverListener);
+
+        this.props.map.on("mouseleave", DIAGNOSIS_LAYER_ID, this.onMouseLeaveListener);
     };
 
     renderLayer = () => {
@@ -232,9 +234,8 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     applyMapTypeSymbols = () => {
-        const { countryMode } = this.props;
         const layer = this.props.map.getLayer(DIAGNOSIS_LAYER_ID);
-        const mapTypeSymbols = resolveMapTypeSymbols(countryMode);
+        const mapTypeSymbols = resolveMapTypeSymbols();
         if (layer && mapTypeSymbols) {
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-radius", mapTypeSymbols["circle-radius"]);
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-color", mapTypeSymbols["circle-color"]);
@@ -247,33 +248,39 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, countryMode, selection, viewData, setSidebarOpen } = this.props;
-        console.log(selection)
-        console.log(viewData)
-
+        const { studies, selection, viewData, setSidebarOpen, sidebarOpen } = this.props;
         /*if (viewData === null) {
             setSidebarOpen(false);
         }*/
-        if (selection === null) {
+        console.log(selection)
+        console.log(viewData)
+        console.log(sidebarOpen)
+        let filteredStudies: DiagnosisStudy[] = [];
+        if (viewData === null) {
             setSidebarOpen(false);
+        }
+       if (selection === null) {
+            //setSidebarOpen(false);
             this.props.setDiagnosisStudySelection([]);
             return <div />;
         }
-        const filteredStudies = this.filterStudies(studies).filter(study =>
-            countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
-        );
+
+         filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === selection.SITE_ID);
+
 
         this.props.setDiagnosisStudySelection(filteredStudies);
 
         if (filteredStudies.length === 0) {
             return <div />;
         }
-
+    //}
         return (
             this.props.theme === "diagnosis" && (
-                <SitePopover map={this.props.map} layer={DIAGNOSIS_LAYER_ID}>
-                    <DiagnosisSelectionChart studies={filteredStudies} popup={true} />
-                </SitePopover>
+                <Hidden smDown>
+                    <SitePopover map={this.props.map} layer={DIAGNOSIS_LAYER_ID}>
+                        <DiagnosisSelectionChart studies={filteredStudies} popup={true} />
+                    </SitePopover>
+                </Hidden>
             )
         );
     }

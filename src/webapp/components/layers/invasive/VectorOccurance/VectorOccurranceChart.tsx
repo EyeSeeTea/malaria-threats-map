@@ -12,7 +12,7 @@ import Pagination from "../../../charts/Pagination";
 import { useTranslation } from "react-i18next";
 import { ChartContainer } from "../../../Chart";
 import Curation from "../../../Curation";
-import { isNotNull } from "../../../../utils/number-utils";
+import { isNotNull, isNull } from "../../../../utils/number-utils";
 import { InvasiveStudy } from "../../../../../domain/entities/InvasiveStudy";
 
 const Flex = styled.div`
@@ -59,7 +59,6 @@ const VectorOccurrenceChart = ({ studies, popup, viewData }: Props) => {
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
 
     const studyObject = sortedStudies[study];
-
     const monthStart = getMonthFromNumber(parseInt(studyObject.MONTH_START));
     const monthEnd = getMonthFromNumber(parseInt(studyObject.MONTH_END));
     const yearStart = parseInt(studyObject.YEAR_START);
@@ -91,7 +90,10 @@ const VectorOccurrenceChart = ({ studies, popup, viewData }: Props) => {
                 <Pagination studies={studies} study={study} setStudy={setStudy} />
             )}
             <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}`}</Box>
+                <Box fontWeight="fontWeightBold">
+                    {isNotNull(studyObject.VILLAGE_NAME) && `${t(studyObject.VILLAGE_NAME)}, `}
+                    {t(isNull(studyObject.ISO2) ? "common.COUNTRY_NA" : studyObject.ISO2)}
+                </Box>
             </Typography>
             {viewData !== null && !popup && (
                 <>

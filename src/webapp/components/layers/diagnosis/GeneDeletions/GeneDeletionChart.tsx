@@ -16,7 +16,7 @@ import { formatList, formatYears } from "../../../../utils/string-utils";
 import * as R from "ramda";
 import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
 import { DiagnosisStudy } from "../../../../../domain/entities/DiagnosisStudy";
-import { isNotNull } from "../../../../utils/number-utils";
+import { isNotNull, isNull } from "../../../../utils/number-utils";
 import { selectViewData } from "../../../../store/reducers/base-reducer";
 
 const ChatContainer = styled.div`
@@ -89,26 +89,27 @@ const GeneDeletionChart = ({ studies, diagnosisFilters, viewData, popup }: Props
         <ChatContainer popup={popup}>
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">
-                    {t(studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2)}
+                    {isNotNull(studyObject.TOOLTIP_SITENAME) && `${t(studyObject.TOOLTIP_SITENAME)}, `}
+                    {t(isNull(studyObject.ISO2) ? "common.COUNTRY_NA" : studyObject.ISO2)}
                 </Box>
             </Typography>
-            <SpacedTypography variant="subtitle2">
-                {t("common.diagnosis.chart.gene_deletions.content_1", {
-                    nStudies,
-                })}
-                <i>{t(diagnosisFilters.deletionType).toLowerCase()}</i>
-                {t("common.diagnosis.chart.gene_deletions.content_2", {
-                    surveyTypes: formatList(
-                        surveyTypes.map(st => {
-                            const dhs = t("common.diagnosis.chart.gene_deletions.DHS");
-                            return st.toLowerCase().replace(new RegExp(dhs, "i"), dhs);
-                        })
-                    ),
-                    years: formatYears(minYear, maxYear),
-                })}
-            </SpacedTypography>
             {viewData !== null && !popup && (
                 <>
+                    <SpacedTypography variant="subtitle2">
+                        {t("common.diagnosis.chart.gene_deletions.content_1", {
+                            nStudies,
+                        })}
+                        <i>{t(diagnosisFilters.deletionType).toLowerCase()}</i>
+                        {t("common.diagnosis.chart.gene_deletions.content_2", {
+                            surveyTypes: formatList(
+                                surveyTypes.map(st => {
+                                    const dhs = t("common.diagnosis.chart.gene_deletions.DHS");
+                                    return st.toLowerCase().replace(new RegExp(dhs, "i"), dhs);
+                                })
+                            ),
+                            years: formatYears(minYear, maxYear),
+                        })}
+                    </SpacedTypography>
                     {isNotNull(studyObject.SAMPLE_ORIGIN) && (
                         <SpacedTypography variant="subtitle2">{t(studyObject.SAMPLE_ORIGIN)}</SpacedTypography>
                     )}

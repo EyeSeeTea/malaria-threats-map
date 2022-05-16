@@ -12,7 +12,6 @@ import { DiagnosisStudy } from "../domain/entities/DiagnosisStudy";
 
 import {
     setBoundsAction,
-    setCountryModeAction,
     setFiltersAction,
     setFiltersMode,
     setFiltersOpen,
@@ -174,10 +173,6 @@ ReduxQuerySync({
             selector: (state: State) => state.malaria.endemicity,
             action: (value: string) => toggleEndemicityLayerAction(value === "true"),
         },
-        countryMode: {
-            selector: (state: State) => state.malaria.countryMode,
-            action: (value: string) => setCountryModeAction(value === "true"),
-        },
         storyMode: {
             selector: (state: State) => state.malaria.storyMode,
             action: (value: string) => setStoryModeAction(value === "true"),
@@ -337,7 +332,7 @@ ReduxQuerySync({
 export const theme = createTheme({
     palette: {
         primary: {
-            main: "#008dc9",
+            main: "#2fb3af",
         },
         secondary: {
             main: "#d86422",
