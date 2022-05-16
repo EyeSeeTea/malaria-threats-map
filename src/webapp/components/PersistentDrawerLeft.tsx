@@ -45,26 +45,6 @@ const useStyles = makeStyles((theme: Theme) =>
             left: 0,
             bottom: 0,
         },
-        appBar: {
-            transition: theme.transitions.create(["margin", "width"], {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
-            }),
-        },
-        appBarShift: {
-            width: (props: ThemeProps) => `calc(100% - ${props.drawerWidth})`,
-            marginLeft: (props: ThemeProps) => props.drawerWidth,
-            transition: theme.transitions.create(["margin", "width"], {
-                easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-        },
-        menuButton: {
-            marginRight: theme.spacing(2),
-        },
-        hide: {
-            display: "none",
-        },
         drawer: {
             width: (props: ThemeProps) => props.drawerWidth,
             flexShrink: 0,
@@ -95,20 +75,9 @@ const useStyles = makeStyles((theme: Theme) =>
             marginLeft: 0,
             position: "relative",
         },
-        tab: {
-            minWidth: 0,
-        },
         iconButton: {
             padding: 10,
             margin: theme.spacing(0, 1),
-        },
-        input: {
-            flex: 1,
-        },
-        divider: {
-            width: 1,
-            height: 28,
-            margin: 4,
         },
         toolbar: {
             padding: 0,
