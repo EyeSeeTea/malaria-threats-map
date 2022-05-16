@@ -10,7 +10,7 @@ import Disclaimer from "./Disclaimer";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { State } from "../store/types";
-import { selectFilters, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
+import { selectFilters, selectSelection, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
 import { setMobileOptionsOpen, setStoryModeAction, setThemeAction } from "../store/actions/base-actions";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
@@ -25,6 +25,7 @@ import { colors } from "../constants/theme";
 import MobileOptions from "./MobileOptions";
 import Loader from "./Loader";
 import Hidden from "./hidden/Hidden";
+import SiteSelectionContent from "./site-selection-content/SiteSelectionContent";
 
 interface ThemeProps {
     drawerWidth: string;
@@ -114,6 +115,7 @@ const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
+    selection: selectSelection(state),
 });
 const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
@@ -131,10 +133,11 @@ type Props = DispatchProps & StateProps & OwnProps;
 function PersistentDrawerLeft({
     setMobileOptionsOpen,
     storyMode,
-    drawerWidth = "400px",
+    drawerWidth = "500px",
     setTheme,
     setStoryMode,
     theme,
+    selection,
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const prevStoryModeRef = useRef<boolean>();
@@ -257,6 +260,19 @@ function PersistentDrawerLeft({
                     </Hidden>
                 </PageWrapper>
             </div>
+            {selection && (
+                <Drawer
+                    className={classes.drawer}
+                    variant="persistent"
+                    anchor={"right"}
+                    open={true}
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}
+                >
+                    <SiteSelectionContent />
+                </Drawer>
+            )}
         </div>
     );
 }

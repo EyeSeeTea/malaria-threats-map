@@ -14,6 +14,7 @@ import { DIAGNOSIS_STATUS } from "./GeneDeletions/utils";
 import {
     fetchDiagnosisStudiesRequest,
     setDiagnosisFilteredStudiesAction,
+    setDiagnosisSelectionStudies,
 } from "../../../store/actions/diagnosis-actions";
 import ChartModal from "../../ChartModal";
 import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
@@ -47,6 +48,7 @@ const mapDispatchToProps = {
     fetchDiagnosisStudies: fetchDiagnosisStudiesRequest,
     setFilteredStudies: setDiagnosisFilteredStudiesAction,
     setSelection: setSelection,
+    setDiagnosisSelectionStudies: setDiagnosisSelectionStudies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -183,6 +185,11 @@ class DiagnosisLayer extends Component<Props> {
         };
         setTimeout(() => {
             this.props.setSelection(selection);
+
+            const selectionStudies = this.filterStudies(this.props.studies).filter(
+                study => study.SITE_ID === selection.SITE_ID
+            );
+            this.props.setDiagnosisSelectionStudies(selectionStudies);
         }, 100);
     };
 

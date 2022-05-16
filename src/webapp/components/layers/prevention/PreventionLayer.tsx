@@ -14,6 +14,7 @@ import mapboxgl from "mapbox-gl";
 import {
     fetchPreventionStudiesRequest,
     setPreventionFilteredStudiesAction,
+    setPreventionSelectionStudies,
 } from "../../../store/actions/prevention-actions";
 import { setSelection } from "../../../store/actions/base-actions";
 import PreventionSelectionChart from "./PreventionSelectionChart";
@@ -51,6 +52,7 @@ const mapDispatchToProps = {
     fetchPreventionStudies: fetchPreventionStudiesRequest,
     setFilteredStudies: setPreventionFilteredStudiesAction,
     setSelection: setSelection,
+    setPreventionSelectionStudies: setPreventionSelectionStudies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -198,6 +200,12 @@ class PreventionLayer extends Component<Props> {
         };
         setTimeout(() => {
             this.props.setSelection(selection);
+
+            const selectionStudies = this.filterStudies(this.props.studies).filter(
+                study => study.SITE_ID === selection.SITE_ID
+            );
+
+            this.props.setPreventionSelectionStudies(selectionStudies);
         }, 100);
     };
 

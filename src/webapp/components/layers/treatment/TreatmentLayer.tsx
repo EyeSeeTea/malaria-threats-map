@@ -19,7 +19,11 @@ import {
 } from "../studies-filters";
 import { State, TreatmentMapType } from "../../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
-import { fetchTreatmentStudiesRequest, setFilteredStudiesAction } from "../../../store/actions/treatment-actions";
+import {
+    fetchTreatmentStudiesRequest,
+    setFilteredStudiesAction,
+    setTreatmentSelectionStudies,
+} from "../../../store/actions/treatment-actions";
 import { setSelection } from "../../../store/actions/base-actions";
 import ChartModal from "../../ChartModal";
 import TreatmentSelectionChart from "./TreatmentSelectionChart";
@@ -55,6 +59,7 @@ const mapDispatchToProps = {
     fetchTreatmentStudies: fetchTreatmentStudiesRequest,
     setFilteredStudies: setFilteredStudiesAction,
     setSelection: setSelection,
+    setTreatmentSelectionStudies: setTreatmentSelectionStudies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -220,6 +225,11 @@ class TreatmentLayer extends Component<Props> {
         };
         setTimeout(() => {
             this.props.setSelection(selection);
+
+            const selectionStudies = this.filterStudies(this.props.studies).filter(
+                study => study.SITE_ID === selection.SITE_ID
+            );
+            this.props.setTreatmentSelectionStudies(selectionStudies);
         }, 100);
     };
 

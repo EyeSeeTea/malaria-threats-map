@@ -9,7 +9,7 @@ import * as R from "ramda";
 import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectInvasiveFilters, selectInvasiveStudies } from "../../../store/reducers/invasive-reducer";
-import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
+import { setInvasiveFilteredStudiesAction, setInvasiveSelectionStudies } from "../../../store/actions/invasive-actions";
 import ChartModal from "../../ChartModal";
 import InvasiveSelectionChart from "./InvasiveSelectionChart";
 import { setSelection } from "../../../store/actions/base-actions";
@@ -47,6 +47,7 @@ const mapDispatchToProps = {
     fetchInvasiveStudies: fetchInvasiveStudiesRequest,
     setFilteredStudies: setInvasiveFilteredStudiesAction,
     setSelection: setSelection,
+    setInvasiveSelectionStudies: setInvasiveSelectionStudies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -172,6 +173,11 @@ class InvasiveLayer extends Component<Props> {
         };
         setTimeout(() => {
             this.props.setSelection(selection);
+
+            const selectionStudies = this.filterStudies(this.props.studies).filter(
+                study => study.SITE_ID === selection.SITE_ID
+            );
+            this.props.setInvasiveSelectionStudies(selectionStudies);
         }, 100);
     };
 
