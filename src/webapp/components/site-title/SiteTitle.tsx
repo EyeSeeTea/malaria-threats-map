@@ -21,12 +21,14 @@ type Props = StateProps & OwnProps;
 const SiteTitle: React.FC<Props> = ({ theme, study }) => {
     const { t } = useTranslation();
 
-    const titleItems = [
-        study.VILLAGE_NAME || study.SITE_NAME,
-        theme === "treatment" ? (study as TreatmentStudy).PROVINCE : "",
-        t(study.ISO2 === "NA" ? "common.COUNTRY_NA" : study.ISO2),
-    ];
-    const title = titleItems.filter(Boolean).join(", ");
+    const title = React.useMemo(() => {
+        const titleItems = [
+            study.VILLAGE_NAME || study.SITE_NAME,
+            theme === "treatment" ? (study as TreatmentStudy).PROVINCE : "",
+            t(study.ISO2 === "NA" ? "common.COUNTRY_NA" : study.ISO2),
+        ];
+        return titleItems.filter(Boolean).join(", ");
+    }, [t, study, theme]);
 
     return (
         <Typography variant="subtitle1">
