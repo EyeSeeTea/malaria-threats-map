@@ -5,7 +5,7 @@ import { circleLayout, studiesToGeoJson } from "../layer-utils";
 import diagnosisSymbols from "../symbols/diagnosis";
 import setupEffects from "../effects";
 import { selectDiagnosisFilters, selectDiagnosisStudies } from "../../../store/reducers/diagnosis-reducer";
-import { selectFilters, selectRegion, selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
+import { selectFilters, selectHoverSelection, selectRegion, selectTheme } from "../../../store/reducers/base-reducer";
 import * as R from "ramda";
 import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
 import { buildDiagnosisFilters } from "../studies-filters";
@@ -16,12 +16,12 @@ import {
     setDiagnosisFilteredStudiesAction,
     setDiagnosisSelectionStudies,
 } from "../../../store/actions/diagnosis-actions";
-import ChartModal from "../../ChartModal";
-import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
-import { setSelection } from "../../../store/actions/base-actions";
+import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../hidden/Hidden";
+import SiteTitle from "../../site-title/SiteTitle";
+import { getSiteSelectionOnClick, getSiteSelectionOnMove } from "../common/utils";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -41,13 +41,14 @@ const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     region: selectRegion(state),
-    selection: selectSelection(state),
+    hoverSelection: selectHoverSelection(state),
 });
 
 const mapDispatchToProps = {
     fetchDiagnosisStudies: fetchDiagnosisStudiesRequest,
     setFilteredStudies: setDiagnosisFilteredStudiesAction,
     setSelection: setSelection,
+    setHoverSelection: setHoverSelection,
     setDiagnosisSelectionStudies: setDiagnosisSelectionStudies,
 };
 
@@ -168,41 +169,44 @@ class DiagnosisLayer extends Component<Props> {
             this.props.map.addLayer(layer(resolveMapTypeSymbols()));
 
             setupEffects(this.props.map, DIAGNOSIS_SOURCE_ID, DIAGNOSIS_LAYER_ID);
-            this.setupPopover();
+
             this.renderLayer();
         }
     }
 
     onClickListener = (e: any) => {
-        const coordinates = e.features[0].geometry.coordinates.slice();
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-        const selection = {
-            ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
-            SITE_ID: e.features[0].properties.SITE_ID,
-            coordinates: coordinates,
-        };
+        const selection = getSiteSelectionOnClick(e, this.props.map, DIAGNOSIS_LAYER_ID);
+
         setTimeout(() => {
             this.props.setSelection(selection);
 
-            const selectionStudies = this.filterStudies(this.props.studies).filter(
-                study => study.SITE_ID === selection.SITE_ID
-            );
+            const selectionStudies = selection
+                ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === selection.SITE_ID)
+                : [];
+
             this.props.setDiagnosisSelectionStudies(selectionStudies);
         }, 100);
     };
 
-    setupPopover = () => {
-        this.props.map.off("click", DIAGNOSIS_LAYER_ID, this.onClickListener);
-        this.props.map.on("click", DIAGNOSIS_LAYER_ID, this.onClickListener);
+    onMouseMoveListener = (e: any) => {
+        this.props.map.getCanvas().style.cursor = "pointer";
+
+        const selection = getSiteSelectionOnMove(e, this.props.map, DIAGNOSIS_LAYER_ID);
+
+        setTimeout(() => {
+            this.props.setHoverSelection(selection);
+        }, 100);
     };
 
     renderLayer = () => {
         if (this.props.map.getLayer(DIAGNOSIS_LAYER_ID)) {
             if (this.props.theme === DIAGNOSIS) {
+                this.props.map.on("mousemove", this.onMouseMoveListener);
+                this.props.map.on("click", this.onClickListener);
                 this.props.map.setLayoutProperty(DIAGNOSIS_LAYER_ID, "visibility", "visible");
             } else {
+                this.props.map.off("mousemove", this.onMouseMoveListener);
+                this.props.map.off("click", this.onClickListener);
                 this.props.map.setLayoutProperty(DIAGNOSIS_LAYER_ID, "visibility", "none");
             }
         }
@@ -223,11 +227,11 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, selection } = this.props;
-        if (selection === null) {
+        const { studies, hoverSelection } = this.props;
+        if (hoverSelection === null) {
             return <div />;
         }
-        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === selection.SITE_ID);
+        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === hoverSelection.SITE_ID);
 
         if (filteredStudies.length === 0) {
             return <div />;
@@ -237,13 +241,8 @@ class DiagnosisLayer extends Component<Props> {
                 <>
                     <Hidden smDown>
                         <SitePopover map={this.props.map}>
-                            <DiagnosisSelectionChart studies={filteredStudies} />
+                            <SiteTitle study={filteredStudies[0]} />
                         </SitePopover>
-                    </Hidden>
-                    <Hidden smUp>
-                        <ChartModal selection={selection}>
-                            <DiagnosisSelectionChart studies={filteredStudies} />
-                        </ChartModal>
                     </Hidden>
                 </>
             )

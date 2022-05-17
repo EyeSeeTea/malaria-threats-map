@@ -12,6 +12,7 @@ export enum ActionTypeEnum {
     MalariaSetInitialDialogOpen = "malaria/SET_INITIAL_DIALOG_OPEN",
     MalariaActionGroupSelected = "malaria/ACTION_GROUP_SELECTED",
     SetSelection = "malaria/SET_SELECTION",
+    SetHoverSelection = "malaria/SET_HOVER_SELECTION",
     SetMobileOptionsOpen = "malaria/SET_MOBILE_OPTIONS_OPEN",
     UpdateZoom = "malaria/UPDATE_ZOOM",
     SetZoom = "malaria/SET_ZOOM",

@@ -9,19 +9,19 @@ import { resolveResistanceStatus } from "./ResistanceStatus/utils";
 import { buildPreventionFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectPreventionFilters, selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
-import { selectFilters, selectRegion, selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
+import { selectFilters, selectHoverSelection, selectRegion, selectTheme } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
 import {
     fetchPreventionStudiesRequest,
     setPreventionFilteredStudiesAction,
     setPreventionSelectionStudies,
 } from "../../../store/actions/prevention-actions";
-import { setSelection } from "../../../store/actions/base-actions";
-import PreventionSelectionChart from "./PreventionSelectionChart";
-import ChartModal from "../../ChartModal";
+import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../../components/hidden/Hidden";
+import SiteTitle from "../../site-title/SiteTitle";
+import { getSiteSelectionOnClick, getSiteSelectionOnMove } from "../common/utils";
 
 export const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -45,13 +45,14 @@ const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     preventionFilters: selectPreventionFilters(state),
     region: selectRegion(state),
-    selection: selectSelection(state),
+    hoverSelection: selectHoverSelection(state),
 });
 
 const mapDispatchToProps = {
     fetchPreventionStudies: fetchPreventionStudiesRequest,
     setFilteredStudies: setPreventionFilteredStudiesAction,
     setSelection: setSelection,
+    setHoverSelection: setHoverSelection,
     setPreventionSelectionStudies: setPreventionSelectionStudies,
 };
 
@@ -183,35 +184,31 @@ class PreventionLayer extends Component<Props> {
             this.props.map.addLayer(layer(resolveMapTypeSymbols(preventionFilters)));
 
             setupEffects(this.props.map, PREVENTION_SOURCE_ID, PREVENTION_LAYER_ID);
-            this.setupPopover();
+
             this.renderLayer();
         }
     }
 
     onClickListener = (e: any) => {
-        const coordinates = e.features[0].geometry.coordinates.slice();
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-        const selection = {
-            ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
-            SITE_ID: e.features[0].properties.SITE_ID,
-            coordinates: coordinates,
-        };
+        const selection = getSiteSelectionOnClick(e, this.props.map, PREVENTION_LAYER_ID);
+
         setTimeout(() => {
             this.props.setSelection(selection);
 
-            const selectionStudies = this.filterStudies(this.props.studies).filter(
-                study => study.SITE_ID === selection.SITE_ID
-            );
+            const selectionStudies = selection
+                ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === selection.SITE_ID)
+                : [];
 
             this.props.setPreventionSelectionStudies(selectionStudies);
         }, 100);
     };
 
-    setupPopover = () => {
-        this.props.map.off("click", PREVENTION_LAYER_ID, this.onClickListener);
-        this.props.map.on("click", PREVENTION_LAYER_ID, this.onClickListener);
+    onMouseMoveListener = (e: any) => {
+        this.props.map.getCanvas().style.cursor = "pointer";
+
+        const selection = getSiteSelectionOnMove(e, this.props.map, PREVENTION_LAYER_ID);
+
+        this.props.setHoverSelection(selection);
     };
 
     renderLayer = () => {
@@ -221,8 +218,12 @@ class PreventionLayer extends Component<Props> {
         if (this.props.map.getLayer(PREVENTION_LAYER_ID)) {
             if (this.props.theme === PREVENTION) {
                 this.props.map.setLayoutProperty(PREVENTION_LAYER_ID, "visibility", "visible");
+                this.props.map.on("mousemove", this.onMouseMoveListener);
+                this.props.map.on("click", this.onClickListener);
             } else {
                 this.props.map.setLayoutProperty(PREVENTION_LAYER_ID, "visibility", "none");
+                this.props.map.off("mousemove", this.onMouseMoveListener);
+                this.props.map.off("click", this.onClickListener);
             }
         }
     };
@@ -243,27 +244,24 @@ class PreventionLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, selection } = this.props;
-        if (selection === null) {
+        const { studies, hoverSelection } = this.props;
+
+        if (hoverSelection === null) {
             return <div />;
         }
-        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === selection.SITE_ID);
+        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === hoverSelection.SITE_ID);
 
         if (filteredStudies.length === 0) {
             return <div />;
         }
+
         return (
             this.props.theme === "prevention" && (
                 <>
                     <Hidden smDown>
                         <SitePopover map={this.props.map}>
-                            <PreventionSelectionChart studies={filteredStudies} />
+                            <SiteTitle study={filteredStudies[0]} />
                         </SitePopover>
-                    </Hidden>
-                    <Hidden smUp>
-                        <ChartModal selection={selection}>
-                            <PreventionSelectionChart studies={filteredStudies} />
-                        </ChartModal>
                     </Hidden>
                 </>
             )

@@ -51,6 +51,8 @@ export const setActionGroupSelected = createAction(ActionTypeEnum.MalariaActionG
 
 export const setSelection = createAction(ActionTypeEnum.SetSelection)<SiteSelection | null>();
 
+export const setHoverSelection = createAction(ActionTypeEnum.SetHoverSelection)<SiteSelection | null>();
+
 export const setMobileOptionsOpen = createAction(ActionTypeEnum.SetMobileOptionsOpen)<boolean>();
 
 export const updateZoomAction = createAction(ActionTypeEnum.UpdateZoom)<number>();
