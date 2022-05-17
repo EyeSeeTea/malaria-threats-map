@@ -46,7 +46,6 @@ export interface MalariaState {
         treatment: Date | null;
         invasive: Date | null;
     };
-    initialDialogOpen: boolean;
     actionGroupSelected: ActionGroup | null;
     filtersOpen?: boolean;
     filtersMode: string;
