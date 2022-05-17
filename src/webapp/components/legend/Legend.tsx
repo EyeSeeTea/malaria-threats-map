@@ -15,7 +15,7 @@ import styled from "styled-components";
 import { Button, Collapse, Divider } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Trans, useTranslation } from "react-i18next";
-import QuestionIcon from "../QuestionIcon";
+import QuestionIcon from "../icons/QuestionIcon";
 
 const StyledButton = styled(Button)`
     color: black;

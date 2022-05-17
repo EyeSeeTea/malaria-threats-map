@@ -64,6 +64,7 @@ import { changeLanguage } from "../config/i18next";
 import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
 import LastUpdated from "./last-updated/LastUpdated";
 import FloatingLegend from "./legend/FloatingLegendContainer";
+import GreaterMekongLink from "./greater-mekong-link/GreaterMekongLink";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const drawerWidth = 100;
@@ -129,7 +130,7 @@ const SearchContainer = styled(BaseFlexAlignStartContainer)`
 
 const LegendContainer = styled(BaseContainer)`
     position: absolute;
-    top: 80px;
+    top: 7%;
     right: 10px;
 `;
 
@@ -137,6 +138,12 @@ const BottomLeftContainer = styled(BaseContainer)`
     bottom: 0;
     display: flex;
     flex-direction: row;
+`;
+
+const TopMiddleContainer = styled(BaseContainer)`
+    top: 7%;
+    left: 40%;
+    width: 310px;
 `;
 
 const BottomRightContainer = styled(BaseContainer)`
@@ -326,6 +333,11 @@ class Map extends React.Component<Props> {
                 {ready && <DiagnosisLayer map={this.map} />}
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
+                {theme === "treatment" && (
+                    <TopMiddleContainer>
+                        <GreaterMekongLink />
+                    </TopMiddleContainer>
+                )}
                 <Hidden smDown>
                     <Box>
                         <AppBar position="sticky" sx={classes.appBar}>
