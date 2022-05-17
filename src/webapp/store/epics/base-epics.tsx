@@ -39,17 +39,15 @@ export const setThemeEpic = (action$: Observable<ActionType<typeof setThemeActio
     action$.pipe(
         ofType(ActionTypeEnum.MalariaSetTheme),
         withLatestFrom(state$),
-        switchMap(([action, state]) => {
+        switchMap(([action, _state]) => {
             const { meta } = action;
             const eventCategory = meta.fromHome ? "homeItem" : "theme_menu";
-            const isDialogOpen = state.malaria.initialDialogOpen;
+
             const base = [
-                ...(isDialogOpen
-                    ? []
-                    : [
-                          logEventAction({ category: eventCategory, action: action.payload }),
-                          logPageViewAction(getAnalyticsPageViewFromString({ page: action.payload })),
-                      ]),
+                ...[
+                    logEventAction({ category: eventCategory, action: action.payload }),
+                    logPageViewAction(getAnalyticsPageViewFromString({ page: action.payload })),
+                ],
                 setSelection(null),
                 setStoryModeStepAction(0),
             ].filter(Boolean);

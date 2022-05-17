@@ -30,7 +30,6 @@ const initialState: MalariaState = Object.freeze({
         treatment: null,
         invasive: null,
     },
-    initialDialogOpen: !query,
     actionGroupSelected: null,
     filtersOpen: true,
     filtersMode: "filters",
@@ -68,8 +67,6 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.MalariaToogleEndemicityLayer]: (visible: boolean) => R.assoc("endemicity", visible),
     [ActionTypeEnum.MalariaSetStoryMode]: (storyMode: boolean) => R.assoc("storyMode", storyMode),
     [ActionTypeEnum.MalariaSetStoryModeStep]: (storyModeStep: number) => R.assoc("storyModeStep", storyModeStep || 0),
-    [ActionTypeEnum.MalariaSetInitialDialogOpen]: (initialDialogOpen: boolean) =>
-        R.assoc("initialDialogOpen", initialDialogOpen),
     [ActionTypeEnum.MalariaActionGroupSelected]: (value: ActionGroup | null) => R.assoc("actionGroupSelected", value),
     [ActionTypeEnum.SetFiltersOpen]: (filtersOpen: boolean) => R.assoc("filtersOpen", filtersOpen),
     [ActionTypeEnum.SetFiltersMode]: (filtersMode: string) => R.assoc("filtersMode", filtersMode || "filters"),
@@ -126,7 +123,6 @@ export const selectAny = createSelector(selectMalariaState, state => state.any);
 export const selectEndemicity = createSelector(selectMalariaState, state => state.endemicity);
 export const selectFilters = createSelector(selectMalariaState, state => state.filters);
 export const selectRegion = createSelector(selectMalariaState, state => state.region);
-export const selectIsInitialDialogOpen = createSelector(selectMalariaState, state => state.initialDialogOpen);
 export const selectActionGroupSelected = createSelector(selectMalariaState, state => state.actionGroupSelected);
 export const selectAreFiltersOpen = createSelector(selectMalariaState, state => state.filtersOpen);
 export const selectFiltersMode = createSelector(selectMalariaState, state => state.filtersMode);

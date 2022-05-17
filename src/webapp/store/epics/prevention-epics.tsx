@@ -55,10 +55,10 @@ export const setPreventionMapTypeEpic = (
     action$.pipe(
         ofType(ActionTypeEnum.SetPreventionMapType),
         withLatestFrom(state$),
-        switchMap(([action, state]) => {
+        switchMap(([action, _state]) => {
             const pageView = getAnalyticsPageView({ page: "prevention", section: action.payload });
-            const isDialogOpen = state.malaria.initialDialogOpen;
-            const logPageView = isDialogOpen ? null : logPageViewAction(pageView);
+
+            const logPageView = logPageViewAction(pageView);
 
             if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
                 return of(..._.compact([setType("MONO_OXYGENASES"), logPageView]));
