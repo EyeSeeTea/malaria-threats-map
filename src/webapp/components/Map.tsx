@@ -31,8 +31,13 @@ import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
 import { Fade, Button, AppBar, Typography, IconButton, Toolbar, Box, Divider, Fab } from "@mui/material";
-import { Menu as MenuIcon, CloseOutlined as CloseOutlinedIcon,
-         Add as ZoomInIcon, Remove as ZoomOutIcon, OpenInFull as MapOnlyIcon } from "@mui/icons-material";
+import {
+    Menu as MenuIcon,
+    CloseOutlined as CloseOutlinedIcon,
+    Add as ZoomInIcon,
+    Remove as ZoomOutIcon,
+    OpenInFull as MapOnlyIcon,
+} from "@mui/icons-material";
 import LeyendPopover from "./legend/LegendPopover";
 import StoryModeSelector from "./StoryModeSelector";
 import MalariaTour from "./tour/MalariaTour";
