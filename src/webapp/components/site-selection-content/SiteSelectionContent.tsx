@@ -12,9 +12,17 @@ import InvasiveSelectionChart from "../layers/invasive/InvasiveSelectionChart";
 import PreventionSelectionChart from "../layers/prevention/PreventionSelectionChart";
 import TreatmentSelectionChart from "../layers/treatment/TreatmentSelectionChart";
 import styled from "styled-components";
+import { IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const Container = styled.div`
     padding: 60px 8px;
+`;
+
+export const IconContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -39,7 +47,12 @@ const SiteSelectionContent: React.FC<Props> = ({
     diagnosisSelectionStudies,
     treatmentSelectionStudies,
     invasiveSelectionStudies,
+    setSelection,
 }) => {
+    const handleClose = React.useCallback(() => {
+        setSelection(null);
+    }, [setSelection]);
+
     if (
         !preventionSelectionStudies.length &&
         !diagnosisSelectionStudies.length &&
@@ -51,6 +64,12 @@ const SiteSelectionContent: React.FC<Props> = ({
 
     return (
         <Container>
+            <IconContainer>
+                <IconButton onClick={handleClose}>
+                    <CloseIcon />
+                </IconButton>
+            </IconContainer>
+
             {theme === "prevention" && <PreventionSelectionChart studies={preventionSelectionStudies} />}
             {theme === "diagnosis" && <DiagnosisSelectionChart studies={diagnosisSelectionStudies} />}
             {theme === "treatment" && <TreatmentSelectionChart studies={treatmentSelectionStudies} />}
