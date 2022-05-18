@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
 import { State } from "../store/types";
 import Map from "./Map";
-import { setRegionAction, setThemeAction } from "../store/actions/base-actions";
-
 import {
     setBoundsAction,
     setFiltersAction,
-    setFiltersMode,
-    setFiltersOpen,
+    setRegionAction,
     setStoryModeAction,
     setStoryModeStepAction,
+    setThemeAction,
     toggleEndemicityLayerAction,
 } from "../store/actions/base-actions";
 import {
@@ -45,7 +43,7 @@ const MapContainer: React.FC = () => {
 
     useEffect(() => {
         ReduxQuerySync({
-            store: store,
+            store,
             params: {
                 theme: {
                     selector: (state: State) => state.malaria.theme,
@@ -165,14 +163,6 @@ const MapContainer: React.FC = () => {
                     selector: (state: State) => state.malaria.storyModeStep,
                     action: (value: string) => setStoryModeStepAction(parseInt(value)),
                 },
-                filterOpen: {
-                    selector: (state: State) => state.malaria.filtersOpen,
-                    action: (value: string) => setFiltersOpen(!value ? true : value === "true"),
-                },
-                filtersMode: {
-                    selector: (state: State) => state.malaria.filtersMode,
-                    action: (value: string) => setFiltersMode(value),
-                },
                 years: {
                     selector: (state: State) => state.malaria.filters,
                     action: (value: string) =>
@@ -210,9 +200,7 @@ const MapContainer: React.FC = () => {
                             case "subRegion":
                                 return setRegionAction({ subRegion: rest[1] });
                             case "site": {
-                                const { siteIso2, site, siteCoordinates } = JSON.parse(
-                                    decodeURIComponent(rest.join(":"))
-                                );
+                                const { siteIso2, site, siteCoordinates } = JSON.parse(decodeURIComponent(rest.join(":")));
                                 return setRegionAction({
                                     siteIso2,
                                     site,

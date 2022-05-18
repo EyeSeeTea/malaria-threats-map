@@ -1,5 +1,7 @@
 {
     "common": {
+        "layers": "Capas",
+        "mekong_link": "Ir a la capa Greather Mekong",
         "title": {
             "title": "Mapa de los desafíos de la malaria",
             "subtitle": "Seguimiento de los desafíos biológicos para el control y la eliminación de la malaria"

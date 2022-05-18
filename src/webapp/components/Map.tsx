@@ -1,7 +1,7 @@
 import React from "react";
 import { style } from "./style";
 import styled from "styled-components";
-import Layers from "./Layers";
+import LayersButton from "./layers_button/LayersButton";
 import mapboxgl from "mapbox-gl";
 import { isMobile } from "react-device-detect";
 import { State } from "../store/types";
@@ -16,7 +16,6 @@ import WhoLogo from "./WhoLogo";
 
 import {
     selectAny,
-    selectIsInitialDialogOpen,
     selectRegion,
     selectSetBounds,
     selectSetZoom,
@@ -42,7 +41,6 @@ import Report from "./Report";
 import Feedback from "./Feedback";
 import InitialDisclaimer from "./InitialDisclaimer";
 import TheaterMode from "./TheaterMode";
-import InitialDialog from "./InitialDialog";
 import TourIcon from "./TourIcon";
 import ShareIcon from "./ShareIcon";
 import { getAnalyticsPageViewFromString } from "../store/analytics";
@@ -58,6 +56,7 @@ import { changeLanguage } from "../config/i18next";
 import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
 import LastUpdated from "./last-updated/LastUpdated";
 import FloatingLegend from "./legend/FloatingLegendContainer";
+import GreaterMekongLink from "./greater-mekong-link/GreaterMekongLink";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const drawerWidth = 100;
@@ -123,12 +122,20 @@ const SearchContainer = styled(BaseFlexAlignStartContainer)`
 
 const LegendContainer = styled(BaseContainer)`
     position: absolute;
-    top: 80px;
+    top: 7%;
     right: 10px;
 `;
 
 const BottomLeftContainer = styled(BaseContainer)`
     bottom: 0;
+    display: flex;
+    flex-direction: row;
+`;
+
+const TopMiddleContainer = styled(BaseContainer)`
+    top: 7%;
+    left: 40%;
+    width: 310px;
 `;
 
 const BottomMiddleContainer = styled(BaseContainer)`
@@ -176,7 +183,6 @@ const mapStateToProps = (state: State) => ({
     diagnosisStudies: selectDiagnosisStudies(state),
     treatmentStudies: selectTreatmentStudies(state),
     invasiveStudies: selectInvasiveStudies(state),
-    initialDialogOpen: selectIsInitialDialogOpen(state),
     tour: selectTour(state),
 });
 
@@ -251,7 +257,7 @@ class Map extends React.Component<Props> {
         });
 
         const pageView = getAnalyticsPageViewFromString({ page: this.props.theme });
-        if (pageView && !this.props.initialDialogOpen) {
+        if (pageView) {
             sendAnalytics({ type: "pageView", ...pageView });
         }
 
@@ -268,8 +274,8 @@ class Map extends React.Component<Props> {
     }
 
     render() {
-        const { theme, initialDialogOpen } = this.props;
-        const showOptions = isMobile || !initialDialogOpen;
+        const { theme } = this.props;
+        const showOptions = true;
         const ready = this.map && this.state.ready;
         const classes = {
             icon: { marginRight: 5 },
@@ -305,6 +311,11 @@ class Map extends React.Component<Props> {
                 {ready && <DiagnosisLayer map={this.map} />}
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
+                {theme === "treatment" && (
+                    <TopMiddleContainer>
+                        <GreaterMekongLink />
+                    </TopMiddleContainer>
+                )}
                 <Hidden smDown>
                     <Box>
                         <AppBar position="sticky" sx={classes.appBar}>
@@ -338,7 +349,6 @@ class Map extends React.Component<Props> {
                             <Hidden smDown>
                                 <MalariaTour />
                             </Hidden>
-                            <Layers />
                             {!isMobile && <DataDownload />}
                             <Hidden smUp>
                                 <ShareIcon />
@@ -355,7 +365,7 @@ class Map extends React.Component<Props> {
                     </PushoverContainer>
                 </Fade>
                 <Hidden smDown>
-                    <Fade in={showOptions}>
+                    <Fade in={false}>
                         <TopRightContainer>
                             <StoryModeSelector />
                             <InitialDisclaimer />
@@ -390,6 +400,8 @@ class Map extends React.Component<Props> {
                 </Fade>
                 <PushoverContainer menuOpen={this.state.menuOpen}>
                     <BottomLeftContainer>
+                        <LayersButton />
+                        <Box width={20} />
                         <Hidden smUp>
                             <WhoLogo width={150} />
                         </Hidden>
@@ -399,9 +411,6 @@ class Map extends React.Component<Props> {
                     </BottomLeftContainer>
                 </PushoverContainer>
                 <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
-                <Hidden smDown>
-                    <InitialDialog />
-                </Hidden>
                 <LanguageSelectorDialog
                     selectedValue={this.state.selectedValue}
                     open={this.state.open}

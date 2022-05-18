@@ -60,6 +60,13 @@ type Props = {
 const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
     const { t } = useTranslation();
 
+    const handleClickOntour = React.useCallback(() => {
+        // sendAnalytics({ type: "event", category: "menu", action: "tour" });
+        // localStorage.setItem("tour", "");
+        // window.history.pushState({}, document.title, window.location.href.split("?")[0]);
+        // window.location.reload();
+    }, []);
+
     return (
         <Drawer
             sx={{
@@ -95,7 +102,6 @@ const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
                         <AboutIcon />
                     </StyledFab>
                     <Typography variant="caption" align="center">
-                        {" "}
                         {t("common.sidebar.about")}
                     </Typography>
                 </SidebarIconDiv>
@@ -105,7 +111,6 @@ const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
                         <ContactIcon />
                     </StyledFab>
                     <Typography variant="caption" align="center">
-                        {" "}
                         {t("common.sidebar.contact")}
                     </Typography>
                 </SidebarIconDiv>
@@ -120,7 +125,6 @@ const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
                         <ShareDataIcon />
                     </StyledFab>
                     <Typography variant="caption" align="center">
-                        {" "}
                         {t("common.sidebar.share_data")}
                     </Typography>
                 </SidebarIconDiv>
@@ -137,17 +141,21 @@ const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
                         </StyledFab>
                     </IconButton>
                     <Typography variant="caption" align="center">
-                        {" "}
                         {t("common.sidebar.language")}
                     </Typography>
                 </SidebarIconDiv>
 
                 <SidebarIconDiv>
-                    <StyledFab id="tour-button" size="small" color={"default"} title={t("common.sidebar.take_tour")}>
+                    <StyledFab
+                        id="tour-button"
+                        size="small"
+                        color={"default"}
+                        title={t("common.sidebar.take_tour")}
+                        onClick={handleClickOntour}
+                    >
                         <TakeATourIcon />
                     </StyledFab>
                     <Typography variant="caption" align="center">
-                        {" "}
                         {t("common.sidebar.take_tour")}
                     </Typography>
                 </SidebarIconDiv>

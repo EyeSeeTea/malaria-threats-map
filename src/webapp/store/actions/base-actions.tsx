@@ -45,15 +45,11 @@ export const setStoryModeAction = createAction(ActionTypeEnum.MalariaSetStoryMod
 
 export const setStoryModeStepAction = createAction(ActionTypeEnum.MalariaSetStoryModeStep)<number>();
 
-export const setInitialDialogOpen = createAction(ActionTypeEnum.MalariaSetInitialDialogOpen)<boolean>();
-
 export const setActionGroupSelected = createAction(ActionTypeEnum.MalariaActionGroupSelected)<ActionGroup | null>();
 
-export const setFiltersOpen = createAction(ActionTypeEnum.SetFiltersOpen)<boolean>();
-
-export const setFiltersMode = createAction(ActionTypeEnum.SetFiltersMode)<string>();
-
 export const setSelection = createAction(ActionTypeEnum.SetSelection)<SiteSelection | null>();
+
+export const setHoverSelection = createAction(ActionTypeEnum.SetHoverSelection)<SiteSelection | null>();
 
 export const setMobileOptionsOpen = createAction(ActionTypeEnum.SetMobileOptionsOpen)<boolean>();
 
