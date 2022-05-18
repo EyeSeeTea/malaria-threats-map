@@ -219,6 +219,7 @@ class Map extends React.Component<Props> {
         theme: "prevention",
         style: style,
         menuOpen: false,
+        viewMapOnly: false, // show only the legend and last-data-update boxes
         viewport: {
             latitude: 40,
             longitude: 0,
@@ -292,10 +293,18 @@ class Map extends React.Component<Props> {
         this.map.flyTo({ zoom: newZoom });
     }
 
+    switchViewMapOnly() {
+        const viewMapOnly = !this.state.viewMapOnly;  // new state
+        this.setState({ viewMapOnly });
+        if (viewMapOnly && !document.fullscreenElement) document.documentElement.requestFullscreen();
+        if (!viewMapOnly && document.fullscreenElement) document.exitFullscreen();
+    }
+
     render() {
         const { theme } = this.props;
         const showOptions = true;
         const ready = this.map && this.state.ready;
+        const viewMapOnly = this.state.viewMapOnly;
         const classes = {
             icon: { marginRight: 5 },
             fab: {
@@ -335,7 +344,7 @@ class Map extends React.Component<Props> {
                         <GreaterMekongLink />
                     </TopMiddleContainer>
                 )}
-                <Hidden smDown>
+                {viewMapOnly || <Hidden smDown> {/* App bar */}
                     <Box>
                         <AppBar position="sticky" sx={classes.appBar}>
                             <StyledToolbar>
@@ -360,9 +369,9 @@ class Map extends React.Component<Props> {
                             </StyledToolbar>
                         </AppBar>
                     </Box>
-                </Hidden>
+                </Hidden>}
                 <LeftSidebarMenu isMenuOpen={this.state.menuOpen} handleClickOpen={handleClickOpen} />
-                <Fade in={showOptions}>
+                {viewMapOnly || <Fade in={showOptions}>
                     <PushoverContainer menuOpen={this.state.menuOpen}>
                         <SearchContainer>
                             <Hidden smDown>
@@ -375,14 +384,14 @@ class Map extends React.Component<Props> {
                             <Hidden smDown>{["prevention", "treatment"].includes(theme) && <Report />}</Hidden>
                         </SearchContainer>
                     </PushoverContainer>
-                </Fade>
-                <Fade in={showOptions}>
+                </Fade>}
+                {viewMapOnly || <Fade in={showOptions}>
                     <PushoverContainer menuOpen={this.state.menuOpen}>
                         <FloatingActionContainer>
                             <MapActions />
                         </FloatingActionContainer>
                     </PushoverContainer>
-                </Fade>
+                </Fade>}
                 <Hidden smDown>
                     <Fade in={false}>
                         <TopRightContainer>
@@ -412,14 +421,14 @@ class Map extends React.Component<Props> {
                             <LeyendPopover />
                         </Hidden>
                         <Hidden smDown>
-                            <FloatingLegend />
+                            <FloatingLegend /> {/* Legend box */}
                         </Hidden>
-                        <LastUpdated />
+                        <LastUpdated /> {/* Last updated box */}
                     </LegendContainer>
                 </Fade>
                 <PushoverContainer menuOpen={this.state.menuOpen}>
                     <BottomLeftContainer>
-                        <LayersButton />
+                        {viewMapOnly || <LayersButton />} {/* Layers selector box */}
                         <Box width={20} />
                         <Hidden smUp>
                             <WhoLogo width={150} />
@@ -437,7 +446,8 @@ class Map extends React.Component<Props> {
                     <MapFab size="small" onClick={() => this.zoom(0.8)}>
                         <ZoomOutIcon />
                     </MapFab>
-                    <MapFab size="small" onClick={() => this.mapContainer.requestFullscreen()}>
+                    <MapFab size="small" onClick={() => this.switchViewMapOnly()}
+                            sx={viewMapOnly ? { bgcolor: "#2fb3af" } : { bgcolor: "white" }}>
                         <MapOnlyIcon />
                     </MapFab>
                 </BottomRightContainer>
