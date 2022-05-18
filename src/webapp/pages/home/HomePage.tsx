@@ -28,7 +28,7 @@ const StyledBanner = styled.div`
     width: 100%;
     background: linear-gradient(90deg, #bbd7e8 0%, #bbd7e800 100%), url(${HomepageMap});
     background-position: right;
-    height: 720px;
+    height:600px;
     opacity: 1;
 `;
 interface Props {
@@ -41,7 +41,10 @@ const ContentDiv = styled.div<Props>`
 `;
 
 const TitleBannerDiv = styled.div`
-    margin-top: 100px;
+    margin-top: 90px;
+    @media (max-width: 1024px) {
+        margin-top: 75px;
+    }
 `;
 
 const MediaCardDiv = styled.div`
@@ -50,11 +53,18 @@ const MediaCardDiv = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    @media (max-width: 1024px) {
+    @media (max-width: 1400px) {
         flex-wrap: wrap;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
+        margin-top: 55px;
+    }
+    @media (max-width: 1000px) {
         justify-content: center;
+        flex-direction: column;
+    }
+    @media (max-width: 768px) {
+        margin-top: 45px;
     }
 `;
 
@@ -90,7 +100,7 @@ export const HomePage = () => {
                 <Header t={t} />
                 <ContentDiv windowWidth={width}>
                     <TitleBannerDiv>
-                        <Typography variant="h2" color={"inherit"} textTransform="uppercase" fontSize={66}>
+                        <Typography variant="h2" color={"inherit"} textTransform="uppercase">
                             <Trans i18nKey="common.homepage.title" t={t}>
                                 Malaria <br /> <strong>Threats Map</strong>
                             </Trans>

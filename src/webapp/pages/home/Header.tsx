@@ -6,6 +6,7 @@ import { HomepageIntegrationReactSelect } from "../../components/BasicSelect";
 import { changeLanguage } from "../../config/i18next";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
+import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
 
 const LANGUAGES = [
     {
@@ -31,13 +32,16 @@ const StickyMenu = styled.div`
     right: 0;
     left: 0;
 `;
+interface Props {
+    width: number;
+}
 
-const StyledToolbar = styled(Toolbar)`
+const StyledToolbar = styled(Toolbar)<Props>`
     &.MuiToolbar-root {
-        width: 85%;
-        margin: auto;
+        width: ${props => `${props.width * 0.85}px`};
+        margin: auto 9% auto auto;
         @media (min-width: 600px) {
-            padding: 0 70px;
+            padding: 0;
             min-height: 50px;
         }
     }
@@ -84,6 +88,7 @@ interface HeaderProps {
 }
 
 const Header = ({ t }: HeaderProps) => {
+    const { width } = useWindowDimensions();
     const [language, setLanguage] = React.useState(i18next.language || window.localStorage.i18nextLng);
     function handleChange(selection: any) {
         const language = selection.value;
@@ -97,7 +102,7 @@ const Header = ({ t }: HeaderProps) => {
         <StickyMenu>
             <Box>
                 <StyledAppBar position="sticky">
-                    <StyledToolbar>
+                    <StyledToolbar width={width}>
                         <MenuOptionBox>
                             <StyledButton>{t("common.homepage.menu.home")}</StyledButton>
                             <StyledButton>{t("common.homepage.menu.tools")}</StyledButton>
@@ -114,6 +119,7 @@ const Header = ({ t }: HeaderProps) => {
                             />
                         </LanguageSelectorBox>
                     </StyledToolbar>
+                    
                 </StyledAppBar>
             </Box>
         </StickyMenu>

@@ -28,7 +28,7 @@
                 "data_download": {
                     "title": "Data download",
                     "subtitle": "Download the data behind the MTM for your own analysis.",
-                    "button_text": "Data Download"
+                    "button_text": "Download data"
                 },
                 "db_last_updated": "Database last updated",
                 "read_story": "Read Story"
