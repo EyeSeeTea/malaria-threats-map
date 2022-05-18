@@ -45,8 +45,6 @@ export const setStoryModeAction = createAction(ActionTypeEnum.MalariaSetStoryMod
 
 export const setStoryModeStepAction = createAction(ActionTypeEnum.MalariaSetStoryModeStep)<number>();
 
-export const setInitialDialogOpen = createAction(ActionTypeEnum.MalariaSetInitialDialogOpen)<boolean>();
-
 export const setActionGroupSelected = createAction(ActionTypeEnum.MalariaActionGroupSelected)<ActionGroup | null>();
 
 export const setSelection = createAction(ActionTypeEnum.SetSelection)<SiteSelection | null>();

@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import {
     logEventAction,
     setBoundsAction,
-    setInitialDialogOpen,
     setRegionAction,
     setSelection,
     setThemeAction,
@@ -88,7 +87,6 @@ const mapDispatchToProps = {
     setTheme: setThemeAction,
     setTourOpen: setTourOpenAction,
     setTourStep: setTourStepAction,
-    setInitialDialogOpen: setInitialDialogOpen,
     setBounds: setBoundsAction,
     setRegion: setRegionAction,
     setSelection: setSelection,
@@ -153,7 +151,7 @@ class MalariaTour extends PureComponent<Props> {
     };
 
     render() {
-        const { theme, tour, setInitialDialogOpen } = this.props;
+        const { theme, tour } = this.props;
 
         // https://github.com/elrumordelaluz/reactour/issues/185
         setTimeout(() => {
@@ -170,7 +168,6 @@ class MalariaTour extends PureComponent<Props> {
             {
                 selector: "#title",
                 content: options => {
-                    setInitialDialogOpen(true);
                     return <Step1 {...options} {...baseProps} step={0} />;
                 },
                 // @ts-ignore
@@ -179,7 +176,6 @@ class MalariaTour extends PureComponent<Props> {
             {
                 selector: "#language",
                 content: options => {
-                    setInitialDialogOpen(true);
                     return <Step2 {...options} {...baseProps} step={1} />;
                 },
                 // @ts-ignore
@@ -188,14 +184,12 @@ class MalariaTour extends PureComponent<Props> {
             {
                 selector: "#dialog",
                 content: options => {
-                    setInitialDialogOpen(true);
                     return <Step3 {...options} {...baseProps} step={2} />;
                 },
             },
             {
                 selector: "#filters",
                 content: options => {
-                    setInitialDialogOpen(false);
                     this.setTheme("prevention");
                     return <Step4 {...options} {...baseProps} step={3} />;
                 },
@@ -205,7 +199,6 @@ class MalariaTour extends PureComponent<Props> {
             {
                 selector: "#sidebar",
                 content: ({ goTo }) => {
-                    setInitialDialogOpen(false);
                     setTimeout(() => goTo(5), 200);
                     return <div />;
                 },
@@ -213,7 +206,6 @@ class MalariaTour extends PureComponent<Props> {
             {
                 selector: "#sidebar",
                 content: options => {
-                    setInitialDialogOpen(false);
                     return <Step5 {...options} {...baseProps} step={5} back={2} />;
                 },
             },
@@ -311,7 +303,9 @@ class MalariaTour extends PureComponent<Props> {
         return (
             <StyledTour
                 steps={steps}
-                isOpen={this.props.tour.open}
+                // Uncomment when tour open is fixed
+                // isOpen={this.props.tour.open}
+                isOpen={false}
                 onRequestClose={this.onClose}
                 disableDotsNavigation={true}
                 disableKeyboardNavigation={true}
