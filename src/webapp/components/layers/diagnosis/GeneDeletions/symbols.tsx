@@ -1,3 +1,4 @@
+import baseSymbols from "../../common/baseSymbols";
 import { DIAGNOSIS_STATUS } from "./utils";
 
 export const DiagnosisStatusColors = {
@@ -6,6 +7,7 @@ export const DiagnosisStatusColors = {
 };
 
 const geneDeletionsSymbols = {
+    ...baseSymbols,
     "circle-radius": ['interpolate', ['linear'], ['zoom'], 1, 2, 4, 7],
     "circle-color": [
         "match",
@@ -14,11 +16,8 @@ const geneDeletionsSymbols = {
         DiagnosisStatusColors[DIAGNOSIS_STATUS.CONFIRMED][0],
         DiagnosisStatusColors[DIAGNOSIS_STATUS.NOT_IDENTIFIED][0],
     ],
-    "circle-opacity": 1,
     "circle-stroke-color": [
-        "case",
-        ["boolean", ["feature-state", "hover"], false],
-        "lightgrey",
+        ...baseSymbols["circle-stroke-color"],
         [
             "match",
             ["get", "DELETION_PERCENT"],
@@ -27,8 +26,6 @@ const geneDeletionsSymbols = {
             DiagnosisStatusColors[DIAGNOSIS_STATUS.NOT_IDENTIFIED][1],
         ],
     ],
-    "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
-    "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
 };
 
 export default geneDeletionsSymbols;

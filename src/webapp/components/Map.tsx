@@ -16,7 +16,6 @@ import WhoLogo from "./WhoLogo";
 
 import {
     selectAny,
-    selectIsInitialDialogOpen,
     selectRegion,
     selectSetBounds,
     selectSetZoom,
@@ -42,7 +41,6 @@ import Report from "./Report";
 import Feedback from "./Feedback";
 import InitialDisclaimer from "./InitialDisclaimer";
 import TheaterMode from "./TheaterMode";
-import InitialDialog from "./InitialDialog";
 import TourIcon from "./TourIcon";
 import ShareIcon from "./ShareIcon";
 import { getAnalyticsPageViewFromString } from "../store/analytics";
@@ -185,7 +183,6 @@ const mapStateToProps = (state: State) => ({
     diagnosisStudies: selectDiagnosisStudies(state),
     treatmentStudies: selectTreatmentStudies(state),
     invasiveStudies: selectInvasiveStudies(state),
-    initialDialogOpen: selectIsInitialDialogOpen(state),
     tour: selectTour(state),
 });
 
@@ -260,7 +257,7 @@ class Map extends React.Component<Props> {
         });
 
         const pageView = getAnalyticsPageViewFromString({ page: this.props.theme });
-        if (pageView && !this.props.initialDialogOpen) {
+        if (pageView) {
             sendAnalytics({ type: "pageView", ...pageView });
         }
 
@@ -277,8 +274,8 @@ class Map extends React.Component<Props> {
     }
 
     render() {
-        const { theme, initialDialogOpen } = this.props;
-        const showOptions = isMobile || !initialDialogOpen;
+        const { theme } = this.props;
+        const showOptions = true;
         const ready = this.map && this.state.ready;
         const classes = {
             icon: { marginRight: 5 },
@@ -368,7 +365,7 @@ class Map extends React.Component<Props> {
                     </PushoverContainer>
                 </Fade>
                 <Hidden smDown>
-                    <Fade in={showOptions}>
+                    <Fade in={false}>
                         <TopRightContainer>
                             <StoryModeSelector />
                             <InitialDisclaimer />
@@ -414,9 +411,6 @@ class Map extends React.Component<Props> {
                     </BottomLeftContainer>
                 </PushoverContainer>
                 <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
-                <Hidden smDown>
-                    <InitialDialog />
-                </Hidden>
                 <LanguageSelectorDialog
                     selectedValue={this.state.selectedValue}
                     open={this.state.open}

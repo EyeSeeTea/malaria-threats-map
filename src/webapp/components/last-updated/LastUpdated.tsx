@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { State } from "../../store/types";
-import { selectFiltersMode, selectLastUpdatedDates, selectTheme } from "../../store/reducers/base-reducer";
+import { selectLastUpdatedDates, selectTheme } from "../../store/reducers/base-reducer";
 import { selectFilteredPreventionStudies, selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { selectDiagnosisFilters, selectFilteredDiagnosisStudies } from "../../store/reducers/diagnosis-reducer";
 import { selectFilteredTreatmentStudies, selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
@@ -23,7 +23,6 @@ const mapStateToProps = (state: State) => ({
     filteredDiagnosisStudies: selectFilteredDiagnosisStudies(state),
     filteredTreatmentStudies: selectFilteredTreatmentStudies(state),
     filteredInvasiveStudies: selectFilteredInvasiveStudies(state),
-    filtersMode: selectFiltersMode(state),
     preventionFilters: selectPreventionFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),

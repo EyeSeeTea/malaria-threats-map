@@ -1,3 +1,4 @@
+import baseSymbols from "../../common/baseSymbols";
 import { INVASIVE_STATUS } from "./utils";
 
 export const InvasiveStatusColors: { [key: string]: string[] } = {
@@ -7,7 +8,8 @@ export const InvasiveStatusColors: { [key: string]: string[] } = {
 };
 
 const vectorOcurranceSymbols = {
-    "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
+    ...baseSymbols,
+    "circle-radius": ['interpolate', ['linear'], ['zoom'], 1, 2, 4, 7],
     "circle-color": [
         "match",
         ["get", "INVASIVE_STATUS"],
@@ -17,11 +19,8 @@ const vectorOcurranceSymbols = {
         InvasiveStatusColors[INVASIVE_STATUS.NATIVE][0],
         InvasiveStatusColors[INVASIVE_STATUS.UNKNOWN][0],
     ],
-    "circle-opacity": 1,
     "circle-stroke-color": [
-        "case",
-        ["boolean", ["feature-state", "hover"], false],
-        "lightgrey",
+        ...baseSymbols["circle-stroke-color"],
         [
             "match",
             ["get", "INVASIVE_STATUS"],
@@ -32,8 +31,6 @@ const vectorOcurranceSymbols = {
             InvasiveStatusColors[INVASIVE_STATUS.UNKNOWN][1],
         ],
     ],
-    "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
-    "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
 };
 
 export default vectorOcurranceSymbols;

@@ -9,11 +9,9 @@ export enum ActionTypeEnum {
     MalariaToogleEndemicityLayer = "malaria/TOGGLE_ENDEMICITY_LAYER",
     MalariaSetStoryMode = "malaria/SET_STORY_MODE",
     MalariaSetStoryModeStep = "malaria/SET_STORY_MODE_STEP",
-    MalariaSetInitialDialogOpen = "malaria/SET_INITIAL_DIALOG_OPEN",
     MalariaActionGroupSelected = "malaria/ACTION_GROUP_SELECTED",
-    SetFiltersOpen = "malaria/SET_FILTERS_OPEN",
-    SetFiltersMode = "malaria/SET_FILTERS_MODE",
     SetSelection = "malaria/SET_SELECTION",
+    SetHoverSelection = "malaria/SET_HOVER_SELECTION",
     SetMobileOptionsOpen = "malaria/SET_MOBILE_OPTIONS_OPEN",
     UpdateZoom = "malaria/UPDATE_ZOOM",
     SetZoom = "malaria/SET_ZOOM",
@@ -45,6 +43,7 @@ export enum ActionTypeEnum {
     SetSpecies = "prevention/SET_SPECIES",
     SetAssayTypes = "prevention/SET_ASSAY_TYPES",
     SetPreventionFilteredStudies = "prevention/SET_FILTER_STUDIES",
+    SetPreventionSelectionStudies = "prevention/SET_SELECTION_STUDIES",
 
     SetDiagnosisMapType = "prevention/SET_DIAGNOSIS_MAP_TYPE",
 
@@ -56,6 +55,7 @@ export enum ActionTypeEnum {
     SetPatientType = "diagnosis/SET_DIAGNOSIS_PATIENT_TYPE",
     SetDeletionType = "diagnosis/SET_DIAGNOSIS_DELETION_TYPE",
     SetDiagnosisFilteredStudies = "diagnosis/SET_FILTER_STUDIES",
+    SetDiagnosisSelectionStudies = "diagnosis/SET_SELECTION_STUDIES",
 
     FetchTreatmentStudiesRequest = "treatment/FETCH_TREATMENT_STUDIES_REQUEST",
     FetchTreatmentStudiesSuccess = "treatment/FETCH_TREATMENT_STUDIES_SUCCESS",
@@ -66,6 +66,7 @@ export enum ActionTypeEnum {
     SetDrug = "treatment/SET_TREATMENT_DRUG",
     SetMolecularMarker = "treatment/SET_MOLECULAR_MARKER",
     SetTreatmentFilteredStudies = "treatment/SET_FILTER_STUDIES",
+    SetTreatmentSelectionStudies = "treatment/SET_SELECTION_STUDIES",
     SetExcludeLowerPatients = "treatment/SET_EXCLUDE_LOWER_PATIENTS",
     SetExcludeLowerSamples = "treatment/SET_EXCLUDE_LOWER_SAMPLES",
 
@@ -76,6 +77,7 @@ export enum ActionTypeEnum {
     SetInvasiveMapType = "invasive/SET_INVASIVE_MAP_TYPE",
     SetInvasiveVectorSpecies = "invasive/SET_INVASIVE_VECTOR_SPECIES",
     SetInvasiveFilteredStudies = "invasive/SET_FILTER_STUDIES",
+    SetInvasiveSelectionStudies = "invasive/SET_SELECTION_STUDIES",
 
     FetchTranslationsRequest = "translations/FETCH_TRANSLATIONS_REQUEST",
     FetchTranslationsSuccess = "translations/FETCH_TRANSLATIONS_SUCCESS",

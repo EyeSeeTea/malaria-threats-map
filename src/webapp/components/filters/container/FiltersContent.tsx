@@ -16,7 +16,6 @@ import VectorOccuranceFilters from "../../layers/invasive/VectorOccurance/Vector
 import { selectInvasiveFilters } from "../../../store/reducers/invasive-reducer";
 import DelayedParasiteClearanceFilters from "../../layers/treatment/DelayedParasiteClearance/DelayedParasiteClearanceFilters";
 import MolecularMarkerFilters from "../../layers/treatment/MolecularMarkers/MolecularMarkerFilters";
-import { setFiltersOpen } from "../../../store/actions/base-actions";
 
 const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
@@ -29,7 +28,6 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setPreventionMapType: setPreventionMapType,
-    setFiltersOpen: setFiltersOpen,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

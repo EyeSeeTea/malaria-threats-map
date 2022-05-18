@@ -1,3 +1,4 @@
+import baseSymbols from "../../common/baseSymbols";
 import { MOLECULAR_MARKER_STATUS } from "./utils";
 
 export const MolecularMarkerColors: { [key: string]: string[] } = {
@@ -9,7 +10,8 @@ export const MolecularMarkerColors: { [key: string]: string[] } = {
 };
 
 const molecularMarkerSymbols = {
-    "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
+    ...baseSymbols,
+    "circle-radius": ['interpolate', ['linear'], ['zoom'], 1, 2, 4, 7],
     "circle-color": [
         "match",
         ["get", "MOLECULAR_MARKER_STATUS"],
@@ -23,11 +25,8 @@ const molecularMarkerSymbols = {
         MolecularMarkerColors[MOLECULAR_MARKER_STATUS.LOW][0],
         MolecularMarkerColors[MOLECULAR_MARKER_STATUS.UNKNOWN][0],
     ],
-    "circle-opacity": 1,
     "circle-stroke-color": [
-        "case",
-        ["boolean", ["feature-state", "hover"], false],
-        "lightgrey",
+        ...baseSymbols["circle-stroke-color"],
         [
             "match",
             ["get", "MOLECULAR_MARKER_STATUS"],
@@ -42,8 +41,6 @@ const molecularMarkerSymbols = {
             MolecularMarkerColors[MOLECULAR_MARKER_STATUS.UNKNOWN][1],
         ],
     ],
-    "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
-    "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
 };
 
 export default molecularMarkerSymbols;
