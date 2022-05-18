@@ -1,5 +1,6 @@
 import { RESISTANCE_MECHANISM } from "./utils";
 import { INTENSITY_STATUS } from "../IntensityStatus/utils";
+import baseSymbols from "../../common/baseSymbols";
 
 export const ResistanceMechanismColors: { [key: string]: string[] } = {
     [RESISTANCE_MECHANISM.CONFIRMED]: ["#d43501", "#882201"],
@@ -8,7 +9,7 @@ export const ResistanceMechanismColors: { [key: string]: string[] } = {
 };
 
 const resistanceMechanismSymbols = {
-    "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
+    ...baseSymbols,
     "circle-color": [
         "match",
         ["get", "MECHANISM_STATUS"],
@@ -16,11 +17,8 @@ const resistanceMechanismSymbols = {
         ResistanceMechanismColors[RESISTANCE_MECHANISM.CONFIRMED][0],
         ResistanceMechanismColors[RESISTANCE_MECHANISM.NOT_CONFIRMED][0],
     ],
-    "circle-opacity": 1,
     "circle-stroke-color": [
-        "case",
-        ["boolean", ["feature-state", "hover"], false],
-        "lightgrey",
+        ...baseSymbols["circle-stroke-color"],
         [
             "match",
             ["get", "MECHANISM_STATUS"],
@@ -29,8 +27,6 @@ const resistanceMechanismSymbols = {
             ResistanceMechanismColors[RESISTANCE_MECHANISM.NOT_CONFIRMED][1],
         ],
     ],
-    "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
-    "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
 };
 
 export default resistanceMechanismSymbols;

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { studiesToGeoJson } from "../layer-utils";
 import setupEffects from "../effects";
 import { selectTreatmentFilters, selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
-import { selectFilters, selectRegion, selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
+import { selectFilters, selectHoverSelection, selectRegion, selectTheme } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
 import {
@@ -19,13 +19,17 @@ import {
 } from "../studies-filters";
 import { State, TreatmentMapType } from "../../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
-import { fetchTreatmentStudiesRequest, setFilteredStudiesAction } from "../../../store/actions/treatment-actions";
-import { setSelection } from "../../../store/actions/base-actions";
-import ChartModal from "../../ChartModal";
-import TreatmentSelectionChart from "./TreatmentSelectionChart";
+import {
+    fetchTreatmentStudiesRequest,
+    setFilteredStudiesAction,
+    setTreatmentSelectionStudies,
+} from "../../../store/actions/treatment-actions";
+import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../hidden/Hidden";
+import SiteTitle from "../../site-title/SiteTitle";
+import { getSiteSelectionOnClick, getSiteSelectionOnMove } from "../common/utils";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -49,12 +53,14 @@ const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
     region: selectRegion(state),
-    selection: selectSelection(state),
+    hoverSelection: selectHoverSelection(state),
 });
 const mapDispatchToProps = {
     fetchTreatmentStudies: fetchTreatmentStudiesRequest,
     setFilteredStudies: setFilteredStudiesAction,
     setSelection: setSelection,
+    setHoverSelection: setHoverSelection,
+    setTreatmentSelectionStudies: setTreatmentSelectionStudies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -203,37 +209,45 @@ class TreatmentLayer extends Component<Props> {
             this.props.map.addLayer(layer(resolveMapTypeSymbols(treatmentFilters)));
 
             setupEffects(this.props.map, TREATMENT_SOURCE_ID, TREATMENT_LAYER_ID);
-            this.setupPopover();
+
             this.renderLayer();
         }
     }
 
     onClickListener = (e: any) => {
-        const coordinates = e.features[0].geometry.coordinates.slice();
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-        const selection = {
-            ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
-            SITE_ID: e.features[0].properties.SITE_ID,
-            coordinates: coordinates,
-        };
+        const selection = getSiteSelectionOnClick(e, this.props.map, TREATMENT_LAYER_ID);
+
         setTimeout(() => {
             this.props.setSelection(selection);
+
+            const selectionStudies = selection
+                ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === selection.SITE_ID)
+                : [];
+
+            this.props.setTreatmentSelectionStudies(selectionStudies);
         }, 100);
     };
 
-    setupPopover = () => {
-        this.props.map.off("click", TREATMENT_LAYER_ID, this.onClickListener);
-        this.props.map.on("click", TREATMENT_LAYER_ID, this.onClickListener);
+    onMouseMoveListener = (e: any) => {
+        this.props.map.getCanvas().style.cursor = "pointer";
+
+        const selection = getSiteSelectionOnMove(e, this.props.map, TREATMENT_LAYER_ID);
+
+        setTimeout(() => {
+            this.props.setHoverSelection(selection);
+        }, 100);
     };
 
     renderLayer = () => {
         if (this.props.map.getLayer(TREATMENT_LAYER_ID)) {
             if (this.props.theme === TREATMENT) {
                 this.props.map.setLayoutProperty(TREATMENT_LAYER_ID, "visibility", "visible");
+                this.props.map.on("mousemove", this.onMouseMoveListener);
+                this.props.map.on("click", this.onClickListener);
             } else {
                 this.props.map.setLayoutProperty(TREATMENT_LAYER_ID, "visibility", "none");
+                this.props.map.off("mousemove", this.onMouseMoveListener);
+                this.props.map.off("click", this.onClickListener);
             }
         }
     };
@@ -254,11 +268,11 @@ class TreatmentLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, selection } = this.props;
-        if (selection === null) {
+        const { studies, hoverSelection } = this.props;
+        if (hoverSelection === null) {
             return <div />;
         }
-        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === selection.SITE_ID);
+        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === hoverSelection.SITE_ID);
 
         if (filteredStudies.length === 0) {
             return <div />;
@@ -268,13 +282,8 @@ class TreatmentLayer extends Component<Props> {
                 <>
                     <Hidden smDown>
                         <SitePopover map={this.props.map}>
-                            <TreatmentSelectionChart studies={filteredStudies} />
+                            <SiteTitle study={filteredStudies[0]} />
                         </SitePopover>
-                    </Hidden>
-                    <Hidden smUp>
-                        <ChartModal selection={selection}>
-                            <TreatmentSelectionChart studies={filteredStudies} />
-                        </ChartModal>
                     </Hidden>
                 </>
             )
