@@ -12,8 +12,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
     setBoundsAction,
     setFiltersAction,
-    setFiltersMode,
-    setFiltersOpen,
     setRegionAction,
     setStoryModeAction,
     setStoryModeStepAction,
@@ -175,14 +173,6 @@ ReduxQuerySync({
         storyModeStep: {
             selector: (state: State) => state.malaria.storyModeStep,
             action: (value: string) => setStoryModeStepAction(parseInt(value)),
-        },
-        filterOpen: {
-            selector: (state: State) => state.malaria.filtersOpen,
-            action: (value: string) => setFiltersOpen(!value ? true : value === "true"),
-        },
-        filtersMode: {
-            selector: (state: State) => state.malaria.filtersMode,
-            action: (value: string) => setFiltersMode(value),
         },
         years: {
             selector: (state: State) => state.malaria.filters,

@@ -1,3 +1,5 @@
+import baseSymbols from "../../common/baseSymbols";
+
 export const ConfirmationStatusColors: { [key: string]: string[] } = {
     Confirmed: ["#D43501", "#882201"],
     Possible: ["#FF9502", "#b56900"],
@@ -5,7 +7,7 @@ export const ConfirmationStatusColors: { [key: string]: string[] } = {
 };
 
 const resistanceStatusSymbols = {
-    "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
+    ...baseSymbols,
     "circle-color": [
         "match",
         ["get", "CONFIRMATION_STATUS"],
@@ -17,11 +19,8 @@ const resistanceStatusSymbols = {
         ConfirmationStatusColors.Susceptible[0],
         /* other */ "#ccc",
     ],
-    "circle-opacity": 1,
     "circle-stroke-color": [
-        "case",
-        ["boolean", ["feature-state", "hover"], false],
-        "lightgrey",
+        ...baseSymbols["circle-stroke-color"],
         [
             "match",
             ["get", "CONFIRMATION_STATUS"],
@@ -34,8 +33,6 @@ const resistanceStatusSymbols = {
             /* other */ "#111",
         ],
     ],
-    "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
-    "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
 };
 
 export default resistanceStatusSymbols;

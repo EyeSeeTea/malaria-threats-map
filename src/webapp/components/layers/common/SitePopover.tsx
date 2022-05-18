@@ -7,10 +7,9 @@ import { store, theme } from "../../../App";
 import { connect, Provider } from "react-redux";
 import { State } from "../../../store/types";
 import mapboxgl from "mapbox-gl";
-import { selectSelection } from "../../../store/reducers/base-reducer";
 import { dispatchCustomEvent } from "../../../utils/dom-utils";
-import { setSelection } from "../../../store/actions/base-actions";
 import { StyledEngineProvider, Theme } from "@mui/material";
+import { selectHoverSelection } from "../../../store/reducers/base-reducer";
 
 declare module "@mui/styles/defaultTheme" {
     // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -18,24 +17,20 @@ declare module "@mui/styles/defaultTheme" {
 }
 
 const mapStateToProps = (state: State) => ({
-    selection: selectSelection(state),
+    hoverSelection: selectHoverSelection(state),
 });
 
-const mapDispatchToProps = {
-    setSelection: setSelection,
-};
-type DispatchProps = typeof mapDispatchToProps;
 type StateProps = ReturnType<typeof mapStateToProps>;
 
 type OwnProps = {
     map: any;
 };
-type Props = StateProps & DispatchProps & OwnProps & { children: React.ReactNode };
+type Props = StateProps & OwnProps & { children: React.ReactNode };
 
-const SitePopover: React.FC<Props> = ({ map, selection, setSelection, children }) => {
+const SitePopover: React.FC<Props> = ({ map, hoverSelection, children }) => {
     useEffect(() => {
         const placeholder = document.createElement("div");
-        if (!selection) {
+        if (!hoverSelection) {
             return;
         }
 
@@ -50,13 +45,7 @@ const SitePopover: React.FC<Props> = ({ map, selection, setSelection, children }
             placeholder
         );
 
-        const popup = new mapboxgl.Popup()
-            .setLngLat(selection.coordinates)
-            .setDOMContent(placeholder)
-            .addTo(map)
-            .on("close", () => {
-                setSelection(null);
-            });
+        const popup = new mapboxgl.Popup().setLngLat(hoverSelection.coordinates).setDOMContent(placeholder).addTo(map);
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
 
@@ -69,4 +58,4 @@ const SitePopover: React.FC<Props> = ({ map, selection, setSelection, children }
     return <div />;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SitePopover);
+export default connect(mapStateToProps)(SitePopover);
