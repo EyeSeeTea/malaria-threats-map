@@ -134,7 +134,7 @@ const TopContainer = styled.div`
 `;
 
 const ChartContainer = styled(Paper)`
-    padding: 8px;
+    padding: 12px 20px;
     display: flex;
     flex-direction: column;
     font-size: 12px;
@@ -253,6 +253,11 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
             <ChartContainer>
+                <Typography color="primary" variant="body2" fontWeight="bold">
+                    {t(studyObject.SPECIES)}
+                </Typography>
+                <Typography variant="caption">{t(studyObject.TYPE)}</Typography>
+
                 <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
                 <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
                 <Curation study={studyObject} />
