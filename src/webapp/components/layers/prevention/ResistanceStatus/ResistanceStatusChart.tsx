@@ -30,12 +30,15 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
         },
     },
     title: {
-        text: translations.mosquito_mortality,
+        text: `<b>${translations.mosquito_mortality}</b>`,
+        style: {
+            fontSize: "11px",
+        },
     },
+
     xAxis: {
         type: "category",
         labels: {
-            rotation: -45,
             style: {
                 whiteSpace: "nowrap",
             },
@@ -45,13 +48,13 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
         min: 0,
         max: 100,
         title: {
-            text: translations.mortality,
+            text: "",
         },
         plotLines: [
             {
                 value: 90,
                 color: "#d43501",
-                dashStyle: "LongDashDot",
+                dashStyle: "Dash",
                 width: 2,
                 zIndex: 5,
                 label: {
@@ -189,7 +192,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     const studyObject = groupedStudies[study][0];
     const translations = {
         mortality: t("common.prevention.chart.resistance_status.mortality"),
-        mosquito_mortality: `${t("common.prevention.chart.resistance_status.mosquito_mortality")} (${t(
+        mosquito_mortality: `${t("common.prevention.chart.resistance_status.mosquito_mortality")} <br>(${t(
             "common.prevention.chart.resistance_status.number_of_tests"
         )})`,
         tested: t("common.prevention.chart.resistance_status.tested"),

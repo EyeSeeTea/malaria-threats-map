@@ -40,7 +40,7 @@
                 "resistance_status": {
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via discriminating concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# of tests",
+                    "number_of_tests": "No. of mosquitoes tested",
                     "Confirmed": "Confirmed",
                     "Possible": "Possible",
                     "Susceptible": "Susceptible",
