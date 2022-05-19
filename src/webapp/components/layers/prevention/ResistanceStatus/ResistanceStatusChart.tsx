@@ -35,7 +35,12 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
             fontSize: "11px",
         },
     },
-
+    subtitle: {
+        text: `<b>${translations.insecticideTypeLabel}</b>:${translations.insecticideType}`,
+        style: {
+            fontSize: "11px",
+        },
+    },
     xAxis: {
         type: "category",
         labels: {
@@ -192,11 +197,13 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     const studyObject = groupedStudies[study][0];
     const translations = {
         mortality: t("common.prevention.chart.resistance_status.mortality"),
-        mosquito_mortality: `${t("common.prevention.chart.resistance_status.mosquito_mortality")} <br>(${t(
+        mosquito_mortality: `${t("common.prevention.chart.resistance_status.mosquito_mortality")}(${t(
             "common.prevention.chart.resistance_status.number_of_tests"
         )})`,
         tested: t("common.prevention.chart.resistance_status.tested"),
         type: t("common.prevention.chart.resistance_status.type"),
+        insecticideTypeLabel: "Insecticide",
+        insecticideType: t(studyObject.INSECTICIDE_TYPE),
     };
 
     const subtitle = isNotNull(studyObject.CITATION_URL)
