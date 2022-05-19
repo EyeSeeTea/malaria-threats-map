@@ -12,7 +12,6 @@ import { ConfirmationStatusColors } from "./symbols";
 import * as R from "ramda";
 import { isNull, isNotNull } from "../../../../utils/number-utils";
 import Citation from "../../../charts/Citation";
-import Pagination from "../../../charts/Pagination";
 import Curation from "../../../Curation";
 import IntegrationReactSelect from "../../../BasicSelect";
 import FormLabel from "@mui/material/FormLabel";
@@ -167,7 +166,6 @@ type Props = StateProps & OwnProps;
 
 const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     const { t } = useTranslation();
-    const [study, setStudy] = useState(0);
     const speciesOptions = R.uniq(R.map(s => s.SPECIES, baseStudies));
     const suggestions: any[] = speciesOptions.map((specie: string) => ({
         label: specie,
@@ -175,20 +173,22 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     }));
     const [species, setSpecies] = useState<any[]>(suggestions);
 
+    const studyObject = React.useMemo(() => baseStudies[0], [baseStudies]);
+
     const onSpeciesChange = (value: any) => {
         sendAnalytics({ type: "event", category: "popup", action: "filter" });
         setSpecies(value);
     };
-    const groupedStudies = R.values(
-        R.groupBy(
-            R.prop("CITATION_URL"),
-            baseStudies.filter(
-                study => !species || !species.length || species.map(s => s.value).includes(study.SPECIES)
-            )
-        )
-    );
+    // const groupedStudies = R.values(
+    //     R.groupBy(
+    //         R.prop("CITATION_URL"),
+    //         baseStudies.filter(
+    //             study => !species || !species.length || species.map(s => s.value).includes(study.SPECIES)
+    //         )
+    //     )
+    // );
 
-    const studies = groupedStudies[study];
+    const studies = baseStudies;
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
         return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
@@ -211,7 +211,6 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         citationUrl: study.CITATION_URL,
     }));
 
-    const studyObject = groupedStudies[study][0];
     const translations = {
         mortality: t("common.prevention.chart.resistance_status.mortality"),
         mosquito_mortality: `${t("common.prevention.chart.resistance_status.mosquito_mortality")}(${t(
@@ -230,7 +229,6 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     const content = () => (
         <>
             <TopContainer>
-                {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
                 <Typography variant="subtitle1">
                     <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
                         `${studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2}`
@@ -259,7 +257,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
                 <Typography variant="caption">{t(studyObject.TYPE)}</Typography>
 
                 <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-                <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
+                <Citation study={studyObject} />
                 <Curation study={studyObject} />
             </ChartContainer>
         </>
