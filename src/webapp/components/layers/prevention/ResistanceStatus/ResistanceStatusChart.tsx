@@ -93,19 +93,7 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
         },
     },
     tooltip: {
-        formatter: function () {
-            const point = this.point as any;
-
-            const bottomText = isNull(point.citationUrl)
-                ? `<br>${translations.type}: ${point.type}<br> ${point.citation}`
-                : "";
-
-            return `
-                <b><i>${point.species}</i></b><br>
-                ${translations.mortality} (%): ${point.y}<br>
-                ${translations.tested}: ${point.number}
-                ${bottomText}`;
-        },
+        enabled: false,
     },
     series: [
         {
@@ -204,11 +192,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     const data = simplifiedStudies.map(study => ({
         name: `${study.YEAR_START}, ${t(study.INSECTICIDE_TYPE)} ${t(study.INSECTICIDE_CONC)}`,
         y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
-        species: t(study.SPECIES),
         number: study.NUMBER,
-        type: t(study.TYPE),
-        citation: study.CITATION_LONG || study.INSTITUTE,
-        citationUrl: study.CITATION_URL,
     }));
 
     const translations = {
