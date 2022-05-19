@@ -23,7 +23,7 @@ import Hidden from "../../../hidden/Hidden";
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
         maxPointWidth: 20,
-        type: "column",
+        type: "bar",
         height: 300,
         style: {
             fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
@@ -61,7 +61,7 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
         ],
     },
     plotOptions: {
-        column: {
+        bar: {
             dataLabels: {
                 formatter: function () {
                     // @ts-ignore
@@ -103,7 +103,7 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
     series: [
         {
             maxPointWidth: 20,
-            type: "column",
+            type: "bar",
             name: translations.mortality,
             data: data,
         },
@@ -185,6 +185,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         citation: study.CITATION_LONG || study.INSTITUTE,
         citationUrl: study.CITATION_URL,
     }));
+
     const studyObject = groupedStudies[study][0];
     const translations = {
         mortality: t("common.prevention.chart.resistance_status.mortality"),
