@@ -18,6 +18,7 @@ import { sendAnalytics } from "../../../../utils/analytics";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import Hidden from "../../../hidden/Hidden";
 import i18next from "i18next";
+import SiteTitle from "../../../site-title/SiteTitle";
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
@@ -224,11 +225,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     const content = () => (
         <>
             <TopContainer>
-                <Typography variant="subtitle1">
-                    <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-                        `${studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2}`
-                    )}`}</Box>
-                </Typography>
+                <SiteTitle study={studyObject} />
                 <Typography variant="subtitle2">{t(studyObject.ASSAY_TYPE)}</Typography>
                 {suggestions.length > 1 && (
                     <Flex>
