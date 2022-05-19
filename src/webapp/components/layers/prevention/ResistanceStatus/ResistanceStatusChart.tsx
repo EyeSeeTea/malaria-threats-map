@@ -3,7 +3,7 @@ import { useState } from "react";
 import Highcharts, { DataLabelsFormatterCallbackFunction } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Paper, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
@@ -124,8 +124,23 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
     },
 });
 
-const ChatContainer = styled.div<{ width?: string }>`
+const Container = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};
+`;
+
+const TopContainer = styled.div`
+    margin: 0px 8px;
+    padding: 0px 12px;
+`;
+
+const ChartContainer = styled(Paper)`
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    border-radius: 12px;
+    box-shadow: none;
+    margin: 0px 8px;
 `;
 
 const StyledSelect = styled(IntegrationReactSelect)`
@@ -159,6 +174,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         value: specie,
     }));
     const [species, setSpecies] = useState<any[]>(suggestions);
+
     const onSpeciesChange = (value: any) => {
         sendAnalytics({ type: "event", category: "popup", action: "filter" });
         setSpecies(value);
@@ -171,6 +187,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
             )
         )
     );
+
     const studies = groupedStudies[study];
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
@@ -212,37 +229,43 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
 
     const content = () => (
         <>
-            {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
-            <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-                    `${studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2}`
-                )}`}</Box>
-            </Typography>
-            <Typography variant="subtitle2">{subtitle}</Typography>
-            {suggestions.length > 1 && (
-                <Flex>
-                    <FormLabel component="legend">Species</FormLabel>
-                    <StyledSelect
-                        isClearable
-                        isMulti
-                        suggestions={suggestions}
-                        onChange={onSpeciesChange}
-                        value={species}
-                    />
-                </Flex>
-            )}
-            <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-            <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
-            <Curation study={studyObject} />
+            <TopContainer>
+                {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
+                <Typography variant="subtitle1">
+                    <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
+                        `${studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2}`
+                    )}`}</Box>
+                </Typography>
+                <Typography variant="subtitle2">{subtitle}</Typography>
+                {suggestions.length > 1 && (
+                    <Flex>
+                        <FormLabel component="legend">Species</FormLabel>
+                        <StyledSelect
+                            isClearable
+                            isMulti
+                            suggestions={suggestions}
+                            onChange={onSpeciesChange}
+                            value={species}
+                        />
+                    </Flex>
+                )}
+            </TopContainer>
+
+            <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
+            <ChartContainer>
+                <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
+                <Citation study={studyObject} allStudiesGroup={groupedStudies[study]} />
+                <Curation study={studyObject} />
+            </ChartContainer>
         </>
     );
     return (
         <>
             <Hidden smUp>
-                <ChatContainer width={"100%"}>{content()}</ChatContainer>
+                <Container width={"100%"}>{content()}</Container>
             </Hidden>
             <Hidden smDown>
-                <ChatContainer width={"500px"}>{content()}</ChatContainer>
+                <Container width={"480  px"}>{content()}</Container>
             </Hidden>
         </>
     );
