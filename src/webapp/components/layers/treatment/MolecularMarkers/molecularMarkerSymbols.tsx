@@ -11,6 +11,7 @@ export const MolecularMarkerColors: { [key: string]: string[] } = {
 
 const molecularMarkerSymbols = {
     ...baseSymbols,
+    "circle-radius": ['interpolate', ['linear'], ['zoom'], 1, 2, 4, 7],
     "circle-color": [
         "match",
         ["get", "MOLECULAR_MARKER_STATUS"],

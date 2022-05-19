@@ -12,6 +12,7 @@ export const IntensityStatusColors: { [key: string]: string[] } = {
 
 const intensityStatusSymbols = {
     ...baseSymbols,
+    "circle-radius": ['interpolate', ['linear'], ['zoom'], 1, 2, 4, 7],
     "circle-color": [
         "match",
         ["get", "RESISTANCE_INTENSITY"],

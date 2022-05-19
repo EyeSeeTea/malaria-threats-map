@@ -8,6 +8,7 @@ export const ConfirmationStatusColors: { [key: string]: string[] } = {
 
 const resistanceStatusSymbols = {
     ...baseSymbols,
+    "circle-radius": ['interpolate', ['linear'], ['zoom'], 1, 2, 4, 7],
     "circle-color": [
         "match",
         ["get", "CONFIRMATION_STATUS"],

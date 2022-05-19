@@ -11,6 +11,7 @@ export const LevelOfInvolvementColors = {
 
 const involvementSymbols = {
     ...baseSymbols,
+    "circle-radius": ['interpolate', ['linear'], ['zoom'], 1, 2, 4, 7],
     "circle-color": [
         "match",
         ["get", PROPERTY],

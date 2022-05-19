@@ -10,6 +10,7 @@ export const ResistanceMechanismColors: { [key: string]: string[] } = {
 
 const resistanceMechanismSymbols = {
     ...baseSymbols,
+    "circle-radius": ['interpolate', ['linear'], ['zoom'], 1, 2, 4, 7],
     "circle-color": [
         "match",
         ["get", "MECHANISM_STATUS"],

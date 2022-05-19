@@ -11,6 +11,7 @@ export const DelayedParasiteClearanceColors: { [key: string]: string[] } = {
 
 const delayedParasiteClearanceSymbols = {
     ...baseSymbols,
+    "circle-radius": ['interpolate', ['linear'], ['zoom'], 1, 2, 4, 7],
     "circle-color": [
         "match",
         ["get", "DELAYED_PARASITE_CLEARANCE_STATUS"],
