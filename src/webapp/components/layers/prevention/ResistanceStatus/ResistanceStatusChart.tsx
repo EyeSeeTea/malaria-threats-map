@@ -10,7 +10,6 @@ import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import { ConfirmationStatusColors } from "./symbols";
 import * as R from "ramda";
-import { isNull, isNotNull } from "../../../../utils/number-utils";
 import Citation from "../../../charts/Citation";
 import Curation from "../../../Curation";
 import IntegrationReactSelect from "../../../BasicSelect";
@@ -18,6 +17,7 @@ import FormLabel from "@mui/material/FormLabel";
 import { sendAnalytics } from "../../../../utils/analytics";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import Hidden from "../../../hidden/Hidden";
+import i18next from "i18next";
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
@@ -152,31 +152,24 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
-    const { t } = useTranslation();
-    const speciesOptions = R.uniq(R.map(s => s.SPECIES, baseStudies));
-    const suggestions: any[] = speciesOptions.map((specie: string) => ({
-        label: specie,
-        value: specie,
-    }));
-    const [species, setSpecies] = useState<any[]>(suggestions);
+type ChartData = {
+    name: string;
+    y: number;
+    number: string;
+};
 
-    const studyObject = React.useMemo(() => baseStudies[0], [baseStudies]);
+const getTranslations = (study: PreventionStudy) => ({
+    mortality: i18next.t("common.prevention.chart.resistance_status.mortality"),
+    mosquito_mortality: `${i18next.t("common.prevention.chart.resistance_status.mosquito_mortality")}(${i18next.t(
+        "common.prevention.chart.resistance_status.number_of_tests"
+    )})`,
+    tested: i18next.t("common.prevention.chart.resistance_status.tested"),
+    type: i18next.t("common.prevention.chart.resistance_status.type"),
+    insecticideTypeLabel: "Insecticide",
+    insecticideType: i18next.t(study.INSECTICIDE_TYPE),
+});
 
-    const onSpeciesChange = (value: any) => {
-        sendAnalytics({ type: "event", category: "popup", action: "filter" });
-        setSpecies(value);
-    };
-    // const groupedStudies = R.values(
-    //     R.groupBy(
-    //         R.prop("CITATION_URL"),
-    //         baseStudies.filter(
-    //             study => !species || !species.length || species.map(s => s.value).includes(study.SPECIES)
-    //         )
-    //     )
-    // );
-
-    const studies = baseStudies;
+function createData(studies: PreventionStudy[]): ChartData[] {
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
         return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
@@ -190,25 +183,43 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         )
     );
     const data = simplifiedStudies.map(study => ({
-        name: `${study.YEAR_START}, ${t(study.INSECTICIDE_TYPE)} ${t(study.INSECTICIDE_CONC)}`,
+        name: `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_TYPE)} ${i18next.t(study.INSECTICIDE_CONC)}`,
         y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
         number: study.NUMBER,
     }));
 
-    const translations = {
-        mortality: t("common.prevention.chart.resistance_status.mortality"),
-        mosquito_mortality: `${t("common.prevention.chart.resistance_status.mosquito_mortality")}(${t(
-            "common.prevention.chart.resistance_status.number_of_tests"
-        )})`,
-        tested: t("common.prevention.chart.resistance_status.tested"),
-        type: t("common.prevention.chart.resistance_status.type"),
-        insecticideTypeLabel: "Insecticide",
-        insecticideType: t(studyObject.INSECTICIDE_TYPE),
+    return data;
+}
+
+const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
+    const { t } = useTranslation();
+    const speciesOptions = R.uniq(R.map(s => s.SPECIES, baseStudies));
+    const suggestions: any[] = speciesOptions.map((specie: string) => ({
+        label: specie,
+        value: specie,
+    }));
+    const [species, setSpecies] = useState<any[]>(suggestions);
+    const [data, setData] = useState<ChartData[]>([]);
+
+    const studyObject = React.useMemo(() => baseStudies[0], [baseStudies]);
+
+    const onSpeciesChange = (value: any) => {
+        sendAnalytics({ type: "event", category: "popup", action: "filter" });
+        setSpecies(value);
     };
 
-    const subtitle = isNotNull(studyObject.CITATION_URL)
-        ? `${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`
-        : t(studyObject.ASSAY_TYPE);
+    React.useEffect(() => {
+        setData(createData(baseStudies));
+    }, [baseStudies]);
+
+    // const groupedStudies = R.values(
+    //     R.groupBy(
+    //         R.prop("CITATION_URL"),
+    //         baseStudies.filter(
+    //             study => !species || !species.length || species.map(s => s.value).includes(study.SPECIES)
+    //         )
+    //     )
+    // );
 
     const content = () => (
         <>
@@ -218,7 +229,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
                         `${studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2}`
                     )}`}</Box>
                 </Typography>
-                <Typography variant="subtitle2">{subtitle}</Typography>
+                <Typography variant="subtitle2">{t(studyObject.ASSAY_TYPE)}</Typography>
                 {suggestions.length > 1 && (
                     <Flex>
                         <FormLabel component="legend">Species</FormLabel>
@@ -240,7 +251,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
                 </Typography>
                 <Typography variant="caption">{t(studyObject.TYPE)}</Typography>
 
-                <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
+                <HighchartsReact highcharts={Highcharts} options={options(data, getTranslations(studyObject))} />
                 <Citation study={studyObject} />
                 <Curation study={studyObject} />
             </ChartContainer>
@@ -252,7 +263,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
                 <Container width={"100%"}>{content()}</Container>
             </Hidden>
             <Hidden smDown>
-                <Container width={"480  px"}>{content()}</Container>
+                <Container width={"500px"}>{content()}</Container>
             </Hidden>
         </>
     );
