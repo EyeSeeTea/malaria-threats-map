@@ -8,7 +8,6 @@ import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy"
 import { isNotNull } from "../../../../utils/number-utils";
 
 const Margin = styled.div`
-    margin-top: 10px;
     margin-bottom: 10px;
 `;
 
