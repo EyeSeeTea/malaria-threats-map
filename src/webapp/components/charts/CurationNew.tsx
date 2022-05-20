@@ -39,7 +39,7 @@ const CurationNew = ({ studies }: Props) => {
             {curations.length > 0 &&
                 curations.map(curation => {
                     return (
-                        <Typography key={curation} variant="caption">
+                        <Typography key={curation} variant="caption" display="block">
                             {curation}
                         </Typography>
                     );

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { selectTheme } from "../../store/reducers/base-reducer";
-import { selectPreventionSelectionStudies } from "../../store/reducers/prevention-reducer";
+import { selectPreventionSelectionStudies, selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import { selectDiagnosisSelectionStudies } from "../../store/reducers/diagnosis-reducer";
 import { selectTreatmentSelectionStudies } from "../../store/reducers/treatment-reducer";
 import { selectInvasiveSelectionStudies } from "../../store/reducers/invasive-reducer";
@@ -27,6 +27,7 @@ export const IconContainer = styled.div`
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
+    preventionAllStudies: selectPreventionStudies,
     preventionSelectionStudies: selectPreventionSelectionStudies(state),
     diagnosisSelectionStudies: selectDiagnosisSelectionStudies(state),
     treatmentSelectionStudies: selectTreatmentSelectionStudies(state),
@@ -71,7 +72,7 @@ const SiteSelectionContent: React.FC<Props> = ({
                 </IconButton>
             </IconContainer>
 
-            {theme === "prevention" && <PreventionSelectionChart studies={preventionSelectionStudies} />}
+            {theme === "prevention" && <PreventionSelectionChart siteFilteredStudies={preventionSelectionStudies} />}
             {theme === "diagnosis" && <DiagnosisSelectionChart studies={diagnosisSelectionStudies} />}
             {theme === "treatment" && <TreatmentSelectionChart studies={treatmentSelectionStudies} />}
             {theme === "invasive" && <InvasiveSelectionChart studies={invasiveSelectionStudies} />}

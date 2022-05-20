@@ -39,6 +39,8 @@
             "chart": {
                 "insecticide": "Insecticide",
                 "not_reported": "NR: not reported",
+                "other_insecticide_class_label": "Other insecticides to which resistance was detected in this site:",
+                "other_insecticide_class_none": "None",
                 "resistance_status": {
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via discriminating concentration bioassay(s) with selected {{insecticideClass}} {{years}}",

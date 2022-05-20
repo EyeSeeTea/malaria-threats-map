@@ -19,6 +19,7 @@ import { chartOptions, createData, getTranslations } from "./utils";
 import _ from "lodash";
 import CitationNew from "../../../charts/CitationNew";
 import CurationNew from "../../../charts/CurationNew";
+import OtherInsecticideClasses from "../common/OtherInsecticideClasses";
 
 export type ChartData = {
     name: string;
@@ -63,13 +64,14 @@ const mapStateToProps = (state: State) => ({
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
-    studies: PreventionStudy[];
+    siteFilteredStudies: PreventionStudy[];
+    siteNonFilteredStudies: PreventionStudy[];
 };
 type Props = StateProps & OwnProps;
 
-const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
+const ResistanceStatusChart = ({ siteFilteredStudies, siteNonFilteredStudies }: Props) => {
     const { t } = useTranslation();
-    const speciesOptions = R.uniq(R.map(s => s.SPECIES, baseStudies));
+    const speciesOptions = R.uniq(R.map(s => s.SPECIES, siteFilteredStudies));
     const suggestions: any[] = speciesOptions.map((specie: string) => ({
         label: specie,
         value: specie,
@@ -77,7 +79,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     const [species, setSpecies] = useState<any[]>(suggestions);
     const [data, setData] = useState<{ [x: string]: { [x: string]: ChartData[] } }>({});
 
-    const studyObject = React.useMemo(() => baseStudies[0], [baseStudies]);
+    const studyObject = React.useMemo(() => siteFilteredStudies[0], [siteFilteredStudies]);
 
     const onSpeciesChange = (value: any) => {
         sendAnalytics({ type: "event", category: "popup", action: "filter" });
@@ -85,7 +87,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     };
 
     React.useEffect(() => {
-        const studiesFiltered = baseStudies.filter(
+        const studiesFiltered = siteFilteredStudies.filter(
             study => !species || !species.length || species.map(s => s.value).includes(study.SPECIES)
         );
 
@@ -100,7 +102,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
             .value();
 
         setData(bySpeciesAndInsecticideType);
-    }, [baseStudies, species]);
+    }, [siteFilteredStudies, species]);
 
     const content = () => (
         <>
@@ -149,8 +151,12 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
                     {t("common.prevention.chart.not_reported")}
                 </Typography>
 
-                <CitationNew studies={baseStudies} />
-                <CurationNew studies={baseStudies} />
+                <CitationNew studies={siteFilteredStudies} />
+                <CurationNew studies={siteFilteredStudies} />
+                <OtherInsecticideClasses
+                    siteFilteredStudies={siteFilteredStudies}
+                    siteNonFilteredStudies={siteNonFilteredStudies}
+                />
             </ChartContainer>
         </>
     );
