@@ -74,11 +74,6 @@ const CitationNew = ({ studies, logOutboundLinkAction, theme }: Props) => {
         // }
     }, [studies, theme]);
 
-    console.log({ studiesWithUrl });
-
-    console.log({ citationsOrInstitutes });
-    console.log({ institutions });
-
     return (
         <CitationUl>
             <Typography variant="caption">
