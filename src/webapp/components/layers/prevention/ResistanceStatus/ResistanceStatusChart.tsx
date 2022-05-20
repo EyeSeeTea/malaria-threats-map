@@ -36,14 +36,14 @@ const TopContainer = styled.div`
     padding: 0px 12px;
 `;
 
-const ChartContainer = styled(Paper)`
+const RoundedContainer = styled(Paper)<{ margin?: string }>`
     padding: 12px 20px;
     display: flex;
     flex-direction: column;
     font-size: 12px;
     border-radius: 12px;
     box-shadow: none;
-    margin: 0px 8px;
+    margin: ${props => props.margin || "0px 8px"}; ;
 `;
 
 const StyledSelect = styled(IntegrationReactSelect)`
@@ -124,7 +124,7 @@ const ResistanceStatusChart = ({ siteFilteredStudies, siteNonFilteredStudies }: 
             </TopContainer>
 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
-            <ChartContainer>
+            <RoundedContainer>
                 {Object.keys(data).map(specie => {
                     return (
                         <React.Fragment key={specie}>
@@ -153,11 +153,13 @@ const ResistanceStatusChart = ({ siteFilteredStudies, siteNonFilteredStudies }: 
 
                 <CitationNew studies={siteFilteredStudies} />
                 <CurationNew studies={siteFilteredStudies} />
+            </RoundedContainer>
+            <RoundedContainer margin="16px 8px">
                 <OtherInsecticideClasses
                     siteFilteredStudies={siteFilteredStudies}
                     siteNonFilteredStudies={siteNonFilteredStudies}
                 />
-            </ChartContainer>
+            </RoundedContainer>
         </>
     );
     return (
