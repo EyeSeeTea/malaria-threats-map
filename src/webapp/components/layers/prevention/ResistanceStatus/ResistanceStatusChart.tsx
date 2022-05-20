@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import * as R from "ramda";
-import Curation from "../../../Curation";
 import IntegrationReactSelect from "../../../BasicSelect";
 import FormLabel from "@mui/material/FormLabel";
 import { sendAnalytics } from "../../../../utils/analytics";
@@ -19,6 +18,7 @@ import SiteTitle from "../../../site-title/SiteTitle";
 import { chartOptions, createData, getTranslations } from "./utils";
 import _ from "lodash";
 import CitationNew from "../../../charts/CitationNew";
+import CurationNew from "../../../charts/CurationNew";
 
 export type ChartData = {
     name: string;
@@ -137,7 +137,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
                 </Typography>
 
                 <CitationNew studies={baseStudies} />
-                <Curation study={studyObject} />
+                <CurationNew studies={baseStudies} />
             </ChartContainer>
         </>
     );
