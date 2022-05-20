@@ -114,7 +114,7 @@ export const getTranslations = (insecticide_type: string) => ({
     )})`,
     tested: i18next.t("common.prevention.chart.resistance_status.tested"),
     type: i18next.t("common.prevention.chart.resistance_status.type"),
-    insecticideTypeLabel: "Insecticide",
+    insecticideTypeLabel: i18next.t("common.prevention.chart.insecticide"),
     insecticideType: i18next.t(insecticide_type),
 });
 
