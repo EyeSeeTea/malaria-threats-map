@@ -5,7 +5,13 @@ import { circleLayout, studiesToGeoJson } from "../layer-utils";
 import diagnosisSymbols from "../symbols/diagnosis";
 import setupEffects from "../effects";
 import { selectDiagnosisFilters, selectDiagnosisStudies } from "../../../store/reducers/diagnosis-reducer";
-import { selectFilters, selectHoverSelection, selectRegion, selectTheme } from "../../../store/reducers/base-reducer";
+import {
+    selectFilters,
+    selectHoverSelection,
+    selectRegion,
+    selectSelection,
+    selectTheme,
+} from "../../../store/reducers/base-reducer";
 import * as R from "ramda";
 import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
 import { buildDiagnosisFilters } from "../studies-filters";
@@ -41,6 +47,7 @@ const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     region: selectRegion(state),
+    selection: selectSelection(state),
     hoverSelection: selectHoverSelection(state),
 });
 
@@ -61,6 +68,14 @@ type OwnProps = {
 type Props = StateProps & DispatchProps & OwnProps;
 
 class DiagnosisLayer extends Component<Props> {
+    updatePreventionSelectionStudies() {
+        const selectionStudies = this.props.selection
+            ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === this.props.selection.SITE_ID)
+            : [];
+
+        this.props.setDiagnosisSelectionStudies(selectionStudies);
+    }
+
     componentDidMount() {
         this.loadStudiesIfRequired();
         this.mountLayer();
@@ -93,6 +108,10 @@ class DiagnosisLayer extends Component<Props> {
         ) {
             this.filterSource();
             this.applyMapTypeSymbols();
+
+            this.updatePreventionSelectionStudies();
+        } else if (prevProps.selection !== this.props.selection) {
+            this.updatePreventionSelectionStudies();
         }
     }
 
@@ -179,12 +198,6 @@ class DiagnosisLayer extends Component<Props> {
 
         setTimeout(() => {
             this.props.setSelection(selection);
-
-            const selectionStudies = selection
-                ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === selection.SITE_ID)
-                : [];
-
-            this.props.setDiagnosisSelectionStudies(selectionStudies);
         }, 100);
     };
 

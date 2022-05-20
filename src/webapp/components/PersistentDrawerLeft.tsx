@@ -12,10 +12,10 @@ import { connect } from "react-redux";
 import { State } from "../store/types";
 import { selectFilters, selectSelection, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
 import { setMobileOptionsOpen, setStoryModeAction, setThemeAction } from "../store/actions/base-actions";
-import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
-import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
-import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
-import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
+import { selectPreventionFilters, selectPreventionSelectionStudies } from "../store/reducers/prevention-reducer";
+import { selectDiagnosisFilters, selectDiagnosisSelectionStudies } from "../store/reducers/diagnosis-reducer";
+import { selectTreatmentFilters, selectTreatmentSelectionStudies } from "../store/reducers/treatment-reducer";
+import { selectInvasiveFilters, selectInvasiveSelectionStudies } from "../store/reducers/invasive-reducer";
 import { setPreventionMapType } from "../store/actions/prevention-actions";
 import { AppBar, IconButton, Tab, Tabs, Toolbar } from "@mui/material";
 import StoryModeStepper from "./StoryModeStepper";
@@ -115,6 +115,10 @@ const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
+    preventionSelectionStudies: selectPreventionSelectionStudies(state),
+    diagnosisSelectionStudies: selectDiagnosisSelectionStudies(state),
+    treatmentSelectionStudies: selectTreatmentSelectionStudies(state),
+    invasiveSelectionStudies: selectInvasiveSelectionStudies(state),
     selection: selectSelection(state),
 });
 const mapDispatchToProps = {
@@ -138,6 +142,10 @@ function PersistentDrawerLeft({
     setStoryMode,
     theme,
     selection,
+    preventionSelectionStudies,
+    diagnosisSelectionStudies,
+    treatmentSelectionStudies,
+    invasiveSelectionStudies,
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const prevStoryModeRef = useRef<boolean>();
@@ -260,19 +268,23 @@ function PersistentDrawerLeft({
                     </Hidden>
                 </PageWrapper>
             </div>
-            {selection && (
-                <Drawer
-                    className={classes.drawer}
-                    variant="persistent"
-                    anchor={"right"}
-                    open={true}
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
-                >
-                    <SiteSelectionContent />
-                </Drawer>
-            )}
+            {selection &&
+                (preventionSelectionStudies.length > 0 ||
+                    diagnosisSelectionStudies.length > 0 ||
+                    treatmentSelectionStudies.length > 0 ||
+                    invasiveSelectionStudies.length > 0) && (
+                    <Drawer
+                        className={classes.drawer}
+                        variant="persistent"
+                        anchor={"right"}
+                        open={true}
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                    >
+                        <SiteSelectionContent />
+                    </Drawer>
+                )}
         </div>
     );
 }
