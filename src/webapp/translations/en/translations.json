@@ -37,7 +37,7 @@
             "synergist_involvement_subtitle": "Results of synergist-insecticide bioassays (mono oxygenases only)",
             "synergist_involvement_legend": "Effect of synergy in susceptibility",
             "chart": {
-                "insecticide": "insecticide",
+                "insecticide": "Insecticide",
                 "resistance_status": {
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via discriminating concentration bioassay(s) with selected {{insecticideClass}} {{years}}",

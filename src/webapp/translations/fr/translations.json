@@ -37,7 +37,7 @@
             "synergist_involvement_subtitle": "Effet synergiste de la susceptibilité",
             "synergist_involvement_legend": "Effet de la synergie sur la susceptibilité",
             "chart": {
-                "insecticide": "insecticide",
+                "insecticide": "Insecticide",
                 "resistance_status": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
                     "content_2": " du paludisme via détermination de la dose diagnostique(s) avec {{insecticideClass}} {{years}}",
