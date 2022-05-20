@@ -38,6 +38,7 @@
             "synergist_involvement_legend": "Efecto de la sinergia en susceptibilidad",
             "chart": {
                 "insecticide": "Insecticide",
+                "not_reported": "NR: no reportado",
                 "resistance_status": {
                     "content_1": "{{nStudies}} pruebas con vectores ",
                     "content_2": " por pruebas de susceptibilidad a la concentración discriminante(s) con {{insecticideClass}} {{years}}",

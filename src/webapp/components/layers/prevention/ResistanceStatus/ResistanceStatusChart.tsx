@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import * as R from "ramda";
-import Citation from "../../../charts/Citation";
 import Curation from "../../../Curation";
 import IntegrationReactSelect from "../../../BasicSelect";
 import FormLabel from "@mui/material/FormLabel";
@@ -19,6 +18,7 @@ import Hidden from "../../../hidden/Hidden";
 import SiteTitle from "../../../site-title/SiteTitle";
 import { chartOptions, createData, getTranslations } from "./utils";
 import _ from "lodash";
+import CitationNew from "../../../charts/CitationNew";
 
 export type ChartData = {
     name: string;
@@ -85,22 +85,17 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     };
 
     React.useEffect(() => {
-        const byInsecticideType = _(baseStudies)
+        const byInsecticideType = _(
+            baseStudies.filter(
+                study => !species || !species.length || species.map(s => s.value).includes(study.SPECIES)
+            )
+        )
             .groupBy(({ INSECTICIDE_TYPE }) => INSECTICIDE_TYPE)
             .mapValues(studies => createData(studies))
             .value();
 
         setDataByInsecticideType(byInsecticideType);
-    }, [baseStudies]);
-
-    // const groupedStudies = R.values(
-    //     R.groupBy(
-    //         R.prop("CITATION_URL"),
-    //         baseStudies.filter(
-    //             study => !species || !species.length || species.map(s => s.value).includes(study.SPECIES)
-    //         )
-    //     )
-    // );
+    }, [baseStudies, species]);
 
     const content = () => (
         <>
@@ -137,8 +132,11 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
                         />
                     );
                 })}
+                <Typography variant="caption" sx={{ marginBottom: 2 }}>
+                    {t("common.prevention.chart.not_reported")}
+                </Typography>
 
-                <Citation study={studyObject} />
+                <CitationNew studies={baseStudies} />
                 <Curation study={studyObject} />
             </ChartContainer>
         </>
