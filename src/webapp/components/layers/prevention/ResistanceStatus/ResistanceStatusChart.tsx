@@ -75,7 +75,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         value: specie,
     }));
     const [species, setSpecies] = useState<any[]>(suggestions);
-    const [dataByInsecticideType, setDataByInsecticideType] = useState<{ [x: string]: ChartData[] }>({});
+    const [data, setData] = useState<{ [x: string]: { [x: string]: ChartData[] } }>({});
 
     const studyObject = React.useMemo(() => baseStudies[0], [baseStudies]);
 
@@ -85,16 +85,21 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
     };
 
     React.useEffect(() => {
-        const byInsecticideType = _(
-            baseStudies.filter(
-                study => !species || !species.length || species.map(s => s.value).includes(study.SPECIES)
-            )
-        )
-            .groupBy(({ INSECTICIDE_TYPE }) => INSECTICIDE_TYPE)
-            .mapValues(studies => createData(studies))
+        const studiesFiltered = baseStudies.filter(
+            study => !species || !species.length || species.map(s => s.value).includes(study.SPECIES)
+        );
+
+        const bySpeciesAndInsecticideType = _(studiesFiltered)
+            .groupBy(({ SPECIES }) => SPECIES)
+            .mapValues(studies => {
+                return _(studies)
+                    .groupBy(({ INSECTICIDE_TYPE }) => INSECTICIDE_TYPE)
+                    .mapValues(studies => createData(studies))
+                    .value();
+            })
             .value();
 
-        setDataByInsecticideType(byInsecticideType);
+        setData(bySpeciesAndInsecticideType);
     }, [baseStudies, species]);
 
     const content = () => (
@@ -118,18 +123,26 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
             <ChartContainer>
-                <Typography color="primary" variant="body2" fontWeight="bold">
-                    {t(studyObject.SPECIES)}
-                </Typography>
-                <Typography variant="caption">{t(studyObject.TYPE)}</Typography>
-
-                {Object.keys(dataByInsecticideType).map(key => {
+                {Object.keys(data).map(specie => {
                     return (
-                        <HighchartsReact
-                            key={key}
-                            highcharts={Highcharts}
-                            options={chartOptions(dataByInsecticideType[key], getTranslations(key))}
-                        />
+                        <React.Fragment key={specie}>
+                            <Typography color="primary" variant="body2" fontWeight="bold">
+                                {t(specie)}
+                            </Typography>
+                            <Typography variant="caption">{t(studyObject.TYPE)}</Typography>
+                            {Object.keys(data[specie]).map(insecticideType => {
+                                return (
+                                    <HighchartsReact
+                                        key={insecticideType}
+                                        highcharts={Highcharts}
+                                        options={chartOptions(
+                                            data[specie][insecticideType],
+                                            getTranslations(insecticideType)
+                                        )}
+                                    />
+                                );
+                            })}
+                        </React.Fragment>
                     );
                 })}
                 <Typography variant="caption" sx={{ marginBottom: 2 }}>
