@@ -14,11 +14,11 @@ interface MediaCardProps {
 const StyledCardButton = styled(Button)`
     &.MuiButton-root {
         color: white;
-        font-size: 1rem;
         background-color: #343434;
-        width: 250px;
+        width: 207px;
         font-weight: bold;
         text-align: center;
+        padding: 5px 15px;
     }
 `;
 
@@ -26,8 +26,8 @@ const StyledCard = styled(Card)`
     max-width: 356px;
     border-radius: 15px;
     box-shadow: 0px 4px 10px #00000033;
-    @media (max-width: 1024px) {
-        margin-top: 20px;
+    @media (max-width: 1300px) {
+        margin: 12px auto;
     }
 `;
 
@@ -36,25 +36,26 @@ const StyledCardActions = styled(CardActions)`
 `;
 
 const StyledCardContent = styled(CardContent)`
-    padding: 20px 50px;
+    padding: 17px 50px 22px 50px;
 `;
 
 const StyledLink = styled(Link)`
     margin: auto;
     color: inherit;
+    text-decoration: none;
 `;
 interface StyledCardMediaProps {
     image: string;
 }
 const StyledCardMedia = styled(CardMedia).attrs<StyledCardMediaProps>(props => ({
     component: "img",
-    height: "230",
+    height: "176",
     image: props.image,
 }))`
     width: 94%;
     margin: auto;
-    padding: 10px;
-    border-radius: 25px 25px 0 0;
+    padding: 9px;
+    border-radius: 15px 15px 0 0;
 `;
 
 const MediaCard = ({ title, subtitle, buttonText, image, buttonLink }: MediaCardProps) => {
@@ -62,7 +63,7 @@ const MediaCard = ({ title, subtitle, buttonText, image, buttonLink }: MediaCard
         <StyledCard>
             <StyledCardMedia image={image} />
             <StyledCardContent>
-                <Typography gutterBottom variant="h5" component="div" textAlign="center" fontWeight="bold">
+                <Typography gutterBottom variant="h5" component="div" textAlign="center" fontWeight="bold"  marginBottom={"17px"}>
                     {title}
                 </Typography>
                 <Typography variant="body2" color="black" textAlign="center">

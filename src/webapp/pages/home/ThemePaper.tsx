@@ -16,21 +16,21 @@ interface ThemePaperProps {
 }
 interface StyledPaperProps {
     color: string;
-    windowHeight: number;
+    height: number;
 }
 const StyledPaper = styled(Paper)<StyledPaperProps>`
     background-color: ${props => props.color};
     display: flex;
     padding: ${props =>
         props.color === themePaperColors.treatmentColor
-            ? `${props.windowHeight * 0.04}px 25px`
-            : `${props.windowHeight * 0.04}px`};
+            ? `${props.height * 0.04}px 25px`
+            : `${props.height * 0.04}px`};
 
     @media (max-width: 1024px) {
         padding: ${props =>
             props.color === themePaperColors.treatmentColor
-                ? `${props.windowHeight * 0.04}px 25px 20px 20px`
-                : `${props.windowHeight * 0.04}px`};
+                ? `${props.height * 0.04}px 25px 20px 20px`
+                : `${props.height * 0.04}px`};
     }
 `;
 
@@ -84,7 +84,7 @@ const ThemePaper = ({ icon, altText, title, subtitle, color, colorOpaque }: Them
 
     return (
         <div>
-            <StyledPaper elevation={0} square color={color} windowHeight={height}>
+            <StyledPaper elevation={0} square color={color} height={height}>
                 <StyledImage src={icon} alt={altText} />
                 <ThemeInfoDiv>
                     <ThemeTitle gutterBottom variant="h5" textAlign="left">
@@ -95,7 +95,7 @@ const ThemePaper = ({ icon, altText, title, subtitle, color, colorOpaque }: Them
                     </Typography>
                 </ThemeInfoDiv>
             </StyledPaper>
-            <BottomPaper elevation={0} square color={colorOpaque} windowHeight={height}>
+            <BottomPaper elevation={0} square color={colorOpaque} height={height}>
                 <FlexSpaceBetween>
                     <FlexColumn>
                         <Typography gutterBottom variant="body1" component="div" textAlign="left">

@@ -1,3 +1,4 @@
+import baseSymbols from "../../common/baseSymbols";
 import { TREATMENT_FAILURE_STATUS } from "./utils";
 
 export const TreatmentFailureColors: { [key: string]: string[] } = {
@@ -9,7 +10,7 @@ export const TreatmentFailureColors: { [key: string]: string[] } = {
 };
 
 const treatmentLayerSymbols = {
-    "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
+    ...baseSymbols,
     "circle-color": [
         "match",
         ["get", "TREATMENT_FAILURE_STATUS"],
@@ -23,11 +24,8 @@ const treatmentLayerSymbols = {
         TreatmentFailureColors[TREATMENT_FAILURE_STATUS.LOW][0],
         TreatmentFailureColors[TREATMENT_FAILURE_STATUS.UNKNOWN][0],
     ],
-    "circle-opacity": 1,
     "circle-stroke-color": [
-        "case",
-        ["boolean", ["feature-state", "hover"], false],
-        "lightgrey",
+        ...baseSymbols["circle-stroke-color"],
         [
             "match",
             ["get", "TREATMENT_FAILURE_STATUS"],
@@ -42,8 +40,6 @@ const treatmentLayerSymbols = {
             TreatmentFailureColors[TREATMENT_FAILURE_STATUS.UNKNOWN][1],
         ],
     ],
-    "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
-    "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
 };
 
 export default treatmentLayerSymbols;

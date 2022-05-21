@@ -9,13 +9,8 @@ import Disclaimer from "./Disclaimer";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { State } from "../store/types";
-import { selectAreFiltersOpen, selectFilters, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
-import {
-    setFiltersOpen,
-    setMobileOptionsOpen,
-    setStoryModeAction,
-    setThemeAction,
-} from "../store/actions/base-actions";
+import { selectFilters, selectSelection, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
+import { setMobileOptionsOpen, setStoryModeAction, setThemeAction } from "../store/actions/base-actions";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
@@ -30,6 +25,7 @@ import MobileOptions from "./MobileOptions";
 import Loader from "./Loader";
 import Hidden from "./hidden/Hidden";
 import MapContainer from "./MapContainer";
+import SiteSelectionContent from "./site-selection-content/SiteSelectionContent";
 
 interface ThemeProps {
     drawerWidth: string;
@@ -44,26 +40,6 @@ const useStyles = makeStyles((theme: Theme) =>
             right: 0,
             left: 0,
             bottom: 0,
-        },
-        appBar: {
-            transition: theme.transitions.create(["margin", "width"], {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
-            }),
-        },
-        appBarShift: {
-            width: (props: ThemeProps) => `calc(100% - ${props.drawerWidth})`,
-            marginLeft: (props: ThemeProps) => props.drawerWidth,
-            transition: theme.transitions.create(["margin", "width"], {
-                easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-        },
-        menuButton: {
-            marginRight: theme.spacing(2),
-        },
-        hide: {
-            display: "none",
         },
         drawer: {
             width: (props: ThemeProps) => props.drawerWidth,
@@ -95,20 +71,9 @@ const useStyles = makeStyles((theme: Theme) =>
             marginLeft: 0,
             position: "relative",
         },
-        tab: {
-            minWidth: 0,
-        },
         iconButton: {
             padding: 10,
             margin: theme.spacing(0, 1),
-        },
-        input: {
-            flex: 1,
-        },
-        divider: {
-            width: 1,
-            height: 28,
-            margin: 4,
         },
         toolbar: {
             padding: 0,
@@ -143,7 +108,6 @@ const StyledTab = styled(Tab)`
 `;
 
 const mapStateToProps = (state: State) => ({
-    filtersOpen: selectAreFiltersOpen(state),
     filters: selectFilters(state),
     theme: selectTheme(state),
     storyMode: selectStoryMode(state),
@@ -151,11 +115,11 @@ const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
+    selection: selectSelection(state),
 });
 const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
     setPreventionMapType: setPreventionMapType,
-    setFiltersOpen: setFiltersOpen,
     setStoryMode: setStoryModeAction,
     setTheme: setThemeAction,
 };
@@ -169,28 +133,22 @@ type Props = DispatchProps & StateProps & OwnProps;
 function PersistentDrawerLeft({
     setMobileOptionsOpen,
     storyMode,
-    filtersOpen,
-    setFiltersOpen,
-    drawerWidth = "400px",
+    drawerWidth = "500px",
     setTheme,
     setStoryMode,
     theme,
+    selection,
 }: Props) {
     const classes = useStyles({ drawerWidth });
-    const prevFilterOpenRef = useRef<boolean>();
     const prevStoryModeRef = useRef<boolean>();
 
     useEffect(() => {
-        prevFilterOpenRef.current = filtersOpen;
         prevStoryModeRef.current = storyMode;
     });
-    const prevFilterOpen = prevFilterOpenRef.current;
+
     const prevStoryMode = prevStoryModeRef.current;
 
-    if (filtersOpen && storyMode) {
-        if (prevFilterOpen === filtersOpen) {
-            setFiltersOpen(!filtersOpen);
-        }
+    if (storyMode) {
         if (prevStoryMode === storyMode) {
             setStoryMode(!storyMode);
         }
@@ -244,12 +202,7 @@ function PersistentDrawerLeft({
                     <Hidden smUp>
                         <AppBar position="static" color="default">
                             <Toolbar className={classes.toolbar}>
-                                <IconButton
-                                    className={classes.iconButton}
-                                    aria-label="menu"
-                                    onClick={() => setFiltersOpen(true)}
-                                    size="large"
-                                >
+                                <IconButton className={classes.iconButton} aria-label="menu" size="large">
                                     <FilterIcon />
                                 </IconButton>
 
@@ -307,6 +260,19 @@ function PersistentDrawerLeft({
                     </Hidden>
                 </PageWrapper>
             </div>
+            {selection && (
+                <Drawer
+                    className={classes.drawer}
+                    variant="persistent"
+                    anchor={"right"}
+                    open={true}
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}
+                >
+                    <SiteSelectionContent />
+                </Drawer>
+            )}
         </div>
     );
 }

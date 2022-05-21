@@ -3,20 +3,20 @@ import { connect } from "react-redux";
 import { InvasiveMapType, State } from "../../../store/types";
 import { studiesToGeoJson } from "../layer-utils";
 import setupEffects from "../effects";
-import { selectFilters, selectRegion, selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
+import { selectFilters, selectHoverSelection, selectRegion, selectTheme } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
 import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectInvasiveFilters, selectInvasiveStudies } from "../../../store/reducers/invasive-reducer";
-import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
-import ChartModal from "../../ChartModal";
-import InvasiveSelectionChart from "./InvasiveSelectionChart";
-import { setSelection } from "../../../store/actions/base-actions";
+import { setInvasiveFilteredStudiesAction, setInvasiveSelectionStudies } from "../../../store/actions/invasive-actions";
+import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
 import { fetchInvasiveStudiesRequest } from "../../../store/actions/invasive-actions";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../hidden/Hidden";
+import SiteTitle from "../../site-title/SiteTitle";
+import { getSiteSelectionOnClick, getSiteSelectionOnMove } from "../common/utils";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
@@ -40,13 +40,15 @@ const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
     region: selectRegion(state),
-    selection: selectSelection(state),
+    hoverSelection: selectHoverSelection(state),
 });
 
 const mapDispatchToProps = {
     fetchInvasiveStudies: fetchInvasiveStudiesRequest,
     setFilteredStudies: setInvasiveFilteredStudiesAction,
     setSelection: setSelection,
+    setHoverSelection: setHoverSelection,
+    setInvasiveSelectionStudies: setInvasiveSelectionStudies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -155,37 +157,45 @@ class InvasiveLayer extends Component<Props> {
             this.props.map.addLayer(layer(resolveMapTypeSymbols()));
 
             setupEffects(this.props.map, INVASIVE_SOURCE_ID, INVASIVE_LAYER_ID);
-            this.setupPopover();
+
             this.renderLayer();
         }
     }
 
     onClickListener = (e: any) => {
-        const coordinates = e.features[0].geometry.coordinates.slice();
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-        const selection = {
-            ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
-            SITE_ID: e.features[0].properties.SITE_ID,
-            coordinates: coordinates,
-        };
+        const selection = getSiteSelectionOnClick(e, this.props.map, INVASIVE_LAYER_ID);
+
         setTimeout(() => {
             this.props.setSelection(selection);
+
+            const selectionStudies = selection
+                ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === selection.SITE_ID)
+                : [];
+
+            this.props.setInvasiveSelectionStudies(selectionStudies);
         }, 100);
     };
 
-    setupPopover = () => {
-        this.props.map.off("click", INVASIVE_LAYER_ID, this.onClickListener);
-        this.props.map.on("click", INVASIVE_LAYER_ID, this.onClickListener);
+    onMouseMoveListener = (e: any) => {
+        this.props.map.getCanvas().style.cursor = "pointer";
+
+        const selection = getSiteSelectionOnMove(e, this.props.map, INVASIVE_LAYER_ID);
+
+        setTimeout(() => {
+            this.props.setHoverSelection(selection);
+        }, 100);
     };
 
     renderLayer = () => {
         if (this.props.map.getLayer(INVASIVE_LAYER_ID)) {
             if (this.props.theme === INVASIVE) {
                 this.props.map.setLayoutProperty(INVASIVE_LAYER_ID, "visibility", "visible");
+                this.props.map.on("mousemove", this.onMouseMoveListener);
+                this.props.map.on("click", this.onClickListener);
             } else {
                 this.props.map.setLayoutProperty(INVASIVE_LAYER_ID, "visibility", "none");
+                this.props.map.off("mousemove", this.onMouseMoveListener);
+                this.props.map.off("click", this.onClickListener);
             }
         }
     };
@@ -205,11 +215,11 @@ class InvasiveLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, selection } = this.props;
-        if (selection === null) {
+        const { studies, hoverSelection } = this.props;
+        if (hoverSelection === null) {
             return <div />;
         }
-        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === selection.SITE_ID);
+        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === hoverSelection.SITE_ID);
         if (filteredStudies.length === 0) {
             return <div />;
         }
@@ -218,13 +228,8 @@ class InvasiveLayer extends Component<Props> {
                 <>
                     <Hidden smDown>
                         <SitePopover map={this.props.map}>
-                            <InvasiveSelectionChart studies={filteredStudies} />
+                            <SiteTitle study={filteredStudies[0]} />
                         </SitePopover>
-                    </Hidden>
-                    <Hidden smUp>
-                        <ChartModal selection={selection}>
-                            <InvasiveSelectionChart studies={filteredStudies} />
-                        </ChartModal>
                     </Hidden>
                 </>
             )

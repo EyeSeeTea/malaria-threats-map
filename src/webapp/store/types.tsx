@@ -46,11 +46,9 @@ export interface MalariaState {
         treatment: Date | null;
         invasive: Date | null;
     };
-    initialDialogOpen: boolean;
     actionGroupSelected: ActionGroup | null;
-    filtersOpen?: boolean;
-    filtersMode: string;
     selection: SiteSelection | null;
+    hoverSelection: SiteSelection | null;
     mobileOptionsOpen: boolean;
     zoom: number;
     setZoom: number | null;
@@ -81,6 +79,7 @@ export interface DiagnosisState {
     loading: boolean;
     filteredStudies: DiagnosisStudy[];
     filters: DiagnosisFilters;
+    selectionStudies: DiagnosisStudy[];
 }
 
 export interface DiagnosisFilters {
@@ -117,6 +116,7 @@ export interface PreventionState {
     loading: boolean;
     filteredStudies: PreventionStudy[];
     filters: PreventionFilters;
+    selectionStudies: PreventionStudy[];
 }
 
 export enum TreatmentMapType {
@@ -140,6 +140,7 @@ export interface TreatmentState {
     loading: boolean;
     filteredStudies: TreatmentStudy[];
     filters: TreatmentFilters;
+    selectionStudies: TreatmentStudy[];
 }
 
 export enum InvasiveMapType {
@@ -157,6 +158,7 @@ export interface InvasiveState {
     loading: boolean;
     filteredStudies: InvasiveStudy[];
     filters: InvasiveFilters;
+    selectionStudies: InvasiveStudy[];
 }
 
 export interface CountryLayerState {

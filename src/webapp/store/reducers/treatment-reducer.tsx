@@ -18,6 +18,7 @@ const initialState: TreatmentState = Object.freeze({
         excludeLowerPatients: false,
         excludeLowerSamples: false,
     },
+    selectionStudies: [],
 });
 
 function updateFilter<T>(key: string, value: T, def?: T) {
@@ -79,6 +80,10 @@ export default createReducer<TreatmentState>(initialState, {
     [ActionTypeEnum.SetExcludeLowerSamples]: updateExcludeLowerSamples,
     [ActionTypeEnum.SetTreatmentFilteredStudies]: (filteredStudies: TreatmentStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
+    [ActionTypeEnum.SetTreatmentSelectionStudies]: (studies: TreatmentStudy[]) => (state: TreatmentState) => ({
+        ...state,
+        selectionStudies: studies,
+    }),
 });
 
 const selectTreatmentState = (state: State) => state.treatment;
@@ -92,3 +97,5 @@ export const selectTreatmentStudiesError = createSelector(selectTreatmentState, 
 export const selectFilteredTreatmentStudies = createSelector(selectTreatmentState, state => state.filteredStudies);
 
 export const selectTreatmentFilters = createSelector(selectTreatmentState, state => state.filters);
+
+export const selectTreatmentSelectionStudies = createSelector(selectTreatmentState, state => state.selectionStudies);
