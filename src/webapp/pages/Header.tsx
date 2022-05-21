@@ -8,7 +8,7 @@ import { HomepageIntegrationReactSelect } from "../components/BasicSelect";
 import { changeLanguage } from "../config/i18next";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
-import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
+import { useWindowDimensions } from "../components/hooks/use-window-dimensions";
 
 const LANGUAGES = [
     {
