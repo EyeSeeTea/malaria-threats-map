@@ -57,14 +57,14 @@ const UserExperience = ({ width }: UserExperienceProps) => {
             <UserExperienceInnerDiv windowWidth={width}>
                 <StyledImg src={UXTesting} alt="user experience testing" maxWidth={151} maxHeight={151} />
                 <UserExperienceTextDiv>
-                    <Typography variant="h4" fontWeight="bold" color={"inherit"}>
+                    <Typography variant="h4" fontWeight="bold" color="inherit">
                         User experience testing
                     </Typography>
-                    <Typography variant="body2" color={"inherit"}>
+                    <Typography variant="body2" color="inherit">
                         We have recently undertaken a process of user experience testing and are grateful to all who
                         willingly gave of their time to contribute to the improvement of the MTM for all its users.{" "}
                     </Typography>
-                    <Typography variant="body2" color={"inherit"}>
+                    <Typography variant="body2" color="inherit">
                         This user testing has led to the addition of the home, about and contact pages, the creation of
                         the dashboards, a dedicated download interface, and a more streamlined map interface. We have
                         also identified additional areas of improvement, which we are working on. These include
