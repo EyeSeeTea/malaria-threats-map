@@ -22,9 +22,7 @@ const StyledPaper = styled(Paper)<StyledPaperProps>`
     background-color: ${props => props.color};
     display: flex;
     padding: ${props =>
-        props.color === themePaperColors.treatmentColor
-            ? `${props.height * 0.04}px 25px`
-            : `${props.height * 0.04}px`};
+        props.color === themePaperColors.treatmentColor ? `${props.height * 0.04}px 25px` : `${props.height * 0.04}px`};
 
     @media (max-width: 1024px) {
         padding: ${props =>

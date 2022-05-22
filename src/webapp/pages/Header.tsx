@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Button, AppBar, Toolbar, Box } from "@mui/material";
 import { TFunction } from "react-i18next";
-import { Link } from "react-router-dom";
+import { NavLink, NavLinkProps } from "react-router-dom";
 
 import { HomepageIntegrationReactSelect } from "../components/BasicSelect";
 import { changeLanguage } from "../config/i18next";
@@ -85,6 +85,28 @@ const StyledAppBar = styled(AppBar)`
     background-color: white;
 `;
 
+const StyledLink = styled(NavLink)<NavLinkProps>`
+    text-decoration: none;
+    color: black;
+    padding: 15px 40px;
+    letter-spacing: 0.235px;
+    &.active {
+        font-weight: bold;
+      }
+      &:hover {
+          border: none;
+          color: #2FB3AF;
+          font-weight: bold;
+          padding-bottom: 10px;
+          letter-spacing: 0;
+          border-bottom: 5px solid #2FB3AF;
+          border-radius: 0;
+          cursor;
+          transition: none;
+      }
+
+`;
+
 interface HeaderProps {
     t: TFunction<"translation", undefined>;
 }
@@ -106,9 +128,13 @@ const Header = ({ t }: HeaderProps) => {
                 <StyledAppBar position="sticky">
                     <StyledToolbar width={width}>
                         <MenuOptionBox>
-                            <StyledButton>{t("common.homepage.menu.home")}</StyledButton>
+                            <Button component={StyledLink} to="/">
+                                {t("common.homepage.menu.home")}
+                            </Button>
                             <StyledButton>{t("common.homepage.menu.tools")}</StyledButton>
-                            <StyledButton><Link to="/about" replace>{t("common.homepage.menu.about")}</Link></StyledButton>
+                            <Button component={StyledLink} to="/about">
+                                {t("common.homepage.menu.about")}
+                            </Button>
                             <StyledButton>{t("common.homepage.menu.contact")}</StyledButton>
                             <StyledButton>{t("common.homepage.menu.share_data")}</StyledButton>
                         </MenuOptionBox>
@@ -121,7 +147,6 @@ const Header = ({ t }: HeaderProps) => {
                             />
                         </LanguageSelectorBox>
                     </StyledToolbar>
-                    
                 </StyledAppBar>
             </Box>
         </StickyMenu>

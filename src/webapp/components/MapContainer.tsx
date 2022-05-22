@@ -200,7 +200,9 @@ const MapContainer: React.FC = () => {
                             case "subRegion":
                                 return setRegionAction({ subRegion: rest[1] });
                             case "site": {
-                                const { siteIso2, site, siteCoordinates } = JSON.parse(decodeURIComponent(rest.join(":")));
+                                const { siteIso2, site, siteCoordinates } = JSON.parse(
+                                    decodeURIComponent(rest.join(":"))
+                                );
                                 return setRegionAction({
                                     siteIso2,
                                     site,

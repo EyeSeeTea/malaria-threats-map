@@ -27,7 +27,7 @@ const StyledBanner = styled.div`
     width: 100%;
     background: linear-gradient(90deg, #bbd7e8 0%, #bbd7e800 100%), url(${HomepageMap});
     background-position: right;
-    height:600px;
+    height: 600px;
     opacity: 1;
 `;
 interface Props {
