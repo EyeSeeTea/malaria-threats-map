@@ -1,8 +1,10 @@
 import { DataLabelsFormatterCallbackFunction } from "highcharts";
 import i18next from "i18next";
+import _ from "lodash";
 import * as R from "ramda";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
-import { ChartData } from "./ResistanceStatusChart";
+import { Option } from "../../../BasicSelect";
+import { ChartData, ChartDataItem } from "./ResistanceStatusChart";
 import { ConfirmationStatusColors } from "./symbols";
 
 export const resolveResistanceStatus = (percentage: number) => {
@@ -15,7 +17,7 @@ export const resolveResistanceStatus = (percentage: number) => {
     }
 };
 
-export const chartOptions: (data: ChartData[], translations: any) => Highcharts.Options = (data, translations) => ({
+export const chartOptions: (data: ChartDataItem[], translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
         maxPointWidth: 20,
         type: "bar",
@@ -122,7 +124,25 @@ export const getTranslations = (insecticide_type: string) => ({
     insecticideType: i18next.t(insecticide_type),
 });
 
-export function createData(studies: PreventionStudy[]): ChartData[] {
+export function createChartData(studies: PreventionStudy[], speciesFilter: Option[]): ChartData {
+    const studiesFiltered = studies.filter(
+        study => !speciesFilter || !speciesFilter.length || speciesFilter.map(s => s.value).includes(study.SPECIES)
+    );
+
+    const bySpeciesAndInsecticideType = _(studiesFiltered)
+        .groupBy(({ SPECIES }) => SPECIES)
+        .mapValues(studies => {
+            return _(studies)
+                .groupBy(({ INSECTICIDE_TYPE }) => INSECTICIDE_TYPE)
+                .mapValues(studies => createChartDataItems(studies))
+                .value();
+        })
+        .value();
+
+    return bySpeciesAndInsecticideType;
+}
+
+export function createChartDataItems(studies: PreventionStudy[]): ChartDataItem[] {
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
         return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;

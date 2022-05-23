@@ -9,23 +9,24 @@ import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import * as R from "ramda";
-import IntegrationReactSelect from "../../../BasicSelect";
+import IntegrationReactSelect, { Option } from "../../../BasicSelect";
 import FormLabel from "@mui/material/FormLabel";
 import { sendAnalytics } from "../../../../utils/analytics";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import Hidden from "../../../hidden/Hidden";
 import SiteTitle from "../../../site-title/SiteTitle";
-import { chartOptions, createData, getTranslations } from "./utils";
-import _ from "lodash";
+import { chartOptions, createChartData, getTranslations } from "./utils";
 import CitationNew from "../../../charts/CitationNew";
 import CurationNew from "../../../charts/CurationNew";
 import OtherInsecticideClasses from "../common/OtherInsecticideClasses";
 
-export type ChartData = {
+export type ChartDataItem = {
     name: string;
     y: number;
     number: string;
 };
+
+export type ChartData = { [x: string]: { [x: string]: ChartDataItem[] } };
 
 const Container = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};
@@ -72,12 +73,12 @@ type Props = StateProps & OwnProps;
 const ResistanceStatusChart = ({ siteFilteredStudies, siteNonFilteredStudies }: Props) => {
     const { t } = useTranslation();
     const speciesOptions = R.uniq(R.map(s => s.SPECIES, siteFilteredStudies));
-    const suggestions: any[] = speciesOptions.map((specie: string) => ({
+    const suggestions: Option[] = speciesOptions.map((specie: string) => ({
         label: specie,
         value: specie,
     }));
     const [species, setSpecies] = useState<any[]>(suggestions);
-    const [data, setData] = useState<{ [x: string]: { [x: string]: ChartData[] } }>({});
+    const [data, setData] = useState<{ [x: string]: { [x: string]: ChartDataItem[] } }>({});
 
     const studyObject = React.useMemo(() => siteFilteredStudies[0], [siteFilteredStudies]);
 
@@ -87,21 +88,9 @@ const ResistanceStatusChart = ({ siteFilteredStudies, siteNonFilteredStudies }: 
     };
 
     React.useEffect(() => {
-        const studiesFiltered = siteFilteredStudies.filter(
-            study => !species || !species.length || species.map(s => s.value).includes(study.SPECIES)
-        );
+        const chartData = createChartData(siteFilteredStudies, species);
 
-        const bySpeciesAndInsecticideType = _(studiesFiltered)
-            .groupBy(({ SPECIES }) => SPECIES)
-            .mapValues(studies => {
-                return _(studies)
-                    .groupBy(({ INSECTICIDE_TYPE }) => INSECTICIDE_TYPE)
-                    .mapValues(studies => createData(studies))
-                    .value();
-            })
-            .value();
-
-        setData(bySpeciesAndInsecticideType);
+        setData(chartData);
     }, [siteFilteredStudies, species]);
 
     const content = () => (
