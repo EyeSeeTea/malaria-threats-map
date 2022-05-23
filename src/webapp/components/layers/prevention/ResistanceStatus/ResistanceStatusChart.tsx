@@ -28,10 +28,15 @@ export type ChartDataItem = {
 
 export type ChartData = { [x: string]: { [x: string]: ChartDataItem[] } };
 
+export type CitationDataSource = {
+    url?: string;
+    text: string;
+};
+
 export type SelectionData = {
     title: string;
     chartData: ChartData;
-    dataSources: string[];
+    dataSources: CitationDataSource[];
     dataCurations: string[];
     othersDetected: string[];
 };
@@ -158,7 +163,7 @@ const ResistanceStatusChart = ({ theme, siteFilteredStudies, siteNonFilteredStud
                     {t("common.prevention.chart.not_reported")}
                 </Typography>
 
-                <CitationNew studies={siteFilteredStudies} />
+                <CitationNew dataSources={selectionData.dataSources} />
                 <CurationNew studies={siteFilteredStudies} />
             </RoundedContainer>
             <RoundedContainer margin="16px 8px">

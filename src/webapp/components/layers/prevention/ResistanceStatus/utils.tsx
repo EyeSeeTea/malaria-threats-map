@@ -3,6 +3,8 @@ import i18next from "i18next";
 import _ from "lodash";
 import * as R from "ramda";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
+import { Study } from "../../../../../domain/entities/Study";
+import { isNotNull, isNull } from "../../../../utils/number-utils";
 import { Option } from "../../../BasicSelect";
 import { getSiteTitle } from "../../../site-title/utils";
 import { ChartData, ChartDataItem, SelectionData } from "./ResistanceStatusChart";
@@ -129,7 +131,7 @@ export function createSelectionData(theme: string, studies: PreventionStudy[], s
     return {
         title: studies.length > 0 ? getSiteTitle(theme, studies[0]) : "",
         chartData: createChartData(studies, speciesFilter),
-        dataSources: [],
+        dataSources: createCitationDataSources(theme, studies),
         dataCurations: [],
         othersDetected: [],
     };
@@ -173,4 +175,48 @@ function createChartDataItems(studies: PreventionStudy[]): ChartDataItem[] {
     }));
 
     return data;
+}
+
+function createCitationDataSources(theme: string, studies: Study[]) {
+    const studiesWithURL = studies.filter(study => isNotNull(study.CITATION_URL));
+    const studiesWithoutURL = studies.filter(study => isNull(study.CITATION_URL));
+
+    const valueOrUndefined = (value: string) => (isNull(value) ? undefined : value.trim());
+
+    const dataSourcesWithUrl = _.uniqBy(studiesWithURL, study => study.CITATION_URL).map(study => {
+        return {
+            url: study.CITATION_URL,
+            text: `${
+                valueOrUndefined(study.CITATION_LONG) ||
+                valueOrUndefined(study.CITATION) ||
+                valueOrUndefined(study.INSTITUTION) ||
+                valueOrUndefined(study.CITATION_URL)
+            } ${study.INSTITUTION_CITY ? `, ${study.INSTITUTION_CITY}` : ""}`,
+        };
+    });
+
+    const getCitation = (study: Study) => (theme === "invasive" ? study.CITATION : study.CITATION_LONG);
+
+    const citations = _.uniq(
+        studiesWithoutURL.filter(study => isNotNull(getCitation(study))).map(study => getCitation(study))
+    );
+
+    const institutes = _.uniq(
+        studiesWithoutURL.filter(study => isNotNull(study.INSTITUTE)).map(study => study.INSTITUTE)
+    );
+
+    const institutions = _.uniq(
+        studiesWithoutURL.filter(study => isNotNull(study.INSTITUTION)).map(study => study.INSTITUTION)
+    );
+
+    const restDataSources = theme !== "treatment" ? (citations.length > 0 ? citations : institutes) : institutions;
+
+    const dataSources = [
+        ...dataSourcesWithUrl,
+        ...restDataSources.map(label => ({
+            text: label,
+        })),
+    ];
+
+    return dataSources;
 }
