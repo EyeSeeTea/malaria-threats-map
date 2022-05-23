@@ -126,22 +126,26 @@ const ResistanceStatusChart = ({ siteFilteredStudies, siteNonFilteredStudies }: 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
             <RoundedContainer>
                 {Object.keys(data).map(specie => {
+                    const dataItems = Object.keys(data[specie]);
+
                     return (
                         <React.Fragment key={specie}>
                             <Typography color="primary" variant="body2" fontWeight="bold">
                                 {t(specie)}
                             </Typography>
                             <Typography variant="caption">{t(studyObject.TYPE)}</Typography>
-                            {Object.keys(data[specie]).map(insecticideType => {
+                            {dataItems.map((insecticideType, index) => {
                                 return (
-                                    <HighchartsReact
-                                        key={insecticideType}
-                                        highcharts={Highcharts}
-                                        options={chartOptions(
-                                            data[specie][insecticideType],
-                                            getTranslations(insecticideType)
-                                        )}
-                                    />
+                                    <div key={insecticideType}>
+                                        <HighchartsReact
+                                            highcharts={Highcharts}
+                                            options={chartOptions(
+                                                data[specie][insecticideType],
+                                                getTranslations(insecticideType)
+                                            )}
+                                        />
+                                        {index < dataItems.length - 1 ? <Divider sx={{ marginBottom: 2 }} /> : null}
+                                    </div>
                                 );
                             })}
                         </React.Fragment>
