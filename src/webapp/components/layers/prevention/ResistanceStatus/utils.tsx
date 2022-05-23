@@ -47,6 +47,7 @@ export const chartOptions: (data: ChartData[], translations: any) => Highcharts.
     yAxis: {
         min: 0,
         max: 100,
+        tickInterval: 50,
         title: {
             text: "",
         },
@@ -71,6 +72,9 @@ export const chartOptions: (data: ChartData[], translations: any) => Highcharts.
                     return `${this.y}% (${this.point.number})`;
                 } as DataLabelsFormatterCallbackFunction,
                 enabled: true,
+                style: {
+                    fontWeight: "normal",
+                },
             },
             zones: [
                 {
