@@ -127,13 +127,18 @@ export const getTranslations = (insecticide_type: string) => ({
     insecticideType: i18next.t(insecticide_type),
 });
 
-export function createSelectionData(theme: string, studies: PreventionStudy[], speciesFilter: Option[]): SelectionData {
+export function createSelectionData(
+    theme: string,
+    siteFilteredStudies: PreventionStudy[],
+    siteNonFilteredStudies: PreventionStudy[],
+    speciesFilter: Option[]
+): SelectionData {
     return {
-        title: studies.length > 0 ? getSiteTitle(theme, studies[0]) : "",
-        chartData: createChartData(studies, speciesFilter),
-        dataSources: createCitationDataSources(theme, studies),
-        dataCurations: [],
-        othersDetected: [],
+        title: siteFilteredStudies.length > 0 ? getSiteTitle(theme, siteFilteredStudies[0]) : "",
+        chartData: createChartData(siteFilteredStudies, speciesFilter),
+        dataSources: createCitationDataSources(theme, siteFilteredStudies),
+        dataCurations: createCurations(siteFilteredStudies),
+        othersDetected: otherInsecticideClasses(siteFilteredStudies, siteNonFilteredStudies),
     };
 }
 
@@ -219,4 +224,26 @@ function createCitationDataSources(theme: string, studies: Study[]) {
     ];
 
     return dataSources;
+}
+
+function createCurations(studies: Study[]) {
+    return _.uniq(
+        studies
+            .filter(study => isNotNull(study.INSTITUTE_CURATION || study.CURATION))
+            .map(study => study.INSTITUTE_CURATION || study.CURATION)
+    );
+}
+
+function otherInsecticideClasses(siteFilteredStudies: Study[], siteNonFilteredStudies: Study[]) {
+    const currentInsecticideClasses = _.uniq(siteFilteredStudies.map(study => study.INSECTICIDE_CLASS));
+    const otherInsecticideClasses = _.uniq(
+        siteNonFilteredStudies
+            .filter(
+                study =>
+                    !currentInsecticideClasses.includes(study.INSECTICIDE_CLASS) && isNotNull(study.INSECTICIDE_CLASS)
+            )
+            .map(study => study.INSECTICIDE_CLASS)
+    );
+
+    return otherInsecticideClasses;
 }

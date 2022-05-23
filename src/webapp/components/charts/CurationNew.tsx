@@ -2,9 +2,6 @@ import * as React from "react";
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { Study } from "../../../domain/entities/Study";
-import { isNotNull } from "../../utils/number-utils";
-import _ from "lodash";
 
 const Margin = styled.div`
     margin-top: 10px;
@@ -12,23 +9,12 @@ const Margin = styled.div`
 `;
 
 type OwnProps = {
-    studies: Partial<Study>[];
+    curations: string[];
 };
+
 type Props = OwnProps;
 
-const CurationNew = ({ studies }: Props) => {
-    const [curations, setCurations] = React.useState<string[]>([]);
-
-    React.useEffect(() => {
-        setCurations(
-            _.uniq(
-                studies
-                    .filter(study => isNotNull(study.INSTITUTE_CURATION || study.CURATION))
-                    .map(study => study.INSTITUTE_CURATION || study.CURATION)
-            )
-        );
-    }, [studies]);
-
+const CurationNew = ({ curations }: Props) => {
     const { t } = useTranslation();
     return (
         <Margin>

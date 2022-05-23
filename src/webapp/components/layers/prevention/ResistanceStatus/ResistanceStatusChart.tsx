@@ -107,10 +107,10 @@ const ResistanceStatusChart = ({ theme, siteFilteredStudies, siteNonFilteredStud
     };
 
     React.useEffect(() => {
-        const selectionData = createSelectionData(theme, siteFilteredStudies, species);
+        const selectionData = createSelectionData(theme, siteFilteredStudies, siteNonFilteredStudies, species);
 
         setSelectionData(selectionData);
-    }, [siteFilteredStudies, species, theme]);
+    }, [theme, siteFilteredStudies, siteNonFilteredStudies, species]);
 
     const content = () => (
         <>
@@ -164,13 +164,10 @@ const ResistanceStatusChart = ({ theme, siteFilteredStudies, siteNonFilteredStud
                 </Typography>
 
                 <CitationNew dataSources={selectionData.dataSources} />
-                <CurationNew studies={siteFilteredStudies} />
+                <CurationNew curations={selectionData.dataCurations} />
             </RoundedContainer>
             <RoundedContainer margin="16px 8px">
-                <OtherInsecticideClasses
-                    siteFilteredStudies={siteFilteredStudies}
-                    siteNonFilteredStudies={siteNonFilteredStudies}
-                />
+                <OtherInsecticideClasses otherInsecticideClasses={selectionData.othersDetected} />
             </RoundedContainer>
         </>
     );
