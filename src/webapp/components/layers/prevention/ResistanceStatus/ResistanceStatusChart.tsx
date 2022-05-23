@@ -15,7 +15,7 @@ import { sendAnalytics } from "../../../../utils/analytics";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import Hidden from "../../../hidden/Hidden";
 import SiteTitle from "../../../site-title/SiteTitle";
-import { chartOptions, createChartData, getTranslations } from "./utils";
+import { chartOptions, createSelectionData, getTranslations } from "./utils";
 import CitationNew from "../../../charts/CitationNew";
 import CurationNew from "../../../charts/CurationNew";
 import OtherInsecticideClasses from "../common/OtherInsecticideClasses";
@@ -27,6 +27,14 @@ export type ChartDataItem = {
 };
 
 export type ChartData = { [x: string]: { [x: string]: ChartDataItem[] } };
+
+export type SelectionData = {
+    title: string;
+    chartData: ChartData;
+    dataSources: string[];
+    dataCurations: string[];
+    othersDetected: string[];
+};
 
 const Container = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};
@@ -70,7 +78,7 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const ResistanceStatusChart = ({ siteFilteredStudies, siteNonFilteredStudies }: Props) => {
+const ResistanceStatusChart = ({ theme, siteFilteredStudies, siteNonFilteredStudies }: Props) => {
     const { t } = useTranslation();
     const speciesOptions = R.uniq(R.map(s => s.SPECIES, siteFilteredStudies));
     const suggestions: Option[] = speciesOptions.map((specie: string) => ({
@@ -78,7 +86,13 @@ const ResistanceStatusChart = ({ siteFilteredStudies, siteNonFilteredStudies }: 
         value: specie,
     }));
     const [species, setSpecies] = useState<any[]>(suggestions);
-    const [data, setData] = useState<{ [x: string]: { [x: string]: ChartDataItem[] } }>({});
+    const [selectionData, setSelectionData] = useState<SelectionData>({
+        title: "",
+        chartData: {},
+        dataSources: [],
+        dataCurations: [],
+        othersDetected: [],
+    });
 
     const studyObject = React.useMemo(() => siteFilteredStudies[0], [siteFilteredStudies]);
 
@@ -88,15 +102,15 @@ const ResistanceStatusChart = ({ siteFilteredStudies, siteNonFilteredStudies }: 
     };
 
     React.useEffect(() => {
-        const chartData = createChartData(siteFilteredStudies, species);
+        const selectionData = createSelectionData(theme, siteFilteredStudies, species);
 
-        setData(chartData);
-    }, [siteFilteredStudies, species]);
+        setSelectionData(selectionData);
+    }, [siteFilteredStudies, species, theme]);
 
     const content = () => (
         <>
             <TopContainer>
-                <SiteTitle study={studyObject} />
+                <SiteTitle title={selectionData.title} />
                 <Typography variant="subtitle2">{t(studyObject.ASSAY_TYPE)}</Typography>
                 {suggestions.length > 1 && (
                     <Flex>
@@ -114,8 +128,8 @@ const ResistanceStatusChart = ({ siteFilteredStudies, siteNonFilteredStudies }: 
 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
             <RoundedContainer>
-                {Object.keys(data).map(specie => {
-                    const dataItems = Object.keys(data[specie]);
+                {Object.keys(selectionData.chartData).map(specie => {
+                    const dataItems = Object.keys(selectionData.chartData[specie]);
 
                     return (
                         <React.Fragment key={specie}>
@@ -129,7 +143,7 @@ const ResistanceStatusChart = ({ siteFilteredStudies, siteNonFilteredStudies }: 
                                         <HighchartsReact
                                             highcharts={Highcharts}
                                             options={chartOptions(
-                                                data[specie][insecticideType],
+                                                selectionData.chartData[specie][insecticideType],
                                                 getTranslations(insecticideType)
                                             )}
                                         />

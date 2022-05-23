@@ -4,7 +4,8 @@ import _ from "lodash";
 import * as R from "ramda";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import { Option } from "../../../BasicSelect";
-import { ChartData, ChartDataItem } from "./ResistanceStatusChart";
+import { getSiteTitle } from "../../../site-title/utils";
+import { ChartData, ChartDataItem, SelectionData } from "./ResistanceStatusChart";
 import { ConfirmationStatusColors } from "./symbols";
 
 export const resolveResistanceStatus = (percentage: number) => {
@@ -124,7 +125,17 @@ export const getTranslations = (insecticide_type: string) => ({
     insecticideType: i18next.t(insecticide_type),
 });
 
-export function createChartData(studies: PreventionStudy[], speciesFilter: Option[]): ChartData {
+export function createSelectionData(theme: string, studies: PreventionStudy[], speciesFilter: Option[]): SelectionData {
+    return {
+        title: studies.length > 0 ? getSiteTitle(theme, studies[0]) : "",
+        chartData: createChartData(studies, speciesFilter),
+        dataSources: [],
+        dataCurations: [],
+        othersDetected: [],
+    };
+}
+
+function createChartData(studies: PreventionStudy[], speciesFilter: Option[]): ChartData {
     const studiesFiltered = studies.filter(
         study => !speciesFilter || !speciesFilter.length || speciesFilter.map(s => s.value).includes(study.SPECIES)
     );
@@ -142,7 +153,7 @@ export function createChartData(studies: PreventionStudy[], speciesFilter: Optio
     return bySpeciesAndInsecticideType;
 }
 
-export function createChartDataItems(studies: PreventionStudy[]): ChartDataItem[] {
+function createChartDataItems(studies: PreventionStudy[]): ChartDataItem[] {
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
         return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
