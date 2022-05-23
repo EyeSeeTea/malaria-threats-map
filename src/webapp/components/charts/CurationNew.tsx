@@ -2,6 +2,7 @@ import * as React from "react";
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { Curation } from "../layers/prevention/ResistanceStatus/ResistanceStatusChart";
 
 const Margin = styled.div`
     margin-top: 10px;
@@ -9,13 +10,14 @@ const Margin = styled.div`
 `;
 
 type OwnProps = {
-    curations: string[];
+    curations: Curation[];
 };
 
 type Props = OwnProps;
 
 const CurationNew = ({ curations }: Props) => {
     const { t } = useTranslation();
+
     return (
         <Margin>
             <Typography variant="caption">
@@ -25,8 +27,8 @@ const CurationNew = ({ curations }: Props) => {
             {curations.length > 0 &&
                 curations.map(curation => {
                     return (
-                        <Typography key={curation} variant="caption" display="block">
-                            {curation}
+                        <Typography key={curation.text} variant="caption" display="block">
+                            {`(${curation.dataSources.join(", ")}) ${curation.text}`}
                         </Typography>
                     );
                 })}

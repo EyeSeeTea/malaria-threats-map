@@ -7,7 +7,7 @@ import { Study } from "../../../../../domain/entities/Study";
 import { isNotNull, isNull } from "../../../../utils/number-utils";
 import { Option } from "../../../BasicSelect";
 import { getSiteTitle } from "../../../site-title/utils";
-import { ChartData, ChartDataItem, SelectionData } from "./ResistanceStatusChart";
+import { ChartData, ChartDataItem, CitationDataSource, Curation, SelectionData } from "./ResistanceStatusChart";
 import { ConfirmationStatusColors } from "./symbols";
 
 export const resolveResistanceStatus = (percentage: number) => {
@@ -133,16 +133,22 @@ export function createSelectionData(
     siteNonFilteredStudies: PreventionStudy[],
     speciesFilter: Option[]
 ): SelectionData {
+    const dataSources = createCitationDataSources(theme, siteFilteredStudies);
+
     return {
         title: siteFilteredStudies.length > 0 ? getSiteTitle(theme, siteFilteredStudies[0]) : "",
-        chartData: createChartData(siteFilteredStudies, speciesFilter),
-        dataSources: createCitationDataSources(theme, siteFilteredStudies),
-        dataCurations: createCurations(siteFilteredStudies),
+        chartData: createChartData(dataSources, siteFilteredStudies, speciesFilter),
+        dataSources: dataSources,
+        dataCurations: createCurations(dataSources, siteFilteredStudies),
         othersDetected: otherInsecticideClasses(siteFilteredStudies, siteNonFilteredStudies),
     };
 }
 
-function createChartData(studies: PreventionStudy[], speciesFilter: Option[]): ChartData {
+function createChartData(
+    dataSources: CitationDataSource[],
+    studies: PreventionStudy[],
+    speciesFilter: Option[]
+): ChartData {
     const studiesFiltered = studies.filter(
         study => !speciesFilter || !speciesFilter.length || speciesFilter.map(s => s.value).includes(study.SPECIES)
     );
@@ -152,7 +158,7 @@ function createChartData(studies: PreventionStudy[], speciesFilter: Option[]): C
         .mapValues(studies => {
             return _(studies)
                 .groupBy(({ INSECTICIDE_TYPE }) => INSECTICIDE_TYPE)
-                .mapValues(studies => createChartDataItems(studies))
+                .mapValues(studies => createChartDataItems(dataSources, studies))
                 .value();
         })
         .value();
@@ -160,10 +166,12 @@ function createChartData(studies: PreventionStudy[], speciesFilter: Option[]): C
     return bySpeciesAndInsecticideType;
 }
 
-function createChartDataItems(studies: PreventionStudy[]): ChartDataItem[] {
+function createChartDataItems(dataSources: CitationDataSource[], studies: PreventionStudy[]): ChartDataItem[] {
+    const getStudyKey = (study: Study) => `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
+
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
-        return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
+        return getStudyKey(study);
     }, sortedStudies);
 
     const simplifiedStudies = R.sortWith(
@@ -173,18 +181,29 @@ function createChartDataItems(studies: PreventionStudy[]): ChartDataItem[] {
                 R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
         )
     );
-    const data = simplifiedStudies.map(study => ({
-        name: `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_TYPE)} ${i18next.t(study.INSECTICIDE_CONC)}`,
-        y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
-        number: study.NUMBER,
-    }));
+
+    const data = simplifiedStudies.map(study => {
+        const studiesByGroup = cleanedStudies[getStudyKey(study)];
+
+        const dataSourceKeys = selectDataSourcesByStudies(dataSources, studiesByGroup);
+
+        return {
+            name: `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_TYPE)} ${i18next.t(
+                study.INSECTICIDE_CONC
+            )} (${dataSourceKeys.join(", ")}) `,
+            y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
+            number: study.NUMBER,
+        };
+    });
 
     return data;
 }
 
-function createCitationDataSources(theme: string, studies: Study[]) {
+function createCitationDataSources(theme: string, studies: Study[]): CitationDataSource[] {
     const studiesWithURL = studies.filter(study => isNotNull(study.CITATION_URL));
     const studiesWithoutURL = studies.filter(study => isNull(study.CITATION_URL));
+
+    const keys = "abcdefghijklmnopqrstuvwxyz".split("");
 
     const valueOrUndefined = (value: string) => (isNull(value) ? undefined : value.trim());
 
@@ -221,17 +240,50 @@ function createCitationDataSources(theme: string, studies: Study[]) {
         ...restDataSources.map(label => ({
             text: label,
         })),
-    ];
+    ].map((ds, index) => ({ ...ds, key: keys[index] }));
 
     return dataSources;
 }
 
-function createCurations(studies: Study[]) {
+function selectDataSourcesByStudies(dataSources: CitationDataSource[], studies: Study[]): string[] {
     return _.uniq(
-        studies
-            .filter(study => isNotNull(study.INSTITUTE_CURATION || study.CURATION))
-            .map(study => study.INSTITUTE_CURATION || study.CURATION)
+        studies.reduce((acc, study) => {
+            const dataSource =
+                dataSources.find(ds => ds.url === study.CITATION_URL) ||
+                dataSources.find(
+                    ds =>
+                        ds.text === study.CITATION ||
+                        ds.text === study.CITATION_LONG ||
+                        ds.text === study.INSTITUTE ||
+                        ds.text === study.INSTITUTION
+                );
+
+            return dataSource ? [...acc, dataSource.key] : acc;
+        }, [])
     );
+}
+
+function createCurations(dataSources: CitationDataSource[], studies: Study[]): Curation[] {
+    const getCuration = (study: Study) => study.INSTITUTE_CURATION || study.CURATION;
+
+    const curationTexts = _.uniq(
+        studies
+            .filter(study => isNotNull(getCuration(study)))
+            .map(study => {
+                return getCuration(study);
+            })
+    );
+
+    const curations = curationTexts.map(text => {
+        const studiesByCuration = studies.filter(study => getCuration(study) === text);
+
+        return {
+            text,
+            dataSources: selectDataSourcesByStudies(dataSources, studiesByCuration),
+        };
+    });
+
+    return curations;
 }
 
 function otherInsecticideClasses(siteFilteredStudies: Study[], siteNonFilteredStudies: Study[]) {

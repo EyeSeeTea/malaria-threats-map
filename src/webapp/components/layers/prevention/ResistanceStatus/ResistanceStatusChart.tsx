@@ -29,7 +29,13 @@ export type ChartDataItem = {
 export type ChartData = { [x: string]: { [x: string]: ChartDataItem[] } };
 
 export type CitationDataSource = {
+    key: string;
     url?: string;
+    text: string;
+};
+
+export type Curation = {
+    dataSources: string[];
     text: string;
 };
 
@@ -37,7 +43,7 @@ export type SelectionData = {
     title: string;
     chartData: ChartData;
     dataSources: CitationDataSource[];
-    dataCurations: string[];
+    dataCurations: Curation[];
     othersDetected: string[];
 };
 
