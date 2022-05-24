@@ -462,9 +462,7 @@ class Map extends React.Component<Props> {
                         </Hidden>
                     </BottomLeftContainer>
                 </PushoverContainer>
-                <BottomMiddleContainer>
-                    {this.props.theaterMode ? <TheaterMode /> : <div />}
-                </BottomMiddleContainer>
+                <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
                 <BottomRightContainer>
                     <MapFab size="small" onClick={() => this.zoom(1.25)}>
                         <ZoomInIcon />
