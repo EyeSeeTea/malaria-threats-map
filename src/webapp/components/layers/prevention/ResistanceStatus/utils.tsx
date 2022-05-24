@@ -27,12 +27,17 @@ export const chartOptions: (data: ChartDataItem[], translations: any) => Highcha
         style: {
             fontSize: "11px",
         },
+        x: 80,
     },
     subtitle: {
         text: `<b>${translations.insecticideTypeLabel}</b>:${translations.insecticideType}`,
         style: {
             fontSize: "11px",
+            color: "black",
         },
+        align: "left",
+        y: 14,
+        x: -10,
     },
     xAxis: {
         type: "category",
@@ -111,7 +116,7 @@ export const chartOptions: (data: ChartDataItem[], translations: any) => Highcha
 
 export const getTranslations = (insecticide_type: string) => ({
     mortality: i18next.t("common.prevention.chart.resistance_status.mortality"),
-    mosquito_mortality: `${i18next.t("common.prevention.chart.resistance_status.mosquito_mortality")}(${i18next.t(
+    mosquito_mortality: `${i18next.t("common.prevention.chart.resistance_status.mosquito_mortality")}<br/>(${i18next.t(
         "common.prevention.chart.resistance_status.number_of_tests"
     )})`,
     tested: i18next.t("common.prevention.chart.resistance_status.tested"),
