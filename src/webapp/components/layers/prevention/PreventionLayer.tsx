@@ -19,7 +19,7 @@ import {
 import mapboxgl from "mapbox-gl";
 import {
     fetchPreventionStudiesRequest,
-    setPreventionFilteredStudiesAction,
+    setPreventionFilteredStudies,
     setPreventionSelectionStudies,
 } from "../../../store/actions/prevention-actions";
 import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
@@ -57,7 +57,7 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     fetchPreventionStudies: fetchPreventionStudiesRequest,
-    setFilteredStudies: setPreventionFilteredStudiesAction,
+    setFilteredStudies: setPreventionFilteredStudies,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
     setPreventionSelectionStudies: setPreventionSelectionStudies,
@@ -76,14 +76,6 @@ class PreventionLayer extends Component<Props> {
     componentDidMount() {
         this.loadStudiesIfRequired();
         this.mountLayer();
-    }
-
-    updatePreventionSelectionStudies() {
-        const selectionStudies = this.props.selection
-            ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === this.props.selection.SITE_ID)
-            : [];
-
-        this.props.setPreventionSelectionStudies(selectionStudies);
     }
 
     componentDidUpdate(prevProps: Props) {
@@ -129,10 +121,6 @@ class PreventionLayer extends Component<Props> {
             }
             this.filterSource();
             this.applyMapTypeSymbols();
-
-            this.updatePreventionSelectionStudies();
-        } else if (prevProps.selection !== this.props.selection) {
-            this.updatePreventionSelectionStudies();
         }
     }
     loadStudiesIfRequired() {
@@ -191,6 +179,7 @@ class PreventionLayer extends Component<Props> {
                 this.props.map.removeLayer(PREVENTION_LAYER_ID);
                 this.props.map.removeSource(PREVENTION_SOURCE_ID);
             }
+
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);

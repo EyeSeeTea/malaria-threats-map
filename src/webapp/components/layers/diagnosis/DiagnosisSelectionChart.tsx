@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { DiagnosisMapType, State } from "../../../store/types";
 import { selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
-import { setPreventionFilteredStudiesAction } from "../../../store/actions/prevention-actions";
 import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 import GeneDeletionChart from "./GeneDeletions/GeneDeletionChart";
@@ -15,7 +14,6 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-    setFilteredStudies: setPreventionFilteredStudiesAction,
     setSelection: setSelection,
 };
 
