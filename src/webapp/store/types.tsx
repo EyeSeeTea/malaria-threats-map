@@ -132,12 +132,12 @@ export type Curation = {
 
 export type PreventionSelectionData = {
     title: string;
-    speciesFilterOptions: Option[];
-    speciesSelection: Option[];
+    filterOptions?: Option[];
+    filterSelection?: Option[];
     studyObject: PreventionStudy;
-    chartData: ChartData;
+    data: ChartData;
     dataSources: CitationDataSource[];
-    dataCurations: Curation[];
+    curations: Curation[];
     othersDetected: string[];
 };
 

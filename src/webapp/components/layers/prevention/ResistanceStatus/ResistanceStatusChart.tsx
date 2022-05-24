@@ -78,15 +78,15 @@ const ResistanceStatusChart = ({ selectionData, setPreventionSelectionDataSpecie
                 <TopContainer>
                     <SiteTitle title={selectionData.title} />
                     <Typography variant="subtitle2">{t(selectionData.studyObject.ASSAY_TYPE)}</Typography>
-                    {selectionData.speciesFilterOptions.length > 1 && (
+                    {selectionData.filterOptions.length > 1 && (
                         <Flex>
                             <FormLabel component="legend">Species</FormLabel>
                             <StyledSelect
                                 isClearable
                                 isMulti
-                                suggestions={selectionData.speciesFilterOptions}
+                                suggestions={selectionData.filterOptions}
                                 onChange={onSpeciesChange}
-                                value={selectionData.speciesSelection}
+                                value={selectionData.filterSelection}
                             />
                         </Flex>
                     )}
@@ -94,8 +94,8 @@ const ResistanceStatusChart = ({ selectionData, setPreventionSelectionDataSpecie
 
                 <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
                 <RoundedContainer>
-                    {Object.keys(selectionData.chartData).map(specie => {
-                        const dataItems = Object.keys(selectionData.chartData[specie]);
+                    {Object.keys(selectionData.data).map(specie => {
+                        const dataItems = Object.keys(selectionData.data[specie]);
 
                         return (
                             <React.Fragment key={specie}>
@@ -109,7 +109,7 @@ const ResistanceStatusChart = ({ selectionData, setPreventionSelectionDataSpecie
                                             <HighchartsReact
                                                 highcharts={Highcharts}
                                                 options={chartOptions(
-                                                    selectionData.chartData[specie][insecticideType],
+                                                    selectionData.data[specie][insecticideType],
                                                     getTranslations(insecticideType)
                                                 )}
                                             />
@@ -125,7 +125,7 @@ const ResistanceStatusChart = ({ selectionData, setPreventionSelectionDataSpecie
                     </Typography>
 
                     <CitationNew dataSources={selectionData.dataSources} />
-                    <CurationNew curations={selectionData.dataCurations} />
+                    <CurationNew curations={selectionData.curations} />
                 </RoundedContainer>
                 <RoundedContainer margin="16px 8px">
                     <OtherInsecticideClasses otherInsecticideClasses={selectionData.othersDetected} />

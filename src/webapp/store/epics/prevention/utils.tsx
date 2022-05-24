@@ -26,12 +26,12 @@ export function createSelectionData(
 
     return {
         title: siteFilteredStudies.length > 0 ? getSiteTitle(theme, siteFilteredStudies[0]) : "",
-        speciesFilterOptions,
-        speciesSelection,
+        filterOptions: speciesFilterOptions,
+        filterSelection: speciesSelection,
         studyObject: siteFilteredStudies[0],
-        chartData: createChartData(dataSources, siteFilteredStudies, speciesSelection),
+        data: createChartData(dataSources, siteFilteredStudies, speciesSelection),
         dataSources: dataSources,
-        dataCurations: createCurations(dataSources, siteFilteredStudies),
+        curations: createCurations(dataSources, siteFilteredStudies),
         othersDetected: otherInsecticideClasses(siteFilteredStudies, siteNonFilteredStudies),
     };
 }
