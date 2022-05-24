@@ -4,23 +4,25 @@ import { Button, Typography, Link, Divider } from "@mui/material";
 import { TFunction } from "react-i18next";
 import { useWindowDimensions } from "../components/hooks/use-window-dimensions";
 import WhoLogoBlue from "../components/WhoLogoBlue";
-
-const FooterDiv = styled.div`
+interface PrivacyProps {
+    windowWidth: number;
+}
+//    margin: 58px 0 34px 0;
+const FooterDiv = styled.div<PrivacyProps>`
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     flex-wrap: wrap;
-    margin: 58px 0 34px 0;
-    flex: 1 auto;
+
+    margin: auto;
+    margin-bottom: 34px;
+    width: ${props => `${props.windowWidth * 0.83}px`};
 `;
 
 const Flex = styled.div`
     display: flex;
     flex-direction: column;
 `;
-interface PrivacyProps {
-    windowWidth: number;
-}
 
 const PrivacyCopyrightDiv = styled.div<PrivacyProps>`
     padding: 22px 0;
@@ -67,7 +69,7 @@ const Footer = ({ t }: FooterProps) => {
 
     return (
         <React.Fragment>
-            <FooterDiv>
+            <FooterDiv windowWidth={width}>
                 <WhoLogoBlue />
                 <div>
                     <FooterHeader gutterBottom variant="body2">

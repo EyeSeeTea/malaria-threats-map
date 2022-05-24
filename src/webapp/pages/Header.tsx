@@ -40,7 +40,7 @@ interface Props {
 
 const StyledToolbar = styled(Toolbar)<Props>`
     &.MuiToolbar-root {
-        width: ${props => `${props.width * 0.85}px`};
+        width: ${props => `${props.width * 0.855}px`};
         margin: auto 9% auto auto;
         @media (min-width: 600px) {
             padding: 0;
@@ -51,7 +51,7 @@ const StyledToolbar = styled(Toolbar)<Props>`
 
 const StyledButton = styled(Button)`
     &.MuiButton-root {
-        padding: 15px 40px;
+        padding: 15px 0;
         color: black;
         letter-spacing: 0.235px;
         &:hover {
@@ -76,8 +76,9 @@ const MenuOptionBox = styled(Box)`
     flex-grow: 1;
     width: 60%;
     margin: auto;
-    @media (min-width: 600px) {
+    @media (min-width: 768px) {
         display: flex;
+        flex-wrap: wrap;
     }
 `;
 
@@ -85,10 +86,14 @@ const StyledAppBar = styled(AppBar)`
     background-color: white;
 `;
 
+const StyledPaddedBox = styled.div`
+    padding: 0 40px;
+`;
+
 const StyledLink = styled(NavLink)<NavLinkProps>`
     text-decoration: none;
+    padding: 15px 0;
     color: black;
-    padding: 15px 40px;
     letter-spacing: 0.235px;
     &.active {
         font-weight: bold;
@@ -97,8 +102,8 @@ const StyledLink = styled(NavLink)<NavLinkProps>`
           border: none;
           color: #2FB3AF;
           font-weight: bold;
-          padding-bottom: 10px;
           letter-spacing: 0;
+          padding-bottom: 10px;
           border-bottom: 5px solid #2FB3AF;
           border-radius: 0;
           cursor;
@@ -128,15 +133,25 @@ const Header = ({ t }: HeaderProps) => {
                 <StyledAppBar position="sticky">
                     <StyledToolbar width={width}>
                         <MenuOptionBox>
-                            <Button component={StyledLink} to="/">
-                                {t("common.homepage.menu.home")}
-                            </Button>
-                            <StyledButton>{t("common.homepage.menu.tools")}</StyledButton>
-                            <Button component={StyledLink} to="/about">
-                                {t("common.homepage.menu.about")}
-                            </Button>
-                            <StyledButton>{t("common.homepage.menu.contact")}</StyledButton>
-                            <StyledButton>{t("common.homepage.menu.share_data")}</StyledButton>
+                            <StyledPaddedBox>
+                                <Button component={StyledLink} to="/">
+                                    {t("common.homepage.menu.home")}
+                                </Button>
+                            </StyledPaddedBox>
+                            <StyledPaddedBox>
+                                <StyledButton>{t("common.homepage.menu.tools")}</StyledButton>
+                            </StyledPaddedBox>
+                            <StyledPaddedBox>
+                                <Button component={StyledLink} to="/about">
+                                    {t("common.homepage.menu.about")}
+                                </Button>
+                            </StyledPaddedBox>
+                            <StyledPaddedBox>
+                                <StyledButton>{t("common.homepage.menu.contact")}</StyledButton>
+                            </StyledPaddedBox>
+                            <StyledPaddedBox>
+                                <StyledButton>{t("common.homepage.menu.share_data")}</StyledButton>
+                            </StyledPaddedBox>
                         </MenuOptionBox>
                         <LanguageSelectorBox>
                             <HomepageIntegrationReactSelect
