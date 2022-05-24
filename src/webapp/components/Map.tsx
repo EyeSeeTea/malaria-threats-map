@@ -150,6 +150,12 @@ const TopMiddleContainer = styled(BaseContainer)`
     width: 310px;
 `;
 
+const BottomMiddleContainer = styled(BaseContainer)`
+    bottom: 0;
+    left: 40%;
+    width: 310px;
+`;
+
 const BottomRightContainer = styled(BaseContainer)`
     display: flex;
     flex-direction: column;
@@ -456,8 +462,10 @@ class Map extends React.Component<Props> {
                         </Hidden>
                     </BottomLeftContainer>
                 </PushoverContainer>
-                <BottomRightContainer>
+                <BottomMiddleContainer>
                     {this.props.theaterMode ? <TheaterMode /> : <div />}
+                </BottomMiddleContainer>
+                <BottomRightContainer>
                     <MapFab size="small" onClick={() => this.zoom(1.25)}>
                         <ZoomInIcon />
                     </MapFab>
