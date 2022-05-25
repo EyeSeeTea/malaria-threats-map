@@ -479,7 +479,11 @@ class Map extends React.Component<Props> {
                     <MapFab
                         size="small"
                         onClick={() => this.switchViewMapOnly()}
-                        sx={viewMapOnly ? { bgcolor: "#2fb3af" } : { bgcolor: "white" }}
+                        sx={
+                            viewMapOnly
+                                ? { bgcolor: "#2fb3af", "&:hover": { bgcolor: "#1f938f" } }
+                                : { bgcolor: "white" }
+                        }
                     >
                         <MapOnlyIcon />
                     </MapFab>
