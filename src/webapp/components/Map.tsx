@@ -289,6 +289,12 @@ class Map extends React.Component<Props> {
         }
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
+
+        document.addEventListener("fullscreenchange", _ => {
+            if (document.fullscreenElement === null && this.state.viewMapOnly) {
+                this.switchViewMapOnly();
+            }
+        });
     }
 
     componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {
