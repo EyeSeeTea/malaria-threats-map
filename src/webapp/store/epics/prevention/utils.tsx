@@ -5,15 +5,29 @@ import { Study } from "../../../../domain/entities/Study";
 import { Option } from "../../../components/BasicSelect";
 import { getSiteTitle } from "../../../components/site-title/utils";
 import { isNotNull, isNull } from "../../../utils/number-utils";
-import { ChartData, ChartDataItem, CitationDataSource, Curation, PreventionSelectionData } from "../../types";
+import {
+    ChartData,
+    ChartDataItem,
+    CitationDataSource,
+    CurationSources,
+    SelectionData,
+    SiteSelection,
+} from "../../types";
 import * as R from "ramda";
 
 export function createSelectionData(
     theme: string,
-    siteFilteredStudies: PreventionStudy[],
-    siteNonFilteredStudies: PreventionStudy[],
+    selection: SiteSelection | null,
+    filteredStudies: PreventionStudy[],
+    nonFilteredStudies: PreventionStudy[],
     speciesFilter: Option[] = undefined
-): PreventionSelectionData {
+): SelectionData {
+    const siteFilteredStudies = selection ? filteredStudies.filter(study => study.SITE_ID === selection.SITE_ID) : [];
+
+    const siteNonFilteredStudies = selection
+        ? nonFilteredStudies.filter(study => study.SITE_ID === selection.SITE_ID)
+        : [];
+
     const dataSources = createCitationDataSources(theme, siteFilteredStudies);
 
     const speciesOptions = R.uniq(R.map(s => s.SPECIES, siteFilteredStudies));
@@ -157,7 +171,7 @@ function selectDataSourcesByStudies(dataSources: CitationDataSource[], studies: 
     );
 }
 
-function createCurations(dataSources: CitationDataSource[], studies: Study[]): Curation[] {
+function createCurations(dataSources: CitationDataSource[], studies: Study[]): CurationSources[] {
     const getCuration = (study: Study) => study.INSTITUTE_CURATION || study.CURATION;
 
     const curationTexts = _.uniq(

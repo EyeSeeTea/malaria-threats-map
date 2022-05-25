@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Divider, Paper, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { selectTheme } from "../../../../store/reducers/base-reducer";
+import { selectSelectionData, selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import IntegrationReactSelect from "../../../BasicSelect";
 import FormLabel from "@mui/material/FormLabel";
@@ -16,8 +16,7 @@ import { chartOptions, getTranslations } from "./utils";
 import CitationNew from "../../../charts/CitationNew";
 import CurationNew from "../../../charts/CurationNew";
 import OtherInsecticideClasses from "../common/OtherInsecticideClasses";
-import { selectPreventionSelectionData } from "../../../../store/reducers/prevention-reducer";
-import { setPreventionSelectionDataSpecies } from "../../../../store/actions/prevention-actions";
+import { setSelectionDataFilterSelection } from "../../../../store/actions/base-actions";
 
 const Container = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};
@@ -52,24 +51,24 @@ const Flex = styled.div`
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
-    selectionData: selectPreventionSelectionData(state),
+    selectionData: selectSelectionData(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 
 const mapDispatchToProps = {
-    setPreventionSelectionDataSpecies: setPreventionSelectionDataSpecies,
+    setSelectionFilterSelection: setSelectionDataFilterSelection,
 };
 type DispatchProps = typeof mapDispatchToProps;
 
 type Props = StateProps & DispatchProps;
 
-const ResistanceStatusChart = ({ selectionData, setPreventionSelectionDataSpecies }: Props) => {
+const ResistanceStatusChart = ({ selectionData, setSelectionFilterSelection }: Props) => {
     const { t } = useTranslation();
 
     const onSpeciesChange = (value: any) => {
         sendAnalytics({ type: "event", category: "popup", action: "filter" });
-        setPreventionSelectionDataSpecies(value);
+        setSelectionFilterSelection(value);
     };
 
     const content = () =>

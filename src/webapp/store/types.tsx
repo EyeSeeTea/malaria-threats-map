@@ -50,6 +50,7 @@ export interface MalariaState {
     actionGroupSelected: ActionGroup | null;
     selection: SiteSelection | null;
     hoverSelection: SiteSelection | null;
+    selectionData: SelectionData | null;
     mobileOptionsOpen: boolean;
     zoom: number;
     setZoom: number | null;
@@ -125,19 +126,19 @@ export type CitationDataSource = {
     text: string;
 };
 
-export type Curation = {
+export type CurationSources = {
     dataSources: string[];
     text: string;
 };
 
-export type PreventionSelectionData = {
+export type SelectionData = {
     title: string;
     filterOptions?: Option[];
     filterSelection?: Option[];
     studyObject: PreventionStudy;
     data: ChartData;
     dataSources: CitationDataSource[];
-    curations: Curation[];
+    curations: CurationSources[];
     othersDetected: string[];
 };
 
@@ -148,7 +149,6 @@ export interface PreventionState {
     filteredStudies: PreventionStudy[];
     filters: PreventionFilters;
     selectionStudies: PreventionStudy[];
-    selectionData?: PreventionSelectionData;
 }
 
 export enum TreatmentMapType {

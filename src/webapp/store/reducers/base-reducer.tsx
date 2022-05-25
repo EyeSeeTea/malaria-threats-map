@@ -1,6 +1,6 @@
 import * as R from "ramda";
 import { createSelector } from "reselect";
-import { ActionGroup, MalariaState, RegionState, SiteSelection, State } from "../types";
+import { ActionGroup, MalariaState, RegionState, SelectionData, SiteSelection, State } from "../types";
 import { createReducer } from "../reducer-utils";
 import { ActionTypeEnum } from "../actions";
 
@@ -35,6 +35,7 @@ const initialState: MalariaState = Object.freeze({
     filtersMode: "filters",
     selection: null,
     hoverSelection: null,
+    selectionData: null,
     mobileOptionsOpen: false,
     zoom: 2,
     setZoom: null,
@@ -90,6 +91,10 @@ export default createReducer<MalariaState>(initialState, {
             hoverSelection: getSelection(state, hoverSelection),
         };
     },
+    [ActionTypeEnum.SetSelectionData]: (selectionData: SelectionData) => (state: MalariaState) => ({
+        ...state,
+        selectionData,
+    }),
     [ActionTypeEnum.SetMobileOptionsOpen]: (mobileOptionsOpen: boolean) =>
         R.assoc("mobileOptionsOpen", mobileOptionsOpen),
     [ActionTypeEnum.UpdateZoom]: (zoom: number) => R.assoc("zoom", zoom),
@@ -160,3 +165,5 @@ export const selectIsSubmittingSubscription = createSelector(
 export const selectIsUploadingFile = createSelector(selectMalariaState, state => state.isUploadingFile);
 
 export const selectLastUpdatedDates = createSelector(selectMalariaState, state => state.lastUpdatedDates);
+
+export const selectSelectionData = createSelector(selectMalariaState, state => state.selectionData);
