@@ -7,6 +7,7 @@ import { TreatmentStudy } from "../../domain/entities/TreatmentStudy";
 import { InvasiveStudy } from "../../domain/entities/InvasiveStudy";
 import { CountryLayer, CountryProperties } from "../../domain/entities/CountryLayer";
 import { Option } from "../components/BasicSelect";
+import { Study } from "../../domain/entities/Study";
 
 export interface State {
     malaria: MalariaState;
@@ -133,10 +134,11 @@ export type CurationSources = {
 
 export type SelectionData = {
     title: string;
+    subtitle: string;
     filterOptions?: Option[];
     filterSelection?: Option[];
-    studyObject: PreventionStudy;
-    data: ChartData;
+    studyObject: Study;
+    data?: ChartData;
     dataSources: CitationDataSource[];
     curations: CurationSources[];
     othersDetected: string[];

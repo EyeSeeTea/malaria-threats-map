@@ -8,15 +8,15 @@ import {
     fetchDiagnosisStudiesSuccess,
     setDiagnosisDeletionType,
     setDiagnosisMapType,
-} from "../actions/diagnosis-actions";
-import { logEventAction, setFiltersAction, setThemeAction, logPageViewAction } from "../actions/base-actions";
-import { DiagnosisMapType, State } from "../types";
-import { addNotificationAction } from "../actions/notifier-actions";
-import { getAnalyticsPageView } from "../analytics";
-import { fromFuture } from "./utils";
-import { EpicDependencies } from "../../store/index";
-import { DiagnosisStudy } from "../../../domain/entities/DiagnosisStudy";
-import { ActionTypeEnum } from "../actions";
+} from "../../actions/diagnosis-actions";
+import { logEventAction, setFiltersAction, setThemeAction, logPageViewAction } from "../../actions/base-actions";
+import { DiagnosisMapType, State } from "../../types";
+import { addNotificationAction } from "../../actions/notifier-actions";
+import { getAnalyticsPageView } from "../../analytics";
+import { fromFuture } from "../utils";
+import { EpicDependencies } from "../../index";
+import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
+import { ActionTypeEnum } from "../../actions";
 
 export const getDiagnosisStudiesEpic = (
     action$: Observable<ActionType<typeof fetchDiagnosisStudiesRequest>>,

@@ -25,7 +25,7 @@ import { getAnalyticsPageView } from "../../analytics";
 import { fromFuture } from "../utils";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { EpicDependencies } from "../../index";
-import { createSelectionData } from "./utils";
+import { createPreventionSelectionData } from "./utils";
 
 export const getPreventionStudiesEpic = (
     action$: Observable<ActionType<typeof fetchPreventionStudiesRequest>>,
@@ -142,7 +142,7 @@ export const setPreventionFilteredStudiesEpic = (
                 ? state.prevention.filteredStudies.filter(study => study.SITE_ID === state.malaria.selection.SITE_ID)
                 : [];
 
-            const selectionData = createSelectionData(
+            const selectionData = createPreventionSelectionData(
                 state.malaria.theme,
                 state.malaria.selection,
                 state.prevention.filteredStudies,
