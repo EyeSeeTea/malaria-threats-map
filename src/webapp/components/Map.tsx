@@ -314,10 +314,10 @@ class Map extends React.Component<Props> {
 
     switchViewMapOnly() {
         const viewMapOnly = !this.state.viewMapOnly; // new state
-        this.setState({ viewMapOnly });
+        this.setState({ viewMapOnly }); // will change the rendered components
         if (viewMapOnly && !document.fullscreenElement) {
             document.documentElement.requestFullscreen();
-            this.props.setActionGroupSelected(null);
+            this.props.setActionGroupSelected(null); // fold the selection box
         }
         if (!viewMapOnly && document.fullscreenElement) {
             document.exitFullscreen();
