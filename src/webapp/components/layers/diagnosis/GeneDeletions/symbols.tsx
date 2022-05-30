@@ -8,7 +8,7 @@ export const DiagnosisStatusColors = {
 
 const geneDeletionsSymbols = {
     ...baseSymbols,
-    "circle-radius": ['interpolate', ['linear'], ['zoom'], 1, 2, 4, 7],
+    "circle-radius": ["interpolate", ["linear"], ["zoom"], 1, 2, 4, 7],
     "circle-color": [
         "match",
         ["get", "DELETION_PERCENT"],

@@ -52,9 +52,9 @@ export const getUrl = <T extends unknown>(url: string) => {
     const options = {
         method: "GET",
         url: url,
-    }
+    };
     return ajax<T>(options).pipe(map(extractResponse), catchError(handleUnauthorized));
-}
+};
 
 export const getFull = <T extends unknown>(path: string) =>
     makeRequestAndHandleUnauthorized<T>({

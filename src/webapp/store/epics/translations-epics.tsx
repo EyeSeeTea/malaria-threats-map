@@ -16,18 +16,22 @@ export const getTranslationsEpic = (action$: Observable<ActionType<typeof fetchT
     action$.pipe(
         ofType(ActionTypeEnum.FetchTranslationsRequest),
         switchMap(() => {
-            return ajax.getUrl<TranslationXMartResponse>("https://frontdoor-r5quteqglawbs.azurefd.net/TRAINING_EYESEETEA/MTM_TRADS?$top=9999").pipe(
-                mergeMap((response: TranslationXMartResponse) => {
-                    const oldResponse = {
-                        displayFieldName: "",
-                        fields: [],
-                        fieldAliases: [],
-                        features: response.value.map(v => ({attributes: v})),
-                    } as TranslationResponse;
+            return ajax
+                .getUrl<TranslationXMartResponse>(
+                    "https://frontdoor-r5quteqglawbs.azurefd.net/TRAINING_EYESEETEA/MTM_TRADS?$top=9999"
+                )
+                .pipe(
+                    mergeMap((response: TranslationXMartResponse) => {
+                        const oldResponse = {
+                            displayFieldName: "",
+                            fields: [],
+                            fieldAliases: [],
+                            features: response.value.map(v => ({ attributes: v })),
+                        } as TranslationResponse;
 
-                    return of(fetchTranslationsSuccessAction(oldResponse));
-                }),
-                catchError((error: AjaxError) => of(fetchTranslationsErrorAction(error)))
-            );
+                        return of(fetchTranslationsSuccessAction(oldResponse));
+                    }),
+                    catchError((error: AjaxError) => of(fetchTranslationsErrorAction(error)))
+                );
         })
     );

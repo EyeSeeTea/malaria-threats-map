@@ -6,8 +6,8 @@ export interface TranslationResponse {
 }
 
 export interface TranslationXMartResponse {
-    "@odata.context": string,
-    value: Translation[],
+    "@odata.context": string;
+    value: Translation[];
 }
 
 interface TranslationFeature {
