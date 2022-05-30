@@ -13,7 +13,11 @@ export const resolveResistanceStatus = (percentage: number) => {
     }
 };
 
-export const chartOptions: (data: ChartDataItem[], translations: any) => Highcharts.Options = (data, translations) => ({
+export const chartOptions: (data: ChartDataItem[], translations: any, showTitle: boolean) => Highcharts.Options = (
+    data,
+    translations,
+    showTitle
+) => ({
     chart: {
         maxPointWidth: 20,
         type: "bar",
@@ -21,23 +25,14 @@ export const chartOptions: (data: ChartDataItem[], translations: any) => Highcha
         style: {
             fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
         },
+        marginLeft: 210,
     },
     title: {
-        text: `<b>${translations.mosquito_mortality}</b>`,
+        text: showTitle ? `<b>${translations.mosquito_mortality}</b>` : undefined,
         style: {
             fontSize: "11px",
         },
         x: 80,
-    },
-    subtitle: {
-        text: `<b>${translations.insecticideTypeLabel}</b>:${translations.insecticideType}`,
-        style: {
-            fontSize: "11px",
-            color: "black",
-        },
-        align: "left",
-        y: 14,
-        x: -10,
     },
     xAxis: {
         type: "category",
@@ -45,6 +40,8 @@ export const chartOptions: (data: ChartDataItem[], translations: any) => Highcha
             style: {
                 whiteSpace: "nowrap",
             },
+            align: "left",
+            reserveSpace: true,
         },
     },
     yAxis: {
@@ -114,13 +111,11 @@ export const chartOptions: (data: ChartDataItem[], translations: any) => Highcha
     },
 });
 
-export const getTranslations = (insecticide_type: string) => ({
+export const getTranslations = () => ({
     mortality: i18next.t("common.prevention.chart.resistance_status.mortality"),
     mosquito_mortality: `${i18next.t("common.prevention.chart.resistance_status.mosquito_mortality")}<br/>(${i18next.t(
         "common.prevention.chart.resistance_status.number_of_tests"
     )})`,
     tested: i18next.t("common.prevention.chart.resistance_status.tested"),
     type: i18next.t("common.prevention.chart.resistance_status.type"),
-    insecticideTypeLabel: i18next.t("common.prevention.chart.insecticide"),
-    insecticideType: i18next.t(insecticide_type),
 });

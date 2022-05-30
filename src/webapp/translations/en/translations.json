@@ -37,7 +37,6 @@
             "synergist_involvement_subtitle": "Results of synergist-insecticide bioassays (mono oxygenases only)",
             "synergist_involvement_legend": "Effect of synergy in susceptibility",
             "chart": {
-                "insecticide": "Insecticide",
                 "not_reported": "NR: not reported",
                 "other_insecticide_class_label": "Other insecticides to which resistance was detected in this site:",
                 "other_insecticide_class_none": "None",

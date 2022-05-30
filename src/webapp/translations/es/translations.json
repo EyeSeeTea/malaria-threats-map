@@ -37,7 +37,6 @@
             "synergist_involvement_subtitle": "Resultados de bioensayos de insecticidas sinérgicos (solo monooxigenasas)",
             "synergist_involvement_legend": "Efecto de la sinergia en susceptibilidad",
             "chart": {
-                "insecticide": "Insecticide",
                 "not_reported": "NR: no reportado",
                 "other_insecticide_class_label": "Otros insecticidas a los que se detectó resistencia en este sitio:",
                 "other_insecticide_class_none": "Ninguno",

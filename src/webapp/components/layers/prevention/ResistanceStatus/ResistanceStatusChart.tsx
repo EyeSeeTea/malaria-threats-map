@@ -77,7 +77,7 @@ const ResistanceStatusChart = ({ selectionData, setPreventionSelectionDataSpecie
             <>
                 <TopContainer>
                     <SiteTitle title={selectionData.title} />
-                    <Typography variant="subtitle2">{t(selectionData.studyObject.ASSAY_TYPE)}</Typography>
+                    <Typography variant="subtitle2">{t(selectionData.subtitle)}</Typography>
                     {selectionData.speciesFilterOptions.length > 1 && (
                         <Flex>
                             <FormLabel component="legend">Species</FormLabel>
@@ -94,7 +94,7 @@ const ResistanceStatusChart = ({ selectionData, setPreventionSelectionDataSpecie
 
                 <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
                 <RoundedContainer>
-                    {Object.keys(selectionData.chartData).map(specie => {
+                    {Object.keys(selectionData.chartData).map((specie, specieIndex) => {
                         const dataItems = Object.keys(selectionData.chartData[specie]);
 
                         return (
@@ -102,21 +102,31 @@ const ResistanceStatusChart = ({ selectionData, setPreventionSelectionDataSpecie
                                 <Typography color="primary" variant="body2" fontWeight="bold">
                                     {t(specie)}
                                 </Typography>
-                                <Typography variant="caption">{t(selectionData.studyObject.TYPE)}</Typography>
-                                {dataItems.map((insecticideType, index) => {
+                                {dataItems.map((type, typeIndex) => {
                                     return (
-                                        <div key={insecticideType}>
-                                            <HighchartsReact
-                                                highcharts={Highcharts}
-                                                options={chartOptions(
-                                                    selectionData.chartData[specie][insecticideType],
-                                                    getTranslations(insecticideType)
-                                                )}
-                                            />
-                                            {index < dataItems.length - 1 ? <Divider sx={{ marginBottom: 2 }} /> : null}
-                                        </div>
+                                        <>
+                                            <Typography variant="caption" fontWeight="bold">
+                                                {t(type)}
+                                            </Typography>
+                                            <div key={type}>
+                                                <HighchartsReact
+                                                    highcharts={Highcharts}
+                                                    options={chartOptions(
+                                                        selectionData.chartData[specie][type],
+                                                        getTranslations(),
+                                                        specieIndex === 0 && specieIndex === 0
+                                                    )}
+                                                />
+                                                {typeIndex < dataItems.length - 1 ? (
+                                                    <Divider sx={{ marginBottom: 2 }} />
+                                                ) : null}
+                                            </div>
+                                        </>
                                     );
                                 })}
+                                {specieIndex < Object.keys(selectionData.chartData).length - 1 ? (
+                                    <Divider sx={{ marginBottom: 2, borderBottomWidth: 2 }} />
+                                ) : null}
                             </React.Fragment>
                         );
                     })}
