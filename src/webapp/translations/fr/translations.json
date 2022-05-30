@@ -37,7 +37,6 @@
             "synergist_involvement_subtitle": "Effet synergiste de la susceptibilité",
             "synergist_involvement_legend": "Effet de la synergie sur la susceptibilité",
             "chart": {
-                "insecticide": "Insecticide",
                 "not_reported": "NR : non signalé",
                 "other_insecticide_class_label": "Autres insecticides auxquels une résistance a été détectée sur ce site:",
                 "other_insecticide_class_none": "Rien",

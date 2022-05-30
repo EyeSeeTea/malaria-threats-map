@@ -23,36 +23,40 @@ const PreventionChart: React.FC<Props> = ({ selectionData }) => {
 
     return (
         <React.Fragment>
-            {data &&
-                Object.keys(selectionData.data).map(specie => {
-                    const dataItems = Object.keys(data[specie]);
+            {Object.keys(data).map((specie, specieIndex) => {
+                const dataItems = Object.keys(data[specie]);
 
-                    return (
-                        <React.Fragment key={specie}>
-                            <Typography color="primary" variant="body2" fontWeight="bold">
-                                {t(specie)}
-                            </Typography>
-                            <Typography variant="caption">{t(selectionData.studyObject.TYPE)}</Typography>
-                            {dataItems.map((insecticideType, index) => {
-                                return (
-                                    <div key={insecticideType}>
+                return (
+                    <React.Fragment key={specie}>
+                        <Typography color="primary" variant="body2" fontWeight="bold">
+                            {t(specie)}
+                        </Typography>
+                        {dataItems.map((type, typeIndex) => {
+                            return (
+                                <>
+                                    <Typography variant="caption" fontWeight="bold">
+                                        {t(type)}
+                                    </Typography>
+                                    <div key={type}>
                                         <HighchartsReact
                                             highcharts={Highcharts}
                                             options={chartOptions(
-                                                data[specie][insecticideType],
-                                                getTranslations(insecticideType)
+                                                data[specie][type],
+                                                getTranslations(),
+                                                specieIndex === 0 && specieIndex === 0
                                             )}
                                         />
-                                        {index < dataItems.length - 1 ? <Divider sx={{ marginBottom: 2 }} /> : null}
+                                        {typeIndex < dataItems.length - 1 ? <Divider sx={{ marginBottom: 2 }} /> : null}
                                     </div>
-                                );
-                            })}
-                            <Typography variant="caption" sx={{ marginBottom: 2 }}>
-                                {t("common.prevention.chart.not_reported")}
-                            </Typography>
-                        </React.Fragment>
-                    );
-                })}
+                                </>
+                            );
+                        })}
+                        {specieIndex < Object.keys(data).length - 1 ? (
+                            <Divider sx={{ marginBottom: 2, borderBottomWidth: 2 }} />
+                        ) : null}
+                    </React.Fragment>
+                );
+            })}
         </React.Fragment>
     );
 };

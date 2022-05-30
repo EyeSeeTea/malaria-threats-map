@@ -42,7 +42,7 @@ export function createPreventionSelectionData(
 
     return {
         title: siteFilteredStudies.length > 0 ? getSiteTitle(theme, siteFilteredStudies[0]) : "",
-        subtitle: i18next.t(studyObject.ASSAY_TYPE),
+        subtitle: i18next.t(studyObject?.ASSAY_TYPE),
         filterOptions: speciesFilterOptions,
         filterSelection: speciesSelection,
         studyObject,
@@ -66,7 +66,7 @@ function createChartData(
         .groupBy(({ SPECIES }) => SPECIES)
         .mapValues(studies => {
             return _(studies)
-                .groupBy(({ INSECTICIDE_TYPE }) => INSECTICIDE_TYPE)
+                .groupBy(({ TYPE }) => TYPE)
                 .mapValues(studies => createChartDataItems(dataSources, studies))
                 .value();
         })
@@ -81,13 +81,13 @@ function createChartDataItems(
 ): PreventionChartDataItem[] {
     const getStudyKey = (study: Study) => `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
 
-    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
+    const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
         return getStudyKey(study);
     }, sortedStudies);
 
     const simplifiedStudies = R.sortWith(
-        [R.ascend(R.prop("YEAR_START")), R.ascend(R.prop("INSECTICIDE_TYPE"))],
+        [R.descend(R.prop("YEAR_START")), R.ascend(R.prop("INSECTICIDE_TYPE"))],
         R.values(cleanedStudies).map(
             (groupStudies: PreventionStudy[]) =>
                 R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
