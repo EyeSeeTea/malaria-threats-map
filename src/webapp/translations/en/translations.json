@@ -134,15 +134,17 @@
             "gene_deletions": "pfhrp2/3 gene deletions",
             "chart": {
                 "gene_deletions": {
+                    "subtitle_1": "Data collected",
+                    "subtitle_2": " by {{surveyTypes}}",
                     "content_1": "{{nStudies}} survey(s) ",
                     "content_2": " by {{surveyTypes}} {{years}}",
                     "content_3": "Number of <i>P. falciparum</i> positive samples from the study population: {{pfPosSamples}}",
                     "content_4": "Type of sample analyzed: {{typeSampleAnalyzed}}",
                     "DHS": "DHS",
                     "deletions_confirmed": "Deletions confirmed (% of samples)",
-                    "deletion_type": "Deletion type",
-                    "no_tested": "No. tested",
-                    "percentage": "Percentage deletion(s) in"
+                    "deletion_type": "Type of deletion",
+                    "no_tested": "Number of samples tested (N)",
+                    "percentage": "Percentage with confirmed deletions (%)"
                 }
             },
             "legend": {

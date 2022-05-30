@@ -1,9 +1,12 @@
 import { DataLabelsFormatterCallbackFunction } from "highcharts";
 import i18next from "i18next";
-import { ChartDataItem } from "../../../store/types";
+import { PreventionChartDataItem } from "../../../store/types";
 import { ConfirmationStatusColors } from "../../layers/prevention/ResistanceStatus/symbols";
 
-export const chartOptions: (data: ChartDataItem[], translations: any) => Highcharts.Options = (data, translations) => ({
+export const chartOptions: (data: PreventionChartDataItem[], translations: any) => Highcharts.Options = (
+    data,
+    translations
+) => ({
     chart: {
         maxPointWidth: 20,
         type: "bar",

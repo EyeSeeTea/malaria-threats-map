@@ -2,7 +2,6 @@ import * as React from "react";
 import styled from "styled-components";
 import { Divider, Paper, Typography } from "@mui/material";
 import { connect } from "react-redux";
-import { useTranslation } from "react-i18next";
 import { selectSelectionData, selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import IntegrationReactSelect from "../BasicSelect";
@@ -15,6 +14,7 @@ import CurationNew from "../charts/CurationNew";
 import OtherInsecticideClasses from "../layers/prevention/common/OtherInsecticideClasses";
 import { setSelectionDataFilterSelection } from "../../store/actions/base-actions";
 import PreventionChart from "./prevention/PreventionChart";
+import DiagnosisChart from "./prevention/DiagnosisChart";
 
 const Container = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};
@@ -62,11 +62,20 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = StateProps & DispatchProps;
 
 const SelectionDataContent = ({ selectionData, setSelectionFilterSelection }: Props) => {
-    const { t } = useTranslation();
-
     const onFiltersChange = (value: any) => {
         sendAnalytics({ type: "event", category: "popup", action: "filter" });
         setSelectionFilterSelection(value);
+    };
+
+    const chartCataContent = () => {
+        switch (selectionData.data.kind) {
+            case "prevention": {
+                return <PreventionChart selectionData={selectionData} />;
+            }
+            case "diagnosis": {
+                return <DiagnosisChart selectionData={selectionData} />;
+            }
+        }
     };
 
     console.log({ selectionData });
@@ -93,10 +102,7 @@ const SelectionDataContent = ({ selectionData, setSelectionFilterSelection }: Pr
 
                 <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
                 <RoundedContainer>
-                    {selectionData.data && <PreventionChart selectionData={selectionData} />}
-                    <Typography variant="caption" sx={{ marginBottom: 2 }}>
-                        {t("common.prevention.chart.not_reported")}
-                    </Typography>
+                    {selectionData.data && chartCataContent()}
 
                     <CitationNew dataSources={selectionData.dataSources} />
                     {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}

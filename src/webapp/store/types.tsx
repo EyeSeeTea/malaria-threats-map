@@ -113,13 +113,34 @@ export interface PreventionFilters {
     species: string[];
 }
 
-export type ChartDataItem = {
+export type PreventionChartDataItem = {
     name: string;
     y: number;
     number: string;
 };
 
-export type ChartData = { [x: string]: { [x: string]: ChartDataItem[] } };
+export type DiagnosisChartDataItem = {
+    type: string;
+    samples: string;
+    percentageConfirmed: string;
+};
+
+export type PreventionChartData = {
+    kind: "prevention";
+    data: { [x: string]: { [x: string]: PreventionChartDataItem[] } };
+};
+
+export type DiagnosisChartDataItemByYear = {
+    header?: string;
+    dataSources: string;
+    year: number;
+    items: DiagnosisChartDataItem[];
+};
+
+export type DiagnosisChartData = {
+    kind: "diagnosis";
+    data: DiagnosisChartDataItemByYear[];
+};
 
 export type CitationDataSource = {
     key: string;
@@ -138,7 +159,7 @@ export type SelectionData = {
     filterOptions?: Option[];
     filterSelection?: Option[];
     studyObject: Study;
-    data?: ChartData;
+    data?: PreventionChartData | DiagnosisChartData;
     dataSources: CitationDataSource[];
     curations: CurationSources[];
     othersDetected: string[];

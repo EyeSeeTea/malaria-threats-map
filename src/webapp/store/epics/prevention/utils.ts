@@ -4,7 +4,13 @@ import { Study } from "../../../../domain/entities/Study";
 import { Option } from "../../../components/BasicSelect";
 import { getSiteTitle } from "../../../components/site-title/utils";
 import { isNotNull } from "../../../utils/number-utils";
-import { ChartData, ChartDataItem, CitationDataSource, SelectionData, SiteSelection } from "../../types";
+import {
+    PreventionChartData,
+    PreventionChartDataItem,
+    CitationDataSource,
+    SelectionData,
+    SiteSelection,
+} from "../../types";
 import * as R from "ramda";
 import { createCitationDataSources, createCurations, selectDataSourcesByStudies } from "../common/utils";
 import _ from "lodash";
@@ -51,7 +57,7 @@ function createChartData(
     dataSources: CitationDataSource[],
     studies: PreventionStudy[],
     speciesFilter: Option[]
-): ChartData {
+): PreventionChartData {
     const studiesFiltered = studies.filter(
         study => !speciesFilter || !speciesFilter.length || speciesFilter.map(s => s.value).includes(study.SPECIES)
     );
@@ -66,10 +72,13 @@ function createChartData(
         })
         .value();
 
-    return bySpeciesAndInsecticideType;
+    return { kind: "prevention", data: bySpeciesAndInsecticideType };
 }
 
-function createChartDataItems(dataSources: CitationDataSource[], studies: PreventionStudy[]): ChartDataItem[] {
+function createChartDataItems(
+    dataSources: CitationDataSource[],
+    studies: PreventionStudy[]
+): PreventionChartDataItem[] {
     const getStudyKey = (study: Study) => `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
 
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
