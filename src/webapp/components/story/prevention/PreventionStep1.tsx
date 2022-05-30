@@ -52,7 +52,7 @@ const PreventionStep1 = () => {
 
             <Link href={t("preventionStory.step1.link")} target="_blank" color={"textSecondary"}>
                 <img
-                    src="https://www.who.int/entity/malaria/publications/atoz/9789241564472_cover.jpg"
+                    src="https://apps.who.int/iris/bitstream/handle/10665/44846/9789241564472_eng.pdf.jpg"
                     alt={t("preventionStory.step1.prevention1")}
                 />
             </Link>
