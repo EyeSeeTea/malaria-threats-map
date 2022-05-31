@@ -354,6 +354,7 @@ class Map extends React.Component<Props> {
                                 <ShareIcon />
                             </Hidden>
                             <Hidden smDown>{["prevention", "treatment"].includes(theme) && <Report />}</Hidden>
+                            <StoryModeSelector />
                         </SearchContainer>
                     </PushoverContainer>
                 </Fade>
@@ -367,7 +368,6 @@ class Map extends React.Component<Props> {
                 <Hidden smDown>
                     <Fade in={false}>
                         <TopRightContainer>
-                            <StoryModeSelector />
                             <InitialDisclaimer />
 
                             <Feedback />
