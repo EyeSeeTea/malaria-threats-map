@@ -7,9 +7,7 @@ const PreventionStep2 = () => {
 
     return (
         <div>
-            <ReactMarkdown>
-                {t("preventionStory_step2")}
-            </ReactMarkdown>
+            <ReactMarkdown>{t("preventionStory_step2")}</ReactMarkdown>
         </div>
     );
 };

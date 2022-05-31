@@ -1,61 +1,13 @@
 import React from "react";
-import Typography from "@mui/material/Typography";
-import { Link } from "@mui/material";
-import createStyles from "@mui/styles/createStyles";
-import makeStyles from "@mui/styles/makeStyles";
-import { useTranslation, Trans } from "react-i18next";
-
-const useStyles = makeStyles(() =>
-    createStyles({
-        title: {
-            lineHeight: 1.3,
-        },
-    })
-);
+import { useTranslation } from "react-i18next";
+import ReactMarkdown from "react-markdown";
 
 const PreventionStep4 = () => {
-    const classes = useStyles({});
     const { t } = useTranslation();
 
     return (
         <div>
-            <Typography variant={"h6"} className={classes.title}>
-                <Trans i18nKey="preventionStory.step4.part1" t={t}>
-                    <b>Increasing resistance underscores the urgent need for enhanced monitoring</b>
-                </Trans>
-            </Typography>
-            <br />
-            <Typography variant={"body2"}>
-                <Trans i18nKey="preventionStory.step4.part2" t={t}>
-                    <b>
-                        Malaria vectors in some areas of Africa can now survive exposure to high concentrations of
-                        insecticides, indicating intensified resistance.
-                    </b>
-                </Trans>
-            </Typography>
-            <br />
-            <Typography variant={"body2"}>
-                <Trans i18nKey="preventionStory.step4.part3" t={t}>
-                    Classical resistance tests measure the number of mosquitoes that survive exposure to a standard
-                    concentration of insecticide. However, intensity of resistance in survivors and the mechanisms that
-                    confer resistance are important. High intensity resistance warrants urgent action that should be
-                    guided by knowledge of the underlying resistance mechanisms.
-                </Trans>
-            </Typography>
-            <br />
-            <Typography variant={"body2"}>
-                <Trans i18nKey="preventionStory.step4.part4" t={t}>
-                    WHO test procedures were recently extended to include bioassays that measure resistance intensity
-                    and metabolic mechanism involvement.
-                </Trans>
-            </Typography>
-            <br />
-            <Link href="https://www.who.int/publications/i/item/9789241511575" target="_blank" color={"textSecondary"}>
-                <img
-                    src="https://www.who.int/entity/malaria/publications/atoz/9789241511575_eng.JPG"
-                    alt={t("preventionStory.step4.prevention4")}
-                />
-            </Link>
+            <ReactMarkdown>{t("preventionStory_step4")}</ReactMarkdown>
         </div>
     );
 };
