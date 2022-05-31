@@ -144,6 +144,7 @@ export const setPreventionFilteredStudiesEpic = (
 
             const selectionData = createPreventionSelectionData(
                 state.malaria.theme,
+                state.prevention.filters.mapType,
                 state.malaria.selection,
                 state.prevention.filteredStudies,
                 state.prevention.studies

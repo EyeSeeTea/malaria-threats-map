@@ -10,6 +10,7 @@ import {
     CitationDataSource,
     SelectionData,
     SiteSelection,
+    PreventionMapType,
 } from "../../types";
 import * as R from "ramda";
 import { createCitationDataSources, createCurations, selectDataSourcesByStudies } from "../common/utils";
@@ -17,6 +18,7 @@ import _ from "lodash";
 
 export function createPreventionSelectionData(
     theme: string,
+    mapType: PreventionMapType,
     selection: SiteSelection | null,
     filteredStudies: PreventionStudy[],
     nonFilteredStudies: PreventionStudy[],
@@ -46,7 +48,7 @@ export function createPreventionSelectionData(
         filterOptions: speciesFilterOptions,
         filterSelection: speciesSelection,
         studyObject,
-        data: createChartData(dataSources, siteFilteredStudies, speciesSelection),
+        data: createChartData(mapType, dataSources, siteFilteredStudies, speciesSelection),
         dataSources: dataSources,
         curations: createCurations(dataSources, siteFilteredStudies),
         othersDetected: otherInsecticideClasses(siteFilteredStudies, siteNonFilteredStudies),
@@ -54,6 +56,7 @@ export function createPreventionSelectionData(
 }
 
 function createChartData(
+    mapType: PreventionMapType,
     dataSources: CitationDataSource[],
     studies: PreventionStudy[],
     speciesFilter: Option[]
@@ -67,7 +70,7 @@ function createChartData(
         .mapValues(studies => {
             return _(studies)
                 .groupBy(({ TYPE }) => TYPE)
-                .mapValues(studies => createChartDataItems(dataSources, studies))
+                .mapValues(studies => createChartDataItems(mapType, dataSources, studies))
                 .value();
         })
         .value();
@@ -75,15 +78,25 @@ function createChartData(
     return { kind: "prevention", data: bySpeciesAndInsecticideType };
 }
 
+function getStudyName(mapType: PreventionMapType, study: Study): string {
+    switch (mapType) {
+        case PreventionMapType.RESISTANCE_STATUS:
+            return `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_TYPE)} ${i18next.t(study.INSECTICIDE_CONC)}`;
+        case PreventionMapType.INTENSITY_STATUS:
+            return `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_INTENSITY)} ${i18next.t(
+                study.INSECTICIDE_TYPE
+            )}`;
+    }
+}
+
 function createChartDataItems(
+    mapType: PreventionMapType,
     dataSources: CitationDataSource[],
     studies: PreventionStudy[]
 ): PreventionChartDataItem[] {
-    const getStudyKey = (study: Study) => `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
-
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
-        return getStudyKey(study);
+        return getStudyName(mapType, study);
     }, sortedStudies);
 
     const simplifiedStudies = R.sortWith(
@@ -95,14 +108,12 @@ function createChartDataItems(
     );
 
     const data = simplifiedStudies.map(study => {
-        const studiesByGroup = cleanedStudies[getStudyKey(study)];
+        const studiesByGroup = cleanedStudies[getStudyName(mapType, study)];
 
         const dataSourceKeys = selectDataSourcesByStudies(dataSources, studiesByGroup);
 
         return {
-            name: `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_TYPE)} ${i18next.t(
-                study.INSECTICIDE_CONC
-            )} (${dataSourceKeys.join(", ")}) `,
+            name: `${getStudyName(mapType, study)} (${dataSourceKeys.join(", ")}) `,
             y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
             number: study.NUMBER,
         };

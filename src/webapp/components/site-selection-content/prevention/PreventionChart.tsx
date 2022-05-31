@@ -3,14 +3,15 @@ import { Divider, Typography } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useTranslation } from "react-i18next";
-import { SelectionData } from "../../../store/types";
-import { chartOptions, getTranslations } from "./utils";
+import { PreventionMapType, SelectionData } from "../../../store/types";
+import { chartOptions } from "./utils";
 
 type Props = {
+    mapType: PreventionMapType;
     selectionData: SelectionData;
 };
 
-const PreventionChart: React.FC<Props> = ({ selectionData }) => {
+const PreventionChart: React.FC<Props> = ({ mapType, selectionData }) => {
     const { t } = useTranslation();
 
     const data = React.useMemo(() => {
@@ -41,8 +42,8 @@ const PreventionChart: React.FC<Props> = ({ selectionData }) => {
                                         <HighchartsReact
                                             highcharts={Highcharts}
                                             options={chartOptions(
+                                                mapType,
                                                 data[specie][type],
-                                                getTranslations(),
                                                 specieIndex === 0 && specieIndex === 0
                                             )}
                                         />

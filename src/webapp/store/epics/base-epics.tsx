@@ -336,6 +336,7 @@ export const setSelectionEpic = (
 
                     const selectionData = createPreventionSelectionData(
                         state.malaria.theme,
+                        state.prevention.filters.mapType,
                         state.malaria.selection,
                         state.prevention.filteredStudies,
                         state.prevention.studies
@@ -392,6 +393,7 @@ export const setSelectionDataFilterSelectionEpic = (
                 case "prevention": {
                     const selectionData = createPreventionSelectionData(
                         state.malaria.theme,
+                        state.prevention.filters.mapType,
                         state.malaria.selection,
                         state.prevention.filteredStudies,
                         state.prevention.studies,
