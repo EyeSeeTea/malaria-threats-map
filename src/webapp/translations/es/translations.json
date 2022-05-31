@@ -54,6 +54,9 @@
                     "allelic": "Frecuencias alélicas",
                     "count": "Número de pruebas",
                     "frequency": "Frecuencia (%)"
+                },
+                "synergist_involvement": {
+                    "no_synergist": "No sinergista"
                 }
             },
             "legend": {

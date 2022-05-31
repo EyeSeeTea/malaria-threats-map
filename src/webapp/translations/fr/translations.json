@@ -54,6 +54,9 @@
                     "allelic": "Fréquence allélique à partir d'analyse moléculaire",
                     "count": "Nombre",
                     "frequency": "Fréquence (%)"
+                },
+                "synergist_involvement": {
+                    "no_synergist": "Pas de synergistes"
                 }
             },
             "legend": {

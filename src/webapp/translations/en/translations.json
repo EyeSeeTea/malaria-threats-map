@@ -54,6 +54,9 @@
                     "allelic": "Allelic frequency from molecular assay",
                     "count": "Count",
                     "frequency": "Frequency (%)"
+                },
+                "synergist_involvement": {
+                    "no_synergist": "No synergist"
                 }
             },
             "legend": {
