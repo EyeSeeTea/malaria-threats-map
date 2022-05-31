@@ -54,13 +54,6 @@
                     "allelic": "Fréquence allélique à partir d'analyse moléculaire",
                     "count": "Nombre",
                     "frequency": "Fréquence (%)"
-                },
-                "synergist_involvement": {
-                    "mortality": "mortalité (%)",
-                    "tested": "Études (n)",
-                    "number_of_tests": "# de tests",
-                    "mosquito_mortality": "% mortalité de moustique",
-                    "no_synergist": "Pas de synergistes"
                 }
             },
             "legend": {

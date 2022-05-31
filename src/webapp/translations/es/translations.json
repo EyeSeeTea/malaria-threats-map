@@ -54,13 +54,6 @@
                     "allelic": "Frecuencias alélicas",
                     "count": "Número de pruebas",
                     "frequency": "Frecuencia (%)"
-                },
-                "synergist_involvement": {
-                    "mortality": "mortalidad (%)",
-                    "tested": "Pruebas (n)",
-                    "number_of_tests": "Número de pruebas",
-                    "mosquito_mortality": "% de mortalidad en los mosquitos",
-                    "no_synergist": "No sinergista"
                 }
             },
             "legend": {
