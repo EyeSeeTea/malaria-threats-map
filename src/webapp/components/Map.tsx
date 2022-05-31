@@ -28,9 +28,21 @@ import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
-import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
-import { Fade, Button, AppBar, Typography, IconButton, Toolbar, Box, Divider } from "@mui/material";
-import { Menu as MenuIcon, CloseOutlined as CloseOutlinedIcon } from "@mui/icons-material";
+import {
+    setRegionAction,
+    setThemeAction,
+    updateBoundsAction,
+    updateZoomAction,
+    setActionGroupSelected,
+} from "../store/actions/base-actions";
+import { Fade, Button, AppBar, Typography, IconButton, Toolbar, Box, Divider, Fab } from "@mui/material";
+import {
+    Menu as MenuIcon,
+    CloseOutlined as CloseOutlinedIcon,
+    Add as ZoomInIcon,
+    Remove as ZoomOutIcon,
+    OpenInFull as MapOnlyIcon,
+} from "@mui/icons-material";
 import LeyendPopover from "./legend/LegendPopover";
 import StoryModeSelector from "./StoryModeSelector";
 import MalariaTour from "./tour/MalariaTour";
@@ -139,7 +151,15 @@ const TopMiddleContainer = styled(BaseContainer)`
 `;
 
 const BottomMiddleContainer = styled(BaseContainer)`
-    margin: 10px auto;
+    bottom: 0;
+    left: 40%;
+    width: 310px;
+`;
+
+const BottomRightContainer = styled(BaseContainer)`
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
     bottom: 0;
     right: 0;
 `;
@@ -172,6 +192,11 @@ const MenuTypography = styled(Typography)`
     letter-spacing: 0.235;
 `;
 
+// A Fab ("floating action button") looks like a rounded button.
+const MapFab = styled(Fab)`
+    margin: 5px;
+`;
+
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     any: selectAny(state),
@@ -192,6 +217,7 @@ const mapDispatchToProps = {
     updateZoom: updateZoomAction,
     updateBounds: updateBoundsAction,
     addNotification: addNotificationAction,
+    setActionGroupSelected: setActionGroupSelected,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -206,6 +232,7 @@ class Map extends React.Component<Props> {
         theme: "prevention",
         style: style,
         menuOpen: false,
+        viewMapOnly: false, // show only the legend and last-data-update boxes
         viewport: {
             latitude: 40,
             longitude: 0,
@@ -262,6 +289,12 @@ class Map extends React.Component<Props> {
         }
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
+
+        document.addEventListener("fullscreenchange", _ => {
+            if (document.fullscreenElement === null && this.state.viewMapOnly) {
+                this.switchViewMapOnly();
+            }
+        });
     }
 
     componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {
@@ -273,10 +306,29 @@ class Map extends React.Component<Props> {
         }
     }
 
+    zoom(factor: number) {
+        const newZoom = this.map.getZoom() * factor;
+        this.setState({ viewport: { ...this.state.viewport, zoom: newZoom } });
+        this.map.flyTo({ zoom: newZoom });
+    }
+
+    switchViewMapOnly() {
+        const viewMapOnly = !this.state.viewMapOnly; // new state
+        this.setState({ viewMapOnly }); // will change the rendered components
+        if (viewMapOnly && !document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+            this.props.setActionGroupSelected(null); // fold the selection box
+        }
+        if (!viewMapOnly && document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    }
+
     render() {
         const { theme } = this.props;
         const showOptions = true;
         const ready = this.map && this.state.ready;
+        const viewMapOnly = this.state.viewMapOnly;
         const classes = {
             icon: { marginRight: 5 },
             fab: {
@@ -316,48 +368,54 @@ class Map extends React.Component<Props> {
                         <GreaterMekongLink />
                     </TopMiddleContainer>
                 )}
-                <Hidden smDown>
-                    <Box>
-                        <AppBar position="sticky" sx={classes.appBar}>
-                            <StyledToolbar>
-                                <Box sx={classes.menuOptionBox}>
-                                    <Flex style={{ alignItems: "center" }}>
-                                        <IconButton onClick={() => this.setState({ menuOpen: !this.state.menuOpen })}>
-                                            {this.state.menuOpen ? <CloseOutlinedIcon /> : <MenuIcon />}
-                                        </IconButton>
-                                        <MenuTypography variant="h6">
-                                            {this.props.t("common.topbar.menu")}
-                                        </MenuTypography>
-                                    </Flex>
-                                    <Divider orientation="vertical" flexItem />
-                                    <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
-                                    <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
-                                    <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
-                                    <StyledButton>{this.props.t("common.topbar.stories")}</StyledButton>
-                                </Box>
-                                <Box sx={classes.screenshotBox}>
-                                    <Screenshot map={this.map} />
-                                </Box>
-                            </StyledToolbar>
-                        </AppBar>
-                    </Box>
-                </Hidden>
+                {viewMapOnly || (
+                    <Hidden smDown>
+                        <Box>
+                            <AppBar position="sticky" sx={classes.appBar}>
+                                <StyledToolbar>
+                                    <Box sx={classes.menuOptionBox}>
+                                        <Flex style={{ alignItems: "center" }}>
+                                            <IconButton
+                                                onClick={() => this.setState({ menuOpen: !this.state.menuOpen })}
+                                            >
+                                                {this.state.menuOpen ? <CloseOutlinedIcon /> : <MenuIcon />}
+                                            </IconButton>
+                                            <MenuTypography variant="h6">
+                                                {this.props.t("common.topbar.menu")}
+                                            </MenuTypography>
+                                        </Flex>
+                                        <Divider orientation="vertical" flexItem />
+                                        <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
+                                        <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
+                                        <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
+                                        <StyledButton>{this.props.t("common.topbar.stories")}</StyledButton>
+                                    </Box>
+                                    <Box sx={classes.screenshotBox}>
+                                        <Screenshot map={this.map} />
+                                    </Box>
+                                </StyledToolbar>
+                            </AppBar>
+                        </Box>
+                    </Hidden>
+                )}
                 <LeftSidebarMenu isMenuOpen={this.state.menuOpen} handleClickOpen={handleClickOpen} />
-                <Fade in={showOptions}>
-                    <PushoverContainer menuOpen={this.state.menuOpen}>
-                        <SearchContainer>
-                            <Hidden smDown>
-                                <MalariaTour />
-                            </Hidden>
-                            {!isMobile && <DataDownload />}
-                            <Hidden smUp>
-                                <ShareIcon />
-                            </Hidden>
-                            <Hidden smDown>{["prevention", "treatment"].includes(theme) && <Report />}</Hidden>
-                            <StoryModeSelector />
-                        </SearchContainer>
-                    </PushoverContainer>
-                </Fade>
+                {viewMapOnly || (
+                    <Fade in={showOptions}>
+                        <PushoverContainer menuOpen={this.state.menuOpen}>
+                            <SearchContainer>
+                                <Hidden smDown>
+                                    <MalariaTour />
+                                </Hidden>
+                                {!isMobile && <DataDownload />}
+                                <Hidden smUp>
+                                    <ShareIcon />
+                                </Hidden>
+                                <Hidden smDown>{["prevention", "treatment"].includes(theme) && <Report />}</Hidden>
+                                <StoryModeSelector />
+                            </SearchContainer>
+                        </PushoverContainer>
+                    </Fade>
+                )}
                 <Fade in={showOptions}>
                     <PushoverContainer menuOpen={this.state.menuOpen}>
                         <FloatingActionContainer>
@@ -393,14 +451,14 @@ class Map extends React.Component<Props> {
                             <LeyendPopover />
                         </Hidden>
                         <Hidden smDown>
-                            <FloatingLegend />
+                            <FloatingLegend /> {/* Legend box */}
                         </Hidden>
-                        <LastUpdated />
+                        <LastUpdated /> {/* Last updated box */}
                     </LegendContainer>
                 </Fade>
                 <PushoverContainer menuOpen={this.state.menuOpen}>
                     <BottomLeftContainer>
-                        <LayersButton />
+                        {viewMapOnly || <LayersButton />} {/* Layers selector box */}
                         <Box width={20} />
                         <Hidden smUp>
                             <WhoLogo width={150} />
@@ -411,6 +469,25 @@ class Map extends React.Component<Props> {
                     </BottomLeftContainer>
                 </PushoverContainer>
                 <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
+                <BottomRightContainer>
+                    <MapFab size="small" onClick={() => this.zoom(1.25)}>
+                        <ZoomInIcon />
+                    </MapFab>
+                    <MapFab size="small" onClick={() => this.zoom(0.8)}>
+                        <ZoomOutIcon />
+                    </MapFab>
+                    <MapFab
+                        size="small"
+                        onClick={() => this.switchViewMapOnly()}
+                        sx={
+                            viewMapOnly
+                                ? { bgcolor: "#2fb3af", "&:hover": { bgcolor: "#1f938f" } }
+                                : { bgcolor: "white" }
+                        }
+                    >
+                        <MapOnlyIcon />
+                    </MapFab>
+                </BottomRightContainer>
                 <LanguageSelectorDialog
                     selectedValue={this.state.selectedValue}
                     open={this.state.open}
