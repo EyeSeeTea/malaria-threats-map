@@ -51,7 +51,7 @@ export function createPreventionSelectionData(
         data: createChartData(mapType, dataSources, siteFilteredStudies, speciesSelection),
         dataSources: dataSources,
         curations: createCurations(dataSources, siteFilteredStudies),
-        othersDetected: otherInsecticideClasses(siteFilteredStudies, siteNonFilteredStudies),
+        othersDetected: otherInsecticideClasses(mapType, siteFilteredStudies, siteNonFilteredStudies),
     };
 }
 
@@ -86,6 +86,16 @@ function getStudyName(mapType: PreventionMapType, study: Study): string {
             return `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_INTENSITY)} ${i18next.t(
                 study.INSECTICIDE_TYPE
             )}`;
+        case PreventionMapType.LEVEL_OF_INVOLVEMENT: {
+            const base = `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_TYPE)} ${i18next.t(
+                study.INSECTICIDE_CONC
+            )}`;
+            const syn =
+                study.SYNERGIST_TYPE === "NO"
+                    ? i18next.t("common.prevention.chart.synergist_involvement.no_synergist")
+                    : `${i18next.t(study.SYNERGIST_TYPE)} ${i18next.t(study.SYNERGIST_CONC)}`;
+            return `${base}, ${syn}`;
+        }
     }
 }
 
@@ -122,7 +132,12 @@ function createChartDataItems(
     return data;
 }
 
-function otherInsecticideClasses(siteFilteredStudies: Study[], siteNonFilteredStudies: Study[]) {
+function otherInsecticideClasses(
+    mapType: PreventionMapType,
+    siteFilteredStudies: Study[],
+    siteNonFilteredStudies: Study[]
+) {
+    if (mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT) return [];
     const currentInsecticideClasses = _.uniq(siteFilteredStudies.map(study => study.INSECTICIDE_CLASS));
     const otherInsecticideClasses = _.uniq(
         siteNonFilteredStudies

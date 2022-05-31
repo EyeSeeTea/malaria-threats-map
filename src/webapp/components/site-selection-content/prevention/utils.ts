@@ -3,9 +3,11 @@ import i18next from "i18next";
 import { PreventionChartDataItem, PreventionMapType } from "../../../store/types";
 import { IntensityStatusColors } from "../../layers/prevention/IntensityStatus/symbols";
 import { INTENSITY_STATUS } from "../../layers/prevention/IntensityStatus/utils";
+import { LevelOfInvolvementColors } from "../../layers/prevention/Involvement/symbols";
+import { LEVEL_OF_INVOLVEMENT } from "../../layers/prevention/Involvement/utils";
 import { ConfirmationStatusColors } from "../../layers/prevention/ResistanceStatus/symbols";
 
-export const chartOptions: (
+export const preventionBarChartOptions: (
     maptype: PreventionMapType,
     data: PreventionChartDataItem[],
     showTitle: boolean
@@ -17,7 +19,7 @@ export const chartOptions: (
         style: {
             fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
         },
-        marginLeft: 210,
+        marginLeft: maptype === PreventionMapType.LEVEL_OF_INVOLVEMENT ? 265 : 210,
     },
     title: {
         text: showTitle
@@ -148,6 +150,21 @@ function getBarZones(maptype: PreventionMapType) {
                 {
                     value: 100.001,
                     color: IntensityStatusColors[INTENSITY_STATUS.HIGH_INTENSITY][0],
+                },
+            ];
+        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+            return [
+                {
+                    value: 90,
+                    color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT][0],
+                },
+                {
+                    value: 98,
+                    color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT][0],
+                },
+                {
+                    value: 100.001,
+                    color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT][0],
                 },
             ];
     }
