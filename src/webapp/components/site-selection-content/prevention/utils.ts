@@ -50,18 +50,6 @@ export const preventionBarChartOptions: (
         title: {
             text: "",
         },
-        plotLines: [
-            {
-                value: 90,
-                color: "#d43501",
-                dashStyle: "Dash",
-                width: 2,
-                zIndex: 5,
-                label: {
-                    text: "",
-                },
-            },
-        ],
     },
     plotOptions: {
         bar: {
