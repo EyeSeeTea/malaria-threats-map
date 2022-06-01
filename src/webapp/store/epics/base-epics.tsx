@@ -369,10 +369,10 @@ export const setSelectionEpic = (
                     return of(...actions);
                 }
                 case "treatment": {
-                    break;
+                    return of();
                 }
                 case "invasive": {
-                    break;
+                    return of();
                 }
                 default:
                     return of();
@@ -399,15 +399,6 @@ export const setSelectionDataFilterSelectionEpic = (
                     );
 
                     return of(setSelectionData(selectionData));
-                }
-                case "diagnosis": {
-                    break;
-                }
-                case "treatment": {
-                    break;
-                }
-                case "invasive": {
-                    break;
                 }
                 default:
                     return of();
