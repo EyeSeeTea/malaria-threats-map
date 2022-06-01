@@ -7,9 +7,17 @@ import {
     fetchDiagnosisStudiesRequest,
     fetchDiagnosisStudiesSuccess,
     setDiagnosisDeletionType,
+    setDiagnosisFilteredStudiesAction,
     setDiagnosisMapType,
+    setDiagnosisSelectionStudies,
 } from "../../actions/diagnosis-actions";
-import { logEventAction, setFiltersAction, setThemeAction, logPageViewAction } from "../../actions/base-actions";
+import {
+    logEventAction,
+    setFiltersAction,
+    setThemeAction,
+    logPageViewAction,
+    setSelectionData,
+} from "../../actions/base-actions";
 import { DiagnosisMapType, State } from "../../types";
 import { addNotificationAction } from "../../actions/notifier-actions";
 import { getAnalyticsPageView } from "../../analytics";
@@ -17,6 +25,7 @@ import { fromFuture } from "../utils";
 import { EpicDependencies } from "../../index";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import { ActionTypeEnum } from "../../actions";
+import { createDiagnosisSelectionData } from "./utils";
 
 export const getDiagnosisStudiesEpic = (
     action$: Observable<ActionType<typeof fetchDiagnosisStudiesRequest>>,
@@ -76,5 +85,29 @@ export const setDiagnosisDeletionTypeEpic = (action$: Observable<ActionType<type
                     label: action.payload,
                 })
             );
+        })
+    );
+
+export const setDiagnosisFilteredStudiesEpic = (
+    action$: Observable<ActionType<typeof setDiagnosisFilteredStudiesAction>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetDiagnosisFilteredStudies),
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            const siteFilteredStudies = state.malaria.selection
+                ? state.diagnosis.filteredStudies.filter(study => study.SITE_ID === state.malaria.selection.SITE_ID)
+                : [];
+
+            const selectionData = createDiagnosisSelectionData(
+                state.malaria.theme,
+                state.malaria.selection,
+                siteFilteredStudies
+            );
+
+            debugger;
+
+            return of(setDiagnosisSelectionStudies(siteFilteredStudies), setSelectionData(selectionData));
         })
     );
