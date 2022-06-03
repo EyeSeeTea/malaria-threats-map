@@ -17,6 +17,7 @@ import PreventionChart from "./prevention/PreventionChart";
 import DiagnosisChart from "./diagnosis/DiagnosisChart";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import InvasiveChart from "./invasive/InvasiveChart";
+import PreventionMechanismsChart from "./prevention/PreventionMechanismsChart";
 
 const Container = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};
@@ -73,6 +74,9 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
         switch (selectionData.data.kind) {
             case "prevention": {
                 return <PreventionChart mapType={preventionFilters.mapType} selectionData={selectionData} />;
+            }
+            case "prevention-mechanism": {
+                return <PreventionMechanismsChart selectionData={selectionData} />;
             }
             case "diagnosis": {
                 return <DiagnosisChart selectionData={selectionData} />;

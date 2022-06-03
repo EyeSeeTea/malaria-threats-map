@@ -119,6 +119,19 @@ export type PreventionChartDataItem = {
     number: string;
 };
 
+export type PreventionMechanismChartDataItem = {
+    name: string;
+    y: number;
+    value?: string;
+};
+
+export type PreventionMechanismChartDataGroup = {
+    maxPointWidth: number;
+    name: string;
+    color?: string;
+    data: PreventionMechanismChartDataItem[];
+};
+
 export type DiagnosisChartDataItem = {
     type: string;
     samples: string;
@@ -128,6 +141,19 @@ export type DiagnosisChartDataItem = {
 export type PreventionChartData = {
     kind: "prevention";
     data: { [x: string]: { [x: string]: PreventionChartDataItem[] } };
+};
+
+export type PreventionMechanismChartData = {
+    kind: "prevention-mechanism";
+    data: {
+        [x: string]: {
+            [x: string]: {
+                years: number[];
+                assays: PreventionMechanismChartDataGroup[];
+                allelics: PreventionMechanismChartDataGroup[];
+            };
+        };
+    };
 };
 
 export type DiagnosisChartDataItemByYear = {
@@ -172,7 +198,7 @@ export type SelectionData = {
     filterOptions?: Option[];
     filterSelection?: Option[];
     studyObject: Study;
-    data?: PreventionChartData | DiagnosisChartData | InvasiveChartData;
+    data?: PreventionChartData | PreventionMechanismChartData | DiagnosisChartData | InvasiveChartData;
     dataSources: CitationDataSource[];
     curations: CurationSources[];
     othersDetected: string[];

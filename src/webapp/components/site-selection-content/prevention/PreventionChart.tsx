@@ -4,7 +4,7 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useTranslation } from "react-i18next";
 import { PreventionMapType, SelectionData } from "../../../store/types";
-import { preventionBarChartOptions } from "./utils";
+import { preventionBarChartOptions } from "./preventionChartUtils";
 
 type Props = {
     mapType: PreventionMapType;
