@@ -4,9 +4,9 @@ import { selectSelection, selectTheme } from "../../../store/reducers/base-reduc
 import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 import MolecularMarkersChart from "./MolecularMarkers/MolecularMarkersChart";
-import TreatmentFailureChart from "../../site-selection-content/treatment/TreatmentFailureChart";
 import { selectTreatmentFilters } from "../../../store/reducers/treatment-reducer";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
+import SelectionDataContent from "../../site-selection-content/SelectionDataContent";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -44,10 +44,8 @@ class TreatmentSelectionChart extends Component<Props> {
         return (
             <>
                 {mapType === TreatmentMapType.MOLECULAR_MARKERS && <MolecularMarkersChart studies={filteredStudies} />}
-                {mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE && (
-                    <TreatmentFailureChart studies={filteredStudies} />
-                )}
-                {mapType === TreatmentMapType.TREATMENT_FAILURE && <TreatmentFailureChart studies={filteredStudies} />}
+                {mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE && <SelectionDataContent />}
+                {mapType === TreatmentMapType.TREATMENT_FAILURE && <SelectionDataContent />}
             </>
         );
     }
