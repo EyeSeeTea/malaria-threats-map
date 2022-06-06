@@ -115,7 +115,7 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
                 <RoundedContainer>
                     {selectionData.data && chartCataContent()}
 
-                    <CitationNew dataSources={selectionData.dataSources} />
+                    {selectionData.dataSources && <CitationNew dataSources={selectionData.dataSources} />}
                     {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
                 </RoundedContainer>
 

@@ -13,9 +13,9 @@ export type SelectionData = {
         | DiagnosisChartData
         | InvasiveChartData
         | TreatmentChartData;
-    dataSources: CitationDataSource[];
-    curations: CurationSources[];
-    othersDetected: string[];
+    dataSources?: CitationDataSource[];
+    curations?: CurationSources[];
+    othersDetected?: string[];
 };
 
 export type PreventionChartData = {

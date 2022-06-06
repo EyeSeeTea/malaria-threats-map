@@ -34,7 +34,7 @@ export function createTreatmentSelectionData(
         filterSelection: [],
         studyObject,
         data: createTreatmentFailureChartData(sortedStudies),
-        dataSources: [],
+        dataSources: undefined,
         curations: [],
         othersDetected: [],
     };
