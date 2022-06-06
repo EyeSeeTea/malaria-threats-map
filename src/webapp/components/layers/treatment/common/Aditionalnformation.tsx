@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Typography } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { AditionalInformation } from "../../../../store/SelectionData";
@@ -16,22 +16,41 @@ const Row = styled.div`
     padding: 0px;
 `;
 
+const StyledLink = styled(Link)`
+    cursor: pointer;
+    &:hover {
+        text-decoration: none;
+    }
+`;
+
 type OwnProps = {
     info: AditionalInformation[];
 };
 
 type Props = OwnProps;
 
-const AditionalInformationContent = ({ info }: Props) => {
+const AditionalInformationContent: React.FC<Props> = ({ info }) => {
     const { t } = useTranslation();
+
+    const [expanded, setExpanded] = React.useState(true);
+
+    const handleExpand = React.useCallback(() => {
+        setExpanded(!expanded);
+    }, [expanded]);
 
     return (
         <Margin>
-            <Typography variant="caption" display="block" sx={{ marginBottom: 2 }}>
-                <b>{t("common.treatment.chart.treatment_failure.aditional_information_title")}</b>
-            </Typography>
+            <Row>
+                <Typography variant="caption" display="block" sx={{ marginBottom: 2 }}>
+                    <b>{t("common.treatment.chart.treatment_failure.aditional_information_title")}</b>
+                </Typography>
 
-            {info && (
+                <StyledLink onClick={handleExpand}>
+                    <b>{"Show more"}</b>
+                </StyledLink>
+            </Row>
+
+            {info && expanded && (
                 <div>
                     {info.map(item => {
                         return (
