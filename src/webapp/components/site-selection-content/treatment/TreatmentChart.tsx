@@ -19,6 +19,9 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
             fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
         },
     },
+    tooltip: {
+        enabled: false,
+    },
     title: {
         text: "",
     },
