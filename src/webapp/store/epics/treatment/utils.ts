@@ -1,11 +1,12 @@
 import i18next from "i18next";
 import { getSiteTitle } from "../../../components/site-title/utils";
-import { SelectionData, TreatmentChartData } from "../../SelectionData";
+import { AditionalInformation, SelectionData, TreatmentChartData } from "../../SelectionData";
 import * as R from "ramda";
 import _ from "lodash";
 import { SiteSelection } from "../../types";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../components/filters/PlasmodiumSpeciesFilter";
+import { isNotNull } from "../../../utils/number-utils";
 
 export function createTreatmentSelectionData(
     theme: string,
@@ -25,8 +26,6 @@ export function createTreatmentSelectionData(
 
     const subtitle = `${plasmodiumSpecies}, ${i18next.t(sortedStudies[0].DRUG_NAME)}`;
 
-    console.log({ sortedStudies });
-
     return {
         title: siteFilteredStudies.length > 0 ? getSiteTitle(theme, siteFilteredStudies[0]) : "",
         subtitle,
@@ -37,6 +36,7 @@ export function createTreatmentSelectionData(
         dataSources: undefined,
         curations: [],
         othersDetected: [],
+        aditionalInformation: createTreatmentAditionalInfo(sortedStudies),
     };
 }
 
@@ -91,11 +91,47 @@ function createTreatmentFailureChartData(studies: TreatmentStudy[]): TreatmentCh
             data: years.map(year => {
                 const yearFilters: any = studies.filter(study => parseInt(year) === parseInt(study.YEAR_START))[0];
                 return yearFilters
-                    ? parseFloat((parseFloat(yearFilters[key.name.toUpperCase()] || "0") * 100).toFixed(2))
+                    ? parseFloat((parseFloat(yearFilters[key.name.toUpperCase()] || -1) * 100).toFixed(2))
                     : -1;
             }),
         };
     });
 
     return { kind: "treatment", data: { series, years } };
+}
+
+function createTreatmentAditionalInfo(studies: TreatmentStudy[]): AditionalInformation[] {
+    const years = rangeYears(2010, new Date().getFullYear()).sort();
+
+    const aditionalInfoByYears = years.map(year => {
+        const studiesByYear: TreatmentStudy[] = studies.filter(study => parseInt(year) === parseInt(study.YEAR_START));
+
+        if (studiesByYear.length === 0) {
+            return undefined;
+        } else {
+            const studyObject = studiesByYear[0];
+
+            const healthFacilityName =
+                isNotNull(studyObject.HEALTHFACILITY_NAME) && studyObject.HEALTHFACILITY_NAME !== "Not applicable"
+                    ? `${i18next.t("common.treatment.chart.treatment_failure.health_facility_name")} ${
+                          studyObject.HEALTHFACILITY_NAME
+                      }. `
+                    : "";
+
+            const numberOfPatients = `${studyObject.N} patients included`;
+            const followUp = `${studyObject.FOLLOW_UP} days follow-up. `;
+
+            return {
+                year,
+                text: `${healthFacilityName} ${numberOfPatients} ${followUp}`,
+                conducted: {
+                    label: `Study conducted by`,
+                    link: studyObject.CITATION_URL,
+                    text: studyObject.INSTITUTION,
+                },
+            };
+        }
+    });
+
+    return _.compact(aditionalInfoByYears);
 }

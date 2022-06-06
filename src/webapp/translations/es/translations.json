@@ -145,13 +145,14 @@
             "molecular_markers": "Marcadores moleculares de resistencia a los medicamentos",
             "molecular_markers_subtitle": "Resultados de estudios de prevención molecular",
             "chart": {
+                "aditional_information_title": "Información adicional: ",
                 "treatment_failure": {
                     "content": "{{nStudies}} estudios de eficacia terapéutica efectuados en la eficacia {{drug}} contra <i>{{plasmodiumSpecies}}</i> {{years}}",
                     "percentage": "%",
                     "study_years": "Año(s) del estudio",
-                    "health_facility_name": "Nombre del centro de salud",
-                    "number_of_patients": "Número de pacientes",
-                    "follow_up": "Duración del seguimiento",
+                    "health_facility_name": "Estudio realizado en el",
+                    "number_of_patients": "pacientes incluidos",
+                    "follow_up": "dias de seguimiento",
                     "confirmed_resist_pv": "Pacientes con resistencia confirmada",
                     "positive_day_3": "Positivos después del 3er día",
                     "treatment_failure_pp": "Pacientes con fallo terapeutico, por protocolo",

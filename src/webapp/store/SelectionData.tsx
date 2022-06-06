@@ -16,6 +16,7 @@ export type SelectionData = {
     dataSources?: CitationDataSource[];
     curations?: CurationSources[];
     othersDetected?: string[];
+    aditionalInformation?: AditionalInformation[];
 };
 
 export type PreventionChartData = {
@@ -108,4 +109,14 @@ export type CitationDataSource = {
 export type CurationSources = {
     dataSources: string[];
     text: string;
+};
+
+export type AditionalInformation = {
+    year: string;
+    text: string;
+    conducted: {
+        label: string;
+        text: string;
+        link?: string;
+    };
 };

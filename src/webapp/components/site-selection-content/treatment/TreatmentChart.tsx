@@ -38,7 +38,8 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
     series: data,
     legend: {
         itemStyle: {
-            fontSize: "9px",
+            fontSize: "12px",
+            fontWeight: "normal",
         },
         enabled: true,
         itemMarginTop: 12,
