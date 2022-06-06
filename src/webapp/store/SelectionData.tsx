@@ -48,7 +48,7 @@ export type InvasiveChartData = {
 
 export type TreatmentChartData = {
     kind: "treatment";
-    data: TreatmentChartDataGroup;
+    data: { years: string[]; series: TreatmentChartDataGroup[] };
 };
 
 export type PreventionChartDataItem = {
@@ -74,7 +74,7 @@ export type TreatmentChartDataGroup = {
     name: string;
     color?: string;
     lineWidth: number;
-    market: { symbol: string };
+    marker: { symbol: string };
     data: number[];
 };
 
