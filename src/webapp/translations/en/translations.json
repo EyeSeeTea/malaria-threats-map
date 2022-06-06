@@ -145,7 +145,6 @@
             "molecular_markers": "Molecular markers of drug resistance",
             "molecular_markers_subtitle": "Results of studies of molecular prevention",
             "chart": {
-                "aditional_information_title": "Aditional information: ",
                 "treatment_failure": {
                     "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against <i>{{plasmodiumSpecies}}</i> {{years}}",
                     "percentage": "Percentage (%)",
@@ -158,7 +157,8 @@
                     "treatment_failure_pp": "Patients with treatment failure, per protocol",
                     "treatment_failure_km": "Patients with treatment failure, Kaplan-Meier",
                     "days": "days",
-                    "studies": "study(s)"
+                    "studies": "study(s)",
+                    "aditional_information_title": "Aditional information: "
                 },
                 "molecular_markers": {
                     "content": "{{nStudies}} molecular marker studies conducted on {{molecularMarker}} {{years}}",

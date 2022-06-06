@@ -28,7 +28,7 @@ const AditionalInformationContent = ({ info }: Props) => {
     return (
         <Margin>
             <Typography variant="caption" display="block" sx={{ marginBottom: 2 }}>
-                <b>{t("common.treatment.chart.aditional_information_title")}</b>
+                <b>{t("common.treatment.chart.treatment_failure.aditional_information_title")}</b>
             </Typography>
 
             {info && (

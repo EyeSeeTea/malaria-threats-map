@@ -145,7 +145,6 @@
             "molecular_markers": "Marqueurs moléculaires de la résistance aux médicaments",
             "molecular_markers_subtitle": "Résultats des études de prévention moléculaire",
             "chart": {
-                "aditional_information_title": "Informations supplémentaires: ",
                 "treatment_failure": {
                     "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre <i>{{plasmodiumSpecies}}</i> {{years}}",
                     "percentage": "Pourcentage (%)",
@@ -158,7 +157,8 @@
                     "treatment_failure_pp": "Patients avec un échec thérapeutique, selon le protocole",
                     "treatment_failure_km": "Patients avec un échec thérapeutique, Kaplan-Meier",
                     "days": "journées",
-                    "studies": "Étude(s)"
+                    "studies": "Étude(s)",
+                    "aditional_information_title": "Informations supplémentaires: "
                 },
                 "molecular_markers": {
                     "content": "{{nStudies}} etudes de marqueur moléculaire effectuée sur {{molecularMarker}} {{years}}",
