@@ -6,8 +6,7 @@ import { PreventionStudy } from "../../domain/entities/PreventionStudy";
 import { TreatmentStudy } from "../../domain/entities/TreatmentStudy";
 import { InvasiveStudy } from "../../domain/entities/InvasiveStudy";
 import { CountryLayer, CountryProperties } from "../../domain/entities/CountryLayer";
-import { Option } from "../components/BasicSelect";
-import { Study } from "../../domain/entities/Study";
+import { SelectionData } from "./SelectionData";
 
 export interface State {
     malaria: MalariaState;
@@ -112,97 +111,6 @@ export interface PreventionFilters {
     type: string | null;
     species: string[];
 }
-
-export type PreventionChartDataItem = {
-    name: string;
-    y: number;
-    number: string;
-};
-
-export type PreventionMechanismChartDataItem = {
-    name: string;
-    y: number;
-    value?: string;
-};
-
-export type PreventionMechanismChartDataGroup = {
-    maxPointWidth: number;
-    name: string;
-    color?: string;
-    data: PreventionMechanismChartDataItem[];
-};
-
-export type DiagnosisChartDataItem = {
-    type: string;
-    samples: string;
-    percentageConfirmed: string;
-};
-
-export type PreventionChartData = {
-    kind: "prevention";
-    data: { [x: string]: { [x: string]: PreventionChartDataItem[] } };
-};
-
-export type PreventionMechanismChartData = {
-    kind: "prevention-mechanism";
-    data: {
-        [x: string]: {
-            [x: string]: {
-                years: number[];
-                assays: PreventionMechanismChartDataGroup[];
-                allelics: PreventionMechanismChartDataGroup[];
-            };
-        };
-    };
-};
-
-export type DiagnosisChartDataItemByYear = {
-    header?: string;
-    dataSources: string;
-    year: number;
-    items: DiagnosisChartDataItem[];
-};
-
-export type DiagnosisChartData = {
-    kind: "diagnosis";
-    data: DiagnosisChartDataItemByYear[];
-};
-
-export type InvasiveChartDataContent = {
-    species?: string;
-    samplingPeriod?: string;
-    samplingMethod?: string;
-    speciedIdentificationMethod?: string;
-    vectorStage?: string;
-};
-
-export type InvasiveChartData = {
-    kind: "invasive";
-    data: InvasiveChartDataContent;
-};
-
-export type CitationDataSource = {
-    key: string;
-    url?: string;
-    text: string;
-};
-
-export type CurationSources = {
-    dataSources: string[];
-    text: string;
-};
-
-export type SelectionData = {
-    title: string;
-    subtitle: string;
-    filterOptions?: Option[];
-    filterSelection?: Option[];
-    studyObject: Study;
-    data?: PreventionChartData | PreventionMechanismChartData | DiagnosisChartData | InvasiveChartData;
-    dataSources: CitationDataSource[];
-    curations: CurationSources[];
-    othersDetected: string[];
-};
 
 export interface PreventionState {
     studies: PreventionStudy[];

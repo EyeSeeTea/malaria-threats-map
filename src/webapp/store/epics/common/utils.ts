@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { Study } from "../../../../domain/entities/Study";
 import { isNotNull, isNull } from "../../../utils/number-utils";
-import { CitationDataSource, CurationSources } from "../../types";
+import { CitationDataSource, CurationSources } from "../../SelectionData";
 
 export function createCitationDataSources(theme: string, studies: Study[]): CitationDataSource[] {
     const studiesWithURL = studies.filter(study => isNotNull(study.CITATION_URL));

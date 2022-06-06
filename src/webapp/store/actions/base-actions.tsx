@@ -1,6 +1,7 @@
 import { createAction, createCustomAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import { ActionGroup, RegionState, SelectionData, SiteSelection } from "../types";
+import { ActionGroup, RegionState, SiteSelection } from "../types";
+import { SelectionData } from "../SelectionData";
 import { AjaxError } from "rxjs/ajax";
 import { UploadFileData } from "../../../domain/usecases/UploadFileUseCase";
 import { Option } from "../../components/BasicSelect";

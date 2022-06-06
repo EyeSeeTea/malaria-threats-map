@@ -1,8 +1,9 @@
 import * as R from "ramda";
 import { createSelector } from "reselect";
-import { ActionGroup, MalariaState, RegionState, SelectionData, SiteSelection, State } from "../types";
+import { ActionGroup, MalariaState, RegionState, SiteSelection, State } from "../types";
 import { createReducer } from "../reducer-utils";
 import { ActionTypeEnum } from "../actions";
+import { SelectionData } from "../SelectionData";
 
 const query = window.location.search.substring(1);
 

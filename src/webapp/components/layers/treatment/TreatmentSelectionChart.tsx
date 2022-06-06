@@ -4,7 +4,7 @@ import { selectSelection, selectTheme } from "../../../store/reducers/base-reduc
 import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 import MolecularMarkersChart from "./MolecularMarkers/MolecularMarkersChart";
-import TreatmentFailureChart from "./TreatmentFailure/TreatmentFailureChart";
+import TreatmentFailureChart from "../../site-selection-content/treatment/TreatmentFailureChart";
 import { selectTreatmentFilters } from "../../../store/reducers/treatment-reducer";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 

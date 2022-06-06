@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { SelectionData } from "../../../store/types";
+import { SelectionData } from "../../../store/SelectionData";
 
 const Container = styled.div`
     margin-bottom: 16px;

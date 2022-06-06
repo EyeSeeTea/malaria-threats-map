@@ -1,11 +1,12 @@
 import i18next from "i18next";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import { getSiteTitle } from "../../../components/site-title/utils";
-import { InvasiveChartData, SelectionData, SiteSelection } from "../../types";
+import { InvasiveChartData, SelectionData } from "../../SelectionData";
 import { createCitationDataSources, createCurations } from "../common/utils";
 import * as R from "ramda";
 import { isNotNull } from "../../../utils/number-utils";
 import { lowerCase } from "lower-case";
+import { SiteSelection } from "../../types";
 
 export function createInvasiveSelectionData(
     theme: string,

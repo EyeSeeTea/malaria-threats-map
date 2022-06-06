@@ -5,10 +5,11 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../store/reducers/base-reducer";
-import { SelectionData, State } from "../../../store/types";
+import { State } from "../../../store/types";
 import { selectPreventionSelectionStudies } from "../../../store/reducers/prevention-reducer";
 import { Divider, Typography } from "@mui/material";
 import i18next from "i18next";
+import { SelectionData } from "../../../store/SelectionData";
 
 const Flex = styled.div`
     display: flex;

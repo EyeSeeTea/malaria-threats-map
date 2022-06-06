@@ -9,16 +9,15 @@ import {
     PreventionChartDataItem,
     CitationDataSource,
     SelectionData,
-    SiteSelection,
-    PreventionMapType,
     PreventionMechanismChartData,
     PreventionMechanismChartDataGroup,
-} from "../../types";
+} from "../../SelectionData";
 import * as R from "ramda";
 import { createCitationDataSources, createCurations, selectDataSourcesByStudies } from "../common/utils";
 import _ from "lodash";
 import { ResistanceMechanismColors } from "../../../components/layers/prevention/ResistanceMechanisms/symbols";
 import { RESISTANCE_MECHANISM } from "../../../components/layers/prevention/ResistanceMechanisms/utils";
+import { PreventionMapType, SiteSelection } from "../../types";
 
 export function createPreventionSelectionData(
     theme: string,

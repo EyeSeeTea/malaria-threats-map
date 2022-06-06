@@ -2,7 +2,7 @@ import * as React from "react";
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { CurationSources } from "../../store/types";
+import { CurationSources } from "../../store/SelectionData";
 
 const Margin = styled.div`
     margin-top: 10px;

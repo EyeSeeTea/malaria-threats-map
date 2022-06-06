@@ -4,7 +4,8 @@ import * as R from "ramda";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import { getSiteTitle } from "../../../components/site-title/utils";
 import { formatList } from "../../../utils/string-utils";
-import { CitationDataSource, DiagnosisChartData, SelectionData, SiteSelection } from "../../types";
+import { CitationDataSource, DiagnosisChartData, SelectionData } from "../../SelectionData";
+import { SiteSelection } from "../../types";
 import { createCitationDataSources, createCurations, selectDataSourcesByStudies } from "../common/utils";
 
 export function createDiagnosisSelectionData(

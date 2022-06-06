@@ -3,8 +3,9 @@ import { Divider, Typography } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useTranslation } from "react-i18next";
-import { PreventionMapType, SelectionData } from "../../../store/types";
+import { SelectionData } from "../../../store/SelectionData";
 import { preventionBarChartOptions } from "./preventionChartUtils";
+import { PreventionMapType } from "../../../store/types";
 
 type Props = {
     mapType: PreventionMapType;
