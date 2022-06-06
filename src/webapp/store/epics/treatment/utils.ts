@@ -16,6 +16,9 @@ export function createTreatmentSelectionData(
     if (!selection) return null;
 
     const siteFilteredStudies = filteredStudies.filter(study => study.SITE_ID === selection.SITE_ID);
+
+    if (siteFilteredStudies.length === 0) return null;
+
     const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), siteFilteredStudies);
 
     const studyObject = sortedStudies[0];
