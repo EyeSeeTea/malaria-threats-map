@@ -28,14 +28,12 @@
             "resistance_intensity": "Intensité de la résistance aux insecticides",
             "resistance_mechanism": "Mécanismes de résistance aux insecticides",
             "synergist_involvement": "Effet synergiste de la susceptibilité",
-            "synergist_involvement_legend": "Effet de la synergie sur la susceptibilité",
-            "pbo_deployment": "Déploiement de moustiquaires  PBO-pyréthroïde",
-            "pbo_deployment_legend": "Conformité aux critères recommandés par l'OMS pour le  déploiementde moustiquaires avec PBO et pyréthroïde",
+            "synergist_involvement_legend": "Effet du synergiste dans la restauration de la sensibilité à l'insecticide",
             "chart": {
                 "resistance_status": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
                     "content_2": " du paludisme via détermination de la dose diagnostique(s) avec {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# de tests",
+                    "number_of_tests": "nombre testé",
                     "Confirmed": "Confirmée",
                     "Possible": "Suspectée",
                     "Susceptible": "Sensible",
@@ -47,7 +45,7 @@
                 "resistance_intensity": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
                     "content_2": " du paludisme via détermination de l'intensité de la résistance(s) avec {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# de tests",
+                    "number_of_tests": "nombre testé",
                     "HIGH_INTENSITY": "Fort",
                     "MODERATE_TO_HIGH_INTENSITY": "Moyen Fort",
                     "MODERATE_INTENSITY": "Moyen",
@@ -60,7 +58,7 @@
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
                     "content_2": " du paludisme via {{insecticideClasses}} avec {{type}} {{years}}",
-                    "number_of_tests": "# de tests",
+                    "number_of_tests": "nombre testé",
                     "DETECTED": "Détecté",
                     "NOT_DETECTED": "Non détecté",
                     "title": "Nombre d'essais de mécanismes",
@@ -71,24 +69,9 @@
                 "synergist_involvement": {
                     "mortality": "mortalité (%)",
                     "tested": "Études (n)",
-                    "number_of_tests": "# de tests",
+                    "number_of_tests": "nombre testé",
                     "mosquito_mortality": "% mortalité de moustique",
                     "no_synergist": "Pas de synergistes"
-                },
-                "pbo_deployment": {
-                    "subtitle": "Conformité avec les critères recommandés par l'OMS pour le déploiement de moustiquaires pyréthroïdes-PBO par espèce vectorielle",
-                    "vector_species": "Espèces vectorielles",
-                    "vector_species_criteria": "Espèces vectorielles qui répondent aux critères",
-                    "num_sites_criteria": "Nombre de sites répondant aux critères",
-                    "pyrethroid_resistance_status": "Statut de résistance aux pyréthroïdes",
-                    "adjusted_mortality": "Mortalité ajustée contre les pyréthrinoïdes entre 10% et 80%",
-                    "most_recent_test_results": "Résultats des tests de sensibilité aux pyréthrinoïdes les plus récents",
-                    "conferred_by_mono_oxygenase": "Conféré (au moins en partie) par la mono-oxygénase",
-                    "mono_oxygenase_measured_by": "Mono-oxygénase mesurée par",
-                    "most_recent_mono_oxygenase_results": "Résultats les plus récents d'implication de la mono-oxygénase",
-                    "yes": "Oui",
-                    "no": "Non",
-                    "view_sites": "Voir les sites"
                 }
             },
             "legend": {
@@ -113,31 +96,6 @@
                     "full_involvement": "Implication totale",
                     "partial_involvement": "Implication partielle",
                     "no_involvement": "Pas d'implication"
-                },
-                "pbo_deployment": {
-                    "eligible": "Tous les critères remplis",
-                    "not_eligible": "Au moins un critère n'est pas rempli",
-                    "not_enough_data": "Davantage de données doivent être collectées pour évaluer les critères",
-                    "expanded": {
-                        "eligible": "les sites où au moins une espèce de vecteur satisfait les trois critères recommandés par l'OMS",
-                        "not_eligible": "les sites où l'une des espèces vectrices pour lesquelles des données sont disponibles enfreint au moins l'un des trois critères recommandés par l'OMS décrits ci-dessus, et aucune  espèce pour lesquelle des données sont disponibles ne satisfait les trois critères.",
-                        "not_enough_data": "sites avec des données insuffisantes pour évaluer si les espèces vectorielles locales satisfont les trois critères",
-                        "p1": "Cette carte montre l'état de conformité des populations locales de vecteurs avec les ",
-                        "p1Link": "https://apps.who.int/iris/bitstream/handle/10665/258939/WHO-HTM-GMP-2017.17-eng.pdf?sequence=5",
-                        "p1a": "trois critères recommandés par l'OMS ",
-                        "p2": "sur différents sites ou zones géographiques. Le statut a été évalué sur la base des données incluses dans la base de données mondiale sur la résistance aux insecticides chez les vecteurs du paludisme. La carte montre l'état de conformité pour les espèces vectrices sélectionnées dans le volet de filtre. Si aucune espèce n'a été filtrée, la carte considère toutes les données disponibles pour évaluer les critères."
-                    },
-                    "link": "https://www.who.int/malaria/publications/atoz/9789241511575/fr/",
-                    "link_text": "Procédures pour tester la résistance aux insecticides chez les moustiques vecteurs du paludisme – seconde édition",
-                    "link_content_1": "Plus de information sur les recommandations de l'OMS pour le déploiement de moustiquaires avec pBO et pyréthrinoïde sont disponibles dans les ",
-                    "link_content_2": ". Ces recommandations seront mises à jour à mesure que de nouvelles preuves scientifiques deviennent disponibles.",
-                    "countries_legend": {
-                        "at_least_one_site": "Au moins un site répond aux trois critères recommandés par l'OMS",
-                        "insufficient_to_judge": "Les données de surveillance rapportées sont insuffisantes pour juger de la comestibilité",
-                        "no_reports_available": "Aucun rapport sur la surveillance des critères recommandés par l'OMS n'est disponible",
-                        "not_malaria_endemic": "Pas de paludisme endémique",
-                        "not_applicable": "N'est pas applicable"
-                    }
                 }
             }
         },
@@ -228,6 +186,8 @@
                     "species": "Espèces",
                     "sampling_period": "Période d’échantillonnage",
                     "sampling_method": "Méthode d’échantillonnage",
+                    "stage": "Stade vecteur trouvé",
+                    "breeding_habitat": "Habitat larvaire",
                     "study_identification_method": "Méthode d’identification des espèces",
                     "data_collection": "Remerciements pour la collecte de données",
                     "no_available": "Indisponible"
@@ -270,7 +230,7 @@
             "plasmodium_species": "Espèces de plasmodium",
             "drug": "Médicament",
             "molecular_marker": "Marqueur moléculaire",
-            "mechanism_type": "Type de mécanisme",
+            "mechanism_type": "Type de synergie",
             "assay_type": "Type d'analyse",
             "synergist_type": "Type de test",
             "synergist_types": "Types du mécanismes métaboliques",
@@ -443,27 +403,6 @@
                 "percentile_75": "Percentile 75"
             }
         },
-        "subscription": {
-            "title": "Inscrivez-vous pour recevoir des mises à jour sur ces quatre défis de la lutte contre le paludisme!",
-            "first_name": "Prénom",
-            "last_name": "Nom de famille",
-            "email": "Email",
-            "country": "Pay",
-            "organization": "Organisation",
-            "button": "Souscrire",
-            "institutions": {
-                "nmcp": "PNLP",
-                "funding_organization": "Entité financiatrice",
-                "research_organization": "Institution de recherche",
-                "who_collaborating_centers": "Centre collaborateur de la OMS",
-                "private_sector": "Secteur privé",
-                "ngo": "ONG",
-                "media_organization": "Agence de communication",
-                "who_country_office": "OMS - Bureau pay",
-                "who_regional_office": "OMS - Bureau regional",
-                "who_headquarters": "OMS - Siège"
-            }
-        },
         "uploadFile": {
             "title": "Téléverser un fichier",
             "name": "Titre",
@@ -494,7 +433,6 @@
             "image": "Exporter une image de la carte",
             "summary": "Rapport sommaire",
             "disclaimer": "Avertissement",
-            "subscribe": "Souscrire",
             "uploadFile": "Télécharger le fichier et télécharger le modèle",
             "comments": "Envoyez vos commentaires",
             "help": "Help",

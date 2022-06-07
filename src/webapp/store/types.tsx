@@ -56,12 +56,10 @@ export interface MalariaState {
     dataDownloadOpen: boolean;
     reportOpen: boolean;
     mapTitle: string;
-    subscriptionOpen: boolean;
     uploadFileOpen: boolean;
     feedbackOpen: boolean;
     theaterMode: boolean;
     legendExpanded: boolean;
-    isSubmittingSubscription: boolean;
     isUploadingFile: boolean;
 }
 
@@ -95,7 +93,6 @@ export enum PreventionMapType {
     INTENSITY_STATUS,
     RESISTANCE_MECHANISM,
     LEVEL_OF_INVOLVEMENT,
-    PBO_DEPLOYMENT,
 }
 
 export interface PreventionFilters {

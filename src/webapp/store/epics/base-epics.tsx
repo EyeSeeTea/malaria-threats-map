@@ -22,7 +22,6 @@ import {
     uploadFileSuccessAction,
     uploadFileErrorAction,
 } from "../actions/base-actions";
-import { PreventionMapType, State } from "../types";
 import * as ajax from "../ajax";
 import { MapServerConfig } from "../../constants/constants";
 import { addNotificationAction } from "../actions/notifier-actions";
@@ -35,6 +34,7 @@ import { fetchCountryLayerRequest } from "../actions/country-layer-actions";
 import { ApiParams } from "../../../data/common/types";
 import { fromFuture } from "./utils";
 import { EpicDependencies } from "..";
+import { State } from "../types";
 
 export const setThemeEpic = (
     action$: ActionsObservable<ActionType<typeof setThemeAction>>,
@@ -60,11 +60,6 @@ export const setThemeEpic = (
             switch (action.payload) {
                 case "invasive":
                     return of(...[setCountryModeAction(false), ...base]);
-                case "prevention":
-                    if (state.prevention.filters.mapType === PreventionMapType.PBO_DEPLOYMENT) {
-                        return of(...[setCountryModeAction(false), ...base]);
-                    }
-                    return of(...base);
                 default:
                     return of(...base);
             }
@@ -142,9 +137,6 @@ export const setStoryModeStepEpic = (
                 }
                 switch (theme) {
                     case "prevention":
-                        if (state.prevention.filters.mapType === PreventionMapType.PBO_DEPLOYMENT) {
-                            return of();
-                        }
                         switch (action.payload) {
                             case 0:
                                 return of(setCountryModeAction(true), setRegionAction({}));
@@ -312,14 +304,7 @@ export const setCountryModeEpic = (
                 ? fetchCountryLayerRequest()
                 : undefined;
 
-            const setRegionIsRequired =
-                !state.malaria.countryMode &&
-                state.malaria.theme === "prevention" &&
-                state.prevention.filters.mapType === PreventionMapType.PBO_DEPLOYMENT
-                    ? setRegionAction({})
-                    : undefined;
-
-            const actions = _.compact([requestCountriesAction, setRegionIsRequired]);
+            const actions = _.compact([requestCountriesAction]);
 
             return of(...actions);
         })

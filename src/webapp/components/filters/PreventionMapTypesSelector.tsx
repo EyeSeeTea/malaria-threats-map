@@ -39,10 +39,6 @@ const preventionSuggestions: OptionType[] = [
         label: "common.prevention.synergist_involvement",
         value: PreventionMapType.LEVEL_OF_INVOLVEMENT,
     },
-    {
-        label: "common.prevention.pbo_deployment",
-        value: PreventionMapType.PBO_DEPLOYMENT,
-    },
 ];
 function PreventionMapTypesSelector({ preventionFilters, setPreventionMapType, setMapTitle }: Props) {
     const { t } = useTranslation();

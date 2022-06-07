@@ -1,35 +1,5 @@
 import { themes } from "../../support/constants";
 
-describe("Open popup in pyrethroid-PBO nets deployment subtheme", () => {
-    beforeEach(() => {
-        cy.loadPage(themes.vectorInsecticideResistance);
-        cy.contains("Insecticide resistance status").click();
-        cy.findByText("Pyrethroid-PBO nets deployment").click();
-    });
-
-    it("should open a popup to click on coordinates", () => {
-        cy.openSitePopup("Cesaree");
-        cy.findByText("Cesaree, French Guiana");
-
-        cy.contains("Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment by vector species");
-
-        //row titles
-        cy.contains("Vector species");
-        cy.contains("Pyrethroid resistance status");
-        cy.contains("Adj. mortality against pyrethroids between 10% and 80%");
-        cy.contains("Most recent pyrethroid susceptibility test results");
-        cy.contains("Conferred (at least in part) by mono-oxygenase");
-        cy.contains("Mono-oxygenase measured by");
-        cy.contains("Most recent mono-oxygenase involvement results");
-
-        //row data
-        cy.contains("An. darlingi");
-        cy.contains("Possible resistance");
-        cy.contains("No");
-        cy.contains("2017");
-    });
-});
-
 describe("Open popup in insecticide resistance intensity subtheme", () => {
     beforeEach(() => {
         cy.loadPage(themes.vectorInsecticideResistance);
@@ -77,10 +47,10 @@ describe("Open popup in insecticide resistance status subtheme", () => {
     });
 
     it("should open a popup to click on coordinates", () => {
-        cy.openSitePopup("Kampti Center");
+        cy.openSitePopup("Kampti");
         cy.findByText("Discriminating concentration bioassays", { exact: false });
 
-        cy.findByText("Kampti Center (Kampti-Lobi), Burkina Faso");
+        cy.findByText("Kampti, Burkina Faso");
         cy.findByText("Acknowledgement for data curation");
     });
 });

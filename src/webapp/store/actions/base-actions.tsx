@@ -110,11 +110,6 @@ export const setMapTitleAction = createAction(ActionTypeEnum.SetMapTitle, action
     return (mapTitle: string) => action(mapTitle);
 });
 
-export const setSubscriptionOpenAction = createAction(
-    ActionTypeEnum.SetSubscriptionOpen,
-    action => (subscriptionOpen: boolean) => action(subscriptionOpen)
-);
-
 export const setUploadFileOpenAction = createAction(
     ActionTypeEnum.SetUploadFileOpen,
     action => (uploadFileOpen: boolean) => action(uploadFileOpen)
