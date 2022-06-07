@@ -382,6 +382,7 @@ export const setSelectionEpic = (
 
                     const selectionData = createTreatmentSelectionData(
                         state.malaria.theme,
+                        state.treatment.filters,
                         state.malaria.selection,
                         state.treatment.filteredStudies
                     );
