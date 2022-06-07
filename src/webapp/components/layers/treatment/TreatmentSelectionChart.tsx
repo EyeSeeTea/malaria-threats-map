@@ -1,16 +1,13 @@
 import React, { Component } from "react";
-import { State, TreatmentMapType } from "../../../store/types";
+import { State } from "../../../store/types";
 import { selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
 import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
-import MolecularMarkersChart from "../../site-selection-content/treatment/MolecularMarkersChart";
-import { selectTreatmentFilters } from "../../../store/reducers/treatment-reducer";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SelectionDataContent from "../../site-selection-content/SelectionDataContent";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
-    treatmentFilters: selectTreatmentFilters(state),
     selection: selectSelection(state),
 });
 
@@ -28,12 +25,7 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 class TreatmentSelectionChart extends Component<Props> {
     render() {
-        const {
-            theme,
-            studies,
-            selection,
-            treatmentFilters: { mapType },
-        } = this.props;
+        const { theme, studies, selection } = this.props;
         if (!selection) {
             return <div />;
         }
@@ -41,13 +33,7 @@ class TreatmentSelectionChart extends Component<Props> {
         if (!filteredStudies.length || theme !== "treatment") {
             return <div />;
         }
-        return (
-            <>
-                {mapType === TreatmentMapType.MOLECULAR_MARKERS && <MolecularMarkersChart studies={filteredStudies} />}
-                {mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE && <SelectionDataContent />}
-                {mapType === TreatmentMapType.TREATMENT_FAILURE && <SelectionDataContent />}
-            </>
-        );
+        return <SelectionDataContent />;
     }
 }
 

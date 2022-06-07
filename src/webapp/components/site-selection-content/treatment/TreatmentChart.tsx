@@ -58,7 +58,6 @@ const mapStateToProps = (state: State) => ({
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
-    studies?: TreatmentStudy[];
     selectionData?: SelectionData;
 };
 type Props = StateProps & OwnProps;
