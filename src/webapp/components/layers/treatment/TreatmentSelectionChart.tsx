@@ -3,7 +3,7 @@ import { State, TreatmentMapType } from "../../../store/types";
 import { selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
 import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
-import MolecularMarkersChart from "./MolecularMarkers/MolecularMarkersChart";
+import MolecularMarkersChart from "../../site-selection-content/treatment/MolecularMarkersChart";
 import { selectTreatmentFilters } from "../../../store/reducers/treatment-reducer";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SelectionDataContent from "../../site-selection-content/SelectionDataContent";

@@ -161,9 +161,7 @@
                     "aditional_information_title": "Aditional information: "
                 },
                 "molecular_markers": {
-                    "content": "{{nStudies}} molecular marker studies conducted on {{molecularMarker}} {{years}}",
-                    "site_content_1": "In this {{year}} study, the following ",
-                    "site_content_2": " mutations were observed among {{nStudies}} samples",
+                    "subtitle": "The folowing {{molecularMarker}} mutations has been observed",
                     "percentage": "Percentage (%)",
                     "studies": "Studies",
                     "study_years": "Study year(s)",
