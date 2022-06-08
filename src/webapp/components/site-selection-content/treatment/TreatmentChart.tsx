@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../store/reducers/base-reducer";
 import { State } from "../../../store/types";
-import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { SelectionData } from "../../../store/SelectionData";
 
 const options: (data: any, categories: any[], translations: any) => Highcharts.Options = (

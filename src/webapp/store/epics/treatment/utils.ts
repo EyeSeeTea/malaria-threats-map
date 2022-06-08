@@ -165,10 +165,20 @@ function createMolecularMarkersChartData(
             years,
             series,
             markers: {
-                "Validated markers": Object.keys(k13Groups).map(genotype => ({
-                    name: genotype,
-                    color: MutationColors[genotype] ? MutationColors[genotype].color : "000",
-                })),
+                "Validated markers": Object.keys(k13Groups)
+                    .map(genotype => ({
+                        name: genotype,
+                        color: MutationColors[genotype] ? MutationColors[genotype].color : "#000",
+                    }))
+                    .filter(marker => marker.name !== "WT"),
+                "Associated markers": [],
+                Wildtype: [
+                    {
+                        name: "WT",
+                        color: MutationColors["WT"].color,
+                    },
+                ],
+                "Other markers": [],
             },
         },
     };
