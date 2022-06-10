@@ -158,7 +158,6 @@ export interface InvasiveState {
     loading: boolean;
     filteredStudies: InvasiveStudy[];
     filters: InvasiveFilters;
-    selectionStudies: InvasiveStudy[];
 }
 
 export interface CountryLayerState {

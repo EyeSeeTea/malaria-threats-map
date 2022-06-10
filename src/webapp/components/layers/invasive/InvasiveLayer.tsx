@@ -15,7 +15,7 @@ import * as R from "ramda";
 import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectInvasiveFilters, selectInvasiveStudies } from "../../../store/reducers/invasive-reducer";
-import { setInvasiveFilteredStudiesAction, setInvasiveSelectionStudies } from "../../../store/actions/invasive-actions";
+import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
 import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
 import { fetchInvasiveStudiesRequest } from "../../../store/actions/invasive-actions";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
@@ -55,7 +55,6 @@ const mapDispatchToProps = {
     setFilteredStudies: setInvasiveFilteredStudiesAction,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
-    setInvasiveSelectionStudies: setInvasiveSelectionStudies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

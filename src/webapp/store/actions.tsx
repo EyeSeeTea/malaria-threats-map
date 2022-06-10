@@ -77,7 +77,6 @@ export enum ActionTypeEnum {
     SetInvasiveMapType = "invasive/SET_INVASIVE_MAP_TYPE",
     SetInvasiveVectorSpecies = "invasive/SET_INVASIVE_VECTOR_SPECIES",
     SetInvasiveFilteredStudies = "invasive/SET_FILTER_STUDIES",
-    SetInvasiveSelectionStudies = "invasive/SET_SELECTION_STUDIES",
 
     FetchTranslationsRequest = "translations/FETCH_TRANSLATIONS_REQUEST",
     FetchTranslationsSuccess = "translations/FETCH_TRANSLATIONS_SUCCESS",

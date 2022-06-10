@@ -16,5 +16,3 @@ export const setInvasiveVectorSpecies = createAction(ActionTypeEnum.SetInvasiveV
 export const setInvasiveFilteredStudiesAction = createAction(ActionTypeEnum.SetInvasiveFilteredStudies)<
     InvasiveStudy[]
 >();
-
-export const setInvasiveSelectionStudies = createAction(ActionTypeEnum.SetInvasiveSelectionStudies)<InvasiveStudy[]>();

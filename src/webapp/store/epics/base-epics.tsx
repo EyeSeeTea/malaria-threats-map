@@ -39,7 +39,6 @@ import { ActionTypeEnum } from "../actions";
 import { createPreventionSelectionData } from "./prevention/utils";
 import { createDiagnosisSelectionData } from "./diagnosis/utils";
 import { createInvasiveSelectionData } from "./invasive/utils";
-import { setInvasiveSelectionStudies } from "../actions/invasive-actions";
 import { setTreatmentSelectionStudies } from "../actions/treatment-actions";
 import { createTreatmentSelectionData } from "./treatment/utils";
 
@@ -371,24 +370,13 @@ export const setSelectionEpic = (
                     return of(...actions);
                 }
                 case "invasive": {
-                    const siteFilteredStudies = state.malaria.selection
-                        ? state.invasive.filteredStudies.filter(
-                              study => study.SITE_ID === state.malaria.selection.SITE_ID
-                          )
-                        : [];
-
                     const selectionData = createInvasiveSelectionData(
                         state.malaria.theme,
                         state.malaria.selection,
                         state.invasive.filteredStudies
                     );
 
-                    const actions = _.compact([
-                        setInvasiveSelectionStudies(siteFilteredStudies),
-                        setSelectionData(selectionData),
-                    ]);
-
-                    return of(...actions);
+                    return of(setSelectionData(selectionData));
                 }
                 default:
                     return of();

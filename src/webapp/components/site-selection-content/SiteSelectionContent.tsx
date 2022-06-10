@@ -2,10 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { selectTheme } from "../../store/reducers/base-reducer";
 import { selectTreatmentSelectionStudies } from "../../store/reducers/treatment-reducer";
-import { selectInvasiveSelectionStudies } from "../../store/reducers/invasive-reducer";
 import { setSelection } from "../../store/actions/base-actions";
 import { State } from "../../store/types";
-import InvasiveSelectionChart from "../layers/invasive/InvasiveSelectionChart";
 import TreatmentSelectionChart from "../layers/treatment/TreatmentSelectionChart";
 import styled from "styled-components";
 import { IconButton } from "@mui/material";
@@ -25,7 +23,6 @@ export const IconContainer = styled.div`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     treatmentSelectionStudies: selectTreatmentSelectionStudies(state),
-    invasiveSelectionStudies: selectInvasiveSelectionStudies(state),
 });
 
 const mapDispatchToProps = {
@@ -36,22 +33,14 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const SiteSelectionContent: React.FC<Props> = ({
-    theme,
-    treatmentSelectionStudies,
-    invasiveSelectionStudies,
-    setSelection,
-}) => {
+const SiteSelectionContent: React.FC<Props> = ({ theme, treatmentSelectionStudies, setSelection }) => {
     const handleClose = React.useCallback(() => {
         setSelection(null);
     }, [setSelection]);
 
     //TODO: Review when preventionSelectionStudies,diagnosisSelectionStudies,
     // treatmentSelectionStudies, invasiveSelectionStudies has not been neccesary
-    if (
-        (theme === "treatment" && !treatmentSelectionStudies.length) ||
-        (theme === "invasive" && !invasiveSelectionStudies.length)
-    ) {
+    if (theme === "treatment" && !treatmentSelectionStudies.length) {
         return <div />;
     }
 
@@ -67,7 +56,7 @@ const SiteSelectionContent: React.FC<Props> = ({
             {theme === "prevention" && <SelectionDataContent />}
             {theme === "diagnosis" && <SelectionDataContent />}
             {theme === "treatment" && <TreatmentSelectionChart studies={treatmentSelectionStudies} />}
-            {theme === "invasive" && <InvasiveSelectionChart studies={invasiveSelectionStudies} />}
+            {theme === "invasive" && <SelectionDataContent />}
         </Container>
     );
 };
