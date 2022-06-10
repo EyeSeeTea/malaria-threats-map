@@ -18,13 +18,14 @@ import {
     selectAny,
     selectRegion,
     selectSelection,
+    selectSelectionData,
     selectSetBounds,
     selectSetZoom,
     selectTheaterMode,
     selectTheme,
     selectTour,
 } from "../store/reducers/base-reducer";
-import { selectPreventionSelectionStudies, selectPreventionStudies } from "../store/reducers/prevention-reducer";
+import { selectPreventionStudies } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisSelectionStudies, selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentSelectionStudies, selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveSelectionStudies, selectInvasiveStudies } from "../store/reducers/invasive-reducer";
@@ -187,11 +188,11 @@ const mapStateToProps = (state: State) => ({
     treatmentStudies: selectTreatmentStudies(state),
     invasiveStudies: selectInvasiveStudies(state),
     tour: selectTour(state),
-    preventionSelectionStudies: selectPreventionSelectionStudies(state),
     diagnosisSelectionStudies: selectDiagnosisSelectionStudies(state),
     treatmentSelectionStudies: selectTreatmentSelectionStudies(state),
     invasiveSelectionStudies: selectInvasiveSelectionStudies(state),
     selection: selectSelection(state),
+    selectionData: selectSelectionData(state),
 });
 
 const mapDispatchToProps = {
@@ -226,14 +227,8 @@ class Map extends React.Component<Props> {
     };
     images: any[] = [];
 
-    shouldShowRightSideBar() {
-        return (
-            this.props.selection &&
-            (this.props.preventionSelectionStudies.length > 0 ||
-                this.props.diagnosisSelectionStudies.length > 0 ||
-                this.props.treatmentSelectionStudies.length > 0 ||
-                this.props.invasiveSelectionStudies.length > 0)
-        );
+    shouldShowRightSideBar(): boolean {
+        return this.props.selection !== null && this.props.selectionData !== null;
     }
 
     componentDidMount() {

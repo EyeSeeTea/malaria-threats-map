@@ -118,7 +118,6 @@ export interface PreventionState {
     loading: boolean;
     filteredStudies: PreventionStudy[];
     filters: PreventionFilters;
-    selectionStudies: PreventionStudy[];
 }
 
 export enum TreatmentMapType {

@@ -17,11 +17,7 @@ import {
     selectTheme,
 } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
-import {
-    fetchPreventionStudiesRequest,
-    setPreventionFilteredStudies,
-    setPreventionSelectionStudies,
-} from "../../../store/actions/prevention-actions";
+import { fetchPreventionStudiesRequest, setPreventionFilteredStudies } from "../../../store/actions/prevention-actions";
 import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import SitePopover from "../common/SitePopover";
@@ -60,7 +56,6 @@ const mapDispatchToProps = {
     setFilteredStudies: setPreventionFilteredStudies,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
-    setPreventionSelectionStudies: setPreventionSelectionStudies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

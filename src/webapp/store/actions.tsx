@@ -45,7 +45,6 @@ export enum ActionTypeEnum {
     SetSpecies = "prevention/SET_SPECIES",
     SetAssayTypes = "prevention/SET_ASSAY_TYPES",
     SetPreventionFilteredStudies = "prevention/SET_FILTER_STUDIES",
-    SetPreventionSelectionStudies = "prevention/SET_SELECTION_STUDIES",
 
     SetDiagnosisMapType = "prevention/SET_DIAGNOSIS_MAP_TYPE",
 

@@ -37,7 +37,6 @@ import { fromFuture } from "./utils";
 import { EpicDependencies } from "..";
 import { ActionTypeEnum } from "../actions";
 import { createPreventionSelectionData } from "./prevention/utils";
-import { setPreventionSelectionStudies } from "../actions/prevention-actions";
 import { setDiagnosisSelectionStudies } from "../actions/diagnosis-actions";
 import { createDiagnosisSelectionData } from "./diagnosis/utils";
 import { createInvasiveSelectionData } from "./invasive/utils";
@@ -332,12 +331,6 @@ export const setSelectionEpic = (
         switchMap(([, state]) => {
             switch (state.malaria.theme) {
                 case "prevention": {
-                    const siteFilteredStudies = state.malaria.selection
-                        ? state.prevention.filteredStudies.filter(
-                              study => study.SITE_ID === state.malaria.selection.SITE_ID
-                          )
-                        : [];
-
                     const selectionData = createPreventionSelectionData(
                         state.malaria.theme,
                         state.prevention.filters.mapType,
@@ -346,12 +339,7 @@ export const setSelectionEpic = (
                         state.prevention.studies
                     );
 
-                    const actions = _.compact([
-                        setPreventionSelectionStudies(siteFilteredStudies),
-                        setSelectionData(selectionData),
-                    ]);
-
-                    return of(...actions);
+                    return of(setSelectionData(selectionData));
                 }
                 case "diagnosis": {
                     const siteFilteredStudies = state.malaria.selection
