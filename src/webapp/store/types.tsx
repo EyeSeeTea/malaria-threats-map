@@ -81,7 +81,6 @@ export interface DiagnosisState {
     loading: boolean;
     filteredStudies: DiagnosisStudy[];
     filters: DiagnosisFilters;
-    selectionStudies: DiagnosisStudy[];
 }
 
 export interface DiagnosisFilters {

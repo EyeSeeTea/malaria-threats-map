@@ -56,7 +56,6 @@ export enum ActionTypeEnum {
     SetPatientType = "diagnosis/SET_DIAGNOSIS_PATIENT_TYPE",
     SetDeletionType = "diagnosis/SET_DIAGNOSIS_DELETION_TYPE",
     SetDiagnosisFilteredStudies = "diagnosis/SET_FILTER_STUDIES",
-    SetDiagnosisSelectionStudies = "diagnosis/SET_SELECTION_STUDIES",
 
     FetchTreatmentStudiesRequest = "treatment/FETCH_TREATMENT_STUDIES_REQUEST",
     FetchTreatmentStudiesSuccess = "treatment/FETCH_TREATMENT_STUDIES_SUCCESS",

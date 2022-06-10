@@ -22,7 +22,3 @@ export const setDiagnosisDeletionType = createAction(ActionTypeEnum.SetDeletionT
 export const setDiagnosisFilteredStudiesAction = createAction(ActionTypeEnum.SetDiagnosisFilteredStudies)<
     DiagnosisStudy[]
 >();
-
-export const setDiagnosisSelectionStudies = createAction(ActionTypeEnum.SetDiagnosisSelectionStudies)<
-    DiagnosisStudy[]
->();

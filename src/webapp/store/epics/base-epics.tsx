@@ -37,7 +37,6 @@ import { fromFuture } from "./utils";
 import { EpicDependencies } from "..";
 import { ActionTypeEnum } from "../actions";
 import { createPreventionSelectionData } from "./prevention/utils";
-import { setDiagnosisSelectionStudies } from "../actions/diagnosis-actions";
 import { createDiagnosisSelectionData } from "./diagnosis/utils";
 import { createInvasiveSelectionData } from "./invasive/utils";
 import { setInvasiveSelectionStudies } from "../actions/invasive-actions";
@@ -342,24 +341,13 @@ export const setSelectionEpic = (
                     return of(setSelectionData(selectionData));
                 }
                 case "diagnosis": {
-                    const siteFilteredStudies = state.malaria.selection
-                        ? state.diagnosis.filteredStudies.filter(
-                              study => study.SITE_ID === state.malaria.selection.SITE_ID
-                          )
-                        : [];
-
                     const selectionData = createDiagnosisSelectionData(
                         state.malaria.theme,
                         state.malaria.selection,
                         state.diagnosis.filteredStudies
                     );
 
-                    const actions = _.compact([
-                        setDiagnosisSelectionStudies(siteFilteredStudies),
-                        setSelectionData(selectionData),
-                    ]);
-
-                    return of(...actions);
+                    return of(setSelectionData(selectionData));
                 }
                 case "treatment": {
                     const siteFilteredStudies = state.malaria.selection

@@ -15,13 +15,9 @@ export function createDiagnosisSelectionData(
 ): SelectionData | null {
     if (!selection) return null;
 
-    //TODO:Remove
-    // const test = filteredStudies.filter(study => study.SITE_ID === selection.SITE_ID);
-    // const siteFilteredStudies = [
-    //     ...test,
-    //     { ...test[0], YEAR_START: test[0].YEAR_START + 1, YEAR_END: test[0].YEAR_END + 1 },
-    // ];
     const siteFilteredStudies = filteredStudies.filter(study => study.SITE_ID === selection.SITE_ID);
+
+    if (siteFilteredStudies.length === 0) return null;
 
     const surveyTypes = _.uniq(siteFilteredStudies.map(study => study.SURVEY_TYPE)).map(type => {
         const dhs = i18next.t("common.diagnosis.chart.gene_deletions.DHS");

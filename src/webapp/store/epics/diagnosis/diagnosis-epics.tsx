@@ -7,9 +7,16 @@ import {
     fetchDiagnosisStudiesRequest,
     fetchDiagnosisStudiesSuccess,
     setDiagnosisDeletionType,
+    setDiagnosisFilteredStudiesAction,
     setDiagnosisMapType,
 } from "../../actions/diagnosis-actions";
-import { logEventAction, setFiltersAction, setThemeAction, logPageViewAction } from "../../actions/base-actions";
+import {
+    logEventAction,
+    setFiltersAction,
+    setThemeAction,
+    logPageViewAction,
+    setSelectionData,
+} from "../../actions/base-actions";
 import { DiagnosisMapType, State } from "../../types";
 import { addNotificationAction } from "../../actions/notifier-actions";
 import { getAnalyticsPageView } from "../../analytics";
@@ -17,6 +24,7 @@ import { fromFuture } from "../utils";
 import { EpicDependencies } from "../../index";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import { ActionTypeEnum } from "../../actions";
+import { createDiagnosisSelectionData } from "./utils";
 
 export const getDiagnosisStudiesEpic = (
     action$: Observable<ActionType<typeof fetchDiagnosisStudiesRequest>>,
@@ -76,5 +84,23 @@ export const setDiagnosisDeletionTypeEpic = (action$: Observable<ActionType<type
                     label: action.payload,
                 })
             );
+        })
+    );
+
+export const setDiagnosisFilteredStudiesEpic = (
+    action$: Observable<ActionType<typeof setDiagnosisFilteredStudiesAction>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(skip(1)).pipe(
+        ofType(ActionTypeEnum.SetDiagnosisFilteredStudies),
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            const selectionData = createDiagnosisSelectionData(
+                state.malaria.theme,
+                state.malaria.selection,
+                state.diagnosis.filteredStudies
+            );
+
+            return of(setSelectionData(selectionData));
         })
     );

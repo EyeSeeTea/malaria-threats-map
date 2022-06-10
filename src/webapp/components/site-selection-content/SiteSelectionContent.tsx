@@ -1,12 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { selectTheme } from "../../store/reducers/base-reducer";
-import { selectDiagnosisSelectionStudies } from "../../store/reducers/diagnosis-reducer";
 import { selectTreatmentSelectionStudies } from "../../store/reducers/treatment-reducer";
 import { selectInvasiveSelectionStudies } from "../../store/reducers/invasive-reducer";
 import { setSelection } from "../../store/actions/base-actions";
 import { State } from "../../store/types";
-import DiagnosisSelectionChart from "../layers/diagnosis/DiagnosisSelectionChart";
 import InvasiveSelectionChart from "../layers/invasive/InvasiveSelectionChart";
 import TreatmentSelectionChart from "../layers/treatment/TreatmentSelectionChart";
 import styled from "styled-components";
@@ -26,7 +24,6 @@ export const IconContainer = styled.div`
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
-    diagnosisSelectionStudies: selectDiagnosisSelectionStudies(state),
     treatmentSelectionStudies: selectTreatmentSelectionStudies(state),
     invasiveSelectionStudies: selectInvasiveSelectionStudies(state),
 });
@@ -41,7 +38,6 @@ type Props = DispatchProps & StateProps;
 
 const SiteSelectionContent: React.FC<Props> = ({
     theme,
-    diagnosisSelectionStudies,
     treatmentSelectionStudies,
     invasiveSelectionStudies,
     setSelection,
@@ -53,7 +49,6 @@ const SiteSelectionContent: React.FC<Props> = ({
     //TODO: Review when preventionSelectionStudies,diagnosisSelectionStudies,
     // treatmentSelectionStudies, invasiveSelectionStudies has not been neccesary
     if (
-        (theme === "diagnosis" && !diagnosisSelectionStudies.length) ||
         (theme === "treatment" && !treatmentSelectionStudies.length) ||
         (theme === "invasive" && !invasiveSelectionStudies.length)
     ) {
@@ -70,7 +65,7 @@ const SiteSelectionContent: React.FC<Props> = ({
             </IconContainer>
 
             {theme === "prevention" && <SelectionDataContent />}
-            {theme === "diagnosis" && <DiagnosisSelectionChart studies={diagnosisSelectionStudies} />}
+            {theme === "diagnosis" && <SelectionDataContent />}
             {theme === "treatment" && <TreatmentSelectionChart studies={treatmentSelectionStudies} />}
             {theme === "invasive" && <InvasiveSelectionChart studies={invasiveSelectionStudies} />}
         </Container>

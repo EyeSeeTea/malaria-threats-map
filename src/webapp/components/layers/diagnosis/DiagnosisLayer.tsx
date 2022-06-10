@@ -20,7 +20,6 @@ import { DIAGNOSIS_STATUS } from "./GeneDeletions/utils";
 import {
     fetchDiagnosisStudiesRequest,
     setDiagnosisFilteredStudiesAction,
-    setDiagnosisSelectionStudies,
 } from "../../../store/actions/diagnosis-actions";
 import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
@@ -56,7 +55,6 @@ const mapDispatchToProps = {
     setFilteredStudies: setDiagnosisFilteredStudiesAction,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
-    setDiagnosisSelectionStudies: setDiagnosisSelectionStudies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

@@ -26,9 +26,9 @@ import {
     selectTour,
 } from "../store/reducers/base-reducer";
 import { selectPreventionStudies } from "../store/reducers/prevention-reducer";
-import { selectDiagnosisSelectionStudies, selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
-import { selectTreatmentSelectionStudies, selectTreatmentStudies } from "../store/reducers/treatment-reducer";
-import { selectInvasiveSelectionStudies, selectInvasiveStudies } from "../store/reducers/invasive-reducer";
+import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
+import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
+import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
 import { Fade, Button, AppBar, Typography, IconButton, Toolbar, Box, Divider, Drawer } from "@mui/material";
@@ -188,9 +188,6 @@ const mapStateToProps = (state: State) => ({
     treatmentStudies: selectTreatmentStudies(state),
     invasiveStudies: selectInvasiveStudies(state),
     tour: selectTour(state),
-    diagnosisSelectionStudies: selectDiagnosisSelectionStudies(state),
-    treatmentSelectionStudies: selectTreatmentSelectionStudies(state),
-    invasiveSelectionStudies: selectInvasiveSelectionStudies(state),
     selection: selectSelection(state),
     selectionData: selectSelectionData(state),
 });
