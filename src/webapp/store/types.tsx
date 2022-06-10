@@ -140,7 +140,6 @@ export interface TreatmentState {
     loading: boolean;
     filteredStudies: TreatmentStudy[];
     filters: TreatmentFilters;
-    selectionStudies: TreatmentStudy[];
 }
 
 export enum InvasiveMapType {

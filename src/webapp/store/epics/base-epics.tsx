@@ -39,7 +39,6 @@ import { ActionTypeEnum } from "../actions";
 import { createPreventionSelectionData } from "./prevention/utils";
 import { createDiagnosisSelectionData } from "./diagnosis/utils";
 import { createInvasiveSelectionData } from "./invasive/utils";
-import { setTreatmentSelectionStudies } from "../actions/treatment-actions";
 import { createTreatmentSelectionData } from "./treatment/utils";
 
 export const setThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>, state$: StateObservable<State>) =>
@@ -349,12 +348,6 @@ export const setSelectionEpic = (
                     return of(setSelectionData(selectionData));
                 }
                 case "treatment": {
-                    const siteFilteredStudies = state.malaria.selection
-                        ? state.treatment.filteredStudies.filter(
-                              study => study.SITE_ID === state.malaria.selection.SITE_ID
-                          )
-                        : [];
-
                     const selectionData = createTreatmentSelectionData(
                         state.malaria.theme,
                         state.treatment.filters,
@@ -362,12 +355,7 @@ export const setSelectionEpic = (
                         state.treatment.filteredStudies
                     );
 
-                    const actions = _.compact([
-                        setTreatmentSelectionStudies(siteFilteredStudies),
-                        setSelectionData(selectionData),
-                    ]);
-
-                    return of(...actions);
+                    return of(setSelectionData(selectionData));
                 }
                 case "invasive": {
                     const selectionData = createInvasiveSelectionData(

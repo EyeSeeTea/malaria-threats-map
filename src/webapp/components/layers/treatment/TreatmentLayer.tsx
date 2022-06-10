@@ -25,11 +25,7 @@ import {
 } from "../studies-filters";
 import { State, TreatmentMapType } from "../../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
-import {
-    fetchTreatmentStudiesRequest,
-    setFilteredStudiesAction,
-    setTreatmentSelectionStudies,
-} from "../../../store/actions/treatment-actions";
+import { fetchTreatmentStudiesRequest, setFilteredStudiesAction } from "../../../store/actions/treatment-actions";
 import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SitePopover from "../common/SitePopover";
@@ -67,7 +63,6 @@ const mapDispatchToProps = {
     setFilteredStudies: setFilteredStudiesAction,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
-    setTreatmentSelectionStudies: setTreatmentSelectionStudies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -80,14 +75,6 @@ type Props = StateProps & OwnProps & DispatchProps;
 
 class TreatmentLayer extends Component<Props> {
     popup: mapboxgl.Popup;
-
-    updatePreventionSelectionStudies() {
-        const selectionStudies = this.props.selection
-            ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === this.props.selection.SITE_ID)
-            : [];
-
-        this.props.setTreatmentSelectionStudies(selectionStudies);
-    }
 
     componentDidMount() {
         this.loadStudiesIfRequired();
@@ -135,10 +122,6 @@ class TreatmentLayer extends Component<Props> {
             }
             this.filterSource();
             this.applyMapTypeSymbols();
-
-            this.updatePreventionSelectionStudies();
-        } else if (prevProps.selection !== this.props.selection) {
-            this.updatePreventionSelectionStudies();
         }
     }
 

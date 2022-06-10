@@ -12,7 +12,6 @@ import {
     setTreatmentDrug,
     setTreatmentMapType,
     setTreatmentPlasmodiumSpecies,
-    setTreatmentSelectionStudies,
 } from "../../actions/treatment-actions";
 import { logPageViewAction, setSelectionData } from "../../actions/base-actions";
 import { TreatmentMapType, State } from "../../types";
@@ -118,10 +117,6 @@ export const setTreatmentFilteredStudiesEpic = (
         ofType(ActionTypeEnum.SetTreatmentFilteredStudies),
         withLatestFrom(state$),
         switchMap(([, state]) => {
-            const siteFilteredStudies = state.malaria.selection
-                ? state.treatment.filteredStudies.filter(study => study.SITE_ID === state.malaria.selection.SITE_ID)
-                : [];
-
             const selectionData = createTreatmentSelectionData(
                 state.malaria.theme,
                 state.treatment.filters,
@@ -129,6 +124,6 @@ export const setTreatmentFilteredStudiesEpic = (
                 state.treatment.filteredStudies
             );
 
-            return of(setTreatmentSelectionStudies(siteFilteredStudies), setSelectionData(selectionData));
+            return of(setSelectionData(selectionData));
         })
     );
