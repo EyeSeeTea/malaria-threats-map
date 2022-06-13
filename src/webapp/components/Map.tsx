@@ -59,7 +59,7 @@ import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
 import LastUpdated from "./last-updated/LastUpdated";
 import FloatingLegend from "./legend/FloatingLegendContainer";
 import GreaterMekongLink from "./greater-mekong-link/GreaterMekongLink";
-import SiteSelectionContent from "./site-selection-content/SiteSelectionContent";
+import SelectionDataContent from "./site-selection-content/SelectionDataContent";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 const drawerWidth = 100;
@@ -438,7 +438,7 @@ class Map extends React.Component<Props> {
                             },
                         }}
                     >
-                        <SiteSelectionContent />
+                        <SelectionDataContent />
                     </Drawer>
                 )}
             </React.Fragment>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Divider, Paper, Typography } from "@mui/material";
+import { Divider, IconButton, Paper, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { selectSelectionData } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
@@ -12,7 +12,7 @@ import SiteTitle from "../site-title/SiteTitle";
 import CitationNew from "../charts/CitationNew";
 import CurationNew from "../charts/CurationNew";
 import OtherInsecticideClasses from "../layers/prevention/common/OtherInsecticideClasses";
-import { setSelectionDataFilterSelection } from "../../store/actions/base-actions";
+import { setSelection, setSelectionDataFilterSelection } from "../../store/actions/base-actions";
 import PreventionChart from "./prevention/PreventionChart";
 import DiagnosisChart from "./diagnosis/DiagnosisChart";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
@@ -21,14 +21,18 @@ import PreventionMechanismsChart from "./prevention/PreventionMechanismsChart";
 import TreatmentChart from "./treatment/TreatmentChart";
 import AditionalInformation from "../layers/treatment/common/Aditionalnformation";
 import MolecularMarkersChart from "./treatment/MolecularMarkersChart";
+import CloseIcon from "@mui/icons-material/Close";
 
-const Container = styled.div<{ width?: string }>`
+const Container = styled.div<{ width?: string; padding?: string }>`
     width: ${props => props.width || "100%"};
+    padding: ${props => props.padding || "70px 0px;"};
 `;
 
-const TopContainer = styled.div`
-    margin: 0px 8px;
-    padding: 0px 12px;
+const Column = styled.div<{ margin?: string; padding?: string }>`
+    margin: ${props => props.margin || "0px 8px"};
+    padding: ${props => props.margin || "0px 12px"};
+    display: flex;
+    flex-direction: column;
 `;
 
 const RoundedContainer = styled(Paper)<{ margin?: string }>`
@@ -53,6 +57,13 @@ const Flex = styled.div`
     align-items: center;
 `;
 
+export const Row = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`;
+
 const mapStateToProps = (state: State) => ({
     preventionFilters: selectPreventionFilters(state),
     selectionData: selectSelectionData(state),
@@ -62,16 +73,26 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 
 const mapDispatchToProps = {
     setSelectionFilterSelection: setSelectionDataFilterSelection,
+    setSelection: setSelection,
 };
 type DispatchProps = typeof mapDispatchToProps;
 
 type Props = StateProps & DispatchProps;
 
-const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFilterSelection }: Props) => {
+const SelectionDataContent: React.FC<Props> = ({
+    preventionFilters,
+    selectionData,
+    setSelectionFilterSelection,
+    setSelection,
+}) => {
     const onFiltersChange = (value: any) => {
         sendAnalytics({ type: "event", category: "popup", action: "filter" });
         setSelectionFilterSelection(value);
     };
+
+    const handleClose = React.useCallback(() => {
+        setSelection(null);
+    }, [setSelection]);
 
     const chartCataContent = () => {
         switch (selectionData.data.kind) {
@@ -99,9 +120,17 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
     const content = () =>
         selectionData ? (
             <>
-                <TopContainer>
-                    <SiteTitle title={selectionData.title} />
-                    <Typography variant="subtitle2">{selectionData.subtitle}</Typography>
+                <Column>
+                    <Row>
+                        <Column margin="0px" padding="0px">
+                            <SiteTitle title={selectionData.title} />
+                            <Typography variant="subtitle2">{selectionData.subtitle}</Typography>
+                        </Column>
+
+                        <IconButton onClick={handleClose}>
+                            <CloseIcon />
+                        </IconButton>
+                    </Row>
                     {selectionData.filterOptions && selectionData.filterOptions.length > 1 && (
                         <Flex>
                             <FormLabel component="legend">Species</FormLabel>
@@ -114,7 +143,7 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
                             />
                         </Flex>
                     )}
-                </TopContainer>
+                </Column>
 
                 <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
                 <RoundedContainer>
@@ -138,7 +167,9 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
     return (
         <>
             <Hidden smUp>
-                <Container width={"100%"}>{content()}</Container>
+                <Container width={"100%"} padding={"20px 0px"}>
+                    {content()}
+                </Container>
             </Hidden>
             <Hidden smDown>
                 <Container width={"500px"}>{content()}</Container>
