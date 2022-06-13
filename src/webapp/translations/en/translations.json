@@ -158,7 +158,9 @@
                     "treatment_failure_km": "Patients with treatment failure, Kaplan-Meier",
                     "days": "days",
                     "studies": "study(s)",
-                    "aditional_information_title": "Aditional information: "
+                    "aditional_information_title": "Aditional information: ",
+                    "show_more": "Show more",
+                    "show_less": "Show less"
                 },
                 "molecular_markers": {
                     "content": "{{nStudies}} molecular marker studies conducted on {{molecularMarker}} {{years}}",

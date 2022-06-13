@@ -46,7 +46,11 @@ const AditionalInformationContent: React.FC<Props> = ({ info }) => {
                 </Typography>
 
                 <StyledLink onClick={handleExpand}>
-                    <b>{"Show more"}</b>
+                    <b>
+                        {expanded
+                            ? t("common.treatment.chart.treatment_failure.show_less")
+                            : t("common.treatment.chart.treatment_failure.show_more")}
+                    </b>
                 </StyledLink>
             </Row>
 

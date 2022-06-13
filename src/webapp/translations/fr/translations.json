@@ -158,7 +158,9 @@
                     "treatment_failure_km": "Patients avec un échec thérapeutique, Kaplan-Meier",
                     "days": "journées",
                     "studies": "Étude(s)",
-                    "aditional_information_title": "Informations supplémentaires: "
+                    "aditional_information_title": "Informations supplémentaires: ",
+                    "show_more": "Afficher plus",
+                    "show_less": "Afficher moins"
                 },
                 "molecular_markers": {
                     "content": "{{nStudies}} etudes de marqueur moléculaire effectuée sur {{molecularMarker}} {{years}}",
