@@ -167,15 +167,15 @@ function getPreventionLegendLebels(filters: PreventionFilters): LegendLabel[] {
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return [
                 {
-                    label: "prevention.legend.synergist_involvement.full_involvement",
+                    label: "prevention.legend.synergist_involvement.full_restoration",
                     color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT][0],
                 },
                 {
-                    label: "prevention.legend.synergist_involvement.partial_involvement",
+                    label: "prevention.legend.synergist_involvement.partial_restoration",
                     color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT][0],
                 },
                 {
-                    label: "prevention.legend.synergist_involvement.no_involvement",
+                    label: "prevention.legend.synergist_involvement.no_restoration",
                     color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT][0],
                 },
             ];
