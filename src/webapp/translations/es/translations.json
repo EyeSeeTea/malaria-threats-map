@@ -432,7 +432,6 @@
             "step3": {
                 "title": "Filtrar datos a descargar",
                 "filters": {
-                    "additional": "Filtros adicionales",
                     "theme": "Seleccione un tema",
                     "dataset": "Seleccione un conjunto de datos"
                 }
