@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Button, AppBar, Toolbar, Box } from "@mui/material";
 import { TFunction } from "react-i18next";
-import { HomepageIntegrationReactSelect } from "../../components/BasicSelect";
+import IntegrationReactSelect, { HomepageIntegrationReactSelect } from "../../components/BasicSelect";
 import { changeLanguage } from "../../config/i18next";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";

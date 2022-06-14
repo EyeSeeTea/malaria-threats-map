@@ -91,7 +91,6 @@ const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
                             <HomeIcon />
                         </StyledFab>
                         <Typography variant="caption" align="center">
-                            {" "}
                             {t("common.sidebar.home")}
                         </Typography>
                     </StyledLink>

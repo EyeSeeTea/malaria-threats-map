@@ -154,7 +154,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         divider: {
             height: theme.spacing(2),
-        },
+        }
     })
 );
 const plasmodiumOptions = ["P. falciparum", "P. vivax", "P. knowlesi", "P. malariae", "P. ovale"];

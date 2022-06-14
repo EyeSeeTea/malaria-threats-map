@@ -15,7 +15,7 @@ declare module "@mui/styles/defaultTheme" {
 
 export const { store } = createStore();
 
-export let theme = createTheme({
+export const theme = responsiveFontSizes(createTheme({
     palette: {
         primary: {
             main: "#2fb3af",
@@ -61,9 +61,7 @@ export let theme = createTheme({
             },
         },
     },
-});
-
-theme = responsiveFontSizes(theme);
+}));
 
 class App extends React.Component {
     render() {
