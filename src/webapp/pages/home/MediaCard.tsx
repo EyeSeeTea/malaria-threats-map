@@ -63,7 +63,14 @@ const MediaCard = ({ title, subtitle, buttonText, image, buttonLink }: MediaCard
         <StyledCard>
             <StyledCardMedia image={image} />
             <StyledCardContent>
-                <Typography gutterBottom variant="h5" component="div" textAlign="center" fontWeight="bold"  marginBottom={"17px"}>
+                <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    textAlign="center"
+                    fontWeight="bold"
+                    marginBottom={"17px"}
+                >
                     {title}
                 </Typography>
                 <Typography variant="body2" color="black" textAlign="center">

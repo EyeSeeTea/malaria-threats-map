@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Typography, Paper, Button } from "@mui/material";
 import { useTranslation, TFunction } from "react-i18next";
 import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
-import { themePaperColors } from "./HomePage";
 
 interface ThemePaperProps {
     icon: string;
@@ -13,24 +12,27 @@ interface ThemePaperProps {
     color: string;
     colorOpaque: string;
     t: TFunction<"translation", undefined>;
+    maxPaperHeight: number;
 }
 interface StyledPaperProps {
     color: string;
     height: number;
+    maxPaperHeight: number;
 }
-const StyledPaper = styled(Paper)<StyledPaperProps>`
+
+const StyledPaper = styled(Paper).withConfig({
+    shouldForwardProp: prop => !["color", "height", "maxPaperHeight"].includes(prop),
+})<StyledPaperProps>`
     background-color: ${props => props.color};
     display: flex;
-    padding: ${props =>
-        props.color === themePaperColors.treatmentColor
-            ? `${props.height * 0.04}px 25px`
-            : `${props.height * 0.04}px`};
+    padding: ${props => props.height * 0.04}px;
+    max-height: ${props => props.maxPaperHeight}px;
+    @media (max-width: 1000px) {
+        max-height: ${props => props.maxPaperHeight + 100}px;
+    }
 
-    @media (max-width: 1024px) {
-        padding: ${props =>
-            props.color === themePaperColors.treatmentColor
-                ? `${props.height * 0.04}px 25px 20px 20px`
-                : `${props.height * 0.04}px`};
+    @media (max-width: 425px) {
+        max-height: none;
     }
 `;
 
@@ -78,13 +80,31 @@ const StyledImage = styled.img`
     }
 `;
 
-const ThemePaper = ({ icon, altText, title, subtitle, color, colorOpaque }: ThemePaperProps) => {
+const ThemePaperDiv = styled.div`
+    flex: 1 0 40%;
+    margin: 20px auto;
+    &:nth-of-type(odd) {
+        margin-right: 40px;
+    }
+    @media (max-width: 1024px) {
+        height: 100%;
+    }
+    @media (max-width: 815px) {
+        &:nth-of-type(odd) {
+            margin-right: 0;
+        }
+    }
+    @media (max-width: 425px) {
+        margin: 20px 0;
+    }
+`;
+const ThemePaper = ({ icon, altText, title, subtitle, color, colorOpaque, maxPaperHeight }: ThemePaperProps) => {
     const { t } = useTranslation();
     const { height } = useWindowDimensions();
 
     return (
-        <div>
-            <StyledPaper elevation={0} square color={color} height={height}>
+        <ThemePaperDiv>
+            <StyledPaper elevation={0} square color={color} height={height} maxPaperHeight={maxPaperHeight}>
                 <StyledImage src={icon} alt={altText} />
                 <ThemeInfoDiv>
                     <ThemeTitle gutterBottom variant="h5" textAlign="left">
@@ -95,7 +115,7 @@ const ThemePaper = ({ icon, altText, title, subtitle, color, colorOpaque }: Them
                     </Typography>
                 </ThemeInfoDiv>
             </StyledPaper>
-            <BottomPaper elevation={0} square color={colorOpaque} height={height}>
+            <BottomPaper elevation={0} square color={colorOpaque} height={height} maxPaperHeight={100}>
                 <FlexSpaceBetween>
                     <FlexColumn>
                         <Typography gutterBottom variant="body1" component="div" textAlign="left">
@@ -110,7 +130,7 @@ const ThemePaper = ({ icon, altText, title, subtitle, color, colorOpaque }: Them
                     </StyledCardButton>
                 </FlexSpaceBetween>
             </BottomPaper>
-        </div>
+        </ThemePaperDiv>
     );
 };
 export default ThemePaper;
