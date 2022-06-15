@@ -115,6 +115,7 @@ export type InvasiveChartDataContent = {
     samplingMethod?: string;
     speciedIdentificationMethod?: string;
     vectorStage?: string;
+    larvalHabitat?: string;
 };
 
 export type CitationDataSource = {

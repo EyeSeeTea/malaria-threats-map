@@ -4,7 +4,7 @@ import { getSiteTitle } from "../../../components/site-title/utils";
 import { InvasiveChartData, SelectionData } from "../../SelectionData";
 import { createCitationDataSources, createCurations } from "../common/utils";
 import * as R from "ramda";
-import { isNotNull } from "../../../utils/number-utils";
+import { isNotNull, isNR } from "../../../utils/number-utils";
 import { lowerCase } from "lower-case";
 import { SiteSelection } from "../../types";
 
@@ -37,17 +37,31 @@ function getData(studies: InvasiveStudy[]): InvasiveChartData {
 
     const studyObject = sortedStudies[0];
 
+    debugger;
+    const larvalHabitat =
+        studyObject.STAGE === "inmatures" || studyObject.STAGE === "inmatures and adults"
+            ? studyObject.BREEDING_HABITAT
+            : undefined;
+
     return {
         kind: "invasive",
         data: {
             species: getSpecies(studyObject),
             samplingPeriod: getSamplingPeriod(studyObject),
-            samplingMethod:
-                studyObject.SAMPLING_METHOD || i18next.t("common.invasive.chart.vector_occurrance.no_available"),
+            samplingMethod: isNR(studyObject.SAMPLING_METHOD)
+                ? i18next.t("common.invasive.chart.vector_occurrance.not_reported")
+                : studyObject.SAMPLING_METHOD || i18next.t("common.invasive.chart.vector_occurrance.no_available"),
             speciedIdentificationMethod: studyObject.ID_METHOD
-                ? lowerCase(studyObject.ID_METHOD)
+                ? isNR(studyObject.ID_METHOD)
+                    ? i18next.t("common.invasive.chart.vector_occurrance.not_reported")
+                    : studyObject.ID_METHOD
                 : i18next.t("common.invasive.chart.vector_occurrance.no_available"),
-            vectorStage: studyObject.STAGE,
+            vectorStage: isNR(studyObject.STAGE)
+                ? i18next.t("common.invasive.chart.vector_occurrance.not_reported")
+                : studyObject.STAGE,
+            larvalHabitat: isNR(larvalHabitat)
+                ? i18next.t("common.invasive.chart.vector_occurrance.not_reported")
+                : larvalHabitat,
         },
     };
 }

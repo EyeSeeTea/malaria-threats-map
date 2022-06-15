@@ -35,7 +35,7 @@
             "resistance_mechanism_subtitle": "Results of molecular assays, biochemical assays and synergist-insecticide bioassays",
             "synergist_involvement": "Synergist effect in susceptibility",
             "synergist_involvement_subtitle": "Results of synergist-insecticide bioassays (mono oxygenases only)",
-            "synergist_involvement_legend": "Effect of synergy in susceptibility",
+            "synergist_involvement_legend": "Effect of the synergist in restoring susceptibility to the insecticide",
             "chart": {
                 "not_reported": "NR: not reported",
                 "other_insecticide_class_label": "Other insecticides to which resistance was detected in this site:",
@@ -216,9 +216,12 @@
                     "species": "Species",
                     "sampling_period": "Sampling period",
                     "sampling_method": "Sampling method",
+                    "stage": "Vector stage found",
+                    "breeding_habitat": "Larval habitat",
                     "study_identification_method": "Species identification method",
                     "data_collection": "Acknowledgement for data curation",
-                    "no_available": "Not available"
+                    "no_available": "Not available",
+                    "not_reported": "Not reported"
                 }
             },
             "legend": {
@@ -263,7 +266,7 @@
             "plasmodium_species": "Plasmodium species",
             "drug": "Drug",
             "molecular_marker": "Molecular marker",
-            "mechanism_type": "Mechanism type",
+            "mechanism_type": "Type of synergy",
             "assay_type": "Assay type",
             "synergist_type": "Test type",
             "select_synergist_type": "Select test type",

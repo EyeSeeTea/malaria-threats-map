@@ -53,19 +53,27 @@ const InvasiveChart: React.FC<Props> = ({ selectionData }) => {
                     </Typography>
                 </Row>
             )}
+            {data.vectorStage && (
+                <Row>
+                    <Typography variant="body2">
+                        <b>{t("common.invasive.chart.vector_occurrance.stage")}:&nbsp;</b>
+                        {data.vectorStage}
+                    </Typography>
+                </Row>
+            )}
+            {data.larvalHabitat && (
+                <Row>
+                    <Typography variant="body2">
+                        <b>{t("common.invasive.chart.vector_occurrance.breeding_habitat")}:&nbsp;</b>
+                        {data.larvalHabitat}
+                    </Typography>
+                </Row>
+            )}
             {data.speciedIdentificationMethod && (
                 <Row>
                     <Typography variant="body2">
                         <b>{t("common.invasive.chart.vector_occurrance.study_identification_method")}:&nbsp;</b>
                         {data.speciedIdentificationMethod}
-                    </Typography>
-                </Row>
-            )}
-            {data.vectorStage && (
-                <Row>
-                    <Typography variant="body2">
-                        <b>{"Vector Stage"}:&nbsp;</b>
-                        {data.vectorStage}
                     </Typography>
                 </Row>
             )}
