@@ -12,7 +12,7 @@ import MapFunctionality from "./MapFunctionality";
 import Challenges from "./Challenges";
 import UserExperience from "./UserExperience";
 
-export interface Props {
+export interface WindowProps {
     windowWidth: number;
 }
 
@@ -21,14 +21,7 @@ export interface StyledImgProps {
     maxHeight: number;
 }
 
-export const StyledImg = styled.img<StyledImgProps>`
-    width: 100%;
-    height: auto;
-    max-width: ${props => `${props.maxWidth}px`};
-    max-height: ${props => `${props.maxHeight}px`};
-`;
-
-export const ContentDiv = styled.div<Props>`
+export const ContentDiv = styled.div<WindowProps>`
     width: ${props => `${props.windowWidth * 0.83}px`};
     margin: auto;
 `;
@@ -36,23 +29,40 @@ export const ContentDiv = styled.div<Props>`
 const StyledBanner = styled.div`
     display: block;
     position: relative;
-    backgroundattachment: fixed;
+    background-attachment: fixed;
     margin: 0;
     left: 0;
     width: 100%;
     background: linear-gradient(90deg, #bbd7e8 0%, #bbd7e800 100%), url(${HomepageMap});
     background-position: right;
-    max-height: 600px;
+    max-height: 900px;
     height: 373px;
     opacity: 1;
+    @media (max-width: 765px) {
+        height: 500px;
+    }
+    @media (max-width: 425px) {
+        height: auto;
+    }
 `;
 
-const BannerContentDiv = styled.div<Props>`
+const BannerContentDiv = styled.div<WindowProps>`
     display: flex;
     align-items: center;
     width: ${props => `${props.windowWidth * 0.83}px`};
     margin: auto;
     margin-top: 81px;
+
+    @media (max-width: 1024px) {
+        height: 80%;
+        justify-content: flex-start;
+        margin-top: 0;
+    }
+    @media (max-width: 765px) {
+        height: 50%;
+        justify-content: center;
+        margin: auto;
+    }
 `;
 
 export const AboutPage = () => {
@@ -64,7 +74,7 @@ export const AboutPage = () => {
             <StyledBanner>
                 <Header t={t} />
                 <BannerContentDiv windowWidth={width}>
-                    <Typography variant="h3" color="inherit" textTransform="uppercase" fontSize={46}>
+                    <Typography variant="h3" color="inherit" textTransform="uppercase">
                         Learn More About <br /> <strong>The Malaria Threats Map</strong>
                     </Typography>
                 </BannerContentDiv>

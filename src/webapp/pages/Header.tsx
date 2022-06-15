@@ -46,6 +46,9 @@ const StyledToolbar = styled(Toolbar)<Props>`
             padding: 0;
             min-height: 50px;
         }
+        @media (max-width: 1024px) {
+            margin-right: 11%;
+        }
     }
 `;
 

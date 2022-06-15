@@ -1,31 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 import { Typography } from "@mui/material";
-import { Props } from "./AboutPage";
-import OverviewMaps from "../../assets/img/about-page/about-overview-maps.svg";
-import OverviewResearchEfforts from "../../assets/img/about-page/about-overview-research-efforts.png";
-import OverviewCountries from "../../assets/img/about-page/about-overview-countries.png";
+import { WindowProps } from "./AboutPage";
 
 interface MapFunctionalityProps {
     width: number;
 }
-interface StyledImgProps {
-    maxWidth: number;
-    maxHeight: number;
-}
+
 const FlexRowSpaceBetweenDiv = styled.div`
     display: flex;
     justify-content: space-between;
 `;
-const StyledImg = styled.img<StyledImgProps>`
-    width: 100%;
-    height: auto;
-    max-width: ${props => `${props.maxWidth}px`};
-    max-height: ${props => `${props.maxHeight}px`};
-`;
-const VideoImage = styled(StyledImg)<StyledImgProps>`
+
+const Video = styled.iframe`
     box-shadow: 0px 5px 10px #00000029;
     border-radius: 20px;
+    width: 356px;
+    height: 270px;
 `;
 
 const MapOverviewDiv = styled.div`
@@ -41,7 +32,7 @@ const MapOverviewDiv = styled.div`
     box-shadow: 0px 5px 10px #00000029;
 `;
 
-const MapFunctionalityInnerDiv = styled.div<Props>`
+const MapFunctionalityInnerDiv = styled.div<WindowProps>`
     display: flex;
     flex-direction: column;
     width: ${props => `${props.windowWidth * 0.83}px`};
@@ -52,6 +43,9 @@ const MapFunctionalityDiv = styled(FlexRowSpaceBetweenDiv)`
     background-color: #f7f7f7;
     margin: auto;
     padding: 64px;
+    @media (max-width: 425px) {
+        padding: 64px 0;
+    }
 `;
 const VideoGalleryDiv = styled(FlexRowSpaceBetweenDiv)`
     flex-wrap: wrap;
@@ -81,6 +75,30 @@ const VideoDescription = styled(Typography)`
         text-align: center;
     }
 `;
+interface VideoAttrs {
+    src: string;
+    alt: string;
+    title: string;
+}
+type Video = Record<string, VideoAttrs>;
+
+const videos: Video = {
+    overview: {
+        src: "https://www.youtube.com/embed/dU_xrzpbupU",
+        alt: "Malaria Threats Map: tracking biological challenges to malaria control and elimination",
+        title: "An overview of the maps",
+    },
+    research: {
+        src: "https://www.youtube.com/embed/VP-pc9oN0dM",
+        alt: "Malaria Threats Map: supporting research efforts",
+        title: "How is the MTM supporting research efforts?",
+    },
+    countries: {
+        src: "https://www.youtube.com/embed/mkggjD0DKwY",
+        alt: "Malaria Threats Map: helping countries address critical threats for malaria control and elimination",
+        title: "How is the MTM supporting countries?",
+    },
+};
 const MapFunctionality = ({ width }: MapFunctionalityProps) => {
     return (
         <MapFunctionalityDiv>
@@ -89,41 +107,24 @@ const MapFunctionality = ({ width }: MapFunctionalityProps) => {
                     Watch: Find out about the functionality of the maps within the MTM
                 </VideoTitle>
                 <VideoGalleryDiv>
-                    <VideoDiv>
-                        <MapOverviewDiv>
-                            <StyledImg
-                                src={OverviewMaps}
-                                alt="Illustration of the 4 malaria map types"
-                                maxWidth={262}
-                                maxHeight={250}
-                            />
-                        </MapOverviewDiv>
-                        <VideoDescription variant="h6">
-                            <strong>Watch:</strong> An overview of the maps
-                        </VideoDescription>
-                    </VideoDiv>
-                    <VideoDiv>
-                        <VideoImage
-                            src={OverviewResearchEfforts}
-                            alt="A researcher looking at the MTM map"
-                            maxWidth={356}
-                            maxHeight={270}
-                        />
-                        <VideoDescription variant="h6">
-                            <strong>Watch:</strong> How is the MTM supporting research efforts?
-                        </VideoDescription>
-                    </VideoDiv>
-                    <VideoDiv>
-                        <VideoImage
-                            src={OverviewCountries}
-                            alt="A doctor and a patient performing malaria treatment"
-                            maxWidth={356}
-                            maxHeight={270}
-                        />
-                        <VideoDescription variant="h6">
-                            <strong>Watch:</strong> How is the MTM supporting countries?
-                        </VideoDescription>
-                    </VideoDiv>
+                    {Object.entries(videos).map(([key], index) => {
+                        return (
+                            <VideoDiv key={index}>
+                                <MapOverviewDiv>
+                                    <Video
+                                        src={videos[key].src}
+                                        title={videos[key].alt}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    ></Video>
+                                </MapOverviewDiv>
+                                <VideoDescription variant="h6">
+                                    <strong>Watch:</strong> {videos[key].title}
+                                </VideoDescription>
+                            </VideoDiv>
+                        );
+                    })}
                 </VideoGalleryDiv>
             </MapFunctionalityInnerDiv>
         </MapFunctionalityDiv>

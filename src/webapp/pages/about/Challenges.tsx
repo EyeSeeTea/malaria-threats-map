@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Typography, Divider, Box, Tabs, Tab } from "@mui/material";
-import { ContentDiv } from "./AboutPage";
+import { WindowProps } from "./AboutPage";
 import DonorsOption from "../../assets/img/about-page/about-page-donors-option.png";
 
 interface ChallengesProps {
@@ -22,6 +22,18 @@ const QuoteDetailsDiv = styled.div`
 const PeopleTypeDivDiv = styled(FlexColumnSpaceBetweenDiv)`
     margin-left: 30px;
     margin-top: 20px;
+    @media (max-width: 1024px) {
+        margin-top: 0;
+    }
+    @media (max-width: 768px) {
+        margin-top: 20px;
+        margin-left: 0;
+    }
+    @media (max-width: 425px) {
+        text-align: center;
+        margin: auto;
+        margin-top: 20px;
+    }
 `;
 
 const StyledTabs = styled(Tabs)`
@@ -29,6 +41,9 @@ const StyledTabs = styled(Tabs)`
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+        @media (max-width: 768px) {
+            justify-content: center;
+        }
     }
 `;
 
@@ -56,14 +71,46 @@ const StyledTab = styled(Tab)`
         @media (max-width: 1024px) {
             margin-top: 20px;
         }
+        @media (max-width: 768px) {
+            margin: 1rem;
+        }
     }
 `;
-const ChallengesDiv = styled.div`
-    display: flex;
-    justify-content: space-between;
-    @media (max-width: 1024px) {
+/*
+@media (max-width: 1024px) {
         flex-direction: column;
     }
+*/
+const ChallengesInnerDiv = styled.div`
+    display: flex;
+    justify-content: space-between;
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+`;
+
+const StyledDivider = styled(Divider)`
+    width: 100%;
+    margin-top: 60px;
+    background-color: #a1c5b7;
+`;
+
+const ChallengesImage = styled.img`
+    width: 475px;
+    height: 250px;
+    margin: auto;
+    @media (max-width: 1024px) {
+        margin-top: 0;
+    }
+    @media (max-width: 768px) {
+        height: auto;
+        width: 100%;
+    }
+`;
+const ChallengesOuterDiv = styled.div<WindowProps>`
+    width: ${props => `${props.windowWidth * 0.83}px`};
+    margin: auto;
+    display: flex;
 `;
 
 interface TabPanelProps {
@@ -88,8 +135,8 @@ const ChallengesInfo = ({ index }: ChallengesInfoProps) => {
     const typesOfPeople = ["National Malaria Control Programmes", "NGOs", "Donors", "WHO Staff", "Researchers"];
 
     return (
-        <ChallengesDiv>
-            <img src={DonorsOption} width={475} height={250} style={{ margin: "auto" }} alt="Donors" />
+        <ChallengesInnerDiv>
+            <ChallengesImage src={DonorsOption} alt={typesOfPeople[index]} />
             <PeopleTypeDivDiv>
                 <Typography variant="h6" fontWeight="bold" color="inherit">
                     {typesOfPeople[index]}
@@ -110,7 +157,7 @@ const ChallengesInfo = ({ index }: ChallengesInfoProps) => {
                     </Typography>
                 </QuoteDetailsDiv>
             </PeopleTypeDivDiv>
-        </ChallengesDiv>
+        </ChallengesInnerDiv>
     );
 };
 const Challenges = ({ width }: ChallengesProps) => {
@@ -121,7 +168,7 @@ const Challenges = ({ width }: ChallengesProps) => {
     };
 
     return (
-        <ContentDiv style={{ display: "flex" }} windowWidth={width}>
+        <ChallengesOuterDiv windowWidth={width}>
             <TypesOfPeopleDiv>
                 <Typography variant="h4" fontWeight="bold" color={"inherit"} letterSpacing={0} textAlign="center">
                     Thousands of people use the Malaria Threats Map to understand challenges to malaria control and
@@ -155,9 +202,9 @@ const Challenges = ({ width }: ChallengesProps) => {
                 <TabPanel value={value} index={4}>
                     <ChallengesInfo index={4} />
                 </TabPanel>
+                <StyledDivider variant="fullWidth" />
             </TypesOfPeopleDiv>
-            <Divider variant="middle" />
-        </ContentDiv>
+        </ChallengesOuterDiv>
     );
 };
 
