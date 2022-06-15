@@ -5,7 +5,6 @@ import { InvasiveChartData, SelectionData } from "../../SelectionData";
 import { createCitationDataSources, createCurations } from "../common/utils";
 import * as R from "ramda";
 import { isNotNull, isNR } from "../../../utils/number-utils";
-import { lowerCase } from "lower-case";
 import { SiteSelection } from "../../types";
 
 export function createInvasiveSelectionData(
@@ -37,7 +36,6 @@ function getData(studies: InvasiveStudy[]): InvasiveChartData {
 
     const studyObject = sortedStudies[0];
 
-    debugger;
     const larvalHabitat =
         studyObject.STAGE === "inmatures" || studyObject.STAGE === "inmatures and adults"
             ? studyObject.BREEDING_HABITAT
