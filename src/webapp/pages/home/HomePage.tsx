@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useTranslation, Trans } from "react-i18next";
-import { Box, Typography, Grid, Divider } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import HomepageMap from "../../assets/img/homepage-map.png";
 import PreventionIcon from "../../assets/img/prevention-icon.svg";
@@ -70,14 +70,30 @@ const MediaCardDiv = styled.div`
 const HeaderDiv = styled.div`
     width: 80%;
     margin: auto;
-    padding-top: 30px;
-    padding-bottom: 40px;
+    padding: 30px 0 40px 0;
+    @media (max-width: 425px) {
+        padding: 10px 0 20px 0;
+    }
 `;
 
 const StyledDivider = styled(Divider)`
     margin-top: 83px;
 `;
-
+const ThemePaperOuterDiv = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    @media (max-width: 815px) {
+        flex-direction: column;
+    }
+`;
+const ThemeTypography = styled(Typography)`
+    @media (max-width: 425px) {
+        line-height: 30px;
+        font-size: 22px;
+    }
+`;
 export const themePaperColors = {
     preventionColor: "#5ABE86",
     preventionColorOpaque: "rgb(90, 190, 134, 0.9)",
@@ -134,66 +150,61 @@ export const HomePage = () => {
                         />
                     </MediaCardDiv>
                     <HeaderDiv>
-                        <Typography
+                        <ThemeTypography
                             gutterBottom
                             variant="h4"
-                            component="div"
                             textAlign="center"
                             fontWeight="bold"
                             lineHeight="50px"
                             fontSize="30px"
                         >
                             {t("common.homepage.header")}
-                        </Typography>
+                        </ThemeTypography>
                     </HeaderDiv>
 
                     <Box sx={{ flexGrow: 1 }}>
-                        <Grid container spacing={{ xs: 2, md: 5 }} columns={{ xs: 4, sm: 8, md: 12, lg: 12 }}>
-                            <Grid item xs={4} sm={8} md={6} lg={6}>
-                                <ThemePaper
-                                    t={t}
-                                    icon={PreventionIcon}
-                                    altText="Prevention Icon"
-                                    title={t("common.themes.prevention")}
-                                    subtitle={t("common.homepage.theme_paper.prevention_subtitle")}
-                                    color={themePaperColors.preventionColor}
-                                    colorOpaque={themePaperColors.preventionColorOpaque}
-                                />
-                            </Grid>
-                            <Grid item xs={4} sm={8} md={6} lg={6}>
-                                <ThemePaper
-                                    t={t}
-                                    icon={InvasiveIcon}
-                                    altText="Invasive Icon"
-                                    title={t("common.themes.invasive")}
-                                    subtitle={t("common.homepage.theme_paper.invasive_subtitle")}
-                                    color={themePaperColors.invasiveColor}
-                                    colorOpaque={themePaperColors.invasiveColorOpaque}
-                                />
-                            </Grid>
-                            <Grid item xs={4} sm={8} md={6} lg={6}>
-                                <ThemePaper
-                                    t={t}
-                                    icon={TreatmentIcon}
-                                    altText="Treatment Icon"
-                                    title={t("common.themes.treatment")}
-                                    subtitle={t("common.homepage.theme_paper.treatment_subtitle")}
-                                    color={themePaperColors.treatmentColor}
-                                    colorOpaque={themePaperColors.treatmentColorOpaque}
-                                />
-                            </Grid>
-                            <Grid item xs={4} sm={8} md={6} lg={6}>
-                                <ThemePaper
-                                    t={t}
-                                    icon={DiagnosisIcon}
-                                    altText="Diagnosis Icon"
-                                    title={t("common.themes.diagnosis")}
-                                    subtitle={t("common.homepage.theme_paper.diagnosis_subtitle")}
-                                    color={themePaperColors.diagnosisColor}
-                                    colorOpaque={themePaperColors.diagnosisColorOpaque}
-                                />
-                            </Grid>
-                        </Grid>
+                        <ThemePaperOuterDiv>
+                            <ThemePaper
+                                t={t}
+                                icon={PreventionIcon}
+                                altText="Prevention Icon"
+                                title={t("common.themes.prevention")}
+                                subtitle={t("common.homepage.theme_paper.prevention_subtitle")}
+                                color={themePaperColors.preventionColor}
+                                colorOpaque={themePaperColors.preventionColorOpaque}
+                                maxPaperHeight={200}
+                            />
+                            <ThemePaper
+                                t={t}
+                                icon={InvasiveIcon}
+                                altText="Invasive Icon"
+                                title={t("common.themes.invasive")}
+                                subtitle={t("common.homepage.theme_paper.invasive_subtitle")}
+                                color={themePaperColors.invasiveColor}
+                                colorOpaque={themePaperColors.invasiveColorOpaque}
+                                maxPaperHeight={200}
+                            />
+                            <ThemePaper
+                                t={t}
+                                icon={TreatmentIcon}
+                                altText="Treatment Icon"
+                                title={t("common.themes.treatment")}
+                                subtitle={t("common.homepage.theme_paper.treatment_subtitle")}
+                                color={themePaperColors.treatmentColor}
+                                colorOpaque={themePaperColors.treatmentColorOpaque}
+                                maxPaperHeight={220}
+                            />
+                            <ThemePaper
+                                t={t}
+                                icon={DiagnosisIcon}
+                                altText="Diagnosis Icon"
+                                title={t("common.themes.diagnosis")}
+                                subtitle={t("common.homepage.theme_paper.diagnosis_subtitle")}
+                                color={themePaperColors.diagnosisColor}
+                                colorOpaque={themePaperColors.diagnosisColorOpaque}
+                                maxPaperHeight={220}
+                            />
+                        </ThemePaperOuterDiv>
                     </Box>
                 </ContentDiv>
                 <StyledDivider variant="fullWidth" />

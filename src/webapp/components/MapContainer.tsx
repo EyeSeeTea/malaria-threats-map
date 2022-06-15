@@ -216,6 +216,7 @@ const MapContainer: React.FC = () => {
                 },
             },
             initialTruth: "location",
+            replaceState: true,
         });
     }, [store]);
 
