@@ -76,11 +76,7 @@ const StyledTab = styled(Tab)`
         }
     }
 `;
-/*
-@media (max-width: 1024px) {
-        flex-direction: column;
-    }
-*/
+
 const ChallengesInnerDiv = styled.div`
     display: flex;
     justify-content: space-between;

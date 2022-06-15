@@ -7,7 +7,7 @@ import WhoLogoBlue from "../components/WhoLogoBlue";
 interface PrivacyProps {
     windowWidth: number;
 }
-//    margin: 58px 0 34px 0;
+
 const FooterDiv = styled.div<PrivacyProps>`
     display: flex;
     flex-direction: row;
