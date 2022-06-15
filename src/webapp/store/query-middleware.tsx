@@ -74,10 +74,9 @@ function ReduxQuerySync({ store, params, replaceState, initialTruth, history = c
         const newLocationSearchString = `?${locationParams}`;
         const oldLocationSearchString = location.search || "?";
         console.log(location)
-        console.log(newLocationSearchString)
-        console.log(oldLocationSearchString)
         //&& location.pathname === "/maps"
-        if (newLocationSearchString !== oldLocationSearchString && location.pathname === "/maps") {
+        // && location.pathname.includes("/maps")) || (newLocationSearchString !== oldLocationSearchString && newLocationSearchString === "")
+        if (newLocationSearchString !== oldLocationSearchString && location.pathname.includes("/maps")) {
             ignoreLocationUpdate = true;
             console.log("hello")
             const newLocation = {
