@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, AppBar, Toolbar, Box } from "@mui/material";
+import { Button, AppBar, Toolbar, Box, Menu, MenuItem, Divider, ClickAwayListener } from "@mui/material";
 import { TFunction } from "react-i18next";
 import IntegrationReactSelect from "../../components/BasicSelect";
 import { changeLanguage } from "../../config/i18next";
@@ -69,6 +69,22 @@ const StyledButton = styled(Button)`
             cursor;
             transition: none;
         }
+        &[aria-expanded=true] {
+            font-weight: bold;
+        }
+    }
+    }
+`;
+
+const StyledMenuButton = styled(Button)`
+    &.MuiButton-root {
+        padding: 15px 0;
+        color: black;
+        font-weight; 400;
+        letter-spacing: 0.235px;
+        &[aria-expanded=true] {
+            font-weight: bold;
+        }
     }
 `;
 
@@ -92,6 +108,47 @@ const StyledAppBar = styled(AppBar)`
 
 const StyledPaddedBox = styled.div`
     padding: 0 40px;
+`;
+
+const StyledMenu = {
+    marginTop: 8,
+    boxShadow: "0px 3px 26px #00000029",
+    borderRadius: "10px",
+    opacity: 1,
+};
+interface StyledMenuItemProps {
+    hoverPaddingRight?: number;
+}
+const StyledMenuItem = styled(MenuItem).withConfig({
+    shouldForwardProp: prop => !["hoverPaddingRight"].includes(prop),
+})<StyledMenuItemProps>`
+    &.MuiMenuItem-root {
+        font-weight: 400;
+        text-align: left;
+        font: normal normal medium 14px/25px "Roboto";
+        font-size: 14px;
+        letter-spacing: 0.45px;
+        color: #343434;
+        text-transform: uppercase;
+        opacity: 1;
+        background-color: white;
+    }
+
+    &.eVCSsi {
+        padding-left: 29px;
+        padding-right: 29px;
+        background-color: white;
+
+        &:hover {
+            font-weight: bold;
+            background-color: white;
+            padding-right: ${props => (props.hoverPaddingRight ? props.hoverPaddingRight : 26)}px;
+        }
+    }
+`;
+const StyledPfhrp = styled.p`
+    text-transform: none;
+    margin: 0 4px;
 `;
 
 interface HeaderProps {
@@ -170,11 +227,26 @@ const Header = ({ t }: HeaderProps) => {
     const { width } = useWindowDimensions();
 
     const [language, setLanguage] = React.useState(i18next.language || window.localStorage.i18nextLng);
-    function handleChange(selection: any) {
+    const [toolAnchorEl, setToolAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [storiesAnchorEl, setStoriesAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const handleChange = (selection: any) => {
         const language = selection.value;
         changeLanguage(language);
         setLanguage(language);
-    }
+    };
+
+    const handleToolClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (toolAnchorEl !== event.currentTarget) {
+            setToolAnchorEl(event.currentTarget);
+        }
+    };
+
+    const handleStoriesClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (storiesAnchorEl !== event.currentTarget) {
+            setStoriesAnchorEl(event.currentTarget);
+        }
+    };
 
     useTranslation();
 
@@ -188,8 +260,79 @@ const Header = ({ t }: HeaderProps) => {
                                 <StyledButton>{t("common.homepage.menu.home")}</StyledButton>
                             </StyledPaddedBox>
                             <StyledPaddedBox>
-                                <StyledButton>{t("common.homepage.menu.tools")}</StyledButton>
+                                <StyledMenuButton
+                                    aria-owns={toolAnchorEl ? "tools-menu" : undefined}
+                                    aria-haspopup="true"
+                                    aria-expanded={Boolean(toolAnchorEl) === true ? "true" : undefined}
+                                    onClick={handleToolClick}
+                                    onMouseOver={handleToolClick}
+                                >
+                                    {t("common.homepage.menu.tools")}
+                                </StyledMenuButton>
                             </StyledPaddedBox>
+                            <ClickAwayListener onClickAway={() => setToolAnchorEl(null)}>
+                                <Menu
+                                    id="tools-menu"
+                                    anchorEl={toolAnchorEl}
+                                    open={Boolean(toolAnchorEl)}
+                                    onClose={() => setToolAnchorEl(null)}
+                                    variant={"selectedMenu"}
+                                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                                    transformOrigin={{ vertical: "top", horizontal: "center" }}
+                                    MenuListProps={{ onMouseLeave: () => setToolAnchorEl(null) }}
+                                    PaperProps={{ style: StyledMenu }}
+                                >
+                                    <StyledMenuItem onClick={() => setToolAnchorEl(null)}>Maps</StyledMenuItem>
+                                    <Divider />
+                                    <StyledMenuItem onClick={() => setToolAnchorEl(null)}>Dashboards</StyledMenuItem>
+                                    <Divider />
+                                    <StyledMenuItem onClick={() => setToolAnchorEl(null)}>Data Download</StyledMenuItem>
+                                </Menu>
+                            </ClickAwayListener>
+                            <StyledPaddedBox>
+                                <StyledMenuButton
+                                    aria-owns={storiesAnchorEl ? "stories-menu" : undefined}
+                                    aria-haspopup="true"
+                                    aria-expanded={Boolean(storiesAnchorEl) === true ? "true" : undefined}
+                                    onClick={handleStoriesClick}
+                                    onMouseOver={handleStoriesClick}
+                                >
+                                    {t("common.homepage.menu.stories")}
+                                </StyledMenuButton>
+                            </StyledPaddedBox>
+                            <ClickAwayListener onClickAway={() => setStoriesAnchorEl(null)}>
+                                <Menu
+                                    id="stories-menu"
+                                    anchorEl={storiesAnchorEl}
+                                    open={Boolean(storiesAnchorEl)}
+                                    onClose={() => setStoriesAnchorEl(null)}
+                                    variant={"selectedMenu"}
+                                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                                    transformOrigin={{ vertical: "top", horizontal: "center" }}
+                                    MenuListProps={{ onMouseLeave: () => setStoriesAnchorEl(null) }}
+                                    PaperProps={{ style: StyledMenu }}
+                                >
+                                    <StyledMenuItem onClick={() => setStoriesAnchorEl(null)}>
+                                        Vector Insecticide Resistance
+                                    </StyledMenuItem>
+                                    <Divider />
+                                    <StyledMenuItem onClick={() => setStoriesAnchorEl(null)}>
+                                        Invasive Vector Species
+                                    </StyledMenuItem>
+                                    <Divider />
+                                    <StyledMenuItem onClick={() => setStoriesAnchorEl(null)} hoverPaddingRight={21}>
+                                        Antimalarial Drug Efficacy and Resistance
+                                    </StyledMenuItem>
+                                    <Divider />
+                                    <StyledMenuItem onClick={() => setStoriesAnchorEl(null)}>
+                                        Parasite{" "}
+                                        <StyledPfhrp>
+                                            <i>pfhrp2/3</i>
+                                        </StyledPfhrp>{" "}
+                                        Gene Deletions
+                                    </StyledMenuItem>
+                                </Menu>
+                            </ClickAwayListener>
                             <StyledPaddedBox>
                                 <StyledButton>{t("common.homepage.menu.about")}</StyledButton>
                             </StyledPaddedBox>
