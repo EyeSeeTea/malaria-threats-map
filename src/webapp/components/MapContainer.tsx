@@ -42,7 +42,7 @@ const MapContainer: React.FC = () => {
     const store = useStore();
 
     useEffect(() => {
-        ReduxQuerySync({
+        const unsubscribe = ReduxQuerySync({
             store,
             params: {
                 theme: {
@@ -218,6 +218,8 @@ const MapContainer: React.FC = () => {
             initialTruth: "location",
             replaceState: true,
         });
+
+        return unsubscribe;
     }, [store]);
 
     return <Map />;
