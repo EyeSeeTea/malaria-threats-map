@@ -327,11 +327,7 @@ const Header = ({ t }: HeaderProps) => {
                                         i18nKey="common.homepage.stories_submenu.parasite_pfhrp_gene_deletions"
                                         t={t}
                                     >
-                                        PARASITE{" "}
-                                        <StyledPfhrp>
-                                            <i> pfhrp2/3 </i>
-                                        </StyledPfhrp>{" "}
-                                        GENE DELETIONS
+                                        PARASITE <i> pfhrp2/3 </i> GENE DELETIONS
                                     </Trans>
                                 </StyledMenuItem>
                             </Menu>
