@@ -1,58 +1,53 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, Typography, Link, Divider } from "@mui/material";
+import { Button, Typography, Link, Divider, Grid, Container } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import WhoLogoBlue from "../../components/WhoLogoBlue";
-import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
 
-interface PrivacyProps {
-    windowWidth: number;
-}
-
-const FooterDiv = styled.div<PrivacyProps>`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-
-    margin: auto;
-    margin-bottom: 34px;
-    width: ${props => `${props.windowWidth * 0.83}px`};
+const FooterContainer = styled(Container)`
+    padding: 22px;
 `;
 
-const Flex = styled.div`
+const PrivacyCopyrightDiv = styled.div`
+    padding-top: 8px;
+    padding-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+`;
+
+const Column = styled(Typography)`
     display: flex;
     flex-direction: column;
+    height: 100%;
+    flex: 1;
 `;
 
-const PrivacyCopyrightDiv = styled.div<PrivacyProps>`
-    padding: 22px 0;
-    width: ${props => `${props.windowWidth * 0.83}px`};
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-`;
-
-const FooterHeader = styled(Typography)`
+const ColumnTitle = styled(Typography)`
     text-align: left;
-    color: #636463;
+    color: dimgray;
     font-weight: bold;
 `;
 
 const StyledNewsletterButton = styled(Button)`
     &.MuiButton-root {
         color: white;
-        font-size: 16px;
-        background-color: #343434;
+        font-size: 18px;
+        background-color: black;
         font-weight: bold;
-        text-align: center;
-        margin: 0;
+        max-width: 355px;
+        margin-top: 16px;
+    }
+`;
+
+const StyledLink = styled(Link)`
+    color: black;
+    &:hover {
+        text-decoration: none;
     }
 `;
 
 const Footer = () => {
     const { t } = useTranslation();
-    const { width } = useWindowDimensions();
 
     //I'll remove this once I get the actual links
     const otherWhoResources = [
@@ -66,69 +61,65 @@ const Footer = () => {
     const aboutWhoGmp = [t("common.footer.about_who_gmp.resource1"), t("common.footer.about_who_gmp.resource2")];
 
     return (
-        <React.Fragment>
-            <FooterDiv windowWidth={width}>
-                <WhoLogoBlue />
-                <div>
-                    <FooterHeader gutterBottom variant="body2">
-                        {t("common.footer.policies.title")}
-                    </FooterHeader>
-                    <Link href="#" underline="none" variant="body1" textAlign="left" color="#343434">
-                        {t("common.footer.policies.disclaimer")}
+        <footer>
+            <FooterContainer maxWidth="xl" sx={{ padding: 3 }}>
+                <Grid container rowSpacing={3} columnSpacing={2} sx={{ paddingTop: 2, paddingBottom: 3 }}>
+                    <Grid item lg={2} md={6} xs={12}>
+                        <Column>
+                            <WhoLogoBlue />
+                        </Column>
+                    </Grid>
+                    <Grid item lg={2} md={6} xs={12}>
+                        <Column>
+                            <ColumnTitle gutterBottom variant="body2">
+                                {t("common.footer.policies.title")}
+                            </ColumnTitle>
+                            <StyledLink href="#" variant="body1">
+                                {t("common.footer.policies.disclaimer")}
+                            </StyledLink>
+                        </Column>
+                    </Grid>
+                    <Grid item lg={3} md={6} xs={12}>
+                        <Column>
+                            <ColumnTitle gutterBottom variant="body2">
+                                {t("common.footer.other_who_resources.title")}
+                            </ColumnTitle>
+                            {otherWhoResources.map((resource, id) => (
+                                <StyledLink key={id} href="#" variant="body1">
+                                    {resource}
+                                </StyledLink>
+                            ))}
+                        </Column>
+                    </Grid>
+                    <Grid item lg={3} md={6} xs={12}>
+                        <Column>
+                            <ColumnTitle gutterBottom variant="body2">
+                                {t("common.footer.about_who_gmp.title")}
+                            </ColumnTitle>
+                            <Column>
+                                {aboutWhoGmp.map((resource, id) => (
+                                    <StyledLink key={id} href="#" variant="body1">
+                                        {resource}
+                                    </StyledLink>
+                                ))}
+                            </Column>
+                            <StyledNewsletterButton size="large" variant="contained">
+                                {t("common.footer.subscribe_newsletter")}
+                            </StyledNewsletterButton>
+                        </Column>
+                    </Grid>
+                </Grid>
+                <Divider variant="fullWidth" sx={{ margin: "8px 0px" }} />
+                <PrivacyCopyrightDiv>
+                    <Link href="#" underline="none" variant="body1" textAlign="center" color="black">
+                        {t("common.footer.privacy")}
                     </Link>
-                </div>
-                <Flex>
-                    <FooterHeader gutterBottom variant="body2">
-                        {t("common.footer.other_who_resources.title")}
-                    </FooterHeader>
-                    {otherWhoResources.map((resource, id) => (
-                        <Link
-                            key={id}
-                            href="#"
-                            underline="none"
-                            variant="body1"
-                            textAlign="left"
-                            color="#343434"
-                            style={{ margin: "5px 0" }}
-                        >
-                            {resource}
-                        </Link>
-                    ))}
-                </Flex>
-                <Flex style={{ justifyContent: "space-between" }}>
-                    <Flex>
-                        <FooterHeader gutterBottom variant="body2">
-                            {t("common.footer.about_who_gmp.title")}
-                        </FooterHeader>
-                        {aboutWhoGmp.map((resource, id) => (
-                            <Link
-                                key={id}
-                                href="#"
-                                underline="none"
-                                variant="body1"
-                                textAlign="left"
-                                color="#343434"
-                                style={{ margin: "5px 0" }}
-                            >
-                                {resource}
-                            </Link>
-                        ))}
-                    </Flex>
-                    <StyledNewsletterButton size="large" variant="contained">
-                        {t("common.footer.subscribe_newsletter")}
-                    </StyledNewsletterButton>
-                </Flex>
-            </FooterDiv>
-            <Divider variant="fullWidth" />
-            <PrivacyCopyrightDiv windowWidth={width}>
-                <Link href="#" underline="none" variant="body1" textAlign="center" color="#343434">
-                    {t("common.footer.privacy")}
-                </Link>
-                <Typography variant="body1" textAlign="center" color="#343434">
-                    {t("disclaimer.p1bLinkText", { year: new Date().getFullYear() })}
-                </Typography>
-            </PrivacyCopyrightDiv>
-        </React.Fragment>
+                    <Typography variant="body1" textAlign="center">
+                        {t("disclaimer.p1bLinkText", { year: new Date().getFullYear() })}
+                    </Typography>
+                </PrivacyCopyrightDiv>
+            </FooterContainer>
+        </footer>
     );
 };
 
