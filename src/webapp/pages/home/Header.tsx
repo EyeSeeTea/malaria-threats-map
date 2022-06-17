@@ -145,10 +145,6 @@ const StyledMenuItem = styled(MenuItem).withConfig({
         }
     }
 `;
-const StyledPfhrp = styled.p`
-    text-transform: none;
-    margin: 0 4px;
-`;
 
 interface HeaderProps {
     t: TFunction<"translation", undefined>;
