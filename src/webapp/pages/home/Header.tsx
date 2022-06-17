@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, AppBar, Toolbar, Box, Menu, MenuItem, Divider, ClickAwayListener } from "@mui/material";
-import { TFunction } from "react-i18next";
+import { Button, AppBar, Toolbar, Box, Menu, MenuItem, Divider } from "@mui/material";
+import { TFunction, useTranslation, Trans } from "react-i18next";
 import IntegrationReactSelect from "../../components/BasicSelect";
 import { changeLanguage } from "../../config/i18next";
-import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
 import createStyles from "@mui/styles/createStyles";
@@ -119,6 +118,7 @@ const StyledMenu = {
 interface StyledMenuItemProps {
     hoverPaddingRight?: number;
 }
+
 const StyledMenuItem = styled(MenuItem).withConfig({
     shouldForwardProp: prop => !["hoverPaddingRight"].includes(prop),
 })<StyledMenuItemProps>`
@@ -129,7 +129,6 @@ const StyledMenuItem = styled(MenuItem).withConfig({
         font-size: 14px;
         letter-spacing: 0.45px;
         color: #343434;
-        text-transform: uppercase;
         opacity: 1;
         background-color: white;
     }
@@ -270,25 +269,29 @@ const Header = ({ t }: HeaderProps) => {
                                     {t("common.homepage.menu.tools")}
                                 </StyledMenuButton>
                             </StyledPaddedBox>
-                            <ClickAwayListener onClickAway={() => setToolAnchorEl(null)}>
-                                <Menu
-                                    id="tools-menu"
-                                    anchorEl={toolAnchorEl}
-                                    open={Boolean(toolAnchorEl)}
-                                    onClose={() => setToolAnchorEl(null)}
-                                    variant={"selectedMenu"}
-                                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                                    transformOrigin={{ vertical: "top", horizontal: "center" }}
-                                    MenuListProps={{ onMouseLeave: () => setToolAnchorEl(null) }}
-                                    PaperProps={{ style: StyledMenu }}
-                                >
-                                    <StyledMenuItem onClick={() => setToolAnchorEl(null)}>Maps</StyledMenuItem>
-                                    <Divider />
-                                    <StyledMenuItem onClick={() => setToolAnchorEl(null)}>Dashboards</StyledMenuItem>
-                                    <Divider />
-                                    <StyledMenuItem onClick={() => setToolAnchorEl(null)}>Data Download</StyledMenuItem>
-                                </Menu>
-                            </ClickAwayListener>
+                            <Menu
+                                id="tools-menu"
+                                anchorEl={toolAnchorEl}
+                                open={Boolean(toolAnchorEl)}
+                                onClose={() => setToolAnchorEl(null)}
+                                variant={"selectedMenu"}
+                                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                                transformOrigin={{ vertical: "top", horizontal: "center" }}
+                                MenuListProps={{ onMouseLeave: () => setToolAnchorEl(null) }}
+                                PaperProps={{ style: StyledMenu }}
+                            >
+                                <StyledMenuItem onClick={() => setToolAnchorEl(null)}>
+                                    {t("common.homepage.tools_submenu.maps")}
+                                </StyledMenuItem>
+                                <Divider />
+                                <StyledMenuItem onClick={() => setToolAnchorEl(null)}>
+                                    {t("common.homepage.tools_submenu.dashboards")}
+                                </StyledMenuItem>
+                                <Divider />
+                                <StyledMenuItem onClick={() => setToolAnchorEl(null)}>
+                                    {t("common.homepage.tools_submenu.data_download")}
+                                </StyledMenuItem>
+                            </Menu>
                             <StyledPaddedBox>
                                 <StyledMenuButton
                                     aria-owns={storiesAnchorEl ? "stories-menu" : undefined}
@@ -300,39 +303,42 @@ const Header = ({ t }: HeaderProps) => {
                                     {t("common.homepage.menu.stories")}
                                 </StyledMenuButton>
                             </StyledPaddedBox>
-                            <ClickAwayListener onClickAway={() => setStoriesAnchorEl(null)}>
-                                <Menu
-                                    id="stories-menu"
-                                    anchorEl={storiesAnchorEl}
-                                    open={Boolean(storiesAnchorEl)}
-                                    onClose={() => setStoriesAnchorEl(null)}
-                                    variant={"selectedMenu"}
-                                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                                    transformOrigin={{ vertical: "top", horizontal: "center" }}
-                                    MenuListProps={{ onMouseLeave: () => setStoriesAnchorEl(null) }}
-                                    PaperProps={{ style: StyledMenu }}
-                                >
-                                    <StyledMenuItem onClick={() => setStoriesAnchorEl(null)}>
-                                        Vector Insecticide Resistance
-                                    </StyledMenuItem>
-                                    <Divider />
-                                    <StyledMenuItem onClick={() => setStoriesAnchorEl(null)}>
-                                        Invasive Vector Species
-                                    </StyledMenuItem>
-                                    <Divider />
-                                    <StyledMenuItem onClick={() => setStoriesAnchorEl(null)} hoverPaddingRight={21}>
-                                        Antimalarial Drug Efficacy and Resistance
-                                    </StyledMenuItem>
-                                    <Divider />
-                                    <StyledMenuItem onClick={() => setStoriesAnchorEl(null)}>
-                                        Parasite{" "}
+                            <Menu
+                                id="stories-menu"
+                                anchorEl={storiesAnchorEl}
+                                open={Boolean(storiesAnchorEl)}
+                                onClose={() => setStoriesAnchorEl(null)}
+                                variant={"selectedMenu"}
+                                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                                transformOrigin={{ vertical: "top", horizontal: "center" }}
+                                MenuListProps={{ onMouseLeave: () => setStoriesAnchorEl(null) }}
+                                PaperProps={{ style: StyledMenu }}
+                            >
+                                <StyledMenuItem onClick={() => setStoriesAnchorEl(null)}>
+                                    {t("common.themes_caps.prevention")}
+                                </StyledMenuItem>
+                                <Divider />
+                                <StyledMenuItem onClick={() => setStoriesAnchorEl(null)}>
+                                    {t("common.themes_caps.invasive")}
+                                </StyledMenuItem>
+                                <Divider />
+                                <StyledMenuItem onClick={() => setStoriesAnchorEl(null)} hoverPaddingRight={21}>
+                                    {t("common.homepage.stories_submenu.antimalarial_drug_efficacy_and_resistance")}
+                                </StyledMenuItem>
+                                <Divider />
+                                <StyledMenuItem onClick={() => setStoriesAnchorEl(null)}>
+                                    <Trans
+                                        i18nKey="common.homepage.stories_submenu.parasite_pfhrp_gene_deletions"
+                                        t={t}
+                                    >
+                                        PARASITE{" "}
                                         <StyledPfhrp>
-                                            <i>pfhrp2/3</i>
+                                            <i> pfhrp2/3 </i>
                                         </StyledPfhrp>{" "}
-                                        Gene Deletions
-                                    </StyledMenuItem>
-                                </Menu>
-                            </ClickAwayListener>
+                                        GENE DELETIONS
+                                    </Trans>
+                                </StyledMenuItem>
+                            </Menu>
                             <StyledPaddedBox>
                                 <StyledButton>{t("common.homepage.menu.about")}</StyledButton>
                             </StyledPaddedBox>
