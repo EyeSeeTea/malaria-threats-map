@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Button, Typography, Link, Divider } from "@mui/material";
-import { TFunction } from "react-i18next";
-import { useWindowDimensions } from "../components/hooks/use-window-dimensions";
-import WhoLogoBlue from "../components/WhoLogoBlue";
+import { useTranslation } from "react-i18next";
+import WhoLogoBlue from "../../components/WhoLogoBlue";
+import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
+
 interface PrivacyProps {
     windowWidth: number;
 }
@@ -49,11 +50,8 @@ const StyledNewsletterButton = styled(Button)`
     }
 `;
 
-interface FooterProps {
-    t: TFunction<"translation", undefined>;
-}
-
-const Footer = ({ t }: FooterProps) => {
+const Footer = () => {
+    const { t } = useTranslation();
     const { width } = useWindowDimensions();
 
     //I'll remove this once I get the actual links

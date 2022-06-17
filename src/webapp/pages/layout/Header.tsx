@@ -3,11 +3,11 @@ import styled from "styled-components";
 import { Button, AppBar, Toolbar, Box } from "@mui/material";
 import { TFunction } from "react-i18next";
 import { NavLink, NavLinkProps } from "react-router-dom";
-import IntegrationReactSelect from "../components/BasicSelect";
-import { changeLanguage } from "../config/i18next";
+import IntegrationReactSelect from "../../components/BasicSelect";
+import { changeLanguage } from "../../config/i18next";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
-import { useWindowDimensions } from "../components/hooks/use-window-dimensions";
+import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import { emphasize, Theme } from "@mui/material/styles";
@@ -117,9 +117,6 @@ const StyledLink = styled(NavLink)<NavLinkProps>`
 
 `;
 
-interface HeaderProps {
-    t: TFunction<"translation", undefined>;
-}
 const classes = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -189,8 +186,9 @@ const classes = makeStyles((theme: Theme) =>
         },
     })
 );
-const Header = ({ t }: HeaderProps) => {
+const Header = () => {
     const { width } = useWindowDimensions();
+    const { t } = useTranslation();
 
     const [language, setLanguage] = React.useState(i18next.language || window.localStorage.i18nextLng);
     function handleChange(selection: any) {
@@ -221,7 +219,9 @@ const Header = ({ t }: HeaderProps) => {
                                 </Button>
                             </StyledPaddedBox>
                             <StyledPaddedBox>
-                                <StyledButton>{t("common.homepage.menu.contact")}</StyledButton>
+                                <Button component={StyledLink} to="/contact">
+                                    {t("common.homepage.menu.contact")}
+                                </Button>
                             </StyledPaddedBox>
                             <StyledPaddedBox>
                                 <StyledButton>{t("common.homepage.menu.share_data")}</StyledButton>
