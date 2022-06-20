@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useTranslation } from "react-i18next";
 import { Typography } from "@mui/material";
 
 import HomepageMap from "../../assets/img/homepage-map.png";
@@ -66,7 +65,6 @@ const BannerContentDiv = styled.div<WindowProps>`
 `;
 
 export const AboutPage = () => {
-    const { t } = useTranslation();
     const { width } = useWindowDimensions();
 
     return (

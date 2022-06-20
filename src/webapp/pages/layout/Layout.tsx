@@ -2,16 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import Header from "./Header";
 import Footer from "./Footer";
+import { Divider } from "@mui/material";
 
 const Container = styled.div`
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 `;
 
 const MainContainer = styled.main`
     flex: 1;
-    padding: 16px;
+    padding-top: 55px;
+    height: 100vh;
 `;
 
 const Layout: React.FC = ({ children }) => {
@@ -21,6 +23,7 @@ const Layout: React.FC = ({ children }) => {
 
             <MainContainer>{children}</MainContainer>
 
+            <Divider />
             <Footer />
         </Container>
     );
