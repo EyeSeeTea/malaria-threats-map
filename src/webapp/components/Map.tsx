@@ -71,6 +71,13 @@ import FloatingLegend from "./legend/FloatingLegendContainer";
 import GreaterMekongLink from "./greater-mekong-link/GreaterMekongLink";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
+
+// Fix bug in production build
+// https://github.com/mapbox/mapbox-gl-js/issues/10173#issuecomment-750489778
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
+
 const drawerWidth = 100;
 
 const StyledButton = styled(Button)`
