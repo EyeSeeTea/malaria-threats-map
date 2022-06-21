@@ -34,6 +34,17 @@ const SendButton = styled(Button)`
     }
 `;
 
+const StyledTextField = styled(TextField)`
+    .MuiInputBase-root {
+        background-color: #f7f7f7;
+        padding-bottom: 10px;
+    }
+`;
+
+const inputProps = {
+    disableUnderline: true,
+};
+
 export const ContactPage: React.FC = () => {
     return (
         <Layout>
@@ -52,37 +63,41 @@ export const ContactPage: React.FC = () => {
                     <form>
                         <Grid container rowSpacing={3} columnSpacing={2} sx={{ marginTop: 4 }}>
                             <Grid item md={6} xs={12}>
-                                <TextField
+                                <StyledTextField
                                     fullWidth={true}
                                     variant="filled"
-                                    label="Your name"
-                                    InputProps={{ disableUnderline: true }}
+                                    name="name"
+                                    placeholder="Your name"
+                                    InputProps={inputProps}
                                 />
                             </Grid>
                             <Grid item md={6} xs={12}>
-                                <TextField
+                                <StyledTextField
                                     fullWidth={true}
                                     variant="filled"
-                                    label="Your email address"
-                                    InputProps={{ disableUnderline: true }}
+                                    name="email"
+                                    placeholder="Your email address"
+                                    InputProps={inputProps}
                                 />
                             </Grid>
                             <Grid item md={12} xs={12}>
-                                <TextField
+                                <StyledTextField
                                     fullWidth={true}
                                     variant="filled"
-                                    label="Subject"
-                                    InputProps={{ disableUnderline: true }}
+                                    name="subject"
+                                    placeholder="Subject"
+                                    InputProps={inputProps}
                                 />
                             </Grid>
                             <Grid item md={12} xs={12}>
-                                <TextField
+                                <StyledTextField
                                     fullWidth={true}
                                     multiline
                                     variant="filled"
-                                    label="Message"
+                                    name="message"
+                                    placeholder="Message"
                                     rows={6}
-                                    InputProps={{ disableUnderline: true }}
+                                    InputProps={inputProps}
                                 />
                             </Grid>
 
