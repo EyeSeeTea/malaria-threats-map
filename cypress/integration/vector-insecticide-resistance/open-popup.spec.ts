@@ -26,7 +26,7 @@ describe("Open popup in resistance mechanisms detection subtheme", () => {
 
     it("should open a popup to click on coordinates", () => {
         cy.openSitePopup("Kitwe");
-        cy.findByText("Biochemical assays, Mono oxygenases");
+        cy.findByText("Biochemical assays", { exact: false });
 
         cy.findByText("Kitwe, Zambia");
         cy.contains(
@@ -64,7 +64,7 @@ describe("Open popup in synergist effect in susceptibility subtheme", () => {
 
     it("should open a popup to click on coordinates", () => {
         cy.openSitePopup("Mamfene");
-        cy.findByText("Synergist-insecticide bioassays, Mono oxygenases");
+        cy.findByText("Synergist-insecticide bioassays", { exact: false });
 
         cy.findByText("Mamfene, South Africa");
         cy.contains(
