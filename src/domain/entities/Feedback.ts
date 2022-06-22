@@ -55,7 +55,16 @@ export class Feedback {
                 })
             );
         } else {
-            return Either.left(errors);
+            const finalErrors = Object.keys(errors).reduce((acc, key) => {
+                return errors[key as keyof FeedbackData].length > 0
+                    ? {
+                          ...acc,
+                          [key]: errors[key as keyof FeedbackData],
+                      }
+                    : acc;
+            }, {});
+
+            return Either.left(finalErrors);
         }
     }
 }

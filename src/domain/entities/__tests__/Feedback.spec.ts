@@ -21,8 +21,8 @@ describe("Email", () => {
 
         feedbackResult.fold(
             errors => {
-                expect(errors.length).toBe(1);
-                expect(errors[0]).toStrictEqual({ errors: ["field_cannot_be_blank"], property: "name", value: "" });
+                expect(Object.keys(errors).length).toBe(1);
+                expect(errors.name).toStrictEqual(["field_cannot_be_blank"]);
             },
             () => fail("should be fail")
         );
@@ -32,8 +32,8 @@ describe("Email", () => {
 
         feedbackResult.fold(
             errors => {
-                expect(errors.length).toBe(1);
-                expect(errors[0]).toStrictEqual({ errors: ["field_cannot_be_blank"], property: "email", value: "" });
+                expect(Object.keys(errors).length).toBe(1);
+                expect(errors.email).toStrictEqual(["field_cannot_be_blank"]);
             },
             () => fail("should be fail")
         );
@@ -43,8 +43,8 @@ describe("Email", () => {
 
         feedbackResult.fold(
             errors => {
-                expect(errors.length).toBe(1);
-                expect(errors[0]).toStrictEqual({ errors: ["field_cannot_be_blank"], property: "subject", value: "" });
+                expect(Object.keys(errors).length).toBe(1);
+                expect(errors.subject).toStrictEqual(["field_cannot_be_blank"]);
             },
             () => fail("should be fail")
         );
@@ -54,8 +54,8 @@ describe("Email", () => {
 
         feedbackResult.fold(
             errors => {
-                expect(errors.length).toBe(1);
-                expect(errors[0]).toStrictEqual({ errors: ["field_cannot_be_blank"], property: "message", value: "" });
+                expect(Object.keys(errors).length).toBe(1);
+                expect(errors.message).toStrictEqual(["field_cannot_be_blank"]);
             },
             () => fail("should be fail")
         );
@@ -65,8 +65,8 @@ describe("Email", () => {
 
         emailResult.fold(
             errors => {
-                expect(errors.length).toBe(1);
-                expect(errors[0]).toStrictEqual({ errors: ["invalid_field"], property: "email", value: "example.com" });
+                expect(Object.keys(errors).length).toBe(1);
+                expect(errors.email).toStrictEqual(["invalid_field"]);
             },
             () => fail("should be fail")
         );
