@@ -51,9 +51,7 @@ export class Either<L, R> {
     getOrThrow(errorMessage?: string): R {
         const throwFn = () => {
             throw Error(
-                errorMessage
-                    ? errorMessage
-                    : "An error has ocurred retrieving value: " + JSON.stringify(this.value)
+                errorMessage ? errorMessage : "An error has ocurred retrieving value: " + JSON.stringify(this.value)
             );
         };
 
