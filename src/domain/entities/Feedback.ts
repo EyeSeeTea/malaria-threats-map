@@ -1,5 +1,5 @@
 import { Either } from "../types/Either";
-import { ValidationError } from "../types/Errors";
+import { ValidationErrors } from "../types/Errors";
 import { validateRegexp, validateRequired } from "../utils/validations";
 
 const EMAIL_PATTERN =
@@ -25,7 +25,7 @@ export class Feedback {
         this.message = data.message;
     }
 
-    public static create(data: FeedbackData): Either<ValidationError<FeedbackData>[], Feedback> {
+    public static create(data: FeedbackData): Either<ValidationErrors<FeedbackData>, Feedback> {
         return this.validateAndCreate(data);
     }
 
@@ -33,21 +33,19 @@ export class Feedback {
         return { name: this.name, email: this.email, subject: this.subject, message: this.message };
     }
 
-    private static validateAndCreate(data: FeedbackData): Either<ValidationError<FeedbackData>[], Feedback> {
+    private static validateAndCreate(data: FeedbackData): Either<ValidationErrors<FeedbackData>, Feedback> {
         const emailRequiredError = validateRequired(data.email);
 
-        const errors = [
-            { property: "name" as const, errors: validateRequired(data.name), value: data.name },
-            {
-                property: "email" as const,
-                errors: emailRequiredError.length > 0 ? emailRequiredError : validateRegexp(data.email, EMAIL_PATTERN),
-                value: data.email,
-            },
-            { property: "subject" as const, errors: validateRequired(data.subject), value: data.subject },
-            { property: "message" as const, errors: validateRequired(data.message), value: data.message },
-        ].filter(validation => validation.errors.length > 0);
+        const errors = {
+            name: validateRequired(data.name),
+            email: emailRequiredError.length > 0 ? emailRequiredError : validateRegexp(data.email, EMAIL_PATTERN),
+            subject: validateRequired(data.subject),
+            message: validateRequired(data.message),
+        };
 
-        if (errors.length === 0) {
+        const propsWithErrors = Object.keys(errors).filter(prop => errors[prop as keyof FeedbackData].length !== 0);
+
+        if (propsWithErrors.length === 0) {
             return Either.right(
                 new Feedback({
                     name: data.name,

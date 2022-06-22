@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { HomePage } from "./home/HomePage";
 import { AboutPage } from "./about/AboutPage";
 import PersistentDrawerLeft from "../components/PersistentDrawerLeft";
-import { ContactPage } from "./contact/ContactPage";
+import ContactPage from "./contact/ContactPage";
 
 export const Router: React.FC = React.memo(() => {
     return (

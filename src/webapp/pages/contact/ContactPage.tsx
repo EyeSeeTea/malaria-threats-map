@@ -1,8 +1,12 @@
-import { Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Alert, Button, Container, Grid, Paper, Snackbar, TextField, Typography } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import Layout from "../layout/Layout";
 import HomepageMap from "../../assets/img/homepage-map.png";
+import { connect } from "react-redux";
+import { State } from "../../store/types";
+import { selectFeedback } from "../../store/reducers/feedback-reducer";
+import { feedbackFieldChange, feedbackSubmit } from "../../store/actions/feedback-actions";
 
 const ImageBanner = styled.div`
     background: linear-gradient(90deg, #bbd7e8 0%, #bbd7e800 100%), url(${HomepageMap});
@@ -45,7 +49,29 @@ const inputProps = {
     disableUnderline: true,
 };
 
-export const ContactPage: React.FC = () => {
+const mapStateToProps = (state: State) => ({
+    feedback: selectFeedback(state),
+});
+
+const mapDispatchToProps = {
+    fieldChange: feedbackFieldChange,
+    submit: feedbackSubmit,
+};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+type Props = StateProps & DispatchProps;
+
+const ContactPage: React.FC<Props> = ({ feedback, submit, fieldChange }) => {
+    const handleFieldChange = React.useCallback(
+        (event: React.ChangeEvent<any>) => {
+            event.persist();
+
+            fieldChange({ prop: event.target.name, value: event.target.value });
+        },
+        [fieldChange]
+    );
+
     return (
         <Layout>
             <ImageBanner>
@@ -64,33 +90,46 @@ export const ContactPage: React.FC = () => {
                         <Grid container rowSpacing={3} columnSpacing={2} sx={{ marginTop: 4 }}>
                             <Grid item md={6} xs={12}>
                                 <StyledTextField
+                                    error={feedback.fieldErrors.name !== undefined}
                                     fullWidth={true}
                                     variant="filled"
                                     name="name"
                                     placeholder="Your name"
                                     InputProps={inputProps}
+                                    value={feedback.fields.name}
+                                    helperText={feedback.fieldErrors.name}
+                                    onChange={handleFieldChange}
                                 />
                             </Grid>
                             <Grid item md={6} xs={12}>
                                 <StyledTextField
+                                    error={feedback.fieldErrors.email !== undefined}
                                     fullWidth={true}
                                     variant="filled"
                                     name="email"
                                     placeholder="Your email address"
                                     InputProps={inputProps}
+                                    value={feedback.fields.email}
+                                    helperText={feedback.fieldErrors.email}
+                                    onChange={handleFieldChange}
                                 />
                             </Grid>
                             <Grid item md={12} xs={12}>
                                 <StyledTextField
+                                    error={feedback.fieldErrors.subject !== undefined}
                                     fullWidth={true}
                                     variant="filled"
                                     name="subject"
                                     placeholder="Subject"
                                     InputProps={inputProps}
+                                    value={feedback.fields.subject}
+                                    helperText={feedback.fieldErrors.subject}
+                                    onChange={handleFieldChange}
                                 />
                             </Grid>
                             <Grid item md={12} xs={12}>
                                 <StyledTextField
+                                    error={feedback.fieldErrors.message !== undefined}
                                     fullWidth={true}
                                     multiline
                                     variant="filled"
@@ -98,16 +137,32 @@ export const ContactPage: React.FC = () => {
                                     placeholder="Message"
                                     rows={6}
                                     InputProps={inputProps}
+                                    value={feedback.fields.message}
+                                    helperText={feedback.fieldErrors.message}
+                                    onChange={handleFieldChange}
                                 />
                             </Grid>
 
                             <Grid item xs={2}>
-                                <SendButton>{"Send"}</SendButton>
+                                <SendButton onClick={submit}>{"Send"}</SendButton>
                             </Grid>
                         </Grid>
                     </form>
                 </RoundedPaper>
             </Container>
+            {feedback.message && (
+                <Snackbar
+                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                    open={true}
+                    autoHideDuration={3000}
+                >
+                    <Alert severity={feedback.message.type === "success" ? "success" : "error"}>
+                        {feedback.message.text}
+                    </Alert>
+                </Snackbar>
+            )}
         </Layout>
     );
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactPage);
