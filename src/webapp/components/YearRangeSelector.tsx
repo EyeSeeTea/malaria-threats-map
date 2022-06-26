@@ -19,12 +19,12 @@ const marks = (start: number, end: number) =>
     range(start, end).map(year =>
         year % 5 === 0
             ? {
-                value: year,
-                label: year.toString(),
-            }
+                  value: year,
+                  label: year.toString(),
+              }
             : {
-                value: year,
-            }
+                  value: year,
+              }
     );
 
 const useStyles = makeStyles({
