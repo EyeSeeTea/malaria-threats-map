@@ -38,7 +38,7 @@ const useStyles = makeStyles({
 });
 
 function valuetext(value: number) {
-    return `${value}°C`;
+    return `${value} years`;
 }
 
 const mapStateToProps = (state: State) => ({
