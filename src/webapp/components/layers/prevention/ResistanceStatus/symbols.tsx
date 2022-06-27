@@ -4,6 +4,10 @@ export const ConfirmationStatusColors: { [key: string]: string[] } = {
     Susceptible: ["#869C66", "#5e6e47"],
 };
 
+const ResistanceStatusColors: { [key: string]: string[] } = {
+    Undetermined: ["#BEBEBE", "#838383"]
+};
+
 const resistanceStatusSymbols = {
     "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
     "circle-color": [

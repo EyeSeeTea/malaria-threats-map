@@ -85,17 +85,22 @@ interface LegendLabel {
     label: string;
     color: string;
     border?: boolean;
+    extendedLabel?: string;
 }
 
-export function LegendLabels({ labels }: { labels: LegendLabel[] }) {
+export function LegendLabels({ labels, legendExpanded }: { labels: LegendLabel[], legendExpanded?: boolean }) {
     const { t } = useTranslation();
     return (
         <LegendEntries>
             {labels.map(label => (
+                <>
                 <LegendEntry key={label.label}>
                     <LegendSymbol color={label.color} border={label.border} />
                     <LegendText>{t(`common.${label.label}`)}</LegendText>
                 </LegendEntry>
+                {legendExpanded && label.extendedLabel && (
+                    <LegendText>{label.extendedLabel}</LegendText>)}
+                </>
             ))}
         </LegendEntries>
     );
