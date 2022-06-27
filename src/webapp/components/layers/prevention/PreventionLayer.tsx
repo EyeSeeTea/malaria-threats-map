@@ -264,6 +264,7 @@ class PreventionLayer extends Component<Props> {
         const filteredStudies = this.filterStudies(studies).filter(study =>
             countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
+        console.log(filteredStudies)
         if (filteredStudies.length === 0) {
             return <div />;
         }
