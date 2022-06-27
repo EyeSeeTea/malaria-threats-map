@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Button, AppBar, Toolbar, Box, Menu, MenuItem, Divider } from "@mui/material";
-import { TFunction, useTranslation, Trans } from "react-i18next";
+import { TFunction, useTranslation } from "react-i18next";
 import IntegrationReactSelect from "../../components/BasicSelect";
 import { changeLanguage } from "../../config/i18next";
 import i18next from "i18next";
@@ -125,6 +125,7 @@ const StyledMenuItem = styled(MenuItem).withConfig({
     &.MuiMenuItem-root {
         font-weight: 400;
         text-align: left;
+        text-transform: none;
         font: normal normal medium 14px/25px "Roboto";
         font-size: 14px;
         letter-spacing: 0.45px;
@@ -323,12 +324,7 @@ const Header = ({ t }: HeaderProps) => {
                                 </StyledMenuItem>
                                 <Divider />
                                 <StyledMenuItem onClick={() => setStoriesAnchorEl(null)}>
-                                    <Trans
-                                        i18nKey="common.homepage.stories_submenu.parasite_pfhrp_gene_deletions"
-                                        t={t}
-                                    >
-                                        PARASITE <i> pfhrp2/3 </i> GENE DELETIONS
-                                    </Trans>
+                                    {t("common.homepage.stories_submenu.parasite_pfhrp_gene_deletions")}
                                 </StyledMenuItem>
                             </Menu>
                             <StyledPaddedBox>
