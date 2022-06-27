@@ -39,6 +39,10 @@ function Legend({ legendExpanded }: Props) {
             label: "prevention.legend.resistance_status.susceptible",
             color: "#869c66",
         },
+        {
+            label: "prevention.legend.resistance_status.undetermined",
+            color: "#BEBEBE",
+        },
     ];
     return (
         <LegendContainer>

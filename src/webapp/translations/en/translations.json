@@ -85,7 +85,8 @@
                 "resistance_status": {
                     "confirmed": "Confirmed (0 to <90%)",
                     "possible": "Possible (90 to <98%)",
-                    "susceptible": "Susceptible (≥98%)"
+                    "susceptible": "Susceptible (≥98%)",
+                    "undetermined": "Undetermined"
                 },
                 "resistance_mechanism": {
                     "confirmed": "Detected",
