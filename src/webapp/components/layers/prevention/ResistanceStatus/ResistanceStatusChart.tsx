@@ -184,7 +184,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         citation: study.CITATION_LONG || study.INSTITUTE,
         citationUrl: study.CITATION_URL,
     }));
-    console.log(data);
+
     const studyObject = groupedStudies[study][0];
     const translations = {
         mortality: t("common.prevention.chart.resistance_status.mortality"),

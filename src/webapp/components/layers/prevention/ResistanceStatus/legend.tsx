@@ -12,7 +12,6 @@ import { State } from "../../../../store/types";
 import { selectLegendExpanded } from "../../../../store/reducers/base-reducer";
 import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
 import { ResistanceStatusColors } from "./symbols";
-
 import { setLegendExpandedAction } from "../../../../store/actions/base-actions";
 import { connect } from "react-redux";
 
@@ -30,7 +29,6 @@ type Props = DispatchProps & StateProps;
 
 function Legend({ legendExpanded, preventionFilters }: Props) {
     const { t } = useTranslation();
-
     const labels = [
         {
             label: "prevention.legend.resistance_status.confirmed",
@@ -45,7 +43,6 @@ function Legend({ legendExpanded, preventionFilters }: Props) {
             color: ResistanceStatusColors.Susceptible[0],
         },
     ];
-
     const greyLabelExtended =
         preventionFilters.insecticideClass === "PYRROLES" && preventionFilters.insecticideTypes.includes("CHLORFENAPYR")
             ? "prevention.extended_legend.resistance_status.pyrroles.chlorfenapyr_undetermined"
