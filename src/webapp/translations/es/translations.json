@@ -85,7 +85,8 @@
                 "resistance_status": {
                     "confirmed": "Confirmado (0 to <90%)",
                     "possible": "Posible (90 to <98%)",
-                    "susceptible": "Susceptible (≥98%)"
+                    "susceptible": "Susceptible (≥98%)",
+                    "undetermined": "Indeterminado"
                 },
                 "resistance_mechanism": {
                     "confirmed": "Detectado",
@@ -96,6 +97,14 @@
                     "full_involvement": "Participación total",
                     "partial_involvement": "Participación parcial",
                     "no_involvement": "Sin participación"
+                }
+            },
+            "extended_legend": {
+                "resistance_status": {
+                    "pyrroles": {
+                        "chlorfenapyr_undetermined": "Los datos recopilados con la concentración de discriminación recomendada de 100 µg/botella pero que no coinciden completamente con los criterios de la OMS para la validación de la prueba, ya sea porque no se informó la temperatura, porque la temperatura cayó fuera del rango recomendado (27 °C ± 2 °C), porque no se probó ninguna cepa de mosquito susceptible en paralelo o porque no se informaron los resultados de la cepa de mosquito susceptible.",
+                        "pirimiphos_methly_undetermined": "Datos recopilados con la concentración de discriminación recomendada anteriormente de 0,25%."
+                    }
                 }
             }
         },

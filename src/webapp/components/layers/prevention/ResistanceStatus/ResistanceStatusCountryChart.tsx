@@ -8,7 +8,7 @@ import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
 import * as R from "ramda";
 import { resolveResistanceStatus } from "./utils";
-import { ConfirmationStatusColors } from "./symbols";
+import { ResistanceStatusColors } from "./symbols";
 import { setCountryModeAction, setRegionAction } from "../../../../store/actions/base-actions";
 import { selectPreventionFilters } from "../../../../store/reducers/prevention-reducer";
 import { formatYears } from "../../../../utils/string-utils";
@@ -49,7 +49,7 @@ const ResistanceStatusCountryChart = ({ studies, setRegion, setCountryMode, prev
         ([status, studies]: any[]) => ({
             name: t(`common.prevention.chart.resistance_status.${status}`),
             y: studies.length,
-            color: ConfirmationStatusColors[status][0],
+            color: ResistanceStatusColors[status][0],
         })
     );
     const onClick = () => {
