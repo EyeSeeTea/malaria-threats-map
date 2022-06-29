@@ -130,7 +130,7 @@ export const setPreventionTypeResetEpic = (action$: ActionsObservable<ActionType
             })
         );
 
-export const setInvasiveThemeEpic = (action$: ActionsObservable<ActionType<typeof setThemeAction>>) =>
+export const setPreventionThemeEpic = (action$: ActionsObservable<ActionType<typeof setThemeAction>>) =>
     action$.ofType(ActionTypeEnum.MalariaSetTheme).pipe(
         switchMap($action => {
             if ($action.payload !== "prevention") {

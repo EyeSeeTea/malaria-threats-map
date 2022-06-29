@@ -51,7 +51,7 @@ export const getTreatmentStudiesEpic = (
         })
     );
 
-export const setTreatmentThemeEpic = (action$: ActionsObservable<ActionType<typeof setTreatmentMapType>>) =>
+export const setTreatmentMapTypesEpic = (action$: ActionsObservable<ActionType<typeof setTreatmentMapType>>) =>
     action$.ofType(ActionTypeEnum.SetTreatmentMapType).pipe(
         switchMap(action => {
             if (action.payload === 2) {
@@ -107,7 +107,7 @@ export const setTreatmentPlasmodiumSpeciesEpic = (
             })
         );
 
-export const setInvasiveThemeEpic = (action$: ActionsObservable<ActionType<typeof setThemeAction>>) =>
+export const setTreatmentThemeEpic = (action$: ActionsObservable<ActionType<typeof setThemeAction>>) =>
     action$.ofType(ActionTypeEnum.MalariaSetTheme).pipe(
         switchMap($action => {
             if ($action.payload !== "treatment") {
