@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { HomePage } from "./home/HomePage";
+import HomePage from "./home/HomePage";
 import PersistentDrawerLeft from "../components/PersistentDrawerLeft";
 
 export const Router: React.FC = React.memo(() => {

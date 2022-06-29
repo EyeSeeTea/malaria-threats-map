@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useTranslation, Trans } from "react-i18next";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
+import { connect } from "react-redux";
 
 import HomepageMap from "../../assets/img/homepage-map.png";
 import PreventionIcon from "../../assets/img/prevention-icon.svg";
 import TreatmentIcon from "../../assets/img/treatment-icon.svg";
 import DiagnosisIcon from "../../assets/img/diagnosis-icon.svg";
 import InvasiveIcon from "../../assets/img/invasive-icon.svg";
-import Divider from "@mui/material/Divider";
 import Dashboards from "../../assets/img/dashboards.png";
 import DataDownload from "../../assets/img/data_download.png";
 import Maps from "../../assets/img/maps.png";
@@ -18,6 +18,17 @@ import MediaCard from "./MediaCard";
 import Footer from "./Footer";
 import Header from "./Header";
 import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
+
+import { State } from "../../store/types";
+import { selectLastUpdatedDates, selectTheme } from "../../store/reducers/base-reducer";
+import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
+import { fetchPreventionStudiesRequest } from "../../store/actions/prevention-actions";
+import { fetchDiagnosisStudiesRequest } from "../../store/actions/diagnosis-actions";
+import { fetchTreatmentStudiesRequest } from "../../store/actions/treatment-actions";
+import { fetchInvasiveStudiesRequest } from "../../store/actions/invasive-actions";
+import { selectDiagnosisStudies } from "../../store/reducers/diagnosis-reducer";
+import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
+import { selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
 
 const StyledBanner = styled.div`
     display: block;
@@ -31,11 +42,11 @@ const StyledBanner = styled.div`
     height: 600px;
     opacity: 1;
 `;
-interface Props {
+interface ContentDivProps {
     windowWidth: number;
 }
 
-const ContentDiv = styled.div<Props>`
+const ContentDiv = styled.div<ContentDivProps>`
     width: ${props => `${props.windowWidth * 0.83}px`};
     margin: auto;
 `;
@@ -106,9 +117,60 @@ export const themePaperColors = {
     diagnosisColorOpaque: "rgb(24, 153, 204, 0.9)",
 };
 
-export const HomePage = () => {
+const mapStateToProps = (state: State) => ({
+    lastUpdatedDates: selectLastUpdatedDates(state),
+    theme: selectTheme(state),
+    preventionStudies: selectPreventionStudies(state),
+    diagnosisStudies: selectDiagnosisStudies(state),
+    treatmentStudies: selectTreatmentStudies(state),
+    invasiveStudies: selectInvasiveStudies(state),
+});
+
+const mapDispatchToProps = {
+    fetchPreventionStudies: fetchPreventionStudiesRequest,
+    fetchDiagnosisStudies: fetchDiagnosisStudiesRequest,
+    fetchTreatmentStudies: fetchTreatmentStudiesRequest,
+    fetchInvasiveStudies: fetchInvasiveStudiesRequest,
+};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+type Props = StateProps & DispatchProps;
+
+const HomePage = ({
+    preventionStudies,
+    diagnosisStudies,
+    treatmentStudies,
+    invasiveStudies,
+    lastUpdatedDates,
+    fetchPreventionStudies,
+    fetchDiagnosisStudies,
+    fetchTreatmentStudies,
+    fetchInvasiveStudies,
+}: Props) => {
     const { t } = useTranslation();
     const { width } = useWindowDimensions();
+    const [loading, setLoading] = React.useState(true);
+
+    useEffect(() => {
+        fetchPreventionStudies();
+        fetchDiagnosisStudies();
+        fetchTreatmentStudies();
+        fetchInvasiveStudies();
+        //eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+        if (
+            preventionStudies.length !== 0 &&
+            diagnosisStudies.length !== 0 &&
+            treatmentStudies.length !== 0 &&
+            invasiveStudies.length !== 0
+        ) {
+            setLoading(false);
+        }
+    }, [preventionStudies, diagnosisStudies, treatmentStudies, invasiveStudies]);
 
     return (
         <React.Fragment>
@@ -174,6 +236,10 @@ export const HomePage = () => {
                                 color={themePaperColors.preventionColor}
                                 colorOpaque={themePaperColors.preventionColorOpaque}
                                 maxPaperHeight={200}
+                                lastUpdated={
+                                    loading ? "loading...." : lastUpdatedDates["prevention"].toLocaleDateString()
+                                }
+                                numStudies={loading ? 0 : preventionStudies.length}
                             />
                             <ThemePaper
                                 t={t}
@@ -184,6 +250,10 @@ export const HomePage = () => {
                                 color={themePaperColors.invasiveColor}
                                 colorOpaque={themePaperColors.invasiveColorOpaque}
                                 maxPaperHeight={200}
+                                lastUpdated={
+                                    loading ? "loading...." : lastUpdatedDates["invasive"].toLocaleDateString()
+                                }
+                                numStudies={loading ? 0 : invasiveStudies.length}
                             />
                             <ThemePaper
                                 t={t}
@@ -194,6 +264,10 @@ export const HomePage = () => {
                                 color={themePaperColors.treatmentColor}
                                 colorOpaque={themePaperColors.treatmentColorOpaque}
                                 maxPaperHeight={220}
+                                lastUpdated={
+                                    loading ? "loading...." : lastUpdatedDates["treatment"].toLocaleDateString()
+                                }
+                                numStudies={loading ? 0 : treatmentStudies.length}
                             />
                             <ThemePaper
                                 t={t}
@@ -204,6 +278,10 @@ export const HomePage = () => {
                                 color={themePaperColors.diagnosisColor}
                                 colorOpaque={themePaperColors.diagnosisColorOpaque}
                                 maxPaperHeight={220}
+                                lastUpdated={
+                                    loading ? "loading...." : lastUpdatedDates["diagnosis"].toLocaleDateString()
+                                }
+                                numStudies={loading ? 0 : diagnosisStudies.length}
                             />
                         </ThemePaperOuterDiv>
                     </Box>
@@ -214,3 +292,5 @@ export const HomePage = () => {
         </React.Fragment>
     );
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
