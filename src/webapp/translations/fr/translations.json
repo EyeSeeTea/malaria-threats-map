@@ -98,6 +98,7 @@
                     "confirmed": "Confirmée (0 to <90%)",
                     "possible": "Suspectée (90 to <98%)",
                     "susceptible": "Sensible (≥98%)",
+                    "undetermined": "Indéterminé",
                     "help": {
                         "p1": "Cette carte contient des données provenant de <1>tests biologiques de concentration discriminante</1>. Chaque point sur la carte représente un site d'étude contenant une ou plusieurs études. Dans les sites où les études montrent différents niveaux d'intensité de résistance, la couleur de le point est déterminé par les résultats les plus récents.",
                         "p2": "Pour plus d'informations sur la définition de chaque niveau, veuillez consulter le <1 href='/'>manuel de l'OMS pour la surveillance de la résistance</1>.",

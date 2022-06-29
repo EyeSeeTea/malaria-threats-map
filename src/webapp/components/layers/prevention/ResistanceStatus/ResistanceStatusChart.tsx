@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
-import { ConfirmationStatusColors } from "./symbols";
+import { ResistanceStatusColors } from "./symbols";
 import * as R from "ramda";
 import { isNull, isNotNull } from "../../../../utils/number-utils";
 import Citation from "../../../charts/Citation";
@@ -72,15 +72,15 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
             zones: [
                 {
                     value: 90,
-                    color: ConfirmationStatusColors.Confirmed[0],
+                    color: ResistanceStatusColors.Confirmed[0],
                 },
                 {
                     value: 98,
-                    color: ConfirmationStatusColors.Possible[0],
+                    color: ResistanceStatusColors.Possible[0],
                 },
                 {
                     value: 100.001,
-                    color: ConfirmationStatusColors.Susceptible[0],
+                    color: ResistanceStatusColors.Susceptible[0],
                 },
             ],
         },
