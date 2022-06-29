@@ -12,7 +12,7 @@ import {
     setTreatmentMapType,
     setTreatmentPlasmodiumSpecies,
 } from "../actions/treatment-actions";
-import { logPageViewAction } from "../actions/base-actions";
+import { logPageViewAction, setFiltersAction, setThemeAction } from "../actions/base-actions";
 import { TreatmentMapType, State } from "../types";
 import { addNotificationAction } from "../actions/notifier-actions";
 import { getAnalyticsPageView } from "../analytics";
@@ -52,7 +52,7 @@ export const getTreatmentStudiesEpic = (
         })
     );
 
-export const setTreatmentThemeEpic = (action$: Observable<ActionType<typeof setTreatmentMapType>>) =>
+export const setTreatmentMapTypesEpic = (action$: Observable<ActionType<typeof setTreatmentMapType>>) =>
     action$.pipe(
         ofType(ActionTypeEnum.SetTreatmentMapType),
         switchMap(action => {
@@ -104,5 +104,16 @@ export const setTreatmentPlasmodiumSpeciesEpic = (
             } else {
                 return of(setTreatmentDrug("DRUG_CQ"));
             }
+        })
+    );
+
+export const setTreatmentThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaSetTheme),
+        switchMap($action => {
+            if ($action.payload !== "treatment") {
+                return of();
+            }
+            return of(setFiltersAction([2015, new Date().getFullYear()]));
         })
     );
