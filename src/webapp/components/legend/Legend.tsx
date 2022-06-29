@@ -119,6 +119,7 @@ const Legend: React.FC<Props> = ({
         () => setLabels(getLegendLabels(theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters)),
         [theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters]
     );
+
     console.log({ mapTypeHelpKey });
 
     return (

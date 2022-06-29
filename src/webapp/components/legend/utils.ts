@@ -115,8 +115,6 @@ export function getLegendLabels(
 }
 
 function getPreventionLegendLebels(filters: PreventionFilters): LegendLabel[] {
-    console.log(filters);
-
     const resistanceStatusLabels = [
         {
             label: "prevention.legend.resistance_status.confirmed",
