@@ -8,6 +8,8 @@ export const ResistanceStatusColors: { [key: string]: string[] } = {
 const resistanceStatusSymbols = {
     "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
     "circle-color": [
+        "case",
+        ["==", ["get", "INSECTICIDE_CLASS"], "PYRROLES"], [
         "match",
         ["get", "RESISTANCE_STATUS"],
         "CONFIRMED_RESISTANCE",
@@ -18,7 +20,18 @@ const resistanceStatusSymbols = {
         ResistanceStatusColors.Susceptible[0],
         "UNDETERMINED",
         ResistanceStatusColors.Undetermined[0],
-        /* other */ "#ccc",
+        /* other */ "#ccc"],
+        ["match",
+        ["get", "CONFIRMATION_STATUS"],
+        "Confirmed",
+        ResistanceStatusColors.Confirmed[0],
+        "Possible",
+        ResistanceStatusColors.Possible[0],
+        "Susceptible",
+        ResistanceStatusColors.Susceptible[0],
+        /* other */ "#ccc"]
+
+
     ],
     "circle-opacity": 1,
     "circle-stroke-color": [
@@ -26,6 +39,8 @@ const resistanceStatusSymbols = {
         ["boolean", ["feature-state", "hover"], false],
         "lightgrey",
         [
+            "case",
+            ["==", ["get", "INSECTICIDE_CLASS"], "PYRROLES"], [
             "match",
             ["get", "RESISTANCE_STATUS"],
             "CONFIRMED_RESISTANCE",
@@ -36,7 +51,16 @@ const resistanceStatusSymbols = {
             ResistanceStatusColors.Susceptible[1],
             "UNDETERMINED",
             ResistanceStatusColors.Undetermined[1],
-            /* other */ "#111",
+            /* other */ "#111"],
+            ["match",
+            ["get", "CONFIRMATION_STATUS"],
+            "Confirmed",
+            ResistanceStatusColors.Confirmed[1],
+            "Possible",
+            ResistanceStatusColors.Possible[1],
+            "Susceptible",
+            ResistanceStatusColors.Susceptible[1],
+            /* other */ "#111"]
         ],
     ],
     "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
