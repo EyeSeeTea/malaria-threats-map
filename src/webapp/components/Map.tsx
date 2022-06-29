@@ -305,7 +305,7 @@ class Map extends React.Component<Props> {
     }
 
     componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {
-        if (this.props.setBounds !== prevProps.setBounds) {
+        if (this.props.setBounds && this.props.setBounds !== prevProps.setBounds) {
             const [[b0, b1], [b2, b3]] = this.props.setBounds;
             this.map.fitBounds([b0, b1, b2, b3], {
                 padding: 100,
