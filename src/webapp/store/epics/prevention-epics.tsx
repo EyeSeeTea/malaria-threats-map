@@ -16,7 +16,7 @@ import {
     setType,
 } from "../actions/prevention-actions";
 import { PreventionMapType, State } from "../types";
-import { logEventAction, logPageViewAction } from "../actions/base-actions";
+import { logEventAction, logPageViewAction, setFiltersAction, setThemeAction } from "../actions/base-actions";
 import { ASSAY_TYPES } from "../../components/filters/AssayTypeCheckboxFilter";
 import { addNotificationAction } from "../actions/notifier-actions";
 import { getAnalyticsPageView } from "../analytics";
@@ -129,3 +129,13 @@ export const setPreventionTypeResetEpic = (action$: ActionsObservable<ActionType
                 return of(setSpecies([]));
             })
         );
+
+export const setInvasiveThemeEpic = (action$: ActionsObservable<ActionType<typeof setThemeAction>>) =>
+    action$.ofType(ActionTypeEnum.MalariaSetTheme).pipe(
+        switchMap($action => {
+            if ($action.payload !== "prevention") {
+                return of();
+            }
+            return of(setFiltersAction([2010, new Date().getFullYear()]));
+        })
+    );

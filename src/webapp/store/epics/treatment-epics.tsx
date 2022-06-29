@@ -12,7 +12,7 @@ import {
     setTreatmentMapType,
     setTreatmentPlasmodiumSpecies,
 } from "../actions/treatment-actions";
-import { logPageViewAction } from "../actions/base-actions";
+import { logPageViewAction, setFiltersAction, setThemeAction } from "../actions/base-actions";
 import { TreatmentMapType, State } from "../types";
 import { addNotificationAction } from "../actions/notifier-actions";
 import { getAnalyticsPageView } from "../analytics";
@@ -106,3 +106,13 @@ export const setTreatmentPlasmodiumSpeciesEpic = (
                 }
             })
         );
+
+export const setInvasiveThemeEpic = (action$: ActionsObservable<ActionType<typeof setThemeAction>>) =>
+    action$.ofType(ActionTypeEnum.MalariaSetTheme).pipe(
+        switchMap($action => {
+            if ($action.payload !== "treatment") {
+                return of();
+            }
+            return of(setFiltersAction([2015, new Date().getFullYear()]));
+        })
+    );
