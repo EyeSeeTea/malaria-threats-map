@@ -9,9 +9,11 @@ import {
     setStoryModeStepAction,
     setThemeAction,
     toggleEndemicityLayerAction,
+    setSelection,
 } from "../store/actions/base-actions";
 import {
     setAssayTypes,
+    setPreventionSelectionStudies,
     setInsecticideClass,
     setInsecticideTypes,
     setPreventionMapType,
@@ -24,6 +26,7 @@ import {
     setDiagnosisMapType,
     setDiagnosisPatientType,
     setDiagnosisSurveyTypes,
+    setDiagnosisSelectionStudies,
 } from "../store/actions/diagnosis-actions";
 import {
     setExcludeLowerPatients,
@@ -32,15 +35,22 @@ import {
     setTreatmentDrug,
     setTreatmentMapType,
     setTreatmentPlasmodiumSpecies,
+    setTreatmentSelectionStudies,
 } from "../store/actions/treatment-actions";
-import { setInvasiveMapType, setInvasiveVectorSpecies } from "../store/actions/invasive-actions";
+import {
+    setInvasiveMapType,
+    setInvasiveVectorSpecies,
+    setInvasiveSelectionStudies,
+} from "../store/actions/invasive-actions";
 import { PreventionMapType } from "../store/types";
 import ReduxQuerySync from "../store/query-middleware";
 import { useStore } from "react-redux";
 
 const MapContainer: React.FC = () => {
     const store = useStore();
-
+    const isNotNull = (value: string) => {
+        return value !== undefined && value !== null && value !== "null";
+    };
     useEffect(() => {
         const unsubscribe = ReduxQuerySync({
             store,
@@ -167,6 +177,100 @@ const MapContainer: React.FC = () => {
                     selector: (state: State) => state.malaria.filters,
                     action: (value: string) =>
                         setFiltersAction(value ? value.split(",").map(value => parseInt(value)) : undefined),
+                },
+                preventionStudies: {
+                    selector: (state: State) => {
+                        let site;
+                        if (state.prevention.selectionStudies.length > 0) {
+                            console.log(state.prevention.selectionStudies);
+                            site = `${encodeURI(JSON.stringify(state.prevention.selectionStudies))}`;
+                        } else site = [];
+
+                        return site;
+                    },
+                    action: (value: string) => {
+                        if (isNotNull(value) && value.length > 0) {
+                            const result = JSON.parse(decodeURIComponent(value));
+                            console.log(result);
+                            return setPreventionSelectionStudies(result);
+                        } else return setPreventionSelectionStudies([]);
+                    },
+                },
+                diagnosisStudies: {
+                    selector: (state: State) => {
+                        let site;
+                        if (state.diagnosis.selectionStudies.length > 0) {
+                            console.log(state.diagnosis.selectionStudies);
+                            site = `${encodeURI(JSON.stringify(state.diagnosis.selectionStudies))}`;
+                        } else site = [];
+
+                        return site;
+                    },
+                    action: (value: string) => {
+                        if (isNotNull(value) && value.length > 0) {
+                            const result = JSON.parse(decodeURIComponent(value));
+                            return setDiagnosisSelectionStudies(result);
+                        } else return setDiagnosisSelectionStudies([]);
+                    },
+                },
+                treatmentStudies: {
+                    selector: (state: State) => {
+                        let site;
+                        if (state.treatment.selectionStudies.length > 0) {
+                            console.log(state.treatment.selectionStudies);
+                            site = `${encodeURI(JSON.stringify(state.treatment.selectionStudies))}`;
+                        } else site = [];
+
+                        return site;
+                    },
+                    action: (value: string) => {
+                        if (isNotNull(value) && value.length > 0) {
+                            const result = JSON.parse(decodeURIComponent(value));
+                            return setTreatmentSelectionStudies(result);
+                        } else return setTreatmentSelectionStudies([]);
+                    },
+                },
+                invasiveStudies: {
+                    selector: (state: State) => {
+                        let site;
+                        if (state.invasive.selectionStudies.length > 0) {
+                            console.log(state.invasive.selectionStudies);
+                            site = `${encodeURI(JSON.stringify(state.invasive.selectionStudies))}`;
+                        } else site = [];
+
+                        return site;
+                    },
+                    action: (value: string) => {
+                        if (isNotNull(value) && value.length > 0) {
+                            const result = JSON.parse(decodeURIComponent(value));
+                            return setInvasiveSelectionStudies(result);
+                        } else return setInvasiveSelectionStudies([]);
+                    },
+                },
+                selection: {
+                    selector: (state: State) => {
+                        let site = null;
+                        if (state.malaria.selection !== null) {
+                            site = encodeURI(
+                                JSON.stringify({
+                                    siteIso2: state.malaria.selection.ISO_2_CODE,
+                                    site: state.malaria.selection.SITE_ID,
+                                    siteCoordinates: state.malaria.selection.coordinates,
+                                })
+                            );
+                        }
+                        return site;
+                    },
+                    action: (value: string) => {
+                        if (isNotNull(value)) {
+                            const { siteIso2, site, siteCoordinates } = JSON.parse(decodeURIComponent(value));
+                            return setSelection({
+                                ISO_2_CODE: siteIso2,
+                                SITE_ID: site,
+                                coordinates: siteCoordinates,
+                            });
+                        } else return setSelection(null);
+                    },
                 },
                 region: {
                     selector: (state: State) => {

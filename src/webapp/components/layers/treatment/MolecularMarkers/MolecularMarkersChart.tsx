@@ -17,6 +17,7 @@ import Citation from "../../../charts/Citation";
 import { formatYears, formatYears2 } from "../../../../utils/string-utils";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import Hidden from "../../../hidden/Hidden";
+import { selectTranslations } from "../../../../store/reducers/translations-reducer";
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
@@ -211,6 +212,7 @@ const Margin = styled.div`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     treatmentFilters: selectTreatmentFilters(state),
+    translations: selectTranslations(state),
 });
 const mapDispatchToProps = {};
 
@@ -221,7 +223,7 @@ type OwnProps = {
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
+const MolecularMarkersChart = ({ studies, treatmentFilters, translations }: Props) => {
     const { t } = useTranslation();
     const [studyIndex, setStudy] = useState(0);
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
@@ -252,17 +254,27 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
         color: MutationColors[study.GENOTYPE] ? MutationColors[study.GENOTYPE].color : "000",
     }));
 
-    const titleItems = [
-        studies[studyIndex].SITE_NAME,
-        studies[studyIndex].PROVINCE,
-        t(studies[studyIndex].ISO2 === "NA" ? "common.COUNTRY_NA" : studies[studyIndex].ISO2),
-    ];
-    const title = titleItems.filter(Boolean).join(", ");
+    const molecularMarkersFiltersValue = React.useCallback(() => {
+        if (!translations) return;
+        const titleItems = [
+            studies[studyIndex].SITE_NAME,
+            studies[studyIndex].PROVINCE,
+            t(studies[studyIndex].ISO2 === "NA" ? "common.COUNTRY_NA" : studies[studyIndex].ISO2),
+        ];
+        return {
+            titleItems,
+            percentage: t("common.treatment.chart.molecular_markers.percentage"),
+        };
+    }, [studyIndex, studies, t, translations]);
+
+    const selectedFilters = React.useMemo(() => {
+        if (!translations) return;
+        return molecularMarkersFiltersValue();
+    }, [translations, molecularMarkersFiltersValue]);
+
+    const title = selectedFilters.titleItems.filter(Boolean).join(", ");
     const molecularMarker = t(MOLECULAR_MARKERS.find((m: any) => m.value === treatmentFilters.molecularMarker).label);
     const study = sortedStudies[sortedStudies.length - studyIndex - 1];
-    const translations = {
-        percentage: t("common.treatment.chart.molecular_markers.percentage"),
-    };
 
     const pfkelch13 = () => {
         return (
@@ -288,16 +300,25 @@ const MolecularMarkersChart = ({ studies, treatmentFilters }: Props) => {
                     })}
                 </Typography>
                 <Hidden smUp>
-                    <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
-                    <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations)} />
+                    <HighchartsReact highcharts={Highcharts} options={options(data, selectedFilters.percentage)} />
+                    <HighchartsReact
+                        highcharts={Highcharts}
+                        options={options2(series, years, selectedFilters.percentage)}
+                    />
                 </Hidden>
                 <Hidden smDown>
                     <Flex>
                         <FlexCol>
-                            <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
+                            <HighchartsReact
+                                highcharts={Highcharts}
+                                options={options(data, selectedFilters.percentage)}
+                            />
                         </FlexCol>
                         <FlexCol flex={2}>
-                            <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations)} />
+                            <HighchartsReact
+                                highcharts={Highcharts}
+                                options={options2(series, years, selectedFilters.percentage)}
+                            />
                         </FlexCol>
                     </Flex>
                 </Hidden>

@@ -16,6 +16,7 @@ import { isNotNull } from "../../../../utils/number-utils";
 import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import Hidden from "../../../hidden/Hidden";
+import { selectTranslations } from "../../../../store/reducers/translations-reducer";
 
 const Flex = styled.div`
     display: flex;
@@ -94,6 +95,7 @@ const ChatContainer = styled.div<{ width?: string }>`
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
+    translations: selectTranslations(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -102,7 +104,7 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const ResistanceMechanismsChart = ({ studies }: Props) => {
+const ResistanceMechanismsChart = ({ studies, translations }: Props) => {
     const { t } = useTranslation();
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
@@ -163,11 +165,11 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
             }),
         };
     });
-    const translations = {
+    const mechanismTranslations = {
         count: t("common.prevention.chart.resistance_mechanism.count"),
         title: t("common.prevention.chart.resistance_mechanism.title"),
     };
-    const translations2 = {
+    const mechanismTranslations2 = {
         count: t("common.prevention.chart.resistance_mechanism.frequency"),
         title: t("common.prevention.chart.resistance_mechanism.allelic"),
     };
@@ -176,21 +178,36 @@ const ResistanceMechanismsChart = ({ studies }: Props) => {
 
     const showAllelic = R.any(serie => R.any(data => data.y !== undefined, serie.data), series);
 
+    const resistanceMechanismsFiltersValue = React.useCallback(() => {
+        if (!translations) return;
+        return { studies };
+    }, [studies, translations]);
+
+    const selectedFilters = React.useMemo(() => {
+        if (!translations) return;
+        return resistanceMechanismsFiltersValue();
+    }, [translations, resistanceMechanismsFiltersValue]);
+
     const content = () => (
         <>
             <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${studies[0].VILLAGE_NAME}, ${t(
-                    studies[0].ISO2 === "NA" ? "common.COUNTRY_NA" : studies[0].ISO2
+                <Box fontWeight="fontWeightBold">{`${selectedFilters.studies[0].VILLAGE_NAME}, ${t(
+                    selectedFilters.studies[0].ISO2 === "NA" ? "common.COUNTRY_NA" : selectedFilters.studies[0].ISO2
                 )}`}</Box>
             </Typography>
-            <Typography variant="subtitle2">{`${t(studies[0].ASSAY_TYPE)}, ${t(studies[0].TYPE)}`}</Typography>
+            <Typography variant="subtitle2">{`${t(selectedFilters.studies[0].ASSAY_TYPE)}, ${t(
+                selectedFilters.studies[0].TYPE
+            )}`}</Typography>
             <Flex>
                 <FlexCol>
-                    <HighchartsReact highcharts={Highcharts} options={options(data, translations)} />
+                    <HighchartsReact highcharts={Highcharts} options={options(data, mechanismTranslations)} />
                 </FlexCol>
                 {showAllelic && (
                     <FlexCol>
-                        <HighchartsReact highcharts={Highcharts} options={options2(series, years, translations2)} />
+                        <HighchartsReact
+                            highcharts={Highcharts}
+                            options={options2(series, years, mechanismTranslations2)}
+                        />
                     </FlexCol>
                 )}
             </Flex>

@@ -17,6 +17,7 @@ import * as R from "ramda";
 import { selectDiagnosisFilters } from "../../../../store/reducers/diagnosis-reducer";
 import { DiagnosisStudy } from "../../../../../domain/entities/DiagnosisStudy";
 import { isNotNull } from "../../../../utils/number-utils";
+import { selectTranslations } from "../../../../store/reducers/translations-reducer";
 
 const ChatContainer = styled.div`
     max-width: 500px;
@@ -30,6 +31,7 @@ const SpacedTypography = styled(Typography)`
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     diagnosisFilters: selectDiagnosisFilters(state),
+    translations: selectTranslations(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -66,22 +68,47 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
+const GeneDeletionChart = ({ studies, diagnosisFilters, translations }: Props) => {
     const { t } = useTranslation();
     const classes = useStyles({});
     const nStudies = studies.length;
-    const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
-    const sortedStudies2 = R.sortBy(study => parseInt(study.YEAR_END), studies);
-    const maxYear = sortedStudies2[sortedStudies2.length - 1].YEAR_END;
-    const minYear = sortedStudies[0].YEAR_START;
-    const studyObject = studies[0];
-    const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(type => t(type));
+
     const formatPercentage = (value: string) => `${(parseFloat(value) * 100).toFixed(1)}%`;
+    const geneDeletionFiltersValue = React.useCallback(() => {
+        if (!translations) return;
+        const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
+        const sortedStudies2 = R.sortBy(study => parseInt(study.YEAR_END), studies);
+        const maxYear = sortedStudies2[sortedStudies2.length - 1].YEAR_END;
+        const minYear = sortedStudies[0].YEAR_START;
+        const studyObject = studies[0];
+        console.log(studyObject);
+        const surveyTypes = R.uniq(studies.map(study => study.SURVEY_TYPE)).map(type => t(type));
+
+        console.log(t(studyObject.ISO2));
+        return {
+            studyObject,
+            diagnosisFilters,
+            surveyTypes,
+            minYear,
+            maxYear,
+        };
+    }, [diagnosisFilters, studies, t, translations]);
+
+    const selectedFilters = React.useMemo(() => {
+        if (!translations) return;
+        return geneDeletionFiltersValue();
+    }, [translations, geneDeletionFiltersValue]);
+
+    console.log(selectedFilters);
     return (
         <ChatContainer>
             <Typography variant="subtitle1">
                 <Box fontWeight="fontWeightBold">
-                    {t(studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2)}
+                    {t(
+                        selectedFilters.studyObject.ISO2 === "NA"
+                            ? "common.COUNTRY_NA"
+                            : selectedFilters.studyObject.ISO2
+                    )}
                 </Box>
             </Typography>
             <SpacedTypography variant="subtitle2">
@@ -91,32 +118,32 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                 <i>{t(diagnosisFilters.deletionType).toLowerCase()}</i>
                 {t("common.diagnosis.chart.gene_deletions.content_2", {
                     surveyTypes: formatList(
-                        surveyTypes.map(st => {
+                        selectedFilters.surveyTypes.map(st => {
                             const dhs = t("common.diagnosis.chart.gene_deletions.DHS");
                             return st.toLowerCase().replace(new RegExp(dhs, "i"), dhs);
                         })
                     ),
-                    years: formatYears(minYear, maxYear),
+                    years: formatYears(selectedFilters.minYear, selectedFilters.maxYear),
                 })}
             </SpacedTypography>
-            {isNotNull(studyObject.SAMPLE_ORIGIN) && (
-                <SpacedTypography variant="subtitle2">{t(studyObject.SAMPLE_ORIGIN)}</SpacedTypography>
+            {isNotNull(selectedFilters.studyObject.SAMPLE_ORIGIN) && (
+                <SpacedTypography variant="subtitle2">{t(selectedFilters.studyObject.SAMPLE_ORIGIN)}</SpacedTypography>
             )}
-            {isNotNull(studyObject.PF_POS_SAMPLES) && (
+            {isNotNull(selectedFilters.studyObject.PF_POS_SAMPLES) && (
                 <SpacedTypography variant="subtitle2">
                     <Trans
                         i18nKey="common.diagnosis.chart.gene_deletions.content_3"
-                        values={{ pfPosSamples: studyObject.PF_POS_SAMPLES }}
+                        values={{ pfPosSamples: selectedFilters.studyObject.PF_POS_SAMPLES }}
                         t={t}
                     >
                         Number of <i>P. falciparum</i> positive samples from the study population:
                     </Trans>
                 </SpacedTypography>
             )}
-            {isNotNull(studyObject.TYPE_SAMPL_ANALYZED) && (
+            {isNotNull(selectedFilters.studyObject.TYPE_SAMPL_ANALYZED) && (
                 <SpacedTypography variant="subtitle2">
                     {t("common.diagnosis.chart.gene_deletions.content_4", {
-                        typeSampleAnalyzed: t(studyObject.TYPE_SAMPL_ANALYZED),
+                        typeSampleAnalyzed: t(selectedFilters.studyObject.TYPE_SAMPL_ANALYZED),
                     })}
                 </SpacedTypography>
             )}
@@ -134,42 +161,49 @@ const GeneDeletionChart = ({ studies, diagnosisFilters }: Props) => {
                                 {t("common.diagnosis.chart.gene_deletions.no_tested")}
                             </StyledHeaderCell>
                             <StyledHeaderCell align={"center"}>
-                                {t("common.diagnosis.chart.gene_deletions.percentage")} {studyObject.YEAR_START}
+                                {t("common.diagnosis.chart.gene_deletions.percentage")}{" "}
+                                {selectedFilters.studyObject.YEAR_START}
                             </StyledHeaderCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         <TableRow>
                             <StyledBodyCell align={"center"}>HRP2</StyledBodyCell>
-                            <StyledBodyCell align={"center"}>{studyObject.HRP2_TESTED || "N/A"}</StyledBodyCell>
                             <StyledBodyCell align={"center"}>
-                                {!Number.isNaN(parseFloat(studyObject.HRP2_PROPORTION_DELETION))
-                                    ? formatPercentage(studyObject.HRP2_PROPORTION_DELETION)
+                                {selectedFilters.studyObject.HRP2_TESTED || "N/A"}
+                            </StyledBodyCell>
+                            <StyledBodyCell align={"center"}>
+                                {!Number.isNaN(parseFloat(selectedFilters.studyObject.HRP2_PROPORTION_DELETION))
+                                    ? formatPercentage(selectedFilters.studyObject.HRP2_PROPORTION_DELETION)
                                     : "N/A"}
                             </StyledBodyCell>
                         </TableRow>
                         <TableRow>
                             <StyledBodyCell align={"center"}>HRP3</StyledBodyCell>
-                            <StyledBodyCell align={"center"}>{studyObject.HRP3_TESTED || "N/A"}</StyledBodyCell>
                             <StyledBodyCell align={"center"}>
-                                {!Number.isNaN(parseFloat(studyObject.HRP3_PROPORTION_DELETION))
-                                    ? formatPercentage(studyObject.HRP3_PROPORTION_DELETION)
+                                {selectedFilters.studyObject.HRP3_TESTED || "N/A"}
+                            </StyledBodyCell>
+                            <StyledBodyCell align={"center"}>
+                                {!Number.isNaN(parseFloat(selectedFilters.studyObject.HRP3_PROPORTION_DELETION))
+                                    ? formatPercentage(selectedFilters.studyObject.HRP3_PROPORTION_DELETION)
                                     : "N/A"}
                             </StyledBodyCell>
                         </TableRow>
                         <TableRow>
                             <StyledBodyCell align={"center"}>HRP2 & 3</StyledBodyCell>
-                            <StyledBodyCell align={"center"}>{studyObject.HRP2_HRP3_TESTED || "N/A"}</StyledBodyCell>
                             <StyledBodyCell align={"center"}>
-                                {!Number.isNaN(parseFloat(studyObject.HRP2_HRP3_TESTED))
-                                    ? formatPercentage(studyObject.HRP2_HRP3_PROPORTION_DELETION)
+                                {selectedFilters.studyObject.HRP2_HRP3_TESTED || "N/A"}
+                            </StyledBodyCell>
+                            <StyledBodyCell align={"center"}>
+                                {!Number.isNaN(parseFloat(selectedFilters.studyObject.HRP2_HRP3_TESTED))
+                                    ? formatPercentage(selectedFilters.studyObject.HRP2_HRP3_PROPORTION_DELETION)
                                     : "N/A"}
                             </StyledBodyCell>
                         </TableRow>
                     </TableBody>
                 </Table>
             </div>
-            <Citation study={studyObject} />
+            <Citation study={selectedFilters.studyObject} />
         </ChatContainer>
     );
 };

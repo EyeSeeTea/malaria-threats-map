@@ -51,7 +51,6 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
                 a.INSECTICIDE_TYPE.localeCompare(b.INSECTICIDE_TYPE) ||
                 Number(a.INSECTICIDE_INTENSITY) - Number(b.INSECTICIDE_INTENSITY)
         );
-
     const data = simplifiedStudies.map(study => ({
         name: `${study.YEAR_START}, ${t(study.INSECTICIDE_INTENSITY)} ${t(study.INSECTICIDE_TYPE)}`,
         y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
@@ -59,7 +58,7 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
         number: study.NUMBER,
     }));
     const studyObject = simplifiedStudies[0];
-    const translations = {
+    const intensityStatusTranslations = {
         mortality: t("common.prevention.chart.resistance_intensity.mortality"),
         mosquito_mortality: `${t("common.prevention.chart.resistance_intensity.mosquito_mortality")} (${t(
             "common.prevention.chart.resistance_intensity.number_of_tests"
@@ -73,7 +72,7 @@ const IntensityStatusChart = ({ studies: baseStudies }: Props) => {
             groupedStudies={groupedStudies}
             setStudy={setStudy}
             study={study}
-            options={options(data, translations)}
+            options={options(data, intensityStatusTranslations)}
         />
     );
 };

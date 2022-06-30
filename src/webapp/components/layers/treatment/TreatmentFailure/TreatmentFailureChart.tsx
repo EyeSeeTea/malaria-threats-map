@@ -17,6 +17,7 @@ import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import _ from "lodash";
 import { isNotNull } from "../../../../utils/number-utils";
 import Hidden from "../../../hidden/Hidden";
+import { selectTranslations } from "../../../../store/reducers/translations-reducer";
 
 const options: (data: any, categories: any[], translations: any) => Highcharts.Options = (
     data,
@@ -46,7 +47,7 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
     yAxis: {
         min: 0,
         title: {
-            text: translations.percentage,
+            text: translations.percentageTranslation,
         },
     },
     plotOptions: {
@@ -98,6 +99,7 @@ const Margin = styled.div`
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
+    translations: selectTranslations(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -106,156 +108,167 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const TreatmentFailureChart = ({ studies }: Props) => {
+const TreatmentFailureChart = ({ studies, translations }: Props) => {
     const { t } = useTranslation();
     const [study, setStudy] = useState(0);
-    const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
-    const years = R.uniq(sortedStudies.map(study => study.YEAR_START)).sort();
-    const maxYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
-    const minYear = parseInt(sortedStudies[0].YEAR_START);
 
-    const {
-        YEAR_START,
-        YEAR_END,
-        PLASMODIUM_SPECIES,
-        DRUG_NAME,
-        N,
-        FOLLOW_UP,
-        CONFIRMED_RESIST_PV,
-        POSITIVE_DAY_3,
-        TREATMENT_FAILURE_KM,
-        TREATMENT_FAILURE_PP,
-        HEALTHFACILITY_NAME,
-    } = sortedStudies[study];
+    const treatmentFailureFiltersValue = React.useCallback(() => {
+        if (!translations) return;
+        const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
+        const years = R.uniq(sortedStudies.map(study => study.YEAR_START)).sort();
+        const maxYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
+        const minYear = parseInt(sortedStudies[0].YEAR_START);
 
-    const keys = _([
-        PLASMODIUM_SPECIES === "P._FALCIPARUM" ? { name: "POSITIVE_DAY_3", color: "#00994C" } : undefined,
-        { name: "TREATMENT_FAILURE_PP", color: "#BE4B48" },
-        { name: "TREATMENT_FAILURE_KM", color: "#4b48be" },
-    ])
-        .compact()
-        .value();
+        const { YEAR_START, YEAR_END, PLASMODIUM_SPECIES } = sortedStudies[study];
 
-    const series = keys.map(key => {
-        return {
-            name: t(`download.therapeutic_efficacy.${key.name}`),
-            color: key.color,
-            data: years.map(year => {
-                const yearFilters: any = studies.filter(study => parseInt(year) === parseInt(study.YEAR_START))[0];
-                return yearFilters ? parseFloat((parseFloat(yearFilters[key.name] || "0") * 100).toFixed(2)) : 0;
-            }),
+        const keys = _([
+            PLASMODIUM_SPECIES === "P._FALCIPARUM" ? { name: "POSITIVE_DAY_3", color: "#00994C" } : undefined,
+            { name: "TREATMENT_FAILURE_PP", color: "#BE4B48" },
+            { name: "TREATMENT_FAILURE_KM", color: "#4b48be" },
+        ])
+            .compact()
+            .value();
+
+        const series = keys.map(key => {
+            return {
+                name: t(`download.therapeutic_efficacy.${key.name}`),
+                color: key.color,
+                data: years.map(year => {
+                    const yearFilters: any = studies.filter(study => parseInt(year) === parseInt(study.YEAR_START))[0];
+                    return yearFilters ? parseFloat((parseFloat(yearFilters[key.name] || "0") * 100).toFixed(2)) : 0;
+                }),
+            };
+        });
+
+        const siteDuration = formatYears(`${minYear}`, `${maxYear}`);
+
+        const titleItems = [
+            studies[study].SITE_NAME,
+            studies[study].PROVINCE,
+            t(`countries.${studies[study].ISO2 === "NA" ? "common.COUNTRY_NA" : studies[study].ISO2}`),
+        ];
+        const title = titleItems.filter(Boolean).join(", ");
+
+        const duration = formatYears2(YEAR_START, YEAR_END);
+        const formatValue = (value: string) =>
+            Number.isNaN(parseFloat(value)) ? "N/A" : `${(parseFloat(value) * 100).toFixed(1)}%`;
+
+        const treatmentTranslations = {
+            percentage: t("common.treatment.chart.treatment_failure.percentage"),
+            healthFacilityName: t("common.treatment.chart.treatment_failure.health_facility_name"),
+            studyYears: t("common.treatment.chart.treatment_failure.study_years"),
+            numberOfPatients: t("common.treatment.chart.treatment_failure.number_of_patients"),
+            followUp: t("common.treatment.chart.treatment_failure.follow_up"),
+            confirmedResistPv: t("common.treatment.chart.treatment_failure.confirmed_resist_pv"),
+            positiveDay3: t("common.treatment.chart.treatment_failure.positive_day_3"),
+            treatmentFailurePp: t("common.treatment.chart.treatment_failure.treatment_failure_pp"),
+            treatmentFailureKm: t("common.treatment.chart.treatment_failure.treatment_failure_km"),
+            days: t("common.treatment.chart.treatment_failure.days"),
+            t_studies: t("common.treatment.chart.treatment_failure.studies"),
         };
-    });
 
-    const siteDuration = formatYears(`${minYear}`, `${maxYear}`);
+        return {
+            sortedStudies: sortedStudies[study],
+            treatmentTranslations,
+            duration,
+            formatValue,
+            minYear,
+            maxYear,
+            title,
+            siteDuration,
+            series,
+            years,
+        };
+    }, [study, studies, t, translations]);
 
-    const titleItems = [
-        studies[study].SITE_NAME,
-        studies[study].PROVINCE,
-        t(`countries.${studies[study].ISO2 === "NA" ? "common.COUNTRY_NA" : studies[study].ISO2}`),
-    ];
-    const title = titleItems.filter(Boolean).join(", ");
-
-    const duration = formatYears2(YEAR_START, YEAR_END);
-    const formatValue = (value: string) =>
-        Number.isNaN(parseFloat(value)) ? "N/A" : `${(parseFloat(value) * 100).toFixed(1)}%`;
-
-    const translations = {
-        percentage: t("common.treatment.chart.treatment_failure.percentage"),
-    };
-    const healthFacilityName = t("common.treatment.chart.treatment_failure.health_facility_name");
-    const studyYears = t("common.treatment.chart.treatment_failure.study_years");
-    const numberOfPatients = t("common.treatment.chart.treatment_failure.number_of_patients");
-    const followUp = t("common.treatment.chart.treatment_failure.follow_up");
-    const confirmedResistPv = t("common.treatment.chart.treatment_failure.confirmed_resist_pv");
-    const positiveDay3 = t("common.treatment.chart.treatment_failure.positive_day_3");
-    const treatmentFailurePp = t("common.treatment.chart.treatment_failure.treatment_failure_pp");
-    const treatmentFailureKm = t("common.treatment.chart.treatment_failure.treatment_failure_km");
-    const days = t("common.treatment.chart.treatment_failure.days");
-    const t_studies = t("common.treatment.chart.treatment_failure.studies");
-
+    const selectedFilters = React.useMemo(() => {
+        if (!translations) return;
+        return treatmentFailureFiltersValue();
+    }, [translations, treatmentFailureFiltersValue]);
     function renderInfo() {
         return (
             <Margin>
-                {isNotNull(HEALTHFACILITY_NAME) && HEALTHFACILITY_NAME !== "Not applicable" && (
-                    <Flex>
-                        <Typography variant="body2">
-                            <b>
-                                {healthFacilityName}
-                                :&nbsp;
-                            </b>
-                            {HEALTHFACILITY_NAME}
-                        </Typography>
-                    </Flex>
-                )}
+                {isNotNull(selectedFilters.sortedStudies.HEALTHFACILITY_NAME) &&
+                    selectedFilters.sortedStudies.HEALTHFACILITY_NAME !== "Not applicable" && (
+                        <Flex>
+                            <Typography variant="body2">
+                                <b>
+                                    {selectedFilters.treatmentTranslations.healthFacilityName}
+                                    :&nbsp;
+                                </b>
+                                {selectedFilters.sortedStudies.HEALTHFACILITY_NAME}
+                            </Typography>
+                        </Flex>
+                    )}
                 <Flex>
                     <Typography variant="body2">
                         <b>
-                            {studyYears}
+                            {selectedFilters.treatmentTranslations.studyYears}
                             :&nbsp;
                         </b>
-                        {duration}
+                        {selectedFilters.duration}
                     </Typography>
                 </Flex>
                 <Flex>
                     <Typography variant="body2">
                         <b>
-                            {numberOfPatients}
+                            {selectedFilters.treatmentTranslations.numberOfPatients}
                             :&nbsp;
                         </b>
-                        {N}
+                        {selectedFilters.sortedStudies.N}
                     </Typography>
                 </Flex>
                 <Flex>
                     <Typography variant="body2">
                         <b>
-                            {followUp}
+                            {selectedFilters.treatmentTranslations.followUp}
                             :&nbsp;
                         </b>
-                        {FOLLOW_UP} {days}
+                        {selectedFilters.sortedStudies.FOLLOW_UP} {selectedFilters.treatmentTranslations.days}
                     </Typography>
                 </Flex>
-                {isNotNull(CONFIRMED_RESIST_PV) && (
+                {isNotNull(selectedFilters.sortedStudies.CONFIRMED_RESIST_PV) && (
                     <Flex>
                         <Typography variant="body2">
                             <b>
-                                {confirmedResistPv}
+                                {selectedFilters.treatmentTranslations.confirmedResistPv}
                                 :&nbsp;
                             </b>
-                            {formatValue(CONFIRMED_RESIST_PV)}
+                            {selectedFilters.formatValue(selectedFilters.sortedStudies.CONFIRMED_RESIST_PV)}
                         </Typography>
                     </Flex>
                 )}
-                {isNotNull(POSITIVE_DAY_3) && PLASMODIUM_SPECIES === "P._FALCIPARUM" && (
+                {isNotNull(selectedFilters.sortedStudies.POSITIVE_DAY_3) &&
+                    selectedFilters.sortedStudies.PLASMODIUM_SPECIES === "P._FALCIPARUM" && (
+                        <Flex>
+                            <Typography variant="body2">
+                                <b>
+                                    {selectedFilters.treatmentTranslations.positiveDay3}
+                                    :&nbsp;
+                                </b>
+                                {selectedFilters.formatValue(selectedFilters.sortedStudies.POSITIVE_DAY_3)}
+                            </Typography>
+                        </Flex>
+                    )}
+                {isNotNull(selectedFilters.sortedStudies.TREATMENT_FAILURE_PP) && (
                     <Flex>
                         <Typography variant="body2">
                             <b>
-                                {positiveDay3}
+                                {selectedFilters.treatmentTranslations.treatmentFailurePp}
                                 :&nbsp;
                             </b>
-                            {formatValue(POSITIVE_DAY_3)}
+                            {selectedFilters.formatValue(selectedFilters.sortedStudies.TREATMENT_FAILURE_PP)}
                         </Typography>
                     </Flex>
                 )}
-                {isNotNull(TREATMENT_FAILURE_PP) && (
+                {isNotNull(selectedFilters.sortedStudies.TREATMENT_FAILURE_KM) && (
                     <Flex>
                         <Typography variant="body2">
                             <b>
-                                {treatmentFailurePp}
+                                {selectedFilters.treatmentTranslations.treatmentFailureKm}
                                 :&nbsp;
                             </b>
-                            {formatValue(TREATMENT_FAILURE_PP)}
-                        </Typography>
-                    </Flex>
-                )}
-                {isNotNull(TREATMENT_FAILURE_KM) && (
-                    <Flex>
-                        <Typography variant="body2">
-                            <b>
-                                {treatmentFailureKm}
-                                :&nbsp;
-                            </b>
-                            {formatValue(TREATMENT_FAILURE_KM)}
+                            {selectedFilters.formatValue(selectedFilters.sortedStudies.TREATMENT_FAILURE_KM)}
                         </Typography>
                     </Flex>
                 )}
@@ -264,28 +277,36 @@ const TreatmentFailureChart = ({ studies }: Props) => {
     }
 
     const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.find(
-        (species: any) => species.value === PLASMODIUM_SPECIES
+        (species: any) => species.value === selectedFilters.sortedStudies.PLASMODIUM_SPECIES
     ).label;
 
     return (
         <ChatContainer>
             <Pagination studies={studies} study={study} setStudy={setStudy} />
             <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${title}`}</Box>
+                <Box fontWeight="fontWeightBold">{`${selectedFilters.title}`}</Box>
             </Typography>
             <Typography variant="body2">
                 <i>{plasmodiumSpecies}</i>
-                {`, ${t(DRUG_NAME)}: ${studies.length} ${t_studies} ${siteDuration}`}
+                {`, ${t(selectedFilters.sortedStudies.DRUG_NAME)}: ${studies.length} ${
+                    selectedFilters.treatmentTranslations.t_studies
+                } ${selectedFilters.siteDuration}`}
             </Typography>
             <Hidden smUp>
                 {renderInfo()}
-                <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
+                <HighchartsReact
+                    highcharts={Highcharts}
+                    options={options(selectedFilters.series, selectedFilters.years, translations)}
+                />
             </Hidden>
             <Hidden smDown>
                 <Flex>
                     <FlexCol>{renderInfo()}</FlexCol>
                     <FlexCol>
-                        <HighchartsReact highcharts={Highcharts} options={options(series, years, translations)} />
+                        <HighchartsReact
+                            highcharts={Highcharts}
+                            options={options(selectedFilters.series, selectedFilters.years, translations)}
+                        />
                     </FlexCol>
                 </Flex>
             </Hidden>

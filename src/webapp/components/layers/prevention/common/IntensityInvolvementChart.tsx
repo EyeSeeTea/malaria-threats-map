@@ -12,6 +12,7 @@ import Pagination from "../../../charts/Pagination";
 import Curation from "../../../Curation";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import Hidden from "../../../hidden/Hidden";
+import { selectTranslations } from "../../../../store/reducers/translations-reducer";
 
 const ChatContainer = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};
@@ -19,6 +20,7 @@ const ChatContainer = styled.div<{ width?: string }>`
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
+    translations: selectTranslations(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -31,20 +33,37 @@ type OwnProps = {
 };
 type Props = StateProps & OwnProps;
 
-const IntensityInvolvementChart = ({ studyObject, options, groupedStudies, setStudy, study }: Props) => {
+const IntensityInvolvementChart = ({ studyObject, options, groupedStudies, setStudy, study, translations }: Props) => {
     const { t } = useTranslation();
+    const intensityStatusFiltersValue = React.useCallback(() => {
+        if (!translations) return;
+        return {
+            studyObject,
+            groupedStudies,
+        };
+    }, [groupedStudies, studyObject, translations]);
+
+    const selectedFilters = React.useMemo(() => {
+        if (!translations) return;
+        return intensityStatusFiltersValue();
+    }, [translations, intensityStatusFiltersValue]);
+
     const content = () => (
         <>
-            {groupedStudies.length > 1 && <Pagination studies={groupedStudies} setStudy={setStudy} study={study} />}
+            {selectedFilters.groupedStudies.length > 1 && (
+                <Pagination studies={selectedFilters.groupedStudies} setStudy={setStudy} study={study} />
+            )}
             <Typography variant="subtitle1">
-                <Box fontWeight="fontWeightBold">{`${studyObject.VILLAGE_NAME}, ${t(
-                    studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : studyObject.ISO2
+                <Box fontWeight="fontWeightBold">{`${selectedFilters.studyObject.VILLAGE_NAME}, ${t(
+                    selectedFilters.studyObject.ISO2 === "NA" ? "common.COUNTRY_NA" : selectedFilters.studyObject.ISO2
                 )}`}</Box>
             </Typography>
-            <Typography variant="subtitle2">{`${t(studyObject.ASSAY_TYPE)}, ${t(studyObject.TYPE)}`}</Typography>
+            <Typography variant="subtitle2">{`${t(selectedFilters.studyObject.ASSAY_TYPE)}, ${t(
+                selectedFilters.studyObject.TYPE
+            )}`}</Typography>
             <HighchartsReact highcharts={Highcharts} options={options} />
-            <Citation study={studyObject} />
-            <Curation study={studyObject} />
+            <Citation study={selectedFilters.studyObject} />
+            <Curation study={selectedFilters.studyObject} />
         </>
     );
     return (
