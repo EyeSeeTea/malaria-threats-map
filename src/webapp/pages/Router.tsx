@@ -4,6 +4,8 @@ import { HomePage } from "./home/HomePage";
 import { AboutPage } from "./about/AboutPage";
 import PersistentDrawerLeft from "../components/PersistentDrawerLeft";
 import ContactPage from "./contact/ContactPage";
+import ShareDataPage from "./shareData/ShareDataPage";
+
 
 export const Router: React.FC = React.memo(() => {
     return (
@@ -12,6 +14,7 @@ export const Router: React.FC = React.memo(() => {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/contact" element={<ContactPage />} />
+                <Route path="/share-data" element={<ShareDataPage />} />
 
                 <Route path="maps" element={<PersistentDrawerLeft />} />
 
