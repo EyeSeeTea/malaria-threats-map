@@ -41,23 +41,26 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     children: React.ReactNode;
+    expandIcon?: boolean;
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const LegendContainer = ({ children, legendExpanded, setLegendExpanded }: Props) => {
+const LegendContainer = ({ children, legendExpanded, setLegendExpanded, expandIcon = true }: Props) => {
     const small = !legendExpanded;
     return (
         <LegendContainerStyled size={small ? 200 : 600} role="group" aria-label="Legend">
-            <IconContainer>
-                <IconButton
-                    size={"small"}
-                    aria-label="upload picture"
-                    component="span"
-                    onClick={() => setLegendExpanded(!legendExpanded)}
-                >
-                    {small ? <GrowIcon fontSize={"small"} /> : <ReduceIcon fontSize={"small"} />}
-                </IconButton>
-            </IconContainer>
+            {expandIcon && (
+                <IconContainer>
+                    <IconButton
+                        size={"small"}
+                        aria-label="upload picture"
+                        component="span"
+                        onClick={() => setLegendExpanded(!legendExpanded)}
+                    >
+                        {small ? <GrowIcon fontSize={"small"} /> : <ReduceIcon fontSize={"small"} />}
+                    </IconButton>
+                </IconContainer>
+            )}
             <ClickAwayListener mouseEvent="onMouseDown" onClickAway={() => setLegendExpanded(false)}>
                 <LegendContent small>{children}</LegendContent>
             </ClickAwayListener>

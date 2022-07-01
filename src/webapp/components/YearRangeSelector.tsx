@@ -17,7 +17,7 @@ export function range(start: number, end: number, reverse?: boolean) {
 }
 const marks = (start: number, end: number) =>
     range(start, end).map(year =>
-        year % 5 === 0
+        (year % 5 === 0 || year === start || year === end)
             ? {
                   value: year,
                   label: year.toString(),
@@ -38,7 +38,7 @@ const useStyles = makeStyles({
 });
 
 function valuetext(value: number) {
-    return `${value}°C`;
+    return `${value} years`;
 }
 
 const mapStateToProps = (state: State) => ({
