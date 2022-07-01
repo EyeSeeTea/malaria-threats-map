@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
-import { ConfirmationStatusColors } from "./symbols";
+import { ResistanceStatusColors } from "./symbols";
 import * as R from "ramda";
 import { isNull, isNotNull } from "../../../../utils/number-utils";
 import Citation from "../../../charts/Citation";
@@ -49,7 +49,7 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
         plotLines: [
             {
                 value: 90,
-                color: "#d43501",
+                color: ResistanceStatusColors.Confirmed[0],
                 dashStyle: "LongDashDot",
                 width: 2,
                 zIndex: 5,
@@ -71,15 +71,15 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
             zones: [
                 {
                     value: 90,
-                    color: ConfirmationStatusColors.Confirmed[0],
+                    color: ResistanceStatusColors.Confirmed[0],
                 },
                 {
                     value: 98,
-                    color: ConfirmationStatusColors.Possible[0],
+                    color: ResistanceStatusColors.Possible[0],
                 },
                 {
                     value: 100.001,
-                    color: ConfirmationStatusColors.Susceptible[0],
+                    color: ResistanceStatusColors.Susceptible[0],
                 },
             ],
         },
@@ -184,6 +184,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         citation: study.CITATION_LONG || study.INSTITUTE,
         citationUrl: study.CITATION_URL,
     }));
+
     const studyObject = groupedStudies[study][0];
     const translations = {
         mortality: t("common.prevention.chart.resistance_status.mortality"),

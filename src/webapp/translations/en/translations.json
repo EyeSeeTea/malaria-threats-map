@@ -85,7 +85,8 @@
                 "resistance_status": {
                     "confirmed": "Confirmed (0 to <90%)",
                     "possible": "Possible (90 to <98%)",
-                    "susceptible": "Susceptible (≥98%)"
+                    "susceptible": "Susceptible (≥98%)",
+                    "undetermined": "Undetermined"
                 },
                 "resistance_mechanism": {
                     "confirmed": "Detected",
@@ -96,6 +97,14 @@
                     "full_restoration": "Full restoration",
                     "partial_restoration": "Partial restoration",
                     "no_restoration": "No restoration"
+                }
+            },
+            "extended_legend": {
+                "resistance_status": {
+                    "pyrroles": {
+                        "chlorfenapyr_undetermined": "Data collected with the recommended discriminating concentration of 100 µg/bottle but that do not fully match WHO criteria for test validation, either because temperature was not reported, because temperature fell outside of the recommended range (27 °C ± 2 °C), because no susceptible mosquito strain was tested in parallel or because results of the susceptible mosquito strain were not reported.",
+                        "pirimiphos_methly_undetermined": "Data collected with the formerly recommended discriminating concentration of 0.25%."
+                    }
                 }
             }
         },

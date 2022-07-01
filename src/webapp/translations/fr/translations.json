@@ -85,7 +85,8 @@
                 "resistance_status": {
                     "confirmed": "Confirmée (0 to <90%)",
                     "possible": "Suspectée (90 to <98%)",
-                    "susceptible": "Sensible (≥98%)"
+                    "susceptible": "Sensible (≥98%)",
+                    "undetermined": "Indéterminé"
                 },
                 "resistance_mechanism": {
                     "confirmed": "Détecté",
@@ -96,6 +97,14 @@
                     "full_restoration": "Restauration totale",
                     "partial_restoration": "Restauration partielle",
                     "no_restoration": "Pas de restauration"
+                }
+            },
+            "extended_legend": {
+                "resistance_status": {
+                    "pyrroles": {
+                        "chlorfenapyr_undetermined": "Données recueillies avec la concentration discriminante recommandée de 100µg/flacon mais qui ne correspondent pas entièrement aux critères de l'OMS pour la validation du test, soit parce que la température n'a pas été signalée, soit parce que la température est tombée en dehors de la plage recommandée (27°C ± 2°C), parce que aucune souche de moustique sensible n'a été testée en parallèle ou parce que les résultats de la souche de moustique sensible n'ont pas été communiqués.",
+                        "pirimiphos_methly_undetermined": "Données recueillies avec la concentration discriminante précédemment recommandée de 0,25%."
+                    }
                 }
             }
         },
