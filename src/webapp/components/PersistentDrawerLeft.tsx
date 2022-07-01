@@ -25,7 +25,6 @@ import MobileOptions from "./MobileOptions";
 import Loader from "./Loader";
 import Hidden from "./hidden/Hidden";
 import MapContainer from "./MapContainer";
-import SiteSelectionContent from "./site-selection-content/SiteSelectionContent";
 
 interface ThemeProps {
     drawerWidth: string;
