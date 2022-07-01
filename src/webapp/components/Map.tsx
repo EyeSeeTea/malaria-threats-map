@@ -73,6 +73,13 @@ import GreaterMekongLink from "./greater-mekong-link/GreaterMekongLink";
 import SiteSelectionContent from "./site-selection-content/SiteSelectionContent";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
+
+// Fix bug in production build
+// https://github.com/mapbox/mapbox-gl-js/issues/10173#issuecomment-750489778
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
+
 const drawerWidth = 100;
 const rightSideBarWidth = 500;
 
@@ -316,7 +323,7 @@ class Map extends React.Component<Props> {
     }
 
     componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {
-        if (this.props.setBounds !== prevProps.setBounds) {
+        if (this.props.setBounds && this.props.setBounds !== prevProps.setBounds) {
             const [[b0, b1], [b2, b3]] = this.props.setBounds;
             this.map.fitBounds([b0, b1, b2, b3], {
                 padding: 100,

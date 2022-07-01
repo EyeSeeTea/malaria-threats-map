@@ -6,6 +6,64 @@
             "title": "Malaria Threats Map",
             "subtitle": "Tracking biological challenges to malaria control and elimination"
         },
+        "homepage": {
+            "menu": {
+                "home": "Home",
+                "tools": "Tools",
+                "about": "About",
+                "contact": "Contact",
+                "share_data": "Share Data"
+            },
+            "title": "Malaria <br /> <strong>Threats Map</strong>",
+            "subtitle": "Explore data about the major biological threats to malaria control and elimination.",
+            "media_cards": {
+                "maps": {
+                    "title": "Maps",
+                    "subtitle": "Explore individual studies and site-level data for all the threats.",
+                    "button_text": "Enter Map"
+                },
+                "dashboards": {
+                    "title": "Dashboards",
+                    "subtitle": "View summaries of the threats at different geographical levels.",
+                    "button_text": "View Dashboards"
+                },
+                "data_download": {
+                    "title": "Data download",
+                    "subtitle": "Download the data behind the MTM for your own analysis.",
+                    "button_text": "Download data"
+                },
+                "db_last_updated": "Database last updated",
+                "read_story": "Read Story"
+            },
+            "header": "The Malaria Threats Map is the most comprehensive platform on the four biological threats to malaria control and elimination.",
+            "theme_paper": {
+                "prevention_subtitle": "Vector resistance to the insecticides used for vector control  threatens malaria control efforts.",
+                "invasive_subtitle": "The spread of certain anopheline vector species and their establishment in new ecosystems poses a threat to malaria control.",
+                "treatment_subtitle": "Antimalarial drug resistance remains one of the key threats to global malaria control efforts, particularly in the Greater Mekong Subregion.",
+                "diagnosis_subtitle": "Gene deletions among some malaria parasites cause false negative diagnostic test results, complicating case management and control."
+            }
+        },
+        "footer": {
+            "policies": {
+                "title": "Policies",
+                "disclaimer": "Disclaimer"
+            },
+            "other_who_resources": {
+                "title": "Other WHO resources",
+                "resource1": "WHO insecticide resistance monitoring",
+                "resource2": "WHO malaria drug efficacy and resistance",
+                "resource3": "WHO malaria RDT guidelines",
+                "resource4": "WHO malaria guidelines",
+                "resource5": "WHO World malaria report"
+            },
+            "about_who_gmp": {
+                "title": "About WHO GMP",
+                "resource1": "WHO Global Malaria Programme",
+                "resource2": "Contact us"
+            },
+            "subscribe_newsletter": "SUBSCRIBE TO GMP NEWSLETTER",
+            "privacy": "Privacy Legal Notice"
+        },
         "themes": {
             "prevention": "Vector insecticide resistance",
             "diagnosis": "Parasite pfhrp2/3 gene deletions",
