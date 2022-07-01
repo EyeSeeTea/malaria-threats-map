@@ -176,9 +176,9 @@
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "Mortalidad por mosquito",
-                    "full_involvement": "Participación total",
-                    "partial_involvement": "Participación parcial",
-                    "no_involvement": "Sin participación",
+                    "full_restoration": "Restauración completa",
+                    "partial_restoration": "Restauración parcial",
+                    "no_restoration": "Sin restauración",
                     "help": {
                         "p1": "Este mapa presenta datos de <1>bioensayos de insecticidas sinérgicos</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En los sitios donde los estudios muestran resultados variables, el color del punto está determinada por los resultados más recientes.",
                         "p2": "Para obtener información sobre cómo se clasifica la participación de los sinergistas, consulte el <1 href='/'>Manual de la OMS para el control de la resistencia</1>.",
