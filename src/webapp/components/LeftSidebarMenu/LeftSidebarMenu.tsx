@@ -9,6 +9,7 @@ import ShareDataIcon from "./Icons/ShareDataIcon";
 
 import { Fab, Drawer, Typography, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 100;
 
@@ -44,6 +45,14 @@ const DrawerHeader = styled("div")(({ theme }) => ({
     justifyContent: "flex-end",
 }));
 
+const StyledLink = styled(Link)`
+    margin: auto;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
 type Props = {
     isMenuOpen: boolean;
     handleClickOpen: () => void;
@@ -77,12 +86,14 @@ const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
             <DrawerHeader></DrawerHeader>
             <SideBarContainer>
                 <SidebarIconDiv>
-                    <StyledFab id="home-button" size="small" color={"default"} title={t("common.sidebar.home")}>
-                        <HomeIcon />
-                    </StyledFab>
-                    <Typography variant="caption" align="center">
-                        {t("common.sidebar.home")}
-                    </Typography>
+                    <StyledLink to="/">
+                        <StyledFab id="home-button" size="small" color={"default"} title={t("common.sidebar.home")}>
+                            <HomeIcon />
+                        </StyledFab>
+                        <Typography variant="caption" align="center">
+                            {t("common.sidebar.home")}
+                        </Typography>
+                    </StyledLink>
                 </SidebarIconDiv>
 
                 <SidebarIconDiv>

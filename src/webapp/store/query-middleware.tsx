@@ -71,6 +71,7 @@ function ReduxQuerySync({ store, params, replaceState, initialTruth, history = c
             }
             lastQueryValues[param] = value;
         });
+
         const newLocationSearchString = `?${locationParams}`;
         const oldLocationSearchString = location.search || "?";
 

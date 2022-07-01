@@ -5,12 +5,11 @@ import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
-import Map from "./Map";
 import Disclaimer from "./Disclaimer";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { State } from "../store/types";
-import { selectFilters, selectSelection, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
+import { selectFilters, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
 import { setMobileOptionsOpen, setStoryModeAction, setThemeAction } from "../store/actions/base-actions";
 import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
@@ -25,7 +24,7 @@ import { colors } from "../constants/theme";
 import MobileOptions from "./MobileOptions";
 import Loader from "./Loader";
 import Hidden from "./hidden/Hidden";
-import SiteSelectionContent from "./site-selection-content/SiteSelectionContent";
+import MapContainer from "./MapContainer";
 
 interface ThemeProps {
     drawerWidth: string;
@@ -115,7 +114,6 @@ const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
-    selection: selectSelection(state),
 });
 const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
@@ -137,7 +135,6 @@ function PersistentDrawerLeft({
     setTheme,
     setStoryMode,
     theme,
-    selection,
 }: Props) {
     const classes = useStyles({ drawerWidth });
     const prevStoryModeRef = useRef<boolean>();
@@ -219,7 +216,7 @@ function PersistentDrawerLeft({
                         </AppBar>
                     </Hidden>
                     <MapWrapper>
-                        <Map />
+                        <MapContainer />
                     </MapWrapper>
                     <Disclaimer />
                     <Hidden smUp>
@@ -260,19 +257,6 @@ function PersistentDrawerLeft({
                     </Hidden>
                 </PageWrapper>
             </div>
-            {selection && (
-                <Drawer
-                    className={classes.drawer}
-                    variant="persistent"
-                    anchor={"right"}
-                    open={true}
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
-                >
-                    <SiteSelectionContent />
-                </Drawer>
-            )}
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import { ofType, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import _ from "lodash";
-import { ActionTypeEnum } from "../actions";
+import { ActionTypeEnum } from "../../actions";
 import { Observable, of } from "rxjs";
 import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
 import {
@@ -11,18 +11,23 @@ import {
     setAssayTypes,
     setInsecticideClass,
     setInsecticideTypes,
+    setPreventionFilteredStudies,
     setPreventionMapType,
+    setPreventionSelectionData,
+    setPreventionSelectionDataSpecies,
+    setPreventionSelectionStudies,
     setSpecies,
     setType,
-} from "../actions/prevention-actions";
-import { PreventionMapType, State } from "../types";
-import { logEventAction, logPageViewAction } from "../actions/base-actions";
-import { ASSAY_TYPES } from "../../components/filters/AssayTypeCheckboxFilter";
-import { addNotificationAction } from "../actions/notifier-actions";
-import { getAnalyticsPageView } from "../analytics";
-import { fromFuture } from "./utils";
-import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
-import { EpicDependencies } from "../../store/index";
+} from "../../actions/prevention-actions";
+import { PreventionMapType, State } from "../../types";
+import { logEventAction, logPageViewAction, setSelection } from "../../actions/base-actions";
+import { ASSAY_TYPES } from "../../../components/filters/AssayTypeCheckboxFilter";
+import { addNotificationAction } from "../../actions/notifier-actions";
+import { getAnalyticsPageView } from "../../analytics";
+import { fromFuture } from "../utils";
+import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
+import { EpicDependencies } from "../../index";
+import { createSelectionData } from "./utils";
 
 export const getPreventionStudiesEpic = (
     action$: Observable<ActionType<typeof fetchPreventionStudiesRequest>>,
@@ -124,5 +129,96 @@ export const setPreventionTypeResetEpic = (action$: Observable<ActionType<typeof
         ofType(ActionTypeEnum.SetType),
         switchMap(_action => {
             return of(setSpecies([]));
+        })
+    );
+
+export const setPreventionFilteredStudiesEpic = (
+    action$: Observable<ActionType<typeof setPreventionFilteredStudies>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(skip(1)).pipe(
+        ofType(ActionTypeEnum.SetPreventionFilteredStudies),
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            const siteFilteredStudies = state.malaria.selection
+                ? state.prevention.filteredStudies.filter(study => study.SITE_ID === state.malaria.selection.SITE_ID)
+                : [];
+
+            const siteNonFilteredStudies = state.malaria.selection
+                ? state.prevention.studies.filter(study => study.SITE_ID === state.malaria.selection.SITE_ID)
+                : [];
+
+            const selectionData = createSelectionData(state.malaria.theme, siteFilteredStudies, siteNonFilteredStudies);
+
+            const actions = _.compact([
+                setPreventionSelectionStudies(siteFilteredStudies),
+                setPreventionSelectionData(selectionData),
+            ]);
+
+            return of(...actions);
+        })
+    );
+
+export const setSelectionEpic = (
+    action$: Observable<ActionType<typeof setSelection>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(skip(1)).pipe(
+        ofType(ActionTypeEnum.SetSelection),
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            if (state.malaria.theme === "prevention") {
+                const siteFilteredStudies = state.malaria.selection
+                    ? state.prevention.filteredStudies.filter(
+                          study => study.SITE_ID === state.malaria.selection.SITE_ID
+                      )
+                    : [];
+
+                const siteNonFilteredStudies = state.malaria.selection
+                    ? state.prevention.studies.filter(study => study.SITE_ID === state.malaria.selection.SITE_ID)
+                    : [];
+
+                const selectionData = createSelectionData(
+                    state.malaria.theme,
+                    siteFilteredStudies,
+                    siteNonFilteredStudies
+                );
+
+                const actions = _.compact([
+                    setPreventionSelectionStudies(siteFilteredStudies),
+                    setPreventionSelectionData(selectionData),
+                ]);
+
+                return of(...actions);
+            } else {
+                return of();
+            }
+        })
+    );
+
+export const setPreventionSelectionDataSpeciesEpic = (
+    action$: Observable<ActionType<typeof setPreventionSelectionDataSpecies>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(skip(1)).pipe(
+        ofType(ActionTypeEnum.SetPreventionSelectionDataSpeciesSelection),
+        withLatestFrom(state$),
+        switchMap(([action, state]) => {
+            const siteFilteredStudies = state.malaria.selection
+                ? state.prevention.filteredStudies.filter(study => study.SITE_ID === state.malaria.selection.SITE_ID)
+                : [];
+
+            const siteNonFilteredStudies = state.malaria.selection
+                ? state.prevention.studies.filter(study => study.SITE_ID === state.malaria.selection.SITE_ID)
+                : [];
+
+            const selectionData = createSelectionData(
+                state.malaria.theme,
+                siteFilteredStudies,
+                siteNonFilteredStudies,
+                action.payload
+            );
+
+            return of(setPreventionSelectionData(selectionData));
         })
     );

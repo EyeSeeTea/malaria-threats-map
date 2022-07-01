@@ -1,4 +1,3 @@
-import { DELETION_TYPES } from "../filters/DeletionTypeFilter";
 import { VectorSpeciesKey } from "../filters/VectorSpeciesFilter";
 import {
     DiagnosisFilters,
@@ -8,6 +7,17 @@ import {
     RegionState,
 } from "../../store/types";
 import { isSynergyst } from "./prevention/ResistanceMechanisms/ResistanceMechanismFilters";
+
+export const DELETION_TYPES = {
+    HRP2_PROPORTION_DELETION: {
+        label: "pfhrp2",
+        value: "HRP2_PROPORTION_DELETION",
+    },
+    HRP2_HRP3_PROPORTION_DELETION: {
+        label: "pfhrp2 + pfhrp3 (dual)",
+        value: "HRP2_HRP3_PROPORTION_DELETION",
+    },
+};
 
 export const filterByYearRange =
     (years: number[], allowEmpty = false) =>
