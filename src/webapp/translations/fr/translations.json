@@ -93,9 +93,9 @@
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "Mortalité de moustique",
-                    "full_involvement": "Implication totale",
-                    "partial_involvement": "Implication partielle",
-                    "no_involvement": "Pas d'implication"
+                    "full_restoration": "Restauration totale",
+                    "partial_restoration": "Restauration partielle",
+                    "no_restoration": "Pas de restauration"
                 }
             }
         },
