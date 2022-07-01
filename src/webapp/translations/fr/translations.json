@@ -6,6 +6,64 @@
             "title": "Carte des menaces du paludisme",
             "subtitle": "Suivi des défis biologiques liés à la lutte et à l'élimination du paludisme"
         },
+        "homepage": {
+            "menu": {
+                "home": "Domicile",
+                "tools": "Outils",
+                "about": "Sur",
+                "contact": "Contacter",
+                "share_data": "Partager des données"
+            },
+            "title": "Carte des <br /> <strong>menaces du paludisme</strong>",
+            "subtitle": "Explorez les données sur les principales menaces biologiques pour le contrôle et l'élimination du paludisme.",
+            "media_cards": {
+                "maps": {
+                    "title": "Plans",
+                    "subtitle": "Explorez des études individuelles et des données au niveau du site pour toutes les menaces.",
+                    "button_text": "Entrez la carte"
+                },
+                "dashboards": {
+                    "title": "Tableaux de bord",
+                    "subtitle": "Affichez des résumés des menaces à différents niveaux géographiques.",
+                    "button_text": "Afficher les tableaux de bord"
+                },
+                "data_download": {
+                    "title": "Téléchargement de données",
+                    "subtitle": "Téléchargez les données derrière le MTM pour votre propre analyse.",
+                    "button_text": "Téléchargement de données"
+                },
+                "db_last_updated": "Dernière mise à jour de la base de données",
+                "read_story": "Lire l'histoire"
+            },
+            "header": "La Malaria Threats Map est la plateforme la plus complète sur les quatre menaces biologiques pour le contrôle et l'élimination du paludisme.",
+            "theme_paper": {
+                "prevention_subtitle": "La résistance des vecteurs aux insecticides utilisés pour la lutte antivectorielle menace les efforts de lutte contre le paludisme.",
+                "invasive_subtitle": "La propagation de certaines espèces anophèles vectrices et leur établissement dans de nouveaux écosystèmes constituent une menace pour la lutte contre le paludisme.",
+                "treatment_subtitle": "La résistance aux médicaments antipaludiques reste l'une des principales menaces pour les efforts mondiaux de lutte contre le paludisme, en particulier dans la sous-région du Grand Mékong.",
+                "diagnosis_subtitle": "Les délétions de gènes chez certains parasites du paludisme entraînent des résultats de tests de diagnostic faussement négatifs, ce qui complique la gestion et le contrôle des cas."
+            }
+        },
+        "footer": {
+            "policies": {
+                "title": "Stratégies",
+                "disclaimer": "Avertissement"
+            },
+            "other_who_resources": {
+                "title": "Autres ressources de l'OMS",
+                "resource1": "Surveillance de la résistance aux insecticides par l'OMS",
+                "resource2": "Efficacité et résistance des médicaments antipaludiques de l'OMS",
+                "resource3": "Lignes directrices de l'OMS sur les TDR du paludisme",
+                "resource4": "Directives de l'OMS sur le paludisme",
+                "resource5": "Rapport mondial de l'OMS sur le paludisme"
+            },
+            "about_who_gmp": {
+                "title": "À propos des BPF de l'OMS",
+                "resource1": "Programme mondial de lutte contre le paludisme de l'OMS",
+                "resource2": "Contactez-nous"
+            },
+            "subscribe_newsletter": "ABONNEZ-VOUS À LA NEWSLETTER GMP",
+            "privacy": "Avis juridique de confidentialité"
+        },
         "themes": {
             "prevention": "Résistance aux insecticides",
             "diagnosis": "Délétion de pfhrp2/3 gènes parasites",
@@ -37,6 +95,9 @@
             "synergist_involvement_subtitle": "Effet synergiste de la susceptibilité",
             "synergist_involvement_legend": "Effet de la synergie sur la susceptibilité",
             "chart": {
+                "not_reported": "NR : non signalé",
+                "other_insecticide_class_label": "Autres insecticides auxquels une résistance a été détectée sur ce site:",
+                "other_insecticide_class_none": "Rien",
                 "resistance_status": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
                     "content_2": " du paludisme via détermination de la dose diagnostique(s) avec {{insecticideClass}} {{years}}",
@@ -115,9 +176,9 @@
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "Mortalité de moustique",
-                    "full_involvement": "Implication totale",
-                    "partial_involvement": "Implication partielle",
-                    "no_involvement": "Pas d'implication",
+                    "full_restoration": "Restauration totale",
+                    "partial_restoration": "Restauration partielle",
+                    "no_restoration": "Pas de restauration",
                     "help": {
                         "p1": "This map presents data from <1>synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying results, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how synergist involvement is graded consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
