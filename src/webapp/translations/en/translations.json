@@ -93,9 +93,9 @@
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "mortality (%)",
-                    "full_involvement": "Full Involvement",
-                    "partial_involvement": "Partial Involvement",
-                    "no_involvement": "No Involvement"
+                    "full_restoration": "Full restoration",
+                    "partial_restoration": "Partial restoration",
+                    "no_restoration": "No restoration"
                 }
             }
         },
@@ -199,7 +199,7 @@
                     "native": "Native",
                     "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
                     "link_text": "reporting form",
-                    "link_content_1": "If you have detected invasive Anopheles vector species please report to us through the "
+                    "link_content_1": "If you have detected invasive <1>Anopheles</1> vector species please report to us through the "
                 }
             }
         },
