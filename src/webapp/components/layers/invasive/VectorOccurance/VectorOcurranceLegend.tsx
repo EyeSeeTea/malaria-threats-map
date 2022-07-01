@@ -23,7 +23,7 @@ export default function VectorOcurranceLegend() {
         },
     ];
     return (
-        <LegendContainer>
+        <LegendContainer expandIcon={false}>
             <LegendTitleContainer>
                 <LegendTitleTypography color="textPrimary" gutterBottom>
                     {t("common.invasive.vector_occurrance")}
