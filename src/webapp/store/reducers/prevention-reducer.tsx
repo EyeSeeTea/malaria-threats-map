@@ -2,7 +2,7 @@ import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { PreventionMapType, PreventionState, State } from "../types";
+import { PreventionMapType, PreventionSelectionData, PreventionState, State } from "../types";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 const initialState: PreventionState = Object.freeze({
@@ -89,6 +89,11 @@ export default createReducer<PreventionState>(initialState, {
         ...state,
         selectionStudies: studies,
     }),
+    [ActionTypeEnum.SetPreventionSelectionData]:
+        (selectionData: PreventionSelectionData) => (state: PreventionState) => ({
+            ...state,
+            selectionData,
+        }),
 });
 
 const selectPreventionState = (state: State) => state.prevention;
@@ -104,3 +109,5 @@ export const selectFilteredPreventionStudies = createSelector(selectPreventionSt
 export const selectPreventionFilters = createSelector(selectPreventionState, state => state.filters);
 
 export const selectPreventionSelectionStudies = createSelector(selectPreventionState, state => state.selectionStudies);
+
+export const selectPreventionSelectionData = createSelector(selectPreventionState, state => state.selectionData);

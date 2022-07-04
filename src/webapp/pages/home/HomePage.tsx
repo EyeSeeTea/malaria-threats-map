@@ -8,15 +8,15 @@ import PreventionIcon from "../../assets/img/prevention-icon.svg";
 import TreatmentIcon from "../../assets/img/treatment-icon.svg";
 import DiagnosisIcon from "../../assets/img/diagnosis-icon.svg";
 import InvasiveIcon from "../../assets/img/invasive-icon.svg";
-import Divider from "@mui/material/Divider";
-import Dashboards from "../../assets/img/dashboards.png";
-import DataDownload from "../../assets/img/data_download.png";
+import Dashboards from "../../assets/img/home-page/dashboards.png";
+import DataDownload from "../../assets/img/home-page/data_download.png";
 import Maps from "../../assets/img/maps.png";
+import Divider from "@mui/material/Divider";
 
 import ThemePaper from "./ThemePaper";
 import MediaCard from "./MediaCard";
-import Footer from "./Footer";
-import Header from "./Header";
+import Footer from "../Footer";
+import Header from "../Header";
 import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
 
 const StyledBanner = styled.div`

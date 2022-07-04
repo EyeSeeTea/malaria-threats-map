@@ -2,10 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { Button, AppBar, Toolbar, Box, Menu, MenuItem, Divider } from "@mui/material";
 import { TFunction, useTranslation } from "react-i18next";
-import IntegrationReactSelect from "../../components/BasicSelect";
-import { changeLanguage } from "../../config/i18next";
+import IntegrationReactSelect from "../components/BasicSelect";
+import { changeLanguage } from "../config/i18next";
+import { NavLink, NavLinkProps } from "react-router-dom";
 import i18next from "i18next";
-import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
+import { useWindowDimensions } from "../components/hooks/use-window-dimensions";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import { emphasize, Theme } from "@mui/material/styles";
@@ -147,6 +148,28 @@ const StyledMenuItem = styled(MenuItem).withConfig({
     }
 `;
 
+const StyledLink = styled(NavLink)<NavLinkProps>`
+    text-decoration: none;
+    padding: 15px 0;
+    color: black;
+    letter-spacing: 0.235px;
+    &.active {
+        font-weight: bold;
+      }
+      &:hover {
+          border: none;
+          color: #2FB3AF;
+          font-weight: bold;
+          letter-spacing: 0;
+          padding-bottom: 10px;
+          border-bottom: 5px solid #2FB3AF;
+          border-radius: 0;
+          cursor;
+          transition: none;
+      }
+
+`;
+
 interface HeaderProps {
     t: TFunction<"translation", undefined>;
 }
@@ -253,7 +276,9 @@ const Header = ({ t }: HeaderProps) => {
                     <StyledToolbar width={width}>
                         <MenuOptionBox>
                             <StyledPaddedBox>
-                                <StyledButton>{t("common.homepage.menu.home")}</StyledButton>
+                                <Button component={StyledLink} to="/">
+                                    {t("common.homepage.menu.home")}
+                                </Button>
                             </StyledPaddedBox>
                             <StyledPaddedBox>
                                 <StyledMenuButton
@@ -328,7 +353,9 @@ const Header = ({ t }: HeaderProps) => {
                                 </StyledMenuItem>
                             </Menu>
                             <StyledPaddedBox>
-                                <StyledButton>{t("common.homepage.menu.about")}</StyledButton>
+                                <Button component={StyledLink} to="/about">
+                                    {t("common.homepage.menu.about")}
+                                </Button>
                             </StyledPaddedBox>
                             <StyledPaddedBox>
                                 <StyledButton>{t("common.homepage.menu.contact")}</StyledButton>

@@ -69,7 +69,7 @@ const MediaCard = ({ title, subtitle, buttonText, image, buttonLink }: MediaCard
                     component="div"
                     textAlign="center"
                     fontWeight="bold"
-                    marginBottom={"17px"}
+                    marginBottom="17px"
                 >
                     {title}
                 </Typography>

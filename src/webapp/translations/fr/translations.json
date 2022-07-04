@@ -105,6 +105,9 @@
             "synergist_involvement_subtitle": "Effet synergiste de la susceptibilité",
             "synergist_involvement_legend": "Effet de la synergie sur la susceptibilité",
             "chart": {
+                "not_reported": "NR : non signalé",
+                "other_insecticide_class_label": "Autres insecticides auxquels une résistance a été détectée sur ce site:",
+                "other_insecticide_class_none": "Rien",
                 "resistance_status": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
                     "content_2": " du paludisme via détermination de la dose diagnostique(s) avec {{insecticideClass}} {{years}}",
@@ -183,9 +186,9 @@
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "Mortalité de moustique",
-                    "full_involvement": "Implication totale",
-                    "partial_involvement": "Implication partielle",
-                    "no_involvement": "Pas d'implication",
+                    "full_restoration": "Restauration totale",
+                    "partial_restoration": "Restauration partielle",
+                    "no_restoration": "Pas de restauration",
                     "help": {
                         "p1": "This map presents data from <1>synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying results, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how synergist involvement is graded consult the <1 href='/'>WHO manual for resistance monitoring</1>.",

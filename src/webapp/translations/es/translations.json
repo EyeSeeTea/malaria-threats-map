@@ -105,6 +105,9 @@
             "synergist_involvement_subtitle": "Resultados de bioensayos de insecticidas sinérgicos (solo monooxigenasas)",
             "synergist_involvement_legend": "Efecto de la sinergia en susceptibilidad",
             "chart": {
+                "not_reported": "NR: no reportado",
+                "other_insecticide_class_label": "Otros insecticidas a los que se detectó resistencia en este sitio:",
+                "other_insecticide_class_none": "Ninguno",
                 "resistance_status": {
                     "content_1": "{{nStudies}} pruebas con vectores ",
                     "content_2": " por pruebas de susceptibilidad a la concentración discriminante(s) con {{insecticideClass}} {{years}}",
@@ -183,9 +186,9 @@
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "Mortalidad por mosquito",
-                    "full_involvement": "Participación total",
-                    "partial_involvement": "Participación parcial",
-                    "no_involvement": "Sin participación",
+                    "full_restoration": "Restauración completa",
+                    "partial_restoration": "Restauración parcial",
+                    "no_restoration": "Sin restauración",
                     "help": {
                         "p1": "Este mapa presenta datos de <1>bioensayos de insecticidas sinérgicos</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En los sitios donde los estudios muestran resultados variables, el color del punto está determinada por los resultados más recientes.",
                         "p2": "Para obtener información sobre cómo se clasifica la participación de los sinergistas, consulte el <1 href='/'>Manual de la OMS para el control de la resistencia</1>.",
