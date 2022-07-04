@@ -61,6 +61,12 @@
                     "name": "Des chercheurs",
                     "text": "Le MTM me donne accès aux données publiques les plus récentes sur la résistance des vecteurs aux insecticides - cela m'aide à prendre des décisions concernant les produits insecticides à financer pour la PID et si des MILD standard ou de nouvelles moustiquaires Pyréthroïde-PBO doivent être déployées. L'interactivité de la plateforme me permet de sélectionner les critères précis qui m'intéressent – puis d'exporter facilement des visualisations pour faciliter les discussions. Aucune autre plate-forme n'est aussi complète que le MTM."
                 }
+            },
+            "userExperienceSection": {
+                "title": "Tests d'expérience utilisateur",
+                "p1": "Nous avons récemment entrepris un processus de test d'expérience utilisateur et sommes reconnaissants à tous ceux qui ont volontairement donné de leur temps pour contribuer à l'amélioration du MTM pour tous ses utilisateurs.",
+                "p2": "Ce test utilisateur a conduit à l'ajout des pages d'accueil, à propos et de contact, à la création de tableaux de bord, d'une interface de téléchargement dédiée et d'une interface cartographique plus simplifiée. Nous avons également identifié des domaines d'amélioration supplémentaires, qui sur lesquels nous travaillons. Il s'agit notamment de conseils accrus pour faciliter la prise de décision et de couches cartographiques supplémentaires. Nous voulons faire de cet outil le meilleur possible afin qu'ensemble nous disposions des ressources nécessaires pour contrôler et éliminer le paludisme.",
+                "button": "Liste des remerciements"
             }
         },
         "homepage": {

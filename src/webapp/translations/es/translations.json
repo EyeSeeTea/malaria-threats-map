@@ -61,6 +61,12 @@
                     "name": "Investigadores",
                     "text": "El MTM me da acceso a los datos públicos más recientes sobre la resistencia de los vectores a los insecticidas; esto me ayuda a tomar decisiones sobre qué productos insecticidas financiar para el IRS y si se deben implementar MTILD estándar o nuevos mosquiteros Piretroides-PBO. La interactividad de la plataforma me permite seleccionar los criterios específicos que me interesan y luego exportar visualizaciones fácilmente para facilitar las discusiones. Ninguna otra plataforma es tan completa como la MTM."
                 }
+            },
+            "userExperienceSection": {
+                "title": "Pruebas de experiencia de usuario",
+                "p1": "Recientemente llevamos a cabo un proceso de prueba de la experiencia del usuario y estamos agradecidos con todos los que voluntariamente dieron su tiempo para contribuir a la mejora del MTM para todos sus usuarios.",
+                "p2": "Esta prueba de usuario condujo a la adición de páginas de inicio, información y contacto, la creación de paneles, una interfaz de descarga dedicada y una interfaz de mapa más optimizada. También identificamos áreas de mejora adicionales, que estamos trabajando. Estos incluyen una mayor orientación para facilitar la toma de decisiones y capas de mapas adicionales. Queremos hacer que esta herramienta sea lo mejor posible para que juntos tengamos los recursos para controlar y eliminar la malaria.",
+                "button": "Lista de reconocimientos"
             }
         },
         "homepage": {
