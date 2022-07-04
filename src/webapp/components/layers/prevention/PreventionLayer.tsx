@@ -9,11 +9,17 @@ import { resolveResistanceStatus } from "./ResistanceStatus/utils";
 import { buildPreventionFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectPreventionFilters, selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
-import { selectFilters, selectHoverSelection, selectRegion, selectTheme } from "../../../store/reducers/base-reducer";
+import {
+    selectFilters,
+    selectHoverSelection,
+    selectRegion,
+    selectSelection,
+    selectTheme,
+} from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
 import {
     fetchPreventionStudiesRequest,
-    setPreventionFilteredStudiesAction,
+    setPreventionFilteredStudies,
     setPreventionSelectionStudies,
 } from "../../../store/actions/prevention-actions";
 import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
@@ -45,12 +51,13 @@ const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     preventionFilters: selectPreventionFilters(state),
     region: selectRegion(state),
+    selection: selectSelection(state),
     hoverSelection: selectHoverSelection(state),
 });
 
 const mapDispatchToProps = {
     fetchPreventionStudies: fetchPreventionStudiesRequest,
-    setFilteredStudies: setPreventionFilteredStudiesAction,
+    setFilteredStudies: setPreventionFilteredStudies,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
     setPreventionSelectionStudies: setPreventionSelectionStudies,
@@ -172,6 +179,7 @@ class PreventionLayer extends Component<Props> {
                 this.props.map.removeLayer(PREVENTION_LAYER_ID);
                 this.props.map.removeSource(PREVENTION_SOURCE_ID);
             }
+
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
@@ -194,12 +202,6 @@ class PreventionLayer extends Component<Props> {
 
         setTimeout(() => {
             this.props.setSelection(selection);
-
-            const selectionStudies = selection
-                ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === selection.SITE_ID)
-                : [];
-
-            this.props.setPreventionSelectionStudies(selectionStudies);
         }, 100);
     };
 
