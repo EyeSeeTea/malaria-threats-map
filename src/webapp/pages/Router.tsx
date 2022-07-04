@@ -3,10 +3,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { HomePage } from "./home/HomePage";
 import { AboutPage } from "./about/AboutPage";
 import PersistentDrawerLeft from "../components/PersistentDrawerLeft";
+import config from "../config";
 
 export const Router: React.FC = React.memo(() => {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={config.publicUrl}>
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />

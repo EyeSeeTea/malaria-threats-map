@@ -1,4 +1,5 @@
 type ConfigProps = {
+    publicUrl: string;
     mapServerUrl: string;
     featuresServerUrl: string;
     mapTilesBaseUrl: string;
@@ -62,41 +63,48 @@ const localFeedbackConfig = {
     issues: { repository: "EyeSeeTea/malaria-threats-map", title: "[User feedback] {title}" },
 };
 
+const publicUrl = process.env.PUBLIC_URL;
+
+const base: Pick<ConfigProps, "feedback" | "publicUrl"> = {
+    publicUrl: publicUrl === "." ? "/" : publicUrl,
+    feedback: localFeedbackConfig,
+};
+
 const configurations: { [key: string]: ConfigProps } = {
     local: {
+        ...base,
         ...stagingMapServer,
         ...stagingMapTile,
         backendUrl: process.env.REACT_APP_BACKEND_URL || `https://portal-uat.who.int/malthreats-api/`,
         gaAppId: "UA-191197789-1",
         env: "local",
-        feedback: localFeedbackConfig,
     },
     dev: {
+        ...base,
         ...stagingMapServer,
         ...stagingMapTile,
         backendUrl: `https://portal-uat.who.int/malthreats-api/`,
         gaAppId: "UA-191197789-2",
         env: "dev",
         hotjar: { hjid: 2287362, hjsv: 6 },
-        feedback: feedbackConfig,
     },
     staging: {
+        ...base,
         ...stagingMapServer,
         ...stagingMapTile,
         backendUrl: `https://portal-uat.who.int/malthreats-api/`,
         gaAppId: "UA-191197789-1",
         env: "staging",
         hotjar: { hjid: 2280607, hjsv: 6 },
-        feedback: feedbackConfig,
     },
     prod: {
+        ...base,
         ...prodMapServer,
         ...prodMapTile,
         backendUrl: `https://extranet.who.int/malthreats-api/`,
         gaAppId: "UA-140410266-1",
         env: "prod",
         hotjar: { hjid: 2269048, hjsv: 6 },
-        feedback: feedbackConfig,
     },
 };
 
