@@ -9,14 +9,14 @@ import PreventionIcon from "../../assets/img/prevention-icon.svg";
 import TreatmentIcon from "../../assets/img/treatment-icon.svg";
 import DiagnosisIcon from "../../assets/img/diagnosis-icon.svg";
 import InvasiveIcon from "../../assets/img/invasive-icon.svg";
-import Dashboards from "../../assets/img/dashboards.png";
-import DataDownload from "../../assets/img/data_download.png";
+import Dashboards from "../../assets/img/home-page/dashboards.png";
+import DataDownload from "../../assets/img/home-page/data_download.png";
 import Maps from "../../assets/img/maps.png";
 
 import ThemePaper from "./ThemePaper";
 import MediaCard from "./MediaCard";
-import Footer from "./Footer";
-import Header from "./Header";
+import Footer from "../Footer";
+import Header from "../Header";
 import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
 
 import { State } from "../../store/types";
@@ -151,7 +151,7 @@ const HomePage = ({
 }: Props) => {
     const { t } = useTranslation();
     const { width } = useWindowDimensions();
-    const currentDateLoadingPlaceholder = new Date(Date.now()).toLocaleString().split(',')[0];
+    const currentDateLoadingPlaceholder = new Date(Date.now()).toLocaleString().split(",")[0];
     const [loading, setLoading] = React.useState(true);
 
     useEffect(() => {
@@ -238,7 +238,9 @@ const HomePage = ({
                                 colorOpaque={themePaperColors.preventionColorOpaque}
                                 maxPaperHeight={200}
                                 lastUpdated={
-                                    loading ? currentDateLoadingPlaceholder : lastUpdatedDates["prevention"].toLocaleDateString()
+                                    loading
+                                        ? currentDateLoadingPlaceholder
+                                        : lastUpdatedDates["prevention"].toLocaleDateString()
                                 }
                                 numStudies={loading ? 0 : preventionStudies.length}
                             />
@@ -252,7 +254,9 @@ const HomePage = ({
                                 colorOpaque={themePaperColors.invasiveColorOpaque}
                                 maxPaperHeight={200}
                                 lastUpdated={
-                                    loading ? currentDateLoadingPlaceholder : lastUpdatedDates["invasive"].toLocaleDateString()
+                                    loading
+                                        ? currentDateLoadingPlaceholder
+                                        : lastUpdatedDates["invasive"].toLocaleDateString()
                                 }
                                 numStudies={loading ? 0 : invasiveStudies.length}
                             />
@@ -266,7 +270,9 @@ const HomePage = ({
                                 colorOpaque={themePaperColors.treatmentColorOpaque}
                                 maxPaperHeight={220}
                                 lastUpdated={
-                                    loading ? currentDateLoadingPlaceholder : lastUpdatedDates["treatment"].toLocaleDateString()
+                                    loading
+                                        ? currentDateLoadingPlaceholder
+                                        : lastUpdatedDates["treatment"].toLocaleDateString()
                                 }
                                 numStudies={loading ? 0 : treatmentStudies.length}
                             />
@@ -280,7 +286,9 @@ const HomePage = ({
                                 colorOpaque={themePaperColors.diagnosisColorOpaque}
                                 maxPaperHeight={220}
                                 lastUpdated={
-                                    loading ? currentDateLoadingPlaceholder : lastUpdatedDates["diagnosis"].toLocaleDateString()
+                                    loading
+                                        ? currentDateLoadingPlaceholder
+                                        : lastUpdatedDates["diagnosis"].toLocaleDateString()
                                 }
                                 numStudies={loading ? 0 : diagnosisStudies.length}
                             />

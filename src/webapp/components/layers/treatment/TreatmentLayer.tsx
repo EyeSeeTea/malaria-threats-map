@@ -3,7 +3,13 @@ import { connect } from "react-redux";
 import { studiesToGeoJson } from "../layer-utils";
 import setupEffects from "../effects";
 import { selectTreatmentFilters, selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
-import { selectFilters, selectHoverSelection, selectRegion, selectTheme } from "../../../store/reducers/base-reducer";
+import {
+    selectFilters,
+    selectHoverSelection,
+    selectRegion,
+    selectSelection,
+    selectTheme,
+} from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
 import {
@@ -53,6 +59,7 @@ const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
     region: selectRegion(state),
+    selection: selectSelection(state),
     hoverSelection: selectHoverSelection(state),
 });
 const mapDispatchToProps = {
@@ -73,6 +80,15 @@ type Props = StateProps & OwnProps & DispatchProps;
 
 class TreatmentLayer extends Component<Props> {
     popup: mapboxgl.Popup;
+
+    updatePreventionSelectionStudies() {
+        const selectionStudies = this.props.selection
+            ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === this.props.selection.SITE_ID)
+            : [];
+
+        this.props.setTreatmentSelectionStudies(selectionStudies);
+    }
+
     componentDidMount() {
         this.loadStudiesIfRequired();
         this.mountLayer();
@@ -119,6 +135,10 @@ class TreatmentLayer extends Component<Props> {
             }
             this.filterSource();
             this.applyMapTypeSymbols();
+
+            this.updatePreventionSelectionStudies();
+        } else if (prevProps.selection !== this.props.selection) {
+            this.updatePreventionSelectionStudies();
         }
     }
 
@@ -219,12 +239,6 @@ class TreatmentLayer extends Component<Props> {
 
         setTimeout(() => {
             this.props.setSelection(selection);
-
-            const selectionStudies = selection
-                ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === selection.SITE_ID)
-                : [];
-
-            this.props.setTreatmentSelectionStudies(selectionStudies);
         }, 100);
     };
 

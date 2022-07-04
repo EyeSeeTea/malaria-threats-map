@@ -1,5 +1,5 @@
 import { combineEpics, Epic } from "redux-observable";
-import * as PreventionEpics from "./epics/prevention-epics";
+import * as PreventionEpics from "./epics/prevention/prevention-epics";
 import * as DiagnosisEpics from "./epics/diagnosis-epics";
 import * as TreatmentEpics from "./epics/treatment-epics";
 import * as InvasiveEpics from "./epics/invasive-epics";
