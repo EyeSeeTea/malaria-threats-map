@@ -2,6 +2,7 @@ import React from "react";
 
 import Layout from "../layout/Layout";
 import BannerSection from "./BannerSection";
+import DataSection from "./DataSection";
 
 export interface StyledImgProps {
     maxWidth: number;
@@ -16,6 +17,7 @@ export const AboutPage: React.FC = () => {
     return (
         <Layout>
             <BannerSection />
+            <DataSection />
         </Layout>
 
         // <React.Fragment>
