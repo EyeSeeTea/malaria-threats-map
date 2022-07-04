@@ -120,7 +120,7 @@ const Legend: React.FC<Props> = ({
         [theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters]
     );
 
-    console.log({ mapTypeHelpKey });
+    //console.log({ mapTypeHelpKey });
 
     return (
         <React.Fragment>
