@@ -34,6 +34,33 @@
                     "alt": "Malaria Threats Map: helping countries address critical threats for malaria control and elimination",
                     "title": "How is the MTM supporting countries?"
                 }
+            },
+            "challengesSection": {
+                "title": " Thousands of people use the Malaria Threats Map to understand challenges to malaria control and elimination, access data and guide decision-making.",
+                "tabFooter": {
+                    "name": "Name",
+                    "globalFund": "Global Fund"
+                },
+                "tab1": {
+                    "name": "National Malaria Control Programmes",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab2": {
+                    "name": "NGOs",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab3": {
+                    "name": "Donors",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab4": {
+                    "name": "WHO Staff",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab5": {
+                    "name": "Researchers",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                }
             }
         },
         "homepage": {

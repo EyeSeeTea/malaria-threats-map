@@ -2,6 +2,7 @@ import React from "react";
 
 import Layout from "../layout/Layout";
 import BannerSection from "./BannerSection";
+import ChallengesSection from "./ChallengesSection";
 import DataSection from "./DataSection";
 import MapSection from "./MapSection";
 
@@ -20,6 +21,7 @@ export const AboutPage: React.FC = () => {
             <BannerSection />
             <DataSection />
             <MapSection />
+            <ChallengesSection />
         </Layout>
 
         // <React.Fragment>

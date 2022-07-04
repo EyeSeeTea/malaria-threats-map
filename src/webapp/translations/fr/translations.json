@@ -34,6 +34,33 @@
                     "alt": "Carte des menaces du paludisme : aider les pays à faire face aux menaces critiques pour le contrôle et l'élimination du paludisme",
                     "title": "Comment le MTM soutient-il les pays?"
                 }
+            },
+            "challengesSection": {
+                "title": "Des milliers de personnes utilisent la Malaria Threats Map pour comprendre les défis du contrôle et de l'élimination du paludisme, accéder aux données et guider la prise de décision.",
+                "tabFooter": {
+                    "name": "Nom",
+                    "globalFund": "Fonds mondial"
+                },
+                "tab1": {
+                    "name": "Programmes nationaux de lutte contre le paludisme",
+                    "text": "Le MTM me donne accès aux données publiques les plus récentes sur la résistance des vecteurs aux insecticides - cela m'aide à prendre des décisions concernant les produits insecticides à financer pour la PID et si des MILD standard ou de nouvelles moustiquaires Pyréthroïde-PBO doivent être déployées. L'interactivité de la plateforme me permet de sélectionner les critères précis qui m'intéressent – puis d'exporter facilement des visualisations pour faciliter les discussions. Aucune autre plate-forme n'est aussi complète que le MTM."
+                },
+                "tab2": {
+                    "name": "ONGs",
+                    "text": "Le MTM me donne accès aux données publiques les plus récentes sur la résistance des vecteurs aux insecticides - cela m'aide à prendre des décisions concernant les produits insecticides à financer pour la PID et si des MILD standard ou de nouvelles moustiquaires Pyréthroïde-PBO doivent être déployées. L'interactivité de la plateforme me permet de sélectionner les critères précis qui m'intéressent – puis d'exporter facilement des visualisations pour faciliter les discussions. Aucune autre plate-forme n'est aussi complète que le MTM."
+                },
+                "tab3": {
+                    "name": "Donateurs",
+                    "text": "Le MTM me donne accès aux données publiques les plus récentes sur la résistance des vecteurs aux insecticides - cela m'aide à prendre des décisions concernant les produits insecticides à financer pour la PID et si des MILD standard ou de nouvelles moustiquaires Pyréthroïde-PBO doivent être déployées. L'interactivité de la plateforme me permet de sélectionner les critères précis qui m'intéressent – puis d'exporter facilement des visualisations pour faciliter les discussions. Aucune autre plate-forme n'est aussi complète que le MTM."
+                },
+                "tab4": {
+                    "name": "Personnel de l'OMS",
+                    "text": "Le MTM me donne accès aux données publiques les plus récentes sur la résistance des vecteurs aux insecticides - cela m'aide à prendre des décisions concernant les produits insecticides à financer pour la PID et si des MILD standard ou de nouvelles moustiquaires Pyréthroïde-PBO doivent être déployées. L'interactivité de la plateforme me permet de sélectionner les critères précis qui m'intéressent – puis d'exporter facilement des visualisations pour faciliter les discussions. Aucune autre plate-forme n'est aussi complète que le MTM."
+                },
+                "tab5": {
+                    "name": "Des chercheurs",
+                    "text": "Le MTM me donne accès aux données publiques les plus récentes sur la résistance des vecteurs aux insecticides - cela m'aide à prendre des décisions concernant les produits insecticides à financer pour la PID et si des MILD standard ou de nouvelles moustiquaires Pyréthroïde-PBO doivent être déployées. L'interactivité de la plateforme me permet de sélectionner les critères précis qui m'intéressent – puis d'exporter facilement des visualisations pour faciliter les discussions. Aucune autre plate-forme n'est aussi complète que le MTM."
+                }
             }
         },
         "homepage": {
