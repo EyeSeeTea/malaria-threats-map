@@ -6,6 +6,36 @@
             "title": "Mapa de los desafíos de la malaria",
             "subtitle": "Seguimiento de los desafíos biológicos para el control y la eliminación de la malaria"
         },
+        "aboutPage": {
+            "title": {
+                "first": "Aprende más sobre",
+                "second": "El mapa de amenazas de malaria"
+            },
+
+            "dataSection": {
+                "title": "De dónde provienen los datos?",
+                "content": "Los datos son recopilados por los Programas Nacionales de Malaria, sus socios implementadores, institutos de investigación y organizaciones no gubernamentales. Se proporcionan directamente al Programa Mundial contra el Paludismo (GMP) de la OMS o se extraen de publicaciones. Todos los datos tienen control de calidad, se incorporan a las bases de datos mundiales de la OMS y luego se publican en el Mapa de Amenazas de la Malaria."
+            },
+            "mapSection": {
+                "title": "Ver: Infórmese sobre la funcionalidad de los mapas dentro del MTM.",
+                "videoLabel": "Ver:",
+                "video1": {
+                    "url": "https://www.youtube.com/embed/dU_xrzpbupU",
+                    "alt": "Mapa de amenazas de malaria: seguimiento de los desafíos biológicos para el control y la eliminación de la malaria",
+                    "title": "Una visión general de los mapas"
+                },
+                "video2": {
+                    "url": "https://www.youtube.com/embed/VP-pc9oN0dM",
+                    "alt": "Mapa de amenazas de malaria: apoyando los esfuerzos de investigación",
+                    "title": "Cómo apoya el MTM los esfuerzos de investigación?"
+                },
+                "video3": {
+                    "url": "https://www.youtube.com/embed/mkggjD0DKwY",
+                    "alt": "Mapa de amenazas de malaria: ayudar a los países a abordar amenazas críticas para el control y la eliminación de la malaria",
+                    "title": "Cómo está apoyando el MTM a los países?"
+                }
+            }
+        },
         "homepage": {
             "menu": {
                 "home": "Casa",

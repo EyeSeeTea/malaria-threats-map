@@ -6,6 +6,36 @@
             "title": "Carte des menaces du paludisme",
             "subtitle": "Suivi des défis biologiques liés à la lutte et à l'élimination du paludisme"
         },
+        "aboutPage": {
+            "title": {
+                "first": "En savoir plus sur",
+                "second": "La carte des menaces du paludisme"
+            },
+
+            "dataSection": {
+                "title": "D'où viennent les données?",
+                "content": "Les données sont collectées par les programmes nationaux de lutte contre le paludisme, leurs partenaires de mise en œuvre, les instituts de recherche et les organisations non gouvernementales. Elles sont soit fournies directement au Programme mondial de lutte contre le paludisme (GMP) de l'OMS, soit extraites de publications. La qualité de toutes les données est contrôlée, incorporée dans les bases de données mondiales de l'OMS, puis publiée sur la carte des menaces du paludisme."
+            },
+            "mapSection": {
+                "title": "Regarder: Découvrez la fonctionnalité des cartes dans le MTM",
+                "videoLabel": "Regarder:",
+                "video1": {
+                    "url": "https://www.youtube.com/embed/dU_xrzpbupU",
+                    "alt": "Carte des menaces du paludisme: suivi des défis biologiques pour le contrôle et l'élimination du paludisme",
+                    "title": "Un aperçu des cartes"
+                },
+                "video2": {
+                    "url": "https://www.youtube.com/embed/VP-pc9oN0dM",
+                    "alt": "Carte des menaces du paludisme: soutenir les efforts de recherche",
+                    "title": "Comment le MTM soutient-il les efforts de recherche?"
+                },
+                "video3": {
+                    "url": "https://www.youtube.com/embed/mkggjD0DKwY",
+                    "alt": "Carte des menaces du paludisme : aider les pays à faire face aux menaces critiques pour le contrôle et l'élimination du paludisme",
+                    "title": "Comment le MTM soutient-il les pays?"
+                }
+            }
+        },
         "homepage": {
             "menu": {
                 "home": "Domicile",

@@ -6,6 +6,36 @@
             "title": "Malaria Threats Map",
             "subtitle": "Tracking biological challenges to malaria control and elimination"
         },
+        "aboutPage": {
+            "title": {
+                "first": "Learn More About",
+                "second": "The Malaria Threats Map"
+            },
+
+            "dataSection": {
+                "title": "Where does the data come from?",
+                "content": "Data is collected by National Malaria Programmes, their implementation partners, research institutes and non-governmental organizations. They are either provided directly to WHO Global Malaria Programme (GMP) or extracted from publications. All data are quality controlled, incorporated into WHO global databases and then published to the Malaria Threats Map."
+            },
+            "mapSection": {
+                "title": "Watch: Find out about the functionality of the maps within the MTM",
+                "videoLabel": "Watch:",
+                "video1": {
+                    "url": "https://www.youtube.com/embed/dU_xrzpbupU",
+                    "alt": "Malaria Threats Map: tracking biological challenges to malaria control and elimination",
+                    "title": "An overview of the maps"
+                },
+                "video2": {
+                    "url": "https://www.youtube.com/embed/VP-pc9oN0dM",
+                    "alt": "Malaria Threats Map: supporting research efforts",
+                    "title": "How is the MTM supporting research efforts?"
+                },
+                "video3": {
+                    "url": "https://www.youtube.com/embed/mkggjD0DKwY",
+                    "alt": "Malaria Threats Map: helping countries address critical threats for malaria control and elimination",
+                    "title": "How is the MTM supporting countries?"
+                }
+            }
+        },
         "homepage": {
             "menu": {
                 "home": "Home",
