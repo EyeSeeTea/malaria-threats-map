@@ -17,31 +17,26 @@ import PreventionIcon from "../../assets/img/prevention-icon.svg";
 import TreatmentIcon from "../../assets/img/treatment-icon.svg";
 import DiagnosisIcon from "../../assets/img/diagnosis-icon.svg";
 import InvasiveIcon from "../../assets/img/invasive-icon.svg";
+import { margin } from "@mui/system";
 
-const Section = styled.section``;
+const Section = styled.section`
+    padding: 10vmin;
+`;
 
 const ThemeCard = styled(Card)`
-    height: "100vh";
-    aspect-ratio: 16:9;
+    height: 100%;
     display: flex;
     flex-direction: column;
 `;
 
-const ThemeCardContent = styled.div<{ background: string }>`
+const ThemeCardContent = styled(Grid)<{ background: string }>`
     background: ${props => props.background};
     flex: 1;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 6vmin;
+    padding: 4vmin 6vmin;
 `;
 
-const ThemeCardActions = styled.div<{ background: string }>`
+const ThemeCardActions = styled(Grid)<{ background: string }>`
     background: ${props => props.background};
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
     padding: 4vmin 6vmin;
 `;
 
@@ -49,9 +44,10 @@ const StyledCardButton = styled(Button)`
     &.MuiButton-root {
         color: white;
         background-color: #343434;
-        width: 30vh;
+        width: 160px;
         font-weight: bold;
         text-align: center;
+        display: block;
         margin: auto 0;
     }
 `;
@@ -161,24 +157,42 @@ const ThemesSection: React.FC<Props> = ({
                 <Typography variant="h4" fontWeight="bold" color="inherit" marginBottom="10vmin" align="center">
                     {t("common.homepage.header")}
                 </Typography>
-                <Grid container spacing={7} sx={{ marginBottom: 6 }} justifyContent="center">
+                <Grid container spacing={5} sx={{ marginBottom: 6 }} justifyContent="center">
                     {themes.map((theme, index) => {
                         return (
                             <Grid key={index} item md={6} xs={12}>
                                 <ThemeCard>
-                                    <ThemeCardContent background={theme.color}>
-                                        <img src={theme.icon} alt={theme.altText} width="100vh" />
-                                        <div style={{ paddingLeft: 32 }}>
+                                    <ThemeCardContent
+                                        background={theme.color}
+                                        container
+                                        rowSpacing={3}
+                                        columnSpacing={8}
+                                    >
+                                        <Grid item lg={3} md={12} style={{ width: "100%" }}>
+                                            <img
+                                                src={theme.icon}
+                                                alt={theme.altText}
+                                                width="100vh"
+                                                style={{ margin: "auto", display: "block" }}
+                                            />
+                                        </Grid>
+                                        <Grid item lg={9} md={12}>
                                             <Typography gutterBottom variant="h5" textAlign="left">
                                                 {theme.title}
                                             </Typography>
                                             <Typography gutterBottom variant="body2" component="div" textAlign="left">
                                                 {theme.subtitle}
                                             </Typography>
-                                        </div>
+                                        </Grid>
                                     </ThemeCardContent>
-                                    <ThemeCardActions background={theme.colorOpaque}>
-                                        <div>
+                                    <ThemeCardActions
+                                        background={theme.colorOpaque}
+                                        container
+                                        rowSpacing={3}
+                                        columnSpacing={1}
+                                        alignItems="center"
+                                    >
+                                        <Grid item lg={8} md={12} style={{ width: "100%" }}>
                                             <Typography gutterBottom variant="body1" component="div" textAlign="left">
                                                 <strong>{t("common.legend.number_of_studies")}: </strong>
                                                 {theme.numStudies ? (
@@ -195,10 +209,12 @@ const ThemesSection: React.FC<Props> = ({
                                                     <CircularProgress size="20px" color="info" />
                                                 )}
                                             </Typography>
-                                        </div>
-                                        <StyledCardButton size="large" variant="contained">
-                                            {t("common.homepage.media_cards.read_story")}
-                                        </StyledCardButton>
+                                        </Grid>
+                                        <Grid item lg={4} md={12} alignContent="center" alignItems="center">
+                                            <StyledCardButton variant="contained">
+                                                {t("common.homepage.media_cards.read_story")}
+                                            </StyledCardButton>
+                                        </Grid>
                                     </ThemeCardActions>
                                 </ThemeCard>
                             </Grid>
