@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, AppBar, Toolbar, Box, Container, Hidden, IconButton, Drawer } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { AppBar, Toolbar, Box, Container, Hidden, IconButton, Drawer } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./LanguageSelector";
 import { Menu as MenuIcon } from "@mui/icons-material";
+import NavMenu from "./NavMenu";
 
 interface DirectionProps {
     flexDirection: "column" | "row";
@@ -13,10 +13,7 @@ interface DirectionProps {
 const MenuContainer = styled(Box)<DirectionProps>`
     display: flex;
     flex-direction: ${({ flexDirection }) => flexDirection};
-`;
-
-const MenuItemContainer = styled.div<DirectionProps>`
-    margin-right: ${({ flexDirection }) => (flexDirection === "row" ? "80px" : "0px")};
+    align-items: center;
 `;
 
 const StyledAppBar = styled(AppBar)`
@@ -30,60 +27,51 @@ const StyledToolbar = styled(Toolbar)`
     justify-content: space-between;
 `;
 
-const StyledLink = styled(NavLink)<DirectionProps>`
-    width: ${({ flexDirection }) => (flexDirection === "row" ? "auto" : "100%")};
-    text-decoration: none;
-    padding: 15px;
-    color: black;
-    font-weight: normal;
-    letter-spacing: 0.235px;
-    &.active {
-        font-weight: bold;
-      }
-      &:hover {
-          border: none;
-          color: #2FB3AF;
-          font-weight: bold;
-          letter-spacing: 0;
-          padding-bottom: 10px;
-          border-bottom: 5px solid #2FB3AF;
-          border-radius: 0;
-          cursor;
-          transition: none;
-      }
-
-`;
-
 const MenuItems: React.FC<DirectionProps> = ({ flexDirection }) => {
     const { t } = useTranslation();
 
+    const menus = React.useMemo(
+        () => [
+            { kind: "simple-menu" as const, name: t("common.homepage.menu.home"), path: "/" },
+            {
+                kind: "parent-menu" as const,
+                name: t("common.homepage.menu.tools"),
+                submenus: [
+                    { kind: "simple-menu" as const, name: t("common.homepage.tools_submenu.maps"), path: "/maps" },
+                    { kind: "simple-menu" as const, name: t("common.homepage.tools_submenu.dashboards"), path: "/" },
+                    { kind: "simple-menu" as const, name: t("common.homepage.tools_submenu.data_download"), path: "/" },
+                ],
+            },
+            {
+                kind: "parent-menu" as const,
+                name: t("common.homepage.menu.stories"),
+                submenus: [
+                    { kind: "simple-menu" as const, name: t("common.themes_caps.prevention"), path: "/" },
+                    { kind: "simple-menu" as const, name: t("common.themes_caps.invasive"), path: "/" },
+                    {
+                        kind: "simple-menu" as const,
+                        name: t("common.homepage.stories_submenu.antimalarial_drug_efficacy_and_resistance"),
+                        path: "/",
+                    },
+                    {
+                        kind: "simple-menu" as const,
+                        name: t("common.homepage.stories_submenu.parasite_pfhrp_gene_deletions"),
+                        path: "/",
+                    },
+                ],
+            },
+            { kind: "simple-menu" as const, name: t("common.homepage.menu.about"), path: "/about" },
+            { kind: "simple-menu" as const, name: t("common.homepage.menu.contact"), path: "/contact" },
+            { kind: "simple-menu" as const, name: t("common.homepage.menu.share_data"), path: "/share-data" },
+        ],
+        [t]
+    );
+
     return (
         <>
-            <MenuItemContainer flexDirection={flexDirection}>
-                <Button component={StyledLink} to="/">
-                    {t("common.homepage.menu.home")}
-                </Button>
-            </MenuItemContainer>
-            <MenuItemContainer flexDirection={flexDirection}>
-                <Button component={StyledLink} to="/tools">
-                    {t("common.homepage.menu.tools")}
-                </Button>
-            </MenuItemContainer>
-            <MenuItemContainer flexDirection={flexDirection}>
-                <Button component={StyledLink} to="/about">
-                    {t("common.homepage.menu.about")}
-                </Button>
-            </MenuItemContainer>
-            <MenuItemContainer flexDirection={flexDirection}>
-                <Button component={StyledLink} to="/contact">
-                    {t("common.homepage.menu.contact")}
-                </Button>
-            </MenuItemContainer>
-            <MenuItemContainer flexDirection={flexDirection}>
-                <Button component={StyledLink} to="/share-data">
-                    {t("common.homepage.menu.share_data")}
-                </Button>
-            </MenuItemContainer>
+            {menus.map(menu => {
+                return <NavMenu key={menu.name} menu={menu} flexDirection={flexDirection} />;
+            })}
         </>
     );
 };
