@@ -9,27 +9,19 @@ const resistanceStatusSymbols = {
     "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
     "circle-color": [
         "case",
-        ["==", ["get", "INSECTICIDE_CLASS"], "PYRROLES"], [
-        "match",
-        ["get", "RESISTANCE_STATUS"],
-        "CONFIRMED_RESISTANCE",
-        ResistanceStatusColors.Confirmed[0],
-        "POSSIBLE_RESISTANCE",
-        ResistanceStatusColors.Possible[0],
-        "SUSCEPTIBLE",
-        ResistanceStatusColors.Susceptible[0],
-        "UNDETERMINED",
-        ResistanceStatusColors.Undetermined[0],
-        /* other */ "#ccc"],
-        ["match",
-        ["get", "CONFIRMATION_STATUS"],
-        "Confirmed",
-        ResistanceStatusColors.Confirmed[0],
-        "Possible",
-        ResistanceStatusColors.Possible[0],
-        "Susceptible",
-        ResistanceStatusColors.Susceptible[0],
-        /* other */ "#ccc"]
+        ["in",  "CHLORFENAPYR", ["get", "INSECTICIDE_TYPE"]], [
+            "match",
+            ["get", "RESISTANCE_STATUS"],
+            "CONFIRMED_RESISTANCE",
+            ResistanceStatusColors.Confirmed[0],
+            "POSSIBLE_RESISTANCE",
+            ResistanceStatusColors.Possible[0],
+            "SUSCEPTIBLE",
+            ResistanceStatusColors.Susceptible[0],
+            "UNDETERMINED",
+            ResistanceStatusColors.Undetermined[0],
+            /* other */ "#ccc"], "#ccc"
+    
 
 
     ],

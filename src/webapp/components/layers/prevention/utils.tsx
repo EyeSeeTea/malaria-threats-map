@@ -30,6 +30,7 @@ export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters, coun
         default:
             return;
     }
+
 };
 
 export const resolveMapTypeLegend = (preventionFilters: PreventionFilters, countryMode: boolean) => {
@@ -123,6 +124,7 @@ const filterByMostRecentYear = (group: any[]) => {
 
 function getByMostRecentYearAndMortalityAdjusted(group: any[]) {
     const filteredStudies = filterByMostRecentYear(group);
+    //console.log(filteredStudies)
     // We sort remaining records by MORTALITY_ADJUSTED
     const filteredSortedStudies = R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), filteredStudies);
     return filteredSortedStudies[0];
