@@ -125,7 +125,6 @@ const filterByMostRecentYear = (group: any[]) => {
 
 function getByMostRecentYearAndMortalityAdjusted(group: any[]) {
     const filteredStudies = filterByMostRecentYear(group);
-    //console.log(filteredStudies)
     // We sort remaining records by MORTALITY_ADJUSTED
     const filteredSortedStudies = R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), filteredStudies);
     return filteredSortedStudies[0];
@@ -201,7 +200,6 @@ function getChlorfenapyrAllStudiesEvaluation(group: any[]) {
             ...study,
             RESISTANCE_STATUS_COLOR: groupColor
         }));
-        //console.log(changedGroup)
     return getByMostRecentYearAndMortalityAdjusted(changedGroup);
 }
 

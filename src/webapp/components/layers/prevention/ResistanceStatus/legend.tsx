@@ -43,7 +43,6 @@ function Legend({ legendExpanded, preventionFilters }: Props) {
             color: ResistanceStatusColors.Susceptible[0],
         },
     ];
-    console.log(preventionFilters)
     const affectedInsecticideClasses = ["PYRROLES", "ORGANOPHOSPHATES"];
     const greyLabelExtended =
         affectedInsecticideClasses.includes(preventionFilters.insecticideClass)
