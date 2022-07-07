@@ -9,8 +9,9 @@ const resistanceStatusSymbols = {
     "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
     "circle-color": [
         "case",
-        ["in",  "CHLORFENAPYR", ["get", "INSECTICIDE_TYPE"]], [
-            "match",
+        ['==', ["has", "RESISTANCE_STATUS_COLOR"], true], 
+        ["string", ["at", 0, ["get", "RESISTANCE_STATUS_COLOR"]]], 
+        ["match",
             ["get", "RESISTANCE_STATUS"],
             "CONFIRMED_RESISTANCE",
             ResistanceStatusColors.Confirmed[0],
@@ -20,7 +21,8 @@ const resistanceStatusSymbols = {
             ResistanceStatusColors.Susceptible[0],
             "UNDETERMINED",
             ResistanceStatusColors.Undetermined[0],
-            /* other */ "#ccc"], "#ccc"
+            /* other */ "#ccc"]
+    
     
 
 
@@ -32,27 +34,19 @@ const resistanceStatusSymbols = {
         "lightgrey",
         [
             "case",
-            ["==", ["get", "INSECTICIDE_CLASS"], "PYRROLES"], [
-            "match",
-            ["get", "RESISTANCE_STATUS"],
-            "CONFIRMED_RESISTANCE",
-            ResistanceStatusColors.Confirmed[1],
-            "POSSIBLE_RESISTANCE",
-            ResistanceStatusColors.Possible[1],
-            "SUSCEPTIBLE",
-            ResistanceStatusColors.Susceptible[1],
-            "UNDETERMINED",
-            ResistanceStatusColors.Undetermined[1],
-            /* other */ "#111"],
+            ['==', ["has", "RESISTANCE_STATUS_COLOR"], true], 
+            ["string", ["at", 1, ["get", "RESISTANCE_STATUS_COLOR"]]], 
             ["match",
-            ["get", "CONFIRMATION_STATUS"],
-            "Confirmed",
-            ResistanceStatusColors.Confirmed[1],
-            "Possible",
-            ResistanceStatusColors.Possible[1],
-            "Susceptible",
-            ResistanceStatusColors.Susceptible[1],
-            /* other */ "#111"]
+                ["get", "RESISTANCE_STATUS"],
+                "CONFIRMED_RESISTANCE",
+                ResistanceStatusColors.Confirmed[1],
+                "POSSIBLE_RESISTANCE",
+                ResistanceStatusColors.Possible[1],
+                "SUSCEPTIBLE",
+                ResistanceStatusColors.Susceptible[1],
+                "UNDETERMINED",
+                ResistanceStatusColors.Undetermined[1],
+            /* other */ "#ccc"],
         ],
     ],
     "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],

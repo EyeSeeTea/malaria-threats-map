@@ -1,5 +1,5 @@
 import React from "react";
-import resistanceStatusSymbols from "./ResistanceStatus/symbols";
+import resistanceStatusSymbols, { ResistanceStatusColors }  from "./ResistanceStatus/symbols";
 import intensityStatusSymbols from "./IntensityStatus/symbols";
 import resistanceMechanismSymbols from "./ResistanceMechanisms/symbols";
 import levelOfInvolvementSymbols from "./Involvement/symbols";
@@ -13,6 +13,7 @@ import CountrySymbols from "./Countries/PreventionCountrySymbols";
 import PreventionCountryLegend from "./Countries/PreventionCountryLegend";
 import LevelOfInvolvementLegend from "./Involvement/LevelOfInvolvementLegend";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
+import _ from "lodash";
 
 export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters, countryMode: boolean) => {
     if (countryMode) {
@@ -180,7 +181,34 @@ function getByMostRecentYearAndInvolvement(group: any[]) {
     return filteredSortedStudies[0];
 }
 
-export const studySelector = (group: any[], mapType: PreventionMapType) => {
+function getChlorfenapyrAllStudiesEvaluation(group: any[]) {
+    const chlorfenapyrResistanceStatus = group.map(study => study.RESISTANCE_STATUS);
+    const countConfirmedResistance = _.countBy(chlorfenapyrResistanceStatus);
+    let groupColor: string[];
+    if(countConfirmedResistance["CONFIRMED_RESISTANCE"] >= 3) {
+        groupColor = ResistanceStatusColors.Confirmed;
+    }
+    else if(countConfirmedResistance["UNDETERMINED"] === chlorfenapyrResistanceStatus.length) {
+        groupColor = ResistanceStatusColors.Undetermined;
+    }
+    else if(countConfirmedResistance["SUSCEPTIBLE"] === chlorfenapyrResistanceStatus.length) {
+        groupColor = ResistanceStatusColors.Susceptible;
+    }
+    else groupColor = ResistanceStatusColors.Possible;
+
+    const changedGroup = group.map(study => (
+        {
+            ...study,
+            RESISTANCE_STATUS_COLOR: groupColor
+        }));
+        //console.log(changedGroup)
+    return getByMostRecentYearAndMortalityAdjusted(changedGroup);
+}
+
+export const studySelector = (group: any[], mapType: PreventionMapType, insecticideClass: string) => {
+    if(mapType === PreventionMapType.RESISTANCE_STATUS && insecticideClass === "PYRROLES") {
+        return getChlorfenapyrAllStudiesEvaluation(group);
+    }
     switch (mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
             return getByMostRecentYearAndMortalityAdjusted(group);

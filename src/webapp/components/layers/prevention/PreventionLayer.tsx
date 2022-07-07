@@ -4,7 +4,7 @@ import { State } from "../../../store/types";
 import { studiesToGeoJson, getCountryStudies } from "../layer-utils";
 import setupEffects from "../effects";
 import * as R from "ramda";
-import resistanceStatusSymbols,  { ResistanceStatusColors } from "./ResistanceStatus/symbols";
+import resistanceStatusSymbols from "./ResistanceStatus/symbols";
 import { resolveResistanceStatus } from "./ResistanceStatus/utils";
 import { buildPreventionFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
@@ -28,8 +28,6 @@ import PreventionSelectionChart from "./PreventionSelectionChart";
 import ChartModal from "../../ChartModal";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import SitePopover from "../common/SitePopover";
-import { PreventionMapType } from "../../../store/types";
-import _ from "lodash";
 
 export const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -150,66 +148,7 @@ class PreventionLayer extends Component<Props> {
             R.path<string>(["SITE_ID"]),
             studies
         );
-    /*
-         switch(resistance_status):
-
-  if (3+ confirmed_resistance), then red
-
-  if (all undetermined), then grey
-
-  if (all susceptible), then green
-  else orange
-        With the grouped studies, I go through them and count how many studies have RESISTANCE_STATUS confirmed and all of that 
-        then I add an attribute called like RESISTANCE_STATUS_COLOR or something in a group and have it be red, green, grey, orange
-        then I can do the matching thing in the symbols 
-                 const changedGroup = group.map(study => (
-                     {
-                        ...study,
-                        RESISTANCE_STATUS_COLOR: "red"
-                    }));
-        */
-        console.log(this.props.preventionFilters)
-       // let filteredStudies;
-        if(mapType === PreventionMapType.RESISTANCE_STATUS && this.props.preventionFilters.insecticideTypes.includes("CHLORFENAPYR")) {
-            //do I need to filter the studies though? 
-            const chlorfenapyrStudies = R.values(groupedStudies).map(group => {
-                console.log(group)
-                const chlorfenapyrResistanceStatus = group.map(study => study.RESISTANCE_STATUS);
-                const countConfirmedResistance = _.countBy(chlorfenapyrResistanceStatus);
-                let groupColor: string[];
-                if(countConfirmedResistance["CONFIRMED_RESISTANCE"] >= 3) {
-                    groupColor = ResistanceStatusColors.Confirmed;
-                }
-                else if(countConfirmedResistance["UNDETERMINED"] === chlorfenapyrResistanceStatus.length) {
-                    groupColor = ResistanceStatusColors.Undetermined;
-                }
-                else if(countConfirmedResistance["SUSCEPTIBLE"] === chlorfenapyrResistanceStatus.length) {
-                    groupColor = ResistanceStatusColors.Susceptible;
-                }
-                else groupColor = ResistanceStatusColors.Possible;
-
-               // console.log(chlorfenapyrResistanceStatus)
-               // console.log(countConfirmedResistance)
-                const changedGroup = group.map(study => (
-                    {
-                       ...study,
-                       RESISTANCE_STATUS_COLOR: groupColor
-                   }));
-                return changedGroup;
-            });
-            console.log(chlorfenapyrStudies)
-            const groupedStudies1 = R.groupBy(
-                R.path<string>(["SITE_ID"]),
-                chlorfenapyrStudies
-            );
-            console.log(groupedStudies1)
-           // filteredStudies = R.values(chlorfenapyrStudies).map(group => studySelector(group, mapType));
-        }
-        console.log(R.values(groupedStudies).map(group => group))
-
-       const filteredStudies = R.values(groupedStudies).map(group => studySelector(group, mapType));
-        console.log("filteredStudies", filteredStudies);
-        
+       const filteredStudies = R.values(groupedStudies).map(group => studySelector(group, mapType, this.props.preventionFilters.insecticideClass));        
         return filteredStudies.map(study => {
             const percentage = parseFloat(study["MORTALITY_ADJUSTED"]);
             return {
@@ -324,7 +263,6 @@ class PreventionLayer extends Component<Props> {
         const filteredStudies = this.filterStudies(studies).filter(study =>
             countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
         );
-        console.log(studies.filter(study => study.INSECTICIDE_TYPE === "CHLORFENAPYR"))
         if (filteredStudies.length === 0) {
             return <div />;
         }
