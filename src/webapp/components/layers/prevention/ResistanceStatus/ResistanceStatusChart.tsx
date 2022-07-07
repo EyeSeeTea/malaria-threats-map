@@ -89,8 +89,7 @@ const defaultHighchartOptions: (data: any, translations: any) => Highcharts.Opti
         enabled: false,
     },
 });
-const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => 
-({
+const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     ...defaultHighchartOptions(data, translations),
     plotOptions: {
         column: {
@@ -101,37 +100,40 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
                 } as DataLabelsFormatterCallbackFunction,
                 enabled: true,
             },
-            zones: data[0].insecticide_type ==="CHLORFENAPYR" ? [
-                {
-                    value: 90,
-                    color: ResistanceStatusColors.Confirmed[0],
-                },
-                {
-                    value: 98,
-                    color: ResistanceStatusColors.Possible[0],
-                },
-                {
-                    value: 99.99,
-                    color: ResistanceStatusColors.Susceptible[0],
-                },
-                {
-                    value: 100.001,
-                    color: ResistanceStatusColors.Undetermined[0],
-                },
-            ] : [
-                {
-                    value: 90,
-                    color: ResistanceStatusColors.Confirmed[0],
-                },
-                {
-                    value: 98,
-                    color: ResistanceStatusColors.Possible[0],
-                },
-                {
-                    value: 100.001,
-                    color: ResistanceStatusColors.Susceptible[0],
-                },
-            ],
+            zones:
+                data[0].insecticide_type === "CHLORFENAPYR"
+                    ? [
+                          {
+                              value: 90,
+                              color: ResistanceStatusColors.Confirmed[0],
+                          },
+                          {
+                              value: 98,
+                              color: ResistanceStatusColors.Possible[0],
+                          },
+                          {
+                              value: 99.99,
+                              color: ResistanceStatusColors.Susceptible[0],
+                          },
+                          {
+                              value: 100.001,
+                              color: ResistanceStatusColors.Undetermined[0],
+                          },
+                      ]
+                    : [
+                          {
+                              value: 90,
+                              color: ResistanceStatusColors.Confirmed[0],
+                          },
+                          {
+                              value: 98,
+                              color: ResistanceStatusColors.Possible[0],
+                          },
+                          {
+                              value: 100.001,
+                              color: ResistanceStatusColors.Susceptible[0],
+                          },
+                      ],
         },
     },
 });

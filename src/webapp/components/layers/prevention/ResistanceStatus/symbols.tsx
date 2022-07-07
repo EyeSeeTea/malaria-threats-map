@@ -9,9 +9,10 @@ const resistanceStatusSymbols = {
     "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
     "circle-color": [
         "case",
-        ['==', ["has", "RESISTANCE_STATUS_COLOR"], true], 
-        ["string", ["at", 0, ["get", "RESISTANCE_STATUS_COLOR"]]], 
-        ["match",
+        ["==", ["has", "RESISTANCE_STATUS_COLOR"], true],
+        ["string", ["at", 0, ["get", "RESISTANCE_STATUS_COLOR"]]],
+        [
+            "match",
             ["get", "RESISTANCE_STATUS"],
             "CONFIRMED_RESISTANCE",
             ResistanceStatusColors.Confirmed[0],
@@ -21,11 +22,8 @@ const resistanceStatusSymbols = {
             ResistanceStatusColors.Susceptible[0],
             "UNDETERMINED",
             ResistanceStatusColors.Undetermined[0],
-            /* other */ "#ccc"]
-    
-    
-
-
+            /* other */ "#ccc",
+        ],
     ],
     "circle-opacity": 1,
     "circle-stroke-color": [
@@ -34,9 +32,10 @@ const resistanceStatusSymbols = {
         "lightgrey",
         [
             "case",
-            ['==', ["has", "RESISTANCE_STATUS_COLOR"], true], 
-            ["string", ["at", 1, ["get", "RESISTANCE_STATUS_COLOR"]]], 
-            ["match",
+            ["==", ["has", "RESISTANCE_STATUS_COLOR"], true],
+            ["string", ["at", 1, ["get", "RESISTANCE_STATUS_COLOR"]]],
+            [
+                "match",
                 ["get", "RESISTANCE_STATUS"],
                 "CONFIRMED_RESISTANCE",
                 ResistanceStatusColors.Confirmed[1],
@@ -46,7 +45,8 @@ const resistanceStatusSymbols = {
                 ResistanceStatusColors.Susceptible[1],
                 "UNDETERMINED",
                 ResistanceStatusColors.Undetermined[1],
-            /* other */ "#ccc"],
+                /* other */ "#ccc",
+            ],
         ],
     ],
     "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],

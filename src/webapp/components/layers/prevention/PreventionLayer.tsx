@@ -148,7 +148,9 @@ class PreventionLayer extends Component<Props> {
             R.path<string>(["SITE_ID"]),
             studies
         );
-       const filteredStudies = R.values(groupedStudies).map(group => studySelector(group, mapType, this.props.preventionFilters.insecticideClass));
+        const filteredStudies = R.values(groupedStudies).map(group =>
+            studySelector(group, mapType, this.props.preventionFilters.insecticideClass)
+        );
         return filteredStudies.map(study => {
             const percentage = parseFloat(study["MORTALITY_ADJUSTED"]);
             return {
