@@ -100,8 +100,9 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
                 } as DataLabelsFormatterCallbackFunction,
                 enabled: true,
             },
+            color: data[0].insecticide_type === "CHLORFENAPYR" ? ResistanceStatusColors.Undetermined[0] : undefined,
             zones:
-                data[0].insecticide_type === "CHLORFENAPYR"
+                data[0].insecticide_type !== "CHLORFENAPYR"
                     ? [
                           {
                               value: 90,
@@ -112,28 +113,11 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
                               color: ResistanceStatusColors.Possible[0],
                           },
                           {
-                              value: 99.99,
-                              color: ResistanceStatusColors.Susceptible[0],
-                          },
-                          {
                               value: 100.001,
-                              color: ResistanceStatusColors.Undetermined[0],
+                              color: ResistanceStatusColors.Susceptible[0],
                           },
                       ]
-                    : [
-                          {
-                              value: 90,
-                              color: ResistanceStatusColors.Confirmed[0],
-                          },
-                          {
-                              value: 98,
-                              color: ResistanceStatusColors.Possible[0],
-                          },
-                          {
-                              value: 100.001,
-                              color: ResistanceStatusColors.Susceptible[0],
-                          },
-                      ],
+                    : [],
         },
     },
 });

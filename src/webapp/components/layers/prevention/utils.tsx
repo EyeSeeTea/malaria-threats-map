@@ -122,13 +122,6 @@ const filterByMostRecentYear = (group: any[]) => {
     return R.filter(study => parseInt(study.YEAR_START) === parseInt(sortedStudies[0].YEAR_START), group);
 };
 
-function getByMostRecentYearAndMortalityAdjusted(group: any[]) {
-    const filteredStudies = filterByMostRecentYear(group);
-    // We sort remaining records by MORTALITY_ADJUSTED
-    const filteredSortedStudies = R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), filteredStudies);
-    return filteredSortedStudies[0];
-}
-
 const ResistanceIntensityOrder: { [value: string]: number } = {
     NA: 0,
     COULD_NOT_BE_RELIABLY_ASSESSED: 0,
@@ -179,32 +172,49 @@ function getByMostRecentYearAndInvolvement(group: any[]) {
     return filteredSortedStudies[0];
 }
 
-function getChlorfenapyrAllStudiesEvaluation(group: any[]) {
-    const chlorfenapyrResistanceStatus = group.map(study => study.RESISTANCE_STATUS);
-    const countConfirmedResistance = _.countBy(chlorfenapyrResistanceStatus);
+function determineResistanceStatusColor(group: any[], insecticideClass: string) {
     let groupColor: string[];
-    if (countConfirmedResistance["CONFIRMED_RESISTANCE"] >= 3) {
-        groupColor = ResistanceStatusColors.Confirmed;
-    } else if (countConfirmedResistance["UNDETERMINED"] === chlorfenapyrResistanceStatus.length) {
-        groupColor = ResistanceStatusColors.Undetermined;
-    } else if (countConfirmedResistance["SUSCEPTIBLE"] === chlorfenapyrResistanceStatus.length) {
-        groupColor = ResistanceStatusColors.Susceptible;
-    } else groupColor = ResistanceStatusColors.Possible;
 
-    const changedGroup = group.map(study => ({
-        ...study,
-        RESISTANCE_STATUS_COLOR: groupColor,
-    }));
-    return getByMostRecentYearAndMortalityAdjusted(changedGroup);
+    if (insecticideClass === "PYRROLES") {
+        const chlorfenapyrResistanceStatus = group.map(study => study.RESISTANCE_STATUS);
+        const countConfirmedResistance = _.countBy(chlorfenapyrResistanceStatus);
+        if (countConfirmedResistance["CONFIRMED_RESISTANCE"] >= 3) {
+            groupColor = ResistanceStatusColors.Confirmed;
+        } else if (countConfirmedResistance["UNDETERMINED"] === chlorfenapyrResistanceStatus.length) {
+            groupColor = ResistanceStatusColors.Undetermined;
+        } else if (countConfirmedResistance["SUSCEPTIBLE"] === chlorfenapyrResistanceStatus.length) {
+            groupColor = ResistanceStatusColors.Susceptible;
+        } else groupColor = ResistanceStatusColors.Possible;
+    } else {
+        const filteredStudies = filterByMostRecentYear(group);
+        // We sort remaining records by MORTALITY_ADJUSTED
+        const filteredSortedStudies = R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), filteredStudies);
+        switch (filteredSortedStudies[0].RESISTANCE_STATUS) {
+            case "CONFIRMED_RESISTANCE":
+                groupColor = ResistanceStatusColors.Confirmed;
+                break;
+            case "POSSIBLE_RESISTANCE":
+                groupColor = ResistanceStatusColors.Possible;
+                break;
+            case "SUSCEPTIBLE":
+                groupColor = ResistanceStatusColors.Susceptible;
+                break;
+            default:
+                groupColor = ResistanceStatusColors.Undetermined;
+        }
+
+        const changedGroup = group.map(study => ({
+            ...study,
+            RESISTANCE_STATUS_COLOR: groupColor,
+        }));
+        return changedGroup[0];
+    }
 }
 
 export const studySelector = (group: any[], mapType: PreventionMapType, insecticideClass: string) => {
-    if (mapType === PreventionMapType.RESISTANCE_STATUS && insecticideClass === "PYRROLES") {
-        return getChlorfenapyrAllStudiesEvaluation(group);
-    }
     switch (mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
-            return getByMostRecentYearAndMortalityAdjusted(group);
+            return determineResistanceStatusColor(group, insecticideClass);
         case PreventionMapType.INTENSITY_STATUS:
             return getByMostRecentYearAndResistanceIntensity(group);
         case PreventionMapType.RESISTANCE_MECHANISM:

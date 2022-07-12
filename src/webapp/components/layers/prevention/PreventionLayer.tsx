@@ -5,7 +5,6 @@ import { studiesToGeoJson, getCountryStudies } from "../layer-utils";
 import setupEffects from "../effects";
 import * as R from "ramda";
 import resistanceStatusSymbols from "./ResistanceStatus/symbols";
-import { resolveResistanceStatus } from "./ResistanceStatus/utils";
 import { buildPreventionFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectPreventionFilters, selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
@@ -151,13 +150,8 @@ class PreventionLayer extends Component<Props> {
         const filteredStudies = R.values(groupedStudies).map(group =>
             studySelector(group, mapType, this.props.preventionFilters.insecticideClass)
         );
-        return filteredStudies.map(study => {
-            const percentage = parseFloat(study["MORTALITY_ADJUSTED"]);
-            return {
-                ...study,
-                CONFIRMATION_STATUS: resolveResistanceStatus(percentage),
-            };
-        });
+        console.log(filteredStudies);
+        return filteredStudies;
     };
 
     buildFilters = () => {
@@ -268,6 +262,7 @@ class PreventionLayer extends Component<Props> {
         if (filteredStudies.length === 0) {
             return <div />;
         }
+        console.log(filteredStudies);
         return (
             this.props.theme === "prevention" && (
                 <>
