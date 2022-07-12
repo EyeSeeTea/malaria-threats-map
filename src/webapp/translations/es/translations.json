@@ -6,6 +6,64 @@
             "title": "Mapa de los desafíos de la malaria",
             "subtitle": "Seguimiento de los desafíos biológicos para el control y la eliminación de la malaria"
         },
+        "homepage": {
+            "menu": {
+                "home": "Casa",
+                "tools": "Instrumentos",
+                "about": "Acerca de",
+                "contact": "Contacto",
+                "share_data": "Compartir datos"
+            },
+            "title": "Mapa de <br /> <strong>amenazas de malaria</strong>",
+            "subtitle": "Explore datos sobre las principales amenazas biológicas para el control y la eliminación de la malaria.",
+            "media_cards": {
+                "maps": {
+                    "title": "Mapas",
+                    "subtitle": "Explore estudios individuales y datos a nivel de sitio para todas las amenazas.",
+                    "button_text": "Entrar en el mapa"
+                },
+                "dashboards": {
+                    "title": "Tableros",
+                    "subtitle": "Vea resúmenes de las amenazas en diferentes niveles geográficos.",
+                    "button_text": "Ver paneles"
+                },
+                "data_download": {
+                    "title": "Descarga de datos",
+                    "subtitle": "Descargue los datos detrás del MTM para su propio análisis.",
+                    "button_text": "Descarga de datos"
+                },
+                "db_last_updated": "Base de datos actualizada por última vez",
+                "read_story": "Leer historia"
+            },
+            "header": "El Malaria Threats Map es la plataforma más completa sobre las cuatro amenazas biológicas para el control y la eliminación de la malaria.",
+            "theme_paper": {
+                "prevention_subtitle": "La resistencia de los vectores a los insecticidas utilizados para el control de vectores amenaza los esfuerzos de control de la malaria.",
+                "invasive_subtitle": "La propagación de ciertas especies de vectores anofelinos y su establecimiento en nuevos ecosistemas representa una amenaza para el control de la malaria.",
+                "treatment_subtitle": "La resistencia a los medicamentos antipalúdicos sigue siendo una de las principales amenazas para los esfuerzos mundiales de control de la malaria, particularmente en la subregión del Gran Mekong.",
+                "diagnosis_subtitle": "Las deleciones de genes entre algunos parásitos de la malaria provocan resultados falsos negativos en las pruebas de diagnóstico, lo que complica la gestión y el control de los casos."
+            }
+        },
+        "footer": {
+            "policies": {
+                "title": "Políticas",
+                "disclaimer": "Descargo de responsabilidad"
+            },
+            "other_who_resources": {
+                "title": "Otros recursos de la OMS",
+                "resource1": "Vigilancia de la resistencia a los insecticidas de la OMS",
+                "resource2": "Eficacia y resistencia de los medicamentos contra la malaria de la OMS",
+                "resource3": "Directrices de PDR de paludismo de la OMS",
+                "resource4": "Directrices sobre malaria de la OMS",
+                "resource5": "OMS Informe mundial sobre el paludismo"
+            },
+            "about_who_gmp": {
+                "title": "Acerca de las BPF de la OMS",
+                "resource1": "Programa Mundial contra la Malaria de la OMS",
+                "resource2": "Contacta con nosotros"
+            },
+            "subscribe_newsletter": "SUSCRÍBETE AL BOLETÍN DE GMP",
+            "privacy": "Privacidad Aviso Legal"
+        },
         "themes": {
             "prevention": "Resistencia a insecticidas en los vectores de malaria",
             "diagnosis": "Deleción del gen pfhrp2/3 del parásito",
@@ -118,9 +176,9 @@
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "Mortalidad por mosquito",
-                    "full_involvement": "Participación total",
-                    "partial_involvement": "Participación parcial",
-                    "no_involvement": "Sin participación",
+                    "full_restoration": "Restauración completa",
+                    "partial_restoration": "Restauración parcial",
+                    "no_restoration": "Sin restauración",
                     "help": {
                         "p1": "Este mapa presenta datos de <1>bioensayos de insecticidas sinérgicos</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En los sitios donde los estudios muestran resultados variables, el color del punto está determinada por los resultados más recientes.",
                         "p2": "Para obtener información sobre cómo se clasifica la participación de los sinergistas, consulte el <1 href='/'>Manual de la OMS para el control de la resistencia</1>.",

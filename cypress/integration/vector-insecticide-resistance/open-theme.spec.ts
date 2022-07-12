@@ -5,11 +5,11 @@ describe("Open theme", () => {
         cy.loadPage(themes.vectorInsecticideResistance);
     });
 
-    it("should contains insecticide resistance status subtheme by default", () => {
+    it("should contain insecticide resistance status subtheme by default", () => {
         cy.contains("Insecticide resistance status");
     });
 
-    it("should contains english language by default", () => {
+    it("should contain english language by default", () => {
         cy.contains("English");
     });
 });
