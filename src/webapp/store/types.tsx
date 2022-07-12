@@ -7,7 +7,7 @@ import { TreatmentStudy } from "../../domain/entities/TreatmentStudy";
 import { InvasiveStudy } from "../../domain/entities/InvasiveStudy";
 import { CountryLayer, CountryProperties } from "../../domain/entities/CountryLayer";
 import { FeedbackState } from "../types/FeedbackState";
-import { Option } from "../components/BasicSelect";
+import { SelectionData } from "./SelectionData";
 
 export interface State {
     malaria: MalariaState;
@@ -52,6 +52,7 @@ export interface MalariaState {
     actionGroupSelected: ActionGroup | null;
     selection: SiteSelection | null;
     hoverSelection: SiteSelection | null;
+    selectionData: SelectionData | null;
     mobileOptionsOpen: boolean;
     zoom: number;
     setZoom: number | null;
@@ -113,36 +114,6 @@ export interface PreventionFilters {
     species: string[];
 }
 
-export type ChartDataItem = {
-    name: string;
-    y: number;
-    number: string;
-};
-
-export type ChartData = { [x: string]: { [x: string]: ChartDataItem[] } };
-
-export type CitationDataSource = {
-    key: string;
-    url?: string;
-    text: string;
-};
-
-export type Curation = {
-    dataSources: string[];
-    text: string;
-};
-
-export type PreventionSelectionData = {
-    title: string;
-    subtitle: string;
-    speciesFilterOptions: Option[];
-    speciesSelection: Option[];
-    chartData: ChartData;
-    dataSources: CitationDataSource[];
-    dataCurations: Curation[];
-    othersDetected: string[];
-};
-
 export interface PreventionState {
     studies: PreventionStudy[];
     error: string | null;
@@ -150,7 +121,6 @@ export interface PreventionState {
     filteredStudies: PreventionStudy[];
     filters: PreventionFilters;
     selectionStudies: PreventionStudy[];
-    selectionData?: PreventionSelectionData;
 }
 
 export enum TreatmentMapType {
