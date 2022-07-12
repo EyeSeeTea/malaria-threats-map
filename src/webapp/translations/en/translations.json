@@ -98,30 +98,9 @@
                 "not_reported": "NR: not reported",
                 "other_insecticide_class_label": "Other insecticides to which resistance was detected in this site:",
                 "other_insecticide_class_none": "None",
-                "resistance_status": {
-                    "content_1": "{{nStudies}} test(s) on ",
-                    "content_2": " malaria vectors via discriminating concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
-                    "number_of_tests": "No. of mosquitoes tested",
-                    "Confirmed": "Confirmed",
-                    "Possible": "Possible",
-                    "Susceptible": "Susceptible",
-                    "mortality": "mortality (%)",
-                    "tested": "tested (n)",
+                "resistance": {
                     "mosquito_mortality": "% mosquito mortality",
-                    "type": "type"
-                },
-                "resistance_intensity": {
-                    "content_1": "{{nStudies}} test(s) on ",
-                    "content_2": " malaria vectors via intensity concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# of tests",
-                    "HIGH_INTENSITY": "High Intensity",
-                    "MODERATE_TO_HIGH_INTENSITY": "Moderate to High Intensity",
-                    "MODERATE_INTENSITY": "Moderate Intensity",
-                    "LOW_INTENSITY": "Low Intensity",
-                    "NA": "NA",
-                    "mortality": "mortality (%)",
-                    "tested": "Tested (n)",
-                    "mosquito_mortality": "% mosquito mortality"
+                    "number_of_tests": "No. of mosquitoes tested"
                 },
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) on ",

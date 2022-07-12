@@ -98,30 +98,9 @@
                 "not_reported": "NR : non signalé",
                 "other_insecticide_class_label": "Autres insecticides auxquels une résistance a été détectée sur ce site:",
                 "other_insecticide_class_none": "Rien",
-                "resistance_status": {
-                    "content_1": "{{nStudies}} test(s) sur les vecteurs ",
-                    "content_2": " du paludisme via détermination de la dose diagnostique(s) avec {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# de tests",
-                    "Confirmed": "Confirmée",
-                    "Possible": "Suspectée",
-                    "Susceptible": "Sensible",
-                    "mortality": "mortalité (%)",
-                    "tested": "Études (n)",
+                "resistance": {
                     "mosquito_mortality": "% mortalité de moustique",
-                    "type": "type"
-                },
-                "resistance_intensity": {
-                    "content_1": "{{nStudies}} test(s) sur les vecteurs ",
-                    "content_2": " du paludisme via détermination de l'intensité de la résistance(s) avec {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# de tests",
-                    "HIGH_INTENSITY": "Fort",
-                    "MODERATE_TO_HIGH_INTENSITY": "Moyen Fort",
-                    "MODERATE_INTENSITY": "Moyen",
-                    "LOW_INTENSITY": "Faible",
-                    "NA": "Sensible",
-                    "mortality": "mortalité (%)",
-                    "tested": "Études (n)",
-                    "mosquito_mortality": "% mortalité de moustique"
+                    "number_of_tests": "# de tests"
                 },
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",

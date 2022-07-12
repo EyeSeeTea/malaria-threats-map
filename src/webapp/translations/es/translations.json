@@ -98,30 +98,9 @@
                 "not_reported": "NR: no reportado",
                 "other_insecticide_class_label": "Otros insecticidas a los que se detectó resistencia en este sitio:",
                 "other_insecticide_class_none": "Ninguno",
-                "resistance_status": {
-                    "content_1": "{{nStudies}} pruebas con vectores ",
-                    "content_2": " por pruebas de susceptibilidad a la concentración discriminante(s) con {{insecticideClass}} {{years}}",
-                    "number_of_tests": "Número de pruebas",
-                    "Confirmed": "Confirmado",
-                    "Possible": "Posible",
-                    "Susceptible": "Susceptible",
-                    "mortality": "mortalidad (%)",
-                    "tested": "Pruebas (n)",
+                "resistance": {
                     "mosquito_mortality": "% de mortalidad en los mosquitos",
-                    "type": "tipo"
-                },
-                "resistance_intensity": {
-                    "content_1": "{{nStudies}} pruebas con vectores ",
-                    "content_2": " por pruebas de intensidad de la resistencia(s) con {{insecticideClass}} {{years}}",
-                    "number_of_tests": "Número de pruebas",
-                    "HIGH_INTENSITY": "Intensidad alta",
-                    "MODERATE_TO_HIGH_INTENSITY": "Intensidad alta a moderada",
-                    "MODERATE_INTENSITY": "Intesidad moderada",
-                    "LOW_INTENSITY": "Intensidad baja",
-                    "NA": "No aplicable",
-                    "mortality": "mortalidad (%)",
-                    "tested": "Pruebas (n)",
-                    "mosquito_mortality": "% de mortalidad en los mosquitos"
+                    "number_of_tests": "Número de pruebas"
                 },
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} pruebas con vectores ",

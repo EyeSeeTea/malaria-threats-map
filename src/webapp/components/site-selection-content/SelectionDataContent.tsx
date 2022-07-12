@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { Divider, Paper, Typography } from "@mui/material";
 import { connect } from "react-redux";
-import { selectSelectionData, selectTheme } from "../../store/reducers/base-reducer";
+import { selectSelectionData } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import IntegrationReactSelect from "../BasicSelect";
 import FormLabel from "@mui/material/FormLabel";
@@ -14,7 +14,8 @@ import CurationNew from "../charts/CurationNew";
 import OtherInsecticideClasses from "../layers/prevention/common/OtherInsecticideClasses";
 import { setSelectionDataFilterSelection } from "../../store/actions/base-actions";
 import PreventionChart from "./prevention/PreventionChart";
-import DiagnosisChart from "./prevention/DiagnosisChart";
+import DiagnosisChart from "./diagnosis/DiagnosisChart";
+import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 
 const Container = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};
@@ -48,7 +49,7 @@ const Flex = styled.div`
 `;
 
 const mapStateToProps = (state: State) => ({
-    theme: selectTheme(state),
+    preventionFilters: selectPreventionFilters(state),
     selectionData: selectSelectionData(state),
 });
 
@@ -61,7 +62,7 @@ type DispatchProps = typeof mapDispatchToProps;
 
 type Props = StateProps & DispatchProps;
 
-const SelectionDataContent = ({ selectionData, setSelectionFilterSelection }: Props) => {
+const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFilterSelection }: Props) => {
     const onFiltersChange = (value: any) => {
         sendAnalytics({ type: "event", category: "popup", action: "filter" });
         setSelectionFilterSelection(value);
@@ -70,7 +71,7 @@ const SelectionDataContent = ({ selectionData, setSelectionFilterSelection }: Pr
     const chartCataContent = () => {
         switch (selectionData.data.kind) {
             case "prevention": {
-                return <PreventionChart selectionData={selectionData} />;
+                return <PreventionChart mapType={preventionFilters.mapType} selectionData={selectionData} />;
             }
             case "diagnosis": {
                 return <DiagnosisChart selectionData={selectionData} />;

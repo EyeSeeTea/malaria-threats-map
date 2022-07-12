@@ -1,13 +1,15 @@
 import { DataLabelsFormatterCallbackFunction } from "highcharts";
 import i18next from "i18next";
-import { PreventionChartDataItem } from "../../../store/types";
+import { PreventionChartDataItem, PreventionMapType } from "../../../store/types";
+import { IntensityStatusColors } from "../../layers/prevention/IntensityStatus/symbols";
+import { INTENSITY_STATUS } from "../../layers/prevention/IntensityStatus/utils";
 import { ConfirmationStatusColors } from "../../layers/prevention/ResistanceStatus/symbols";
 
 export const chartOptions: (
+    maptype: PreventionMapType,
     data: PreventionChartDataItem[],
-    translations: any,
     showTitle: boolean
-) => Highcharts.Options = (data, translations, showTitle) => ({
+) => Highcharts.Options = (maptype, data, showTitle) => ({
     chart: {
         maxPointWidth: 20,
         type: "bar",
@@ -18,7 +20,11 @@ export const chartOptions: (
         marginLeft: 210,
     },
     title: {
-        text: showTitle ? `<b>${translations.mosquito_mortality}</b>` : undefined,
+        text: showTitle
+            ? `<b>${i18next.t("common.prevention.chart.resistance.mosquito_mortality")}<br/>(${i18next.t(
+                  "common.prevention.chart.resistance.number_of_tests"
+              )})</b>`
+            : undefined,
         style: {
             fontSize: "11px",
         },
@@ -35,24 +41,13 @@ export const chartOptions: (
         },
     },
     yAxis: {
+        opposite: true,
         min: 0,
         max: 100,
         tickInterval: 50,
         title: {
             text: "",
         },
-        plotLines: [
-            {
-                value: 90,
-                color: "#d43501",
-                dashStyle: "Dash",
-                width: 2,
-                zIndex: 5,
-                label: {
-                    text: "",
-                },
-            },
-        ],
     },
     plotOptions: {
         bar: {
@@ -66,7 +61,31 @@ export const chartOptions: (
                     fontWeight: "normal",
                 },
             },
-            zones: [
+            zones: getBarZones(maptype),
+        },
+    },
+    tooltip: {
+        enabled: false,
+    },
+    series: [
+        {
+            maxPointWidth: 20,
+            type: "bar",
+            data: data,
+        },
+    ],
+    legend: {
+        enabled: false,
+    },
+    credits: {
+        enabled: false,
+    },
+});
+
+function getBarZones(maptype: PreventionMapType) {
+    switch (maptype) {
+        case PreventionMapType.RESISTANCE_STATUS:
+            return [
                 {
                     value: 90,
                     color: ConfirmationStatusColors.Confirmed[0],
@@ -79,33 +98,45 @@ export const chartOptions: (
                     value: 100.001,
                     color: ConfirmationStatusColors.Susceptible[0],
                 },
-            ],
-        },
-    },
-    tooltip: {
-        enabled: false,
-    },
-    series: [
-        {
-            maxPointWidth: 20,
-            type: "bar",
-            name: translations.mortality,
-            data: data,
-        },
-    ],
-    legend: {
-        enabled: false,
-    },
-    credits: {
-        enabled: false,
-    },
-});
-
-export const getTranslations = () => ({
-    mortality: i18next.t("common.prevention.chart.resistance_status.mortality"),
-    mosquito_mortality: `${i18next.t("common.prevention.chart.resistance_status.mosquito_mortality")}<br/>(${i18next.t(
-        "common.prevention.chart.resistance_status.number_of_tests"
-    )})`,
-    tested: i18next.t("common.prevention.chart.resistance_status.tested"),
-    type: i18next.t("common.prevention.chart.resistance_status.type"),
-});
+            ];
+        case PreventionMapType.INTENSITY_STATUS:
+            return [
+                // {
+                //     value: 0,
+                //     color: IntensityStatusColors[INTENSITY_STATUS.UNKNOWN][0],
+                // },
+                // {
+                //     value: 40,
+                //     color: IntensityStatusColors[INTENSITY_STATUS.SUSCEPTIBLE][0],
+                // },
+                // {
+                //     value: 50,
+                //     color: IntensityStatusColors[INTENSITY_STATUS.LOW_INTENSITY][0],
+                // },
+                // {
+                //     value: 90,
+                //     color: IntensityStatusColors[INTENSITY_STATUS.MODERATE_INTENSITY][0],
+                // },
+                // {
+                //     value: 98,
+                //     color: IntensityStatusColors[INTENSITY_STATUS.MODERATE_TO_HIGH_INTENSITY][0],
+                // },
+                // {
+                //     value: 100.001,
+                //     color: IntensityStatusColors[INTENSITY_STATUS.HIGH_INTENSITY][0],
+                // },
+                {
+                    value: 90,
+                    color: "#D3D3D3",
+                },
+                {
+                    value: 98,
+                    color: IntensityStatusColors[INTENSITY_STATUS.LOW_INTENSITY][0],
+                },
+                {
+                    value: 100.001,
+                    color: IntensityStatusColors[INTENSITY_STATUS.HIGH_INTENSITY][0],
+                },
+            ];
+    }
+}
