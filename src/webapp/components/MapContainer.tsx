@@ -40,7 +40,6 @@ import { useStore } from "react-redux";
 
 const MapContainer: React.FC = () => {
     const store = useStore();
-
     useEffect(() => {
         const unsubscribe = ReduxQuerySync({
             store,
