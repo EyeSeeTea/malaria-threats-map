@@ -2,7 +2,7 @@ import { combineEpics, Epic } from "redux-observable";
 import * as PreventionEpics from "./epics/prevention/prevention-epics";
 import * as DiagnosisEpics from "./epics/diagnosis/diagnosis-epics";
 import * as TreatmentEpics from "./epics/treatment-epics";
-import * as InvasiveEpics from "./epics/invasive-epics";
+import * as InvasiveEpics from "./epics/invasive/invasive-epics";
 import * as TranslationsEpics from "./epics/translations-epics";
 import * as CountryLayerEpics from "./epics/country-layer-epics";
 import * as DistrictEpics from "./epics/districts-epics";

@@ -142,6 +142,19 @@ export type DiagnosisChartData = {
     data: DiagnosisChartDataItemByYear[];
 };
 
+export type InvasiveChartDataContent = {
+    species?: string;
+    samplingPeriod?: string;
+    samplingMethod?: string;
+    speciedIdentificationMethod?: string;
+    vectorStage?: string;
+};
+
+export type InvasiveChartData = {
+    kind: "invasive";
+    data: InvasiveChartDataContent;
+};
+
 export type CitationDataSource = {
     key: string;
     url?: string;
@@ -159,7 +172,7 @@ export type SelectionData = {
     filterOptions?: Option[];
     filterSelection?: Option[];
     studyObject: Study;
-    data?: PreventionChartData | DiagnosisChartData;
+    data?: PreventionChartData | DiagnosisChartData | InvasiveChartData;
     dataSources: CitationDataSource[];
     curations: CurationSources[];
     othersDetected: string[];

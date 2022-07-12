@@ -40,6 +40,8 @@ import { createPreventionSelectionData } from "./prevention/utils";
 import { setPreventionSelectionStudies } from "../actions/prevention-actions";
 import { setDiagnosisSelectionStudies } from "../actions/diagnosis-actions";
 import { createDiagnosisSelectionData } from "./diagnosis/utils";
+import { createInvasiveSelectionData } from "./invasive/utils";
+import { setInvasiveSelectionStudies } from "../actions/invasive-actions";
 
 export const setThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>, state$: StateObservable<State>) =>
     action$.pipe(
@@ -373,7 +375,24 @@ export const setSelectionEpic = (
                     return of();
                 }
                 case "invasive": {
-                    return of();
+                    const siteFilteredStudies = state.malaria.selection
+                        ? state.invasive.filteredStudies.filter(
+                              study => study.SITE_ID === state.malaria.selection.SITE_ID
+                          )
+                        : [];
+
+                    const selectionData = createInvasiveSelectionData(
+                        state.malaria.theme,
+                        state.malaria.selection,
+                        state.invasive.filteredStudies
+                    );
+
+                    const actions = _.compact([
+                        setInvasiveSelectionStudies(siteFilteredStudies),
+                        setSelectionData(selectionData),
+                    ]);
+
+                    return of(...actions);
                 }
                 default:
                     return of();

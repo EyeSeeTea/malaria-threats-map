@@ -16,6 +16,7 @@ import { setSelectionDataFilterSelection } from "../../store/actions/base-action
 import PreventionChart from "./prevention/PreventionChart";
 import DiagnosisChart from "./diagnosis/DiagnosisChart";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
+import InvasiveChart from "./invasive/InvasiveChart";
 
 const Container = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};
@@ -76,10 +77,11 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
             case "diagnosis": {
                 return <DiagnosisChart selectionData={selectionData} />;
             }
+            case "invasive": {
+                return <InvasiveChart selectionData={selectionData} />;
+            }
         }
     };
-
-    console.log({ selectionData });
 
     const content = () =>
         selectionData ? (
