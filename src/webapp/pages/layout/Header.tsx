@@ -96,7 +96,7 @@ const Header = () => {
     }, [drawerOpen]);
 
     return (
-        <>
+        <nav>
             <StyledAppBar>
                 <Container maxWidth="xl">
                     <StyledToolbar>
@@ -120,7 +120,7 @@ const Header = () => {
                 </MenuContainer>
                 <LanguageSelector />
             </Drawer>
-        </>
+        </nav>
     );
 };
 
