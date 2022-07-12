@@ -1,21 +1,24 @@
 import { ofType, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
-import { ActionTypeEnum } from "../actions";
+import { ActionTypeEnum } from "../../actions";
 import { Observable, of } from "rxjs";
 import { catchError, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
 import {
     fetchInvasiveStudiesError,
     fetchInvasiveStudiesRequest,
     fetchInvasiveStudiesSuccess,
+    setInvasiveFilteredStudiesAction,
     setInvasiveMapType,
-} from "../actions/invasive-actions";
-import { setFiltersAction, setThemeAction, logPageViewAction } from "../actions/base-actions";
-import { InvasiveMapType, State } from "../types";
-import { addNotificationAction } from "../actions/notifier-actions";
-import { getAnalyticsPageView } from "../analytics";
-import { fromFuture } from "./utils";
-import { EpicDependencies } from "../../store/index";
-import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
+    setInvasiveSelectionStudies,
+} from "../../actions/invasive-actions";
+import { setFiltersAction, setThemeAction, logPageViewAction, setSelectionData } from "../../actions/base-actions";
+import { InvasiveMapType, State } from "../../types";
+import { addNotificationAction } from "../../actions/notifier-actions";
+import { getAnalyticsPageView } from "../../analytics";
+import { fromFuture } from "../utils";
+import { EpicDependencies } from "../../index";
+import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
+import { createInvasiveSelectionData } from "./utils";
 
 export const getInvasiveStudiesEpic = (
     action$: Observable<ActionType<typeof fetchInvasiveStudiesRequest>>,
@@ -60,5 +63,27 @@ export const setInvasiveThemeEpic = (action$: Observable<ActionType<typeof setTh
                 return of();
             }
             return of(setFiltersAction([1985, new Date().getFullYear()]));
+        })
+    );
+
+export const setInvasiveFilteredStudiesEpic = (
+    action$: Observable<ActionType<typeof setInvasiveFilteredStudiesAction>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe().pipe(
+        ofType(ActionTypeEnum.SetInvasiveFilteredStudies),
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            const siteFilteredStudies = state.malaria.selection
+                ? state.invasive.filteredStudies.filter(study => study.SITE_ID === state.malaria.selection.SITE_ID)
+                : [];
+
+            const selectionData = createInvasiveSelectionData(
+                state.malaria.theme,
+                state.malaria.selection,
+                state.invasive.filteredStudies
+            );
+
+            return of(setInvasiveSelectionStudies(siteFilteredStudies), setSelectionData(selectionData));
         })
     );

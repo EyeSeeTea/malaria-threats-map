@@ -69,14 +69,6 @@ type Props = StateProps & OwnProps & DispatchProps;
 class InvasiveLayer extends Component<Props> {
     popup: mapboxgl.Popup;
 
-    updatePreventionSelectionStudies() {
-        const selectionStudies = this.props.selection
-            ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === this.props.selection.SITE_ID)
-            : [];
-
-        this.props.setInvasiveSelectionStudies(selectionStudies);
-    }
-
     componentDidMount() {
         this.loadStudiesIfRequired();
         this.mountLayer();
@@ -103,10 +95,6 @@ class InvasiveLayer extends Component<Props> {
             }
             this.filterSource();
             this.applyMapTypeSymbols();
-
-            this.updatePreventionSelectionStudies();
-        } else if (prevProps.selection !== this.props.selection) {
-            this.updatePreventionSelectionStudies();
         }
     }
 

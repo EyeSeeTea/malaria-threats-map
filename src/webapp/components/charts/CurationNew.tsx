@@ -2,7 +2,7 @@ import * as React from "react";
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { Curation } from "../../store/types";
+import { CurationSources } from "../../store/SelectionData";
 
 const Margin = styled.div`
     margin-top: 10px;
@@ -10,7 +10,7 @@ const Margin = styled.div`
 `;
 
 type OwnProps = {
-    curations: Curation[];
+    curations: CurationSources[];
 };
 
 type Props = OwnProps;
