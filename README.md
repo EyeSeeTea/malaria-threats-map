@@ -18,6 +18,12 @@ Build for production:
 $ yarn build-prod
 ```
 
+When deploying to a server with a path prefix, use the environment variable `PUBLIC_URL`. Example:
+
+```
+$ PUBLIC_URL=/mtm yarn build
+```
+
 ## Development
 
 ```
