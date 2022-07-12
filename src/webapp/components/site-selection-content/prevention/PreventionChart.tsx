@@ -4,7 +4,7 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useTranslation } from "react-i18next";
 import { PreventionMapType, SelectionData } from "../../../store/types";
-import { chartOptions } from "./utils";
+import { preventionBarChartOptions } from "./utils";
 
 type Props = {
     mapType: PreventionMapType;
@@ -41,7 +41,7 @@ const PreventionChart: React.FC<Props> = ({ mapType, selectionData }) => {
                                     <div key={type}>
                                         <HighchartsReact
                                             highcharts={Highcharts}
-                                            options={chartOptions(
+                                            options={preventionBarChartOptions(
                                                 mapType,
                                                 data[specie][type],
                                                 specieIndex === 0 && specieIndex === 0

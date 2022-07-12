@@ -1,6 +1,5 @@
 import * as React from "react";
 import { PreventionMapType, State } from "../../../store/types";
-import LevelOfInvolvementChart from "./Involvement/LevelOfInvolvementChart";
 import ResistanceMechanismsChart from "./ResistanceMechanisms/ResistanceMechanismsChart";
 import { selectPreventionFilters } from "../../../store/reducers/prevention-reducer";
 import { selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
@@ -45,11 +44,7 @@ const PreventionSelectionChart: React.FC<Props> = ({
         <div />
     ) : (
         <div id="fifth-duo">
-            {mapType === PreventionMapType.RESISTANCE_STATUS && <SelectionDataContent />}
-            {mapType === PreventionMapType.INTENSITY_STATUS && <SelectionDataContent />}
-            {mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT && (
-                <LevelOfInvolvementChart studies={filteredStudies} />
-            )}
+            {mapType !== PreventionMapType.RESISTANCE_MECHANISM && <SelectionDataContent />}
             {mapType === PreventionMapType.RESISTANCE_MECHANISM && (
                 <ResistanceMechanismsChart studies={filteredStudies} />
             )}
