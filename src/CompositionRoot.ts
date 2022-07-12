@@ -13,6 +13,7 @@ import { GetCountryLayerUseCase } from "./domain/usecases/GetCountryLayerUseCase
 import { SmtpJsEmailRepository } from "./data/repositories/SmtpJsEmailRepository";
 import { UploadFileUseCase } from "./domain/usecases/UploadFileUseCase";
 import getDistrictsUrl from "./webapp/utils/getDistrictsUrl";
+import { SendFeedbackUseCase } from "./domain/usecases/SendFeedbackUseCase";
 
 export class CompositionRoot {
     private preventionRepository = new PreventionApiRepository(config.mapServerUrl);
@@ -20,7 +21,7 @@ export class CompositionRoot {
     private treatmentRepository = new TreatmentApiRepository(config.mapServerUrl);
     private invasiveRepository = new InvasiveApiRepository(config.mapServerUrl);
     private countryLayerRepository = new CountryLayerApiRepository(config.featuresServerUrl, config.backendUrl);
-    private fileRepository = new SmtpJsEmailRepository();
+    private emailRepository = new SmtpJsEmailRepository(config.feedbackEmailSecureToken);
     private _districtsUrl: string;
 
     constructor() {
@@ -59,12 +60,18 @@ export class CompositionRoot {
 
     public get uploadFile() {
         return getExecute({
-            save: new UploadFileUseCase(this.fileRepository),
+            save: new UploadFileUseCase(this.emailRepository, config.feedbackEmailFrom, config.feedbackEmailTo),
         });
     }
 
     public get districtsUrl() {
         return this._districtsUrl;
+    }
+
+    public get feedback() {
+        return getExecute({
+            send: new SendFeedbackUseCase(this.emailRepository, config.feedbackEmailFrom, config.feedbackEmailTo),
+        });
     }
 
     private async initDistrictsUrl() {

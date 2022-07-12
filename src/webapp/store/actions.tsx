@@ -109,4 +109,11 @@ export enum ActionTypeEnum {
     UploadFileRequest = "uploadFile/REQUEST",
     UploadFileSuccess = "uploadFile/SUCCESS",
     UploadFileError = "uploadFile/ERROR",
+
+    FeedbackSetFields = "feedback/SET_FIELDS",
+    FeedbackFieldChange = "feedback/SET_FIELD_CHANGE",
+    FeedbackSetFieldErros = "feedback/SET_FIELD_ERRORS",
+    FeedbackSubmit = "feedback/SUBMIT",
+    FeedbackSuccess = "feedback/SUCCESS",
+    FeedbackError = "feedback/ERROR",
 }

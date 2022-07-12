@@ -12,12 +12,11 @@ import Dashboards from "../../assets/img/home-page/dashboards.png";
 import DataDownload from "../../assets/img/home-page/data_download.png";
 import Maps from "../../assets/img/maps.png";
 import Divider from "@mui/material/Divider";
-
 import ThemePaper from "./ThemePaper";
 import MediaCard from "./MediaCard";
-import Footer from "../Footer";
-import Header from "../Header";
+import Header from "../layout/Header";
 import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
+import Footer from "../layout/Footer";
 
 const StyledBanner = styled.div`
     display: block;
@@ -113,7 +112,7 @@ export const HomePage = () => {
     return (
         <React.Fragment>
             <StyledBanner>
-                <Header t={t} />
+                <Header />
                 <ContentDiv windowWidth={width}>
                     <TitleBannerDiv>
                         <Typography variant="h2" color={"inherit"} textTransform="uppercase">
@@ -209,7 +208,7 @@ export const HomePage = () => {
                     </Box>
                 </ContentDiv>
                 <StyledDivider variant="fullWidth" />
-                <Footer t={t} />
+                <Footer />
             </StyledBanner>
         </React.Fragment>
     );
