@@ -25,7 +25,7 @@ export const setSynergistTypes = createAction(ActionTypeEnum.SetSynergistTypes)<
 
 export const setSpecies = createAction(ActionTypeEnum.SetSpecies)<string[]>();
 
-export const setPreventionFilteredStudiesAction = createAction(ActionTypeEnum.SetPreventionFilteredStudies)<
+export const setPreventionFilteredStudies = createAction(ActionTypeEnum.SetPreventionFilteredStudies)<
     PreventionStudy[]
 >();
 

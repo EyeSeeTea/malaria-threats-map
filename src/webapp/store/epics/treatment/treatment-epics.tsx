@@ -1,24 +1,27 @@
 import { ofType, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
-import { ActionTypeEnum } from "../actions";
+import { ActionTypeEnum } from "../../actions";
 import { Observable, of } from "rxjs";
 import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
 import {
     fetchTreatmentStudiesError,
     fetchTreatmentStudiesRequest,
     fetchTreatmentStudiesSuccess,
+    setFilteredStudiesAction,
     setMolecularMarker,
     setTreatmentDrug,
     setTreatmentMapType,
     setTreatmentPlasmodiumSpecies,
-} from "../actions/treatment-actions";
-import { logPageViewAction } from "../actions/base-actions";
-import { TreatmentMapType, State } from "../types";
-import { addNotificationAction } from "../actions/notifier-actions";
-import { getAnalyticsPageView } from "../analytics";
-import { fromFuture } from "./utils";
-import { EpicDependencies } from "../../store/index";
-import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
+    setTreatmentSelectionStudies,
+} from "../../actions/treatment-actions";
+import { logPageViewAction, setFiltersAction, setSelectionData, setThemeAction } from "../../actions/base-actions";
+import { TreatmentMapType, State } from "../../types";
+import { addNotificationAction } from "../../actions/notifier-actions";
+import { getAnalyticsPageView } from "../../analytics";
+import { fromFuture } from "../utils";
+import { EpicDependencies } from "../../index";
+import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
+import { createTreatmentSelectionData } from "./utils";
 
 function groupStudies(studies: TreatmentStudy[]) {
     const filtered255Studies = studies.filter(study => study.DimensionID === 255 || study.DimensionID === 256);
@@ -52,7 +55,7 @@ export const getTreatmentStudiesEpic = (
         })
     );
 
-export const setTreatmentThemeEpic = (action$: Observable<ActionType<typeof setTreatmentMapType>>) =>
+export const setTreatmentMapTypesEpic = (action$: Observable<ActionType<typeof setTreatmentMapType>>) =>
     action$.pipe(
         ofType(ActionTypeEnum.SetTreatmentMapType),
         switchMap(action => {
@@ -104,5 +107,38 @@ export const setTreatmentPlasmodiumSpeciesEpic = (
             } else {
                 return of(setTreatmentDrug("DRUG_CQ"));
             }
+        })
+    );
+
+export const setTreatmentFilteredStudiesEpic = (
+    action$: Observable<ActionType<typeof setFilteredStudiesAction>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(skip(1)).pipe(
+        ofType(ActionTypeEnum.SetTreatmentFilteredStudies),
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            const siteFilteredStudies = state.malaria.selection
+                ? state.treatment.filteredStudies.filter(study => study.SITE_ID === state.malaria.selection.SITE_ID)
+                : [];
+
+            const selectionData = createTreatmentSelectionData(
+                state.malaria.theme,
+                state.malaria.selection,
+                state.treatment.filteredStudies
+            );
+
+            return of(setTreatmentSelectionStudies(siteFilteredStudies), setSelectionData(selectionData));
+        })
+    );
+
+export const setTreatmentThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaSetTheme),
+        switchMap($action => {
+            if ($action.payload !== "treatment") {
+                return of();
+            }
+            return of(setFiltersAction([2015, new Date().getFullYear()]));
         })
     );

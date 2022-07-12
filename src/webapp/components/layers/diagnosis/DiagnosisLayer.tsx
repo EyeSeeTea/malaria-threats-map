@@ -5,7 +5,13 @@ import { circleLayout, studiesToGeoJson } from "../layer-utils";
 import diagnosisSymbols from "../symbols/diagnosis";
 import setupEffects from "../effects";
 import { selectDiagnosisFilters, selectDiagnosisStudies } from "../../../store/reducers/diagnosis-reducer";
-import { selectFilters, selectHoverSelection, selectRegion, selectTheme } from "../../../store/reducers/base-reducer";
+import {
+    selectFilters,
+    selectHoverSelection,
+    selectRegion,
+    selectSelection,
+    selectTheme,
+} from "../../../store/reducers/base-reducer";
 import * as R from "ramda";
 import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
 import { buildDiagnosisFilters } from "../studies-filters";
@@ -41,6 +47,7 @@ const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     region: selectRegion(state),
+    selection: selectSelection(state),
     hoverSelection: selectHoverSelection(state),
 });
 
@@ -179,12 +186,6 @@ class DiagnosisLayer extends Component<Props> {
 
         setTimeout(() => {
             this.props.setSelection(selection);
-
-            const selectionStudies = selection
-                ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === selection.SITE_ID)
-                : [];
-
-            this.props.setDiagnosisSelectionStudies(selectionStudies);
         }, 100);
     };
 
