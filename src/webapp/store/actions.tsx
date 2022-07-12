@@ -12,6 +12,8 @@ export enum ActionTypeEnum {
     MalariaActionGroupSelected = "malaria/ACTION_GROUP_SELECTED",
     SetSelection = "malaria/SET_SELECTION",
     SetHoverSelection = "malaria/SET_HOVER_SELECTION",
+    SetSelectionData = "malaria/SET_SELECTION_DATA",
+    SetSelectionDataFilterSelection = "malaria/SET_SELECTION_DATA_FILTER_SELECTION",
     SetMobileOptionsOpen = "malaria/SET_MOBILE_OPTIONS_OPEN",
     UpdateZoom = "malaria/UPDATE_ZOOM",
     SetZoom = "malaria/SET_ZOOM",
@@ -107,4 +109,11 @@ export enum ActionTypeEnum {
     UploadFileRequest = "uploadFile/REQUEST",
     UploadFileSuccess = "uploadFile/SUCCESS",
     UploadFileError = "uploadFile/ERROR",
+
+    FeedbackSetFields = "feedback/SET_FIELDS",
+    FeedbackFieldChange = "feedback/SET_FIELD_CHANGE",
+    FeedbackSetFieldErros = "feedback/SET_FIELD_ERRORS",
+    FeedbackSubmit = "feedback/SUBMIT",
+    FeedbackSuccess = "feedback/SUCCESS",
+    FeedbackError = "feedback/ERROR",
 }

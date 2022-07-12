@@ -3,7 +3,13 @@ import { connect } from "react-redux";
 import { InvasiveMapType, State } from "../../../store/types";
 import { studiesToGeoJson } from "../layer-utils";
 import setupEffects from "../effects";
-import { selectFilters, selectHoverSelection, selectRegion, selectTheme } from "../../../store/reducers/base-reducer";
+import {
+    selectFilters,
+    selectHoverSelection,
+    selectRegion,
+    selectSelection,
+    selectTheme,
+} from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
 import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../studies-filters";
@@ -40,6 +46,7 @@ const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     invasiveFilters: selectInvasiveFilters(state),
     region: selectRegion(state),
+    selection: selectSelection(state),
     hoverSelection: selectHoverSelection(state),
 });
 
@@ -61,6 +68,7 @@ type Props = StateProps & OwnProps & DispatchProps;
 
 class InvasiveLayer extends Component<Props> {
     popup: mapboxgl.Popup;
+
     componentDidMount() {
         this.loadStudiesIfRequired();
         this.mountLayer();
@@ -167,12 +175,6 @@ class InvasiveLayer extends Component<Props> {
 
         setTimeout(() => {
             this.props.setSelection(selection);
-
-            const selectionStudies = selection
-                ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === selection.SITE_ID)
-                : [];
-
-            this.props.setInvasiveSelectionStudies(selectionStudies);
         }, 100);
     };
 

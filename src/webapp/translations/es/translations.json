@@ -6,6 +6,64 @@
             "title": "Mapa de los desafíos de la malaria",
             "subtitle": "Seguimiento de los desafíos biológicos para el control y la eliminación de la malaria"
         },
+        "homepage": {
+            "menu": {
+                "home": "Casa",
+                "tools": "Instrumentos",
+                "about": "Acerca de",
+                "contact": "Contacto",
+                "share_data": "Compartir datos"
+            },
+            "title": "Mapa de <br /> <strong>amenazas de malaria</strong>",
+            "subtitle": "Explore datos sobre las principales amenazas biológicas para el control y la eliminación de la malaria.",
+            "media_cards": {
+                "maps": {
+                    "title": "Mapas",
+                    "subtitle": "Explore estudios individuales y datos a nivel de sitio para todas las amenazas.",
+                    "button_text": "Entrar en el mapa"
+                },
+                "dashboards": {
+                    "title": "Tableros",
+                    "subtitle": "Vea resúmenes de las amenazas en diferentes niveles geográficos.",
+                    "button_text": "Ver paneles"
+                },
+                "data_download": {
+                    "title": "Descarga de datos",
+                    "subtitle": "Descargue los datos detrás del MTM para su propio análisis.",
+                    "button_text": "Descarga de datos"
+                },
+                "db_last_updated": "Base de datos actualizada por última vez",
+                "read_story": "Leer historia"
+            },
+            "header": "El Malaria Threats Map es la plataforma más completa sobre las cuatro amenazas biológicas para el control y la eliminación de la malaria.",
+            "theme_paper": {
+                "prevention_subtitle": "La resistencia de los vectores a los insecticidas utilizados para el control de vectores amenaza los esfuerzos de control de la malaria.",
+                "invasive_subtitle": "La propagación de ciertas especies de vectores anofelinos y su establecimiento en nuevos ecosistemas representa una amenaza para el control de la malaria.",
+                "treatment_subtitle": "La resistencia a los medicamentos antipalúdicos sigue siendo una de las principales amenazas para los esfuerzos mundiales de control de la malaria, particularmente en la subregión del Gran Mekong.",
+                "diagnosis_subtitle": "Las deleciones de genes entre algunos parásitos de la malaria provocan resultados falsos negativos en las pruebas de diagnóstico, lo que complica la gestión y el control de los casos."
+            }
+        },
+        "footer": {
+            "policies": {
+                "title": "Políticas",
+                "disclaimer": "Descargo de responsabilidad"
+            },
+            "other_who_resources": {
+                "title": "Otros recursos de la OMS",
+                "resource1": "Vigilancia de la resistencia a los insecticidas de la OMS",
+                "resource2": "Eficacia y resistencia de los medicamentos contra la malaria de la OMS",
+                "resource3": "Directrices de PDR de paludismo de la OMS",
+                "resource4": "Directrices sobre malaria de la OMS",
+                "resource5": "OMS Informe mundial sobre el paludismo"
+            },
+            "about_who_gmp": {
+                "title": "Acerca de las BPF de la OMS",
+                "resource1": "Programa Mundial contra la Malaria de la OMS",
+                "resource2": "Contacta con nosotros"
+            },
+            "subscribe_newsletter": "SUSCRÍBETE AL BOLETÍN DE GMP",
+            "privacy": "Privacidad Aviso Legal"
+        },
         "themes": {
             "prevention": "Resistencia a insecticidas en los vectores de malaria",
             "diagnosis": "Deleción del gen pfhrp2/3 del parásito",
@@ -37,30 +95,12 @@
             "synergist_involvement_subtitle": "Resultados de bioensayos de insecticidas sinérgicos (solo monooxigenasas)",
             "synergist_involvement_legend": "Efecto de la sinergia en susceptibilidad",
             "chart": {
-                "resistance_status": {
-                    "content_1": "{{nStudies}} pruebas con vectores ",
-                    "content_2": " por pruebas de susceptibilidad a la concentración discriminante(s) con {{insecticideClass}} {{years}}",
-                    "number_of_tests": "Número de pruebas",
-                    "Confirmed": "Confirmado",
-                    "Possible": "Posible",
-                    "Susceptible": "Susceptible",
-                    "mortality": "mortalidad (%)",
-                    "tested": "Pruebas (n)",
+                "not_reported": "NR: no reportado",
+                "other_insecticide_class_label": "Otros insecticidas a los que se detectó resistencia en este sitio:",
+                "other_insecticide_class_none": "Ninguno",
+                "resistance": {
                     "mosquito_mortality": "% de mortalidad en los mosquitos",
-                    "type": "tipo"
-                },
-                "resistance_intensity": {
-                    "content_1": "{{nStudies}} pruebas con vectores ",
-                    "content_2": " por pruebas de intensidad de la resistencia(s) con {{insecticideClass}} {{years}}",
-                    "number_of_tests": "Número de pruebas",
-                    "HIGH_INTENSITY": "Intensidad alta",
-                    "MODERATE_TO_HIGH_INTENSITY": "Intensidad alta a moderada",
-                    "MODERATE_INTENSITY": "Intesidad moderada",
-                    "LOW_INTENSITY": "Intensidad baja",
-                    "NA": "No aplicable",
-                    "mortality": "mortalidad (%)",
-                    "tested": "Pruebas (n)",
-                    "mosquito_mortality": "% de mortalidad en los mosquitos"
+                    "number_of_tests": "Número de pruebas"
                 },
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} pruebas con vectores ",
@@ -74,10 +114,6 @@
                     "frequency": "Frecuencia (%)"
                 },
                 "synergist_involvement": {
-                    "mortality": "mortalidad (%)",
-                    "tested": "Pruebas (n)",
-                    "number_of_tests": "Número de pruebas",
-                    "mosquito_mortality": "% de mortalidad en los mosquitos",
                     "no_synergist": "No sinergista"
                 }
             },
@@ -115,9 +151,9 @@
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "Mortalidad por mosquito",
-                    "full_involvement": "Participación total",
-                    "partial_involvement": "Participación parcial",
-                    "no_involvement": "Sin participación",
+                    "full_restoration": "Restauración completa",
+                    "partial_restoration": "Restauración parcial",
+                    "no_restoration": "Sin restauración",
                     "help": {
                         "p1": "Este mapa presenta datos de <1>bioensayos de insecticidas sinérgicos</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En los sitios donde los estudios muestran resultados variables, el color del punto está determinada por los resultados más recientes.",
                         "p2": "Para obtener información sobre cómo se clasifica la participación de los sinergistas, consulte el <1 href='/'>Manual de la OMS para el control de la resistencia</1>.",
@@ -130,6 +166,8 @@
             "gene_deletions": "Deleciones del gen pfhrp2/3",
             "chart": {
                 "gene_deletions": {
+                    "subtitle_1": "Datos recolectados",
+                    "subtitle_2": " por {{surveyTypes}}",
                     "content_1": "{{nStudies}} encuesta(s) ",
                     "content_2": " por {{surveyTypes}} {{years}}",
                     "content_3": "Número de muestras positives de <i> P. falciparum </i>en la población en estudio: {{pfPosSamples}}",
@@ -137,8 +175,8 @@
                     "DHS": "DHS",
                     "deletions_confirmed": "Deleciones confirmadas (% de muestras)",
                     "deletion_type": "Tipo de deleción",
-                    "no_tested": "No. muestras",
-                    "percentage": "Porcentaje de muestras con deleciones en"
+                    "no_tested": "Número de muestras analizadas (N)",
+                    "percentage": "Porcentaje con deleciones confirmadas (%)"
                 }
             },
             "legend": {
@@ -169,15 +207,18 @@
                     "content": "{{nStudies}} estudios de eficacia terapéutica efectuados en la eficacia {{drug}} contra <i>{{plasmodiumSpecies}}</i> {{years}}",
                     "percentage": "%",
                     "study_years": "Año(s) del estudio",
-                    "health_facility_name": "Nombre del centro de salud",
-                    "number_of_patients": "Número de pacientes",
-                    "follow_up": "Duración del seguimiento",
+                    "health_facility_name": "Estudio realizado en el",
+                    "number_of_patients": "pacientes incluidos",
+                    "follow_up": "dias de seguimiento",
                     "confirmed_resist_pv": "Pacientes con resistencia confirmada",
                     "positive_day_3": "Positivos después del 3er día",
                     "treatment_failure_pp": "Pacientes con fallo terapeutico, por protocolo",
                     "treatment_failure_km": "Pacientes con fallo terapeutico, Kaplan-Meier",
                     "days": "días",
-                    "studies": "estudio(s)"
+                    "studies": "estudio(s)",
+                    "aditional_information_title": "Información adicional: ",
+                    "show_more": "Mostrar más",
+                    "show_less": "Mostrar menos"
                 },
                 "molecular_markers": {
                     "content": "{{nStudies}} estudios de marcadores moleculares efectuados en {{molecularMarker}} {{years}}",
