@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { HomePage } from "./home/HomePage";
+import HomePage from "./home/HomePage";
 import { AboutPage } from "./about/AboutPage";
 import PersistentDrawerLeft from "../components/PersistentDrawerLeft";
 import ContactPage from "./contact/ContactPage";
