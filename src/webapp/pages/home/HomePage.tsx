@@ -12,12 +12,11 @@ import InvasiveIcon from "../../assets/img/invasive-icon.svg";
 import Dashboards from "../../assets/img/home-page/dashboards.png";
 import DataDownload from "../../assets/img/home-page/data_download.png";
 import Maps from "../../assets/img/maps.png";
-
 import ThemePaper from "./ThemePaper";
 import MediaCard from "./MediaCard";
-import Footer from "../Footer";
-import Header from "../Header";
+import Header from "../layout/Header";
 import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
+import Footer from "../layout/Footer";
 
 import { State } from "../../store/types";
 import { selectLastUpdatedDates, selectTheme } from "../../store/reducers/base-reducer";
@@ -176,7 +175,7 @@ const HomePage = ({
     return (
         <React.Fragment>
             <StyledBanner>
-                <Header t={t} />
+                <Header />
                 <ContentDiv windowWidth={width}>
                     <TitleBannerDiv>
                         <Typography variant="h2" color={"inherit"} textTransform="uppercase">
@@ -296,7 +295,7 @@ const HomePage = ({
                     </Box>
                 </ContentDiv>
                 <StyledDivider variant="fullWidth" />
-                <Footer t={t} />
+                <Footer />
             </StyledBanner>
         </React.Fragment>
     );

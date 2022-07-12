@@ -1,16 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { useTranslation } from "react-i18next";
 import { Typography } from "@mui/material";
 
 import HomepageMap from "../../assets/img/homepage-map.png";
-import Footer from "../Footer";
-import Header from "../Header";
+import Header from "../layout/Header";
 import { useWindowDimensions } from "../../components/hooks/use-window-dimensions";
 import DataOrigin from "./DataOrigin";
 import MapFunctionality from "./MapFunctionality";
 import Challenges from "./Challenges";
 import UserExperience from "./UserExperience";
+import Footer from "../layout/Footer";
 
 export interface WindowProps {
     windowWidth: number;
@@ -66,13 +65,12 @@ const BannerContentDiv = styled.div<WindowProps>`
 `;
 
 export const AboutPage = () => {
-    const { t } = useTranslation();
     const { width } = useWindowDimensions();
 
     return (
         <React.Fragment>
             <StyledBanner>
-                <Header t={t} />
+                <Header />
                 <BannerContentDiv windowWidth={width}>
                     <Typography variant="h3" color="inherit" textTransform="uppercase">
                         Learn More About <br /> <strong>The Malaria Threats Map</strong>
@@ -83,7 +81,7 @@ export const AboutPage = () => {
             <MapFunctionality width={width} />
             <Challenges width={width} />
             <UserExperience width={width} />
-            <Footer t={t} />
+            <Footer />
         </React.Fragment>
     );
 };

@@ -98,30 +98,9 @@
                 "not_reported": "NR : non signalé",
                 "other_insecticide_class_label": "Autres insecticides auxquels une résistance a été détectée sur ce site:",
                 "other_insecticide_class_none": "Rien",
-                "resistance_status": {
-                    "content_1": "{{nStudies}} test(s) sur les vecteurs ",
-                    "content_2": " du paludisme via détermination de la dose diagnostique(s) avec {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# de tests",
-                    "Confirmed": "Confirmée",
-                    "Possible": "Suspectée",
-                    "Susceptible": "Sensible",
-                    "mortality": "mortalité (%)",
-                    "tested": "Études (n)",
+                "resistance": {
                     "mosquito_mortality": "% mortalité de moustique",
-                    "type": "type"
-                },
-                "resistance_intensity": {
-                    "content_1": "{{nStudies}} test(s) sur les vecteurs ",
-                    "content_2": " du paludisme via détermination de l'intensité de la résistance(s) avec {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# de tests",
-                    "HIGH_INTENSITY": "Fort",
-                    "MODERATE_TO_HIGH_INTENSITY": "Moyen Fort",
-                    "MODERATE_INTENSITY": "Moyen",
-                    "LOW_INTENSITY": "Faible",
-                    "NA": "Sensible",
-                    "mortality": "mortalité (%)",
-                    "tested": "Études (n)",
-                    "mosquito_mortality": "% mortalité de moustique"
+                    "number_of_tests": "# de tests"
                 },
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
@@ -135,10 +114,6 @@
                     "frequency": "Fréquence (%)"
                 },
                 "synergist_involvement": {
-                    "mortality": "mortalité (%)",
-                    "tested": "Études (n)",
-                    "number_of_tests": "# de tests",
-                    "mosquito_mortality": "% mortalité de moustique",
                     "no_synergist": "Pas de synergistes"
                 }
             },
@@ -191,6 +166,8 @@
             "gene_deletions": "Délétions du gène pfhrp2/3",
             "chart": {
                 "gene_deletions": {
+                    "subtitle_1": "Données collectées",
+                    "subtitle_2": " par {{surveyTypes}}",
                     "content_1": "{{nStudies}} enquête(s) ",
                     "content_2": " par {{surveyTypes}} {{years}}",
                     "content_3": "Nombre de <i>P. falciparum</i> échantillons positifs de la population étudiée: {{pfPosSamples}}",
@@ -198,8 +175,8 @@
                     "DHS": "EDS",
                     "deletions_confirmed": "Délétions confirmées (% d'échantillons)",
                     "deletion_type": "Type de délétion",
-                    "no_tested": "Nombre d'échantillons testés",
-                    "percentage": "Pourcentage de délétion en "
+                    "no_tested": "Nombre d'échantillons testés (N)",
+                    "percentage": "Pourcentage de suppressions confirmées (%)"
                 }
             },
             "legend": {
@@ -230,15 +207,18 @@
                     "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre <i>{{plasmodiumSpecies}}</i> {{years}}",
                     "percentage": "Pourcentage (%)",
                     "study_years": "Années d'étude(s)",
-                    "number_of_patients": "Nombre de patients",
-                    "health_facility_name": "Nom de l'établissement de santé",
-                    "follow_up": "Suivi",
+                    "number_of_patients": "patients inclus",
+                    "health_facility_name": "Étude menée au",
+                    "follow_up": "suivi des jours",
                     "confirmed_resist_pv": "Patients avec une résistance confirmée",
                     "positive_day_3": "Positif après le 3ème jour",
                     "treatment_failure_pp": "Patients avec un échec thérapeutique, selon le protocole",
                     "treatment_failure_km": "Patients avec un échec thérapeutique, Kaplan-Meier",
                     "days": "journées",
-                    "studies": "Étude(s)"
+                    "studies": "Étude(s)",
+                    "aditional_information_title": "Informations supplémentaires: ",
+                    "show_more": "Afficher plus",
+                    "show_less": "Afficher moins"
                 },
                 "molecular_markers": {
                     "content": "{{nStudies}} etudes de marqueur moléculaire effectuée sur {{molecularMarker}} {{years}}",
