@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { logOutboundLinkAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { CitationDataSource } from "../../store/types";
+import { CitationDataSource } from "../../store/SelectionData";
 
 const mapDispatchToProps = {
     logOutboundLinkAction: logOutboundLinkAction,

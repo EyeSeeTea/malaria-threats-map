@@ -120,8 +120,6 @@ const Legend: React.FC<Props> = ({
         [theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters]
     );
 
-    //console.log({ mapTypeHelpKey });
-
     return (
         <React.Fragment>
             <StyledButton fullWidth={true} onClick={handleExpand}>
