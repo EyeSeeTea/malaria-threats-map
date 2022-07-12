@@ -1,17 +1,14 @@
 import * as React from "react";
-import { PreventionMapType, State } from "../../../store/types";
-import ResistanceMechanismsChart from "./ResistanceMechanisms/ResistanceMechanismsChart";
-import { selectPreventionFilters } from "../../../store/reducers/prevention-reducer";
 import { selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
 import { setPreventionFilteredStudies } from "../../../store/actions/prevention-actions";
 import { setSelection } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import SelectionDataContent from "../../site-selection-content/SelectionDataContent";
+import { State } from "../../../store/types";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
-    preventionFilters: selectPreventionFilters(state),
     selection: selectSelection(state),
 });
 
@@ -28,12 +25,7 @@ type OwnProps = {
 };
 type Props = StateProps & DispatchProps & OwnProps;
 
-const PreventionSelectionChart: React.FC<Props> = ({
-    theme,
-    siteFilteredStudies,
-    selection,
-    preventionFilters: { mapType },
-}) => {
+const PreventionSelectionChart: React.FC<Props> = ({ theme, siteFilteredStudies, selection }) => {
     const [filteredStudies, setFilteredStudies] = React.useState<PreventionStudy[]>([]);
 
     React.useEffect(() => {
@@ -44,10 +36,7 @@ const PreventionSelectionChart: React.FC<Props> = ({
         <div />
     ) : (
         <div id="fifth-duo">
-            {mapType !== PreventionMapType.RESISTANCE_MECHANISM && <SelectionDataContent />}
-            {mapType === PreventionMapType.RESISTANCE_MECHANISM && (
-                <ResistanceMechanismsChart studies={filteredStudies} />
-            )}
+            <SelectionDataContent />
         </div>
     );
 };
