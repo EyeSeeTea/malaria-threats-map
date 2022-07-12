@@ -1,8 +1,9 @@
 import { createAction, createCustomAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import { ActionGroup, RegionState, SiteSelection } from "../types";
+import { ActionGroup, RegionState, SelectionData, SiteSelection } from "../types";
 import { AjaxError } from "rxjs/ajax";
 import { UploadFileData } from "../../../domain/usecases/UploadFileUseCase";
+import { Option } from "../../components/BasicSelect";
 
 interface SetThemeOptions {
     fromHome?: boolean;
@@ -50,6 +51,10 @@ export const setActionGroupSelected = createAction(ActionTypeEnum.MalariaActionG
 export const setSelection = createAction(ActionTypeEnum.SetSelection)<SiteSelection | null>();
 
 export const setHoverSelection = createAction(ActionTypeEnum.SetHoverSelection)<SiteSelection | null>();
+
+export const setSelectionData = createAction(ActionTypeEnum.SetSelectionData)<SelectionData>();
+
+export const setSelectionDataFilterSelection = createAction(ActionTypeEnum.SetSelectionDataFilterSelection)<Option[]>();
 
 export const setMobileOptionsOpen = createAction(ActionTypeEnum.SetMobileOptionsOpen)<boolean>();
 

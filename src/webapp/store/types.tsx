@@ -7,6 +7,7 @@ import { TreatmentStudy } from "../../domain/entities/TreatmentStudy";
 import { InvasiveStudy } from "../../domain/entities/InvasiveStudy";
 import { CountryLayer, CountryProperties } from "../../domain/entities/CountryLayer";
 import { Option } from "../components/BasicSelect";
+import { Study } from "../../domain/entities/Study";
 
 export interface State {
     malaria: MalariaState;
@@ -50,6 +51,7 @@ export interface MalariaState {
     actionGroupSelected: ActionGroup | null;
     selection: SiteSelection | null;
     hoverSelection: SiteSelection | null;
+    selectionData: SelectionData | null;
     mobileOptionsOpen: boolean;
     zoom: number;
     setZoom: number | null;
@@ -111,13 +113,34 @@ export interface PreventionFilters {
     species: string[];
 }
 
-export type ChartDataItem = {
+export type PreventionChartDataItem = {
     name: string;
     y: number;
     number: string;
 };
 
-export type ChartData = { [x: string]: { [x: string]: ChartDataItem[] } };
+export type DiagnosisChartDataItem = {
+    type: string;
+    samples: string;
+    percentageConfirmed: string;
+};
+
+export type PreventionChartData = {
+    kind: "prevention";
+    data: { [x: string]: { [x: string]: PreventionChartDataItem[] } };
+};
+
+export type DiagnosisChartDataItemByYear = {
+    header?: string;
+    dataSources: string;
+    year: number;
+    items: DiagnosisChartDataItem[];
+};
+
+export type DiagnosisChartData = {
+    kind: "diagnosis";
+    data: DiagnosisChartDataItemByYear[];
+};
 
 export type CitationDataSource = {
     key: string;
@@ -125,19 +148,20 @@ export type CitationDataSource = {
     text: string;
 };
 
-export type Curation = {
+export type CurationSources = {
     dataSources: string[];
     text: string;
 };
 
-export type PreventionSelectionData = {
+export type SelectionData = {
     title: string;
     subtitle: string;
-    speciesFilterOptions: Option[];
-    speciesSelection: Option[];
-    chartData: ChartData;
+    filterOptions?: Option[];
+    filterSelection?: Option[];
+    studyObject: Study;
+    data?: PreventionChartData | DiagnosisChartData;
     dataSources: CitationDataSource[];
-    dataCurations: Curation[];
+    curations: CurationSources[];
     othersDetected: string[];
 };
 
@@ -148,7 +172,6 @@ export interface PreventionState {
     filteredStudies: PreventionStudy[];
     filters: PreventionFilters;
     selectionStudies: PreventionStudy[];
-    selectionData?: PreventionSelectionData;
 }
 
 export enum TreatmentMapType {

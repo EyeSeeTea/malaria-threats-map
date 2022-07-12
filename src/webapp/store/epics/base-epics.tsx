@@ -19,6 +19,8 @@ import {
     setUploadFileOpenAction,
     uploadFileSuccessAction,
     uploadFileErrorAction,
+    setSelectionData,
+    setSelectionDataFilterSelection,
 } from "../actions/base-actions";
 import { State } from "../types";
 import * as ajax from "../ajax";
@@ -34,6 +36,10 @@ import { ApiParams } from "../../../data/common/types";
 import { fromFuture } from "./utils";
 import { EpicDependencies } from "..";
 import { ActionTypeEnum } from "../actions";
+import { createPreventionSelectionData } from "./prevention/utils";
+import { setPreventionSelectionStudies } from "../actions/prevention-actions";
+import { setDiagnosisSelectionStudies } from "../actions/diagnosis-actions";
+import { createDiagnosisSelectionData } from "./diagnosis/utils";
 
 export const setThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>, state$: StateObservable<State>) =>
     action$.pipe(
@@ -53,21 +59,6 @@ export const setThemeEpic = (action$: Observable<ActionType<typeof setThemeActio
             ].filter(Boolean);
 
             return of(...base);
-        })
-    );
-
-export const setSelectionEpic = (
-    action$: Observable<ActionType<typeof setSelection>>,
-    state$: StateObservable<State>
-) =>
-    action$.pipe(
-        ofType(ActionTypeEnum.SetSelection),
-        withLatestFrom(state$),
-        switchMap(([action, state]) => {
-            if (!action.payload) return of();
-            const { theme } = state.malaria;
-            const logAction = logEventAction({ category: "popup", action: "pin", label: theme });
-            return of(logAction);
         })
     );
 
@@ -311,3 +302,106 @@ export const setRegionEpic = (
 function requestCountriesIsRequired(state: State, condition: () => boolean) {
     return !state.countryLayer.loading && state.countryLayer.countries.length === 0 && condition();
 }
+
+export const setSelectionToLogEpic = (
+    action$: Observable<ActionType<typeof setSelection>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetSelection),
+        withLatestFrom(state$),
+        switchMap(([action, state]) => {
+            if (!action.payload) return of();
+            const { theme } = state.malaria;
+            const logAction = logEventAction({ category: "popup", action: "pin", label: theme });
+            return of(logAction);
+        })
+    );
+
+export const setSelectionEpic = (
+    action$: Observable<ActionType<typeof setSelection>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetSelection),
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            switch (state.malaria.theme) {
+                case "prevention": {
+                    const siteFilteredStudies = state.malaria.selection
+                        ? state.prevention.filteredStudies.filter(
+                              study => study.SITE_ID === state.malaria.selection.SITE_ID
+                          )
+                        : [];
+
+                    const selectionData = createPreventionSelectionData(
+                        state.malaria.theme,
+                        state.malaria.selection,
+                        state.prevention.filteredStudies,
+                        state.prevention.studies
+                    );
+
+                    const actions = _.compact([
+                        setPreventionSelectionStudies(siteFilteredStudies),
+                        setSelectionData(selectionData),
+                    ]);
+
+                    return of(...actions);
+                }
+                case "diagnosis": {
+                    const siteFilteredStudies = state.malaria.selection
+                        ? state.diagnosis.filteredStudies.filter(
+                              study => study.SITE_ID === state.malaria.selection.SITE_ID
+                          )
+                        : [];
+
+                    const selectionData = createDiagnosisSelectionData(
+                        state.malaria.theme,
+                        state.malaria.selection,
+                        state.diagnosis.filteredStudies
+                    );
+
+                    const actions = _.compact([
+                        setDiagnosisSelectionStudies(siteFilteredStudies),
+                        setSelectionData(selectionData),
+                    ]);
+
+                    return of(...actions);
+                }
+                case "treatment": {
+                    return of();
+                }
+                case "invasive": {
+                    return of();
+                }
+                default:
+                    return of();
+            }
+        })
+    );
+
+export const setSelectionDataFilterSelectionEpic = (
+    action$: Observable<ActionType<typeof setSelectionDataFilterSelection>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe().pipe(
+        ofType(ActionTypeEnum.SetSelectionDataFilterSelection),
+        withLatestFrom(state$),
+        switchMap(([action, state]) => {
+            switch (state.malaria.theme) {
+                case "prevention": {
+                    const selectionData = createPreventionSelectionData(
+                        state.malaria.theme,
+                        state.malaria.selection,
+                        state.prevention.filteredStudies,
+                        state.prevention.studies,
+                        action.payload
+                    );
+
+                    return of(setSelectionData(selectionData));
+                }
+                default:
+                    return of();
+            }
+        })
+    );
