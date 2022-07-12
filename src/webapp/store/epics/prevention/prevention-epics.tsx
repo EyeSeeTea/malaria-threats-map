@@ -4,6 +4,22 @@ import _ from "lodash";
 import { ActionTypeEnum } from "../../actions";
 import { Observable, of } from "rxjs";
 import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
+
+import { createPreventionSelectionData } from "./utils";
+import { PreventionMapType, State } from "../../types";
+import { EpicDependencies } from "../..";
+import { fromFuture } from "../utils";
+import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
+import { getAnalyticsPageView } from "../../analytics";
+import { addNotificationAction } from "../../actions/notifier-actions";
+import { ASSAY_TYPES } from "../../../components/filters/AssayTypeCheckboxFilter";
+import {
+    logEventAction,
+    logPageViewAction,
+    setFiltersAction,
+    setSelectionData,
+    setThemeAction,
+} from "../../actions/base-actions";
 import {
     fetchPreventionStudiesError,
     fetchPreventionStudiesRequest,
@@ -17,15 +33,6 @@ import {
     setSpecies,
     setType,
 } from "../../actions/prevention-actions";
-import { PreventionMapType, State } from "../../types";
-import { logEventAction, logPageViewAction, setSelectionData } from "../../actions/base-actions";
-import { ASSAY_TYPES } from "../../../components/filters/AssayTypeCheckboxFilter";
-import { addNotificationAction } from "../../actions/notifier-actions";
-import { getAnalyticsPageView } from "../../analytics";
-import { fromFuture } from "../utils";
-import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
-import { EpicDependencies } from "../../index";
-import { createPreventionSelectionData } from "./utils";
 
 export const getPreventionStudiesEpic = (
     action$: Observable<ActionType<typeof fetchPreventionStudiesRequest>>,
@@ -156,5 +163,16 @@ export const setPreventionFilteredStudiesEpic = (
             ]);
 
             return of(...actions);
+        })
+    );
+
+export const setPreventionThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaSetTheme),
+        switchMap($action => {
+            if ($action.payload !== "prevention") {
+                return of();
+            }
+            return of(setFiltersAction([2010, new Date().getFullYear()]));
         })
     );
