@@ -101,7 +101,7 @@ const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = new 
                 max={maxYear}
             />
             <Row>
-                {[minYear, maxYear - 10, maxYear].map(year => {
+                {[minYear, Math.floor((minYear + maxYear) / 2), maxYear].map(year => {
                     return <span key={year}>{year}</span>;
                 })}
             </Row>

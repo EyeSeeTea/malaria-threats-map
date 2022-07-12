@@ -5,11 +5,11 @@ describe("Open theme", () => {
         cy.loadPage(themes.parasiteGeneDeletions);
     });
 
-    it("should contains pfhrp2/3 gene deletions subtheme by default", () => {
+    it("should contain pfhrp2/3 gene deletions subtheme by default", () => {
         cy.contains("pfhrp2/3 gene deletions");
     });
 
-    it("should contains english language by default", () => {
+    it("should contain english language by default", () => {
         cy.contains("English");
     });
 });
