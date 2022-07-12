@@ -10,6 +10,7 @@ import countryLayerReducer from "../store/reducers/country-layer-reducer";
 import districtsReducer from "../store/reducers/districts-reducer";
 import notificationsReducer from "../store/reducers/notifier-reducer";
 import { State } from "./types";
+import feedbackReducer from "./reducers/feedback-reducer";
 
 const rootReducer = () =>
     combineReducers<State>({
@@ -22,6 +23,7 @@ const rootReducer = () =>
         countryLayer: countryLayerReducer,
         district: districtsReducer,
         notifications: notificationsReducer,
+        feedback: feedbackReducer,
     });
 
 export default rootReducer;
