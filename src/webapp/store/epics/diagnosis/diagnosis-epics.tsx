@@ -106,8 +106,6 @@ export const setDiagnosisFilteredStudiesEpic = (
                 siteFilteredStudies
             );
 
-            debugger;
-
             return of(setDiagnosisSelectionStudies(siteFilteredStudies), setSelectionData(selectionData));
         })
     );
