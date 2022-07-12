@@ -1,6 +1,7 @@
 import { DataLabelsFormatterCallbackFunction } from "highcharts";
 import i18next from "i18next";
-import { PreventionChartDataItem, PreventionMapType } from "../../../store/types";
+import { PreventionChartDataItem } from "../../../store/SelectionData";
+import { PreventionMapType } from "../../../store/types";
 import { IntensityStatusColors } from "../../layers/prevention/IntensityStatus/symbols";
 import { INTENSITY_STATUS } from "../../layers/prevention/IntensityStatus/utils";
 import { LevelOfInvolvementColors } from "../../layers/prevention/Involvement/symbols";

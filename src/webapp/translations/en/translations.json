@@ -207,15 +207,18 @@
                     "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against <i>{{plasmodiumSpecies}}</i> {{years}}",
                     "percentage": "Percentage (%)",
                     "study_years": "Study year(s)",
-                    "health_facility_name": "Health facility name",
-                    "number_of_patients": "Number of patients",
-                    "follow_up": "Follow-up",
+                    "health_facility_name": "Study conducted at the",
+                    "number_of_patients": "patients included",
+                    "follow_up": "days follow-up",
                     "confirmed_resist_pv": "Patients with confirmed resistance",
                     "positive_day_3": "Positive after day 3",
                     "treatment_failure_pp": "Patients with treatment failure, per protocol",
                     "treatment_failure_km": "Patients with treatment failure, Kaplan-Meier",
                     "days": "days",
-                    "studies": "study(s)"
+                    "studies": "study(s)",
+                    "aditional_information_title": "Aditional information: ",
+                    "show_more": "Show more",
+                    "show_less": "Show less"
                 },
                 "molecular_markers": {
                     "content": "{{nStudies}} molecular marker studies conducted on {{molecularMarker}} {{years}}",

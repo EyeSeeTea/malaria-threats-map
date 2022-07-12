@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@m
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { SelectionData } from "../../../store/types";
+import { SelectionData } from "../../../store/SelectionData";
 
 // const SpacedTypography = styled(Typography)`
 //     margin-bottom: 5px;

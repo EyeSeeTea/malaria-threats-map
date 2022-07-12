@@ -18,6 +18,8 @@ import DiagnosisChart from "./diagnosis/DiagnosisChart";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import InvasiveChart from "./invasive/InvasiveChart";
 import PreventionMechanismsChart from "./prevention/PreventionMechanismsChart";
+import TreatmentChart from "./treatment/TreatmentChart";
+import AditionalInformation from "../layers/treatment/common/Aditionalnformation";
 
 const Container = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};
@@ -84,6 +86,9 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
             case "invasive": {
                 return <InvasiveChart selectionData={selectionData} />;
             }
+            case "treatment": {
+                return <TreatmentChart selectionData={selectionData} />;
+            }
         }
     };
 
@@ -111,8 +116,11 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
                 <RoundedContainer>
                     {selectionData.data && chartCataContent()}
 
-                    <CitationNew dataSources={selectionData.dataSources} />
+                    {selectionData.dataSources && <CitationNew dataSources={selectionData.dataSources} />}
                     {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
+                    {selectionData.aditionalInformation && (
+                        <AditionalInformation info={selectionData.aditionalInformation} />
+                    )}
                 </RoundedContainer>
 
                 {selectionData.othersDetected.length > 0 && (
