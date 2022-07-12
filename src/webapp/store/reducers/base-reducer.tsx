@@ -3,6 +3,7 @@ import { createSelector } from "reselect";
 import { ActionGroup, MalariaState, RegionState, SiteSelection, State } from "../types";
 import { createReducer } from "../reducer-utils";
 import { ActionTypeEnum } from "../actions";
+import { SelectionData } from "../SelectionData";
 
 const query = window.location.search.substring(1);
 
@@ -15,7 +16,7 @@ const initialState: MalariaState = Object.freeze({
     countryMode: false,
     storyMode: false,
     storyModeStep: 0,
-    filters: [2010, new Date().getFullYear()],
+    filters: [2015, new Date().getFullYear()],
     region: {
         country: "",
         region: "",
@@ -35,6 +36,7 @@ const initialState: MalariaState = Object.freeze({
     filtersMode: "filters",
     selection: null,
     hoverSelection: null,
+    selectionData: null,
     mobileOptionsOpen: false,
     zoom: 2,
     setZoom: null,
@@ -90,6 +92,10 @@ export default createReducer<MalariaState>(initialState, {
             hoverSelection: getSelection(state, hoverSelection),
         };
     },
+    [ActionTypeEnum.SetSelectionData]: (selectionData: SelectionData) => (state: MalariaState) => ({
+        ...state,
+        selectionData,
+    }),
     [ActionTypeEnum.SetMobileOptionsOpen]: (mobileOptionsOpen: boolean) =>
         R.assoc("mobileOptionsOpen", mobileOptionsOpen),
     [ActionTypeEnum.UpdateZoom]: (zoom: number) => R.assoc("zoom", zoom),
@@ -160,3 +166,5 @@ export const selectIsSubmittingSubscription = createSelector(
 export const selectIsUploadingFile = createSelector(selectMalariaState, state => state.isUploadingFile);
 
 export const selectLastUpdatedDates = createSelector(selectMalariaState, state => state.lastUpdatedDates);
+
+export const selectSelectionData = createSelector(selectMalariaState, state => state.selectionData);

@@ -15,8 +15,8 @@ import styled from "styled-components";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-export const Container = styled.div`
-    padding: 60px 8px;
+export const Container = styled.div<{ padding?: string }>`
+    padding: ${props => props.padding || "60px 0px"};
 `;
 
 export const IconContainer = styled.div`
@@ -53,6 +53,8 @@ const SiteSelectionContent: React.FC<Props> = ({
         setSelection(null);
     }, [setSelection]);
 
+    //TODO: Review when preventionSelectionStudies,diagnosisSelectionStudies,
+    // treatmentSelectionStudies, invasiveSelectionStudies has not been neccesary
     if (
         !preventionSelectionStudies.length &&
         !diagnosisSelectionStudies.length &&
@@ -63,14 +65,15 @@ const SiteSelectionContent: React.FC<Props> = ({
     }
 
     return (
-        <Container>
+        // Remove padding according to theme when all charts are refactored
+        <Container padding={theme === "prevention" ? "60px 0px" : "60px 8px"}>
             <IconContainer>
                 <IconButton onClick={handleClose}>
                     <CloseIcon />
                 </IconButton>
             </IconContainer>
 
-            {theme === "prevention" && <PreventionSelectionChart studies={preventionSelectionStudies} />}
+            {theme === "prevention" && <PreventionSelectionChart siteFilteredStudies={preventionSelectionStudies} />}
             {theme === "diagnosis" && <DiagnosisSelectionChart studies={diagnosisSelectionStudies} />}
             {theme === "treatment" && <TreatmentSelectionChart studies={treatmentSelectionStudies} />}
             {theme === "invasive" && <InvasiveSelectionChart studies={invasiveSelectionStudies} />}

@@ -12,7 +12,11 @@ const resistanceStatusSymbols = {
     "circle-radius": ["interpolate", ["linear"], ["zoom"], 1, 2, 4, 7],
     "circle-color": [
         "case",
-        ["==", ["get", "INSECTICIDE_CLASS"], "PYRROLES"],
+        [
+            "any",
+            ["==", ["get", "INSECTICIDE_CLASS"], "PYRROLES"],
+            ["==", ["get", "INSECTICIDE_CLASS"], "ORGANOPHOSPHATES"],
+        ],
         [
             "match",
             ["get", "RESISTANCE_STATUS"],
@@ -42,7 +46,11 @@ const resistanceStatusSymbols = {
         ...baseSymbols["circle-stroke-color"],
         [
             "case",
-            ["==", ["get", "INSECTICIDE_CLASS"], "PYRROLES"],
+            [
+                "any",
+                ["==", ["get", "INSECTICIDE_CLASS"], "PYRROLES"],
+                ["==", ["get", "INSECTICIDE_CLASS"], "ORGANOPHOSPHATES"],
+            ],
             [
                 "match",
                 ["get", "RESISTANCE_STATUS"],
