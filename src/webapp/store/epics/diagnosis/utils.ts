@@ -13,7 +13,7 @@ export function createDiagnosisSelectionData(
     selection: SiteSelection | null,
     filteredStudies: DiagnosisStudy[]
 ): SelectionData | null {
-    if (!selection) return null;
+    if (!selection || filteredStudies.length === 0) return null;
 
     //TODO:Remove
     // const test = filteredStudies.filter(study => study.SITE_ID === selection.SITE_ID);

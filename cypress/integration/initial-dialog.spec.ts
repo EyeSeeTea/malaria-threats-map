@@ -5,15 +5,15 @@ describe("Open theme", () => {
         cy.loadPage();
     });
 
-    it("should contains insecticide resistance status sub theme by default", () => {
+    it("should contain insecticide resistance status sub theme by default", () => {
         cy.contains("Malaria Threats Map");
     });
 
-    it("should contains english language by default", () => {
+    it("should contain english language by default", () => {
         cy.contains("English");
     });
 
-    it("should contains 4 theme cards", () => {
+    it("should contain 4 theme cards", () => {
         cy.contains(themes.vectorInsecticideResistance);
         cy.contains(themes.parasiteGeneDeletions);
         cy.contains(themes.parasiteDrugEfficacy);

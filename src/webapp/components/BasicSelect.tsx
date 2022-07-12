@@ -231,9 +231,17 @@ export type Option = {
     value: string;
 };
 
-export default function IntegrationReactSelect({ suggestions = [], value, onChange, className, ...rest }: any) {
+export default function IntegrationReactSelect({
+    suggestions = [],
+    value,
+    onChange,
+    className,
+    classes,
+    ...rest
+}: any) {
     const { t } = useTranslation();
-    const classes = useStyles(rest);
+    const defaultClasses = useStyles(rest);
+    const finalClasses = classes || defaultClasses;
     const theme = useTheme();
 
     const selectStyles = {
@@ -255,9 +263,9 @@ export default function IntegrationReactSelect({ suggestions = [], value, onChan
     };
 
     return (
-        <div className={`${classes.root} ${className}`} role="listbox">
+        <div className={`${finalClasses.root} ${className}`} role="listbox">
             <Select
-                classes={classes}
+                classes={finalClasses}
                 styles={selectStyles}
                 components={components}
                 options={R.sortBy<Option>(R.prop("label"), suggestions)}

@@ -5,11 +5,11 @@ describe("Open theme", () => {
         cy.loadPage(themes.invasiveVectorSpecies);
     });
 
-    it("should contains vector occurrence subtheme by default", () => {
+    it("should contain vector occurrence subtheme by default", () => {
         cy.contains("Vector occurrence");
     });
 
-    it("should contains english language by default", () => {
+    it("should contain english language by default", () => {
         cy.contains("English");
     });
 });

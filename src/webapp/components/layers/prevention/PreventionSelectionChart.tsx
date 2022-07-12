@@ -1,5 +1,4 @@
 import * as React from "react";
-import { selectPreventionFilters } from "../../../store/reducers/prevention-reducer";
 import { selectSelection, selectTheme } from "../../../store/reducers/base-reducer";
 import { setPreventionFilteredStudies } from "../../../store/actions/prevention-actions";
 import { setSelection } from "../../../store/actions/base-actions";
