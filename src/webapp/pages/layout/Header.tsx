@@ -54,7 +54,7 @@ const MenuItems: React.FC<DirectionProps> = ({ flexDirection }) => {
                         path: "/",
                     },
                     {
-                        kind: "simple-menu" as const,
+                        kind: "simple-menu-trans" as const,
                         name: t("common.homepage.stories_submenu.parasite_pfhrp_gene_deletions"),
                         path: "/",
                     },
@@ -70,7 +70,7 @@ const MenuItems: React.FC<DirectionProps> = ({ flexDirection }) => {
     return (
         <>
             {menus.map(menu => {
-                return <NavMenu key={menu.name} menu={menu} flexDirection={flexDirection} />;
+                return <NavMenu key={menu.name} menu={menu} flexDirection={flexDirection} t={t}/>;
             })}
         </>
     );

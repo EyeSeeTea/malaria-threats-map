@@ -2,6 +2,7 @@ import { Button, Divider, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { useTranslation, Trans } from "react-i18next";
 
 interface DirectionProps {
     flexDirection: "column" | "row";
@@ -92,19 +93,26 @@ export interface SimpleMenu {
     path: string;
 }
 
+export interface SimpleMenuTrans {
+    kind: "simple-menu-trans";
+    name: string;
+    path: string;
+}
+
 export interface ParentMenu {
     kind: "parent-menu";
     name: string;
     submenus?: MenuData[];
 }
 
-export type MenuData = SimpleMenu | ParentMenu;
+export type MenuData = SimpleMenu | ParentMenu | SimpleMenuTrans;
 
 interface SimpleMenuProps extends DirectionProps {
     menu: MenuData;
+    t?: any;
 }
 
-const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection }) => {
+const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection, t }) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -121,6 +129,12 @@ const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection }) => {
                         {menu.name}
                     </Button>
                 </MenuItemContainer>
+            );
+        case "simple-menu-trans":
+            return (
+                <MenuItemContainer flexDirection={flexDirection}>
+                    <Trans i18nKey={"homepage.stories_submenu.parasite_pfhrp_gene_deletions"} t={t}>Parasite <i>pfhrp2/3</i> gene deletions</Trans>
+                                        </MenuItemContainer>
             );
         case "parent-menu":
             return (
