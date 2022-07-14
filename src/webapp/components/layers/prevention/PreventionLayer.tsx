@@ -150,7 +150,6 @@ class PreventionLayer extends Component<Props> {
         const filteredStudies = R.values(groupedStudies).map(group =>
             studySelector(group, mapType, this.props.preventionFilters.insecticideClass)
         );
-        console.log(filteredStudies);
         return filteredStudies;
     };
 
@@ -262,7 +261,6 @@ class PreventionLayer extends Component<Props> {
         if (filteredStudies.length === 0) {
             return <div />;
         }
-        console.log(filteredStudies);
         return (
             this.props.theme === "prevention" && (
                 <>
