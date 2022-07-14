@@ -179,36 +179,39 @@ function getByMostRecentYearAndMortalityAdjusted(group: any[]) {
 }
 function getPyrrolesResistanceStatusColor(group: any[]) {
     const chlorfenapyrResistanceStatus = group.map(study => study.RESISTANCE_STATUS);
-        const countConfirmedResistance = _.countBy(chlorfenapyrResistanceStatus);
-        if (countConfirmedResistance["CONFIRMED_RESISTANCE"] >= 3) {
-            return ResistanceStatusColors.Confirmed;
-        } else if (countConfirmedResistance["UNDETERMINED"] === chlorfenapyrResistanceStatus.length) {
-            return ResistanceStatusColors.Undetermined;
-        } else if (countConfirmedResistance["SUSCEPTIBLE"] === chlorfenapyrResistanceStatus.length) {
-            return ResistanceStatusColors.Susceptible;
-        } else return ResistanceStatusColors.Possible;
+    const countConfirmedResistance = _.countBy(chlorfenapyrResistanceStatus);
+    if (countConfirmedResistance["CONFIRMED_RESISTANCE"] >= 3) {
+        return ResistanceStatusColors.Confirmed;
+    } else if (countConfirmedResistance["UNDETERMINED"] === chlorfenapyrResistanceStatus.length) {
+        return ResistanceStatusColors.Undetermined;
+    } else if (countConfirmedResistance["SUSCEPTIBLE"] === chlorfenapyrResistanceStatus.length) {
+        return ResistanceStatusColors.Susceptible;
+    } else return ResistanceStatusColors.Possible;
 }
 
 function getDefaultResistanceStatusColor(group: any[]) {
     const filteredStudies = getByMostRecentYearAndMortalityAdjusted(group);
-        switch (filteredStudies.RESISTANCE_STATUS) {
-            case "CONFIRMED_RESISTANCE":
-                return ResistanceStatusColors.Confirmed;
-            case "POSSIBLE_RESISTANCE":
-                return ResistanceStatusColors.Possible;
-            case "SUSCEPTIBLE":
-                return ResistanceStatusColors.Susceptible;
-            default:
-                return ResistanceStatusColors.Undetermined;
-        }
+    switch (filteredStudies.RESISTANCE_STATUS) {
+        case "CONFIRMED_RESISTANCE":
+            return ResistanceStatusColors.Confirmed;
+        case "POSSIBLE_RESISTANCE":
+            return ResistanceStatusColors.Possible;
+        case "SUSCEPTIBLE":
+            return ResistanceStatusColors.Susceptible;
+        default:
+            return ResistanceStatusColors.Undetermined;
+    }
 }
-function getResistanceStatusColor(group: any[], insecticideClass: string) {
-    const groupColor = insecticideClass === "PYRROLES" ? getPyrrolesResistanceStatusColor(group) : getDefaultResistanceStatusColor(group);
+export function getResistanceStatusColor(group: any[], insecticideClass: string) {
+    const groupColor =
+        insecticideClass === "PYRROLES"
+            ? getPyrrolesResistanceStatusColor(group)
+            : getDefaultResistanceStatusColor(group);
     const changedGroup = group.map(study => ({
         ...study,
         RESISTANCE_STATUS_COLOR: groupColor,
     }));
-   return insecticideClass === "PYRROLES" ? getByMostRecentYearAndMortalityAdjusted(changedGroup) : changedGroup[0];   
+    return insecticideClass === "PYRROLES" ? getByMostRecentYearAndMortalityAdjusted(changedGroup) : changedGroup[0];
 }
 
 export const studySelector = (group: any[], mapType: PreventionMapType, insecticideClass: string) => {

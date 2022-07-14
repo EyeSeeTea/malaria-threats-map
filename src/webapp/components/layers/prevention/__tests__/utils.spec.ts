@@ -5,7 +5,9 @@ import {
     getMostRecentByCriteria1,
     getMostRecentByCriteria2,
     getMostRecentByCriteria3,
+    getResistanceStatusColor,
 } from "../utils";
+import { ResistanceStatusColors } from "../ResistanceStatus/symbols";
 
 describe("Prevention Pbo studies", () => {
     describe("filterByCriteria1", () => {
@@ -115,10 +117,152 @@ describe("Prevention Pbo studies", () => {
     });
 });
 
+describe("Prevention Resistance Status studies", () => {
+    describe("threeConfirmedStudies", () => {
+        it("should return the red confirmed color", () => {
+            const studies = getStudies({
+                totalStudies: 3,
+                resistanceStatusArr: new Array(3).fill("CONFIRMED_RESISTANCE"),
+            });
+            const filteredStudies = getResistanceStatusColor(studies, "PYRROLES");
+            expect(filteredStudies.RESISTANCE_STATUS_COLOR).toEqual(ResistanceStatusColors.Confirmed);
+        });
+    });
+    describe("twoConfirmedStudies", () => {
+        it("should return the orange possible color", () => {
+            const studies = getStudies({
+                totalStudies: 2,
+                resistanceStatusArr: new Array(2).fill("CONFIRMED_RESISTANCE"),
+            });
+            const filteredStudies = getResistanceStatusColor(studies, "PYRROLES");
+            expect(filteredStudies.RESISTANCE_STATUS_COLOR).toEqual(ResistanceStatusColors.Possible);
+        });
+    });
+    describe("threeUndeterminedStudies", () => {
+        it("should return the grey undetermined color", () => {
+            const studies = getStudies({ totalStudies: 3, resistanceStatusArr: new Array(3).fill("UNDETERMINED") });
+            const filteredStudies = getResistanceStatusColor(studies, "PYRROLES");
+            expect(filteredStudies.RESISTANCE_STATUS_COLOR).toEqual(ResistanceStatusColors.Undetermined);
+        });
+    });
+    describe("twoUndeterminedOnePossibleStudies", () => {
+        it("should return the orange possible color", () => {
+            const studies = getStudies({
+                totalStudies: 3,
+                resistanceStatusArr: ["UNDETERMINED", "UNDETERMINED", "POSSIBLE_RESISTANCE"],
+            });
+            const filteredStudies = getResistanceStatusColor(studies, "PYRROLES");
+            expect(filteredStudies.RESISTANCE_STATUS_COLOR).toEqual(ResistanceStatusColors.Possible);
+        });
+    });
+    describe("oneUndeterminedOnePossibleOneSusceptibleStudies", () => {
+        it("should return the orange possible color", () => {
+            const studies = getStudies({
+                totalStudies: 3,
+                resistanceStatusArr: ["UNDETERMINED", "POSSIBLE_RESISTANCE", "SUSCEPTIBLE"],
+            });
+            const filteredStudies = getResistanceStatusColor(studies, "PYRROLES");
+            expect(filteredStudies.RESISTANCE_STATUS_COLOR).toEqual(ResistanceStatusColors.Possible);
+        });
+    });
+    describe("threeSusceptibleStudies", () => {
+        it("should return the green susceptible color", () => {
+            const studies = getStudies({ totalStudies: 3, resistanceStatusArr: new Array(3).fill("SUSCEPTIBLE") });
+            const filteredStudies = getResistanceStatusColor(studies, "PYRROLES");
+            expect(filteredStudies.RESISTANCE_STATUS_COLOR).toEqual(ResistanceStatusColors.Susceptible);
+        });
+    });
+    describe("twoPossibleStudies", () => {
+        it("should return the orange possible color", () => {
+            const studies = getStudies({
+                totalStudies: 2,
+                resistanceStatusArr: new Array(2).fill("POSSIBLE_RESISTANCE"),
+            });
+            const filteredStudies = getResistanceStatusColor(studies, "PYRROLES");
+            expect(filteredStudies.RESISTANCE_STATUS_COLOR).toEqual(ResistanceStatusColors.Possible);
+        });
+    });
+    describe("oneConfirmedStudies", () => {
+        it("should return the red confirmed color", () => {
+            const studies = getStudies({ totalStudies: 1, resistanceStatusArr: ["CONFIRMED_RESISTANCE"] });
+            const filteredStudies = getResistanceStatusColor(studies, "PYRROLES");
+            expect(filteredStudies.RESISTANCE_STATUS_COLOR).toEqual(ResistanceStatusColors.Possible);
+        });
+    });
+});
+
 interface params {
     totalStudies: number;
     meetFiltersCount: number;
     years?: number[];
+}
+
+interface resistanceStatusStudiesParams {
+    totalStudies?: number;
+    resistanceStatusArr: string[];
+}
+
+function getStudies({ totalStudies, resistanceStatusArr }: resistanceStatusStudiesParams): PreventionStudy[] {
+    const dataList = Array.from(Array(totalStudies).keys()).map((_, index) => {
+        const studyTemplate: PreventionStudy = {
+            OBJECTID: 5625,
+            Code: "IROB002912",
+            COUNTRY_NAME: "NIGERIA",
+            ISO2: "NG",
+            REGION_FULL: "AFRICA",
+            SUBREGION: "AFRICA_WEST_SUB-REGION",
+            Latitude: "7.233330",
+            Longitude: "3.866670",
+            MALARIA_ENDEMIC: 1,
+            SITE_ID: "IRNG92",
+            YEAR_START: "2018",
+            INVESTIGATION_TYPE: "PHENOTYPIC",
+            ASSAY_TYPE: "DISCRIMINATING_CONCENTRATION_BIOASSAY",
+            INSECTICIDE_TYPE: "CHLORFENAPYR",
+            INSECTICIDE_INTENSITY: "1",
+            SYNERGIST_TYPE: "NA",
+            MONTH_START: "NR",
+            VILLAGE_NAME: "Oluyole",
+            SPECIES: "An. gambiae s.l.",
+            MORTALITY_ADJUSTED: "1.000",
+            RESISTANCE_STATUS: resistanceStatusArr[index],
+            MECHANISM_STATUS: "NA",
+            MECHANISM_FREQUENCY: "NA",
+            INSTITUTE: "U.S. President's Malaria Initiative",
+            INSECTICIDE_CLASS: "PYRROLES",
+            METHOD_STANDARD: 0,
+            RESISTANCE_INTENSITY: "NA",
+            MECHANISM_PROXY: "NA",
+            PROXY_TYPE: "NA",
+            INSECTICIDE_CONC: "100µg",
+            SYNERGIST_CONC: "NA",
+            RESISTANCE_STATUS_NUMERIC: 3,
+            MONTH_END: "NR",
+            TYPE: "WHO_BOTTLE_ADULTS",
+            NUMBER: "100",
+            TIME: "72HRS",
+            STAGE_ORIGIN: "F0_ADULTS_(FROM_WILD_LARVAE)",
+            YEAR_END: "NR",
+            VERSION: 2,
+            CITATION_LONG: "U.S. President's Malaria Initiative",
+            CITATION_URL: "NA",
+            STUDY_PAIRING_CODE: "NA",
+            INSTITUTE_CURATION: "U.S. President's Malaria Initiative",
+            ADMIN1: "Oyo",
+            ADMIN1_GUID: "41485fd7-a3c8-4d7d-bbba-a351a2aa4619",
+            ADMIN2: "Oluyole",
+            ADMIN2_GUID: "f2bc2035-746d-4a12-9d27-17058834d099",
+            SITE_NAME: "",
+            CURATION: "",
+            CITATION: "",
+            RESISTANCE_FREQUENCY: "NA",
+            TYPE_SYNERGIST: "NA",
+        };
+
+        return studyTemplate;
+    });
+
+    return dataList;
 }
 
 function givenAStudiesByCriteria1({ totalStudies, meetFiltersCount, years }: params): PreventionStudy[] {
