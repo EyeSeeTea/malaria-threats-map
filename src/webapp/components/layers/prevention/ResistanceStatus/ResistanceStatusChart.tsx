@@ -19,7 +19,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 import { sendAnalytics } from "../../../../utils/analytics";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 
-const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
+const defaultHighchartOptions: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
         maxPointWidth: 20,
         type: "column",
@@ -59,31 +59,6 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
             },
         ],
     },
-    plotOptions: {
-        column: {
-            dataLabels: {
-                formatter: function () {
-                    // @ts-ignore
-                    return `${this.y}% (${this.point.number})`;
-                } as DataLabelsFormatterCallbackFunction,
-                enabled: true,
-            },
-            zones: [
-                {
-                    value: 90,
-                    color: ResistanceStatusColors.Confirmed[0],
-                },
-                {
-                    value: 98,
-                    color: ResistanceStatusColors.Possible[0],
-                },
-                {
-                    value: 100.001,
-                    color: ResistanceStatusColors.Susceptible[0],
-                },
-            ],
-        },
-    },
     tooltip: {
         formatter: function () {
             const point = this.point as any;
@@ -112,6 +87,38 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
     },
     credits: {
         enabled: false,
+    },
+});
+const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
+    ...defaultHighchartOptions(data, translations),
+    plotOptions: {
+        column: {
+            dataLabels: {
+                formatter: function () {
+                    // @ts-ignore
+                    return `${this.y}% (${this.point.number})`;
+                } as DataLabelsFormatterCallbackFunction,
+                enabled: true,
+            },
+            color: data[0].insecticide_type === "CHLORFENAPYR" ? ResistanceStatusColors.Undetermined[0] : undefined,
+            zones:
+                data[0].insecticide_type !== "CHLORFENAPYR"
+                    ? [
+                          {
+                              value: 90,
+                              color: ResistanceStatusColors.Confirmed[0],
+                          },
+                          {
+                              value: 98,
+                              color: ResistanceStatusColors.Possible[0],
+                          },
+                          {
+                              value: 100.001,
+                              color: ResistanceStatusColors.Susceptible[0],
+                          },
+                      ]
+                    : [],
+        },
     },
 });
 
@@ -163,6 +170,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         )
     );
     const studies = groupedStudies[study];
+
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
         return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
@@ -180,11 +188,11 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
         species: t(study.SPECIES),
         number: study.NUMBER,
+        insecticide_type: study.INSECTICIDE_TYPE,
         type: t(study.TYPE),
         citation: study.CITATION_LONG || study.INSTITUTE,
         citationUrl: study.CITATION_URL,
     }));
-
     const studyObject = groupedStudies[study][0];
     const translations = {
         mortality: t("common.prevention.chart.resistance_status.mortality"),

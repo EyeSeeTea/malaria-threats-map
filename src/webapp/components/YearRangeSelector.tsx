@@ -17,7 +17,7 @@ export function range(start: number, end: number, reverse?: boolean) {
 }
 const marks = (start: number, end: number) =>
     range(start, end).map(year =>
-        (year % 5 === 0 || year === start || year === end)
+        year % 5 === 0 || year === start || year === end
             ? {
                   value: year,
                   label: year.toString(),

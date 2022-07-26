@@ -49,9 +49,13 @@ const ResistanceStatusCountryChart = ({ studies, setRegion, setCountryMode, prev
         ([status, studies]: any[]) => ({
             name: t(`common.prevention.chart.resistance_status.${status}`),
             y: studies.length,
-            color: ResistanceStatusColors[status][0],
+            color:
+                studies[0].INSECTICIDE_TYPE === "CHLORFENAPYR"
+                    ? ResistanceStatusColors.Undetermined[0]
+                    : ResistanceStatusColors[status][0],
         })
     );
+
     const onClick = () => {
         setRegion({ country: studies[0].ISO2 });
         setCountryMode(false);
