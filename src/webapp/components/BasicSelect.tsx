@@ -126,6 +126,37 @@ function Control(props: ControlProps<OptionType, false>) {
     );
 }
 
+function Option(props: OptionProps<OptionType, false>) {
+    const { t } = useTranslation();
+    const value = props.children ? t(props.children.toString()) : "";
+    const isFirstRender = useFirstRender();
+    const isFocused = isFirstRender ? false : props.isFocused;
+    const plasmodiumStyles = plasmodiumOptions.includes(value) ? { fontStyle: "italic" } : {};
+
+    const optionStyles = props.getStyles("option", props);
+
+    //it doesn't have access to the control/selected value
+    return (
+        <MenuItem
+            dense
+            ref={props.innerRef}
+            selected={isFocused}
+            component="div"
+            style={{
+                ...optionStyles,
+                fontWeight: props.isSelected ? 800 : 400,
+                ...plasmodiumStyles,
+            }}
+            {...props.innerProps}
+            title={value}
+        >
+            <Typography variant="inherit" noWrap>
+                {value}
+            </Typography>
+        </MenuItem>
+    );
+}
+
 type MuiPlaceholderProps = Omit<PlaceholderProps<OptionType, false>, "innerProps"> &
     Partial<Pick<PlaceholderProps<OptionType, false>, "innerProps">>;
 function Placeholder(props: MuiPlaceholderProps) {
@@ -198,44 +229,8 @@ export default function IntegrationReactSelect({ suggestions = [], value, onChan
         }),
         option: (base: any, state: any) => ({
             ...base,
-            backgroundColor: state.isSelected ? "red" : "blue",
-            ":active": {
-                backgroundColor: state.isSelected ? "green" : "yellow",
-            },
         }),
     };
-
-    function Option(props: OptionProps<OptionType, false>) {
-        const { t } = useTranslation();
-        const value = props.children ? t(props.children.toString()) : "";
-        const isFirstRender = useFirstRender();
-        const isFocused = isFirstRender ? false : props.isFocused;
-        const plasmodiumStyles = plasmodiumOptions.includes(value) ? { fontStyle: "italic" } : {};
-        const speciesStyles = suggestions.map((el: { label: string; value: string }) => el.label).includes(value)
-            ? { fontStyle: "italic" }
-            : {};
-
-        //it doesn't have access to the control/selected value
-        return (
-            <MenuItem
-                dense
-                ref={props.innerRef}
-                selected={isFocused}
-                component="div"
-                style={{
-                    fontWeight: props.isSelected ? 800 : 400,
-                    ...plasmodiumStyles,
-                    ...speciesStyles,
-                }}
-                {...props.innerProps}
-                title={value}
-            >
-                <Typography variant="inherit" noWrap>
-                    {value}
-                </Typography>
-            </MenuItem>
-        );
-    }
 
     const components = {
         Control,
