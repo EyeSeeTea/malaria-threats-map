@@ -213,7 +213,14 @@ export type Option = {
     value: string;
 };
 
-export default function IntegrationReactSelect({ suggestions = [], value, onChange, className, ...rest }: any) {
+export default function IntegrationReactSelect({
+    suggestions = [],
+    value,
+    onChange,
+    className,
+    optionsStyle,
+    ...rest
+}: any) {
     const { t } = useTranslation();
     const classes = useStyles(rest);
     const theme = useTheme();
@@ -227,8 +234,9 @@ export default function IntegrationReactSelect({ suggestions = [], value, onChan
                 font: "inherit",
             },
         }),
-        option: (base: any, state: any) => ({
+        option: (base: any) => ({
             ...base,
+            ...optionsStyle,
         }),
     };
 
