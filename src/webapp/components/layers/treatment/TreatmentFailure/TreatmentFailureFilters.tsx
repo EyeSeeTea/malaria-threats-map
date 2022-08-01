@@ -10,11 +10,7 @@ export default function TreatmentFailureFilters() {
             <PlasmodiumSpeciesFilter />
             <DrugsFilter />
             <ExcludeLowerPatientsFilter />
-            <YearRangeSelector
-                minYear={2010}
-                maxYear={new Date().getFullYear()}
-                defaultValue={[2015, new Date().getFullYear()]}
-            />
+            <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
         </>
     );
 }

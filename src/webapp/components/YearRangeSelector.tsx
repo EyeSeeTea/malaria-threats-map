@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Slider, FormLabel } from "@material-ui/core";
 import { connect } from "react-redux";
@@ -54,28 +54,12 @@ type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     minYear?: number;
     maxYear?: number;
-    defaultValue?: number[];
 };
 type Props = OwnProps & DispatchProps & StateProps;
 
-const YearRangeSelector = ({
-    filters,
-    setFilters,
-    minYear = 1988,
-    maxYear = new Date().getFullYear(),
-    defaultValue,
-}: Props) => {
+const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = new Date().getFullYear() }: Props) => {
     const classes = useStyles({});
     const { t } = useTranslation();
-
-    useEffect(() => {
-        if (defaultValue) {
-            setFilters(defaultValue);
-        } else {
-            setFilters([minYear, maxYear]);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const handleChange = (event: any, newValue: number | number[]) => {
         const [start, end] = newValue as number[];
