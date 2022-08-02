@@ -178,7 +178,7 @@ const HomePage = ({
                 <Header />
                 <ContentDiv windowWidth={width}>
                     <TitleBannerDiv>
-                        <Typography variant="h2" color={"inherit"} textTransform="uppercase">
+                        <Typography variant="h2" color={"inherit"} textTransform="uppercase" paddingTop="27px">
                             <Trans i18nKey="common.homepage.title" t={t}>
                                 Malaria <br /> <strong>Threats Map</strong>
                             </Trans>
