@@ -208,6 +208,17 @@ function Menu(props: MenuProps<OptionType, false>) {
     );
 }
 
+const components = {
+    Control,
+    Menu,
+    MultiValue,
+    NoOptionsMessage,
+    Option,
+    Placeholder,
+    SingleValue,
+    ValueContainer,
+};
+
 export type Option = {
     label: string;
     value: string;
@@ -238,17 +249,6 @@ export default function IntegrationReactSelect({
             ...base,
             ...optionsStyle,
         }),
-    };
-
-    const components = {
-        Control,
-        Menu,
-        MultiValue,
-        NoOptionsMessage,
-        Option,
-        Placeholder,
-        SingleValue,
-        ValueContainer,
     };
 
     return (
