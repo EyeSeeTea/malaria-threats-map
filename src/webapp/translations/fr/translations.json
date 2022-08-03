@@ -420,6 +420,7 @@
         },
         "sidebar": {
             "home": "Maison",
+            "stories": "Histoires",
             "about": "Sur",
             "contact": "Contact",
             "share_data": "Partager des données",
