@@ -415,8 +415,7 @@
         "topbar": {
             "menu": "Menu",
             "maps": "Maps",
-            "dashboards": "Dashboards",
-            "stories": "Stories"
+            "dashboards": "Dashboards"
         },
         "sidebar": {
             "home": "Home",
