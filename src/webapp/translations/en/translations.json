@@ -6,6 +6,69 @@
             "title": "Malaria Threats Map",
             "subtitle": "Tracking biological challenges to malaria control and elimination"
         },
+        "aboutPage": {
+            "title": {
+                "first": "Learn More About",
+                "second": "The Malaria Threats Map"
+            },
+
+            "dataSection": {
+                "title": "Where does the data come from?",
+                "content": "Data is collected by National Malaria Programmes, their implementation partners, research institutes and non-governmental organizations. They are either provided directly to WHO Global Malaria Programme (GMP) or extracted from publications. All data are quality controlled, incorporated into WHO global databases and then published to the Malaria Threats Map."
+            },
+            "mapSection": {
+                "title": "Watch: Find out about the functionality of the maps within the MTM",
+                "videoLabel": "Watch:",
+                "video1": {
+                    "url": "https://www.youtube.com/embed/dU_xrzpbupU",
+                    "alt": "Malaria Threats Map: tracking biological challenges to malaria control and elimination",
+                    "title": "An overview of the maps"
+                },
+                "video2": {
+                    "url": "https://www.youtube.com/embed/VP-pc9oN0dM",
+                    "alt": "Malaria Threats Map: supporting research efforts",
+                    "title": "How is the MTM supporting research efforts?"
+                },
+                "video3": {
+                    "url": "https://www.youtube.com/embed/mkggjD0DKwY",
+                    "alt": "Malaria Threats Map: helping countries address critical threats for malaria control and elimination",
+                    "title": "How is the MTM supporting countries?"
+                }
+            },
+            "challengesSection": {
+                "title": " Thousands of people use the Malaria Threats Map to understand challenges to malaria control and elimination, access data and guide decision-making.",
+                "tabFooter": {
+                    "name": "Name",
+                    "globalFund": "Global Fund"
+                },
+                "tab1": {
+                    "name": "National Malaria Control Programmes",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab2": {
+                    "name": "NGOs",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab3": {
+                    "name": "Donors",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab4": {
+                    "name": "WHO Staff",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab5": {
+                    "name": "Researchers",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                }
+            },
+            "userExperienceSection": {
+                "title": "User experience testing",
+                "p1": "We have recently undertaken a process of user experience testing and are grateful to all who willingly gave of their time to contribute to the improvement of the MTM for all its users.",
+                "p2": "This user testing has led to the addition of the home, about and contact pages, the creation of the dashboards, a dedicated download interface, and a more streamlined map interface. We have also identified additional areas of improvement, which we are working on. These include increased guidance to facilitate decision-making, and additional map layers. We want to make this tool the best it can be so that together we have the resources to control and eliminate malaria.",
+                "button": "Acknowledgements List"
+            }
+        },
         "homepage": {
             "menu": {
                 "home": "Home",

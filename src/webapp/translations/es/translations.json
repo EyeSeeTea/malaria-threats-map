@@ -6,6 +6,69 @@
             "title": "Mapa de los desafíos de la malaria",
             "subtitle": "Seguimiento de los desafíos biológicos para el control y la eliminación de la malaria"
         },
+        "aboutPage": {
+            "title": {
+                "first": "Aprende más sobre",
+                "second": "El mapa de amenazas de malaria"
+            },
+
+            "dataSection": {
+                "title": "De dónde provienen los datos?",
+                "content": "Los datos son recopilados por los Programas Nacionales de Malaria, sus socios implementadores, institutos de investigación y organizaciones no gubernamentales. Se proporcionan directamente al Programa Mundial contra el Paludismo (GMP) de la OMS o se extraen de publicaciones. Todos los datos tienen control de calidad, se incorporan a las bases de datos mundiales de la OMS y luego se publican en el Mapa de Amenazas de la Malaria."
+            },
+            "mapSection": {
+                "title": "Ver: Infórmese sobre la funcionalidad de los mapas dentro del MTM.",
+                "videoLabel": "Ver:",
+                "video1": {
+                    "url": "https://www.youtube.com/embed/dU_xrzpbupU",
+                    "alt": "Mapa de amenazas de malaria: seguimiento de los desafíos biológicos para el control y la eliminación de la malaria",
+                    "title": "Una visión general de los mapas"
+                },
+                "video2": {
+                    "url": "https://www.youtube.com/embed/VP-pc9oN0dM",
+                    "alt": "Mapa de amenazas de malaria: apoyando los esfuerzos de investigación",
+                    "title": "Cómo apoya el MTM los esfuerzos de investigación?"
+                },
+                "video3": {
+                    "url": "https://www.youtube.com/embed/mkggjD0DKwY",
+                    "alt": "Mapa de amenazas de malaria: ayudar a los países a abordar amenazas críticas para el control y la eliminación de la malaria",
+                    "title": "Cómo está apoyando el MTM a los países?"
+                }
+            },
+            "challengesSection": {
+                "title": "Miles de personas usan el Mapa de Amenazas de la Malaria para comprender los desafíos para el control y la eliminación de la malaria, acceder a datos y guiar la toma de decisiones.",
+                "tabFooter": {
+                    "name": "Nombre",
+                    "globalFund": "Fondo Mundial"
+                },
+                "tab1": {
+                    "name": "Programas Nacionales de Control de la Malaria",
+                    "text": "El MTM me da acceso a los datos públicos más recientes sobre la resistencia de los vectores a los insecticidas; esto me ayuda a tomar decisiones sobre qué productos insecticidas financiar para el IRS y si se deben implementar MTILD estándar o nuevos mosquiteros Piretroides-PBO. La interactividad de la plataforma me permite seleccionar los criterios específicos que me interesan y luego exportar visualizaciones fácilmente para facilitar las discusiones. Ninguna otra plataforma es tan completa como la MTM."
+                },
+                "tab2": {
+                    "name": "ONGs",
+                    "text": "El MTM me da acceso a los datos públicos más recientes sobre la resistencia de los vectores a los insecticidas; esto me ayuda a tomar decisiones sobre qué productos insecticidas financiar para el IRS y si se deben implementar MTILD estándar o nuevos mosquiteros Piretroides-PBO. La interactividad de la plataforma me permite seleccionar los criterios específicos que me interesan y luego exportar visualizaciones fácilmente para facilitar las discusiones. Ninguna otra plataforma es tan completa como la MTM."
+                },
+                "tab3": {
+                    "name": "Donantes",
+                    "text": "El MTM me da acceso a los datos públicos más recientes sobre la resistencia de los vectores a los insecticidas; esto me ayuda a tomar decisiones sobre qué productos insecticidas financiar para el IRS y si se deben implementar MTILD estándar o nuevos mosquiteros Piretroides-PBO. La interactividad de la plataforma me permite seleccionar los criterios específicos que me interesan y luego exportar visualizaciones fácilmente para facilitar las discusiones. Ninguna otra plataforma es tan completa como la MTM."
+                },
+                "tab4": {
+                    "name": "Personal de la OMS",
+                    "text": "El MTM me da acceso a los datos públicos más recientes sobre la resistencia de los vectores a los insecticidas; esto me ayuda a tomar decisiones sobre qué productos insecticidas financiar para el IRS y si se deben implementar MTILD estándar o nuevos mosquiteros Piretroides-PBO. La interactividad de la plataforma me permite seleccionar los criterios específicos que me interesan y luego exportar visualizaciones fácilmente para facilitar las discusiones. Ninguna otra plataforma es tan completa como la MTM."
+                },
+                "tab5": {
+                    "name": "Investigadores",
+                    "text": "El MTM me da acceso a los datos públicos más recientes sobre la resistencia de los vectores a los insecticidas; esto me ayuda a tomar decisiones sobre qué productos insecticidas financiar para el IRS y si se deben implementar MTILD estándar o nuevos mosquiteros Piretroides-PBO. La interactividad de la plataforma me permite seleccionar los criterios específicos que me interesan y luego exportar visualizaciones fácilmente para facilitar las discusiones. Ninguna otra plataforma es tan completa como la MTM."
+                }
+            },
+            "userExperienceSection": {
+                "title": "Pruebas de experiencia de usuario",
+                "p1": "Recientemente llevamos a cabo un proceso de prueba de la experiencia del usuario y estamos agradecidos con todos los que voluntariamente dieron su tiempo para contribuir a la mejora del MTM para todos sus usuarios.",
+                "p2": "Esta prueba de usuario condujo a la adición de páginas de inicio, información y contacto, la creación de paneles, una interfaz de descarga dedicada y una interfaz de mapa más optimizada. También identificamos áreas de mejora adicionales, que estamos trabajando. Estos incluyen una mayor orientación para facilitar la toma de decisiones y capas de mapas adicionales. Queremos hacer que esta herramienta sea lo mejor posible para que juntos tengamos los recursos para controlar y eliminar la malaria.",
+                "button": "Lista de reconocimientos"
+            }
+        },
         "homepage": {
             "menu": {
                 "home": "Casa",

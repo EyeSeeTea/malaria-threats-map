@@ -101,7 +101,7 @@ export function getLegendLabels(
 ): LegendLabel[] {
     switch (theme) {
         case "prevention":
-            return getPreventionLegendLebels(preventionFilters);
+            return getPreventionLegendLabels(preventionFilters);
         case "diagnosis":
             return getDiagnosisLegendLabels(diagnosisFilters);
         case "treatment":
@@ -113,7 +113,7 @@ export function getLegendLabels(
     }
 }
 
-function getPreventionLegendLebels(filters: PreventionFilters): LegendLabel[] {
+function getPreventionLegendLabels(filters: PreventionFilters): LegendLabel[] {
     switch (filters.mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
             return [

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "./Header";
 import Footer from "./Footer";
 import { Divider } from "@mui/material";
+import Header from "./Header";
 
 const Container = styled.div`
     min-height: 100vh;
@@ -13,7 +13,7 @@ const Container = styled.div`
 const MainContainer = styled.main`
     flex: 1;
     padding-top: 55px;
-    height: 100vh;
+    min-height: 100vh;
 `;
 
 const Layout: React.FC = ({ children }) => {
