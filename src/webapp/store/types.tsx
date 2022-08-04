@@ -7,6 +7,7 @@ import { TreatmentStudy } from "../../domain/entities/TreatmentStudy";
 import { InvasiveStudy } from "../../domain/entities/InvasiveStudy";
 import { CountryLayer, CountryProperties } from "../../domain/entities/CountryLayer";
 import { FeedbackState } from "../types/FeedbackState";
+import { SelectionData } from "./SelectionData";
 
 export interface State {
     malaria: MalariaState;
@@ -51,6 +52,7 @@ export interface MalariaState {
     actionGroupSelected: ActionGroup | null;
     selection: SiteSelection | null;
     hoverSelection: SiteSelection | null;
+    selectionData: SelectionData | null;
     mobileOptionsOpen: boolean;
     zoom: number;
     setZoom: number | null;

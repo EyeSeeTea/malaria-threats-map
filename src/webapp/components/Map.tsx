@@ -17,16 +17,17 @@ import WhoLogo from "./WhoLogo";
 import {
     selectAny,
     selectRegion,
+    selectSelection,
     selectSetBounds,
     selectSetZoom,
     selectTheaterMode,
     selectTheme,
     selectTour,
 } from "../store/reducers/base-reducer";
-import { selectPreventionStudies } from "../store/reducers/prevention-reducer";
-import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
-import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
-import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
+import { selectPreventionSelectionStudies, selectPreventionStudies } from "../store/reducers/prevention-reducer";
+import { selectDiagnosisSelectionStudies, selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
+import { selectTreatmentSelectionStudies, selectTreatmentStudies } from "../store/reducers/treatment-reducer";
+import { selectInvasiveSelectionStudies, selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import {
     setRegionAction,
@@ -35,7 +36,7 @@ import {
     updateZoomAction,
     setActionGroupSelected,
 } from "../store/actions/base-actions";
-import { Fade, Button, AppBar, Typography, IconButton, Toolbar, Box, Divider, Fab } from "@mui/material";
+import { Fade, Button, AppBar, Typography, IconButton, Toolbar, Box, Divider, Fab, Drawer } from "@mui/material";
 import {
     Menu as MenuIcon,
     CloseOutlined as CloseOutlinedIcon,
@@ -69,9 +70,18 @@ import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
 import LastUpdated from "./last-updated/LastUpdated";
 import FloatingLegend from "./legend/FloatingLegendContainer";
 import GreaterMekongLink from "./greater-mekong-link/GreaterMekongLink";
+import SiteSelectionContent from "./site-selection-content/SiteSelectionContent";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
+
+// Fix bug in production build
+// https://github.com/mapbox/mapbox-gl-js/issues/10173#issuecomment-750489778
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
+
 const drawerWidth = 100;
+const rightSideBarWidth = 500;
 
 const StyledButton = styled(Button)`
     &.MuiButton-root {
@@ -132,10 +142,10 @@ const SearchContainer = styled(BaseFlexAlignStartContainer)`
     align-items: start;
 `;
 
-const LegendContainer = styled(BaseContainer)`
+const LegendContainer = styled(BaseContainer)<{ rightOpen: boolean }>`
     position: absolute;
     top: 7%;
-    right: 10px;
+    right: ${props => (props.rightOpen ? `${rightSideBarWidth}px` : "10px")};
 `;
 
 const BottomLeftContainer = styled(BaseContainer)`
@@ -209,6 +219,11 @@ const mapStateToProps = (state: State) => ({
     treatmentStudies: selectTreatmentStudies(state),
     invasiveStudies: selectInvasiveStudies(state),
     tour: selectTour(state),
+    preventionSelectionStudies: selectPreventionSelectionStudies(state),
+    diagnosisSelectionStudies: selectDiagnosisSelectionStudies(state),
+    treatmentSelectionStudies: selectTreatmentSelectionStudies(state),
+    invasiveSelectionStudies: selectInvasiveSelectionStudies(state),
+    selection: selectSelection(state),
 });
 
 const mapDispatchToProps = {
@@ -244,6 +259,16 @@ class Map extends React.Component<Props> {
         selectedValue: LANGUAGES[0].value,
     };
     images: any[] = [];
+
+    shouldShowRightSideBar() {
+        return (
+            this.props.selection &&
+            (this.props.preventionSelectionStudies.length > 0 ||
+                this.props.diagnosisSelectionStudies.length > 0 ||
+                this.props.treatmentSelectionStudies.length > 0 ||
+                this.props.invasiveSelectionStudies.length > 0)
+        );
+    }
 
     componentDidMount() {
         if (!mapboxgl.supported()) {
@@ -446,7 +471,7 @@ class Map extends React.Component<Props> {
                     </Fade>
                 </Hidden>
                 <Fade in={showOptions}>
-                    <LegendContainer id={"legend"}>
+                    <LegendContainer id={"legend"} rightOpen={this.shouldShowRightSideBar()}>
                         <Hidden smUp>
                             <LeyendPopover />
                         </Hidden>
@@ -493,6 +518,21 @@ class Map extends React.Component<Props> {
                     open={this.state.open}
                     onClose={handleClose}
                 />
+                {this.shouldShowRightSideBar() && (
+                    <Drawer
+                        //className={classes.drawer}
+                        variant="persistent"
+                        anchor={"right"}
+                        open={true}
+                        PaperProps={{
+                            sx: {
+                                backgroundColor: "#f3f3f3",
+                            },
+                        }}
+                    >
+                        <SiteSelectionContent />
+                    </Drawer>
+                )}
             </React.Fragment>
         );
     }

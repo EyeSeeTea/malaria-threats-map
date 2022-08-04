@@ -168,30 +168,12 @@
             "synergist_involvement_subtitle": "Results of synergist-insecticide bioassays (mono oxygenases only)",
             "synergist_involvement_legend": "Effect of synergy in susceptibility",
             "chart": {
-                "resistance_status": {
-                    "content_1": "{{nStudies}} test(s) on ",
-                    "content_2": " malaria vectors via discriminating concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# of tests",
-                    "Confirmed": "Confirmed",
-                    "Possible": "Possible",
-                    "Susceptible": "Susceptible",
-                    "mortality": "mortality (%)",
-                    "tested": "tested (n)",
+                "not_reported": "NR: not reported",
+                "other_insecticide_class_label": "Other insecticides to which resistance was detected in this site:",
+                "other_insecticide_class_none": "None",
+                "resistance": {
                     "mosquito_mortality": "% mosquito mortality",
-                    "type": "type"
-                },
-                "resistance_intensity": {
-                    "content_1": "{{nStudies}} test(s) on ",
-                    "content_2": " malaria vectors via intensity concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# of tests",
-                    "HIGH_INTENSITY": "High Intensity",
-                    "MODERATE_TO_HIGH_INTENSITY": "Moderate to High Intensity",
-                    "MODERATE_INTENSITY": "Moderate Intensity",
-                    "LOW_INTENSITY": "Low Intensity",
-                    "NA": "NA",
-                    "mortality": "mortality (%)",
-                    "tested": "Tested (n)",
-                    "mosquito_mortality": "% mosquito mortality"
+                    "number_of_tests": "No. of mosquitoes tested"
                 },
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) on ",
@@ -205,10 +187,6 @@
                     "frequency": "Frequency (%)"
                 },
                 "synergist_involvement": {
-                    "mortality": "mortality (%)",
-                    "tested": "Tested (n)",
-                    "number_of_tests": "# of tests",
-                    "mosquito_mortality": "% mosquito mortality",
                     "no_synergist": "No synergist"
                 }
             },
@@ -246,9 +224,9 @@
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "mortality (%)",
-                    "full_involvement": "Full Involvement",
-                    "partial_involvement": "Partial Involvement",
-                    "no_involvement": "No Involvement",
+                    "full_restoration": "Full restoration",
+                    "partial_restoration": "Partial restoration",
+                    "no_restoration": "No restoration",
                     "help": {
                         "p1": "This map presents data from <1>synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying results, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how synergist involvement is graded consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
@@ -261,15 +239,17 @@
             "gene_deletions": "pfhrp2/3 gene deletions",
             "chart": {
                 "gene_deletions": {
+                    "subtitle_1": "Data collected",
+                    "subtitle_2": " by {{surveyTypes}}",
                     "content_1": "{{nStudies}} survey(s) ",
                     "content_2": " by {{surveyTypes}} {{years}}",
                     "content_3": "Number of <i>P. falciparum</i> positive samples from the study population: {{pfPosSamples}}",
                     "content_4": "Type of sample analyzed: {{typeSampleAnalyzed}}",
                     "DHS": "DHS",
                     "deletions_confirmed": "Deletions confirmed (% of samples)",
-                    "deletion_type": "Deletion type",
-                    "no_tested": "No. tested",
-                    "percentage": "Percentage deletion(s) in"
+                    "deletion_type": "Type of deletion",
+                    "no_tested": "Number of samples tested (N)",
+                    "percentage": "Percentage with confirmed deletions (%)"
                 }
             },
             "legend": {
@@ -300,15 +280,18 @@
                     "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against <i>{{plasmodiumSpecies}}</i> {{years}}",
                     "percentage": "Percentage (%)",
                     "study_years": "Study year(s)",
-                    "health_facility_name": "Health facility name",
-                    "number_of_patients": "Number of patients",
-                    "follow_up": "Follow-up",
+                    "health_facility_name": "Study conducted at the",
+                    "number_of_patients": "patients included",
+                    "follow_up": "days follow-up",
                     "confirmed_resist_pv": "Patients with confirmed resistance",
                     "positive_day_3": "Positive after day 3",
                     "treatment_failure_pp": "Patients with treatment failure, per protocol",
                     "treatment_failure_km": "Patients with treatment failure, Kaplan-Meier",
                     "days": "days",
-                    "studies": "study(s)"
+                    "studies": "study(s)",
+                    "aditional_information_title": "Aditional information: ",
+                    "show_more": "Show more",
+                    "show_less": "Show less"
                 },
                 "molecular_markers": {
                     "content": "{{nStudies}} molecular marker studies conducted on {{molecularMarker}} {{years}}",
