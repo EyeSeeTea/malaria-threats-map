@@ -79,12 +79,12 @@
                 "share_data": "Compartir datos"
             },
             "tools_submenu": {
-                "maps": "MAPAS",
-                "dashboards": "TABLEROS",
-                "data_download": "DESCARGA DE DATOS"
+                "maps": "Mapas",
+                "dashboards": "Tableros",
+                "data_download": "Descarga de datos"
             },
             "stories_submenu": {
-                "antimalarial_drug_efficacy_and_resistance": "EFICACIA Y RESISTENCIA A FÁRMACOS ANTIPALÚDICOS",
+                "antimalarial_drug_efficacy_and_resistance": "Eficacia y resistencia a fármacos antipalúdicos",
                 "parasite_pfhrp_gene_deletions": "Deleciones del gen <i>pfhrp2/3</i> del parásito"
             },
             "title": "Mapa de <br /> <strong>amenazas de malaria</strong>",

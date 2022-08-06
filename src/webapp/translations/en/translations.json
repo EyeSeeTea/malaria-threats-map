@@ -79,12 +79,12 @@
                 "share_data": "Share Data"
             },
             "tools_submenu": {
-                "maps": "MAPS",
-                "dashboards": "DASHBOARDS",
-                "data_download": "DATA DOWNLOAD"
+                "maps": "Maps",
+                "dashboards": "Dashboards",
+                "data_download": "Data download"
             },
             "stories_submenu": {
-                "antimalarial_drug_efficacy_and_resistance": "ANTIMALARIAL DRUG EFFICACY AND RESISTANCE",
+                "antimalarial_drug_efficacy_and_resistance": "Antimalarial drug efficacy and resistance",
                 "parasite_pfhrp_gene_deletions": "Parasite <i>pfhrp2/3</i> gene deletions"
             },
             "title": "Malaria <br /> <strong>Threats Map</strong>",

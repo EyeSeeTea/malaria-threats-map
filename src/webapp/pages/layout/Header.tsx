@@ -36,6 +36,7 @@ const MenuItems: React.FC<DirectionProps> = ({ flexDirection }) => {
             {
                 kind: "parent-menu" as const,
                 name: t("common.homepage.menu.tools"),
+                hoverPaddingRight: 23,
                 submenus: [
                     { kind: "simple-menu" as const, name: t("common.homepage.tools_submenu.maps"), path: "/maps" },
                     { kind: "simple-menu" as const, name: t("common.homepage.tools_submenu.dashboards"), path: "/" },
@@ -45,9 +46,10 @@ const MenuItems: React.FC<DirectionProps> = ({ flexDirection }) => {
             {
                 kind: "parent-menu" as const,
                 name: t("common.homepage.menu.stories"),
+                hoverPaddingRight: 7,
                 submenus: [
-                    { kind: "simple-menu" as const, name: t("common.themes_caps.prevention"), path: "/" },
-                    { kind: "simple-menu" as const, name: t("common.themes_caps.invasive"), path: "/" },
+                    { kind: "simple-menu" as const, name: t("common.themes.prevention"), path: "/" },
+                    { kind: "simple-menu" as const, name: t("common.themes.invasive"), path: "/" },
                     {
                         kind: "simple-menu" as const,
                         name: t("common.homepage.stories_submenu.antimalarial_drug_efficacy_and_resistance"),
@@ -55,7 +57,7 @@ const MenuItems: React.FC<DirectionProps> = ({ flexDirection }) => {
                     },
                     {
                         kind: "simple-menu-trans" as const,
-                        name: t("common.homepage.stories_submenu.parasite_pfhrp_gene_deletions"),
+                        name: "common.homepage.stories_submenu.parasite_pfhrp_gene_deletions",
                         path: "/",
                     },
                 ],
@@ -70,7 +72,7 @@ const MenuItems: React.FC<DirectionProps> = ({ flexDirection }) => {
     return (
         <>
             {menus.map(menu => {
-                return <NavMenu key={menu.name} menu={menu} flexDirection={flexDirection} t={t}/>;
+                return <NavMenu key={menu.name} menu={menu} flexDirection={flexDirection} t={t} />;
             })}
         </>
     );
