@@ -13,6 +13,8 @@ interface ThemePaperProps {
     colorOpaque: string;
     t: TFunction<"translation", undefined>;
     maxPaperHeight: number;
+    lastUpdated: string;
+    numStudies: number;
 }
 interface StyledPaperProps {
     color: string;
@@ -98,7 +100,17 @@ const ThemePaperDiv = styled.div`
         margin: 20px 0;
     }
 `;
-const ThemePaper = ({ icon, altText, title, subtitle, color, colorOpaque, maxPaperHeight }: ThemePaperProps) => {
+const ThemePaper = ({
+    icon,
+    altText,
+    title,
+    subtitle,
+    color,
+    colorOpaque,
+    maxPaperHeight,
+    lastUpdated,
+    numStudies,
+}: ThemePaperProps) => {
     const { t } = useTranslation();
     const { height } = useWindowDimensions();
 
@@ -119,10 +131,11 @@ const ThemePaper = ({ icon, altText, title, subtitle, color, colorOpaque, maxPap
                 <FlexSpaceBetween>
                     <FlexColumn>
                         <Typography gutterBottom variant="body1" component="div" textAlign="left">
-                            <strong>{t("common.legend.number_of_studies")}:</strong> 23820
+                            <strong>{t("common.legend.number_of_studies")}: </strong> {numStudies}
                         </Typography>
                         <Typography gutterBottom variant="body1" component="div" textAlign="left">
-                            <strong>{t("common.homepage.media_cards.db_last_updated")}:</strong> 28/09/2021
+                            <strong>{t("common.homepage.media_cards.db_last_updated")}: </strong>
+                            {lastUpdated}
                         </Typography>
                     </FlexColumn>
                     <StyledCardButton size="large" variant="contained">

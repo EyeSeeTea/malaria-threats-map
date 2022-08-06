@@ -68,14 +68,6 @@ type OwnProps = {
 type Props = StateProps & DispatchProps & OwnProps;
 
 class DiagnosisLayer extends Component<Props> {
-    updatePreventionSelectionStudies() {
-        const selectionStudies = this.props.selection
-            ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === this.props.selection.SITE_ID)
-            : [];
-
-        this.props.setDiagnosisSelectionStudies(selectionStudies);
-    }
-
     componentDidMount() {
         this.loadStudiesIfRequired();
         this.mountLayer();
@@ -108,10 +100,6 @@ class DiagnosisLayer extends Component<Props> {
         ) {
             this.filterSource();
             this.applyMapTypeSymbols();
-
-            this.updatePreventionSelectionStudies();
-        } else if (prevProps.selection !== this.props.selection) {
-            this.updatePreventionSelectionStudies();
         }
     }
 

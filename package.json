@@ -59,7 +59,7 @@
         "@mui/styled-engine": "npm:@mui/styled-engine-sc@5.4.2"
     },
     "scripts": {
-        "start": "cross-env-shell REACT_APP_ENV=staging BROWSER=none react-scripts start",
+        "start": "cross-env-shell REACT_APP_ENV=local BROWSER=none react-scripts start",
         "build": "cross-env-shell REACT_APP_ENV=staging react-scripts build",
         "build-prod": "cross-env-shell REACT_APP_ENV=prod react-scripts build",
         "build-dev": "cross-env-shell REACT_APP_ENV=dev react-scripts build",
