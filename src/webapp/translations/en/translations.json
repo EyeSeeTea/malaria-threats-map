@@ -6,6 +6,69 @@
             "title": "Malaria Threats Map",
             "subtitle": "Tracking biological challenges to malaria control and elimination"
         },
+        "aboutPage": {
+            "title": {
+                "first": "Learn More About",
+                "second": "The Malaria Threats Map"
+            },
+
+            "dataSection": {
+                "title": "Where does the data come from?",
+                "content": "Data is collected by National Malaria Programmes, their implementation partners, research institutes and non-governmental organizations. They are either provided directly to WHO Global Malaria Programme (GMP) or extracted from publications. All data are quality controlled, incorporated into WHO global databases and then published to the Malaria Threats Map."
+            },
+            "mapSection": {
+                "title": "Watch: Find out about the functionality of the maps within the MTM",
+                "videoLabel": "Watch:",
+                "video1": {
+                    "url": "https://www.youtube.com/embed/dU_xrzpbupU",
+                    "alt": "Malaria Threats Map: tracking biological challenges to malaria control and elimination",
+                    "title": "An overview of the maps"
+                },
+                "video2": {
+                    "url": "https://www.youtube.com/embed/VP-pc9oN0dM",
+                    "alt": "Malaria Threats Map: supporting research efforts",
+                    "title": "How is the MTM supporting research efforts?"
+                },
+                "video3": {
+                    "url": "https://www.youtube.com/embed/mkggjD0DKwY",
+                    "alt": "Malaria Threats Map: helping countries address critical threats for malaria control and elimination",
+                    "title": "How is the MTM supporting countries?"
+                }
+            },
+            "challengesSection": {
+                "title": " Thousands of people use the Malaria Threats Map to understand challenges to malaria control and elimination, access data and guide decision-making.",
+                "tabFooter": {
+                    "name": "Name",
+                    "globalFund": "Global Fund"
+                },
+                "tab1": {
+                    "name": "National Malaria Control Programmes",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab2": {
+                    "name": "NGOs",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab3": {
+                    "name": "Donors",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab4": {
+                    "name": "WHO Staff",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab5": {
+                    "name": "Researchers",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                }
+            },
+            "userExperienceSection": {
+                "title": "User experience testing",
+                "p1": "We have recently undertaken a process of user experience testing and are grateful to all who willingly gave of their time to contribute to the improvement of the MTM for all its users.",
+                "p2": "This user testing has led to the addition of the home, about and contact pages, the creation of the dashboards, a dedicated download interface, and a more streamlined map interface. We have also identified additional areas of improvement, which we are working on. These include increased guidance to facilitate decision-making, and additional map layers. We want to make this tool the best it can be so that together we have the resources to control and eliminate malaria.",
+                "button": "Acknowledgements List"
+            }
+        },
         "homepage": {
             "menu": {
                 "home": "Home",
@@ -98,30 +161,9 @@
                 "not_reported": "NR: not reported",
                 "other_insecticide_class_label": "Other insecticides to which resistance was detected in this site:",
                 "other_insecticide_class_none": "None",
-                "resistance_status": {
-                    "content_1": "{{nStudies}} test(s) on ",
-                    "content_2": " malaria vectors via discriminating concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
-                    "number_of_tests": "No. of mosquitoes tested",
-                    "Confirmed": "Confirmed",
-                    "Possible": "Possible",
-                    "Susceptible": "Susceptible",
-                    "mortality": "mortality (%)",
-                    "tested": "tested (n)",
+                "resistance": {
                     "mosquito_mortality": "% mosquito mortality",
-                    "type": "type"
-                },
-                "resistance_intensity": {
-                    "content_1": "{{nStudies}} test(s) on ",
-                    "content_2": " malaria vectors via intensity concentration bioassay(s) with selected {{insecticideClass}} {{years}}",
-                    "number_of_tests": "# of tests",
-                    "HIGH_INTENSITY": "High Intensity",
-                    "MODERATE_TO_HIGH_INTENSITY": "Moderate to High Intensity",
-                    "MODERATE_INTENSITY": "Moderate Intensity",
-                    "LOW_INTENSITY": "Low Intensity",
-                    "NA": "NA",
-                    "mortality": "mortality (%)",
-                    "tested": "Tested (n)",
-                    "mosquito_mortality": "% mosquito mortality"
+                    "number_of_tests": "No. of mosquitoes tested"
                 },
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) on ",
@@ -135,10 +177,6 @@
                     "frequency": "Frequency (%)"
                 },
                 "synergist_involvement": {
-                    "mortality": "mortality (%)",
-                    "tested": "Tested (n)",
-                    "number_of_tests": "# of tests",
-                    "mosquito_mortality": "% mosquito mortality",
                     "no_synergist": "No synergist"
                 }
             },
@@ -191,15 +229,17 @@
             "gene_deletions": "pfhrp2/3 gene deletions",
             "chart": {
                 "gene_deletions": {
+                    "subtitle_1": "Data collected",
+                    "subtitle_2": " by {{surveyTypes}}",
                     "content_1": "{{nStudies}} survey(s) ",
                     "content_2": " by {{surveyTypes}} {{years}}",
                     "content_3": "Number of <i>P. falciparum</i> positive samples from the study population: {{pfPosSamples}}",
                     "content_4": "Type of sample analyzed: {{typeSampleAnalyzed}}",
                     "DHS": "DHS",
                     "deletions_confirmed": "Deletions confirmed (% of samples)",
-                    "deletion_type": "Deletion type",
-                    "no_tested": "No. tested",
-                    "percentage": "Percentage deletion(s) in"
+                    "deletion_type": "Type of deletion",
+                    "no_tested": "Number of samples tested (N)",
+                    "percentage": "Percentage with confirmed deletions (%)"
                 }
             },
             "legend": {
@@ -230,15 +270,18 @@
                     "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against <i>{{plasmodiumSpecies}}</i> {{years}}",
                     "percentage": "Percentage (%)",
                     "study_years": "Study year(s)",
-                    "health_facility_name": "Health facility name",
-                    "number_of_patients": "Number of patients",
-                    "follow_up": "Follow-up",
+                    "health_facility_name": "Study conducted at the",
+                    "number_of_patients": "patients included",
+                    "follow_up": "days follow-up",
                     "confirmed_resist_pv": "Patients with confirmed resistance",
                     "positive_day_3": "Positive after day 3",
                     "treatment_failure_pp": "Patients with treatment failure, per protocol",
                     "treatment_failure_km": "Patients with treatment failure, Kaplan-Meier",
                     "days": "days",
-                    "studies": "study(s)"
+                    "studies": "study(s)",
+                    "aditional_information_title": "Aditional information: ",
+                    "show_more": "Show more",
+                    "show_less": "Show less"
                 },
                 "molecular_markers": {
                     "content": "{{nStudies}} molecular marker studies conducted on {{molecularMarker}} {{years}}",

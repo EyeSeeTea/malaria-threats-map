@@ -1,8 +1,7 @@
 import { createAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import { PreventionMapType, PreventionSelectionData } from "../types";
+import { PreventionMapType } from "../types";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
-import { Option } from "../../components/BasicSelect";
 
 export const fetchPreventionStudiesRequest = createAction(ActionTypeEnum.FetchPreventionStudiesRequest)();
 
@@ -33,11 +32,3 @@ export const setPreventionFilteredStudies = createAction(ActionTypeEnum.SetPreve
 export const setPreventionSelectionStudies = createAction(ActionTypeEnum.SetPreventionSelectionStudies)<
     PreventionStudy[]
 >();
-
-export const setPreventionSelectionData = createAction(
-    ActionTypeEnum.SetPreventionSelectionData
-)<PreventionSelectionData>();
-
-export const setPreventionSelectionDataSpecies = createAction(
-    ActionTypeEnum.SetPreventionSelectionDataSpeciesSelection
-)<Option[]>();
