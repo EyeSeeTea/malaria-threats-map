@@ -43,10 +43,16 @@ function Legend({ legendExpanded, preventionFilters }: Props) {
             color: ResistanceStatusColors.Susceptible[0],
         },
     ];
+
     const affectedInsecticideClasses = ["PYRROLES", "ORGANOPHOSPHATES"];
-    const greyLabelExtended = affectedInsecticideClasses.includes(preventionFilters.insecticideClass)
-        ? "prevention.extended_legend.resistance_status.pyrroles.chlorfenapyr_undetermined"
-        : "prevention.extended_legend.resistance_status.pyrroles.pirimiphos_methly_undetermined";
+    const greyLabelExtended =
+        preventionFilters.insecticideClass === "ORGANOPHOSPHATES" &&
+        preventionFilters.insecticideTypes.includes("PIRIMIPHOS-METHYL")
+            ? "prevention.extended_legend.resistance_status.pyrroles.pirimiphos_methly_undetermined"
+            : preventionFilters.insecticideClass === "PYRROLES" &&
+              preventionFilters.insecticideTypes.includes("CHLORFENAPYR")
+            ? "prevention.extended_legend.resistance_status.pyrroles.chlorfenapyr_undetermined"
+            : null;
 
     const greyLabel = {
         label: "prevention.legend.resistance_status.undetermined",
