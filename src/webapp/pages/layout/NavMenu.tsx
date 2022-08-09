@@ -1,4 +1,5 @@
 import { Button, Divider, Menu, MenuItem } from "@mui/material";
+import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
@@ -132,6 +133,7 @@ const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection }) => {
                             aria-expanded={Boolean(anchorEl) === true ? "true" : undefined}
                             onClick={handleClick}
                             onMouseOver={handleClick}
+                            endIcon={menu.submenus && <KeyboardArrowDownIcon />}
                         >
                             {menu.name}
                         </StyledMenuButton>
