@@ -12,6 +12,7 @@ const mapStateToProps = (state: State) => ({
     insecticideClasses: selectInsecticideClasses(state),
     preventionFilters: selectPreventionFilters(state),
     filteredStudies: selectFilteredPreventionStudies(state),
+
 });
 
 const mapDispatchToProps = {
@@ -30,11 +31,12 @@ export const INSECTICIDE_CLASSES: string[] = [
     "PYRROLES",
 ];
 
-function InsecticideClassFilter({ insecticideClasses = [], preventionFilters, setInsecticideClass }: Props) {
+function InsecticideClassFilter({ insecticideClasses = [], preventionFilters, filteredStudies, setInsecticideClass }: Props) {
     const { t } = useTranslation();
     const handleChange = (event: React.ChangeEvent<unknown>) => {
         setInsecticideClass((event.target as HTMLInputElement).value);
     };
+    console.log(filteredStudies);
 
     const options = (insecticideClasses as Translation[])
         .filter(translation => translation.VALUE_ !== "NA")
@@ -43,7 +45,7 @@ function InsecticideClassFilter({ insecticideClasses = [], preventionFilters, se
             value: insecticide.VALUE_,
             label: t(insecticide.VALUE_),
         }));
-
+    
     return (
         <RadioGroupFilter
             label={t("common.filters.insecticide_class")}
