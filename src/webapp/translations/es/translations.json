@@ -103,7 +103,7 @@
                 "resistance_status": {
                     "pyrroles": {
                         "chlorfenapyr_undetermined": "Los puntos grises representan los datos recopilados con la concentración de discriminación recomendada de 100 µg/botella, pero que no coinciden completamente con los criterios de la OMS para la validación de la prueba, ya sea porque no se informó la temperatura o porque la temperatura cayó fuera del rango recomendado (27 °C ± 2  °C), porque no se probó ninguna cepa de mosquito susceptible en paralelo o porque no se informaron los resultados de la cepa de mosquito susceptible.",
-                        "pirimiphos_methly_undetermined": "Los puntos grises representan los datos recopilados con la concentración de discriminación de pirimifos-metilo recomendada anteriormente de 0,25 %. Estos datos deben validarse con las nuevas concentraciones discriminatorias disponibles en el Manual de la OMS para monitorear la resistencia a insecticidas en mosquitos vectores y seleccionar las intervenciones apropiadas. https://www.who.int/publications/i/item/9789240051089"
+                        "pirimiphos_methly_undetermined": "Los puntos grises representan datos recogidos por medio de bioensayos realizados usando la concentración discriminante de pirimifos-metilo recomendada anteriormente (0,25 %). Estos datos deben validarse contra las nuevas concentraciones discriminantes disponibles en el manual de la OMS para la vigilancia de la resistencia de los mosquitoes vectors a los insecticides y la selección de intervenciones adecuadas. https://www.who.int/publications/i/item/9789240051089"
                     }
                 }
             }
