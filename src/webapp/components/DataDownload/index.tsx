@@ -8,7 +8,6 @@ import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import Dialog from "@mui/material/Dialog";
 import Step from "@mui/material/Step";
-import StepButton from "@mui/material/StepButton";
 import { selectIsDataDownloadOpen } from "../../store/reducers/base-reducer";
 import { logEventAction, setDataDownloadOpenAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
