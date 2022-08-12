@@ -193,7 +193,7 @@ const HomePage = ({
                             title={t("common.homepage.media_cards.maps.title")}
                             subtitle={t("common.homepage.media_cards.maps.subtitle")}
                             buttonText={t("common.homepage.media_cards.maps.button_text")}
-                            buttonLink={"maps"}
+                            buttonLink={"/maps"}
                             image={Maps}
                             altText={t("common.homepage.media_cards.maps.title")}
                         />

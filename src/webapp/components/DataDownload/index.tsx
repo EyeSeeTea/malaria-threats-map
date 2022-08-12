@@ -2,14 +2,12 @@ import React from "react";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
-import { AppBar, Button, Container, DialogActions, Fab, StepLabel, Theme, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, Container, DialogActions, StepLabel, Theme, Toolbar, Typography } from "@mui/material";
 import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
-import Dialog from "@mui/material/Dialog";
 import Step from "@mui/material/Step";
-import { selectIsDataDownloadOpen } from "../../store/reducers/base-reducer";
-import { logEventAction, setDataDownloadOpenAction } from "../../store/actions/base-actions";
+import { logEventAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
 import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
 import UserForm, { ORGANIZATION_TYPES } from "./UserForm";
@@ -95,9 +93,6 @@ const useStyles = makeStyles((theme: Theme) =>
         appBar: {
             position: "relative",
         },
-        paper: {
-            backgroundColor: "#fafafa",
-        },
         paperStepper: {
             backgroundColor: "#fafafa",
             marginTop: 8,
@@ -106,14 +101,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const mapStateToProps = (state: State) => ({
-    isDataDownloadOpen: selectIsDataDownloadOpen(state),
     preventionStudies: selectPreventionStudies(state),
     treatmentStudies: selectTreatmentStudies(state),
     invasiveStudies: selectInvasiveStudies(state),
 });
 
 const mapDispatchToProps = {
-    setDataDownloadOpen: setDataDownloadOpenAction,
     addDownload: addDataDownloadRequestAction,
     logEvent: logEventAction,
 };
@@ -192,15 +185,7 @@ const initialUseInfo: Partial<UseInfo> = {
     piConsent: false,
 };
 
-function DataDownload({
-    isDataDownloadOpen,
-    setDataDownloadOpen,
-    preventionStudies,
-    treatmentStudies,
-    invasiveStudies,
-    logEvent,
-    addDownload,
-}: Props) {
+function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, logEvent, addDownload }: Props) {
     const classes = useStyles({});
     const { t } = useTranslation();
     const [activeStep, setActiveStep] = React.useState(0);
@@ -208,14 +193,12 @@ function DataDownload({
     const [messageLoader, setMessageLoader] = React.useState("");
 
     React.useEffect(() => {
-        if (isDataDownloadOpen) {
-            logEvent({
-                category: "download",
-                action: "step",
-                label: (activeStep + 1).toString(),
-            });
-        }
-    }, [activeStep, isDataDownloadOpen, logEvent]);
+        logEvent({
+            category: "download",
+            action: "step",
+            label: (activeStep + 1).toString(),
+        });
+    }, [activeStep, logEvent]);
 
     const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>({});
     const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({
@@ -241,32 +224,6 @@ function DataDownload({
         countries: [],
     });
 
-    const reset = () => {
-        setActiveStep(0);
-        setWelcomeInfo({});
-        setUserInfo({
-            organizationType: t(`common.${ORGANIZATION_TYPES[0]}`),
-        });
-        setUseInfo(initialUseInfo);
-        setSelections({
-            theme: "prevention",
-            preventionDataset: undefined,
-            treatmentDataset: undefined,
-            invasiveDataset: undefined,
-            insecticideClasses: [],
-            insecticideTypes: [],
-            mechanismTypes: [],
-            molecularMarkers: [],
-            types: [],
-            synergistTypes: [],
-            plasmodiumSpecies: [],
-            species: [],
-            drugs: [],
-            years: [],
-            countries: [],
-        });
-    };
-
     const onChangeWelcomeInfo = (field: keyof WelcomeInfo, value: any) => {
         setWelcomeInfo({ ...welcomeInfo, [field]: value });
     };
@@ -275,11 +232,6 @@ function DataDownload({
     };
     const onChangeUseInfo = (field: keyof UseInfo, value: any) => {
         setUseInfo({ ...useInfo, [field]: value });
-    };
-    const handleToggle = () => {
-        logEvent({ category: "menu", action: "download" });
-        setDataDownloadOpen(!isDataDownloadOpen);
-        reset();
     };
 
     const steps = getSteps();
@@ -917,97 +869,79 @@ function DataDownload({
     const isFormValid = () => isWelcomeFormValid() && isUserFormValid() && isUseFormValid() && isDownloadFormValid();
 
     return (
-        <div>
-            <Fab
-                size="small"
-                color={isDataDownloadOpen ? "primary" : "default"}
-                onClick={handleToggle}
-                className={classes.fab}
-                title={t("common.icons.download")}
-            >
-                <CloudDownloadIcon />
-            </Fab>
-            <Dialog
-                fullScreen
-                open={isDataDownloadOpen}
-                onClose={handleToggle}
-                aria-labelledby="max-width-dialog-title"
-                PaperProps={{
-                    className: classes.paper,
-                }}
-            >
-                {downloading && <SimpleLoader message={messageLoader} />}
-                <AppBar position={"relative"}>
-                    <Container maxWidth={"md"}>
-                        <Toolbar variant="dense">
-                            <Typography variant="h6" className={classes.title}>
-                                {t("common.data_download.title")}
-                            </Typography>
-                        </Toolbar>
-                    </Container>
-                </AppBar>
+        <StyledContainer>
+            {downloading && <SimpleLoader message={messageLoader} />}
+            <AppBar position={"relative"}>
                 <Container maxWidth={"md"}>
-                    <PaperStepper
-                        alternativeLabel
-                        activeStep={activeStep}
-                        className={classes.paperStepper}
-                        connector={<StyledStepConnector />}
+                    <Toolbar variant="dense">
+                        <Typography variant="h6" className={classes.title}>
+                            {t("common.data_download.title")}
+                        </Typography>
+                    </Toolbar>
+                </Container>
+            </AppBar>
+            <Container maxWidth={"md"}>
+                <PaperStepper
+                    alternativeLabel
+                    activeStep={activeStep}
+                    className={classes.paperStepper}
+                    connector={<StyledStepConnector />}
+                >
+                    {steps.map((label, index) => (
+                        <Step key={label}>
+                            <StepLabel
+                                icon={
+                                    <StepIcon disabled={index > activeStep}>
+                                        {index < activeStep ? <CheckIcon /> : <p>{index + 1}</p>}
+                                    </StepIcon>
+                                }
+                            >
+                                {t(`common.${label}`)}
+                            </StepLabel>
+                            {/* <StepButton>{t(`common.${label}`)}</StepButton> */}
+                        </Step>
+                    ))}
+                </PaperStepper>
+            </Container>
+            <Container maxWidth={"md"}>
+                <Wrapper>{renderStep()}</Wrapper>
+            </Container>
+            <Container maxWidth={"md"}>
+                <DialogActions>
+                    <FlexGrow />
+                    <GreyButton disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                        {t("common.data_download.buttons.back")}
+                    </GreyButton>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        className={classes.button}
+                        disabled={!isStepValid()}
                     >
-                        {steps.map((label, index) => (
-                            <Step key={label}>
-                                <StepLabel
-                                    icon={
-                                        <StepIcon disabled={index > activeStep}>
-                                            {index < activeStep ? <CheckIcon /> : <p>{index + 1}</p>}
-                                        </StepIcon>
-                                    }
-                                >
-                                    {t(`common.${label}`)}
-                                </StepLabel>
-                                {/* <StepButton>{t(`common.${label}`)}</StepButton> */}
-                            </Step>
-                        ))}
-                    </PaperStepper>
-                </Container>
-                <Container maxWidth={"md"}>
-                    <Wrapper>{renderStep()}</Wrapper>
-                </Container>
-                <Container maxWidth={"md"}>
-                    <DialogActions>
-                        <Button variant={"contained"} color={"primary"} onClick={handleToggle}>
-                            {t("common.data_download.buttons.close")}
-                        </Button>
-                        <FlexGrow />
-                        <GreyButton disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                            {t("common.data_download.buttons.back")}
-                        </GreyButton>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleNext}
-                            className={classes.button}
-                            disabled={!isStepValid()}
-                        >
-                            {t("common.data_download.buttons.next")}
-                        </Button>
-                        <Button
-                            startIcon={<CloudDownloadIcon />}
-                            variant={"contained"}
-                            color={"primary"}
-                            className={classes.button}
-                            disabled={!isFormValid()}
-                            onClick={() => downloadData()}
-                        >
-                            {t("common.data_download.buttons.download")}
-                        </Button>
-                    </DialogActions>
-                </Container>
-            </Dialog>
-        </div>
+                        {t("common.data_download.buttons.next")}
+                    </Button>
+                    <Button
+                        startIcon={<CloudDownloadIcon />}
+                        variant={"contained"}
+                        color={"primary"}
+                        className={classes.button}
+                        disabled={!isFormValid()}
+                        onClick={() => downloadData()}
+                    >
+                        {t("common.data_download.buttons.download")}
+                    </Button>
+                </DialogActions>
+            </Container>
+        </StyledContainer>
     );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataDownload);
+
+const StyledContainer = styled(Container)`
+    background: #fafafa;
+`;
 
 const StepIcon = styled.div<{ disabled: boolean }>`
     background-color: ${({ disabled }) => (disabled ? "#DDDDDD" : "#2FB3AF")};

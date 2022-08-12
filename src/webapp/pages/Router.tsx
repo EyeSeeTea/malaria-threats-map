@@ -2,9 +2,10 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./home/HomePage";
 import { AboutPage } from "./about/AboutPage";
-import PersistentDrawerLeft from "../components/PersistentDrawerLeft";
+import MapPage from "./map/MapPage";
 import ContactPage from "./contact/ContactPage";
 import config from "../config";
+import { DownloadPage } from "./download/DownloadPage";
 
 export const Router: React.FC = React.memo(() => {
     return (
@@ -14,7 +15,8 @@ export const Router: React.FC = React.memo(() => {
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/contact" element={<ContactPage />} />
 
-                <Route path="maps" element={<PersistentDrawerLeft />} />
+                <Route path="/maps" element={<MapPage />} />
+                <Route path="/download" element={<DownloadPage />} />
 
                 {/* Default route */}
                 <Route element={<HomePage />} />

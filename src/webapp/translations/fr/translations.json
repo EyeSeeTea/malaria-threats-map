@@ -466,8 +466,7 @@
             "buttons": {
                 "back": "Précédent",
                 "next": "Suivant",
-                "download": "Télécharger",
-                "close": "Sortir"
+                "download": "Télécharger"
             },
             "filters": {
                 "prevention": {

@@ -69,8 +69,6 @@ export const setTourOpenAction = createAction(ActionTypeEnum.SetTourOpen)<boolea
 
 export const setTourStepAction = createAction(ActionTypeEnum.SetTourStep)<number>();
 
-export const setDataDownloadOpenAction = createAction(ActionTypeEnum.SetDataDownloadOpen)<boolean>();
-
 export const setReportOpenAction = createAction(ActionTypeEnum.SetReportOpen)<boolean>();
 
 export const setMapTitleAction = createAction(ActionTypeEnum.SetMapTitle)<string>();

@@ -59,7 +59,6 @@ export interface MalariaState {
     bounds: Array<Array<number>>;
     setBounds: Array<Array<number>>;
     tour: TourState;
-    dataDownloadOpen: boolean;
     reportOpen: boolean;
     mapTitle: string;
     subscriptionOpen: boolean;

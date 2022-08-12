@@ -466,8 +466,7 @@
             "buttons": {
                 "back": "Back",
                 "next": "Next",
-                "download": "Download",
-                "close": "Close"
+                "download": "Download"
             },
             "filters": {
                 "prevention": {

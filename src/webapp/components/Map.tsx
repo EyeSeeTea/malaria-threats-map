@@ -3,7 +3,6 @@ import { style } from "./style";
 import styled from "styled-components";
 import LayersButton from "./layers_button/LayersButton";
 import mapboxgl from "mapbox-gl";
-import { isMobile } from "react-device-detect";
 import { State } from "../store/types";
 import { connect } from "react-redux";
 import PreventionLayer from "./layers/prevention/PreventionLayer";
@@ -36,19 +35,12 @@ import {
     updateZoomAction,
     setActionGroupSelected,
 } from "../store/actions/base-actions";
-import { Fade, Button, AppBar, Typography, IconButton, Toolbar, Box, Divider, Fab, Drawer } from "@mui/material";
-import {
-    Menu as MenuIcon,
-    CloseOutlined as CloseOutlinedIcon,
-    Add as ZoomInIcon,
-    Remove as ZoomOutIcon,
-    OpenInFull as MapOnlyIcon,
-} from "@mui/icons-material";
+import { Fade, Box, Fab, Drawer } from "@mui/material";
+import { Add as ZoomInIcon, Remove as ZoomOutIcon, OpenInFull as MapOnlyIcon } from "@mui/icons-material";
 import LeyendPopover from "./legend/LegendPopover";
 import StoryModeSelector from "./StoryModeSelector";
 import MalariaTour from "./tour/MalariaTour";
 import MekongLayer from "./layers/MekongLayer";
-import DataDownload from "./DataDownload";
 import Screenshot from "./Screenshot";
 import Report from "./Report";
 import Feedback from "./Feedback";
@@ -60,10 +52,8 @@ import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
-import { Flex } from "./Chart";
 import MapActions from "./map-actions/MapActions";
 import { dispatchCustomEvent } from "../utils/dom-utils";
-import LeftSidebarMenu from "./LeftSidebarMenu/LeftSidebarMenu";
 
 import { changeLanguage } from "../config/i18next";
 import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
@@ -71,6 +61,7 @@ import LastUpdated from "./last-updated/LastUpdated";
 import FloatingLegend from "./legend/FloatingLegendContainer";
 import GreaterMekongLink from "./greater-mekong-link/GreaterMekongLink";
 import SiteSelectionContent from "./site-selection-content/SiteSelectionContent";
+import SecondaryHeader from "../pages/secondary-layout/SecondaryHeader";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
@@ -82,25 +73,6 @@ mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worke
 
 const drawerWidth = 100;
 const rightSideBarWidth = 500;
-
-const StyledButton = styled(Button)`
-    &.MuiButton-root {
-        padding: 15px;
-        color: black;
-        letter-spacing: 0.235px;
-        &:hover {
-            border: none;
-            color: #2FB3AF;
-            font-weight: bold;
-            padding-bottom: 10px;
-            letter-spacing: 0;
-            border-bottom: 5px solid #2FB3AF;
-            border-radius: 0;
-            cursor;
-            transition: none;
-        }
-    }
-`;
 
 const Separator = styled.div`
     width: 20px;
@@ -180,26 +152,8 @@ const FloatingActionContainer = styled(BaseContainer)`
     pointer-events: all;
 `;
 
-const StyledToolbar = styled(Toolbar)`
-    &.MuiToolbar-root {
-        padding: 0;
-        @media (min-width: 600px) {
-            padding: 0;
-            min-height: 50px;
-        }
-    }
-`;
-
 const PushoverContainer = styled.div`
     margin-left: ${(props: { menuOpen: boolean }) => (props.menuOpen ? `${drawerWidth}px` : "0")};
-`;
-
-const MenuTypography = styled(Typography)`
-    padding-right: 17px;
-    text-transform: uppercase;
-    font-size: 0.875rem;
-    line-height: 1.75;
-    letter-spacing: 0.235;
 `;
 
 // A Fab ("floating action button") looks like a rounded button.
@@ -365,10 +319,6 @@ class Map extends React.Component<Props> {
             appBar: { backgroundColor: "white", zIndex: 1400 },
         };
 
-        const handleClickOpen = () => {
-            this.setState({ open: true });
-        };
-
         const handleClose = (value: string) => {
             changeLanguage(value);
             this.setState({ open: false, selectedValue: value });
@@ -393,37 +343,19 @@ class Map extends React.Component<Props> {
                         <GreaterMekongLink />
                     </TopMiddleContainer>
                 )}
+                {/* TODO:Refactor SecondaryHeader from here and use Secondary Layout in MapPage */}
                 {viewMapOnly || (
                     <Hidden smDown>
-                        <Box>
-                            <AppBar position="sticky" sx={classes.appBar}>
-                                <StyledToolbar>
-                                    <Box sx={classes.menuOptionBox}>
-                                        <Flex style={{ alignItems: "center" }}>
-                                            <IconButton
-                                                onClick={() => this.setState({ menuOpen: !this.state.menuOpen })}
-                                            >
-                                                {this.state.menuOpen ? <CloseOutlinedIcon /> : <MenuIcon />}
-                                            </IconButton>
-                                            <MenuTypography variant="h6">
-                                                {this.props.t("common.topbar.menu")}
-                                            </MenuTypography>
-                                        </Flex>
-                                        <Divider orientation="vertical" flexItem />
-                                        <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
-                                        <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
-                                        <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
-                                        <StyledButton>{this.props.t("common.topbar.stories")}</StyledButton>
-                                    </Box>
-                                    <Box sx={classes.screenshotBox}>
-                                        <Screenshot map={this.map} />
-                                    </Box>
-                                </StyledToolbar>
-                            </AppBar>
-                        </Box>
+                        <SecondaryHeader
+                            action={
+                                <Box sx={classes.screenshotBox}>
+                                    <Screenshot map={this.map} />
+                                </Box>
+                            }
+                            onDrawerOpenChange={open => this.setState({ menuOpen: open })}
+                        />
                     </Hidden>
                 )}
-                <LeftSidebarMenu isMenuOpen={this.state.menuOpen} handleClickOpen={handleClickOpen} />
                 {viewMapOnly || (
                     <Fade in={showOptions}>
                         <PushoverContainer menuOpen={this.state.menuOpen}>
@@ -431,7 +363,6 @@ class Map extends React.Component<Props> {
                                 <Hidden smDown>
                                     <MalariaTour />
                                 </Hidden>
-                                {!isMobile && <DataDownload />}
                                 <Hidden smUp>
                                     <ShareIcon />
                                 </Hidden>

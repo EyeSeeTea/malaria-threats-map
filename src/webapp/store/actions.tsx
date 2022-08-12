@@ -21,7 +21,6 @@ export enum ActionTypeEnum {
     SetBounds = "malaria/SET_BOUNDS",
     SetTourOpen = "malaria/SET_TOUR_OPEN",
     SetTourStep = "malaria/SET_TOUR_STEP",
-    SetDataDownloadOpen = "malaria/SET_DATA_DOWNLOAD_OPEN",
     SetReportOpen = "malaria/SET_REPORT_OPEN",
     SetMapTitle = "malaria/SET_MAP_TITLE",
     SetSubscriptionOpen = "malaria/SET_SUBSCRIPTION_OPEN",
