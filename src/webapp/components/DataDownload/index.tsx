@@ -2,7 +2,8 @@ import React from "react";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
-import { AppBar, Button, Container, DialogActions, Fab, Theme, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, Container, DialogActions, Fab, StepLabel, Theme, Toolbar, Typography } from "@mui/material";
+import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import Dialog from "@mui/material/Dialog";
@@ -47,6 +48,7 @@ import { FlexGrow } from "../Chart";
 import SimpleLoader from "../SimpleLoader";
 import { setTimeout } from "timers";
 import PaperStepper from "../PaperStepper/PaperStepper";
+import CheckIcon from "@mui/icons-material/Check";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
 
@@ -96,6 +98,10 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         paper: {
             backgroundColor: "#fafafa",
+        },
+        paperStepper: {
+            backgroundColor: "#fafafa",
+            marginTop: 8,
         },
     })
 );
@@ -942,10 +948,24 @@ function DataDownload({
                     </Container>
                 </AppBar>
                 <Container maxWidth={"md"}>
-                    <PaperStepper alternativeLabel nonLinear activeStep={activeStep} className={classes.paper}>
-                        {steps.map((label, _index) => (
+                    <PaperStepper
+                        alternativeLabel
+                        activeStep={activeStep}
+                        className={classes.paperStepper}
+                        connector={<StyledStepConnector />}
+                    >
+                        {steps.map((label, index) => (
                             <Step key={label}>
-                                <StepButton>{t(`common.${label}`)}</StepButton>
+                                <StepLabel
+                                    icon={
+                                        <StepIcon disabled={index > activeStep}>
+                                            {index < activeStep ? <CheckIcon /> : <p>{index + 1}</p>}
+                                        </StepIcon>
+                                    }
+                                >
+                                    {t(`common.${label}`)}
+                                </StepLabel>
+                                {/* <StepButton>{t(`common.${label}`)}</StepButton> */}
                             </Step>
                         ))}
                     </PaperStepper>
@@ -989,3 +1009,41 @@ function DataDownload({
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataDownload);
+
+const StepIcon = styled.div<{ disabled: boolean }>`
+    background-color: ${({ disabled }) => (disabled ? "#DDDDDD" : "#2FB3AF")};
+    color: #fff;
+    width: 40px;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 50%;
+    margin-top: -13px;
+    font-weight: 500;
+    z-index: 1;
+`;
+
+const StyledStepConnector = styled(StepConnector)(() => ({
+    [`&.${stepConnectorClasses.alternativeLabel}`]: {
+        top: 10,
+        left: "calc(-50% + 26px)",
+        right: "calc(50% + 26px)",
+    },
+    [`&.${stepConnectorClasses.active}`]: {
+        [`& .${stepConnectorClasses.line}`]: {
+            borderColor: "#2FB3AF",
+        },
+    },
+    [`&.${stepConnectorClasses.completed}`]: {
+        [`& .${stepConnectorClasses.line}`]: {
+            borderColor: "#2FB3AF",
+        },
+    },
+    [`& .${stepConnectorClasses.line}`]: {
+        borderColor: "#DDDDDD",
+        borderTopWidth: 2,
+    },
+}));
