@@ -261,7 +261,7 @@ class PreventionLayer extends Component<Props> {
         if (filteredStudies.length === 0) {
             return <div />;
         }
-        console.log(filteredStudies);
+
         return (
             this.props.theme === "prevention" && (
                 <>

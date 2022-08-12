@@ -102,8 +102,8 @@
             "extended_legend": {
                 "resistance_status": {
                     "pyrroles": {
-                        "chlorfenapyr_undetermined": "Data collected with the recommended discriminating concentration of 100 µg/bottle but that do not fully match WHO criteria for test validation, either because temperature was not reported, because temperature fell outside of the recommended range (27 °C ± 2 °C), because no susceptible mosquito strain was tested in parallel or because results of the susceptible mosquito strain were not reported.",
-                        "pirimiphos_methly_undetermined": "Data collected with the formerly recommended discriminating concentration of 0.25%."
+                        "chlorfenapyr_undetermined": "Grey  dots represent data collected with the recommended discriminating  concentration of 100 µg/bottle but that do not fully match WHO criteria  for test validation, either because the temperature was not reported,  because temperature fell outside of the recommended range (27 °C ± 2  °C), because no susceptible mosquito strain was tested in parallel or  because results of the susceptible mosquito strain were not reported.",
+                        "pirimiphos_methly_undetermined": "Grey  dots represent data collected with the formerly recommended pyrimiphos-methyl discriminating concentration of 0.25%.  These data should be validated against the new discriminating concentrations available in the WHO Manual for monitoring insecticide resistance in mosquito vectors and selecting appropriate interventions. https://www.who.int/publications/i/item/9789240051089"
                     }
                 }
             }
