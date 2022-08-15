@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Checkbox, FormControl, Paper, TextField, Theme, Typography } from "@mui/material";
+import { Card, Checkbox, FormControl, Paper, TextField, Theme } from "@mui/material";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import styled from "styled-components";
@@ -92,14 +92,6 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
         onChange("studyDate", date);
     };
 
-    const handleConsent1Change = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onChange("contactConsent", event.target.checked);
-    };
-
-    const handleConsent2Change = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onChange("piConsent", event.target.checked);
-    };
-
     const researchActive = isResearchActive(useInfo.uses);
     const policiesActive = isPoliciesActive(useInfo.uses);
     const toolsActive = isToolsActive(useInfo.uses);
@@ -190,19 +182,7 @@ const UseForm = ({ onChange, useInfo }: OwnProps) => {
                 value={useInfo.countries}
                 onChange={handleCountriesChange}
             />
-            <Snackbar>
-                {t("common.data_download.step2.message")}
-                <FormControlLabel
-                    control={
-                        <Checkbox checked={useInfo.contactConsent} onChange={handleConsent1Change} color="primary" />
-                    }
-                    label={<Typography variant={"body2"}>{t("common.data_download.step2.consent1")}</Typography>}
-                />
-                <FormControlLabel
-                    control={<Checkbox checked={useInfo.piConsent} onChange={handleConsent2Change} color="primary" />}
-                    label={<Typography variant={"body2"}>{t("common.data_download.step2.consent2")}</Typography>}
-                />
-            </Snackbar>
+            <Snackbar></Snackbar>
         </Card>
     );
 };

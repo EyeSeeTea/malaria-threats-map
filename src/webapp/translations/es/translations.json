@@ -526,9 +526,11 @@
                     "other": "Otras"
                 },
                 "organization_name": "Nombre de la Organización",
-                "position": "Position",
+                "uses_placeHolder": "Nos interesa saber para qué estás utilizando los datos. Le agradeceríamos si pudiera proporcionar una breve descripción.",
                 "country": "País de Residencia",
-                "email": "Email"
+                "email": "Email",
+                "consent1": "Autorizo ser contactado por la Organización Mundial de la Salud con respecto a mi experiencia con el Mapa de Amenazas de la Malaria y los datos de las bases de datos globales.",
+                "consent2": "Autorizo a la Organización Mundial de la Salud a usar el nombre de mi organización y la descripción del proyecto proporcionada anteriormente para mostrar el uso de las bases de datos globales (no se mostrarán datos personales)."
             },
             "step2": {
                 "title": "Propósito de la descarga",
@@ -549,9 +551,7 @@
                     "date": "¿Cuándo tiene previsto terminar su proyecto, política, estrategia o plan?"
                 },
                 "countries": "Países donde se implementará el proyecto, política, estrategia o plan",
-                "message": "La OMS desea mejorar las bases de datos mundiales y el Mapa de los desafíos de la malaria para satisfacer mejor las necesidades de su comunidad de usuarios. Por lo tanto, la OMS pretende comunicarse con los usuarios para recopilar sugerencias de mejora y aprender de los diferentes casos de uso de estos productos y los beneficios que estos productos les reportan.",
-                "consent1": "Autorizo a la Organización Mundial de la Salud a usar mis datos personales para contactarme con respecto a mi experiencia usando el Mapa de los desafíos de la malaria y los datos de las bases de datos globales. ",
-                "consent2": "Autorizo a la Organización Mundial de la Salud a usar el nombre de la organización y las descripciones de proyectos que he proporcionado para presentar los casos de uso de las bases de datos globales (no se mostrarán datos personales)."
+                "message": "La OMS desea mejorar las bases de datos mundiales y el Mapa de los desafíos de la malaria para satisfacer mejor las necesidades de su comunidad de usuarios. Por lo tanto, la OMS pretende comunicarse con los usuarios para recopilar sugerencias de mejora y aprender de los diferentes casos de uso de estos productos y los beneficios que estos productos les reportan."
             },
             "step3": {
                 "title": "Filtrar datos a descargar",

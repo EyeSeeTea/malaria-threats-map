@@ -125,9 +125,11 @@ export type UserInfo = {
     lastName: string;
     organizationType: string;
     organizationName: string;
-    position: string;
+    uses: string;
     country: string;
     email: string;
+    contactConsent: boolean;
+    piConsent: boolean;
 };
 
 export type WelcomeInfo = {
@@ -141,8 +143,6 @@ export type UseInfo = {
     researchInfo: string;
     policiesInfo: string;
     toolsInfo: string;
-    contactConsent: boolean;
-    piConsent: boolean;
 };
 
 export type Download = {
@@ -150,10 +150,10 @@ export type Download = {
     lastName: string;
     organizationType: string;
     organizationName: string;
+    uses: string;
     position: string;
     country: string;
     email: string;
-    uses: string;
     date: string;
     researchInfo: string;
     policiesInfo: string;
@@ -177,8 +177,6 @@ const initialUseInfo: Partial<UseInfo> = {
     uses: [],
     countries: [],
     studyDate: new Date(),
-    contactConsent: false,
-    piConsent: false,
 };
 
 function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, logEvent, addDownload }: Props) {
@@ -751,14 +749,14 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                 lastName: userInfo.lastName,
                 organizationType: t(`common.${userInfo.organizationType}`),
                 organizationName: userInfo.organizationName,
-                position: userInfo.position,
+                uses: userInfo.uses,
+                position: "", // TODO: Remove of backend?
                 country: userInfo.country,
                 email: userInfo.email,
-                uses: useInfo.uses.map(use => t(`common.${use}`)).join(", "),
                 researchInfo: useInfo.researchInfo || "",
                 policiesInfo: useInfo.policiesInfo || "",
-                contactConsent: useInfo.contactConsent,
-                organisationProjectConsent: useInfo.piConsent,
+                contactConsent: userInfo.contactConsent,
+                organisationProjectConsent: userInfo.piConsent,
                 toolsInfo: useInfo.toolsInfo || "",
                 implementationCountries: useInfo.countries.join(", ") || "",
                 date: useInfo.studyDate.toISOString().slice(0, 10),
@@ -799,7 +797,7 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
         return (
             userInfo.firstName &&
             userInfo.lastName &&
-            userInfo.position &&
+            userInfo.uses &&
             userInfo.country &&
             userInfo.organizationType &&
             userInfo.organizationName &&
@@ -863,56 +861,53 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
     const isFormValid = () => isWelcomeFormValid() && isUserFormValid() && isUseFormValid() && isDownloadFormValid();
 
     return (
-        <StyledContainer>
+        <StyledContainer maxWidth="lg">
             {downloading && <SimpleLoader message={messageLoader} />}
-            <Container maxWidth={"md"}>
-                <PaperStepper alternativeLabel activeStep={activeStep} connector={<StyledStepConnector />}>
-                    {steps.map((label, index) => (
-                        <Step key={label}>
-                            <StepLabel
-                                icon={
-                                    <StepIcon disabled={index > activeStep}>
-                                        {index < activeStep ? <CheckIcon /> : <p>{index + 1}</p>}
-                                    </StepIcon>
-                                }
-                            >
-                                {t(`common.${label}`)}
-                            </StepLabel>
-                            {/* <StepButton>{t(`common.${label}`)}</StepButton> */}
-                        </Step>
-                    ))}
-                </PaperStepper>
-            </Container>
-            <Container maxWidth={"md"}>
-                <Wrapper>{renderStep()}</Wrapper>
-            </Container>
-            <Container maxWidth={"md"}>
-                <DialogActions>
-                    <FlexGrow />
-                    <GreyButton disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                        {t("common.data_download.buttons.back")}
-                    </GreyButton>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        className={classes.button}
-                        disabled={!isStepValid()}
-                    >
-                        {t("common.data_download.buttons.next")}
-                    </Button>
-                    <Button
-                        startIcon={<CloudDownloadIcon />}
-                        variant={"contained"}
-                        color={"primary"}
-                        className={classes.button}
-                        disabled={!isFormValid()}
-                        onClick={() => downloadData()}
-                    >
-                        {t("common.data_download.buttons.download")}
-                    </Button>
-                </DialogActions>
-            </Container>
+
+            <PaperStepper alternativeLabel activeStep={activeStep} connector={<StyledStepConnector />}>
+                {steps.map((label, index) => (
+                    <Step key={label}>
+                        <StepLabel
+                            icon={
+                                <StepIcon disabled={index > activeStep}>
+                                    {index < activeStep ? <CheckIcon /> : <p>{index + 1}</p>}
+                                </StepIcon>
+                            }
+                        >
+                            {t(`common.${label}`)}
+                        </StepLabel>
+                        {/* <StepButton>{t(`common.${label}`)}</StepButton> */}
+                    </Step>
+                ))}
+            </PaperStepper>
+
+            <Wrapper>{renderStep()}</Wrapper>
+
+            <DialogActions>
+                <FlexGrow />
+                <GreyButton disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                    {t("common.data_download.buttons.back")}
+                </GreyButton>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                    disabled={!isStepValid()}
+                >
+                    {t("common.data_download.buttons.next")}
+                </Button>
+                <Button
+                    startIcon={<CloudDownloadIcon />}
+                    variant={"contained"}
+                    color={"primary"}
+                    className={classes.button}
+                    disabled={!isFormValid()}
+                    onClick={() => downloadData()}
+                >
+                    {t("common.data_download.buttons.download")}
+                </Button>
+            </DialogActions>
         </StyledContainer>
     );
 }

@@ -526,9 +526,11 @@
                     "other": "Autres"
                 },
                 "organization_name": "Nom de l'organisation",
-                "position": "Position",
+                "uses_placeHolder": "Nous souhaitons savoir pourquoi vous utilisez les données. Nous apprécierions si vous pouviez fournir une courte description.",
                 "country": "Pays de Résidence",
-                "email": "Email"
+                "email": "Email",
+                "consent1": "J'autorise à être contacté par l'Organisation mondiale de la santé concernant mon expérience avec la Malaria Threat Map et les données des bases de données mondiales.",
+                "consent2": "J'autorise l'Organisation mondiale de la santé à utiliser le nom de mon organisation et la description du projet fournis ci-dessus pour afficher l'utilisation des bases de données mondiales (aucune donnée personnelle ne sera affichée)."
             },
             "step2": {
                 "title": "But du téléchargement",
@@ -549,9 +551,7 @@
                     "date": "Quand prévoyez-vous de terminer votre projet, politique, stratégie ou plan?"
                 },
                 "countries": "Pays où le projet, la politique, la stratégie ou le plan seront mis en œuvre",
-                "message": "L'OMS souhaite améliorer les bases de données mondiales et la carte des menaces de paludisme afin de mieux répondre aux besoins de notre communauté d'utilisateurs. Par conséquent, l'OMS souhaite collaborer avec notre communauté d'utilisateurs pour recueillir des suggestions d'amélioration et tirer des enseignements des différents cas d'utilisation et avantages que ces produits leur apportent",
-                "consent1": "J'autorise l'Organisation mondiale de la santé à utiliser mes données personnelles pour me contacter concernant mon expérience de l’utilisation de la carte des menaces de paludisme et des données des bases de données mondiales. ",
-                "consent2": "J'autorise l'Organisation mondiale de la santé à utiliser le nom de l'organisation et les descriptions de projet que j'ai fournies pour présenter les utilisations des bases de données mondiales (aucune donnée personnelle ne sera affichée)."
+                "message": "L'OMS souhaite améliorer les bases de données mondiales et la carte des menaces de paludisme afin de mieux répondre aux besoins de notre communauté d'utilisateurs. Par conséquent, l'OMS souhaite collaborer avec notre communauté d'utilisateurs pour recueillir des suggestions d'amélioration et tirer des enseignements des différents cas d'utilisation et avantages que ces produits leur apportent"
             },
             "step3": {
                 "title": "Filtrer les données à télécharger",
