@@ -2,7 +2,7 @@ import React from "react";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
-import { AppBar, Button, Container, DialogActions, StepLabel, Theme, Toolbar, Typography } from "@mui/material";
+import { Button, Container, DialogActions, StepLabel, Theme } from "@mui/material";
 import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -10,7 +10,7 @@ import Step from "@mui/material/Step";
 import { logEventAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
 import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
-import UserForm, { ORGANIZATION_TYPES } from "./UserForm";
+import UserForm from "./UserForm";
 import UseForm, { isPoliciesActive, isResearchActive, isToolsActive } from "./UseForm";
 import Welcome from "./Welcome";
 import Filters from "./Filters";
@@ -92,10 +92,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         appBar: {
             position: "relative",
-        },
-        paperStepper: {
-            backgroundColor: "#fafafa",
-            marginTop: 8,
         },
     })
 );
@@ -201,9 +197,7 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
     }, [activeStep, logEvent]);
 
     const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>({});
-    const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({
-        organizationType: t(`common.${ORGANIZATION_TYPES[0]}`),
-    });
+    const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({});
     const [useInfo, setUseInfo] = React.useState<Partial<UseInfo>>(initialUseInfo);
 
     const [selections, setSelections] = React.useState({
@@ -871,22 +865,8 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
     return (
         <StyledContainer>
             {downloading && <SimpleLoader message={messageLoader} />}
-            <AppBar position={"relative"}>
-                <Container maxWidth={"md"}>
-                    <Toolbar variant="dense">
-                        <Typography variant="h6" className={classes.title}>
-                            {t("common.data_download.title")}
-                        </Typography>
-                    </Toolbar>
-                </Container>
-            </AppBar>
             <Container maxWidth={"md"}>
-                <PaperStepper
-                    alternativeLabel
-                    activeStep={activeStep}
-                    className={classes.paperStepper}
-                    connector={<StyledStepConnector />}
-                >
+                <PaperStepper alternativeLabel activeStep={activeStep} connector={<StyledStepConnector />}>
                     {steps.map((label, index) => (
                         <Step key={label}>
                             <StepLabel
@@ -940,7 +920,8 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
 export default connect(mapStateToProps, mapDispatchToProps)(DataDownload);
 
 const StyledContainer = styled(Container)`
-    background: #fafafa;
+    background: #ffffff;
+    margin-top: 80px;
 `;
 
 const StepIcon = styled.div<{ disabled: boolean }>`
