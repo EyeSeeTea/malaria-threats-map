@@ -19,14 +19,12 @@ export const DELETION_TYPES = {
     },
 };
 
-export const filterByYearRange =
-    (years: number[], allowEmpty = false) =>
-    (study: any) => {
-        return (
-            (allowEmpty && !study.YEAR_START) ||
-            (parseInt(study.YEAR_START) >= years[0] && parseInt(study.YEAR_START) <= years[1])
-        );
-    };
+export const filterByYearRange = (years: number[], allowEmpty = false) => (study: any) => {
+    return (
+        (allowEmpty && !study.YEAR_START) ||
+        (parseInt(study.YEAR_START) >= years[0] && parseInt(study.YEAR_START) <= years[1])
+    );
+};
 
 export const filterByYears = (years: number[]) => (study: any) => {
     return !years.length || years.includes(study.YEAR_START);
@@ -96,7 +94,7 @@ export const filterByTypes = (types: string[]) => (study: any) => {
 };
 
 export const filterByTypeSynergist = (synergistTypes: string[]) => (study: any) => {
-    return !synergistTypes.length || synergistTypes.includes(study.TYPE_SYNERGIST);
+    return !synergistTypes.length || synergistTypes.includes(study.TYPE);
 };
 
 export const filterBySpecies = (species: string[]) => (study: any) => {
@@ -215,7 +213,7 @@ export const buildPreventionFilters = (
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return [
                 filterByLevelOfInvolvement,
-                filterByType(preventionFilters.type),
+                filterByProxyType(preventionFilters.proxyType),
                 filterBySpecies(preventionFilters.species),
                 filterByTypeSynergist(preventionFilters.synergistTypes),
                 filterByYearRange(filters),
