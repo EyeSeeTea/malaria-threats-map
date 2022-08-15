@@ -1,11 +1,12 @@
 import React from "react";
 import { Checkbox, FormControlLabel, Grid, MenuItem, TextField, Typography } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { UserInfo } from "./index";
 import { emailRegexp } from "../Subscription";
 import { FullCountry } from "./filters/FullCountriesSelector";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const ORGANIZATION_TYPES = [
     "common.data_download.step1.organization_type_options.university",
@@ -133,7 +134,12 @@ const UserForm = ({ onChange, userInfo }: Props) => {
             </Grid>
 
             <Grid item xs={12}>
-                {t("common.data_download.step2.message")}
+                <Trans i18nKey="common.data_download.step1.message" t={t}>
+                    WHO is keen to improve the global databases and Malaria Threats Map to better serve the needs of our
+                    user community. Hence, WHO would like to engage with our user community to collect suggestions for
+                    improvement and to learn from different use cases and benefits that these products bring to them. If
+                    you would like to share feedback, you can do so <NavLink to="/contact">here</NavLink>.
+                </Trans>
             </Grid>
 
             <Grid item xs={12}>
