@@ -2,7 +2,7 @@ import React from "react";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
-import { Button, Container, DialogActions, StepLabel, Theme } from "@mui/material";
+import { Button, Container, StepLabel, stepLabelClasses, Theme } from "@mui/material";
 import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -41,7 +41,6 @@ import { format } from "date-fns";
 import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
 import { emailRegexp } from "../Subscription";
-import { FlexGrow } from "../Chart";
 import SimpleLoader from "../SimpleLoader";
 import { setTimeout } from "timers";
 import PaperStepper from "../PaperStepper/PaperStepper";
@@ -53,14 +52,6 @@ export const BIOCHEMICAL_MECHANISM_TYPES = ["KDR_L1014S", "KDR_L1014F", "KDR_(MU
 
 const Wrapper = styled.div`
     margin: 16px 0;
-`;
-
-const GreyButton = styled(Button)`
-    background-color: transparent;
-    color: black;
-    &:hover {
-        background-color: #f5f5f5;
-    }
 `;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -867,7 +858,7 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
             <PaperStepper alternativeLabel activeStep={activeStep} connector={<StyledStepConnector />}>
                 {steps.map((label, index) => (
                     <Step key={label}>
-                        <StepLabel
+                        <StyledStepLabel
                             icon={
                                 <StepIcon disabled={index > activeStep}>
                                     {index < activeStep ? <CheckIcon /> : <p>{index + 1}</p>}
@@ -875,7 +866,7 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                             }
                         >
                             {t(`common.${label}`)}
-                        </StepLabel>
+                        </StyledStepLabel>
                         {/* <StepButton>{t(`common.${label}`)}</StepButton> */}
                     </Step>
                 ))}
@@ -883,31 +874,45 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
 
             <Wrapper>{renderStep()}</Wrapper>
 
-            <DialogActions>
-                <FlexGrow />
-                <GreyButton disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+            <Container
+                maxWidth="xs"
+                sx={{ display: "flex", flexDirection: "row", marginTop: 4, justifyContent: "center" }}
+            >
+                <BackButton
+                    variant="outlined"
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    className={classes.button}
+                    size="large"
+                >
                     {t("common.data_download.buttons.back")}
-                </GreyButton>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                    disabled={!isStepValid()}
-                >
-                    {t("common.data_download.buttons.next")}
-                </Button>
-                <Button
-                    startIcon={<CloudDownloadIcon />}
-                    variant={"contained"}
-                    color={"primary"}
-                    className={classes.button}
-                    disabled={!isFormValid()}
-                    onClick={() => downloadData()}
-                >
-                    {t("common.data_download.buttons.download")}
-                </Button>
-            </DialogActions>
+                </BackButton>
+                {activeStep < steps.length - 1 && (
+                    <PrimaryButton
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        className={classes.button}
+                        disabled={!isStepValid()}
+                        size="large"
+                    >
+                        {t("common.data_download.buttons.next")}
+                    </PrimaryButton>
+                )}
+                {activeStep === steps.length - 1 && (
+                    <PrimaryButton
+                        startIcon={<CloudDownloadIcon />}
+                        variant={"contained"}
+                        color={"primary"}
+                        className={classes.button}
+                        disabled={!isFormValid()}
+                        onClick={() => downloadData()}
+                        size="large"
+                    >
+                        {t("common.data_download.buttons.download")}
+                    </PrimaryButton>
+                )}
+            </Container>
         </StyledContainer>
     );
 }
@@ -956,3 +961,36 @@ const StyledStepConnector = styled(StepConnector)(() => ({
         borderTopWidth: 2,
     },
 }));
+
+const StyledStepLabel = styled(StepLabel)(() => ({
+    [`& .${stepLabelClasses.label}`]: {
+        [`&.${stepLabelClasses.completed}`]: {
+            color: "#2FB3AF",
+        },
+        [`&.${stepLabelClasses.active}`]: {
+            color: "#2FB3AF",
+        },
+        color: "#C6C6C6",
+    },
+}));
+
+const BackButton = styled(Button)`
+    background-color: transparent;
+    border: 1px solid#AAAAAA;
+    color: #999999;
+    &:hover {
+        background-color: #f5f5f5;
+        border: 2px solid#AAAAAA;
+    }
+    font-size: 20px;
+    padding: 12px 24px;
+    cursor: pointer;
+`;
+
+const PrimaryButton = styled(Button)`
+    color: white;
+    font-size: 20px;
+    margin-left: 16px;
+    padding: 12px 24px;
+    cursor: pointer;
+`;
