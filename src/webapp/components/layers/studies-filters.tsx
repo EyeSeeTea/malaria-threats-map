@@ -19,12 +19,14 @@ export const DELETION_TYPES = {
     },
 };
 
-export const filterByYearRange = (years: number[], allowEmpty = false) => (study: any) => {
-    return (
-        (allowEmpty && !study.YEAR_START) ||
-        (parseInt(study.YEAR_START) >= years[0] && parseInt(study.YEAR_START) <= years[1])
-    );
-};
+export const filterByYearRange =
+    (years: number[], allowEmpty = false) =>
+    (study: any) => {
+        return (
+            (allowEmpty && !study.YEAR_START) ||
+            (parseInt(study.YEAR_START) >= years[0] && parseInt(study.YEAR_START) <= years[1])
+        );
+    };
 
 export const filterByYears = (years: number[]) => (study: any) => {
     return !years.length || years.includes(study.YEAR_START);
