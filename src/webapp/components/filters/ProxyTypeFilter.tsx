@@ -38,7 +38,7 @@ function ProxyTypeFilter({ proxyTypes = [], preventionFilters, setProxyType, log
         .filter(translation => translation.VALUE_ !== "NA")
         .map(mechanism => ({
             value: mechanism.VALUE_,
-            label: t(`PROXY_TYPE_${mechanism.VALUE_}`),
+            label: t(`PROXY_TYPE.${mechanism.VALUE_}`),
         }));
 
     console.log({ proxyTypes });

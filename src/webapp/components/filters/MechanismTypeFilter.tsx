@@ -50,7 +50,7 @@ function MechanismTypeFilter({ types = [], preventionFilters, setType, logEventA
         .filter(translation => translation.VALUE_ !== "NA")
         .map(mechanism => ({
             value: mechanism.VALUE_,
-            label: t(`TYPE_${mechanism.VALUE_}`),
+            label: t(`TYPE.${mechanism.VALUE_}`),
         }));
 
     return (

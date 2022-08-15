@@ -34,5 +34,5 @@ interface Field {
 }
 
 export function getTranslationsKey(translation: Translation) {
-    return `${translation.FIELD}_${translation.VALUE_}`;
+    return `${translation.FIELD}.${translation.VALUE_}`;
 }
