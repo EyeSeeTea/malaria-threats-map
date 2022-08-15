@@ -41,6 +41,8 @@ export const selectAssayTypes = createSelector(selectFields, R.propOr([], "ASSAY
 
 export const selectTypes = createSelector(selectFields, R.propOr([], "TYPE"));
 
+export const selectProxyTypes = createSelector(selectFields, R.propOr([], "PROXY_TYPE"));
+
 export const selectSpecies = createSelector(selectFields, R.propOr([], "SPECIES"));
 
 export const selectSurveyTypes = createSelector(selectFields, R.propOr([], "SURVEY_TYPE"));

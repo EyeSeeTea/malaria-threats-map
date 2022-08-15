@@ -39,6 +39,7 @@ export enum ActionTypeEnum {
     SetPreventionMapType = "prevention/SET_PREVENTION_MAP_TYPE",
     SetInsecticideClass = "prevention/SET_INSECTICIDE_CLASS",
     SetInsecticideTypes = "prevention/SET_INSECTICIDE_TYPES",
+    SetProxyType = "prevention/SET_PROXY_TYPE",
     SetType = "prevention/SET_TYPE",
     SetSynergistTypes = "prevention/SET_SYNERGIST_TYPES",
     SetSpecies = "prevention/SET_SPECIES",
