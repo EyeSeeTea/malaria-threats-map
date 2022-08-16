@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
 import UserForm from "./UserForm";
 import UseForm, { isPoliciesActive, isResearchActive, isToolsActive } from "./UseForm";
-import Welcome from "./Welcome";
+import Terms from "./Terms";
 import Filters from "./Filters";
 import { exportToCSV, Tab } from "./download";
 import styled from "styled-components";
@@ -104,10 +104,10 @@ type Props = DispatchProps & StateProps & OwnProps;
 
 function getSteps() {
     return [
-        "data_download.step0.title",
-        "data_download.step1.title",
-        "data_download.step2.title",
         "data_download.step3.title",
+        "data_download.personal_step.title",
+        "data_download.terms_step.title",
+        "data_download.step2.title",
     ];
 }
 
@@ -123,7 +123,7 @@ export type UserInfo = {
     piConsent: boolean;
 };
 
-export type WelcomeInfo = {
+export type TermsInfo = {
     agreement: boolean;
 };
 
@@ -134,6 +134,24 @@ export type UseInfo = {
     researchInfo: string;
     policiesInfo: string;
     toolsInfo: string;
+};
+
+export type DataInfo = {
+    theme: string;
+    preventionDataset: string;
+    treatmentDataset: string;
+    invasiveDataset: string;
+    insecticideClasses: string[];
+    insecticideTypes: string[];
+    mechanismTypes: string[];
+    molecularMarkers: string[];
+    types: string[];
+    synergistTypes: string[];
+    plasmodiumSpecies: string[];
+    species: string[];
+    drugs: string[];
+    years: string[];
+    countries: string[];
 };
 
 export type Download = {
@@ -185,11 +203,11 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
         });
     }, [activeStep, logEvent]);
 
-    const [welcomeInfo, setWelcomeInfo] = React.useState<Partial<WelcomeInfo>>({});
+    const [termsInfo, setTermsInfo] = React.useState<Partial<TermsInfo>>({});
     const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({});
     const [useInfo, setUseInfo] = React.useState<Partial<UseInfo>>(initialUseInfo);
 
-    const [selections, setSelections] = React.useState({
+    const [dataInfo, setDataInfo] = React.useState({
         theme: "prevention",
         preventionDataset: undefined,
         treatmentDataset: undefined,
@@ -207,8 +225,8 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
         countries: [],
     });
 
-    const onChangeWelcomeInfo = (field: keyof WelcomeInfo, value: any) => {
-        setWelcomeInfo({ ...welcomeInfo, [field]: value });
+    const onChangeWelcomeInfo = (field: keyof TermsInfo, value: any) => {
+        setTermsInfo({ ...termsInfo, [field]: value });
     };
     const onChangeUserInfo = (field: keyof UserInfo, value: any) => {
         setUserInfo({ ...userInfo, [field]: value });
@@ -310,21 +328,21 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
     };
 
     const downloadPreventionData = () => {
-        switch (selections.preventionDataset) {
+        switch (dataInfo.preventionDataset) {
             case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
             case "INTENSITY_CONCENTRATION_BIOASSAY": {
                 const filters = [
                     filterByDownload(),
-                    filterByAssayTypes([selections.preventionDataset]),
-                    filterByInsecticideClasses(selections.insecticideClasses),
-                    filterByInsecticideTypes(selections.insecticideTypes),
-                    filterByTypes(selections.types),
-                    filterBySpecies(selections.species),
-                    filterByCountries(selections.countries),
-                    filterByYears(selections.years),
+                    filterByAssayTypes([dataInfo.preventionDataset]),
+                    filterByInsecticideClasses(dataInfo.insecticideClasses),
+                    filterByInsecticideTypes(dataInfo.insecticideTypes),
+                    filterByTypes(dataInfo.types),
+                    filterBySpecies(dataInfo.species),
+                    filterByCountries(dataInfo.countries),
+                    filterByYears(dataInfo.years),
                 ];
                 const studies = filterStudies(preventionStudies, filters);
-                const results = buildResults(studies, mappings[selections.preventionDataset]);
+                const results = buildResults(studies, mappings[dataInfo.preventionDataset]);
 
                 const fields = [
                     "ID",
@@ -372,20 +390,20 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                changeLoaderAndExportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${dataInfo.preventionDataset}_${dateString}`);
                 break;
             }
             case "SYNERGIST-INSECTICIDE_BIOASSAY": {
                 const filters = [
                     filterByDownload(),
-                    filterByAssayTypes([selections.preventionDataset]),
-                    filterByTypes(selections.types),
-                    filterBySpecies(selections.species),
-                    filterByCountries(selections.countries),
-                    filterByYears(selections.years),
+                    filterByAssayTypes([dataInfo.preventionDataset]),
+                    filterByTypes(dataInfo.types),
+                    filterBySpecies(dataInfo.species),
+                    filterByCountries(dataInfo.countries),
+                    filterByYears(dataInfo.years),
                 ];
                 const studies = filterStudies(preventionStudies, filters);
-                const results = buildResults(studies, mappings[selections.preventionDataset]);
+                const results = buildResults(studies, mappings[dataInfo.preventionDataset]);
                 const fields = [
                     "ID",
                     "COUNTRY_NAME",
@@ -436,7 +454,7 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                changeLoaderAndExportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${dataInfo.preventionDataset}_${dateString}`);
                 break;
             }
             case "MOLECULAR_ASSAY": {
@@ -444,12 +462,12 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                     filterByDownload(),
                     filterByAssayTypes(["MOLECULAR_ASSAY", "BIOCHEMICAL_ASSAY"]),
                     filterByTypes(MOLECULAR_MECHANISM_TYPES),
-                    filterBySpecies(selections.species),
-                    filterByCountries(selections.countries),
-                    filterByYears(selections.years),
+                    filterBySpecies(dataInfo.species),
+                    filterByCountries(dataInfo.countries),
+                    filterByYears(dataInfo.years),
                 ];
                 const studies = filterStudies(preventionStudies, filters);
-                const results = buildResults(studies, mappings[selections.preventionDataset]);
+                const results = buildResults(studies, mappings[dataInfo.preventionDataset]);
                 const fields = [
                     "ID",
                     "COUNTRY_NAME",
@@ -493,19 +511,19 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                changeLoaderAndExportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${dataInfo.preventionDataset}_${dateString}`);
                 break;
             }
             case "BIOCHEMICAL_ASSAY": {
                 const filters = [
                     filterByDownload(),
                     filterByTypes(BIOCHEMICAL_MECHANISM_TYPES),
-                    filterBySpecies(selections.species),
-                    filterByCountries(selections.countries),
-                    filterByYears(selections.years),
+                    filterBySpecies(dataInfo.species),
+                    filterByCountries(dataInfo.countries),
+                    filterByYears(dataInfo.years),
                 ];
                 const studies = filterStudies(preventionStudies, filters);
-                const results = buildResults(studies, mappings[selections.preventionDataset]);
+                const results = buildResults(studies, mappings[dataInfo.preventionDataset]);
                 const fields = [
                     "ID",
                     "COUNTRY_NAME",
@@ -548,24 +566,24 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                changeLoaderAndExportToCSV(tabs, `MTM_${selections.preventionDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${dataInfo.preventionDataset}_${dateString}`);
                 break;
             }
         }
     };
 
     const downloadTreatmentData = () => {
-        switch (selections.treatmentDataset) {
+        switch (dataInfo.treatmentDataset) {
             case "THERAPEUTIC_EFFICACY_STUDY": {
                 const filters = [
                     filterByDimensionId(256),
-                    filterByManyPlasmodiumSpecies(selections.plasmodiumSpecies),
-                    filterByDrugs(selections.drugs),
-                    filterByCountries(selections.countries),
-                    filterByYears(selections.years),
+                    filterByManyPlasmodiumSpecies(dataInfo.plasmodiumSpecies),
+                    filterByDrugs(dataInfo.drugs),
+                    filterByCountries(dataInfo.countries),
+                    filterByYears(dataInfo.years),
                 ];
                 const studies = filterStudies(treatmentStudies, filters);
-                const results = buildResults(studies, mappings[selections.treatmentDataset]);
+                const results = buildResults(studies, mappings[dataInfo.treatmentDataset]);
                 const fields = [
                     "ID",
                     "COUNTRY_NAME",
@@ -607,15 +625,15 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                changeLoaderAndExportToCSV(tabs, `MTM_${selections.treatmentDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${dataInfo.treatmentDataset}_${dateString}`);
                 break;
             }
             case "MOLECULAR_MARKER_STUDY": {
                 const filters = [
                     filterByMolecularMarkerStudyDimension255(),
-                    filterByMolecularMarkers(selections.molecularMarkers),
-                    filterByCountries(selections.countries),
-                    filterByYears(selections.years),
+                    filterByMolecularMarkers(dataInfo.molecularMarkers),
+                    filterByCountries(dataInfo.countries),
+                    filterByYears(dataInfo.years),
                 ];
                 const studies = filterStudies(treatmentStudies, filters);
                 const results = buildResults(studies, mappings["MOLECULAR_MARKER_STUDY"]);
@@ -666,21 +684,21 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                     },
                 ];
                 const dateString = format(new Date(), "yyyyMMdd");
-                changeLoaderAndExportToCSV(tabs, `MTM_${selections.treatmentDataset}_${dateString}`);
+                changeLoaderAndExportToCSV(tabs, `MTM_${dataInfo.treatmentDataset}_${dateString}`);
                 break;
             }
         }
     };
 
     const downloadInvasiveData = () => {
-        if (selections.invasiveDataset === "INVASIVE_VECTOR_SPECIES") {
+        if (dataInfo.invasiveDataset === "INVASIVE_VECTOR_SPECIES") {
             const filters = [
-                filterBySpecies(selections.species),
-                filterByCountries(selections.countries),
-                filterByYears(selections.years),
+                filterBySpecies(dataInfo.species),
+                filterByCountries(dataInfo.countries),
+                filterByYears(dataInfo.years),
             ];
             const studies = filterStudies(invasiveStudies, filters);
-            const results = buildResults(studies, mappings[selections.invasiveDataset]);
+            const results = buildResults(studies, mappings[dataInfo.invasiveDataset]);
             const fields = [
                 "ID",
                 "COUNTRY_NAME",
@@ -726,7 +744,7 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                 },
             ];
             const dateString = format(new Date(), "yyyyMMdd");
-            changeLoaderAndExportToCSV(tabs, `MTM_${selections.invasiveDataset}_${dateString}`);
+            changeLoaderAndExportToCSV(tabs, `MTM_${dataInfo.invasiveDataset}_${dateString}`);
         }
     };
 
@@ -751,27 +769,25 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                 toolsInfo: useInfo.toolsInfo || "",
                 implementationCountries: useInfo.countries.join(", ") || "",
                 date: useInfo.studyDate.toISOString().slice(0, 10),
-                theme: selections.theme,
+                theme: dataInfo.theme,
                 dataset: t(
-                    `common.${
-                        selections.preventionDataset || selections.treatmentDataset || selections.invasiveDataset
-                    }`
+                    `common.${dataInfo.preventionDataset || dataInfo.treatmentDataset || dataInfo.invasiveDataset}`
                 ),
             };
 
             let dataset;
-            switch (selections.theme) {
+            switch (dataInfo.theme) {
                 case "prevention":
                     downloadPreventionData();
-                    dataset = selections.preventionDataset;
+                    dataset = dataInfo.preventionDataset;
                     break;
                 case "treatment":
                     downloadTreatmentData();
-                    dataset = selections.treatmentDataset;
+                    dataset = dataInfo.treatmentDataset;
                     break;
                 case "invasive":
                     downloadInvasiveData();
-                    dataset = selections.invasiveDataset;
+                    dataset = dataInfo.invasiveDataset;
                     break;
             }
             addDownload(request);
@@ -781,7 +797,7 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
     };
 
     const isWelcomeFormValid = () => {
-        return welcomeInfo.agreement;
+        return termsInfo.agreement;
     };
 
     const isUserFormValid = () => {
@@ -824,35 +840,35 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
     const renderStep = () => {
         switch (activeStep) {
             case 0:
-                return <Welcome welcomeInfo={welcomeInfo} onChange={onChangeWelcomeInfo} />;
+                return <Filters onChange={setDataInfo} selections={dataInfo} />;
             case 1:
                 return <UserForm userInfo={userInfo} onChange={onChangeUserInfo} />;
             case 2:
-                return <UseForm useInfo={useInfo} onChange={onChangeUseInfo} />;
+                return <Terms termsInfo={termsInfo} dataInfo={dataInfo} onChange={onChangeWelcomeInfo} />;
             case 3:
-                return <Filters onChange={setSelections} selections={selections} />;
+                return <UseForm useInfo={useInfo} onChange={onChangeUseInfo} />;
             default:
                 return <div />;
         }
     };
 
-    const { theme, preventionDataset, treatmentDataset, invasiveDataset } = selections;
+    const { theme, preventionDataset, treatmentDataset, invasiveDataset } = dataInfo;
 
     const isStepValid = () => {
         switch (activeStep) {
             case 0:
-                return isWelcomeFormValid();
+                return isDownloadFormValid();
             case 1:
-                return isWelcomeFormValid() && isUserFormValid();
+                return isDownloadFormValid() && isUserFormValid();
             case 2:
-                return isWelcomeFormValid() && isUserFormValid() && isUseFormValid();
+                return isDownloadFormValid() && isUserFormValid() && isWelcomeFormValid();
         }
     };
 
     const isFormValid = () => isWelcomeFormValid() && isUserFormValid() && isUseFormValid() && isDownloadFormValid();
 
     return (
-        <StyledContainer maxWidth="lg">
+        <StyledContainer maxWidth="xl">
             {downloading && <SimpleLoader message={messageLoader} />}
 
             <PaperStepper alternativeLabel activeStep={activeStep} connector={<StyledStepConnector />}>
