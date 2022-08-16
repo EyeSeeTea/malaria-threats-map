@@ -125,7 +125,7 @@ const DataValue: React.FC<{ dataInfo: DataInfo }> = ({ dataInfo }) => {
                 return t(dataInfo.treatmentDataset);
             }
         }
-    }, []);
+    }, [dataInfo, t]);
 
     return (
         <Stack direction="column" spacing={1}>
