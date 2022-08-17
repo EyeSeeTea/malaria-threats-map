@@ -11,18 +11,14 @@ import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
 import UserForm from "./UserForm";
 import Terms from "./Terms";
 import Filters from "./Filters";
-import { exportToCSV, Tab } from "./download";
 import styled from "styled-components";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import { selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
 import { addDataDownloadRequestAction } from "../../store/actions/data-download-actions";
-import { format } from "date-fns";
-import { emailRegexp } from "../Subscription";
 import SimpleLoader from "../SimpleLoader";
-import { setTimeout } from "timers";
 import PaperStepper from "../PaperStepper/PaperStepper";
 import CheckIcon from "@mui/icons-material/Check";
-import { mapInvasiveStudiesToCSV, mapPreventionStudiesToCSV, mapTreatmentStudiesToCSV } from "./mappers/cvsMapper";
+import { useDownload } from "./useDownload";
 
 const Wrapper = styled.div`
     margin: 16px 0;
@@ -47,60 +43,6 @@ function getSteps() {
     return ["data_download.step3.title", "data_download.personal_step.title", "data_download.terms_step.title"];
 }
 
-export type UserInfo = {
-    firstName: string;
-    lastName: string;
-    organizationType: string;
-    organizationName: string;
-    uses: string;
-    country: string;
-    email: string;
-    contactConsent: boolean;
-    piConsent: boolean;
-};
-
-export type TermsInfo = {
-    agreement: boolean;
-};
-
-export type DataInfo = {
-    theme: string;
-    preventionDataset: string;
-    treatmentDataset: string;
-    invasiveDataset: string;
-    insecticideClasses: string[];
-    insecticideTypes: string[];
-    mechanismTypes: string[];
-    molecularMarkers: string[];
-    types: string[];
-    synergistTypes: string[];
-    plasmodiumSpecies: string[];
-    species: string[];
-    drugs: string[];
-    years: number[];
-    countries: string[];
-};
-
-export type Download = {
-    firstName: string;
-    lastName: string;
-    organizationType: string;
-    organizationName: string;
-    uses: string;
-    position: string;
-    country: string;
-    email: string;
-    date: string;
-    researchInfo: string;
-    policiesInfo: string;
-    contactConsent: boolean;
-    organisationProjectConsent: boolean;
-    toolsInfo: string;
-    implementationCountries: string;
-    theme: string;
-    dataset: string;
-};
-
 export type Contact = {
     email: string;
     firstName: string;
@@ -111,149 +53,29 @@ export type Contact = {
 
 function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, logEvent, addDownload }: Props) {
     const { t } = useTranslation();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [downloading, setDownloading] = React.useState(false);
-    const [messageLoader, setMessageLoader] = React.useState("");
-
-    React.useEffect(() => {
-        logEvent({
-            category: "download",
-            action: "step",
-            label: (activeStep + 1).toString(),
-        });
-    }, [activeStep, logEvent]);
-
-    const [termsInfo, setTermsInfo] = React.useState<Partial<TermsInfo>>({});
-    const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({});
-
-    const [dataInfo, setDataInfo] = React.useState({
-        theme: "prevention",
-        preventionDataset: undefined,
-        treatmentDataset: undefined,
-        invasiveDataset: undefined,
-        insecticideClasses: [],
-        insecticideTypes: [],
-        mechanismTypes: [],
-        molecularMarkers: [],
-        types: [],
-        synergistTypes: [],
-        plasmodiumSpecies: [],
-        species: [],
-        drugs: [],
-        years: [],
-        countries: [],
-    });
-
-    const onChangeTermsInfo = (field: keyof TermsInfo, value: any) => {
-        setTermsInfo({ ...termsInfo, [field]: value });
-    };
-    const onChangeUserInfo = (field: keyof UserInfo, value: any) => {
-        setUserInfo({ ...userInfo, [field]: value });
-    };
+    const {
+        activeStep,
+        downloading,
+        messageLoader,
+        dataInfo,
+        userInfo,
+        termsInfo,
+        isStepValid,
+        isFormValid,
+        downloadData,
+        handleNext,
+        handleBack,
+        onChangeDataInfo,
+        onChangeUserInfo,
+        onChangeTermsInfo,
+    } = useDownload(logEvent, addDownload);
 
     const steps = getSteps();
-
-    const handleNext = () => {
-        setActiveStep(prevActiveStep => prevActiveStep + 1);
-    };
-
-    const handleBack = () => {
-        setActiveStep(prevActiveStep => prevActiveStep - 1);
-    };
-
-    const downloadData = () => {
-        setDownloading(true);
-        setMessageLoader(t("common.data_download.loader.fetching_data"));
-
-        setTimeout(() => {
-            const request: Download = {
-                firstName: userInfo.firstName,
-                lastName: userInfo.lastName,
-                organizationType: t(`common.${userInfo.organizationType}`),
-                organizationName: userInfo.organizationName,
-                uses: userInfo.uses,
-                country: userInfo.country,
-                email: userInfo.email,
-                contactConsent: userInfo.contactConsent,
-                organisationProjectConsent: userInfo.piConsent,
-                theme: dataInfo.theme,
-                dataset: t(
-                    `common.${dataInfo.preventionDataset || dataInfo.treatmentDataset || dataInfo.invasiveDataset}`
-                ),
-                position: "", // TODO: Old field in backed
-                researchInfo: "", // TODO: Old field in backed
-                policiesInfo: "", // TODO: Old field in backed
-                toolsInfo: "", // TODO: Old field in backed
-                implementationCountries: "", // TODO: Old field in backed
-                date: null, // TODO: Old field in backed
-            };
-
-            const dateString = format(new Date(), "yyyyMMdd");
-
-            let dataset;
-            switch (dataInfo.theme) {
-                case "prevention": {
-                    const preventionTabs = mapPreventionStudiesToCSV(preventionStudies, dataInfo);
-                    dataset = dataInfo.preventionDataset;
-                    changeLoaderAndExportToCSV(preventionTabs, `MTM_${dataInfo.preventionDataset}_${dateString}`);
-                    break;
-                }
-                case "treatment": {
-                    const treatmentTabs = mapTreatmentStudiesToCSV(treatmentStudies, dataInfo);
-                    dataset = dataInfo.treatmentDataset;
-                    changeLoaderAndExportToCSV(treatmentTabs, `MTM_${dataInfo.treatmentDataset}_${dateString}`);
-                    break;
-                }
-                case "invasive": {
-                    const invasiveTabs = mapInvasiveStudiesToCSV(invasiveStudies, dataInfo);
-                    dataset = dataInfo.invasiveDataset;
-                    changeLoaderAndExportToCSV(invasiveTabs, `MTM_${dataInfo.invasiveDataset}_${dateString}`);
-                    break;
-                }
-            }
-
-            addDownload(request);
-
-            logEvent({ category: "Download", action: "download", label: dataset || undefined });
-        }, 100);
-    };
-
-    const changeLoaderAndExportToCSV = (tabs: Tab[], filename: string) => {
-        setMessageLoader(t("common.data_download.loader.generating_file"));
-        setTimeout(() => {
-            exportToCSV(tabs, filename);
-            setDownloading(false);
-        }, 100);
-    };
-
-    const isWelcomeFormValid = () => {
-        return termsInfo.agreement;
-    };
-
-    const isUserFormValid = () => {
-        return (
-            userInfo.firstName &&
-            userInfo.lastName &&
-            userInfo.uses &&
-            userInfo.country &&
-            userInfo.organizationType &&
-            userInfo.organizationName &&
-            emailRegexp.test(userInfo.email)
-        );
-    };
-
-    const isDownloadFormValid = () => {
-        return (
-            (theme === "prevention" && preventionDataset) ||
-            (theme === "treatment" && treatmentDataset) ||
-            (theme === "invasive" && invasiveDataset)
-        );
-    };
 
     const renderStep = () => {
         switch (activeStep) {
             case 0:
-                return <Filters onChange={setDataInfo} selections={dataInfo} />;
+                return <Filters selections={dataInfo} onChange={onChangeDataInfo} />;
             case 1:
                 return <UserForm userInfo={userInfo} onChange={onChangeUserInfo} />;
             case 2:
@@ -262,21 +84,6 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                 return <div />;
         }
     };
-
-    const { theme, preventionDataset, treatmentDataset, invasiveDataset } = dataInfo;
-
-    const isStepValid = () => {
-        switch (activeStep) {
-            case 0:
-                return isDownloadFormValid();
-            case 1:
-                return isDownloadFormValid() && isUserFormValid();
-            case 2:
-                return isDownloadFormValid() && isUserFormValid() && isWelcomeFormValid();
-        }
-    };
-
-    const isFormValid = () => isWelcomeFormValid() && isUserFormValid() && isDownloadFormValid();
 
     return (
         <StyledContainer maxWidth="xl">
@@ -295,7 +102,6 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                             >
                                 {t(`common.${label}`)}
                             </StyledStepLabel>
-                            {/* <StepButton>{t(`common.${label}`)}</StepButton> */}
                         </Step>
                     ))}
                 </PaperStepper>
@@ -327,7 +133,7 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                         variant={"contained"}
                         color={"primary"}
                         disabled={!isFormValid()}
-                        onClick={() => downloadData()}
+                        onClick={() => downloadData(preventionStudies, treatmentStudies, invasiveStudies)}
                         size="large"
                     >
                         {t("common.data_download.buttons.download")}

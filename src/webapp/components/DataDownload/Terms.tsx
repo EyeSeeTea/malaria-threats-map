@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import { Card, Checkbox, FormControlLabel, Grid, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { DataInfo, TermsInfo } from "./index";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "../Icons";
+import { DataInfo, TermsInfo } from "./types";
 
 type OwnProps = {
     termsInfo: Partial<TermsInfo>;

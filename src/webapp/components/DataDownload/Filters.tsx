@@ -31,6 +31,7 @@ import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
 import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
 import { filterByAssayTypes } from "../layers/studies-filters";
+import { DataInfo } from "./types";
 
 const Divider = styled.div`
     height: 16px;
@@ -51,7 +52,7 @@ const mapDispatchToProps = {
 };
 
 type OwnProps = {
-    onChange: (filters: any) => void;
+    onChange: (filters: DataInfo) => void;
     selections: any;
 };
 

@@ -22,7 +22,7 @@ import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import { MOLECULAR_MARKERS } from "../../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../filters/PlasmodiumSpeciesFilter";
 import { Option } from "../../BasicSelect";
-import { DataInfo } from "..";
+import { DataInfo } from "../types";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
 
