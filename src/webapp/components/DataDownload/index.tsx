@@ -2,10 +2,8 @@ import React from "react";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
-import { Button, Container, StepLabel, stepLabelClasses, Theme } from "@mui/material";
+import { Button, Container, StepLabel, stepLabelClasses } from "@mui/material";
 import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
-import createStyles from "@mui/styles/createStyles";
-import makeStyles from "@mui/styles/makeStyles";
 import Step from "@mui/material/Step";
 import { logEventAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
@@ -16,75 +14,19 @@ import Filters from "./Filters";
 import { exportToCSV, Tab } from "./download";
 import styled from "styled-components";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
-import {
-    filterByAssayTypes,
-    filterByCountries,
-    filterByDimensionId,
-    filterByDownload,
-    filterByDrugs,
-    filterByInsecticideClasses,
-    filterByInsecticideTypes,
-    filterByManyPlasmodiumSpecies,
-    filterByMolecularMarkers,
-    filterByMolecularMarkerStudyDimension255,
-    filterBySpecies,
-    filterByTypes,
-    filterByYears,
-} from "../layers/studies-filters";
-import { Option } from "../BasicSelect";
-import mappings from "./mappings/index";
-import * as R from "ramda";
 import { selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
 import { addDataDownloadRequestAction } from "../../store/actions/data-download-actions";
 import { format } from "date-fns";
-import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
-import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
 import { emailRegexp } from "../Subscription";
 import SimpleLoader from "../SimpleLoader";
 import { setTimeout } from "timers";
 import PaperStepper from "../PaperStepper/PaperStepper";
 import CheckIcon from "@mui/icons-material/Check";
-
-export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
-
-export const BIOCHEMICAL_MECHANISM_TYPES = ["KDR_L1014S", "KDR_L1014F", "KDR_(MUTATION_UNSPECIFIED)", "ACE1R"];
+import { mapInvasiveStudiesToCSV, mapPreventionStudiesToCSV, mapTreatmentStudiesToCSV } from "./mappers/cvsMapper";
 
 const Wrapper = styled.div`
     margin: 16px 0;
 `;
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        title: {
-            marginLeft: theme.spacing(2),
-            flex: 1,
-            whiteSpace: "nowrap",
-        },
-        fab: {
-            pointerEvents: "all",
-            margin: theme.spacing(0.5, 0),
-        },
-        form: {
-            display: "flex",
-            flexDirection: "column",
-            margin: "auto",
-            width: "fit-content",
-        },
-        formControl: {
-            marginTop: theme.spacing(2),
-            minWidth: 120,
-        },
-        formControlLabel: {
-            marginTop: theme.spacing(1),
-        },
-        button: {
-            marginRight: theme.spacing(1),
-        },
-        appBar: {
-            position: "relative",
-        },
-    })
-);
 
 const mapStateToProps = (state: State) => ({
     preventionStudies: selectPreventionStudies(state),
@@ -135,7 +77,7 @@ export type DataInfo = {
     plasmodiumSpecies: string[];
     species: string[];
     drugs: string[];
-    years: string[];
+    years: number[];
     countries: string[];
 };
 
@@ -168,7 +110,6 @@ export type Contact = {
 };
 
 function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, logEvent, addDownload }: Props) {
-    const classes = useStyles({});
     const { t } = useTranslation();
     const [activeStep, setActiveStep] = React.useState(0);
     const [downloading, setDownloading] = React.useState(false);
@@ -203,7 +144,7 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
         countries: [],
     });
 
-    const onChangeWelcomeInfo = (field: keyof TermsInfo, value: any) => {
+    const onChangeTermsInfo = (field: keyof TermsInfo, value: any) => {
         setTermsInfo({ ...termsInfo, [field]: value });
     };
     const onChangeUserInfo = (field: keyof UserInfo, value: any) => {
@@ -218,509 +159,6 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
 
     const handleBack = () => {
         setActiveStep(prevActiveStep => prevActiveStep - 1);
-    };
-
-    const filterStudies = (baseStudies: any[], filters: any[]) => {
-        return filters.reduce((studies, filter) => studies.filter(filter), baseStudies);
-    };
-
-    const resolveValue = (field: Option, study: any) => {
-        if (field.value === "MM_TYPE") {
-            return MOLECULAR_MARKERS.find(mm => mm.value === Number(study[field.value])).label;
-        }
-        if (field.value === "PLASMODIUM_SPECIES") {
-            const value = PLASMODIUM_SPECIES_SUGGESTIONS.find(species => species.value === study[field.value]);
-
-            return value ? value.label : undefined;
-        }
-        if (["Latitude", "Longitude"].includes(field.value)) {
-            return Number(study[field.value]).toFixed(6);
-        }
-        if (
-            [
-                "CITATION",
-                "CITATION_LONG",
-                "CITATION_URL",
-                "PROVINCE",
-                "OBJECTID",
-                "MONTH_END",
-                "MONTH_START",
-                "YEAR_END",
-                "YEAR_START",
-            ].includes(field.value)
-        ) {
-            return study[field.value];
-        }
-        if (["STAGE_ORIGIN", "STAGE"].includes(field.value)) {
-            return String(study[field.value]).toUpperCase();
-        }
-        if (
-            [
-                "POSITIVE_DAY_3",
-                "TREATMENT_FAILURE_PP",
-                "TREATMENT_FAILURE_KM",
-                "MORTALITY_ADJUSTED",
-                "PROPORTION",
-            ].includes(field.value)
-        ) {
-            if (!isNaN(study[field.value])) {
-                return (parseFloat(study[field.value]) * 100).toFixed(2);
-            }
-            return study[field.value];
-        }
-        if (field.value === "ISO2") {
-            if (field.label === "ISO2") {
-                return study[field.value];
-            } else {
-                return t(`${study[field.value] === "NA" ? "common.COUNTRY_NA" : study[field.value]}`);
-            }
-        }
-        if (!isNaN(study[field.value])) {
-            return study[field.value];
-        } else {
-            return t(`${study[field.value]}`);
-        }
-    };
-
-    const buildResults = (studies: any, mappings: Option[]) => {
-        return studies.map((study: { [key: string]: any }) =>
-            mappings.reduce(
-                (acc: any, field: Option) => ({
-                    ...acc,
-                    [field.label]: resolveValue(field, study),
-                }),
-                {}
-            )
-        );
-    };
-
-    const changeLoaderAndExportToCSV = (tabs: Tab[], filename: string) => {
-        setMessageLoader(t("common.data_download.loader.generating_file"));
-        setTimeout(() => {
-            exportToCSV(tabs, filename);
-            setDownloading(false);
-        }, 100);
-    };
-
-    const downloadPreventionData = () => {
-        switch (dataInfo.preventionDataset) {
-            case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
-            case "INTENSITY_CONCENTRATION_BIOASSAY": {
-                const filters = [
-                    filterByDownload(),
-                    filterByAssayTypes([dataInfo.preventionDataset]),
-                    filterByInsecticideClasses(dataInfo.insecticideClasses),
-                    filterByInsecticideTypes(dataInfo.insecticideTypes),
-                    filterByTypes(dataInfo.types),
-                    filterBySpecies(dataInfo.species),
-                    filterByCountries(dataInfo.countries),
-                    filterByYears(dataInfo.years),
-                ];
-                const studies = filterStudies(preventionStudies, filters);
-                const results = buildResults(studies, mappings[dataInfo.preventionDataset]);
-
-                const fields = [
-                    "ID",
-                    "COUNTRY_NAME",
-                    "SITE_NAME",
-                    "ADMIN1",
-                    "ADMIN2",
-                    "SITE_CODE",
-                    "LATITUDE",
-                    "LONGITUDE",
-                    "TEST_TYPE",
-                    "INSECTICIDE_TYPE",
-                    "INSECTICIDE_CONCENTRATION",
-                    "YEAR_START",
-                    "VECTOR_SPECIES",
-                    "STAGE_ORIGIN",
-                    "MOSQUITO_NUMBER",
-                    "TIME_HOLDING_POSTEXPOSURE",
-                    "MORTALITY_ADJUSTED",
-                    "RESISTANCE_STATUS",
-                    "DATA_SOURCE",
-                    "CITATION",
-                    "CITATION_URL",
-                    "DATA_CURATOR",
-                ];
-                const tabs = [
-                    {
-                        name: t("disclaimerTab.name"),
-                        studies: [
-                            {
-                                Disclaimer: t("disclaimerTab.disclaimer"),
-                            },
-                        ],
-                    },
-                    {
-                        name: "Data",
-                        studies: results,
-                    },
-                    {
-                        name: "Glossary",
-                        studies: fields.map(field => ({
-                            "Variable name": field,
-                            Description: t(`download.discrimination.${field}`),
-                        })),
-                    },
-                ];
-                const dateString = format(new Date(), "yyyyMMdd");
-                changeLoaderAndExportToCSV(tabs, `MTM_${dataInfo.preventionDataset}_${dateString}`);
-                break;
-            }
-            case "SYNERGIST-INSECTICIDE_BIOASSAY": {
-                const filters = [
-                    filterByDownload(),
-                    filterByAssayTypes([dataInfo.preventionDataset]),
-                    filterByTypes(dataInfo.types),
-                    filterBySpecies(dataInfo.species),
-                    filterByCountries(dataInfo.countries),
-                    filterByYears(dataInfo.years),
-                ];
-                const studies = filterStudies(preventionStudies, filters);
-                const results = buildResults(studies, mappings[dataInfo.preventionDataset]);
-                const fields = [
-                    "ID",
-                    "COUNTRY_NAME",
-                    "ADMIN1",
-                    "ADMIN2",
-                    "SITE_NAME",
-                    "SITE_CODE",
-                    "LATITUDE",
-                    "LONGITUDE",
-                    "TEST_TYPE",
-                    "TYPE_SYNERGIST",
-                    "INSECTICIDE_TYPE",
-                    "INSECTICIDE_CONCENTRATION",
-                    "SYNERGIST_TYPE",
-                    "SYNERGIST_CONCENTRATION",
-                    "YEAR_START",
-                    "VECTOR_SPECIES",
-                    "STAGE_ORIGIN",
-                    "MOSQUITO_NUMBER",
-                    "TIME_HOLDING_POSTEXPOSURE",
-                    "MORTALITY_ADJUSTED_SYNERGIST_INSECTICIDE",
-                    "MORTALITY_ADJUSTED_INSECTICIDE_ONLY",
-                    "METABOLIC_MECHANISM_INVOLVEMENT",
-                    "DATA_SOURCE",
-                    "CITATION",
-                    "CITATION_URL",
-                    "DATA_CURATOR",
-                ];
-                const tabs = [
-                    {
-                        name: t("disclaimerTab.name"),
-                        studies: [
-                            {
-                                Disclaimer: t("disclaimerTab.disclaimer"),
-                            },
-                        ],
-                    },
-                    {
-                        name: "Data",
-                        studies: results,
-                    },
-                    {
-                        name: "Glossary",
-                        studies: fields.map(field => ({
-                            "Variable name": field,
-                            Description: t(`download.synergist.${field}`),
-                        })),
-                    },
-                ];
-                const dateString = format(new Date(), "yyyyMMdd");
-                changeLoaderAndExportToCSV(tabs, `MTM_${dataInfo.preventionDataset}_${dateString}`);
-                break;
-            }
-            case "MOLECULAR_ASSAY": {
-                const filters = [
-                    filterByDownload(),
-                    filterByAssayTypes(["MOLECULAR_ASSAY", "BIOCHEMICAL_ASSAY"]),
-                    filterByTypes(MOLECULAR_MECHANISM_TYPES),
-                    filterBySpecies(dataInfo.species),
-                    filterByCountries(dataInfo.countries),
-                    filterByYears(dataInfo.years),
-                ];
-                const studies = filterStudies(preventionStudies, filters);
-                const results = buildResults(studies, mappings[dataInfo.preventionDataset]);
-                const fields = [
-                    "ID",
-                    "COUNTRY_NAME",
-                    "ADMIN1",
-                    "ADMIN2",
-                    "SITE_NAME",
-                    "SITE_CODE",
-                    "LATITUDE",
-                    "LONGITUDE",
-                    "TEST_TYPE",
-                    "YEAR_START",
-                    "VECTOR_SPECIES",
-                    "STAGE_ORIGIN",
-                    "MOSQUITO_NUMBER",
-                    "MECHANISM_STATUS",
-                    "MECHANISM_FREQUENCY",
-                    "DATA_SOURCE",
-                    "CITATION",
-                    "CITATION_URL",
-                    "DATA_CURATOR",
-                ];
-                const tabs = [
-                    {
-                        name: t("disclaimerTab.name"),
-                        studies: [
-                            {
-                                Disclaimer: t("disclaimerTab.disclaimer"),
-                            },
-                        ],
-                    },
-                    {
-                        name: "Data",
-                        studies: results,
-                    },
-                    {
-                        name: "Glossary",
-                        studies: fields.map(field => ({
-                            "Variable name": field,
-                            Description: t(`download.molecular_assay.${field}`),
-                        })),
-                    },
-                ];
-                const dateString = format(new Date(), "yyyyMMdd");
-                changeLoaderAndExportToCSV(tabs, `MTM_${dataInfo.preventionDataset}_${dateString}`);
-                break;
-            }
-            case "BIOCHEMICAL_ASSAY": {
-                const filters = [
-                    filterByDownload(),
-                    filterByTypes(BIOCHEMICAL_MECHANISM_TYPES),
-                    filterBySpecies(dataInfo.species),
-                    filterByCountries(dataInfo.countries),
-                    filterByYears(dataInfo.years),
-                ];
-                const studies = filterStudies(preventionStudies, filters);
-                const results = buildResults(studies, mappings[dataInfo.preventionDataset]);
-                const fields = [
-                    "ID",
-                    "COUNTRY_NAME",
-                    "ADMIN1",
-                    "ADMIN2",
-                    "SITE_NAME",
-                    "SITE_CODE",
-                    "LATITUDE",
-                    "LONGITUDE",
-                    "TEST_TYPE",
-                    "YEAR_START",
-                    "VECTOR_SPECIES",
-                    "STAGE_ORIGIN",
-                    "MOSQUITO_NUMBER",
-                    "MECHANISM_STATUS",
-                    "DATA_SOURCE",
-                    "CITATION",
-                    "CITATION_URL",
-                    "DATA_CURATOR",
-                ];
-                const tabs = [
-                    {
-                        name: t("disclaimerTab.name"),
-                        studies: [
-                            {
-                                Disclaimer: t("disclaimerTab.disclaimer"),
-                            },
-                        ],
-                    },
-                    {
-                        name: "Data",
-                        studies: results,
-                    },
-                    {
-                        name: "Glossary",
-                        studies: fields.map(field => ({
-                            "Variable name": field,
-                            Description: t(`download.biochemical_assay.${field}`),
-                        })),
-                    },
-                ];
-                const dateString = format(new Date(), "yyyyMMdd");
-                changeLoaderAndExportToCSV(tabs, `MTM_${dataInfo.preventionDataset}_${dateString}`);
-                break;
-            }
-        }
-    };
-
-    const downloadTreatmentData = () => {
-        switch (dataInfo.treatmentDataset) {
-            case "THERAPEUTIC_EFFICACY_STUDY": {
-                const filters = [
-                    filterByDimensionId(256),
-                    filterByManyPlasmodiumSpecies(dataInfo.plasmodiumSpecies),
-                    filterByDrugs(dataInfo.drugs),
-                    filterByCountries(dataInfo.countries),
-                    filterByYears(dataInfo.years),
-                ];
-                const studies = filterStudies(treatmentStudies, filters);
-                const results = buildResults(studies, mappings[dataInfo.treatmentDataset]);
-                const fields = [
-                    "ID",
-                    "COUNTRY_NAME",
-                    "ADMIN2",
-                    "SITE_NAME",
-                    "LATITUDE",
-                    "LONGITUDE",
-                    "YEAR_START",
-                    "YEAR_END",
-                    "DRUG_NAME",
-                    "PLASMODIUM_SPECIES",
-                    "SAMPLE_SIZE",
-                    "FOLLOW_UP",
-                    "POSITIVE_DAY_3",
-                    "TREATMENT_FAILURE_PP",
-                    "TREATMENT_FAILURE_KM",
-                    "DATA_SOURCE",
-                    "CITATION_URL",
-                ];
-                const tabs = [
-                    {
-                        name: t("disclaimerTab.name"),
-                        studies: [
-                            {
-                                Disclaimer: t("disclaimerTab.disclaimer"),
-                            },
-                        ],
-                    },
-                    {
-                        name: "Data",
-                        studies: results,
-                    },
-                    {
-                        name: "Glossary",
-                        studies: fields.map(field => ({
-                            "Variable name": field,
-                            Description: t(`download.therapeutic_efficacy.${field}`),
-                        })),
-                    },
-                ];
-                const dateString = format(new Date(), "yyyyMMdd");
-                changeLoaderAndExportToCSV(tabs, `MTM_${dataInfo.treatmentDataset}_${dateString}`);
-                break;
-            }
-            case "MOLECULAR_MARKER_STUDY": {
-                const filters = [
-                    filterByMolecularMarkerStudyDimension255(),
-                    filterByMolecularMarkers(dataInfo.molecularMarkers),
-                    filterByCountries(dataInfo.countries),
-                    filterByYears(dataInfo.years),
-                ];
-                const studies = filterStudies(treatmentStudies, filters);
-                const results = buildResults(studies, mappings["MOLECULAR_MARKER_STUDY"]);
-                const genes = buildResults(
-                    R.flatten(R.map(r => r.groupStudies, studies)),
-                    mappings["MOLECULAR_MARKER_STUDY_GENES"]
-                );
-                const fields = [
-                    "ID",
-                    "MM_TYPE",
-                    "COUNTRY_NAME",
-                    "SITE_NAME",
-                    "ADMIN2",
-                    "LATITUDE",
-                    "LONGITUDE",
-                    "YEAR_START",
-                    "DRUG_NAME",
-                    "PLASMODIUM_SPECIES",
-                    "SAMPLE_SIZE",
-                    "DATA_SOURCE",
-                    "CITATION_URL",
-                    "GENOTYPE",
-                    "PROPORTION",
-                ];
-                const tabs = [
-                    {
-                        name: t("disclaimerTab.name"),
-                        studies: [
-                            {
-                                Disclaimer: t("disclaimerTab.disclaimer"),
-                            },
-                        ],
-                    },
-                    {
-                        name: "MM_StudyInfo",
-                        studies: results,
-                    },
-                    {
-                        name: "MM_geneMutations",
-                        studies: genes,
-                    },
-                    {
-                        name: "Glossary",
-                        studies: fields.map(field => ({
-                            "Variable name": field,
-                            Description: t(`download.mm.${field}`),
-                        })),
-                    },
-                ];
-                const dateString = format(new Date(), "yyyyMMdd");
-                changeLoaderAndExportToCSV(tabs, `MTM_${dataInfo.treatmentDataset}_${dateString}`);
-                break;
-            }
-        }
-    };
-
-    const downloadInvasiveData = () => {
-        if (dataInfo.invasiveDataset === "INVASIVE_VECTOR_SPECIES") {
-            const filters = [
-                filterBySpecies(dataInfo.species),
-                filterByCountries(dataInfo.countries),
-                filterByYears(dataInfo.years),
-            ];
-            const studies = filterStudies(invasiveStudies, filters);
-            const results = buildResults(studies, mappings[dataInfo.invasiveDataset]);
-            const fields = [
-                "ID",
-                "COUNTRY_NAME",
-                "SITE_NAME",
-                "LATITUDE",
-                "LONGITUDE",
-                "VECTOR_SPECIES_COMPLEX",
-                "VECTOR_SPECIES",
-                "STAGE",
-                "YEAR_START",
-                "MONTH_START",
-                "YEAR_END",
-                "MONTH_END",
-                "SAMPLING_METHOD",
-                "MOSQUITO_NUMBER",
-                "BREEDING_HABITAT",
-                "ID_METHOD",
-                "DATA_SOURCE",
-                "CITATION",
-                "CITATION_URL",
-                "DATA_CURATOR",
-                "INVASIVE_STATUS",
-            ];
-            const tabs = [
-                {
-                    name: t("disclaimerTab.name"),
-                    studies: [
-                        {
-                            Disclaimer: t("disclaimerTab.disclaimer"),
-                        },
-                    ],
-                },
-                {
-                    name: "Data",
-                    studies: results,
-                },
-                {
-                    name: "Glossary",
-                    studies: fields.map(field => ({
-                        "Variable name": field,
-                        Description: t(`download.invasive.${field}`),
-                    })),
-                },
-            ];
-            const dateString = format(new Date(), "yyyyMMdd");
-            changeLoaderAndExportToCSV(tabs, `MTM_${dataInfo.invasiveDataset}_${dateString}`);
-        }
     };
 
     const downloadData = () => {
@@ -742,32 +180,49 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                 dataset: t(
                     `common.${dataInfo.preventionDataset || dataInfo.treatmentDataset || dataInfo.invasiveDataset}`
                 ),
-                position: "", // TODO: Old field
-                researchInfo: "", // TODO: Old field
-                policiesInfo: "", // TODO: Old field
-                toolsInfo: "", // TODO: Old field
-                implementationCountries: "", // TODO: Old field,
-                date: null, // TODO: Old field,
+                position: "", // TODO: Old field in backed
+                researchInfo: "", // TODO: Old field in backed
+                policiesInfo: "", // TODO: Old field in backed
+                toolsInfo: "", // TODO: Old field in backed
+                implementationCountries: "", // TODO: Old field in backed
+                date: null, // TODO: Old field in backed
             };
+
+            const dateString = format(new Date(), "yyyyMMdd");
 
             let dataset;
             switch (dataInfo.theme) {
-                case "prevention":
-                    downloadPreventionData();
+                case "prevention": {
+                    const preventionTabs = mapPreventionStudiesToCSV(preventionStudies, dataInfo);
                     dataset = dataInfo.preventionDataset;
+                    changeLoaderAndExportToCSV(preventionTabs, `MTM_${dataInfo.preventionDataset}_${dateString}`);
                     break;
-                case "treatment":
-                    downloadTreatmentData();
+                }
+                case "treatment": {
+                    const treatmentTabs = mapTreatmentStudiesToCSV(treatmentStudies, dataInfo);
                     dataset = dataInfo.treatmentDataset;
+                    changeLoaderAndExportToCSV(treatmentTabs, `MTM_${dataInfo.treatmentDataset}_${dateString}`);
                     break;
-                case "invasive":
-                    downloadInvasiveData();
+                }
+                case "invasive": {
+                    const invasiveTabs = mapInvasiveStudiesToCSV(invasiveStudies, dataInfo);
                     dataset = dataInfo.invasiveDataset;
+                    changeLoaderAndExportToCSV(invasiveTabs, `MTM_${dataInfo.invasiveDataset}_${dateString}`);
                     break;
+                }
             }
+
             addDownload(request);
 
             logEvent({ category: "Download", action: "download", label: dataset || undefined });
+        }, 100);
+    };
+
+    const changeLoaderAndExportToCSV = (tabs: Tab[], filename: string) => {
+        setMessageLoader(t("common.data_download.loader.generating_file"));
+        setTimeout(() => {
+            exportToCSV(tabs, filename);
+            setDownloading(false);
         }, 100);
     };
 
@@ -802,7 +257,7 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
             case 1:
                 return <UserForm userInfo={userInfo} onChange={onChangeUserInfo} />;
             case 2:
-                return <Terms termsInfo={termsInfo} dataInfo={dataInfo} onChange={onChangeWelcomeInfo} />;
+                return <Terms termsInfo={termsInfo} dataInfo={dataInfo} onChange={onChangeTermsInfo} />;
             default:
                 return <div />;
         }
@@ -852,13 +307,7 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                 maxWidth="xs"
                 sx={{ display: "flex", flexDirection: "row", marginTop: 4, justifyContent: "center" }}
             >
-                <BackButton
-                    variant="outlined"
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    className={classes.button}
-                    size="large"
-                >
+                <BackButton variant="outlined" disabled={activeStep === 0} onClick={handleBack} size="large">
                     {t("common.data_download.buttons.back")}
                 </BackButton>
                 {activeStep < steps.length - 1 && (
@@ -866,7 +315,6 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                         variant="contained"
                         color="primary"
                         onClick={handleNext}
-                        className={classes.button}
                         disabled={!isStepValid()}
                         size="large"
                     >
@@ -878,7 +326,6 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                         startIcon={<CloudDownloadIcon />}
                         variant={"contained"}
                         color={"primary"}
-                        className={classes.button}
                         disabled={!isFormValid()}
                         onClick={() => downloadData()}
                         size="large"
