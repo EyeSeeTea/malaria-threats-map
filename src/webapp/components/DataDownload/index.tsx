@@ -827,22 +827,24 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
         <StyledContainer maxWidth="xl">
             {downloading && <SimpleLoader message={messageLoader} />}
 
-            <PaperStepper alternativeLabel activeStep={activeStep} connector={<StyledStepConnector />}>
-                {steps.map((label, index) => (
-                    <Step key={label}>
-                        <StyledStepLabel
-                            icon={
-                                <StepIcon disabled={index > activeStep}>
-                                    {index < activeStep ? <CheckIcon /> : <p>{index + 1}</p>}
-                                </StepIcon>
-                            }
-                        >
-                            {t(`common.${label}`)}
-                        </StyledStepLabel>
-                        {/* <StepButton>{t(`common.${label}`)}</StepButton> */}
-                    </Step>
-                ))}
-            </PaperStepper>
+            <Container maxWidth="md">
+                <PaperStepper alternativeLabel activeStep={activeStep} connector={<StyledStepConnector />}>
+                    {steps.map((label, index) => (
+                        <Step key={label}>
+                            <StyledStepLabel
+                                icon={
+                                    <StepIcon disabled={index > activeStep}>
+                                        {index < activeStep ? <CheckIcon /> : <p>{index + 1}</p>}
+                                    </StepIcon>
+                                }
+                            >
+                                {t(`common.${label}`)}
+                            </StyledStepLabel>
+                            {/* <StepButton>{t(`common.${label}`)}</StepButton> */}
+                        </Step>
+                    ))}
+                </PaperStepper>
+            </Container>
 
             <Wrapper>{renderStep()}</Wrapper>
 
