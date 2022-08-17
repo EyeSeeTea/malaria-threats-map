@@ -11,7 +11,6 @@ import { logEventAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
 import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
 import UserForm from "./UserForm";
-import UseForm, { isPoliciesActive, isResearchActive, isToolsActive } from "./UseForm";
 import Terms from "./Terms";
 import Filters from "./Filters";
 import { exportToCSV, Tab } from "./download";
@@ -103,12 +102,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
 function getSteps() {
-    return [
-        "data_download.step3.title",
-        "data_download.personal_step.title",
-        "data_download.terms_step.title",
-        "data_download.step2.title",
-    ];
+    return ["data_download.step3.title", "data_download.personal_step.title", "data_download.terms_step.title"];
 }
 
 export type UserInfo = {
@@ -125,15 +119,6 @@ export type UserInfo = {
 
 export type TermsInfo = {
     agreement: boolean;
-};
-
-export type UseInfo = {
-    uses: string[];
-    countries: string[];
-    studyDate: Date;
-    researchInfo: string;
-    policiesInfo: string;
-    toolsInfo: string;
 };
 
 export type DataInfo = {
@@ -182,12 +167,6 @@ export type Contact = {
     country: string;
 };
 
-const initialUseInfo: Partial<UseInfo> = {
-    uses: [],
-    countries: [],
-    studyDate: new Date(),
-};
-
 function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, logEvent, addDownload }: Props) {
     const classes = useStyles({});
     const { t } = useTranslation();
@@ -205,7 +184,6 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
 
     const [termsInfo, setTermsInfo] = React.useState<Partial<TermsInfo>>({});
     const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({});
-    const [useInfo, setUseInfo] = React.useState<Partial<UseInfo>>(initialUseInfo);
 
     const [dataInfo, setDataInfo] = React.useState({
         theme: "prevention",
@@ -230,9 +208,6 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
     };
     const onChangeUserInfo = (field: keyof UserInfo, value: any) => {
         setUserInfo({ ...userInfo, [field]: value });
-    };
-    const onChangeUseInfo = (field: keyof UseInfo, value: any) => {
-        setUseInfo({ ...useInfo, [field]: value });
     };
 
     const steps = getSteps();
@@ -759,20 +734,20 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                 organizationType: t(`common.${userInfo.organizationType}`),
                 organizationName: userInfo.organizationName,
                 uses: userInfo.uses,
-                position: "", // TODO: Remove of backend?
                 country: userInfo.country,
                 email: userInfo.email,
-                researchInfo: useInfo.researchInfo || "",
-                policiesInfo: useInfo.policiesInfo || "",
                 contactConsent: userInfo.contactConsent,
                 organisationProjectConsent: userInfo.piConsent,
-                toolsInfo: useInfo.toolsInfo || "",
-                implementationCountries: useInfo.countries.join(", ") || "",
-                date: useInfo.studyDate.toISOString().slice(0, 10),
                 theme: dataInfo.theme,
                 dataset: t(
                     `common.${dataInfo.preventionDataset || dataInfo.treatmentDataset || dataInfo.invasiveDataset}`
                 ),
+                position: "", // TODO: Old field
+                researchInfo: "", // TODO: Old field
+                policiesInfo: "", // TODO: Old field
+                toolsInfo: "", // TODO: Old field
+                implementationCountries: "", // TODO: Old field,
+                date: null, // TODO: Old field,
             };
 
             let dataset;
@@ -812,23 +787,6 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
         );
     };
 
-    const isUseFormValid = () => {
-        if (!useInfo.uses) {
-            return false;
-        }
-        const researchActive = isResearchActive(useInfo.uses);
-        const policiesActive = isPoliciesActive(useInfo.uses);
-        const toolsActive = isToolsActive(useInfo.uses);
-        return (
-            useInfo.uses.length > 0 &&
-            useInfo.studyDate &&
-            (researchActive ? useInfo.researchInfo : true) &&
-            (policiesActive ? useInfo.policiesInfo : true) &&
-            (toolsActive ? useInfo.toolsInfo : true) &&
-            useInfo.countries.length > 0
-        );
-    };
-
     const isDownloadFormValid = () => {
         return (
             (theme === "prevention" && preventionDataset) ||
@@ -845,8 +803,6 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                 return <UserForm userInfo={userInfo} onChange={onChangeUserInfo} />;
             case 2:
                 return <Terms termsInfo={termsInfo} dataInfo={dataInfo} onChange={onChangeWelcomeInfo} />;
-            case 3:
-                return <UseForm useInfo={useInfo} onChange={onChangeUseInfo} />;
             default:
                 return <div />;
         }
@@ -865,7 +821,7 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
         }
     };
 
-    const isFormValid = () => isWelcomeFormValid() && isUserFormValid() && isUseFormValid() && isDownloadFormValid();
+    const isFormValid = () => isWelcomeFormValid() && isUserFormValid() && isDownloadFormValid();
 
     return (
         <StyledContainer maxWidth="xl">

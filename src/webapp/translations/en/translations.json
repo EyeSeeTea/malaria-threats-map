@@ -524,26 +524,6 @@
                 "consent1": "I consent to be contacted by the World Health Organization regarding my experience using the Malaria Threats Map and data from the global databases.",
                 "consent2": "I consent for the World Health Organization to use my organization name and project description provided above to showcase the use of the global databases (no personal data will be shown)."
             },
-            "step2": {
-                "title": "Purpose of data download",
-                "data_use": "What will you use the data for?",
-                "data_use_options": {
-                    "research": "Research",
-                    "grant": "Develop grant or project proposals",
-                    "treatments": "Development of new anti-malaria treatments",
-                    "vector": "Development of new vector control tools",
-                    "diagnosis": "Development of new diagnosis tools",
-                    "policies": "Development of national policies, strategies and/or work plans (e.g. Malaria National Strategy Plan development, National treatment policy or guidelines, Insecticide Resistance Monitoring and Management Plans)",
-                    "advocacy": "Advocacy"
-                },
-                "date_use_options_content": {
-                    "research": "Please provide a short description of the project or research question for which data will be used (minimum 100 words)",
-                    "policies": "Please provide the title or a short description of the policy, strategy or plan for which data will be used",
-                    "tools": " Please describe briefly the new treatment, diagnosis or vector control tools you aim to develop (minimum 100 words)",
-                    "date": "When are you planning to finish your project, policy, strategy or plan?"
-                },
-                "countries": "Countries where the project, policy, strategy or plan will be implemented"
-            },
             "step3": {
                 "title": "Select data",
                 "filters": {

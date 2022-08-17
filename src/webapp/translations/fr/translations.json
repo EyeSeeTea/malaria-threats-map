@@ -524,26 +524,6 @@
                 "consent1": "J'autorise à être contacté par l'Organisation mondiale de la santé concernant mon expérience avec la Malaria Threat Map et les données des bases de données mondiales.",
                 "consent2": "J'autorise l'Organisation mondiale de la santé à utiliser le nom de mon organisation et la description du projet fournis ci-dessus pour afficher l'utilisation des bases de données mondiales (aucune donnée personnelle ne sera affichée)."
             },
-            "step2": {
-                "title": "But du téléchargement",
-                "data_use": "Quel est le but de l'utilisation de ces données?",
-                "data_use_options": {
-                    "research": "Recherche",
-                    "grant": "Développer des propositions de projets",
-                    "treatments": "Development of new anti-malaria treatments",
-                    "vector": "Développer de nouveaux outils de contrôle vectoriel",
-                    "diagnosis": "Développer de nouveaux outils de diagnostic",
-                    "policies": "Élaboration de politiques, stratégies et / ou plans de travail nationaux (par exemple, Plan stratégique national de lutte contre le paludisme, Politique ou directives nationales de traitement, plans nationaux de suivi et de gestion de la résistance aux insecticides chez les vecteurs du paludisme)",
-                    "advocacy": "Plaidoyer"
-                },
-                "date_use_options_content": {
-                    "research": "Veuillez fournir une brève description du projet ou de la question de recherche pour laquelle les données seront utilisées (100 mots minimum)",
-                    "policies": "Veuillez fournir le titre ou une brève description de la politique, de la stratégie ou du plan pour lesquels les données seront utilisées",
-                    "tools": "Veuillez décrire brièvement les nouveaux traitements, outils de diagnostic ou de lutte antivectorielle que vous souhaitez développer (minimum 100 mots)",
-                    "date": "Quand prévoyez-vous de terminer votre projet, politique, stratégie ou plan?"
-                },
-                "countries": "Pays où le projet, la politique, la stratégie ou le plan seront mis en œuvre"
-            },
             "step3": {
                 "title": "Sélectionnez les données",
                 "filters": {

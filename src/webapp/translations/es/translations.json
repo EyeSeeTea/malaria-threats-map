@@ -524,26 +524,6 @@
                 "consent1": "Autorizo ser contactado por la Organización Mundial de la Salud con respecto a mi experiencia con el Mapa de Amenazas de la Malaria y los datos de las bases de datos globales.",
                 "consent2": "Autorizo a la Organización Mundial de la Salud a usar el nombre de mi organización y la descripción del proyecto proporcionada anteriormente para mostrar el uso de las bases de datos globales (no se mostrarán datos personales)."
             },
-            "step2": {
-                "title": "Propósito de la descarga",
-                "data_use": "¿Con qué propósito se utilizarán estos datos?",
-                "data_use_options": {
-                    "research": "Investigación",
-                    "grant": "Desarrollar propuestas de proyectos",
-                    "treatments": "Desarrollo de nuevos tratamientos antipalúdicos",
-                    "vector": "Desarrollar nuevas herramientas de control de vectores",
-                    "diagnosis": "Desarrollar nuevas herramientas de diagnóstico",
-                    "policies": "Desarrollo de políticas nacionales, estrategias y / o planes de trabajo (por ejemplo, Plan Estratégico Nacional contra la Malaria, políticas o directrices de tratamiento, planes nacionales de monitoreo y manejo de la resistencia a insecticidas en vectores del paludismo)",
-                    "advocacy": "Abogacía"
-                },
-                "date_use_options_content": {
-                    "research": " Proporcione una breve descripción del proyecto o pregunta de investigación para la cual se utilizarán los datos (mínimo 100 palabras)",
-                    "policies": "Proporcione el título o una breve descripción de la política, estrategia o plan para la que se utilizarán los datos.",
-                    "tools": "Describa brevemente los nuevos tratamiento o las nuevas herramientas diagnóstico o de control de vectores que pretende desarrollar (mínimo 100 palabras)",
-                    "date": "¿Cuándo tiene previsto terminar su proyecto, política, estrategia o plan?"
-                },
-                "countries": "Países donde se implementará el proyecto, política, estrategia o plan"
-            },
             "step3": {
                 "title": "Seleccione datos",
                 "filters": {
