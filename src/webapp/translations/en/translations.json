@@ -69,6 +69,24 @@
                 "button": "Acknowledgements List"
             }
         },
+        "dashboard": {
+            "title" : "Dashboards",
+            "filtersSection": {
+                "first":{
+                    "title": "1. Select Theme",
+                    "buttonOne": "Vector insecticide resistance",
+                    "buttonTwo": "Antimalarial drug efficacy and resistance"
+                },
+                "second":{
+                    "title": "2. Select Country",
+                    "helper": "Select up to 5 countries",
+                    "lastUpdate": "Last data update for this filter selection:",
+                    "cta": "Generate Dashboard"
+                },
+                "note": "Note: A large number of data points are needed to create a dashboard. For this reason, dashboards are currently only available for two of the four themes: vector insecticide resistance and antimalarial drug efficacy and resistance. Dashboards will continue to develop as more data becomes available."
+            },
+            "contents" : "Contents:"
+        },
         "homepage": {
             "menu": {
                 "home": "Home",

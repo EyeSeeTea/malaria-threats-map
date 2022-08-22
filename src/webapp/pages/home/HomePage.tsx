@@ -201,6 +201,7 @@ const HomePage = ({
                             title={t("common.homepage.media_cards.dashboards.title")}
                             subtitle={t("common.homepage.media_cards.dashboards.subtitle")}
                             buttonText={t("common.homepage.media_cards.dashboards.button_text")}
+                            buttonLink={"/dashboards"}
                             image={Dashboards}
                             altText={t("common.homepage.media_cards.dashboards.title")}
                         />

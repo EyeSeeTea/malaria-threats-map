@@ -18,8 +18,8 @@ export const FilterColumContainer = styled.div<{ padding?: string }>`
     align-items: center;
 `;
 
-export const FilterRowContainer = styled.div`
-    margin: 10px 20px;
+export const FilterRowContainer = styled.div<{ onlyYMargin?: boolean }>`
+    margin: ${props => (props.onlyYMargin ? "10px 0px" : "10px 20px")};
     padding: 10px 10px;
     display: flex;
     flex-direction: row;
