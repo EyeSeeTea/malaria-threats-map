@@ -64,22 +64,6 @@ const SectionTitle = styled(Typography)`
     font-size: 10px;
 `;
 
-const countryOptions: Option[] = [
-    { label: "Country Context", value: "all" },
-    { label: "Epidemiological profile", value: "epidemiological-profile" },
-    { label: "Major Plasmodium species and treatment regimen", value: "major-plasmodium" },
-];
-const therapeuticResultsOptions: Option[] = [
-    { label: "Therapeutic efficacy study results", value: "all" },
-    { label: "Summary of treatment failure rates by drug", value: "summary-treatment-failures" },
-    { label: "Treatment failure rates over time", value: "treatment-failure-rates" },
-    { label: "Parasite clearance rates over time", value: "parasite-clearance-rates" },
-];
-const molecularResultsOptions: Option[] = [
-    { label: "Molecular marker study results", value: "all" },
-    { label: "Summary of molecular marker study results over time", value: "summary-molecular-marker-study" },
-];
-
 const ThemeButton = ({ theme, label, selectedTheme }: ThemeButtonProps) => {
     return (
         <Button
@@ -125,6 +109,37 @@ export const DashboardsPage = () => {
         label: name,
         value: iso,
     }));
+
+    const countryOptions: Option[] = [
+        { label: t("common.dashboard.contentsSection.countryOptions.countryContext"), value: "all" },
+        {
+            label: t("common.dashboard.contentsSection.countryOptions.epidemiologicalProfile"),
+            value: "epidemiological-profile",
+        },
+        { label: t("common.dashboard.contentsSection.countryOptions.majorPlasmodium"), value: "major-plasmodium" },
+    ];
+    const therapeuticResultsOptions: Option[] = [
+        { label: t("common.dashboard.contentsSection.therapeuticResultsOptions.therapeuticEfficacy"), value: "all" },
+        {
+            label: t("common.dashboard.contentsSection.therapeuticResultsOptions.summaryTreatmentFailures"),
+            value: "summary-treatment-failures",
+        },
+        {
+            label: t("common.dashboard.contentsSection.therapeuticResultsOptions.treatmentFailureRates"),
+            value: "treatment-failure-rates",
+        },
+        {
+            label: t("common.dashboard.contentsSection.therapeuticResultsOptions.parasiteClearanceRates"),
+            value: "parasite-clearance-rates",
+        },
+    ];
+    const molecularResultsOptions: Option[] = [
+        { label: t("common.dashboard.contentsSection.molecularResultsOptions.molecularMarker"), value: "all" },
+        {
+            label: t("common.dashboard.contentsSection.molecularResultsOptions.summaryMolecularMarker"),
+            value: "summary-molecular-marker",
+        },
+    ];
 
     return (
         <Layout>
@@ -196,7 +211,7 @@ export const DashboardsPage = () => {
             <Container maxWidth="lg">
                 <Grid container spacing={3} mt={2} justifyContent="center" alignItems={"center"}>
                     <Grid item md={"auto"} xs={12}>
-                        <SectionTitle>{t("common.dashboard.contents")}</SectionTitle>
+                        <SectionTitle>{t("common.dashboard.contentsSection.title")}</SectionTitle>
                     </Grid>
                     <Grid item md={3} xs={12}>
                         <Select
