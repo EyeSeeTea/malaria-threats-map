@@ -30,7 +30,7 @@ import { addNotificationAction } from "../store/actions/notifier-actions";
 import { isNotNull } from "../utils/number-utils";
 import Dropzone, { DropzoneState } from "react-dropzone";
 import { FullCountry } from "./DataDownload/filters/FullCountriesSelector";
-import { ORGANIZATION_TYPES } from "./DataDownload/UserForm";
+import { ORGANIZATION_TYPES } from "./DataDownload/steps/UserForm";
 
 const mapStateToProps = (state: State) => ({
     uploadFileOpen: selectUploadFileOpen(state),

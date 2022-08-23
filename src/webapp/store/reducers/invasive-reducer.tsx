@@ -2,7 +2,7 @@ import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { InvasiveMapType, InvasiveState, State } from "../types";
+import { InvasiveDataset, InvasiveMapType, InvasiveState, State } from "../types";
 import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
 
 const initialState: InvasiveState = Object.freeze({
@@ -12,14 +12,11 @@ const initialState: InvasiveState = Object.freeze({
     filteredStudies: [],
     filters: {
         mapType: InvasiveMapType.VECTOR_OCCURANCE,
+        dataset: "INVASIVE_VECTOR_SPECIES",
         vectorSpecies: [],
     },
     selectionStudies: [],
 });
-
-function updateSpecies(vectorSpecies: string[]) {
-    return updateFilter("vectorSpecies", vectorSpecies, []);
-}
 
 function updateFilter<T>(key: string, value: T, def?: T) {
     return (state: InvasiveState) => {
@@ -31,6 +28,14 @@ function updateFilter<T>(key: string, value: T, def?: T) {
             },
         };
     };
+}
+
+function updateDataset(dataset: InvasiveDataset) {
+    return updateFilter("dataset", dataset, "INVASIVE_VECTOR_SPECIES");
+}
+
+function updateSpecies(vectorSpecies: string[]) {
+    return updateFilter("vectorSpecies", vectorSpecies, []);
 }
 
 export default createReducer<InvasiveState>(initialState, {
@@ -48,6 +53,7 @@ export default createReducer<InvasiveState>(initialState, {
         error: "There was a problem loading studies",
         loading: false,
     }),
+    [ActionTypeEnum.SetInvasiveDataset]: updateDataset,
     [ActionTypeEnum.SetInvasiveVectorSpecies]: updateSpecies,
     [ActionTypeEnum.SetInvasiveFilteredStudies]: (filteredStudies: InvasiveStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),

@@ -34,7 +34,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const FiltersContent: React.FC<Props> = ({
+const MapFiltersContent: React.FC<Props> = ({
     theme,
     preventionFilters,
     diagnosisFilters,
@@ -85,4 +85,4 @@ const FiltersContent: React.FC<Props> = ({
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FiltersContent);
+export default connect(mapStateToProps, mapDispatchToProps)(MapFiltersContent);

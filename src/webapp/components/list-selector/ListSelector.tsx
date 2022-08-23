@@ -30,7 +30,7 @@ const SelectableListItem = styled(ListItemButton)`
 export interface ListSelectorItem {
     title: string;
     subtitle?: string;
-    value: unknown;
+    value: number | string;
 }
 
 interface ListSelectorProps {
