@@ -399,6 +399,7 @@
             "plasmodium_species": "Plasmodium species",
             "drug": "Drug",
             "molecular_marker": "Molecular marker",
+            "proxy_type": "Type of synergy",
             "mechanism_type": "Mechanism type",
             "assay_type": "Assay type",
             "synergist_type": "Test type",
