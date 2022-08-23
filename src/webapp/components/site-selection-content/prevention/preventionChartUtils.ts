@@ -6,7 +6,7 @@ import { IntensityStatusColors } from "../../layers/prevention/IntensityStatus/s
 import { INTENSITY_STATUS } from "../../layers/prevention/IntensityStatus/utils";
 import { LevelOfInvolvementColors } from "../../layers/prevention/Involvement/symbols";
 import { LEVEL_OF_INVOLVEMENT } from "../../layers/prevention/Involvement/utils";
-import { ConfirmationStatusColors } from "../../layers/prevention/ResistanceStatus/symbols";
+import { ResistanceStatusColors } from "../../layers/prevention/ResistanceStatus/symbols";
 
 export const preventionBarChartOptions: (
     maptype: PreventionMapType,
@@ -91,15 +91,15 @@ function getBarZones(maptype: PreventionMapType) {
             return [
                 {
                     value: 90,
-                    color: ConfirmationStatusColors.Confirmed[0],
+                    color: ResistanceStatusColors.Confirmed[0],
                 },
                 {
                     value: 98,
-                    color: ConfirmationStatusColors.Possible[0],
+                    color: ResistanceStatusColors.Possible[0],
                 },
                 {
                     value: 100.001,
-                    color: ConfirmationStatusColors.Susceptible[0],
+                    color: ResistanceStatusColors.Susceptible[0],
                 },
             ];
         case PreventionMapType.INTENSITY_STATUS:
