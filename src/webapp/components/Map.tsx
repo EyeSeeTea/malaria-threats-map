@@ -413,7 +413,6 @@ class Map extends React.Component<Props> {
                                         <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
                                         <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
                                         <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
-                                        <StyledButton>{this.props.t("common.topbar.stories")}</StyledButton>
                                     </Box>
                                     <Box sx={classes.screenshotBox}>
                                         <Screenshot map={this.map} />
