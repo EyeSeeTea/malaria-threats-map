@@ -19,6 +19,17 @@ import FormLabel from "@material-ui/core/FormLabel";
 import { sendAnalytics } from "../../../../utils/analytics";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 
+interface Data {
+    citation: string;
+    citationUrl: string;
+    insecticide_type: string;
+    name: string;
+    number: string;
+    species: string;
+    type: string;
+    y: number;
+}
+
 const defaultHighchartOptions: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
         maxPointWidth: 20,
@@ -89,6 +100,9 @@ const defaultHighchartOptions: (data: any, translations: any) => Highcharts.Opti
         enabled: false,
     },
 });
+const isGreyInsecticideTypes = (data: Data) =>
+    (data.insecticide_type === "PIRIMIPHOS-METHYL" && data.name.includes("0.25%")) ||
+    data.insecticide_type === "CHLORFENAPYR";
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     ...defaultHighchartOptions(data, translations),
     plotOptions: {
@@ -100,24 +114,23 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
                 } as DataLabelsFormatterCallbackFunction,
                 enabled: true,
             },
-            color: data[0].insecticide_type === "CHLORFENAPYR" ? ResistanceStatusColors.Undetermined[0] : undefined,
-            zones:
-                data[0].insecticide_type !== "CHLORFENAPYR"
-                    ? [
-                          {
-                              value: 90,
-                              color: ResistanceStatusColors.Confirmed[0],
-                          },
-                          {
-                              value: 98,
-                              color: ResistanceStatusColors.Possible[0],
-                          },
-                          {
-                              value: 100.001,
-                              color: ResistanceStatusColors.Susceptible[0],
-                          },
-                      ]
-                    : [],
+            color: isGreyInsecticideTypes(data[0]) ? ResistanceStatusColors.Undetermined[0] : undefined,
+            zones: !isGreyInsecticideTypes(data[0])
+                ? [
+                      {
+                          value: 90,
+                          color: ResistanceStatusColors.Confirmed[0],
+                      },
+                      {
+                          value: 98,
+                          color: ResistanceStatusColors.Possible[0],
+                      },
+                      {
+                          value: 100.001,
+                          color: ResistanceStatusColors.Susceptible[0],
+                      },
+                  ]
+                : [],
         },
     },
 });
@@ -183,7 +196,8 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
                 R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
         )
     );
-    const data = simplifiedStudies.map(study => ({
+
+    const data: Data[] = simplifiedStudies.map(study => ({
         name: `${study.YEAR_START}, ${t(study.INSECTICIDE_TYPE)} ${t(study.INSECTICIDE_CONC)}`,
         y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
         species: t(study.SPECIES),
@@ -193,6 +207,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         citation: study.CITATION_LONG || study.INSTITUTE,
         citationUrl: study.CITATION_URL,
     }));
+
     const studyObject = groupedStudies[study][0];
     const translations = {
         mortality: t("common.prevention.chart.resistance_status.mortality"),

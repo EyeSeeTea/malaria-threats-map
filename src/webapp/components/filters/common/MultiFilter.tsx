@@ -1,4 +1,4 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import { connect } from "react-redux";
 import IntegrationReactSelect, { Option } from "../../BasicSelect";
 import { Divider, FilterWrapper } from "../Filters";
@@ -11,9 +11,10 @@ type Props = {
     onChange: (selection: string[]) => void;
     value: string[];
     analyticsMultiFilterAction?: string;
+    optionsStyle?: CSSProperties;
 };
 
-function MultiFilter({ label, options, onChange, value, analyticsMultiFilterAction }: Props) {
+function MultiFilter({ label, options, onChange, value, analyticsMultiFilterAction, optionsStyle }: Props) {
     const onSelectionChange = (options: Option[] = []) => {
         onChange((options || []).map(o => o.value));
 
@@ -34,6 +35,7 @@ function MultiFilter({ label, options, onChange, value, analyticsMultiFilterActi
                 suggestions={options}
                 onChange={onSelectionChange}
                 value={selections}
+                optionsStyle={optionsStyle}
             />
         </FilterWrapper>
     );

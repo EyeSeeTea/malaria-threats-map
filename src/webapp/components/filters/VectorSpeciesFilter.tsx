@@ -54,6 +54,7 @@ const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, setVectorSpecie
             onChange={setVectorSpecies}
             value={invasiveFilters.vectorSpecies}
             analyticsMultiFilterAction={"vectorSpecies"}
+            optionsStyle={{ fontStyle: "italic" }}
         />
     );
 };
