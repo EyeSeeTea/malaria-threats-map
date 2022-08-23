@@ -73,9 +73,19 @@
             "menu": {
                 "home": "Home",
                 "tools": "Tools",
+                "stories": "Stories",
                 "about": "About",
                 "contact": "Contact",
                 "share_data": "Share Data"
+            },
+            "tools_submenu": {
+                "maps": "Maps",
+                "dashboards": "Dashboards",
+                "data_download": "Data download"
+            },
+            "stories_submenu": {
+                "antimalarial_drug_efficacy_and_resistance": "Antimalarial drug efficacy and resistance",
+                "parasite_pfhrp_gene_deletions": "Parasite <i>pfhrp2/3</i> gene deletions"
             },
             "title": "Malaria <br /> <strong>Threats Map</strong>",
             "subtitle": "Explore data about the major biological threats to malaria control and elimination.",
@@ -197,6 +207,7 @@
                     "confirmed": "Confirmed (0 to <90%)",
                     "possible": "Possible (90 to <98%)",
                     "susceptible": "Susceptible (≥98%)",
+                    "undetermined": "Undetermined",
                     "help": {
                         "p1": "This map contains data from <1>discriminating concentration bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying levels of resistance intensity, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how each level is defined, please consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
@@ -416,11 +427,11 @@
         "topbar": {
             "menu": "Menu",
             "maps": "Maps",
-            "dashboards": "Dashboards",
-            "stories": "Stories"
+            "dashboards": "Dashboards"
         },
         "sidebar": {
             "home": "Home",
+            "stories": "Stories",
             "about": "About",
             "contact": "Contact",
             "share_data": "Share data",
