@@ -73,9 +73,19 @@
             "menu": {
                 "home": "Casa",
                 "tools": "Instrumentos",
+                "stories": "Cuentos",
                 "about": "Acerca de",
                 "contact": "Contacto",
                 "share_data": "Compartir datos"
+            },
+            "tools_submenu": {
+                "maps": "Mapas",
+                "dashboards": "Tableros",
+                "data_download": "Descarga de datos"
+            },
+            "stories_submenu": {
+                "antimalarial_drug_efficacy_and_resistance": "Eficacia y resistencia a fármacos antipalúdicos",
+                "parasite_pfhrp_gene_deletions": "Deleciones del gen <i>pfhrp2/3</i> del parásito"
             },
             "title": "Mapa de <br /> <strong>amenazas de malaria</strong>",
             "subtitle": "Explore datos sobre las principales amenazas biológicas para el control y la eliminación de la malaria.",
@@ -197,6 +207,7 @@
                     "confirmed": "Confirmado (0 to <90%)",
                     "possible": "Posible (90 to <98%)",
                     "susceptible": "Susceptible (≥98%)",
+                    "undetermined": "Indeterminado",
                     "help": {
                         "p1": "Este mapa contiene datos de <1>bioensayos de concentración discriminatoria</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En sitios donde los estudios muestran niveles variables de intensidad de resistencia, el color de el punto está determinado por los resultados más recientes.",
                         "p2": "Para obtener información sobre cómo se define cada nivel, consulte el <1 href='/'>manual de la OMS para el control de la resistencia</1>.",
@@ -415,11 +426,11 @@
         "topbar": {
             "menu": "Menú",
             "maps": "Mapas",
-            "dashboards": "Tableros",
-            "stories": "Cuentos"
+            "dashboards": "Tableros"
         },
         "sidebar": {
             "home": "Casa",
+            "stories": "Cuentos",
             "about": "Sobre",
             "contact": "Contactar",
             "share_data": "Compartir datos",
