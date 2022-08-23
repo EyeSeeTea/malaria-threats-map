@@ -73,9 +73,19 @@
             "menu": {
                 "home": "Home",
                 "tools": "Tools",
+                "stories": "Stories",
                 "about": "About",
                 "contact": "Contact",
                 "share_data": "Share Data"
+            },
+            "tools_submenu": {
+                "maps": "Maps",
+                "dashboards": "Dashboards",
+                "data_download": "Data download"
+            },
+            "stories_submenu": {
+                "antimalarial_drug_efficacy_and_resistance": "Antimalarial drug efficacy and resistance",
+                "parasite_pfhrp_gene_deletions": "Parasite <i>pfhrp2/3</i> gene deletions"
             },
             "title": "Malaria <br /> <strong>Threats Map</strong>",
             "subtitle": "Explore data about the major biological threats to malaria control and elimination.",

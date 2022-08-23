@@ -73,9 +73,19 @@
             "menu": {
                 "home": "Casa",
                 "tools": "Instrumentos",
+                "stories": "Cuentos",
                 "about": "Acerca de",
                 "contact": "Contacto",
                 "share_data": "Compartir datos"
+            },
+            "tools_submenu": {
+                "maps": "Mapas",
+                "dashboards": "Tableros",
+                "data_download": "Descarga de datos"
+            },
+            "stories_submenu": {
+                "antimalarial_drug_efficacy_and_resistance": "Eficacia y resistencia a fármacos antipalúdicos",
+                "parasite_pfhrp_gene_deletions": "Deleciones del gen <i>pfhrp2/3</i> del parásito"
             },
             "title": "Mapa de <br /> <strong>amenazas de malaria</strong>",
             "subtitle": "Explore datos sobre las principales amenazas biológicas para el control y la eliminación de la malaria.",
