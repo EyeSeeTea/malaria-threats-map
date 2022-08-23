@@ -430,6 +430,7 @@
         },
         "sidebar": {
             "home": "Home",
+            "stories": "Stories",
             "about": "About",
             "contact": "Contact",
             "share_data": "Share data",
