@@ -426,8 +426,7 @@
         "topbar": {
             "menu": "Menú",
             "maps": "Mapas",
-            "dashboards": "Tableros",
-            "stories": "Cuentos"
+            "dashboards": "Tableros"
         },
         "sidebar": {
             "home": "Casa",
