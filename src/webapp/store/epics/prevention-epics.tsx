@@ -12,6 +12,7 @@ import {
     setInsecticideClass,
     setInsecticideTypes,
     setPreventionMapType,
+    setProxyType,
     setSpecies,
     setType,
 } from "../actions/prevention-actions";
@@ -65,7 +66,7 @@ export const setPreventionMapTypeEpic = (
             } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
                 return of(..._.compact([setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
-                return of(..._.compact([setType("MONO_OXYGENASES"), logPageView]));
+                return of(..._.compact([setProxyType("MONO_OXYGENASES"), logPageView]));
             } else {
                 return of(..._.compact([setType(undefined), logPageView]));
             }
