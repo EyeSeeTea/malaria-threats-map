@@ -17,7 +17,6 @@ import PreventionIcon from "../../assets/img/prevention-icon.svg";
 import TreatmentIcon from "../../assets/img/treatment-icon.svg";
 import DiagnosisIcon from "../../assets/img/diagnosis-icon.svg";
 import InvasiveIcon from "../../assets/img/invasive-icon.svg";
-import { margin } from "@mui/system";
 
 const Section = styled.section`
     padding: 10vmin;

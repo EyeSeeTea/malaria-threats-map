@@ -79,13 +79,13 @@
                 "share_data": "Partager des données"
             },
             "tools_submenu": {
-                "maps": "PLANS",
-                "dashboards": "TABLEAUX DE BORD",
-                "data_download": "TÉLÉCHARGEMENT DE DONNÉES"
+                "maps": "Plans",
+                "dashboards": "Tableaux de bord",
+                "data_download": "Téléchargement de données"
             },
             "stories_submenu": {
-                "antimalarial_drug_efficacy_and_resistance": "EFFICACITÉ ET RÉSISTANCE DES MÉDICAMENTS ANTIPALUDIQUES",
-                "parasite_pfhrp_gene_deletions": "DÉLÉTIONS DU GÈNE PARASITE pfhrp2/3"
+                "antimalarial_drug_efficacy_and_resistance": "Efficacité et résistance des médicaments antipaludiques",
+                "parasite_pfhrp_gene_deletions": "Délétions du gène parasite <i>pfhrp2/3</i>"
             },
             "title": "Carte des <br /> <strong>menaces du paludisme</strong>",
             "subtitle": "Explorez les données sur les principales menaces biologiques pour le contrôle et l'élimination du paludisme.",
@@ -207,6 +207,7 @@
                     "confirmed": "Confirmée (0 to <90%)",
                     "possible": "Suspectée (90 to <98%)",
                     "susceptible": "Sensible (≥98%)",
+                    "undetermined": "Indéterminé",
                     "help": {
                         "p1": "Cette carte contient des données provenant de <1>tests biologiques de concentration discriminante</1>. Chaque point sur la carte représente un site d'étude contenant une ou plusieurs études. Dans les sites où les études montrent différents niveaux d'intensité de résistance, la couleur de le point est déterminé par les résultats les plus récents.",
                         "p2": "Pour plus d'informations sur la définition de chaque niveau, veuillez consulter le <1 href='/'>manuel de l'OMS pour la surveillance de la résistance</1>.",
@@ -398,6 +399,7 @@
             "plasmodium_species": "Espèces de plasmodium",
             "drug": "Médicament",
             "molecular_marker": "Marqueur moléculaire",
+            "proxy_type": "Type de synergie",
             "mechanism_type": "Type de mécanisme",
             "assay_type": "Type d'analyse",
             "synergist_type": "Type de test",
@@ -425,11 +427,11 @@
         "topbar": {
             "menu": "Menu",
             "maps": "Plans",
-            "dashboards": "Tableaux de bord",
-            "stories": "Histoires"
+            "dashboards": "Tableaux de bord"
         },
         "sidebar": {
             "home": "Maison",
+            "stories": "Histoires",
             "about": "Sur",
             "contact": "Contact",
             "share_data": "Partager des données",
