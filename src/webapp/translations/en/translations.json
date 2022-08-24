@@ -435,6 +435,7 @@
             "step3": {
                 "title": "Filter the data",
                 "filters": {
+                    "additional": "Additional filters",
                     "theme": "Select Theme",
                     "dataset": "Select Dataset"
                 }

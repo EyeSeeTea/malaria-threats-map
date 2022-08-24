@@ -21,10 +21,18 @@ import styled from "styled-components";
 import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
 import {
     filterByAssayTypes,
+    filterByCountries,
     filterByDimensionId,
     filterByDownload,
+    filterByDrugs,
+    filterByInsecticideClasses,
+    filterByInsecticideTypes,
+    filterByManyPlasmodiumSpecies,
+    filterByMolecularMarkers,
     filterByMolecularMarkerStudyDimension255,
+    filterBySpecies,
     filterByTypes,
+    filterByYears,
 } from "../layers/studies-filters";
 import { Option } from "../BasicSelect";
 import mappings from "./mappings/index";
@@ -207,6 +215,17 @@ function DataDownload({
         preventionDataset: undefined,
         treatmentDataset: undefined,
         invasiveDataset: undefined,
+        insecticideClasses: [],
+        insecticideTypes: [],
+        mechanismTypes: [],
+        molecularMarkers: [],
+        types: [],
+        synergistTypes: [],
+        plasmodiumSpecies: [],
+        species: [],
+        drugs: [],
+        years: [],
+        countries: [],
     });
 
     const reset = () => {
@@ -221,6 +240,17 @@ function DataDownload({
             preventionDataset: undefined,
             treatmentDataset: undefined,
             invasiveDataset: undefined,
+            insecticideClasses: [],
+            insecticideTypes: [],
+            mechanismTypes: [],
+            molecularMarkers: [],
+            types: [],
+            synergistTypes: [],
+            plasmodiumSpecies: [],
+            species: [],
+            drugs: [],
+            years: [],
+            countries: [],
         });
     };
 
@@ -335,7 +365,16 @@ function DataDownload({
         switch (selections.preventionDataset) {
             case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
             case "INTENSITY_CONCENTRATION_BIOASSAY": {
-                const filters = [filterByDownload(), filterByAssayTypes([selections.preventionDataset])];
+                const filters = [
+                    filterByDownload(),
+                    filterByAssayTypes([selections.preventionDataset]),
+                    filterByInsecticideClasses(selections.insecticideClasses),
+                    filterByInsecticideTypes(selections.insecticideTypes),
+                    filterByTypes(selections.types),
+                    filterBySpecies(selections.species),
+                    filterByCountries(selections.countries),
+                    filterByYears(selections.years),
+                ];
                 const studies = filterStudies(preventionStudies, filters);
                 const results = buildResults(studies, mappings[selections.preventionDataset]);
 
@@ -389,7 +428,14 @@ function DataDownload({
                 break;
             }
             case "SYNERGIST-INSECTICIDE_BIOASSAY": {
-                const filters = [filterByDownload(), filterByAssayTypes([selections.preventionDataset])];
+                const filters = [
+                    filterByDownload(),
+                    filterByAssayTypes([selections.preventionDataset]),
+                    filterByTypes(selections.types),
+                    filterBySpecies(selections.species),
+                    filterByCountries(selections.countries),
+                    filterByYears(selections.years),
+                ];
                 const studies = filterStudies(preventionStudies, filters);
                 const results = buildResults(studies, mappings[selections.preventionDataset]);
                 const fields = [
@@ -450,6 +496,9 @@ function DataDownload({
                     filterByDownload(),
                     filterByAssayTypes(["MOLECULAR_ASSAY", "BIOCHEMICAL_ASSAY"]),
                     filterByTypes(MOLECULAR_MECHANISM_TYPES),
+                    filterBySpecies(selections.species),
+                    filterByCountries(selections.countries),
+                    filterByYears(selections.years),
                 ];
                 const studies = filterStudies(preventionStudies, filters);
                 const results = buildResults(studies, mappings[selections.preventionDataset]);
@@ -500,7 +549,13 @@ function DataDownload({
                 break;
             }
             case "BIOCHEMICAL_ASSAY": {
-                const filters = [filterByDownload(), filterByTypes(BIOCHEMICAL_MECHANISM_TYPES)];
+                const filters = [
+                    filterByDownload(),
+                    filterByTypes(BIOCHEMICAL_MECHANISM_TYPES),
+                    filterBySpecies(selections.species),
+                    filterByCountries(selections.countries),
+                    filterByYears(selections.years),
+                ];
                 const studies = filterStudies(preventionStudies, filters);
                 const results = buildResults(studies, mappings[selections.preventionDataset]);
                 const fields = [
@@ -554,7 +609,13 @@ function DataDownload({
     const downloadTreatmentData = () => {
         switch (selections.treatmentDataset) {
             case "THERAPEUTIC_EFFICACY_STUDY": {
-                const filters = [filterByDimensionId(256)];
+                const filters = [
+                    filterByDimensionId(256),
+                    filterByManyPlasmodiumSpecies(selections.plasmodiumSpecies),
+                    filterByDrugs(selections.drugs),
+                    filterByCountries(selections.countries),
+                    filterByYears(selections.years),
+                ];
                 const studies = filterStudies(treatmentStudies, filters);
                 const results = buildResults(studies, mappings[selections.treatmentDataset]);
                 const fields = [
@@ -602,7 +663,12 @@ function DataDownload({
                 break;
             }
             case "MOLECULAR_MARKER_STUDY": {
-                const filters = [filterByMolecularMarkerStudyDimension255()];
+                const filters = [
+                    filterByMolecularMarkerStudyDimension255(),
+                    filterByMolecularMarkers(selections.molecularMarkers),
+                    filterByCountries(selections.countries),
+                    filterByYears(selections.years),
+                ];
                 const studies = filterStudies(treatmentStudies, filters);
                 const results = buildResults(studies, mappings["MOLECULAR_MARKER_STUDY"]);
                 const genes = buildResults(
@@ -660,7 +726,12 @@ function DataDownload({
 
     const downloadInvasiveData = () => {
         if (selections.invasiveDataset === "INVASIVE_VECTOR_SPECIES") {
-            const studies = invasiveStudies;
+            const filters = [
+                filterBySpecies(selections.species),
+                filterByCountries(selections.countries),
+                filterByYears(selections.years),
+            ];
+            const studies = filterStudies(invasiveStudies, filters);
             const results = buildResults(studies, mappings[selections.invasiveDataset]);
             const fields = [
                 "ID",
