@@ -1,7 +1,8 @@
-import { Button, Divider, Menu, MenuItem } from "@mui/material";
+import { Button, Divider, Menu, MenuItem, Typography } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { Trans } from "react-i18next";
 
 interface DirectionProps {
     flexDirection: "column" | "row";
@@ -86,8 +87,14 @@ const StyledMenuItem = styled(MenuItem).withConfig({
     }
 `;
 
+const StyledTypogrpahy = styled(Typography)`
+    &:hover {
+        font-weight: bold;
+    }
+`;
+
 export interface SimpleMenu {
-    kind: "simple-menu";
+    kind: "simple-menu" | "simple-menu-trans";
     name: string;
     path: string;
 }
@@ -95,6 +102,7 @@ export interface SimpleMenu {
 export interface ParentMenu {
     kind: "parent-menu";
     name: string;
+    hoverPaddingRight?: number;
     submenus?: MenuData[];
 }
 
@@ -102,9 +110,10 @@ export type MenuData = SimpleMenu | ParentMenu;
 
 interface SimpleMenuProps extends DirectionProps {
     menu: MenuData;
+    t?: any;
 }
 
-const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection }) => {
+const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection, t }) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -112,7 +121,6 @@ const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection }) => {
             setAnchorEl(event.currentTarget);
         }
     };
-
     switch (menu.kind) {
         case "simple-menu":
             return (
@@ -150,8 +158,20 @@ const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection }) => {
                             menu.submenus.map((submenu, index) => {
                                 return (
                                     <>
-                                        <StyledMenuItem key={index} onClick={() => setAnchorEl(null)}>
-                                            {submenu.name}
+                                        <StyledMenuItem
+                                            key={index}
+                                            onClick={() => setAnchorEl(null)}
+                                            hoverPaddingRight={menu.hoverPaddingRight}
+                                        >
+                                            {submenu.kind === "simple-menu-trans" ? (
+                                                <StyledTypogrpahy variant="body2" color="inherit">
+                                                    <Trans i18nKey={submenu.name} t={t}>
+                                                        {t(submenu.name)}
+                                                    </Trans>
+                                                </StyledTypogrpahy>
+                                            ) : (
+                                                submenu.name
+                                            )}
                                         </StyledMenuItem>
                                         {index < menu.submenus.length - 1 ? <Divider /> : null}
                                     </>

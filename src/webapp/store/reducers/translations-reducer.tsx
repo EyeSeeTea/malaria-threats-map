@@ -41,6 +41,8 @@ export const selectAssayTypes = createSelector(selectFields, state => state.ASSA
 
 export const selectTypes = createSelector(selectFields, state => state.TYPE || []);
 
+export const selectProxyTypes = createSelector(selectFields, state => state.PROXY_TYPE || []);
+
 export const selectSpecies = createSelector(selectFields, state => state.SPECIES || []);
 
 export const selectSurveyTypes = createSelector(selectFields, state => state.SURVEY_TYPE || []);

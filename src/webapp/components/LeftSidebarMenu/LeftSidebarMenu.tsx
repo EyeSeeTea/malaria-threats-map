@@ -6,6 +6,7 @@ import TakeATourIcon from "./Icons/TakeATourIcon";
 import LanguageIcon from "./Icons/LanguageIcon";
 import ContactIcon from "./Icons/ContactIcon";
 import ShareDataIcon from "./Icons/ShareDataIcon";
+import StoriesIcon from "./Icons/StoriesIcon";
 
 import { Fab, Drawer, Typography, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -94,6 +95,15 @@ const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
                             {t("common.sidebar.home")}
                         </Typography>
                     </StyledLink>
+                </SidebarIconDiv>
+
+                <SidebarIconDiv>
+                    <StyledFab id="stories-button" size="small" color={"default"} title={t("common.sidebar.stories")}>
+                        <StoriesIcon />
+                    </StyledFab>
+                    <Typography variant="caption" align="center">
+                        {t("common.sidebar.stories")}
+                    </Typography>
                 </SidebarIconDiv>
 
                 <SidebarIconDiv>

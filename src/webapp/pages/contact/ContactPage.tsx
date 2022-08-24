@@ -25,6 +25,8 @@ const RoundedPaper = styled(Paper)`
     border-radius: 10px;
     margin-top: -10vh;
     margin-bottom: 100px;
+    margin-left: 10vmin;
+    margin-right: 10vmin;
     padding: 10vmin;
 `;
 
