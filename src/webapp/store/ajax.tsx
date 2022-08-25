@@ -65,14 +65,3 @@ export const postFull = <T extends unknown>(path: string, request: any) =>
         },
         customPath: true,
     });
-
-export const patchFull = <T extends unknown>(path: string, request: any) =>
-    makeRequestAndHandleUnauthorized<T>({
-        method: "PATCH",
-        path,
-        body: request,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        customPath: true,
-    });

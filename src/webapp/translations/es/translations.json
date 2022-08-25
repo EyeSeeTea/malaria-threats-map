@@ -363,7 +363,7 @@
                     "native": "Nativa",
                     "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
                     "link_text": "formulario de reporte",
-                    "link_content_1": "Si ha detectado especies invasoras de vectores de Anopheles, infórmenos a través del ",
+                    "link_content_1": "Si ha detectado especies invasoras de vectores de <1>Anopheles</1>, infórmenos a través del ",
                     "help": {
                         "p1": "Este mapa representa datos de la <1>vigilancia de vectores de mosquitos Anopheles</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. El color del punto muestra si la especie es invasora o nativa de la zona.",
                         "p2": "",
@@ -455,7 +455,7 @@
         },
         "copyright": {
             "mobile": "Haga clic aquí para leer la advertencia que se aplica al mapa de arriba",
-            "content": "Las denominaciones empleadas en esta publicación y la forma en que aparecen presentados los datos que contiene no implican, por parte de la Organización Mundial de la Salud, juicio alguno sobre la condición jurídica de países, territorios, ciudades o zonas, o de sus autoridades, ni con respecto al trazado de sus fronteras o límites. Las líneas de puntos, así como las líneas discontinuas y las áreas marcadas en gris, en los mapas representan de manera aproximada las fronteras y áreas respecto de las cuales puede que no haya pleno acuerdo. Las fronteras del mapa proporcionadas reflejan la situación política y geográfica actual a partir de la fecha de publicación ({{year}}). Sin embargo, la información técnica sobre la salud se basa en datos precisos con respecto al año seleccionado. Debe destacarse la desconexión en esta disposición, pero no debe extraerse ninguna implicación de carácter político o terminológico de esta disposición, ya que es puramente una función de limitaciones técnicas y gráficas. Fuente de datos: Programa Mundial \nsobre Paludismo. Producción de mapas: Programa Mundial sobre Paludismo. Organización Mundial de la Salud."
+            "content": "Las denominaciones empleadas en esta publicación y la forma en que aparecen presentados los datos que contiene no implican, por parte de la OMS, juicio alguno sobre la condición jurídica de países, territorios, ciudades o zonas, o de sus autoridades, ni respecto del trazado de sus fronteras o límites. Las líneas discontinuas en los mapas representan de manera aproximada fronteras respecto de las cuales puede que no haya pleno acuerdo. Fuente de datos: Programa Mundial sobre Paludismo. Producción de mapas: Programa Mundial sobre Paludismo. Organización Mundial de la Salud. OMS {{year}}."
         },
         "options": {
             "title": "Opciones",
@@ -599,27 +599,6 @@
                 "percentile_75": "Percentile 75"
             }
         },
-        "subscription": {
-            "title": "Suscríbase para recibir actualizaciones sobre estos cuatro desafíos en la lucha contra la malaria!",
-            "first_name": "Nombre",
-            "last_name": "Apellidos",
-            "email": "Email",
-            "country": "País",
-            "organization": "Organización",
-            "button": "Subscríbete",
-            "institutions": {
-                "nmcp": "PNLM",
-                "funding_organization": "Entidad financiadora",
-                "research_organization": "Centro de investigación",
-                "who_collaborating_centers": "Centro colaborador de la OMS",
-                "private_sector": "Sector privado",
-                "ngo": "ONG",
-                "media_organization": "Agencia de comunicación",
-                "who_country_office": "OMS - Oficina de país",
-                "who_regional_office": "OMS - Oficina Regional",
-                "who_headquarters": "OMS - Sede"
-            }
-        },
         "uploadFile": {
             "title": "Subir fichero",
             "name": "Título",
@@ -650,7 +629,6 @@
             "image": "Exportar mapa",
             "summary": "Informe resumen",
             "disclaimer": "Aviso Legal",
-            "subscribe": "Suscríbase",
             "uploadFile": "Subir fichero y descargar plantilla",
             "comments": "Envíe sus comentarios",
             "help": "Ayuda",

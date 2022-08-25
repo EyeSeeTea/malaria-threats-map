@@ -5,8 +5,8 @@ import makeStyles from "@mui/styles/makeStyles";
 import { useTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { UserInfo } from "./index";
-import { emailRegexp } from "../Subscription";
 import { FullCountry } from "./filters/FullCountriesSelector";
+import { emailRegexp } from "../../../domain/common/regex";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
