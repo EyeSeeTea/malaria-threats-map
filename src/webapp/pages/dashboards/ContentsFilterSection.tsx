@@ -124,6 +124,8 @@ export const ContentsFilterSection: React.FC<ContentsFilterSectionProps> = ({
     );
 };
 
+export default ContentsFilterSection;
+
 const selectStyles = {
     control: (base: any) => ({
         ...base,

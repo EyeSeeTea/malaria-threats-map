@@ -5,7 +5,7 @@ import { AboutPage } from "./about/AboutPage";
 import MapPage from "./map/MapPage";
 import ContactPage from "./contact/ContactPage";
 import config from "../config";
-import { DashboardsPage } from "./dashboards/DashboardsPage";
+import DashboardsPage from "./dashboards/DashboardsPage";
 import { DownloadPage } from "./download/DownloadPage";
 
 export const Router: React.FC = React.memo(() => {

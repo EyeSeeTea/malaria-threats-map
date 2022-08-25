@@ -5,19 +5,32 @@ import { PreventionIcon, TreatmentIcon } from "../../components/Icons";
 import MultiFilter from "../../components/filters/common/MultiFilter";
 import { useTranslation } from "react-i18next";
 import { Option } from "../../components/BasicSelect";
+import { State } from "../../store/types";
+import { selectLastUpdatedDates } from "../../store/reducers/base-reducer";
+import { connect } from "react-redux";
+import { DashboardsThemeOptions } from "./DashboardsState";
 
 interface SelectionSectionProps {
-    theme: ThemeOptions;
+    theme: DashboardsThemeOptions;
     countries: string[];
-    onThemeChange: (theme: ThemeOptions) => void;
+    onThemeChange: (theme: DashboardsThemeOptions) => void;
     onCountriesChange: (countries: string[]) => void;
 }
 
-export const ThemeSelectionSection: React.FC<SelectionSectionProps> = ({
+const mapStateToProps = (state: State) => ({
+    lastUpdatedDates: selectLastUpdatedDates(state),
+});
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+
+type Props = StateProps & SelectionSectionProps;
+
+const ThemeSelectionSection: React.FC<Props> = ({
     theme,
     countries,
     onThemeChange,
     onCountriesChange,
+    lastUpdatedDates,
 }) => {
     const { t } = useTranslation();
 
@@ -89,8 +102,9 @@ export const ThemeSelectionSection: React.FC<SelectionSectionProps> = ({
                             </Typography>
                             <StyledGenerateButton>Generate Dashboard</StyledGenerateButton>
                             <Typography variant="caption" fontSize={"12px"} textAlign="right">
-                                {t("common.dashboard.filtersSection.second.lastUpdate")}{" "}
-                                {theme === "prevention" ? "03/08/2022" : "05/11/2021"}
+                                {`${t("common.dashboard.filtersSection.second.lastUpdate")} ${
+                                    lastUpdatedDates[theme]?.toLocaleDateString() || ""
+                                }`}
                             </Typography>
                         </Stack>
                     </Grid>
@@ -103,10 +117,10 @@ export const ThemeSelectionSection: React.FC<SelectionSectionProps> = ({
     );
 };
 
-export type ThemeOptions = "prevention" | "treatment";
+export default connect(mapStateToProps)(ThemeSelectionSection);
 
 type ThemeButtonProps = {
-    theme: ThemeOptions;
+    theme: DashboardsThemeOptions;
     selected: boolean;
     label: string;
 };

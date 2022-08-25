@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Container, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { ThemeSelectionSection, ThemeOptions } from "./ThemeSelectionSection";
-import { ContentsFilterSection } from "./ContentsFilterSection";
+import ThemeSelectionSection from "./ThemeSelectionSection";
+import ContentsFilterSection from "./ContentsFilterSection";
 import SecondaryLayout from "../secondary-layout/SecondaryLayout";
+import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
+import { State } from "../../store/types";
+import { fetchTreatmentStudiesRequest } from "../../store/actions/treatment-actions";
+import { connect } from "react-redux";
+import { useDashboards } from "./useDashboards";
 
 const StyledContainer = styled.div`
     background-color: #43cea4;
@@ -13,13 +18,28 @@ const StyledContainer = styled.div`
     height: 400px;
 `;
 
-export const DashboardsPage = () => {
+const mapStateToProps = (state: State) => ({
+    treatmentStudies: selectTreatmentStudies(state),
+});
+
+const mapDispatchToProps = {
+    fetchTreatmentStudies: fetchTreatmentStudiesRequest,
+};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+type Props = DispatchProps & StateProps;
+
+const DashboardsPage: React.FC<Props> = ({ treatmentStudies, fetchTreatmentStudies }) => {
     const { t } = useTranslation();
-    const [theme, setTheme] = useState<ThemeOptions>("prevention");
-    const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
-    const [countryContext, setCountryContext] = useState<string>();
-    const [therapeuticResults, setTherapeuticResults] = useState<string>();
-    const [molecularResults, setMolecularResults] = useState<string>();
+    const {
+        state,
+        onThemeChange,
+        onSelectedCountriesChange,
+        onCountryContextChange,
+        onTherapeuticResultsChange,
+        onMolecularResultsChange,
+    } = useDashboards(treatmentStudies, fetchTreatmentStudies);
 
     return (
         <SecondaryLayout>
@@ -32,22 +52,24 @@ export const DashboardsPage = () => {
             </StyledContainer>
             <Container maxWidth="md" sx={{ marginTop: "-200px" }}>
                 <ThemeSelectionSection
-                    theme={theme}
-                    countries={selectedCountries}
-                    onCountriesChange={setSelectedCountries}
-                    onThemeChange={setTheme}
+                    theme={state.theme}
+                    countries={state.selectedCountries}
+                    onCountriesChange={onSelectedCountriesChange}
+                    onThemeChange={onThemeChange}
                 />
             </Container>
             <Container maxWidth="lg">
                 <ContentsFilterSection
-                    selectedCountryContext={countryContext}
-                    selectedTherapeutic={therapeuticResults}
-                    selectedMolecular={molecularResults}
-                    onCountryContextChange={setCountryContext}
-                    onTherapeuticChange={setTherapeuticResults}
-                    onMolecularChange={setMolecularResults}
+                    selectedCountryContext={state.countryContext}
+                    selectedTherapeutic={state.therapeuticResults}
+                    selectedMolecular={state.molecularResults}
+                    onCountryContextChange={onCountryContextChange}
+                    onTherapeuticChange={onTherapeuticResultsChange}
+                    onMolecularChange={onMolecularResultsChange}
                 />
             </Container>
         </SecondaryLayout>
     );
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardsPage);
