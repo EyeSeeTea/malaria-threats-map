@@ -73,9 +73,19 @@
             "menu": {
                 "home": "Home",
                 "tools": "Tools",
+                "stories": "Stories",
                 "about": "About",
                 "contact": "Contact",
                 "share_data": "Share Data"
+            },
+            "tools_submenu": {
+                "maps": "Maps",
+                "dashboards": "Dashboards",
+                "data_download": "Data download"
+            },
+            "stories_submenu": {
+                "antimalarial_drug_efficacy_and_resistance": "Antimalarial drug efficacy and resistance",
+                "parasite_pfhrp_gene_deletions": "Parasite <i>pfhrp2/3</i> gene deletions"
             },
             "title": "Malaria <br /> <strong>Threats Map</strong>",
             "subtitle": "Explore data about the major biological threats to malaria control and elimination.",
@@ -168,7 +178,7 @@
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via {{insecticideClasses}} with selected {{type}} {{years}}",
-                    "number_of_tests": "# of tests",
+                    "number_of_tests": "No. of mosquitoes tested",
                     "DETECTED": "Detected",
                     "NOT_DETECTED": "Not detected",
                     "title": "Number of mechanism assays",
@@ -197,6 +207,7 @@
                     "confirmed": "Confirmed (0 to <90%)",
                     "possible": "Possible (90 to <98%)",
                     "susceptible": "Susceptible (≥98%)",
+                    "undetermined": "Undetermined",
                     "help": {
                         "p1": "This map contains data from <1>discriminating concentration bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying levels of resistance intensity, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how each level is defined, please consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
@@ -352,7 +363,7 @@
                     "native": "Native",
                     "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
                     "link_text": "reporting form",
-                    "link_content_1": "If you have detected invasive Anopheles vector species please report to us through the ",
+                    "link_content_1": "If you have detected invasive <1>Anopheles</1> vector species please report to us through the ",
                     "help": {
                         "p1": "This map represents data from <1>vector surveillance of Anopheles mosquitoes</1>. Each dot on the map represents a study site containing one or more studies. The colour of the dot shows whether the species is invasive or native to the area.",
                         "p2": "",
@@ -388,6 +399,7 @@
             "plasmodium_species": "Plasmodium species",
             "drug": "Drug",
             "molecular_marker": "Molecular marker",
+            "proxy_type": "Type of synergy",
             "mechanism_type": "Mechanism type",
             "assay_type": "Assay type",
             "synergist_type": "Test type",
@@ -415,11 +427,11 @@
         "topbar": {
             "menu": "Menu",
             "maps": "Maps",
-            "dashboards": "Dashboards",
-            "stories": "Stories"
+            "dashboards": "Dashboards"
         },
         "sidebar": {
             "home": "Home",
+            "stories": "Stories",
             "about": "About",
             "contact": "Contact",
             "share_data": "Share data",
@@ -443,7 +455,7 @@
         },
         "copyright": {
             "mobile": "Click here to read the disclaimer that applies to the above map",
-            "content": "The boundaries and names shown and the designations used on this map do not imply the expression of any opinion whatsoever on the part of the World Health Organization concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Dotted and dashed lines or grey areas on maps represent approximate border lines or areas for which there may not yet be full agreement. The borders of the map provided reflect the current political and geographic status as of the date of publication ({{year}}). However, the technical health information is based on data accurate with respect to the year selected. The disconnect in this arrangement should be noted but no implications regarding political or terminological status should be drawn from this arrangement as it is purely a function of technical and graphical limitations. Data source: Global Malaria Programme. Map production: Global Malaria Programme. World Health Organization. WHO {{year}}. All rights reserved."
+            "content": "The designations employed and the presentation of the material in this publication do not imply the expression of any opinion whatsoever on the part of WHO concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Dotted and dashed lines on maps represent approximate border lines for which there may not yet be full agreement. Data source: Global Malaria Programme. Map production: Global Malaria Programme. World Health Organization. WHO {{year}}."
         },
         "options": {
             "title": "Options",
@@ -587,27 +599,6 @@
                 "percentile_75": "Percentile 75th"
             }
         },
-        "subscription": {
-            "title": "Subscribe to receive Threats Updates!",
-            "first_name": "First name",
-            "last_name": "Last name",
-            "email": "Email",
-            "country": "Country",
-            "organization": "Organization",
-            "button": "Subscribe",
-            "institutions": {
-                "nmcp": "NMCP",
-                "funding_organization": "Funding Organization",
-                "research_organization": "Research Organization",
-                "who_collaborating_centers": "WHO Collaborating Centers",
-                "private_sector": "Private Sector",
-                "ngo": "NGO",
-                "media_organization": "Media Organization",
-                "who_country_office": "WHO Country Office",
-                "who_regional_office": "WHO Regional Office",
-                "who_headquarters": "WHO Headquarters"
-            }
-        },
         "uploadFile": {
             "title": "Upload file",
             "name": "Title",
@@ -638,7 +629,6 @@
             "image": "Export map",
             "summary": "Summary Report",
             "disclaimer": "Disclaimer",
-            "subscribe": "Subscribe",
             "uploadFile": "Upload file and download template",
             "comments": "Provide your feedback",
             "help": "Help",

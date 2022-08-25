@@ -152,6 +152,7 @@ const BottomLeftContainer = styled(BaseContainer)`
     bottom: 0;
     display: flex;
     flex-direction: row;
+    align-items: center;
 `;
 
 const TopMiddleContainer = styled(BaseContainer)`
@@ -413,7 +414,6 @@ class Map extends React.Component<Props> {
                                         <StyledButton>{this.props.t("common.topbar.maps")}</StyledButton>
                                         <StyledButton>{this.props.t("common.topbar.dashboards")}</StyledButton>
                                         <StyledButton>{this.props.t("common.data_download.title")}</StyledButton>
-                                        <StyledButton>{this.props.t("common.topbar.stories")}</StyledButton>
                                     </Box>
                                     <Box sx={classes.screenshotBox}>
                                         <Screenshot map={this.map} />
@@ -485,12 +485,7 @@ class Map extends React.Component<Props> {
                     <BottomLeftContainer>
                         {viewMapOnly || <LayersButton />} {/* Layers selector box */}
                         <Box width={20} />
-                        <Hidden smUp>
-                            <WhoLogo width={150} />
-                        </Hidden>
-                        <Hidden smDown>
-                            <WhoLogo />
-                        </Hidden>
+                        <WhoLogo />
                     </BottomLeftContainer>
                 </PushoverContainer>
                 <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
