@@ -178,7 +178,7 @@
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via {{insecticideClasses}} with selected {{type}} {{years}}",
-                    "number_of_tests": "# of tests",
+                    "number_of_tests": "No. of mosquitoes tested",
                     "DETECTED": "Detected",
                     "NOT_DETECTED": "Not detected",
                     "title": "Number of mechanism assays",

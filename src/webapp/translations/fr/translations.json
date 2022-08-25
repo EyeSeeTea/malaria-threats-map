@@ -173,12 +173,12 @@
                 "other_insecticide_class_none": "Rien",
                 "resistance": {
                     "mosquito_mortality": "% mortalité de moustique",
-                    "number_of_tests": "# de tests"
+                    "number_of_tests": "nombre testé"
                 },
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
                     "content_2": " du paludisme via {{insecticideClasses}} avec {{type}} {{years}}",
-                    "number_of_tests": "# de tests",
+                    "number_of_tests": "nombre testé",
                     "DETECTED": "Détecté",
                     "NOT_DETECTED": "Non détecté",
                     "title": "Nombre d'essais de mécanismes",
