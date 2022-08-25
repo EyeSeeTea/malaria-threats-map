@@ -599,27 +599,6 @@
                 "percentile_75": "Percentile 75"
             }
         },
-        "subscription": {
-            "title": "Inscrivez-vous pour recevoir des mises à jour sur ces quatre défis de la lutte contre le paludisme!",
-            "first_name": "Prénom",
-            "last_name": "Nom de famille",
-            "email": "Email",
-            "country": "Pay",
-            "organization": "Organisation",
-            "button": "Souscrire",
-            "institutions": {
-                "nmcp": "PNLP",
-                "funding_organization": "Entité financiatrice",
-                "research_organization": "Institution de recherche",
-                "who_collaborating_centers": "Centre collaborateur de la OMS",
-                "private_sector": "Secteur privé",
-                "ngo": "ONG",
-                "media_organization": "Agence de communication",
-                "who_country_office": "OMS - Bureau pay",
-                "who_regional_office": "OMS - Bureau regional",
-                "who_headquarters": "OMS - Siège"
-            }
-        },
         "uploadFile": {
             "title": "Téléverser un fichier",
             "name": "Titre",
@@ -650,7 +629,6 @@
             "image": "Exporter une image de la carte",
             "summary": "Rapport sommaire",
             "disclaimer": "Avertissement",
-            "subscribe": "Souscrire",
             "uploadFile": "Télécharger le fichier et télécharger le modèle",
             "comments": "Envoyez vos commentaires",
             "help": "Help",
