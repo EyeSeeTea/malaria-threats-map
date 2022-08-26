@@ -102,6 +102,21 @@
                     "molecularMarker": "Resultados del estudio de marcadores moleculares",
                     "summaryMolecularMarker": "Resumen de los resultados del estudio de marcadores moleculares a lo largo del tiempo"
                 }
+            },
+            "therapeuticEfficacySection": {
+                "title": "Therapeutic efficacy studies (TES)",
+                "treatmentFailureByDrug": {
+                    "title": "SUMMARY OF TREATMENT FAILURE RATES BY DRUG"
+                },
+                "treatmentFailureOverTime": {
+                    "title": "TREATMENT FAILURE RATES OVER TIME"
+                },
+                "parasiteClearanceOverTime": {
+                    "title": "PARASITE CLEARANCE RATES OVER TIME"
+                }
+            },
+            "treatmentFilters": {
+                "title": "Filter Data"
             }
         },
         "homepage": {

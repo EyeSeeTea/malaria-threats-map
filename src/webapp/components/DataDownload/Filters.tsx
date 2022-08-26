@@ -364,7 +364,7 @@ const Filters = ({
                                     onChange={onSetPlasmodiumSpecies}
                                     value={plasmodiumSpecies}
                                 />
-                                <DrugsSelector onChange={onSetDrugs} value={drugs} />
+                                <DrugsSelector studies={treatmentStudies} onChange={onSetDrugs} value={drugs} />
                             </>
                         ) : ["MOLECULAR_MARKER_STUDY"].includes(treatmentDataset) ? (
                             <>

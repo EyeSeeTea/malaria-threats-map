@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
-export const FilterWrapper = styled.div`
-    margin: 10px 20px;
+export const FilterWrapper = styled.div<{ onlyYMargin?: boolean }>`
+    margin: ${props => (props.onlyYMargin ? "10px 0px" : "10px 20px")};
 `;
+
 export const FilterSimpleWrapper = styled.div`
     margin: 10px 0px;
 `;
@@ -18,12 +19,12 @@ export const FilterColumContainer = styled.div<{ padding?: string }>`
     align-items: center;
 `;
 
-export const FilterRowContainer = styled.div<{ onlyYMargin?: boolean }>`
+export const FilterRowContainer = styled.div<{ onlyYMargin?: boolean; onlyYPadding?: boolean; background?: string }>`
     margin: ${props => (props.onlyYMargin ? "10px 0px" : "10px 20px")};
-    padding: 10px 10px;
+    padding: ${props => (props.onlyYPadding ? "10px 0px" : "10px 10px")};
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: #f5f5f5;
+    background-color: ${props => props.background ?? "#f5f5f5"};
     border-radius: 5px;
 `;

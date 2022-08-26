@@ -5,49 +5,19 @@ import { PreventionIcon, TreatmentIcon } from "../../components/Icons";
 import MultiFilter from "../../components/filters/common/MultiFilter";
 import { useTranslation } from "react-i18next";
 import { Option } from "../../components/BasicSelect";
-import { State } from "../../store/types";
-import { selectLastUpdatedDates } from "../../store/reducers/base-reducer";
-import { connect } from "react-redux";
-import { DashboardsThemeOptions } from "./DashboardsState";
+import { DashboardsThemeOptions } from "./types";
+import { useDashboards } from "./context/useDashboards";
 
-interface SelectionSectionProps {
-    theme: DashboardsThemeOptions;
-    countries: string[];
-    onThemeChange: (theme: DashboardsThemeOptions) => void;
-    onCountriesChange: (countries: string[]) => void;
-}
-
-const mapStateToProps = (state: State) => ({
-    lastUpdatedDates: selectLastUpdatedDates(state),
-});
-
-type StateProps = ReturnType<typeof mapStateToProps>;
-
-type Props = StateProps & SelectionSectionProps;
-
-const ThemeSelectionSection: React.FC<Props> = ({
-    theme,
-    countries,
-    onThemeChange,
-    onCountriesChange,
-    lastUpdatedDates,
-}) => {
+const ThemeSelectionSection: React.FC = () => {
     const { t } = useTranslation();
+
+    const { theme, selectedCountries, updatedDates, onThemeChange, onSelectedCountriesChange } = useDashboards();
 
     const baseCountries = t("countries", { returnObjects: true });
     const countrySuggestions: Option[] = Object.entries(baseCountries).map(([iso, name]) => ({
         label: name,
         value: iso,
     }));
-
-    const handleCountryChange = useCallback(
-        (countries: string[]) => {
-            if (countries.length <= 5) {
-                onCountriesChange(countries);
-            }
-        },
-        [onCountriesChange]
-    );
 
     const handleThemeChange = useCallback(
         (_event: React.MouseEvent<HTMLElement>, value: any) => {
@@ -94,16 +64,19 @@ const ThemeSelectionSection: React.FC<Props> = ({
                                 label={t("common.filters.select_country")}
                                 placeholder={t("common.filters.select_country")}
                                 options={countrySuggestions}
-                                onChange={handleCountryChange}
-                                value={countries}
+                                onChange={onSelectedCountriesChange}
+                                value={selectedCountries}
+                                onlyYMargin
                             />
                             <Typography variant="caption" fontSize={"11px"}>
                                 {t("common.dashboard.filtersSection.second.helper")}
                             </Typography>
-                            <StyledGenerateButton>Generate Dashboard</StyledGenerateButton>
+                            <StyledGenerateButton disabled={selectedCountries.length > 0}>
+                                Generate Dashboard
+                            </StyledGenerateButton>
                             <Typography variant="caption" fontSize={"12px"} textAlign="right">
                                 {`${t("common.dashboard.filtersSection.second.lastUpdate")} ${
-                                    lastUpdatedDates[theme]?.toLocaleDateString() || ""
+                                    updatedDates[theme]?.toLocaleDateString() || ""
                                 }`}
                             </Typography>
                         </Stack>
@@ -117,7 +90,7 @@ const ThemeSelectionSection: React.FC<Props> = ({
     );
 };
 
-export default connect(mapStateToProps)(ThemeSelectionSection);
+export default ThemeSelectionSection;
 
 type ThemeButtonProps = {
     theme: DashboardsThemeOptions;

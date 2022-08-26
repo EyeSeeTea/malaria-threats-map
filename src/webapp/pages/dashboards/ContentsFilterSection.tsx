@@ -2,11 +2,12 @@ import React, { useCallback, useMemo } from "react";
 import styled from "styled-components";
 import { Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { Option } from "../../components/BasicSelect";
 import i18next from "i18next";
 import Select from "react-select";
+import { TherapeuticEfficacy } from "./types";
+import { useDashboards } from "./context/useDashboards";
 
-const countryContextOptions: Option[] = [
+const countryContextOptions: Option<string>[] = [
     { label: i18next.t("common.dashboard.contentsSection.countryOptions.countryContext"), value: "all" },
     {
         label: i18next.t("common.dashboard.contentsSection.countryOptions.epidemiologicalProfile"),
@@ -15,7 +16,7 @@ const countryContextOptions: Option[] = [
     { label: i18next.t("common.dashboard.contentsSection.countryOptions.majorPlasmodium"), value: "major-plasmodium" },
 ];
 
-const therapeuticResultsOptions: Option[] = [
+const therapeuticEfficacyOptions: Option<TherapeuticEfficacy>[] = [
     {
         label: i18next.t("common.dashboard.contentsSection.therapeuticResultsOptions.therapeuticEfficacy"),
         value: "all",
@@ -34,7 +35,7 @@ const therapeuticResultsOptions: Option[] = [
     },
 ];
 
-const molecularResultsOptions: Option[] = [
+const molecularMarkerOptions: Option<string>[] = [
     { label: i18next.t("common.dashboard.contentsSection.molecularResultsOptions.molecularMarker"), value: "all" },
     {
         label: i18next.t("common.dashboard.contentsSection.molecularResultsOptions.summaryMolecularMarker"),
@@ -42,54 +43,49 @@ const molecularResultsOptions: Option[] = [
     },
 ];
 
-interface ContentsFilterSectionProps {
-    selectedCountryContext: string;
-    selectedTherapeutic: string;
-    selectedMolecular: string;
-    onCountryContextChange: (countryContext: string) => void;
-    onTherapeuticChange: (therapeutic: string) => void;
-    onMolecularChange: (molecular: string) => void;
-}
-
-export const ContentsFilterSection: React.FC<ContentsFilterSectionProps> = ({
-    selectedCountryContext,
-    selectedTherapeutic,
-    selectedMolecular,
-    onCountryContextChange,
-    onTherapeuticChange,
-    onMolecularChange,
-}) => {
+export const ContentsFilterSection: React.FC = () => {
     const { t } = useTranslation();
+    const {
+        countryContext,
+        therapeuticEfficacy,
+        molecularMarker,
+        onCountryContextChange,
+        onTherapeuticEfficacyChange,
+        onMolecularMarkerChange,
+    } = useDashboards();
 
     const handleCountryContextChange = useCallback(
-        (option: Option) => onCountryContextChange(option.value),
+        (option: Option<string>) => onCountryContextChange(option.value),
         [onCountryContextChange]
     );
 
     const handleTherapeuticChange = useCallback(
-        (option: Option) => onTherapeuticChange(option.value),
-        [onTherapeuticChange]
+        (option: Option<TherapeuticEfficacy>) => onTherapeuticEfficacyChange(option.value),
+        [onTherapeuticEfficacyChange]
     );
 
-    const handleMolecularChange = useCallback((option: Option) => onMolecularChange(option.value), [onMolecularChange]);
+    const handleMolecularChange = useCallback(
+        (option: Option<string>) => onMolecularMarkerChange(option.value),
+        [onMolecularMarkerChange]
+    );
 
     const countryContextValue = useMemo(
-        () => countryContextOptions.find(item => item.value === selectedCountryContext),
-        [selectedCountryContext]
+        () => countryContextOptions.find(item => item.value === countryContext),
+        [countryContext]
     );
 
     const countryTherapeutictValue = useMemo(
-        () => therapeuticResultsOptions.find(item => item.value === selectedTherapeutic),
-        [selectedTherapeutic]
+        () => therapeuticEfficacyOptions.find(item => item.value === therapeuticEfficacy),
+        [therapeuticEfficacy]
     );
 
     const molecularValue = useMemo(
-        () => molecularResultsOptions.find(item => item.value === selectedMolecular),
-        [selectedMolecular]
+        () => molecularMarkerOptions.find(item => item.value === molecularMarker),
+        [molecularMarker]
     );
 
     return (
-        <Grid container spacing={3} mt={2} justifyContent="center" alignItems={"center"}>
+        <Grid container spacing={3} mt={2} justifyContent="center" alignItems={"center"} sx={{ marginBottom: 4 }}>
             <Grid item md={"auto"} xs={12}>
                 <SectionTitle>{t("common.dashboard.contentsSection.title")}</SectionTitle>
             </Grid>
@@ -104,7 +100,7 @@ export const ContentsFilterSection: React.FC<ContentsFilterSectionProps> = ({
             </Grid>
             <Grid item md={3} xs={12}>
                 <Select
-                    options={therapeuticResultsOptions}
+                    options={therapeuticEfficacyOptions}
                     value={countryTherapeutictValue}
                     onChange={handleTherapeuticChange}
                     placeholder={"Therapeutic efficacy study results"}
@@ -113,7 +109,7 @@ export const ContentsFilterSection: React.FC<ContentsFilterSectionProps> = ({
             </Grid>
             <Grid item md={3} xs={12}>
                 <Select
-                    options={molecularResultsOptions}
+                    options={molecularMarkerOptions}
                     value={molecularValue}
                     onChange={handleMolecularChange}
                     placeholder={"Molecular marker study results"}
@@ -146,3 +142,8 @@ const SectionTitle = styled(Typography)`
     text-transform: uppercase;
     font-size: 10px;
 `;
+
+export type Option<T> = {
+    label: string;
+    value: T;
+};

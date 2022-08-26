@@ -34,6 +34,13 @@ export interface RegionState {
 
 export type ActionGroup = "THEME" | "MAP_TYPE" | "DATA" | "LOCATION";
 
+export type LastUpdatedDates = {
+    prevention: Date | null;
+    diagnosis: Date | null;
+    treatment: Date | null;
+    invasive: Date | null;
+};
+
 export interface MalariaState {
     theme: string;
     any: any;
@@ -43,12 +50,7 @@ export interface MalariaState {
     storyModeStep: number;
     filters: number[];
     region: RegionState;
-    lastUpdatedDates: {
-        prevention: Date | null;
-        diagnosis: Date | null;
-        treatment: Date | null;
-        invasive: Date | null;
-    };
+    lastUpdatedDates: LastUpdatedDates;
     actionGroupSelected: ActionGroup | null;
     selection: SiteSelection | null;
     hoverSelection: SiteSelection | null;
