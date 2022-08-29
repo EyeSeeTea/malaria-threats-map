@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { Card, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { initialTreatmentFilters, TreatmentFiltersState } from "./TreatmentFiltersState";
 import PlasmodiumSpecieSelector from "../../../../components/filters/PlasmodiumSpecieSelector";
 import DrugsSelector from "../../../../components/filters/DrugsSelector";
 import { useDashboards } from "../../context/useDashboards";
@@ -12,40 +11,32 @@ import ExcludeLowerPatientsSelector from "../../../../components/filters/Exclude
 interface TreatmentFiltersProps {
     drugsMultiple?: boolean;
     drugsClearable?: boolean;
+    plasmodiumSpecies: string;
+    drugs: string[];
+    molecularMarker: number;
+    years: [number, number];
+    excludeLowerPatients: boolean;
+    onPlasmodiumSpeciesChange: (value: string) => void;
+    onDrugsChange: (values: string[]) => void;
+    onMolecularMarkerChange: (value: number) => void;
+    onYearsChange: (years: [number, number]) => void;
+    onExcludeLowerPatientsChange: (value: boolean) => void;
 }
 
-const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({ drugsMultiple = false, drugsClearable = false }) => {
+const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
+    drugsMultiple = false,
+    drugsClearable = false,
+    plasmodiumSpecies,
+    drugs,
+    years,
+    excludeLowerPatients,
+    onPlasmodiumSpeciesChange,
+    onDrugsChange,
+    onYearsChange,
+    onExcludeLowerPatientsChange,
+}) => {
     const { t } = useTranslation();
-    const { filteredStudies } = useDashboards();
-    const [filters, setFilters] = useState<TreatmentFiltersState>(initialTreatmentFilters);
-
-    const handlePlasmodiumChange = useCallback(
-        (value: string) => {
-            setFilters({ ...filters, plasmodiumSpecies: value });
-        },
-        [filters]
-    );
-
-    const handleDrugChange = useCallback(
-        (values: string[]) => {
-            setFilters({ ...filters, drugs: values });
-        },
-        [filters]
-    );
-
-    const handleYearsChange = useCallback(
-        (years: [number, number]) => {
-            setFilters({ ...filters, years });
-        },
-        [filters]
-    );
-
-    const handleExclude = useCallback(
-        (excludeLowerPatients: boolean) => {
-            setFilters({ ...filters, excludeLowerPatients });
-        },
-        [filters]
-    );
+    const { dashboardsTreatmentStudies } = useDashboards();
 
     return (
         <FiltersCard elevation={0}>
@@ -57,8 +48,8 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({ drugsMultiple = fal
                 labelBold
                 multi={false}
                 background={"#F7F7F7"}
-                onChange={handlePlasmodiumChange}
-                value={filters.plasmodiumSpecies}
+                onChange={onPlasmodiumSpeciesChange}
+                value={plasmodiumSpecies}
             />
 
             <DrugsSelector
@@ -67,23 +58,23 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({ drugsMultiple = fal
                 multi={drugsMultiple}
                 isClearable={drugsClearable}
                 background={"#F7F7F7"}
-                studies={filteredStudies}
-                onChange={handleDrugChange}
-                value={filters.drugs}
+                studies={dashboardsTreatmentStudies}
+                onChange={onDrugsChange}
+                value={drugs}
             />
 
-            <DashboardsYearRangeSelector years={filters.years} onChange={handleYearsChange} />
+            <DashboardsYearRangeSelector years={years} onChange={onYearsChange} />
 
             <ExcludeLowerPatientsSelector
-                value={filters.excludeLowerPatients}
-                onChange={handleExclude}
+                value={excludeLowerPatients}
+                onChange={onExcludeLowerPatientsChange}
                 fontWeight="bold"
             />
         </FiltersCard>
     );
 };
 
-export default TreatmentFilters;
+export default React.memo(TreatmentFilters);
 
 const FiltersCard = styled(Card)`
     min-height: 470px;

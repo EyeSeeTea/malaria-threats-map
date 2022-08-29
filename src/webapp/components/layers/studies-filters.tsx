@@ -157,8 +157,8 @@ export const filterByMolecularMarkerStudyDimension256 = () => (study: any) => {
     return study.DimensionID === 256;
 };
 
-export const filterByMolecularMarker = (molecularMarker: number) => (study: any) => {
-    return study.MM_TYPE === molecularMarker.toString();
+export const filterByMolecularMarker = (molecularMarker?: number) => (study: any) => {
+    return !molecularMarker || study.MM_TYPE === molecularMarker.toString();
 };
 
 export const filterByMolecularMarkers = (molecularMarkers: string[]) => (study: any) => {

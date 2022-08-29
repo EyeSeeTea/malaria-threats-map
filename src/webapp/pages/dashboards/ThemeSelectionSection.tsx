@@ -11,7 +11,8 @@ import { useDashboards } from "./context/useDashboards";
 const ThemeSelectionSection: React.FC = () => {
     const { t } = useTranslation();
 
-    const { theme, selectedCountries, updatedDates, onThemeChange, onSelectedCountriesChange } = useDashboards();
+    const { theme, selectedCountries, updatedDates, onThemeChange, onSelectedCountriesChange, onGenerate } =
+        useDashboards();
 
     const baseCountries = t("countries", { returnObjects: true });
     const countrySuggestions: Option[] = Object.entries(baseCountries).map(([iso, name]) => ({
@@ -71,7 +72,7 @@ const ThemeSelectionSection: React.FC = () => {
                             <Typography variant="caption" fontSize={"11px"}>
                                 {t("common.dashboard.filtersSection.second.helper")}
                             </Typography>
-                            <StyledGenerateButton disabled={selectedCountries.length > 0}>
+                            <StyledGenerateButton disabled={selectedCountries.length === 0} onClick={onGenerate}>
                                 Generate Dashboard
                             </StyledGenerateButton>
                             <Typography variant="caption" fontSize={"12px"} textAlign="right">
@@ -90,7 +91,7 @@ const ThemeSelectionSection: React.FC = () => {
     );
 };
 
-export default ThemeSelectionSection;
+export default React.memo(ThemeSelectionSection);
 
 type ThemeButtonProps = {
     theme: DashboardsThemeOptions;

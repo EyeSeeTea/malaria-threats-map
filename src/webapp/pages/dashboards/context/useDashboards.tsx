@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useCallback } from "react";
 import { DashboardsThemeOptions, TherapeuticEfficacy } from "../types";
 import { DashboardContext } from "./DashboardProvider";
 
@@ -9,41 +9,61 @@ export const useDashboards = () => {
         countryContext,
         therapeuticEfficacy,
         molecularMarker,
-        studies,
-        filteredStudies,
+        treatmentStudies,
+        dashboardsTreatmentStudies,
         updatedDates,
         setTheme,
         setSelectedCountries,
         setCountryContext,
         setTherapeuticEfficacy,
         setMolecularMarker,
-        setFilteredStudies,
+        setDashboardsTreatmentStudies,
     } = useContext(DashboardContext);
 
-    const onThemeChange = (theme: DashboardsThemeOptions) => {
-        setTheme(theme);
-    };
+    const onThemeChange = useCallback(
+        (theme: DashboardsThemeOptions) => {
+            setTheme(theme);
+        },
+        [setTheme]
+    );
 
-    const onSelectedCountriesChange = (selectedCountries: string[]) => {
-        if (selectedCountries.length <= 5) {
-            setSelectedCountries(selectedCountries);
-            setFilteredStudies(
-                studies.filter(study => selectedCountries.includes(study.ISO2) || selectedCountries.length === 0)
-            );
-        }
-    };
+    const onSelectedCountriesChange = useCallback(
+        (selectedCountries: string[]) => {
+            if (selectedCountries.length <= 5) {
+                setSelectedCountries(selectedCountries);
+            }
+        },
+        [setSelectedCountries]
+    );
 
-    const onCountryContextChange = (countryContext: string) => {
-        setCountryContext(countryContext);
-    };
+    const onCountryContextChange = useCallback(
+        (countryContext: string) => {
+            setCountryContext(countryContext);
+        },
+        [setCountryContext]
+    );
 
-    const onTherapeuticEfficacyChange = (therapeuticEfficacy: TherapeuticEfficacy) => {
-        setTherapeuticEfficacy(therapeuticEfficacy);
-    };
+    const onTherapeuticEfficacyChange = useCallback(
+        (therapeuticEfficacy: TherapeuticEfficacy) => {
+            setTherapeuticEfficacy(therapeuticEfficacy);
+        },
+        [setTherapeuticEfficacy]
+    );
 
-    const onMolecularMarkerChange = (molecularMarker: string) => {
-        setMolecularMarker(molecularMarker);
-    };
+    const onMolecularMarkerChange = useCallback(
+        (molecularMarker: string) => {
+            setMolecularMarker(molecularMarker);
+        },
+        [setMolecularMarker]
+    );
+
+    const onGenerate = useCallback(() => {
+        const dashboardStudies = treatmentStudies.filter(
+            study => selectedCountries.includes(study.ISO2) || selectedCountries.length === 0
+        );
+
+        setDashboardsTreatmentStudies(dashboardStudies);
+    }, [selectedCountries, setDashboardsTreatmentStudies, treatmentStudies]);
 
     return {
         theme,
@@ -51,13 +71,13 @@ export const useDashboards = () => {
         countryContext,
         therapeuticEfficacy,
         molecularMarker,
-        studies,
-        filteredStudies,
+        dashboardsTreatmentStudies,
         updatedDates,
         onThemeChange,
         onSelectedCountriesChange,
         onCountryContextChange,
         onTherapeuticEfficacyChange,
         onMolecularMarkerChange,
+        onGenerate,
     };
 };

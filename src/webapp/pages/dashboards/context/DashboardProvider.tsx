@@ -34,8 +34,7 @@ const DashboardProvider: React.FC<Props> = ({
     const [countryContext, setCountryContext] = useState<string>("all");
     const [therapeuticEfficacy, setTherapeuticEfficacy] = useState<TherapeuticEfficacy>("all");
     const [molecularMarker, setMolecularMarker] = useState<string>("all");
-    const [studies, setStudies] = useState<TreatmentStudy[]>([]);
-    const [filteredStudies, setFilteredStudies] = useState<TreatmentStudy[]>([]);
+    const [dashboardsTreatmentStudies, setDashboardsTreatmentStudies] = useState<TreatmentStudy[]>(undefined);
     const [updatedDates, setUpdatedDates] = useState<LastUpdatedDates>({
         prevention: null,
         diagnosis: null,
@@ -46,11 +45,6 @@ const DashboardProvider: React.FC<Props> = ({
     useEffect(() => {
         fetchTreatmentStudies();
     }, [fetchTreatmentStudies]);
-
-    useEffect(() => {
-        setStudies(treatmentStudies);
-        setFilteredStudies(treatmentStudies);
-    }, [treatmentStudies]);
 
     useEffect(() => {
         setUpdatedDates(lastUpdatedDates);
@@ -64,15 +58,15 @@ const DashboardProvider: React.FC<Props> = ({
                 countryContext,
                 therapeuticEfficacy,
                 molecularMarker,
-                studies,
-                filteredStudies,
+                treatmentStudies,
+                dashboardsTreatmentStudies,
                 updatedDates,
                 setTheme,
                 setSelectedCountries,
                 setCountryContext,
                 setTherapeuticEfficacy,
                 setMolecularMarker,
-                setFilteredStudies,
+                setDashboardsTreatmentStudies,
             }}
         >
             {children}
@@ -88,13 +82,13 @@ interface DashboardState {
     countryContext: string;
     therapeuticEfficacy: string;
     molecularMarker: string;
-    studies: TreatmentStudy[];
-    filteredStudies: TreatmentStudy[];
+    treatmentStudies: TreatmentStudy[];
+    dashboardsTreatmentStudies: TreatmentStudy[];
     updatedDates: LastUpdatedDates;
     setTheme: Dispatch<SetStateAction<DashboardsThemeOptions>>;
     setSelectedCountries: Dispatch<SetStateAction<string[]>>;
     setCountryContext: Dispatch<SetStateAction<string>>;
     setTherapeuticEfficacy: Dispatch<SetStateAction<TherapeuticEfficacy>>;
     setMolecularMarker: Dispatch<SetStateAction<string>>;
-    setFilteredStudies: Dispatch<SetStateAction<TreatmentStudy[]>>;
+    setDashboardsTreatmentStudies: Dispatch<SetStateAction<TreatmentStudy[]>>;
 }

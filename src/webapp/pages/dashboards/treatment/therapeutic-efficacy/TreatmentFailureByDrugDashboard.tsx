@@ -3,9 +3,22 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import TreatmentFilters from "../filters/TreatmentFilters";
+import { useTreatmentFilters } from "../filters/useTreatmentFilters";
 
 const TreatmentFailureByDrugDashboard: React.FC = () => {
     const { t } = useTranslation();
+    const {
+        plasmodiumSpecies,
+        drugs,
+        molecularMarker,
+        years,
+        excludeLowerPatients,
+        onPlasmodiumChange,
+        onDrugsChange,
+        onYearsChange,
+        onExcludeLowerPatientsChange,
+        onMolecularMarkerChange,
+    } = useTreatmentFilters();
 
     return (
         <React.Fragment>
@@ -14,7 +27,20 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
             <Grid container spacing={2}>
                 <Grid item md={3} xs={12}>
                     <Stack direction="column">
-                        <TreatmentFilters drugsMultiple={true} drugsClearable={true}></TreatmentFilters>
+                        <TreatmentFilters
+                            drugsMultiple={true}
+                            drugsClearable={true}
+                            plasmodiumSpecies={plasmodiumSpecies}
+                            drugs={drugs}
+                            molecularMarker={molecularMarker}
+                            years={years}
+                            excludeLowerPatients={excludeLowerPatients}
+                            onPlasmodiumSpeciesChange={onPlasmodiumChange}
+                            onDrugsChange={onDrugsChange}
+                            onMolecularMarkerChange={onMolecularMarkerChange}
+                            onYearsChange={onYearsChange}
+                            onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
+                        ></TreatmentFilters>
                         <StudiesCountCard elevation={0}></StudiesCountCard>
                     </Stack>
                 </Grid>
