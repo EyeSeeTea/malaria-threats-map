@@ -14,6 +14,7 @@ More(Highcharts);
 const TreatmentFailureOverTimeDashboard: React.FC = () => {
     const { t } = useTranslation();
     const {
+        studiesCount,
         series,
         plasmodiumSpecies,
         drugs,
@@ -46,7 +47,11 @@ const TreatmentFailureOverTimeDashboard: React.FC = () => {
                             onYearsChange={onYearsChange}
                             onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
                         ></TreatmentFilters>
-                        <StudiesCountCard elevation={0}></StudiesCountCard>
+                        <StudiesCountCard elevation={0}>
+                            {t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.numStudies", {
+                                count: studiesCount,
+                            })}
+                        </StudiesCountCard>
                     </Stack>
                 </Grid>
                 <Grid item md={9} xs={12}>
@@ -66,7 +71,7 @@ const DasboardCard = styled(Card)`
 `;
 
 const StudiesCountCard = styled(Card)`
-    height: 60px;
+    padding: 24px;
 `;
 
 const Title = styled.h3`
@@ -148,28 +153,6 @@ function chartOptions(series: BubleChartGroup[]): Highcharts.Options {
             pointFormat: "Patients {point.z}",
         },
         series,
-        // : [
-        //     {
-        //         type: "bubble",
-        //         name: "Belgium",
-        //         color: "rgba(223, 83, 83, .5)",
-        //         data: [
-        //             { x: 2010, y: 5, z: 20, name: "BE" },
-        //             { x: 2012, y: 20, z: 30, name: "BE" },
-        //             { x: 2014, y: 40, z: 40, name: "BE" },
-        //         ],
-        //     },
-        //     {
-        //         type: "bubble",
-        //         name: "Spain",
-        //         color: "rgba(150, 83, 83, .5)",
-        //         data: [
-        //             { x: 2012, y: 8, z: 10, name: "BE" },
-        //             { x: 2016, y: 17, z: 20, name: "BE" },
-        //             { x: 2018, y: 30, z: 24, name: "BE" },
-        //         ],
-        //     },
-        // ],
         credits: {
             enabled: false,
         },

@@ -46,6 +46,8 @@ export function useTreatmentFailureOverTime() {
     const [series, setSeries] = React.useState<BubleChartGroup[]>([]);
     const { dashboardsTreatmentStudies } = useDashboards();
 
+    const studiesCount = React.useMemo(() => filteredStudies.length, [filteredStudies]);
+
     React.useEffect(() => {
         const filteredStudies = filterStudies(
             dashboardsTreatmentStudies,
@@ -64,6 +66,8 @@ export function useTreatmentFailureOverTime() {
     }, [filteredStudies]);
 
     return {
+        studiesCount,
+        filteredStudies,
         series,
         plasmodiumSpecies,
         drugs,

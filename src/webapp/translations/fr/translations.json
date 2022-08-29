@@ -115,7 +115,8 @@
                     "title": "SUMMARY OF TREATMENT FAILURE RATES BY DRUG"
                 },
                 "treatmentFailureOverTime": {
-                    "title": "TREATMENT FAILURE RATES OVER TIME"
+                    "title": "TREATMENT FAILURE RATES OVER TIME",
+                    "numStudies": "The applied filters yield {{count}} studies"
                 },
                 "parasiteClearanceOverTime": {
                     "title": "PARASITE CLEARANCE RATES OVER TIME"

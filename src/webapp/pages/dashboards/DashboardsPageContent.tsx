@@ -6,7 +6,6 @@ import ThemeSelectionSection from "./ThemeSelectionSection";
 import ContentsFilterSection from "./ContentsFilterSection";
 import SecondaryLayout from "../secondary-layout/SecondaryLayout";
 import TreatmentEfficacyStudies from "./treatment/therapeutic-efficacy/TreatmentEfficacyStudies";
-import DashboardProvider from "./context/DashboardProvider";
 import { useDashboards } from "./context/useDashboards";
 
 const StyledContainer = styled.div`
