@@ -173,12 +173,12 @@
                 "other_insecticide_class_none": "Rien",
                 "resistance": {
                     "mosquito_mortality": "% mortalité de moustique",
-                    "number_of_tests": "# de tests"
+                    "number_of_tests": "nombre testé"
                 },
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) sur les vecteurs ",
                     "content_2": " du paludisme via {{insecticideClasses}} avec {{type}} {{years}}",
-                    "number_of_tests": "# de tests",
+                    "number_of_tests": "nombre testé",
                     "DETECTED": "Détecté",
                     "NOT_DETECTED": "Non détecté",
                     "title": "Nombre d'essais de mécanismes",
@@ -363,7 +363,7 @@
                     "native": "Autochtone",
                     "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
                     "link_text": "formulaire de rapport",
-                    "link_content_1": "Si vous avez détecté une espèce invasive vecteur Anopheles, veuillez nous en informer via le ",
+                    "link_content_1": "Si vous avez détecté une espèce invasive vecteur <1>Anopheles</1>, veuillez nous en informer via le ",
                     "help": {
                         "p1": "Cette carte représente les données de la <1>surveillance vectorielle des moustiques anophèles</1>. Chaque point sur la carte représente un site d'étude contenant une ou plusieurs études. La couleur du point indique si l'espèce est envahissante ou originaire de la région.",
                         "p2": "",
@@ -455,7 +455,7 @@
         },
         "copyright": {
             "mobile": "Cliquez ici pour lire l'avertissement qui s'applique à la carte ci-dessus",
-            "content": "Les appellations employées dans la présente publication et la présentation des données qui y figurent \nn’impliquent de la part de l’Organisation mondiale de la Santé aucune prise de position quant au statut juridique des \npays, territoires, villes ou zones, ou de leurs autorités, ni quant au tracé de leurs frontières ou limites. Les lignes \ndiscontinues et en pointillé, ainsi que les zones en gris, sur les cartes représentent des frontières et zones \napproximatives dont le tracé peut ne pas avoir fait l'objet d'un accord définitif. Les limites de la carte fournies \nreflètent l'état politique et géographique à la date de publication ({{year}}). Cependant, les informations techniques sur \nla santé sont basées sur des données précises par rapport à l'année sélectionnée. La déconnexion dans cet arrangement \ndoit être notée, mais aucune implication concernant le statut politique ou terminologique ne doit être tirée de cet \narrangement car il est purement fonction des limitations techniques et graphiques. Source des données: Programme mondial \ncontre le paludisme. Production de cartes: Programme mondial contre le paludisme. Organisation mondiale de la santé."
+            "content": "Les appellations employées dans la présente publication et la présentation des données qui y figurent n’impliquent de la part de l’OMS aucune prise de position quant au statut juridique des pays, territoires, villes ou zones, ou de leurs autorités, ni quant au tracé de leurs frontières ou limites. Les traits discontinus formés d’une succession de points ou de tirets sur les cartes représentent des frontières approximatives dont le tracé peut ne pas avoir fait l’objet d’un accord définitif.  Source des données: Programme mondial contre le paludisme. Production de cartes: Programme mondial contre le paludisme. Organisation mondiale de la santé. OMS {{year}}."
         },
         "options": {
             "title": "Options",
@@ -599,27 +599,6 @@
                 "percentile_75": "Percentile 75"
             }
         },
-        "subscription": {
-            "title": "Inscrivez-vous pour recevoir des mises à jour sur ces quatre défis de la lutte contre le paludisme!",
-            "first_name": "Prénom",
-            "last_name": "Nom de famille",
-            "email": "Email",
-            "country": "Pay",
-            "organization": "Organisation",
-            "button": "Souscrire",
-            "institutions": {
-                "nmcp": "PNLP",
-                "funding_organization": "Entité financiatrice",
-                "research_organization": "Institution de recherche",
-                "who_collaborating_centers": "Centre collaborateur de la OMS",
-                "private_sector": "Secteur privé",
-                "ngo": "ONG",
-                "media_organization": "Agence de communication",
-                "who_country_office": "OMS - Bureau pay",
-                "who_regional_office": "OMS - Bureau regional",
-                "who_headquarters": "OMS - Siège"
-            }
-        },
         "uploadFile": {
             "title": "Téléverser un fichier",
             "name": "Titre",
@@ -650,7 +629,6 @@
             "image": "Exporter une image de la carte",
             "summary": "Rapport sommaire",
             "disclaimer": "Avertissement",
-            "subscribe": "Souscrire",
             "uploadFile": "Télécharger le fichier et télécharger le modèle",
             "comments": "Envoyez vos commentaires",
             "help": "Help",

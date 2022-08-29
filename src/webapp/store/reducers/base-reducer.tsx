@@ -113,14 +113,10 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.SetDataDownloadOpen]: (dataDownloadOpen: boolean) => R.assoc("dataDownloadOpen", dataDownloadOpen),
     [ActionTypeEnum.SetReportOpen]: (reportOpen: boolean) => R.assoc("reportOpen", reportOpen),
     [ActionTypeEnum.SetMapTitle]: (mapTitle: string) => R.assoc("mapTitle", mapTitle),
-    [ActionTypeEnum.SetSubscriptionOpen]: (subscriptionOpen: boolean) => R.assoc("subscriptionOpen", subscriptionOpen),
     [ActionTypeEnum.SetUploadFileOpen]: (uploadFileOpen: boolean) => R.assoc("uploadFileOpen", uploadFileOpen),
     [ActionTypeEnum.SetFeedbackOpen]: (feedbackOpen: boolean) => R.assoc("feedbackOpen", feedbackOpen),
     [ActionTypeEnum.SetTheaterMode]: (theaterMode: boolean) => R.assoc("theaterMode", theaterMode),
     [ActionTypeEnum.SetLegendExpanded]: (legendExpanded: boolean) => R.assoc("legendExpanded", legendExpanded),
-    [ActionTypeEnum.AddSubscriptionContactRequest]: () => R.assoc("isSubmittingSubscription", true),
-    [ActionTypeEnum.AddSubscriptionContactError]: () => R.assoc("isSubmittingSubscription", false),
-    [ActionTypeEnum.AddSubscriptionContactSuccess]: () => R.assoc("isSubmittingSubscription", false),
     [ActionTypeEnum.UploadFileRequest]: () => R.assoc("isUploadingFile", true),
     [ActionTypeEnum.UploadFileSuccess]: () => R.assoc("isUploadingFile", false),
     [ActionTypeEnum.UploadFileError]: () => R.assoc("isUploadingFile", false),
@@ -148,8 +144,6 @@ export const selectIsReportOpen = createSelector(selectMalariaState, state => st
 
 export const selectMapTitle = createSelector(selectMalariaState, state => state.mapTitle);
 
-export const selectIsSubscriptionOpen = createSelector(selectMalariaState, state => state.subscriptionOpen);
-
 export const selectUploadFileOpen = createSelector(selectMalariaState, state => state.uploadFileOpen);
 
 export const selectIsFeedbackOpen = createSelector(selectMalariaState, state => state.feedbackOpen);
@@ -157,11 +151,6 @@ export const selectIsFeedbackOpen = createSelector(selectMalariaState, state => 
 export const selectTheaterMode = createSelector(selectMalariaState, state => state.theaterMode);
 
 export const selectLegendExpanded = createSelector(selectMalariaState, state => state.legendExpanded);
-
-export const selectIsSubmittingSubscription = createSelector(
-    selectMalariaState,
-    state => state.isSubmittingSubscription
-);
 
 export const selectIsUploadingFile = createSelector(selectMalariaState, state => state.isUploadingFile);
 

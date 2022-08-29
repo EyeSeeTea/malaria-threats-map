@@ -15,6 +15,7 @@ export interface CountryProperties {
     CENTER_LON: number;
     ISO_2_CODE: string;
     ENDEMICITY: number;
+    ENDDATE: number;
     PBO_DEPLOYMENT_STATUS?: string;
 }
 

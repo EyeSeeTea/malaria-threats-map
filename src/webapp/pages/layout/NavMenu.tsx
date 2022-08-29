@@ -22,32 +22,33 @@ const StyledLink = styled(NavLink)<DirectionProps>`
     letter-spacing: 0.235px;
     &.active {
         font-weight: bold;
-      }
-      &:hover {
-          border: none;
-          color: #2FB3AF;
-          font-weight: bold;
-          letter-spacing: 0;
-          padding-bottom: 10px;
-          border-bottom: 5px solid #2FB3AF;
-          border-radius: 0;
-          cursor;
-          transition: none;
-      }
-      &[aria-expanded=true] {
+    }
+    &:hover {
+        border: none;
+        color: #2fb3af;
+        font-weight: bold;
+        letter-spacing: 0;
+        padding-bottom: 10px;
+        border-bottom: 5px solid #2fb3af;
+        border-radius: 0;
+        cursor: pointer;
+        transition: none;
+    }
+    &[aria-expanded="true"] {
         font-weight: bold;
     }
-}`;
+`;
 
 const StyledMenuButton = styled(Button)`
     &.MuiButton-root {
-    width: 100%;
-    padding: 15px 0;
-    color: black;
-    font-weight; 400;
-    letter-spacing: 0.235px;
-    &[aria-expanded=true] {
-        font-weight: bold;
+        width: 100%;
+        padding: 15px 0;
+        color: black;
+        font-weight: 400;
+        letter-spacing: 0.235px;
+        &[aria-expanded="true"] {
+            font-weight: bold;
+        }
     }
 `;
 
