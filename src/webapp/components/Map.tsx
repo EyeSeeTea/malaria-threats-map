@@ -59,7 +59,7 @@ import { changeLanguage } from "../config/i18next";
 import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
 import LastUpdated from "./last-updated/LastUpdated";
 import FloatingLegend from "./legend/FloatingLegendContainer";
-import GreaterMekongLink from "./greater-mekong-link/GreaterMekongLink";
+import InfoToastLink from "./InfoToastLink";
 import SiteSelectionContent from "./site-selection-content/SiteSelectionContent";
 import SecondaryHeader from "../pages/secondary-layout/SecondaryHeader";
 
@@ -338,9 +338,14 @@ class Map extends React.Component<Props> {
                 {ready && <DiagnosisLayer map={this.map} />}
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
+                {ready && (
+                    <TopMiddleContainer>
+                        <InfoToastLink text={this.props.t("common.takeATour")} type="tour" />
+                    </TopMiddleContainer>
+                )}
                 {theme === "treatment" && (
                     <TopMiddleContainer>
-                        <GreaterMekongLink />
+                        <InfoToastLink text={this.props.t("common.mekong_link")} type="greaterMekong" />
                     </TopMiddleContainer>
                 )}
                 {/* TODO:Refactor SecondaryHeader from here and use Secondary Layout in MapPage */}

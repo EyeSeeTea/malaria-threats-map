@@ -8,9 +8,11 @@ export default function Step4(options: StepProps) {
     return (
         <>
             <>
-                <Typography variant="body2">{t("tour.steps.4.p1")}</Typography>
+                <Typography variant="subtitle1">
+                    <strong>{t("tour.steps.4.title")}</strong>
+                </Typography>
             </>
-            <Footer {...options} current={4} total={10} />
+            <Footer {...options} current={4} total={5} />
         </>
     );
 }

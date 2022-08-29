@@ -16,6 +16,7 @@ import { diagnosisSuggestions } from "../filters/DiagnosisMapTypesSelector";
 import { invasiveSuggestions } from "../filters/InvasiveMapTypesSelector";
 import { treatmentSuggestions } from "../filters/TreatmentMapTypesSelector";
 import { setMapTitleAction } from "../../store/actions/base-actions";
+import { Box } from "@mui/material";
 
 const Label = styled.span`
     font-weight: bold;
@@ -74,21 +75,23 @@ const MapTypeMapActions: React.FC<Props> = ({
     }, [selectedMapType, t, setMapTitle]);
 
     return (
-        <ActionGroupItem
-            childrenMaxHeight={"420px"}
-            placeholder={t("mapActions.selectMapType")}
-            value={
-                selectedMapType && (
-                    <span>
-                        <Label>{t("mapActions.mapType")}:&nbsp;</Label>
-                        <Value>{t(selectedMapType)}</Value>
-                    </span>
-                )
-            }
-            actionGroupKey={"MAP_TYPE"}
-        >
-            {theme !== "diagnosis" && theme !== "invasive" && <MapTypesSelector />}
-        </ActionGroupItem>
+        <Box id="mapType">
+            <ActionGroupItem
+                childrenMaxHeight={"420px"}
+                placeholder={t("mapActions.selectMapType")}
+                value={
+                    selectedMapType && (
+                        <span>
+                            <Label>{t("mapActions.mapType")}:&nbsp;</Label>
+                            <Value>{t(selectedMapType)}</Value>
+                        </span>
+                    )
+                }
+                actionGroupKey={"MAP_TYPE"}
+            >
+                {theme !== "diagnosis" && theme !== "invasive" && <MapTypesSelector />}
+            </ActionGroupItem>
+        </Box>
     );
 };
 

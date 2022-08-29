@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "../Icons";
+import { Box } from "@mui/material";
 
 const Label = styled.span`
     font-weight: bold;
@@ -79,9 +80,11 @@ const ThemeMapActions: React.FC<StateProps> = ({ theme }) => {
     }, [theme, t]);
 
     return (
-        <ActionGroupItem placeholder={t("mapActions.selectTheme")} actionGroupKey={"THEME"} value={themeValue}>
-            <TopicSelector />
-        </ActionGroupItem>
+        <Box id="theme">
+            <ActionGroupItem placeholder={t("mapActions.selectTheme")} actionGroupKey={"THEME"} value={themeValue}>
+                <TopicSelector />
+            </ActionGroupItem>
+        </Box>
     );
 };
 

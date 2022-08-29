@@ -39,7 +39,7 @@ const ThemeButton = styled.div<{ disabled?: boolean }>`
         background-color: #e2e2e2;
     }
     height: 152px;
-    padding 4px;
+    padding: 4px;
 `;
 
 const Title = styled.span`

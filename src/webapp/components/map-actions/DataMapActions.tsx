@@ -16,6 +16,7 @@ import _ from "lodash";
 import { suggestions } from "../filters/VectorSpeciesFilter";
 import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
+import { Box } from "@mui/material";
 
 const Label = styled.span`
     font-weight: bold;
@@ -135,21 +136,23 @@ const DataMapActions: React.FC<StateProps> = ({
     ]);
 
     return (
-        <ActionGroupItem
-            childrenMaxHeight={"400px"}
-            placeholder={t("mapActions.selectData")}
-            actionGroupKey={"DATA"}
-            value={
-                selectedFilters && (
-                    <span>
-                        <Label>{t("mapActions.data")}:&nbsp;</Label>
-                        <Value>{t(selectedFilters)}</Value>
-                    </span>
-                )
-            }
-        >
-            <FiltersContent />
-        </ActionGroupItem>
+        <Box id="dataFilters">
+            <ActionGroupItem
+                childrenMaxHeight={"400px"}
+                placeholder={t("mapActions.selectData")}
+                actionGroupKey={"DATA"}
+                value={
+                    selectedFilters && (
+                        <span>
+                            <Label>{t("mapActions.data")}:&nbsp;</Label>
+                            <Value>{t(selectedFilters)}</Value>
+                        </span>
+                    )
+                }
+            >
+                <FiltersContent />
+            </ActionGroupItem>
+        </Box>
     );
 };
 
