@@ -2,7 +2,7 @@ import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { PreventionMapType, PreventionState, State } from "../types";
+import { PreventionDataset, PreventionMapType, PreventionState, State } from "../types";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 const initialState: PreventionState = Object.freeze({
@@ -12,6 +12,7 @@ const initialState: PreventionState = Object.freeze({
     filteredStudies: [],
     filters: {
         mapType: PreventionMapType.RESISTANCE_STATUS,
+        dataset: "DISCRIMINATING_CONCENTRATION_BIOASSAY",
         insecticideClass: "PYRETHROIDS",
         insecticideTypes: [],
         synergistTypes: [],
@@ -36,6 +37,10 @@ function updateFilter<T>(key: string, value: T, def?: T) {
 
 function updatePreventionMapType(mapType: PreventionMapType) {
     return updateFilter("mapType", mapType, PreventionMapType.RESISTANCE_STATUS);
+}
+
+function updatePreventionDataSet(dataset: PreventionDataset) {
+    return updateFilter("dataset", dataset, "DISCRIMINATING_CONCENTRATION_BIOASSAY");
 }
 
 function updateInsecticideClass(insecticideClass: string) {
@@ -77,6 +82,7 @@ export default createReducer<PreventionState>(initialState, {
         loading: false,
     }),
     [ActionTypeEnum.SetPreventionMapType]: updatePreventionMapType,
+    [ActionTypeEnum.SetPreventionDataset]: updatePreventionDataSet,
     [ActionTypeEnum.SetInsecticideClass]: updateInsecticideClass,
     [ActionTypeEnum.SetInsecticideTypes]: updateInsecticideTypes,
     [ActionTypeEnum.SetAssayTypes]: updateAssayTypes,

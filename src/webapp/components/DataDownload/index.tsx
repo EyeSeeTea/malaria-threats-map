@@ -5,32 +5,28 @@ import { connect } from "react-redux";
 import { Button, Container, StepLabel, stepLabelClasses } from "@mui/material";
 import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
 import Step from "@mui/material/Step";
-import { logEventAction } from "../../store/actions/base-actions";
+import { logEventAction, setThemeAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
-import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
-import UserForm from "./UserForm";
-import Terms from "./Terms";
-import Filters from "./Filters";
+import UserForm from "./steps/UserForm";
+import Terms from "./steps/Terms";
+import Data from "./steps/Data";
 import styled from "styled-components";
-import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
-import { selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
 import { addDataDownloadRequestAction } from "../../store/actions/data-download-actions";
 import SimpleLoader from "../SimpleLoader";
 import PaperStepper from "../PaperStepper/PaperStepper";
 import CheckIcon from "@mui/icons-material/Check";
 import { useDownload } from "./useDownload";
+import { setPreventionDataset } from "../../store/actions/prevention-actions";
 
 const Wrapper = styled.div`
     margin: 16px 0;
 `;
 
-const mapStateToProps = (state: State) => ({
-    preventionStudies: selectPreventionStudies(state),
-    treatmentStudies: selectTreatmentStudies(state),
-    invasiveStudies: selectInvasiveStudies(state),
-});
+const mapStateToProps = (_state: State) => ({});
 
 const mapDispatchToProps = {
+    setTheme: setThemeAction,
+    setPreventionDataset: setPreventionDataset,
     addDownload: addDataDownloadRequestAction,
     logEvent: logEventAction,
 };
@@ -40,7 +36,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
 function getSteps() {
-    return ["data_download.step3.title", "data_download.personal_step.title", "data_download.terms_step.title"];
+    return ["data_download.data_step.title", "data_download.personal_step.title", "data_download.terms_step.title"];
 }
 
 export type Contact = {
@@ -51,13 +47,13 @@ export type Contact = {
     country: string;
 };
 
-function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, logEvent, addDownload }: Props) {
+function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset }: Props) {
     const { t } = useTranslation();
     const {
         activeStep,
         downloading,
         messageLoader,
-        dataInfo,
+        selectedDataBases,
         userInfo,
         termsInfo,
         isStepValid,
@@ -65,21 +61,35 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
         downloadData,
         handleNext,
         handleBack,
-        onChangeDataInfo,
+        onChangeSelectedDatabases,
         onChangeUserInfo,
         onChangeTermsInfo,
-    } = useDownload(logEvent, addDownload);
+    } = useDownload(logEvent, setTheme, setPreventionDataset, addDownload);
 
     const steps = getSteps();
+
+    const onChooseOther = React.useCallback(() => {
+        handleBack();
+        handleBack();
+    }, [handleBack]);
 
     const renderStep = () => {
         switch (activeStep) {
             case 0:
-                return <Filters selections={dataInfo} onChange={onChangeDataInfo} />;
+                return (
+                    <Data selectedDatabases={selectedDataBases} onChangeSelectedDatabases={onChangeSelectedDatabases} />
+                );
             case 1:
                 return <UserForm userInfo={userInfo} onChange={onChangeUserInfo} />;
             case 2:
-                return <Terms termsInfo={termsInfo} dataInfo={dataInfo} onChange={onChangeTermsInfo} />;
+                return (
+                    <Terms
+                        termsInfo={termsInfo}
+                        selectedDatabases={selectedDataBases}
+                        onChange={onChangeTermsInfo}
+                        onChooseOther={onChooseOther}
+                    />
+                );
             default:
                 return <div />;
         }
@@ -133,7 +143,7 @@ function DataDownload({ preventionStudies, treatmentStudies, invasiveStudies, lo
                         variant={"contained"}
                         color={"primary"}
                         disabled={!isFormValid()}
-                        onClick={() => downloadData(preventionStudies, treatmentStudies, invasiveStudies)}
+                        onClick={() => downloadData()}
                         size="large"
                     >
                         {t("common.data_download.buttons.download")}

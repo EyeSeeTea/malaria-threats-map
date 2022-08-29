@@ -11,7 +11,9 @@ export const fetchPreventionStudiesSuccess = createAction(ActionTypeEnum.FetchPr
 
 export const fetchPreventionStudiesError = createAction(ActionTypeEnum.FetchPreventionStudiesError)();
 
-export const setPreventionMapType = createAction(ActionTypeEnum.SetPreventionMapType)<PreventionMapType>();
+export const setPreventionMapType = createAction(ActionTypeEnum.SetPreventionMapType)<PreventionMapType | null>();
+
+export const setPreventionDataset = createAction(ActionTypeEnum.SetPreventionDataset)<string | null>();
 
 export const setInsecticideClass = createAction(ActionTypeEnum.SetInsecticideClass)<string>();
 

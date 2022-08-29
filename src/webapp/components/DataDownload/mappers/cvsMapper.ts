@@ -1,49 +1,21 @@
 import i18next from "i18next";
-import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
-import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
-import {
-    filterByAssayTypes,
-    filterByCountries,
-    filterByDimensionId,
-    filterByDownload,
-    filterByDrugs,
-    filterByInsecticideClasses,
-    filterByInsecticideTypes,
-    filterByManyPlasmodiumSpecies,
-    filterByMolecularMarkers,
-    filterByMolecularMarkerStudyDimension255,
-    filterBySpecies,
-    filterByTypes,
-    filterByYears,
-} from "../../layers/studies-filters";
+
 import mappings from "../mappings";
 import * as R from "ramda";
-import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import { MOLECULAR_MARKERS } from "../../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../filters/PlasmodiumSpeciesFilter";
 import { Option } from "../../BasicSelect";
-import { DataInfo } from "../types";
+import { InvasiveDatabaseSelection, PreventionDatabaseSelection, TreatmentDatabaseSelection } from "../types";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
 
 export const BIOCHEMICAL_MECHANISM_TYPES = ["KDR_L1014S", "KDR_L1014F", "KDR_(MUTATION_UNSPECIFIED)", "ACE1R"];
 
-export const mapPreventionStudiesToCSV = (preventionStudies: PreventionStudy[], dataInfo: DataInfo) => {
-    switch (dataInfo.preventionDataset) {
+export const mapPreventionStudiesToCSV = (database: PreventionDatabaseSelection) => {
+    switch (database.dataset) {
         case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
         case "INTENSITY_CONCENTRATION_BIOASSAY": {
-            const filters = [
-                filterByDownload(),
-                filterByAssayTypes([dataInfo.preventionDataset]),
-                filterByInsecticideClasses(dataInfo.insecticideClasses),
-                filterByInsecticideTypes(dataInfo.insecticideTypes),
-                filterByTypes(dataInfo.types),
-                filterBySpecies(dataInfo.species),
-                filterByCountries(dataInfo.countries),
-                filterByYears(dataInfo.years),
-            ];
-            const studies = filterStudies(preventionStudies, filters);
-            const results = buildResults(studies, mappings[dataInfo.preventionDataset]);
+            const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
 
             const fields = [
                 "ID",
@@ -92,16 +64,8 @@ export const mapPreventionStudiesToCSV = (preventionStudies: PreventionStudy[], 
             ];
         }
         case "SYNERGIST-INSECTICIDE_BIOASSAY": {
-            const filters = [
-                filterByDownload(),
-                filterByAssayTypes([dataInfo.preventionDataset]),
-                filterByTypes(dataInfo.types),
-                filterBySpecies(dataInfo.species),
-                filterByCountries(dataInfo.countries),
-                filterByYears(dataInfo.years),
-            ];
-            const studies = filterStudies(preventionStudies, filters);
-            const results = buildResults(studies, mappings[dataInfo.preventionDataset]);
+            const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+
             const fields = [
                 "ID",
                 "COUNTRY_NAME",
@@ -153,16 +117,8 @@ export const mapPreventionStudiesToCSV = (preventionStudies: PreventionStudy[], 
             ];
         }
         case "MOLECULAR_ASSAY": {
-            const filters = [
-                filterByDownload(),
-                filterByAssayTypes(["MOLECULAR_ASSAY", "BIOCHEMICAL_ASSAY"]),
-                filterByTypes(MOLECULAR_MECHANISM_TYPES),
-                filterBySpecies(dataInfo.species),
-                filterByCountries(dataInfo.countries),
-                filterByYears(dataInfo.years),
-            ];
-            const studies = filterStudies(preventionStudies, filters);
-            const results = buildResults(studies, mappings[dataInfo.preventionDataset]);
+            const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+
             const fields = [
                 "ID",
                 "COUNTRY_NAME",
@@ -207,15 +163,8 @@ export const mapPreventionStudiesToCSV = (preventionStudies: PreventionStudy[], 
             ];
         }
         case "BIOCHEMICAL_ASSAY": {
-            const filters = [
-                filterByDownload(),
-                filterByTypes(BIOCHEMICAL_MECHANISM_TYPES),
-                filterBySpecies(dataInfo.species),
-                filterByCountries(dataInfo.countries),
-                filterByYears(dataInfo.years),
-            ];
-            const studies = filterStudies(preventionStudies, filters);
-            const results = buildResults(studies, mappings[dataInfo.preventionDataset]);
+            const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+
             const fields = [
                 "ID",
                 "COUNTRY_NAME",
@@ -261,18 +210,11 @@ export const mapPreventionStudiesToCSV = (preventionStudies: PreventionStudy[], 
     }
 };
 
-export const mapTreatmentStudiesToCSV = (treatmentStudies: TreatmentStudy[], dataInfo: DataInfo) => {
-    switch (dataInfo.treatmentDataset) {
+export const mapTreatmentStudiesToCSV = (database: TreatmentDatabaseSelection) => {
+    switch (database.dataset) {
         case "THERAPEUTIC_EFFICACY_STUDY": {
-            const filters = [
-                filterByDimensionId(256),
-                filterByManyPlasmodiumSpecies(dataInfo.plasmodiumSpecies),
-                filterByDrugs(dataInfo.drugs),
-                filterByCountries(dataInfo.countries),
-                filterByYears(dataInfo.years),
-            ];
-            const studies = filterStudies(treatmentStudies, filters);
-            const results = buildResults(studies, mappings[dataInfo.treatmentDataset]);
+            const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+
             const fields = [
                 "ID",
                 "COUNTRY_NAME",
@@ -315,16 +257,9 @@ export const mapTreatmentStudiesToCSV = (treatmentStudies: TreatmentStudy[], dat
             ];
         }
         case "MOLECULAR_MARKER_STUDY": {
-            const filters = [
-                filterByMolecularMarkerStudyDimension255(),
-                filterByMolecularMarkers(dataInfo.molecularMarkers),
-                filterByCountries(dataInfo.countries),
-                filterByYears(dataInfo.years),
-            ];
-            const studies = filterStudies(treatmentStudies, filters);
-            const results = buildResults(studies, mappings["MOLECULAR_MARKER_STUDY"]);
-            const genes = buildResults(
-                R.flatten(R.map(r => r.groupStudies, studies)),
+            const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+            const genes = mapStudies(
+                R.flatten(R.map(r => r.groupStudies, database.filteredStudies)),
                 mappings["MOLECULAR_MARKER_STUDY_GENES"]
             );
             const fields = [
@@ -373,15 +308,10 @@ export const mapTreatmentStudiesToCSV = (treatmentStudies: TreatmentStudy[], dat
     }
 };
 
-export const mapInvasiveStudiesToCSV = (invasiveStudies: InvasiveStudy[], dataInfo: DataInfo) => {
-    if (dataInfo.invasiveDataset === "INVASIVE_VECTOR_SPECIES") {
-        const filters = [
-            filterBySpecies(dataInfo.species),
-            filterByCountries(dataInfo.countries),
-            filterByYears(dataInfo.years),
-        ];
-        const studies = filterStudies(invasiveStudies, filters);
-        const results = buildResults(studies, mappings[dataInfo.invasiveDataset]);
+export const mapInvasiveStudiesToCSV = (database: InvasiveDatabaseSelection) => {
+    if (database.dataset === "INVASIVE_VECTOR_SPECIES") {
+        const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+
         const fields = [
             "ID",
             "COUNTRY_NAME",
@@ -429,11 +359,7 @@ export const mapInvasiveStudiesToCSV = (invasiveStudies: InvasiveStudy[], dataIn
     }
 };
 
-const filterStudies = (baseStudies: any[], filters: any[]) => {
-    return filters.reduce((studies, filter) => studies.filter(filter), baseStudies);
-};
-
-const buildResults = (studies: any, mappings: Option[]) => {
+const mapStudies = (studies: any, mappings: Option[]) => {
     return studies.map((study: { [key: string]: any }) =>
         mappings.reduce(
             (acc: any, field: Option) => ({

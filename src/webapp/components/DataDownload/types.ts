@@ -1,3 +1,9 @@
+import { DiagnosisStudy } from "../../../domain/entities/DiagnosisStudy";
+import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
+import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
+import { DiagnosisFilters, InvasiveFilters, PreventionFilters, TreatmentFilters } from "../../store/types";
+
 export type UserInfo = {
     firstName: string;
     lastName: string;
@@ -14,23 +20,42 @@ export type TermsInfo = {
     agreement: boolean;
 };
 
-export type DataInfo = {
-    theme: string;
-    preventionDataset: string;
-    treatmentDataset: string;
-    invasiveDataset: string;
-    insecticideClasses: string[];
-    insecticideTypes: string[];
-    mechanismTypes: string[];
-    molecularMarkers: string[];
-    types: string[];
-    synergistTypes: string[];
-    plasmodiumSpecies: string[];
-    species: string[];
-    drugs: string[];
-    years: number[];
-    countries: string[];
-};
+export interface DatabaseSelectionBase {
+    id: number;
+    dataset: string;
+    filtersValue: string;
+    location: string;
+}
+
+export interface PreventionDatabaseSelection extends DatabaseSelectionBase {
+    kind: "prevention";
+    filters: PreventionFilters;
+    filteredStudies: PreventionStudy[];
+}
+
+export interface DiagnosisDatabaseSelection extends DatabaseSelectionBase {
+    kind: "diagnosis";
+    filters: DiagnosisFilters;
+    filteredStudies: DiagnosisStudy[];
+}
+
+export interface TreatmentDatabaseSelection extends DatabaseSelectionBase {
+    kind: "treatment";
+    filters: TreatmentFilters;
+    filteredStudies: TreatmentStudy[];
+}
+
+export interface InvasiveDatabaseSelection extends DatabaseSelectionBase {
+    kind: "invasive";
+    filters: InvasiveFilters;
+    filteredStudies: InvasiveStudy[];
+}
+
+export type DatabaseSelection =
+    | PreventionDatabaseSelection
+    | DiagnosisDatabaseSelection
+    | TreatmentDatabaseSelection
+    | InvasiveDatabaseSelection;
 
 export type Download = {
     firstName: string;

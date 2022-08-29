@@ -9,6 +9,7 @@ import { selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "../Icons";
 import { Box } from "@mui/material";
+import { GridSize } from "@mui/material";
 
 const Label = styled.span`
     font-weight: bold;
@@ -21,19 +22,24 @@ const Value = styled.span`
 const Row = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
     margin: 0px;
     padding: 0px;
 `;
+
+interface ownProps {
+    themeItemGridSize?: GridSize;
+}
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
+type Props = StateProps & ownProps;
 
-const ThemeMapActions: React.FC<StateProps> = ({ theme }) => {
+const ThemeMapActions: React.FC<Props> = ({ theme, themeItemGridSize }) => {
     const { t } = useTranslation();
 
     const themeValue = useMemo(() => {
@@ -82,7 +88,7 @@ const ThemeMapActions: React.FC<StateProps> = ({ theme }) => {
     return (
         <Box id="theme">
             <ActionGroupItem placeholder={t("mapActions.selectTheme")} actionGroupKey={"THEME"} value={themeValue}>
-                <TopicSelector />
+                <TopicSelector themeItemGridSize={themeItemGridSize} />
             </ActionGroupItem>
         </Box>
     );
