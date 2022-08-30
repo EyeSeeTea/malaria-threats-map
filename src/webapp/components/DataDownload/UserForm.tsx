@@ -3,8 +3,8 @@ import { Checkbox, FormControlLabel, Grid, MenuItem, TextField, Typography } fro
 import { Trans, useTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { UserInfo } from "./index";
-import { emailRegexp } from "../Subscription";
 import { FullCountry } from "./filters/FullCountriesSelector";
+import { emailRegexp } from "../../../domain/common/regex";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 

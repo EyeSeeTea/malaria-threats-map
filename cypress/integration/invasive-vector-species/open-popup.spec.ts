@@ -11,7 +11,7 @@ describe("Open popup", () => {
         cy.findByText("An. stephensi");
         cy.findAllByText("Kanasar & Khetusar");
         cy.findByText("1994");
-        cy.findByText("NR");
+        cy.findAllByText("NR");
         cy.findByText("morphology");
         cy.findByText(
             "Tyagi, B.K. and Yadav, S.P. (2001). Bionomics of malaria vectors in two physiographically different areas of the epidemic-prone Thar Desert, north-western Rajasthan (India). Journal of Arid Environments, 47(2):161-172"

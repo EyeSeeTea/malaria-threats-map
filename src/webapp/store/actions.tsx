@@ -23,7 +23,6 @@ export enum ActionTypeEnum {
     SetTourStep = "malaria/SET_TOUR_STEP",
     SetReportOpen = "malaria/SET_REPORT_OPEN",
     SetMapTitle = "malaria/SET_MAP_TITLE",
-    SetSubscriptionOpen = "malaria/SET_SUBSCRIPTION_OPEN",
     SetUploadFileOpen = "malaria/SET_UPLOAD_FILE_OPEN",
     SetFeedbackOpen = "malaria/SET_FEEDBACK_OPEN",
     SetTheaterMode = "malaria/SET_THEATER_MODE_OPEN",
@@ -39,6 +38,7 @@ export enum ActionTypeEnum {
     SetPreventionMapType = "prevention/SET_PREVENTION_MAP_TYPE",
     SetInsecticideClass = "prevention/SET_INSECTICIDE_CLASS",
     SetInsecticideTypes = "prevention/SET_INSECTICIDE_TYPES",
+    SetProxyType = "prevention/SET_PROXY_TYPE",
     SetType = "prevention/SET_TYPE",
     SetSynergistTypes = "prevention/SET_SYNERGIST_TYPES",
     SetSpecies = "prevention/SET_SPECIES",
@@ -100,10 +100,6 @@ export enum ActionTypeEnum {
     FetchDownloadsError = "downloads/FETCH_DOWNLOADS_ERROR",
 
     AddDownloadRequest = "downloads/ADD_DOWNLOAD_REQUEST",
-
-    AddSubscriptionContactRequest = "downloads/ADD_SUBSCRIPTION_CONTACT_REQUEST",
-    AddSubscriptionContactSuccess = "downloads/ADD_SUBSCRIPTION_CONTACT_SUCCESS",
-    AddSubscriptionContactError = "downloads/ADD_SUBSCRIPTION_CONTACT_ERROR",
 
     UploadFileRequest = "uploadFile/REQUEST",
     UploadFileSuccess = "uploadFile/SUCCESS",

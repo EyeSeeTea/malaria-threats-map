@@ -21,6 +21,8 @@ export const setAssayTypes = createAction(ActionTypeEnum.SetAssayTypes)<string[]
 
 export const setType = createAction(ActionTypeEnum.SetType)<string>();
 
+export const setProxyType = createAction(ActionTypeEnum.SetProxyType)<string>();
+
 export const setSynergistTypes = createAction(ActionTypeEnum.SetSynergistTypes)<string[]>();
 
 export const setSpecies = createAction(ActionTypeEnum.SetSpecies)<string[]>();

@@ -40,11 +40,11 @@ import { addDataDownloadRequestAction } from "../../store/actions/data-download-
 import { format } from "date-fns";
 import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
-import { emailRegexp } from "../Subscription";
 import SimpleLoader from "../SimpleLoader";
 import { setTimeout } from "timers";
 import PaperStepper from "../PaperStepper/PaperStepper";
 import CheckIcon from "@mui/icons-material/Check";
+import { emailRegexp } from "../../../domain/common/regex";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
 
@@ -172,14 +172,6 @@ export type Download = {
     implementationCountries: string;
     theme: string;
     dataset: string;
-};
-
-export type Contact = {
-    email: string;
-    firstName: string;
-    lastName: string;
-    organization: string;
-    country: string;
 };
 
 const initialUseInfo: Partial<UseInfo> = {

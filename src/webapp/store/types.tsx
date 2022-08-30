@@ -63,12 +63,10 @@ export interface MalariaState {
     tour: TourState;
     reportOpen: boolean;
     mapTitle: string;
-    subscriptionOpen: boolean;
     uploadFileOpen: boolean;
     feedbackOpen: boolean;
     theaterMode: boolean;
     legendExpanded: boolean;
-    isSubmittingSubscription: boolean;
     isUploadingFile: boolean;
 }
 
@@ -111,6 +109,7 @@ export interface PreventionFilters {
     insecticideTypes: string[];
     synergistTypes: string[];
     assayTypes: string[];
+    proxyType: string | null;
     type: string | null;
     species: string[];
 }
