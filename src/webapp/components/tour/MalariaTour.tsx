@@ -236,8 +236,8 @@ class MalariaTour extends PureComponent<Props> {
             {
                 selector: ".mapboxgl-canvas",
                 content: ({ goTo }) => {
-                    setTimeout(() => goTo(9), 2000);
                     this.setRegion("ZM");
+                    setTimeout(() => goTo(9), 300);
                 },
             },
             {
