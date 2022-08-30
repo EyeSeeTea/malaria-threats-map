@@ -1,17 +1,22 @@
 import { Card, Grid, Stack } from "@mui/material";
 import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import More from "highcharts/highcharts-more";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import TreatmentFilters from "../filters/TreatmentFilters";
 import BubbleChartHelpImage from "../../../../assets/img/dashboards/bubble-chart-help.png";
-import { BubleChartGroup, useTreatmentFailureOverTime } from "./useTreatmentFailureOverTime";
+import { BubleChartGroup, TreatmentOverTimeType } from "./types";
+import HighchartsReact from "highcharts-react-official";
+import More from "highcharts/highcharts-more";
+import { useTreatmentOverTime } from "./useTreatmentOverTime";
 
 More(Highcharts);
 
-const TreatmentFailureOverTimeDashboard: React.FC = () => {
+interface TreatmentOverTimeDashboardProps {
+    type: TreatmentOverTimeType;
+}
+
+const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({ type }) => {
     const { t } = useTranslation();
     const {
         studiesCount,
@@ -26,16 +31,21 @@ const TreatmentFailureOverTimeDashboard: React.FC = () => {
         onYearsChange,
         onExcludeLowerPatientsChange,
         onMolecularMarkerChange,
-    } = useTreatmentFailureOverTime();
+    } = useTreatmentOverTime(type);
 
     return (
         <React.Fragment>
-            <Title>{t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.title")}</Title>
+            <Title>
+                {type === "treatmentFailure"
+                    ? t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.title")
+                    : t("common.dashboard.therapeuticEfficacySection.parasiteClearanceOverTime.title")}
+            </Title>
 
             <Grid container spacing={2}>
                 <Grid item md={3} xs={12}>
                     <Stack direction="column">
                         <TreatmentFilters
+                            drugsClearable={true}
                             plasmodiumSpecies={plasmodiumSpecies}
                             drugs={drugs}
                             molecularMarker={molecularMarker}
@@ -56,7 +66,7 @@ const TreatmentFailureOverTimeDashboard: React.FC = () => {
                 </Grid>
                 <Grid item md={9} xs={12}>
                     <DasboardCard elevation={0} sx={{ padding: "16px 32px 16px 32px" }}>
-                        <HighchartsReact highcharts={Highcharts} options={chartOptions(series)} />
+                        <HighchartsReact highcharts={Highcharts} options={chartOptions(type, series)} />
                     </DasboardCard>
                 </Grid>
             </Grid>
@@ -64,7 +74,7 @@ const TreatmentFailureOverTimeDashboard: React.FC = () => {
     );
 };
 
-export default React.memo(TreatmentFailureOverTimeDashboard);
+export default React.memo(TreatmentOverTimeDashboard);
 
 const DasboardCard = styled(Card)`
     height: 600px;
@@ -81,7 +91,7 @@ const Title = styled.h3`
     text-transform: uppercase;
 `;
 
-function chartOptions(series: BubleChartGroup[]): Highcharts.Options {
+function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): Highcharts.Options {
     return {
         chart: {
             type: "bubble",
@@ -128,7 +138,10 @@ function chartOptions(series: BubleChartGroup[]): Highcharts.Options {
             startOnTick: false,
             endOnTick: false,
             title: {
-                text: "Treatment Failure %",
+                text:
+                    type === "treatmentFailure"
+                        ? "Treatment Failure %"
+                        : "Percentage of patients with parasitemia on day 3 (%)",
                 margin: 40,
                 style: {
                     fontSize: "14px",
@@ -136,17 +149,19 @@ function chartOptions(series: BubleChartGroup[]): Highcharts.Options {
                 },
             },
             maxPadding: 0.2,
-            plotLines: [
-                {
-                    color: "#d43616",
-                    dashStyle: "Solid",
-                    width: 3,
-                    value: 10,
-                    zIndex: 3,
-                },
-            ],
+            plotLines:
+                type === "treatmentFailure"
+                    ? [
+                          {
+                              color: "#d43616",
+                              dashStyle: "Solid",
+                              width: 3,
+                              value: 10,
+                              zIndex: 3,
+                          },
+                      ]
+                    : [],
             min: 0,
-            tickInterval: 20,
         },
         tooltip: {
             enabled: true,

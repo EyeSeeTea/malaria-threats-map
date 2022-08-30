@@ -3,9 +3,8 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
 import { useDashboards } from "../../context/useDashboards";
-import ParasiteClearanceOverTimeDashboard from "./ParasiteClearanceOverTimeDashboard";
 import TreatmentFailureByDrugDashboard from "./TreatmentFailureByDrugDashboard";
-import TreatmentFailureOverTimeDashboard from "./TreatmentFailureOverTimeDashboard";
+import TreatmentOverTimeDashboard from "./TreatmentOverTimeDashboard";
 
 const TreatmentEfficacyStudies: React.FC = () => {
     const { t } = useTranslation();
@@ -19,10 +18,10 @@ const TreatmentEfficacyStudies: React.FC = () => {
                 <TreatmentFailureByDrugDashboard />
             )}
             {(therapeuticEfficacy === "all" || therapeuticEfficacy === "treatment-failure-rates") && (
-                <TreatmentFailureOverTimeDashboard />
+                <TreatmentOverTimeDashboard type="treatmentFailure" />
             )}
             {(therapeuticEfficacy === "all" || therapeuticEfficacy === "parasite-clearance-rates") && (
-                <ParasiteClearanceOverTimeDashboard />
+                <TreatmentOverTimeDashboard type="positiveDay3" />
             )}
         </Container>
     );

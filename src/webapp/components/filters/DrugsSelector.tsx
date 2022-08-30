@@ -43,11 +43,11 @@ const DrugsSelector: React.FC<DrugsSelectorProps> = ({
         if (Array.isArray(selected)) {
             onChange(selected.map(v => v.value));
         } else {
-            onChange(selected.value);
+            onChange(selected?.value);
         }
     };
 
-    const selection = sortedSuggestions.filter(suggestion => value.includes(suggestion.value));
+    const selection = sortedSuggestions.filter(suggestion => value && value.includes(suggestion.value));
 
     return (
         <FilterWrapper onlyYMargin={onlyYMargin}>

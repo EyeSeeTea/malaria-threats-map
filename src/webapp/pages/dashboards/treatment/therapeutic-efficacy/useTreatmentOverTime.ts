@@ -1,34 +1,13 @@
 import i18next from "i18next";
 import _ from "lodash";
 import React from "react";
-import { Study } from "../../../../../domain/entities/Study";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
-import {
-    filterByDrugs,
-    filterByExcludeLowerPatients,
-    filterByMolecularMarker,
-    filterByPlasmodiumSpecies,
-    filterByYearRange,
-} from "../../../../components/layers/studies-filters";
 import { useDashboards } from "../../context/useDashboards";
 import { useTreatmentFilters } from "../filters/useTreatmentFilters";
+import { filterStudies } from "../utils";
+import { BubleChartGroup, treatmentdashboardColors, TreatmentOverTimeType } from "./types";
 
-const colors = ["#7EA0C3", "#FEAF59", "#F78185", "#94CFCA", "#7BC280"];
-
-export type BubleChartGroup = {
-    type: "bubble";
-    name: string;
-    color: string;
-    data: BubleChartItem[];
-};
-
-type BubleChartItem = {
-    x: number; //year
-    y: number; //treatment failure
-    z: number; //number patients
-};
-
-export function useTreatmentFailureOverTime() {
+export function useTreatmentOverTime(type: TreatmentOverTimeType) {
     const {
         plasmodiumSpecies,
         drugs,
@@ -62,8 +41,8 @@ export function useTreatmentFailureOverTime() {
     }, [dashboardsTreatmentStudies, plasmodiumSpecies, drugs, molecularMarker, years, excludeLowerPatients]);
 
     React.useEffect(() => {
-        setSeries(createTreatmentFailureChartData(filteredStudies));
-    }, [filteredStudies]);
+        setSeries(createTreatmentBubbleChartData(filteredStudies, type));
+    }, [filteredStudies, type]);
 
     return {
         studiesCount,
@@ -82,48 +61,36 @@ export function useTreatmentFailureOverTime() {
     };
 }
 
-function filterStudies(
-    studies: Study[],
-    plasmodiumSpecies: string,
-    drugs: string[],
-    molecularMarker: number,
-    years: [number, number],
-    excludeLowerPatients: boolean
-): TreatmentStudy[] {
-    const filters = [
-        filterByPlasmodiumSpecies(plasmodiumSpecies),
-        filterByDrugs(drugs),
-        filterByYearRange(years),
-        filterByMolecularMarker(molecularMarker),
-        filterByExcludeLowerPatients(excludeLowerPatients),
-    ];
-
-    const filteredStudies = filters.reduce((studies, filter) => studies.filter(filter), studies);
-
-    return filteredStudies as unknown as TreatmentStudy[];
-}
-
-function createTreatmentFailureChartData(studies: TreatmentStudy[]): BubleChartGroup[] {
+export function createTreatmentBubbleChartData(
+    studies: TreatmentStudy[],
+    type: TreatmentOverTimeType
+): BubleChartGroup[] {
     const countries = _.uniq(studies.map(study => study.ISO2));
 
     const series = countries.map((iso2, index) => {
         const studiesByCountry = studies.filter(study => study.ISO2 === iso2);
 
-        console.log({ studiesByCountry });
-
         return {
             type: "bubble" as const,
             name: i18next.t(iso2),
-            color: index <= colors.length - 1 ? colors[index] : "#000000",
-            data: studiesByCountry.map(study => ({
-                x: +study.YEAR_START,
-                y: +study.TREATMENT_FAILURE_PP || +study.TREATMENT_FAILURE_PP || -1,
-                z: +study.N,
-            })),
+            color: index <= treatmentdashboardColors.length - 1 ? treatmentdashboardColors[index] : "#000000",
+            data: studiesByCountry.map(study => {
+                const rawValue =
+                    type === "treatmentFailure"
+                        ? parseFloat(study.TREATMENT_FAILURE_PP) || parseFloat(study.TREATMENT_FAILURE_PP) || -1
+                        : parseFloat(study.POSITIVE_DAY_3) || -1;
+
+                // Remove weird 999.990
+                const value = rawValue === 999.99 ? -1 : +(rawValue * 100).toFixed(2);
+
+                return {
+                    x: +study.YEAR_START,
+                    y: value,
+                    z: +study.N,
+                };
+            }),
         };
     });
-
-    console.log({ series });
 
     return series;
 }

@@ -72,7 +72,10 @@ const ThemeSelectionSection: React.FC = () => {
                             <Typography variant="caption" fontSize={"11px"}>
                                 {t("common.dashboard.filtersSection.second.helper")}
                             </Typography>
-                            <StyledGenerateButton disabled={selectedCountries.length === 0} onClick={onGenerate}>
+                            <StyledGenerateButton
+                                disabled={selectedCountries.length === 0 || theme === "prevention"}
+                                onClick={onGenerate}
+                            >
                                 Generate Dashboard
                             </StyledGenerateButton>
                             <Typography variant="caption" fontSize={"12px"} textAlign="right">
