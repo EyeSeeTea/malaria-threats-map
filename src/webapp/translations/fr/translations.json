@@ -565,7 +565,7 @@
                 "p2": "Please acknowledge the use of these datasets by including the following reference in your publications: WHO, Malaria Threats Map, year, date of access, acknowledgement of the countries having provided the underlying data (in the event that the source refers to ministries of health or national malaria control programs of specific countries).",
                 "summary_title": "Download List",
                 "check": "Check here to indicated that you have read and agree to the Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses.",
-                "data_set": "Dataset"
+                "choose_other": "Choose other databases"
             },
             "personal_step": {
                 "title": "Coordonnées personnelles",
@@ -593,33 +593,17 @@
                 "consent1": "J'autorise à être contacté par l'Organisation mondiale de la santé concernant mon expérience avec la Malaria Threat Map et les données des bases de données mondiales.",
                 "consent2": "J'autorise l'Organisation mondiale de la santé à utiliser le nom de mon organisation et la description du projet fournis ci-dessus pour afficher l'utilisation des bases de données mondiales (aucune donnée personnelle ne sera affichée)."
             },
-            "step2": {
-                "title": "But du téléchargement",
-                "data_use": "Quel est le but de l'utilisation de ces données?",
-                "data_use_options": {
-                    "research": "Recherche",
-                    "grant": "Développer des propositions de projets",
-                    "treatments": "Development of new anti-malaria treatments",
-                    "vector": "Développer de nouveaux outils de contrôle vectoriel",
-                    "diagnosis": "Développer de nouveaux outils de diagnostic",
-                    "policies": "Élaboration de politiques, stratégies et / ou plans de travail nationaux (par exemple, Plan stratégique national de lutte contre le paludisme, Politique ou directives nationales de traitement, plans nationaux de suivi et de gestion de la résistance aux insecticides chez les vecteurs du paludisme)",
-                    "advocacy": "Plaidoyer"
-                },
-                "date_use_options_content": {
-                    "research": "Veuillez fournir une brève description du projet ou de la question de recherche pour laquelle les données seront utilisées (100 mots minimum)",
-                    "policies": "Veuillez fournir le titre ou une brève description de la politique, de la stratégie ou du plan pour lesquels les données seront utilisées",
-                    "tools": "Veuillez décrire brièvement les nouveaux traitements, outils de diagnostic ou de lutte antivectorielle que vous souhaitez développer (minimum 100 mots)",
-                    "date": "Quand prévoyez-vous de terminer votre projet, politique, stratégie ou plan?"
-                },
-                "countries": "Pays où le projet, la politique, la stratégie ou le plan seront mis en œuvre"
-            },
-            "step3": {
+            "data_step": {
                 "title": "Sélectionnez les données",
-                "filters": {
-                    "additional": "Filtres supplémentaires",
-                    "theme": "Sélectionnez un thème",
-                    "dataset": "Sélectionnez un jeu de données"
-                }
+                "p1": "Cette boîte de dialogue vous permet de télécharger des données à partir de quatre des bases de données mondiales de l'OMS : la résistance aux insecticides chez les vecteurs du paludisme, les espèces vectrices invasives, l'efficacité et la résistance aux médicaments antipaludiques et les délétions du gène <1>pfhrp2/3</1>. Un lien vers la source de données d'origine et la citation sont inclus dans chaque ensemble de données, le cas échéant.",
+                "last_updated": "Le jeu de données sélectionné a été mis à jour pour la dernière fois le :",
+                "add_to_download": "Ajouter au téléchargement",
+                "db_download_list": "Liste de téléchargement de la base de données",
+                "db_download_helper_text": "Votre liste de bases de données sélectionnées pour le téléchargement sera affichée ici. Pour ajouter des données, veuillez filtrer les données dont vous avez besoin sur la droite et cliquez sur “Ajouter au téléchargement“.",
+                "data_set": "Ensemble de données :",
+                "data": "Données :",
+                "location": "Emplacement :",
+                "studies_in_file": "{{total}} bioessais inclus dans le fichier"
             }
         },
         "report": {
@@ -928,7 +912,9 @@
         "selectData": "FILTRER LES DONNÉES",
         "data": "Données",
         "selectLocation": "EMPLACEMENT DU FILTRE (FACULTATIF)",
-        "location": "Emplacement"
+        "location": "Emplacement",
+        "selectDataset": "SELECT DATASET",
+        "dataset": "Dataset"
     },
     "preventionStory": {
         "step1": {

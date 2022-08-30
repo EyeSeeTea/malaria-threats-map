@@ -2,7 +2,7 @@ import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { State, TreatmentMapType, TreatmentState } from "../types";
+import { State, TreatmentDataset, TreatmentMapType, TreatmentState } from "../types";
 import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
 
 const initialState: TreatmentState = Object.freeze({
@@ -12,6 +12,7 @@ const initialState: TreatmentState = Object.freeze({
     filteredStudies: [],
     filters: {
         mapType: TreatmentMapType.TREATMENT_FAILURE,
+        dataset: "THERAPEUTIC_EFFICACY_STUDY",
         plasmodiumSpecies: "P._FALCIPARUM",
         drug: "DRUG_AL",
         molecularMarker: 1,
@@ -35,6 +36,10 @@ function updateFilter<T>(key: string, value: T, def?: T) {
 
 function updateMapType(mapType: TreatmentMapType) {
     return updateFilter("mapType", mapType, TreatmentMapType.TREATMENT_FAILURE);
+}
+
+function updateDataset(dataset: TreatmentDataset) {
+    return updateFilter("dataset", dataset, "THERAPEUTIC_EFFICACY_STUDY");
 }
 
 function updatePlasmodiumSpecies(plasmodiumSpecies: string) {
@@ -73,6 +78,7 @@ export default createReducer<TreatmentState>(initialState, {
         loading: false,
     }),
     [ActionTypeEnum.SetTreatmentMapType]: updateMapType,
+    [ActionTypeEnum.SetTreatmentDataset]: updateDataset,
     [ActionTypeEnum.SetPlasmodiumSpecies]: updatePlasmodiumSpecies,
     [ActionTypeEnum.SetDrug]: updateDrug,
     [ActionTypeEnum.SetMolecularMarker]: updateMolecularMarker,

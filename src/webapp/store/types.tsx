@@ -32,7 +32,22 @@ export interface RegionState {
     siteCoordinates?: [number, number];
 }
 
-export type ActionGroup = "THEME" | "MAP_TYPE" | "DATA" | "LOCATION";
+export type ActionGroup = "THEME" | "MAP_TYPE" | "DATA" | "LOCATION" | "DATASET";
+
+export type MapTheme = "prevention" | "diagnosis" | "treatment" | "invasive";
+
+export type PreventionDataset =
+    | "DISCRIMINATING_CONCENTRATION_BIOASSAY"
+    | "INTENSITY_CONCENTRATION_BIOASSAY"
+    | "SYNERGIST-INSECTICIDE_BIOASSAY"
+    | "MOLECULAR_ASSAY"
+    | "BIOCHEMICAL_ASSAY";
+
+export type TreatmentDataset = "THERAPEUTIC_EFFICACY_STUDY" | "MOLECULAR_MARKER_STUDY";
+
+export type InvasiveDataset = "INVASIVE_VECTOR_SPECIES";
+
+export type DiagnosisDataset = "DIAGNOSIS";
 
 export type LastUpdatedDates = {
     prevention: Date | null;
@@ -87,6 +102,7 @@ export interface DiagnosisState {
 
 export interface DiagnosisFilters {
     mapType: DiagnosisMapType;
+    dataset: DiagnosisDataset;
     surveyTypes: string[];
     patientType: string | null;
     deletionType: string | null;
@@ -105,6 +121,7 @@ export enum PreventionMapType {
 
 export interface PreventionFilters {
     mapType: PreventionMapType;
+    dataset: PreventionDataset;
     insecticideClass: string;
     insecticideTypes: string[];
     synergistTypes: string[];
@@ -131,6 +148,7 @@ export enum TreatmentMapType {
 
 export interface TreatmentFilters {
     mapType: TreatmentMapType;
+    dataset: TreatmentDataset;
     plasmodiumSpecies: string;
     drug: string;
     molecularMarker: number;
@@ -153,6 +171,7 @@ export enum InvasiveMapType {
 
 export interface InvasiveFilters {
     mapType: InvasiveMapType;
+    dataset: InvasiveDataset;
     vectorSpecies: string[];
 }
 

@@ -559,7 +559,7 @@
                 "p2": "Please acknowledge the use of these datasets by including the following reference in your publications: WHO, Malaria Threats Map, year, date of access, acknowledgement of the countries having provided the underlying data (in the event that the source refers to ministries of health or national malaria control programs of specific countries).",
                 "summary_title": "Download List",
                 "check": "Check here to indicated that you have read and agree to the Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses.",
-                "data_set": "Dataset"
+                "choose_other": "Choose other databases"
             },
             "personal_step": {
                 "title": " Personal details",
@@ -587,33 +587,17 @@
                 "consent1": "I consent to be contacted by the World Health Organization regarding my experience using the Malaria Threats Map and data from the global databases.",
                 "consent2": "I consent for the World Health Organization to use my organization name and project description provided above to showcase the use of the global databases (no personal data will be shown)."
             },
-            "step2": {
-                "title": "Purpose of data download",
-                "data_use": "What will you use the data for?",
-                "data_use_options": {
-                    "research": "Research",
-                    "grant": "Develop grant or project proposals",
-                    "treatments": "Development of new anti-malaria treatments",
-                    "vector": "Development of new vector control tools",
-                    "diagnosis": "Development of new diagnosis tools",
-                    "policies": "Development of national policies, strategies and/or work plans (e.g. Malaria National Strategy Plan development, National treatment policy or guidelines, Insecticide Resistance Monitoring and Management Plans)",
-                    "advocacy": "Advocacy"
-                },
-                "date_use_options_content": {
-                    "research": "Please provide a short description of the project or research question for which data will be used (minimum 100 words)",
-                    "policies": "Please provide the title or a short description of the policy, strategy or plan for which data will be used",
-                    "tools": " Please describe briefly the new treatment, diagnosis or vector control tools you aim to develop (minimum 100 words)",
-                    "date": "When are you planning to finish your project, policy, strategy or plan?"
-                },
-                "countries": "Countries where the project, policy, strategy or plan will be implemented"
-            },
-            "step3": {
+            "data_step": {
                 "title": "Select data",
-                "filters": {
-                    "additional": "Additional filters",
-                    "theme": "Select Theme",
-                    "dataset": "Select Dataset"
-                }
+                "p1": "This dialogue allows you to download data from four of the WHO global databases: insecticide resistance in malaria vectors, invasive vector species, antimalarial drug efficacy and resistance, and <1>pfhrp2/3</1> gene deletions. A link to the original data source and citation are included in each dataset, where available.",
+                "last_updated": "The selected dataset was last updated on:",
+                "add_to_download": "Add to Download",
+                "db_download_list": "Database Download List",
+                "db_download_helper_text": "Your list of databases selected for download will be shown here. To add data, please filter for the data you require on the right and click “Add to download”.",
+                "data_set": "Dataset:",
+                "data": "Data:",
+                "location": "Location:",
+                "studies_in_file": "{{total}} bioassays included in the file"
             }
         },
         "report": {
@@ -921,7 +905,9 @@
         "selectData": "FILTER DATA",
         "data": "Data",
         "selectLocation": "FILTER LOCATION (OPTIONAL)",
-        "location": "Location"
+        "location": "Location",
+        "selectDataset": "SELECT DATASET",
+        "dataset": "Dataset"
     },
     "preventionStory": {
         "step1": {
