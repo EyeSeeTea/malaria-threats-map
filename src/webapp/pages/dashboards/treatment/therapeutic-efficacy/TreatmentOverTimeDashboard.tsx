@@ -79,7 +79,7 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
 export default React.memo(TreatmentOverTimeDashboard);
 
 const DasboardCard = styled(Card)`
-    height: 600px;
+    min-height: 600px;
 `;
 
 const StudiesCountCard = styled(Card)`
@@ -115,7 +115,7 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
                    </div>`,
             align: "right",
             x: -30,
-            y: 70,
+            y: 40,
             margin: 20,
             style: {
                 fontSize: "14px",

@@ -142,7 +142,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
 export default TreatmentFailureByDrugDashboard;
 
 const DasboardCard = styled(Card)`
-    height: 500px;
+    min-height: 500px;
     padding: 64px;
 `;
 
