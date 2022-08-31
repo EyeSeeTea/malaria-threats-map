@@ -25,12 +25,12 @@
                     "title": "Un aperçu des cartes"
                 },
                 "video2": {
-                    "url": "https://www.youtube.com/watch?v=diMb_gbUUbM",
+                    "url": "https://www.youtube.com/embed/diMb_gbUUbM",
                     "alt": "Carte des menaces du paludisme: soutenir les efforts de recherche",
                     "title": "Comment le MTM soutient-il les efforts de recherche?"
                 },
                 "video3": {
-                    "url": "https://www.youtube.com/watch?v=x5P45TynlgM&t=0s",
+                    "url": "https://www.youtube.com/embed/x5P45TynlgM",
                     "alt": "Carte des menaces du paludisme : aider les pays à faire face aux menaces critiques pour le contrôle et l'élimination du paludisme",
                     "title": "Comment le MTM soutient-il les pays?"
                 }
