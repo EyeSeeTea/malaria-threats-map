@@ -30,7 +30,7 @@ const DrugsSelector: React.FC<DrugsSelectorProps> = ({
     isClearable = false,
 }) => {
     const { t } = useTranslation();
-    const uniques = R.uniq(R.map(R.prop("DRUG_NAME"), studies)).filter(Boolean);
+    const uniques = R.uniq(R.map(R.prop("DRUG_NAME"), studies)).map(value => value.replace(".", "%2E"));
 
     const suggestions = uniques.map((drug: string) => ({
         label: t(drug),

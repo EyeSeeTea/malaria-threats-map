@@ -4,11 +4,12 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import PlasmodiumSpecieSelector from "../../../../components/filters/PlasmodiumSpecieSelector";
 import DrugsSelector from "../../../../components/filters/DrugsSelector";
-import { useDashboards } from "../../context/useDashboards";
 import DashboardsYearRangeSelector from "./DashboardsYearRangeSelector";
 import ExcludeLowerPatientsSelector from "../../../../components/filters/ExcludeLowerPatientsSelector";
+import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 
 interface TreatmentFiltersProps {
+    studies: TreatmentStudy[];
     drugsMultiple?: boolean;
     drugsClearable?: boolean;
     plasmodiumSpecies: string;
@@ -24,6 +25,7 @@ interface TreatmentFiltersProps {
 }
 
 const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
+    studies,
     drugsMultiple = false,
     drugsClearable = false,
     plasmodiumSpecies,
@@ -36,7 +38,6 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
     onExcludeLowerPatientsChange,
 }) => {
     const { t } = useTranslation();
-    const { dashboardsTreatmentStudies } = useDashboards();
 
     return (
         <FiltersCard elevation={0}>
@@ -58,7 +59,7 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                 multi={drugsMultiple}
                 isClearable={drugsClearable}
                 background={"#F7F7F7"}
-                studies={dashboardsTreatmentStudies}
+                studies={studies}
                 onChange={onDrugsChange}
                 value={drugs}
             />

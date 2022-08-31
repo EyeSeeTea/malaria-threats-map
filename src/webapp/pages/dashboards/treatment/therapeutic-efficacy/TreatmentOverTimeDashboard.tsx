@@ -6,9 +6,9 @@ import styled from "styled-components";
 import TreatmentFilters from "../filters/TreatmentFilters";
 import BubbleChartHelpImage from "../../../../assets/img/dashboards/bubble-chart-help.png";
 import { BubleChartGroup, TreatmentOverTimeType } from "./types";
+import { useTreatmentOverTime } from "./useTreatmentOverTime";
 import HighchartsReact from "highcharts-react-official";
 import More from "highcharts/highcharts-more";
-import { useTreatmentOverTime } from "./useTreatmentOverTime";
 
 More(Highcharts);
 
@@ -19,6 +19,7 @@ interface TreatmentOverTimeDashboardProps {
 const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({ type }) => {
     const { t } = useTranslation();
     const {
+        filteredStudiesForDrugs,
         studiesCount,
         series,
         plasmodiumSpecies,
@@ -45,6 +46,7 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
                 <Grid item md={3} xs={12}>
                     <Stack direction="column">
                         <TreatmentFilters
+                            studies={filteredStudiesForDrugs}
                             drugsClearable={true}
                             plasmodiumSpecies={plasmodiumSpecies}
                             drugs={drugs}
@@ -113,7 +115,7 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
                    </div>`,
             align: "right",
             x: -30,
-            y: 60,
+            y: 70,
             margin: 20,
             style: {
                 fontSize: "14px",

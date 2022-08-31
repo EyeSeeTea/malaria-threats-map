@@ -2,13 +2,14 @@ import i18next from "i18next";
 import _ from "lodash";
 import React from "react";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
-import { useDashboards } from "../../context/useDashboards";
-import { useTreatmentFilters } from "../filters/useTreatmentFilters";
-import { filterStudies } from "../utils";
 import { BubleChartGroup, treatmentdashboardColors, TreatmentOverTimeType } from "./types";
+import { useTreatment } from "./useTreatment";
 
 export function useTreatmentOverTime(type: TreatmentOverTimeType) {
     const {
+        filteredStudies,
+        filteredStudiesForDrugs,
+        studiesCount,
         plasmodiumSpecies,
         drugs,
         molecularMarker,
@@ -19,26 +20,9 @@ export function useTreatmentOverTime(type: TreatmentOverTimeType) {
         onYearsChange,
         onExcludeLowerPatientsChange,
         onMolecularMarkerChange,
-    } = useTreatmentFilters();
+    } = useTreatment();
 
-    const [filteredStudies, setFilteredStudies] = React.useState<TreatmentStudy[]>([]);
     const [series, setSeries] = React.useState<BubleChartGroup[]>([]);
-    const { dashboardsTreatmentStudies } = useDashboards();
-
-    const studiesCount = React.useMemo(() => filteredStudies.length, [filteredStudies]);
-
-    React.useEffect(() => {
-        const filteredStudies = filterStudies(
-            dashboardsTreatmentStudies,
-            plasmodiumSpecies,
-            drugs,
-            molecularMarker,
-            years,
-            excludeLowerPatients
-        );
-
-        setFilteredStudies(filteredStudies);
-    }, [dashboardsTreatmentStudies, plasmodiumSpecies, drugs, molecularMarker, years, excludeLowerPatients]);
 
     React.useEffect(() => {
         setSeries(createTreatmentBubbleChartData(filteredStudies, type));
@@ -46,7 +30,7 @@ export function useTreatmentOverTime(type: TreatmentOverTimeType) {
 
     return {
         studiesCount,
-        filteredStudies,
+        filteredStudiesForDrugs,
         series,
         plasmodiumSpecies,
         drugs,

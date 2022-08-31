@@ -1,24 +1,41 @@
-import { Card, Grid, Stack } from "@mui/material";
+import { Card, Grid, Stack, Typography } from "@mui/material";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import TreatmentFilters from "../filters/TreatmentFilters";
-import { useTreatmentFilters } from "../filters/useTreatmentFilters";
+import { treatmentByDrugColors, TreatmentFailureSeriesItem } from "./types";
+import { useTreatmentFailureByDrug } from "./useTreatmentFailureByDrug";
+import More from "highcharts/highcharts-more";
 
+More(Highcharts);
 const TreatmentFailureByDrugDashboard: React.FC = () => {
     const { t } = useTranslation();
     const {
+        filteredStudiesForDrugs,
+        selectedCountries,
+        studiesCount,
         plasmodiumSpecies,
         drugs,
         molecularMarker,
         years,
         excludeLowerPatients,
+        data,
         onPlasmodiumChange,
         onDrugsChange,
         onYearsChange,
         onExcludeLowerPatientsChange,
         onMolecularMarkerChange,
-    } = useTreatmentFilters();
+    } = useTreatmentFailureByDrug();
+
+    const countryLegend = React.useMemo(() => {
+        return selectedCountries.map(iso => `${iso}:${t(iso)}`).join("; ");
+    }, [selectedCountries, t]);
+
+    const drugLegend = React.useMemo(() => {
+        return drugs?.length > 0 ? drugs.map(drug => `${drug.replace("DRUG_", "")}:${t(drug)}`).join("; ") : "";
+    }, [drugs, t]);
 
     return (
         <React.Fragment>
@@ -28,6 +45,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
                 <Grid item md={3} xs={12}>
                     <Stack direction="column">
                         <TreatmentFilters
+                            studies={filteredStudiesForDrugs}
                             drugsMultiple={true}
                             drugsClearable={true}
                             plasmodiumSpecies={plasmodiumSpecies}
@@ -41,11 +59,80 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
                             onYearsChange={onYearsChange}
                             onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
                         ></TreatmentFilters>
-                        <StudiesCountCard elevation={0}></StudiesCountCard>
+                        <StudiesCountCard elevation={0}>
+                            {t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.numStudies", {
+                                count: studiesCount,
+                            })}
+                        </StudiesCountCard>
                     </Stack>
                 </Grid>
                 <Grid item md={9} xs={12}>
-                    <DasboardCard elevation={0}></DasboardCard>
+                    <DasboardCard elevation={0}>
+                        <Stack direction="column" alignItems="center">
+                            <Typography variant="body2" fontWeight="bold">
+                                {"Study outcome:"}
+                            </Typography>
+                            <Stack
+                                direction="row"
+                                alignItems="center"
+                                justifyContent="center"
+                                spacing={4}
+                                sx={{ marginTop: 2, marginBottom: 4, width: "100%" }}
+                            >
+                                <Stack direction="row" alignItems="center" spacing={1}>
+                                    <LegendIcon color={treatmentByDrugColors[0]} />
+                                    <Typography variant="body2">{"<10% of patients with treatment failure"}</Typography>
+                                </Stack>
+                                <Stack direction="row" alignItems="center" spacing={1}>
+                                    <LegendIcon color={treatmentByDrugColors[1]} />
+                                    <Typography variant="body2">{"≥10% of patients with treatment failure"}</Typography>
+                                </Stack>
+                            </Stack>
+                        </Stack>
+                        <div style={{ overflowX: "auto" }}>
+                            <Table width={Object.keys(data).length * 400}>
+                                <thead>
+                                    <tr>
+                                        {Object.keys(data).map(drug => {
+                                            return <th key={drug}>{drug}</th>;
+                                        })}
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        {Object.keys(data).map((drug, index) => {
+                                            return (
+                                                <td key={drug}>
+                                                    {
+                                                        <HighchartsReact
+                                                            highcharts={Highcharts}
+                                                            options={chartOptions(
+                                                                index === 0,
+                                                                selectedCountries,
+                                                                data[drug]
+                                                            )}
+                                                        />
+                                                    }
+                                                </td>
+                                            );
+                                        })}
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </div>
+                        <Stack direction="column" alignItems="center" sx={{ marginBottom: 4 }}>
+                            <Typography variant="body2" fontWeight="bold">
+                                {"Number of studies"}
+                            </Typography>
+                        </Stack>
+                        <Stack direction="column">
+                            <Typography variant="body2">{countryLegend}</Typography>
+                        </Stack>
+                        <Stack direction="column" sx={{ marginTop: 2 }}>
+                            <Typography variant="body2">{drugLegend}</Typography>
+                        </Stack>
+                    </DasboardCard>
                 </Grid>
             </Grid>
         </React.Fragment>
@@ -55,11 +142,18 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
 export default TreatmentFailureByDrugDashboard;
 
 const DasboardCard = styled(Card)`
-    height: 583px;
+    height: 500px;
+    padding: 64px;
+`;
+
+const LegendIcon = styled.div<{ color: string }>`
+    background: ${props => props.color};
+    width: 12px;
+    height: 12px;
 `;
 
 const StudiesCountCard = styled(Card)`
-    height: 60px;
+    padding: 24px;
 `;
 
 const Title = styled.h3`
@@ -68,3 +162,89 @@ const Title = styled.h3`
     color: #2ba681;
     text-transform: uppercase;
 `;
+
+const Table = styled.table<{ width: number }>`
+    width: ${props => props.width}px;
+    table-layout: fixed;
+    border-collapse: collapse;
+    tr th {
+        border: 2px solid #d3e0ed;
+        font-size: 14px;
+        font-weight: normal;
+        height: 40px;
+    }
+
+    tr th {
+        border-top: 0;
+    }
+
+    tr th:first-child {
+        border-left: 0;
+    }
+
+    tr th:last-child {
+        border-right: 0;
+    }
+    tr td {
+        border: 2px solid #d3e0ed;
+    }
+
+    tr td:first-child {
+        border-left: 0;
+    }
+
+    tr td:last-child {
+        border-right: 0;
+    }
+
+    tr td {
+        border-top: 0;
+        border-bottom: 0;
+    }
+`;
+
+function chartOptions(
+    firstChart: boolean,
+    countries: string[],
+    series: TreatmentFailureSeriesItem[]
+): Highcharts.Options {
+    return {
+        chart: {
+            type: "bar",
+            height: countries.length * 50 + 30,
+            marginTop: 0,
+            marginRight: 0,
+            marginLeft: firstChart ? undefined : 0,
+        },
+        title: {
+            text: "",
+        },
+        xAxis: {
+            visible: firstChart,
+            categories: countries,
+            labels: {
+                style: {
+                    fontSize: "14px",
+                },
+            },
+        },
+        yAxis: {
+            tickInterval: 10,
+            title: {
+                text: "",
+            },
+        },
+        plotOptions: {
+            series: {
+                stacking: "normal",
+            },
+        },
+        series,
+        legend: {
+            enabled: false,
+        },
+        credits: {
+            enabled: false,
+        },
+    };
+}

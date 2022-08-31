@@ -14,3 +14,12 @@ export type BubleChartItem = {
     y: number; //treatment failure
     z: number; //number patients
 };
+
+export const treatmentByDrugColors = ["#E39B9E", "#A00101"];
+
+export interface TreatmentFailureSeriesItem {
+    type: "bar";
+    color: string;
+    data: number[];
+    maxPointWidth: number;
+}

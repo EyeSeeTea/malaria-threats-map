@@ -13,21 +13,21 @@ export function useTreatmentFilters() {
         setPlasmodiumSpecies(value);
     }, []);
 
-    const onDrugsChange = (values: string[]) => {
+    const onDrugsChange = React.useCallback((values: string[]) => {
         setDrugs(values);
-    };
+    }, []);
 
-    const onYearsChange = (years: [number, number]) => {
+    const onYearsChange = React.useCallback((years: [number, number]) => {
         setYears(years);
-    };
+    }, []);
 
-    const onExcludeLowerPatientsChange = (excludeLowerPatients: boolean) => {
+    const onExcludeLowerPatientsChange = React.useCallback((excludeLowerPatients: boolean) => {
         setExcludeLowerPatients(excludeLowerPatients);
-    };
+    }, []);
 
-    const onMolecularMarkerChange = (molecularMarker: number) => {
+    const onMolecularMarkerChange = React.useCallback((molecularMarker: number) => {
         setMolecularMarker(molecularMarker);
-    };
+    }, []);
 
     return {
         plasmodiumSpecies,
