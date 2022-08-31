@@ -1,14 +1,12 @@
-import { Card, Grid, Stack } from "@mui/material";
 import Highcharts from "highcharts";
-import React from "react";
+import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
-import TreatmentFilters from "../filters/TreatmentFilters";
 import BubbleChartHelpImage from "../../../../assets/img/dashboards/bubble-chart-help.png";
 import { BubleChartGroup, TreatmentOverTimeType } from "./types";
 import { useTreatmentOverTime } from "./useTreatmentOverTime";
 import HighchartsReact from "highcharts-react-official";
 import More from "highcharts/highcharts-more";
+import TreatmentFilterableDashboard from "./TreatmentFilterableDashboard";
 
 More(Highcharts);
 
@@ -34,70 +32,42 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
         onMolecularMarkerChange,
     } = useTreatmentOverTime(type);
 
-    return (
-        <React.Fragment>
-            <Title>
-                {type === "treatmentFailure"
-                    ? t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.title")
-                    : t("common.dashboard.therapeuticEfficacySection.parasiteClearanceOverTime.title")}
-            </Title>
+    const chartComponentRef = useRef(null);
 
-            <Grid container spacing={2}>
-                <Grid item md={3} xs={12}>
-                    <Stack direction="column">
-                        <TreatmentFilters
-                            studies={filteredStudiesForDrugs}
-                            drugsClearable={true}
-                            plasmodiumSpecies={plasmodiumSpecies}
-                            drugs={drugs}
-                            molecularMarker={molecularMarker}
-                            years={years}
-                            excludeLowerPatients={excludeLowerPatients}
-                            onPlasmodiumSpeciesChange={onPlasmodiumChange}
-                            onDrugsChange={onDrugsChange}
-                            onMolecularMarkerChange={onMolecularMarkerChange}
-                            onYearsChange={onYearsChange}
-                            onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
-                        ></TreatmentFilters>
-                        <StudiesCountCard elevation={0}>
-                            {t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.numStudies", {
-                                count: studiesCount,
-                            })}
-                        </StudiesCountCard>
-                    </Stack>
-                </Grid>
-                <Grid item md={9} xs={12}>
-                    <DasboardCard elevation={0} sx={{ padding: "16px 32px 16px 32px" }}>
-                        <HighchartsReact highcharts={Highcharts} options={chartOptions(type, series)} />
-                    </DasboardCard>
-                </Grid>
-            </Grid>
-        </React.Fragment>
+    return (
+        <TreatmentFilterableDashboard
+            chartComponentRef={chartComponentRef}
+            title={t("common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.title")}
+            filteredStudiesForDrugs={filteredStudiesForDrugs}
+            studiesCount={studiesCount}
+            plasmodiumSpecies={plasmodiumSpecies}
+            drugs={drugs}
+            molecularMarker={molecularMarker}
+            years={years}
+            excludeLowerPatients={excludeLowerPatients}
+            onPlasmodiumChange={onPlasmodiumChange}
+            onDrugsChange={onDrugsChange}
+            onYearsChange={onYearsChange}
+            onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
+            onMolecularMarkerChange={onMolecularMarkerChange}
+        >
+            <HighchartsReact highcharts={Highcharts} options={chartOptions(type, series)} ref={chartComponentRef} />
+        </TreatmentFilterableDashboard>
     );
 };
 
 export default React.memo(TreatmentOverTimeDashboard);
-
-const DasboardCard = styled(Card)`
-    min-height: 600px;
-`;
-
-const StudiesCountCard = styled(Card)`
-    padding: 24px;
-`;
-
-const Title = styled.h3`
-    font-size: 23px;
-    margin-bottom: 30px;
-    color: #2ba681;
-    text-transform: uppercase;
-`;
 
 function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): Highcharts.Options {
     return {
         chart: {
             type: "bubble",
             height: "600px",
+            events: {
+                load() {
+                    setTimeout(this.reflow.bind(this), 0);
+                },
+            },
         },
 
         legend: {

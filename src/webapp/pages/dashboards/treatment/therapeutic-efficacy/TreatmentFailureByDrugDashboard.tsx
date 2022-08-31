@@ -1,13 +1,13 @@
-import { Card, Grid, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import TreatmentFilters from "../filters/TreatmentFilters";
 import { treatmentByDrugColors, TreatmentFailureSeriesItem } from "./types";
 import { useTreatmentFailureByDrug } from "./useTreatmentFailureByDrug";
 import More from "highcharts/highcharts-more";
+import TreatmentFilterableDashboard from "./TreatmentFilterableDashboard";
 
 More(Highcharts);
 const TreatmentFailureByDrugDashboard: React.FC = () => {
@@ -38,129 +38,91 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
     }, [drugs, t]);
 
     return (
-        <React.Fragment>
-            <Title>{t("common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.title")}</Title>
-
-            <Grid container spacing={2}>
-                <Grid item md={3} xs={12}>
-                    <Stack direction="column">
-                        <TreatmentFilters
-                            studies={filteredStudiesForDrugs}
-                            drugsMultiple={true}
-                            drugsClearable={true}
-                            plasmodiumSpecies={plasmodiumSpecies}
-                            drugs={drugs}
-                            molecularMarker={molecularMarker}
-                            years={years}
-                            excludeLowerPatients={excludeLowerPatients}
-                            onPlasmodiumSpeciesChange={onPlasmodiumChange}
-                            onDrugsChange={onDrugsChange}
-                            onMolecularMarkerChange={onMolecularMarkerChange}
-                            onYearsChange={onYearsChange}
-                            onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
-                        ></TreatmentFilters>
-                        <StudiesCountCard elevation={0}>
-                            {t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.numStudies", {
-                                count: studiesCount,
-                            })}
-                        </StudiesCountCard>
+        <TreatmentFilterableDashboard
+            title={t("common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.title")}
+            filteredStudiesForDrugs={filteredStudiesForDrugs}
+            studiesCount={studiesCount}
+            plasmodiumSpecies={plasmodiumSpecies}
+            drugs={drugs}
+            molecularMarker={molecularMarker}
+            years={years}
+            excludeLowerPatients={excludeLowerPatients}
+            onPlasmodiumChange={onPlasmodiumChange}
+            onDrugsChange={onDrugsChange}
+            onYearsChange={onYearsChange}
+            onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
+            onMolecularMarkerChange={onMolecularMarkerChange}
+        >
+            <Stack direction="column" alignItems="center">
+                <Typography variant="body2" fontWeight="bold">
+                    {"Study outcome:"}
+                </Typography>
+                <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="center"
+                    spacing={4}
+                    sx={{ marginTop: 2, marginBottom: 4, width: "100%" }}
+                >
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                        <LegendIcon color={treatmentByDrugColors[0]} />
+                        <Typography variant="body2">{"<10% of patients with treatment failure"}</Typography>
                     </Stack>
-                </Grid>
-                <Grid item md={9} xs={12}>
-                    <DasboardCard elevation={0}>
-                        <Stack direction="column" alignItems="center">
-                            <Typography variant="body2" fontWeight="bold">
-                                {"Study outcome:"}
-                            </Typography>
-                            <Stack
-                                direction="row"
-                                alignItems="center"
-                                justifyContent="center"
-                                spacing={4}
-                                sx={{ marginTop: 2, marginBottom: 4, width: "100%" }}
-                            >
-                                <Stack direction="row" alignItems="center" spacing={1}>
-                                    <LegendIcon color={treatmentByDrugColors[0]} />
-                                    <Typography variant="body2">{"<10% of patients with treatment failure"}</Typography>
-                                </Stack>
-                                <Stack direction="row" alignItems="center" spacing={1}>
-                                    <LegendIcon color={treatmentByDrugColors[1]} />
-                                    <Typography variant="body2">{"≥10% of patients with treatment failure"}</Typography>
-                                </Stack>
-                            </Stack>
-                        </Stack>
-                        <div style={{ overflowX: "auto" }}>
-                            <Table width={Object.keys(data).length * 400}>
-                                <thead>
-                                    <tr>
-                                        {Object.keys(data).map(drug => {
-                                            return <th key={drug}>{drug}</th>;
-                                        })}
-                                    </tr>
-                                </thead>
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                        <LegendIcon color={treatmentByDrugColors[1]} />
+                        <Typography variant="body2">{"≥10% of patients with treatment failure"}</Typography>
+                    </Stack>
+                </Stack>
+            </Stack>
+            <div style={{ overflowX: "auto" }}>
+                <Table width={Object.keys(data).length * 400}>
+                    <thead>
+                        <tr>
+                            {Object.keys(data).map(drug => {
+                                return <th key={drug}>{drug}</th>;
+                            })}
+                        </tr>
+                    </thead>
 
-                                <tbody>
-                                    <tr>
-                                        {Object.keys(data).map((drug, index) => {
-                                            return (
-                                                <td key={drug}>
-                                                    {
-                                                        <HighchartsReact
-                                                            highcharts={Highcharts}
-                                                            options={chartOptions(
-                                                                index === 0,
-                                                                selectedCountries,
-                                                                data[drug]
-                                                            )}
-                                                        />
-                                                    }
-                                                </td>
-                                            );
-                                        })}
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </div>
-                        <Stack direction="column" alignItems="center" sx={{ marginBottom: 4 }}>
-                            <Typography variant="body2" fontWeight="bold">
-                                {"Number of studies"}
-                            </Typography>
-                        </Stack>
-                        <Stack direction="column">
-                            <Typography variant="body2">{countryLegend}</Typography>
-                        </Stack>
-                        <Stack direction="column" sx={{ marginTop: 2 }}>
-                            <Typography variant="body2">{drugLegend}</Typography>
-                        </Stack>
-                    </DasboardCard>
-                </Grid>
-            </Grid>
-        </React.Fragment>
+                    <tbody>
+                        <tr>
+                            {Object.keys(data).map((drug, index) => {
+                                return (
+                                    <td key={drug}>
+                                        {
+                                            <HighchartsReact
+                                                highcharts={Highcharts}
+                                                options={chartOptions(index === 0, selectedCountries, data[drug])}
+                                            />
+                                        }
+                                    </td>
+                                );
+                            })}
+                        </tr>
+                    </tbody>
+                </Table>
+            </div>
+            <Stack direction="column" alignItems="center" sx={{ marginBottom: 4 }}>
+                <Typography variant="body2" fontWeight="bold">
+                    {"Number of studies"}
+                </Typography>
+            </Stack>
+            <Stack direction="column">
+                <Typography variant="body2">{countryLegend}</Typography>
+            </Stack>
+            <Stack direction="column" sx={{ marginTop: 2 }}>
+                <Typography variant="body2">{drugLegend}</Typography>
+            </Stack>
+        </TreatmentFilterableDashboard>
     );
 };
 
 export default TreatmentFailureByDrugDashboard;
 
-const DasboardCard = styled(Card)`
-    min-height: 500px;
-    padding: 64px;
-`;
-
 const LegendIcon = styled.div<{ color: string }>`
     background: ${props => props.color};
     width: 12px;
     height: 12px;
-`;
-
-const StudiesCountCard = styled(Card)`
-    padding: 24px;
-`;
-
-const Title = styled.h3`
-    font-size: 23px;
-    margin-bottom: 30px;
-    color: #2ba681;
-    text-transform: uppercase;
 `;
 
 const Table = styled.table<{ width: number }>`

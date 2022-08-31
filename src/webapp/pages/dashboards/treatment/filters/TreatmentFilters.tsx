@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Typography } from "@mui/material";
+import { Card, IconButton, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import PlasmodiumSpecieSelector from "../../../../components/filters/PlasmodiumSpecieSelector";
@@ -7,6 +7,7 @@ import DrugsSelector from "../../../../components/filters/DrugsSelector";
 import DashboardsYearRangeSelector from "./DashboardsYearRangeSelector";
 import ExcludeLowerPatientsSelector from "../../../../components/filters/ExcludeLowerPatientsSelector";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 interface TreatmentFiltersProps {
     studies: TreatmentStudy[];
@@ -22,6 +23,7 @@ interface TreatmentFiltersProps {
     onMolecularMarkerChange: (value: number) => void;
     onYearsChange: (years: [number, number]) => void;
     onExcludeLowerPatientsChange: (value: boolean) => void;
+    onCollapse: () => void;
 }
 
 const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
@@ -36,14 +38,22 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
     onDrugsChange,
     onYearsChange,
     onExcludeLowerPatientsChange,
+    onCollapse,
 }) => {
     const { t } = useTranslation();
 
     return (
         <FiltersCard elevation={0}>
-            <Typography variant="body2" textTransform="uppercase" fontWeight="bold">
-                {t("common.dashboard.treatmentFilters.title")}
-            </Typography>
+            <Stack direction="row" justifyContent="space-between" alignItems="center">
+                <Typography variant="body2" textTransform="uppercase" fontWeight="bold">
+                    {t("common.dashboard.treatmentFilters.title")}
+                </Typography>
+
+                <IconButton onClick={onCollapse} size="small">
+                    <ArrowBackIosIcon />
+                </IconButton>
+            </Stack>
+
             <PlasmodiumSpecieSelector
                 onlyYMargin
                 labelBold
