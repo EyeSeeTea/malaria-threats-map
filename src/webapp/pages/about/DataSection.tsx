@@ -2,7 +2,6 @@ import React from "react";
 import { Container, Grid, Typography } from "@mui/material";
 import DataGraphic from "../../assets/img/about-page/data-graphic.svg";
 import { useTranslation } from "react-i18next";
-import { initial } from "lodash";
 
 const DataSection = () => {
     const { t } = useTranslation();
