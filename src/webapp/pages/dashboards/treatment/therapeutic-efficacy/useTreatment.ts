@@ -5,7 +5,7 @@ import { useTreatmentFilters } from "../filters/useTreatmentFilters";
 import { filterStudies } from "../utils";
 import _ from "lodash";
 
-export function useTreatment() {
+export function useTreatment(drugsMulti: boolean) {
     const {
         plasmodiumSpecies,
         drugs,
@@ -26,12 +26,28 @@ export function useTreatment() {
     const studiesCount = React.useMemo(() => filteredStudies.length, [filteredStudies]);
 
     React.useEffect(() => {
-        const drugUniques = _.uniq(filteredStudiesForDrugs.map(study => study.DRUG_NAME))[0];
+        if (drugs === undefined) {
+            if (drugsMulti) {
+                const drugUniques =
+                    filteredStudiesForDrugs.length > 0
+                        ? _.uniq(filteredStudiesForDrugs.map(study => study.DRUG_NAME))
+                        : undefined;
 
-        if (drugUniques) {
-            onDrugsChange([drugUniques]);
+                if (drugUniques) {
+                    onDrugsChange(drugUniques);
+                }
+            } else {
+                const drug =
+                    filteredStudiesForDrugs.length > 0
+                        ? _.uniq(filteredStudiesForDrugs.map(study => study.DRUG_NAME))[0]
+                        : undefined;
+
+                if (drug) {
+                    onDrugsChange([drug]);
+                }
+            }
         }
-    }, [filteredStudiesForDrugs, onDrugsChange]);
+    }, [filteredStudiesForDrugs, onDrugsChange, drugs, drugsMulti]);
 
     React.useEffect(() => {
         const filteredStudies = filterStudies(

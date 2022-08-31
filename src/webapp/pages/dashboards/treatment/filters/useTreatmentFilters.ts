@@ -4,7 +4,7 @@ import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../../components/filters/P
 
 export function useTreatmentFilters() {
     const [plasmodiumSpecies, setPlasmodiumSpecies] = useState<string>(PLASMODIUM_SPECIES_SUGGESTIONS[0].value);
-    const [drugs, setDrugs] = useState<string[]>([]);
+    const [drugs, setDrugs] = useState<string[]>(undefined);
     const [molecularMarker, setMolecularMarker] = useState<number>(0);
     const [years, setYears] = useState<[number, number]>([2010, new Date().getFullYear()]);
     const [excludeLowerPatients, setExcludeLowerPatients] = useState<boolean>(false);

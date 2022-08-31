@@ -20,12 +20,12 @@ export function useTreatmentFailureByDrug() {
         onYearsChange,
         onExcludeLowerPatientsChange,
         onMolecularMarkerChange,
-    } = useTreatment();
+    } = useTreatment(true);
 
     const [data, setData] = React.useState<Record<string, TreatmentFailureSeriesItem[]>>({});
 
     React.useEffect(() => {
-        setData(createChartData(filteredStudies, drugs, selectedCountries));
+        setData(createChartData(filteredStudies, drugs || [], selectedCountries));
     }, [filteredStudies, drugs, selectedCountries]);
 
     return {

@@ -20,7 +20,7 @@ export function useTreatmentOverTime(type: TreatmentOverTimeType) {
         onYearsChange,
         onExcludeLowerPatientsChange,
         onMolecularMarkerChange,
-    } = useTreatment();
+    } = useTreatment(false);
 
     const [series, setSeries] = React.useState<BubleChartGroup[]>([]);
 
