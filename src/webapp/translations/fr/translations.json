@@ -85,7 +85,8 @@
                 "resistance_status": {
                     "confirmed": "Confirmée (0 to <90%)",
                     "possible": "Suspectée (90 to <98%)",
-                    "susceptible": "Sensible (≥98%)"
+                    "susceptible": "Sensible (≥98%)",
+                    "undetermined": "Indéterminé"
                 },
                 "resistance_mechanism": {
                     "confirmed": "Détecté",
@@ -93,9 +94,17 @@
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "Mortalité de moustique",
-                    "full_involvement": "Implication totale",
-                    "partial_involvement": "Implication partielle",
-                    "no_involvement": "Pas d'implication"
+                    "full_restoration": "Restauration totale",
+                    "partial_restoration": "Restauration partielle",
+                    "no_restoration": "Pas de restauration"
+                }
+            },
+            "extended_legend": {
+                "resistance_status": {
+                    "pyrroles": {
+                        "chlorfenapyr_undetermined": "Les points en gris représentent les données recueillies avec la concentration discriminante recommandée de 100 µg/flacon mais qui ne correspondent pas entièrement aux critères de l'OMS pour la validation du test, soit parce que la température n'a pas été signalée, soit parce que la température est en dehors de la plage recommandée (27 °C ± 2 ° C), parce qu'aucune souche de moustique sensible n'a été testée en parallèle ou parce que les résultats de la souche de moustique sensible n'ont pas été rapportés.",
+                        "pirimiphos_methly_undetermined": "Les points gris représentent les données recueillies à partir d'essais biologiques effectués en utilisant la concentration discriminante précédemment recommandée de pirimiphos-méthyl (0,25 %). Ces données doivent être validées par rapport aux nouvelles concentrations discriminantes disponibles dans le manuel de l'OMS pour la surveillance de la résistance des moustiques vecteurs aux insecticides et la sélection des interventions appropriées. https://www.who.int/publications/i/item/9789240051089"
+                    }
                 }
             }
         },
@@ -199,7 +208,7 @@
                     "native": "Autochtone",
                     "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
                     "link_text": "formulaire de rapport",
-                    "link_content_1": "Si vous avez détecté une espèce invasive vecteur Anopheles, veuillez nous en informer via le "
+                    "link_content_1": "Si vous avez détecté une espèce invasive vecteur <1>Anopheles</1>, veuillez nous en informer via le "
                 }
             }
         },
@@ -230,7 +239,8 @@
             "plasmodium_species": "Espèces de plasmodium",
             "drug": "Médicament",
             "molecular_marker": "Marqueur moléculaire",
-            "mechanism_type": "Type de synergie",
+            "proxy_type": "Type de synergie",
+            "mechanism_type": "Type de mécanisme",
             "assay_type": "Type d'analyse",
             "synergist_type": "Type de test",
             "synergist_types": "Types du mécanismes métaboliques",

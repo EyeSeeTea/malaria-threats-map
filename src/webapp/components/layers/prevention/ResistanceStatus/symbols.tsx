@@ -1,38 +1,19 @@
-export const ConfirmationStatusColors: { [key: string]: string[] } = {
+export const ResistanceStatusColors: { [key: string]: string[] } = {
     Confirmed: ["#D43501", "#882201"],
     Possible: ["#FF9502", "#b56900"],
     Susceptible: ["#869C66", "#5e6e47"],
+    Undetermined: ["#BEBEBE", "#838383"],
 };
 
 const resistanceStatusSymbols = {
     "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
-    "circle-color": [
-        "match",
-        ["get", "CONFIRMATION_STATUS"],
-        "Confirmed",
-        ConfirmationStatusColors.Confirmed[0],
-        "Possible",
-        ConfirmationStatusColors.Possible[0],
-        "Susceptible",
-        ConfirmationStatusColors.Susceptible[0],
-        /* other */ "#ccc",
-    ],
+    "circle-color": ["string", ["at", 0, ["get", "RESISTANCE_STATUS_COLOR"]]],
     "circle-opacity": 1,
     "circle-stroke-color": [
         "case",
         ["boolean", ["feature-state", "hover"], false],
         "lightgrey",
-        [
-            "match",
-            ["get", "CONFIRMATION_STATUS"],
-            "Confirmed",
-            ConfirmationStatusColors.Confirmed[1],
-            "Possible",
-            ConfirmationStatusColors.Possible[1],
-            "Susceptible",
-            ConfirmationStatusColors.Susceptible[1],
-            /* other */ "#111",
-        ],
+        ["string", ["at", 1, ["get", "RESISTANCE_STATUS_COLOR"]]],
     ],
     "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
     "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],

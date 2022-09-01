@@ -101,6 +101,7 @@ export interface PreventionFilters {
     insecticideTypes: string[];
     synergistTypes: string[];
     assayTypes: string[];
+    proxyType: string | null;
     type: string | null;
     species: string[];
 }

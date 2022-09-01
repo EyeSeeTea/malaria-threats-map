@@ -85,7 +85,8 @@
                 "resistance_status": {
                     "confirmed": "Confirmado (0 to <90%)",
                     "possible": "Posible (90 to <98%)",
-                    "susceptible": "Susceptible (≥98%)"
+                    "susceptible": "Susceptible (≥98%)",
+                    "undetermined": "Indeterminado"
                 },
                 "resistance_mechanism": {
                     "confirmed": "Detectado",
@@ -93,9 +94,17 @@
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "Mortalidad por mosquito",
-                    "full_involvement": "Participación total",
-                    "partial_involvement": "Participación parcial",
-                    "no_involvement": "Sin participación"
+                    "full_restoration": "Restauración completa",
+                    "partial_restoration": "Restauración parcial",
+                    "no_restoration": "Sin restauración"
+                }
+            },
+            "extended_legend": {
+                "resistance_status": {
+                    "pyrroles": {
+                        "chlorfenapyr_undetermined": "Los puntos grises representan los datos recopilados con la concentración de discriminación recomendada de 100 µg/botella, pero que no coinciden completamente con los criterios de la OMS para la validación de la prueba, ya sea porque no se informó la temperatura o porque la temperatura cayó fuera del rango recomendado (27 °C ± 2  °C), porque no se probó ninguna cepa de mosquito susceptible en paralelo o porque no se informaron los resultados de la cepa de mosquito susceptible.",
+                        "pirimiphos_methly_undetermined": "Los puntos grises representan datos recogidos por medio de bioensayos realizados usando la concentración discriminante de pirimifos-metilo recomendada anteriormente (0,25 %). Estos datos deben validarse contra las nuevas concentraciones discriminantes disponibles en el manual de la OMS para la vigilancia de la resistencia de los mosquitoes vectors a los insecticides y la selección de intervenciones adecuadas. https://www.who.int/publications/i/item/9789240051089"
+                    }
                 }
             }
         },
@@ -199,7 +208,7 @@
                     "native": "Nativa",
                     "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
                     "link_text": "formulario de reporte",
-                    "link_content_1": "Si ha detectado especies invasoras de vectores de Anopheles, infórmenos a través del "
+                    "link_content_1": "Si ha detectado especies invasoras de vectores de <1>Anopheles</1>, infórmenos a través del "
                 }
             }
         },
@@ -230,7 +239,8 @@
             "plasmodium_species": "Especie de plasmodium",
             "drug": "Tratamiento",
             "molecular_marker": "Marcador molecular",
-            "mechanism_type": "Tipo de sinergia",
+            "proxy_type": "Tipo de sinergia",
+            "mechanism_type": "Tipo de mecanismo",
             "assay_type": "Tipo de ensayo",
             "synergist_type": "Tipo de test",
             "synergist_types": "Tipos sinergistas",

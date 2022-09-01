@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../../store/reducers/base-reducer";
 import { State } from "../../../../store/types";
-import { ConfirmationStatusColors } from "./symbols";
+import { ResistanceStatusColors } from "./symbols";
 import * as R from "ramda";
 import { isNull, isNotNull } from "../../../../utils/number-utils";
 import Citation from "../../../charts/Citation";
@@ -19,7 +19,18 @@ import FormLabel from "@material-ui/core/FormLabel";
 import { sendAnalytics } from "../../../../utils/analytics";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 
-const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
+interface Data {
+    citation: string;
+    citationUrl: string;
+    insecticide_type: string;
+    name: string;
+    number: string;
+    species: string;
+    type: string;
+    y: number;
+}
+
+const defaultHighchartOptions: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
         maxPointWidth: 20,
         type: "column",
@@ -49,7 +60,7 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
         plotLines: [
             {
                 value: 90,
-                color: "#d43501",
+                color: ResistanceStatusColors.Confirmed[0],
                 dashStyle: "LongDashDot",
                 width: 2,
                 zIndex: 5,
@@ -58,31 +69,6 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
                 },
             },
         ],
-    },
-    plotOptions: {
-        column: {
-            dataLabels: {
-                formatter: function () {
-                    // @ts-ignore
-                    return `${this.y}% (${this.point.number})`;
-                } as DataLabelsFormatterCallbackFunction,
-                enabled: true,
-            },
-            zones: [
-                {
-                    value: 90,
-                    color: ConfirmationStatusColors.Confirmed[0],
-                },
-                {
-                    value: 98,
-                    color: ConfirmationStatusColors.Possible[0],
-                },
-                {
-                    value: 100.001,
-                    color: ConfirmationStatusColors.Susceptible[0],
-                },
-            ],
-        },
     },
     tooltip: {
         formatter: function () {
@@ -112,6 +98,40 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
     },
     credits: {
         enabled: false,
+    },
+});
+const isGreyInsecticideTypes = (data: Data) =>
+    (data.insecticide_type === "PIRIMIPHOS-METHYL" && data.name.includes("0.25%")) ||
+    data.insecticide_type === "CHLORFENAPYR";
+const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
+    ...defaultHighchartOptions(data, translations),
+    plotOptions: {
+        column: {
+            dataLabels: {
+                formatter: function () {
+                    // @ts-ignore
+                    return `${this.y}% (${this.point.number})`;
+                } as DataLabelsFormatterCallbackFunction,
+                enabled: true,
+            },
+            color: isGreyInsecticideTypes(data[0]) ? ResistanceStatusColors.Undetermined[0] : undefined,
+            zones: !isGreyInsecticideTypes(data[0])
+                ? [
+                      {
+                          value: 90,
+                          color: ResistanceStatusColors.Confirmed[0],
+                      },
+                      {
+                          value: 98,
+                          color: ResistanceStatusColors.Possible[0],
+                      },
+                      {
+                          value: 100.001,
+                          color: ResistanceStatusColors.Susceptible[0],
+                      },
+                  ]
+                : [],
+        },
     },
 });
 
@@ -163,6 +183,7 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
         )
     );
     const studies = groupedStudies[study];
+
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
         return `${study.YEAR_START}, ${study.INSECTICIDE_TYPE} ${study.INSECTICIDE_CONC}`;
@@ -175,15 +196,18 @@ const ResistanceStatusChart = ({ studies: baseStudies }: Props) => {
                 R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
         )
     );
-    const data = simplifiedStudies.map(study => ({
+
+    const data: Data[] = simplifiedStudies.map(study => ({
         name: `${study.YEAR_START}, ${t(study.INSECTICIDE_TYPE)} ${t(study.INSECTICIDE_CONC)}`,
         y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
         species: t(study.SPECIES),
         number: study.NUMBER,
+        insecticide_type: study.INSECTICIDE_TYPE,
         type: t(study.TYPE),
         citation: study.CITATION_LONG || study.INSTITUTE,
         citationUrl: study.CITATION_URL,
     }));
+
     const studyObject = groupedStudies[study][0];
     const translations = {
         mortality: t("common.prevention.chart.resistance_status.mortality"),

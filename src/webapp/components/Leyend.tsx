@@ -14,8 +14,7 @@ import { setPreventionMapType } from "../store/actions/prevention-actions";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
-import { useTranslation } from "react-i18next";
-
+import { useTranslation, Trans } from "react-i18next";
 export { default as LegendContainer } from "./LegendContainer";
 
 const LegendEntries = styled.div`
@@ -85,17 +84,27 @@ interface LegendLabel {
     label: string;
     color: string;
     border?: boolean;
+    extendedLabel?: string;
 }
 
-export function LegendLabels({ labels }: { labels: LegendLabel[] }) {
+export function LegendLabels({ labels, legendExpanded }: { labels: LegendLabel[]; legendExpanded?: boolean }) {
     const { t } = useTranslation();
     return (
         <LegendEntries>
             {labels.map(label => (
-                <LegendEntry key={label.label}>
-                    <LegendSymbol color={label.color} border={label.border} />
-                    <LegendText>{t(`common.${label.label}`)}</LegendText>
-                </LegendEntry>
+                <>
+                    <LegendEntry key={label.label}>
+                        <LegendSymbol color={label.color} border={label.border} />
+                        <LegendText>{t(`common.${label.label}`)}</LegendText>
+                    </LegendEntry>
+                    {legendExpanded && label.extendedLabel && (
+                        <LegendText>
+                            <Trans i18nKey={`common.${label.extendedLabel}`} t={t}>
+                                {t(`common.${label.extendedLabel}`)}
+                            </Trans>
+                        </LegendText>
+                    )}
+                </>
             ))}
         </LegendEntries>
     );

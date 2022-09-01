@@ -85,7 +85,8 @@
                 "resistance_status": {
                     "confirmed": "Confirmed (0 to <90%)",
                     "possible": "Possible (90 to <98%)",
-                    "susceptible": "Susceptible (≥98%)"
+                    "susceptible": "Susceptible (≥98%)",
+                    "undetermined": "Undetermined"
                 },
                 "resistance_mechanism": {
                     "confirmed": "Detected",
@@ -93,9 +94,17 @@
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "mortality (%)",
-                    "full_involvement": "Full Involvement",
-                    "partial_involvement": "Partial Involvement",
-                    "no_involvement": "No Involvement"
+                    "full_restoration": "Full restoration",
+                    "partial_restoration": "Partial restoration",
+                    "no_restoration": "No restoration"
+                }
+            },
+            "extended_legend": {
+                "resistance_status": {
+                    "pyrroles": {
+                        "chlorfenapyr_undetermined": "Grey  dots represent data collected with the recommended discriminating  concentration of 100 µg/bottle but that do not fully match WHO criteria  for test validation, either because the temperature was not reported,  because temperature fell outside of the recommended range (27 °C ± 2  °C), because no susceptible mosquito strain was tested in parallel or  because results of the susceptible mosquito strain were not reported.",
+                        "pirimiphos_methly_undetermined": "Grey  dots represent data collected with the formerly recommended pyrimiphos-methyl discriminating concentration of 0.25%.  These data should be validated against the new discriminating concentrations available in the WHO Manual for monitoring insecticide resistance in mosquito vectors and selecting appropriate interventions. https://www.who.int/publications/i/item/9789240051089"
+                    }
                 }
             }
         },
@@ -199,7 +208,7 @@
                     "native": "Native",
                     "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
                     "link_text": "reporting form",
-                    "link_content_1": "If you have detected invasive Anopheles vector species please report to us through the "
+                    "link_content_1": "If you have detected invasive <1>Anopheles</1> vector species please report to us through the "
                 }
             }
         },
@@ -230,7 +239,8 @@
             "plasmodium_species": "Plasmodium species",
             "drug": "Drug",
             "molecular_marker": "Molecular marker",
-            "mechanism_type": "Type of synergy",
+            "proxy_type": "Type of synergy",
+            "mechanism_type": "Mechanism type",
             "assay_type": "Assay type",
             "synergist_type": "Test type",
             "synergist_types": "Synergist types",
