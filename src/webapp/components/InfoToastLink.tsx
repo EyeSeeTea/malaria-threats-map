@@ -24,6 +24,7 @@ const Circle = styled.div`
     border-radius: 100%;
     background: #ffffff;
     font-size: 0.75rem;
+    max-height: 22px;
 `;
 
 const StyledLink = styled(Link)`
