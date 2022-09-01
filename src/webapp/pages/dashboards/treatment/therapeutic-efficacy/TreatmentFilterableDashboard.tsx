@@ -13,6 +13,8 @@ import HighchartsReact from "highcharts-react-official";
 import html2canvas from "html2canvas";
 
 interface TreatmentFilterableDashboardProps {
+    drugsMultiple: boolean;
+    drugsClearable: boolean;
     chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject>;
     title: string;
     filteredStudiesForDrugs: TreatmentStudy[];
@@ -31,6 +33,8 @@ interface TreatmentFilterableDashboardProps {
 
 More(Highcharts);
 const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = ({
+    drugsMultiple,
+    drugsClearable,
     chartComponentRef,
     title,
     filteredStudiesForDrugs,
@@ -96,8 +100,8 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                         <Stack direction="column">
                             <TreatmentFilters
                                 studies={filteredStudiesForDrugs}
-                                drugsMultiple={true}
-                                drugsClearable={true}
+                                drugsMultiple={drugsMultiple}
+                                drugsClearable={drugsClearable}
                                 plasmodiumSpecies={plasmodiumSpecies}
                                 drugs={drugs}
                                 molecularMarker={molecularMarker}
