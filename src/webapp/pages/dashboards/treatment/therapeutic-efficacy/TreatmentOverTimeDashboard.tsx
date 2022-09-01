@@ -6,7 +6,7 @@ import { BubleChartGroup, TreatmentOverTimeType } from "./types";
 import { useTreatmentOverTime } from "./useTreatmentOverTime";
 import HighchartsReact from "highcharts-react-official";
 import More from "highcharts/highcharts-more";
-import TreatmentFilterableDashboard from "./TreatmentFilterableDashboard";
+import TreatmentFilterableDashboard from "../TreatmentFilterableDashboard";
 import i18next from "i18next";
 
 More(Highcharts);

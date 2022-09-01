@@ -2,7 +2,7 @@ import React from "react";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import { getTreatmentFailure } from "../utils";
 import { treatmentByDrugColors, TreatmentFailureSeriesItem } from "./types";
-import { useTreatment } from "./useTreatment";
+import { useTreatment } from "../useTreatment";
 
 export function useTreatmentFailureByDrug() {
     const {

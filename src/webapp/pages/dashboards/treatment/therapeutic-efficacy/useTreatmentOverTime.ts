@@ -3,7 +3,7 @@ import _ from "lodash";
 import React from "react";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import { BubleChartGroup, treatmentdashboardColors, TreatmentOverTimeType } from "./types";
-import { useTreatment } from "./useTreatment";
+import { useTreatment } from "../useTreatment";
 
 export function useTreatmentOverTime(type: TreatmentOverTimeType) {
     const {

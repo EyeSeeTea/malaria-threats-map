@@ -3,12 +3,12 @@ import Highcharts from "highcharts";
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import TreatmentFilters from "../filters/TreatmentFilters";
+import TreatmentFilters from "./filters/TreatmentFilters";
 import More from "highcharts/highcharts-more";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import DownloadIcon from "@mui/icons-material/Download";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
+import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import HighchartsReact from "highcharts-react-official";
 import html2canvas from "html2canvas";
 

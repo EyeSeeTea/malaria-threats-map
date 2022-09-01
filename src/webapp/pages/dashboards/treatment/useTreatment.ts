@@ -1,8 +1,8 @@
 import React from "react";
-import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
-import { useDashboards } from "../../context/useDashboards";
-import { useTreatmentFilters } from "../filters/useTreatmentFilters";
-import { filterStudies } from "../utils";
+import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
+import { useDashboards } from "../context/useDashboards";
+import { useTreatmentFilters } from "./filters/useTreatmentFilters";
+import { filterStudies } from "./utils";
 import _ from "lodash";
 
 export function useTreatment(drugsMulti: boolean) {

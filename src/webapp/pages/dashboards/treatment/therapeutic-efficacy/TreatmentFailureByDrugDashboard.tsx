@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { treatmentByDrugColors, TreatmentFailureSeriesItem } from "./types";
 import { useTreatmentFailureByDrug } from "./useTreatmentFailureByDrug";
 import More from "highcharts/highcharts-more";
-import TreatmentFilterableDashboard from "./TreatmentFilterableDashboard";
+import TreatmentFilterableDashboard from "../TreatmentFilterableDashboard";
 
 More(Highcharts);
 const TreatmentFailureByDrugDashboard: React.FC = () => {
