@@ -1,6 +1,6 @@
 import { Button, Card, Fab, Grid, Stack } from "@mui/material";
 import Highcharts from "highcharts";
-import React from "react";
+import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import TreatmentFilters from "../filters/TreatmentFilters";
@@ -10,6 +10,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import HighchartsReact from "highcharts-react-official";
+import html2canvas from "html2canvas";
 
 interface TreatmentFilterableDashboardProps {
     chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject>;
@@ -50,6 +51,8 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
 
     const { t } = useTranslation();
 
+    const ref = useRef<HTMLDivElement>(null);
+
     const handleFiltersVisible = React.useCallback(() => {
         setFiltersVisible(!filtersVisible);
     }, [filtersVisible]);
@@ -60,6 +63,19 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
         chart?.reflow();
     }, [filtersVisible, chartComponentRef]);
 
+    const handleDownload = React.useCallback(() => {
+        if (ref.current === null) {
+            return;
+        }
+
+        html2canvas(ref.current).then(canvas => {
+            const link = document.createElement("a");
+            link.download = title;
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+    }, [ref, title]);
+
     return (
         <React.Fragment>
             <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -68,7 +84,7 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                     <Fab color="primary" size="small">
                         <InfoOutlinedIcon sx={{ color: "white", width: "20px" }} />
                     </Fab>
-                    <Fab color="primary" size="small">
+                    <Fab color="primary" size="small" onClick={handleDownload}>
                         <DownloadIcon sx={{ color: "white" }} />
                     </Fab>
                 </Stack>
@@ -109,7 +125,7 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                                 {"Filter data"}
                             </Button>
                         )}
-                        {children}
+                        <div ref={ref}>{children}</div>
                     </DasboardCard>
                 </Grid>
             </Grid>
