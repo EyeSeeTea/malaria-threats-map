@@ -105,15 +105,23 @@
             },
             "therapeuticEfficacySection": {
                 "title": "Therapeutic efficacy studies (TES)",
+                "numStudies": "The applied filters yield {{count}} studies",
                 "treatmentFailureByDrug": {
-                    "title": "SUMMARY OF TREATMENT FAILURE RATES BY DRUG"
+                    "title": "SUMMARY OF TREATMENT FAILURE RATES BY DRUG",
+                    "studyOutcome": "Study outcome:",
+                    "numStudies": "Number of studies",
+                    "lessThan10Patients": "<10% of patients with treatment failure",
+                    "moreOrEqualThan10Patients": "≥10% of patients with treatment failure"
                 },
                 "treatmentFailureOverTime": {
                     "title": "TREATMENT FAILURE RATES OVER TIME",
-                    "numStudies": "The applied filters yield {{count}} studies"
+                    "numberPatients": "Number of Patients",
+                    "treatmentFailure": "Treatment Failure %",
+                    "year": "Year"
                 },
                 "parasiteClearanceOverTime": {
-                    "title": "PARASITE CLEARANCE RATES OVER TIME"
+                    "title": "PARASITE CLEARANCE RATES OVER TIME",
+                    "parasitemiaOnDay3": "Percentage of patients with parasitemia on day 3 (%)"
                 }
             },
             "treatmentFilters": {

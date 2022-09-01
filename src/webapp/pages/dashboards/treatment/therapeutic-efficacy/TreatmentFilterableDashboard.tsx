@@ -111,7 +111,7 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                                 onCollapse={handleFiltersVisible}
                             ></TreatmentFilters>
                             <StudiesCountCard elevation={0}>
-                                {t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.numStudies", {
+                                {t("common.dashboard.therapeuticEfficacySection.numStudies", {
                                     count: studiesCount,
                                 })}
                             </StudiesCountCard>

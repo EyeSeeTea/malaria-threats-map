@@ -7,6 +7,7 @@ import { useTreatmentOverTime } from "./useTreatmentOverTime";
 import HighchartsReact from "highcharts-react-official";
 import More from "highcharts/highcharts-more";
 import TreatmentFilterableDashboard from "./TreatmentFilterableDashboard";
+import i18next from "i18next";
 
 More(Highcharts);
 
@@ -85,7 +86,8 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
         title: {
             useHTML: true,
             text: `<div style="display: flex;flex-direction: row;align-items: center;"> 
-                        Number of Patients <img width="100px" src=${BubbleChartHelpImage} alt='' />
+                    ${i18next.t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.numberPatients")} 
+                    <img width="100px" src=${BubbleChartHelpImage} alt='' />
                    </div>`,
             align: "right",
             x: -30,
@@ -100,7 +102,7 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
         xAxis: {
             gridLineWidth: 1,
             title: {
-                text: "Year",
+                text: i18next.t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.year"),
                 margin: 20,
                 style: {
                     fontSize: "14px",
@@ -116,8 +118,12 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
             title: {
                 text:
                     type === "treatmentFailure"
-                        ? "Treatment Failure %"
-                        : "Percentage of patients with parasitemia on day 3 (%)",
+                        ? i18next.t(
+                              "common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.treatmentFailure"
+                          )
+                        : i18next.t(
+                              "common.dashboard.therapeuticEfficacySection.parasiteClearanceOverTime.parasitemiaOnDay3"
+                          ),
                 margin: 40,
                 style: {
                     fontSize: "14px",

@@ -55,7 +55,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
         >
             <Stack direction="column" alignItems="center">
                 <Typography variant="body2" fontWeight="bold">
-                    {"Study outcome:"}
+                    {t("common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.studyOutcome")}
                 </Typography>
                 <Stack
                     direction="row"
@@ -66,11 +66,17 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
                 >
                     <Stack direction="row" alignItems="center" spacing={1}>
                         <LegendIcon color={treatmentByDrugColors[0]} />
-                        <Typography variant="body2">{"<10% of patients with treatment failure"}</Typography>
+                        <Typography variant="body2">
+                            {t("common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.lessThan10Patients")}
+                        </Typography>
                     </Stack>
                     <Stack direction="row" alignItems="center" spacing={1}>
                         <LegendIcon color={treatmentByDrugColors[1]} />
-                        <Typography variant="body2">{"≥10% of patients with treatment failure"}</Typography>
+                        <Typography variant="body2">
+                            {t(
+                                "common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.moreOrEqualThan10Patients"
+                            )}
+                        </Typography>
                     </Stack>
                 </Stack>
             </Stack>
@@ -104,7 +110,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
             </div>
             <Stack direction="column" alignItems="center" sx={{ marginBottom: 4 }}>
                 <Typography variant="body2" fontWeight="bold">
-                    {"Number of studies"}
+                    {t("common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.numStudies")}
                 </Typography>
             </Stack>
             <Stack direction="column">

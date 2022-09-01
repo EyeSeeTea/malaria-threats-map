@@ -104,20 +104,28 @@
                 }
             },
             "therapeuticEfficacySection": {
-                "title": "Therapeutic efficacy studies (TES)",
+                "title": "Estudios de eficacia terapéutica (EET)",
+                "numStudies": "Los filtros aplicados producen {{count}} estudios",
                 "treatmentFailureByDrug": {
-                    "title": "SUMMARY OF TREATMENT FAILURE RATES BY DRUG"
+                    "title": "RESUMEN DE LAS TASAS DE FRACASO DEL TRATAMIENTO POR FÁRMACO",
+                    "studyOutcome": "Resultado del estudio:",
+                    "numStudies": "Número de estudios",
+                    "lessThan10Patients": "<10% de pacientes con fracaso del tratamiento",
+                    "moreOrEqualThan10Patients": "≥10% de los pacientes con fracaso del tratamiento"
                 },
                 "treatmentFailureOverTime": {
-                    "title": "TREATMENT FAILURE RATES OVER TIME",
-                    "numStudies": "The applied filters yield {{count}} studies"
+                    "title": "TASAS DE FRACASO DEL TRATAMIENTO A LO LARGO DEL TIEMPO",
+                    "numberPatients": "Número de Pacientes",
+                    "treatmentFailure": "Fracaso del tratamiento %",
+                    "year": "Año"
                 },
                 "parasiteClearanceOverTime": {
-                    "title": "PARASITE CLEARANCE RATES OVER TIME"
+                    "title": "TASAS DE ELIMINACIÓN DE PARÁSITOS A LO LARGO DEL TIEMPO",
+                    "parasitemiaOnDay3": "Porcentaje de pacientes con parasitemia en el día 3 (%)"
                 }
             },
             "treatmentFilters": {
-                "title": "Filter Data"
+                "title": "Filtrar Datos"
             }
         },
         "homepage": {
