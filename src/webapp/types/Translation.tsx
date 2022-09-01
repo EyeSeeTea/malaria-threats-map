@@ -37,3 +37,7 @@ interface Field {
     alias: string;
     length: number;
 }
+
+export function getTranslationsKey(translation: Translation) {
+    return `${translation.FIELD}.${translation.VALUE_}`;
+}
