@@ -16,9 +16,7 @@ export const getTranslationsEpic = (action$: Observable<ActionType<typeof fetchT
     action$.pipe(
         ofType(ActionTypeEnum.FetchTranslationsRequest),
         switchMap(() => {
-            const url = ajax.cacheCircunvent(
-                "https://frontdoor-r5quteqglawbs.azurefd.net/TRAINING_EYESEETEA/MTM_TRADS"
-            );
+            const url = ajax.cacheCircunvent("https://frontdoor-r5quteqglawbs.azurefd.net/VECTORS_IR/TRANSLATIONS");
             return ajax.getUrl<TranslationXMartResponse>(url).pipe(
                 mergeMap((response: TranslationXMartResponse) => {
                     const oldResponse = {
