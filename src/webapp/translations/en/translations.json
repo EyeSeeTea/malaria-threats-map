@@ -13,8 +13,8 @@
             },
 
             "dataSection": {
-                "title": "Where does the data come from?",
-                "content": "Data is collected by National Malaria Programmes, their implementation partners, research institutes and non-governmental organizations. They are either provided directly to WHO Global Malaria Programme (GMP) or extracted from publications. All data are quality controlled, incorporated into WHO global databases and then published to the Malaria Threats Map."
+                "title": "Where do the data come from?",
+                "content": "Data are collected by National Malaria Programmes, their implementation partners, research institutes and non-governmental organizations. They are either provided directly to WHO Global Malaria Programme (GMP) or extracted from publications. All data are quality controlled, incorporated into WHO global databases and then published to the Malaria Threats Map."
             },
             "mapSection": {
                 "title": "Watch: Find out about the functionality of the maps within the MTM",
@@ -25,12 +25,12 @@
                     "title": "An overview of the maps"
                 },
                 "video2": {
-                    "url": "https://www.youtube.com/embed/VP-pc9oN0dM",
+                    "url": "https://www.youtube.com/embed/diMb_gbUUbM",
                     "alt": "Malaria Threats Map: supporting research efforts",
                     "title": "How is the MTM supporting research efforts?"
                 },
                 "video3": {
-                    "url": "https://www.youtube.com/embed/mkggjD0DKwY",
+                    "url": "https://www.youtube.com/embed/x5P45TynlgM",
                     "alt": "Malaria Threats Map: helping countries address critical threats for malaria control and elimination",
                     "title": "How is the MTM supporting countries?"
                 }

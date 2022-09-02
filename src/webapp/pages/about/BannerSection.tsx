@@ -6,6 +6,9 @@ import styled from "styled-components";
 
 const TitleContainer = styled(Container)`
     padding-top: 12vh;
+    @media (max-width: 425px) {
+        padding: 12vh 20px 0px 20px;
+    }
 `;
 
 const BannerSection = () => {
