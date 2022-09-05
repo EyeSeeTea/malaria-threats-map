@@ -124,6 +124,17 @@
                     "parasitemiaOnDay3": "Pourcentage de patients atteints de parasitémie au jour 3 (%)"
                 }
             },
+            "MolecularMarkerSection": {
+                "title": "Molecular marker studies",
+                "molecularMarkerOverTime": {
+                    "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
+                    "legendLabel": "Percentage of samples in one study where multiple copy numbers were detected:",
+                    "numStudies": "Number of Studies",
+                    "year": "Year",
+                    "chartTitle": "Percentage of samples in one study where validated or candidate",
+                    "chartSubtitle": "molecular markers of artemisinin resistance were detected:"
+                }
+            },
             "treatmentFilters": {
                 "title": "Filtrer les données"
             }

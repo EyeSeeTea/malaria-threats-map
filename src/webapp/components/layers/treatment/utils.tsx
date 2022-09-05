@@ -7,6 +7,7 @@ import * as R from "ramda";
 import { TREATMENT_FAILURE_STATUS } from "./TreatmentFailure/utils";
 import { DELAYED_PARASITE_CLEARANCE_STATUS } from "./DelayedParasiteClearance/utils";
 import { MOLECULAR_MARKER_STATUS } from "./MolecularMarkers/utils";
+import { MolecularMarkerStudy, TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 
 export const resolveMapTypeSymbols = (treatmentFilters: TreatmentFilters) => {
     switch (treatmentFilters.mapType) {
@@ -93,15 +94,20 @@ const resolveMolecularMarker = (value: number) => {
     return MOLECULAR_MARKER_STATUS.UNKNOWN;
 };
 
-function getByMostRecentYearAndMolecularMarker(group: any[]) {
-    const filteredStudies = filterByMostRecentYear(group);
-
-    const valueStudies = filteredStudies.map(study => {
+export function getMolecularMarkerStudies(studies: TreatmentStudy[]): MolecularMarkerStudy[] {
+    return studies.map(study => {
         const value = study.groupStudies.reduce((acc: number, item: any) => {
             return acc + (item.GENOTYPE === "WT" ? 0 : parseFloat(item.PROPORTION));
         }, 0);
         return { ...study, VALUE: value };
     });
+}
+
+function getByMostRecentYearAndMolecularMarker(group: any[]) {
+    const filteredStudies = filterByMostRecentYear(group);
+
+    const valueStudies = getMolecularMarkerStudies(filteredStudies);
+
     // We sort remaining records by RESISTANCE INTENSITY
     const filteredSortedStudies = R.sortBy(study => -study.VALUE, valueStudies);
     return {

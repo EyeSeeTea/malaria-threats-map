@@ -4,7 +4,7 @@ import { Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import Select from "react-select";
-import { TherapeuticEfficacy } from "./types";
+import { MolecularMarker, TherapeuticEfficacy } from "./types";
 import { useDashboards } from "./context/useDashboards";
 
 const countryContextOptions: Option<string>[] = [
@@ -35,7 +35,7 @@ const therapeuticEfficacyOptions: Option<TherapeuticEfficacy>[] = [
     },
 ];
 
-const molecularMarkerOptions: Option<string>[] = [
+const molecularMarkerOptions: Option<MolecularMarker>[] = [
     { label: i18next.t("common.dashboard.contentsSection.molecularResultsOptions.molecularMarker"), value: "all" },
     {
         label: i18next.t("common.dashboard.contentsSection.molecularResultsOptions.summaryMolecularMarker"),
@@ -65,7 +65,7 @@ export const ContentsFilterSection: React.FC = () => {
     );
 
     const handleMolecularChange = useCallback(
-        (option: Option<string>) => onMolecularMarkerChange(option.value),
+        (option: Option<MolecularMarker>) => onMolecularMarkerChange(option.value),
         [onMolecularMarkerChange]
     );
 

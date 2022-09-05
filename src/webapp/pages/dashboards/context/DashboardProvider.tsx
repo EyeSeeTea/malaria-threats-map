@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { DashboardsThemeOptions, TherapeuticEfficacy } from "../types";
+import { DashboardsThemeOptions, MolecularMarker, TherapeuticEfficacy } from "../types";
 import React from "react";
 import { selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
 import { fetchTreatmentStudiesRequest } from "../../../store/actions/treatment-actions";
@@ -33,7 +33,7 @@ const DashboardProvider: React.FC<Props> = ({
     const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
     const [countryContext, setCountryContext] = useState<string>("all");
     const [therapeuticEfficacy, setTherapeuticEfficacy] = useState<TherapeuticEfficacy>("all");
-    const [molecularMarker, setMolecularMarker] = useState<string>("all");
+    const [molecularMarker, setMolecularMarker] = useState<MolecularMarker>("all");
     const [dashboardsTreatmentStudies, setDashboardsTreatmentStudies] = useState<TreatmentStudy[]>(undefined);
     const [updatedDates, setUpdatedDates] = useState<LastUpdatedDates>({
         prevention: null,
@@ -81,7 +81,7 @@ interface DashboardState {
     selectedCountries: string[];
     countryContext: string;
     therapeuticEfficacy: string;
-    molecularMarker: string;
+    molecularMarker: MolecularMarker;
     treatmentStudies: TreatmentStudy[];
     dashboardsTreatmentStudies: TreatmentStudy[];
     updatedDates: LastUpdatedDates;
@@ -89,6 +89,6 @@ interface DashboardState {
     setSelectedCountries: Dispatch<SetStateAction<string[]>>;
     setCountryContext: Dispatch<SetStateAction<string>>;
     setTherapeuticEfficacy: Dispatch<SetStateAction<TherapeuticEfficacy>>;
-    setMolecularMarker: Dispatch<SetStateAction<string>>;
+    setMolecularMarker: Dispatch<SetStateAction<MolecularMarker>>;
     setDashboardsTreatmentStudies: Dispatch<SetStateAction<TreatmentStudy[]>>;
 }
