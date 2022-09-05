@@ -43,6 +43,27 @@
                 "diagnosis_subtitle": "Gene deletions among some malaria parasites cause false negative diagnostic test results, complicating case management and control."
             }
         },
+        "shareDataPage":{
+            "title":"Contribute to the Malaria Threats Map by sharing your <strong>data</strong>",
+            "section1":{
+                "title":"Contribute insecticide resistance data",
+                "description":"We invite data submissions from all individuals and organizations. Please report your data using the following forms and email the completed forms to us.",
+                "list":{
+                    "1": "Discriminating concentration bioassays",
+                    "2": "Intensity concentration bioassays",
+                    "3": "Synergist insecticide bioassays",
+                    "download": "Download"
+                }
+            },
+            "section2":{
+                "title":"Contribute <i>An. stephensi</i> detection data",
+                "description":"We invite data submissions from all individuals and organizations about An. stephensi detection outside of its native areas. Please report your data through the following form and send it to us."
+            },
+            "buttons":{
+                "send_data": "Send data to WHO by email",
+                "download_excel": "Download the Excel template"
+            }
+        },
         "footer": {
             "policies": {
                 "title": "Policies",

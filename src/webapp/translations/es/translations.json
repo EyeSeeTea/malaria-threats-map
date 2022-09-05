@@ -43,6 +43,27 @@
                 "diagnosis_subtitle": "Las deleciones de genes entre algunos parásitos de la malaria provocan resultados falsos negativos en las pruebas de diagnóstico, lo que complica la gestión y el control de los casos."
             }
         },
+        "shareDataPage":{
+            "title":"Contribuye al Mapa de Amenazas de la Malaria compartiendo tus <strong>datos</strong>",
+            "section1":{
+                "title":"Aportar datos sobre la resistencia a los insecticidas",
+                "description":"Invitamos a todas las personas y organizaciones a que envíen sus datos. Por favor, comunique sus datos utilizando los siguientes formularios y envíenoslos por correo electrónico.",
+                "list":{
+                    "1": "Bioensayos de concentración discriminante",
+                    "2": "Bioensayos de concentración de intensidad",
+                    "3": "Bioensayos de insecticidas sinérgicos",
+                    "download": "Descargar"
+                }
+            },
+            "section2":{
+                "title":"Aportar datos de detección de <i>An. stephensi</i>",
+                "description":"Invitamos a todas las personas y organizaciones a enviar datos sobre la detección de An. stephensi fuera de sus áreas nativas. Por favor, comunique sus datos a través del siguiente formulario y envíenoslo."
+            },
+            "buttons":{
+                "send_data": "Enviar datos a la OMS por correo electrónico",
+                "download_excel": "Descargar la plantilla de Excel"
+            }
+        },
         "footer": {
             "policies": {
                 "title": "Políticas",

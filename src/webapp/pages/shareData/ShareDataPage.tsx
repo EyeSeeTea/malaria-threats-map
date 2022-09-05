@@ -1,5 +1,6 @@
-import { Alert, Button, Container, Grid, Paper, Snackbar, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
 import React from "react";
+import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
 import Layout from "../layout/Layout";
 import HomepageMap from "../../assets/img/homepage-map.png";
@@ -9,57 +10,37 @@ import { selectFeedback } from "../../store/reducers/feedback-reducer";
 import { feedbackFieldChange, feedbackSubmit } from "../../store/actions/feedback-actions";
 import ShareDataChart from "../../assets/img/share-data-page/share-data-chart.png";
 import ContributeDataGraphic from "../../assets/img/share-data-page/contribute-data.png";
-import DownloadIcon from '@mui/icons-material/Download';
+import DownloadIcon from "@mui/icons-material/Download";
 
 const ImageBanner = styled.div`
     background: linear-gradient(90deg, #bbd7e8 0%, #bbd7e800 100%), url(${HomepageMap});
     background-position: right;
-    height: 50vh;
+    height: 25vh;
     min-height: 260px;
 `;
 
 const TitleContainer = styled(Container)`
-    padding-top: 10vh;
+    padding-top: 60px;
     font-weight: lighter;
-    font-size: 8vw;
-`;
-
-const RoundedPaper = styled(Paper)`
-    border-radius: 10px;
-    margin-top: -10vh;
-    margin-bottom: 100px;
-    padding: 10vmin;
-`;
-
-const SendButton = styled(Button)`
-    &.MuiButton-root {
-        color: white;
-        font-size: 18px;
-        background-color: black;
-        font-weight: bold;
-        width: 190px;
+    @media (max-width: 768px) {
+        padding-top: 5vh;
     }
 `;
-
-const StyledTextField = styled(TextField)`
-    .MuiInputBase-root {
-        background-color: #f7f7f7;
-        padding-bottom: 10px;
-    }
-`;
-
-
 const BlueStyledButton = styled(Button)`
     &.MuiButton-root {
         color: white;
         font-size: 18px;
-        background-color: #1899CC;
+        background-color: #1899cc;
         font-weight: bold;
-        max-width: 355px;
         margin-top: 16px;
+        padding: 6px 50px;
+        width: fit-content;
+        @media (max-width: 768px) {
+            font-size: 13px;
+            padding: 6px 20px;
+        }
     }
 `;
-
 
 const BlackStyledButton = styled(Button)`
     &.MuiButton-root {
@@ -67,14 +48,35 @@ const BlackStyledButton = styled(Button)`
         font-size: 18px;
         background-color: black;
         font-weight: bold;
-        max-width: 355px;
         margin-top: 16px;
+        @media (max-width: 768px) {
+            font-size: 13px;
+        }
     }
 `;
 
-const inputProps = {
-    disableUnderline: true,
-};
+const ShareDataChartImage = styled.img`
+    width: 80%;
+    height: auto;
+    z-index: 2;
+    /* @media (max-width: 768px) {
+        width: 90vw;
+    } */
+`;
+const ContributeDataImage = styled.img`
+    width: 70%;
+    height: auto;
+`;
+
+const ListLink = styled.a`
+    color: #08bbe1;
+    &:visited {
+        color: #08bbe1;
+    }
+    &:hover {
+        color: #1899cc;
+    }
+`;
 
 const mapStateToProps = (state: State) => ({
     feedback: selectFeedback(state),
@@ -89,67 +91,127 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = StateProps & DispatchProps;
 
-const ShareDataPage: React.FC<Props> = ({ feedback, submit, fieldChange }) => {
-    const handleFieldChange = React.useCallback(
-        (event: React.ChangeEvent<any>) => {
-            event.persist();
-
-            fieldChange({ prop: event.target.name, value: event.target.value });
-        },
-        [fieldChange]
-    );
+const ShareDataPage: React.FC<Props> = () => {
+    const { t } = useTranslation();
 
     return (
         <Layout>
             <ImageBanner>
                 <TitleContainer maxWidth="xl">
-                    <Typography variant="h2" component="h1" color="inherit" textTransform="uppercase">
-                        Contribute to the Malaria Threats Map by sharing your <strong>data</strong>
+                    <Typography
+                        variant="h2"
+                        component="h1"
+                        textTransform="uppercase"
+                        fontSize={{ xs: "30px", sm: "5vw", md: "4vw", lg: "3vw" }}
+                    >
+                        <Trans i18nKey="common.shareDataPage.title" t={t}>
+                            Contribute to the Malaria Threats Map by sharing your <strong>data</strong>
+                        </Trans>
                     </Typography>
                 </TitleContainer>
             </ImageBanner>
             <Container maxWidth="xl">
-                <Grid container rowSpacing={3} columnSpacing={2} sx={{ marginTop: 4 }}>
-                    <Grid item md={6} xs={12}>
-                    <Typography variant="h4" fontWeight="bold" color="inherit" marginBottom="25px">
-                    Contribute insecticide resistance data
-                    </Typography>
-                    <Typography variant="body1" color="inherit" marginBottom="25px">
-                    We invite data submissions from all individuals and organizations. Please report your data using the following forms and email the completed forms to us.
-                    </Typography>
-                    <ul>
-                        <li>Discriminating concentration bioassays <a href="#">Download</a></li>
-                        <li>Intensity concentration bioassays <a href="#">Download</a></li>
-                        <li>Synergist insecticide bioassays <a href="#">Download</a></li>
-                    </ul>
-                    <BlueStyledButton variant="contained" color="primary" href="#">Send data to WHO by email</BlueStyledButton>
+                <Grid container rowSpacing={7} columnSpacing={2} sx={{ marginTop: 4, marginBottom: 4 }}>
+                    <Grid item md={6} xs={12} display="flex" flexDirection={"column"} justifyContent="center">
+                        <Typography
+                            fontSize={{ xs: "30px", md: "40px" }}
+                            fontWeight="bold"
+                            marginBottom="25px"
+                            color="#343434"
+                        >
+                            {t("common.shareDataPage.section1.title")}
+                        </Typography>
+                        <Typography marginBottom="25px" fontSize={{ xs: "18px", md: "25px" }} maxWidth={"90%"}>
+                            {t("common.shareDataPage.section1.description")}
+                        </Typography>
+                        <ul>
+                            <li>
+                                <Typography fontSize={{ xs: "18px", md: "25px" }}>
+                                    {t("common.shareDataPage.section1.list.1")}{" "}
+                                    <ListLink href="#">{t("common.shareDataPage.section1.list.download")}</ListLink>
+                                </Typography>
+                            </li>
+                            <li>
+                                <Typography fontSize={{ xs: "18px", md: "25px" }}>
+                                    {t("common.shareDataPage.section1.list.2")}{" "}
+                                    <ListLink href="#">{t("common.shareDataPage.section1.list.download")}</ListLink>
+                                </Typography>
+                            </li>
+                            <li>
+                                <Typography fontSize={{ xs: "18px", md: "25px" }}>
+                                    {t("common.shareDataPage.section1.list.3")}{" "}
+                                    <ListLink href="#">{t("common.shareDataPage.section1.list.download")}</ListLink>
+                                </Typography>
+                            </li>
+                        </ul>
+                        <BlueStyledButton variant="contained" color="primary" href="#">
+                            {t("common.shareDataPage.buttons.send_data")}
+                        </BlueStyledButton>
                     </Grid>
-                            <Grid item md={6} xs={12} style={{backgroundColor: "#5CCDCE", borderRadius: "50%"}}>
-                                <img src={ShareDataChart} width={726} height={471} />
-                        </Grid>
-                            <Grid item md={6} xs={12}>
-                            <img src={ContributeDataGraphic} width={726} height={471} />
-                    
+                    <Grid item md={6} xs={12} display={"flex"} alignItems="center" justifyContent={"center"}>
+                        <Box
+                            borderRadius={"100%"}
+                            bgcolor="#5CCDCE"
+                            width={{ xs: "65vw", sm: "60vw", md: "40vw", lg: "500px" }}
+                            height={{ xs: "65vw", sm: "60vw", md: "40vw", lg: "500px" }}
+                            position="absolute"
+                        ></Box>
+                        <ShareDataChartImage src={ShareDataChart} alt="Share Data Chart" />
+                    </Grid>
+                    <Grid
+                        item
+                        md={6}
+                        xs={12}
+                        display={"flex"}
+                        alignItems="center"
+                        justifyContent={{ xs: "center", md: "flex-start" }}
+                        order={{ xs: 4, md: 3 }}
+                    >
+                        <ContributeDataImage src={ContributeDataGraphic} alt="Contribute Data Graphic" />
+                    </Grid>
+                    <Grid
+                        item
+                        md={6}
+                        xs={12}
+                        display="flex"
+                        flexDirection={"column"}
+                        justifyContent="center"
+                        order={{ xs: 3, md: 4 }}
+                    >
+                        <Typography
+                            fontWeight="bold"
+                            fontSize={{ xs: "30px", md: "40px" }}
+                            marginBottom="25px"
+                            width={"100%"}
+                            color="#343434"
+                        >
+                            <Trans i18nKey="common.shareDataPage.section2.title" t={t}>
+                                Contribute <i>An. stephensi</i> detection data
+                            </Trans>
+                        </Typography>
+                        <Typography fontSize={{ xs: "18px", md: "25px" }} marginBottom="25px" maxWidth={"90%"}>
+                            {t("common.shareDataPage.section2.description")}
+                        </Typography>
+                        <Grid width={"100%"}>
+                            <Grid item md={12} xs={12}>
+                                <BlackStyledButton
+                                    variant="contained"
+                                    color="primary"
+                                    href="#"
+                                    startIcon={<DownloadIcon />}
+                                >
+                                    {t("common.shareDataPage.buttons.download_excel")}
+                                </BlackStyledButton>
                             </Grid>
-                            <Grid item md={6} xs={12}>
-                                <Typography variant="h4" fontWeight="bold" color="inherit" marginBottom="25px">
-                                Contribute An. stephensi detection data
-                                </Typography>
-                                <Typography variant="body1" color="inherit" marginBottom="25px">
-                                We invite data submissions from all individuals and organizations about An. stephensi detection outside of its native areas. Please report your data through the following form and send it to us.                                
-                                </Typography>
-                                <Grid>
-                                    <Grid item md={12} xs={12}>
-                                        <BlueStyledButton variant="contained" color="primary" href="#">Send data to WHO by email</BlueStyledButton>
-                                    </Grid> 
-                                    <Grid item md={12} xs={12}>
-                                        <BlackStyledButton variant="contained" color="primary" href="#">
-                                        Download the Excel template</BlackStyledButton>
-                                    </Grid> 
-                                </Grid>
+                            <Grid item md={12} xs={12}>
+                                <BlueStyledButton variant="contained" color="primary" href="#">
+                                    {t("common.shareDataPage.buttons.send_data")}
+                                </BlueStyledButton>
                             </Grid>
                         </Grid>
-                </Container>
+                    </Grid>
+                </Grid>
+            </Container>
         </Layout>
     );
 };

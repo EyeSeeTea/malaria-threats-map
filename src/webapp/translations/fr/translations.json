@@ -43,6 +43,27 @@
                 "diagnosis_subtitle": "Les délétions de gènes chez certains parasites du paludisme entraînent des résultats de tests de diagnostic faussement négatifs, ce qui complique la gestion et le contrôle des cas."
             }
         },
+        "shareDataPage":{
+            "title":"Contribuez à la carte des menaces du paludisme en partageant vos <strong>données</strong>.",
+            "section1":{
+                "title":"Fournir des données sur la résistance aux insecticides",
+                "description":"Nous invitons les particuliers et les organisations à nous soumettre leurs données. Veuillez communiquer vos données en utilisant les formulaires suivants et nous envoyer les formulaires remplis par courriel.",
+                "list":{
+                    "1": "Essais biologiques à concentration discriminante",
+                    "2": "Tests biologiques d'intensité et de concentration",
+                    "3": "Essais biologiques d'insecticides synergistes",
+                    "download": "Télécharger"
+                }
+            },
+            "section2":{
+                "title":"Contribuer aux données de détection de <i>An. stephensi</i>.",
+                "description":"Nous invitons toutes les personnes et organisations à soumettre des données sur la détection d'An. stephensi en dehors de ses zones d'origine. Veuillez signaler vos données au moyen du formulaire suivant et nous les envoyer."
+            },
+            "buttons":{
+                "send_data": "Envoyez les données à l'OMS par courriel",
+                "download_excel": "Télécharger le modèle Excel"
+            }
+        },
         "footer": {
             "policies": {
                 "title": "Stratégies",
