@@ -13,7 +13,7 @@ const initialState: DiagnosisState = Object.freeze({
     filteredStudies: [],
     filters: {
         mapType: DiagnosisMapType.GENE_DELETIONS,
-        dataset: "DIAGNOSIS",
+        dataset: "PFHRP23_GENE_DELETIONS",
         deletionType: DELETION_TYPES.HRP2_PROPORTION_DELETION.value,
         surveyTypes: [],
         patientType: null,

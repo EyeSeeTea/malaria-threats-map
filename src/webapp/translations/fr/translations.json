@@ -478,6 +478,11 @@
                         "resistance_mechanism_assays_biochemical": "Résultats de l'identification des mécanismes de résistance biochimique"
                     }
                 },
+                "diagnosis": {
+                    "datasets": {
+                        "gene_deletions": "Délétion de pfhrp2/3 gènes"
+                    }
+                },
                 "treatment": {
                     "datasets": {
                         "therapeutic_efficacy_studies": "Résultats des études d'efficacité thérapeutique",
@@ -823,6 +828,30 @@
             "CITATION": "Citation de la publication où les données ont été publiées",
             "CITATION_URL": "URL de la publication où les données ont été publiées",
             "DATA_CURATOR": "Institut qui a compilé les données. Certaines des données de cette base de données ont été compilées par des institutions collaboratrices qui ont partagé leurs collections de données avec l'OMS. Cette colonne indiquera le nom de l'institution ou du groupe qui a compilé les données."
+        },
+        "diagnosis": {
+            "ID": "Unique identifier of the bioassay",
+            "COUNTRY_NAME": "Name of the country where the bioassay was conducted",
+            "ADMIN1": "Administrative level 1 where the mosquitoes where collected",
+            "ADMIN2": "Administrative level 2 where the mosquitoes where collected",
+            "SITE_NAME": "Site where the mosquitoes were collected",
+            "LATITUDE": "Latitude of the site where the mosquitoes were collected",
+            "LONGITUDE": "Longitude of the site where the mosquitoes were collected",
+            "YEAR_START": "Year when the mosquito collection started",
+            "SURVEY_TYPE": "",
+            "PATIENT_TYPE": "",
+            "HRP2_TESTED": "",
+            "HRP2_PROPORTION_DELETION": "",
+            "HRP3_TESTED": "",
+            "HRP3_PROPORTION_DELETION": "",
+            "HRP2_HRP3_TESTED": "",
+            "HRP2_HRP3_PROPORTION_DELETION": "",
+            "DELETETION_STATUS": "",
+            "SAMPLE_ORIGIN": "",
+            "PF_POS_SAMPLES": "",
+            "TYPE_SAMPL_ANALYZED": "",
+            "CITATION": "Citation of the publication where the data was published",
+            "CITATION_URL": "URL of the publication where the data was published"
         }
     },
     "invasiveStory": {

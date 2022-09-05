@@ -70,8 +70,8 @@ export const treatmentDatasetSuggestions: ListSelectorItem[] = [
 
 export const diagnosisDatasetSuggestions: ListSelectorItem[] = [
     {
-        title: "common.data_download.filters.diagnosis.datasets.diagnosis",
-        value: "DIAGNOSIS",
+        title: "common.data_download.filters.diagnosis.datasets.gene_deletions",
+        value: "PFHRP23_GENE_DELETIONS",
     },
 ];
 
@@ -81,8 +81,6 @@ export const invasiveDatasetSuggestions: ListSelectorItem[] = [
         value: "INVASIVE_VECTOR_SPECIES",
     },
 ];
-
-export const diagnosiseDatasetSuggestions: ListSelectorItem[] = [];
 
 function DataSetSelector({
     theme,
