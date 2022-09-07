@@ -23,3 +23,8 @@ interface Field {
     alias: string;
     length: number;
 }
+
+export interface XMartApiResponse<T> {
+    "@odata.context": string;
+    value: T[];
+}
