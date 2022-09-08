@@ -103,6 +103,30 @@
                     "summaryMolecularMarker": "Resumen de los resultados del estudio de marcadores moleculares a lo largo del tiempo"
                 }
             },
+            "countryContextSection": {
+                "title": "Country Context",
+                "epidemiologicalProfile": {
+                    "title": "EPIDEMIOLOGICAL PROFILE",
+                    "country": "Country",
+                    "year": "year",
+                    "transmission": " Population living in high transmission, low transmission and malaria-free areas",
+                    "burdenEstimates": "Burden estimates",
+                    "highTransmission": "High transmission",
+                    "moreThanOneCase": "(>1 case per 1000 population)",
+                    "lowTransmission": "Low transmission",
+                    "lessOrEqualtoOneCase": "(0-1 case per 1000 population)",
+                    "malariaFree": "Malaria-free",
+                    "zeroCases": "(0 cases)",
+                    "estimatedCases": "Estimated cases",
+                    "estimatedDeaths": "Estimated deaths"
+                },
+                "majorPlamociumSpecies": {
+                    "title": "MAJOR PLASMODIUM SPECIES AND TREATMENT REGIMEN",
+                    "country": "Country",
+                    "species": "Major Plasmodium species (%)",
+                    "firstLineTreatments": "1st line treatments for uncomplicated malaria"
+                }
+            },
             "therapeuticEfficacySection": {
                 "title": "Estudios de eficacia terapéutica (EET)",
                 "numStudies": "Los filtros aplicados producen {{count}} estudios",
