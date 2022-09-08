@@ -8,7 +8,7 @@ export class InvasiveApiRepository implements InvasiveRepository {
     constructor(private baseUrl: string) {}
 
     getStudies(): FutureData<InvasiveStudy[]> {
-        const url = "https://frontdoor-r5quteqglawbs.azurefd.net/VECTORS_IR/FACT_INVASIVE_SPECIES_LEGACY";
+        const url = this.baseUrl + "/FACT_INVASIVE_SPECIES_LEGACY";
 
         return request<XMartApiResponse<InvasiveStudy>>({ url }).map(response => response.value);
     }
