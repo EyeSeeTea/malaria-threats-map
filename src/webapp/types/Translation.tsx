@@ -5,11 +5,6 @@ export interface TranslationResponse {
     fields: Field[];
 }
 
-export interface TranslationXMartResponse {
-    "@odata.context": string;
-    value: Translation[];
-}
-
 interface TranslationFeature {
     attributes: Translation;
 }

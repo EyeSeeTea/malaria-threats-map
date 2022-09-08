@@ -4,7 +4,8 @@ import * as ajax from "../../store/ajax";
 import { Observable, of } from "rxjs";
 import { catchError, mergeMap, switchMap } from "rxjs/operators";
 import { AjaxError } from "rxjs/ajax";
-import { TranslationResponse, TranslationXMartResponse } from "../../types/Translation";
+import { TranslationResponse, Translation } from "../../types/Translation";
+import { XMartApiResponse } from "../../../data/common/types";
 import {
     fetchTranslationsErrorAction,
     fetchTranslationsRequestAction,
@@ -17,8 +18,8 @@ export const getTranslationsEpic = (action$: Observable<ActionType<typeof fetchT
         ofType(ActionTypeEnum.FetchTranslationsRequest),
         switchMap(() => {
             const url = ajax.cacheCircunvent("https://frontdoor-r5quteqglawbs.azurefd.net/VECTORS_IR/TRANSLATIONS");
-            return ajax.getUrl<TranslationXMartResponse>(url).pipe(
-                mergeMap((response: TranslationXMartResponse) => {
+            return ajax.getUrl<XMartApiResponse<Translation>>(url).pipe(
+                mergeMap((response: XMartApiResponse<Translation>) => {
                     const oldResponse = {
                         displayFieldName: "",
                         fields: [],
