@@ -1,9 +1,10 @@
 import React from "react";
-import { Trans, useTranslation } from "react-i18next";
-import { Card, IconButton, Link, Stack, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { Card, Stack, Tooltip, tooltipClasses, TooltipProps, Typography } from "@mui/material";
 import styled from "styled-components";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useCountryContextData } from "./context/useCountryContextData";
+import CountryContextSource from "./CountryContextSource";
 
 const numberFormatter = Intl.NumberFormat("en", { notation: "compact", maximumFractionDigits: 1 });
 
@@ -64,7 +65,7 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                                 </SubHeadText>
                             </th>
                             <th>
-                                <Stack direction="row">
+                                <Stack direction="row" alignItems="center">
                                     <Stack direction="column">
                                         <SubHeadText align="left">
                                             {t(
@@ -77,9 +78,24 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                                             )}
                                         </SubHeadText>
                                     </Stack>
-                                    <IconButton>
-                                        <HelpOutlineIcon />
-                                    </IconButton>
+                                    <HtmlTooltip
+                                        open={true}
+                                        title={
+                                            <React.Fragment>
+                                                <Typography variant="body2" fontWeight="bold" sx={{ marginBottom: 2 }}>
+                                                    Malaria-free
+                                                </Typography>
+                                                <Typography variant="body2">
+                                                    An area in which there is no continuing local mosquito borne malaria
+                                                    transmission and the risk for acquiring malaria is limited to
+                                                    infection from introduced cases.
+                                                </Typography>
+                                            </React.Fragment>
+                                        }
+                                        arrow
+                                    >
+                                        <InfoOutlinedIcon />
+                                    </HtmlTooltip>
                                 </Stack>
                             </th>
                             <th>
@@ -112,11 +128,13 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                                     </td>
                                     <td>
                                         <CellText>{`${numberFormatter.format(
-                                            item.MAL_CALC_POP_AT_RISK_LOW_HIGH
+                                            item.MAL_CALC_POP_AT_RISK_LOW_HIGH - item.MAL_CALC_POP_AT_RISK_HIGH
                                         )} (?%)`}</CellText>
                                     </td>
                                     <td>
-                                        <CellText>{`${numberFormatter.format(item.MAL_POP_UN)} (?%)`}</CellText>
+                                        <CellText>{`${numberFormatter.format(
+                                            item.MAL_POP_UN - item.MAL_CALC_POP_AT_RISK_LOW_HIGH
+                                        )} (?%)`}</CellText>
                                     </td>
                                     <td>
                                         <CellText>{`${numberFormatter.format(
@@ -137,12 +155,7 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                         })}
                     </tbody>
                 </Table>
-                <Trans i18nKey="" t={t}>
-                    {"Source: "}
-                    <Link href="#" color="blue">
-                        {"Who World malaria report 2021"}
-                    </Link>
-                </Trans>
+                <CountryContextSource />
             </DasboardCard>
         </React.Fragment>
     );
@@ -161,6 +174,23 @@ const Title = styled.h3`
     color: #2ba681;
     text-transform: uppercase;
 `;
+
+const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: "white",
+        color: "black",
+        maxWidth: 300,
+        padding: "16px",
+        borderRadius: "10px",
+        boxShadow: "0px 4px 8px #00000080",
+    },
+    [`& .${tooltipClasses.arrow}:before `]: {
+        backgroundColor: "white",
+        boxShadow: "0px 4px 8px #00000080",
+    },
+}));
 
 const HeadText = styled(Typography)`
     font-size: 16px;

@@ -105,6 +105,8 @@
             },
             "countryContextSection": {
                 "title": "Country Context",
+                "source": "Source:",
+                "whoWorldMalariaReport": "Who World malaria report 2021",
                 "epidemiologicalProfile": {
                     "title": "EPIDEMIOLOGICAL PROFILE",
                     "country": "Country",

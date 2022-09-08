@@ -1,8 +1,9 @@
 import React from "react";
-import { Trans, useTranslation } from "react-i18next";
-import { Card, Link, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { Card, Typography } from "@mui/material";
 import styled from "styled-components";
 import { useCountryContextData } from "./context/useCountryContextData";
+import CountryContextSource from "./CountryContextSource";
 
 const MajorPlamociumSpeciesDashboard: React.FC = () => {
     const { t } = useTranslation();
@@ -28,7 +29,7 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
                                 <React.Fragment key={item.ORGANISATIONUNITNAME}>
                                     <tr>
                                         <td rowSpan={2}>{item.ORGANISATIONUNITNAME}</td>
-                                        <td>{`P. falciparum (?%)`}</td>
+                                        <td>{`P. falciparum (${(item.MAL_CALC_PERPF * 100).toFixed()}%)`}</td>
                                         <td>
                                             {item.MAL_PROFILE_MEDICINE_FOR_1ST_LINE_TRT_OF_PF &&
                                                 item.MAL_PROFILE_MEDICINE_FOR_1ST_LINE_TRT_OF_PF.split("; ").map(
@@ -43,7 +44,7 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>{`P. vivax (?%)`}</td>
+                                        <td>{`P. vivax (${(item.MAL_CALC_PERPV * 100).toFixed()}%)`}</td>
                                         <td>
                                             {item.MAL_PROFILE_MEDICINE_FOR_TRT_OF_PVIVAX &&
                                                 item.MAL_PROFILE_MEDICINE_FOR_TRT_OF_PVIVAX.split(";").map(drug => {
@@ -60,12 +61,7 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
                         })}
                     </tbody>
                 </Table>
-                <Trans i18nKey="" t={t}>
-                    {"Source: "}
-                    <Link href="#" color="blue">
-                        {"Who World malaria report 2021"}
-                    </Link>
-                </Trans>
+                <CountryContextSource />
             </DasboardCard>
         </React.Fragment>
     );

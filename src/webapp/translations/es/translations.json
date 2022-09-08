@@ -104,27 +104,27 @@
                 }
             },
             "countryContextSection": {
-                "title": "Country Context",
+                "title": "Contexto del país",
                 "epidemiologicalProfile": {
-                    "title": "EPIDEMIOLOGICAL PROFILE",
-                    "country": "Country",
-                    "year": "year",
-                    "transmission": " Population living in high transmission, low transmission and malaria-free areas",
-                    "burdenEstimates": "Burden estimates",
-                    "highTransmission": "High transmission",
-                    "moreThanOneCase": "(>1 case per 1000 population)",
-                    "lowTransmission": "Low transmission",
-                    "lessOrEqualtoOneCase": "(0-1 case per 1000 population)",
-                    "malariaFree": "Malaria-free",
-                    "zeroCases": "(0 cases)",
-                    "estimatedCases": "Estimated cases",
-                    "estimatedDeaths": "Estimated deaths"
+                    "title": "PERFIL EPIDEMIOLÓGICO",
+                    "country": "País",
+                    "year": "Año",
+                    "transmission": "Población que vive en áreas de alta transmisión, baja transmisión y libres de malaria",
+                    "burdenEstimates": "Estimaciones de carga",
+                    "highTransmission": "Alta transmisión",
+                    "moreThanOneCase": "(>1 caso por cada 1000 habitantes)",
+                    "lowTransmission": "Transmisión baja",
+                    "lessOrEqualtoOneCase": "(0-1 caso por 1000 habitantes)",
+                    "malariaFree": "Libre de malaria",
+                    "zeroCases": "(0 casos)",
+                    "estimatedCases": "Casos estimados",
+                    "estimatedDeaths": "Muertes estimadas"
                 },
                 "majorPlamociumSpecies": {
-                    "title": "MAJOR PLASMODIUM SPECIES AND TREATMENT REGIMEN",
-                    "country": "Country",
-                    "species": "Major Plasmodium species (%)",
-                    "firstLineTreatments": "1st line treatments for uncomplicated malaria"
+                    "title": "PRINCIPALES ESPECIES DE PLASMODIUM Y RÉGIMEN DE TRATAMIENTO",
+                    "country": "País",
+                    "species": "Especies principales de Plasmodium (%)",
+                    "firstLineTreatments": "Tratamientos de primera línea para la malaria sin complicaciones"
                 }
             },
             "therapeuticEfficacySection": {
