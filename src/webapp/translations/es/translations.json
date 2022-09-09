@@ -85,25 +85,25 @@
                 },
                 "note": "Nota: Se necesita un gran número de puntos de datos para crear un cuadro de mando. Por esta razón, los tableros sólo están disponibles para dos de los cuatro temas: la resistencia a los insecticidas vectoriales y la eficacia y resistencia a los medicamentos antipalúdicos. Los cuadros de mando seguirán desarrollándose a medida que se disponga de más datos."
             },
-            "contentsSection": {
+            "dashboardsFilterSection": {
                 "title": "Contenidos:",
-                "countryOptions": {
+                "countryContextOptions": {
                     "countryContext": "Contexto del país",
                     "epidemiologicalProfile": "Perfil epidemiológico",
                     "majorPlasmodium": "Principales especies de Plasmodium y régimen de tratamiento"
                 },
-                "therapeuticResultsOptions": {
+                "therapeuticEfficacyOptions": {
                     "therapeuticEfficacy": "Resultados del estudio de eficacia terapéutica",
                     "summaryTreatmentFailures": "Resumen de las tasas de fracaso del tratamiento por fármaco",
                     "treatmentFailureRates": "Tasas de fracaso del tratamiento a lo largo del tiempo",
                     "parasiteClearanceRates": "Índices de eliminación de parásitos a lo largo del tiempo"
                 },
-                "molecularResultsOptions": {
+                "molecularMarkerOptions": {
                     "molecularMarker": "Resultados del estudio de marcadores moleculares",
                     "summaryMolecularMarker": "Resumen de los resultados del estudio de marcadores moleculares a lo largo del tiempo"
                 }
             },
-            "countryContextSection": {
+            "countryContextDashboards": {
                 "title": "Contexto del país",
                 "epidemiologicalProfile": {
                     "title": "PERFIL EPIDEMIOLÓGICO",
@@ -127,7 +127,7 @@
                     "firstLineTreatments": "Tratamientos de primera línea para la malaria sin complicaciones"
                 }
             },
-            "therapeuticEfficacySection": {
+            "therapeuticEfficacyDashboards": {
                 "title": "Estudios de eficacia terapéutica (EET)",
                 "numStudies": "Los filtros aplicados producen {{count}} estudios",
                 "treatmentFailureByDrug": {
@@ -148,7 +148,7 @@
                     "parasitemiaOnDay3": "Porcentaje de pacientes con parasitemia en el día 3 (%)"
                 }
             },
-            "MolecularMarkerSection": {
+            "molecularMarkerDashboards": {
                 "title": "Molecular marker studies",
                 "molecularMarkerOverTime": {
                     "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",

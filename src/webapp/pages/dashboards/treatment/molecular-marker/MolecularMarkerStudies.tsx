@@ -15,7 +15,7 @@ const MolecularMarkerStudies: React.FC<MolecularMarkerStudiesProps> = ({ molecul
     return (
         <Container>
             <TitleDivider />
-            <Title>{t("common.dashboard.MolecularMarkerSection.title")}</Title>
+            <Title>{t("common.dashboard.molecularMarkerDashboards.title")}</Title>
             {(molecularMarker === "all" || molecularMarker === "summary-molecular-marker") && (
                 <MolecularMarkerDashboard />
             )}

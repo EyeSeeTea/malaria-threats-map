@@ -12,14 +12,16 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
     return (
         <React.Fragment>
             <DasboardCard>
-                <Title>{t("common.dashboard.countryContextSection.majorPlamociumSpecies.title")}</Title>
+                <Title>{t("common.dashboard.countryContextDashboards.majorPlamociumSpecies.title")}</Title>
                 <Table>
                     <thead>
                         <tr>
-                            <th> {t("common.dashboard.countryContextSection.majorPlamociumSpecies.country")}</th>
-                            <th>{t("common.dashboard.countryContextSection.majorPlamociumSpecies.species")}</th>
+                            <th> {t("common.dashboard.countryContextDashboards.majorPlamociumSpecies.country")}</th>
+                            <th>{t("common.dashboard.countryContextDashboards.majorPlamociumSpecies.species")}</th>
                             <th>
-                                {t("common.dashboard.countryContextSection.majorPlamociumSpecies.firstLineTreatments")}
+                                {t(
+                                    "common.dashboard.countryContextDashboards.majorPlamociumSpecies.firstLineTreatments"
+                                )}
                             </th>
                         </tr>
                     </thead>

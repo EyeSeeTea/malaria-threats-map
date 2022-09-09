@@ -31,7 +31,7 @@ const MolecularMarkerDashboard: React.FC = () => {
     return (
         <TreatmentFilterableDashboard
             isMolecularMarkerChart={true}
-            title={t("common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.title")}
+            title={t("common.dashboard.molecularMarkerDashboards.molecularMarkerOverTime.title")}
             drugsMultiple={true}
             drugsClearable={true}
             filteredStudiesForDrugs={filteredStudiesForDrugs}
@@ -78,7 +78,7 @@ function chartOptions(years: number[], series: MolecularChartSerie[]): Highchart
         title: {
             useHTML: true,
             text: `<span style="width:100px;">${i18next.t(
-                "common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.chartTitle"
+                "common.dashboard.molecularMarkerDashboards.molecularMarkerOverTime.chartTitle"
             )}</span>`,
             align: "center",
             style: {
@@ -91,7 +91,7 @@ function chartOptions(years: number[], series: MolecularChartSerie[]): Highchart
         subtitle: {
             useHTML: true,
             text: `<span style="width:100px;">${i18next.t(
-                "common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.chartSubtitle"
+                "common.dashboard.molecularMarkerDashboards.molecularMarkerOverTime.chartSubtitle"
             )}</span>`,
             align: "center",
             style: {
@@ -104,7 +104,7 @@ function chartOptions(years: number[], series: MolecularChartSerie[]): Highchart
         xAxis: {
             categories: years.map(year => year.toString()),
             title: {
-                text: i18next.t("common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.year"),
+                text: i18next.t("common.dashboard.molecularMarkerDashboards.molecularMarkerOverTime.year"),
                 style: {
                     fontWeight: "bold",
                     color: "black",
@@ -116,7 +116,7 @@ function chartOptions(years: number[], series: MolecularChartSerie[]): Highchart
         yAxis: {
             min: 0,
             title: {
-                text: i18next.t("common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.numStudies"),
+                text: i18next.t("common.dashboard.molecularMarkerDashboards.molecularMarkerOverTime.numStudies"),
                 style: {
                     fontWeight: "bold",
                     color: "black",

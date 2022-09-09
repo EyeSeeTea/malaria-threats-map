@@ -16,7 +16,7 @@ const TreatmentEfficacyStudies: React.FC<TreatmentEfficacyStudiesProps> = ({ the
     return (
         <Container>
             <TitleDivider />
-            <Title>{t("common.dashboard.therapeuticEfficacySection.title")}</Title>
+            <Title>{t("common.dashboard.therapeuticEfficacyDashboards.title")}</Title>
             {(therapeuticEfficacy === "all" || therapeuticEfficacy === "summary-treatment-failures") && (
                 <TreatmentFailureByDrugDashboard />
             )}

@@ -5,13 +5,14 @@ import ContentsFilterSection from "./ContentsFilterSection";
 import TreatmentEfficacyStudies from "./therapeutic-efficacy/TreatmentEfficacyStudies";
 import { useDashboards } from "../context/useDashboards";
 import MolecularMarkerStudies from "./molecular-marker/MolecularMarkerStudies";
-import CountryContextStudies from "./country-context/CountryContextStudies";
-import { MolecularMarker, TherapeuticEfficacy, TreatmentCountryContext } from "./types";
+import CountryContextStudies from "../common/country-context/CountryContextStudies";
+import { MolecularMarker, TherapeuticEfficacy } from "./types";
+import { CountryContext } from "../types";
 
 const TreatmentDashboards: React.FC = () => {
     const { dashboardsTreatmentStudies } = useDashboards();
 
-    const [countryContext, setCountryContext] = React.useState<TreatmentCountryContext>("all");
+    const [countryContext, setCountryContext] = React.useState<CountryContext>("all");
     const [therapeuticEfficacy, setTherapeuticEfficacy] = React.useState<TherapeuticEfficacy>("all");
     const [molecularMarker, setMolecularMarker] = React.useState<MolecularMarker>("all");
 

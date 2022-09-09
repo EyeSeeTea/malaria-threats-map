@@ -40,8 +40,8 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
             chartComponentRef={chartComponentRef}
             title={
                 type === "treatmentFailure"
-                    ? t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.title")
-                    : t("common.dashboard.therapeuticEfficacySection.parasiteClearanceOverTime.title")
+                    ? t("common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.title")
+                    : t("common.dashboard.therapeuticEfficacyDashboards.parasiteClearanceOverTime.title")
             }
             drugsMultiple={false}
             drugsClearable={false}
@@ -88,7 +88,9 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
         title: {
             useHTML: true,
             text: `<div style="display: flex;flex-direction: row;align-items: center;"> 
-                    ${i18next.t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.numberPatients")} 
+                    ${i18next.t(
+                        "common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.numberPatients"
+                    )} 
                     <img width="100px" src=${BubbleChartHelpImage} alt='' />
                    </div>`,
             align: "right",
@@ -104,7 +106,7 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
         xAxis: {
             gridLineWidth: 1,
             title: {
-                text: i18next.t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.year"),
+                text: i18next.t("common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.year"),
                 margin: 20,
                 style: {
                     fontSize: "14px",
@@ -121,10 +123,10 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
                 text:
                     type === "treatmentFailure"
                         ? i18next.t(
-                              "common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.treatmentFailure"
+                              "common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.treatmentFailure"
                           )
                         : i18next.t(
-                              "common.dashboard.therapeuticEfficacySection.parasiteClearanceOverTime.parasitemiaOnDay3"
+                              "common.dashboard.therapeuticEfficacyDashboards.parasiteClearanceOverTime.parasitemiaOnDay3"
                           ),
                 margin: 40,
                 style: {

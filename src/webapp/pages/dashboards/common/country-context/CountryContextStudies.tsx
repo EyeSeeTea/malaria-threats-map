@@ -2,13 +2,13 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
-import { TreatmentCountryContext } from "../types";
+import { CountryContext } from "../../types";
 import CountryContextDataProvider from "./context/CountryContextDataProvider";
 import MolecularMarkerDashboard from "./EpidemiologicalProfileDashboard";
 import MajorPlamociumSpeciesDashboard from "./MajorPlamociumSpeciesDashboard";
 
 interface CountryContextStudiesProps {
-    countryContext: TreatmentCountryContext;
+    countryContext: CountryContext;
 }
 
 const CountryContextStudies: React.FC<CountryContextStudiesProps> = ({ countryContext }) => {
@@ -18,7 +18,7 @@ const CountryContextStudies: React.FC<CountryContextStudiesProps> = ({ countryCo
         <CountryContextDataProvider>
             <Container>
                 <TitleDivider />
-                <Title>{t("common.dashboard.countryContextSection.title")}</Title>
+                <Title>{t("common.dashboard.countryContextDashboards.title")}</Title>
                 {(countryContext === "all" || countryContext === "epidemiological-profile") && (
                     <MolecularMarkerDashboard />
                 )}
