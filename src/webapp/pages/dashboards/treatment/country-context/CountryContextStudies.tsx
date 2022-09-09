@@ -30,7 +30,7 @@ const CountryContextStudies: React.FC<CountryContextStudiesProps> = ({ countryCo
     );
 };
 
-export default CountryContextStudies;
+export default React.memo(CountryContextStudies);
 
 const TitleDivider = styled.div`
     height: 4px;
