@@ -70,7 +70,6 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
 export default MajorPlamociumSpeciesDashboard;
 
 const DasboardCard = styled(Card)`
-    min-height: 500px;
     padding: 16px 42px;
 `;
 

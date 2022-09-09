@@ -79,7 +79,6 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                                         </SubHeadText>
                                     </Stack>
                                     <HtmlTooltip
-                                        open={true}
                                         title={
                                             <React.Fragment>
                                                 <Typography variant="body2" fontWeight="bold" sx={{ marginBottom: 2 }}>
