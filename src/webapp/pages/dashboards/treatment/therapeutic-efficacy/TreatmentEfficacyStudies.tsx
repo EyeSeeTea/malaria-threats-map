@@ -2,13 +2,16 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
-import { useDashboards } from "../../context/useDashboards";
+import { TherapeuticEfficacy } from "../types";
 import TreatmentFailureByDrugDashboard from "./TreatmentFailureByDrugDashboard";
 import TreatmentOverTimeDashboard from "./TreatmentOverTimeDashboard";
 
-const TreatmentEfficacyStudies: React.FC = () => {
+interface TreatmentEfficacyStudiesProps {
+    therapeuticEfficacy: TherapeuticEfficacy;
+}
+
+const TreatmentEfficacyStudies: React.FC<TreatmentEfficacyStudiesProps> = ({ therapeuticEfficacy }) => {
     const { t } = useTranslation();
-    const { therapeuticEfficacy } = useDashboards();
 
     return (
         <Container>

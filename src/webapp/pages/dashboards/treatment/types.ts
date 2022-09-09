@@ -1,0 +1,9 @@
+export type TherapeuticEfficacy =
+    | "all"
+    | "summary-treatment-failures"
+    | "treatment-failure-rates"
+    | "parasite-clearance-rates";
+
+export type MolecularMarker = "all" | "summary-molecular-marker";
+
+export type TreatmentCountryContext = "all" | "epidemiological-profile" | "major-plasmodium";

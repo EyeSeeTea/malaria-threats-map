@@ -4,10 +4,9 @@ import { Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import Select from "react-select";
-import { CountryContext, MolecularMarker, TherapeuticEfficacy } from "./types";
-import { useDashboards } from "./context/useDashboards";
+import { MolecularMarker, TherapeuticEfficacy, TreatmentCountryContext } from "./types";
 
-const countryContextOptions: Option<CountryContext>[] = [
+const countryContextOptions: Option<TreatmentCountryContext>[] = [
     { label: i18next.t("common.dashboard.contentsSection.countryOptions.countryContext"), value: "all" },
     {
         label: i18next.t("common.dashboard.contentsSection.countryOptions.epidemiologicalProfile"),
@@ -43,19 +42,27 @@ const molecularMarkerOptions: Option<MolecularMarker>[] = [
     },
 ];
 
-export const ContentsFilterSection: React.FC = () => {
+interface ContentsFilterSectionProps {
+    countryContext: TreatmentCountryContext;
+    therapeuticEfficacy: TherapeuticEfficacy;
+    molecularMarker: MolecularMarker;
+    onCountryContextChange: (value: TreatmentCountryContext) => void;
+    onTherapeuticEfficacyChange: (value: TherapeuticEfficacy) => void;
+    onMolecularMarkerChange: (value: MolecularMarker) => void;
+}
+
+export const ContentsFilterSection: React.FC<ContentsFilterSectionProps> = ({
+    countryContext,
+    therapeuticEfficacy,
+    molecularMarker,
+    onCountryContextChange,
+    onTherapeuticEfficacyChange,
+    onMolecularMarkerChange,
+}) => {
     const { t } = useTranslation();
-    const {
-        countryContext,
-        therapeuticEfficacy,
-        molecularMarker,
-        onCountryContextChange,
-        onTherapeuticEfficacyChange,
-        onMolecularMarkerChange,
-    } = useDashboards();
 
     const handleCountryContextChange = useCallback(
-        (option: Option<CountryContext>) => onCountryContextChange(option.value),
+        (option: Option<TreatmentCountryContext>) => onCountryContextChange(option.value),
         [onCountryContextChange]
     );
 

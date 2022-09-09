@@ -2,12 +2,15 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
-import { useDashboards } from "../../context/useDashboards";
+import { MolecularMarker } from "../types";
 import MolecularMarkerDashboard from "./MolecularMarkerOverTimeDashboard";
 
-const MolecularMarkerStudies: React.FC = () => {
+interface MolecularMarkerStudiesProps {
+    molecularMarker: MolecularMarker;
+}
+
+const MolecularMarkerStudies: React.FC<MolecularMarkerStudiesProps> = ({ molecularMarker }) => {
     const { t } = useTranslation();
-    const { molecularMarker } = useDashboards();
 
     return (
         <Container>

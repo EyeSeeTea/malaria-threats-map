@@ -2,14 +2,17 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
-import { useDashboards } from "../../context/useDashboards";
+import { TreatmentCountryContext } from "../types";
 import CountryContextDataProvider from "./context/CountryContextDataProvider";
 import MolecularMarkerDashboard from "./EpidemiologicalProfileDashboard";
 import MajorPlamociumSpeciesDashboard from "./MajorPlamociumSpeciesDashboard";
 
-const CountryContextStudies: React.FC = () => {
+interface CountryContextStudiesProps {
+    countryContext: TreatmentCountryContext;
+}
+
+const CountryContextStudies: React.FC<CountryContextStudiesProps> = ({ countryContext }) => {
     const { t } = useTranslation();
-    const { countryContext } = useDashboards();
 
     return (
         <CountryContextDataProvider>
