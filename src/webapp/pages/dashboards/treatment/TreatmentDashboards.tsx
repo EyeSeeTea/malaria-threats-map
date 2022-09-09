@@ -10,7 +10,7 @@ import { MolecularMarker, TherapeuticEfficacy } from "./types";
 import { CountryContext } from "../types";
 
 const TreatmentDashboards: React.FC = () => {
-    const { dashboardsTreatmentStudies } = useDashboards();
+    const { dashboardsTreatmentStudies, theme } = useDashboards();
 
     const [countryContext, setCountryContext] = React.useState<CountryContext>("all");
     const [therapeuticEfficacy, setTherapeuticEfficacy] = React.useState<TherapeuticEfficacy>("all");
@@ -31,7 +31,7 @@ const TreatmentDashboards: React.FC = () => {
             <DashboardSection>
                 {dashboardsTreatmentStudies && (
                     <Container maxWidth="xl">
-                        <CountryContextStudies countryContext={countryContext} />
+                        <CountryContextStudies countryContext={countryContext} theme={theme} />
                     </Container>
                 )}
             </DashboardSection>

@@ -2,16 +2,20 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
-import { CountryContext } from "../../types";
+import { CountryContext, DashboardsThemeOptions } from "../../types";
 import CountryContextDataProvider from "./context/CountryContextDataProvider";
-import MolecularMarkerDashboard from "./EpidemiologicalProfileDashboard";
+import EpidemiologicalProfileDashboard from "./EpidemiologicalProfileDashboard";
 import MajorPlamociumSpeciesDashboard from "./MajorPlamociumSpeciesDashboard";
 
-interface CountryContextStudiesProps {
+interface CountryContextDashboardProps {
     countryContext: CountryContext;
 }
 
-const CountryContextStudies: React.FC<CountryContextStudiesProps> = ({ countryContext }) => {
+interface CountryContextStudiesProps extends CountryContextDashboardProps {
+    theme: DashboardsThemeOptions;
+}
+
+const CountryContextStudies: React.FC<CountryContextStudiesProps> = ({ countryContext, theme }) => {
     const { t } = useTranslation();
 
     return (
@@ -19,11 +23,10 @@ const CountryContextStudies: React.FC<CountryContextStudiesProps> = ({ countryCo
             <Container>
                 <TitleDivider />
                 <Title>{t("common.dashboard.countryContextDashboards.title")}</Title>
-                {(countryContext === "all" || countryContext === "epidemiological-profile") && (
-                    <MolecularMarkerDashboard />
-                )}
-                {(countryContext === "all" || countryContext === "major-plasmodium") && (
-                    <MajorPlamociumSpeciesDashboard />
+                {theme === "prevention" ? (
+                    <PreventionCountryContextDashboards countryContext={countryContext} />
+                ) : (
+                    <TreatmentCountryContextDashboards countryContext={countryContext} />
                 )}
             </Container>
         </CountryContextDataProvider>
@@ -45,3 +48,28 @@ const Title = styled.h2`
     margin-bottom: 30px;
     color: #636463;
 `;
+
+const PreventionCountryContextDashboards: React.FC<CountryContextDashboardProps> = ({ countryContext }) => {
+    const { t } = useTranslation();
+
+    return (
+        <React.Fragment>
+            {(countryContext === "all" || countryContext === "epidemiological-profile") && (
+                <EpidemiologicalProfileDashboard />
+            )}
+        </React.Fragment>
+    );
+};
+
+const TreatmentCountryContextDashboards: React.FC<CountryContextDashboardProps> = ({ countryContext }) => {
+    const { t } = useTranslation();
+
+    return (
+        <React.Fragment>
+            {(countryContext === "all" || countryContext === "epidemiological-profile") && (
+                <EpidemiologicalProfileDashboard />
+            )}
+            {(countryContext === "all" || countryContext === "major-plasmodium") && <MajorPlamociumSpeciesDashboard />}
+        </React.Fragment>
+    );
+};

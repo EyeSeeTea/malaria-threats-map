@@ -6,6 +6,7 @@ import ThemeSelectionSection from "./ThemeSelectionSection";
 import SecondaryLayout from "../secondary-layout/SecondaryLayout";
 import { useDashboards } from "./context/useDashboards";
 import TreatmentDashboards from "./treatment/TreatmentDashboards";
+import PreventionDashboards from "./prevention/PreventionDashboards";
 
 const StyledContainer = styled.div`
     background-color: #43cea4;
@@ -31,7 +32,7 @@ const DashboardsPageContent: React.FC = () => {
             <Container maxWidth="md" sx={{ marginTop: "-200px" }}>
                 <ThemeSelectionSection />
             </Container>
-            {theme === "treatment" && <TreatmentDashboards />}
+            {theme === "prevention" ? <PreventionDashboards /> : <TreatmentDashboards />}
         </SecondaryLayout>
     );
 };
