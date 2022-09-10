@@ -1,6 +1,21 @@
-import InvasiveStep1 from "./InvasiveStep1";
-import InvasiveStep2 from "./InvasiveStep2";
-import InvasiveStep3 from "./InvasiveStep3";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import ReactMarkdown from "react-markdown";
 
-const InvasiveSteps = [InvasiveStep1, InvasiveStep2, InvasiveStep3];
+const createStep = (key: string) => {
+    const InvasiveStep = () => {
+        const { t } = useTranslation();
+
+        return (
+            <div>
+                <ReactMarkdown>{t(key)}</ReactMarkdown>
+            </div>
+        );
+    };
+
+    return InvasiveStep;
+};
+
+const InvasiveSteps = ["invasiveStory_step1", "invasiveStory_step2", "invasiveStory_step3"].map(createStep);
+
 export default InvasiveSteps;

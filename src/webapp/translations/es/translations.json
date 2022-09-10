@@ -642,28 +642,6 @@
         "COUNTRY_NA": "Namibia",
         "WEBGL_error_message": "Su navegador no es compatible con WebGL. Puede habilitar WebGL en la configuración avanzada de su navegador."
     },
-    "diagnosisStory": {
-        "step1": {
-            "part1": "<0>Las supresiones de genes entre los parásitos de la malaria causan falsos negativos en las pruebas de diagnóstico.</0>",
-            "part2": "Las pruebas de diagnóstico rápido (PDR) se utilizan para el diagnóstico de la malaria en la mayoría de las áreas endémicas. La detección de <i> Plasmodium falciparum </i>, el parásito de la malaria que causa más mortalidad en el mundo, depende de las PDR dirigidas a la detección de un antígeno llamado HRP2 (proteína 2 rica en histidina), así como cierta reactividad cruzada con HRP3, una proteína de los parásitos estructuralmente similar al HRP2. La gran mayoría de los PDR fabricadas, adquiridas y utilizadas en todo el mundo se basan en la detección de HRP2 ya sea solos o en combinación con otros antígenos (como la lactato-deshidrogenasa o la aldolasa).",
-            "part3": "Sin embargo, en 2010 un estudio patrocinado por la OMS y FIND encontró que algunos parásitos de <i>P. falciparum</i> en el Perú carecían del gen <i>pfhrp2</i>. Sin este gen, el parásito no puede producir HRP2 y, por tanto, las pruebas rápidas basadas en HRP2 no lo detectan. Este fue el primer informe que confirmó la ausencia del gen <i>pfhrp2</i> entre parásitos de la especie <i>P. falciparum</i> en un entorno clínico.",
-            "see": "Ver: ",
-            "part4": "Gamboa et al. (2010) Una gran proporción de aislamientos de <i>P. falciparum</i> en la región amazónica del Perú carece de <i>pfhrp2</i> y pfhrp3: implicaciones para las pruebas de diagnóstico rápido del paludismo. PLoS One. 5(1):e8091"
-        },
-        "step2": {
-            "part1": "<0>Las supresiones de los genes <i> pfhrp2/3 </i> pueden tener implicaciones significativas para la salud pública</0>",
-            "part2": "Los falsos negativos obtenidos mediante PDR causados por supresiones de <i>pfhrp2/3</i> pueden conducir a un diagnóstico incorrecto o tardío y amenazar la seguridad del paciente. Además, el paciente puede seguir siendo una fuente de transmisión de la malaria hasta que se le trate adecuadamente.",
-            "part3": "Desde 2010, varios estudios realizados en distintas regiones de África y Asia también encontraron parásitos <i>P. falciparum</i> que carecen del gen <i>pfhrp2</i>. La prevalencia de esta mutación genética varía según los países. En los lugares donde se confirma la supresión del gen, las prácticas de compra de PDR y gestión de casos deben adaptarse en consecuencia. En los casos en los que la prevalencia de falsos negativos debido a la supresión del <i>pfhrp2</i> supera el 5% la OMS recomienda usar una PDR que no esté basada exclusivamente en la detección de HRP2 para detectar parásitos de la especie <i>P. falciparum</i> (pf-pLDH) en pacientes sintomáticos.",
-            "link": "https://www.who.int/publications/i/item/WHO-HTM-GMP-2017.18",
-            "supportingStudies": "Enlace a estudios de apoyo."
-        },
-        "step3": {
-            "part1": "<0>Una mayor vigilancia de las supresiones del gen <i>pfhrp2/3</i> entre las poblaciones de <i>P. falciparum</i> es esencial</0>",
-            "part2": "Una vez que se confirman las supresiones en una región geográfica, deben realizarse estudios localmente y en zonas vecinas para estimar la prevalencia de los parásitos con supresión del gen. En contextos clínicos, es importante investigar la causa o causas de los falsos negativos en las PDR.",
-            "part3": "La vigilancia centinela debe ser diseñada para reportar los hallazgos tanto positivos como negativos. Los datos deben gestionarse bien para ayudar a priorizar los estudios, analizar adecuadamente las tendencias a lo largo del tiempo e informar una respuesta coordinada a esta amenaza.",
-            "part4": "A partir de 2017, la base de datos de la OMS incluye datos de supresión de genes pfhrp2/3 para 29 países en 5 de las regiones de la OMS."
-        }
-    },
     "disclaimer": {
         "p1a": "<strong>Fuente de datos:</strong> Programa Mundial sobre el Paludismo",
         "p1b": "<strong>Elaboración de mapas:</strong> Programa mundial de paludismo. Organización Mundial de la Salud.",
@@ -840,32 +818,6 @@
             "DATA_CURATOR": "Instituto que compiló los datos. Parte de los datos en esta base de datos ha sido compilada por instituciones colaboradoras que compartieron sus colecciones de datos con la OMS. Esta columna indicará el nombre de la institución o grupo que compiló los datos."
         }
     },
-    "invasiveStory": {
-        "step1": {
-            "part1": "<0>La detección de <i>An. stephensi</i> en Sri Lanka y el cuerno de África resalta la capacidad de las especies de vectores de extenderse a nuevas áreas geográficas.</0>",
-            "part2": "<0>Otro ejemplo lo proporciona la introducción de <i>An. gambiae</i> en el norte de Brasil en 1930. Su eliminación demuestra que las invasiones de vectores pueden controlarse.</0>",
-            "part3": "<i>An. stephensi</i> es un vector de malaria urbana altamente eficiente. Aunque es tradicionalmente nativo de ciertos países del sudeste asiático y la Península Arábiga, desde 2012 ha sido detectado en Djibouti (2012), Etiopía (2016), Sri Lanka (2017) y más recientemente en la República del Sudán (2019, datos no publicados).",
-            "part4": "La propagación de <i>An. Stephensi</i> ha contribuido al resurgimiento de la malaria en la ciudad de Djibouti. En Sri Lanka, podría poner en peligro los esfuerzos de prevención del restablecimiento de la malaria. En África, dado la rápida y descontrolada urbanización, la propagación de <i>An. stephensi</i> en el medio urbano podría poner en riesgo los logros en la reducción de la carga de malaria conseguidos desde el año 2000.",
-            "supporting": "secundaria"
-        },
-        "step2": {
-            "part1": "<0>La detección oportuna de las especies de vectores invasoras es crucialpara contener su propagación.</0>",
-            "part2": "<0>Los sistemas de vigilancia entomológica proporcionan información crítica para el diseño e implementación de las estrategias de control vectorial.</0>",
-            "part3": "Para diseñar intervenciones efectivas que eviten una mayor propagación de las especies de vectores invasoras y su establecimiento en nuevas áreas geográficas, es necesario comprender los hábitats de reproducción y descanso de las especies de vectores, su comportamiento, sus preferencias alimenticias y su estado de resistencia.",
-            "part4": "La OMS recomienda a todos los países endémicos realizar una vigilancia entomológica e informar a la OMS sobre la detección de especies sospechosas de ser invasoras completando, y enviando a",
-            "whoForm": " el formulario de la OMS para informar sobre la detección de las especies invasoras de vectores Anopheles a ",
-            "link": "https://www.who.int/publications/i/item/who-form-to-report-detection-of-invasive-anopheles-vector-species",
-            "part5": "KLos principales indicadores que deben ser monitoreados a través de la vigilancia entomológica pueden consultarse en el capítulo 5 del",
-            "whoManual": " manual de referencia para la vigilancia, el seguimiento y la evaluación de la malaria. "
-        },
-        "step3": {
-            "part1": "<0>Las estrategias de control vectorial deben diseñarse basándose en las mejores prácticas implementados por otros países, deben monitorearse y evaluarse adecuadamente y modificarse cuando sea necesario.</0>",
-            "part2": "<0>Las especies de vectores invasoras pueden adaptarse a su nuevo entorno cambiando sus comportamientos tradicionales y/o volviéndose resistentes a los insecticidas cuando son expuestas a intervenciones de control vectorial.</0>",
-            "part3": "Debido a estos potenciales cambios, los programas nacionales deben monitorear y evaluar continuamente la efectividad de las intervenciones de control vectorial desplegadas y modificarlas estratégicamente cuando sea necesario.",
-            "part4": "La OMS recomienda a los programas nacionales, y sus socios implementadores, documentar las lecciones aprendidas y comunicarlas a la OMS a través del e-mail ",
-            "part5": ". Esto es crucial para construir la evidencia científica necesaria para formular estrategias para el control y eliminación de las especies de vectores invasora."
-        }
-    },
     "legend": {
         "p1": "Este mapa muestra el estado de cumplimiento de las poblaciones de vectores locales con los",
         "p1Link": "https://apps.who.int/iris/bitstream/handle/10665/258939/WHO-HTM-GMP-2017.17-eng.pdf?sequence=5",
@@ -913,31 +865,6 @@
             "9": {
                 "p1": "Haga clic en un país para ver un resumen del estado de la resistance para dicho país."
             }
-        }
-    },
-    "treatmentStory": {
-        "step1": {
-            "part1": "<0>Los parásitos de la malaria han desarrollado repetidamente resistencia al tratamiento antimalárico</0>",
-            "part2": "<0>Durante décadas, la resistencia de los parásitos a los medicamentos ha sido uno de los principales obstáculos en la lucha contra la malaria.</0>",
-            "part3": "La vigilancia continua y notificación de la eficacia terapéutica y la resistencia de los parásitos a los antimaláricos, es fundamental para asegurar que los pacientes reciban un tratamiento eficaz. La OMS apoya a los programas nacionales de control de la malaria para vigilar la eficacia terapéutica de los antimaláricos y para rastrear los cambios genéticos relacionados con la resistencia a los medicamentos en los parásitos de la malaria.",
-            "part4": "El rol crítico que juega el control de la eficacia de los fármacos se ha observado en todo el mundo. La resistencia ha sido un reto persistente en la subregión del Gran Mekong. La región ha vigilado muy activamente la eficacia de estos fármacos."
-        },
-        "step2": {
-            "part1": "<0>La vigilancia rutinaria de la eficacia de las terapias combinadas basadas en artemisinina (TCA) es esencial para asegurar que los pacientes reciban un tratamiento eficaz</0>",
-            "part2": "<0>La OMS recomienda que todos los países endémicos de malaria realicen estudios de eficacia terapéutica al menos una vez cada dos años para informar sus directivas de tratamiento.</0>",
-            "part3": "La selección del medicamento antimaláricos se basa en la eficacia del medicamento contra el parásito de la malaria. Consecuentemente, el monitoreo de la eficacia terapéutica de los antimaláricos es un componente fundamental de las estrategias de tratamiento de la malaria. La OMS ha elaborado un protocolo estándar para medir la eficacia del tratamiento de los antimaláricos."
-        },
-        "step3": {
-            "part1": "<0>Los estudios de marcadores moleculares proporcionan datos esenciales para la detección y seguimiento de la resistencia a los medicamentos antimaláricos</0>",
-            "part2": "<0>Los marcadores moleculares de la resistencia a fármacos son cambios genéticos en el parásito de la malaria que se asocian con la resistencia a los antimaláricos</0>",
-            "part3": "En comparación con los estudios de eficacia, los estudios de marcadores moleculares tienen varias ventajas prácticas, por ejemplo, se puede recoger y analizar rápidamente un gran número de muestras. Ya se han identificado marcadores moleculares de resistencia de <i>P. falciparum</i> a diferentes fármacos, incluyendo la cloroquina, piperaquina, mefloquina, pirimetamina, sulfadoxina, atovacuona y artemisininas.",
-            "part4": "En el caso de las artemisininas, se ha encontrado varias mutaciones en el dominio de los propelentes de Kelch 13 (K13) que están asociadas con la desaparición retardada del parásito. Este es un campo en desarrollo, ya que se van descubriendo poco a poco más mutaciones del K13 y se va construyendo una mejor comprensión de las mutaciones que tienen mayor influencia en la resistencia."
-        },
-        "step4": {
-            "part1": "<0>La resistencia a los fármacos es un desafío tanto en <i>P. vivax</i> como en <i>P. falciparum</i>, las dos especies más comunes de parásitos de la malaria humana</0>",
-            "part2": "<0>Es critico contar con información actualizada sobre la resistencia a fármacos para ambos parásitos de la malaria</0>",
-            "part3": "Las terapias combinadas basadas en la artemisinina son el tratamiento recomendado para el parásito más mortal de la malaria, <i>P. falciparum</i>. Existen dos indicadores clave para vigilar la eficacia de las TCA: (1) la proporción de tratamientos fallidos y (2) la proporción de pacientes que presenta parásitos al tercer día después del inicio del tratamiento. Un aumento en la proporción de pacientes con parásitos al tercer día es un signo que advierte de la potencial existencia de resistencia a la artemisinina.",
-            "part4": "La cloroquina se sigue utilizando en muchos lugares para tratar la malaria por <i>P. vivax</i>. Sin embargo, como la resistencia a la cloroquina también se está desarrollando en este parásito, algunos países han comenzado a utilizar TCA para el tratamiento de la malaria por <i>P. vivax</i>."
         }
     },
     "utils": {

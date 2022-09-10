@@ -1,7 +1,26 @@
-import TreatmentStep1 from "./TreatmentStep1";
-import TreatmentStep2 from "./TreatmentStep2";
-import TreatmentStep3 from "./TreatmentStep3";
-import TreatmentStep4 from "./TreatmentStep4";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import ReactMarkdown from "react-markdown";
 
-const TreatmentSteps = [TreatmentStep1, TreatmentStep2, TreatmentStep3, TreatmentStep4];
+const createStep = (key: string) => {
+    const TreatmentStep = () => {
+        const { t } = useTranslation();
+
+        return (
+            <div>
+                <ReactMarkdown>{t(key)}</ReactMarkdown>
+            </div>
+        );
+    };
+
+    return TreatmentStep;
+};
+
+const TreatmentSteps = [
+    "treatmentStory_step1",
+    "treatmentStory_step2",
+    "treatmentStory_step3",
+    "treatmentStory_step4",
+].map(createStep);
+
 export default TreatmentSteps;
