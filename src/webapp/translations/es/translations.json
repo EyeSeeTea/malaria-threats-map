@@ -126,6 +126,14 @@
             },
             "treatmentFilters": {
                 "title": "Filtrar Datos"
+            },
+            "informationModal": {
+                "chartInterpretation": "<strong>Interpretación del gráfico:</strong> Este gráfico de barras muestra el número de estudios de eficacia terapéutica realizados en un país (o países) seleccionado. El usuario puede personalizar el gráfico seleccionando una especie de Plasmodium, así como uno o más fármacos, y el año o años de interés. El usuario también puede excluir del gráfico los estudios con menos de 20 pacientes. Los estudios con >10% de pacientes con fracaso terapéutico se muestran en rojo; los estudios con <10% de pacientes con fracaso terapéutico se muestran en rosa.",
+                "dataAvailability": "<strong>Disponibilidad de datos:</strong> Se muestran todos los estudios de los que se dispone de datos.",
+                "studyProtocol": "<strong>Protocolo de estudio:</strong> La OMS recomienda que todos los estudios de eficacia terapéutica se realicen según el protocolo estándar de la OMS.",
+                "info": "Para ver más detalles sobre un estudio concreto, vuelva a la interfaz del mapa para ver los datos a nivel de sitio.",
+                "dataPeriod": "<strong>Período de datos:</strong>",
+                "dataLastUpdated" : "<strong>Datos actualizados por última vez:</strong>"
             }
         },
         "homepage": {

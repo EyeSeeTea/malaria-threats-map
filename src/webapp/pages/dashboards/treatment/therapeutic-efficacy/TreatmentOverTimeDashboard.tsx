@@ -148,8 +148,23 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
             min: 0,
         },
         tooltip: {
-            enabled: true,
-            pointFormat: "Patients {point.z}",
+            useHTML: true,
+            headerFormat: "<table>",
+            pointFormat:
+                '<tr><th colspan="2"><h3>{point.site}, {point.country}({point.x})</h3></th></tr>' +
+                "<tr><th>Drug:</th><td>{point.drug}</td></tr>" +
+                "<tr><th>Number of patients:</th><td>{point.z}</td></tr>" +
+                "<tr><th>Treatment failure rate:</th><td>{point.y}%</td></tr>" +
+                "<br/>" +
+                "<tr><th>Source:</th><td><a href='https://www.niaid.nih.gov/' target='_blank'><i>National Institute of Allergy and Infectious Diseases, National Institutes of Health</i></a></td></tr>",
+            footerFormat: "</table>",
+            style: {
+                pointerEvents: "auto",
+            },
+            borderRadius: 30,
+            shadow: { color: "#000000", offsetX: 1, offsetY: 3, opacity: 0.1, width: 6 },
+            borderColor: "#ffffff8b",
+            backgroundColor: "white",
         },
         series,
         credits: {

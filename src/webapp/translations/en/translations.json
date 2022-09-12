@@ -126,6 +126,14 @@
             },
             "treatmentFilters": {
                 "title": "Filter Data"
+            },
+            "informationModal": {
+                "chartInterpretation": "<strong>Chart interpretation:</strong> This bar chart shows the number of therapeutic efficacy studies conducted in a selected country (or countries). The user can customize the chart by selecting one Plasmodium species, as well as selecting one or more drugs, and year(s) of interest. The user can also exclude studies with less than 20 patients from the chart. Studies with >10% of patients with treatment failure are shown in red; studies with <10% of patients with treatment failure are shown in pink.",
+                "dataAvailability": "<strong>Data availability:</strong> All studies for which data are available are shown.",
+                "studyProtocol": "<strong>Study protocol:</strong> WHO recommends that all therapeutic efficacy studies are conducted according to the WHO. standard protocol.",
+                "info": "To view more details about a specific study, return to the map interface to view the site-level data.",
+                "dataPeriod": "<strong>Data period:</strong>",
+                "dataLastUpdated" : "<strong>Data last updated:</strong>"
             }
         },
         "homepage": {

@@ -71,6 +71,9 @@ export function createTreatmentBubbleChartData(
                     x: +study.YEAR_START,
                     y: value,
                     z: +study.N,
+                    site: study.SITE_NAME,
+                    country: study.COUNTRY_NAME,
+                    drug: study.DRUG_NAME,
                 };
             }),
         };

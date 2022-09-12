@@ -126,6 +126,14 @@
             },
             "treatmentFilters": {
                 "title": "Filtrer les données"
+            },
+            "informationModal": {
+                "chartInterpretation": "<strong>Interprétation du graphique:</strong> Ce graphique à barres montre le nombre d'études d'efficacité thérapeutique menées dans un ou plusieurs pays sélectionnés. L'utilisateur peut personnaliser le graphique en sélectionnant une espèce de Plasmodium, ainsi qu'en choisissant un ou plusieurs médicaments, et la ou les années qui l'intéressent. L'utilisateur peut également exclure du graphique les études comptant moins de 20 patients. Les études comportant >10% de patients en échec thérapeutique sont indiquées en rouge ; les études comportant <10% de patients en échec thérapeutique sont indiquées en rose.",
+                "dataAvailability": "<strong>Données disponibles:</strong> Toutes les études pour lesquelles des données sont disponibles sont présentées.",
+                "studyProtocol": "<strong>Protocole de l'étude:</strong> L'OMS recommande que toutes les études d'efficacité thérapeutique soient menées selon le protocole standard de l'OMS.",
+                "info": "Pour afficher plus de détails sur une étude spécifique, revenez à l'interface cartographique pour afficher les données au niveau du site.",
+                "dataPeriod": "<strong>Période de données:</strong>",
+                "dataLastUpdated" : "<strong>Dernière mise à jour des données :</strong> ."
             }
         },
         "homepage": {
