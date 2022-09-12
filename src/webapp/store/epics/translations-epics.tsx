@@ -12,12 +12,13 @@ import {
     fetchTranslationsSuccessAction,
 } from "../actions/translations-actions";
 import { ofType } from "redux-observable";
+import config from "../../config";
 
 export const getTranslationsEpic = (action$: Observable<ActionType<typeof fetchTranslationsRequestAction>>) =>
     action$.pipe(
         ofType(ActionTypeEnum.FetchTranslationsRequest),
         switchMap(() => {
-            const url = ajax.cacheCircunvent("https://frontdoor-r5quteqglawbs.azurefd.net/MAL_THREATS/TRANSLATIONS");
+            const url = ajax.cacheCircunvent(config.xmartServerUrl + "/TRANSLATIONS");
             return ajax.getUrl<XMartApiResponse<Translation>>(url).pipe(
                 mergeMap((response: XMartApiResponse<Translation>) => {
                     const oldResponse = {
