@@ -192,8 +192,24 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = StateProps & DispatchProps & WithTranslation;
+type StateTypes = {
+    ready: boolean;
+    theme: string;
+    style: mapboxgl.Style;
+    menuOpen: boolean;
+    viewMapOnly: boolean; // show only the legend and last-data-update boxes
+    viewport: {
+        latitude: number;
+        longitude: number;
+        zoom: number;
+        bearing: number;
+        pitch: number;
+    };
+    open: boolean;
+    selectedValue: string;
+};
 
-class Map extends React.Component<Props> {
+class Map extends React.Component<Props, StateTypes> {
     map: mapboxgl.Map;
     mapContainer: any;
     state = {
@@ -358,6 +374,7 @@ class Map extends React.Component<Props> {
                                 </Box>
                             }
                             onDrawerOpenChange={open => this.setState({ menuOpen: open })}
+                            toggleLanguageModal={() => this.setState(prevState => ({ open: !prevState.open }))}
                         />
                     </Hidden>
                 )}
