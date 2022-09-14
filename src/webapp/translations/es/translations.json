@@ -537,6 +537,7 @@
                 "add_to_download": "Agregar para descargar",
                 "db_download_list": "Lista de descargas de la base de datos",
                 "db_download_helper_text": "Su lista de bases de datos seleccionadas para descargar se mostrará aquí. Para agregar datos, filtre los datos que necesita a la derecha y haga clic en “Agregar para descargar“.",
+                "prevention_warning": "Tenga en cuenta que no todos los contribuyentes del tema de la resistencia de los vectores a los insecticidas nos han permitido compartir sus datos. Por lo tanto, algunos de los datos en Malaria Threats Map no están disponibles para descargar. Para los datos extraídos de las publicaciones, tenga en cuenta que cuando los valores de las variables relevantes no se proporcionaron directamente en las publicaciones o se analizaron de manera diferente a la recomendada por la OMS, los valores se calcularon a partir de los datos informados.",
                 "data_set": "Conjunto de datos:",
                 "data": "Datos:",
                 "location": "Ubicación:",

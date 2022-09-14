@@ -536,6 +536,7 @@
                 "add_to_download": "Add to Download",
                 "db_download_list": "Database Download List",
                 "db_download_helper_text": "Your list of databases selected for download will be shown here. To add data, please filter for the data you require on the right and click “Add to download”.",
+                "prevention_warning": "Please note that not every contributor of the vector insecticide resistance theme has allowed us to share their data. Hence some of the data in Malaria Threats Map is not available for download. For data extracted from publications, please note that when the values of relevant variables were not directly provided in the publications or were analyzed differently than recommended by WHO, values were calculated from the reported data.",
                 "data_set": "Dataset:",
                 "data": "Data:",
                 "location": "Location:",

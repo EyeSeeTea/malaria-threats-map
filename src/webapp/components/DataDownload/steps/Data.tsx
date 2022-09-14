@@ -296,18 +296,28 @@ const Data: React.FC<Props> = ({
                                 {t("common.data_download.data_step.db_download_helper_text")}
                             </Typography>
                         ) : (
-                            <List>
-                                {selectedDatabases.map((database, index) => {
-                                    return (
-                                        <DatabaseItem
-                                            key={database.id}
-                                            database={database}
-                                            onRemoveDatabase={handleRemoveToDownload}
-                                            addDivider={index < selectedDatabases.length - 1}
-                                        />
-                                    );
-                                })}
-                            </List>
+                            <React.Fragment>
+                                <List>
+                                    {selectedDatabases.map((database, index) => {
+                                        return (
+                                            <DatabaseItem
+                                                key={database.id}
+                                                database={database}
+                                                onRemoveDatabase={handleRemoveToDownload}
+                                                addDivider={index < selectedDatabases.length - 1}
+                                            />
+                                        );
+                                    })}
+                                </List>
+                                {selectedDatabases.some(database => database.kind === "prevention") && (
+                                    <React.Fragment>
+                                        <Divider sx={{ marginBottom: 2 }} />
+                                        <Typography variant="caption" lineHeight="6px">
+                                            {t("common.data_download.data_step.prevention_warning")}
+                                        </Typography>
+                                    </React.Fragment>
+                                )}
+                            </React.Fragment>
                         )}
                     </ListCard>
                 </Grid>
