@@ -424,7 +424,8 @@
             "about": "About",
             "contact": "Contact",
             "share_data": "Share data",
-            "language": "Language"
+            "language": "Language",
+            "take_tour": "Take a Tour"
         },
         "legend": {
             "subtitle": "Determined by the most recent data in a site",
