@@ -17,6 +17,7 @@ const initialState: PreventionState = Object.freeze({
         insecticideTypes: [],
         synergistTypes: [],
         assayTypes: [],
+        proxyType: null,
         type: null,
         species: [],
     },
@@ -54,6 +55,11 @@ function updateInsecticideTypes(insecticideTypes: string[]) {
 function updateType(type: string) {
     return updateFilter("type", type);
 }
+
+function updateProxyType(proxyType: string) {
+    return updateFilter("proxyType", proxyType);
+}
+
 function updateSynergistTypes(synergistTypes: string[]) {
     return updateFilter("synergistTypes", synergistTypes, []);
 }
@@ -88,6 +94,7 @@ export default createReducer<PreventionState>(initialState, {
     [ActionTypeEnum.SetAssayTypes]: updateAssayTypes,
     [ActionTypeEnum.SetSynergistTypes]: updateSynergistTypes,
     [ActionTypeEnum.SetType]: updateType,
+    [ActionTypeEnum.SetProxyType]: updateProxyType,
     [ActionTypeEnum.SetSpecies]: updateSpecies,
     [ActionTypeEnum.SetPreventionFilteredStudies]: (filteredStudies: PreventionStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),

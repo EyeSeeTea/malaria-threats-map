@@ -124,6 +124,7 @@ const BottomLeftContainer = styled(BaseContainer)`
     bottom: 0;
     display: flex;
     flex-direction: row;
+    align-items: center;
 `;
 
 const TopMiddleContainer = styled(BaseContainer)`
@@ -416,12 +417,7 @@ class Map extends React.Component<Props> {
                     <BottomLeftContainer>
                         {viewMapOnly || <LayersButton />} {/* Layers selector box */}
                         <Box width={20} />
-                        <Hidden smUp>
-                            <WhoLogo width={150} />
-                        </Hidden>
-                        <Hidden smDown>
-                            <WhoLogo />
-                        </Hidden>
+                        <WhoLogo />
                     </BottomLeftContainer>
                 </PushoverContainer>
                 <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>

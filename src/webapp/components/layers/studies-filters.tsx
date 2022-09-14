@@ -150,7 +150,7 @@ export const filterByTypes = (types: string[]) => (study: any) => {
 };
 
 export const filterByTypeSynergist = (synergistTypes: string[]) => (study: any) => {
-    return !synergistTypes.length || synergistTypes.includes(study.TYPE_SYNERGIST);
+    return !synergistTypes.length || synergistTypes.includes(study.TYPE);
 };
 
 export const filterBySpecies = (species: string[]) => (study: any) => {
@@ -419,7 +419,7 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return [
                 filterByLevelOfInvolvement,
-                filterByType(preventionFilters.type),
+                filterByProxyType(preventionFilters.proxyType),
                 filterBySpecies(preventionFilters.species),
                 filterByTypeSynergist(preventionFilters.synergistTypes),
                 filterByYearRange(filters),

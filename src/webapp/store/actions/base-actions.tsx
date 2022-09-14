@@ -71,8 +71,6 @@ export const setReportOpenAction = createAction(ActionTypeEnum.SetReportOpen)<bo
 
 export const setMapTitleAction = createAction(ActionTypeEnum.SetMapTitle)<string>();
 
-export const setSubscriptionOpenAction = createAction(ActionTypeEnum.SetSubscriptionOpen)<boolean>();
-
 export const setUploadFileOpenAction = createAction(ActionTypeEnum.SetUploadFileOpen)<boolean>();
 
 export const setFeedbackOpenAction = createAction(ActionTypeEnum.SetFeedbackOpen)<boolean>();

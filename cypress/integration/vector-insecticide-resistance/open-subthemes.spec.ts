@@ -7,14 +7,6 @@ describe("Open subthemes", () => {
         cy.loadPage(themes.vectorInsecticideResistance);
     });
 
-    it("should open Pyrethroid-PBO nets deployment subtheme", () => {
-        cy.contains(defaultSubtheme).click();
-
-        cy.findByText("Pyrethroid-PBO nets deployment").click();
-
-        cy.findByLegendTitle("Compliance with WHO recommended criteria for Pyrethroid-PBO nets deployment");
-    });
-
     it("should open Insecticide resistance intensity subtheme", () => {
         cy.contains(defaultSubtheme).click();
 

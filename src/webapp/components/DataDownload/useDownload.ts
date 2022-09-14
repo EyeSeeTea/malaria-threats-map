@@ -8,11 +8,11 @@ import {
     mapTreatmentStudiesToCSV,
 } from "./mappers/cvsMapper";
 import { exportToCSV, Tab } from "./download";
-import { emailRegexp } from "../Subscription";
 import { DatabaseSelection, Download, TermsInfo, UserInfo } from "./types";
 import { ActionCreatorTypeMetadata, PayloadActionCreator } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
 import { Source } from "../../store/actions/base-actions";
+import { emailRegexp } from "../../../domain/common/regex";
 
 export function useDownload(
     logEvent: any,
