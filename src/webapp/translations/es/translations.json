@@ -477,9 +477,8 @@
             },
             "buttons": {
                 "back": "Anterior",
-                "next": "Siguiente",
-                "download": "Descargar",
-                "close": "Cerrar"
+                "next": "Siguiente Paso",
+                "download": "Descargar"
             },
             "filters": {
                 "prevention": {
@@ -489,6 +488,11 @@
                         "synergist_insecticide_bioassays": "Resultados de pruebas con sinergista e insecticida",
                         "resistance_mechanism_assays_molecular": "Resultados de pruebas de detección de mecanismos moleculares de la resistencia",
                         "resistance_mechanism_assays_biochemical": "Resultados de pruebas de detección de mecanismos bioquímicos de la resistencia"
+                    }
+                },
+                "diagnosis": {
+                    "datasets": {
+                        "gene_deletions": "Deleción del gen pfhrp2/3"
                     }
                 },
                 "treatment": {
@@ -503,24 +507,15 @@
                     }
                 }
             },
-            "step0": {
-                "title": "Mensaje de bienvenida",
-                "p1": "¡Bienvenido al diálogo de descarga de datos del Mapa de los desafíos de la malaria!",
-                "p2": "Este diálogo le permitirá descargar datos de las bases de datos mundiales de la OMS sobre la resistencia a los insecticidas en los vectores de la malaria, la eficacia y resistencia de los parásitos a los medicamentos antipalúdicos y las especies vectoras invasoras.",
-                "p3": "Los datos  contenidos en estas tres bases de datos globales han sido puestos a disposición del  Programa Mundial sobre Paludismo de la Organización Mundial de la Salud (OMS) por los Ministerios de Salud o sus asociados en el desarrollo, o mediante su extracción de publicaciones científicas por parte de la OMS o sus socios. Para reconocer sus contribuciones, cada conjunto de datos incluye una columna con sus fuentes. Tenga en cuenta que no todos los contribuyentes nos han permitido compartir sus datos. Por lo tanto, algunos de los datos que usted puede ver en el Mapa de los desafíos de la malaria no están disponibles para descarga. En el caso de datos extraídos de las publicaciones, tenga en cuenta que cuando las publicaciones no proporcionan directamente los valores de las variables incluidas en las bases de datos globales, o cuando estos se calculan de manera diferente a la recomendada por la OMS, los valores de las bases de datos han sido calculados por la OMS a partir de los datos disponibles.",
-                "p4a": "El uso de los datos está sujeto a los ",
-                "p4bLinkText": "Términos y condiciones de uso para compilaciones, agregaciones, evaluaciones y análisis de datos de la OMS",
-                "p4bLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions",
-                "p4c": ". Al utilizar los Conjuntos de datos o cualquier representación derivada de ellos, usted acepta respetar y adherirse a estos términos y condiciones, que pueden ser modificados por la OMS de vez en cuando a su exclusivo criterio.",
-                "p5": "Usted deberá reconocer el uso de estos conjuntos de datos incluyendo la siguiente referencia en sus publicaciones: OMS, Mapa de los desafíos de la malaria (https://www.who.int/malaria/maps/threats/), fecha de acceso, reconocimiento a los países que proporcionaron los datos subyacentes (en caso de que la fuente se refiera a los ministerios de salud o programas nacionales de control de la malaria de países específicos).",
-                "p6": "El Programa Mundial sobre el Paludismo de la OMS está interesado en hacer seguimiento y de mostrar la utilidad de las bases de datos globales. Por lo tanto, a continuación le haremos algunas preguntas sobre el propósito para el cual desea descargar datos.",
-                "p7a": "Si tiene alguna pregunta, no dude en contactarnos en: ",
-                "p7bEmail": "gmp-maps@who.int",
-                "p8a": "Marque aquí para indicar que ha leído y acepta los ",
-                "p8bLinkText": "Términos y condiciones de uso para compilaciones, agregaciones, evaluaciones y análisis de datos de la OMS",
-                "p8bLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions"
+            "terms_step": {
+                "title": "Terminos and Condiciones",
+                "p1": "The use of all data is subject to the Terms and conditions of use for WHO compilations, aggregations, evaluations and analyses. By using the Datasets or any presentations of data derived from them, you agree to be bound by and adhere to these Terms and Conditions, as may be amended from time to time by WHO at its sole discretion. If any datasets are credited to a source other than WHO, then those materials are not covered by these Terms and Conditions, and permission should be sought from the source.",
+                "p2": "Please acknowledge the use of these datasets by including the following reference in your publications: WHO, Malaria Threats Map, year, date of access, acknowledgement of the countries having provided the underlying data (in the event that the source refers to ministries of health or national malaria control programs of specific countries).",
+                "summary_title": "Download List",
+                "check": "Check here to indicated that you have read and agree to the Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses.",
+                "choose_other": "Choose other databases"
             },
-            "step1": {
+            "personal_step": {
                 "title": "Datos de contacto",
                 "first_name": "Nombre",
                 "last_name": "Apellidos",
@@ -539,40 +534,26 @@
                     "other": "Otras"
                 },
                 "organization_name": "Nombre de la Organización",
-                "position": "Position",
+                "uses_placeHolder": "Nos interesa saber para qué estás utilizando los datos. Le agradeceríamos si pudiera proporcionar una breve descripción.",
                 "country": "País de Residencia",
-                "email": "Email"
+                "email": "Email",
+                "message": "La OMS está interesada en mejorar las bases de datos mundiales y el Mapa de amenazas de malaria para atender mejor las necesidades de nuestra comunidad de usuarios. Por lo tanto, a la OMS le gustaría interactuar con nuestra comunidad de usuarios para recopilar sugerencias de mejora y aprender de los diferentes casos de uso y los beneficios que estos productos les brindan. Si desea compartir comentarios, puede hacerlo <1 href='/contact'>aquí</1>.",
+                "consent1": "Autorizo ser contactado por la Organización Mundial de la Salud con respecto a mi experiencia con el Mapa de Amenazas de la Malaria y los datos de las bases de datos globales.",
+                "consent2": "Autorizo a la Organización Mundial de la Salud a usar el nombre de mi organización y la descripción del proyecto proporcionada anteriormente para mostrar el uso de las bases de datos globales (no se mostrarán datos personales)."
             },
-            "step2": {
-                "title": "Propósito de la descarga",
-                "data_use": "¿Con qué propósito se utilizarán estos datos?",
-                "data_use_options": {
-                    "research": "Investigación",
-                    "grant": "Desarrollar propuestas de proyectos",
-                    "treatments": "Desarrollo de nuevos tratamientos antipalúdicos",
-                    "vector": "Desarrollar nuevas herramientas de control de vectores",
-                    "diagnosis": "Desarrollar nuevas herramientas de diagnóstico",
-                    "policies": "Desarrollo de políticas nacionales, estrategias y / o planes de trabajo (por ejemplo, Plan Estratégico Nacional contra la Malaria, políticas o directrices de tratamiento, planes nacionales de monitoreo y manejo de la resistencia a insecticidas en vectores del paludismo)",
-                    "advocacy": "Abogacía"
-                },
-                "date_use_options_content": {
-                    "research": " Proporcione una breve descripción del proyecto o pregunta de investigación para la cual se utilizarán los datos (mínimo 100 palabras)",
-                    "policies": "Proporcione el título o una breve descripción de la política, estrategia o plan para la que se utilizarán los datos.",
-                    "tools": "Describa brevemente los nuevos tratamiento o las nuevas herramientas diagnóstico o de control de vectores que pretende desarrollar (mínimo 100 palabras)",
-                    "date": "¿Cuándo tiene previsto terminar su proyecto, política, estrategia o plan?"
-                },
-                "countries": "Países donde se implementará el proyecto, política, estrategia o plan",
-                "message": "La OMS desea mejorar las bases de datos mundiales y el Mapa de los desafíos de la malaria para satisfacer mejor las necesidades de su comunidad de usuarios. Por lo tanto, la OMS pretende comunicarse con los usuarios para recopilar sugerencias de mejora y aprender de los diferentes casos de uso de estos productos y los beneficios que estos productos les reportan.",
-                "consent1": "Autorizo a la Organización Mundial de la Salud a usar mis datos personales para contactarme con respecto a mi experiencia usando el Mapa de los desafíos de la malaria y los datos de las bases de datos globales. ",
-                "consent2": "Autorizo a la Organización Mundial de la Salud a usar el nombre de la organización y las descripciones de proyectos que he proporcionado para presentar los casos de uso de las bases de datos globales (no se mostrarán datos personales)."
-            },
-            "step3": {
-                "title": "Filtrar datos a descargar",
-                "filters": {
-                    "additional": "Filtros adicionales",
-                    "theme": "Seleccione un tema",
-                    "dataset": "Seleccione un conjunto de datos"
-                }
+            "data_step": {
+                "title": "Seleccione datos",
+
+                "p1": "Este cuadro de diálogo le permite descargar datos de cuatro de las bases de datos mundiales de la OMS: resistencia a insecticidas en vectores de la malaria, especies de vectores invasivos, eficacia y resistencia a medicamentos antipalúdicos y deleciones del gen <1>pfhrp2/3</1>. Se incluye un enlace a la fuente de datos original y la cita en cada conjunto de datos, donde esté disponible.",
+                "last_updated": "El conjunto de datos seleccionado se actualizó por última vez el:",
+                "add_to_download": "Agregar para descargar",
+                "db_download_list": "Lista de descargas de la base de datos",
+                "db_download_helper_text": "Su lista de bases de datos seleccionadas para descargar se mostrará aquí. Para agregar datos, filtre los datos que necesita a la derecha y haga clic en “Agregar para descargar“.",
+                "prevention_warning": "Tenga en cuenta que no todos los contribuyentes del tema de la resistencia de los vectores a los insecticidas nos han permitido compartir sus datos. Por lo tanto, algunos de los datos en Malaria Threats Map no están disponibles para descargar. Para los datos extraídos de las publicaciones, tenga en cuenta que cuando los valores de las variables relevantes no se proporcionaron directamente en las publicaciones o se analizaron de manera diferente a la recomendada por la OMS, los valores se calcularon a partir de los datos informados.",
+                "data_set": "Conjunto de datos:",
+                "data": "Datos:",
+                "location": "Ubicación:",
+                "studies_in_file": "{{total}} bioensayos incluidos en el archivo"
             }
         },
         "report": {
@@ -838,6 +819,30 @@
             "CITATION": "Cita de la publicación donde se publicaron los datos",
             "CITATION_URL": "URL de la publicación donde se publicaron los datos",
             "DATA_CURATOR": "Instituto que compiló los datos. Parte de los datos en esta base de datos ha sido compilada por instituciones colaboradoras que compartieron sus colecciones de datos con la OMS. Esta columna indicará el nombre de la institución o grupo que compiló los datos."
+        },
+        "diagnosis": {
+            "ID": "Identificador único del bioensayo",
+            "COUNTRY_NAME": "Nombre del país donde se realizó el bioensayo",
+            "ADMIN1": "Nivel administrativo 1 donde se recolectaron los mosquitos",
+            "ADMIN2": "Nivel administrativo 2 donde se colectaron los mosquitos",
+            "SITE_NAME": "Sitio donde se recolectaron los mosquitos",
+            "LATITUDE": "Latitud del sitio donde se colectaron los mosquitos",
+            "LONGITUDE": "Longitud del sitio donde se recolectaron los mosquitos",
+            "YEAR_START": "Año en que comenzó la recolección de mosquitos",
+            "SURVEY_TYPE": "Tipo de Encuesta realizada",
+            "PATIENT_TYPE": "Estado clínico del paciente",
+            "HRP2_TESTED": "Número de muestras analizadas para deleciones HRP2",
+            "HRP2_PROPORTION_DELETION": "Porcentaje de muestras de Pf analizadas con deleciones HRP2",
+            "HRP3_TESTED": "Número de muestras analizadas para deleciones HRP3",
+            "HRP3_PROPORTION_DELETION": "Porcentaje de muestras de Pf analizadas con deleciones HRP3",
+            "HRP2_HRP3_TESTED": "Número de muestras de Pf analizadas para deleciones HRP2 Y HRP3",
+            "HRP2_HRP3_PROPORTION_DELETION": "Porcentaje de muestras de Pf analizadas con deleciones HRP2 Y HRP3",
+            "DELETETION_STATUS": "Tipo de borrado: confirmado o sospechoso",
+            "SAMPLE_ORIGIN": "Muestras lugar de origen, cuando se toman de viajeros que regresan",
+            "PF_POS_SAMPLES": "Número de muestras positivas de P. falciparum en la encuesta total",
+            "TYPE_SAMPL_ANALYZED": "tipo de muestra analizada: todas, solo discordantes o no representativas",
+            "CITATION": "Cita de la publicación donde se publicaron los datos",
+            "CITATION_URL": "URL de la publicación donde se publicaron los datos"
         }
     },
     "invasiveStory": {
@@ -880,7 +885,9 @@
         "selectData": "FILTRO DE DATOS",
         "data": "Datos",
         "selectLocation": "FILTRO DE LOCALIZACIÓN (OPCIONAL)",
-        "location": "Localización"
+        "location": "Localización",
+        "selectDataset": "SELECT DATASET",
+        "dataset": "Dataset"
     },
     "preventionStory": {
         "step1": {

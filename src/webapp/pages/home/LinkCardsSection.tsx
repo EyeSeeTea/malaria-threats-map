@@ -76,7 +76,7 @@ const LinkCardsSection: React.FC = () => {
                 buttonText: t("common.homepage.media_cards.dashboards.button_text"),
             },
             {
-                path: "/data-download",
+                path: "/download",
                 image: DataDownload,
                 title: t("common.homepage.media_cards.data_download.title"),
                 text: t("common.homepage.media_cards.data_download.subtitle"),

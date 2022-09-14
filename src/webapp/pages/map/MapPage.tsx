@@ -5,26 +5,26 @@ import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
-import Disclaimer from "./Disclaimer";
+import Disclaimer from "../../components/Disclaimer";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { State } from "../store/types";
-import { selectFilters, selectStoryMode, selectTheme } from "../store/reducers/base-reducer";
-import { setMobileOptionsOpen, setStoryModeAction, setThemeAction } from "../store/actions/base-actions";
-import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
-import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
-import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
-import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
-import { setPreventionMapType } from "../store/actions/prevention-actions";
+import { State } from "../../store/types";
+import { selectFilters, selectStoryMode, selectTheme } from "../../store/reducers/base-reducer";
+import { setMobileOptionsOpen, setStoryModeAction, setThemeAction } from "../../store/actions/base-actions";
+import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
+import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
+import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
+import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
+import { setPreventionMapType } from "../../store/actions/prevention-actions";
 import { AppBar, IconButton, Tab, Tabs, Toolbar } from "@mui/material";
-import StoryModeStepper from "./StoryModeStepper";
+import StoryModeStepper from "../../components/StoryModeStepper";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { DiagnosisIcon, FilterIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
-import { colors } from "../constants/theme";
-import MobileOptions from "./MobileOptions";
-import Loader from "./Loader";
-import Hidden from "./hidden/Hidden";
-import MapContainer from "./MapContainer";
+import { DiagnosisIcon, FilterIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "../../components/Icons";
+import { colors } from "../../constants/theme";
+import MobileOptions from "../../components/MobileOptions";
+import Loader from "../../components/Loader";
+import Hidden from "../../components/hidden/Hidden";
+import MapContainer from "../../components/MapContainer";
 
 interface ThemeProps {
     drawerWidth: string;
@@ -128,14 +128,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
-function PersistentDrawerLeft({
-    setMobileOptionsOpen,
-    storyMode,
-    drawerWidth = "500px",
-    setTheme,
-    setStoryMode,
-    theme,
-}: Props) {
+function MapPage({ setMobileOptionsOpen, storyMode, drawerWidth = "500px", setTheme, setStoryMode, theme }: Props) {
     const classes = useStyles({ drawerWidth });
     const prevStoryModeRef = useRef<boolean>();
 
@@ -260,4 +253,4 @@ function PersistentDrawerLeft({
         </div>
     );
 }
-export default connect(mapStateToProps, mapDispatchToProps)(PersistentDrawerLeft);
+export default connect(mapStateToProps, mapDispatchToProps)(MapPage);

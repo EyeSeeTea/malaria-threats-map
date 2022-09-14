@@ -58,6 +58,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     minYear?: number;
     maxYear?: number;
+    showTheatherMode?: boolean;
 };
 type Props = OwnProps & DispatchProps & StateProps;
 
@@ -68,7 +69,13 @@ export function range(start: number, end: number, reverse?: boolean) {
     return reverse ? R.reverse(years) : years;
 }
 
-const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = new Date().getFullYear() }: Props) => {
+const YearRangeSelector = ({
+    filters,
+    setFilters,
+    minYear = 1988,
+    maxYear = new Date().getFullYear(),
+    showTheatherMode = true,
+}: Props) => {
     const { t } = useTranslation();
 
     const handleChange = (event: Event, newValue: number | number[]) => {
@@ -106,7 +113,7 @@ const YearRangeSelector = ({ filters, setFilters, minYear = 1988, maxYear = new 
                 })}
             </Row>
             <MuiDivider />
-            <TheaterMode />
+            {showTheatherMode && <TheaterMode />}
         </FilterColumContainer>
     );
 };
