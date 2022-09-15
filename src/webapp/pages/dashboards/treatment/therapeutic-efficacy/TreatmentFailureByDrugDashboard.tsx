@@ -40,6 +40,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
     return (
         <TreatmentFilterableDashboard
             title={t("common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.title")}
+            type="treatmentFailureByDrug"
             drugsMultiple={true}
             drugsClearable={true}
             filteredStudiesForDrugs={filteredStudiesForDrugs}

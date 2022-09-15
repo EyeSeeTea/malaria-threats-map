@@ -15,6 +15,13 @@ interface TreatmentOverTimeDashboardProps {
     type: TreatmentOverTimeType;
 }
 
+interface CustomPoint extends Highcharts.Point {
+    z: number;
+    drug: string;
+    site: string;
+    country: string;
+}
+
 const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({ type }) => {
     const { t } = useTranslation();
     const {
@@ -43,6 +50,7 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
                     ? t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.title")
                     : t("common.dashboard.therapeuticEfficacySection.parasiteClearanceOverTime.title")
             }
+            type={type}
             drugsMultiple={false}
             drugsClearable={false}
             filteredStudiesForDrugs={filteredStudiesForDrugs}
@@ -149,15 +157,25 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
         },
         tooltip: {
             useHTML: true,
-            headerFormat: "<table>",
-            pointFormat:
-                '<tr><th colspan="2"><h3>{point.site}, {point.country}({point.x})</h3></th></tr>' +
-                "<tr><th>Drug:</th><td>{point.drug}</td></tr>" +
-                "<tr><th>Number of patients:</th><td>{point.z}</td></tr>" +
-                "<tr><th>Treatment failure rate:</th><td>{point.y}%</td></tr>" +
-                "<br/>" +
-                "<tr><th>Source:</th><td><a href='https://www.niaid.nih.gov/' target='_blank'><i>National Institute of Allergy and Infectious Diseases, National Institutes of Health</i></a></td></tr>",
-            footerFormat: "</table>",
+            formatter: function () {
+                const point = this.point as CustomPoint;
+                return `
+                    <table>
+                        <tr><th colspan="2"><h3>${point.site}, ${point.country}(${point.x})</h3></th></tr>
+                        <tr><th>${i18next.t("common.dashboard.tooltip.drug")}</th><td>${i18next.t(point.drug)}</td></tr>
+                        <tr><th>${i18next.t("common.dashboard.tooltip.numberOfPatients")}</th><td>${point.z}</td></tr>
+                        <tr><th>${i18next.t("common.dashboard.tooltip.treatmentFailureRate")}</th><td>${
+                    point.y
+                }%</td></tr>
+                        <br/>
+                        <tr><th>${i18next.t(
+                            "common.dashboard.tooltip.source.label"
+                        )}</th><td><a href='https://www.niaid.nih.gov/' target='_blank'><i>${i18next.t(
+                    "common.dashboard.tooltip.source.link"
+                )}</i></a></td></tr>
+                    </table>
+                `;
+            },
             style: {
                 pointerEvents: "auto",
             },
