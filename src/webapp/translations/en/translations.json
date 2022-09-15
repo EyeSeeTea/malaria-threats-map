@@ -2,6 +2,7 @@
     "common": {
         "layers": "Layers",
         "mekong_link": "Go to the Greather Mekong Layer",
+        "takeATour": "Unsure where to start? Take a tour.",
         "title": {
             "title": "Malaria Threats Map",
             "subtitle": "Tracking biological challenges to malaria control and elimination"
@@ -436,7 +437,7 @@
             "contact": "Contact",
             "share_data": "Share data",
             "language": "Language",
-            "take_tour": "Take a tour"
+            "take_tour": "Take a Tour"
         },
         "legend": {
             "subtitle": "Determined by the most recent data in a site",
@@ -922,33 +923,19 @@
     "tour": {
         "steps": {
             "1": {
-                "title": "Welcome to Malaria Threats Map!",
-                "p1": "You are at a WHO official platform created to present the magnitude and spread of four biological challenges for malaria control and elimination.",
-                "p2": "This wizard will show how to use the platform"
+                "title": "Select a theme"
             },
             "2": {
-                "title": "Choose a language"
+                "title": "Select a map to explore study results"
             },
             "3": {
-                "p1": "Open our interactive maps containing the latest data for the four challenges"
+                "title": "Add filters to produce a map limited to specific criteria"
             },
             "4": {
-                "p1": "Open the filters section to chose from the challenge filters as well as region filters"
+                "title": "Select a specific region, subregion, country and/or site"
             },
             "5": {
-                "p1": "Select the country, region or sub region of your interest or leave this filters blank to explore all countries"
-            },
-            "6": {
-                "p1": "Select several filters and notice how the map adjusts automatically."
-            },
-            "7": {
-                "p1": "Click on a site to see individual study result meeting your filter criteria. Results for one study at time are shown in the window. If there is more than one study meeting your criteria, you can visualize other study results by clicking the upper arrow."
-            },
-            "8": {
-                "p1": "Click on the country view to the number of studies performed in such country"
-            },
-            "9": {
-                "p1": "Click on a country to see a summary of resistance status for that country"
+                "title": "Click on a site to see study details"
             }
         }
     },
