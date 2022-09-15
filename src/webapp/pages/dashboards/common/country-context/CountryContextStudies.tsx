@@ -5,6 +5,7 @@ import { Container } from "../../../../components/site-selection-content/SiteSel
 import { CountryContext, DashboardsThemeOptions } from "../../types";
 import CountryContextDataProvider from "./context/CountryContextDataProvider";
 import EpidemiologicalProfileDashboard from "./EpidemiologicalProfileDashboard";
+import MajorAnophelesSpeciesDashboard from "./MajorAnophelesSpeciesDashboard";
 import MajorPlamociumSpeciesDashboard from "./MajorPlamociumSpeciesDashboard";
 
 interface CountryContextDashboardProps {
@@ -50,20 +51,19 @@ const Title = styled.h2`
 `;
 
 const PreventionCountryContextDashboards: React.FC<CountryContextDashboardProps> = ({ countryContext }) => {
-    const { t } = useTranslation();
-
     return (
         <React.Fragment>
             {(countryContext === "all" || countryContext === "epidemiological-profile") && (
                 <EpidemiologicalProfileDashboard />
+            )}
+            {(countryContext === "all" || countryContext === "major-anopheles-species") && (
+                <MajorAnophelesSpeciesDashboard />
             )}
         </React.Fragment>
     );
 };
 
 const TreatmentCountryContextDashboards: React.FC<CountryContextDashboardProps> = ({ countryContext }) => {
-    const { t } = useTranslation();
-
     return (
         <React.Fragment>
             {(countryContext === "all" || countryContext === "epidemiological-profile") && (

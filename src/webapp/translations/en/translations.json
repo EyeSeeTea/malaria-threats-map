@@ -90,7 +90,8 @@
                 "countryContextOptions": {
                     "countryContext": "Country Context",
                     "epidemiologicalProfile": "Epidemiological profile",
-                    "majorPlasmodium": "Major Plasmodium species and treatment regimen"
+                    "majorPlasmodium": "Major Plasmodium species and treatment regimen",
+                    "majorAnophelesSpecies": "Major Anopheles species"
                 },
                 "therapeuticEfficacyOptions": {
                     "therapeuticEfficacy": "Therapeutic efficacy study results",
@@ -127,6 +128,11 @@
                     "country": "Country",
                     "species": "Major Plasmodium species (%)",
                     "firstLineTreatments": "1st line treatments for uncomplicated malaria"
+                },
+                "majorAnophelesSpecies": {
+                    "title": "MAJOR ANOPHELES SPECIES",
+                    "country": "Country",
+                    "species": "Major Anopheles species"
                 }
             },
             "therapeuticEfficacyDashboards": {

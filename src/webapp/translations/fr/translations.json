@@ -90,7 +90,8 @@
                 "countryContextOptions": {
                     "countryContext": "Contexte du pays",
                     "epidemiologicalProfile": "Profil épidémiologique",
-                    "majorPlasmodium": "Principales espèces de Plasmodium et régime de traitement"
+                    "majorPlasmodium": "Principales espèces de Plasmodium et régime de traitement",
+                    "majorAnophelesSpecies": "Espèces majeures d'anophèles"
                 },
                 "therapeuticEfficacyOptions": {
                     "therapeuticEfficacy": "Résultats des études sur l'efficacité thérapeutique",
@@ -125,6 +126,11 @@
                     "country": "Pays",
                     "species": "Espèces majeures de Plasmodium (%)",
                     "firstLineTreatments": "Traitements de 1ère ligne pour le paludisme non compliqué"
+                },
+                "majorAnophelesSpecies": {
+                    "title": "ESPÈCES MAJEURES D'ANOPHÈLES",
+                    "country": "Pays",
+                    "species": "Espèces majeures d'anophèles"
                 }
             },
             "therapeuticEfficacyDashboards": {
