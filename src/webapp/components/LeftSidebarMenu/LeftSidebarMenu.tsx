@@ -99,7 +99,7 @@ const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
                 </SidebarIconDiv>
 
                 <SidebarIconDiv>
-                    <StyledLink to="/stories/prevention">
+                    <StyledLink to="/stories?theme=prevention">
                         <StyledFab
                             id="stories-button"
                             size="small"
