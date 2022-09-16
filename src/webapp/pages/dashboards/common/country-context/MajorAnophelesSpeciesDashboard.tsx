@@ -50,6 +50,7 @@ export default MajorAnophelesSpeciesDashboard;
 
 const DasboardCard = styled(Card)`
     padding: 16px 42px;
+    margin-bottom: 24px;
 `;
 
 const Title = styled.h3`

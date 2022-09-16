@@ -6,8 +6,8 @@ import { useDashboards } from "../context/useDashboards";
 import CountryContextStudies from "../common/country-context/CountryContextStudies";
 import { CountryContext } from "../types";
 
-const TreatmentDashboards: React.FC = () => {
-    const { dashboardsTreatmentStudies, theme } = useDashboards();
+const PreventionDashboards: React.FC = () => {
+    const { dashboardsPreventionStudies, theme } = useDashboards();
 
     const [countryContext, setCountryContext] = React.useState<CountryContext>("all");
 
@@ -17,7 +17,7 @@ const TreatmentDashboards: React.FC = () => {
                 <ContentsFilterSection countryContext={countryContext} onCountryContextChange={setCountryContext} />
             </Container>
             <DashboardSection>
-                {dashboardsTreatmentStudies && (
+                {dashboardsPreventionStudies && (
                     <Container maxWidth="xl">
                         <CountryContextStudies countryContext={countryContext} theme={theme} />
                     </Container>
@@ -27,7 +27,7 @@ const TreatmentDashboards: React.FC = () => {
     );
 };
 
-export default TreatmentDashboards;
+export default PreventionDashboards;
 
 const DashboardSection = styled.section`
     background: #00000012;

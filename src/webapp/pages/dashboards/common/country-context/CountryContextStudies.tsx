@@ -7,6 +7,7 @@ import CountryContextDataProvider from "./context/CountryContextDataProvider";
 import EpidemiologicalProfileDashboard from "./EpidemiologicalProfileDashboard";
 import MajorAnophelesSpeciesDashboard from "./MajorAnophelesSpeciesDashboard";
 import MajorPlamociumSpeciesDashboard from "./MajorPlamociumSpeciesDashboard";
+import SummaryInsecticideResistanceDashboard from "./SummaryInsecticideResistanceDashboard";
 
 interface CountryContextDashboardProps {
     countryContext: CountryContext;
@@ -58,6 +59,9 @@ const PreventionCountryContextDashboards: React.FC<CountryContextDashboardProps>
             )}
             {(countryContext === "all" || countryContext === "major-anopheles-species") && (
                 <MajorAnophelesSpeciesDashboard />
+            )}
+            {(countryContext === "all" || countryContext === "summary-insecticide-resistance") && (
+                <SummaryInsecticideResistanceDashboard />
             )}
         </React.Fragment>
     );

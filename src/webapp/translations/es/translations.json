@@ -91,7 +91,8 @@
                     "countryContext": "Contexto del país",
                     "epidemiologicalProfile": "Perfil epidemiológico",
                     "majorPlasmodium": "Principales especies de Plasmodium y régimen de tratamiento",
-                    "majorAnophelesSpecies": "Principales especies de Anopheles"
+                    "majorAnophelesSpecies": "Principales especies de Anopheles",
+                    "summaryInsecticideResistance": "Resumen de la resistencia a los insecticidas"
                 },
                 "therapeuticEfficacyOptions": {
                     "therapeuticEfficacy": "Resultados del estudio de eficacia terapéutica",
@@ -131,6 +132,13 @@
                     "title": "PRINCIPALES ESPECIES DE ANOFELES",
                     "country": "País",
                     "species": "Principales especies de Anopheles"
+                },
+                "summaryInsecticideResistance": {
+                    "title": "RESUMEN DE RESISTENCIA A INSECTICIDAS",
+                    "country": "País",
+                    "vectorSpecies": "Especies de vectores que han demostrado resistencia confirmada a uno o más insecticidas",
+                    "insecticideClasses": "Clases de insecticidas a las que se ha detectado resistencia",
+                    "resistanceMechanisms": "Mecanismos de resistencia detectados"
                 }
             },
             "therapeuticEfficacyDashboards": {

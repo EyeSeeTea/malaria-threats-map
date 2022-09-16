@@ -18,6 +18,12 @@ const countryContextOptions: Record<DashboardsThemeOptions, Option<CountryContex
             label: i18next.t("common.dashboard.dashboardsFilterSection.countryContextOptions.majorAnophelesSpecies"),
             value: "major-anopheles-species",
         },
+        {
+            label: i18next.t(
+                "common.dashboard.dashboardsFilterSection.countryContextOptions.summaryInsecticideResistance"
+            ),
+            value: "summary-insecticide-resistance",
+        },
     ],
     treatment: [
         {

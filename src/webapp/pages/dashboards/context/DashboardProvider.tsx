@@ -7,16 +7,21 @@ import { LastUpdatedDates, State } from "../../../store/types";
 import { connect } from "react-redux";
 import { selectLastUpdatedDates } from "../../../store/reducers/base-reducer";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
+import { fetchPreventionStudiesRequest } from "../../../store/actions/prevention-actions";
+import { selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
+import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 
 export const DashboardContext = React.createContext<DashboardState>(null);
 
 const mapStateToProps = (state: State) => ({
+    preventionStudies: selectPreventionStudies(state),
     treatmentStudies: selectTreatmentStudies(state),
     lastUpdatedDates: selectLastUpdatedDates(state),
 });
 
 const mapDispatchToProps = {
     fetchTreatmentStudies: fetchTreatmentStudiesRequest,
+    fetchPreventionStudies: fetchPreventionStudiesRequest,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -25,12 +30,15 @@ type Props = DispatchProps & StateProps;
 
 const DashboardProvider: React.FC<Props> = ({
     children,
+    preventionStudies,
     treatmentStudies,
+    fetchPreventionStudies,
     fetchTreatmentStudies,
     lastUpdatedDates,
 }) => {
     const [theme, setTheme] = useState<DashboardsThemeOptions>("prevention");
     const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
+    const [dashboardsPreventionStudies, setDashboardsPreventionStudies] = useState<PreventionStudy[]>(undefined);
     const [dashboardsTreatmentStudies, setDashboardsTreatmentStudies] = useState<TreatmentStudy[]>(undefined);
     const [updatedDates, setUpdatedDates] = useState<LastUpdatedDates>({
         prevention: null,
@@ -40,8 +48,12 @@ const DashboardProvider: React.FC<Props> = ({
     });
 
     useEffect(() => {
-        fetchTreatmentStudies();
-    }, [fetchTreatmentStudies]);
+        if (theme === "prevention") {
+            fetchPreventionStudies();
+        } else {
+            fetchTreatmentStudies();
+        }
+    }, [theme, fetchPreventionStudies, fetchTreatmentStudies]);
 
     useEffect(() => {
         setUpdatedDates(lastUpdatedDates);
@@ -52,12 +64,15 @@ const DashboardProvider: React.FC<Props> = ({
             value={{
                 theme,
                 selectedCountries,
+                preventionStudies,
                 treatmentStudies,
+                dashboardsPreventionStudies,
                 dashboardsTreatmentStudies,
                 updatedDates,
                 setTheme,
                 setSelectedCountries,
                 setDashboardsTreatmentStudies,
+                setDashboardsPreventionStudies,
             }}
         >
             {children}
@@ -71,9 +86,12 @@ interface DashboardState {
     theme: DashboardsThemeOptions;
     selectedCountries: string[];
     treatmentStudies: TreatmentStudy[];
+    preventionStudies: PreventionStudy[];
+    dashboardsPreventionStudies: PreventionStudy[];
     dashboardsTreatmentStudies: TreatmentStudy[];
     updatedDates: LastUpdatedDates;
     setTheme: Dispatch<SetStateAction<DashboardsThemeOptions>>;
     setSelectedCountries: Dispatch<SetStateAction<string[]>>;
+    setDashboardsPreventionStudies: Dispatch<SetStateAction<PreventionStudy[]>>;
     setDashboardsTreatmentStudies: Dispatch<SetStateAction<TreatmentStudy[]>>;
 }

@@ -6,11 +6,14 @@ export const useDashboards = () => {
     const {
         theme,
         selectedCountries,
+        preventionStudies,
         treatmentStudies,
+        dashboardsPreventionStudies,
         dashboardsTreatmentStudies,
         updatedDates,
         setTheme,
         setSelectedCountries,
+        setDashboardsPreventionStudies,
         setDashboardsTreatmentStudies,
     } = useContext(DashboardContext);
 
@@ -31,17 +34,33 @@ export const useDashboards = () => {
     );
 
     const onGenerate = useCallback(() => {
-        const dashboardStudies = treatmentStudies.filter(
-            study => selectedCountries.includes(study.ISO2) || selectedCountries.length === 0
-        );
+        if (theme === "prevention") {
+            const dashboardStudies = preventionStudies.filter(
+                study => selectedCountries.includes(study.ISO2) || selectedCountries.length === 0
+            );
 
-        setDashboardsTreatmentStudies(dashboardStudies);
-    }, [selectedCountries, setDashboardsTreatmentStudies, treatmentStudies]);
+            setDashboardsPreventionStudies(dashboardStudies);
+        } else {
+            const dashboardStudies = treatmentStudies.filter(
+                study => selectedCountries.includes(study.ISO2) || selectedCountries.length === 0
+            );
+
+            setDashboardsTreatmentStudies(dashboardStudies);
+        }
+    }, [
+        theme,
+        selectedCountries,
+        preventionStudies,
+        treatmentStudies,
+        setDashboardsPreventionStudies,
+        setDashboardsTreatmentStudies,
+    ]);
 
     return {
         theme,
         selectedCountries,
         dashboardsTreatmentStudies,
+        dashboardsPreventionStudies,
         updatedDates,
         onThemeChange,
         onSelectedCountriesChange,
