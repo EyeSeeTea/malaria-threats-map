@@ -2,6 +2,7 @@
     "common": {
         "layers": "Capas",
         "mekong_link": "Ir a la capa Greather Mekong",
+        "takeATour": "¿No sabe por dónde empezar? Haga un recorrido.",
         "title": {
             "title": "Mapa de los desafíos de la malaria",
             "subtitle": "Seguimiento de los desafíos biológicos para el control y la eliminación de la malaria"
@@ -25,12 +26,12 @@
                     "title": "Una visión general de los mapas"
                 },
                 "video2": {
-                    "url": "https://www.youtube.com/embed/VP-pc9oN0dM",
+                    "url": "https://www.youtube.com/embed/diMb_gbUUbM",
                     "alt": "Mapa de amenazas de malaria: apoyando los esfuerzos de investigación",
                     "title": "Cómo apoya el MTM los esfuerzos de investigación?"
                 },
                 "video3": {
-                    "url": "https://www.youtube.com/embed/mkggjD0DKwY",
+                    "url": "https://www.youtube.com/embed/x5P45TynlgM",
                     "alt": "Mapa de amenazas de malaria: ayudar a los países a abordar amenazas críticas para el control y la eliminación de la malaria",
                     "title": "Cómo está apoyando el MTM a los países?"
                 }
@@ -108,9 +109,19 @@
             "menu": {
                 "home": "Casa",
                 "tools": "Instrumentos",
+                "stories": "Cuentos",
                 "about": "Acerca de",
                 "contact": "Contacto",
                 "share_data": "Compartir datos"
+            },
+            "tools_submenu": {
+                "maps": "Mapas",
+                "dashboards": "Tableros",
+                "data_download": "Descarga de datos"
+            },
+            "stories_submenu": {
+                "antimalarial_drug_efficacy_and_resistance": "Eficacia y resistencia a fármacos antipalúdicos",
+                "parasite_pfhrp_gene_deletions": "Deleciones del gen <i>pfhrp2/3</i> del parásito"
             },
             "title": "Mapa de <br /> <strong>amenazas de malaria</strong>",
             "subtitle": "Explore datos sobre las principales amenazas biológicas para el control y la eliminación de la malaria.",
@@ -232,6 +243,7 @@
                     "confirmed": "Confirmado (0 to <90%)",
                     "possible": "Posible (90 to <98%)",
                     "susceptible": "Susceptible (≥98%)",
+                    "undetermined": "Indeterminado",
                     "help": {
                         "p1": "Este mapa contiene datos de <1>bioensayos de concentración discriminatoria</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En sitios donde los estudios muestran niveles variables de intensidad de resistencia, el color de el punto está determinado por los resultados más recientes.",
                         "p2": "Para obtener información sobre cómo se define cada nivel, consulte el <1 href='/'>manual de la OMS para el control de la resistencia</1>.",
@@ -387,7 +399,7 @@
                     "native": "Nativa",
                     "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
                     "link_text": "formulario de reporte",
-                    "link_content_1": "Si ha detectado especies invasoras de vectores de Anopheles, infórmenos a través del ",
+                    "link_content_1": "Si ha detectado especies invasoras de vectores de <1>Anopheles</1>, infórmenos a través del ",
                     "help": {
                         "p1": "Este mapa representa datos de la <1>vigilancia de vectores de mosquitos Anopheles</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. El color del punto muestra si la especie es invasora o nativa de la zona.",
                         "p2": "",
@@ -423,6 +435,7 @@
             "plasmodium_species": "Especie de plasmodium",
             "drug": "Tratamiento",
             "molecular_marker": "Marcador molecular",
+            "proxy_type": "Tipo de sinergia",
             "mechanism_type": "Tipo de mecanismo",
             "assay_type": "Tipo de ensayo",
             "synergist_type": "Tipo de test",
@@ -450,11 +463,11 @@
         "topbar": {
             "menu": "Menú",
             "maps": "Mapas",
-            "dashboards": "Tableros",
-            "stories": "Cuentos"
+            "dashboards": "Tableros"
         },
         "sidebar": {
             "home": "Casa",
+            "stories": "Cuentos",
             "about": "Sobre",
             "contact": "Contactar",
             "share_data": "Compartir datos",
@@ -478,7 +491,7 @@
         },
         "copyright": {
             "mobile": "Haga clic aquí para leer la advertencia que se aplica al mapa de arriba",
-            "content": "Las denominaciones empleadas en esta publicación y la forma en que aparecen presentados los datos que contiene no implican, por parte de la Organización Mundial de la Salud, juicio alguno sobre la condición jurídica de países, territorios, ciudades o zonas, o de sus autoridades, ni con respecto al trazado de sus fronteras o límites. Las líneas de puntos, así como las líneas discontinuas y las áreas marcadas en gris, en los mapas representan de manera aproximada las fronteras y áreas respecto de las cuales puede que no haya pleno acuerdo. Las fronteras del mapa proporcionadas reflejan la situación política y geográfica actual a partir de la fecha de publicación ({{year}}). Sin embargo, la información técnica sobre la salud se basa en datos precisos con respecto al año seleccionado. Debe destacarse la desconexión en esta disposición, pero no debe extraerse ninguna implicación de carácter político o terminológico de esta disposición, ya que es puramente una función de limitaciones técnicas y gráficas. Fuente de datos: Programa Mundial \nsobre Paludismo. Producción de mapas: Programa Mundial sobre Paludismo. Organización Mundial de la Salud."
+            "content": "Las denominaciones empleadas en esta publicación y la forma en que aparecen presentados los datos que contiene no implican, por parte de la OMS, juicio alguno sobre la condición jurídica de países, territorios, ciudades o zonas, o de sus autoridades, ni respecto del trazado de sus fronteras o límites. Las líneas discontinuas en los mapas representan de manera aproximada fronteras respecto de las cuales puede que no haya pleno acuerdo. Fuente de datos: Programa Mundial sobre Paludismo. Producción de mapas: Programa Mundial sobre Paludismo. Organización Mundial de la Salud. OMS {{year}}."
         },
         "options": {
             "title": "Opciones",
@@ -513,6 +526,11 @@
                         "resistance_mechanism_assays_biochemical": "Resultados de pruebas de detección de mecanismos bioquímicos de la resistencia"
                     }
                 },
+                "diagnosis": {
+                    "datasets": {
+                        "gene_deletions": "Deleción del gen pfhrp2/3"
+                    }
+                },
                 "treatment": {
                     "datasets": {
                         "therapeutic_efficacy_studies": "Resultados de los estudios de eficacia terapéutica",
@@ -531,7 +549,7 @@
                 "p2": "Please acknowledge the use of these datasets by including the following reference in your publications: WHO, Malaria Threats Map, year, date of access, acknowledgement of the countries having provided the underlying data (in the event that the source refers to ministries of health or national malaria control programs of specific countries).",
                 "summary_title": "Download List",
                 "check": "Check here to indicated that you have read and agree to the Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses.",
-                "data_set": "Dataset"
+                "choose_other": "Choose other databases"
             },
             "personal_step": {
                 "title": "Datos de contacto",
@@ -559,33 +577,19 @@
                 "consent1": "Autorizo ser contactado por la Organización Mundial de la Salud con respecto a mi experiencia con el Mapa de Amenazas de la Malaria y los datos de las bases de datos globales.",
                 "consent2": "Autorizo a la Organización Mundial de la Salud a usar el nombre de mi organización y la descripción del proyecto proporcionada anteriormente para mostrar el uso de las bases de datos globales (no se mostrarán datos personales)."
             },
-            "step2": {
-                "title": "Propósito de la descarga",
-                "data_use": "¿Con qué propósito se utilizarán estos datos?",
-                "data_use_options": {
-                    "research": "Investigación",
-                    "grant": "Desarrollar propuestas de proyectos",
-                    "treatments": "Desarrollo de nuevos tratamientos antipalúdicos",
-                    "vector": "Desarrollar nuevas herramientas de control de vectores",
-                    "diagnosis": "Desarrollar nuevas herramientas de diagnóstico",
-                    "policies": "Desarrollo de políticas nacionales, estrategias y / o planes de trabajo (por ejemplo, Plan Estratégico Nacional contra la Malaria, políticas o directrices de tratamiento, planes nacionales de monitoreo y manejo de la resistencia a insecticidas en vectores del paludismo)",
-                    "advocacy": "Abogacía"
-                },
-                "date_use_options_content": {
-                    "research": " Proporcione una breve descripción del proyecto o pregunta de investigación para la cual se utilizarán los datos (mínimo 100 palabras)",
-                    "policies": "Proporcione el título o una breve descripción de la política, estrategia o plan para la que se utilizarán los datos.",
-                    "tools": "Describa brevemente los nuevos tratamiento o las nuevas herramientas diagnóstico o de control de vectores que pretende desarrollar (mínimo 100 palabras)",
-                    "date": "¿Cuándo tiene previsto terminar su proyecto, política, estrategia o plan?"
-                },
-                "countries": "Países donde se implementará el proyecto, política, estrategia o plan"
-            },
-            "step3": {
+            "data_step": {
                 "title": "Seleccione datos",
-                "filters": {
-                    "additional": "Filtros adicionales",
-                    "theme": "Seleccione un tema",
-                    "dataset": "Seleccione un conjunto de datos"
-                }
+
+                "p1": "Este cuadro de diálogo le permite descargar datos de cuatro de las bases de datos mundiales de la OMS: resistencia a insecticidas en vectores de la malaria, especies de vectores invasivos, eficacia y resistencia a medicamentos antipalúdicos y deleciones del gen <1>pfhrp2/3</1>. Se incluye un enlace a la fuente de datos original y la cita en cada conjunto de datos, donde esté disponible.",
+                "last_updated": "El conjunto de datos seleccionado se actualizó por última vez el:",
+                "add_to_download": "Agregar para descargar",
+                "db_download_list": "Lista de descargas de la base de datos",
+                "db_download_helper_text": "Su lista de bases de datos seleccionadas para descargar se mostrará aquí. Para agregar datos, filtre los datos que necesita a la derecha y haga clic en “Agregar para descargar“.",
+                "prevention_warning": "Tenga en cuenta que no todos los contribuyentes del tema de la resistencia de los vectores a los insecticidas nos han permitido compartir sus datos. Por lo tanto, algunos de los datos en Malaria Threats Map no están disponibles para descargar. Para los datos extraídos de las publicaciones, tenga en cuenta que cuando los valores de las variables relevantes no se proporcionaron directamente en las publicaciones o se analizaron de manera diferente a la recomendada por la OMS, los valores se calcularon a partir de los datos informados.",
+                "data_set": "Conjunto de datos:",
+                "data": "Datos:",
+                "location": "Ubicación:",
+                "studies_in_file": "{{total}} bioensayos incluidos en el archivo"
             }
         },
         "report": {
@@ -610,27 +614,6 @@
                 "studies": "Número de estudios",
                 "percentile_25": "Percentile 25",
                 "percentile_75": "Percentile 75"
-            }
-        },
-        "subscription": {
-            "title": "Suscríbase para recibir actualizaciones sobre estos cuatro desafíos en la lucha contra la malaria!",
-            "first_name": "Nombre",
-            "last_name": "Apellidos",
-            "email": "Email",
-            "country": "País",
-            "organization": "Organización",
-            "button": "Subscríbete",
-            "institutions": {
-                "nmcp": "PNLM",
-                "funding_organization": "Entidad financiadora",
-                "research_organization": "Centro de investigación",
-                "who_collaborating_centers": "Centro colaborador de la OMS",
-                "private_sector": "Sector privado",
-                "ngo": "ONG",
-                "media_organization": "Agencia de comunicación",
-                "who_country_office": "OMS - Oficina de país",
-                "who_regional_office": "OMS - Oficina Regional",
-                "who_headquarters": "OMS - Sede"
             }
         },
         "uploadFile": {
@@ -663,7 +646,6 @@
             "image": "Exportar mapa",
             "summary": "Informe resumen",
             "disclaimer": "Aviso Legal",
-            "subscribe": "Suscríbase",
             "uploadFile": "Subir fichero y descargar plantilla",
             "comments": "Envíe sus comentarios",
             "help": "Ayuda",
@@ -873,6 +855,30 @@
             "CITATION": "Cita de la publicación donde se publicaron los datos",
             "CITATION_URL": "URL de la publicación donde se publicaron los datos",
             "DATA_CURATOR": "Instituto que compiló los datos. Parte de los datos en esta base de datos ha sido compilada por instituciones colaboradoras que compartieron sus colecciones de datos con la OMS. Esta columna indicará el nombre de la institución o grupo que compiló los datos."
+        },
+        "diagnosis": {
+            "ID": "Identificador único del bioensayo",
+            "COUNTRY_NAME": "Nombre del país donde se realizó el bioensayo",
+            "ADMIN1": "Nivel administrativo 1 donde se recolectaron los mosquitos",
+            "ADMIN2": "Nivel administrativo 2 donde se colectaron los mosquitos",
+            "SITE_NAME": "Sitio donde se recolectaron los mosquitos",
+            "LATITUDE": "Latitud del sitio donde se colectaron los mosquitos",
+            "LONGITUDE": "Longitud del sitio donde se recolectaron los mosquitos",
+            "YEAR_START": "Año en que comenzó la recolección de mosquitos",
+            "SURVEY_TYPE": "Tipo de Encuesta realizada",
+            "PATIENT_TYPE": "Estado clínico del paciente",
+            "HRP2_TESTED": "Número de muestras analizadas para deleciones HRP2",
+            "HRP2_PROPORTION_DELETION": "Porcentaje de muestras de Pf analizadas con deleciones HRP2",
+            "HRP3_TESTED": "Número de muestras analizadas para deleciones HRP3",
+            "HRP3_PROPORTION_DELETION": "Porcentaje de muestras de Pf analizadas con deleciones HRP3",
+            "HRP2_HRP3_TESTED": "Número de muestras de Pf analizadas para deleciones HRP2 Y HRP3",
+            "HRP2_HRP3_PROPORTION_DELETION": "Porcentaje de muestras de Pf analizadas con deleciones HRP2 Y HRP3",
+            "DELETETION_STATUS": "Tipo de borrado: confirmado o sospechoso",
+            "SAMPLE_ORIGIN": "Muestras lugar de origen, cuando se toman de viajeros que regresan",
+            "PF_POS_SAMPLES": "Número de muestras positivas de P. falciparum en la encuesta total",
+            "TYPE_SAMPL_ANALYZED": "tipo de muestra analizada: todas, solo discordantes o no representativas",
+            "CITATION": "Cita de la publicación donde se publicaron los datos",
+            "CITATION_URL": "URL de la publicación donde se publicaron los datos"
         }
     },
     "invasiveStory": {
@@ -915,7 +921,9 @@
         "selectData": "FILTRO DE DATOS",
         "data": "Datos",
         "selectLocation": "FILTRO DE LOCALIZACIÓN (OPCIONAL)",
-        "location": "Localización"
+        "location": "Localización",
+        "selectDataset": "SELECT DATASET",
+        "dataset": "Dataset"
     },
     "preventionStory": {
         "step1": {
@@ -951,33 +959,19 @@
     "tour": {
         "steps": {
             "1": {
-                "title": "Bienvenido al Mapa de los desafíos de la malaria!",
-                "p1": "Usted se encuentra en una plataforma oficial de la OMS creada con el objetivo de mostrar la magnitud y la distribución geográfica de cuatro desafíos biológicos para el control y eliminación de la malaria.",
-                "p2": "Este asistente le mostrará cómo utilizar la plataforma."
+                "title": "Seleccione un tema"
             },
             "2": {
-                "title": "Por favor, selecciona un idioma."
+                "title": "Seleccione un mapa para explorar los resultados del estudio"
             },
             "3": {
-                "p1": "Abra nuestros mapas interactivos que muestran datos recientes sobre los tres desafíos."
+                "title": "Añadir filtros para producir un mapa limitado a criterios específicos"
             },
             "4": {
-                "p1": "Abra la sección filtros para aplicar filtros aplicables al desafío asi como filtros por regiones"
+                "title": "Seleccione una región, subregión, país y/o sitio específico"
             },
             "5": {
-                "p1": "Seleccione un país, una región o una sub-región o deje estos campos vacíos si prefiere ver todos los países a la vez."
-            },
-            "6": {
-                "p1": "Seleccione varios filtros y observer cómo el mapa cambia automáticamente."
-            },
-            "7": {
-                "p1": "Haga clic en un punto para acceder a los resultados de los bioensayos que cumplen sus criterios de búsqueda. La ventana emergente muestra los resultados para un solo estudio. Si hubiera más estudios que cumple sus criterios de búsqueda para ese punto, puede ver los resultados haciendo clic en la flecha >"
-            },
-            "8": {
-                "p1": "Consulte los resultados de los bioensayos de resistencia efectuados en cada lugar de monitoria de cada país."
-            },
-            "9": {
-                "p1": "Haga clic en un país para ver un resumen del estado de la resistance para dicho país."
+                "title": "Haga clic en un sitio para ver los detalles del estudio"
             }
         }
     },

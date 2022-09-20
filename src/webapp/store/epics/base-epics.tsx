@@ -50,12 +50,9 @@ export const setThemeEpic = (action$: Observable<ActionType<typeof setThemeActio
         ofType(ActionTypeEnum.MalariaSetTheme),
         withLatestFrom(state$),
         switchMap(([action, _state]) => {
-            const { meta } = action;
-            const eventCategory = meta.fromHome ? "homeItem" : "theme_menu";
-
             const base = [
                 ...[
-                    logEventAction({ category: eventCategory, action: action.payload }),
+                    logEventAction({ category: "theme_menu", action: action.payload }),
                     logPageViewAction(getAnalyticsPageViewFromString({ page: action.payload })),
                 ],
                 setSelection(null),

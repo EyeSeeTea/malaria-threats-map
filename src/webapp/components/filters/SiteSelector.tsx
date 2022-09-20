@@ -12,6 +12,7 @@ import { sendAnalytics } from "../../utils/analytics";
 import { Study } from "../../../domain/entities/Study";
 import { useTranslation } from "react-i18next";
 import SingleFilter from "./common/SingleFilter";
+import { isNotNull } from "../../utils/number-utils";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -55,7 +56,7 @@ function SiteSelector({
     })();
 
     const SITES_SUGGESTIONS = R.uniqBy(
-        study => study.value,
+        study => study.value && study.label,
         studies.map(study => ({
             label: study.SITE_NAME || study.VILLAGE_NAME,
             value: study.SITE_ID,
@@ -64,7 +65,7 @@ function SiteSelector({
         }))
     );
 
-    const suggestions = SITES_SUGGESTIONS.sort((a, b) => (a.label < b.label ? -1 : 1)).slice(0, 10);
+    const suggestions = SITES_SUGGESTIONS.filter(s => isNotNull(s.label)).sort((a, b) => (a.label < b.label ? -1 : 1));
 
     const onChange = (selection?: string) => {
         const site = suggestions.find(site => site.value === selection);

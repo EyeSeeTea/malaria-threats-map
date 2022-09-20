@@ -2,11 +2,11 @@ import React from "react";
 import { Checkbox, FormControlLabel, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import { Trans, useTranslation } from "react-i18next";
 import { connect } from "react-redux";
-import { UserInfo } from "./index";
-import { emailRegexp } from "../Subscription";
-import { FullCountry } from "./filters/FullCountriesSelector";
+import { FullCountry } from "../filters/FullCountriesSelector";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import { UserInfo } from "../types";
+import { emailRegexp } from "../../../../domain/common/regex";
 
 export const ORGANIZATION_TYPES = [
     "common.data_download.personal_step.organization_type_options.university",
