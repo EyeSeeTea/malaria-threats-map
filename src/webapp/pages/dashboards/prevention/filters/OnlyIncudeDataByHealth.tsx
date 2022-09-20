@@ -1,27 +1,26 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import SwitchFilter from "./common/SwitchFilter";
+import SwitchFilter from "../../../../components/filters/common/SwitchFilter";
 
-interface ExcludeLowerPatientsSelectorProps {
+interface OnlyIncudeDataByHealthProps {
     value: boolean;
     onChange: (value: boolean) => void;
-    fontWeight?: string;
 }
 
-const ExcludeLowerPatientsSelector: React.FC<ExcludeLowerPatientsSelectorProps> = ({ value, onChange, fontWeight }) => {
+const OnlyIncudeDataByHealth: React.FC<OnlyIncudeDataByHealthProps> = ({ value, onChange }) => {
     const { t } = useTranslation();
 
     return (
         <SwitchFilter
-            label={t("common.filters.exclude_lower_patients")}
+            label={t("common.filters.only_include_data_by_health")}
             onChange={onChange}
             value={value}
             background="transparent"
             margin={"10px 0px"}
             padding={"10px 0px"}
-            fontWeight={fontWeight}
+            fontWeight={"bold"}
         />
     );
 };
 
-export default ExcludeLowerPatientsSelector;
+export default OnlyIncudeDataByHealth;

@@ -19,9 +19,13 @@ export const FilterColumContainer = styled.div<{ padding?: string }>`
     align-items: center;
 `;
 
-export const FilterRowContainer = styled.div<{ onlyYMargin?: boolean; onlyYPadding?: boolean; background?: string }>`
-    margin: ${props => (props.onlyYMargin ? "10px 0px" : "10px 20px")};
-    padding: ${props => (props.onlyYPadding ? "10px 0px" : "10px 10px")};
+export const FilterRowContainer = styled.div<{
+    margin?: string;
+    padding?: string;
+    background?: string;
+}>`
+    margin: ${props => (props.margin ? props.margin : "10px 20px")};
+    padding: ${props => (props.padding ? props.padding : "10px 10px")};
     display: flex;
     flex-direction: row;
     align-items: center;

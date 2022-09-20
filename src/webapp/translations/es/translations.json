@@ -530,7 +530,10 @@
             "select_site": "Seleccionar sitio",
             "site": "Sitio",
             "exclude_lower_patients": "Excluir estudios de menos de 20 pacientes",
-            "exclude_lower_samples": "Excluir estudios de menos de 20 muestras"
+            "exclude_lower_samples": "Excluir estudios de menos de 20 muestras",
+            "onlyIncludeBioassays": "Solo incluya bioensayos con más de la cantidad de mosquitos que fluye",
+            "zero_all_bioassays": "0 (todos los bioensayos)",
+            "only_include_data_by_health": "Only include data provided to WHO by ministries of health"
         },
         "topbar": {
             "menu": "Menú",

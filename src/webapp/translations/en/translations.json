@@ -11,7 +11,6 @@
                 "first": "Learn More About",
                 "second": "The Malaria Threats Map"
             },
-
             "dataSection": {
                 "title": "Where does the data come from?",
                 "content": "Data is collected by National Malaria Programmes, their implementation partners, research institutes and non-governmental organizations. They are either provided directly to WHO Global Malaria Programme (GMP) or extracted from publications. All data are quality controlled, incorporated into WHO global databases and then published to the Malaria Threats Map."
@@ -103,6 +102,10 @@
                 "molecularMarkerOptions": {
                     "molecularMarker": "Molecular marker study results",
                     "summaryMolecularMarker": "Summary of molecular marker study results over time"
+                },
+                "phenotypicInsecticideResistanceOptions": {
+                    "phenotypicInsecticideResistance": "Phenotypic Insecticide Resistance",
+                    "statusOfResistanceToInsecticides": "Status of resistance to insecticides"
                 }
             },
             "countryContextDashboards": {
@@ -175,6 +178,13 @@
                     "chartSubtitle": "molecular markers of artemisinin resistance were detected:"
                 }
             },
+            "phenotypicInsecticideResistanceDashboards": {
+                "title": "Phenotypic insecticide resistance",
+                "statusOfResistanceToInsecticides": {
+                    "title": "STATUS OF RESISTANCE TO INSECTICIDES"
+                }
+            },
+
             "treatmentFilters": {
                 "title": "Filter Data"
             }
@@ -532,7 +542,10 @@
             "select_site": "Select Site",
             "site": "Site",
             "exclude_lower_patients": "Exclude studies of less than 20 patients",
-            "exclude_lower_samples": "Exclude studies of less than 20 samples"
+            "exclude_lower_samples": "Exclude studies of less than 20 samples",
+            "onlyIncludeBioassays": "Only include bioassays with more than the flowing number of mosquitoes",
+            "zero_all_bioassays": "0 (all bioassays)",
+            "only_include_data_by_health": "Only include data provided to WHO by ministries of health"
         },
         "topbar": {
             "menu": "Menu",

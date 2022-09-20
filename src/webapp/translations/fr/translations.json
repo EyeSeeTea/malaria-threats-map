@@ -530,7 +530,10 @@
             "select_site": "Sélectionnez un site",
             "site": "Site",
             "exclude_lower_patients": "Exclure les études portant sur moins de 20 patients",
-            "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons"
+            "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons",
+            "onlyIncludeBioassays": "N'inclure que les essais biologiques avec plus que le nombre de moustiques en cours",
+            "zero_all_bioassays": "0 (tous les essais biologiques)",
+            "only_include_data_by_health": "Only include data provided to WHO by ministries of health"
         },
         "topbar": {
             "menu": "Menu",

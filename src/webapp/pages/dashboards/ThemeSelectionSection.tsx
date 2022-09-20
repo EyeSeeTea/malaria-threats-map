@@ -67,7 +67,7 @@ const ThemeSelectionSection: React.FC = () => {
                                 options={countrySuggestions}
                                 onChange={onSelectedCountriesChange}
                                 value={selectedCountries}
-                                onlyYMargin
+                                margin="10px 0px"
                             />
                             <Typography variant="caption" fontSize={"11px"}>
                                 {t("common.dashboard.filtersSection.second.helper")}
