@@ -312,8 +312,8 @@ function buildDiagnosisFiltersByMap(diagnosisFilters: DiagnosisFilters, filters:
 }
 
 function buildDiagnosisFiltersByDownload(diagnosisFilters: DiagnosisFilters, filters: number[], region: RegionState) {
-    switch (diagnosisFilters.mapType) {
-        case DiagnosisMapType.GENE_DELETIONS:
+    switch (diagnosisFilters.dataset) {
+        case "PFHRP23_GENE_DELETIONS":
             return [
                 filterByDeletionType(diagnosisFilters.deletionType),
                 filterBySurveyTypes(diagnosisFilters.surveyTypes),

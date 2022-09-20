@@ -11,7 +11,7 @@ import {
     TreatmentMapType,
 } from "../../store/types";
 import {
-    diagnosiseDatasetSuggestions,
+    diagnosisDatasetSuggestions,
     invasiveDatasetSuggestions,
     preventionDatasetSuggestions,
     treatmentDatasetSuggestions,
@@ -88,7 +88,7 @@ export function getDataset(
             return dataSet ? i18next.t(dataSet.title) : undefined;
         }
         case "diagnosis": {
-            const dataSet = diagnosiseDatasetSuggestions.find(
+            const dataSet = diagnosisDatasetSuggestions.find(
                 suggestion => suggestion.value === diagnosisFilters.dataset
             );
 
