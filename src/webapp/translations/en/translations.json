@@ -117,6 +117,24 @@
                 "diagnosis_subtitle": "Gene deletions among some malaria parasites cause false negative diagnostic test results, complicating case management and control."
             }
         },
+        "storiesPage":{
+            "prevention":{
+                "title": "Vector insecticide resistance",
+                "description": "Find out about vector insecticide resistance and what the WHO recommends to combat this threat to malaria control and elimination."
+            },
+            "invasive":{
+                "title": "Invasive vector species",
+                "description": "Find out about invasive vector species and what the WHO recommends to combat this threat to malaria control and elimination."
+            },
+            "treatment":{
+                "title": "Antimalarial drug efficacy and resistance",
+                "description": "Find out about antimalarial drug efficacy and resistance and what the WHO recommends to combat this threat to malaria control and elimination."
+            },
+            "diagnosis":{
+                "title": "Parasite <i>pfhrp2/3</i> gene deletions",
+                "description": "Find out about Parasite pfhrp2/3 gene deletions and what the WHO recommends to combat this threat to malaria control and elimination."
+            }
+        },
         "footer": {
             "policies": {
                 "title": "Policies",

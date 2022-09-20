@@ -117,6 +117,24 @@
                 "diagnosis_subtitle": "Les délétions de gènes chez certains parasites du paludisme entraînent des résultats de tests de diagnostic faussement négatifs, ce qui complique la gestion et le contrôle des cas."
             }
         },
+        "storiesPage":{
+            "prevention":{
+                "title": "Résistance des vecteurs aux insecticides",
+                "description": "Découvrez la résistance des vecteurs aux insecticides et ce que l'OMS recommande pour lutter contre cette menace pour le contrôle et l'élimination du paludisme."
+            },
+            "invasive":{
+                "title": "Espèces vectrices envahissantes",
+                "description": "Découvrez les espèces vectorielles envahissantes et ce que l'OMS recommande pour lutter contre cette menace pour le contrôle et l'élimination du paludisme."
+            },
+            "treatment":{
+                "title": "Efficacité et résistance des médicaments antipaludiques",
+                "description": "Découvrez l'efficacité et la résistance des médicaments antipaludiques et ce que l'OMS recommande pour lutter contre cette menace pour le contrôle et l'élimination du paludisme."
+            },
+            "diagnosis":{
+                "title": "Délétions du gène <i>pfhrp2/3</i> parasitaire",
+                "description": "Découvrez les délétions du gène pfhrp2/3 du parasite et ce que l'OMS recommande pour lutter contre cette menace pour le contrôle et l'élimination du paludisme."
+            }
+        },
         "footer": {
             "policies": {
                 "title": "Stratégies",

@@ -48,17 +48,25 @@ const MenuItems: React.FC<DirectionProps> = ({ flexDirection }) => {
                 name: t("common.homepage.menu.stories"),
                 hoverPaddingRight: 7,
                 submenus: [
-                    { kind: "simple-menu" as const, name: t("common.themes.prevention"), path: "/" },
-                    { kind: "simple-menu" as const, name: t("common.themes.invasive"), path: "/" },
                     {
-                        kind: "simple-menu" as const,
+                        kind: "simple-menu-trans" as const,
+                        name: t("common.themes.prevention"),
+                        path: "/stories?theme=prevention",
+                    },
+                    {
+                        kind: "simple-menu-trans" as const,
+                        name: t("common.themes.invasive"),
+                        path: "/stories?theme=invasive",
+                    },
+                    {
+                        kind: "simple-menu-trans" as const,
                         name: t("common.homepage.stories_submenu.antimalarial_drug_efficacy_and_resistance"),
-                        path: "/",
+                        path: "/stories?theme=treatment",
                     },
                     {
                         kind: "simple-menu-trans" as const,
                         name: "common.homepage.stories_submenu.parasite_pfhrp_gene_deletions",
-                        path: "/",
+                        path: "/stories?theme=diagnosis",
                     },
                 ],
             },
