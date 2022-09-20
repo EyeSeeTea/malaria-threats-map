@@ -70,6 +70,41 @@
                 "button": "Liste des remerciements"
             }
         },
+        "dashboard": {
+            "title": "Tableaux de bord",
+            "filtersSection": {
+                "first": {
+                    "title": "1. Sélectionnez le thème",
+                    "buttonOne": "Résistance des vecteurs aux insecticides",
+                    "buttonTwo": "Efficacité et résistance des médicaments antipaludiques"
+                },
+                "second": {
+                    "title": "2. Sélectionnez le pays",
+                    "helper": "Sélectionnez jusqu'à 5 pays",
+                    "lastUpdate": "Dernière mise à jour des données pour cette sélection de filtre :",
+                    "cta": "Générer tableau de bord"
+                },
+                "note": "Note : Un grand nombre de points de données est nécessaire pour créer un tableau de bord. Pour cette raison, les tableaux de bord ne sont actuellement disponibles que pour deux des quatre thèmes : la résistance des vecteurs aux insecticides et l'efficacité et la résistance des médicaments antipaludiques. Les tableaux de bord continueront à se développer au fur et à mesure que des données supplémentaires seront disponibles."
+            },
+            "contentsSection": {
+                "title": "Contenu:",
+                "countryOptions": {
+                    "countryContext": "Contexte du pays",
+                    "epidemiologicalProfile": "Profil épidémiologique",
+                    "majorPlasmodium": "Principales espèces de Plasmodium et régime de traitement"
+                },
+                "therapeuticResultsOptions": {
+                    "therapeuticEfficacy": "Résultats des études sur l'efficacité thérapeutique",
+                    "summaryTreatmentFailures": "Résumé des taux d'échec thérapeutique par médicament",
+                    "treatmentFailureRates": "Taux d'échec des traitements dans le temps",
+                    "parasiteClearanceRates": "Taux d'élimination des parasites dans le temps"
+                },
+                "molecularResultsOptions": {
+                    "molecularMarker": "Résultats de l'étude des marqueurs moléculaires",
+                    "summaryMolecularMarker": "Résumé des résultats des études sur les marqueurs moléculaires au fil du temps"
+                }
+            }
+        },
         "homepage": {
             "menu": {
                 "home": "Domicile",
