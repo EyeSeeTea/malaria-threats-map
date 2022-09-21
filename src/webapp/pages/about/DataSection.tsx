@@ -9,7 +9,13 @@ const DataSection = () => {
     return (
         <section>
             <Container maxWidth="xl">
-                <Grid container spacing={2} sx={{ marginTop: 4, marginBottom: 4 }} alignItems="center">
+                <Grid
+                    container
+                    spacing={2}
+                    sx={{ marginTop: 4, marginBottom: 4 }}
+                    alignItems="center"
+                    paddingX={{ xs: 2, md: "initial" }}
+                >
                     <Grid item md={6} xs={12}>
                         <Typography variant="h4" fontWeight="bold" color="inherit" marginBottom="25px">
                             {t("common.aboutPage.dataSection.title")}

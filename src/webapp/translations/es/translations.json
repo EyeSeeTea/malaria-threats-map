@@ -2,6 +2,7 @@
     "common": {
         "layers": "Capas",
         "mekong_link": "Ir a la capa Greather Mekong",
+        "takeATour": "¿No sabe por dónde empezar? Haga un recorrido.",
         "title": {
             "title": "Mapa de los desafíos de la malaria",
             "subtitle": "Seguimiento de los desafíos biológicos para el control y la eliminación de la malaria"
@@ -25,12 +26,12 @@
                     "title": "Una visión general de los mapas"
                 },
                 "video2": {
-                    "url": "https://www.youtube.com/embed/VP-pc9oN0dM",
+                    "url": "https://www.youtube.com/embed/diMb_gbUUbM",
                     "alt": "Mapa de amenazas de malaria: apoyando los esfuerzos de investigación",
                     "title": "Cómo apoya el MTM los esfuerzos de investigación?"
                 },
                 "video3": {
-                    "url": "https://www.youtube.com/embed/mkggjD0DKwY",
+                    "url": "https://www.youtube.com/embed/x5P45TynlgM",
                     "alt": "Mapa de amenazas de malaria: ayudar a los países a abordar amenazas críticas para el control y la eliminación de la malaria",
                     "title": "Cómo está apoyando el MTM a los países?"
                 }
@@ -595,6 +596,11 @@
                         "resistance_mechanism_assays_biochemical": "Resultados de pruebas de detección de mecanismos bioquímicos de la resistencia"
                     }
                 },
+                "diagnosis": {
+                    "datasets": {
+                        "gene_deletions": "Deleción del gen pfhrp2/3"
+                    }
+                },
                 "treatment": {
                     "datasets": {
                         "therapeutic_efficacy_studies": "Resultados de los estudios de eficacia terapéutica",
@@ -649,6 +655,7 @@
                 "add_to_download": "Agregar para descargar",
                 "db_download_list": "Lista de descargas de la base de datos",
                 "db_download_helper_text": "Su lista de bases de datos seleccionadas para descargar se mostrará aquí. Para agregar datos, filtre los datos que necesita a la derecha y haga clic en “Agregar para descargar“.",
+                "prevention_warning": "Tenga en cuenta que no todos los contribuyentes del tema de la resistencia de los vectores a los insecticidas nos han permitido compartir sus datos. Por lo tanto, algunos de los datos en Malaria Threats Map no están disponibles para descargar. Para los datos extraídos de las publicaciones, tenga en cuenta que cuando los valores de las variables relevantes no se proporcionaron directamente en las publicaciones o se analizaron de manera diferente a la recomendada por la OMS, los valores se calcularon a partir de los datos informados.",
                 "data_set": "Conjunto de datos:",
                 "data": "Datos:",
                 "location": "Ubicación:",
@@ -918,6 +925,30 @@
             "CITATION": "Cita de la publicación donde se publicaron los datos",
             "CITATION_URL": "URL de la publicación donde se publicaron los datos",
             "DATA_CURATOR": "Instituto que compiló los datos. Parte de los datos en esta base de datos ha sido compilada por instituciones colaboradoras que compartieron sus colecciones de datos con la OMS. Esta columna indicará el nombre de la institución o grupo que compiló los datos."
+        },
+        "diagnosis": {
+            "ID": "Identificador único del bioensayo",
+            "COUNTRY_NAME": "Nombre del país donde se realizó el bioensayo",
+            "ADMIN1": "Nivel administrativo 1 donde se recolectaron los mosquitos",
+            "ADMIN2": "Nivel administrativo 2 donde se colectaron los mosquitos",
+            "SITE_NAME": "Sitio donde se recolectaron los mosquitos",
+            "LATITUDE": "Latitud del sitio donde se colectaron los mosquitos",
+            "LONGITUDE": "Longitud del sitio donde se recolectaron los mosquitos",
+            "YEAR_START": "Año en que comenzó la recolección de mosquitos",
+            "SURVEY_TYPE": "Tipo de Encuesta realizada",
+            "PATIENT_TYPE": "Estado clínico del paciente",
+            "HRP2_TESTED": "Número de muestras analizadas para deleciones HRP2",
+            "HRP2_PROPORTION_DELETION": "Porcentaje de muestras de Pf analizadas con deleciones HRP2",
+            "HRP3_TESTED": "Número de muestras analizadas para deleciones HRP3",
+            "HRP3_PROPORTION_DELETION": "Porcentaje de muestras de Pf analizadas con deleciones HRP3",
+            "HRP2_HRP3_TESTED": "Número de muestras de Pf analizadas para deleciones HRP2 Y HRP3",
+            "HRP2_HRP3_PROPORTION_DELETION": "Porcentaje de muestras de Pf analizadas con deleciones HRP2 Y HRP3",
+            "DELETETION_STATUS": "Tipo de borrado: confirmado o sospechoso",
+            "SAMPLE_ORIGIN": "Muestras lugar de origen, cuando se toman de viajeros que regresan",
+            "PF_POS_SAMPLES": "Número de muestras positivas de P. falciparum en la encuesta total",
+            "TYPE_SAMPL_ANALYZED": "tipo de muestra analizada: todas, solo discordantes o no representativas",
+            "CITATION": "Cita de la publicación donde se publicaron los datos",
+            "CITATION_URL": "URL de la publicación donde se publicaron los datos"
         }
     },
     "invasiveStory": {
@@ -998,33 +1029,19 @@
     "tour": {
         "steps": {
             "1": {
-                "title": "Bienvenido al Mapa de los desafíos de la malaria!",
-                "p1": "Usted se encuentra en una plataforma oficial de la OMS creada con el objetivo de mostrar la magnitud y la distribución geográfica de cuatro desafíos biológicos para el control y eliminación de la malaria.",
-                "p2": "Este asistente le mostrará cómo utilizar la plataforma."
+                "title": "Seleccione un tema"
             },
             "2": {
-                "title": "Por favor, selecciona un idioma."
+                "title": "Seleccione un mapa para explorar los resultados del estudio"
             },
             "3": {
-                "p1": "Abra nuestros mapas interactivos que muestran datos recientes sobre los tres desafíos."
+                "title": "Añadir filtros para producir un mapa limitado a criterios específicos"
             },
             "4": {
-                "p1": "Abra la sección filtros para aplicar filtros aplicables al desafío asi como filtros por regiones"
+                "title": "Seleccione una región, subregión, país y/o sitio específico"
             },
             "5": {
-                "p1": "Seleccione un país, una región o una sub-región o deje estos campos vacíos si prefiere ver todos los países a la vez."
-            },
-            "6": {
-                "p1": "Seleccione varios filtros y observer cómo el mapa cambia automáticamente."
-            },
-            "7": {
-                "p1": "Haga clic en un punto para acceder a los resultados de los bioensayos que cumplen sus criterios de búsqueda. La ventana emergente muestra los resultados para un solo estudio. Si hubiera más estudios que cumple sus criterios de búsqueda para ese punto, puede ver los resultados haciendo clic en la flecha >"
-            },
-            "8": {
-                "p1": "Consulte los resultados de los bioensayos de resistencia efectuados en cada lugar de monitoria de cada país."
-            },
-            "9": {
-                "p1": "Haga clic en un país para ver un resumen del estado de la resistance para dicho país."
+                "title": "Haga clic en un sitio para ver los detalles del estudio"
             }
         }
     },

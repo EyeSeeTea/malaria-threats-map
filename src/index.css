@@ -212,3 +212,18 @@ code {
     height: auto;
     width: 400px;
 }
+
+.tour-modal {
+    border-radius: 10px;
+}
+
+.tour-modal::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent white transparent transparent;
+}

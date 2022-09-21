@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "../Icons";
+import { Box } from "@mui/material";
 import { GridSize } from "@mui/material";
 
 const Label = styled.span`
@@ -85,9 +86,11 @@ const ThemeMapActions: React.FC<Props> = ({ theme, themeItemGridSize }) => {
     }, [theme, t]);
 
     return (
-        <ActionGroupItem placeholder={t("mapActions.selectTheme")} actionGroupKey={"THEME"} value={themeValue}>
-            <TopicSelector themeItemGridSize={themeItemGridSize} />
-        </ActionGroupItem>
+        <Box id="theme">
+            <ActionGroupItem placeholder={t("mapActions.selectTheme")} actionGroupKey={"THEME"} value={themeValue}>
+                <TopicSelector themeItemGridSize={themeItemGridSize} />
+            </ActionGroupItem>
+        </Box>
     );
 };
 

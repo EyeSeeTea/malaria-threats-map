@@ -106,7 +106,7 @@ const DownloadFiltersContent: React.FC<Props> = ({
             }
         case "diagnosis":
             switch (diagnosisFilters.dataset) {
-                case "DIAGNOSIS":
+                case "PFHRP23_GENE_DELETIONS":
                     return (
                         <div>
                             <DeletionTypeFilter />

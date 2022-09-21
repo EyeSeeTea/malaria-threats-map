@@ -59,7 +59,7 @@ import { changeLanguage } from "../config/i18next";
 import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
 import LastUpdated from "./last-updated/LastUpdated";
 import FloatingLegend from "./legend/FloatingLegendContainer";
-import GreaterMekongLink from "./greater-mekong-link/GreaterMekongLink";
+import InfoToastLink from "./InfoToastLink";
 import SiteSelectionContent from "./site-selection-content/SiteSelectionContent";
 import SecondaryHeader from "../pages/secondary-layout/SecondaryHeader";
 
@@ -193,8 +193,24 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = StateProps & DispatchProps & WithTranslation;
+type StateTypes = {
+    ready: boolean;
+    theme: string;
+    style: mapboxgl.Style;
+    menuOpen: boolean;
+    viewMapOnly: boolean; // show only the legend and last-data-update boxes
+    viewport: {
+        latitude: number;
+        longitude: number;
+        zoom: number;
+        bearing: number;
+        pitch: number;
+    };
+    open: boolean;
+    selectedValue: string;
+};
 
-class Map extends React.Component<Props> {
+class Map extends React.Component<Props, StateTypes> {
     map: mapboxgl.Map;
     mapContainer: any;
     state = {
@@ -339,9 +355,14 @@ class Map extends React.Component<Props> {
                 {ready && <DiagnosisLayer map={this.map} />}
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
+                {ready && (
+                    <TopMiddleContainer>
+                        <InfoToastLink text={this.props.t("common.takeATour")} type="tour" />
+                    </TopMiddleContainer>
+                )}
                 {theme === "treatment" && (
                     <TopMiddleContainer>
-                        <GreaterMekongLink />
+                        <InfoToastLink text={this.props.t("common.mekong_link")} type="greaterMekong" />
                     </TopMiddleContainer>
                 )}
                 {/* TODO:Refactor SecondaryHeader from here and use Secondary Layout in MapPage */}
@@ -354,6 +375,7 @@ class Map extends React.Component<Props> {
                                 </Box>
                             }
                             onDrawerOpenChange={open => this.setState({ menuOpen: open })}
+                            toggleLanguageModal={() => this.setState(prevState => ({ open: !prevState.open }))}
                         />
                     </Hidden>
                 )}
