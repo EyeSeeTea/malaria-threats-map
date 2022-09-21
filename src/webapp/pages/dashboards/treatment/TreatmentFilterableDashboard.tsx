@@ -18,7 +18,7 @@ interface TreatmentFilterableDashboardProps {
     drugsClearable: boolean;
     chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject>;
     title: string;
-    type: string;
+    type: "treatmentFailureByDrug" | "treatmentFailure" | "positiveDay3" | "molecularMarkerStudy";
     filteredStudiesForDrugs: TreatmentStudy[];
     studiesCount: number;
     plasmodiumSpecies: string;

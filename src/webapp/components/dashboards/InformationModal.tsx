@@ -4,6 +4,9 @@ import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
 import { escape } from "lodash";
+import { useDashboards } from "../../pages/dashboards/context/useDashboards";
+import { LastUpdatedDates } from "../../store/types";
+import { format } from "date-fns";
 
 type InformationModalProps = {
     title: string;
@@ -231,6 +234,7 @@ export default function InformationModal({
     handleCloseInfoModal,
 }: InformationModalProps): JSX.Element {
     const { t } = useTranslation();
+    const { theme, updatedDates } = useDashboards();
 
     const ModalContent = () => {
         switch (type) {
@@ -285,7 +289,7 @@ export default function InformationModal({
                             <Trans i18nKey="common.dashboard.informationModal.common.dataLastUpdated" t={t}>
                                 <strong>Data last updated:</strong>
                             </Trans>{" "}
-                            05/11/2021
+                            {format(updatedDates[theme as keyof LastUpdatedDates], "dd/MM/yyyy")}
                         </Typography>
                     </Stack>
                 </Stack>
