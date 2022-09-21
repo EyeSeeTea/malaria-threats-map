@@ -10,9 +10,9 @@ import { useFiltersVisible } from "../common/filters/useFiltersVisible";
 import { downloadHtmlElement } from "../utils";
 import DashboardTitle from "../common/DashboardTitle";
 
-interface TreatmentFilterableDashboardProps {
+interface PreventionFilterableDashboardProps {
     title: string;
-    chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject>;
+    chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject[] | HighchartsReact.RefObject>;
     filters: PreventionFiltersState;
     onYearsChange: (years: [number, number]) => void;
     onInsecticideClassesChange: (value: string[]) => void;
@@ -20,7 +20,7 @@ interface TreatmentFilterableDashboardProps {
     onOnlyIncludeDataByHealthChange: (value: boolean) => void;
 }
 
-const PreventionFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = ({
+const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = ({
     title,
     filters,
     onInsecticideClassesChange,
@@ -37,9 +37,13 @@ const PreventionFilterableDashboard: React.FC<TreatmentFilterableDashboardProps>
     const ref = useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
-        const chart = chartComponentRef?.current?.chart;
-
-        chart?.reflow();
+        if (Array.isArray(chartComponentRef?.current)) {
+            chartComponentRef?.current?.forEach(current => {
+                current?.chart?.reflow();
+            });
+        } else {
+            chartComponentRef?.current?.chart.reflow();
+        }
     }, [filtersVisible, chartComponentRef]);
 
     const handleDownload = React.useCallback(() => {

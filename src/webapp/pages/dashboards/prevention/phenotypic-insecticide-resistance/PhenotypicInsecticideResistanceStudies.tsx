@@ -5,11 +5,13 @@ import { Container } from "../../../../components/site-selection-content/SiteSel
 import { PhenotypicInsecticideResistance } from "../types";
 import ResistanceToInsecticideDashboard from "./ResistanceToInsecticideDashboard";
 
-interface TreatmentEfficacyStudiesProps {
+interface PhenotypicInsecticideResistanceStudiesProps {
     phenotypicInsecticideResistance: PhenotypicInsecticideResistance;
 }
 
-const TreatmentEfficacyStudies: React.FC<TreatmentEfficacyStudiesProps> = ({ phenotypicInsecticideResistance }) => {
+const PhenotypicInsecticideResistanceStudies: React.FC<PhenotypicInsecticideResistanceStudiesProps> = ({
+    phenotypicInsecticideResistance,
+}) => {
     const { t } = useTranslation();
 
     return (
@@ -24,7 +26,7 @@ const TreatmentEfficacyStudies: React.FC<TreatmentEfficacyStudiesProps> = ({ phe
     );
 };
 
-export default TreatmentEfficacyStudies;
+export default PhenotypicInsecticideResistanceStudies;
 
 const TitleDivider = styled.div`
     height: 4px;

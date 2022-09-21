@@ -45,6 +45,7 @@ function InsecticideClassSelector({ insecticideClasses = [], onChange, value }: 
             onChange={onChange}
             value={value}
             margin={"10px 0px"}
+            isClearable={true}
         />
     );
 }

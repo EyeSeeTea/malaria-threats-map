@@ -6,7 +6,7 @@ export interface PreventionFiltersState {
 }
 
 export const initialPreventionFilters: PreventionFiltersState = {
-    insecticideClasses: [],
+    insecticideClasses: ["PYRETHROIDS", "ORGANOCHLORINES", "CARBAMATES", "ORGANOPHOSPHATES"],
     years: [2010, new Date().getFullYear()],
     onlyIncludeBioassaysWithMoreMosquitoes: 0,
     OnlyIncludeDataByHealth: false,
