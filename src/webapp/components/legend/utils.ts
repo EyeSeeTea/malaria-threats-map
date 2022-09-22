@@ -14,6 +14,7 @@ import { DIAGNOSIS_STATUS } from "../layers/diagnosis/GeneDeletions/utils";
 import { INVASIVE_STATUS } from "../layers/invasive/VectorOccurance/utils";
 import { InvasiveStatusColors } from "../layers/invasive/VectorOccurance/vector-ocurrance-symbols";
 import { IntensityStatusColors } from "../layers/prevention/IntensityStatus/symbols";
+import { ResistanceStatusColors } from "../layers/prevention/ResistanceStatus/symbols";
 import { INTENSITY_STATUS } from "../layers/prevention/IntensityStatus/utils";
 import { LevelOfInvolvementColors } from "../layers/prevention/Involvement/symbols";
 import { LEVEL_OF_INVOLVEMENT } from "../layers/prevention/Involvement/utils";
@@ -101,7 +102,7 @@ export function getLegendLabels(
 ): LegendLabel[] {
     switch (theme) {
         case "prevention":
-            return getPreventionLegendLebels(preventionFilters);
+            return getPreventionLegendLabels(preventionFilters);
         case "diagnosis":
             return getDiagnosisLegendLabels(diagnosisFilters);
         case "treatment":
@@ -113,23 +114,32 @@ export function getLegendLabels(
     }
 }
 
-function getPreventionLegendLebels(filters: PreventionFilters): LegendLabel[] {
+function getPreventionLegendLabels(filters: PreventionFilters): LegendLabel[] {
+    const resistanceStatusLabels = [
+        {
+            label: "prevention.legend.resistance_status.confirmed",
+            color: ResistanceStatusColors.Confirmed[0],
+        },
+        {
+            label: "prevention.legend.resistance_status.possible",
+            color: ResistanceStatusColors.Possible[0],
+        },
+        {
+            label: "prevention.legend.resistance_status.susceptible",
+            color: ResistanceStatusColors.Susceptible[0],
+        },
+    ];
+    const greyLabel = {
+        label: "prevention.legend.resistance_status.undetermined",
+        color: ResistanceStatusColors.Undetermined[0],
+    };
+
     switch (filters.mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
-            return [
-                {
-                    label: "prevention.legend.resistance_status.confirmed",
-                    color: "#d43501",
-                },
-                {
-                    label: "prevention.legend.resistance_status.possible",
-                    color: "#ff9502",
-                },
-                {
-                    label: "prevention.legend.resistance_status.susceptible",
-                    color: "#869c66",
-                },
-            ];
+            return filters.insecticideClass === "PYRROLES" || filters.insecticideClass === "ORGANOPHOSPHATES"
+                ? resistanceStatusLabels.concat(greyLabel)
+                : resistanceStatusLabels;
+
         case PreventionMapType.INTENSITY_STATUS:
             return [
                 {
@@ -167,15 +177,15 @@ function getPreventionLegendLebels(filters: PreventionFilters): LegendLabel[] {
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return [
                 {
-                    label: "prevention.legend.synergist_involvement.full_involvement",
+                    label: "prevention.legend.synergist_involvement.full_restoration",
                     color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT][0],
                 },
                 {
-                    label: "prevention.legend.synergist_involvement.partial_involvement",
+                    label: "prevention.legend.synergist_involvement.partial_restoration",
                     color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT][0],
                 },
                 {
-                    label: "prevention.legend.synergist_involvement.no_involvement",
+                    label: "prevention.legend.synergist_involvement.no_restoration",
                     color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT][0],
                 },
             ];

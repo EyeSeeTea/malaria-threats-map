@@ -1,18 +1,18 @@
 import { createAction, createCustomAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import { ActionGroup, RegionState, SiteSelection } from "../types";
+import { SelectionData } from "../SelectionData";
 import { AjaxError } from "rxjs/ajax";
 import { UploadFileData } from "../../../domain/usecases/UploadFileUseCase";
+import { Option } from "../../components/BasicSelect";
 
-interface SetThemeOptions {
-    fromHome?: boolean;
-}
+export type Source = "map" | "download";
 
 export const setThemeAction = createCustomAction(
     ActionTypeEnum.MalariaSetTheme,
-    (theme: string, options: SetThemeOptions = {}) => ({
+    (theme: string, from: Source = "map") => ({
         payload: theme,
-        meta: options,
+        from,
     })
 );
 
@@ -51,6 +51,10 @@ export const setSelection = createAction(ActionTypeEnum.SetSelection)<SiteSelect
 
 export const setHoverSelection = createAction(ActionTypeEnum.SetHoverSelection)<SiteSelection | null>();
 
+export const setSelectionData = createAction(ActionTypeEnum.SetSelectionData)<SelectionData>();
+
+export const setSelectionDataFilterSelection = createAction(ActionTypeEnum.SetSelectionDataFilterSelection)<Option[]>();
+
 export const setMobileOptionsOpen = createAction(ActionTypeEnum.SetMobileOptionsOpen)<boolean>();
 
 export const updateZoomAction = createAction(ActionTypeEnum.UpdateZoom)<number>();
@@ -63,13 +67,9 @@ export const setTourOpenAction = createAction(ActionTypeEnum.SetTourOpen)<boolea
 
 export const setTourStepAction = createAction(ActionTypeEnum.SetTourStep)<number>();
 
-export const setDataDownloadOpenAction = createAction(ActionTypeEnum.SetDataDownloadOpen)<boolean>();
-
 export const setReportOpenAction = createAction(ActionTypeEnum.SetReportOpen)<boolean>();
 
 export const setMapTitleAction = createAction(ActionTypeEnum.SetMapTitle)<string>();
-
-export const setSubscriptionOpenAction = createAction(ActionTypeEnum.SetSubscriptionOpen)<boolean>();
 
 export const setUploadFileOpenAction = createAction(ActionTypeEnum.SetUploadFileOpen)<boolean>();
 

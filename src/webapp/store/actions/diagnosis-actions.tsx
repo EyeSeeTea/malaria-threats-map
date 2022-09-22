@@ -15,7 +15,9 @@ export const setDiagnosisSurveyTypes = createAction(ActionTypeEnum.SetSurveyType
 
 export const setDiagnosisPatientType = createAction(ActionTypeEnum.SetPatientType)<string>();
 
-export const setDiagnosisMapType = createAction(ActionTypeEnum.SetDiagnosisMapType)<DiagnosisMapType>();
+export const setDiagnosisMapType = createAction(ActionTypeEnum.SetDiagnosisMapType)<DiagnosisMapType | null>();
+
+export const setDiagnosisDataset = createAction(ActionTypeEnum.SetDiagnosisDataset)<string | null>();
 
 export const setDiagnosisDeletionType = createAction(ActionTypeEnum.SetDeletionType)<string>();
 

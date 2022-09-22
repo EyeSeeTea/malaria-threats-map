@@ -2,7 +2,7 @@ import React from "react";
 import YearRangeSelector from "../../../YearRangeSelector";
 import VectorSpeciesFilter from "../../../filters/VectorSpeciesFilter";
 import { Link } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { Snackbar } from "../../common/Snackbar";
 
 export default function VectorOccuranceFilters() {
@@ -12,7 +12,9 @@ export default function VectorOccuranceFilters() {
             <VectorSpeciesFilter />
             <YearRangeSelector minYear={1985} maxYear={new Date().getFullYear()} />
             <Snackbar>
-                {t("common.invasive.legend.vector_occurrance.link_content_1")}
+                <Trans i18nKey="common.invasive.legend.vector_occurrance.link_content_1">
+                    If you have detected invasive <i>Anopheles</i> vector species please report to us through the
+                </Trans>
                 <Link href={t("common.invasive.legend.vector_occurrance.link")} target="_blank">
                     {t("common.invasive.legend.vector_occurrance.link_text")}
                 </Link>

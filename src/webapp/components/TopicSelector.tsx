@@ -1,7 +1,7 @@
 import React from "react";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import styled from "styled-components";
-import { Box, Button, Grid, IconButton } from "@mui/material";
+import { Box, Grid, GridSize, IconButton } from "@mui/material";
 import { State } from "../store/types";
 import { connect } from "react-redux";
 import { setActionGroupSelected, setThemeAction } from "../store/actions/base-actions";
@@ -21,13 +21,14 @@ const GridItem = styled(Grid)`
 `;
 
 const StyledIconButton = styled(IconButton)`
-    padding: 8px 40px 4px 40px !important;
+    padding: 18px 40px 10px 40px !important;
 `;
 
 const ThemeButton = styled.div<{ disabled?: boolean }>`
     display: flex;
     flex-direction: column;
     text-align: center;
+
     cursor: ${props => (props.disabled ? "not-allowed" : "")};
     opacity: ${props => (props.disabled ? 0.7 : 1)};
     background: #f5f5f5;
@@ -39,7 +40,7 @@ const ThemeButton = styled.div<{ disabled?: boolean }>`
         background-color: #e2e2e2;
     }
     height: 152px;
-    padding 4px;
+    padding: 6px;
 `;
 
 const Title = styled.span`
@@ -55,12 +56,16 @@ const Title = styled.span`
     align-items: center;
 `;
 
-const LearnMoreButton = styled(Button)`
-    color: #487299;
-    font-size: 13px;
-    text-decoration: underline;
-    padding: 2px 8px;
-`;
+// const LearnMoreButton = styled(Button)`
+//     color: #487299;
+//     font-size: 13px;
+//     text-decoration: underline;
+//     padding: 2px 8px;
+// `;
+
+interface ownProps {
+    themeItemGridSize?: GridSize;
+}
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -77,9 +82,10 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type Props = DispatchProps & StateProps & ownProps;
 
 const ThemeSelector: React.FC<Props> = ({
+    themeItemGridSize,
     theme,
     setTheme,
     preventionError,
@@ -112,8 +118,8 @@ const ThemeSelector: React.FC<Props> = ({
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <GridContainer container spacing={1}>
-                <GridItem item xs={6}>
+            <GridContainer container spacing={2}>
+                <GridItem item xs={themeItemGridSize || 6}>
                     <ThemeButton disabled={!!preventionError}>
                         <StyledIconButton
                             disableRipple
@@ -124,10 +130,10 @@ const ThemeSelector: React.FC<Props> = ({
                             <PreventionIcon selected={theme === "prevention" && !preventionError} />
                         </StyledIconButton>
                         <Title>{t("common.themes.prevention")}</Title>
-                        <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton>
+                        {/* <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton> */}
                     </ThemeButton>
                 </GridItem>
-                <GridItem item xs={6}>
+                <GridItem item xs={themeItemGridSize || 6}>
                     <ThemeButton disabled={!!invasiveError}>
                         <StyledIconButton
                             disableRipple
@@ -138,10 +144,10 @@ const ThemeSelector: React.FC<Props> = ({
                             <InvasiveIcon selected={theme === "invasive"} />
                         </StyledIconButton>
                         <Title>{t("common.themes.invasive")}</Title>
-                        <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton>
+                        {/* <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton> */}
                     </ThemeButton>
                 </GridItem>
-                <GridItem item xs={6}>
+                <GridItem item xs={themeItemGridSize || 6}>
                     <ThemeButton disabled={!!treatmentError}>
                         <StyledIconButton
                             disableRipple
@@ -152,10 +158,10 @@ const ThemeSelector: React.FC<Props> = ({
                             <TreatmentIcon selected={theme === "treatment"} />
                         </StyledIconButton>
                         <Title>{t("common.themes.treatment")}</Title>
-                        <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton>
+                        {/* <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton> */}
                     </ThemeButton>
                 </GridItem>
-                <GridItem item xs={6}>
+                <GridItem item xs={themeItemGridSize || 6}>
                     <ThemeButton disabled={!!diagnosisError}>
                         <StyledIconButton
                             disableRipple
@@ -166,7 +172,7 @@ const ThemeSelector: React.FC<Props> = ({
                             <DiagnosisIcon selected={theme === "diagnosis"} />
                         </StyledIconButton>
                         <Title>{t("common.themes.diagnosis")}</Title>
-                        <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton>
+                        {/* <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton> */}
                     </ThemeButton>
                 </GridItem>
             </GridContainer>

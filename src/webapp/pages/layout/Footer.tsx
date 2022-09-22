@@ -31,11 +31,19 @@ const ColumnTitle = styled(Typography)`
 const StyledNewsletterButton = styled(Button)`
     &.MuiButton-root {
         color: white;
-        font-size: 18px;
+        font-size: 16px;
         background-color: black;
         font-weight: bold;
         max-width: 355px;
         margin-top: 16px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-right: 20px;
+        padding-left: 20px;
+        white-space: nowrap;
+        @media (max-width: 425px) {
+            font-size: 12px;
+        }
     }
 `;
 

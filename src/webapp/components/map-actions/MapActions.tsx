@@ -27,7 +27,7 @@ const MapActions: React.FC = () => {
                 <Divider />
                 <MapTypeMapActions />
                 <Divider />
-                <DataMapActions />
+                <DataMapActions from={"map"} />
                 <Divider />
                 <LocationMapActions />
             </StyledList>

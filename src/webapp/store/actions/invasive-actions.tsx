@@ -9,7 +9,9 @@ export const fetchInvasiveStudiesSuccess = createAction(ActionTypeEnum.FetchInva
 
 export const fetchInvasiveStudiesError = createAction(ActionTypeEnum.FetchInvasiveStudiesError)();
 
-export const setInvasiveMapType = createAction(ActionTypeEnum.SetInvasiveMapType)<InvasiveMapType>();
+export const setInvasiveMapType = createAction(ActionTypeEnum.SetInvasiveMapType)<InvasiveMapType | null>();
+
+export const setInvasiveDataset = createAction(ActionTypeEnum.SetInvasiveDataset)<string | null>();
 
 export const setInvasiveVectorSpecies = createAction(ActionTypeEnum.SetInvasiveVectorSpecies)<string[]>();
 
