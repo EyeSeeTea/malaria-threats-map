@@ -1,6 +1,6 @@
-import { Box, Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Box, Container, Grid, Paper, TextField, Typography } from "@mui/material";
 import React from "react";
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation, Trans, TFunction } from "react-i18next";
 import styled from "styled-components";
 import Layout from "../layout/Layout";
 import HomepageMap from "../../assets/img/homepage-map.png";
@@ -10,7 +10,6 @@ import { selectFeedback } from "../../store/reducers/feedback-reducer";
 import { feedbackFieldChange, feedbackSubmit } from "../../store/actions/feedback-actions";
 import ShareDataChart from "../../assets/img/share-data-page/share-data-chart.png";
 import ContributeDataGraphic from "../../assets/img/share-data-page/contribute-data.png";
-import DownloadIcon from "@mui/icons-material/Download";
 
 const ImageBanner = styled.div`
     background: linear-gradient(90deg, #bbd7e8 0%, #bbd7e800 100%), url(${HomepageMap});
@@ -24,34 +23,6 @@ const TitleContainer = styled(Container)`
     font-weight: lighter;
     @media (max-width: 768px) {
         padding-top: 5vh;
-    }
-`;
-const BlueStyledButton = styled(Button)`
-    &.MuiButton-root {
-        color: white;
-        font-size: 18px;
-        background-color: #1899cc;
-        font-weight: bold;
-        margin-top: 16px;
-        padding: 6px 50px;
-        width: fit-content;
-        @media (max-width: 768px) {
-            font-size: 13px;
-            padding: 6px 20px;
-        }
-    }
-`;
-
-const BlackStyledButton = styled(Button)`
-    &.MuiButton-root {
-        color: white;
-        font-size: 18px;
-        background-color: black;
-        font-weight: bold;
-        margin-top: 16px;
-        @media (max-width: 768px) {
-            font-size: 13px;
-        }
     }
 `;
 
@@ -68,16 +39,6 @@ const ContributeDataImage = styled.img`
     height: auto;
 `;
 
-const ListLink = styled.a`
-    color: #08bbe1;
-    &:visited {
-        color: #08bbe1;
-    }
-    &:hover {
-        color: #1899cc;
-    }
-`;
-
 const mapStateToProps = (state: State) => ({
     feedback: selectFeedback(state),
 });
@@ -85,6 +46,19 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     fieldChange: feedbackFieldChange,
     submit: feedbackSubmit,
+};
+
+const SectionsFooter = ({ t }: { t: TFunction<"translation", undefined> }) => {
+    return (
+        <Typography fontSize={{ xs: "18px", md: "25px" }}>
+            <Trans i18nKey="common.shareDataPage.sectionsFooter" t={t}>
+                Completed forms can be sent to:{" "}
+                <a href="mailto:vectorsurveillance@who.int" target="_blank" rel="noreferrer">
+                    vectorsurveillance@who.int
+                </a>
+            </Trans>
+        </Typography>
+    );
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -122,31 +96,43 @@ const ShareDataPage: React.FC<Props> = () => {
                             {t("common.shareDataPage.section1.title")}
                         </Typography>
                         <Typography marginBottom="25px" fontSize={{ xs: "18px", md: "25px" }} maxWidth={"90%"}>
-                            {t("common.shareDataPage.section1.description")}
+                            <Trans i18nKey="common.shareDataPage.section1.description" t={t}>
+                                We invite data submissions from all individuals and organizations. Please report your
+                                data using the following WHO standard data collection forms. Forms are available for
+                                download{" "}
+                                <a
+                                    href="https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    here
+                                </a>
+                                .
+                            </Trans>
                         </Typography>
                         <ul>
                             <li>
                                 <Typography fontSize={{ xs: "18px", md: "25px" }}>
-                                    {t("common.shareDataPage.section1.list.1")}{" "}
-                                    <ListLink href="#">{t("common.shareDataPage.section1.list.download")}</ListLink>
+                                    {t("common.shareDataPage.section1.list.1")}
                                 </Typography>
                             </li>
                             <li>
                                 <Typography fontSize={{ xs: "18px", md: "25px" }}>
-                                    {t("common.shareDataPage.section1.list.2")}{" "}
-                                    <ListLink href="#">{t("common.shareDataPage.section1.list.download")}</ListLink>
+                                    {t("common.shareDataPage.section1.list.2")}
                                 </Typography>
                             </li>
                             <li>
                                 <Typography fontSize={{ xs: "18px", md: "25px" }}>
-                                    {t("common.shareDataPage.section1.list.3")}{" "}
-                                    <ListLink href="#">{t("common.shareDataPage.section1.list.download")}</ListLink>
+                                    {t("common.shareDataPage.section1.list.3")}
+                                </Typography>
+                            </li>
+                            <li>
+                                <Typography fontSize={{ xs: "18px", md: "25px" }}>
+                                    {t("common.shareDataPage.section1.list.4")}
                                 </Typography>
                             </li>
                         </ul>
-                        <BlueStyledButton variant="contained" color="primary" href="#">
-                            {t("common.shareDataPage.buttons.send_data")}
-                        </BlueStyledButton>
+                        <SectionsFooter t={t} />
                     </Grid>
                     <Grid item md={6} xs={12} display={"flex"} alignItems="center" justifyContent={"center"}>
                         <Box
@@ -190,25 +176,21 @@ const ShareDataPage: React.FC<Props> = () => {
                             </Trans>
                         </Typography>
                         <Typography fontSize={{ xs: "18px", md: "25px" }} marginBottom="25px" maxWidth={"90%"}>
-                            {t("common.shareDataPage.section2.description")}
-                        </Typography>
-                        <Grid width={"100%"}>
-                            <Grid item md={12} xs={12}>
-                                <BlackStyledButton
-                                    variant="contained"
-                                    color="primary"
-                                    href="#"
-                                    startIcon={<DownloadIcon />}
+                            <Trans i18nKey="common.shareDataPage.section2.description" t={t}>
+                                We invite data submissions from all individuals and organizations about{" "}
+                                <i>An. stephensi</i> detection outside of its native areas. Please report your data
+                                using the WHO standard data collection form, available{" "}
+                                <a
+                                    href="https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors"
+                                    target="_blank"
+                                    rel="noreferrer"
                                 >
-                                    {t("common.shareDataPage.buttons.download_excel")}
-                                </BlackStyledButton>
-                            </Grid>
-                            <Grid item md={12} xs={12}>
-                                <BlueStyledButton variant="contained" color="primary" href="#">
-                                    {t("common.shareDataPage.buttons.send_data")}
-                                </BlueStyledButton>
-                            </Grid>
-                        </Grid>
+                                    here
+                                </a>
+                                .
+                            </Trans>
+                        </Typography>
+                        <SectionsFooter t={t} />
                     </Grid>
                 </Grid>
             </Container>
