@@ -103,6 +103,30 @@
                     "molecularMarker": "Résultats de l'étude des marqueurs moléculaires",
                     "summaryMolecularMarker": "Résumé des résultats des études sur les marqueurs moléculaires au fil du temps"
                 }
+            },
+            "therapeuticEfficacySection": {
+                "title": "Études d'efficacité thérapeutique (EET)",
+                "numStudies": "Les filtres appliqués génèrent {{count}} études",
+                "treatmentFailureByDrug": {
+                    "title": "RÉSUMÉ DES TAUX D'ÉCHEC DU TRAITEMENT PAR MÉDICAMENT",
+                    "studyOutcome": "Résultat de l'étude:",
+                    "numStudies": "Nombre d'études",
+                    "lessThan10Patients": "<10% des patients en échec thérapeutique",
+                    "moreOrEqualThan10Patients": "≥10% des patients en échec thérapeutique"
+                },
+                "treatmentFailureOverTime": {
+                    "title": "TAUX D'ÉCHEC DU TRAITEMENT AU FIL DU TEMPS",
+                    "numberPatients": "Nombre de patients",
+                    "treatmentFailure": "Échec du traitement %",
+                    "year": "An"
+                },
+                "parasiteClearanceOverTime": {
+                    "title": "TAUX D'ÉLIMINATION DES PARASITES AU FIL DU TEMPS",
+                    "parasitemiaOnDay3": "Pourcentage de patients atteints de parasitémie au jour 3 (%)"
+                }
+            },
+            "treatmentFilters": {
+                "title": "Filtrer les données"
             }
         },
         "homepage": {

@@ -1,6 +1,6 @@
 import { createAction } from "typesafe-actions";
-import { Download } from "../../components/DataDownload/types";
 import { ActionTypeEnum } from "../actions";
+import { Download } from "../../components/DataDownload/types";
 
 export const fetchDataDownloadRequestAction = createAction(ActionTypeEnum.FetchDownloadsRequest)();
 
