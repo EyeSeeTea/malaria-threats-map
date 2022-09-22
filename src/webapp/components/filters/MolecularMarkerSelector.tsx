@@ -1,17 +1,15 @@
 import React from "react";
-import * as R from "ramda";
 import { useTranslation } from "react-i18next";
 import { ValueType } from "react-select";
 import IntegrationReactSelect, { OptionType } from "../BasicSelect";
 import styled from "styled-components";
 import { Divider, FilterWrapper } from "./Filters";
 import { Typography } from "@mui/material";
-import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
+import { MOLECULAR_MARKERS } from "./MolecularMarkerFilter";
 
 type DrugsSelectorProps = {
-    studies: TreatmentStudy[];
-    onChange: (selection: string[]) => void;
-    value: string[];
+    onChange: (selection: number) => void;
+    value: number;
     multi?: boolean;
     background?: string;
     onlyYMargin?: boolean;
@@ -19,8 +17,7 @@ type DrugsSelectorProps = {
     isClearable?: boolean;
 };
 
-const DrugsSelector: React.FC<DrugsSelectorProps> = ({
-    studies,
+const MolecularMarkerSelector: React.FC<DrugsSelectorProps> = ({
     onChange,
     value,
     multi = true,
@@ -30,34 +27,27 @@ const DrugsSelector: React.FC<DrugsSelectorProps> = ({
     isClearable = false,
 }) => {
     const { t } = useTranslation();
-    const uniques = R.uniq(R.map(R.prop("DRUG_NAME"), studies)).map(value => value.replace(".", "%2E"));
 
-    const suggestions = uniques.map((drug: string) => ({
-        label: t(drug),
-        value: drug,
+    const options = MOLECULAR_MARKERS.map(marker => ({
+        value: marker.value,
+        label: t(marker.label),
     }));
 
-    const sortedSuggestions = R.sortBy(R.prop("label"), suggestions);
-
     const onSelectionChange = (selected: ValueType<OptionType, false>) => {
-        if (Array.isArray(selected)) {
-            onChange(selected.map(v => v.value));
-        } else {
-            onChange(selected?.value);
-        }
+        onChange(selected?.value);
     };
 
-    const selection = sortedSuggestions.filter(suggestion => value && value.includes(suggestion.value));
+    const selection = MOLECULAR_MARKERS.find(marker => marker.value === value);
 
     return (
         <FilterWrapper onlyYMargin={onlyYMargin}>
             <Typography variant="body2" fontWeight={labelBold ? "bold" : undefined}>
-                {t("common.filters.drug")}
+                {t("common.filters.molecular_marker")}
             </Typography>
             <Divider />
             <Container background={background}>
                 <IntegrationReactSelect
-                    suggestions={sortedSuggestions}
+                    suggestions={options}
                     onChange={onSelectionChange}
                     value={selection}
                     isMulti={multi}
@@ -68,7 +58,7 @@ const DrugsSelector: React.FC<DrugsSelectorProps> = ({
     );
 };
 
-export default DrugsSelector;
+export default MolecularMarkerSelector;
 
 const Container = styled.div<{ background: string }>`
     background: ${props => props.background || "transparent"};

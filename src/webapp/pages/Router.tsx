@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AboutPage } from "./about/AboutPage";
 import ContactPage from "./contact/ContactPage";
+import DashboardsPage from "./dashboards/DashboardsPage";
 import { DownloadPage } from "./download/DownloadPage";
 import HomePage from "./home/HomePage";
 import MapPage from "./map/MapPage";
@@ -20,6 +21,7 @@ export const Router: React.FC = React.memo(() => {
 
                 <Route path="/maps" element={<MapPage />} />
                 <Route path="/download" element={<DownloadPage />} />
+                <Route path="/dashboards" element={<DashboardsPage />} />
 
                 {/* Default route */}
                 <Route element={<HomePage />} />

@@ -1,0 +1,159 @@
+import Highcharts from "highcharts";
+import React, { useRef } from "react";
+import { useTranslation } from "react-i18next";
+import BubbleChartHelpImage from "../../../../assets/img/dashboards/bubble-chart-help.png";
+import { BubleChartGroup, TreatmentOverTimeType } from "./types";
+import { useTreatmentOverTime } from "./useTreatmentOverTime";
+import HighchartsReact from "highcharts-react-official";
+import More from "highcharts/highcharts-more";
+import TreatmentFilterableDashboard from "../TreatmentFilterableDashboard";
+import i18next from "i18next";
+
+More(Highcharts);
+
+interface TreatmentOverTimeDashboardProps {
+    type: TreatmentOverTimeType;
+}
+
+const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({ type }) => {
+    const { t } = useTranslation();
+    const {
+        filteredStudiesForDrugs,
+        studiesCount,
+        series,
+        plasmodiumSpecies,
+        drugs,
+        molecularMarker,
+        years,
+        excludeLowerPatients,
+        onPlasmodiumChange,
+        onDrugsChange,
+        onYearsChange,
+        onExcludeLowerPatientsChange,
+        onMolecularMarkerChange,
+    } = useTreatmentOverTime(type);
+
+    const chartComponentRef = useRef(null);
+
+    return (
+        <TreatmentFilterableDashboard
+            chartComponentRef={chartComponentRef}
+            title={
+                type === "treatmentFailure"
+                    ? t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.title")
+                    : t("common.dashboard.therapeuticEfficacySection.parasiteClearanceOverTime.title")
+            }
+            drugsMultiple={false}
+            drugsClearable={false}
+            filteredStudiesForDrugs={filteredStudiesForDrugs}
+            studiesCount={studiesCount}
+            plasmodiumSpecies={plasmodiumSpecies}
+            drugs={drugs}
+            molecularMarker={molecularMarker}
+            years={years}
+            excludeLowerPatients={excludeLowerPatients}
+            onPlasmodiumChange={onPlasmodiumChange}
+            onDrugsChange={onDrugsChange}
+            onYearsChange={onYearsChange}
+            onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
+            onMolecularMarkerChange={onMolecularMarkerChange}
+        >
+            <HighchartsReact highcharts={Highcharts} options={chartOptions(type, series)} ref={chartComponentRef} />
+        </TreatmentFilterableDashboard>
+    );
+};
+
+export default React.memo(TreatmentOverTimeDashboard);
+
+function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): Highcharts.Options {
+    return {
+        chart: {
+            type: "bubble",
+            height: "600px",
+            events: {
+                load() {
+                    setTimeout(this.reflow.bind(this), 0);
+                },
+            },
+        },
+
+        legend: {
+            enabled: true,
+            verticalAlign: "top",
+            align: "left",
+            x: 50,
+            margin: 20,
+        },
+
+        title: {
+            useHTML: true,
+            text: `<div style="display: flex;flex-direction: row;align-items: center;"> 
+                    ${i18next.t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.numberPatients")} 
+                    <img width="100px" src=${BubbleChartHelpImage} alt='' />
+                   </div>`,
+            align: "right",
+            x: -30,
+            y: 40,
+            margin: 20,
+            style: {
+                fontSize: "14px",
+                fontWeight: "bold",
+            },
+        },
+
+        xAxis: {
+            gridLineWidth: 1,
+            title: {
+                text: i18next.t("common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.year"),
+                margin: 20,
+                style: {
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                },
+            },
+            tickInterval: 2,
+        },
+
+        yAxis: {
+            startOnTick: false,
+            endOnTick: false,
+            title: {
+                text:
+                    type === "treatmentFailure"
+                        ? i18next.t(
+                              "common.dashboard.therapeuticEfficacySection.treatmentFailureOverTime.treatmentFailure"
+                          )
+                        : i18next.t(
+                              "common.dashboard.therapeuticEfficacySection.parasiteClearanceOverTime.parasitemiaOnDay3"
+                          ),
+                margin: 40,
+                style: {
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                },
+            },
+            maxPadding: 0.2,
+            plotLines:
+                type === "treatmentFailure"
+                    ? [
+                          {
+                              color: "#d43616",
+                              dashStyle: "Solid",
+                              width: 3,
+                              value: 10,
+                              zIndex: 3,
+                          },
+                      ]
+                    : [],
+            min: 0,
+        },
+        tooltip: {
+            enabled: true,
+            pointFormat: "Patients {point.z}",
+        },
+        series,
+        credits: {
+            enabled: false,
+        },
+    };
+}

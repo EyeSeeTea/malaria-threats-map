@@ -49,6 +49,13 @@ export type InvasiveDataset = "INVASIVE_VECTOR_SPECIES";
 
 export type DiagnosisDataset = "PFHRP23_GENE_DELETIONS";
 
+export type LastUpdatedDates = {
+    prevention: Date | null;
+    diagnosis: Date | null;
+    treatment: Date | null;
+    invasive: Date | null;
+};
+
 export interface MalariaState {
     theme: string;
     any: any;
@@ -58,12 +65,7 @@ export interface MalariaState {
     storyModeStep: number;
     filters: number[];
     region: RegionState;
-    lastUpdatedDates: {
-        prevention: Date | null;
-        diagnosis: Date | null;
-        treatment: Date | null;
-        invasive: Date | null;
-    };
+    lastUpdatedDates: LastUpdatedDates;
     actionGroupSelected: ActionGroup | null;
     selection: SiteSelection | null;
     hoverSelection: SiteSelection | null;

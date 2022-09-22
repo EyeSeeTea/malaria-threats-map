@@ -70,6 +70,76 @@
                 "button": "Lista de reconocimientos"
             }
         },
+        "dashboard": {
+            "title": "Tableros",
+            "filtersSection": {
+                "first": {
+                    "title": "1. Seleccionar tema",
+                    "buttonOne": "Resistencia a insecticidas en los vectores de malaria",
+                    "buttonTwo": "Eficacia y resistencia a los medicamentos antipalúdicos"
+                },
+                "second": {
+                    "title": "2. Seleccionar país",
+                    "helper": "Seleccione hasta 5 países",
+                    "lastUpdate": "Última actualización de datos para esta selección de filtro:",
+                    "cta": "Generar Tablero"
+                },
+                "note": "Nota: Se necesita un gran número de puntos de datos para crear un cuadro de mando. Por esta razón, los tableros sólo están disponibles para dos de los cuatro temas: la resistencia a los insecticidas vectoriales y la eficacia y resistencia a los medicamentos antipalúdicos. Los cuadros de mando seguirán desarrollándose a medida que se disponga de más datos."
+            },
+            "contentsSection": {
+                "title": "Contenidos:",
+                "countryOptions": {
+                    "countryContext": "Contexto del país",
+                    "epidemiologicalProfile": "Perfil epidemiológico",
+                    "majorPlasmodium": "Principales especies de Plasmodium y régimen de tratamiento"
+                },
+                "therapeuticResultsOptions": {
+                    "therapeuticEfficacy": "Resultados del estudio de eficacia terapéutica",
+                    "summaryTreatmentFailures": "Resumen de las tasas de fracaso del tratamiento por fármaco",
+                    "treatmentFailureRates": "Tasas de fracaso del tratamiento a lo largo del tiempo",
+                    "parasiteClearanceRates": "Índices de eliminación de parásitos a lo largo del tiempo"
+                },
+                "molecularResultsOptions": {
+                    "molecularMarker": "Resultados del estudio de marcadores moleculares",
+                    "summaryMolecularMarker": "Resumen de los resultados del estudio de marcadores moleculares a lo largo del tiempo"
+                }
+            },
+            "therapeuticEfficacySection": {
+                "title": "Estudios de eficacia terapéutica (EET)",
+                "numStudies": "Los filtros aplicados producen {{count}} estudios",
+                "treatmentFailureByDrug": {
+                    "title": "RESUMEN DE LAS TASAS DE FRACASO DEL TRATAMIENTO POR FÁRMACO",
+                    "studyOutcome": "Resultado del estudio:",
+                    "numStudies": "Número de estudios",
+                    "lessThan10Patients": "<10% de pacientes con fracaso del tratamiento",
+                    "moreOrEqualThan10Patients": "≥10% de los pacientes con fracaso del tratamiento"
+                },
+                "treatmentFailureOverTime": {
+                    "title": "TASAS DE FRACASO DEL TRATAMIENTO A LO LARGO DEL TIEMPO",
+                    "numberPatients": "Número de Pacientes",
+                    "treatmentFailure": "Fracaso del tratamiento %",
+                    "year": "Año"
+                },
+                "parasiteClearanceOverTime": {
+                    "title": "TASAS DE ELIMINACIÓN DE PARÁSITOS A LO LARGO DEL TIEMPO",
+                    "parasitemiaOnDay3": "Porcentaje de pacientes con parasitemia en el día 3 (%)"
+                }
+            },
+            "MolecularMarkerSection": {
+                "title": "Molecular marker studies",
+                "molecularMarkerOverTime": {
+                    "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
+                    "legendLabel": "Percentage of samples in one study where multiple copy numbers were detected:",
+                    "numStudies": "Number of Studies",
+                    "year": "Year",
+                    "chartTitle": "Percentage of samples in one study where validated or candidate",
+                    "chartSubtitle": "molecular markers of artemisinin resistance were detected:"
+                }
+            },
+            "treatmentFilters": {
+                "title": "Filtrar Datos"
+            }
+        },
         "homepage": {
             "menu": {
                 "home": "Casa",
