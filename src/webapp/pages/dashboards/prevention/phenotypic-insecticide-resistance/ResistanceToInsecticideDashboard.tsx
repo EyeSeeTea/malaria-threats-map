@@ -22,6 +22,22 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
 
     const chartComponentRefs = useRef([]);
 
+    const maxStackedColumn = React.useMemo(() => {
+        const maxValues = Object.values(data).reduce((acc: number[], countrySeries: ResistanceToInsecticideSerie[]) => {
+            const maxValuesByType = countrySeries.reduce((acc, serieItem) => {
+                if (acc.length === 0) {
+                    return serieItem.data;
+                } else {
+                    return serieItem.data.map((value, index) => value + acc[index]);
+                }
+            }, []);
+
+            return [...acc, ...maxValuesByType];
+        }, []);
+
+        return Math.max(...maxValues);
+    }, [data]);
+
     return (
         <PreventionFilterableDashboard
             chartComponentRef={chartComponentRefs}
@@ -41,15 +57,18 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
                             <tr key={isoCountry}>
                                 <td>{t(isoCountry)}</td>
                                 <td>
-                                    <HighchartsReact
+                                    <StyledHighcharts
                                         highcharts={Highcharts}
                                         options={chartOptions(
                                             data[isoCountry],
                                             categories,
                                             index === 0,
-                                            index === Object.keys(data).length - 1
+                                            index === Object.keys(data).length - 1,
+                                            maxStackedColumn
                                         )}
-                                        ref={element => chartComponentRefs.current.push(element)}
+                                        ref={(element: HighchartsReact.RefObject) =>
+                                            chartComponentRefs.current.push(element)
+                                        }
                                     />
                                 </td>
                             </tr>
@@ -64,6 +83,7 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
 export default React.memo(ResistanceToInsecticideDashboard);
 
 const Table = styled.table`
+    table-layout: fixed;
     width: 100%;
     max-width: 100%;
     border-collapse: collapse;
@@ -72,17 +92,25 @@ const Table = styled.table`
         border-bottom: 2px solid #0000001a;
         border-top: 2px solid #0000001a;
     }
+    tr:last-child {
+        border-bottom: 0px;
+    }
     tr td:nth-child(2) {
-        width: 100%;
+        width: 90%;
     }
 `;
+
+const StyledHighcharts = styled(HighchartsReact)``;
 
 function chartOptions(
     series: ResistanceToInsecticideSerie[],
     categories: string[],
     enabledLegend: boolean,
-    visibleYAxisLabels: boolean
+    visibleYAxisLabels: boolean,
+    max: number
 ): Highcharts.Options {
+    const tickInterval = Math.floor(max / 20);
+
     return {
         chart: {
             type: "bar",
@@ -108,6 +136,9 @@ function chartOptions(
             labels: {
                 enabled: visibleYAxisLabels,
             },
+            min: 0,
+            max: max,
+            tickInterval: tickInterval,
         },
         legend: {
             verticalAlign: "top",
