@@ -41,6 +41,9 @@ const StyledNewsletterButton = styled(Button)`
         padding-right: 20px;
         padding-left: 20px;
         white-space: nowrap;
+        @media (max-width: 425px) {
+            font-size: 12px;
+        }
     }
 `;
 

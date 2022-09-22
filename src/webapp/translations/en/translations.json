@@ -2,6 +2,7 @@
     "common": {
         "layers": "Layers",
         "mekong_link": "Go to the Greather Mekong Layer",
+        "takeATour": "Unsure where to start? Take a tour.",
         "title": {
             "title": "Malaria Threats Map",
             "subtitle": "Tracking biological challenges to malaria control and elimination"
@@ -13,8 +14,8 @@
             },
 
             "dataSection": {
-                "title": "Where does the data come from?",
-                "content": "Data is collected by National Malaria Programmes, their implementation partners, research institutes and non-governmental organizations. They are either provided directly to WHO Global Malaria Programme (GMP) or extracted from publications. All data are quality controlled, incorporated into WHO global databases and then published to the Malaria Threats Map."
+                "title": "Where do the data come from?",
+                "content": "Data are collected by National Malaria Programmes, their implementation partners, research institutes and non-governmental organizations. They are either provided directly to WHO Global Malaria Programme (GMP) or extracted from publications. All data are quality controlled, incorporated into WHO global databases and then published to the Malaria Threats Map."
             },
             "mapSection": {
                 "title": "Watch: Find out about the functionality of the maps within the MTM",
@@ -25,12 +26,12 @@
                     "title": "An overview of the maps"
                 },
                 "video2": {
-                    "url": "https://www.youtube.com/embed/VP-pc9oN0dM",
+                    "url": "https://www.youtube.com/embed/diMb_gbUUbM",
                     "alt": "Malaria Threats Map: supporting research efforts",
                     "title": "How is the MTM supporting research efforts?"
                 },
                 "video3": {
-                    "url": "https://www.youtube.com/embed/mkggjD0DKwY",
+                    "url": "https://www.youtube.com/embed/x5P45TynlgM",
                     "alt": "Malaria Threats Map: helping countries address critical threats for malaria control and elimination",
                     "title": "How is the MTM supporting countries?"
                 }
@@ -506,7 +507,7 @@
             "contact": "Contact",
             "share_data": "Share data",
             "language": "Language",
-            "take_tour": "Take a tour"
+            "take_tour": "Take a Tour"
         },
         "legend": {
             "subtitle": "Determined by the most recent data in a site",
@@ -558,6 +559,11 @@
                         "synergist_insecticide_bioassays": "Results of synergist-insecticide bioassays",
                         "resistance_mechanism_assays_molecular": "Results of molecular resistance mechanism identification",
                         "resistance_mechanism_assays_biochemical": "Results of biochemical resistance mechanism identification"
+                    }
+                },
+                "diagnosis": {
+                    "datasets": {
+                        "gene_deletions": "pfhrp2/3 gene deletions"
                     }
                 },
                 "treatment": {
@@ -613,6 +619,7 @@
                 "add_to_download": "Add to Download",
                 "db_download_list": "Database Download List",
                 "db_download_helper_text": "Your list of databases selected for download will be shown here. To add data, please filter for the data you require on the right and click “Add to download”.",
+                "prevention_warning": "Please note that not every contributor of the vector insecticide resistance theme has allowed us to share their data. Hence some of the data in Malaria Threats Map is not available for download. For data extracted from publications, please note that when the values of relevant variables were not directly provided in the publications or were analyzed differently than recommended by WHO, values were calculated from the reported data.",
                 "data_set": "Dataset:",
                 "data": "Data:",
                 "location": "Location:",
@@ -882,6 +889,30 @@
             "CITATION": "Citation of the publication where the data was published",
             "CITATION_URL": "URL of the publication where the data was published",
             "DATA_CURATOR": "Institute that compiled the data. Part of the data in this databases has been compiled by WHO's partner institutions and submited to or shared with WHO.This column will indicate the name of the institution or group that compiled the data."
+        },
+        "diagnosis": {
+            "ID": "Unique identifier of the bioassay",
+            "COUNTRY_NAME": "Name of the country where the bioassay was conducted",
+            "ADMIN1": "Administrative level 1 where the mosquitoes where collected",
+            "ADMIN2": "Administrative level 2 where the mosquitoes where collected",
+            "SITE_NAME": "Site where the mosquitoes were collected",
+            "LATITUDE": "Latitude of the site where the mosquitoes were collected",
+            "LONGITUDE": "Longitude of the site where the mosquitoes were collected",
+            "YEAR_START": "Year when the mosquito collection started",
+            "SURVEY_TYPE": "Type of Survey conducted",
+            "PATIENT_TYPE": "Patient  clinical status",
+            "HRP2_TESTED": "Number of samples tested for HRP2 deletions",
+            "HRP2_PROPORTION_DELETION": "Pct of Pf samples tested with HRP2 deletions",
+            "HRP3_TESTED": "Number of samples tested for HRP3 deletions",
+            "HRP3_PROPORTION_DELETION": "Pct of Pf samples tested with HRP3 deletions",
+            "HRP2_HRP3_TESTED": "Number  of Pf samples tested for HRP2 AND HRP3 deletions",
+            "HRP2_HRP3_PROPORTION_DELETION": "Pct of Pf samples tested with HRP2 AND HRP3 deletions",
+            "DELETETION_STATUS": "Deletion type: confirmed or suspected",
+            "SAMPLE_ORIGIN": "Samples place of origin, when taken from returning travellers",
+            "PF_POS_SAMPLES": "Number of P.falciparum positive samples in total survey",
+            "TYPE_SAMPL_ANALYZED": "type  of sample analyzed - all, discordant only, or non-representative",
+            "CITATION": "Citation of the publication where the data was published",
+            "CITATION_URL": "URL of the publication where the data was published"
         }
     },
     "invasiveStory": {
@@ -962,33 +993,19 @@
     "tour": {
         "steps": {
             "1": {
-                "title": "Welcome to Malaria Threats Map!",
-                "p1": "You are at a WHO official platform created to present the magnitude and spread of four biological challenges for malaria control and elimination.",
-                "p2": "This wizard will show how to use the platform"
+                "title": "Select a theme"
             },
             "2": {
-                "title": "Choose a language"
+                "title": "Select a map to explore study results"
             },
             "3": {
-                "p1": "Open our interactive maps containing the latest data for the four challenges"
+                "title": "Add filters to produce a map limited to specific criteria"
             },
             "4": {
-                "p1": "Open the filters section to chose from the challenge filters as well as region filters"
+                "title": "Select a specific region, subregion, country and/or site"
             },
             "5": {
-                "p1": "Select the country, region or sub region of your interest or leave this filters blank to explore all countries"
-            },
-            "6": {
-                "p1": "Select several filters and notice how the map adjusts automatically."
-            },
-            "7": {
-                "p1": "Click on a site to see individual study result meeting your filter criteria. Results for one study at time are shown in the window. If there is more than one study meeting your criteria, you can visualize other study results by clicking the upper arrow."
-            },
-            "8": {
-                "p1": "Click on the country view to the number of studies performed in such country"
-            },
-            "9": {
-                "p1": "Click on a country to see a summary of resistance status for that country"
+                "title": "Click on a site to see study details"
             }
         }
     },
