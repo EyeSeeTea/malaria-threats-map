@@ -5,3 +5,5 @@ export type TherapeuticEfficacy =
     | "summary-treatment-failures"
     | "treatment-failure-rates"
     | "parasite-clearance-rates";
+
+export type MolecularMarker = "all" | "summary-molecular-marker";

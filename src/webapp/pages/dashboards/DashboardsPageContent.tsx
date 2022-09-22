@@ -7,6 +7,7 @@ import ContentsFilterSection from "./ContentsFilterSection";
 import SecondaryLayout from "../secondary-layout/SecondaryLayout";
 import TreatmentEfficacyStudies from "./treatment/therapeutic-efficacy/TreatmentEfficacyStudies";
 import { useDashboards } from "./context/useDashboards";
+import MolecularMarkerStudies from "./treatment/molecular-marker/MolecularMarkerStudies";
 
 const StyledContainer = styled.div`
     background-color: #43cea4;
@@ -42,6 +43,14 @@ const DashboardsPageContent: React.FC = () => {
                     </Container>
                 )}
             </DashboardSection>
+
+            <DashboardSection>
+                {dashboardsTreatmentStudies && (
+                    <Container maxWidth="xl">
+                        <MolecularMarkerStudies />
+                    </Container>
+                )}
+            </DashboardSection>
         </SecondaryLayout>
     );
 };
@@ -50,4 +59,5 @@ export default DashboardsPageContent;
 
 const DashboardSection = styled.section`
     background: #00000012;
+    margin: 32px 0px;
 `;

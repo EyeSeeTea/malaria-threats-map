@@ -13,6 +13,7 @@ import HighchartsReact from "highcharts-react-official";
 import html2canvas from "html2canvas";
 
 interface TreatmentFilterableDashboardProps {
+    isMolecularMarkerChart?: boolean;
     drugsMultiple: boolean;
     drugsClearable: boolean;
     chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject>;
@@ -33,6 +34,7 @@ interface TreatmentFilterableDashboardProps {
 
 More(Highcharts);
 const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = ({
+    isMolecularMarkerChart = false,
     drugsMultiple,
     drugsClearable,
     chartComponentRef,
@@ -94,11 +96,12 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                 </Stack>
             </Stack>
 
-            <Grid container spacing={2}>
+            <Grid container spacing={2} ref={ref}>
                 {filtersVisible && (
                     <Grid item md={3} xs={12}>
                         <Stack direction="column">
                             <TreatmentFilters
+                                isMolecularMarkerChart={isMolecularMarkerChart}
                                 studies={filteredStudiesForDrugs}
                                 drugsMultiple={drugsMultiple}
                                 drugsClearable={drugsClearable}

@@ -1,5 +1,5 @@
 import { useContext, useCallback } from "react";
-import { DashboardsThemeOptions, TherapeuticEfficacy } from "../types";
+import { DashboardsThemeOptions, MolecularMarker, TherapeuticEfficacy } from "../types";
 import { DashboardContext } from "./DashboardProvider";
 
 export const useDashboards = () => {
@@ -51,7 +51,7 @@ export const useDashboards = () => {
     );
 
     const onMolecularMarkerChange = useCallback(
-        (molecularMarker: string) => {
+        (molecularMarker: MolecularMarker) => {
             setMolecularMarker(molecularMarker);
         },
         [setMolecularMarker]
