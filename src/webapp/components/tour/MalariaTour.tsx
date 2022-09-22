@@ -1,10 +1,11 @@
 import React, { PureComponent } from "react";
 import Tour, { ReactourStep, ReactourStepContentArgs } from "reactour";
-import { SiteSelection, State } from "../../store/types";
+import { ActionGroup, SiteSelection, State } from "../../store/types";
 import { selectTheme, selectTour } from "../../store/reducers/base-reducer";
 import { connect } from "react-redux";
 import {
     logEventAction,
+    setActionGroupSelected,
     setBoundsAction,
     setRegionAction,
     setSelection,
@@ -22,13 +23,8 @@ import Step2 from "./steps/Step2";
 import Step3 from "./steps/Step3";
 import Step4 from "./steps/Step4";
 import Step5 from "./steps/Step5";
-import Step6 from "./steps/Step6";
-import Step7 from "./steps/Step7";
-import Step8 from "./steps/Step8";
-import Step9 from "./steps/Step9";
 import { dispatchCustomEvent } from "../../utils/dom-utils";
 import { setInsecticideClass, setInsecticideTypes, setSpecies } from "../../store/actions/prevention-actions";
-import Step6b from "./steps/Step6b";
 
 const StyledTour = styled(Tour)`
     padding: 10;
@@ -58,26 +54,30 @@ export interface StepProps extends ReactourStepContentArgs {
     total?: number;
 }
 
-export const Footer = (options: StepProps) => (
-    <Flex>
-        <IconButton
-            component="div"
-            tabIndex={-1}
-            onClick={() => options.goTo(options.back ? options.back : options.step - 1)}
-            size="small"
-        >
-            <KeyboardArrowLeft />
-        </IconButton>
-        <Stepper>{`${options.current} / ${options.total}`}</Stepper>
-        <IconButton component="div" tabIndex={-1} onClick={() => options.goTo(options.step + 1)} size="small">
-            <KeyboardArrowRight />
-        </IconButton>
-        <FlexGrow />
-        <Button variant={"text"} tabIndex={-1} onClick={() => options.setTourOpen(false)} size="small">
-            Close
-        </Button>
-    </Flex>
-);
+export const Footer = (options: StepProps) => {
+    return (
+        <Flex>
+            <IconButton
+                component="div"
+                tabIndex={-1}
+                onClick={() => {
+                    options.goTo(options.back ? options.back : 0);
+                }}
+                size="small"
+            >
+                <KeyboardArrowLeft />
+            </IconButton>
+            <Stepper>{`${options.current} / ${options.total}`}</Stepper>
+            <IconButton component="div" tabIndex={-1} onClick={() => options.goTo(options.step + 1)} size="small">
+                <KeyboardArrowRight />
+            </IconButton>
+            <FlexGrow />
+            <Button variant={"text"} tabIndex={-1} onClick={() => options.setTourOpen(false)} size="small">
+                Close
+            </Button>
+        </Flex>
+    );
+};
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -94,6 +94,7 @@ const mapDispatchToProps = {
     setInsecticideClass,
     setInsecticideTypes,
     setSpecies,
+    setActionGroupSelected,
     logEvent: logEventAction,
 };
 
@@ -141,6 +142,10 @@ class MalariaTour extends PureComponent<Props> {
         this.props.setSpecies(species);
     };
 
+    setActionGroupSelected = (selectGroup: ActionGroup) => {
+        this.props.setActionGroupSelected(selectGroup);
+    };
+
     onClose = () => {
         this.setState({ open: false });
         this.setInsecticideClass("PYRETHROIDS");
@@ -151,8 +156,7 @@ class MalariaTour extends PureComponent<Props> {
     };
 
     render() {
-        const { theme, tour } = this.props;
-
+        const { tour } = this.props;
         // https://github.com/elrumordelaluz/reactour/issues/185
         setTimeout(() => {
             const elements = document.querySelectorAll("div[data-focus-lock-disabled] button");
@@ -166,146 +170,90 @@ class MalariaTour extends PureComponent<Props> {
 
         const steps: ReactourStep[] = [
             {
-                selector: "#title",
-                content: options => {
-                    return <Step1 {...options} {...baseProps} step={0} />;
+                selector: "#theme",
+                action: () => {
+                    this.setActionGroupSelected("THEME");
                 },
-                // @ts-ignore
-                observe: "#title",
-            },
-            {
-                selector: "#language",
                 content: options => {
-                    return <Step2 {...options} {...baseProps} step={1} />;
-                },
-                // @ts-ignore
-                observe: "#language",
-            },
-            {
-                selector: "#dialog",
-                content: options => {
-                    return <Step3 {...options} {...baseProps} step={2} />;
+                    setTimeout(() => options.goTo(1), 300);
                 },
             },
             {
-                selector: "#filters",
+                selector: "#theme",
                 content: options => {
-                    this.setTheme("prevention");
-                    return <Step4 {...options} {...baseProps} step={3} />;
+                    return <Step1 {...options} {...baseProps} step={1} />;
                 },
-                // @ts-ignore
-                observe: "#filters",
+                observe: "#theme",
             },
             {
-                selector: "#sidebar",
+                selector: "#mapType",
+                action: () => {
+                    this.setActionGroupSelected("MAP_TYPE");
+                },
+                content: options => {
+                    setTimeout(() => options.goTo(3), 300);
+                },
+            },
+            {
+                selector: "#mapType",
+                content: options => {
+                    return <Step2 {...options} {...baseProps} step={3} back={0} />;
+                },
+                observe: "#mapType",
+            },
+            {
+                selector: "#dataFilters",
+                action: () => {
+                    this.setActionGroupSelected("DATA");
+                },
+                content: options => {
+                    setTimeout(() => options.goTo(5), 300);
+                },
+            },
+            {
+                selector: "#dataFilters",
+                content: options => {
+                    return <Step3 {...options} {...baseProps} step={5} back={2} />;
+                },
+                observe: "#dataFilters",
+            },
+            {
+                selector: "#locationFilters",
+                action: () => {
+                    this.setActionGroupSelected("LOCATION");
+                },
+                content: options => {
+                    setTimeout(() => options.goTo(7), 300);
+                },
+            },
+            {
+                selector: "#locationFilters",
+                content: options => {
+                    return <Step4 {...options} {...baseProps} step={7} back={4} />;
+                },
+                observe: "#locationFilters",
+            },
+            {
+                selector: ".mapboxgl-canvas",
                 content: ({ goTo }) => {
-                    setTimeout(() => goTo(5), 200);
-                    return <div />;
+                    this.setRegion("ZM");
+                    setTimeout(() => goTo(9), 300);
                 },
             },
             {
-                selector: "#sidebar",
+                selector: ".mapboxgl-canvas",
                 content: options => {
-                    return <Step5 {...options} {...baseProps} step={5} back={2} />;
+                    return <Step5 {...options} {...baseProps} step={9} back={6} />;
                 },
-            },
-            {
-                selector: "#sidebar",
-                content: ({ goTo }) => {
-                    setTimeout(() => goTo(7), 200);
-                    return <div />;
-                },
-            },
-            {
-                selector: "#sidebar",
-                content: options => {
-                    this.setInsecticideClass("PYRETHROIDS");
-                    this.setInsecticideTypes([]);
-                    this.setSelection(null);
-                    return <Step6 {...options} {...baseProps} step={7} back={4} />;
-                },
-            },
-            {
-                selector: "#sidebar",
-                content: options => {
-                    this.setInsecticideClass("CARBAMATES");
-                    this.setInsecticideTypes(["PROPOXUR"]);
-                    this.setSelection(null);
-                    return <Step6b {...options} {...baseProps} step={8} back={7} />;
-                },
-            },
-            {
-                selector: "#fifth-duo",
-                content: ({ goTo }) => {
-                    const selection = (() => {
-                        switch (theme) {
-                            case "prevention":
-                                return {
-                                    ISO_2_CODE: "",
-                                    SITE_ID: "S8.600000_16.433300",
-                                    coordinates: [16.435546875, 8.597315884206026],
-                                };
-                            case "treatment":
-                                return {
-                                    ISO_2_CODE: "",
-                                    SITE_ID: "S12.036389_24.876944",
-                                    coordinates: [24.87579345703125, 12.036634374014696],
-                                };
-                            case "diagnosis":
-                                return {
-                                    ISO_2_CODE: "",
-                                    SITE_ID: "S15.642516_32.455489",
-                                    coordinates: [32.45635986328125, 15.6415517493066],
-                                };
-                            default:
-                                return null;
-                        }
-                    })();
-                    setTimeout(() => this.setSelection(selection as SiteSelection), 200);
-                    setTimeout(() => goTo(10), 300);
-                    return <div />;
-                },
-            },
-            {
-                selector: ".mapboxgl-popup",
-                content: options => {
-                    return <Step7 {...options} {...baseProps} step={10} back={7} />;
-                },
-            },
-            {
-                selector: "#country-button",
-                content: options => {
-                    this.setSelection(null);
-                    return <Step8 {...options} {...baseProps} step={11} back={9} />;
-                },
-            },
-            {
-                selector: "#country-button",
-                content: ({ goTo }) => {
-                    const selection = {
-                        ISO_2_CODE: "SD",
-                        SITE_ID: "",
-                        coordinates: [30.003662109375, 16.048453014179174],
-                    };
-                    setTimeout(() => this.setSelection(selection as SiteSelection), 200);
-                    setTimeout(() => goTo(13), 300);
-                    return <div />;
-                },
-            },
-            {
-                selector: ".mapboxgl-popup",
-                content: options => {
-                    return <Step9 {...options} {...baseProps} step={13} back={11} />;
-                },
+                position: "center",
+                observe: ".mapboxgl-canvas",
             },
         ];
 
         return (
             <StyledTour
                 steps={steps}
-                // Uncomment when tour open is fixed
-                // isOpen={this.props.tour.open}
-                isOpen={false}
+                isOpen={this.props.tour.open}
                 onRequestClose={this.onClose}
                 disableDotsNavigation={true}
                 disableKeyboardNavigation={true}
@@ -316,6 +264,7 @@ class MalariaTour extends PureComponent<Props> {
                 showCloseButton={false}
                 getCurrentStep={this.setStep}
                 goToStep={tour.step}
+                className="tour-modal"
             />
         );
     }

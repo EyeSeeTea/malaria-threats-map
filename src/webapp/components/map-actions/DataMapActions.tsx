@@ -15,6 +15,7 @@ import { filtersToString } from "./utils";
 import { Source } from "../../store/actions/base-actions";
 import DownloadFiltersContent from "../filters/container/DownloadFiltersContent";
 import MapFiltersContent from "../filters/container/MapFiltersContent";
+import { Box } from "@mui/material";
 
 const Label = styled.span`
     font-weight: bold;
@@ -77,21 +78,23 @@ const DataMapActions: React.FC<Props> = ({
 
     console.log({ from });
     return (
-        <ActionGroupItem
-            childrenMaxHeight={"400px"}
-            placeholder={t("mapActions.selectData")}
-            actionGroupKey={"DATA"}
-            value={
-                selectedFilters && (
-                    <span>
-                        <Label>{t("mapActions.data")}:&nbsp;</Label>
-                        <Value>{t(selectedFilters)}</Value>
-                    </span>
-                )
-            }
-        >
-            {from === "map" ? <MapFiltersContent /> : <DownloadFiltersContent />}
-        </ActionGroupItem>
+        <Box id="dataFilters">
+            <ActionGroupItem
+                childrenMaxHeight={"400px"}
+                placeholder={t("mapActions.selectData")}
+                actionGroupKey={"DATA"}
+                value={
+                    selectedFilters && (
+                        <span>
+                            <Label>{t("mapActions.data")}:&nbsp;</Label>
+                            <Value>{t(selectedFilters)}</Value>
+                        </span>
+                    )
+                }
+            >
+                {from === "map" ? <MapFiltersContent /> : <DownloadFiltersContent />}
+            </ActionGroupItem>
+        </Box>
     );
 };
 

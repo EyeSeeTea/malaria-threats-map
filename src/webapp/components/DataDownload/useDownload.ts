@@ -1,7 +1,12 @@
 import React from "react";
 import { format } from "date-fns";
 import i18next from "i18next";
-import { mapInvasiveStudiesToCSV, mapPreventionStudiesToCSV, mapTreatmentStudiesToCSV } from "./mappers/cvsMapper";
+import {
+    mapDiagnosisStudiesToCSV,
+    mapInvasiveStudiesToCSV,
+    mapPreventionStudiesToCSV,
+    mapTreatmentStudiesToCSV,
+} from "./mappers/cvsMapper";
 import { exportToCSV, Tab } from "./download";
 import { DatabaseSelection, Download, TermsInfo, UserInfo } from "./types";
 import { ActionCreatorTypeMetadata, PayloadActionCreator } from "typesafe-actions";
@@ -96,6 +101,11 @@ export function useDownload(
                     case "prevention": {
                         const preventionTabs = mapPreventionStudiesToCSV(database);
                         changeLoaderAndExportToCSV(preventionTabs, `MTM_${database.dataset}_${dateString}`);
+                        break;
+                    }
+                    case "diagnosis": {
+                        const diagnosisTabs = mapDiagnosisStudiesToCSV(database);
+                        changeLoaderAndExportToCSV(diagnosisTabs, `MTM_${database.dataset}_${dateString}`);
                         break;
                     }
                     case "treatment": {

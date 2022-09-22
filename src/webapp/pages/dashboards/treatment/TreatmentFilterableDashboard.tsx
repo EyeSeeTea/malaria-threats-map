@@ -96,7 +96,7 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                 </Stack>
             </Stack>
 
-            <Grid container spacing={2}>
+            <Grid container spacing={2} ref={ref}>
                 {filtersVisible && (
                     <Grid item md={3} xs={12}>
                         <Stack direction="column">
