@@ -6,15 +6,13 @@ import { AjaxError } from "rxjs/ajax";
 import { UploadFileData } from "../../../domain/usecases/UploadFileUseCase";
 import { Option } from "../../components/BasicSelect";
 
-interface SetThemeOptions {
-    fromHome?: boolean;
-}
+export type Source = "map" | "download";
 
 export const setThemeAction = createCustomAction(
     ActionTypeEnum.MalariaSetTheme,
-    (theme: string, options: SetThemeOptions = {}) => ({
+    (theme: string, from: Source = "map") => ({
         payload: theme,
-        meta: options,
+        from,
     })
 );
 
@@ -68,8 +66,6 @@ export const setBoundsAction = createAction(ActionTypeEnum.SetBounds)<Array<Arra
 export const setTourOpenAction = createAction(ActionTypeEnum.SetTourOpen)<boolean>();
 
 export const setTourStepAction = createAction(ActionTypeEnum.SetTourStep)<number>();
-
-export const setDataDownloadOpenAction = createAction(ActionTypeEnum.SetDataDownloadOpen)<boolean>();
 
 export const setReportOpenAction = createAction(ActionTypeEnum.SetReportOpen)<boolean>();
 

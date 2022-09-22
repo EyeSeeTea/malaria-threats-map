@@ -2,6 +2,7 @@
     "common": {
         "layers": "couches",
         "mekong_link": "Aller à la couche du Grand Mékong",
+        "takeATour": "Vous ne savez pas par où commencer ? Faites un tour.",
         "title": {
             "title": "Carte des menaces du paludisme",
             "subtitle": "Suivi des défis biologiques liés à la lutte et à l'élimination du paludisme"
@@ -67,6 +68,76 @@
                 "p1": "Nous avons récemment entrepris un processus de test d'expérience utilisateur et sommes reconnaissants à tous ceux qui ont volontairement donné de leur temps pour contribuer à l'amélioration du MTM pour tous ses utilisateurs.",
                 "p2": "Ce test utilisateur a conduit à l'ajout des pages d'accueil, à propos et de contact, à la création de tableaux de bord, d'une interface de téléchargement dédiée et d'une interface cartographique plus simplifiée. Nous avons également identifié des domaines d'amélioration supplémentaires, qui sur lesquels nous travaillons. Il s'agit notamment de conseils accrus pour faciliter la prise de décision et de couches cartographiques supplémentaires. Nous voulons faire de cet outil le meilleur possible afin qu'ensemble nous disposions des ressources nécessaires pour contrôler et éliminer le paludisme.",
                 "button": "Liste des remerciements"
+            }
+        },
+        "dashboard": {
+            "title": "Tableaux de bord",
+            "filtersSection": {
+                "first": {
+                    "title": "1. Sélectionnez le thème",
+                    "buttonOne": "Résistance des vecteurs aux insecticides",
+                    "buttonTwo": "Efficacité et résistance des médicaments antipaludiques"
+                },
+                "second": {
+                    "title": "2. Sélectionnez le pays",
+                    "helper": "Sélectionnez jusqu'à 5 pays",
+                    "lastUpdate": "Dernière mise à jour des données pour cette sélection de filtre :",
+                    "cta": "Générer tableau de bord"
+                },
+                "note": "Note : Un grand nombre de points de données est nécessaire pour créer un tableau de bord. Pour cette raison, les tableaux de bord ne sont actuellement disponibles que pour deux des quatre thèmes : la résistance des vecteurs aux insecticides et l'efficacité et la résistance des médicaments antipaludiques. Les tableaux de bord continueront à se développer au fur et à mesure que des données supplémentaires seront disponibles."
+            },
+            "contentsSection": {
+                "title": "Contenu:",
+                "countryOptions": {
+                    "countryContext": "Contexte du pays",
+                    "epidemiologicalProfile": "Profil épidémiologique",
+                    "majorPlasmodium": "Principales espèces de Plasmodium et régime de traitement"
+                },
+                "therapeuticResultsOptions": {
+                    "therapeuticEfficacy": "Résultats des études sur l'efficacité thérapeutique",
+                    "summaryTreatmentFailures": "Résumé des taux d'échec thérapeutique par médicament",
+                    "treatmentFailureRates": "Taux d'échec des traitements dans le temps",
+                    "parasiteClearanceRates": "Taux d'élimination des parasites dans le temps"
+                },
+                "molecularResultsOptions": {
+                    "molecularMarker": "Résultats de l'étude des marqueurs moléculaires",
+                    "summaryMolecularMarker": "Résumé des résultats des études sur les marqueurs moléculaires au fil du temps"
+                }
+            },
+            "therapeuticEfficacySection": {
+                "title": "Études d'efficacité thérapeutique (EET)",
+                "numStudies": "Les filtres appliqués génèrent {{count}} études",
+                "treatmentFailureByDrug": {
+                    "title": "RÉSUMÉ DES TAUX D'ÉCHEC DU TRAITEMENT PAR MÉDICAMENT",
+                    "studyOutcome": "Résultat de l'étude:",
+                    "numStudies": "Nombre d'études",
+                    "lessThan10Patients": "<10% des patients en échec thérapeutique",
+                    "moreOrEqualThan10Patients": "≥10% des patients en échec thérapeutique"
+                },
+                "treatmentFailureOverTime": {
+                    "title": "TAUX D'ÉCHEC DU TRAITEMENT AU FIL DU TEMPS",
+                    "numberPatients": "Nombre de patients",
+                    "treatmentFailure": "Échec du traitement %",
+                    "year": "An"
+                },
+                "parasiteClearanceOverTime": {
+                    "title": "TAUX D'ÉLIMINATION DES PARASITES AU FIL DU TEMPS",
+                    "parasitemiaOnDay3": "Pourcentage de patients atteints de parasitémie au jour 3 (%)"
+                }
+            },
+            "MolecularMarkerSection": {
+                "title": "Molecular marker studies",
+                "molecularMarkerOverTime": {
+                    "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
+                    "legendLabel": "Percentage of samples in one study where multiple copy numbers were detected:",
+                    "numStudies": "Number of Studies",
+                    "year": "Year",
+                    "chartTitle": "Percentage of samples in one study where validated or candidate",
+                    "chartSubtitle": "molecular markers of artemisinin resistance were detected:"
+                }
+            },
+            "treatmentFilters": {
+                "title": "Filtrer les données"
             }
         },
         "homepage": {
@@ -477,9 +548,8 @@
             },
             "buttons": {
                 "back": "Précédent",
-                "next": "Suivant",
-                "download": "Télécharger",
-                "close": "Sortir"
+                "next": "L'étape suivante",
+                "download": "Télécharger"
             },
             "filters": {
                 "prevention": {
@@ -489,6 +559,11 @@
                         "synergist_insecticide_bioassays": "Résultats des tests biologiques sur des mélanges synergiste/insecticide",
                         "resistance_mechanism_assays_molecular": "Résultats de l'identification du mécanisme de résistance moléculaire",
                         "resistance_mechanism_assays_biochemical": "Résultats de l'identification des mécanismes de résistance biochimique"
+                    }
+                },
+                "diagnosis": {
+                    "datasets": {
+                        "gene_deletions": "Délétion de pfhrp2/3 gènes"
                     }
                 },
                 "treatment": {
@@ -503,24 +578,15 @@
                     }
                 }
             },
-            "step0": {
-                "title": "Message d'accueil",
-                "p1": "Bienvenue dans la boîte de dialogue de téléchargement des données des Cartes de menaces du paludisme!",
-                "p2": "Cette boîte de dialogue vous permettra de télécharger des données des bases de données mondiales de l'OMS sur la résistance aux insecticides chez les vecteurs du paludisme, sur l'efficacité et la résistance des médicaments et sur les espèces invasives de vecteurs.",
-                "p3": "Les données contenues dans ces trois bases de données mondiales ont été mises à la disposition du Programme mondial de lutte contre le paludisme de l'Organisation mondiale de la santé (OMS) par les ministères de la santé ou leurs partenaires de développement, ou par leur extraction de publications scientifiques par l'OMS ou ses partenaires. Afin de créditer leurs contributions, une colonne contenant les sources des données est incluse dans chaque ensemble de données. Veuillez noter que tous les contributeurs ne nous ont pas permis de partager leurs données. Par conséquent, certaines des données de la carte des menaces de paludisme ne peuvent pas être téléchargées. Pour les données extraites des publications, veuillez noter que lorsque les valeurs des variables pertinentes n'ont pas été directement fournies dans les publications ou ont été analysées d’une manière différente de celle recommandée par l'OMS, les valeurs ont été calculées à partir des données déclarées.",
-                "p4a": "L'utilisation de toutes les données est soumise aux ",
-                "p4bLinkText": "Conditions d'utilisation des compilations, agrégations, évaluations et analyses de données de l'OMS",
-                "p4bLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions",
-                "p4c": ". En utilisant les ensembles de données ou toute présentation de données qui en dérivent, vous acceptez d'être lié par ces conditions générales et de les respecter, conditions qui pourront être modifiées de temps à autre par l'OMS à sa seule discrétion.",
-                "p5": "Veuillez reconnaître l'utilisation de ces ensembles de données en incluant la référence suivante dans vos publications: OMS, Carte des menaces de paludisme (https://www.who.int/malaria/maps/threats/), date d'accès, reconnaissance des pays ayant fourni les données sous-jacentes (dans le cas où la source se réfère aux ministères de la santé ou programmes nationaux de lutte antipaludique de pays spécifiques).",
-                "p6": "Le programmes mondial de lutte antipaludique tient à suivre et à présenter l'utilisation des bases de données mondiales. Par conséquent, nous vous poserons quelques questions sur l'utilisation prévue des données que vous souhaitez télécharger.",
-                "p7a": "Si vous avez des questions, n'hésitez pas à nous contacter sur: ",
-                "p7bEmail": "gmp-maps@who.int",
-                "p8a": "Cochez ici pour indiquer que vous avez lu et accepté les ",
-                "p8bLinkText": "Conditions d'utilisation des compilations, agrégations, évaluations et analyses de données de l'OMS",
-                "p8bLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions"
+            "terms_step": {
+                "title": "Terminaux et conditions",
+                "p1": "The use of all data is subject to the Terms and conditions of use for WHO compilations, aggregations, evaluations and analyses. By using the Datasets or any presentations of data derived from them, you agree to be bound by and adhere to these Terms and Conditions, as may be amended from time to time by WHO at its sole discretion. If any datasets are credited to a source other than WHO, then those materials are not covered by these Terms and Conditions, and permission should be sought from the source.",
+                "p2": "Please acknowledge the use of these datasets by including the following reference in your publications: WHO, Malaria Threats Map, year, date of access, acknowledgement of the countries having provided the underlying data (in the event that the source refers to ministries of health or national malaria control programs of specific countries).",
+                "summary_title": "Download List",
+                "check": "Check here to indicated that you have read and agree to the Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses.",
+                "choose_other": "Choose other databases"
             },
-            "step1": {
+            "personal_step": {
                 "title": "Coordonnées personnelles",
                 "first_name": "Prénom",
                 "last_name": "Nom de famille",
@@ -539,40 +605,25 @@
                     "other": "Autres"
                 },
                 "organization_name": "Nom de l'organisation",
-                "position": "Position",
+                "uses_placeHolder": "Nous souhaitons savoir pourquoi vous utilisez les données. Nous apprécierions si vous pouviez fournir une courte description.",
                 "country": "Pays de Résidence",
-                "email": "Email"
+                "email": "Email",
+                "message": "L'OMS tient à améliorer les bases de données mondiales et la carte des menaces du paludisme afin de mieux répondre aux besoins de notre communauté d'utilisateurs. Par conséquent, l'OMS souhaite s'engager avec notre communauté d'utilisateurs pour recueillir des suggestions d'amélioration et apprendre des différents cas d'utilisation et des avantages que ces produits leur apportent. Si vous souhaitez partager des commentaires, vous pouvez le faire <1 href='/contact'>ici</1>.",
+                "consent1": "J'autorise à être contacté par l'Organisation mondiale de la santé concernant mon expérience avec la Malaria Threat Map et les données des bases de données mondiales.",
+                "consent2": "J'autorise l'Organisation mondiale de la santé à utiliser le nom de mon organisation et la description du projet fournis ci-dessus pour afficher l'utilisation des bases de données mondiales (aucune donnée personnelle ne sera affichée)."
             },
-            "step2": {
-                "title": "But du téléchargement",
-                "data_use": "Quel est le but de l'utilisation de ces données?",
-                "data_use_options": {
-                    "research": "Recherche",
-                    "grant": "Développer des propositions de projets",
-                    "treatments": "Development of new anti-malaria treatments",
-                    "vector": "Développer de nouveaux outils de contrôle vectoriel",
-                    "diagnosis": "Développer de nouveaux outils de diagnostic",
-                    "policies": "Élaboration de politiques, stratégies et / ou plans de travail nationaux (par exemple, Plan stratégique national de lutte contre le paludisme, Politique ou directives nationales de traitement, plans nationaux de suivi et de gestion de la résistance aux insecticides chez les vecteurs du paludisme)",
-                    "advocacy": "Plaidoyer"
-                },
-                "date_use_options_content": {
-                    "research": "Veuillez fournir une brève description du projet ou de la question de recherche pour laquelle les données seront utilisées (100 mots minimum)",
-                    "policies": "Veuillez fournir le titre ou une brève description de la politique, de la stratégie ou du plan pour lesquels les données seront utilisées",
-                    "tools": "Veuillez décrire brièvement les nouveaux traitements, outils de diagnostic ou de lutte antivectorielle que vous souhaitez développer (minimum 100 mots)",
-                    "date": "Quand prévoyez-vous de terminer votre projet, politique, stratégie ou plan?"
-                },
-                "countries": "Pays où le projet, la politique, la stratégie ou le plan seront mis en œuvre",
-                "message": "L'OMS souhaite améliorer les bases de données mondiales et la carte des menaces de paludisme afin de mieux répondre aux besoins de notre communauté d'utilisateurs. Par conséquent, l'OMS souhaite collaborer avec notre communauté d'utilisateurs pour recueillir des suggestions d'amélioration et tirer des enseignements des différents cas d'utilisation et avantages que ces produits leur apportent",
-                "consent1": "J'autorise l'Organisation mondiale de la santé à utiliser mes données personnelles pour me contacter concernant mon expérience de l’utilisation de la carte des menaces de paludisme et des données des bases de données mondiales. ",
-                "consent2": "J'autorise l'Organisation mondiale de la santé à utiliser le nom de l'organisation et les descriptions de projet que j'ai fournies pour présenter les utilisations des bases de données mondiales (aucune donnée personnelle ne sera affichée)."
-            },
-            "step3": {
-                "title": "Filtrer les données à télécharger",
-                "filters": {
-                    "additional": "Filtres supplémentaires",
-                    "theme": "Sélectionnez un thème",
-                    "dataset": "Sélectionnez un jeu de données"
-                }
+            "data_step": {
+                "title": "Sélectionnez les données",
+                "p1": "Cette boîte de dialogue vous permet de télécharger des données à partir de quatre des bases de données mondiales de l'OMS : la résistance aux insecticides chez les vecteurs du paludisme, les espèces vectrices invasives, l'efficacité et la résistance aux médicaments antipaludiques et les délétions du gène <1>pfhrp2/3</1>. Un lien vers la source de données d'origine et la citation sont inclus dans chaque ensemble de données, le cas échéant.",
+                "last_updated": "Le jeu de données sélectionné a été mis à jour pour la dernière fois le :",
+                "add_to_download": "Ajouter au téléchargement",
+                "db_download_list": "Liste de téléchargement de la base de données",
+                "db_download_helper_text": "Votre liste de bases de données sélectionnées pour le téléchargement sera affichée ici. Pour ajouter des données, veuillez filtrer les données dont vous avez besoin sur la droite et cliquez sur “Ajouter au téléchargement“.",
+                "prevention_warning": "Veuillez noter que tous les contributeurs du thème de la résistance des vecteurs aux insecticides ne nous ont pas permis de partager leurs données. Par conséquent, certaines des données de Malaria Threats Map ne sont pas disponibles au téléchargement. Pour les données extraites des publications, veuillez noter que lorsque les valeurs des variables pertinentes n'étaient pas directement fournies dans les publications ou étaient analysées différemment de celles recommandées par l'OMS, les valeurs étaient calculées à partir des données rapportées.",
+                "data_set": "Ensemble de données :",
+                "data": "Données :",
+                "location": "Emplacement :",
+                "studies_in_file": "{{total}} bioessais inclus dans le fichier"
             }
         },
         "report": {
@@ -817,6 +868,30 @@
             "CITATION": "Citation de la publication où les données ont été publiées",
             "CITATION_URL": "URL de la publication où les données ont été publiées",
             "DATA_CURATOR": "Institut qui a compilé les données. Certaines des données de cette base de données ont été compilées par des institutions collaboratrices qui ont partagé leurs collections de données avec l'OMS. Cette colonne indiquera le nom de l'institution ou du groupe qui a compilé les données."
+        },
+        "diagnosis": {
+            "ID": "Identifiant unique du bioessai",
+            "COUNTRY_NAME": "Nom du pays où l'essai biologique a été réalisé",
+            "ADMIN1": "Niveau administratif 1 où les moustiques ont été collectés",
+            "ADMIN2": "Niveau administratif 2 où les moustiques ont été collectés",
+            "SITE_NAME": "Site où les moustiques ont été collectés",
+            "LATITUDE": "Latitude du site où les moustiques ont été collectés",
+            "LONGITUDE": "Longitude du site où les moustiques ont été collectés",
+            "YEAR_START": "Année du début de la collecte des moustiques",
+            "SURVEY_TYPE": "Type d'enquête menée",
+            "PATIENT_TYPE": "État clinique du patient",
+            "HRP2_TESTED": "Nombre d'échantillons testés pour les suppressions HRP2",
+            "HRP2_PROPORTION_DELETION": "Pct d'échantillons Pf testés avec des suppressions HRP2",
+            "HRP3_TESTED": "Nombre d'échantillons testés pour les suppressions HRP3",
+            "HRP3_PROPORTION_DELETION": "Pct d'échantillons Pf testés avec des suppressions HRP3",
+            "HRP2_HRP3_TESTED": "Nombre d'échantillons Pf testés pour les suppressions HRP2 ET HRP3",
+            "HRP2_HRP3_PROPORTION_DELETION": "Pct d'échantillons Pf testés avec suppressions HRP2 ET HRP3",
+            "DELETETION_STATUS": "Type de suppression : confirmé ou suspecté",
+            "SAMPLE_ORIGIN": "Lieu d'origine des échantillons, lorsqu'ils sont prélevés sur des voyageurs de retour",
+            "PF_POS_SAMPLES": "Nombre d'échantillons positifs à P.falciparum dans l'enquête totale",
+            "TYPE_SAMPL_ANALYZED": "type d'échantillon analysé - tous, discordants uniquement ou non représentatifs",
+            "CITATION": "Citation de la publication où les données ont été publiées",
+            "CITATION_URL": "URL de la publication où les données ont été publiées"
         }
     },
     "legend": {
@@ -833,38 +908,26 @@
         "selectData": "FILTRER LES DONNÉES",
         "data": "Données",
         "selectLocation": "EMPLACEMENT DU FILTRE (FACULTATIF)",
-        "location": "Emplacement"
+        "location": "Emplacement",
+        "selectDataset": "SELECT DATASET",
+        "dataset": "Dataset"
     },
     "tour": {
         "steps": {
             "1": {
-                "title": "Bienvenue sur la Carte des menaces du paludisme",
-                "p1": "Vous êtes sur la plateforme officielle de l’Organisation Mondiale de la Santé, éditée pour présenter l’ampleur et la répartition des quatre défis biologiques à la lutte contre le paludisme et son éradication.",
-                "p2": "Cet assistant vous montrera comment utiliser cette plateforme."
+                "title": "Sélectionnez un thème"
             },
             "2": {
-                "title": "Veuillez sélectionner une langue."
+                "title": "Sélectionnez une carte pour explorer les résultats de l'étude"
             },
             "3": {
-                "p1": "Allez sur nos cartes interactives qui présentent les données actualisées sur les trois défis."
+                "title": "Ajouter des filtres pour produire une carte limitée à des critères spécifiques"
             },
             "4": {
-                "p1": "Ouvrez la section des filtres pour choisir parmi les filtres de défi ainsi que les filtres de région"
+                "title": "Sélectionnez une région, une sous-région, un pays et/ou un site spécifique."
             },
             "5": {
-                "p1": "Sélectionnez un pays, une région ou une sous-région de votre choix ou laisser ces champs vides pour avoir un aperçu sur tous les pays."
-            },
-            "6": {
-                "p1": "Sélectionnez plusieurs filtres et notez comment la carte s'ajuste automatiquement."
-            },
-            "7": {
-                "p1": "Cliquez sur un site pour accéder au résultat de l’étude correspondant à vos critères de recherche. La fenêtre contextuelle affiche les résultats pour une seule étude. S’il y a plus d’une étude correspondant à vos critères de recherche pour un site, vous pouvez consulter les résultats des autres études en cliquant sur la flèche dirigée vers le haut >"
-            },
-            "8": {
-                "p1": "Consulter les résultats de bioessais par site pour chaque pays."
-            },
-            "9": {
-                "p1": "Cliquez sur un pays pour accéder au récapitulatif sur la résistance."
+                "title": "Cliquez sur un site pour voir les détails de l'étude"
             }
         }
     },

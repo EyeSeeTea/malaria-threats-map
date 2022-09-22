@@ -21,7 +21,6 @@ export enum ActionTypeEnum {
     SetBounds = "malaria/SET_BOUNDS",
     SetTourOpen = "malaria/SET_TOUR_OPEN",
     SetTourStep = "malaria/SET_TOUR_STEP",
-    SetDataDownloadOpen = "malaria/SET_DATA_DOWNLOAD_OPEN",
     SetReportOpen = "malaria/SET_REPORT_OPEN",
     SetMapTitle = "malaria/SET_MAP_TITLE",
     SetUploadFileOpen = "malaria/SET_UPLOAD_FILE_OPEN",
@@ -37,6 +36,7 @@ export enum ActionTypeEnum {
     FetchPreventionStudiesError = "prevention/FETCH_PREVENTION_STUDIES_ERROR",
 
     SetPreventionMapType = "prevention/SET_PREVENTION_MAP_TYPE",
+    SetPreventionDataset = "prevention/SET_PREVENTION_DATASET",
     SetInsecticideClass = "prevention/SET_INSECTICIDE_CLASS",
     SetInsecticideTypes = "prevention/SET_INSECTICIDE_TYPES",
     SetProxyType = "prevention/SET_PROXY_TYPE",
@@ -47,7 +47,8 @@ export enum ActionTypeEnum {
     SetPreventionFilteredStudies = "prevention/SET_FILTER_STUDIES",
     SetPreventionSelectionStudies = "prevention/SET_SELECTION_STUDIES",
 
-    SetDiagnosisMapType = "prevention/SET_DIAGNOSIS_MAP_TYPE",
+    SetDiagnosisMapType = "diagnosis/SET_DIAGNOSIS_MAP_TYPE",
+    SetDiagnosisDataset = "diagnosis/SET_DIAGNOSIS_DATASET",
 
     FetchDiagnosisStudiesRequest = "diagnosis/FETCH_DIAGNOSIS_STUDIES_REQUEST",
     FetchDiagnosisStudiesSuccess = "diagnosis/FETCH_DIAGNOSIS_STUDIES_SUCCESS",
@@ -64,6 +65,7 @@ export enum ActionTypeEnum {
     FetchTreatmentStudiesError = "treatment/FETCH_TREATMENT_STUDIES_ERROR",
 
     SetTreatmentMapType = "treatment/SET_TREATMENT_MAP_TYPE",
+    SetTreatmentDataset = "treatment/SET_TREATMENT_DATASET",
     SetPlasmodiumSpecies = "treatment/SET_TREATMENT_PLASMODIUM_SPECIES",
     SetDrug = "treatment/SET_TREATMENT_DRUG",
     SetMolecularMarker = "treatment/SET_MOLECULAR_MARKER",
@@ -77,6 +79,7 @@ export enum ActionTypeEnum {
     FetchInvasiveStudiesError = "invasive/FETCH_INVASIVE_STUDIES_ERROR",
 
     SetInvasiveMapType = "invasive/SET_INVASIVE_MAP_TYPE",
+    SetInvasiveDataset = "invasive/SET_INVASIVE_DATASET",
     SetInvasiveVectorSpecies = "invasive/SET_INVASIVE_VECTOR_SPECIES",
     SetInvasiveFilteredStudies = "invasive/SET_FILTER_STUDIES",
     SetInvasiveSelectionStudies = "invasive/SET_SELECTION_STUDIES",
