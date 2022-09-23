@@ -19,6 +19,7 @@ export const useCountryContextData = () => {
         if (data === undefined) {
             compositionRoot.countryContext.get().run(
                 data => {
+                    console.log(data);
                     setData(data);
                 },
                 () => {
@@ -30,12 +31,8 @@ export const useCountryContextData = () => {
 
     React.useEffect(() => {
         if (!data) return;
-        //TODO: Remove when iso3 missing is fixed
-        const countries = Object.keys(allCountries)
-            .filter(countryIso => selectedCountries.includes(countryIso))
-            .map(countryIso => allCountries[countryIso]);
 
-        const filtered = data.filter(item => countries.includes(item.ORGANISATIONUNITNAME));
+        const filtered = data.filter(item => selectedCountries.includes(item.ORGANISATIONUNIT_ISO2));
         setFilteredData(filtered);
     }, [data, selectedCountries, allCountries]);
 

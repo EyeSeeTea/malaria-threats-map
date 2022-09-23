@@ -19,6 +19,7 @@ export interface CountryContextData {
     MAL_PROFILE_MEDICINE_FOR_1ST_LINE_TRT_OF_PF: string;
     MAL_PROFILE_MEDICINE_FOR_TRT_OF_PVIVAX: string;
     ORGANISATIONUNITCODE: string;
+    ORGANISATIONUNIT_ISO2: string;
     ORGANISATIONUNITNAME: string;
     PERIODID: number;
 }
