@@ -176,7 +176,7 @@ const Title = styled.h3`
 
 const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
+))(() => ({
     [`& .${tooltipClasses.tooltip}`]: {
         backgroundColor: "white",
         color: "black",
