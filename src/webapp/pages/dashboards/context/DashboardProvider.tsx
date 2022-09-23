@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { DashboardsThemeOptions, MolecularMarker, TherapeuticEfficacy } from "../types";
+import { CountryContext, DashboardsThemeOptions, MolecularMarker, TherapeuticEfficacy } from "../types";
 import React from "react";
 import { selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
 import { fetchTreatmentStudiesRequest } from "../../../store/actions/treatment-actions";
@@ -31,7 +31,7 @@ const DashboardProvider: React.FC<Props> = ({
 }) => {
     const [theme, setTheme] = useState<DashboardsThemeOptions>("prevention");
     const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
-    const [countryContext, setCountryContext] = useState<string>("all");
+    const [countryContext, setCountryContext] = useState<CountryContext>("all");
     const [therapeuticEfficacy, setTherapeuticEfficacy] = useState<TherapeuticEfficacy>("all");
     const [molecularMarker, setMolecularMarker] = useState<MolecularMarker>("all");
     const [dashboardsTreatmentStudies, setDashboardsTreatmentStudies] = useState<TreatmentStudy[]>(undefined);
@@ -79,7 +79,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(DashboardProvider);
 interface DashboardState {
     theme: DashboardsThemeOptions;
     selectedCountries: string[];
-    countryContext: string;
+    countryContext: CountryContext;
     therapeuticEfficacy: string;
     molecularMarker: MolecularMarker;
     treatmentStudies: TreatmentStudy[];
@@ -87,7 +87,7 @@ interface DashboardState {
     updatedDates: LastUpdatedDates;
     setTheme: Dispatch<SetStateAction<DashboardsThemeOptions>>;
     setSelectedCountries: Dispatch<SetStateAction<string[]>>;
-    setCountryContext: Dispatch<SetStateAction<string>>;
+    setCountryContext: Dispatch<SetStateAction<CountryContext>>;
     setTherapeuticEfficacy: Dispatch<SetStateAction<TherapeuticEfficacy>>;
     setMolecularMarker: Dispatch<SetStateAction<MolecularMarker>>;
     setDashboardsTreatmentStudies: Dispatch<SetStateAction<TreatmentStudy[]>>;
