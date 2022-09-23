@@ -106,6 +106,8 @@
             },
             "countryContextSection": {
                 "title": "Contexto del país",
+                "source": "Fuente:",
+                "whoWorldMalariaReport": "Informe mundial sobre el paludismo de la OMS 2021",
                 "epidemiologicalProfile": {
                     "title": "PERFIL EPIDEMIOLÓGICO",
                     "country": "País",
