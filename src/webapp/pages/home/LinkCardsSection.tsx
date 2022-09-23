@@ -69,7 +69,7 @@ const LinkCardsSection: React.FC = () => {
                 buttonText: t("common.homepage.media_cards.maps.button_text"),
             },
             {
-                path: "/dasboards",
+                path: "/dashboards",
                 image: Dashboards,
                 title: t("common.homepage.media_cards.dashboards.title"),
                 text: t("common.homepage.media_cards.dashboards.subtitle"),
