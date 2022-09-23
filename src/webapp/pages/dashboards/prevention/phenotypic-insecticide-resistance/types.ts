@@ -1,4 +1,4 @@
-export type ResistanceToInsecticideGroup = Record<string, ResistanceToInsecticideSerie[]>;
+export type ResistanceToInsecticideSeriesGroup = Record<string, ResistanceToInsecticideSerie[]>;
 
 export interface ResistanceToInsecticideSerie {
     type: "bar";

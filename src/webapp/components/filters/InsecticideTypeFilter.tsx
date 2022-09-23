@@ -11,7 +11,8 @@ import {
 import * as R from "ramda";
 import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
-import { filterByInsecticideClass } from "../layers/studies-filters";
+import { filterByInsecticideClasses } from "../layers/studies-filters";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 const mapStateToProps = (state: State) => ({
     insecticideTypes: selectInsecticideTypes(state),
@@ -28,19 +29,23 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const InsecticideTypeFilter: React.FC<Props> = ({ preventionFilters, studies, setInsecticideTypes }) => {
-    const { t } = useTranslation();
-
-    const filters = [filterByInsecticideClass(preventionFilters.insecticideClass)];
+export function getInsecticideTypes(studies: PreventionStudy[], insecticideClasses: string[]) {
+    const filters = [filterByInsecticideClasses(insecticideClasses)];
 
     const filteredStudies = filters.reduce((studies, filter) => studies.filter(filter), studies);
 
     const uniques = R.uniq(R.map(R.prop("INSECTICIDE_TYPE"), filteredStudies));
 
-    const suggestions: any[] = uniques.map((type: string) => ({
+    return uniques.map((type: string) => ({
         label: type,
         value: type,
     }));
+}
+
+const InsecticideTypeFilter: React.FC<Props> = ({ preventionFilters, studies, setInsecticideTypes }) => {
+    const { t } = useTranslation();
+
+    const suggestions = getInsecticideTypes(studies, [preventionFilters.insecticideClass]);
 
     return (
         <MultiFilter

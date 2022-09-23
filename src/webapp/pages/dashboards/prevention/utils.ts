@@ -1,6 +1,7 @@
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import {
     filterByInsecticideClasses,
+    filterByInsecticideTypes,
     filterByResistanceStatus,
     filterByYearRange,
 } from "../../../components/layers/studies-filters";
@@ -13,8 +14,9 @@ export function filterStudies(
     const filters = [
         filterByResistanceStatus,
         filterByInsecticideClasses(preventionFilters.insecticideClasses),
+        filterByInsecticideTypes(preventionFilters.insecticideTypes),
         filterByOnlyIncludeBioassaysWithMoreMosquitoes(preventionFilters.onlyIncludeBioassaysWithMoreMosquitoes),
-        filterByOnlyIncludeDataByHealth(preventionFilters.OnlyIncludeDataByHealth),
+        filterByOnlyIncludeDataByHealth(preventionFilters.onlyIncludeDataByHealth),
         filterByYearRange(preventionFilters.years),
     ];
 

@@ -1,41 +1,47 @@
 import React from "react";
 import { useState } from "react";
-import { initialPreventionFilters, PreventionFiltersState } from "./PreventionFiltersState";
 
 export function usePreventionFilters() {
-    const [filters, setFilters] = useState<PreventionFiltersState>(initialPreventionFilters);
+    const [insecticideTypes, setInsecticideTypes] = useState<string[]>([]);
+    const [insecticideClasses, setInsecticideClasses] = useState<string[]>([]);
+    const [years, setYears] = useState<[number, number]>([2010, new Date().getFullYear()]);
+    const [onlyIncludeBioassaysWithMoreMosquitoes, setOnlyIncludeBioassaysWithMoreMosquitoes] = useState<number>(0);
+    const [onlyIncludeDataByHealth, setOnlyIncludeDataByHealth] = useState<boolean>(false);
 
-    const onInsecticideClassChange = React.useCallback(
-        (values: string[]) => {
-            setFilters({ ...filters, insecticideClasses: values });
-        },
-        [filters]
-    );
+    const onInsecticideClassChange = React.useCallback((values: string[]) => {
+        setInsecticideClasses(values);
+    }, []);
 
-    const onYearsChange = React.useCallback(
-        (years: [number, number]) => {
-            setFilters({ ...filters, years });
-        },
-        [filters]
-    );
+    const onInsecticideTypesChange = React.useCallback((values: string[]) => {
+        setInsecticideTypes(values);
+    }, []);
 
-    const onOnlyIncludeBioassaysWithMoreMosquitoesChange = React.useCallback(
-        (value: number) => {
-            setFilters({ ...filters, onlyIncludeBioassaysWithMoreMosquitoes: value });
-        },
-        [filters]
-    );
+    const onYearsChange = React.useCallback((years: [number, number]) => {
+        setYears(years);
+    }, []);
 
-    const onOnlyIncludeDataByHealthChange = React.useCallback(
-        (value: boolean) => {
-            setFilters({ ...filters, OnlyIncludeDataByHealth: value });
-        },
-        [filters]
-    );
+    const onOnlyIncludeBioassaysWithMoreMosquitoesChange = React.useCallback((value: number) => {
+        setOnlyIncludeBioassaysWithMoreMosquitoes(value);
+    }, []);
+
+    const onOnlyIncludeDataByHealthChange = React.useCallback((value: boolean) => {
+        setOnlyIncludeDataByHealth(value);
+    }, []);
+
+    const filters = React.useMemo(() => {
+        return {
+            insecticideClasses,
+            insecticideTypes,
+            years,
+            onlyIncludeBioassaysWithMoreMosquitoes,
+            onlyIncludeDataByHealth,
+        };
+    }, [insecticideClasses, insecticideTypes, years, onlyIncludeBioassaysWithMoreMosquitoes, onlyIncludeDataByHealth]);
 
     return {
         filters,
         onInsecticideClassChange,
+        onInsecticideTypesChange,
         onYearsChange,
         onOnlyIncludeBioassaysWithMoreMosquitoesChange,
         onOnlyIncludeDataByHealthChange,

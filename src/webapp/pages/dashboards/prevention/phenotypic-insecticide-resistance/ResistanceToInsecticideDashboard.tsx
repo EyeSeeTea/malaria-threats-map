@@ -11,13 +11,18 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
     const { t } = useTranslation();
 
     const {
+        filteredStudiesForInsecticide,
+        chartType,
+        chartTypes,
         categories,
         data,
         filters,
         onInsecticideClassChange,
+        onInsecticideTypesChange,
         onYearsChange,
         onOnlyIncludeBioassaysWithMoreMosquitoesChange,
         onOnlyIncludeDataByHealthChange,
+        onChartTypeChange,
     } = useResistanceToInsecticide();
 
     const chartComponentRefs = useRef([]);
@@ -40,15 +45,20 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
 
     return (
         <PreventionFilterableDashboard
+            chartTypes={chartTypes}
+            chartType={chartType}
+            studies={filteredStudiesForInsecticide}
             chartComponentRef={chartComponentRefs}
             title={t(
                 "common.dashboard.phenotypicInsecticideResistanceDashboards.statusOfResistanceToInsecticides.title"
             )}
             filters={filters}
-            onInsecticideClassesChange={onInsecticideClassChange}
+            onInsecticideClassesChange={chartType === "by-insecticide-class" ? onInsecticideClassChange : undefined}
+            onInsecticideTypesChange={chartType === "by-insecticide" ? onInsecticideTypesChange : undefined}
             onYearsChange={onYearsChange}
             onOnlyIncludeBioassaysWithMoreMosquitoesChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}
             onOnlyIncludeDataByHealthChange={onOnlyIncludeDataByHealthChange}
+            onChartTypeChange={onChartTypeChange}
         >
             <div style={{ overflowX: "auto" }}>
                 <Table>
@@ -114,7 +124,7 @@ function chartOptions(
     return {
         chart: {
             type: "bar",
-            height: enabledLegend || visibleYAxisLabels ? 250 : 200,
+            height: categories.length * 30 + (enabledLegend ? 50 : 0) + (visibleYAxisLabels ? 50 : 0),
             marginTop: enabledLegend ? 60 : 0,
             marginBottom: visibleYAxisLabels ? 60 : 0,
         },
@@ -143,10 +153,10 @@ function chartOptions(
         legend: {
             verticalAlign: "top",
             align: "center",
-
+            reversed: true,
             enabled: enabledLegend,
             y: -40,
-            x: 0,
+            x: 20,
         },
         plotOptions: {
             series: {

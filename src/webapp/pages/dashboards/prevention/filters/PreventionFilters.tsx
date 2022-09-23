@@ -7,10 +7,14 @@ import InsecticideClassSelector from "../../../../components/filters/Insecticide
 import DashboardsYearRangeSelector from "../../common/filters/DashboardsYearRangeSelector";
 import OnlyIncludeBioassaysWithMoreMosquitoes from "./OnlyIncludeBioassaysWithMoreMosquitoes";
 import OnlyIncudeDataByHealth from "./OnlyIncudeDataByHealth";
+import InsecticideTypeSelector from "../../../../components/filters/InsecticideTypeSelector";
+import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 
 interface PreventionFiltersProps {
+    studies: PreventionStudy[];
     filters: PreventionFiltersState;
-    onInsecticideClassesChange: (value: string[]) => void;
+    onInsecticideClassesChange?: (value: string[]) => void;
+    onInsecticideTypesChange?: (value: string[]) => void;
     onYearsChange: (years: [number, number]) => void;
     onOnlyIncludeBioassaysWithMoreMosquitoesChange: (value: number) => void;
     onOnlyIncludeDataByHealthChange: (value: boolean) => void;
@@ -18,8 +22,10 @@ interface PreventionFiltersProps {
 }
 
 const PreventionFilters: React.FC<PreventionFiltersProps> = ({
+    studies,
     filters,
     onInsecticideClassesChange,
+    onInsecticideTypesChange,
     onYearsChange,
     onOnlyIncludeBioassaysWithMoreMosquitoesChange,
     onOnlyIncludeDataByHealthChange,
@@ -39,7 +45,18 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                 </IconButton>
             </Stack>
 
-            <InsecticideClassSelector onChange={onInsecticideClassesChange} value={filters.insecticideClasses} />
+            {onInsecticideClassesChange && (
+                <InsecticideClassSelector onChange={onInsecticideClassesChange} value={filters.insecticideClasses} />
+            )}
+
+            {onInsecticideTypesChange && (
+                <InsecticideTypeSelector
+                    studies={studies}
+                    onChange={onInsecticideTypesChange}
+                    value={filters.insecticideTypes}
+                    insecticideClassesFilter={filters.insecticideClasses}
+                />
+            )}
 
             <DashboardsYearRangeSelector years={filters.years} onChange={onYearsChange} />
             <OnlyIncludeBioassaysWithMoreMosquitoes
@@ -47,7 +64,7 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                 onChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}
             />
             <OnlyIncudeDataByHealth
-                value={filters.OnlyIncludeDataByHealth}
+                value={filters.onlyIncludeDataByHealth}
                 onChange={onOnlyIncludeDataByHealthChange}
             />
         </React.Fragment>
