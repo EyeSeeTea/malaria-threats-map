@@ -8,8 +8,10 @@ import DashboardsYearRangeSelector from "./DashboardsYearRangeSelector";
 import ExcludeLowerPatientsSelector from "../../../../components/filters/ExcludeLowerPatientsSelector";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import MolecularMarkerSelector from "../../../../components/filters/MolecularMarkerSelector";
 
 interface TreatmentFiltersProps {
+    isMolecularMarkerChart: boolean;
     studies: TreatmentStudy[];
     drugsMultiple?: boolean;
     drugsClearable?: boolean;
@@ -27,15 +29,18 @@ interface TreatmentFiltersProps {
 }
 
 const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
+    isMolecularMarkerChart,
     studies,
     drugsMultiple = false,
     drugsClearable = false,
     plasmodiumSpecies,
     drugs,
+    molecularMarker,
     years,
     excludeLowerPatients,
     onPlasmodiumSpeciesChange,
     onDrugsChange,
+    onMolecularMarkerChange,
     onYearsChange,
     onExcludeLowerPatientsChange,
     onCollapse,
@@ -54,25 +59,41 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                 </IconButton>
             </Stack>
 
-            <PlasmodiumSpecieSelector
-                onlyYMargin
-                labelBold
-                multi={false}
-                background={"#F7F7F7"}
-                onChange={onPlasmodiumSpeciesChange}
-                value={plasmodiumSpecies}
-            />
+            {!isMolecularMarkerChart && (
+                <React.Fragment>
+                    <PlasmodiumSpecieSelector
+                        onlyYMargin
+                        labelBold
+                        multi={false}
+                        background={"#F7F7F7"}
+                        onChange={onPlasmodiumSpeciesChange}
+                        value={plasmodiumSpecies}
+                    />
 
-            <DrugsSelector
-                onlyYMargin
-                labelBold
-                multi={drugsMultiple}
-                isClearable={drugsClearable}
-                background={"#F7F7F7"}
-                studies={studies}
-                onChange={onDrugsChange}
-                value={drugs}
-            />
+                    <DrugsSelector
+                        onlyYMargin
+                        labelBold
+                        multi={drugsMultiple}
+                        isClearable={drugsClearable}
+                        background={"#F7F7F7"}
+                        studies={studies}
+                        onChange={onDrugsChange}
+                        value={drugs}
+                    />
+                </React.Fragment>
+            )}
+            {isMolecularMarkerChart && (
+                <React.Fragment>
+                    <MolecularMarkerSelector
+                        onlyYMargin
+                        labelBold
+                        multi={false}
+                        background={"#F7F7F7"}
+                        onChange={onMolecularMarkerChange}
+                        value={molecularMarker}
+                    />
+                </React.Fragment>
+            )}
 
             <DashboardsYearRangeSelector years={years} onChange={onYearsChange} />
 
