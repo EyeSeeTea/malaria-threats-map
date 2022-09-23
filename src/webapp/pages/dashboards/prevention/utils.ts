@@ -30,6 +30,6 @@ export const filterByOnlyIncludeBioassaysWithMoreMosquitoes =
         return +study.NUMBER >= numberMosquitoes;
     };
 
-export const filterByOnlyIncludeDataByHealth = (_value: boolean) => (_study: PreventionStudy) => {
-    return true;
+export const filterByOnlyIncludeDataByHealth = (value: boolean) => (study: PreventionStudy) => {
+    return !value || study.INSTITUTION_TYPE === "MoH";
 };

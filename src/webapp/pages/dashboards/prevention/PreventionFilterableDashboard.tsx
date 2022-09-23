@@ -1,6 +1,5 @@
 import { Button, Card, Grid, Stack, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import React, { useRef } from "react";
-import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import HighchartsReact from "highcharts-react-official";
@@ -12,12 +11,14 @@ import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { Option } from "../common/types";
 import { ResistanceToInsecticideChartType } from "./types";
 import { PreventionFiltersState } from "./filters/PreventionFiltersState";
+import CategoriesCount from "../common/CategoriesCount";
 
 interface PreventionFilterableDashboardProps {
     chartTypes: Option<ResistanceToInsecticideChartType>[];
     chartType: ResistanceToInsecticideChartType;
     studies: PreventionStudy[];
     title: string;
+    categoriesCount: Record<string, number>;
     chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject[] | HighchartsReact.RefObject>;
     filters: PreventionFiltersState;
     onYearsChange: (years: [number, number]) => void;
@@ -33,6 +34,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
     chartType,
     studies,
     title,
+    categoriesCount,
     filters,
     onInsecticideClassesChange,
     onInsecticideTypesChange,
@@ -44,8 +46,6 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
     onChartTypeChange,
 }) => {
     const { filtersVisible, onChangeFiltersVisible } = useFiltersVisible();
-
-    const { t } = useTranslation();
 
     const ref = useRef<HTMLDivElement>(null);
 
@@ -90,7 +90,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
                 })}
             </ToggleButtonGroup>
 
-            <Grid container spacing={2}>
+            <Grid container spacing={2} ref={ref}>
                 {filtersVisible && (
                     <Grid item md={3} xs={12}>
                         <Stack direction="column">
@@ -109,9 +109,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
                                 />
                             </FiltersCard>
                             <StudiesCountCard elevation={0}>
-                                {t("common.dashboard.therapeuticEfficacyDashboards.numStudies", {
-                                    count: 0,
-                                })}
+                                <CategoriesCount counts={categoriesCount} />
                             </StudiesCountCard>
                         </Stack>
                     </Grid>
@@ -123,7 +121,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
                                 {"Filter data"}
                             </Button>
                         )}
-                        <div ref={ref}>{children}</div>
+                        <div>{children}</div>
                     </DasboardCard>
                 </Grid>
             </Grid>

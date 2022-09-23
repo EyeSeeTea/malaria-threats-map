@@ -103,6 +103,10 @@
                 "molecularMarkerOptions": {
                     "molecularMarker": "Résultats de l'étude des marqueurs moléculaires",
                     "summaryMolecularMarker": "Résumé des résultats des études sur les marqueurs moléculaires au fil du temps"
+                },
+                "phenotypicInsecticideResistanceOptions": {
+                    "phenotypicInsecticideResistance": "Résistance phénotypique aux insecticides",
+                    "statusOfResistanceToInsecticides": "Etat de résistance aux insecticides"
                 }
             },
             "countryContextDashboards": {
@@ -171,6 +175,20 @@
                     "year": "Year",
                     "chartTitle": "Percentage of samples in one study where validated or candidate",
                     "chartSubtitle": "molecular markers of artemisinin resistance were detected:"
+                }
+            },
+            "phenotypicInsecticideResistanceDashboards": {
+                "title": "Résistance phénotypique aux insecticides",
+                "numBioassays": "Le nombre suivant d'essais biologiques correspond au filtre appliqué :",
+                "numSites": "Nombre de sites",
+                "insecticideResistanceStatus": "Statut de résistance aux insecticides",
+                "byInsecticideClass": "Par classe d'insecticide",
+                "byInsecticide": "Par insecticide",
+                "confirmed": "Confirmé (0 à <90%)",
+                "possible": "Possible (90 à <98%)",
+                "susceptible": "Susceptible (≥98%)",
+                "statusOfResistanceToInsecticides": {
+                    "title": "ÉTAT DE RÉSISTANCE AUX INSECTICIDES"
                 }
             },
             "treatmentFilters": {

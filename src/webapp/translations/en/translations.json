@@ -180,6 +180,14 @@
             },
             "phenotypicInsecticideResistanceDashboards": {
                 "title": "Phenotypic insecticide resistance",
+                "numBioassays": "The following number of bioassay meet the applied filter:",
+                "numSites": "Number of sites",
+                "insecticideResistanceStatus": "Insecticide resistance status",
+                "byInsecticideClass": "By Insecticide Class",
+                "byInsecticide": "By Insecticide",
+                "confirmed": "Confirmed (0 to <90%)",
+                "possible": "Possible (90 to <98%)",
+                "susceptible": "Susceptible (≥98%)",
                 "statusOfResistanceToInsecticides": {
                     "title": "STATUS OF RESISTANCE TO INSECTICIDES"
                 }

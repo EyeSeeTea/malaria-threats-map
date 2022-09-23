@@ -11,11 +11,11 @@ import { ResistanceToInsecticideSeriesGroup } from "./types";
 
 const chartTypes: Option<ResistanceToInsecticideChartType>[] = [
     {
-        label: i18next.t("By Insecticide Class"),
+        label: i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.byInsecticideClass"),
         value: "by-insecticide-class",
     },
     {
-        label: i18next.t("By Insecticide"),
+        label: i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.byInsecticide"),
         value: "by-insecticide",
     },
 ];
@@ -35,6 +35,7 @@ export function useResistanceToInsecticide() {
 
     const [data, setData] = React.useState<ResistanceToInsecticideSeriesGroup>({});
     const [categories, setCategories] = React.useState<string[]>([]);
+    const [categoriesCount, setCategoriesCount] = React.useState<Record<string, number>>({});
     const [chartType, setChartType] = React.useState<ResistanceToInsecticideChartType>("by-insecticide-class");
 
     React.useEffect(() => {
@@ -61,6 +62,14 @@ export function useResistanceToInsecticide() {
         }
     }, [chartType, onInsecticideClassChange, onInsecticideTypesChange, filteredStudiesForInsecticide]);
 
+    React.useEffect(() => {
+        if (chartType === "by-insecticide-class") {
+            setCategoriesCount(_.countBy(filteredStudies, "INSECTICIDE_CLASS"));
+        } else {
+            setCategoriesCount(_.countBy(filteredStudies, "INSECTICIDE_TYPE"));
+        }
+    }, [chartType, filteredStudies]);
+
     const onChartTypeChange = React.useCallback((type: ResistanceToInsecticideChartType) => {
         setChartType(type);
     }, []);
@@ -68,6 +77,7 @@ export function useResistanceToInsecticide() {
     return {
         filteredStudies,
         filteredStudiesForInsecticide,
+        categoriesCount,
         chartTypes,
         chartType,
         categories,
@@ -90,6 +100,7 @@ export function createChartData(
 ): ResistanceToInsecticideSeriesGroup {
     const result = selectedCountries.reduce((acc, countryISO) => {
         const studiesByCountry = studies.filter(study => study.ISO2 === countryISO);
+        console.log({ studiesByCountry: studiesByCountry.map(study => study.INSTITUTION_TYPE) });
 
         const resistanceConfirmedStudies = studiesByCountry.filter(
             study => study.RESISTANCE_STATUS === "CONFIRMED_RESISTANCE"
@@ -97,7 +108,7 @@ export function createChartData(
 
         const resistanceConfirmed = {
             type: "bar" as const,
-            name: "Confirmed (0 to <90%)",
+            name: i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.confirmed"),
             color: ResistanceStatusColors.Confirmed[0],
             data:
                 type === "by-insecticide-class"
@@ -111,7 +122,7 @@ export function createChartData(
 
         const resistancePosible = {
             type: "bar" as const,
-            name: "Possible (90 to <98%)",
+            name: i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.possible"),
             color: ResistanceStatusColors.Possible[0],
             data:
                 type === "by-insecticide-class"
@@ -125,7 +136,7 @@ export function createChartData(
 
         const resistanceSusceptible = {
             type: "bar" as const,
-            name: "Susceptible (≥98%)",
+            name: i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.susceptible"),
             color: ResistanceStatusColors.Susceptible[0],
             data:
                 type === "by-insecticide-class"

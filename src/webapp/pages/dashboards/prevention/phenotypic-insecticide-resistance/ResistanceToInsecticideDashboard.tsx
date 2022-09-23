@@ -6,6 +6,7 @@ import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import { useResistanceToInsecticide } from "./useResistanceToInsecticide";
 import { ResistanceToInsecticideSerie } from "./types";
+import i18next from "i18next";
 
 const ResistanceToInsecticideDashboard: React.FC = () => {
     const { t } = useTranslation();
@@ -15,6 +16,7 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
         chartType,
         chartTypes,
         categories,
+        categoriesCount,
         data,
         filters,
         onInsecticideClassChange,
@@ -48,6 +50,7 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
             chartTypes={chartTypes}
             chartType={chartType}
             studies={filteredStudiesForInsecticide}
+            categoriesCount={categoriesCount}
             chartComponentRef={chartComponentRefs}
             title={t(
                 "common.dashboard.phenotypicInsecticideResistanceDashboards.statusOfResistanceToInsecticides.title"
@@ -130,7 +133,9 @@ function chartOptions(
         },
         title: {
             align: "left",
-            text: enabledLegend ? "Insecticide resistance status" : "",
+            text: enabledLegend
+                ? i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.insecticideResistanceStatus")
+                : "",
             style: { fontSize: "14px", fontWeight: "bold", color: "black" },
         },
         xAxis: {
@@ -138,7 +143,9 @@ function chartOptions(
         },
         yAxis: {
             title: {
-                text: visibleYAxisLabels ? "Number of sites" : "",
+                text: visibleYAxisLabels
+                    ? i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.numSites")
+                    : "",
                 style: { fontSize: "14px", fontWeight: "bold", color: "black" },
                 y: 20,
                 x: -50,
@@ -156,7 +163,7 @@ function chartOptions(
             reversed: true,
             enabled: enabledLegend,
             y: -40,
-            x: 20,
+            x: 50,
         },
         plotOptions: {
             series: {
