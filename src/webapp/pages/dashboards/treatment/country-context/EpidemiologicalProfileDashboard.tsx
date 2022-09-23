@@ -110,8 +110,8 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
+                        {/* TODO: move this calculations to presenter (custom hook) */}
                         {data.map(item => {
-                            console.log({ item });
                             return (
                                 <tr key={item.ORGANISATIONUNITNAME}>
                                     <td>
@@ -121,19 +121,27 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                                         <CellText>{item.PERIODID}</CellText>
                                     </td>
                                     <td>
-                                        <CellText>{`${numberFormatter.format(
-                                            item.MAL_CALC_POP_AT_RISK_HIGH
-                                        )} (?%)`}</CellText>
+                                        <CellText>{`${numberFormatter.format(item.MAL_CALC_POP_AT_RISK_HIGH)} (${(
+                                            (item.MAL_CALC_POP_AT_RISK_HIGH / item.MAL_POP_UN) *
+                                            100
+                                        ).toFixed()}%)`}</CellText>
                                     </td>
                                     <td>
                                         <CellText>{`${numberFormatter.format(
                                             item.MAL_CALC_POP_AT_RISK_LOW_HIGH - item.MAL_CALC_POP_AT_RISK_HIGH
-                                        )} (?%)`}</CellText>
+                                        )} (${(
+                                            ((item.MAL_CALC_POP_AT_RISK_LOW_HIGH - item.MAL_CALC_POP_AT_RISK_HIGH) /
+                                                item.MAL_POP_UN) *
+                                            100
+                                        ).toFixed()}%)`}</CellText>
                                     </td>
                                     <td>
                                         <CellText>{`${numberFormatter.format(
                                             item.MAL_POP_UN - item.MAL_CALC_POP_AT_RISK_LOW_HIGH
-                                        )} (?%)`}</CellText>
+                                        )} (${(
+                                            ((item.MAL_POP_UN - item.MAL_CALC_POP_AT_RISK_LOW_HIGH) / item.MAL_POP_UN) *
+                                            100
+                                        ).toFixed()}%)`}</CellText>
                                     </td>
                                     <td>
                                         <CellText>{`${numberFormatter.format(
