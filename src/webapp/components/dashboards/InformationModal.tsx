@@ -182,10 +182,12 @@ const MolecularMarkerStudyContent = () => {
                 </Trans>
             </Typography>
             <Typography fontSize={{ xs: "11px", md: "15px" }}>
-                <Typography fontStyle={"italic"} color="#2FB3AF">
+                <Typography fontStyle={"italic"} color="#2FB3AF" fontWeight={"bold"} display="inline">
                     Pfkelch13:
                 </Typography>{" "}
-                {t("common.dashboard.informationModal.summaryMolecularMarkerStudyOverTime.pfkelch13.description")}
+                <Typography display="inline">
+                    {t("common.dashboard.informationModal.summaryMolecularMarkerStudyOverTime.pfkelch13.description")}
+                </Typography>
                 <ul>
                     <li>
                         {t("common.dashboard.informationModal.summaryMolecularMarkerStudyOverTime.pfkelch13.list_1")}
@@ -196,20 +198,24 @@ const MolecularMarkerStudyContent = () => {
                 </ul>
             </Typography>
             <Typography fontSize={{ xs: "11px", md: "15px" }}>
-                <Typography fontStyle={"italic"} color="#2FB3AF">
+                <Typography fontStyle={"italic"} color="#2FB3AF" fontWeight={"bold"} display="inline">
                     Pfcrt:
                 </Typography>{" "}
-                {t("common.dashboard.informationModal.summaryMolecularMarkerStudyOverTime.pfcrt")}
+                <Typography display="inline">
+                    {t("common.dashboard.informationModal.summaryMolecularMarkerStudyOverTime.pfcrt")}
+                </Typography>
             </Typography>
             <Typography fontSize={{ xs: "11px", md: "15px" }}>
-                <Typography fontStyle={"italic"} color="#2FB3AF">
+                <Typography fontStyle={"italic"} color="#2FB3AF" fontWeight={"bold"} display="inline">
                     Pfmdr1
                 </Typography>{" "}
-                {t("common.dashboard.informationModal.common.and")}{" "}
-                <Typography fontStyle={"italic"} color="#2FB3AF">
+                <Typography display="inline">{t("common.dashboard.informationModal.common.and")} </Typography>
+                <Typography fontStyle={"italic"} color="#2FB3AF" fontWeight={"bold"} display="inline">
                     Pfplasmepsin 2-3:
                 </Typography>{" "}
-                {t("common.dashboard.informationModal.summaryMolecularMarkerStudyOverTime.pfmdr1.description")}
+                <Typography display="inline">
+                    {t("common.dashboard.informationModal.summaryMolecularMarkerStudyOverTime.pfmdr1")}
+                </Typography>
             </Typography>
             <Typography fontSize={{ xs: "11px", md: "15px" }}>
                 <Trans
