@@ -164,6 +164,52 @@
             },
             "treatmentFilters": {
                 "title": "Filtrar Datos"
+            },
+            "informationModal": {
+                "common":{
+                    "dataPeriod": "<strong>Período de datos:</strong>",
+                    "dataLastUpdated" : "<strong>Datos actualizados por última vez:</strong>",
+                    "studyProtocol": "<strong>Protocolo de estudio:</strong> La OMS recomienda que todos los estudios de eficacia terapéutica se realicen según el protocolo estándar de la OMS.",
+                    "info": "Para ver más detalles sobre un estudio concreto, vuelva a la interfaz del mapa para ver los datos a nivel de sitio.",
+                    "and": "y"
+                },
+                "summaryTreatmentFailureRateByDrug": {
+                    "chartInterpretation": "<strong>Interpretación del gráfico:</strong> Este gráfico de barras muestra el número de estudios de eficacia terapéutica realizados en un país (o países) seleccionado. El usuario puede personalizar el gráfico seleccionando una especie de Plasmodium, así como seleccionando uno o más fármacos, y año(s) de interés. El usuario también puede excluir del gráfico los estudios con menos de 20 pacientes. Los estudios con >10% de pacientes con fracaso terapéutico se muestran en rojo; los estudios con {{lessThen}}10% de pacientes con fracaso terapéutico se muestran en rosa.",
+                    "dataAvailability": "<strong>Disponibilidad de datos:</strong> Se muestran todos los estudios de los que se dispone de datos."
+                },
+                "treatmentFailureRateOverTime": {
+                    "chartInterpretation": "<strong>Interpretación del gráfico:</strong> Este gráfico de dispersión muestra el porcentaje de pacientes con fracaso del tratamiento, en un estudio de eficacia terapéutica realizado en un país (o países) seleccionado, por año. El usuario puede personalizar el gráfico seleccionando una especie de Plasmodium, un fármaco y los años de interés. El usuario también puede excluir del gráfico los estudios con menos de 20 pacientes.",
+                    "description_1": "Cada círculo representa un estudio de eficacia terapéutica. El tamaño del círculo es indicativo del número total de pacientes incluidos en el estudio. El color del círculo indica el país donde se realizó el estudio.",
+                    "description_2": "La ubicación de los círculos a lo largo del eje x se basa en el año en que se completó el estudio. Hay un ligero desplazamiento horizontal de los círculos, dentro de un intervalo de un año, para reducir la apariencia de círculos superpuestos.",
+                    "dataAvailability": "<strong>Disponibilidad de datos:</strong> En este gráfico sólo se muestran los datos de <strong><i>P. falciparum</i></strong> y <strong><i>P. vivax</i></strong>."
+                },
+                "parasiteClearanceRatesOverTime": {
+                    "chartInterpretation": "<strong>Interpretación del gráfico:</strong> Este gráfico de dispersión muestra el porcentaje de pacientes con retraso en la eliminación del parásito, en un estudio de eficacia terapéutica, realizado en un país (o países) seleccionado, por año. El usuario puede personalizar el gráfico seleccionando una especie de Plasmodium, un fármaco y los años de interés. El usuario también puede excluir del gráfico los estudios con menos de 20 pacientes.",
+                    "description_1": "Cada círculo representa un estudio de eficacia terapéutica. El tamaño del círculo es indicativo del número total de pacientes incluidos en el estudio. El color del círculo indica el país donde se realizó el estudio.",
+                    "description_2": "La ubicación de los círculos a lo largo del eje x se basa en el año en que se completó el estudio. Hay un ligero desplazamiento horizontal de los círculos, dentro de un intervalo de años, para reducir el solapamiento de los círculos.",
+                    "dataAvailability": "<strong>Disponibilidad de datos:</strong> En este gráfico sólo se muestran los datos de <strong><i>P. falciparum</i></strong> y <strong><i>P. vivax</i></strong>."
+                },
+                "summaryMolecularMarkerStudyOverTime": {
+                    "intro": "Los estudios de marcadores moleculares identifican y hacen un seguimiento de la prevalencia de las mutaciones moleculares asociadas a la resistencia a los fármacos antipalúdicos. El usuario puede personalizar el gráfico seleccionando el tipo de estudio de marcadores moleculares y los años de interés. El usuario también puede excluir del gráfico los estudios con menos de 20 pacientes.",
+                    "chartInterpretation": "<strong>Interpretación del gráfico:</strong> Este gráfico de barras apiladas muestra los resultados de los estudios de marcadores moleculares. La altura de la barra está determinada por el número de estudios realizados en ese año.",
+                    "pfkelch13": {
+                        "description": "El color de la barra representa el porcentaje de muestras dentro de un estudio donde se detectaron marcadores moleculares validados y candidatos. El azul claro indica un porcentaje bajo; el azul oscuro representa un porcentaje alto.",
+                        "list_1": "Los marcadores validados incluyen: (F466I, N458Y, Y493H, R539T, I543T, P553L, R561H, P574L, C580Y)",
+                        "list_2": "Los marcadores asociados/candidatos incluyen: (P441L, G449A, C469F/Y, A481V, R515K, P527H, N5371/D, G538V, V568G, R6221, A675V)"
+                    },
+                    "pfcrt": "El color de la barra representa el porcentaje de muestras de un estudio en las que se detectaron mutaciones. El azul claro indica un porcentaje bajo; el azul oscuro representa un porcentaje alto.",
+                    "pfmdr1": "El color de la barra representa el porcentaje de muestras dentro de un estudio en el que se detectaron números de copias múltiples. El azul claro indica un porcentaje bajo; el azul oscuro representa un porcentaje alto.",
+                    "dataAvailability": "<strong>Disponibilidad de datos:</strong> Se muestran todos los estudios de los que se dispone de datos."
+                }
+            },
+            "tooltip":{
+                "drug": "Fármaco",
+                "numberOfPatients": "Número de pacientes",
+                "treatmentFailureRate": "Tasa de fracaso del tratamiento",
+                "source": {
+                    "label": "Fuente",
+                    "link": "Instituto Nacional de Alergia y Enfermedades Infecciosas, Institutos Nacionales de Salud"
+                }
             }
         },
         "homepage": {

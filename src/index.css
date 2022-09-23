@@ -29,10 +29,6 @@ code {
     display: none !important;
 }
 
-.highcharts-tooltip {
-    max-width: 140px !important;
-}
-
 #ic_signupform .elcontainer {
     background: #ffffff;
     text-align: left;
@@ -206,6 +202,15 @@ code {
 }
 #___reactour svg {
     color: rgba(0, 0, 0, 0.5);
+}
+
+.highcharts-tooltip a {
+    white-space: normal !important;
+}
+
+.highcharts-tooltip table {
+    height: auto;
+    width: 400px;
 }
 
 .tour-modal {

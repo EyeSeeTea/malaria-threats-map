@@ -9,6 +9,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import DownloadIcon from "@mui/icons-material/Download";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
+import InformationModal from "../../../components/dashboards/InformationModal";
 import HighchartsReact from "highcharts-react-official";
 import html2canvas from "html2canvas";
 
@@ -18,6 +19,7 @@ interface TreatmentFilterableDashboardProps {
     drugsClearable: boolean;
     chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject>;
     title: string;
+    type: "treatmentFailureByDrug" | "treatmentFailure" | "positiveDay3" | "molecularMarkerStudy";
     filteredStudiesForDrugs: TreatmentStudy[];
     studiesCount: number;
     plasmodiumSpecies: string;
@@ -39,6 +41,7 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
     drugsClearable,
     chartComponentRef,
     title,
+    type,
     filteredStudiesForDrugs,
     studiesCount,
     plasmodiumSpecies,
@@ -54,6 +57,9 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
     children,
 }) => {
     const [filtersVisible, setFiltersVisible] = React.useState(true);
+    const [openInfoModal, setOpenInfoModal] = React.useState(false);
+    const handleOpenInfoModal = () => setOpenInfoModal(true);
+    const handleCloseInfoModal = () => setOpenInfoModal(false);
 
     const { t } = useTranslation();
 
@@ -88,14 +94,13 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                 <Title>{title}</Title>
                 <Stack direction="row" spacing={2}>
                     <Fab color="primary" size="small">
-                        <InfoOutlinedIcon sx={{ color: "white", width: "20px" }} />
+                        <InfoOutlinedIcon sx={{ color: "white", width: "20px" }} onClick={handleOpenInfoModal} />
                     </Fab>
                     <Fab color="primary" size="small" onClick={handleDownload}>
                         <DownloadIcon sx={{ color: "white" }} />
                     </Fab>
                 </Stack>
             </Stack>
-
             <Grid container spacing={2} ref={ref}>
                 {filtersVisible && (
                     <Grid item md={3} xs={12}>
@@ -135,6 +140,13 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                         <div ref={ref}>{children}</div>
                     </DasboardCard>
                 </Grid>
+                <InformationModal
+                    title={title}
+                    type={type}
+                    years={years}
+                    openInfoModal={openInfoModal}
+                    handleCloseInfoModal={handleCloseInfoModal}
+                />
             </Grid>
         </React.Fragment>
     );
