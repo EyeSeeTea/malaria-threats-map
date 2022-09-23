@@ -104,6 +104,32 @@
                     "summaryMolecularMarker": "Resumen de los resultados del estudio de marcadores moleculares a lo largo del tiempo"
                 }
             },
+            "countryContextSection": {
+                "title": "Contexto del país",
+                "source": "Fuente:",
+                "whoWorldMalariaReport": "Informe mundial sobre el paludismo de la OMS 2021",
+                "epidemiologicalProfile": {
+                    "title": "PERFIL EPIDEMIOLÓGICO",
+                    "country": "País",
+                    "year": "Año",
+                    "transmission": "Población que vive en áreas de alta transmisión, baja transmisión y libres de malaria",
+                    "burdenEstimates": "Estimaciones de carga",
+                    "highTransmission": "Alta transmisión",
+                    "moreThanOneCase": "(>1 caso por cada 1000 habitantes)",
+                    "lowTransmission": "Transmisión baja",
+                    "lessOrEqualtoOneCase": "(0-1 caso por 1000 habitantes)",
+                    "malariaFree": "Libre de malaria",
+                    "zeroCases": "(0 casos)",
+                    "estimatedCases": "Casos estimados",
+                    "estimatedDeaths": "Muertes estimadas"
+                },
+                "majorPlamociumSpecies": {
+                    "title": "PRINCIPALES ESPECIES DE PLASMODIUM Y RÉGIMEN DE TRATAMIENTO",
+                    "country": "País",
+                    "species": "Especies principales de Plasmodium (%)",
+                    "firstLineTreatments": "Tratamientos de primera línea para la malaria sin complicaciones"
+                }
+            },
             "therapeuticEfficacySection": {
                 "title": "Estudios de eficacia terapéutica (EET)",
                 "numStudies": "Los filtros aplicados producen {{count}} estudios",

@@ -1,5 +1,5 @@
 import { useContext, useCallback } from "react";
-import { DashboardsThemeOptions, MolecularMarker, TherapeuticEfficacy } from "../types";
+import { CountryContext, DashboardsThemeOptions, MolecularMarker, TherapeuticEfficacy } from "../types";
 import { DashboardContext } from "./DashboardProvider";
 
 export const useDashboards = () => {
@@ -37,7 +37,7 @@ export const useDashboards = () => {
     );
 
     const onCountryContextChange = useCallback(
-        (countryContext: string) => {
+        (countryContext: CountryContext) => {
             setCountryContext(countryContext);
         },
         [setCountryContext]
