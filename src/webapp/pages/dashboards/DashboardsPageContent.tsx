@@ -8,6 +8,7 @@ import SecondaryLayout from "../secondary-layout/SecondaryLayout";
 import TreatmentEfficacyStudies from "./treatment/therapeutic-efficacy/TreatmentEfficacyStudies";
 import { useDashboards } from "./context/useDashboards";
 import MolecularMarkerStudies from "./treatment/molecular-marker/MolecularMarkerStudies";
+import CountryContextStudies from "./treatment/country-context/CountryContextStudies";
 
 const StyledContainer = styled.div`
     background-color: #43cea4;
@@ -36,6 +37,13 @@ const DashboardsPageContent: React.FC = () => {
             <Container maxWidth="lg">
                 <ContentsFilterSection />
             </Container>
+            <DashboardSection>
+                {dashboardsTreatmentStudies && (
+                    <Container maxWidth="xl">
+                        <CountryContextStudies />
+                    </Container>
+                )}
+            </DashboardSection>
             <DashboardSection>
                 {dashboardsTreatmentStudies && (
                     <Container maxWidth="xl">

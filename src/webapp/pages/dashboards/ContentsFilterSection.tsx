@@ -4,10 +4,10 @@ import { Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import Select from "react-select";
-import { MolecularMarker, TherapeuticEfficacy } from "./types";
+import { CountryContext, MolecularMarker, TherapeuticEfficacy } from "./types";
 import { useDashboards } from "./context/useDashboards";
 
-const countryContextOptions: Option<string>[] = [
+const countryContextOptions: Option<CountryContext>[] = [
     { label: i18next.t("common.dashboard.contentsSection.countryOptions.countryContext"), value: "all" },
     {
         label: i18next.t("common.dashboard.contentsSection.countryOptions.epidemiologicalProfile"),
@@ -55,7 +55,7 @@ export const ContentsFilterSection: React.FC = () => {
     } = useDashboards();
 
     const handleCountryContextChange = useCallback(
-        (option: Option<string>) => onCountryContextChange(option.value),
+        (option: Option<CountryContext>) => onCountryContextChange(option.value),
         [onCountryContextChange]
     );
 
