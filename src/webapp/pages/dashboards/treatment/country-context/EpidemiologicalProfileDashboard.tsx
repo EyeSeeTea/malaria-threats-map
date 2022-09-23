@@ -118,7 +118,7 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                                         <CellText>{item.ORGANISATIONUNITNAME}</CellText>
                                     </td>
                                     <td>
-                                        <CellText>{item.PERIOD}</CellText>
+                                        <CellText>{item.PERIODID}</CellText>
                                     </td>
                                     <td>
                                         <CellText>{`${numberFormatter.format(
