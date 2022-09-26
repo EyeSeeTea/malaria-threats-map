@@ -1,11 +1,12 @@
 import React from "react";
-import { Grid, Stack, Typography } from "@mui/material";
+import { Grid, Paper, Stack, Typography } from "@mui/material";
 import { Trans, useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import ImageBanner from "../common/ImageBanner";
 import PreventionIcon from "../../assets/img/prevention-icon.svg";
 import Map from "../../assets/img/stories-page/map.png";
+import CircleIcon from "@mui/icons-material/Circle";
 
 import Layout from "../layout/Layout";
 import StoryModeStepper from "../../components/StoryModeStepper";
@@ -37,6 +38,20 @@ const PreventionImage = styled.img`
 const MapImage = styled.img`
     width: 100%;
     height: auto;
+    position: relative;
+`;
+
+const StyledPaper = styled(Paper)`
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    border-radius: 10px;
+    box-shadow: 2;
+    padding: 10px;
+    @media (min-width: 900px) and (max-width: 1236px) {
+        height: fit-content;
+        top: 30px;
+    }
 `;
 
 export const StoriesPage: React.FC = () => {
@@ -82,20 +97,48 @@ export const StoriesPage: React.FC = () => {
                 paddingX={"30px"}
                 sx={{ width: "100%", marginLeft: "0px", paddingLeft: "0px", paddingRight: "0px" }}
             >
-                <Grid item xs={12} md={6} lg={5} xl={4} sx={{ paddingLeft: "0px !important" }}>
+                <Grid item xs={12} md={4} lg={4} xl={3} sx={{ paddingLeft: "0px !important" }}>
                     <StoryModeStepper theme={searchParams.get("theme") as ThemeType} />
                 </Grid>
                 <Grid
                     item
                     xs={12}
-                    md={6}
-                    lg={7}
-                    xl={8}
+                    md={8}
+                    lg={8}
+                    xl={9}
                     padding="16px"
                     marginTop={{ xs: "16px", md: "55px" }}
                     sx={{ maxWidth: "1200px !important" }}
+                    position="relative"
                 >
                     <MapImage src={Map} alt="map" />
+                    <StyledPaper>
+                        <Stack spacing={{ xs: 1, md: 2 }}>
+                            <Typography fontSize={{ xs: "10px", md: "12px" }} fontWeight="bold">
+                                {t(`common.prevention.resistance_status`)}
+                            </Typography>
+                            <Stack>
+                                <Stack direction={"row"} spacing={1} alignItems="center">
+                                    <CircleIcon sx={{ color: "#869C66", fontSize: 10 }} />
+                                    <Typography fontSize={{ xs: "9px", md: "11px" }}>
+                                        {t(`common.prevention.legend.resistance_status.confirmed`)}
+                                    </Typography>
+                                </Stack>
+                                <Stack direction={"row"} spacing={1} alignItems="center">
+                                    <CircleIcon sx={{ color: "#FD9225", fontSize: 10 }} />
+                                    <Typography fontSize={{ xs: "9px", md: "11px" }}>
+                                        {t(`common.prevention.legend.resistance_status.possible`)}
+                                    </Typography>
+                                </Stack>
+                                <Stack direction={"row"} spacing={1} alignItems="center">
+                                    <CircleIcon sx={{ color: "#E41517", fontSize: 10 }} />
+                                    <Typography fontSize={{ xs: "9px", md: "11px" }}>
+                                        {t(`common.prevention.legend.resistance_status.susceptible`)}
+                                    </Typography>
+                                </Stack>
+                            </Stack>
+                        </Stack>
+                    </StyledPaper>
                 </Grid>
             </Grid>
         </Layout>

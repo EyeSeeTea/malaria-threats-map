@@ -77,7 +77,7 @@ type Steps = { [value: string]: any[] };
 
 function StoryModeStepper({ theme }: Props) {
     const { t } = useTranslation();
-    const [storyModeStep, setStoryModeStep] = useState<number>(1);
+    const [storyModeStep, setStoryModeStep] = useState<number>(0);
     const classes = useStyles({});
     const steps = getSteps();
 
@@ -138,8 +138,8 @@ function StoryModeStepper({ theme }: Props) {
                                         "& .MuiSvgIcon-root": {
                                             zIndex: 1,
                                             color: "#fff",
-                                            width: 38,
-                                            height: 38,
+                                            width: 33,
+                                            height: 33,
                                             display: "flex",
                                             fill: "#D3D3D3",
                                             cursor: "pointer",
@@ -152,7 +152,7 @@ function StoryModeStepper({ theme }: Props) {
                                         },
                                         "& .MuiStepIcon-text": {
                                             fill: "white",
-                                            fontSize: "12px",
+                                            fontSize: "11px",
                                         },
                                     }}
                                 >
