@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useTranslation, Trans, TFunction } from "react-i18next";
 import styled from "styled-components";
@@ -181,7 +181,7 @@ const ShareDataPage: React.FC<Props> = () => {
                                 <i>An. stephensi</i> detection outside of its native areas. Please report your data
                                 using the WHO standard data collection form, available{" "}
                                 <a
-                                    href="https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors"
+                                    href="https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-databases-on-invasive-mosquito-vector-species"
                                     target="_blank"
                                     rel="noreferrer"
                                 >
