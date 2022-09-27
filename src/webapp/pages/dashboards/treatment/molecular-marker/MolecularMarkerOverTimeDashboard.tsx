@@ -32,6 +32,7 @@ const MolecularMarkerDashboard: React.FC = () => {
         <TreatmentFilterableDashboard
             isMolecularMarkerChart={true}
             title={t("common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.title")}
+            type="molecularMarkerStudy"
             drugsMultiple={true}
             drugsClearable={true}
             filteredStudiesForDrugs={filteredStudiesForDrugs}

@@ -104,6 +104,32 @@
                     "summaryMolecularMarker": "Résumé des résultats des études sur les marqueurs moléculaires au fil du temps"
                 }
             },
+            "countryContextSection": {
+                "title": "Contexte du pays",
+                "source": "La source:",
+                "whoWorldMalariaReport": "Rapport 2021 de l'OMS sur le paludisme dans le monde",
+                "epidemiologicalProfile": {
+                    "title": "PROFIL ÉPIDÉMIOLOGIQUE",
+                    "country": "Pays",
+                    "year": "Année",
+                    "transmission": "Population vivant dans des zones à forte transmission, à faible transmission et exemptes de paludisme",
+                    "burdenEstimates": "Estimations de la charge",
+                    "highTransmission": "Transmission élevée",
+                    "moreThanOneCase": "(>1 cas pour 1000 habitants)",
+                    "lowTransmission": "Faible transmission",
+                    "lessOrEqualtoOneCase": "(0-1 cas pour 1000 habitants)",
+                    "malariaFree": "Sans paludisme",
+                    "zeroCases": "(0 cas)",
+                    "estimatedCases": "Cas estimés",
+                    "estimatedDeaths": "Décès estimés"
+                },
+                "majorPlamociumSpecies": {
+                    "title": "PRINCIPALES ESPÈCES DE PLASMODIUM ET RÉGIME DE TRAITEMENT",
+                    "country": "Pays",
+                    "species": "Espèces majeures de Plasmodium (%)",
+                    "firstLineTreatments": "Traitements de 1ère ligne pour le paludisme non compliqué"
+                }
+            },
             "therapeuticEfficacySection": {
                 "title": "Études d'efficacité thérapeutique (EET)",
                 "numStudies": "Les filtres appliqués génèrent {{count}} études",
@@ -138,6 +164,52 @@
             },
             "treatmentFilters": {
                 "title": "Filtrer les données"
+            },
+            "informationModal": {
+                "common":{
+                    "dataPeriod": "<strong>Période de données:</strong>",
+                    "dataLastUpdated" : "<strong>Données mises à jour pour la dernière fois:</strong>",
+                    "studyProtocol": "<strong>Protocole d'étude:</strong> L'OMS recommande que toutes les études d'efficacité thérapeutique soient menées selon le protocole standard de l'OMS.",
+                    "info": "Pour afficher plus de détails sur une étude spécifique, revenez à l'interface cartographique pour afficher les données au niveau du site.",
+                    "and": "et"
+                },
+                "summaryTreatmentFailureRateByDrug": {
+                    "chartInterpretation": "<strong>Interprétation du graphique:</strong> Ce graphique à barres montre le nombre d'études d'efficacité thérapeutique menées dans un ou plusieurs pays sélectionnés. L'utilisateur peut personnaliser le graphique en sélectionnant une espèce de Plasmodium, ainsi qu'en choisissant un ou plusieurs médicaments, et la ou les années qui l'intéressent. L'utilisateur peut également exclure du graphique les études comportant moins de 20 patients. Les études comportant >10% de patients en échec thérapeutique sont indiquées en rouge ; les études comportant {{lessThen}}10% de patients en échec thérapeutique sont indiquées en rose.",
+                    "dataAvailability": "<strong>Disponibilité des données :</strong> toutes les études pour lesquelles des données sont disponibles sont affichées."
+                },
+                "treatmentFailureRateOverTime": {
+                    "chartInterpretation": "<strong>Interprétation du graphique:</strong> Ce diagramme de dispersion affiche le pourcentage de patients en échec thérapeutique, dans une étude d'efficacité thérapeutique menée dans un ou plusieurs pays sélectionnés, par année. L'utilisateur peut personnaliser le graphique en sélectionnant une espèce de Plasmodium, un médicament et les années qui l'intéressent. L'utilisateur peut également exclure du graphique les études comptant moins de 20 patients.",
+                    "description_1": "Chaque cercle représente une étude d'efficacité thérapeutique. La taille du cercle est indicative du nombre total de patients inclus dans l'étude. La couleur du cercle indique le pays où l'étude a été menée.",
+                    "description_2": "L'emplacement des cercles le long de l'axe des x est basé sur l'année au cours de laquelle l'étude a été réalisée. Il y a un léger déplacement horizontal des cercles, dans un intervalle d'une année, afin de réduire l'apparence de cercles qui se chevauchent.",
+                    "dataAvailability": "<strong>Disponibilité des données:</strong> Seules les données concernant <strong><i>P. falciparum</i></strong> et <strong><i>P. vivax</i></strong> sont affichées dans ce graphique."
+                },
+                "parasiteClearanceRatesOverTime": {
+                    "chartInterpretation": "<strong>Interprétation du graphique:</strong> Ce diagramme de dispersion affiche le pourcentage de patients présentant une clairance parasitaire retardée, dans une étude d'efficacité thérapeutique, menée dans un ou plusieurs pays sélectionnés, par année. L'utilisateur peut personnaliser le graphique en sélectionnant une espèce de Plasmodium, un médicament et les années qui l'intéressent. L'utilisateur peut également exclure du graphique les études comptant moins de 20 patients.",
+                    "description_1": "Chaque cercle représente une étude d'efficacité thérapeutique. La taille du cercle est indicative du nombre total de patients inclus dans l'étude. La couleur du cercle indique le pays où l'étude a été menée.",
+                    "description_2": "L'emplacement des cercles le long de l'axe des x est basé sur l'année au cours de laquelle l'étude a été réalisée. Il y a un léger déplacement horizontal des cercles, dans un intervalle d'une année, afin de réduire les cercles qui se chevauchent.",
+                    "dataAvailability": "<strong>Disponibilité des données:</strong> Seules les données concernant <strong>P. falciparum</strong> et <strong>P. vivax</strong> sont affichées dans ce graphique."
+                },
+                "summaryMolecularMarkerStudyOverTime": {
+                    "intro": "Les études sur les marqueurs moléculaires identifient et suivent la prévalence des mutations moléculaires associées à la résistance aux médicaments antipaludiques. L'utilisateur peut personnaliser le graphique en sélectionnant le type d'étude de marqueurs moléculaires et les années d'intérêt. Il peut également exclure du graphique les études portant sur moins de 20 patients.",
+                    "chartInterpretation": "<strong>Interprétation du graphique:</strong> Ce graphique à barres empilées affiche les résultats des études sur les marqueurs moléculaires. La hauteur de la barre est déterminée par le nombre d'études menées cette année-là.",
+                    "pfkelch13": {
+                        "description": "La couleur de la barre représente le pourcentage d'échantillons dans une étude où les marqueurs moléculaires validés et candidats ont été détectés. Le bleu clair indique un faible pourcentage ; le bleu foncé représente un pourcentage élevé.",
+                        "list_1": "Les marqueurs validés comprennent: (F466I, N458Y, Y493H, R539T, I543T, P553L, R561H, P574L, C580Y)",
+                        "list_2": "Les marqueurs associés/candidats comprennent: (P441L, G449A, C469F/Y, A481V, R515K, P527H, N5371/D, G538V, V568G, R6221, A675V)"
+                    },
+                    "pfcrt": "La couleur de la barre représente le pourcentage d'échantillons dans une étude où des mutations ont été détectées. Le bleu clair indique un faible pourcentage ; le bleu foncé représente un pourcentage élevé.",
+                    "pfmdr1": "La couleur de la barre représente le pourcentage d'échantillons dans une étude où des nombres de copies multiples ont été détectés. Le bleu clair indique un faible pourcentage ; le bleu foncé représente un pourcentage élevé.",
+                    "dataAvailability": "<strong>Data availability:</strong> Toutes les études pour lesquelles des données sont disponibles sont présentées."
+                }
+            },
+            "tooltip":{
+                "drug": "Médicament",
+                "numberOfPatients": "Nombre de patients",
+                "treatmentFailureRate": "Taux d'échec du traitement",
+                "source": {
+                    "label": "Source",
+                    "link": "Institut national des allergies et des maladies infectieuses, Instituts nationaux de la santé"
+                }
             }
         },
         "homepage": {
@@ -186,6 +258,24 @@
                 "treatment_subtitle": "La résistance aux médicaments antipaludiques reste l'une des principales menaces pour les efforts mondiaux de lutte contre le paludisme, en particulier dans la sous-région du Grand Mékong.",
                 "diagnosis_subtitle": "Les délétions de gènes chez certains parasites du paludisme entraînent des résultats de tests de diagnostic faussement négatifs, ce qui complique la gestion et le contrôle des cas."
             }
+        },
+        "shareDataPage":{
+            "title":"Contribuez à la carte des menaces du paludisme en partageant vos <strong>données</strong>.",
+            "section1":{
+                "title":"Fournir des données sur la résistance aux insecticides",
+                "description":"Nous invitons toutes les personnes et organisations à soumettre des données. Veuillez communiquer vos données en utilisant les formulaires standard de collecte de données de l'OMS suivants. Les formulaires peuvent être téléchargés <2 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>ici</2>.",
+                "list":{
+                    "1": "Résultats des essais biologiques des insecticides synergistes",
+                    "2": "Résultats du test biologique de concentration d'intensité",
+                    "3": "Discriminer les résultats des essais biologiques de concentration",
+                    "4": "Résultats des essais biologiques moléculaires et biochimiques"
+                }
+            },
+            "section2":{
+                "title":"Contribuer aux données de détection de <i>An. stephensi</i>.",
+                "description":"Nous invitons toutes les personnes et organisations à soumettre des données sur la détection de <i>An. stephensi</i> en dehors de ses zones d'origine. Veuillez communiquer vos données en utilisant le formulaire standard de collecte de données de l'OMS, disponible à l'adresse suivante <5 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>ici</5>."
+            },
+            "sectionsFooter": "Les formulaires complétés peuvent être envoyés à: <2>vectorsurveillance@who.int</2>"
         },
         "footer": {
             "policies": {

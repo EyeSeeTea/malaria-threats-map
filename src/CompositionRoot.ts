@@ -14,6 +14,8 @@ import { SmtpJsEmailRepository } from "./data/repositories/SmtpJsEmailRepository
 import { UploadFileUseCase } from "./domain/usecases/UploadFileUseCase";
 import getDistrictsUrl from "./webapp/utils/getDistrictsUrl";
 import { SendFeedbackUseCase } from "./domain/usecases/SendFeedbackUseCase";
+import { CountryContextApiRepository } from "./data/repositories/CountryContextApiRepository";
+import { GetCountryContextUseCase } from "./domain/usecases/GetCountryContextUseCase";
 
 export class CompositionRoot {
     private preventionRepository = new PreventionApiRepository(config.mapServerUrl);
@@ -22,6 +24,7 @@ export class CompositionRoot {
     private invasiveRepository = new InvasiveApiRepository(config.xmartServerUrl);
     private countryLayerRepository = new CountryLayerApiRepository(config.featuresServerUrl, config.backendUrl);
     private emailRepository = new SmtpJsEmailRepository(config.feedbackEmailSecureToken);
+    private countryContextRepository = new CountryContextApiRepository(config.xmartServerUrl);
     private _districtsUrl: string;
 
     constructor() {
@@ -71,6 +74,12 @@ export class CompositionRoot {
     public get feedback() {
         return getExecute({
             send: new SendFeedbackUseCase(this.emailRepository, config.feedbackEmailFrom, config.feedbackEmailTo),
+        });
+    }
+
+    public get countryContext() {
+        return getExecute({
+            get: new GetCountryContextUseCase(this.countryContextRepository),
         });
     }
 

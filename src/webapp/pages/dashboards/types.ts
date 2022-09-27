@@ -7,3 +7,5 @@ export type TherapeuticEfficacy =
     | "parasite-clearance-rates";
 
 export type MolecularMarker = "all" | "summary-molecular-marker";
+
+export type CountryContext = "all" | "epidemiological-profile" | "major-plasmodium";
