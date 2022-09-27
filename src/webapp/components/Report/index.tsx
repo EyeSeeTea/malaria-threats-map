@@ -1,5 +1,5 @@
 import React from "react";
-import { Fab, Theme } from "@mui/material";
+import { Fab, Theme, Hidden } from "@mui/material";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import ReportIcon from "@mui/icons-material/Description";
@@ -80,16 +80,18 @@ function Report({ isReportOpen, openReport, theme }: Props) {
 
     return (
         <React.Fragment>
-            <Fab
-                id="country-button"
-                size="small"
-                color={isReportOpen ? "primary" : "default"}
-                onClick={handleClickOpen}
-                className={classes.fab}
-                title={t("common.icons.summary")}
-            >
-                <ReportIcon />
-            </Fab>
+            <Hidden smUp>
+                <Fab
+                    id="country-button"
+                    size="small"
+                    color={isReportOpen ? "primary" : "default"}
+                    onClick={handleClickOpen}
+                    className={classes.fab}
+                    title={t("common.icons.summary")}
+                >
+                    <ReportIcon />
+                </Fab>
+            </Hidden>
             <Dialog
                 fullWidth
                 maxWidth={"xl"}
