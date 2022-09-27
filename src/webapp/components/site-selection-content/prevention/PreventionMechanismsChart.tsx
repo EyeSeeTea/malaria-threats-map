@@ -29,7 +29,7 @@ const preventionMechanismAssaysBarChartOptions: (
         type: "bar",
         height: 120 + years.length * 40,
         style: {
-            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
         },
     },
     legend: {
@@ -98,7 +98,7 @@ const preventionMechanismAllelicBarChartOptions: (
         height: 120 + years.length * 40,
         width: 150,
         style: {
-            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
         },
         marginTop: 95,
     },

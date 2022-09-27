@@ -70,7 +70,7 @@ const StyledMenuItem = styled(MenuItem).withConfig({
         font-weight: 400;
         text-align: left;
         text-transform: none;
-        font: normal normal medium 14px/25px "Roboto";
+        font: normal normal medium 14px/25px "Source Sans Pro";
         font-size: 14px;
         letter-spacing: 0.45px;
         color: #343434;

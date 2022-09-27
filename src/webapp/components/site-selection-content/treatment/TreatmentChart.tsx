@@ -16,7 +16,7 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
     chart: {
         height: 400,
         style: {
-            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
         },
     },
     tooltip: {

@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useTranslation, Trans, TFunction } from "react-i18next";
 import styled from "styled-components";

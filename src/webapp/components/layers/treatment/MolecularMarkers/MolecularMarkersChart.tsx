@@ -26,7 +26,7 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
         type: "pie",
         height: 250,
         style: {
-            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
         },
     },
     title: {
@@ -83,7 +83,7 @@ const options2: (data: any, categories: any[], translations: any) => Highcharts.
         type: "column",
         height: 250,
         style: {
-            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
         },
     },
     title: {
@@ -139,7 +139,7 @@ const options3: (data: any, categories: any[], translations: any) => Highcharts.
         height: 250,
         width: 300,
         style: {
-            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
         },
     },
     title: {

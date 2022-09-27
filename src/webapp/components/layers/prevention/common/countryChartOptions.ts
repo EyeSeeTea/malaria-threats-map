@@ -15,7 +15,7 @@ const statusCountryChartOptions: (data: any, labels: StatusCountryChartLabels) =
         type: "pie",
         height: 250,
         style: {
-            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
         },
     },
     title: {

@@ -18,7 +18,7 @@ export const preventionBarChartOptions: (
         type: "bar",
         height: 90 + data.length * 40,
         style: {
-            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
         },
         marginLeft: maptype === PreventionMapType.LEVEL_OF_INVOLVEMENT ? 265 : 210,
     },
