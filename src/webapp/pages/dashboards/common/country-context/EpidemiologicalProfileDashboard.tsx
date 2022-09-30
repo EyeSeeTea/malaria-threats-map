@@ -121,7 +121,6 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                     </thead>
                     <tbody>
                         {data.map(item => {
-                            console.log({ item });
                             return (
                                 <tr key={item.ORGANISATIONUNITNAME}>
                                     <td>

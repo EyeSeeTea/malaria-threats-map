@@ -12,7 +12,7 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
     const { t } = useTranslation();
 
     const {
-        filteredStudiesForInsecticide,
+        insecticideTypeOptions,
         chartType,
         chartTypes,
         categories,
@@ -47,10 +47,11 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
 
     return (
         <PreventionFilterableDashboard
+            insecticideTypeOptions={insecticideTypeOptions}
+            chart="status-of-resistance-of-insecticide"
             chartTypes={chartTypes}
             chartType={chartType}
-            studies={filteredStudiesForInsecticide}
-            categoriesCount={categoriesCount}
+            count={categoriesCount}
             chartComponentRef={chartComponentRefs}
             title={t(
                 "common.dashboard.phenotypicInsecticideResistanceDashboards.statusOfResistanceToInsecticides.title"
@@ -65,28 +66,30 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
         >
             <div style={{ overflowX: "auto" }}>
                 <Table>
-                    {Object.keys(data).map((isoCountry, index) => {
-                        return (
-                            <tr key={isoCountry}>
-                                <td>{t(isoCountry)}</td>
-                                <td>
-                                    <StyledHighcharts
-                                        highcharts={Highcharts}
-                                        options={chartOptions(
-                                            data[isoCountry],
-                                            categories,
-                                            index === 0,
-                                            index === Object.keys(data).length - 1,
-                                            maxStackedColumn
-                                        )}
-                                        ref={(element: HighchartsReact.RefObject) =>
-                                            chartComponentRefs.current.push(element)
-                                        }
-                                    />
-                                </td>
-                            </tr>
-                        );
-                    })}
+                    <tbody>
+                        {Object.keys(data).map((isoCountry, index) => {
+                            return (
+                                <tr key={isoCountry}>
+                                    <td>{t(isoCountry)}</td>
+                                    <td>
+                                        <StyledHighcharts
+                                            highcharts={Highcharts}
+                                            options={chartOptions(
+                                                data[isoCountry],
+                                                categories,
+                                                index === 0,
+                                                index === Object.keys(data).length - 1,
+                                                maxStackedColumn
+                                            )}
+                                            ref={(element: HighchartsReact.RefObject) =>
+                                                chartComponentRefs.current.push(element)
+                                            }
+                                        />
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
                 </Table>
             </div>
         </PreventionFilterableDashboard>

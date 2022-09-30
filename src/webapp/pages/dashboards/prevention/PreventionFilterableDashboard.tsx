@@ -3,41 +3,51 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import HighchartsReact from "highcharts-react-official";
-import PreventionFilters from "./filters/PreventionFilters";
+import PreventionFilters, { PreventionFilterableChart } from "./filters/PreventionFilters";
 import { useFiltersVisible } from "../common/filters/useFiltersVisible";
 import { downloadHtmlElement } from "../utils";
 import DashboardTitle from "../common/DashboardTitle";
-import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { Option } from "../common/types";
 import { ResistanceToInsecticideChartType } from "./types";
 import { PreventionFiltersState } from "./filters/PreventionFiltersState";
 import CategoriesCount from "../common/CategoriesCount";
+import { useTranslation } from "react-i18next";
 
 interface PreventionFilterableDashboardProps {
-    chartTypes: Option<ResistanceToInsecticideChartType>[];
-    chartType: ResistanceToInsecticideChartType;
-    studies: PreventionStudy[];
+    chart: PreventionFilterableChart;
+    chartTypes?: Option<ResistanceToInsecticideChartType>[];
+    chartType?: ResistanceToInsecticideChartType;
+    speciesOptions?: Option<string>[];
+    typeOptions?: Option<string>[];
+    insecticideTypeOptions?: Option<string>[];
     title: string;
-    categoriesCount: Record<string, number>;
+    count: number | Record<string, number>;
     chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject[] | HighchartsReact.RefObject>;
     filters: PreventionFiltersState;
     onYearsChange: (years: [number, number]) => void;
-    onInsecticideClassesChange: (value: string[]) => void;
-    onInsecticideTypesChange: (value: string[]) => void;
+    onInsecticideClassesChange?: (value: string[]) => void;
+    onSpeciesChange?: (value: string[]) => void;
+    onTypeChange?: (value: string) => void;
+    onInsecticideTypesChange?: (value: string[]) => void;
     onOnlyIncludeBioassaysWithMoreMosquitoesChange: (value: number) => void;
     onOnlyIncludeDataByHealthChange: (value: boolean) => void;
-    onChartTypeChange: (value: ResistanceToInsecticideChartType) => void;
+    onChartTypeChange?: (value: ResistanceToInsecticideChartType) => void;
 }
 
 const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = ({
+    chart,
     chartTypes,
     chartType,
-    studies,
+    insecticideTypeOptions,
     title,
-    categoriesCount,
+    count,
     filters,
+    speciesOptions,
+    typeOptions,
     onInsecticideClassesChange,
+    onSpeciesChange,
     onInsecticideTypesChange,
+    onTypeChange,
     onYearsChange,
     onOnlyIncludeBioassaysWithMoreMosquitoesChange,
     onOnlyIncludeDataByHealthChange,
@@ -46,6 +56,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
     onChartTypeChange,
 }) => {
     const { filtersVisible, onChangeFiltersVisible } = useFiltersVisible();
+    const { t } = useTranslation();
 
     const ref = useRef<HTMLDivElement>(null);
 
@@ -63,9 +74,11 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
         downloadHtmlElement(ref.current, title);
     }, [ref, title]);
 
-    const handleAlignment = React.useCallback(
+    const handleChartTypeChange = React.useCallback(
         (_event: React.MouseEvent<HTMLElement>, value: ResistanceToInsecticideChartType) => {
-            onChartTypeChange(value);
+            if (onChartTypeChange) {
+                onChartTypeChange(value);
+            }
         },
         [onChartTypeChange]
     );
@@ -74,21 +87,23 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
         <React.Fragment>
             <DashboardTitle title={title} onDownloadClick={handleDownload} showActions={true} />
 
-            <ToggleButtonGroup
-                value={chartType}
-                exclusive
-                onChange={handleAlignment}
-                aria-label="text alignment"
-                sx={{ marginBottom: 2 }}
-            >
-                {chartTypes.map(type => {
-                    return (
-                        <StyledToggleButton key={type.value} value={type.value}>
-                            {type.label}
-                        </StyledToggleButton>
-                    );
-                })}
-            </ToggleButtonGroup>
+            {chartTypes && (
+                <ToggleButtonGroup
+                    value={chartType}
+                    exclusive
+                    onChange={handleChartTypeChange}
+                    aria-label="text alignment"
+                    sx={{ marginBottom: 2 }}
+                >
+                    {chartTypes.map(type => {
+                        return (
+                            <StyledToggleButton key={type.value} value={type.value}>
+                                {type.label}
+                            </StyledToggleButton>
+                        );
+                    })}
+                </ToggleButtonGroup>
+            )}
 
             <Grid container spacing={2} ref={ref}>
                 {filtersVisible && (
@@ -96,10 +111,15 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
                         <Stack direction="column">
                             <FiltersCard>
                                 <PreventionFilters
-                                    studies={studies}
+                                    chart={chart}
+                                    insecticideTypeOptions={insecticideTypeOptions}
                                     filters={filters}
+                                    speciesOptions={speciesOptions}
+                                    typeOptions={typeOptions}
                                     onInsecticideClassesChange={onInsecticideClassesChange}
+                                    onSpeciesChange={onSpeciesChange}
                                     onInsecticideTypesChange={onInsecticideTypesChange}
+                                    onTypeChange={onTypeChange}
                                     onYearsChange={onYearsChange}
                                     onOnlyIncludeBioassaysWithMoreMosquitoesChange={
                                         onOnlyIncludeBioassaysWithMoreMosquitoesChange
@@ -109,7 +129,13 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
                                 />
                             </FiltersCard>
                             <StudiesCountCard elevation={0}>
-                                <CategoriesCount counts={categoriesCount} />
+                                {typeof count === "number" ? (
+                                    t("common.dashboard.phenotypicInsecticideResistanceDashboards.numBioassays", {
+                                        count,
+                                    })
+                                ) : (
+                                    <CategoriesCount counts={count} />
+                                )}
                             </StudiesCountCard>
                         </Stack>
                     </Grid>

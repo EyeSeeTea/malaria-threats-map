@@ -1,10 +1,9 @@
 import { Button, Card, Grid, Stack } from "@mui/material";
-import Highcharts from "highcharts";
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import TreatmentFilters from "./filters/TreatmentFilters";
-import More from "highcharts/highcharts-more";
+
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import HighchartsReact from "highcharts-react-official";
@@ -32,7 +31,6 @@ interface TreatmentFilterableDashboardProps {
     onMolecularMarkerChange: (value: number) => void;
 }
 
-More(Highcharts);
 const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = ({
     isMolecularMarkerChart = false,
     drugsMultiple,

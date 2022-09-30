@@ -3,6 +3,8 @@ import {
     filterByInsecticideClasses,
     filterByInsecticideTypes,
     filterByResistanceStatus,
+    filterBySpecies,
+    filterByType,
     filterByYearRange,
 } from "../../../components/layers/studies-filters";
 import { PreventionFiltersState } from "./filters/PreventionFiltersState";
@@ -15,6 +17,8 @@ export function filterStudies(
         filterByResistanceStatus,
         filterByInsecticideClasses(preventionFilters.insecticideClasses),
         filterByInsecticideTypes(preventionFilters.insecticideTypes),
+        filterBySpecies(preventionFilters.species),
+        filterByType(preventionFilters.type),
         filterByOnlyIncludeBioassaysWithMoreMosquitoes(preventionFilters.onlyIncludeBioassaysWithMoreMosquitoes),
         filterByOnlyIncludeDataByHealth(preventionFilters.onlyIncludeDataByHealth),
         filterByYearRange(preventionFilters.years),

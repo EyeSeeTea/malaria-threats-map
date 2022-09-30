@@ -1,42 +1,38 @@
 import React from "react";
-import { connect } from "react-redux";
-import { State } from "../../store/types";
-import { selectSpecies } from "../../store/reducers/translations-reducer";
-import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
-import * as R from "ramda";
 import { useTranslation } from "react-i18next";
 import MultiFilter from "./common/MultiFilter";
+import { Option } from "../BasicSelect";
 
-const mapStateToProps = (state: State) => ({
-    species: selectSpecies(state),
-    studies: selectPreventionStudies(state),
-});
-
-type OwnProps = {
+type SpeciesSelectorProps = {
+    options: Option[];
     onChange: (selection: string[]) => void;
     value: string[];
+    labelPosition?: "top" | "middle";
+    margin?: string;
+    isClearable?: boolean;
 };
 
-type StateProps = ReturnType<typeof mapStateToProps>;
-type Props = StateProps & OwnProps;
-
-const SpeciesSelector: React.FC<Props> = ({ studies, onChange, value }) => {
+const SpeciesSelector: React.FC<SpeciesSelectorProps> = ({
+    options,
+    onChange,
+    value,
+    labelPosition,
+    margin,
+    isClearable,
+}) => {
     const { t } = useTranslation();
-    const uniques = R.uniq(R.map(R.prop("SPECIES"), studies)).sort();
-
-    const suggestions: any[] = uniques.map((specie: string) => ({
-        label: specie,
-        value: specie,
-    }));
 
     return (
         <MultiFilter
+            labelPosition={labelPosition}
+            margin={margin}
             label={t("common.filters.vector_species")}
-            options={suggestions}
+            options={options}
             onChange={onChange}
             value={value}
+            isClearable={isClearable}
         />
     );
 };
 
-export default connect(mapStateToProps, null)(SpeciesSelector);
+export default SpeciesSelector;

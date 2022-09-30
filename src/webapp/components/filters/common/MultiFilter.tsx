@@ -8,6 +8,7 @@ import { Typography } from "@mui/material";
 
 type Props = {
     labelPosition?: "top" | "middle";
+    margin?: string;
     label: string;
     options: Option[];
     placeholder?: string;
@@ -15,7 +16,6 @@ type Props = {
     value: string[];
     analyticsMultiFilterAction?: string;
     isClearable?: boolean;
-    margin?: string;
 };
 
 function MultiFilter({

@@ -23,10 +23,12 @@ const chartTypes: Option<ResistanceToInsecticideChartType>[] = [
 export function useResistanceToInsecticide() {
     const {
         filteredStudies,
-        filteredStudiesForInsecticide,
+        insecticideClassOptions,
+        insecticideTypeOptions,
         selectedCountries,
         filters,
         onInsecticideClassChange,
+        onSpeciesChange,
         onInsecticideTypesChange,
         onYearsChange,
         onOnlyIncludeBioassaysWithMoreMosquitoesChange,
@@ -52,15 +54,19 @@ export function useResistanceToInsecticide() {
 
     React.useEffect(() => {
         if (chartType === "by-insecticide-class") {
-            const insecticideClasses = _.uniq(filteredStudiesForInsecticide.map(study => study.INSECTICIDE_CLASS));
-            onInsecticideClassChange(insecticideClasses);
+            onInsecticideClassChange(insecticideClassOptions.map(op => op.value));
             onInsecticideTypesChange([]);
         } else {
-            const insecticideTypes = _.uniq(filteredStudiesForInsecticide.map(study => study.INSECTICIDE_TYPE));
             onInsecticideClassChange([]);
-            onInsecticideTypesChange(insecticideTypes);
+            onInsecticideTypesChange(insecticideTypeOptions.map(op => op.value));
         }
-    }, [chartType, onInsecticideClassChange, onInsecticideTypesChange, filteredStudiesForInsecticide]);
+    }, [
+        chartType,
+        onInsecticideClassChange,
+        onInsecticideTypesChange,
+        insecticideClassOptions,
+        insecticideTypeOptions,
+    ]);
 
     React.useEffect(() => {
         if (chartType === "by-insecticide-class") {
@@ -75,8 +81,8 @@ export function useResistanceToInsecticide() {
     }, []);
 
     return {
+        insecticideTypeOptions,
         filteredStudies,
-        filteredStudiesForInsecticide,
         categoriesCount,
         chartTypes,
         chartType,
@@ -85,6 +91,7 @@ export function useResistanceToInsecticide() {
         filters,
         onChartTypeChange,
         onInsecticideClassChange,
+        onSpeciesChange,
         onInsecticideTypesChange,
         onYearsChange,
         onOnlyIncludeBioassaysWithMoreMosquitoesChange,
@@ -100,7 +107,6 @@ export function createChartData(
 ): ResistanceToInsecticideSeriesGroup {
     const result = selectedCountries.reduce((acc, countryISO) => {
         const studiesByCountry = studies.filter(study => study.ISO2 === countryISO);
-        console.log({ studiesByCountry: studiesByCountry.map(study => study.INSTITUTION_TYPE) });
 
         const resistanceConfirmedStudies = studiesByCountry.filter(
             study => study.RESISTANCE_STATUS === "CONFIRMED_RESISTANCE"
@@ -146,8 +152,6 @@ export function createChartData(
 
         return { ...acc, [countryISO]: [resistanceSusceptible, resistancePosible, resistanceConfirmed] };
     }, {});
-
-    console.log({ result });
 
     return result;
 }

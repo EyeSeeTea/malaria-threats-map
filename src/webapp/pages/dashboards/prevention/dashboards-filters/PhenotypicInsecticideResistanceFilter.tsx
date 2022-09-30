@@ -17,6 +17,12 @@ const options: Option<PhenotypicInsecticideResistance>[] = [
         ),
         value: "status-resistance-insecticide",
     },
+    {
+        label: i18next.t(
+            "common.dashboard.dashboardsFilterSection.phenotypicInsecticideResistanceOptions.mosquitoOverTime"
+        ),
+        value: "mosquito-mortality-over-time",
+    },
 ];
 
 interface PhenotypicInsecticideResistanceFilterProps {

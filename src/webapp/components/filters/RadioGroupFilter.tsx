@@ -5,8 +5,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { Divider, FilterColumContainer } from "./Filters";
-import FormLabel from "@mui/material/FormLabel";
 import { Option } from "../BasicSelect";
+import { Typography } from "@mui/material";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
     & span {
@@ -19,19 +19,34 @@ const StyledFormControlLabel = styled(FormControlLabel)`
 
 type RadioGroupProps = {
     label: string;
+    labelFontSize?: string;
+    labelFontWeight?: string;
     options: Option[];
     handleChange: (event: React.ChangeEvent<unknown>) => void;
     value: string;
+    margin?: string;
+    padding?: string;
+    background?: string;
 };
 
-function RadioGroupFilter({ label, options, handleChange, value }: RadioGroupProps) {
+function RadioGroupFilter({
+    label,
+    options,
+    handleChange,
+    value,
+    margin,
+    padding,
+    background,
+    labelFontSize,
+    labelFontWeight,
+}: RadioGroupProps) {
     return (
-        <FilterColumContainer>
-            <FormLabel color="primary" component="legend">
+        <FilterColumContainer margin={margin} padding={padding} background={background}>
+            <Typography component="legend" fontSize={labelFontSize} fontWeight={labelFontWeight}>
                 {label}
-            </FormLabel>
+            </Typography>
             <Divider />
-            <RadioGroup value={value} onChange={handleChange}>
+            <RadioGroup value={value} onChange={handleChange} sx={{ paddingLeft: 2 }}>
                 {options.map((option: Option) => (
                     <StyledFormControlLabel
                         key={option.value}

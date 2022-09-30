@@ -106,7 +106,8 @@
                 },
                 "phenotypicInsecticideResistanceOptions": {
                     "phenotypicInsecticideResistance": "Résistance phénotypique aux insecticides",
-                    "statusOfResistanceToInsecticides": "Etat de résistance aux insecticides"
+                    "statusOfResistanceToInsecticides": "Etat de résistance aux insecticides",
+                    "mosquitoOverTime": "Mosquito Over Time"
                 }
             },
             "countryContextDashboards": {
@@ -172,14 +173,15 @@
                     "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
                     "legendLabel": "Percentage of samples in one study where multiple copy numbers were detected:",
                     "numStudies": "Number of Studies",
-                    "year": "Year",
+                    "year": "An",
                     "chartTitle": "Percentage of samples in one study where validated or candidate",
                     "chartSubtitle": "molecular markers of artemisinin resistance were detected:"
                 }
             },
             "phenotypicInsecticideResistanceDashboards": {
                 "title": "Résistance phénotypique aux insecticides",
-                "numBioassays": "Le nombre suivant d'essais biologiques correspond au filtre appliqué :",
+                "numBioassaysByCategory": "Le nombre suivant d'essais biologiques correspond au filtre appliqué :",
+                "numBioassays": "{{count}} biologiques correspond au filtre appliqué ",
                 "numSites": "Nombre de sites",
                 "insecticideResistanceStatus": "Statut de résistance aux insecticides",
                 "byInsecticideClass": "Par classe d'insecticide",
@@ -189,6 +191,11 @@
                 "susceptible": "Susceptible (≥98%)",
                 "statusOfResistanceToInsecticides": {
                     "title": "ÉTAT DE RÉSISTANCE AUX INSECTICIDES"
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MORTALITÉ DES MOUSTIQUES AU FIL DU TEMPS",
+                    "adjustedMortality": "Mortalité ajustée",
+                    "year": "An"
                 }
             },
             "treatmentFilters": {

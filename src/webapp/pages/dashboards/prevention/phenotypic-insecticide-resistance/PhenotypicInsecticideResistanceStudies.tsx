@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
 import { PhenotypicInsecticideResistance } from "../types";
+import MosquitoMortalityOverTimeDashboard from "./MosquitoMortalityOverTimeDashboard";
 import ResistanceToInsecticideDashboard from "./ResistanceToInsecticideDashboard";
 
 interface PhenotypicInsecticideResistanceStudiesProps {
@@ -21,6 +22,10 @@ const PhenotypicInsecticideResistanceStudies: React.FC<PhenotypicInsecticideResi
             {(phenotypicInsecticideResistance === "all" ||
                 phenotypicInsecticideResistance === "status-resistance-insecticide") && (
                 <ResistanceToInsecticideDashboard />
+            )}
+            {(phenotypicInsecticideResistance === "all" ||
+                phenotypicInsecticideResistance === "mosquito-mortality-over-time") && (
+                <MosquitoMortalityOverTimeDashboard />
             )}
         </Container>
     );

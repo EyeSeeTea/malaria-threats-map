@@ -105,7 +105,8 @@
                 },
                 "phenotypicInsecticideResistanceOptions": {
                     "phenotypicInsecticideResistance": "Phenotypic Insecticide Resistance",
-                    "statusOfResistanceToInsecticides": "Status of resistance to insecticides"
+                    "statusOfResistanceToInsecticides": "Status of resistance to insecticides",
+                    "mosquitoOverTime": "Mosquito Over Time"
                 }
             },
             "countryContextDashboards": {
@@ -180,7 +181,8 @@
             },
             "phenotypicInsecticideResistanceDashboards": {
                 "title": "Phenotypic insecticide resistance",
-                "numBioassays": "The following number of bioassay meet the applied filter:",
+                "numBioassaysByCategory": "The following number of bioassay meet the applied filter:",
+                "numBioassays": "{{count}} bioassays meet the applied filter",
                 "numSites": "Number of sites",
                 "insecticideResistanceStatus": "Insecticide resistance status",
                 "byInsecticideClass": "By Insecticide Class",
@@ -190,9 +192,13 @@
                 "susceptible": "Susceptible (≥98%)",
                 "statusOfResistanceToInsecticides": {
                     "title": "STATUS OF RESISTANCE TO INSECTICIDES"
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MOSQUITO MORTALITY OVER TIME",
+                    "adjustedMortality": "Adjusted mortality",
+                    "year": "Year"
                 }
             },
-
             "treatmentFilters": {
                 "title": "Filter Data"
             }

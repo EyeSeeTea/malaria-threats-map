@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { selectInsecticideClasses } from "../../store/reducers/translations-reducer";
 import MultiFilter from "../../components/filters/common/MultiFilter";
 import { getInsecticideClassOptions } from "./InsecticideClassFilter";
+import RadioGroupFilter from "./RadioGroupFilter";
 
 const mapStateToProps = (state: State) => ({
     insecticideClasses: selectInsecticideClasses(state),
@@ -12,18 +13,24 @@ const mapStateToProps = (state: State) => ({
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 interface OwnProps {
+    type: "radio" | "select";
     onChange: (selection: string[]) => void;
     value: string[];
 }
 
 type Props = OwnProps & StateProps;
 
-function InsecticideClassSelector({ insecticideClasses = [], onChange, value }: Props) {
+function InsecticideClassSelector({ type, insecticideClasses = [], onChange, value }: Props) {
     const { t } = useTranslation();
 
     const options = getInsecticideClassOptions(insecticideClasses);
 
-    return (
+    const handleRadioChange = (event: React.ChangeEvent<unknown>) => {
+        const value = (event.target as HTMLInputElement).value;
+        onChange([value]);
+    };
+
+    return type === "select" ? (
         <MultiFilter
             labelPosition="top"
             label={t("common.filters.insecticide_class")}
@@ -32,6 +39,18 @@ function InsecticideClassSelector({ insecticideClasses = [], onChange, value }: 
             value={value}
             margin={"10px 0px"}
             isClearable={true}
+        />
+    ) : (
+        <RadioGroupFilter
+            label={t("common.filters.insecticide_class")}
+            options={options}
+            handleChange={handleRadioChange}
+            margin={"10px 0px"}
+            padding={"10px 0px"}
+            value={value.length > 0 ? value[0] : options[0].value}
+            background={"white"}
+            labelFontSize="14px"
+            labelFontWeight="bold"
         />
     );
 }

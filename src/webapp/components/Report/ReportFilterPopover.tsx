@@ -10,6 +10,7 @@ import DrugsSelector from "../filters/DrugsSelector";
 import PlasmodiumSpecieSelector from "../filters/PlasmodiumSpecieSelector";
 import SpeciesSelector from "../filters/SpeciesSelector";
 import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
+import { extractSpeciesOptions, PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -30,6 +31,7 @@ interface Props {
     setPlasmodiumSpecie?: any;
     species?: string[];
     setSpecies?: any;
+    preventionStudies?: PreventionStudy[];
     treatmentStudies?: TreatmentStudy[];
 }
 
@@ -42,6 +44,7 @@ const ReportFilterPopover: React.FC<Props> = ({
     setPlasmodiumSpecie,
     species,
     setSpecies,
+    preventionStudies,
     treatmentStudies,
 }) => {
     const classes = useStyles({});
@@ -91,7 +94,13 @@ const ReportFilterPopover: React.FC<Props> = ({
 
                 <CountriesSelector onChange={setCountries} value={countries} />
 
-                {species && setSpecies && <SpeciesSelector onChange={setSpecies} value={species} />}
+                {species && setSpecies && (
+                    <SpeciesSelector
+                        options={extractSpeciesOptions(preventionStudies)}
+                        onChange={setSpecies}
+                        value={species}
+                    />
+                )}
             </Popover>
         </div>
     );

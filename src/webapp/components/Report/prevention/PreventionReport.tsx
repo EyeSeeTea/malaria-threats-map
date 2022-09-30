@@ -323,6 +323,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
                         species={species}
                         setSpecies={setSpecies}
                         onClick={downloadData}
+                        preventionStudies={studies}
                     />
                     <TableContainer>
                         <Table

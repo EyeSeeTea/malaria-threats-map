@@ -7,14 +7,23 @@ import InsecticideClassSelector from "../../../../components/filters/Insecticide
 import DashboardsYearRangeSelector from "../../common/filters/DashboardsYearRangeSelector";
 import OnlyIncludeBioassaysWithMoreMosquitoes from "./OnlyIncludeBioassaysWithMoreMosquitoes";
 import OnlyIncudeDataByHealth from "./OnlyIncudeDataByHealth";
-import InsecticideTypeSelector from "../../../../components/filters/InsecticideTypeSelector";
-import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
+import SpeciesSelector from "../../../../components/filters/SpeciesSelector";
+import { Option } from "../../../../components/BasicSelect";
+import SingleFilter from "../../../../components/filters/common/SingleFilter";
+import MultiFilter from "../../../../components/filters/common/MultiFilter";
+
+export type PreventionFilterableChart = "status-of-resistance-of-insecticide" | "mosquito-mortality-overtime";
 
 interface PreventionFiltersProps {
-    studies: PreventionStudy[];
+    chart: PreventionFilterableChart;
+    insecticideTypeOptions: Option[];
     filters: PreventionFiltersState;
+    speciesOptions?: Option[];
+    typeOptions?: Option[];
     onInsecticideClassesChange?: (value: string[]) => void;
+    onSpeciesChange?: (value: string[]) => void;
     onInsecticideTypesChange?: (value: string[]) => void;
+    onTypeChange?: (value: string) => void;
     onYearsChange: (years: [number, number]) => void;
     onOnlyIncludeBioassaysWithMoreMosquitoesChange: (value: number) => void;
     onOnlyIncludeDataByHealthChange: (value: boolean) => void;
@@ -22,10 +31,15 @@ interface PreventionFiltersProps {
 }
 
 const PreventionFilters: React.FC<PreventionFiltersProps> = ({
-    studies,
+    chart,
+    insecticideTypeOptions,
     filters,
+    speciesOptions,
+    typeOptions,
     onInsecticideClassesChange,
+    onSpeciesChange,
     onInsecticideTypesChange,
+    onTypeChange,
     onYearsChange,
     onOnlyIncludeBioassaysWithMoreMosquitoesChange,
     onOnlyIncludeDataByHealthChange,
@@ -46,15 +60,44 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
             </Stack>
 
             {onInsecticideClassesChange && (
-                <InsecticideClassSelector onChange={onInsecticideClassesChange} value={filters.insecticideClasses} />
+                <InsecticideClassSelector
+                    onChange={onInsecticideClassesChange}
+                    value={filters.insecticideClasses}
+                    type={chart === "mosquito-mortality-overtime" ? "radio" : "select"}
+                />
+            )}
+
+            {speciesOptions && onSpeciesChange && (
+                <SpeciesSelector
+                    labelPosition="top"
+                    margin="10px 0px"
+                    options={speciesOptions}
+                    onChange={onSpeciesChange}
+                    value={filters.species}
+                    isClearable={true}
+                />
+            )}
+
+            {onTypeChange && (
+                <SingleFilter
+                    labelPosition={"top"}
+                    margin={"10px 0px"}
+                    label={t("common.filters.test_type")}
+                    options={typeOptions}
+                    onChange={onTypeChange}
+                    value={filters.type}
+                />
             )}
 
             {onInsecticideTypesChange && (
-                <InsecticideTypeSelector
-                    studies={studies}
+                <MultiFilter
+                    labelPosition="top"
+                    label={t("common.filters.insecticide_type")}
+                    options={insecticideTypeOptions}
                     onChange={onInsecticideTypesChange}
                     value={filters.insecticideTypes}
-                    insecticideClassesFilter={filters.insecticideClasses}
+                    margin={"10px 0px"}
+                    isClearable={true}
                 />
             )}
 

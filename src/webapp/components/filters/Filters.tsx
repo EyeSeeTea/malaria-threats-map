@@ -11,10 +11,10 @@ export const Divider = styled.div`
     height: 10px;
 `;
 
-export const FilterColumContainer = styled.div<{ padding?: string }>`
-    margin: 10px 20px;
+export const FilterColumContainer = styled.div<{ padding?: string; margin?: string; background?: string }>`
+    margin: ${props => (props.margin ? props.margin : "10px 20px")};
     padding: ${p => p.padding ?? "10px 20px"};
-    background-color: #f5f5f5;
+    background-color: ${props => props.background ?? "#f5f5f5"};
     border-radius: 5px;
     align-items: center;
 `;
