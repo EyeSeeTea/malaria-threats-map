@@ -29,6 +29,7 @@ const ASSAY_TYPE_FILTER: { [key: string]: string[] } = {
 const StyledFormControlLabel = styled(FormControlLabel)`
     & span {
         padding: 2px;
+        font-size: 14px;
     }
 `;
 
@@ -70,7 +71,9 @@ function AssayTypeCheckboxFilter({ assayTypes, preventionFilters, setAssayTypes 
 
     return (
         <FilterColumContainer>
-            <FormLabel component="legend">{t("common.filters.assay_type")}</FormLabel>
+            <FormLabel component="legend" sx={{ fontSize: "14px" }}>
+                {t("common.filters.assay_type")}
+            </FormLabel>
             <Divider />
             <FormGroup>
                 {types.map(type => (

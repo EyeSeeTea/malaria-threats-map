@@ -91,7 +91,7 @@ const YearRangeSelector = ({
 
     return (
         <FilterColumContainer padding="0px">
-            <FormLabel component="legend" sx={{ marginBottom: "20px", padding: "10px" }}>
+            <FormLabel component="legend" sx={{ marginBottom: "20px", padding: "10px", fontSize: "14px" }}>
                 {t("common.filters.years")}
             </FormLabel>
             <Divider />

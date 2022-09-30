@@ -49,7 +49,7 @@ function SingleFilter({
     return (
         <FilterRowContainer>
             {selection && (
-                <FormLabel color="primary" component="legend">
+                <FormLabel color="primary" component="legend" sx={{ fontSize: "14px" }}>
                     {`${label}:`}&nbsp;
                 </FormLabel>
             )}

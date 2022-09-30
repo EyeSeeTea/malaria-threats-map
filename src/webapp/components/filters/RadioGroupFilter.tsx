@@ -11,6 +11,7 @@ import { Option } from "../BasicSelect";
 const StyledFormControlLabel = styled(FormControlLabel)`
     & span {
         padding: 2px;
+        font-size: 14px;
     }
     & svg {
         left: 2px;
@@ -27,7 +28,7 @@ type RadioGroupProps = {
 function RadioGroupFilter({ label, options, handleChange, value }: RadioGroupProps) {
     return (
         <FilterColumContainer>
-            <FormLabel color="primary" component="legend">
+            <FormLabel color="primary" component="legend" sx={{ fontSize: "14px" }}>
                 {label}
             </FormLabel>
             <Divider />

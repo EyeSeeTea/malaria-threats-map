@@ -29,7 +29,7 @@ function MultiFilter({ label, options, onChange, value, analyticsMultiFilterActi
     return (
         <FilterRowContainer onlyYMargin={onlyYMargin}>
             {selections && selections.length > 0 && (
-                <FormLabel color="primary" component="legend">
+                <FormLabel color="primary" component="legend" sx={{ fontSize: "14px" }}>
                     {`${label}:`}&nbsp;
                 </FormLabel>
             )}

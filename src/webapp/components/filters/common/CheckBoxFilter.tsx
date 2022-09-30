@@ -29,8 +29,10 @@ function CheckBoxFilter({ label, onChange, value, analyticsFilterAction, logEven
     };
 
     return (
-        <FilterColumContainer>
-            <FormLabel component="legend">{label}</FormLabel>
+        <FilterColumContainer style={{ display: "flex" }}>
+            <FormLabel component="legend" sx={{ fontSize: "14px" }}>
+                {label}
+            </FormLabel>
             <Checkbox color="primary" checked={value} onChange={onSelectionChange} />
         </FilterColumContainer>
     );
