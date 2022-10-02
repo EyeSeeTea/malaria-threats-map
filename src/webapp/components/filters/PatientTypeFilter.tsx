@@ -46,7 +46,7 @@ const PatientTypeFilter: React.FC<Props> = ({ setPatientType, diagnosisFilters, 
 
     const filteredStudies: DiagnosisStudy[] = filters.reduce((studies, filter) => studies.filter(filter), studies);
 
-    const uniques = R.uniq(R.map(R.prop("PATIENT_TYPE"), filteredStudies));
+    const uniques = R.reject(e => !e, R.uniq(R.map(R.prop("PATIENT_TYPE"), filteredStudies)));
 
     const suggestions: any[] = uniques.map((patientType: string) => ({
         label: patientType,
