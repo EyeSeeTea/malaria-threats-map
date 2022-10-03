@@ -375,6 +375,7 @@ function buildTreatmentFiltersByDownload(treatmentFilters: TreatmentFilters, fil
                 filterByMolecularMarker(treatmentFilters.molecularMarker),
                 filterByYearRange(filters),
                 filterByYearRange(filters),
+                filterByRegion(region),
             ];
         default:
             return [];
