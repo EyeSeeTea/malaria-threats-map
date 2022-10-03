@@ -166,9 +166,9 @@
                 "title": "Filtrer les données"
             },
             "informationModal": {
-                "common":{
+                "common": {
                     "dataPeriod": "<strong>Période de données:</strong>",
-                    "dataLastUpdated" : "<strong>Données mises à jour pour la dernière fois:</strong>",
+                    "dataLastUpdated": "<strong>Données mises à jour pour la dernière fois:</strong>",
                     "studyProtocol": "<strong>Protocole d'étude:</strong> L'OMS recommande que toutes les études d'efficacité thérapeutique soient menées selon le protocole standard de l'OMS.",
                     "info": "Pour afficher plus de détails sur une étude spécifique, revenez à l'interface cartographique pour afficher les données au niveau du site.",
                     "and": "et"
@@ -202,7 +202,7 @@
                     "dataAvailability": "<strong>Data availability:</strong> Toutes les études pour lesquelles des données sont disponibles sont présentées."
                 }
             },
-            "tooltip":{
+            "tooltip": {
                 "drug": "Médicament",
                 "numberOfPatients": "Nombre de patients",
                 "treatmentFailureRate": "Taux d'échec du traitement",
@@ -259,21 +259,21 @@
                 "diagnosis_subtitle": "Les délétions de gènes chez certains parasites du paludisme entraînent des résultats de tests de diagnostic faussement négatifs, ce qui complique la gestion et le contrôle des cas."
             }
         },
-        "shareDataPage":{
-            "title":"Contribuez à la carte des menaces du paludisme en partageant vos <strong>données</strong>.",
-            "section1":{
-                "title":"Fournir des données sur la résistance aux insecticides",
-                "description":"Nous invitons toutes les personnes et organisations à soumettre des données. Veuillez communiquer vos données en utilisant les formulaires standard de collecte de données de l'OMS suivants. Les formulaires peuvent être téléchargés <2 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>ici</2>.",
-                "list":{
+        "shareDataPage": {
+            "title": "Contribuez à la carte des menaces du paludisme en partageant vos <strong>données</strong>.",
+            "section1": {
+                "title": "Fournir des données sur la résistance aux insecticides",
+                "description": "Nous invitons toutes les personnes et organisations à soumettre des données. Veuillez communiquer vos données en utilisant les formulaires standard de collecte de données de l'OMS suivants. Les formulaires peuvent être téléchargés <2 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>ici</2>.",
+                "list": {
                     "1": "Résultats des essais biologiques des insecticides synergistes",
                     "2": "Résultats du test biologique de concentration d'intensité",
                     "3": "Discriminer les résultats des essais biologiques de concentration",
                     "4": "Résultats des essais biologiques moléculaires et biochimiques"
                 }
             },
-            "section2":{
-                "title":"Contribuer aux données de détection de <i>An. stephensi</i>.",
-                "description":"Nous invitons toutes les personnes et organisations à soumettre des données sur la détection de <i>An. stephensi</i> en dehors de ses zones d'origine. Veuillez communiquer vos données en utilisant le formulaire standard de collecte de données de l'OMS, disponible à l'adresse suivante <5 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>ici</5>."
+            "section2": {
+                "title": "Contribuer aux données de détection de <i>An. stephensi</i>.",
+                "description": "Nous invitons toutes les personnes et organisations à soumettre des données sur la détection de <i>An. stephensi</i> en dehors de ses zones d'origine. Veuillez communiquer vos données en utilisant le formulaire standard de collecte de données de l'OMS, disponible à l'adresse suivante <5 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>ici</5>."
             },
             "sectionsFooter": "Les formulaires complétés peuvent être envoyés à: <2>vectorsurveillance@who.int</2>"
         },
@@ -704,7 +704,7 @@
             },
             "data_step": {
                 "title": "Sélectionnez les données",
-                "p1": "Cette boîte de dialogue vous permet de télécharger des données à partir de quatre des bases de données mondiales de l'OMS : la résistance aux insecticides chez les vecteurs du paludisme, les espèces vectrices invasives, l'efficacité et la résistance aux médicaments antipaludiques et les délétions du gène <1>pfhrp2/3</1>. Un lien vers la source de données d'origine et la citation sont inclus dans chaque ensemble de données, le cas échéant.",
+                "p1": "Cette boîte de dialogue vous permet de télécharger les données des quatre bases de données mondiales de l'OMS : la résistance aux insecticides chez les vecteurs du paludisme, les espèces vectrices invasives, l'efficacité et la résistance aux médicaments antipaludiques et les délétions du gène <1>Pfhrp2/3</1>. Un lien vers la source de données originale et la citation sont inclus dans chaque ensemble de données, le cas échéant.",
                 "last_updated": "Le jeu de données sélectionné a été mis à jour pour la dernière fois le :",
                 "add_to_download": "Ajouter au téléchargement",
                 "db_download_list": "Liste de téléchargement de la base de données",
