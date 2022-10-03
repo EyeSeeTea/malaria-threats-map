@@ -658,8 +658,8 @@
                 },
                 "treatment": {
                     "datasets": {
-                        "therapeutic_efficacy_studies": "Resultados de los estudios de eficacia terapéutica",
-                        "molecular_marker_studies": "Resultados de  los estudios de marcadores moleculares de la resistencia a los medicamentos"
+                        "therapeutic_efficacy_studies": "Estudios de eficacia terapéutica",
+                        "molecular_marker_studies": "Estudios de marcadores moleculares de la resistencia a los medicamentos"
                     }
                 },
                 "invasive": {
@@ -713,7 +713,8 @@
                 "data_set": "Conjunto de datos:",
                 "data": "Datos:",
                 "location": "Ubicación:",
-                "studies_in_file": "{{total}} bioensayos incluidos en el archivo"
+                "studies_in_file": "{{total}} estudios incluidos en el archivo",
+                "bioassays_in_file": "{{total}} bioensayos incluidos en el archivo"
             }
         },
         "report": {

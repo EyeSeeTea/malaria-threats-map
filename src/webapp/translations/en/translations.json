@@ -658,8 +658,8 @@
                 },
                 "treatment": {
                     "datasets": {
-                        "therapeutic_efficacy_studies": "Results of therapeutic efficacy studies",
-                        "molecular_marker_studies": "Results of molecular marker studies"
+                        "therapeutic_efficacy_studies": "Therapeutic efficacy studies",
+                        "molecular_marker_studies": "Molecular marker studies"
                     }
                 },
                 "invasive": {
@@ -713,7 +713,8 @@
                 "data_set": "Dataset:",
                 "data": "Data:",
                 "location": "Location:",
-                "studies_in_file": "{{total}} bioassays included in the file"
+                "studies_in_file": "{{total}} studies included in the file",
+                "bioassays_in_file": "{{total}} bioassays included in the file"
             }
         },
         "report": {
