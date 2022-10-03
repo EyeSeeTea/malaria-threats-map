@@ -104,8 +104,10 @@ export const setTreatmentPlasmodiumSpeciesEpic = (
         switchMap(action => {
             if (["P._FALCIPARUM", "P._KNOWLESI", "P._OVALE"].includes(action.payload)) {
                 return of(setTreatmentDrug("DRUG_AL"));
-            } else {
+            } else if (action.payload !== null) {
                 return of(setTreatmentDrug("DRUG_CQ"));
+            } else {
+                return of();
             }
         })
     );
@@ -139,6 +141,23 @@ export const setTreatmentThemeEpic = (action$: Observable<ActionType<typeof setT
             if ($action.payload !== "treatment") {
                 return of();
             }
-            return of(setFiltersAction([2015, new Date().getFullYear()]));
+
+            const base = [setFiltersAction([2015, new Date().getFullYear()])];
+
+            if ($action.from === "map") {
+                return of(
+                    ...base,
+                    setTreatmentPlasmodiumSpecies("P._FALCIPARUM"),
+                    setTreatmentDrug("DRUG_AL"),
+                    setMolecularMarker(1)
+                );
+            } else {
+                return of(
+                    ...base,
+                    setTreatmentPlasmodiumSpecies(null),
+                    setTreatmentDrug(null),
+                    setMolecularMarker(null)
+                );
+            }
         })
     );

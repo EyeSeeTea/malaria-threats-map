@@ -324,7 +324,7 @@ const Data: React.FC<Props> = ({
                 <Grid item md={6} xs={12}>
                     <DataSelectionCard>
                         <StyledList>
-                            <ThemeMapActions themeItemGridSize={3} />
+                            <ThemeMapActions from="download" themeItemGridSize={3} />
                             <Divider />
                             <DataSetMapActions />
                             <Divider />

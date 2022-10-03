@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Box, Grid, GridSize, IconButton } from "@mui/material";
 import { State } from "../store/types";
 import { connect } from "react-redux";
-import { setActionGroupSelected, setThemeAction } from "../store/actions/base-actions";
+import { setActionGroupSelected, setThemeAction, Source } from "../store/actions/base-actions";
 import { selectTheme } from "../store/reducers/base-reducer";
 import { selectPreventionStudiesError } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisStudiesError } from "../store/reducers/diagnosis-reducer";
@@ -65,6 +65,7 @@ const Title = styled.span`
 
 interface ownProps {
     themeItemGridSize?: GridSize;
+    from: Source;
 }
 
 const mapStateToProps = (state: State) => ({
@@ -85,6 +86,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & ownProps;
 
 const ThemeSelector: React.FC<Props> = ({
+    from,
     themeItemGridSize,
     theme,
     setTheme,
@@ -98,23 +100,23 @@ const ThemeSelector: React.FC<Props> = ({
 
     const handlePreventionClick = React.useCallback(() => {
         setActionGroupSelected("MAP_TYPE");
-        setTheme("prevention");
-    }, [setTheme, setActionGroupSelected]);
+        setTheme("prevention", from);
+    }, [setTheme, setActionGroupSelected, from]);
 
     const handleInvasiveClick = React.useCallback(() => {
-        setTheme("invasive");
+        setTheme("invasive", from);
         setActionGroupSelected("DATA");
-    }, [setTheme, setActionGroupSelected]);
+    }, [setTheme, setActionGroupSelected, from]);
 
     const handleDiagnosisClick = React.useCallback(() => {
-        setTheme("diagnosis");
+        setTheme("diagnosis", from);
         setActionGroupSelected("DATA");
-    }, [setTheme, setActionGroupSelected]);
+    }, [setTheme, setActionGroupSelected, from]);
 
     const handleTreatmentClick = React.useCallback(() => {
-        setTheme("treatment");
+        setTheme("treatment", from);
         setActionGroupSelected("MAP_TYPE");
-    }, [setTheme, setActionGroupSelected]);
+    }, [setTheme, setActionGroupSelected, from]);
 
     return (
         <Box sx={{ flexGrow: 1 }}>

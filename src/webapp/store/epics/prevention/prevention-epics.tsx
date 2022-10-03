@@ -174,6 +174,13 @@ export const setPreventionThemeEpic = (action$: Observable<ActionType<typeof set
             if ($action.payload !== "prevention") {
                 return of();
             }
-            return of(setFiltersAction([2010, new Date().getFullYear()]));
+
+            const base = [setFiltersAction([2010, new Date().getFullYear()])];
+
+            if ($action.from === "map") {
+                return of(...base, setInsecticideClass("PYRETHROIDS"));
+            } else {
+                return of(...base, setInsecticideClass(null));
+            }
         })
     );
