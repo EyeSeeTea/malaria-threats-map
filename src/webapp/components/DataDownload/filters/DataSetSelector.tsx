@@ -138,7 +138,7 @@ function DataSetSelector({
     const onChange = useCallback(
         (selection: ListSelectorItem) => {
             onChangeDataSet(selection);
-            setActionGroupSelected("DATA");
+            setActionGroupSelected(null);
         },
         [onChangeDataSet, setActionGroupSelected]
     );

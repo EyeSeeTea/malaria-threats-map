@@ -99,23 +99,43 @@ const ThemeSelector: React.FC<Props> = ({
     const { t } = useTranslation();
 
     const handlePreventionClick = React.useCallback(() => {
-        setActionGroupSelected("MAP_TYPE");
         setTheme("prevention", from);
+
+        if (from === "map") {
+            setActionGroupSelected("MAP_TYPE");
+        } else {
+            setActionGroupSelected("DATASET");
+        }
     }, [setTheme, setActionGroupSelected, from]);
 
     const handleInvasiveClick = React.useCallback(() => {
         setTheme("invasive", from);
-        setActionGroupSelected("DATA");
+
+        if (from === "map") {
+            setActionGroupSelected("DATA");
+        } else {
+            setActionGroupSelected(null);
+        }
     }, [setTheme, setActionGroupSelected, from]);
 
     const handleDiagnosisClick = React.useCallback(() => {
         setTheme("diagnosis", from);
-        setActionGroupSelected("DATA");
+
+        if (from === "map") {
+            setActionGroupSelected("DATA");
+        } else {
+            setActionGroupSelected(null);
+        }
     }, [setTheme, setActionGroupSelected, from]);
 
     const handleTreatmentClick = React.useCallback(() => {
         setTheme("treatment", from);
-        setActionGroupSelected("MAP_TYPE");
+
+        if (from === "map") {
+            setActionGroupSelected("MAP_TYPE");
+        } else {
+            setActionGroupSelected("DATASET");
+        }
     }, [setTheme, setActionGroupSelected, from]);
 
     return (
