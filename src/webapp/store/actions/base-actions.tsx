@@ -39,6 +39,8 @@ export const setRegionAction = createAction(ActionTypeEnum.MalariaSetRegion)<Reg
 
 export const setFiltersAction = createAction(ActionTypeEnum.MalariaSetFilters)<number[] | undefined>();
 
+export const setMaxMinYearsAction = createAction(ActionTypeEnum.MalariaSetMaxMinYears)<number[] | undefined>();
+
 export const toggleEndemicityLayerAction = createAction(ActionTypeEnum.MalariaToogleEndemicityLayer)<boolean>();
 
 export const setStoryModeAction = createAction(ActionTypeEnum.MalariaSetStoryMode)<boolean>();

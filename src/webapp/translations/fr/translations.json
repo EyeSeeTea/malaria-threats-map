@@ -1044,7 +1044,7 @@
         "theme": "Thème",
         "selectMapType": "SÉLECTIONNER LE TYPE DE CARTE",
         "mapType": "Carte",
-        "selectData": "FILTRER LES DONNÉES",
+        "selectData": "FILTRER LES DONNÉES  (FACULTATIF)",
         "data": "Données",
         "selectLocation": "EMPLACEMENT DU FILTRE (FACULTATIF)",
         "location": "Emplacement",

@@ -55,11 +55,7 @@ const DownloadFiltersContent: React.FC<Props> = ({
                             <InsecticideTypeFilter />
                             <TypeFilter />
                             <SpeciesFilter />
-                            <YearRangeSelector
-                                minYear={2010}
-                                maxYear={new Date().getFullYear()}
-                                showTheatherMode={false}
-                            />
+                            <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );
                 case "INTENSITY_CONCENTRATION_BIOASSAY":
@@ -69,11 +65,7 @@ const DownloadFiltersContent: React.FC<Props> = ({
                             <InsecticideTypeFilter />
                             <TypeFilter />
                             <SpeciesFilter />
-                            <YearRangeSelector
-                                minYear={2010}
-                                maxYear={new Date().getFullYear()}
-                                showTheatherMode={false}
-                            />
+                            <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );
                 case "BIOCHEMICAL_ASSAY":
@@ -83,22 +75,14 @@ const DownloadFiltersContent: React.FC<Props> = ({
                             <MechanismTypeFilter />
                             <SpeciesFilter />
                             {/* {isSynergyst(preventionFilters) && <SynergistTypeFilter />} */}
-                            <YearRangeSelector
-                                minYear={2010}
-                                maxYear={new Date().getFullYear()}
-                                showTheatherMode={false}
-                            />
+                            <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );
                 case "SYNERGIST-INSECTICIDE_BIOASSAY":
                     return (
                         <div>
                             <SpeciesFilter />
-                            <YearRangeSelector
-                                minYear={2010}
-                                maxYear={new Date().getFullYear()}
-                                showTheatherMode={false}
-                            />
+                            <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );
                 default:
@@ -112,11 +96,7 @@ const DownloadFiltersContent: React.FC<Props> = ({
                             <DeletionTypeFilter />
                             <SurveyTypeFilter />
                             <PatientTypeFilter />
-                            <YearRangeSelector
-                                minYear={1998}
-                                maxYear={new Date().getFullYear()}
-                                showTheatherMode={false}
-                            />
+                            <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );
                 default:
@@ -129,22 +109,14 @@ const DownloadFiltersContent: React.FC<Props> = ({
                         <div>
                             <PlasmodiumSpeciesFilter />
                             <DrugsFilter />
-                            <YearRangeSelector
-                                minYear={2015}
-                                maxYear={new Date().getFullYear()}
-                                showTheatherMode={false}
-                            />
+                            <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );
                 case "MOLECULAR_MARKER_STUDY":
                     return (
                         <div>
                             <MolecularMarkerFilter />
-                            <YearRangeSelector
-                                minYear={2015}
-                                maxYear={new Date().getFullYear()}
-                                showTheatherMode={false}
-                            />
+                            <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );
                 default:
@@ -156,11 +128,7 @@ const DownloadFiltersContent: React.FC<Props> = ({
                     return (
                         <div>
                             <VectorSpeciesFilter />
-                            <YearRangeSelector
-                                minYear={1985}
-                                maxYear={new Date().getFullYear()}
-                                showTheatherMode={false}
-                            />
+                            <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );
                 default:

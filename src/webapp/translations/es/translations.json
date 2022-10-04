@@ -1043,7 +1043,7 @@
         "theme": "Tema",
         "selectMapType": "SELECCIONA TIPO DE MAPA",
         "mapType": "Mapa",
-        "selectData": "FILTRO DE DATOS",
+        "selectData": "FILTRO DE DATOS (OPCIONAL)",
         "data": "Datos",
         "selectLocation": "FILTRO DE LOCALIZACIÓN (OPCIONAL)",
         "location": "Localización",

@@ -30,21 +30,24 @@ export function filtersToString(
     treatmentFilters: TreatmentFilters,
     diagnosisFilters: DiagnosisFilters,
     invasiveFilters: InvasiveFilters,
+    maxMinYears: number[],
     yearFilters: number[],
     from: Source
 ) {
+    const years = maxMinYears[0] === yearFilters[0] && maxMinYears[1] === yearFilters[1] ? [] : yearFilters;
+
     switch (theme) {
         case "prevention": {
-            return preventionFiltersToString(preventionFilters, yearFilters, from);
+            return preventionFiltersToString(preventionFilters, years, from);
         }
         case "diagnosis": {
-            return diagnosisFiltersToString(diagnosisFilters, yearFilters, from);
+            return diagnosisFiltersToString(diagnosisFilters, years, from);
         }
         case "invasive": {
-            return invasiveFiltersToString(invasiveFilters, yearFilters, from);
+            return invasiveFiltersToString(invasiveFilters, years, from);
         }
         case "treatment": {
-            return treatmentFiltersToString(treatmentFilters, yearFilters, from);
+            return treatmentFiltersToString(treatmentFilters, years, from);
         }
     }
 }

@@ -17,6 +17,7 @@ import {
     setThemeAction,
     logPageViewAction,
     setSelectionData,
+    setMaxMinYearsAction,
 } from "../../actions/base-actions";
 import { DiagnosisMapType, State } from "../../types";
 import { addNotificationAction } from "../../actions/notifier-actions";
@@ -58,7 +59,10 @@ export const setDiagnosisThemeEpic = (action$: Observable<ActionType<typeof setT
                 return of();
             }
 
-            const base = [setFiltersAction([1998, new Date().getFullYear()])];
+            const base = [
+                setMaxMinYearsAction([1998, new Date().getFullYear()]),
+                setFiltersAction([1998, new Date().getFullYear()]),
+            ];
 
             if ($action.from === "map") {
                 return of(...base, setDiagnosisDeletionType(DELETION_TYPES.HRP2_PROPORTION_DELETION.value));

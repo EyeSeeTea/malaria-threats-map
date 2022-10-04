@@ -14,7 +14,13 @@ import {
     setTreatmentPlasmodiumSpecies,
     setTreatmentSelectionStudies,
 } from "../../actions/treatment-actions";
-import { logPageViewAction, setFiltersAction, setSelectionData, setThemeAction } from "../../actions/base-actions";
+import {
+    logPageViewAction,
+    setFiltersAction,
+    setMaxMinYearsAction,
+    setSelectionData,
+    setThemeAction,
+} from "../../actions/base-actions";
 import { TreatmentMapType, State } from "../../types";
 import { addNotificationAction } from "../../actions/notifier-actions";
 import { getAnalyticsPageView } from "../../analytics";
@@ -142,7 +148,10 @@ export const setTreatmentThemeEpic = (action$: Observable<ActionType<typeof setT
                 return of();
             }
 
-            const base = [setFiltersAction([2015, new Date().getFullYear()])];
+            const base = [
+                setMaxMinYearsAction([2010, new Date().getFullYear()]),
+                setFiltersAction([2015, new Date().getFullYear()]),
+            ];
 
             if ($action.from === "map") {
                 return of(

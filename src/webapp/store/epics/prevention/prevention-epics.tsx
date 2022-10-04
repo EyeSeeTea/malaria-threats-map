@@ -17,6 +17,7 @@ import {
     logEventAction,
     logPageViewAction,
     setFiltersAction,
+    setMaxMinYearsAction,
     setSelectionData,
     setThemeAction,
 } from "../../actions/base-actions";
@@ -175,7 +176,10 @@ export const setPreventionThemeEpic = (action$: Observable<ActionType<typeof set
                 return of();
             }
 
-            const base = [setFiltersAction([2010, new Date().getFullYear()])];
+            const base = [
+                setMaxMinYearsAction([2010, new Date().getFullYear()]),
+                setFiltersAction([2010, new Date().getFullYear()]),
+            ];
 
             if ($action.from === "map") {
                 return of(...base, setInsecticideClass("PYRETHROIDS"));
