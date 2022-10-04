@@ -3,6 +3,9 @@
         "layers": "Capas",
         "mekong_link": "Ir a la capa Greather Mekong",
         "takeATour": "¿No sabe por dónde empezar? Haga un recorrido.",
+        "zoomIn": "Ampliar",
+        "zoomOut": "Alejar",
+        "fullscreen": "Ver en pantalla completa",
         "title": {
             "title": "Mapa de los desafíos de la malaria",
             "subtitle": "Seguimiento de los desafíos biológicos para el control y la eliminación de la malaria"

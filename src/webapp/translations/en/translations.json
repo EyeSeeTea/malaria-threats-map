@@ -3,6 +3,9 @@
         "layers": "Layers",
         "mekong_link": "Go to the Greather Mekong Layer",
         "takeATour": "Unsure where to start? Take a tour.",
+        "zoomIn": "Zoom in",
+        "zoomOut": "Zoom out",
+        "fullscreen": "View full screen",
         "title": {
             "title": "Malaria Threats Map",
             "subtitle": "Tracking biological challenges to malaria control and elimination"

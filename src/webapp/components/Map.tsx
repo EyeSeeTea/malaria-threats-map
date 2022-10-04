@@ -35,7 +35,7 @@ import {
     updateZoomAction,
     setActionGroupSelected,
 } from "../store/actions/base-actions";
-import { Fade, Box, Fab, Drawer } from "@mui/material";
+import { Fade, Box, Fab, Drawer, Tooltip } from "@mui/material";
 import { Add as ZoomInIcon, Remove as ZoomOutIcon, OpenInFull as MapOnlyIcon } from "@mui/icons-material";
 import LeyendPopover from "./legend/LegendPopover";
 import StoryModeSelector from "./StoryModeSelector";
@@ -160,6 +160,8 @@ const PushoverContainer = styled.div`
 // A Fab ("floating action button") looks like a rounded button.
 const MapFab = styled(Fab)`
     margin: 5px;
+    width: 36px;
+    height: 11px;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -321,7 +323,7 @@ class Map extends React.Component<Props, StateTypes> {
     }
 
     render() {
-        const { theme } = this.props;
+        const { theme, t } = this.props;
         const showOptions = true;
         const ready = this.map && this.state.ready;
         const viewMapOnly = this.state.viewMapOnly;
@@ -444,23 +446,29 @@ class Map extends React.Component<Props, StateTypes> {
                 </PushoverContainer>
                 <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
                 <BottomRightContainer>
-                    <MapFab size="small" onClick={() => this.zoom(1.25)}>
-                        <ZoomInIcon />
-                    </MapFab>
-                    <MapFab size="small" onClick={() => this.zoom(0.8)}>
-                        <ZoomOutIcon />
-                    </MapFab>
-                    <MapFab
-                        size="small"
-                        onClick={() => this.switchViewMapOnly()}
-                        sx={
-                            viewMapOnly
-                                ? { bgcolor: "#2fb3af", "&:hover": { bgcolor: "#1f938f" } }
-                                : { bgcolor: "white" }
-                        }
-                    >
-                        <MapOnlyIcon />
-                    </MapFab>
+                    <Tooltip title={t("common.zoomIn")} placement="left">
+                        <MapFab size="small" onClick={() => this.zoom(1.25)}>
+                            <ZoomInIcon sx={{ fontSize: "14px" }} />
+                        </MapFab>
+                    </Tooltip>
+                    <Tooltip title={t("common.zoomOut")} placement="left">
+                        <MapFab size="small" onClick={() => this.zoom(0.8)}>
+                            <ZoomOutIcon sx={{ fontSize: "14px" }} />
+                        </MapFab>
+                    </Tooltip>
+                    <Tooltip title={t("common.fullscreen")} placement="left">
+                        <MapFab
+                            size="small"
+                            onClick={() => this.switchViewMapOnly()}
+                            sx={
+                                viewMapOnly
+                                    ? { bgcolor: "#2fb3af", "&:hover": { bgcolor: "#1f938f" } }
+                                    : { bgcolor: "white" }
+                            }
+                        >
+                            <MapOnlyIcon sx={{ fontSize: "14px" }} />
+                        </MapFab>
+                    </Tooltip>
                 </BottomRightContainer>
                 <LanguageSelectorDialog
                     selectedValue={this.state.selectedValue}
