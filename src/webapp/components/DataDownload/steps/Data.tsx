@@ -1,6 +1,12 @@
 import React, { useCallback, useEffect } from "react";
 import { State, MapTheme } from "../../../store/types";
-import { selectFilters, selectLastUpdatedDates, selectRegion, selectTheme } from "../../../store/reducers/base-reducer";
+import {
+    selectFilters,
+    selectLastUpdatedDates,
+    selectMaxMinYears,
+    selectRegion,
+    selectTheme,
+} from "../../../store/reducers/base-reducer";
 import { setActionGroupSelected } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 
@@ -81,6 +87,7 @@ const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
+    maxMinYears: selectMaxMinYears(state),
     yearFilters: selectFilters(state),
     region: selectRegion(state),
     lastUpdatedDates: selectLastUpdatedDates(state),
@@ -115,6 +122,7 @@ const Data: React.FC<Props> = ({
     treatmentFilters,
     diagnosisFilters,
     invasiveFilters,
+    maxMinYears,
     yearFilters,
     region,
     fetchPreventionStudies,
@@ -186,7 +194,9 @@ const Data: React.FC<Props> = ({
                     dataset: preventionDatasetSuggestions
                         .find(ds => ds.value === preventionFilters.dataset)
                         .value.toString(),
-                    filtersValue: preventionFiltersToString(preventionFilters, yearFilters, "download"),
+                    filtersValue:
+                        preventionFiltersToString(preventionFilters, maxMinYears, yearFilters, "download") ||
+                        t("mapActions.all"),
                     filteredStudies: preventionFilteredStudies,
                     location: getLocation(region) || t("mapActions.all"),
                 };
@@ -202,7 +212,9 @@ const Data: React.FC<Props> = ({
                     dataset: diagnosisDatasetSuggestions
                         .find(ds => ds.value === diagnosisFilters.dataset)
                         .value.toString(),
-                    filtersValue: diagnosisFiltersToString(diagnosisFilters, yearFilters, "download"),
+                    filtersValue:
+                        diagnosisFiltersToString(diagnosisFilters, maxMinYears, yearFilters, "download") ||
+                        t("mapActions.all"),
                     filteredStudies: diagnosisFilteredStudies,
                     location: getLocation(region) || t("mapActions.all"),
                 };
@@ -218,7 +230,9 @@ const Data: React.FC<Props> = ({
                     dataset: invasiveDatasetSuggestions
                         .find(ds => ds.value === invasiveFilters.dataset)
                         .value.toString(),
-                    filtersValue: invasiveFiltersToString(invasiveFilters, yearFilters, "download"),
+                    filtersValue:
+                        invasiveFiltersToString(invasiveFilters, maxMinYears, yearFilters, "download") ||
+                        t("mapActions.all"),
                     filteredStudies: invasiveFilteredStudies,
                     location: getLocation(region) || t("mapActions.all"),
                 };
@@ -234,7 +248,9 @@ const Data: React.FC<Props> = ({
                     dataset: treatmentDatasetSuggestions
                         .find(ds => ds.value === treatmentFilters.dataset)
                         .value.toString(),
-                    filtersValue: treatmentFiltersToString(treatmentFilters, yearFilters, "download"),
+                    filtersValue:
+                        treatmentFiltersToString(treatmentFilters, maxMinYears, yearFilters, "download") ||
+                        t("mapActions.all"),
                     filteredStudies: treatmentFilteredStudies,
                     location: getLocation(region) || t("mapActions.all"),
                 };
@@ -250,6 +266,7 @@ const Data: React.FC<Props> = ({
         diagnosisFilters,
         treatmentFilters,
         invasiveFilters,
+        maxMinYears,
         yearFilters,
         region,
         preventionFilteredStudies,

@@ -34,20 +34,18 @@ export function filtersToString(
     yearFilters: number[],
     from: Source
 ) {
-    const years = maxMinYears[0] === yearFilters[0] && maxMinYears[1] === yearFilters[1] ? [] : yearFilters;
-
     switch (theme) {
         case "prevention": {
-            return preventionFiltersToString(preventionFilters, years, from);
+            return preventionFiltersToString(preventionFilters, maxMinYears, yearFilters, from);
         }
         case "diagnosis": {
-            return diagnosisFiltersToString(diagnosisFilters, years, from);
+            return diagnosisFiltersToString(diagnosisFilters, maxMinYears, yearFilters, from);
         }
         case "invasive": {
-            return invasiveFiltersToString(invasiveFilters, years, from);
+            return invasiveFiltersToString(invasiveFilters, maxMinYears, yearFilters, from);
         }
         case "treatment": {
-            return treatmentFiltersToString(treatmentFilters, years, from);
+            return treatmentFiltersToString(treatmentFilters, maxMinYears, yearFilters, from);
         }
     }
 }
@@ -139,8 +137,13 @@ export function getFilters(
     }
 }
 
-export function preventionFiltersToString(preventionFilters: PreventionFilters, yearFilters: number[], from: Source) {
-    const years = yearFilters.join("-");
+export function preventionFiltersToString(
+    preventionFilters: PreventionFilters,
+    maxMinYears: number[],
+    yearFilters: number[],
+    from: Source
+) {
+    const years = getYearsSummary(maxMinYears, yearFilters);
     const insecticideClass = i18next.t(preventionFilters.insecticideClass);
     const insecticideTypes = preventionFilters.insecticideTypes.map(item => i18next.t(item));
     const type = i18next.t(preventionFilters.type);
@@ -180,8 +183,13 @@ export function preventionFiltersToString(preventionFilters: PreventionFilters, 
     }
 }
 
-export function treatmentFiltersToString(treatmentFilters: TreatmentFilters, yearFilters: number[], from: Source) {
-    const years = yearFilters.join("-");
+export function treatmentFiltersToString(
+    treatmentFilters: TreatmentFilters,
+    maxMinYears: number[],
+    yearFilters: number[],
+    from: Source
+) {
+    const years = getYearsSummary(maxMinYears, yearFilters);
     const exlude = treatmentFilters.excludeLowerPatients
         ? i18next.t("common.filters.exclude_lower_patients")
         : undefined;
@@ -213,8 +221,13 @@ export function treatmentFiltersToString(treatmentFilters: TreatmentFilters, yea
     }
 }
 
-export function diagnosisFiltersToString(diagnosisFilters: DiagnosisFilters, yearFilters: number[], _from: Source) {
-    const years = yearFilters.join("-");
+export function diagnosisFiltersToString(
+    diagnosisFilters: DiagnosisFilters,
+    maxMinYears: number[],
+    yearFilters: number[],
+    _from: Source
+) {
+    const years = getYearsSummary(maxMinYears, yearFilters);
 
     const deletionType = i18next.t(diagnosisFilters.deletionType);
     const surveyTypes = diagnosisFilters.surveyTypes.map(item => i18next.t(item));
@@ -223,8 +236,13 @@ export function diagnosisFiltersToString(diagnosisFilters: DiagnosisFilters, yea
     return _.compact([deletionType, ...surveyTypes, patientType, years]).join(" | ");
 }
 
-export function invasiveFiltersToString(invasiveFilters: InvasiveFilters, yearFilters: number[], _from: Source) {
-    const years = yearFilters.join("-");
+export function invasiveFiltersToString(
+    invasiveFilters: InvasiveFilters,
+    maxMinYears: number[],
+    yearFilters: number[],
+    _from: Source
+) {
+    const years = getYearsSummary(maxMinYears, yearFilters);
 
     const vectorSpecies = invasiveFilters.vectorSpecies.map(item => {
         const vectorSpecie = suggestions.find(sug => sug.value === item);
@@ -232,4 +250,8 @@ export function invasiveFiltersToString(invasiveFilters: InvasiveFilters, yearFi
     });
 
     return _.compact([...vectorSpecies, years]).join(" | ");
+}
+
+function getYearsSummary(maxMinYears: number[], yearFilters: number[]) {
+    return maxMinYears[0] === yearFilters[0] && maxMinYears[1] === yearFilters[1] ? "" : yearFilters.join("-");
 }
