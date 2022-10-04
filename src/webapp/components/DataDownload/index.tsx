@@ -122,7 +122,7 @@ function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset, s
 
             <Container
                 maxWidth="xs"
-                sx={{ display: "flex", flexDirection: "row", marginTop: 4, justifyContent: "center" }}
+                sx={{ display: "flex", flexDirection: "row", justifyContent: "center", marginTop: 4, marginBottom: 6 }}
             >
                 {activeStep > 0 && (
                     <BackButton variant="outlined" disabled={activeStep === 0} onClick={handleBack} size="large">
