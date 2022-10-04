@@ -166,9 +166,9 @@
                 "title": "Filter Data"
             },
             "informationModal": {
-                "common":{
+                "common": {
                     "dataPeriod": "<strong>Data period:</strong>",
-                    "dataLastUpdated" : "<strong>Data last updated:</strong>",
+                    "dataLastUpdated": "<strong>Data last updated:</strong>",
                     "studyProtocol": "<strong>Study protocol:</strong> WHO recommends that all therapeutic efficacy studies are conducted according to the WHO standard protocol.",
                     "info": "To view more details about a specific study, return to the map interface to view the site-level data.",
                     "and": "and"
@@ -202,7 +202,7 @@
                     "dataAvailability": "<strong>Data availability:</strong> All studies for which data are available are shown."
                 }
             },
-            "tooltip":{
+            "tooltip": {
                 "drug": "Drug",
                 "numberOfPatients": "Number of patients",
                 "treatmentFailureRate": "Treatment failure rate",
@@ -259,21 +259,21 @@
                 "diagnosis_subtitle": "Gene deletions among some malaria parasites cause false negative diagnostic test results, complicating case management and control."
             }
         },
-        "shareDataPage":{
-            "title":"Contribute to the Malaria Threats Map by sharing your <strong>data</strong>",
-            "section1":{
-                "title":"Contribute insecticide resistance data",
-                "description":"We invite data submissions from all individuals and organizations. Please report your data using the following WHO standard data collection forms. Forms are available for download <2 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>here</2>.",
-                "list":{
+        "shareDataPage": {
+            "title": "Contribute to the Malaria Threats Map by sharing your <strong>data</strong>",
+            "section1": {
+                "title": "Contribute insecticide resistance data",
+                "description": "We invite data submissions from all individuals and organizations. Please report your data using the following WHO standard data collection forms. Forms are available for download <2 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>here</2>.",
+                "list": {
                     "1": "Synergist insecticide bioassay results",
                     "2": "Intensity concentration bioassay results",
                     "3": "Discriminating concentration bioassay results",
                     "4": "Molecular and biochemical bioassay results"
                 }
             },
-            "section2":{
-                "title":"Contribute <i>An. stephensi</i> detection data",
-                "description":"We invite data submissions from all individuals and organizations about <i>An. stephensi</i> detection outside of its native areas. Please report your data using the WHO standard data collection form, available <5 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>here</5>."
+            "section2": {
+                "title": "Contribute <i>An. stephensi</i> detection data",
+                "description": "We invite data submissions from all individuals and organizations about <i>An. stephensi</i> detection outside of its native areas. Please report your data using the WHO standard data collection form, available <5 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>here</5>."
             },
             "sectionsFooter": "Completed forms can be sent to: <2>vectorsurveillance@who.int</2>"
         },
