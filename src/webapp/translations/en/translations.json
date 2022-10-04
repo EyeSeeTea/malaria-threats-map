@@ -698,7 +698,7 @@
                 "uses_placeHolder": "We are interested in knowing what you are using the data for. We would appreciate if you could provide a short description.",
                 "country": "Country of residence",
                 "email": "E-mail",
-                "message": "WHO is keen to improve the global databases and Malaria Threats Map to better serve the needs of our user community. Hence, WHO would like to engage with our user community to collect suggestions for improvement and to learn from different use cases and benefits that these products bring to them. If you would like to share feedback, you can do so <1 href='/contact'>here</1>.",
+                "message": "WHO is keen to improve the global databases and Malaria Threats Map to better serve the needs of our user community. Hence, WHO would like to engage with our user community to collect suggestions for improvement and to learn from different use cases and benefits that these products bring to them. If you would like to share feedback, you can do so <2 href='/contact'>here</2>.",
                 "consent1": "I consent to be contacted by the World Health Organization regarding my experience using the Malaria Threats Map and data from the global databases.",
                 "consent2": "I consent for the World Health Organization to use my organization name and project description provided above to showcase the use of the global databases (no personal data will be shown)."
             },

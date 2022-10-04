@@ -698,7 +698,7 @@
                 "uses_placeHolder": "Nos interesa saber para qué estás utilizando los datos. Le agradeceríamos si pudiera proporcionar una breve descripción.",
                 "country": "País de Residencia",
                 "email": "Email",
-                "message": "La OMS está interesada en mejorar las bases de datos mundiales y el Mapa de amenazas de malaria para atender mejor las necesidades de nuestra comunidad de usuarios. Por lo tanto, a la OMS le gustaría interactuar con nuestra comunidad de usuarios para recopilar sugerencias de mejora y aprender de los diferentes casos de uso y los beneficios que estos productos les brindan. Si desea compartir comentarios, puede hacerlo <1 href='/contact'>aquí</1>.",
+                "message": "La OMS está interesada en mejorar las bases de datos mundiales y el Mapa de amenazas de malaria para atender mejor las necesidades de nuestra comunidad de usuarios. Por lo tanto, a la OMS le gustaría interactuar con nuestra comunidad de usuarios para recopilar sugerencias de mejora y aprender de los diferentes casos de uso y los beneficios que estos productos les brindan. Si desea compartir comentarios, puede hacerlo <2 href='/contact'>aquí</2>.",
                 "consent1": "Autorizo ser contactado por la Organización Mundial de la Salud con respecto a mi experiencia con el Mapa de Amenazas de la Malaria y los datos de las bases de datos globales.",
                 "consent2": "Autorizo a la Organización Mundial de la Salud a usar el nombre de mi organización y la descripción del proyecto proporcionada anteriormente para mostrar el uso de las bases de datos globales (no se mostrarán datos personales)."
             },

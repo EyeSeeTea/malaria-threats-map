@@ -698,7 +698,7 @@
                 "uses_placeHolder": "Nous souhaitons savoir pourquoi vous utilisez les données. Nous apprécierions si vous pouviez fournir une courte description.",
                 "country": "Pays de Résidence",
                 "email": "Email",
-                "message": "L'OMS tient à améliorer les bases de données mondiales et la carte des menaces du paludisme afin de mieux répondre aux besoins de notre communauté d'utilisateurs. Par conséquent, l'OMS souhaite s'engager avec notre communauté d'utilisateurs pour recueillir des suggestions d'amélioration et apprendre des différents cas d'utilisation et des avantages que ces produits leur apportent. Si vous souhaitez partager des commentaires, vous pouvez le faire <1 href='/contact'>ici</1>.",
+                "message": "L'OMS tient à améliorer les bases de données mondiales et la carte des menaces du paludisme afin de mieux répondre aux besoins de notre communauté d'utilisateurs. Par conséquent, l'OMS souhaite s'engager avec notre communauté d'utilisateurs pour recueillir des suggestions d'amélioration et apprendre des différents cas d'utilisation et des avantages que ces produits leur apportent. Si vous souhaitez partager des commentaires, vous pouvez le faire <2 href='/contact'>ici</2>.",
                 "consent1": "J'autorise à être contacté par l'Organisation mondiale de la santé concernant mon expérience avec la Malaria Threat Map et les données des bases de données mondiales.",
                 "consent2": "J'autorise l'Organisation mondiale de la santé à utiliser le nom de mon organisation et la description du projet fournis ci-dessus pour afficher l'utilisation des bases de données mondiales (aucune donnée personnelle ne sera affichée)."
             },
