@@ -190,7 +190,6 @@ const Data: React.FC<Props> = ({
     }, [invasiveStudies, invasiveFilters, region, yearFilters, setInvasiveFilteredStudies]);
 
     useEffect(() => {
-        debugger;
         const minMaxYears =
             theme === "prevention"
                 ? getMaxMinYears(preventionStudies)

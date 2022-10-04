@@ -4,7 +4,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { FullCountry } from "../filters/FullCountriesSelector";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+
 import { UserInfo } from "../types";
 import { emailRegexp } from "../../../../domain/common/regex";
 
