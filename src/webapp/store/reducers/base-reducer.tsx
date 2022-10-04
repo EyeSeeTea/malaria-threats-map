@@ -76,8 +76,8 @@ export default createReducer<MalariaState>(initialState, {
     }),
     [ActionTypeEnum.MalariaSetFilters]: (filters: number[] | undefined) =>
         R.assoc("filters", filters || initialState.filters),
-    [ActionTypeEnum.MalariaSetFilters]: (filters: number[] | undefined) =>
-        R.assoc("filters", filters || initialState.filters),
+    [ActionTypeEnum.MalariaSetMaxMinYears]: (maxMinYears: number[] | undefined) =>
+        R.assoc("maxMinYears", maxMinYears || initialState.maxMinYears),
     [ActionTypeEnum.MalariaToogleEndemicityLayer]: (visible: boolean) => R.assoc("endemicity", visible),
     [ActionTypeEnum.MalariaSetStoryMode]: (storyMode: boolean) => R.assoc("storyMode", storyMode),
     [ActionTypeEnum.MalariaSetStoryModeStep]: (storyModeStep: number) => R.assoc("storyModeStep", storyModeStep || 0),
