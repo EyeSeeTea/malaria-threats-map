@@ -1,6 +1,6 @@
 import { request } from "../common/request";
 import { FutureData } from "../../domain/common/FutureData";
-import { XMartApiResponse } from "../common/types";
+import { ApiParams, ApiResponse } from "../common/types";
 import { InvasiveRepository } from "../../domain/repositories/InvasiveRepository";
 import { InvasiveStudy } from "../../domain/entities/InvasiveStudy";
 
@@ -8,8 +8,14 @@ export class InvasiveApiRepository implements InvasiveRepository {
     constructor(private baseUrl: string) {}
 
     getStudies(): FutureData<InvasiveStudy[]> {
-        const url = this.baseUrl + "/FACT_INVASIVE_SPECIES_LEGACY";
+        const params: ApiParams = {
+            f: "json",
+            where: `1=1`,
+            outFields: "*",
+        };
 
-        return request<XMartApiResponse<InvasiveStudy>>({ url }).map(response => response.value);
+        return request<ApiResponse<InvasiveStudy>>({ url: `${this.baseUrl}/10/query`, params }).map(response =>
+            response.features.map(feature => feature.attributes)
+        );
     }
 }
