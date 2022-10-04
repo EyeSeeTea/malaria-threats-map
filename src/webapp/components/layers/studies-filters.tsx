@@ -126,7 +126,7 @@ export const filterByCountries = (countries: string[]) => (study: any) => {
 };
 
 export const filterByInsecticideClass = (insecticideClass: string) => (study: any) => {
-    return !study.INSECTICIDE_CLASS || study.INSECTICIDE_CLASS === insecticideClass;
+    return !insecticideClass || study.INSECTICIDE_CLASS === insecticideClass;
 };
 
 export const filterByInsecticideClasses = (insecticideClasses: string[]) => (study: any) => {
