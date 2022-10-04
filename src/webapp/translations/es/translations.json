@@ -1047,6 +1047,7 @@
         "data": "Datos",
         "selectLocation": "FILTRO DE LOCALIZACIÓN (OPCIONAL)",
         "location": "Localización",
+        "all": "Todos",
         "selectDataset": "SELECT DATASET",
         "dataset": "Dataset"
     },

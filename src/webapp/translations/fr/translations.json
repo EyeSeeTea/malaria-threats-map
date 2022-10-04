@@ -1048,6 +1048,7 @@
         "data": "Données",
         "selectLocation": "EMPLACEMENT DU FILTRE (FACULTATIF)",
         "location": "Emplacement",
+        "all": "Tout",
         "selectDataset": "SELECT DATASET",
         "dataset": "Dataset"
     },

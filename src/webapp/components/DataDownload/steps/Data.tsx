@@ -188,7 +188,7 @@ const Data: React.FC<Props> = ({
                         .value.toString(),
                     filtersValue: preventionFiltersToString(preventionFilters, yearFilters, "download"),
                     filteredStudies: preventionFilteredStudies,
-                    location: getLocation(region),
+                    location: getLocation(region) || t("mapActions.all"),
                 };
 
                 onChangeSelectedDatabases([...selectedDatabases, database]);
@@ -204,7 +204,7 @@ const Data: React.FC<Props> = ({
                         .value.toString(),
                     filtersValue: diagnosisFiltersToString(diagnosisFilters, yearFilters, "download"),
                     filteredStudies: diagnosisFilteredStudies,
-                    location: getLocation(region),
+                    location: getLocation(region) || t("mapActions.all"),
                 };
 
                 onChangeSelectedDatabases([...selectedDatabases, database]);
@@ -220,7 +220,7 @@ const Data: React.FC<Props> = ({
                         .value.toString(),
                     filtersValue: invasiveFiltersToString(invasiveFilters, yearFilters, "download"),
                     filteredStudies: invasiveFilteredStudies,
-                    location: getLocation(region),
+                    location: getLocation(region) || t("mapActions.all"),
                 };
 
                 onChangeSelectedDatabases([...selectedDatabases, database]);
@@ -236,7 +236,7 @@ const Data: React.FC<Props> = ({
                         .value.toString(),
                     filtersValue: treatmentFiltersToString(treatmentFilters, yearFilters, "download"),
                     filteredStudies: treatmentFilteredStudies,
-                    location: getLocation(region),
+                    location: getLocation(region) || t("mapActions.all"),
                 };
 
                 onChangeSelectedDatabases([...selectedDatabases, database]);
@@ -257,6 +257,7 @@ const Data: React.FC<Props> = ({
         treatmentFilteredStudies,
         invasiveFilteredStudies,
         onChangeSelectedDatabases,
+        t,
     ]);
 
     const handleRemoveToDownload = useCallback(

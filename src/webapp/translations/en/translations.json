@@ -1047,6 +1047,7 @@
         "data": "Data",
         "selectLocation": "FILTER LOCATION (OPTIONAL)",
         "location": "Location",
+        "all": "All",
         "selectDataset": "SELECT DATASET",
         "dataset": "Dataset"
     },
