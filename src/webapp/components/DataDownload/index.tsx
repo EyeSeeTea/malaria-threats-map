@@ -123,9 +123,11 @@ function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset }:
                 maxWidth="xs"
                 sx={{ display: "flex", flexDirection: "row", marginTop: 4, justifyContent: "center" }}
             >
-                <BackButton variant="outlined" disabled={activeStep === 0} onClick={handleBack} size="large">
-                    {t("common.data_download.buttons.back")}
-                </BackButton>
+                {activeStep > 0 && (
+                    <BackButton variant="outlined" disabled={activeStep === 0} onClick={handleBack} size="large">
+                        {t("common.data_download.buttons.back")}
+                    </BackButton>
+                )}
                 {activeStep < steps.length - 1 && (
                     <PrimaryButton
                         variant="contained"
