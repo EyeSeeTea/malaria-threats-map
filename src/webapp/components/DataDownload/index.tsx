@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Button, Container, StepLabel, stepLabelClasses } from "@mui/material";
 import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
 import Step from "@mui/material/Step";
-import { logEventAction, setThemeAction } from "../../store/actions/base-actions";
+import { logEventAction, setActionGroupSelected, setThemeAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
 import UserForm from "./steps/UserForm";
 import Terms from "./steps/Terms";
@@ -27,6 +27,7 @@ const mapStateToProps = (_state: State) => ({});
 const mapDispatchToProps = {
     setTheme: setThemeAction,
     setPreventionDataset: setPreventionDataset,
+    setActionGroupSelected: setActionGroupSelected,
     addDownload: addDataDownloadRequestAction,
     logEvent: logEventAction,
 };
@@ -47,7 +48,7 @@ export type Contact = {
     country: string;
 };
 
-function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset }: Props) {
+function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset, setActionGroupSelected }: Props) {
     const { t } = useTranslation();
     const {
         activeStep,
@@ -64,7 +65,7 @@ function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset }:
         onChangeSelectedDatabases,
         onChangeUserInfo,
         onChangeTermsInfo,
-    } = useDownload(logEvent, setTheme, setPreventionDataset, addDownload);
+    } = useDownload(logEvent, setTheme, setPreventionDataset, addDownload, setActionGroupSelected);
 
     const steps = getSteps();
 
