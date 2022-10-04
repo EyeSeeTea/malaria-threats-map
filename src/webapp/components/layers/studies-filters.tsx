@@ -180,7 +180,7 @@ export const filterByDimensionId = (dimensionId: number) => (study: any) => {
 };
 
 export const filterByPlasmodiumSpecies = (plasmodiumSpecies: string) => (study: any) => {
-    return study.PLASMODIUM_SPECIES === plasmodiumSpecies;
+    return !plasmodiumSpecies || study.PLASMODIUM_SPECIES === plasmodiumSpecies;
 };
 
 export const filterByManyPlasmodiumSpecies = (plasmodiumSpecies: string[]) => (study: any) => {
@@ -188,7 +188,7 @@ export const filterByManyPlasmodiumSpecies = (plasmodiumSpecies: string[]) => (s
 };
 
 export const filterByDrug = (drug: string) => (study: any) => {
-    return study.DRUG_NAME === drug;
+    return !drug || study.DRUG_NAME === drug;
 };
 
 export const filterByDrugs = (drugs: string[]) => (study: any) => {
