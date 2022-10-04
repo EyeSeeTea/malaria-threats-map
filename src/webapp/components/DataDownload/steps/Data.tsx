@@ -371,8 +371,8 @@ const Data: React.FC<Props> = ({
                             <LocationMapActions />
                             <FooterDivider />
                             <Footer>
-                                <Stack direction="row" justifyContent="space-around" sx={{ width: "100%" }}>
-                                    <Stack direction="column" alignItems="center">
+                                <Stack direction="row" justifyContent="space-between" sx={{ width: "100%" }}>
+                                    <Stack direction="column" alignItems="left">
                                         <Typography variant="body2">
                                             {t("common.data_download.data_step.last_updated")}
                                         </Typography>

@@ -53,7 +53,6 @@ export interface Study {
 
 export function getMaxMinYears(studies: Study[]): [number, number] {
     if (studies.length === 0) return [2010, new Date().getFullYear()];
-    debugger;
     const years = _.compact(_.uniq(studies.map(study => parseInt(study.YEAR_START)).sort()));
 
     const min = Math.min(...years);
