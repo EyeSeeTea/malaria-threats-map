@@ -62,7 +62,6 @@ const ThemeSelectionSection: React.FC = () => {
                         <Stack>
                             <SectionTitle>{t("common.dashboard.filtersSection.second.title")}</SectionTitle>
                             <MultiFilter
-                                label={t("common.filters.select_country")}
                                 placeholder={t("common.filters.select_country")}
                                 options={countrySuggestions}
                                 onChange={onSelectedCountriesChange}
