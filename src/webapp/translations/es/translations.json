@@ -84,7 +84,7 @@
                     "lastUpdate": "Última actualización de datos para esta selección de filtro:",
                     "cta": "Generar Tablero"
                 },
-                "note": "Nota: Se necesita un gran número de puntos de datos para crear un cuadro de mando. Por esta razón, los tableros sólo están disponibles para dos de los cuatro temas: la resistencia a los insecticidas vectoriales y la eficacia y resistencia a los medicamentos antipalúdicos. Los cuadros de mando seguirán desarrollándose a medida que se disponga de más datos."
+                "note": "Nota: Actualmente, los tableros solo están disponibles para dos de los cuatro temas: resistencia a los insecticidas de vectores y eficacia y resistencia a los medicamentos antipalúdicos. Los tableros continuarán desarrollándose a medida que haya más datos disponibles."
             },
             "contentsSection": {
                 "title": "Contenidos:",

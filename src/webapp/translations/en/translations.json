@@ -84,7 +84,7 @@
                     "lastUpdate": "Last data update for this filter selection:",
                     "cta": "Generate Dashboard"
                 },
-                "note": "Note: A large number of data points are needed to create a dashboard. For this reason, dashboards are currently only available for two of the four themes: vector insecticide resistance and antimalarial drug efficacy and resistance. Dashboards will continue to develop as more data becomes available."
+                "note": "Note: Dashboards are currently only available for two of the four themes: vector insecticide resistance and antimalarial drug efficacy and resistance. Dashboards will continue to develop as more data becomes available."
             },
             "contentsSection": {
                 "title": "Contents:",
