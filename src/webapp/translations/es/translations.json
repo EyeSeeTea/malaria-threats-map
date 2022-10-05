@@ -81,7 +81,7 @@
                 "second": {
                     "title": "2. Seleccionar país",
                     "helper": "Seleccione hasta 5 países",
-                    "lastUpdate": "Última actualización de datos para esta selección de filtro:",
+                    "lastUpdate": "Última actualización: ",
                     "cta": "Generar Tablero"
                 },
                 "note": "Nota: Actualmente, los tableros solo están disponibles para dos de los cuatro temas: resistencia a los insecticidas de vectores y eficacia y resistencia a los medicamentos antipalúdicos. Los tableros continuarán desarrollándose a medida que haya más datos disponibles."

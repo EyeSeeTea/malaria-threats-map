@@ -77,11 +77,13 @@ const ThemeSelectionSection: React.FC = () => {
                             >
                                 Generate Dashboard
                             </StyledGenerateButton>
-                            <Typography variant="caption" fontSize={"12px"} textAlign="right">
-                                {`${t("common.dashboard.filtersSection.second.lastUpdate")} ${
-                                    updatedDates[theme]?.toLocaleDateString() || ""
-                                }`}
-                            </Typography>
+                            {updatedDates[theme] && (
+                                <Typography variant="caption" fontSize={"12px"} textAlign="right">
+                                    {`${t("common.dashboard.filtersSection.second.lastUpdate")} ${
+                                        updatedDates[theme]?.toLocaleDateString() || ""
+                                    }`}
+                                </Typography>
+                            )}
                         </Stack>
                     </Grid>
                 </Grid>

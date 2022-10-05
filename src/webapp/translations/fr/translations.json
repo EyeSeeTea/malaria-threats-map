@@ -81,7 +81,7 @@
                 "second": {
                     "title": "2. Sélectionnez le pays",
                     "helper": "Sélectionnez jusqu'à 5 pays",
-                    "lastUpdate": "Dernière mise à jour des données pour cette sélection de filtre :",
+                    "lastUpdate": "Dernière mise à jour: ",
                     "cta": "Générer tableau de bord"
                 },
                 "note": "Remarque : Les tableaux de bord ne sont actuellement disponibles que pour deux des quatre thèmes : la résistance des vecteurs aux insecticides et l'efficacité et la résistance des médicaments antipaludiques. Les tableaux de bord continueront à se développer au fur et à mesure que de nouvelles données seront disponibles."

@@ -81,7 +81,7 @@
                 "second": {
                     "title": "2. Select Country",
                     "helper": "Select up to 5 countries",
-                    "lastUpdate": "Last data update for this filter selection:",
+                    "lastUpdate": "Last update: ",
                     "cta": "Generate Dashboard"
                 },
                 "note": "Note: Dashboards are currently only available for two of the four themes: vector insecticide resistance and antimalarial drug efficacy and resistance. Dashboards will continue to develop as more data becomes available."
