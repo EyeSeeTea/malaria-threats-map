@@ -1,7 +1,10 @@
-import PreventionStep1 from "./PreventionStep1";
-import PreventionStep2 from "./PreventionStep2";
-import PreventionStep3 from "./PreventionStep3";
-import PreventionStep4 from "./PreventionStep4";
+import { createStoryStep } from "../create-story-step";
 
-const PreventionSteps = [PreventionStep1, PreventionStep2, PreventionStep3, PreventionStep4];
+const PreventionSteps = [
+    "preventionStory_step1",
+    "preventionStory_step2",
+    "preventionStory_step3",
+    "preventionStory_step4",
+].map(createStoryStep);
+
 export default PreventionSteps;

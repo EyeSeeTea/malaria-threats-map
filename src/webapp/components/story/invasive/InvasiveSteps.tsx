@@ -1,6 +1,5 @@
-import InvasiveStep1 from "./InvasiveStep1";
-import InvasiveStep2 from "./InvasiveStep2";
-import InvasiveStep3 from "./InvasiveStep3";
+import { createStoryStep } from "../create-story-step";
 
-const InvasiveSteps = [InvasiveStep1, InvasiveStep2, InvasiveStep3];
+const InvasiveSteps = ["invasiveStory_step1", "invasiveStory_step2", "invasiveStory_step3"].map(createStoryStep);
+
 export default InvasiveSteps;

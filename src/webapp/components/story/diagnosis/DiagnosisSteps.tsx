@@ -1,6 +1,5 @@
-import DiagnosisStep1 from "./DiagnosisStep1";
-import DiagnosisStep2 from "./DiagnosisStep2";
-import DiagnosisStep3 from "./DiagnosisStep3";
+import { createStoryStep } from "../create-story-step";
 
-const DiagnosisSteps = [DiagnosisStep1, DiagnosisStep2, DiagnosisStep3];
+const DiagnosisSteps = ["diagnosisStory_step1", "diagnosisStory_step2", "diagnosisStory_step3"].map(createStoryStep);
+
 export default DiagnosisSteps;
