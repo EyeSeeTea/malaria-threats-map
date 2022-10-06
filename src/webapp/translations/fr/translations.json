@@ -275,6 +275,10 @@
             "diagnosis":{
                 "title": "Délétions du gène <i>pfhrp2/3</i> parasitaire",
                 "description": "Découvrez les délétions du gène pfhrp2/3 du parasite et ce que l'OMS recommande pour lutter contre cette menace pour le contrôle et l'élimination du paludisme."
+            },
+            "stepper":{
+                "next": "suivant",
+                "back": "arrière"
             }
         },
         "shareDataPage":{

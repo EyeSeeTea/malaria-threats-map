@@ -275,6 +275,10 @@
             "diagnosis":{
                 "title": "Supresiones del gen <i>pfhrp2/3</i> del parásito",
                 "description": "Conozca las deleciones del gen pfhrp2/3 del parásito y las recomendaciones de la OMS para combatir esta amenaza para el control y la eliminación del paludismo."
+            },
+            "stepper":{
+                "next": "siguiente",
+                "back": "volver"
             }
         },
         "shareDataPage":{

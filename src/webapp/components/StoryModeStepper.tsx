@@ -170,7 +170,7 @@ function StoryModeStepper({ theme }: Props) {
                                 disabled={storyModeStep === 0}
                                 className={classes.button}
                             >
-                                Back
+                                {t("common.storiesPage.stepper.back")}
                             </Button>
                         )}
                         {storyModeStep < selectedSteps.length - 1 && (
@@ -181,7 +181,7 @@ function StoryModeStepper({ theme }: Props) {
                                 disabled={storyModeStep === steps.length - 1}
                                 className={classes.button}
                             >
-                                Next
+                                {t("common.storiesPage.stepper.next")}
                             </Button>
                         )}
                     </div>
