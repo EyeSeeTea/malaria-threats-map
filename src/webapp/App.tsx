@@ -7,6 +7,8 @@ import DataProvider from "./components/DataProvider";
 import { Theme, StyledEngineProvider, responsiveFontSizes } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Router } from "./pages/Router";
+import { AppContext } from "./context/app-context";
+import { CompositionRoot } from "../CompositionRoot";
 
 declare module "@mui/styles/defaultTheme" {
     // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -73,7 +75,9 @@ class App extends React.Component {
                     <Provider store={store}>
                         <DataProvider>
                             <I18nextProvider i18n={i18next}>
-                                <Router />
+                                <AppContext.Provider value={{ compositionRoot: new CompositionRoot() }}>
+                                    <Router />
+                                </AppContext.Provider>
                             </I18nextProvider>
                         </DataProvider>
                     </Provider>

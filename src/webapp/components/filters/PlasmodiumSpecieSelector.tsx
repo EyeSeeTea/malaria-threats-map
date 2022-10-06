@@ -1,13 +1,18 @@
 import React from "react";
 import IntegrationReactSelect, { OptionType } from "../BasicSelect";
 import { Divider, FilterWrapper } from "./Filters";
-import FormLabel from "@mui/material/FormLabel";
-import T from "../../translations/T";
 import { ValueType } from "react-select/src/types";
+import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+import { Typography } from "@mui/material";
 
 type OwnProps = {
-    onChange: (selection: string[]) => void;
+    onChange: (selection: string) => void;
     value: string;
+    multi?: boolean;
+    background?: string;
+    onlyYMargin?: boolean;
+    labelBold?: boolean;
 };
 
 type Props = OwnProps;
@@ -35,26 +40,44 @@ const PLASMODIUM_SPECIES_SUGGESTIONS: any[] = [
     },
 ];
 
-function PlasmodiumSpecieSelector({ onChange, value }: Props) {
+function PlasmodiumSpecieSelector({
+    onChange,
+    value,
+    multi = true,
+    background,
+    onlyYMargin = false,
+    labelBold = false,
+}: Props) {
     const onSelectionChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;
         onChange(selection.value);
     };
 
+    const { t } = useTranslation();
+
     const selection = PLASMODIUM_SPECIES_SUGGESTIONS.filter(suggestion => value === suggestion.value);
     return (
-        <FilterWrapper>
-            <FormLabel component="legend">
-                <T i18nKey={"common.filters.plasmodium_species"} />
-            </FormLabel>
+        <FilterWrapper onlyYMargin={onlyYMargin}>
+            <Typography variant="body2" fontWeight={labelBold ? "bold" : undefined}>
+                {t("common.filters.plasmodium_species")}
+            </Typography>
             <Divider />
-            <IntegrationReactSelect
-                suggestions={PLASMODIUM_SPECIES_SUGGESTIONS}
-                onChange={onSelectionChange}
-                value={selection}
-            />
+            <Container background={background}>
+                <IntegrationReactSelect
+                    suggestions={PLASMODIUM_SPECIES_SUGGESTIONS}
+                    onChange={onSelectionChange}
+                    value={selection}
+                    multi={multi}
+                />
+            </Container>
         </FilterWrapper>
     );
 }
 
 export default PlasmodiumSpecieSelector;
+
+const Container = styled.div<{ background: string }>`
+    background: ${props => props.background || "transparent"};
+    padding: ${props => (props.background ? "6px 16px;" : "0px;")};
+    border-radius: ${props => (props.background ? "10px;" : "0px;")};
+`;

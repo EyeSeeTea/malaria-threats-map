@@ -70,6 +70,148 @@
                 "button": "Acknowledgements List"
             }
         },
+        "dashboard": {
+            "title": "Dashboards",
+            "filtersSection": {
+                "first": {
+                    "title": "1. Select Theme",
+                    "buttonOne": "Vector insecticide resistance",
+                    "buttonTwo": "Antimalarial drug efficacy and resistance"
+                },
+                "second": {
+                    "title": "2. Select Country",
+                    "helper": "Select up to 5 countries",
+                    "lastUpdate": "Last data update for this filter selection:",
+                    "cta": "Generate Dashboard"
+                },
+                "note": "Note: A large number of data points are needed to create a dashboard. For this reason, dashboards are currently only available for two of the four themes: vector insecticide resistance and antimalarial drug efficacy and resistance. Dashboards will continue to develop as more data becomes available."
+            },
+            "contentsSection": {
+                "title": "Contents:",
+                "countryOptions": {
+                    "countryContext": "Country Context",
+                    "epidemiologicalProfile": "Epidemiological profile",
+                    "majorPlasmodium": "Major Plasmodium species and treatment regimen"
+                },
+                "therapeuticResultsOptions": {
+                    "therapeuticEfficacy": "Therapeutic efficacy study results",
+                    "summaryTreatmentFailures": "Summary of treatment failure rates by drug",
+                    "treatmentFailureRates": "Treatment failure rates over time",
+                    "parasiteClearanceRates": "Parasite clearance rates over time"
+                },
+                "molecularResultsOptions": {
+                    "molecularMarker": "Molecular marker study results",
+                    "summaryMolecularMarker": "Summary of molecular marker study results over time"
+                }
+            },
+            "countryContextSection": {
+                "title": "Country Context",
+                "source": "Source:",
+                "whoWorldMalariaReport": "Who World malaria report 2021",
+                "epidemiologicalProfile": {
+                    "title": "EPIDEMIOLOGICAL PROFILE",
+                    "country": "Country",
+                    "year": "year",
+                    "transmission": " Population living in high transmission, low transmission and malaria-free areas",
+                    "burdenEstimates": "Burden estimates",
+                    "highTransmission": "High transmission",
+                    "moreThanOneCase": "(>1 case per 1000 population)",
+                    "lowTransmission": "Low transmission",
+                    "lessOrEqualtoOneCase": "(0-1 case per 1000 population)",
+                    "malariaFree": "Malaria-free",
+                    "zeroCases": "(0 cases)",
+                    "estimatedCases": "Estimated cases",
+                    "estimatedDeaths": "Estimated deaths"
+                },
+                "majorPlamociumSpecies": {
+                    "title": "MAJOR PLASMODIUM SPECIES AND TREATMENT REGIMEN",
+                    "country": "Country",
+                    "species": "Major Plasmodium species (%)",
+                    "firstLineTreatments": "1st line treatments for uncomplicated malaria"
+                }
+            },
+            "therapeuticEfficacySection": {
+                "title": "Therapeutic efficacy studies (TES)",
+                "numStudies": "The applied filters yield {{count}} studies",
+                "treatmentFailureByDrug": {
+                    "title": "SUMMARY OF TREATMENT FAILURE RATES BY DRUG",
+                    "studyOutcome": "Study outcome:",
+                    "numStudies": "Number of studies",
+                    "lessThan10Patients": "<10% of patients with treatment failure",
+                    "moreOrEqualThan10Patients": "≥10% of patients with treatment failure"
+                },
+                "treatmentFailureOverTime": {
+                    "title": "TREATMENT FAILURE RATES OVER TIME",
+                    "numberPatients": "Number of Patients",
+                    "treatmentFailure": "Treatment Failure %",
+                    "year": "Year"
+                },
+                "parasiteClearanceOverTime": {
+                    "title": "PARASITE CLEARANCE RATES OVER TIME",
+                    "parasitemiaOnDay3": "Percentage of patients with parasitemia on day 3 (%)"
+                }
+            },
+            "MolecularMarkerSection": {
+                "title": "Molecular marker studies",
+                "molecularMarkerOverTime": {
+                    "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
+                    "legendLabel": "Percentage of samples in one study where multiple copy numbers were detected:",
+                    "numStudies": "Number of Studies",
+                    "year": "Year",
+                    "chartTitle": "Percentage of samples in one study where validated or candidate",
+                    "chartSubtitle": "molecular markers of artemisinin resistance were detected:"
+                }
+            },
+            "treatmentFilters": {
+                "title": "Filter Data"
+            },
+            "informationModal": {
+                "common":{
+                    "dataPeriod": "<strong>Data period:</strong>",
+                    "dataLastUpdated" : "<strong>Data last updated:</strong>",
+                    "studyProtocol": "<strong>Study protocol:</strong> WHO recommends that all therapeutic efficacy studies are conducted according to the WHO standard protocol.",
+                    "info": "To view more details about a specific study, return to the map interface to view the site-level data.",
+                    "and": "and"
+                },
+                "summaryTreatmentFailureRateByDrug": {
+                    "chartInterpretation": "<strong>Chart interpretation:</strong> This bar chart shows the number of therapeutic efficacy studies conducted in a selected country (or countries). The user can customize the chart by selecting one Plasmodium species, as well as selecting one or more drugs, and year(s) of interest. The user can also exclude studies with less than 20 patients from the chart. Studies with >10% of patients with treatment failure are shown in red; studies with {{lessThen}}10% of patients with treatment failure are shown in pink.",
+                    "dataAvailability": "<strong>Data availability:</strong> All studies for which data are available are shown."
+                },
+                "treatmentFailureRateOverTime": {
+                    "chartInterpretation": "<strong>Chart interpretation:</strong> This scatter plot displays the percentage of patients with treatment failure, in a therapeutic efficacy study conducted in a selected country (or countries), by year. The user can customize the chart by selecting a Plasmodium species, a drug, and the years of interest. The user can also exclude studies with less than 20 patients from the chart.",
+                    "description_1": "Each circle represents one therapeutic efficacy study. The size of the circle is indicative of the total number of patients included in the study. The colour of the circle indicates the country where the study was conducted.",
+                    "description_2": "The placement of the circles along the x-axis is based on the year in which the study was completed. There is a slight horizontal displacement of the circles, within a year interval, in order to reduce the appearance of overlapping circles.",
+                    "dataAvailability": "<strong>Data availability:</strong> Only data for <strong><i>P. falciparum</i></strong> and <strong><i>P. vivax</i></strong> are displayed in this graph."
+                },
+                "parasiteClearanceRatesOverTime": {
+                    "chartInterpretation": "<strong>Chart interpretation:</strong> This scatter plot displays the percentage of patients with delayed parasite clearance, in a therapeutic efficacy study, conducted in a selected country (or countries), by year. The user can customize the chart by selecting a Plasmodium species, a drug, and the years of interest. The user can also exclude studies with less than 20 patients from the chart.",
+                    "description_1": "Each circle represents one therapeutic efficacy study. The size of the circle is indicative of the total number of patients included in the study. The colour of the circle indicates the country where the study was conducted.",
+                    "description_2": "The placement of the circles along the x-axis is based on the year in which the study was completed. There is slight horizontal displacement of the circles, within a year interval, in order to reduce overlapping circles.",
+                    "dataAvailability": "<strong>Data availability:</strong> Only data for <strong><i>P. falciparum</i></strong> and <strong><i>P. vivax</i></strong> are displayed in this graph."
+                },
+                "summaryMolecularMarkerStudyOverTime": {
+                    "intro": "Molecular marker studies identify and track the prevalence of molecular mutations associated with antimalarial drug resistance. The user can customize the chart by selecting the type of molecular marker study and the years of interest. The user can also exclude studies with less than 20 patients from the chart.",
+                    "chartInterpretation": "<strong>Chart interpretation:</strong> This stacked bar chart displays the molecular marker study results. The height of the bar is determined by the number of studies conducted in that year.",
+                    "pfkelch13": {
+                        "description": "The colour of the bar represents the percentage of samples within one study where validated and candidate molecular markers were detected. Light blue indicates a low percentage; dark blue represents a high percentage.",
+                        "list_1": "Validated markers include: (F466I, N458Y, Y493H, R539T, I543T, P553L, R561H, P574L, C580Y)",
+                        "list_2": "Associated /candidate markers include: (P441L, G449A, C469F/Y, A481V, R515K, P527H, N5371/D, G538V, V568G, R6221, A675V)"
+                    },
+                    "pfcrt": "The colour of the bar represents the percentage of samples within one study where mutations were detected. Light blue indicates a low percentage; dark blue represents a high percentage.",
+                    "pfmdr1": "The colour of the bar represents the percentage of samples within one study where multiple copy numbers were detected. Light blue indicates a low percentage; dark blue represents a high percentage.",
+                    "dataAvailability": "<strong>Data availability:</strong> All studies for which data are available are shown."
+                }
+            },
+            "tooltip":{
+                "drug": "Drug",
+                "numberOfPatients": "Number of patients",
+                "treatmentFailureRate": "Treatment failure rate",
+                "source": {
+                    "label": "Source",
+                    "link": "National Institute of Allergy and Infectious Diseases, National Institutes of Health"
+                }
+            }
+        },
         "homepage": {
             "menu": {
                 "home": "Home",
@@ -134,6 +276,24 @@
                 "title": "Parasite <i>pfhrp2/3</i> gene deletions",
                 "description": "Find out about Parasite pfhrp2/3 gene deletions and what the WHO recommends to combat this threat to malaria control and elimination."
             }
+        },
+        "shareDataPage":{
+            "title":"Contribute to the Malaria Threats Map by sharing your <strong>data</strong>",
+            "section1":{
+                "title":"Contribute insecticide resistance data",
+                "description":"We invite data submissions from all individuals and organizations. Please report your data using the following WHO standard data collection forms. Forms are available for download <2 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>here</2>.",
+                "list":{
+                    "1": "Synergist insecticide bioassay results",
+                    "2": "Intensity concentration bioassay results",
+                    "3": "Discriminating concentration bioassay results",
+                    "4": "Molecular and biochemical bioassay results"
+                }
+            },
+            "section2":{
+                "title":"Contribute <i>An. stephensi</i> detection data",
+                "description":"We invite data submissions from all individuals and organizations about <i>An. stephensi</i> detection outside of its native areas. Please report your data using the WHO standard data collection form, available <5 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>here</5>."
+            },
+            "sectionsFooter": "Completed forms can be sent to: <2>vectorsurveillance@who.int</2>"
         },
         "footer": {
             "policies": {

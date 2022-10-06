@@ -24,3 +24,7 @@ export interface TreatmentStudy extends Study {
     Code: number;
     HEALTHFACILITY_NAME: string;
 }
+
+export interface MolecularMarkerStudy extends TreatmentStudy {
+    VALUE: number;
+}

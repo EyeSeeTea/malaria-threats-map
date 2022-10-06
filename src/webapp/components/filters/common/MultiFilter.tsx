@@ -12,9 +12,10 @@ type Props = {
     onChange: (selection: string[]) => void;
     value: string[];
     analyticsMultiFilterAction?: string;
+    onlyYMargin?: boolean;
 };
 
-function MultiFilter({ label, options, onChange, value, analyticsMultiFilterAction, placeholder }: Props) {
+function MultiFilter({ label, options, onChange, value, analyticsMultiFilterAction, placeholder, onlyYMargin }: Props) {
     const onSelectionChange = (options: Option[] = []) => {
         onChange((options || []).map(o => o.value));
 
@@ -26,7 +27,7 @@ function MultiFilter({ label, options, onChange, value, analyticsMultiFilterActi
     const selections = options.filter(option => value.includes(option.value));
 
     return (
-        <FilterRowContainer>
+        <FilterRowContainer onlyYMargin={onlyYMargin}>
             {selections && selections.length > 0 && (
                 <FormLabel color="primary" component="legend">
                     {`${label}:`}&nbsp;

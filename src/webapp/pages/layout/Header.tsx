@@ -39,8 +39,16 @@ const MenuItems: React.FC<DirectionProps> = ({ flexDirection }) => {
                 hoverPaddingRight: 23,
                 submenus: [
                     { kind: "simple-menu" as const, name: t("common.homepage.tools_submenu.maps"), path: "/maps" },
-                    { kind: "simple-menu" as const, name: t("common.homepage.tools_submenu.dashboards"), path: "/" },
-                    { kind: "simple-menu" as const, name: t("common.homepage.tools_submenu.data_download"), path: "/" },
+                    {
+                        kind: "simple-menu" as const,
+                        name: t("common.homepage.tools_submenu.dashboards"),
+                        path: "/dashboards",
+                    },
+                    {
+                        kind: "simple-menu" as const,
+                        name: t("common.homepage.tools_submenu.data_download"),
+                        path: "/download",
+                    },
                 ],
             },
             {
