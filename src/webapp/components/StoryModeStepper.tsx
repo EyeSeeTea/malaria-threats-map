@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme: Theme) =>
             fontWeight: "bold",
             fontSize: "17px",
             "@media(max-width: 768px)": {
-                fontSize: "12px",
-                padding: "6px 30px",
+                fontSize: "13px",
+                padding: "8px 35px",
             },
         },
         instructions: {
@@ -45,10 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: "55px",
             padding: theme.spacing(2),
             paddingBottom: "80px",
-            "@media(min-width: 1536px)": {
-                height: "82%",
-            },
-            height: "78%",
+            height: "88%",
         },
         buttons: {
             position: "absolute",
@@ -56,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
             bottom: "20px",
             width: "90%",
             justifyContent: "space-between",
-            marginLeft: theme.spacing(2),
+            marginLeft: "7px",
             marginRight: theme.spacing(2),
         },
         appBar: {
@@ -80,6 +77,10 @@ function StoryModeStepper({ theme }: Props) {
     const [storyModeStep, setStoryModeStep] = useState<number>(0);
     const classes = useStyles({});
     const steps = getSteps();
+
+    useEffect(() => {
+        setStoryModeStep(0);
+    }, [theme]);
 
     const handleNext = () => {
         setStoryModeStep(storyModeStep + 1);
