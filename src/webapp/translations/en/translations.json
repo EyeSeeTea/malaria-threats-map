@@ -137,6 +137,7 @@
                     "title": "SUMMARY OF TREATMENT FAILURE RATES BY DRUG",
                     "studyOutcome": "Study outcome:",
                     "numStudies": "Number of studies",
+                    "studies": "studies",
                     "lessThan10Patients": "<10% of patients with treatment failure",
                     "moreOrEqualThan10Patients": "≥10% of patients with treatment failure"
                 },

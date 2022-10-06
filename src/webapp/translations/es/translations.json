@@ -137,6 +137,7 @@
                     "title": "RESUMEN DE LAS TASAS DE FRACASO DEL TRATAMIENTO POR FÁRMACO",
                     "studyOutcome": "Resultado del estudio:",
                     "numStudies": "Número de estudios",
+                    "studies": "estudios",
                     "lessThan10Patients": "<10% de pacientes con fracaso del tratamiento",
                     "moreOrEqualThan10Patients": "≥10% de los pacientes con fracaso del tratamiento"
                 },

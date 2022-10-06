@@ -8,6 +8,7 @@ import { treatmentByDrugColors, TreatmentFailureSeriesItem } from "./types";
 import { useTreatmentFailureByDrug } from "./useTreatmentFailureByDrug";
 import More from "highcharts/highcharts-more";
 import TreatmentFilterableDashboard from "../TreatmentFilterableDashboard";
+import i18next from "i18next";
 
 More(Highcharts);
 const TreatmentFailureByDrugDashboard: React.FC = () => {
@@ -208,6 +209,15 @@ function chartOptions(
         plotOptions: {
             series: {
                 stacking: "normal",
+            },
+        },
+        tooltip: {
+            headerFormat: "",
+            pointFormat: `{point.y} ${i18next.t(
+                "common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.studies"
+            )}`,
+            style: {
+                width: 150,
             },
         },
         series,
