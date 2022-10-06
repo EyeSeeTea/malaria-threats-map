@@ -46,15 +46,11 @@ const MapImage = styled.img`
 
 const StyledPaper = styled(Paper)`
     position: absolute;
-    top: 30px;
-    right: 25px;
+    bottom: 20px;
+    right: 20px;
     border-radius: 10px;
     box-shadow: 2;
     padding: 10px;
-    @media (max-width: 768px) {
-        top: auto;
-        bottom: 30px;
-    }
 `;
 
 const ThemeImage = ({ theme }: { theme: ThemeType }) => {
@@ -137,36 +133,37 @@ export const StoriesPage: React.FC = () => {
                     padding="16px"
                     marginTop={{ xs: "16px", md: "55px" }}
                     sx={{ maxWidth: "1200px !important" }}
-                    position="relative"
                 >
-                    <MapImage src={Map} alt="map" />
-                    <StyledPaper>
-                        <Stack spacing={{ xs: 1, md: 2 }}>
-                            <Typography fontSize={{ xs: "10px", md: "12px" }} fontWeight="bold">
-                                {t(`common.prevention.resistance_status`)}
-                            </Typography>
-                            <Stack>
-                                <Stack direction={"row"} spacing={1} alignItems="center">
-                                    <CircleIcon sx={{ color: "#869C66", fontSize: 10 }} />
-                                    <Typography fontSize={{ xs: "9px", md: "11px" }}>
-                                        {t(`common.prevention.legend.resistance_status.confirmed`)}
-                                    </Typography>
-                                </Stack>
-                                <Stack direction={"row"} spacing={1} alignItems="center">
-                                    <CircleIcon sx={{ color: "#FD9225", fontSize: 10 }} />
-                                    <Typography fontSize={{ xs: "9px", md: "11px" }}>
-                                        {t(`common.prevention.legend.resistance_status.possible`)}
-                                    </Typography>
-                                </Stack>
-                                <Stack direction={"row"} spacing={1} alignItems="center">
-                                    <CircleIcon sx={{ color: "#E41517", fontSize: 10 }} />
-                                    <Typography fontSize={{ xs: "9px", md: "11px" }}>
-                                        {t(`common.prevention.legend.resistance_status.susceptible`)}
-                                    </Typography>
+                    <div style={{ position: "relative" }}>
+                        <MapImage src={Map} alt="map" />
+                        <StyledPaper>
+                            <Stack spacing={{ xs: 1, md: 2 }}>
+                                <Typography fontSize={{ xs: "10px", md: "12px" }} fontWeight="bold">
+                                    {t(`common.prevention.resistance_status`)}
+                                </Typography>
+                                <Stack>
+                                    <Stack direction={"row"} spacing={1} alignItems="center">
+                                        <CircleIcon sx={{ color: "#869C66", fontSize: 10 }} />
+                                        <Typography fontSize={{ xs: "9px", md: "11px" }}>
+                                            {t(`common.prevention.legend.resistance_status.confirmed`)}
+                                        </Typography>
+                                    </Stack>
+                                    <Stack direction={"row"} spacing={1} alignItems="center">
+                                        <CircleIcon sx={{ color: "#FD9225", fontSize: 10 }} />
+                                        <Typography fontSize={{ xs: "9px", md: "11px" }}>
+                                            {t(`common.prevention.legend.resistance_status.possible`)}
+                                        </Typography>
+                                    </Stack>
+                                    <Stack direction={"row"} spacing={1} alignItems="center">
+                                        <CircleIcon sx={{ color: "#E41517", fontSize: 10 }} />
+                                        <Typography fontSize={{ xs: "9px", md: "11px" }}>
+                                            {t(`common.prevention.legend.resistance_status.susceptible`)}
+                                        </Typography>
+                                    </Stack>
                                 </Stack>
                             </Stack>
-                        </Stack>
-                    </StyledPaper>
+                        </StyledPaper>
+                    </div>
                 </Grid>
             </Grid>
         </Layout>
