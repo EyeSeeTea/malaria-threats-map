@@ -12,6 +12,7 @@ import i18next from "i18next";
 More(Highcharts);
 
 interface TreatmentOverTimeDashboardProps {
+    id?: string;
     type: TreatmentOverTimeType;
 }
 
@@ -22,7 +23,7 @@ interface CustomPoint extends Highcharts.Point {
     country: string;
 }
 
-const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({ type }) => {
+const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({ id, type }) => {
     const { t } = useTranslation();
     const {
         filteredStudiesForDrugs,
@@ -44,6 +45,7 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
 
     return (
         <TreatmentFilterableDashboard
+            id={id}
             chartComponentRef={chartComponentRef}
             title={
                 type === "treatmentFailure"

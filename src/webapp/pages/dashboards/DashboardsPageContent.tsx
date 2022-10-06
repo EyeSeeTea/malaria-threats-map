@@ -34,9 +34,7 @@ const DashboardsPageContent: React.FC = () => {
             <Container maxWidth="md" sx={{ marginTop: "-200px" }}>
                 <ThemeSelectionSection />
             </Container>
-            <Container maxWidth="lg">
-                <ContentsFilterSection />
-            </Container>
+            <Container maxWidth="lg">{dashboardsTreatmentStudies && <ContentsFilterSection />}</Container>
             <DashboardSection>
                 {dashboardsTreatmentStudies && (
                     <Container maxWidth="xl">

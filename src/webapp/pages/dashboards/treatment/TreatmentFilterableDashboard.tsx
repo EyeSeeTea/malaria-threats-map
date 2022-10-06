@@ -14,6 +14,7 @@ import HighchartsReact from "highcharts-react-official";
 import html2canvas from "html2canvas";
 
 interface TreatmentFilterableDashboardProps {
+    id?: string;
     isMolecularMarkerChart?: boolean;
     drugsMultiple: boolean;
     drugsClearable: boolean;
@@ -36,6 +37,7 @@ interface TreatmentFilterableDashboardProps {
 
 More(Highcharts);
 const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = ({
+    id,
     isMolecularMarkerChart = false,
     drugsMultiple,
     drugsClearable,
@@ -91,7 +93,7 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
     return (
         <React.Fragment>
             <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Title>{title}</Title>
+                <Title id={id}>{title}</Title>
                 <Stack direction="row" spacing={2}>
                     <Fab color="primary" size="small">
                         <InfoOutlinedIcon sx={{ color: "white", width: "20px" }} onClick={handleOpenInfoModal} />

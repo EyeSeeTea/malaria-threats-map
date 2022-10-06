@@ -8,7 +8,7 @@ import { CountryContext, MolecularMarker, TherapeuticEfficacy } from "./types";
 import { useDashboards } from "./context/useDashboards";
 
 const countryContextOptions: Option<CountryContext>[] = [
-    { label: i18next.t("common.dashboard.contentsSection.countryOptions.countryContext"), value: "all" },
+    { label: i18next.t("common.dashboard.contentsSection.countryOptions.countryContext"), value: "country-context" },
     {
         label: i18next.t("common.dashboard.contentsSection.countryOptions.epidemiologicalProfile"),
         value: "epidemiological-profile",
@@ -19,7 +19,7 @@ const countryContextOptions: Option<CountryContext>[] = [
 const therapeuticEfficacyOptions: Option<TherapeuticEfficacy>[] = [
     {
         label: i18next.t("common.dashboard.contentsSection.therapeuticResultsOptions.therapeuticEfficacy"),
-        value: "all",
+        value: "therapeutic-efficacy",
     },
     {
         label: i18next.t("common.dashboard.contentsSection.therapeuticResultsOptions.summaryTreatmentFailures"),
@@ -36,12 +36,21 @@ const therapeuticEfficacyOptions: Option<TherapeuticEfficacy>[] = [
 ];
 
 const molecularMarkerOptions: Option<MolecularMarker>[] = [
-    { label: i18next.t("common.dashboard.contentsSection.molecularResultsOptions.molecularMarker"), value: "all" },
+    {
+        label: i18next.t("common.dashboard.contentsSection.molecularResultsOptions.molecularMarker"),
+        value: "molecular-marker",
+    },
     {
         label: i18next.t("common.dashboard.contentsSection.molecularResultsOptions.summaryMolecularMarker"),
         value: "summary-molecular-marker",
     },
 ];
+const scrollToSection = (id: string) => {
+    document.querySelector(`#${id}`)?.scrollIntoView({
+        block: "center",
+        behavior: "smooth",
+    });
+};
 
 export const ContentsFilterSection: React.FC = () => {
     const { t } = useTranslation();
@@ -55,17 +64,26 @@ export const ContentsFilterSection: React.FC = () => {
     } = useDashboards();
 
     const handleCountryContextChange = useCallback(
-        (option: Option<CountryContext>) => onCountryContextChange(option.value),
+        (option: Option<CountryContext>) => {
+            onCountryContextChange(option.value);
+            scrollToSection(option.value);
+        },
         [onCountryContextChange]
     );
 
     const handleTherapeuticChange = useCallback(
-        (option: Option<TherapeuticEfficacy>) => onTherapeuticEfficacyChange(option.value),
+        (option: Option<TherapeuticEfficacy>) => {
+            onTherapeuticEfficacyChange(option.value);
+            scrollToSection(option.value);
+        },
         [onTherapeuticEfficacyChange]
     );
 
     const handleMolecularChange = useCallback(
-        (option: Option<MolecularMarker>) => onMolecularMarkerChange(option.value),
+        (option: Option<MolecularMarker>) => {
+            onMolecularMarkerChange(option.value);
+            scrollToSection(option.value);
+        },
         [onMolecularMarkerChange]
     );
 

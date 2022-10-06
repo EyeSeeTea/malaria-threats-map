@@ -1,11 +1,11 @@
 export type DashboardsThemeOptions = "prevention" | "treatment";
 
 export type TherapeuticEfficacy =
-    | "all"
+    | "therapeutic-efficacy"
     | "summary-treatment-failures"
     | "treatment-failure-rates"
     | "parasite-clearance-rates";
 
-export type MolecularMarker = "all" | "summary-molecular-marker";
+export type MolecularMarker = "molecular-marker" | "summary-molecular-marker";
 
-export type CountryContext = "all" | "epidemiological-profile" | "major-plasmodium";
+export type CountryContext = "country-context" | "epidemiological-profile" | "major-plasmodium";

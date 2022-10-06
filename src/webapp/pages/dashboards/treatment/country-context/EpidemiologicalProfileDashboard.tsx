@@ -16,7 +16,9 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
     return (
         <React.Fragment>
             <DasboardCard>
-                <Title>{t("common.dashboard.countryContextSection.epidemiologicalProfile.title")}</Title>
+                <Title id="epidemiological-profile">
+                    {t("common.dashboard.countryContextSection.epidemiologicalProfile.title")}
+                </Title>
                 <Table>
                     <thead>
                         <tr>

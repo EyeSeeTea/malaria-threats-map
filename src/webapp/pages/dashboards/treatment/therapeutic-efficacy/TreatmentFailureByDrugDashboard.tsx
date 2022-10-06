@@ -56,7 +56,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
             onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
             onMolecularMarkerChange={onMolecularMarkerChange}
         >
-            <Stack direction="column" alignItems="center">
+            <Stack direction="column" alignItems="center" id="summary-treatment-failures">
                 <Typography variant="body2" fontWeight="bold">
                     {t("common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.studyOutcome")}
                 </Typography>

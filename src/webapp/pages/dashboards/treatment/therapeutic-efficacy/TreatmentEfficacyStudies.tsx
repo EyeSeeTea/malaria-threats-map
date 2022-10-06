@@ -2,27 +2,19 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
-import { useDashboards } from "../../context/useDashboards";
 import TreatmentFailureByDrugDashboard from "./TreatmentFailureByDrugDashboard";
 import TreatmentOverTimeDashboard from "./TreatmentOverTimeDashboard";
 
 const TreatmentEfficacyStudies: React.FC = () => {
     const { t } = useTranslation();
-    const { therapeuticEfficacy } = useDashboards();
 
     return (
         <Container>
             <TitleDivider />
-            <Title>{t("common.dashboard.therapeuticEfficacySection.title")}</Title>
-            {(therapeuticEfficacy === "all" || therapeuticEfficacy === "summary-treatment-failures") && (
-                <TreatmentFailureByDrugDashboard />
-            )}
-            {(therapeuticEfficacy === "all" || therapeuticEfficacy === "treatment-failure-rates") && (
-                <TreatmentOverTimeDashboard type="treatmentFailure" />
-            )}
-            {(therapeuticEfficacy === "all" || therapeuticEfficacy === "parasite-clearance-rates") && (
-                <TreatmentOverTimeDashboard type="positiveDay3" />
-            )}
+            <Title id="therapeutic-efficacy">{t("common.dashboard.therapeuticEfficacySection.title")}</Title>
+            <TreatmentFailureByDrugDashboard />
+            <TreatmentOverTimeDashboard id="treatment-failure-rates" type="treatmentFailure" />
+            <TreatmentOverTimeDashboard id="parasite-clearance-rates" type="positiveDay3" />
         </Container>
     );
 };
