@@ -89,7 +89,7 @@
             "contentsSection": {
                 "title": "Contents:",
                 "countryOptions": {
-                    "countryContext": "Country Context",
+                    "countryContext": "Country context",
                     "epidemiologicalProfile": "Epidemiological profile",
                     "majorPlasmodium": "Major Plasmodium species and treatment regimen"
                 },
@@ -111,7 +111,7 @@
                 "epidemiologicalProfile": {
                     "title": "EPIDEMIOLOGICAL PROFILE",
                     "country": "Country",
-                    "year": "year",
+                    "year": "Year",
                     "transmission": " Population living in high transmission, low transmission and malaria-free areas",
                     "burdenEstimates": "Burden estimates",
                     "highTransmission": "High transmission",

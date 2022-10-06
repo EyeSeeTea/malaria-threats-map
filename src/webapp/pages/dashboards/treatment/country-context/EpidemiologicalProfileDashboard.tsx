@@ -208,7 +208,7 @@ const HeadText = styled(Typography)`
 `;
 
 const SubHeadText = styled(Typography)`
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     padding: 0px 30px;
     color: #343434;
@@ -243,9 +243,6 @@ const Table = styled.table`
         border-right: 0;
     }
 
-    tr th:nth-child(3) {
-        border-right: 0;
-    }
     tr th:nth-child(4) {
         border-left: 0;
         border-right: 0;
