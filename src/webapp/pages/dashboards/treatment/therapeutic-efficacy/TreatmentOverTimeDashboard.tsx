@@ -86,7 +86,12 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
                 },
             },
         },
-
+        plotOptions: {
+            bubble: {
+                minSize: 1,
+                maxSize: 30,
+            },
+        },
         legend: {
             enabled: true,
             verticalAlign: "top",
