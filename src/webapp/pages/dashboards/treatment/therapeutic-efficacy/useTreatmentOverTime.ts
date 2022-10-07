@@ -64,7 +64,7 @@ export function createTreatmentBubbleChartData(
                 TREATMENT_FAILURE_PP: "-1",
                 POSITIVE_DAY_3: " -1",
                 SITE_NAME: "",
-                COUNTRY_NAME: "",
+                ISO2: "",
                 DRUG_NAME: "",
                 N: 0,
             };
@@ -90,7 +90,7 @@ export function createTreatmentBubbleChartData(
                     y: value,
                     z: +study.N,
                     site: study.SITE_NAME,
-                    country: study.COUNTRY_NAME,
+                    country: study.ISO2,
                     drug: study.DRUG_NAME,
                 };
             }),
