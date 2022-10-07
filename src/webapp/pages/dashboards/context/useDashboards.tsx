@@ -23,6 +23,10 @@ export const useDashboards = () => {
     const onThemeChange = useCallback(
         (theme: DashboardsThemeOptions) => {
             setTheme(theme);
+
+            if (!theme) {
+                setDashboardsTreatmentStudies(undefined);
+            }
         },
         [setTheme]
     );
@@ -31,6 +35,10 @@ export const useDashboards = () => {
         (selectedCountries: string[]) => {
             if (selectedCountries.length <= 5) {
                 setSelectedCountries(selectedCountries);
+
+                if (selectedCountries.length === 0) {
+                    setDashboardsTreatmentStudies(undefined);
+                }
             }
         },
         [setSelectedCountries]
