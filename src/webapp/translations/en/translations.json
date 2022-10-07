@@ -370,7 +370,7 @@
                     "susceptible": "Susceptible (≥98%)",
                     "undetermined": "Undetermined",
                     "help": {
-                        "p1": "This map contains data from <1>discriminating concentration bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying levels of resistance intensity, the colour of the dot is determined by the most recent results.",
+                        "p1": "This map contains data from <1>discriminating concentration bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying levels of resistance, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how each level is defined, please consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
@@ -526,7 +526,7 @@
                     "link_text": "reporting form",
                     "link_content_1": "If you have detected invasive <1>Anopheles</1> vector species please report to us through the ",
                     "help": {
-                        "p1": "This map represents data from <1>vector surveillance of Anopheles mosquitoes</1>. Each dot on the map represents a study site containing one or more studies. The colour of the dot shows whether the species is invasive or native to the area.",
+                        "p1": "This map represents sites where <1><i>Anopheles</i> mosquitoes</1> (of the species selected in the filter) have been detected. The colour of the dots shows whether the species is invasive or native to the site.",
                         "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices.",
                         "question": "Please report the detection of invasive Anopheles vector species using this <2 href='/'>reporting form</2>."
