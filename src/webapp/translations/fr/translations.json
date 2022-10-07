@@ -144,7 +144,7 @@
                 "treatmentFailureOverTime": {
                     "title": "TAUX D'ÉCHEC DU TRAITEMENT AU FIL DU TEMPS",
                     "numberPatients": "Nombre de patients",
-                    "treatmentFailure": "Échec du traitement %",
+                    "treatmentFailure": "Échec du traitement (%)",
                     "year": "An"
                 },
                 "parasiteClearanceOverTime": {

@@ -121,7 +121,7 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
                     fontWeight: "bold",
                 },
             },
-            tickInterval: 2,
+            tickInterval: 1,
         },
 
         yAxis: {

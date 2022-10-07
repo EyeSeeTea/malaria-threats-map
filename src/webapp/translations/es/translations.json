@@ -144,7 +144,7 @@
                 "treatmentFailureOverTime": {
                     "title": "TASAS DE FRACASO DEL TRATAMIENTO A LO LARGO DEL TIEMPO",
                     "numberPatients": "Número de Pacientes",
-                    "treatmentFailure": "Fracaso del tratamiento %",
+                    "treatmentFailure": "Fracaso del tratamiento (%)",
                     "year": "Año"
                 },
                 "parasiteClearanceOverTime": {

@@ -144,7 +144,7 @@
                 "treatmentFailureOverTime": {
                     "title": "TREATMENT FAILURE RATES OVER TIME",
                     "numberPatients": "Number of Patients",
-                    "treatmentFailure": "Treatment Failure %",
+                    "treatmentFailure": "Treatment failure (%)",
                     "year": "Year"
                 },
                 "parasiteClearanceOverTime": {

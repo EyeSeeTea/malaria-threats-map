@@ -72,7 +72,7 @@ const ThemeSelectionSection: React.FC = () => {
                                 {t("common.dashboard.filtersSection.second.helper")}
                             </Typography>
                             <StyledGenerateButton
-                                disabled={selectedCountries.length === 0 || theme === "prevention"}
+                                disabled={selectedCountries.length === 0 || theme === undefined}
                                 onClick={onGenerate}
                             >
                                 Generate Dashboard
