@@ -115,4 +115,5 @@ const FiltersCard = styled(Card)`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    overflow: visible;
 `;
