@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import IntegrationReactSelect, { Option } from "../../BasicSelect";
 import { FilterRowContainer } from "../Filters";
-import FormLabel from "@mui/material/FormLabel";
 import { sendMultiFilterAnalytics } from "../../../utils/analytics";
+import { Typography } from "@mui/material";
 
 type Props = {
     label: string;
@@ -29,9 +29,9 @@ function MultiFilter({ label, options, onChange, value, analyticsMultiFilterActi
     return (
         <FilterRowContainer onlyYMargin={onlyYMargin}>
             {selections && selections.length > 0 && (
-                <FormLabel color="primary" component="legend" sx={{ fontSize: "14px" }}>
+                <Typography component="legend" variant="body2">
                     {`${label}:`}&nbsp;
-                </FormLabel>
+                </Typography>
             )}
             <IntegrationReactSelect
                 isMulti

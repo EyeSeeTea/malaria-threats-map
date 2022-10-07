@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import IntegrationReactSelect, { Option } from "../../BasicSelect";
-import FormLabel from "@mui/material/FormLabel";
 import { logEventAction } from "../../../store/actions/base-actions";
 import { FilterRowContainer } from "../Filters";
+import { Typography } from "@mui/material";
 
 type OwnProps = {
     label: string;
@@ -49,9 +49,9 @@ function SingleFilter({
     return (
         <FilterRowContainer>
             {selection && (
-                <FormLabel color="primary" component="legend" sx={{ fontSize: "14px" }}>
+                <Typography component="legend" variant="body2">
                     {`${label}:`}&nbsp;
-                </FormLabel>
+                </Typography>
             )}
             <IntegrationReactSelect
                 isMulti={false}

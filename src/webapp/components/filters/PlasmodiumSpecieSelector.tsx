@@ -58,7 +58,7 @@ function PlasmodiumSpecieSelector({
     const selection = PLASMODIUM_SPECIES_SUGGESTIONS.filter(suggestion => value === suggestion.value);
     return (
         <FilterWrapper onlyYMargin={onlyYMargin}>
-            <Typography fontSize="14px" fontWeight={labelBold ? "bold" : undefined}>
+            <Typography variant="body2" fontWeight={labelBold ? "bold" : undefined}>
                 {t("common.filters.plasmodium_species")}
             </Typography>
             <Divider />
