@@ -82,12 +82,14 @@ export function createTreatmentBubbleChartData(
                         ? parseFloat(study.TREATMENT_FAILURE_PP) || parseFloat(study.TREATMENT_FAILURE_PP) || -1
                         : parseFloat(study.POSITIVE_DAY_3) || -1;
 
+                const value = +(rawValue * 100).toFixed(2);
+
                 // Remove weird 999.990
-                const value = rawValue === 999.99 ? -1 : +(rawValue * 100).toFixed(2);
+                const fixedValue = value > 100 ? 100 : value;
 
                 return {
                     x: +study.YEAR_START,
-                    y: value,
+                    y: fixedValue,
                     z: +study.N,
                     site: study.SITE_NAME,
                     country: study.ISO2,
