@@ -28,7 +28,7 @@ export const useDashboards = () => {
                 setDashboardsTreatmentStudies(undefined);
             }
         },
-        [setTheme]
+        [setTheme, setDashboardsTreatmentStudies]
     );
 
     const onSelectedCountriesChange = useCallback(
@@ -41,7 +41,7 @@ export const useDashboards = () => {
                 }
             }
         },
-        [setSelectedCountries]
+        [setSelectedCountries, setDashboardsTreatmentStudies]
     );
 
     const onCountryContextChange = useCallback(
