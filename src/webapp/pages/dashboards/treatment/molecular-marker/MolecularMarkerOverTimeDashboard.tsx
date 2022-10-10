@@ -51,12 +51,19 @@ const MolecularMarkerDashboard: React.FC = () => {
             onMolecularMarkerChange={onMolecularMarkerChange}
         >
             {data &&
-                Object.keys(data.seriesByCountry).map(country => {
+                Object.keys(data.seriesByCountry).map((country, index) => {
+                    const legendVisible = index === 0;
+
                     return (
                         <React.Fragment key={country}>
                             <HighchartsReact
                                 highcharts={Highcharts}
-                                options={chartOptions(data.years, data.seriesByCountry[country], molecularMarker)}
+                                options={chartOptions(
+                                    legendVisible,
+                                    data.years,
+                                    data.seriesByCountry[country],
+                                    molecularMarker
+                                )}
                             />
                             <Stack direction="column" alignItems="center">
                                 <Typography variant="body1" fontWeight="bold" sx={{ marginLeft: 8 }}>
@@ -73,6 +80,7 @@ const MolecularMarkerDashboard: React.FC = () => {
 export default MolecularMarkerDashboard;
 
 function chartOptions(
+    showLegend: boolean,
     years: number[],
     series: MolecularChartSerie[],
     molecularMarker: MolecularMarker
@@ -86,9 +94,11 @@ function chartOptions(
         },
         title: {
             useHTML: true,
-            text: `<span style="width:100px;">${i18next.t(
-                `common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.${chartPrefix}ChartTitle`
-            )}</span>`,
+            text:
+                showLegend &&
+                `<span style="width:100px;">${i18next.t(
+                    `common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.${chartPrefix}ChartTitle`
+                )}</span>`,
             align: "center",
             style: {
                 fontWeight: "bold",
@@ -100,6 +110,7 @@ function chartOptions(
         subtitle: {
             useHTML: true,
             text:
+                showLegend &&
                 molecularMarker === 1 &&
                 `<span style="width:100px;">${i18next.t(
                     `common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.${chartPrefix}ChartSubtitle`
@@ -140,6 +151,7 @@ function chartOptions(
             align: "center",
             verticalAlign: "top",
             reversed: true,
+            enabled: showLegend,
         },
         plotOptions: {
             column: {
