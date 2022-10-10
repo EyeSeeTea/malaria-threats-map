@@ -8,6 +8,7 @@ import TreatmentFilterableDashboard from "../TreatmentFilterableDashboard";
 import i18next from "i18next";
 import { Stack, Typography } from "@mui/material";
 import { MolecularChartSerie } from "./types";
+import { MolecularMarker } from "../../../../components/filters/MolecularMarkerFilter";
 
 More(Highcharts);
 const MolecularMarkerDashboard: React.FC = () => {
@@ -55,7 +56,7 @@ const MolecularMarkerDashboard: React.FC = () => {
                         <React.Fragment key={country}>
                             <HighchartsReact
                                 highcharts={Highcharts}
-                                options={chartOptions(data.years, data.seriesByCountry[country])}
+                                options={chartOptions(data.years, data.seriesByCountry[country], molecularMarker)}
                             />
                             <Stack direction="column" alignItems="center">
                                 <Typography variant="body1" fontWeight="bold" sx={{ marginLeft: 8 }}>
@@ -71,7 +72,13 @@ const MolecularMarkerDashboard: React.FC = () => {
 
 export default MolecularMarkerDashboard;
 
-function chartOptions(years: number[], series: MolecularChartSerie[]): Highcharts.Options {
+function chartOptions(
+    years: number[],
+    series: MolecularChartSerie[],
+    molecularMarker: MolecularMarker
+): Highcharts.Options {
+    const chartPrefix = getChartPrefix(molecularMarker);
+
     return {
         chart: {
             type: "column",
@@ -80,7 +87,7 @@ function chartOptions(years: number[], series: MolecularChartSerie[]): Highchart
         title: {
             useHTML: true,
             text: `<span style="width:100px;">${i18next.t(
-                "common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.chartTitle"
+                `common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.${chartPrefix}ChartTitle`
             )}</span>`,
             align: "center",
             style: {
@@ -92,9 +99,11 @@ function chartOptions(years: number[], series: MolecularChartSerie[]): Highchart
         },
         subtitle: {
             useHTML: true,
-            text: `<span style="width:100px;">${i18next.t(
-                "common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.chartSubtitle"
-            )}</span>`,
+            text:
+                molecularMarker === 1 &&
+                `<span style="width:100px;">${i18next.t(
+                    `common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.${chartPrefix}ChartSubtitle`
+                )}</span>`,
             align: "center",
             style: {
                 fontWeight: "bold",
@@ -142,4 +151,16 @@ function chartOptions(years: number[], series: MolecularChartSerie[]): Highchart
             enabled: false,
         },
     };
+}
+
+function getChartPrefix(molecularMarker: MolecularMarker) {
+    switch (molecularMarker) {
+        case 1: {
+            return "artemisinin";
+        }
+        case 2:
+            return "mutations";
+        default:
+            return "multiple";
+    }
 }

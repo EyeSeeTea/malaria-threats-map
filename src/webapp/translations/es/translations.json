@@ -159,8 +159,10 @@
                     "legendLabel": "Percentage of samples in one study where multiple copy numbers were detected:",
                     "numStudies": "Number of Studies",
                     "year": "Year",
-                    "chartTitle": "Percentage of samples in one study where validated or candidate",
-                    "chartSubtitle": "molecular markers of artemisinin resistance were detected:"
+                    "artemisininChartTitle": "Percentage of samples in one study where validated or candidate",
+                    "artemisininChartSubtitle": "molecular markers of artemisinin resistance were detected:",
+                    "mutationsChartTitle": "Studies where mutations were detected in:",
+                    "multipleChartTitle": "Studies where multiple copy numbers were detected in:"
                 }
             },
             "treatmentFilters": {

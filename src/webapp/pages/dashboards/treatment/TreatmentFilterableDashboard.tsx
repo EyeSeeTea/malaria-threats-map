@@ -12,6 +12,7 @@ import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import InformationModal from "../../../components/dashboards/InformationModal";
 import HighchartsReact from "highcharts-react-official";
 import html2canvas from "html2canvas";
+import { MolecularMarker } from "../../../components/filters/MolecularMarkerFilter";
 
 interface TreatmentFilterableDashboardProps {
     id?: string;
@@ -25,14 +26,14 @@ interface TreatmentFilterableDashboardProps {
     studiesCount: number;
     plasmodiumSpecies: string;
     drugs: string[];
-    molecularMarker: number;
+    molecularMarker: MolecularMarker;
     years: [number, number];
     excludeLowerPatients: boolean;
     onPlasmodiumChange: (value: string) => void;
     onDrugsChange: (value: string[]) => void;
     onYearsChange: (value: [number, number]) => void;
     onExcludeLowerPatientsChange: (value: boolean) => void;
-    onMolecularMarkerChange: (value: number) => void;
+    onMolecularMarkerChange: (value: MolecularMarker) => void;
 }
 
 More(Highcharts);
