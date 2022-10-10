@@ -17,6 +17,7 @@ import Citation from "../../../charts/Citation";
 import { formatYears, formatYears2 } from "../../../../utils/string-utils";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import Hidden from "../../../hidden/Hidden";
+import { ChartStyles } from "../../../charts/Style";
 
 const options: (data: any, translations: any) => Highcharts.Options = (data, translations) => ({
     chart: {
@@ -26,7 +27,7 @@ const options: (data: any, translations: any) => Highcharts.Options = (data, tra
         type: "pie",
         height: 250,
         style: {
-            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
+            ...ChartStyles,
         },
     },
     title: {
@@ -83,7 +84,7 @@ const options2: (data: any, categories: any[], translations: any) => Highcharts.
         type: "column",
         height: 250,
         style: {
-            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
+            ...ChartStyles,
         },
     },
     title: {
@@ -139,7 +140,7 @@ const options3: (data: any, categories: any[], translations: any) => Highcharts.
         height: 250,
         width: 300,
         style: {
-            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
+            ...ChartStyles,
         },
     },
     title: {

@@ -10,6 +10,7 @@ import { selectPreventionSelectionStudies } from "../../../store/reducers/preven
 import { Divider, Typography } from "@mui/material";
 import i18next from "i18next";
 import { SelectionData } from "../../../store/SelectionData";
+import { ChartStyles } from "../../charts/Style";
 
 const Flex = styled.div`
     display: flex;
@@ -29,7 +30,7 @@ const preventionMechanismAssaysBarChartOptions: (
         type: "bar",
         height: 120 + years.length * 40,
         style: {
-            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
+            ...ChartStyles,
         },
     },
     legend: {
@@ -98,7 +99,7 @@ const preventionMechanismAllelicBarChartOptions: (
         height: 120 + years.length * 40,
         width: 150,
         style: {
-            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
+            ...ChartStyles,
         },
         marginTop: 95,
     },

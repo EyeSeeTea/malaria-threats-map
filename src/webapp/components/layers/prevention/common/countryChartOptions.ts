@@ -1,3 +1,5 @@
+import { ChartStyles } from "../../../charts/Style";
+
 export interface StatusCountryChartLabels {
     title: string;
     numberOfTests: string;
@@ -15,7 +17,7 @@ const statusCountryChartOptions: (data: any, labels: StatusCountryChartLabels) =
         type: "pie",
         height: 250,
         style: {
-            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
+            ...ChartStyles,
         },
     },
     title: {

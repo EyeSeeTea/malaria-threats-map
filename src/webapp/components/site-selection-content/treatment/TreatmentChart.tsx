@@ -7,6 +7,7 @@ import { selectTheme } from "../../../store/reducers/base-reducer";
 import { State } from "../../../store/types";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { SelectionData } from "../../../store/SelectionData";
+import { ChartStyles } from "../../charts/Style";
 
 const options: (data: any, categories: any[], translations: any) => Highcharts.Options = (
     data,
@@ -16,7 +17,7 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
     chart: {
         height: 400,
         style: {
-            fontFamily: '"Source Sans Pro", "Roboto", "Helvetica", "Arial", sans-serif;',
+            ...ChartStyles,
         },
     },
     tooltip: {
