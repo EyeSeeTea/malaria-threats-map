@@ -153,16 +153,15 @@
                 }
             },
             "MolecularMarkerSection": {
-                "title": "Molecular marker studies",
+                "title": "Études de marqueurs moléculaires",
                 "molecularMarkerOverTime": {
-                    "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
-                    "legendLabel": "Percentage of samples in one study where multiple copy numbers were detected:",
-                    "numStudies": "Number of Studies",
-                    "year": "Year",
-                    "artemisininChartTitle": "Percentage of samples in one study where validated or candidate",
-                    "artemisininChartSubtitle": "molecular markers of artemisinin resistance were detected:",
-                    "mutationsChartTitle": "Studies where mutations were detected in:",
-                    "multipleChartTitle": "Studies where multiple copy numbers were detected in:"
+                    "title": "RÉSUMÉ DES RÉSULTATS DE L'ÉTUDE DES MARQUEURS MOLÉCULAIRES AU FIL DU TEMPS",
+                    "numStudies": "Nombre d'études",
+                    "year": "Année",
+                    "artemisininChartTitle": "Pourcentage d'échantillons dans une étude validée ou candidate",
+                    "artemisininChartSubtitle": "des marqueurs moléculaires de la résistance à l'artémisinine ont été détectés:",
+                    "mutationsChartTitle": "Études où des mutations ont été détectées dans:",
+                    "multipleChartTitle": "Études où plusieurs numéros de copie ont été détectés dans:"
                 }
             },
             "treatmentFilters": {

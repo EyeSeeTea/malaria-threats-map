@@ -156,7 +156,6 @@
                 "title": "Molecular marker studies",
                 "molecularMarkerOverTime": {
                     "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
-                    "legendLabel": "Percentage of samples in one study where multiple copy numbers were detected:",
                     "numStudies": "Number of Studies",
                     "year": "Year",
                     "artemisininChartTitle": "Percentage of samples in one study where validated or candidate",
