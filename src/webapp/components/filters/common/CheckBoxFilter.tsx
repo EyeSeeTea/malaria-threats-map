@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { FilterColumContainer } from "../Filters";
-import FormLabel from "@mui/material/FormLabel";
 import { logEventAction } from "../../../store/actions/base-actions";
-import { Checkbox } from "@mui/material";
+import { Checkbox, Typography } from "@mui/material";
 
 type OwnProps = {
     label: string;
@@ -29,8 +28,10 @@ function CheckBoxFilter({ label, onChange, value, analyticsFilterAction, logEven
     };
 
     return (
-        <FilterColumContainer>
-            <FormLabel component="legend">{label}</FormLabel>
+        <FilterColumContainer style={{ display: "flex" }}>
+            <Typography component="legend" variant="body2" color="dimgray">
+                {label}
+            </Typography>
             <Checkbox color="primary" checked={value} onChange={onSelectionChange} />
         </FilterColumContainer>
     );

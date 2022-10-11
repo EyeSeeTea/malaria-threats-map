@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
             display: "flex",
             flex: 1,
             alignItems: "center",
+            justifyContent: "space-evenly",
             overflow: "hidden",
             flexWrap: (props: { isMulti?: boolean }) => (props.isMulti ? "wrap" : "nowrap"),
         },
@@ -68,13 +69,13 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(1, 2),
         },
         singleValue: {
-            fontSize: 16,
+            fontSize: 14,
         },
         placeholder: {
             position: "absolute",
             left: 2,
             bottom: 6,
-            fontSize: 16,
+            fontSize: 14,
         },
         paper: {
             position: "absolute",

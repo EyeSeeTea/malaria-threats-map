@@ -5,12 +5,13 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { Divider, FilterColumContainer } from "./Filters";
-import FormLabel from "@mui/material/FormLabel";
 import { Option } from "../BasicSelect";
+import { Typography } from "@mui/material";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
     & span {
         padding: 2px;
+        font-size: 14px;
     }
     & svg {
         left: 2px;
@@ -27,9 +28,9 @@ type RadioGroupProps = {
 function RadioGroupFilter({ label, options, handleChange, value }: RadioGroupProps) {
     return (
         <FilterColumContainer>
-            <FormLabel color="primary" component="legend">
+            <Typography color="dimgray" component="legend" variant="body2">
                 {label}
-            </FormLabel>
+            </Typography>
             <Divider />
             <RadioGroup value={value} onChange={handleChange}>
                 {options.map((option: Option) => (

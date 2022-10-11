@@ -1,5 +1,5 @@
 import React from "react";
-import { Slider, FormLabel, styled as MuiStyled, Divider as MuiDivider } from "@mui/material";
+import { Slider, styled as MuiStyled, Divider as MuiDivider, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import * as R from "ramda";
@@ -91,9 +91,14 @@ const YearRangeSelector = ({
 
     return (
         <FilterColumContainer padding="0px">
-            <FormLabel component="legend" sx={{ marginBottom: "20px", padding: "10px" }}>
+            <Typography
+                component="legend"
+                variant="body2"
+                color={"dimgray"}
+                sx={{ marginBottom: "20px", padding: "10px" }}
+            >
                 {t("common.filters.years")}
-            </FormLabel>
+            </Typography>
             <Divider />
             <StyledSlider
                 color="primary"
