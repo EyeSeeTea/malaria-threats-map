@@ -13,9 +13,9 @@ const initialState: TreatmentState = Object.freeze({
     filters: {
         mapType: TreatmentMapType.TREATMENT_FAILURE,
         dataset: "THERAPEUTIC_EFFICACY_STUDY",
-        plasmodiumSpecies: "P._FALCIPARUM",
-        drug: "DRUG_AL",
-        molecularMarker: 1,
+        plasmodiumSpecies: null,
+        drug: null,
+        molecularMarker: null,
         excludeLowerPatients: false,
         excludeLowerSamples: false,
     },
@@ -43,15 +43,15 @@ function updateDataset(dataset: TreatmentDataset) {
 }
 
 function updatePlasmodiumSpecies(plasmodiumSpecies: string) {
-    return updateFilter("plasmodiumSpecies", plasmodiumSpecies, "P._FALCIPARUM");
+    return updateFilter("plasmodiumSpecies", plasmodiumSpecies);
 }
 
 function updateDrug(drug: string) {
-    return updateFilter("drug", drug, "DRUG_AL");
+    return updateFilter("drug", drug);
 }
 
 function updateMolecularMarker(molecularMarker: number) {
-    return updateFilter("molecularMarker", molecularMarker, 1);
+    return updateFilter("molecularMarker", molecularMarker);
 }
 
 function updateExcludeLowerPatients(value: boolean) {

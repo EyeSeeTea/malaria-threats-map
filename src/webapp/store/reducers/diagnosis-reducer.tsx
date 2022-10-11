@@ -3,7 +3,6 @@ import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
 import { DiagnosisDataset, DiagnosisMapType, DiagnosisState, State } from "../types";
-import { DELETION_TYPES } from "../../components/filters/DeletionTypeFilter";
 import { DiagnosisStudy } from "../../../domain/entities/DiagnosisStudy";
 
 const initialState: DiagnosisState = Object.freeze({
@@ -14,7 +13,7 @@ const initialState: DiagnosisState = Object.freeze({
     filters: {
         mapType: DiagnosisMapType.GENE_DELETIONS,
         dataset: "PFHRP23_GENE_DELETIONS",
-        deletionType: DELETION_TYPES.HRP2_PROPORTION_DELETION.value,
+        deletionType: undefined,
         surveyTypes: [],
         patientType: null,
     },
@@ -50,7 +49,7 @@ function updatePatientType(patientType: string) {
 }
 
 function updateDeletionType(deletionType: string) {
-    return updateFilter("deletionType", deletionType, DELETION_TYPES.HRP2_PROPORTION_DELETION.value);
+    return updateFilter("deletionType", deletionType);
 }
 
 export default createReducer<DiagnosisState>(initialState, {

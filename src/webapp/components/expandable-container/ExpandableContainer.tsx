@@ -52,11 +52,11 @@ const ExpandableContainer: React.FC<ExpandableContainerProps> = ({
     }, [expanded]);
 
     const handleExpand = () => {
-        if (children && onExpand) {
-            onExpand(!expanded);
-        }
+        if (children) {
+            if (onExpand) onExpand(!expanded);
 
-        setExpandedState(!expandedState);
+            setExpandedState(!expandedState);
+        }
     };
 
     return (

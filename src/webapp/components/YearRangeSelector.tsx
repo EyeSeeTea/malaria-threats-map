@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import * as R from "ramda";
 import { State } from "../store/types";
-import { selectFilters } from "../store/reducers/base-reducer";
+import { selectFilters, selectMaxMinYears } from "../store/reducers/base-reducer";
 import { setFiltersAction } from "../store/actions/base-actions";
 import { sendAnalytics } from "../utils/analytics";
 import { Divider, FilterColumContainer } from "./filters/Filters";
@@ -47,6 +47,7 @@ function valuetext(value: number) {
 
 const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
+    maxMinYears: selectMaxMinYears(state),
 });
 
 const mapDispatchToProps = {
@@ -56,8 +57,6 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
-    minYear?: number;
-    maxYear?: number;
     showTheatherMode?: boolean;
 };
 type Props = OwnProps & DispatchProps & StateProps;
@@ -69,13 +68,7 @@ export function range(start: number, end: number, reverse?: boolean) {
     return reverse ? R.reverse(years) : years;
 }
 
-const YearRangeSelector = ({
-    filters,
-    setFilters,
-    minYear = 1988,
-    maxYear = new Date().getFullYear(),
-    showTheatherMode = true,
-}: Props) => {
+const YearRangeSelector = ({ maxMinYears, filters, setFilters, showTheatherMode = true }: Props) => {
     const { t } = useTranslation();
 
     const handleChange = (event: Event, newValue: number | number[]) => {
@@ -109,11 +102,11 @@ const YearRangeSelector = ({
                 aria-labelledby="range-slider"
                 getAriaValueText={valuetext}
                 step={1}
-                min={minYear}
-                max={maxYear}
+                min={maxMinYears[0]}
+                max={maxMinYears[1]}
             />
             <Row>
-                {[minYear, Math.floor((minYear + maxYear) / 2), maxYear].map(year => {
+                {[maxMinYears[0], Math.floor((maxMinYears[0] + maxMinYears[1]) / 2), maxMinYears[1]].map(year => {
                     return <span key={year}>{year}</span>;
                 })}
             </Row>

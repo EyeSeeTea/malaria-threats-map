@@ -658,8 +658,8 @@
                 },
                 "treatment": {
                     "datasets": {
-                        "therapeutic_efficacy_studies": "Résultats des études d'efficacité thérapeutique",
-                        "molecular_marker_studies": "Résultats des études sur les marqueurs moléculaires de la résistance aux médicaments"
+                        "therapeutic_efficacy_studies": "Études d'efficacité thérapeutique",
+                        "molecular_marker_studies": "Études sur les marqueurs moléculaires de la résistance aux médicaments"
                     }
                 },
                 "invasive": {
@@ -698,13 +698,13 @@
                 "uses_placeHolder": "Nous souhaitons savoir pourquoi vous utilisez les données. Nous apprécierions si vous pouviez fournir une courte description.",
                 "country": "Pays de Résidence",
                 "email": "Email",
-                "message": "L'OMS tient à améliorer les bases de données mondiales et la carte des menaces du paludisme afin de mieux répondre aux besoins de notre communauté d'utilisateurs. Par conséquent, l'OMS souhaite s'engager avec notre communauté d'utilisateurs pour recueillir des suggestions d'amélioration et apprendre des différents cas d'utilisation et des avantages que ces produits leur apportent. Si vous souhaitez partager des commentaires, vous pouvez le faire <1 href='/contact'>ici</1>.",
+                "message": "L'OMS tient à améliorer les bases de données mondiales et la carte des menaces du paludisme afin de mieux répondre aux besoins de notre communauté d'utilisateurs. Par conséquent, l'OMS souhaite s'engager avec notre communauté d'utilisateurs pour recueillir des suggestions d'amélioration et apprendre des différents cas d'utilisation et des avantages que ces produits leur apportent. Si vous souhaitez partager des commentaires, vous pouvez le faire <2 href='/contact'>ici</2>.",
                 "consent1": "J'autorise à être contacté par l'Organisation mondiale de la santé concernant mon expérience avec la Malaria Threat Map et les données des bases de données mondiales.",
                 "consent2": "J'autorise l'Organisation mondiale de la santé à utiliser le nom de mon organisation et la description du projet fournis ci-dessus pour afficher l'utilisation des bases de données mondiales (aucune donnée personnelle ne sera affichée)."
             },
             "data_step": {
                 "title": "Sélectionnez les données",
-                "p1": "Cette boîte de dialogue vous permet de télécharger des données à partir de quatre des bases de données mondiales de l'OMS : la résistance aux insecticides chez les vecteurs du paludisme, les espèces vectrices invasives, l'efficacité et la résistance aux médicaments antipaludiques et les délétions du gène <1>pfhrp2/3</1>. Un lien vers la source de données d'origine et la citation sont inclus dans chaque ensemble de données, le cas échéant.",
+                "p1": "Cette boîte de dialogue vous permet de télécharger les données des quatre bases de données mondiales de l'OMS : la résistance aux insecticides chez les vecteurs du paludisme, les espèces vectrices invasives, l'efficacité et la résistance aux médicaments antipaludiques et les délétions du gène <1>Pfhrp2/3</1>. Un lien vers la source de données originale et la citation sont inclus dans chaque ensemble de données, le cas échéant.",
                 "last_updated": "Le jeu de données sélectionné a été mis à jour pour la dernière fois le :",
                 "add_to_download": "Ajouter au téléchargement",
                 "db_download_list": "Liste de téléchargement de la base de données",
@@ -713,7 +713,8 @@
                 "data_set": "Ensemble de données :",
                 "data": "Données :",
                 "location": "Emplacement :",
-                "studies_in_file": "{{total}} bioessais inclus dans le fichier"
+                "studies_in_file": "{{total}} études included in the file",
+                "bioassays_in_file": "{{total}} bioassays included in the file"
             }
         },
         "report": {
@@ -995,10 +996,11 @@
         "theme": "Thème",
         "selectMapType": "SÉLECTIONNER LE TYPE DE CARTE",
         "mapType": "Carte",
-        "selectData": "FILTRER LES DONNÉES",
+        "selectData": "FILTRER LES DONNÉES  (FACULTATIF)",
         "data": "Données",
         "selectLocation": "EMPLACEMENT DU FILTRE (FACULTATIF)",
         "location": "Emplacement",
+        "all": "Tout",
         "selectDataset": "SELECT DATASET",
         "dataset": "Dataset"
     },

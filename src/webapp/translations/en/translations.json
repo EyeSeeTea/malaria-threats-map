@@ -658,8 +658,8 @@
                 },
                 "treatment": {
                     "datasets": {
-                        "therapeutic_efficacy_studies": "Results of therapeutic efficacy studies",
-                        "molecular_marker_studies": "Results of molecular marker studies"
+                        "therapeutic_efficacy_studies": "Therapeutic efficacy studies",
+                        "molecular_marker_studies": "Molecular marker studies"
                     }
                 },
                 "invasive": {
@@ -698,13 +698,13 @@
                 "uses_placeHolder": "We are interested in knowing what you are using the data for. We would appreciate if you could provide a short description.",
                 "country": "Country of residence",
                 "email": "E-mail",
-                "message": "WHO is keen to improve the global databases and Malaria Threats Map to better serve the needs of our user community. Hence, WHO would like to engage with our user community to collect suggestions for improvement and to learn from different use cases and benefits that these products bring to them. If you would like to share feedback, you can do so <1 href='/contact'>here</1>.",
+                "message": "WHO is keen to improve the global databases and Malaria Threats Map to better serve the needs of our user community. Hence, WHO would like to engage with our user community to collect suggestions for improvement and to learn from different use cases and benefits that these products bring to them. If you would like to share feedback, you can do so <2 href='/contact'>here</2>.",
                 "consent1": "I consent to be contacted by the World Health Organization regarding my experience using the Malaria Threats Map and data from the global databases.",
                 "consent2": "I consent for the World Health Organization to use my organization name and project description provided above to showcase the use of the global databases (no personal data will be shown)."
             },
             "data_step": {
                 "title": "Select data",
-                "p1": "This dialogue allows you to download data from four of the WHO global databases: insecticide resistance in malaria vectors, invasive vector species, antimalarial drug efficacy and resistance, and <1>pfhrp2/3</1> gene deletions. A link to the original data source and citation are included in each dataset, where available.",
+                "p1": "This dialogue allows you to download data from the four WHO global databases: insecticide resistance in malaria vectors, invasive vector species, antimalarial drug efficacy and resistance, and <1>Pfhrp2/3</1> gene deletions. A link to the original data source and citation are included in each dataset, where available.",
                 "last_updated": "The selected dataset was last updated on:",
                 "add_to_download": "Add to Download",
                 "db_download_list": "Database Download List",
@@ -713,7 +713,8 @@
                 "data_set": "Dataset:",
                 "data": "Data:",
                 "location": "Location:",
-                "studies_in_file": "{{total}} bioassays included in the file"
+                "studies_in_file": "{{total}} studies included in the file",
+                "bioassays_in_file": "{{total}} bioassays included in the file"
             }
         },
         "report": {
@@ -994,10 +995,11 @@
         "theme": "Theme",
         "selectMapType": "SELECT MAP TYPE",
         "mapType": "Map",
-        "selectData": "FILTER DATA",
+        "selectData": "FILTER DATA (OPTIONAL)",
         "data": "Data",
         "selectLocation": "FILTER LOCATION (OPTIONAL)",
         "location": "Location",
+        "all": "All",
         "selectDataset": "SELECT DATASET",
         "dataset": "Dataset"
     },
