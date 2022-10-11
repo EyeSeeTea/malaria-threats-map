@@ -6,9 +6,10 @@ import { useMolecularMarker } from "./useMolecularMarkerOverTime";
 import More from "highcharts/highcharts-more";
 import TreatmentFilterableDashboard from "../TreatmentFilterableDashboard";
 import i18next from "i18next";
-import { Stack, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { MolecularChartSerie } from "./types";
 import { MolecularMarker } from "../../../../components/filters/MolecularMarkerFilter";
+import styled from "styled-components";
 
 More(Highcharts);
 const MolecularMarkerDashboard: React.FC = () => {
@@ -50,34 +51,53 @@ const MolecularMarkerDashboard: React.FC = () => {
             onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
             onMolecularMarkerChange={onMolecularMarkerChange}
         >
-            {data &&
-                Object.keys(data.seriesByCountry).map((country, index) => {
-                    const legendVisible = index === 0;
+            <Table>
+                <tbody>
+                    {data &&
+                        Object.keys(data.seriesByCountry).map((country, index) => {
+                            const legendVisible = index === 0;
 
-                    return (
-                        <React.Fragment key={country}>
-                            <HighchartsReact
-                                highcharts={Highcharts}
-                                options={chartOptions(
-                                    legendVisible,
-                                    data.years,
-                                    data.seriesByCountry[country],
-                                    molecularMarker
-                                )}
-                            />
-                            <Stack direction="column" alignItems="center">
-                                <Typography variant="body1" fontWeight="bold" sx={{ marginLeft: 8 }}>
-                                    {t(country)}
-                                </Typography>
-                            </Stack>
-                        </React.Fragment>
-                    );
-                })}
+                            return (
+                                <tr key={country}>
+                                    <td>
+                                        <Typography variant="body1" sx={{ marginLeft: 8 }}>
+                                            {t(country)}
+                                        </Typography>
+                                    </td>
+
+                                    <td>
+                                        <HighchartsReact
+                                            highcharts={Highcharts}
+                                            options={chartOptions(
+                                                legendVisible,
+                                                data.years,
+                                                data.seriesByCountry[country],
+                                                molecularMarker
+                                            )}
+                                        />
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                </tbody>
+            </Table>
         </TreatmentFilterableDashboard>
     );
 };
 
 export default MolecularMarkerDashboard;
+
+const Table = styled.table`
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    tr td:nth-child(1) {
+        width: 20%;
+    }
+    tr td:nth-child(2) {
+        width: 80%;
+    }
+`;
 
 function chartOptions(
     showLegend: boolean,
