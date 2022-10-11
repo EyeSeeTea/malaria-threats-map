@@ -3,6 +3,9 @@
         "layers": "couches",
         "mekong_link": "Aller à la couche du Grand Mékong",
         "takeATour": "Vous ne savez pas par où commencer ? Faites un tour.",
+        "zoomIn": "Agrandir",
+        "zoomOut": "Dézoomer",
+        "fullscreen": "Afficher en plein écran",
         "title": {
             "title": "Carte des menaces du paludisme",
             "subtitle": "Suivi des défis biologiques liés à la lutte et à l'élimination du paludisme"
