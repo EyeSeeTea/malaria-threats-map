@@ -1083,7 +1083,7 @@
     "tour": {
         "steps": {
             "1": {
-                "title": "Select a theme"
+                "title": "Select one of the 4 biological threats"
             },
             "2": {
                 "title": "Select a map to explore study results"
@@ -1092,10 +1092,10 @@
                 "title": "Add filters to produce a map limited to specific criteria"
             },
             "4": {
-                "title": "Select a specific region, subregion, country and/or site"
+                "title": "Select a region, subregion, country and/or site"
             },
             "5": {
-                "title": "Click on a site to see study details"
+                "title": "Click on a map point to see study details"
             }
         }
     },

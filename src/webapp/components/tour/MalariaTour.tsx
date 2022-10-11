@@ -242,6 +242,13 @@ class MalariaTour extends PureComponent<Props> {
             },
             {
                 selector: ".mapboxgl-canvas",
+                action: () => {
+                    this.setSelection({
+                        SITE_ID: "IRZM41",
+                        coordinates: [-14.2333, 28.6],
+                        ISO_2_CODE: "ZM",
+                    });
+                },
                 content: options => {
                     return <Step5 {...options} {...baseProps} step={9} back={6} />;
                 },
