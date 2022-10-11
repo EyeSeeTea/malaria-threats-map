@@ -67,7 +67,7 @@ const LastUpdated = ({
                 <Typography variant="body2" display="block" gutterBottom>
                     <strong>{`${t("common.filters.last_updated").toUpperCase()} ${lastUpdatedDates[
                         themeSelector
-                    ].toLocaleDateString()}`}</strong>
+                    ]?.toLocaleDateString()}`}</strong>
                 </Typography>
             )}
 
