@@ -11,7 +11,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import InformationModal from "../../../components/dashboards/InformationModal";
 import HighchartsReact from "highcharts-react-official";
-import html2canvas from "html2canvas";
+import { toPng } from "html-to-image";
 import { MolecularMarker } from "../../../components/filters/MolecularMarkerFilter";
 
 interface TreatmentFilterableDashboardProps {
@@ -87,12 +87,16 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
             return;
         }
 
-        html2canvas(ref.current).then(canvas => {
-            const link = document.createElement("a");
-            link.download = title;
-            link.href = canvas.toDataURL();
-            link.click();
-        });
+        toPng(ref.current, { backgroundColor: "#F7F7F7" })
+            .then(dataUrl => {
+                const link = document.createElement("a");
+                link.download = title;
+                link.href = dataUrl;
+                link.click();
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }, [ref, title]);
 
     return (
