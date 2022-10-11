@@ -30,6 +30,17 @@ const MolecularMarkerDashboard: React.FC = () => {
         onMolecularMarkerChange,
     } = useMolecularMarker();
 
+    const max = React.useMemo(() => {
+        if (!data) return 0;
+
+        const dataValues = Object.values(data.seriesByCountry)
+            .flat()
+            .map(value => value.data)
+            .flat();
+
+        return Math.max(...dataValues);
+    }, [data]);
+
     return (
         <TreatmentFilterableDashboard
             id="summary-molecular-marker"
@@ -72,7 +83,8 @@ const MolecularMarkerDashboard: React.FC = () => {
                                                 legendVisible,
                                                 data.years,
                                                 data.seriesByCountry[country],
-                                                molecularMarker
+                                                molecularMarker,
+                                                max
                                             )}
                                         />
                                     </td>
@@ -103,7 +115,8 @@ function chartOptions(
     showLegend: boolean,
     years: number[],
     series: MolecularChartSerie[],
-    molecularMarker: MolecularMarker
+    molecularMarker: MolecularMarker,
+    max: number
 ): Highcharts.Options {
     const chartPrefix = getChartPrefix(molecularMarker);
 
@@ -157,6 +170,7 @@ function chartOptions(
         },
         yAxis: {
             min: 0,
+            max,
             title: {
                 text: i18next.t("common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.numStudies"),
                 style: {
