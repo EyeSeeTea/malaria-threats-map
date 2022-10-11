@@ -783,28 +783,6 @@
         "COUNTRY_NA": "Namibie",
         "WEBGL_error_message": "Votre navigateur ne prend pas en charge WebGL. Vous pouvez activer WebGL dans les paramètres avancés de votre navigateur."
     },
-    "diagnosisStory": {
-        "step1": {
-            "part1": "<0>Les délétions de gènes parmi les parasites du paludisme provoquent des résultats de tests de diagnostic faussement négatifs</0>",
-            "part2": "Les tests de diagnostic rapide (TDR) sont utilisés pour le diagnostic du paludisme dans la plupart des zones endémiques. La détection de <i>Plasmodium falciparum</i> - le parasite du paludisme le plus mortel à l'échelle mondiale - repose sur les TDR qui ciblent un antigène appelé protéine riche en histidine 2 (HRP2), ainsi qu'une certaine réactivité croisée avec HRP3, une protéine de parasite structurellement similaire. La grande majorité des TDR fabriqués, achetés et utilisés dans le monde sont basés sur la détection de HRP2, soit seul, soit en association avec d'autres antigènes (tels que le lactate déshydrogénase parasite ou l'aldolase)",
-            "part3": "Cependant, en 2010, une étude parrainée par l'OMS et FIND a révélé que certains parasites de <i>P. falciparum</i> au Pérou manquaient du gène <i>pfhrp2</i>. Sans ce gène, le parasite ne peut pas produire de HRP2 et ne peut pas être détecté par des TDR à base de HRP2. Ce fut le premier rapport à confirmer l'absence du gène <i>pfhrp2</i> chez les parasites de <i>P. falciparum</i> dans un contexte clinique.",
-            "see": "Voir: ",
-            "part4": "Gamboa et al. (2010) Une grande proportion de <i> Les isolats de P. falciparum </i> dans la région amazonienne du Pérou manquent de <i> pfhrp2 </i> et pfhrp3: implications pour les tests de diagnostic rapide du paludisme. PLoS One. 5 (1): e8091"
-        },
-        "step2": {
-            "part1": "<0>Les délétions de <i>pfhrp2/3</i> gènes peuvent avoir d'importantes implications pour la santé publique</0>",
-            "part2": "Les faux résultats de TDR négatifs dus aux suppressions de <i>pfhrp2/3</i> peuvent entraîner un diagnostic incorrect ou retardé et menacer la sécurité du patient. Le patient peut également continuer à être une source de transmission du paludisme jusqu'à ce qu'il soit correctement traité.",
-            "part3": "Depuis 2010, les enquêtes dans plusieurs contextes en Afrique et en Asie ont également trouvé une proportion variable de <i>P. falciparum</i>parasites dépourvus du gène <i>pfhrp2</i>. La prévalence de cette mutation génétique varie à l’intérieur des pays et entre les pays. Si elle est confirmée, les achats des TDR et les pratiques de gestion des cas doivent être adaptés en conséquence. L'OMS recommande de changer pour un TDR qui ne repose pas exclusivement sur le HRP2 pour détection de <i>P. falciparum</i> (c.-à-d. pf-pLDH) si la prévalence des TDR faussement négatifs en raison de la délétion <i>pfhrp2</i> est ≥ 5% parmi les patients symptomatiques.",
-            "link": "https://www.who.int/publications/i/item/WHO-HTM-GMP-2017.18",
-            "supportingStudies": "Lien vers les études à l'appui."
-        },
-        "step3": {
-            "part1": "<0>Une surveillance accrue des délétions de gènes <i>pfhrp2/3</i> parmi le <i>P. falciparum</i> est essentielle</0>",
-            "part2": "Une fois que les délétions <i>pfhrp2/3</i> sont confirmées dans une région géographique, des enquêtes devraient être menées localement et dans les zones voisines pour estimer la prévalence des parasites portant des délétions des gènes. Dans les contextes cliniques, la (les) cause(s) des TDR faussement négatifs devraient faire l'objet d'une enquête.",
-            "part3": "La surveillance sentinelle devrait être instituée avec tous les résultats (positifs et négatifs) signalés. Les données doivent être bien gérées pour aider à hiérarchiser les enquêtes, suivre adéquatement les tendances dans le temps et informer une réponse coordonnée.",
-            "part4": "Depuis 2017, la base de données de l'OMS comprend les données de délétion des gènes <i>pfhrp2/3</i> pour 29 pays dans 5 régions de l'OMS."
-        }
-    },
     "disclaimer": {
         "p1a": "<strong>Source des données:</strong> Programme mondial contre le paludisme.",
         "p1b": "<strong>Production de cartes:</strong> Programme mondial contre le paludisme. Organisation mondiale de la santé.",
@@ -1006,32 +984,6 @@
             "CITATION_URL": "URL de la publication où les données ont été publiées"
         }
     },
-    "invasiveStory": {
-        "step1": {
-            "part1": "<0>La détection d'<i>An. stephensi</i> au Sri Lanka et dans la corne de l'Afrique souligne le potentiel de dissémination et d'établissement des espèces vectrices dans des nouvelles zones géographiques.</0>",
-            "part2": "<0>L'invasion du nord du Brésil par <i>An. gambiae</i> en 1930 est un autre exemple. Son éradication prouve que les invasions de vecteurs peuvent être résorbées.</0>",
-            "part3": "<i>An. stephensi</i> est un vecteur de paludisme urbain très compétent, traditionnellement signalé dans certains pays d'Asie du Sud-Est et dans la péninsule arabique. Depuis 2012, il a été détecté à Djibouti (2012), en Ethiopie (2016), au Sri Lanka (2017) et plus récemment en République du Soudan (2019, rapport non publié).",
-            "part4": "L'invasion d'<i>An. stephensi</i> a contribué à la résurgence du paludisme dans la ville de Djibouti. Au Sri Lanka, la récente invasion de ce vecteur pourrait compromettre les efforts visant à prévenir le rétablissement du paludisme. En Afrique, dans le contexte de l'urbanisation rapide et incontrôlée, la propagation et l'établissement d'<i>An. stephensi</i> en milieu urbain pourraient mettre en péril les progrès réalisés depuis 2000 dans la réduction de la charge du paludisme.",
-            "supporting": "justificative"
-        },
-        "step2": {
-            "part1": "<0>La détection opportune des espèces vectrices invasives est cruciale pour contenir leur propagation. </0>",
-            "part2": "<0>Les systèmes de surveillance entomologique fournissent des informations essentielles pour la conception et la mise en œuvre des stratégies de lutte antivectorielle.</0>",
-            "part3": "La connaissance des gîtes de reproduction et de repos des espèces vectrices, de leur comportement, de leurs préférences alimentaires et de leur statut en matière de résistance est nécessaire pour concevoir des interventions efficaces visant à prévenir la propagation des espèces vectrices invasives et leur établissement dans de nouvelles aires géographiques.",
-            "part4": "L'OMS recommande que tous les pays d'endémie palustre effectuent une surveillance entomologique et signalent à l'OMS la détection d'espèces soupçonnées d'être invasives en remplissant et en envoyant le formulaire de l'OMS pour signaler la détection des espèces d’anophèles vectrices invasives",
-            "whoForm": " formulaire de l'OMS pour signaler la détection d'espèces d’anophèles vectrices invasives à ",
-            "part5": "Les indicateurs clés pour la surveillance entomologique sont énumérés au chapitre 5 du manuel de référence de l'OMS intitulé:",
-            "link": "https://cdn.who.int/media/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form-fr.xlsm",
-            "whoManual": " lutte contre le paludisme: surveillance, suivi et évaluation. Un manuel de référence."
-        },
-        "step3": {
-            "part1": "<0>Les stratégies de lutte devraient s'inspirer des meilleures pratiques d'autres pays, faire l'objet d'un suivi et d'une évaluation adéquats et être modifiées au besoin.</0>",
-            "part2": "<0>Les espèces vectrices invasives peuvent s'adapter à leur nouvel environnement en modifiant leurs comportements traditionnels et peuvent devenir résistantes aux insecticides lorsqu'elles sont exposées aux outils de lutte antivectorielle.</0>",
-            "part3": "En raison des ces potentiels changements de comportement adaptatifs des espèces vectrices, les programmes devraient continuellement surveiller et évaluer l'efficacité des interventions de lutte antivectorielle déployées afin d'opérer les ajustements stratégiques nécessaires.",
-            "part4": "L'OMS recommande aux programmes nationaux de lutte contre le paludisme, et à leurs partenaires exécutifs, de consigner les enseignements retenus et de les communiquer à l'OMS (",
-            "part5": ") afin de contribuer à l'élaboration de plan fondé sur des données probantes en matière de lutte et d'éradication des espèces vectrices et invasives du paludisme."
-        }
-    },
     "legend": {
         "p1": "Cette carte montre l&apos;état de conformité des populations locales de vecteurs avec les",
         "p1Link": "https://apps.who.int/iris/bitstream/handle/10665/258939/WHO-HTM-GMP-2017.17-eng.pdf?sequence=5",
@@ -1050,37 +1002,6 @@
         "selectDataset": "SELECT DATASET",
         "dataset": "Dataset"
     },
-    "preventionStory": {
-        "step1": {
-            "part1": "<0> Le suivi de la résistance aux insecticides chez les vecteurs du paludisme est essentiel</0>",
-            "part2": "<0>Sur les 89 pays d’endémie palustre, 80 ont déclaré un suivi de la résistance aux insecticides entre 2010 et 2017. La quantité et la qualité des données varient selon les pays.</0>",
-            "part3": "La prévention du paludisme est essentiellement basée sur des outils qui ciblent les vecteurs : les moustiquaires imprégnées à longue durée d’action et les pulvérisations intra-domiciliaires. La résistance des moustiques aux insecticides est une préoccupation majeure, en particulier la résistance aux pyréthrinoïdes, car ils sont la seule classe d'insecticides actuellement approuvée pour l’imprégnation des  moustiquaires.",
-            "part4": "Le Plan mondial de l'OMS pour la gestion de la résistance aux insecticides chez les vecteurs du paludisme (GPIRM) appelle à maintenir l'efficacité de la lutte antivectorielle. Le suivi de la résistance est nécessaire pour orienter les stratégies de réduction et de gestion de la résistance aux insecticides.",
-            "link": "https://apps.who.int/iris/handle/10665/44846",
-            "prevention1": "justificative 1"
-        },
-        "step2": {
-            "part1": "<0>Les activités de suivi ont révélé que la résistance aux insecticides chez les vecteurs du paludisme était très répandue</0>",
-            "part2": "<0>Sur les 89 pays d’endémie palustre, 65 ont rapporté une résistance aux pyréthrinoïdes chez, au moins, un vecteur local depuis 2010</0>",
-            "part3": "La résistance a été détectée chez les vecteurs des six régions de l'OMS et aux quatre classes les plus couramment utilisés dans la lutte contre les vecteurs adultes. La résistance aux pyréthrinoïdes est la plus testée et la plus souvent rapportée.",
-            "link": "https://www.who.int/publications/i/item/9789241514057",
-            "prevention2": "justificative 2"
-        },
-        "step3": {
-            "part1": "<0>Nombreux sont les pays à ne pas disposer de données récentes et complètes sur la résistance aux insecticides</0>",
-            "part2": "<0>Sur les 89 pays d’endémie palustre, 47 ont rapporté des données pour 2017. Les données sont, à quelques exceptions près, assez rares en dehors de l’Afrique. Le suivi ne comprend pas toujours tous les principaux vecteurs, ni toutes les principales classes d'insecticides.</0>",
-            "part3": "Des données à jour et représentatives sont nécessaires pour la planification et la mise en œuvre de la lutte antivectorielle. Le suivi de la résistance devrait être effectué dans tous les pays d’endémie  palustre au moins une fois par an, et périodiquement dans les pays ayant éliminé le paludisme mais qui restent vulnérable à la réintroduction. Le suivi de la résistance devrait inclure tous les principaux vecteurs provenant des différentes zones éco-épidémiologiques. Les tests de sensibilité devraient être effectués avec des classes d'insecticides qui sont soit utilisées, soit prévues pour être utilisées dans la lutte antivectorielle.",
-            "part4": "Les exigences de suivi de la résistance doivent être définies dans le cadre d'un plan national de suivi et de gestion de la résistance aux insecticides.",
-            "prevention3": "justificative 3"
-        },
-        "step4": {
-            "part1": "<0>L’augmentation de la résistance souligne le besoin urgent d’un meilleur suivi</0>",
-            "part2": "<0>Les vecteurs du paludisme dans certaines régions d'Afrique peuvent désormais survivre à une exposition à de fortes concentrations d'insecticides, ce qui indique une résistance intensifiée.</0>",
-            "part3": "Les tests classiques de résistance mesurent le nombre de moustiques qui survivent à l’exposition à une concentration standard d'insecticide. Cependant, l'intensité de la résistance chez les survivants et les mécanismes qui confèrent la résistance sont importants. Un niveau élevé de résistance impose une action urgente qui devrait être guidée par la connaissance des mécanismes impliqués dans la résistance.",
-            "part4": "Les procédures de tests de sensibilité de l'OMS ont récemment été élargies pour inclure des bio-essais qui mesurent l'intensité de la résistance et l'implication des mécanismes métaboliques.",
-            "prevention4": "justificative 4"
-        }
-    },
     "tour": {
         "steps": {
             "1": {
@@ -1098,31 +1019,6 @@
             "5": {
                 "title": "Cliquez sur un site pour voir les détails de l'étude"
             }
-        }
-    },
-    "treatmentStory": {
-        "step1": {
-            "part1": "<0>Les parasites du paludisme ont développé de manière successive une résistance au traitement antipaludique</0>",
-            "part2": "<0>Pendant des décennies, la résistance aux médicaments a été l'un des principaux obstacles à la lutte contre le paludisme.</0>",
-            "part3": "La surveillance continue et l’information sur l'efficacité du médicament et sur la résistance des parasites sont essentielles pour garantir aux patients un traitement efficace. L'OMS soutient les programmes nationaux de lutte contre le paludisme afin de surveiller l'efficacité du traitement antipaludique et de suivre les changements génétiques liés à la résistance aux médicaments chez les parasites du paludisme.",
-            "part4": "Le rôle crucial de la surveillance de l'efficacité des médicaments a été observé dans le monde entier. La résistance a été un défi persistant dans la sous-région du Grand Mékong. La région a été très active dans la surveillance de l'efficacité des médicaments."
-        },
-        "step2": {
-            "part1": "<0>La surveillance systématique de l'efficacité des thérapies combinées à base d'artémisinine (ACT) est essentielle pour s'assurer que les patients reçoivent un traitement efficace</0>",
-            "part2": "<0>L'OMS recommande que tous les pays où le paludisme est endémique effectuent des études d'efficacité thérapeutique au moins une fois tous les deux ans pour informer la politique de traitement.</0>",
-            "part3": "La sélection du médicament antipaludique recommandé repose sur l'efficacité du médicament contre le parasite du paludisme. Par conséquent, le suivi de l'efficacité thérapeutique des médicaments antipaludiques est un élément fondamental des stratégies de traitement du paludisme. L'OMS a élaboré un protocole standard pour la surveillance de l'efficacité du traitement antipaludique."
-        },
-        "step3": {
-            "part1": "<0>Les études sur les marqueurs moléculaires fournissent des données essentielles pour la détection et le suivi de la résistance aux médicaments antipaludiques</0>",
-            "part2": "<0>Les marqueurs moléculaires pour la résistance aux médicaments sont des changements génétiques dans le parasite du paludisme qui se sont révélés être associés à une résistance.</0>",
-            "part3": "Par rapport aux études d'efficacité, les études sur les marqueurs moléculaires présentent plusieurs avantages pratiques. Par exemple, un grand nombre d'échantillons peuvent être collectés et analysés rapidement. Les marqueurs moléculaires de la résistance de <i>P. falciparum</i> aux médicaments ont été identifiés comprenant la chloroquine, la piperaquine, la mefloquine, la pyrimethamine, la sulfadoxine, l’atovaquone et l’artémisinine et ses dérivés. Pour les artémisinines, plusieurs mutations dans le domaine du promoteur Kelch 13 (K13) se sont révélées associées à une clearance parasitaire retardée. Il s'agit d'un domaine en constante évolution au fur et à mesure que de nouvelles mutations K13 sont découvertes et nous développons une meilleure compréhension des mutations ayant la plus grande influence.",
-            "part4": "Pour les artémisinines, de nombreuses mutations dans le domaine du promoteur Kelch 13 (K13) se sont révélées associées au dégagement de parasites retardé. Il s'agit d'un champ évolutif au fur et à mesure que de nouvelles mutations K13 sont découvertes et nous développons une meilleure compréhension des mutations les plus influentes."
-        },
-        "step4": {
-            "part1": "<0>La résistance aux médicaments est un défi à la fois pour <i> P. vivax </i> comme dans <i> P. falciparum </i>, les deux espèces les plus courantes de parasites du paludisme humain</0>",
-            "part2": "<0>Il est essentiel de disposer d'informations à jour sur la résistance aux médicaments pour les deux parasites du paludisme</0>",
-            "part3": "Les associations thérapeutiques à base d'artémisinine sont le traitement recommandé pour le parasite le plus mortel du paludisme, <i> P. falciparum</i>. Il existe deux indicateurs clés pour surveiller l'efficacité des ACT: (1) la proportion de traitements échoués et (2) la proportion de patients atteints de parasites le troisième jour après le début du traitement. Une augmentation de la proportion de patients atteints de parasites au troisième jour est un signe avant-coureur de l'existence potentielle d'une résistance à l'artémisinine.",
-            "part4": "La chloroquine est encore utilisée dans de nombreux endroits pour traiter le paludisme à <i>P. vivax</i>. Cependant, comme la résistance à la chloroquine se développe également chez ce parasite, certains pays ont commencé à utiliser le TCA pour le traitement de <i>P. vivax</i>."
         }
     },
     "utils": {
