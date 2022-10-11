@@ -30,6 +30,8 @@ const MolecularMarkerDashboard: React.FC = () => {
         onMolecularMarkerChange,
     } = useMolecularMarker();
 
+    const chartComponentRefs = React.useRef([]);
+
     const max = React.useMemo(() => {
         if (!data) return 0;
 
@@ -43,6 +45,7 @@ const MolecularMarkerDashboard: React.FC = () => {
 
     return (
         <TreatmentFilterableDashboard
+            chartComponentRef={chartComponentRefs}
             id="summary-molecular-marker"
             isMolecularMarkerChart={true}
             title={t("common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.title")}
@@ -79,6 +82,9 @@ const MolecularMarkerDashboard: React.FC = () => {
                                     <td>
                                         <HighchartsReact
                                             highcharts={Highcharts}
+                                            ref={(element: HighchartsReact.RefObject) =>
+                                                chartComponentRefs.current.push(element)
+                                            }
                                             options={chartOptions(
                                                 legendVisible,
                                                 data.years,
@@ -103,9 +109,6 @@ const Table = styled.table`
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
-    tr td:nth-child(1) {
-        width: 20%;
-    }
     tr td:nth-child(2) {
         width: 80%;
     }

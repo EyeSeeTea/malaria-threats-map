@@ -19,7 +19,7 @@ interface TreatmentFilterableDashboardProps {
     isMolecularMarkerChart?: boolean;
     drugsMultiple: boolean;
     drugsClearable: boolean;
-    chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject>;
+    chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject[] | HighchartsReact.RefObject>;
     title: string;
     type: "treatmentFailureByDrug" | "treatmentFailure" | "positiveDay3" | "molecularMarkerStudy";
     filteredStudiesForDrugs: TreatmentStudy[];
@@ -73,9 +73,13 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
     }, [filtersVisible]);
 
     React.useEffect(() => {
-        const chart = chartComponentRef?.current?.chart;
-
-        chart?.reflow();
+        if (Array.isArray(chartComponentRef?.current)) {
+            chartComponentRef?.current?.forEach(current => {
+                current?.chart?.reflow();
+            });
+        } else {
+            chartComponentRef?.current?.chart.reflow();
+        }
     }, [filtersVisible, chartComponentRef]);
 
     const handleDownload = React.useCallback(() => {
