@@ -1,7 +1,6 @@
 import React from "react";
-import { IconButton, Modal, Paper, Stack, Typography } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, IconButton, Stack, Typography } from "@mui/material";
 import { useTranslation, Trans } from "react-i18next";
-import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
 import { escape } from "lodash";
 import { useDashboards } from "../../pages/dashboards/context/useDashboards";
@@ -16,33 +15,11 @@ type InformationModalProps = {
     handleCloseInfoModal: () => void;
 };
 
-const InfoModal = styled(Paper)`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: medium;
-    border-width: 0px;
-    padding: 60px 100px;
-    border-color: black;
-    @media (max-width: 1440px) {
-        width: 70vw;
-    }
-    @media (max-width: 1024px) {
-        padding: 40px 60px;
-        width: 80vw;
-    }
-    @media (max-width: 768px) {
-        padding: 20px 30px;
-        width: 80vw;
-    }
-`;
-
 const TreatmentFailureByDrugContent = () => {
     const { t } = useTranslation();
     return (
         <>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 <Trans
                     i18nKey="common.dashboard.informationModal.summaryTreatmentFailureRateByDrug.chartInterpretation"
                     t={t}
@@ -50,7 +27,7 @@ const TreatmentFailureByDrugContent = () => {
                     values={{ lessThen: escape("<") }}
                 ></Trans>
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 <Trans
                     i18nKey="common.dashboard.informationModal.summaryTreatmentFailureRateByDrug.dataAvailability"
                     t={t}
@@ -58,15 +35,13 @@ const TreatmentFailureByDrugContent = () => {
                     <strong>Data availability:</strong> All studies for which data are available are shown.
                 </Trans>
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 <Trans i18nKey="common.dashboard.informationModal.common.studyProtocol" t={t}>
                     <strong>Study protocol:</strong> WHO recommends that all therapeutic efficacy studies are conducted
                     according to the WHO. standard protocol.
                 </Trans>
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
-                {t("common.dashboard.informationModal.common.info")}
-            </Typography>
+            <Typography variant="body1">{t("common.dashboard.informationModal.common.info")}</Typography>
         </>
     );
 };
@@ -74,7 +49,7 @@ const TreatmentFailureContent = () => {
     const { t } = useTranslation();
     return (
         <>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 <Trans
                     i18nKey="common.dashboard.informationModal.treatmentFailureRateOverTime.chartInterpretation"
                     t={t}
@@ -85,13 +60,13 @@ const TreatmentFailureContent = () => {
                     of interest. The user can also exclude studies with less than 20 patients from the chart.
                 </Trans>
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 {t("common.dashboard.informationModal.treatmentFailureRateOverTime.description_1")}
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 {t("common.dashboard.informationModal.treatmentFailureRateOverTime.description_2")}
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 <Trans i18nKey="common.dashboard.informationModal.treatmentFailureRateOverTime.dataAvailability" t={t}>
                     <strong>Data availability:</strong> Only data for{" "}
                     <strong>
@@ -104,15 +79,13 @@ const TreatmentFailureContent = () => {
                     are displayed in this graph.
                 </Trans>
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 <Trans i18nKey="common.dashboard.informationModal.common.studyProtocol" t={t}>
                     <strong>Study protocol:</strong> WHO recommends that all therapeutic efficacy studies are conducted
                     according to the WHO standard protocol.
                 </Trans>
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
-                {t("common.dashboard.informationModal.common.info")}
-            </Typography>
+            <Typography variant="body1">{t("common.dashboard.informationModal.common.info")}</Typography>
         </>
     );
 };
@@ -120,7 +93,7 @@ const ParasiteClearanceContent = () => {
     const { t } = useTranslation();
     return (
         <>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 <Trans
                     i18nKey="common.dashboard.informationModal.parasiteClearanceRatesOverTime.chartInterpretation"
                     t={t}
@@ -131,13 +104,13 @@ const ParasiteClearanceContent = () => {
                     the years of interest. The user can also exclude studies with less than 20 patients from the chart.
                 </Trans>
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 {t("common.dashboard.informationModal.parasiteClearanceRatesOverTime.description_1")}
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 {t("common.dashboard.informationModal.parasiteClearanceRatesOverTime.description_2")}
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 <Trans
                     i18nKey="common.dashboard.informationModal.parasiteClearanceRatesOverTime.dataAvailability"
                     t={t}
@@ -153,15 +126,13 @@ const ParasiteClearanceContent = () => {
                     are displayed in this graph.
                 </Trans>
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 <Trans i18nKey="common.dashboard.informationModal.common.studyProtocol" t={t}>
                     <strong>Study protocol:</strong> WHO recommends that all therapeutic efficacy studies are conducted
                     according to the WHO. standard protocol.
                 </Trans>
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
-                {t("common.dashboard.informationModal.common.info")}
-            </Typography>
+            <Typography variant="body1">{t("common.dashboard.informationModal.common.info")}</Typography>
         </>
     );
 };
@@ -169,10 +140,10 @@ const MolecularMarkerStudyContent = () => {
     const { t } = useTranslation();
     return (
         <>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 {t("common.dashboard.informationModal.summaryMolecularMarkerStudyOverTime.intro")}
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 <Trans
                     i18nKey="common.dashboard.informationModal.summaryMolecularMarkerStudyOverTime.chartInterpretation"
                     t={t}
@@ -181,7 +152,7 @@ const MolecularMarkerStudyContent = () => {
                     results. The height of the bar is determined by the number of studies conducted in that year.
                 </Trans>
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 <Typography fontStyle={"italic"} color="#2FB3AF" fontWeight={"bold"} display="inline">
                     Pfkelch13:
                 </Typography>{" "}
@@ -197,7 +168,7 @@ const MolecularMarkerStudyContent = () => {
                     </li>
                 </ul>
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 <Typography fontStyle={"italic"} color="#2FB3AF" fontWeight={"bold"} display="inline">
                     Pfcrt:
                 </Typography>{" "}
@@ -205,10 +176,10 @@ const MolecularMarkerStudyContent = () => {
                     {t("common.dashboard.informationModal.summaryMolecularMarkerStudyOverTime.pfcrt")}
                 </Typography>
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 <Typography fontStyle={"italic"} color="#2FB3AF" fontWeight={"bold"} display="inline">
                     Pfmdr1
-                </Typography>{" "}
+                </Typography>
                 <Typography display="inline">{t("common.dashboard.informationModal.common.and")} </Typography>
                 <Typography fontStyle={"italic"} color="#2FB3AF" fontWeight={"bold"} display="inline">
                     Pfplasmepsin 2-3:
@@ -217,7 +188,7 @@ const MolecularMarkerStudyContent = () => {
                     {t("common.dashboard.informationModal.summaryMolecularMarkerStudyOverTime.pfmdr1")}
                 </Typography>
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
+            <Typography variant="body1">
                 <Trans
                     i18nKey="common.dashboard.informationModal.summaryMolecularMarkerStudyOverTime.dataAvailability"
                     t={t}
@@ -225,9 +196,7 @@ const MolecularMarkerStudyContent = () => {
                     <strong>Data availability:</strong> All studies for which data are available are shown.
                 </Trans>
             </Typography>
-            <Typography fontSize={{ xs: "11px", md: "15px" }}>
-                {t("common.dashboard.informationModal.common.info")}
-            </Typography>
+            <Typography variant="body1">{t("common.dashboard.informationModal.common.info")}</Typography>
         </>
     );
 };
@@ -256,13 +225,15 @@ export default function InformationModal({
     };
 
     return (
-        <Modal
+        <Dialog
             open={openInfoModal}
             onClose={handleCloseInfoModal}
             aria-labelledby="info-modal"
             aria-describedby="adicional-info-modal"
+            sx={{ marginTop: 4 }}
+            maxWidth="lg"
         >
-            <InfoModal>
+            <DialogTitle id="responsive-dialog-title" sx={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10 }}>
                 <Typography
                     id="modal-modal-title"
                     variant="h5"
@@ -281,25 +252,28 @@ export default function InformationModal({
                 >
                     <CloseIcon />
                 </IconButton>
+            </DialogTitle>
+
+            <DialogContent sx={{ paddingLeft: 10, paddingRight: 10, paddingBottom: 10 }}>
                 <Stack mt={3} gap={{ xs: 1, md: 3 }}>
                     <ModalContent />
                     <hr style={{ width: "100%" }}></hr>
                     <Stack>
-                        <Typography fontSize={{ xs: "11px", md: "15px" }}>
+                        <Typography variant="body1">
                             <Trans i18nKey="common.dashboard.informationModal.common.dataPeriod" t={t}>
                                 <strong>Data period:</strong>
-                            </Trans>{" "}
+                            </Trans>
                             {years[0]}-{years[1]}
                         </Typography>
-                        <Typography fontSize={{ xs: "11px", md: "15px" }}>
+                        <Typography variant="body1">
                             <Trans i18nKey="common.dashboard.informationModal.common.dataLastUpdated" t={t}>
                                 <strong>Data last updated:</strong>
-                            </Trans>{" "}
+                            </Trans>
                             {format(updatedDates[theme as keyof LastUpdatedDates], "dd/MM/yyyy")}
                         </Typography>
                     </Stack>
                 </Stack>
-            </InfoModal>
-        </Modal>
+            </DialogContent>
+        </Dialog>
     );
 }
