@@ -156,7 +156,7 @@
                 "title": "Molecular marker studies",
                 "molecularMarkerOverTime": {
                     "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
-                    "numStudies": "Number of Studies",
+                    "numStudies": "Number of studies",
                     "year": "Year",
                     "artemisininChartTitle": "Percentage of samples in one study where validated or candidate",
                     "artemisininChartSubtitle": "molecular markers of artemisinin resistance were detected:",
