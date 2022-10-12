@@ -528,6 +528,7 @@
                     "invasive": "Envahissante",
                     "native": "Autochtone",
                     "link": "https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-databases-on-invasive-mosquito-vector-species",
+                    "not_found": "Pas trouvé",
                     "link_text": "formulaire de rapport",
                     "link_content_1": "Si vous avez détecté une espèce invasive vecteur <1>Anopheles</1>, veuillez nous en informer via le ",
                     "help": {

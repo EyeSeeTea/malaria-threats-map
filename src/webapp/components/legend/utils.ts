@@ -292,6 +292,10 @@ function getInvasiveLegendLabels(filters: InvasiveFilters): LegendLabel[] {
                     label: "invasive.legend.vector_occurrance.native",
                     color: InvasiveStatusColors[INVASIVE_STATUS.NATIVE][0],
                 },
+                {
+                    label: "invasive.legend.vector_occurrance.not_found",
+                    color: InvasiveStatusColors[INVASIVE_STATUS.NOTFOUND][0],
+                },
             ];
         default:
             return [];
