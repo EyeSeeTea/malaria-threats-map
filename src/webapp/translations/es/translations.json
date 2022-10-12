@@ -284,11 +284,9 @@
             },
             "other_who_resources": {
                 "title": "Otros recursos de la OMS",
-                "resource1": "Vigilancia de la resistencia a los insecticidas de la OMS",
-                "resource2": "Eficacia y resistencia de los medicamentos contra la malaria de la OMS",
-                "resource3": "Directrices de PDR de paludismo de la OMS",
-                "resource4": "Directrices sobre malaria de la OMS",
-                "resource5": "OMS Informe mundial sobre el paludismo"
+                "resource1": "Directrices de la OMS sobre la malaria",
+                "resource2": "Informe mundial de la OMS sobre la malaria",
+                "resource3": "Mapa de amenazas de la malaria de la OMS"
             },
             "about_who_gmp": {
                 "title": "Acerca de las BPF de la OMS",
@@ -795,9 +793,7 @@
         "p3aLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions",
         "p3b": "Términos y condiciones de uso para compilaciones, agregaciones, evaluaciones y análisis de datos de la OMS.",
         "p4a": "La siguiente cita deberá proporcionarse visiblemente junto con las imágenes o archivos generados desde la aplicación.",
-        "p4b": "Fuente: ",
-        "p4bLink": "https://www.who.int/malaria/maps/threats/",
-        "p4bLinkText": "Mapa de los desafíos de la malaria.",
+        "p4b": "Fuente: Mapa de los desafíos de la malaria.",
         "p5a": "Para obtener más información, póngase en contacto con: ",
         "p5aLink": "mailto:gmp-maps@who.int",
         "p5aLinkText": "gmp-maps@who.int"

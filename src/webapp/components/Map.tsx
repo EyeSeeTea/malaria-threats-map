@@ -44,7 +44,6 @@ import MekongLayer from "./layers/MekongLayer";
 import Screenshot from "./Screenshot";
 import Report from "./Report";
 import Feedback from "./Feedback";
-import InitialDisclaimer from "./InitialDisclaimer";
 import TheaterMode from "./TheaterMode";
 import TourIcon from "./TourIcon";
 import ShareIcon from "./ShareIcon";
@@ -405,7 +404,6 @@ class Map extends React.Component<Props, StateTypes> {
                     <Fade in={false}>
                         <TopRightContainer>
                             <StoryModeSelector />
-                            <InitialDisclaimer />
 
                             <Feedback />
                             <TourIcon />
@@ -418,7 +416,6 @@ class Map extends React.Component<Props, StateTypes> {
                     <Fade in={showOptions}>
                         <TopRightVerticalContainer>
                             <StoryModeSelector />
-                            <InitialDisclaimer />
 
                             <Feedback />
                         </TopRightVerticalContainer>
