@@ -206,6 +206,7 @@
                 "vector_occurrance": {
                     "invasive": "Invasive",
                     "native": "Native",
+                    "not_found": "Not found",
                     "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
                     "link_text": "reporting form",
                     "link_content_1": "If you have detected invasive <1>Anopheles</1> vector species please report to us through the "
