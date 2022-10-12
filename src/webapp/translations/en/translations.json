@@ -583,7 +583,7 @@
             "select_site": "Select Site",
             "site": "Site",
             "exclude_lower_patients": "Exclude studies with fewer than 20 patients",
-            "exclude_lower_samples": "Exclude studies with fewer than 20 samples"
+            "exclude_lower_samples": "Exclude studies of less than 20 samples"
         },
         "topbar": {
             "menu": "Menu",
