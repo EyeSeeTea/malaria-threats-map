@@ -1012,7 +1012,7 @@
     "tour": {
         "steps": {
             "1": {
-                "title": "Sélectionnez un thème"
+                "title": "Sélectionnez l'une des 4 menaces biologiques"
             },
             "2": {
                 "title": "Sélectionnez une carte pour explorer les résultats de l'étude"
@@ -1021,10 +1021,10 @@
                 "title": "Ajouter des filtres pour produire une carte limitée à des critères spécifiques"
             },
             "4": {
-                "title": "Sélectionnez une région, une sous-région, un pays et/ou un site spécifique."
+                "title": "Sélectionnez une région, une sous-région, un pays et/ou un site."
             },
             "5": {
-                "title": "Cliquez sur un site pour voir les détails de l'étude"
+                "title": "Cliquez sur un point de la carte pour voir les détails de l'étude"
             }
         }
     },
