@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme: Theme) =>
             display: "flex",
             flex: 1,
             alignItems: "center",
-            justifyContent: "space-evenly",
             overflow: "hidden",
             flexWrap: (props: { isMulti?: boolean }) => (props.isMulti ? "wrap" : "nowrap"),
         },

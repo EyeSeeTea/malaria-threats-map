@@ -6,8 +6,16 @@ import { setMolecularMarker } from "../../store/actions/treatment-actions";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
 import { logEventAction } from "../../store/actions/base-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
+import { Option } from "../../pages/dashboards/ContentsFilterSection";
 
-export const MOLECULAR_MARKERS = [
+export type pfkelch13 = 1;
+export type pfcrt = 2;
+export type pfmdr1 = 3;
+export type pfplasmepsin = 4;
+
+export type MolecularMarker = pfkelch13 | pfcrt | pfmdr1 | pfplasmepsin;
+
+export const MOLECULAR_MARKERS: Option<MolecularMarker>[] = [
     {
         label: "Pfkelch13",
         value: 1,

@@ -8,10 +8,12 @@ import HighchartsReact from "highcharts-react-official";
 import More from "highcharts/highcharts-more";
 import TreatmentFilterableDashboard from "../TreatmentFilterableDashboard";
 import i18next from "i18next";
+import { ChartStyles } from "../../../../components/charts/Style";
 
 More(Highcharts);
 
 interface TreatmentOverTimeDashboardProps {
+    id?: string;
     type: TreatmentOverTimeType;
 }
 
@@ -22,7 +24,7 @@ interface CustomPoint extends Highcharts.Point {
     country: string;
 }
 
-const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({ type }) => {
+const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({ id, type }) => {
     const { t } = useTranslation();
     const {
         filteredStudiesForDrugs,
@@ -44,6 +46,7 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
 
     return (
         <TreatmentFilterableDashboard
+            id={id}
             chartComponentRef={chartComponentRef}
             title={
                 type === "treatmentFailure"
@@ -78,13 +81,16 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
         chart: {
             type: "bubble",
             height: "600px",
-            events: {
-                load() {
-                    setTimeout(this.reflow.bind(this), 0);
-                },
+            style: {
+                ...ChartStyles,
             },
         },
-
+        plotOptions: {
+            bubble: {
+                minSize: 1,
+                maxSize: 30,
+            },
+        },
         legend: {
             enabled: true,
             verticalAlign: "top",
@@ -119,7 +125,7 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
                     fontWeight: "bold",
                 },
             },
-            tickInterval: 2,
+            tickInterval: 1,
         },
 
         yAxis: {
@@ -161,7 +167,7 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
                 const point = this.point as CustomPoint;
                 return `
                     <table>
-                        <tr><th colspan="2"><h3>${point.site}, ${point.country}(${point.x})</h3></th></tr>
+                        <tr><th colspan="2"><h3>${point.site}, ${i18next.t(point.country)} (${point.x})</h3></th></tr>
                         <tr><th>${i18next.t("common.dashboard.tooltip.drug")}</th><td>${i18next.t(point.drug)}</td></tr>
                         <tr><th>${i18next.t("common.dashboard.tooltip.numberOfPatients")}</th><td>${point.z}</td></tr>
                         <tr><th>${i18next.t("common.dashboard.tooltip.treatmentFailureRate")}</th><td>${

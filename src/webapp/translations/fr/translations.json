@@ -84,10 +84,10 @@
                 "second": {
                     "title": "2. Sélectionnez le pays",
                     "helper": "Sélectionnez jusqu'à 5 pays",
-                    "lastUpdate": "Dernière mise à jour des données pour cette sélection de filtre :",
+                    "lastUpdate": "Dernière mise à jour: ",
                     "cta": "Générer tableau de bord"
                 },
-                "note": "Note : Un grand nombre de points de données est nécessaire pour créer un tableau de bord. Pour cette raison, les tableaux de bord ne sont actuellement disponibles que pour deux des quatre thèmes : la résistance des vecteurs aux insecticides et l'efficacité et la résistance des médicaments antipaludiques. Les tableaux de bord continueront à se développer au fur et à mesure que des données supplémentaires seront disponibles."
+                "note": "Remarque : Les tableaux de bord ne sont actuellement disponibles que pour deux des quatre thèmes : la résistance des vecteurs aux insecticides et l'efficacité et la résistance des médicaments antipaludiques. Les tableaux de bord continueront à se développer au fur et à mesure que de nouvelles données seront disponibles."
             },
             "contentsSection": {
                 "title": "Contenu:",
@@ -140,13 +140,14 @@
                     "title": "RÉSUMÉ DES TAUX D'ÉCHEC DU TRAITEMENT PAR MÉDICAMENT",
                     "studyOutcome": "Résultat de l'étude:",
                     "numStudies": "Nombre d'études",
+                    "studies": "études",
                     "lessThan10Patients": "<10% des patients en échec thérapeutique",
                     "moreOrEqualThan10Patients": "≥10% des patients en échec thérapeutique"
                 },
                 "treatmentFailureOverTime": {
                     "title": "TAUX D'ÉCHEC DU TRAITEMENT AU FIL DU TEMPS",
                     "numberPatients": "Nombre de patients",
-                    "treatmentFailure": "Échec du traitement %",
+                    "treatmentFailure": "Échec du traitement (%)",
                     "year": "An"
                 },
                 "parasiteClearanceOverTime": {
@@ -155,14 +156,15 @@
                 }
             },
             "MolecularMarkerSection": {
-                "title": "Molecular marker studies",
+                "title": "Études de marqueurs moléculaires",
                 "molecularMarkerOverTime": {
-                    "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
-                    "legendLabel": "Percentage of samples in one study where multiple copy numbers were detected:",
-                    "numStudies": "Number of Studies",
-                    "year": "Year",
-                    "chartTitle": "Percentage of samples in one study where validated or candidate",
-                    "chartSubtitle": "molecular markers of artemisinin resistance were detected:"
+                    "title": "RÉSUMÉ DES RÉSULTATS DE L'ÉTUDE DES MARQUEURS MOLÉCULAIRES AU FIL DU TEMPS",
+                    "numStudies": "Nombre d'études",
+                    "year": "Année",
+                    "artemisininChartTitle": "Pourcentage d'échantillons dans une étude validée ou candidate",
+                    "artemisininChartSubtitle": "des marqueurs moléculaires de la résistance à l'artémisinine ont été détectés:",
+                    "mutationsChartTitle": "Études où des mutations ont été détectées dans:",
+                    "multipleChartTitle": "Études où plusieurs numéros de copie ont été détectés dans:"
                 }
             },
             "treatmentFilters": {

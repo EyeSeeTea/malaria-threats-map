@@ -9,6 +9,7 @@ import ExcludeLowerPatientsSelector from "../../../../components/filters/Exclude
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MolecularMarkerSelector from "../../../../components/filters/MolecularMarkerSelector";
+import { MolecularMarker } from "../../../../components/filters/MolecularMarkerFilter";
 
 interface TreatmentFiltersProps {
     isMolecularMarkerChart: boolean;
@@ -22,7 +23,7 @@ interface TreatmentFiltersProps {
     excludeLowerPatients: boolean;
     onPlasmodiumSpeciesChange: (value: string) => void;
     onDrugsChange: (values: string[]) => void;
-    onMolecularMarkerChange: (value: number) => void;
+    onMolecularMarkerChange: (value: MolecularMarker) => void;
     onYearsChange: (years: [number, number]) => void;
     onExcludeLowerPatientsChange: (value: boolean) => void;
     onCollapse: () => void;
@@ -115,4 +116,5 @@ const FiltersCard = styled(Card)`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    overflow: visible;
 `;

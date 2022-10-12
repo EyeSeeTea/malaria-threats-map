@@ -2,20 +2,16 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
-import { useDashboards } from "../../context/useDashboards";
 import MolecularMarkerDashboard from "./MolecularMarkerOverTimeDashboard";
 
 const MolecularMarkerStudies: React.FC = () => {
     const { t } = useTranslation();
-    const { molecularMarker } = useDashboards();
 
     return (
         <Container>
             <TitleDivider />
-            <Title>{t("common.dashboard.MolecularMarkerSection.title")}</Title>
-            {(molecularMarker === "all" || molecularMarker === "summary-molecular-marker") && (
-                <MolecularMarkerDashboard />
-            )}
+            <Title id="molecular-marker">{t("common.dashboard.MolecularMarkerSection.title")}</Title>
+            <MolecularMarkerDashboard />
         </Container>
     );
 };

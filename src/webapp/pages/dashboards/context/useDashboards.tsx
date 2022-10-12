@@ -23,17 +23,25 @@ export const useDashboards = () => {
     const onThemeChange = useCallback(
         (theme: DashboardsThemeOptions) => {
             setTheme(theme);
+
+            if (!theme) {
+                setDashboardsTreatmentStudies(undefined);
+            }
         },
-        [setTheme]
+        [setTheme, setDashboardsTreatmentStudies]
     );
 
     const onSelectedCountriesChange = useCallback(
         (selectedCountries: string[]) => {
             if (selectedCountries.length <= 5) {
                 setSelectedCountries(selectedCountries);
+
+                if (selectedCountries.length === 0) {
+                    setDashboardsTreatmentStudies(undefined);
+                }
             }
         },
-        [setSelectedCountries]
+        [setSelectedCountries, setDashboardsTreatmentStudies]
     );
 
     const onCountryContextChange = useCallback(

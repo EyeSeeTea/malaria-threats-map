@@ -5,10 +5,10 @@ import IntegrationReactSelect, { OptionType } from "../BasicSelect";
 import styled from "styled-components";
 import { Divider, FilterWrapper } from "./Filters";
 import { Typography } from "@mui/material";
-import { MOLECULAR_MARKERS } from "./MolecularMarkerFilter";
+import { MolecularMarker, MOLECULAR_MARKERS } from "./MolecularMarkerFilter";
 
 type DrugsSelectorProps = {
-    onChange: (selection: number) => void;
+    onChange: (selection: MolecularMarker) => void;
     value: number;
     multi?: boolean;
     background?: string;

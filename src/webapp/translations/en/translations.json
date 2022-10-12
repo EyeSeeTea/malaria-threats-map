@@ -84,15 +84,15 @@
                 "second": {
                     "title": "2. Select Country",
                     "helper": "Select up to 5 countries",
-                    "lastUpdate": "Last data update for this filter selection:",
+                    "lastUpdate": "Last update: ",
                     "cta": "Generate Dashboard"
                 },
-                "note": "Note: A large number of data points are needed to create a dashboard. For this reason, dashboards are currently only available for two of the four themes: vector insecticide resistance and antimalarial drug efficacy and resistance. Dashboards will continue to develop as more data becomes available."
+                "note": "Note: Dashboards are currently only available for two of the four themes: vector insecticide resistance and antimalarial drug efficacy and resistance. Dashboards will continue to develop as more data becomes available."
             },
             "contentsSection": {
                 "title": "Contents:",
                 "countryOptions": {
-                    "countryContext": "Country Context",
+                    "countryContext": "Country context",
                     "epidemiologicalProfile": "Epidemiological profile",
                     "majorPlasmodium": "Major Plasmodium species and treatment regimen"
                 },
@@ -110,11 +110,11 @@
             "countryContextSection": {
                 "title": "Country Context",
                 "source": "Source:",
-                "whoWorldMalariaReport": "Who World malaria report 2021",
+                "whoWorldMalariaReport": "WHO. World malaria report 2021",
                 "epidemiologicalProfile": {
                     "title": "EPIDEMIOLOGICAL PROFILE",
                     "country": "Country",
-                    "year": "year",
+                    "year": "Year",
                     "transmission": " Population living in high transmission, low transmission and malaria-free areas",
                     "burdenEstimates": "Burden estimates",
                     "highTransmission": "High transmission",
@@ -140,13 +140,14 @@
                     "title": "SUMMARY OF TREATMENT FAILURE RATES BY DRUG",
                     "studyOutcome": "Study outcome:",
                     "numStudies": "Number of studies",
+                    "studies": "studies",
                     "lessThan10Patients": "<10% of patients with treatment failure",
                     "moreOrEqualThan10Patients": "≥10% of patients with treatment failure"
                 },
                 "treatmentFailureOverTime": {
                     "title": "TREATMENT FAILURE RATES OVER TIME",
                     "numberPatients": "Number of Patients",
-                    "treatmentFailure": "Treatment Failure %",
+                    "treatmentFailure": "Treatment failure (%)",
                     "year": "Year"
                 },
                 "parasiteClearanceOverTime": {
@@ -158,11 +159,12 @@
                 "title": "Molecular marker studies",
                 "molecularMarkerOverTime": {
                     "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
-                    "legendLabel": "Percentage of samples in one study where multiple copy numbers were detected:",
-                    "numStudies": "Number of Studies",
+                    "numStudies": "Number of studies",
                     "year": "Year",
-                    "chartTitle": "Percentage of samples in one study where validated or candidate",
-                    "chartSubtitle": "molecular markers of artemisinin resistance were detected:"
+                    "artemisininChartTitle": "Percentage of samples in one study where validated or candidate",
+                    "artemisininChartSubtitle": "molecular markers of artemisinin resistance were detected:",
+                    "mutationsChartTitle": "Studies where mutations were detected in:",
+                    "multipleChartTitle": "Studies where multiple copy numbers were detected in:"
                 }
             },
             "treatmentFilters": {

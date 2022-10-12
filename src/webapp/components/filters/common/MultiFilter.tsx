@@ -6,7 +6,7 @@ import { sendMultiFilterAnalytics } from "../../../utils/analytics";
 import { Typography } from "@mui/material";
 
 type Props = {
-    label: string;
+    label?: string;
     options: Option[];
     placeholder?: string;
     onChange: (selection: string[]) => void;
@@ -28,7 +28,7 @@ function MultiFilter({ label, options, onChange, value, analyticsMultiFilterActi
 
     return (
         <FilterRowContainer onlyYMargin={onlyYMargin}>
-            {selections && selections.length > 0 && (
+            {label && selections && selections.length > 0 && (
                 <Typography component="legend" variant="body2">
                     {`${label}:`}&nbsp;
                 </Typography>

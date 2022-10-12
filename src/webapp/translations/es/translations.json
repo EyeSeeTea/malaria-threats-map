@@ -84,10 +84,10 @@
                 "second": {
                     "title": "2. Seleccionar país",
                     "helper": "Seleccione hasta 5 países",
-                    "lastUpdate": "Última actualización de datos para esta selección de filtro:",
+                    "lastUpdate": "Última actualización: ",
                     "cta": "Generar Tablero"
                 },
-                "note": "Nota: Se necesita un gran número de puntos de datos para crear un cuadro de mando. Por esta razón, los tableros sólo están disponibles para dos de los cuatro temas: la resistencia a los insecticidas vectoriales y la eficacia y resistencia a los medicamentos antipalúdicos. Los cuadros de mando seguirán desarrollándose a medida que se disponga de más datos."
+                "note": "Nota: Actualmente, los tableros solo están disponibles para dos de los cuatro temas: resistencia a los insecticidas de vectores y eficacia y resistencia a los medicamentos antipalúdicos. Los tableros continuarán desarrollándose a medida que haya más datos disponibles."
             },
             "contentsSection": {
                 "title": "Contenidos:",
@@ -140,13 +140,14 @@
                     "title": "RESUMEN DE LAS TASAS DE FRACASO DEL TRATAMIENTO POR FÁRMACO",
                     "studyOutcome": "Resultado del estudio:",
                     "numStudies": "Número de estudios",
+                    "studies": "estudios",
                     "lessThan10Patients": "<10% de pacientes con fracaso del tratamiento",
                     "moreOrEqualThan10Patients": "≥10% de los pacientes con fracaso del tratamiento"
                 },
                 "treatmentFailureOverTime": {
                     "title": "TASAS DE FRACASO DEL TRATAMIENTO A LO LARGO DEL TIEMPO",
                     "numberPatients": "Número de Pacientes",
-                    "treatmentFailure": "Fracaso del tratamiento %",
+                    "treatmentFailure": "Fracaso del tratamiento (%)",
                     "year": "Año"
                 },
                 "parasiteClearanceOverTime": {
@@ -155,14 +156,15 @@
                 }
             },
             "MolecularMarkerSection": {
-                "title": "Molecular marker studies",
+                "title": "Estudios de marcadores moleculares",
                 "molecularMarkerOverTime": {
-                    "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
-                    "legendLabel": "Percentage of samples in one study where multiple copy numbers were detected:",
-                    "numStudies": "Number of Studies",
-                    "year": "Year",
-                    "chartTitle": "Percentage of samples in one study where validated or candidate",
-                    "chartSubtitle": "molecular markers of artemisinin resistance were detected:"
+                    "title": "RESULTADOS DEL ESTUDIO DE MARCADORES MOLECULARES A LO LARGO DEL TIEMPO",
+                    "numStudies": "Número de estudios",
+                    "year": "Año",
+                    "artemisininChartTitle": "Porcentaje de muestras en un estudio donde se detectaron marcadores",
+                    "artemisininChartSubtitle": "moleculares validados o candidatos de resistencia a la artemisinina:",
+                    "mutationsChartTitle": "Estudios donde se detectaron mutaciones en:",
+                    "multipleChartTitle": "Estudios en los que se detectaron varios números de copia en:"
                 }
             },
             "treatmentFilters": {
