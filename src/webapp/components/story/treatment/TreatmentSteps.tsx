@@ -1,7 +1,10 @@
-import TreatmentStep1 from "./TreatmentStep1";
-import TreatmentStep2 from "./TreatmentStep2";
-import TreatmentStep3 from "./TreatmentStep3";
-import TreatmentStep4 from "./TreatmentStep4";
+import { createStoryStep } from "../create-story-step";
 
-const TreatmentSteps = [TreatmentStep1, TreatmentStep2, TreatmentStep3, TreatmentStep4];
+const TreatmentSteps = [
+    "treatmentStory_step1",
+    "treatmentStory_step2",
+    "treatmentStory_step3",
+    "treatmentStory_step4",
+].map(createStoryStep);
+
 export default TreatmentSteps;

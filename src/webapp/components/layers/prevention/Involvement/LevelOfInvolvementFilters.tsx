@@ -11,7 +11,7 @@ export default function LevelOfInvolvementFilters() {
             <ProxyTypeFilter />
             <SynergistTypeFilter />
             <SpeciesFilter />
-            <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
+            <YearRangeSelector />
         </div>
     );
 }

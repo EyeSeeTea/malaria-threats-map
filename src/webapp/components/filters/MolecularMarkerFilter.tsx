@@ -63,12 +63,16 @@ function MolecularMarkerFilter({ treatmentFilters, setMolecularMarker, logEventA
         label: t(marker.label),
     }));
 
+    const value = React.useMemo(() => {
+        return MOLECULAR_MARKERS.find(marker => marker.value === treatmentFilters.molecularMarker)?.label;
+    }, [treatmentFilters]);
+
     return (
         <RadioGroupFilter
             label={t("common.filters.molecular_marker")}
             options={options}
             handleChange={handleChange}
-            value={MOLECULAR_MARKERS.find(marker => marker.value === treatmentFilters.molecularMarker).label}
+            value={value}
         />
     );
 }

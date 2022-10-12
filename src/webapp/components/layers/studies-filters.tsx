@@ -126,7 +126,7 @@ export const filterByCountries = (countries: string[]) => (study: any) => {
 };
 
 export const filterByInsecticideClass = (insecticideClass: string) => (study: any) => {
-    return !study.INSECTICIDE_CLASS || study.INSECTICIDE_CLASS === insecticideClass;
+    return !insecticideClass || study.INSECTICIDE_CLASS === insecticideClass;
 };
 
 export const filterByInsecticideClasses = (insecticideClasses: string[]) => (study: any) => {
@@ -180,7 +180,7 @@ export const filterByDimensionId = (dimensionId: number) => (study: any) => {
 };
 
 export const filterByPlasmodiumSpecies = (plasmodiumSpecies: string) => (study: any) => {
-    return study.PLASMODIUM_SPECIES === plasmodiumSpecies;
+    return !plasmodiumSpecies || study.PLASMODIUM_SPECIES === plasmodiumSpecies;
 };
 
 export const filterByManyPlasmodiumSpecies = (plasmodiumSpecies: string[]) => (study: any) => {
@@ -188,7 +188,7 @@ export const filterByManyPlasmodiumSpecies = (plasmodiumSpecies: string[]) => (s
 };
 
 export const filterByDrug = (drug: string) => (study: any) => {
-    return study.DRUG_NAME === drug;
+    return !drug || study.DRUG_NAME === drug;
 };
 
 export const filterByDrugs = (drugs: string[]) => (study: any) => {
@@ -375,6 +375,7 @@ function buildTreatmentFiltersByDownload(treatmentFilters: TreatmentFilters, fil
                 filterByMolecularMarker(treatmentFilters.molecularMarker),
                 filterByYearRange(filters),
                 filterByYearRange(filters),
+                filterByRegion(region),
             ];
         default:
             return [];

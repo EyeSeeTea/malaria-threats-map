@@ -9,6 +9,7 @@ import { useTreatmentFailureByDrug } from "./useTreatmentFailureByDrug";
 import More from "highcharts/highcharts-more";
 import TreatmentFilterableDashboard from "../TreatmentFilterableDashboard";
 import i18next from "i18next";
+import { ChartStyles } from "../../../../components/charts/Style";
 
 More(Highcharts);
 const TreatmentFailureByDrugDashboard: React.FC = () => {
@@ -187,6 +188,9 @@ function chartOptions(
             marginTop: 0,
             marginRight: 0,
             marginLeft: firstChart ? undefined : 0,
+            style: {
+                ...ChartStyles,
+            },
         },
         title: {
             text: "",

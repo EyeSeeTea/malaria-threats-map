@@ -10,6 +10,7 @@ import { Typography } from "@mui/material";
 import { MolecularChartSerie } from "./types";
 import { MolecularMarker } from "../../../../components/filters/MolecularMarkerFilter";
 import styled from "styled-components";
+import { ChartStyles } from "../../../../components/charts/Style";
 
 More(Highcharts);
 const MolecularMarkerDashboard: React.FC = () => {
@@ -127,6 +128,9 @@ function chartOptions(
         chart: {
             type: "column",
             height: 550,
+            style: {
+                ...ChartStyles,
+            },
         },
         title: {
             useHTML: true,

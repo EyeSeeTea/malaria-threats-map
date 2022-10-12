@@ -68,13 +68,13 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(1, 2),
         },
         singleValue: {
-            fontSize: 16,
+            fontSize: 14,
         },
         placeholder: {
             position: "absolute",
             left: 2,
             bottom: 6,
-            fontSize: 16,
+            fontSize: 14,
         },
         paper: {
             position: "absolute",

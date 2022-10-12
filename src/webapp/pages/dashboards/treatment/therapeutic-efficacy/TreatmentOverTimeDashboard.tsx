@@ -8,6 +8,7 @@ import HighchartsReact from "highcharts-react-official";
 import More from "highcharts/highcharts-more";
 import TreatmentFilterableDashboard from "../TreatmentFilterableDashboard";
 import i18next from "i18next";
+import { ChartStyles } from "../../../../components/charts/Style";
 
 More(Highcharts);
 
@@ -80,10 +81,8 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
         chart: {
             type: "bubble",
             height: "600px",
-            events: {
-                load() {
-                    setTimeout(this.reflow.bind(this), 0);
-                },
+            style: {
+                ...ChartStyles,
             },
         },
         plotOptions: {
