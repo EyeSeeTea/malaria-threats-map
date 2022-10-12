@@ -22,7 +22,7 @@ const TitleContainer = styled.div`
     font-weight: lighter;
     font-size: 8vw;
     padding-left: 10px;
-    max-width: 78%;
+    max-width: 55%;
     @media (max-width: 768px) {
         max-width: 100%;
     }
@@ -51,6 +51,10 @@ const StyledPaper = styled(Paper)`
     border-radius: 10px;
     box-shadow: 2;
     padding: 10px;
+    @media (max-width: 768px) {
+        bottom: 5px;
+        right: 5px;
+    }
 `;
 
 const ThemeImage = ({ theme }: { theme: ThemeType }) => {
@@ -78,36 +82,20 @@ export const StoriesPage: React.FC = () => {
 
     return (
         <Layout>
-            <ImageBanner bgColor1="#5ABE86" bgColor2="#5abe8574">
+            <ImageBanner bgColor1="#5ABE86" bgColor2="#5abe8574" minHeight="380px">
                 <Grid container spacing={3} height="100%">
-                    <Grid
-                        item
-                        xs={4}
-                        display="flex"
-                        justifyContent={"right"}
-                        height={{ xs: "90%", sm: "100%", md: "110%" }}
-                    >
+                    <Grid item xs={4} display="flex" justifyContent={"right"} paddingLeft="0px !important">
                         <ThemeImage theme={searchParams.get("theme") as ThemeType} />
                     </Grid>
                     <Grid item xs={8} display="flex" justifyContent={"left"} paddingLeft="10px">
                         <TitleContainer>
                             <Stack gap={{ xs: 1, sm: 2, lg: 3 }}>
-                                <Typography
-                                    fontSize={{ xs: "20px", sm: "30px", md: "40px", lg: "45px", xl: "55px" }}
-                                    component="h1"
-                                    color="white"
-                                    textTransform="uppercase"
-                                >
+                                <Typography component="h1" variant="h4" color="white" textTransform="uppercase">
                                     <Trans i18nKey={t(`common.storiesPage.${searchParams.get("theme")}.title`)} t={t}>
                                         {t(`common.storiesPage.${searchParams.get("theme")}.title`)}
                                     </Trans>
                                 </Typography>
-                                <Typography
-                                    fontSize={{ xs: "14px", sm: "20px", xl: "30px" }}
-                                    component="h4"
-                                    color="white"
-                                    fontWeight={"medium"}
-                                >
+                                <Typography component="h4" variant="h6" color="white" fontWeight={"medium"}>
                                     {t(`common.storiesPage.${searchParams.get("theme")}.description`)}
                                 </Typography>
                             </Stack>
@@ -137,26 +125,26 @@ export const StoriesPage: React.FC = () => {
                     <div style={{ position: "relative" }}>
                         <MapImage src={Map} alt="map" />
                         <StyledPaper>
-                            <Stack spacing={{ xs: 1, md: 2 }}>
-                                <Typography fontSize={{ xs: "10px", md: "12px" }} fontWeight="bold">
+                            <Stack spacing={{ xs: 0, md: 2 }}>
+                                <Typography variant="caption" fontWeight="bold">
                                     {t(`common.prevention.resistance_status`)}
                                 </Typography>
                                 <Stack>
                                     <Stack direction={"row"} spacing={1} alignItems="center">
                                         <CircleIcon sx={{ color: "#869C66", fontSize: 10 }} />
-                                        <Typography fontSize={{ xs: "9px", md: "11px" }}>
+                                        <Typography variant="caption">
                                             {t(`common.prevention.legend.resistance_status.confirmed`)}
                                         </Typography>
                                     </Stack>
                                     <Stack direction={"row"} spacing={1} alignItems="center">
                                         <CircleIcon sx={{ color: "#FD9225", fontSize: 10 }} />
-                                        <Typography fontSize={{ xs: "9px", md: "11px" }}>
+                                        <Typography variant="caption">
                                             {t(`common.prevention.legend.resistance_status.possible`)}
                                         </Typography>
                                     </Stack>
                                     <Stack direction={"row"} spacing={1} alignItems="center">
                                         <CircleIcon sx={{ color: "#E41517", fontSize: 10 }} />
-                                        <Typography fontSize={{ xs: "9px", md: "11px" }}>
+                                        <Typography variant="caption">
                                             {t(`common.prevention.legend.resistance_status.susceptible`)}
                                         </Typography>
                                     </Stack>
