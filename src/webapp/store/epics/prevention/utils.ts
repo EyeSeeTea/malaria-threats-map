@@ -33,9 +33,11 @@ export function createPreventionSelectionData(
 
     const siteNonFilteredStudies = nonFilteredStudies.filter(study => study.SITE_ID === selection.SITE_ID);
 
-    const dataSources = createCitationDataSources(theme, siteFilteredStudies);
+    const sortedStudies = _.orderBy(siteFilteredStudies, study => +study.YEAR_START, "desc");
 
-    const speciesOptions = R.uniq(R.map(s => s.SPECIES, siteFilteredStudies));
+    const dataSources = createCitationDataSources(theme, sortedStudies);
+
+    const speciesOptions = R.uniq(R.map(s => s.SPECIES, sortedStudies));
     const speciesFilterOptions: Option[] = speciesOptions.map((specie: string) => ({
         label: specie,
         value: specie,
@@ -43,21 +45,21 @@ export function createPreventionSelectionData(
 
     const speciesSelection = speciesFilter || speciesFilterOptions;
 
-    const studyObject = siteFilteredStudies[0];
+    const studyObject = sortedStudies[0];
 
     return {
-        title: siteFilteredStudies.length > 0 ? getSiteTitle(theme, siteFilteredStudies[0]) : "",
+        title: sortedStudies.length > 0 ? getSiteTitle(theme, sortedStudies[0]) : "",
         subtitle: i18next.t(studyObject?.ASSAY_TYPE),
         filterOptions: speciesFilterOptions,
         filterSelection: speciesSelection,
         studyObject,
         data:
             mapType === PreventionMapType.RESISTANCE_MECHANISM
-                ? createPreventionMechanismChartData(dataSources, siteFilteredStudies, speciesSelection)
-                : createPreventionChartData(mapType, dataSources, siteFilteredStudies, speciesSelection),
+                ? createPreventionMechanismChartData(dataSources, sortedStudies, speciesSelection)
+                : createPreventionChartData(mapType, dataSources, sortedStudies, speciesSelection),
         dataSources: dataSources,
-        curations: createCurations(dataSources, siteFilteredStudies),
-        othersDetected: otherDetected(mapType, siteFilteredStudies, siteNonFilteredStudies),
+        curations: createCurations(dataSources, sortedStudies),
+        othersDetected: otherDetected(mapType, sortedStudies, siteNonFilteredStudies),
     };
 }
 
