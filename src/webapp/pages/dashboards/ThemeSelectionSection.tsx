@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { Button, Grid, ToggleButton, ToggleButtonGroup, Typography, Stack } from "@mui/material";
 import { PreventionIcon, TreatmentIcon } from "../../components/Icons";
@@ -7,18 +7,47 @@ import { useTranslation } from "react-i18next";
 import { Option } from "../../components/BasicSelect";
 import { DashboardsThemeOptions } from "./types";
 import { useDashboards } from "./context/useDashboards";
+import { State } from "../../store/types";
+import { selectCountries } from "../../store/reducers/country-layer-reducer";
+import { fetchCountryLayerRequest } from "../../store/actions/country-layer-actions";
+import { connect } from "react-redux";
 
-const ThemeSelectionSection: React.FC = () => {
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+type Props = DispatchProps & StateProps;
+
+const mapStateToProps = (state: State) => ({
+    countries: selectCountries(state),
+});
+
+const mapDispatchToProps = {
+    fetchCountryLayer: fetchCountryLayerRequest,
+};
+
+const capitalize = (country: String) => {
+    const countryArray = country.split(" ");
+    for (let i = 0; i < countryArray.length; i++) {
+        countryArray[i] = countryArray[i].charAt(0).toUpperCase() + countryArray[i].substring(1).toLowerCase();
+    }
+    return countryArray.join(" ");
+};
+
+const ThemeSelectionSection = ({ countries, fetchCountryLayer }: Props) => {
     const { t } = useTranslation();
 
     const { theme, selectedCountries, updatedDates, onThemeChange, onSelectedCountriesChange, onGenerate } =
         useDashboards();
 
-    const baseCountries = t("countries", { returnObjects: true });
-    const countrySuggestions: Option[] = Object.entries(baseCountries).map(([iso, name]) => ({
-        label: name,
-        value: iso,
-    }));
+    const countrySuggestions: Option[] = countries
+        .filter(({ ENDEMICITY }) => ENDEMICITY === 1)
+        .map(({ ADM0_NAME, ISO_2_CODE }) => ({
+            label: capitalize(ADM0_NAME),
+            value: ISO_2_CODE,
+        }));
+
+    useEffect(() => {
+        fetchCountryLayer();
+    }, [fetchCountryLayer]);
 
     const handleThemeChange = useCallback(
         (_event: React.MouseEvent<HTMLElement>, value: any) => {
@@ -95,7 +124,7 @@ const ThemeSelectionSection: React.FC = () => {
     );
 };
 
-export default React.memo(ThemeSelectionSection);
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(ThemeSelectionSection));
 
 type ThemeButtonProps = {
     theme: DashboardsThemeOptions;
