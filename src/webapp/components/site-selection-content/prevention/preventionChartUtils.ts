@@ -22,6 +22,7 @@ export const preventionBarChartOptions: (
             ...ChartStyles,
         },
         marginLeft: maptype === PreventionMapType.LEVEL_OF_INVOLVEMENT ? 265 : 210,
+        marginRight: 60,
     },
     title: {
         text: showTitle
@@ -56,6 +57,8 @@ export const preventionBarChartOptions: (
     plotOptions: {
         bar: {
             dataLabels: {
+                crop: false,
+                overflow: "allow",
                 formatter: function () {
                     // @ts-ignore
                     return `${this.y}% (${this.point.number})`;
