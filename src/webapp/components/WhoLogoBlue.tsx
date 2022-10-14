@@ -6,11 +6,11 @@ import styled from "styled-components";
 
 const StyledImage = styled.img`
     width: 100%;
-    max-height: 50px;
+    height: auto;
 `;
 
 const StyledEnglishImage = styled(StyledImage)`
-    max-width: 150px;
+    max-width: 200px;
 `;
 
 const StyledSpanFrenImage = styled(StyledImage)`

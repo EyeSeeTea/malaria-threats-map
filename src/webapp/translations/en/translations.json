@@ -311,11 +311,9 @@
             },
             "other_who_resources": {
                 "title": "Other WHO resources",
-                "resource1": "WHO insecticide resistance monitoring",
-                "resource2": "WHO malaria drug efficacy and resistance",
-                "resource3": "WHO malaria RDT guidelines",
-                "resource4": "WHO malaria guidelines",
-                "resource5": "WHO World malaria report"
+                "resource1": "WHO malaria guidelines",
+                "resource2": "WHO World malaria report",
+                "resource3": "WHO Malaria threats map"
             },
             "about_who_gmp": {
                 "title": "About WHO GMP",
@@ -823,9 +821,7 @@
         "p3aLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions",
         "p3b": "Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses.",
         "p4a": "The following citation shall be conspicuously provided alongside images or files generated from the application.",
-        "p4b": "Source: ",
-        "p4bLink": "https://www.who.int/malaria/maps/threats/",
-        "p4bLinkText": "WHO Malaria Threats Map.",
+        "p4b": "Source: WHO Malaria Threats Map.",
         "p5a": "For further information, please contact: ",
         "p5aLink": "mailto:gmp-maps@who.int",
         "p5aLinkText": "gmp-maps@who.int"
