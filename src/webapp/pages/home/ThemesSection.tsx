@@ -113,7 +113,7 @@ const ThemesSection: React.FC<Props> = ({
                 altText: "Prevention Icon",
                 color: "#5ABE86",
                 colorOpaque: "rgb(90, 190, 134, 0.9)",
-                lastUpdated: loading ? undefined : lastUpdatedDates["prevention"].toLocaleDateString(),
+                lastUpdated: loading ? undefined : lastUpdatedDates["prevention"]?.toLocaleDateString(),
                 numStudies: loading ? undefined : preventionStudies.length,
             },
             {
@@ -123,7 +123,7 @@ const ThemesSection: React.FC<Props> = ({
                 altText: "Invasive Icon",
                 color: "#5CC579",
                 colorOpaque: "rgb(92, 197, 121, 0.9)",
-                lastUpdated: loading ? undefined : lastUpdatedDates["invasive"].toLocaleDateString(),
+                lastUpdated: loading ? undefined : lastUpdatedDates["invasive"]?.toLocaleDateString(),
                 numStudies: loading ? undefined : invasiveStudies.length,
             },
             {
@@ -133,7 +133,7 @@ const ThemesSection: React.FC<Props> = ({
                 altText: "Invasive Icon",
                 color: "#5CCDCE",
                 colorOpaque: "rgb(92, 205, 206, 0.9)",
-                lastUpdated: loading ? undefined : lastUpdatedDates["treatment"].toLocaleDateString(),
+                lastUpdated: loading ? undefined : lastUpdatedDates["treatment"]?.toLocaleDateString(),
                 numStudies: loading ? undefined : treatmentStudies.length,
             },
             {
@@ -143,7 +143,7 @@ const ThemesSection: React.FC<Props> = ({
                 altText: "Diagnosis Icon",
                 color: "#1899CC",
                 colorOpaque: "rgb(24, 153, 204, 0.9)",
-                lastUpdated: loading ? undefined : lastUpdatedDates["diagnosis"].toLocaleDateString(),
+                lastUpdated: loading ? undefined : lastUpdatedDates["diagnosis"]?.toLocaleDateString(),
                 numStudies: loading ? undefined : diagnosisStudies.length,
             },
         ],

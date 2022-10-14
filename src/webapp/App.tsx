@@ -33,6 +33,17 @@ export const theme = responsiveFontSizes(
                 A100: "#e0e0e0",
             },
         },
+        typography: {
+            fontFamily: [
+                '"Source Sans Pro"',
+                "-apple-system",
+                "BlinkMacSystemFont",
+                '"Segoe UI"',
+                "Oxygen",
+                '"Helvetica Neue"',
+                "sans-serif",
+            ].join(","),
+        },
         components: {
             MuiCssBaseline: {
                 styleOverrides: {

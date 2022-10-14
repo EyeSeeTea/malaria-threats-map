@@ -13,7 +13,7 @@ const initialState: PreventionState = Object.freeze({
     filters: {
         mapType: PreventionMapType.RESISTANCE_STATUS,
         dataset: "DISCRIMINATING_CONCENTRATION_BIOASSAY",
-        insecticideClass: "PYRETHROIDS",
+        insecticideClass: null,
         insecticideTypes: [],
         synergistTypes: [],
         assayTypes: [],
@@ -45,7 +45,7 @@ function updatePreventionDataSet(dataset: PreventionDataset) {
 }
 
 function updateInsecticideClass(insecticideClass: string) {
-    return updateFilter("insecticideClass", insecticideClass, "PYRETHROIDS");
+    return updateFilter("insecticideClass", insecticideClass);
 }
 
 function updateInsecticideTypes(insecticideTypes: string[]) {

@@ -4,10 +4,17 @@ import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material"
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Trans } from "react-i18next";
+import makeStyles from "@mui/styles/makeStyles";
 
 interface DirectionProps {
     flexDirection: "column" | "row";
 }
+
+const useStyles = makeStyles({
+    popOverRoot: {
+        pointerEvents: "none",
+    },
+});
 
 const MenuItemContainer = styled.div<DirectionProps>`
     margin-right: ${({ flexDirection }) => (flexDirection === "row" ? "80px" : "0px")};
@@ -70,7 +77,7 @@ const StyledMenuItem = styled(MenuItem).withConfig({
         font-weight: 400;
         text-align: left;
         text-transform: none;
-        font: normal normal medium 14px/25px "Roboto";
+        font: normal normal medium 14px/25px "Source Sans Pro";
         font-size: 14px;
         letter-spacing: 0.45px;
         color: #343434;
@@ -116,14 +123,35 @@ interface SimpleMenuProps extends DirectionProps {
 }
 
 const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection, t }) => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const navigate = useNavigate();
+    const styles = useStyles();
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    let currentlyHovering = false;
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         if (anchorEl !== event.currentTarget) {
             setAnchorEl(event.currentTarget);
         }
     };
+
+    const handleCloseHover = () => {
+        currentlyHovering = false;
+        setTimeout(() => {
+            if (!currentlyHovering) {
+                handleClose();
+            }
+        }, 50);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleHover = () => {
+        currentlyHovering = true;
+    };
+
     switch (menu.kind) {
         case "simple-menu":
             return (
@@ -143,6 +171,7 @@ const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection, t }) => {
                             aria-expanded={Boolean(anchorEl) === true ? "true" : undefined}
                             onClick={handleClick}
                             onMouseOver={handleClick}
+                            onMouseLeave={handleCloseHover}
                             endIcon={menu.submenus && <KeyboardArrowDownIcon />}
                         >
                             {menu.name}
@@ -151,12 +180,19 @@ const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection, t }) => {
                     <Menu
                         anchorEl={anchorEl}
                         open={Boolean(anchorEl)}
-                        onClose={() => setAnchorEl(null)}
+                        onClose={handleClose}
                         variant={"selectedMenu"}
                         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                         transformOrigin={{ vertical: "top", horizontal: "center" }}
-                        MenuListProps={{ onMouseLeave: () => setAnchorEl(null) }}
+                        MenuListProps={{
+                            onMouseEnter: handleHover,
+                            onMouseLeave: handleCloseHover,
+                            style: { pointerEvents: "auto" },
+                        }}
                         PaperProps={{ style: StyledMenu }}
+                        PopoverClasses={{
+                            root: styles.popOverRoot,
+                        }}
                     >
                         {menu.submenus &&
                             menu.submenus.map((submenu, index) => {
@@ -167,7 +203,7 @@ const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection, t }) => {
                                                 key={index}
                                                 onClick={() => {
                                                     navigate(submenu.path);
-                                                    setAnchorEl(null);
+                                                    handleClose();
                                                 }}
                                                 hoverPaddingRight={menu.hoverPaddingRight}
                                             >

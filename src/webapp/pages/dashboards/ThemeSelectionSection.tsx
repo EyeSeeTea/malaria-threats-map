@@ -62,7 +62,6 @@ const ThemeSelectionSection: React.FC = () => {
                         <Stack>
                             <SectionTitle>{t("common.dashboard.filtersSection.second.title")}</SectionTitle>
                             <MultiFilter
-                                label={t("common.filters.select_country")}
                                 placeholder={t("common.filters.select_country")}
                                 options={countrySuggestions}
                                 onChange={onSelectedCountriesChange}
@@ -73,16 +72,18 @@ const ThemeSelectionSection: React.FC = () => {
                                 {t("common.dashboard.filtersSection.second.helper")}
                             </Typography>
                             <StyledGenerateButton
-                                disabled={selectedCountries.length === 0 || theme === "prevention"}
+                                disabled={selectedCountries.length === 0 || theme === undefined}
                                 onClick={onGenerate}
                             >
                                 Generate Dashboard
                             </StyledGenerateButton>
-                            <Typography variant="caption" fontSize={"12px"} textAlign="right">
-                                {`${t("common.dashboard.filtersSection.second.lastUpdate")} ${
-                                    updatedDates[theme]?.toLocaleDateString() || ""
-                                }`}
-                            </Typography>
+                            {updatedDates[theme] && (
+                                <Typography variant="caption" fontSize={"12px"} textAlign="right">
+                                    {`${t("common.dashboard.filtersSection.second.lastUpdate")} ${
+                                        updatedDates[theme]?.toLocaleDateString() || ""
+                                    }`}
+                                </Typography>
+                            )}
                         </Stack>
                     </Grid>
                 </Grid>

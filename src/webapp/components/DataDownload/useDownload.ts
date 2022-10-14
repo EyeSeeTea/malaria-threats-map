@@ -13,6 +13,7 @@ import { ActionCreatorTypeMetadata, PayloadActionCreator } from "typesafe-action
 import { ActionTypeEnum } from "../../store/actions";
 import { Source } from "../../store/actions/base-actions";
 import { emailRegexp } from "../../../domain/common/regex";
+import { ActionGroup } from "../../store/types";
 
 export function useDownload(
     logEvent: any,
@@ -26,7 +27,8 @@ export function useDownload(
     }) &
         ActionCreatorTypeMetadata<ActionTypeEnum.MalariaSetTheme>,
     setPreventionDataset: PayloadActionCreator<ActionTypeEnum.SetPreventionDataset, string>,
-    addDownload: PayloadActionCreator<ActionTypeEnum.AddDownloadRequest, Download>
+    addDownload: PayloadActionCreator<ActionTypeEnum.AddDownloadRequest, Download>,
+    setActionGroupSelected: PayloadActionCreator<ActionTypeEnum.MalariaActionGroupSelected, ActionGroup>
 ) {
     const [activeStep, setActiveStep] = React.useState(0);
     const [downloading, setDownloading] = React.useState(false);
@@ -61,6 +63,8 @@ export function useDownload(
 
     const onChangeSelectedDatabases = (databases: DatabaseSelection[]) => {
         setSelectedDatabases(databases);
+        setTheme("prevention", "download");
+        setActionGroupSelected("THEME");
     };
 
     const handleNext = () => {

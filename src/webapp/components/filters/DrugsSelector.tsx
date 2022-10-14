@@ -43,7 +43,7 @@ const DrugsSelector: React.FC<DrugsSelectorProps> = ({
         if (Array.isArray(selected)) {
             onChange(selected.map(v => v.value));
         } else {
-            onChange(selected?.value);
+            onChange([selected?.value]);
         }
     };
 

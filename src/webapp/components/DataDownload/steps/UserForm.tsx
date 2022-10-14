@@ -4,7 +4,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { FullCountry } from "../filters/FullCountriesSelector";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+
 import { UserInfo } from "../types";
 import { emailRegexp } from "../../../../domain/common/regex";
 
@@ -139,13 +139,15 @@ const UserForm = ({ onChange, userInfo }: Props) => {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <Trans i18nKey="common.data_download.personal_step.message" t={t}>
-                        WHO is keen to improve the global databases and Malaria Threats Map to better serve the needs of
-                        our user community. Hence, WHO would like to engage with our user community to collect
-                        suggestions for improvement and to learn from different use cases and benefits that these
-                        products bring to them. If you would like to share feedback, you can do so{" "}
-                        <NavLink to="/contact">here</NavLink>.
-                    </Trans>
+                    <Typography variant="body1" lineHeight={2}>
+                        <Trans i18nKey="common.data_download.personal_step.message" t={t}>
+                            WHO is keen to improve the global databases and Malaria Threats Map to better serve the
+                            needs of our user community. Hence, WHO would like to engage with our user community to
+                            collect suggestions for improvement and to learn from different use cases and benefits that
+                            these products bring to them. If you would like to share feedback, you can do so{" "}
+                            <a href="/contact">here</a>.
+                        </Trans>
+                    </Typography>
                 </Grid>
 
                 <Grid item xs={12}>

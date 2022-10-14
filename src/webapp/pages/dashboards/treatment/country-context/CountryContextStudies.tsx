@@ -2,26 +2,20 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
-import { useDashboards } from "../../context/useDashboards";
 import CountryContextDataProvider from "./context/CountryContextDataProvider";
 import MolecularMarkerDashboard from "./EpidemiologicalProfileDashboard";
 import MajorPlamociumSpeciesDashboard from "./MajorPlamociumSpeciesDashboard";
 
 const CountryContextStudies: React.FC = () => {
     const { t } = useTranslation();
-    const { countryContext } = useDashboards();
 
     return (
         <CountryContextDataProvider>
             <Container>
-                <TitleDivider />
+                <TitleDivider id="country-context" />
                 <Title>{t("common.dashboard.countryContextSection.title")}</Title>
-                {(countryContext === "all" || countryContext === "epidemiological-profile") && (
-                    <MolecularMarkerDashboard />
-                )}
-                {(countryContext === "all" || countryContext === "major-plasmodium") && (
-                    <MajorPlamociumSpeciesDashboard />
-                )}
+                <MolecularMarkerDashboard />
+                <MajorPlamociumSpeciesDashboard />
             </Container>
         </CountryContextDataProvider>
     );

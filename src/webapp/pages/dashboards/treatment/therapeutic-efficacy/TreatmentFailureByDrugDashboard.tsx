@@ -8,6 +8,8 @@ import { treatmentByDrugColors, TreatmentFailureSeriesItem } from "./types";
 import { useTreatmentFailureByDrug } from "./useTreatmentFailureByDrug";
 import More from "highcharts/highcharts-more";
 import TreatmentFilterableDashboard from "../TreatmentFilterableDashboard";
+import i18next from "i18next";
+import { ChartStyles } from "../../../../components/charts/Style";
 
 More(Highcharts);
 const TreatmentFailureByDrugDashboard: React.FC = () => {
@@ -56,7 +58,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
             onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
             onMolecularMarkerChange={onMolecularMarkerChange}
         >
-            <Stack direction="column" alignItems="center">
+            <Stack direction="column" alignItems="center" id="summary-treatment-failures">
                 <Typography variant="body2" fontWeight="bold">
                     {t("common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.studyOutcome")}
                 </Typography>
@@ -186,6 +188,9 @@ function chartOptions(
             marginTop: 0,
             marginRight: 0,
             marginLeft: firstChart ? undefined : 0,
+            style: {
+                ...ChartStyles,
+            },
         },
         title: {
             text: "",
@@ -208,6 +213,15 @@ function chartOptions(
         plotOptions: {
             series: {
                 stacking: "normal",
+            },
+        },
+        tooltip: {
+            headerFormat: "",
+            pointFormat: `{point.y} ${i18next.t(
+                "common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.studies"
+            )}`,
+            style: {
+                width: 150,
             },
         },
         series,

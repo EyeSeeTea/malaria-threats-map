@@ -16,21 +16,21 @@ const StyledButton = styled(Button)`
 `;
 
 const Row = styled.div`
-    padding: 8px 0px 8px 8px;
+    padding: 4px 0px 0px 8px;
     display: flex;
     flex-direction: row;
 `;
 
 const Title = styled.span`
-    padding: 8px 0px 8px 8px;
-    font-size: 16px;
+    padding: 8px 0px 0px 8px;
+    font-size: 12px;
     width: 120px;
 `;
 
 const Image = styled.img`
     border-radius: 12px;
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
 `;
 

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import ActionGroupItem from "./ActionGroupItem";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { selectFilters, selectTheme } from "../../store/reducers/base-reducer";
+import { selectFilters, selectMaxMinYears, selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
@@ -31,6 +31,7 @@ const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
+    maxMinYears: selectMaxMinYears(state),
     yearFilters: selectFilters(state),
     translations: selectTranslations(state),
 });
@@ -48,6 +49,7 @@ const DataMapActions: React.FC<Props> = ({
     invasiveFilters,
     diagnosisFilters,
     treatmentFilters,
+    maxMinYears,
     yearFilters,
     translations,
 }) => {
@@ -62,6 +64,7 @@ const DataMapActions: React.FC<Props> = ({
             treatmentFilters,
             diagnosisFilters,
             invasiveFilters,
+            maxMinYears,
             yearFilters,
             from
         );
@@ -70,13 +73,13 @@ const DataMapActions: React.FC<Props> = ({
         preventionFilters,
         treatmentFilters,
         translations,
+        maxMinYears,
         yearFilters,
         diagnosisFilters,
         invasiveFilters,
         from,
     ]);
 
-    console.log({ from });
     return (
         <Box id="dataFilters">
             <ActionGroupItem

@@ -10,6 +10,7 @@ import { State } from "../../store/types";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "../Icons";
 import { Box } from "@mui/material";
 import { GridSize } from "@mui/material";
+import { Source } from "../../store/actions/base-actions";
 
 const Label = styled.span`
     font-weight: bold;
@@ -30,6 +31,7 @@ const Row = styled.div`
 
 interface ownProps {
     themeItemGridSize?: GridSize;
+    from: Source;
 }
 
 const mapStateToProps = (state: State) => ({
@@ -39,7 +41,7 @@ const mapStateToProps = (state: State) => ({
 type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps & ownProps;
 
-const ThemeMapActions: React.FC<Props> = ({ theme, themeItemGridSize }) => {
+const ThemeMapActions: React.FC<Props> = ({ theme, themeItemGridSize, from }) => {
     const { t } = useTranslation();
 
     const themeValue = useMemo(() => {
@@ -88,7 +90,7 @@ const ThemeMapActions: React.FC<Props> = ({ theme, themeItemGridSize }) => {
     return (
         <Box id="theme">
             <ActionGroupItem placeholder={t("mapActions.selectTheme")} actionGroupKey={"THEME"} value={themeValue}>
-                <TopicSelector themeItemGridSize={themeItemGridSize} />
+                <TopicSelector themeItemGridSize={themeItemGridSize} from={from} />
             </ActionGroupItem>
         </Box>
     );

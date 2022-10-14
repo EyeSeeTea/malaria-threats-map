@@ -7,6 +7,7 @@ import { INTENSITY_STATUS } from "../../layers/prevention/IntensityStatus/utils"
 import { LevelOfInvolvementColors } from "../../layers/prevention/Involvement/symbols";
 import { LEVEL_OF_INVOLVEMENT } from "../../layers/prevention/Involvement/utils";
 import { ResistanceStatusColors } from "../../layers/prevention/ResistanceStatus/symbols";
+import { ChartStyles } from "../../charts/Style";
 
 export const preventionBarChartOptions: (
     maptype: PreventionMapType,
@@ -18,7 +19,7 @@ export const preventionBarChartOptions: (
         type: "bar",
         height: 90 + data.length * 40,
         style: {
-            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+            ...ChartStyles,
         },
         marginLeft: maptype === PreventionMapType.LEVEL_OF_INVOLVEMENT ? 265 : 210,
     },
