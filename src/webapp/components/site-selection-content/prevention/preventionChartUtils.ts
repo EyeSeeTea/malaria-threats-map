@@ -17,7 +17,7 @@ export const preventionBarChartOptions: (
     chart: {
         maxPointWidth: 20,
         type: "bar",
-        height: 90 + data.length * 40,
+        height: (showTitle ? 90 : 50) + data.length * 40,
         style: {
             ...ChartStyles,
         },
