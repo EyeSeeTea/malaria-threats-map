@@ -98,9 +98,6 @@ const Footer = () => {
     const subscribeNewsletterLink =
         "https://www.who.int/teams/global-malaria-programme/about/previous-issues-of-the-newsletter";
 
-    //MISSING LINK
-    const privacyNoticeLink = "";
-
     return (
         <footer>
             <FooterContainer maxWidth="xl" sx={{ padding: 3 }}>
@@ -134,7 +131,7 @@ const Footer = () => {
                             </ColumnTitle>
                             <Column>
                                 {aboutWhoGmp.map(({ label, link }, id) => (
-                                    <StyledLink key={id} href={link} variant="body1">
+                                    <StyledLink key={id} href={link} variant="body1" target={"_blank"}>
                                         {label}
                                     </StyledLink>
                                 ))}
