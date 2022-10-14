@@ -609,7 +609,7 @@
             "select_sub_region": "Select subregion",
             "select_site": "Select site",
             "site": "Site",
-            "exclude_lower_patients": "Exclude studies of less than 20 patients",
+            "exclude_lower_patients": "Exclude studies with fewer than 20 patients",
             "exclude_lower_samples": "Exclude studies of less than 20 samples"
         },
         "topbar": {
