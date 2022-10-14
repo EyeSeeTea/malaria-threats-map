@@ -24,14 +24,6 @@ const mapDispatchToProps = {
     fetchCountryLayer: fetchCountryLayerRequest,
 };
 
-const capitalize = (country: String) => {
-    const countryArray = country.split(" ");
-    for (let i = 0; i < countryArray.length; i++) {
-        countryArray[i] = countryArray[i].charAt(0).toUpperCase() + countryArray[i].substring(1).toLowerCase();
-    }
-    return countryArray.join(" ");
-};
-
 const ThemeSelectionSection = ({ countries, fetchCountryLayer }: Props) => {
     const { t } = useTranslation();
 
@@ -40,8 +32,8 @@ const ThemeSelectionSection = ({ countries, fetchCountryLayer }: Props) => {
 
     const countrySuggestions: Option[] = countries
         .filter(({ ENDEMICITY }) => ENDEMICITY === 1)
-        .map(({ ADM0_NAME, ISO_2_CODE }) => ({
-            label: capitalize(ADM0_NAME),
+        .map(({ ISO_2_CODE }) => ({
+            label: t(ISO_2_CODE),
             value: ISO_2_CODE,
         }));
 
