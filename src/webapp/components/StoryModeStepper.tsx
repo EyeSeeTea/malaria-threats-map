@@ -4,13 +4,10 @@ import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import { Step, StepLabel, Button, Paper } from "@mui/material";
 import styled from "styled-components";
-import PreventionSteps from "./story/prevention/PreventionSteps";
-import DiagnosisSteps from "./story/diagnosis/DiagnosisSteps";
 import { useTranslation } from "react-i18next";
-import TreatmentSteps from "./story/treatment/TreatmentSteps";
-import InvasiveSteps from "./story/invasive/InvasiveSteps";
 import { useSwipeable, SwipeEventData } from "react-swipeable";
 import PaperStepper from "./PaperStepper/PaperStepper";
+import StoryStep from "./story/StoryStep";
 
 const StyledStepLabel = styled(StepLabel)`
     cursor: pointer;
@@ -70,7 +67,14 @@ type Props = {
     theme: "prevention" | "invasive" | "treatment" | "diagnosis";
 };
 
-type Steps = { [value: string]: any[] };
+type Steps = { [value: string]: string[] };
+
+const themeMap = {
+    invasive: ["invasiveStory_step1", "invasiveStory_step2", "invasiveStory_step3"],
+    diagnosis: ["diagnosisStory_step1", "diagnosisStory_step2", "diagnosisStory_step3"],
+    treatment: ["treatmentStory_step1", "treatmentStory_step2", "treatmentStory_step3", "treatmentStory_step4"],
+    prevention: ["preventionStory_step1", "preventionStory_step2", "preventionStory_step3", "preventionStory_step4"],
+} as Steps;
 
 function StoryModeStepper({ theme }: Props) {
     const { t } = useTranslation();
@@ -107,18 +111,11 @@ function StoryModeStepper({ theme }: Props) {
         rotationAngle: 0, // set a rotation angle
     });
 
-    const themeMap = {
-        invasive: InvasiveSteps,
-        diagnosis: DiagnosisSteps,
-        treatment: TreatmentSteps,
-        prevention: PreventionSteps,
-    } as Steps;
+    const themeSteps = React.useMemo(() => themeMap[theme], [theme]);
 
-    const selectedSteps = themeMap[theme];
+    const selectedStep = React.useMemo(() => themeSteps[storyModeStep], [themeSteps, storyModeStep]);
 
-    const SelectedStep = selectedSteps[storyModeStep];
-
-    if (storyModeStep < 0 || storyModeStep > selectedSteps.length - 1) {
+    if (storyModeStep < 0 || storyModeStep > themeSteps.length - 1) {
         setStoryModeStep(0);
     }
 
@@ -127,7 +124,7 @@ function StoryModeStepper({ theme }: Props) {
             <div className={classes.root}>
                 <Paper className={classes.paper}>
                     <PaperStepper activeStep={storyModeStep}>
-                        {selectedSteps.map((step: any, index: number) => {
+                        {themeMap[theme].map((_step: any, index: number) => {
                             const stepProps: { completed?: boolean } = {};
                             const labelProps: { optional?: React.ReactNode } = {};
                             return (
@@ -162,7 +159,7 @@ function StoryModeStepper({ theme }: Props) {
                             );
                         })}
                     </PaperStepper>
-                    {SelectedStep ? <SelectedStep /> : <div />}
+                    {selectedStep ? <StoryStep i18nKey={selectedStep} /> : <div />}
                     <div className={classes.buttons}>
                         {storyModeStep > 0 && (
                             <Button
@@ -174,7 +171,7 @@ function StoryModeStepper({ theme }: Props) {
                                 {t("common.storiesPage.stepper.back")}
                             </Button>
                         )}
-                        {storyModeStep < selectedSteps.length - 1 && (
+                        {storyModeStep < themeSteps.length - 1 && (
                             <Button
                                 variant="contained"
                                 color="primary"
