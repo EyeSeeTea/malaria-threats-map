@@ -264,6 +264,28 @@
                 "diagnosis_subtitle": "Las deleciones de genes entre algunos parásitos de la malaria provocan resultados falsos negativos en las pruebas de diagnóstico, lo que complica la gestión y el control de los casos."
             }
         },
+        "storiesPage": {
+            "prevention": {
+                "title": "Resistencia de los vectores a los insecticidas",
+                "description": "Infórmese sobre la resistencia de los vectores a los insecticidas y lo que la OMS recomienda para combatir esta amenaza para el control y la eliminación del paludismo."
+            },
+            "invasive": {
+                "title": "Especies vectoriales invasoras",
+                "description": "Conozca las especies vectoriales invasoras y las recomendaciones de la OMS para combatir esta amenaza para el control y la eliminación del paludismo."
+            },
+            "treatment": {
+                "title": "Eficacia y resistencia de los medicamentos antipalúdicos",
+                "description": "Infórmese sobre la eficacia y la resistencia de los medicamentos antipalúdicos y sobre las recomendaciones de la OMS para combatir esta amenaza para el control y la eliminación del paludismo."
+            },
+            "diagnosis": {
+                "title": "Supresiones del gen <i>pfhrp2/3</i> del parásito",
+                "description": "Conozca las deleciones del gen pfhrp2/3 del parásito y las recomendaciones de la OMS para combatir esta amenaza para el control y la eliminación del paludismo."
+            },
+            "stepper": {
+                "next": "siguiente",
+                "back": "volver"
+            }
+        },
         "shareDataPage": {
             "title": "Contribuye al Mapa de Amenazas de la Malaria compartiendo tus <strong>datos</strong>",
             "section1": {

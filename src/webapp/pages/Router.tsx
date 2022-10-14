@@ -4,6 +4,7 @@ import { AboutPage } from "./about/AboutPage";
 import ContactPage from "./contact/ContactPage";
 import DashboardsPage from "./dashboards/DashboardsPage";
 import { DownloadPage } from "./download/DownloadPage";
+import { StoriesPage } from "./stories/StoriesPage";
 import HomePage from "./home/HomePage";
 import MapPage from "./map/MapPage";
 import ShareDataPage from "./shareData/ShareDataPage";
@@ -21,6 +22,7 @@ export const Router: React.FC = React.memo(() => {
 
                 <Route path="/maps" element={<MapPage />} />
                 <Route path="/download" element={<DownloadPage />} />
+                <Route path="/stories" element={<StoriesPage />} />
                 <Route path="/dashboards" element={<DashboardsPage />} />
 
                 {/* Default route */}
