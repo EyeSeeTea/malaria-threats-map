@@ -178,11 +178,11 @@ function createPreventionMechanismAllelics(
                     name: `${year}`,
                     y: study && !isNA(study.MECHANISM_FREQUENCY) && !isNR(study.MECHANISM_FREQUENCY) ? y : 0,
                     value: !study
-                        ? "NR"
+                        ? i18next.t("common.prevention.chart.resistance_mechanism.not_reported")
                         : isNA(study.MECHANISM_FREQUENCY)
                         ? "N/A"
                         : isNR(study.MECHANISM_FREQUENCY)
-                        ? "Not reported"
+                        ? i18next.t("common.prevention.chart.resistance_mechanism.not_reported")
                         : `${y}%`,
                 };
             }),

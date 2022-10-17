@@ -345,12 +345,12 @@
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via {{insecticideClasses}} with selected {{type}} {{years}}",
                     "number_of_tests": "No. of mosquitoes tested",
-                    "DETECTED": "Detected",
-                    "NOT_DETECTED": "Not detected",
-                    "title": "Number of mechanism assays",
+                    "DETECTED": "Number of assays that detected resistance mechanisms (count)",
+                    "NOT_DETECTED": "Number of assays that did not detect resistance mechanisms (count)",
                     "allelic": "Allelic frequency from molecular assay",
                     "count": "Count",
-                    "frequency": "Frequency (%)"
+                    "frequency": "Frequency (%)",
+                    "not_reported": "Not reported"
                 },
                 "synergist_involvement": {
                     "no_synergist": "No synergist"
