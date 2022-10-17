@@ -226,6 +226,6 @@ const Table = styled.table<{ height: number }>`
         width: 30%;
     }
     tr th:nth-child(3) {
-        width: 20%;
+        width: 30%;
     }
 `;

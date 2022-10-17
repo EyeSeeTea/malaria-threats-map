@@ -125,21 +125,31 @@ function createPreventionMechanismChartData(
 function createPreventionMechanismAssays(
     years: number[],
     studies: PreventionStudy[],
-    _dataSources: CitationDataSource[]
+    dataSources: CitationDataSource[]
 ): PreventionMechanismChartDataGroup[] {
-    const detected = years.map(year => {
+    const yearsObjects = years.map(year => {
         const yearStudies = studies.filter(study => parseInt(study.YEAR_START) === year);
+
+        const dataSourceKeys = selectDataSourcesByStudies(dataSources, yearStudies);
+
+        return { year, name: `${year.toString()} (${dataSourceKeys.join(", ")}) ` };
+    });
+
+    const detected = yearsObjects.map(yearObject => {
+        const yearStudies = studies.filter(study => parseInt(study.YEAR_START) === yearObject.year);
         const d = yearStudies.filter(study => study.MECHANISM_STATUS === "DETECTED");
+
         return {
-            name: year.toString(),
+            name: yearObject.name,
             y: -d.length,
         };
     });
-    const notDetected = years.map(year => {
-        const yearStudies = studies.filter(study => parseInt(study.YEAR_START) === year);
+    const notDetected = yearsObjects.map(yearObject => {
+        const yearStudies = studies.filter(study => parseInt(study.YEAR_START) === yearObject.year);
         const nD = yearStudies.filter(study => study.MECHANISM_STATUS !== "DETECTED");
+
         return {
-            name: year.toString(),
+            name: yearObject.name,
             y: nD.length,
         };
     });
