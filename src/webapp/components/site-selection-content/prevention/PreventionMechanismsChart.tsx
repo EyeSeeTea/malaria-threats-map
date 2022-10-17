@@ -96,6 +96,8 @@ const preventionMechanismAllelicBarChartOptions: (data: any, years: string[]) =>
             text: "",
         },
         visible: false,
+        min: 0,
+        max: 100,
     },
     plotOptions: {
         bar: {
