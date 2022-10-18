@@ -59,7 +59,7 @@ const preventionMechanismAssaysBarChartOptions: (data: any, years: string[]) => 
             dataLabels: {
                 formatter: function () {
                     // @ts-ignore
-                    return this.y < 0 ? this.y * -1 : this.y;
+                    return this.point.yName;
                 } as DataLabelsFormatterCallbackFunction,
                 enabled: true,
             },

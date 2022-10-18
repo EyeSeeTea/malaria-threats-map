@@ -11,7 +11,7 @@ import Hidden from "../hidden/Hidden";
 import SiteTitle from "../site-title/SiteTitle";
 import CitationNew from "../charts/CitationNew";
 import CurationNew from "../charts/CurationNew";
-import OtherInsecticideClasses from "../layers/prevention/common/OtherInsecticideClasses";
+import OtherInfo from "../layers/prevention/common/OtherInfo";
 import { setSelectionDataFilterSelection } from "../../store/actions/base-actions";
 import PreventionChart from "./prevention/PreventionChart";
 import DiagnosisChart from "./diagnosis/DiagnosisChart";
@@ -125,7 +125,7 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
 
                 {selectionData.othersDetected.length > 0 && (
                     <RoundedContainer margin="16px 8px">
-                        <OtherInsecticideClasses otherInsecticideClasses={selectionData.othersDetected} />
+                        <OtherInfo title={selectionData.othersTitle} info={selectionData.othersDetected} />
                     </RoundedContainer>
                 )}
             </>

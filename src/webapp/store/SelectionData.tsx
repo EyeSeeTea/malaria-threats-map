@@ -16,6 +16,7 @@ export type SelectionData = {
     dataSources?: CitationDataSource[];
     curations?: CurationSources[];
     othersDetected?: string[];
+    othersTitle?: string;
     aditionalInformation?: AditionalInformation[];
 };
 
@@ -61,6 +62,7 @@ export type PreventionChartDataItem = {
 export type PreventionMechanismChartDataItem = {
     name: string;
     y: number;
+    yName: string;
     value?: string;
 };
 

@@ -8,6 +8,7 @@ import { selectPreventionFilters } from "../../store/reducers/prevention-reducer
 import { setType } from "../../store/actions/prevention-actions";
 import { logEventAction } from "../../store/actions/base-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
+import i18next from "i18next";
 
 export const WHITELISTED_TYPES = [
     "MONO_OXYGENASES",
@@ -33,6 +34,16 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
+export function cleanMechanismTypeOptions(values: string[]) {
+    const filteredTypes = WHITELISTED_TYPES.map(wl_type => values.find((value: any) => value === wl_type)).filter(
+        Boolean
+    );
+
+    const options = filteredTypes.filter(value => value !== "NA");
+
+    return options;
+}
+
 function MechanismTypeFilter({ types = [], preventionFilters, setType, logEventAction }: Props) {
     const { t } = useTranslation();
     const handleChange = (event: React.ChangeEvent<unknown>) => {
@@ -42,16 +53,10 @@ function MechanismTypeFilter({ types = [], preventionFilters, setType, logEventA
     };
     const suggestions: Translation[] = types as Translation[];
 
-    const filteredTypes = WHITELISTED_TYPES.map(value => suggestions.find((type: any) => type.VALUE_ === value)).filter(
-        Boolean
-    );
-
-    const options = filteredTypes
-        .filter(translation => translation.VALUE_ !== "NA")
-        .map(mechanism => ({
-            value: mechanism.VALUE_,
-            label: t(`TYPE.${mechanism.VALUE_}`),
-        }));
+    const options = cleanMechanismTypeOptions(suggestions.map((type: Translation) => type.VALUE_)).map(value => ({
+        value: value,
+        label: i18next.t(`TYPE.${value}`),
+    }));
 
     return (
         <RadioGroupFilter

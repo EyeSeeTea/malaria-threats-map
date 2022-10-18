@@ -336,6 +336,7 @@
             "chart": {
                 "not_reported": "NR: not reported",
                 "other_insecticide_class_label": "Other insecticides to which resistance was detected in this site:",
+                "other_mechanisms": "Other mechanisms detected",
                 "other_insecticide_class_none": "None",
                 "resistance": {
                     "mosquito_mortality": "% mosquito mortality",
