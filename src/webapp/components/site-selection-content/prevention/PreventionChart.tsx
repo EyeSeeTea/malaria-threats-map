@@ -34,17 +34,40 @@ const PreventionChart: React.FC<Props> = ({ mapType, selectionData }) => {
                             {t(specie)}
                         </Typography>
                         {dataItems.map((type, typeIndex) => {
+                            const title = data[specie][type].title;
+
                             return (
                                 <>
                                     <Typography variant="caption" fontWeight="bold">
                                         {t(type)}
                                     </Typography>
+                                    {title && (
+                                        <span>
+                                            <Typography
+                                                variant="caption"
+                                                sx={{ color: title.statusColor }}
+                                                display="inline"
+                                            >
+                                                {title.titlePrefix}&nbsp;
+                                            </Typography>
+                                            <Typography variant="caption" display="inline">
+                                                {title.titleContent}&nbsp;
+                                            </Typography>
+                                            <Typography
+                                                variant="caption"
+                                                sx={{ color: title.statusColor }}
+                                                display="inline"
+                                            >
+                                                {title.titleSufix}
+                                            </Typography>
+                                        </span>
+                                    )}
                                     <div key={type}>
                                         <HighchartsReact
                                             highcharts={Highcharts}
                                             options={preventionBarChartOptions(
                                                 mapType,
-                                                data[specie][type],
+                                                data[specie][type].seriesData,
                                                 specieIndex === 0 && specieIndex === 0
                                             )}
                                         />

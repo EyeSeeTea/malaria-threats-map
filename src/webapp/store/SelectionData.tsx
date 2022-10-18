@@ -20,9 +20,16 @@ export type SelectionData = {
     aditionalInformation?: AditionalInformation[];
 };
 
+type preventionChartDataTitle = {
+    statusColor: string;
+    titlePrefix: string;
+    titleContent: string;
+    titleSufix: string;
+};
+
 export type PreventionChartData = {
     kind: "prevention";
-    data: { [x: string]: { [x: string]: PreventionChartDataItem[] } };
+    data: { [x: string]: { [x: string]: { title?: preventionChartDataTitle; seriesData: PreventionChartDataItem[] } } };
 };
 
 export type PreventionMechanismChartData = {

@@ -25,6 +25,11 @@ import {
     filterByResistanceStatus,
 } from "../../../components/layers/studies-filters";
 import { cleanMechanismTypeOptions } from "../../../components/filters/MechanismTypeFilter";
+import { getByMostRecentYearAndInvolvement } from "../../../components/layers/prevention/utils";
+import { LEVEL_OF_INVOLVEMENT } from "../../../components/layers/prevention/Involvement/utils";
+import { LevelOfInvolvementColors } from "../../../components/layers/prevention/Involvement/symbols";
+
+type SortDirection = boolean | "asc" | "desc";
 
 export function createPreventionSelectionData(
     theme: string,
@@ -83,12 +88,34 @@ function createPreventionChartData(
         study => !speciesFilter || !speciesFilter.length || speciesFilter.map(s => s.value).includes(study.SPECIES)
     );
 
+    const mostRecentStudy = getByMostRecentYearAndInvolvement(studies);
+
+    const title =
+        mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT
+            ? {
+                  statusColor:
+                      mostRecentStudy.MECHANISM_PROXY === LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT
+                          ? LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT][1]
+                          : mostRecentStudy.MECHANISM_PROXY === LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT
+                          ? LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT][1]
+                          : LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT][1],
+                  titlePrefix:
+                      mostRecentStudy.MECHANISM_PROXY === LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT
+                          ? "PBO fully"
+                          : mostRecentStudy.MECHANISM_PROXY === LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT
+                          ? "PBO partially"
+                          : "PBO no",
+                  titleContent: "restores susceptibility to",
+                  titleSufix: "Pyrethroids",
+              }
+            : undefined;
+
     const bySpeciesAndInsecticideType = _(studiesFiltered)
         .groupBy(({ SPECIES }) => SPECIES)
         .mapValues(studies => {
             return _(studies)
                 .groupBy(({ TYPE }) => TYPE)
-                .mapValues(studies => createChartDataItems(mapType, dataSources, studies))
+                .mapValues(studies => ({ title, seriesData: createChartDataItems(mapType, dataSources, studies) }))
                 .value();
         })
         .value();
@@ -247,13 +274,20 @@ function createChartDataItems(
         return getStudyName(mapType, study);
     }, sortedStudies);
 
-    const simplifiedStudies = R.sortWith(
-        [R.descend(R.prop("YEAR_START")), R.ascend(R.prop("INSECTICIDE_TYPE"))],
-        R.values(cleanedStudies).map(
-            (groupStudies: PreventionStudy[]) =>
-                R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
-        )
+    const firstStudiesOfGroups = Object.values(cleanedStudies).map(
+        (groupStudies: PreventionStudy[]) => R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
     );
+
+    const orders: [string, SortDirection][] = _.compact([
+        ["YEAR_START", "desc"],
+        ["INSECTICIDE_TYPE", "asc"],
+        mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT ? ["SYNERGIST_TYPE", "asc"] : undefined,
+    ]);
+
+    const orderFields = orders.map(order => order[0]);
+    const orderDirections = orders.map(order => order[1]);
+
+    const simplifiedStudies = _.orderBy(firstStudiesOfGroups, orderFields, orderDirections);
 
     const data = simplifiedStudies.map(study => {
         const studiesByGroup = cleanedStudies[getStudyName(mapType, study)];
