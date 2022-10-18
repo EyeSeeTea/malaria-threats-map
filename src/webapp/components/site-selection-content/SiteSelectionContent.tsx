@@ -16,6 +16,7 @@ import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 export const Container = styled.div<{ padding?: string }>`
+    width: 350px;
     padding: ${props => props.padding || "60px 0px"};
 `;
 

@@ -71,7 +71,7 @@ mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3a
 mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const drawerWidth = 100;
-const rightSideBarWidth = 500;
+const rightSideBarWidth = 350;
 
 const Separator = styled.div`
     width: 20px;
@@ -138,12 +138,12 @@ const BottomMiddleContainer = styled(BaseContainer)`
     width: 310px;
 `;
 
-const BottomRightContainer = styled(BaseContainer)`
+const BottomRightContainer = styled(BaseContainer)<{ rightOpen: boolean }>`
     display: flex;
     flex-direction: column;
     margin: 10px;
     bottom: 0;
-    right: 0;
+    right: ${props => (props.rightOpen ? `${rightSideBarWidth}px` : 0)};
 `;
 
 const FloatingActionContainer = styled(BaseContainer)`
@@ -442,7 +442,7 @@ class Map extends React.Component<Props, StateTypes> {
                     </BottomLeftContainer>
                 </PushoverContainer>
                 <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
-                <BottomRightContainer>
+                <BottomRightContainer rightOpen={this.shouldShowRightSideBar()}>
                     <Tooltip title={t("common.zoomIn")} placement="left">
                         <MapFab size="small" onClick={() => this.zoom(1.25)}>
                             <ZoomInIcon sx={{ fontSize: "14px" }} />

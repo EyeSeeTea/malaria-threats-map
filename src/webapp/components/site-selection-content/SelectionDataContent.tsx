@@ -7,7 +7,6 @@ import { State } from "../../store/types";
 import IntegrationReactSelect from "../BasicSelect";
 import FormLabel from "@mui/material/FormLabel";
 import { sendAnalytics } from "../../utils/analytics";
-import Hidden from "../hidden/Hidden";
 import SiteTitle from "../site-title/SiteTitle";
 import CitationNew from "../charts/CitationNew";
 import CurationNew from "../charts/CurationNew";
@@ -131,15 +130,6 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
             </>
         ) : null;
 
-    return (
-        <>
-            <Hidden smUp>
-                <Container width={"100%"}>{content()}</Container>
-            </Hidden>
-            <Hidden smDown>
-                <Container width={"500px"}>{content()}</Container>
-            </Hidden>
-        </>
-    );
+    return <Container width={"100%"}>{content()}</Container>;
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SelectionDataContent);
