@@ -522,7 +522,7 @@
                     "sampling_method": "Méthode d’échantillonnage",
                     "study_identification_method": "Méthode d’identification des espèces",
                     "data_collection": "Remerciements pour la collecte de données",
-                    "no_available": "Indisponible"
+                    "not_recorded": "Pas enregistré"
                 }
             },
             "legend": {
