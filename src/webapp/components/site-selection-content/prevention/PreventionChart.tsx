@@ -16,7 +16,7 @@ const PreventionChart: React.FC<Props> = ({ mapType, selectionData }) => {
     const { t } = useTranslation();
 
     const data = React.useMemo(() => {
-        if (selectionData.data.kind === "prevention") {
+        if (selectionData.kind === "common" && selectionData.data.kind === "prevention") {
             return selectionData.data.data;
         } else {
             return null;

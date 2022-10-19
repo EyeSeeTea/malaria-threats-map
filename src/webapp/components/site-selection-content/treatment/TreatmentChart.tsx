@@ -68,7 +68,7 @@ const TreatmentChart = ({ selectionData }: Props) => {
     const { t } = useTranslation();
 
     const data = React.useMemo(() => {
-        if (selectionData.data.kind === "treatment") {
+        if (selectionData.kind === "common" && selectionData.data.kind === "treatment") {
             return selectionData.data.data;
         } else {
             return null;

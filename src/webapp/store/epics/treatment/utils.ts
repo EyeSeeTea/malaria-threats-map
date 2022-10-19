@@ -30,6 +30,7 @@ export function createTreatmentSelectionData(
     const subtitle = `${plasmodiumSpecies}, ${i18next.t(sortedStudies[0].DRUG_NAME)}`;
 
     return {
+        kind: "common",
         title: siteFilteredStudies.length > 0 ? getSiteTitle(theme, siteFilteredStudies[0]) : "",
         subtitle,
         filterOptions: [],

@@ -1,18 +1,17 @@
 import { Study } from "../../domain/entities/Study";
 import { Option } from "../components/BasicSelect";
+import { InvasiveSelectionData } from "./epics/invasive/types";
 
-export type SelectionData = {
+export type SelectionData = InvasiveSelectionData | CommonSelectionData;
+
+export type CommonSelectionData = {
+    kind: "common";
     title: string;
     subtitle: string;
     filterOptions?: Option[];
     filterSelection?: Option[];
     studyObject: Study;
-    data?:
-        | PreventionChartData
-        | PreventionMechanismChartData
-        | DiagnosisChartData
-        | InvasiveChartData
-        | TreatmentChartData;
+    data?: PreventionChartData | PreventionMechanismChartData | DiagnosisChartData | TreatmentChartData;
     dataSources?: CitationDataSource[];
     curations?: CurationSources[];
     othersDetected?: string[];
@@ -48,11 +47,6 @@ export type PreventionMechanismChartData = {
 export type DiagnosisChartData = {
     kind: "diagnosis";
     data: DiagnosisChartDataItemByYear[];
-};
-
-export type InvasiveChartData = {
-    kind: "invasive";
-    data: InvasiveChartDataContent;
 };
 
 export type TreatmentChartData = {
@@ -99,14 +93,6 @@ export type DiagnosisChartDataItemByYear = {
     dataSources: string;
     year: number;
     items: DiagnosisChartDataItem[];
-};
-
-export type InvasiveChartDataContent = {
-    species?: string;
-    samplingPeriod?: string;
-    samplingMethod?: string;
-    speciedIdentificationMethod?: string;
-    vectorStage?: string;
 };
 
 export type CitationDataSource = {

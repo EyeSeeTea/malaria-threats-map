@@ -133,7 +133,7 @@ const PreventionMechanismsChart = ({ selectionData }: Props) => {
     const { t } = useTranslation();
 
     const data = React.useMemo(() => {
-        if (selectionData.data.kind === "prevention-mechanism") {
+        if (selectionData.kind === "common" && selectionData.data.kind === "prevention-mechanism") {
             return selectionData.data.data;
         } else {
             return null;

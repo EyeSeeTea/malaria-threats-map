@@ -40,6 +40,7 @@ export function createDiagnosisSelectionData(
     const dataSources = createCitationDataSources(theme, siteFilteredStudies);
 
     return {
+        kind: "common",
         title: siteFilteredStudies.length > 0 ? getSiteTitle(theme, siteFilteredStudies[0]) : "",
         subtitle,
         studyObject: siteFilteredStudies[0],

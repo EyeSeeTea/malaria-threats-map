@@ -62,6 +62,7 @@ export function createPreventionSelectionData(
     const studyObject = sortedStudies[0];
 
     return {
+        kind: "common",
         title: sortedStudies.length > 0 ? getSiteTitle(theme, sortedStudies[0]) : "",
         subtitle: i18next.t(studyObject?.ASSAY_TYPE),
         filterOptions: speciesFilterOptions,
