@@ -37,7 +37,8 @@ const CountrySelector = ({ region, countries = [], setRegion, fetchCountryLayer,
     const onChange = (selection?: string) => {
         if (selection) sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label: selection });
         setRegion({
-            region: countries.find(el => el.ISO_2_CODE === selection)?.REGION_FULL.replace(" ", "_") || "",
+            region: countries.find(el => el.ISO_2_CODE === selection)?.REGION_FULL.replaceAll(" ", "_") || "",
+            subRegion: countries.find(el => el.ISO_2_CODE === selection)?.SUBREGION?.replaceAll(" ", "_") || "",
             country: selection,
         });
     };
