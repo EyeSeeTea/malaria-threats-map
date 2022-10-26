@@ -450,7 +450,7 @@
                     "study_years": "Study year(s)",
                     "health_facility_name": "Study conducted at the",
                     "number_of_patients": "patients included",
-                    "follow_up": "days follow-up",
+                    "follow_up": "-day follow-up. ",
                     "confirmed_resist_pv": "Patients with confirmed resistance",
                     "positive_day_3": "Positive after day 3",
                     "treatment_failure_pp": "Patients with treatment failure, per protocol",

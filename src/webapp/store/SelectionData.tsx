@@ -77,7 +77,6 @@ export type PreventionMechanismChartDataGroup = {
 export type TreatmentChartDataGroup = {
     name: string;
     color?: string;
-    lineWidth: number;
     marker: { symbol: string };
     data: number[];
 };
