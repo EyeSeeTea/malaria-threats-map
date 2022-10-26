@@ -11,6 +11,7 @@ import {
     SelectionData,
     PreventionMechanismChartData,
     PreventionMechanismChartDataGroup,
+    preventionChartDataTitle,
 } from "../../SelectionData";
 import * as R from "ramda";
 import { createCitationDataSources, createCurations, selectDataSourcesByStudies } from "../common/utils";
@@ -25,9 +26,6 @@ import {
     filterByResistanceStatus,
 } from "../../../components/layers/studies-filters";
 import { cleanMechanismTypeOptions } from "../../../components/filters/MechanismTypeFilter";
-import { getByMostRecentYearAndInvolvement } from "../../../components/layers/prevention/utils";
-import { LEVEL_OF_INVOLVEMENT } from "../../../components/layers/prevention/Involvement/utils";
-import { LevelOfInvolvementColors } from "../../../components/layers/prevention/Involvement/symbols";
 
 type SortDirection = boolean | "asc" | "desc";
 
@@ -89,10 +87,10 @@ function createPreventionChartData(
         study => !speciesFilter || !speciesFilter.length || speciesFilter.map(s => s.value).includes(study.SPECIES)
     );
 
-    const mostRecentStudy = getByMostRecentYearAndInvolvement(studies);
+    //const mostRecentStudy = getByMostRecentYearAndInvolvement(studies);
 
-    const title =
-        mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT
+    const title: preventionChartDataTitle = undefined;
+    /*mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT
             ? {
                   statusColor:
                       mostRecentStudy.MECHANISM_PROXY === LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT
@@ -109,7 +107,7 @@ function createPreventionChartData(
                   titleContent: "restores susceptibility to",
                   titleSufix: "Pyrethroids",
               }
-            : undefined;
+            : undefined;*/
 
     const bySpeciesAndInsecticideType = _(studiesFiltered)
         .groupBy(({ SPECIES }) => SPECIES)
@@ -279,13 +277,16 @@ function createChartDataItems(
         (groupStudies: PreventionStudy[]) => R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
     );
 
-    const orders: [string, SortDirection][] = _.compact([
+    const orders: [string | ((study: PreventionStudy) => unknown), SortDirection][] = _.compact([
         ["YEAR_START", "desc"],
         ["INSECTICIDE_TYPE", "asc"],
         mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT ? ["SYNERGIST_TYPE", "asc"] : undefined,
+        mapType === PreventionMapType.INTENSITY_STATUS
+            ? [(study: PreventionStudy) => +study.INSECTICIDE_INTENSITY.replace("x", ""), "asc"]
+            : undefined,
     ]);
 
-    const orderFields = orders.map(order => order[0]);
+    const orderFields: _.Many<_.ListIteratee<PreventionStudy>> = orders.map(order => order[0]);
     const orderDirections = orders.map(order => order[1]);
 
     const simplifiedStudies = _.orderBy(firstStudiesOfGroups, orderFields, orderDirections);

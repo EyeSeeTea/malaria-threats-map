@@ -2,8 +2,6 @@ import { DataLabelsFormatterCallbackFunction } from "highcharts";
 import i18next from "i18next";
 import { PreventionChartDataItem } from "../../../store/SelectionData";
 import { PreventionMapType } from "../../../store/types";
-import { IntensityStatusColors } from "../../layers/prevention/IntensityStatus/symbols";
-import { INTENSITY_STATUS } from "../../layers/prevention/IntensityStatus/utils";
 import { ResistanceStatusColors } from "../../layers/prevention/ResistanceStatus/symbols";
 import { ChartStyles } from "../../charts/Style";
 
@@ -107,16 +105,12 @@ function getBarZones(maptype: PreventionMapType) {
         case PreventionMapType.INTENSITY_STATUS:
             return [
                 {
-                    value: 90,
-                    color: "#D3D3D3",
-                },
-                {
-                    value: 98,
-                    color: IntensityStatusColors[INTENSITY_STATUS.LOW_INTENSITY][0],
+                    value: 100,
+                    color: "#D0CECE",
                 },
                 {
                     value: 100.001,
-                    color: IntensityStatusColors[INTENSITY_STATUS.HIGH_INTENSITY][0],
+                    color: "#717171",
                 },
             ];
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:

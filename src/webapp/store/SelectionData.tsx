@@ -19,7 +19,7 @@ export type CommonSelectionData = {
     aditionalInformation?: AditionalInformation[];
 };
 
-type preventionChartDataTitle = {
+export type preventionChartDataTitle = {
     statusColor: string;
     titlePrefix: string;
     titleContent: string;
