@@ -36,6 +36,7 @@ const initialState: MalariaState = Object.freeze({
     filtersOpen: true,
     filtersMode: "filters",
     selection: null,
+    siteHighlight: null,
     hoverSelection: null,
     selectionData: null,
     mobileOptionsOpen: false,
@@ -88,6 +89,7 @@ export default createReducer<MalariaState>(initialState, {
             selection: getSelection(state, selection),
         };
     },
+    [ActionTypeEnum.SetSiteHighlight]: (site: string) => R.assoc("siteHighlight", site),
     [ActionTypeEnum.SetHoverSelection]: (hoverSelection: SiteSelection) => (state: MalariaState) => {
         return {
             ...state,
@@ -137,6 +139,7 @@ export const selectRegion = createSelector(selectMalariaState, state => state.re
 export const selectActionGroupSelected = createSelector(selectMalariaState, state => state.actionGroupSelected);
 export const selectStoryModeStep = createSelector(selectMalariaState, state => state.storyModeStep);
 export const selectSelection = createSelector(selectMalariaState, state => state.selection);
+export const selectSiteHighlight = createSelector(selectMalariaState, state => state.siteHighlight);
 export const selectHoverSelection = createSelector(selectMalariaState, state => state.hoverSelection);
 export const selectAreMobileOptionsOpen = createSelector(selectMalariaState, state => state.mobileOptionsOpen);
 export const selectSetZoom = createSelector(selectMalariaState, state => state.setZoom);

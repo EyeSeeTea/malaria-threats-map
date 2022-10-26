@@ -5,6 +5,8 @@ import {
     setBoundsAction,
     setFiltersAction,
     setRegionAction,
+    setSelection,
+    setSiteHighlight,
     setStoryModeAction,
     setStoryModeStepAction,
     setThemeAction,
@@ -37,6 +39,7 @@ import { setInvasiveMapType, setInvasiveVectorSpecies } from "../store/actions/i
 import { PreventionMapType } from "../store/types";
 import ReduxQuerySync from "../store/query-middleware";
 import { useStore } from "react-redux";
+import _ from "lodash";
 
 const MapContainer: React.FC = () => {
     const store = useStore();
@@ -166,6 +169,45 @@ const MapContainer: React.FC = () => {
                     selector: (state: State) => state.malaria.filters,
                     action: (value: string) =>
                         setFiltersAction(value ? value.split(",").map(value => parseInt(value)) : undefined),
+                },
+                selection: {
+                    selector: (state: State) => {
+                        let site = null;
+                        if (!_.isEmpty(state.malaria.selection)) {
+                            site = encodeURI(
+                                JSON.stringify({
+                                    siteIso2: state.malaria.selection.ISO_2_CODE,
+                                    site: state.malaria.selection.SITE_ID,
+                                    siteCoordinates: state.malaria.selection.coordinates,
+                                })
+                            );
+                        } else site = "";
+                        return site;
+                    },
+                    action: (value: string) => {
+                        if (value) {
+                            const { siteIso2, site, siteCoordinates } = JSON.parse(decodeURIComponent(value));
+                            return setSelection({
+                                ISO_2_CODE: siteIso2,
+                                SITE_ID: site,
+                                coordinates: siteCoordinates,
+                            });
+                        } else return setSelection(null);
+                    },
+                },
+                siteHighlight: {
+                    selector: (state: State) => {
+                        let site = null;
+                        if (!_.isEmpty(state.malaria.selectionData)) {
+                            site = encodeURI(JSON.stringify(state.malaria.selectionData.studyObject?.OBJECTID));
+                        } else site = "";
+                        return site;
+                    },
+                    action: (value: string) => {
+                        if (value) {
+                            return setSiteHighlight(value);
+                        } else return setSiteHighlight(null);
+                    },
                 },
                 region: {
                     selector: (state: State) => {

@@ -69,6 +69,7 @@ export interface MalariaState {
     lastUpdatedDates: LastUpdatedDates;
     actionGroupSelected: ActionGroup | null;
     selection: SiteSelection | null;
+    siteHighlight: string | null;
     hoverSelection: SiteSelection | null;
     selectionData: SelectionData | null;
     mobileOptionsOpen: boolean;

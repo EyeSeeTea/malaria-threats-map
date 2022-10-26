@@ -12,6 +12,7 @@ export enum ActionTypeEnum {
     MalariaSetStoryModeStep = "malaria/SET_STORY_MODE_STEP",
     MalariaActionGroupSelected = "malaria/ACTION_GROUP_SELECTED",
     SetSelection = "malaria/SET_SELECTION",
+    SetSiteHighlight = "malaria/SET_SITE_HIGHLIGHT",
     SetHoverSelection = "malaria/SET_HOVER_SELECTION",
     SetSelectionData = "malaria/SET_SELECTION_DATA",
     SetSelectionDataFilterSelection = "malaria/SET_SELECTION_DATA_FILTER_SELECTION",

@@ -15,6 +15,7 @@ import {
     selectRegion,
     selectSelection,
     selectTheme,
+    selectSiteHighlight,
 } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
 import {
@@ -52,6 +53,7 @@ const mapStateToProps = (state: State) => ({
     preventionFilters: selectPreventionFilters(state),
     region: selectRegion(state),
     selection: selectSelection(state),
+    siteHighlight: selectSiteHighlight(state),
     hoverSelection: selectHoverSelection(state),
 });
 
@@ -192,6 +194,12 @@ class PreventionLayer extends Component<Props> {
             this.props.map.addLayer(layer(resolveMapTypeSymbols(preventionFilters)));
 
             setupEffects(this.props.map, PREVENTION_SOURCE_ID, PREVENTION_LAYER_ID);
+            if (this.props.siteHighlight) {
+                this.props.map.setFeatureState(
+                    { source: PREVENTION_SOURCE_ID, id: this.props.siteHighlight },
+                    { click: true }
+                );
+            }
 
             this.renderLayer();
         }
