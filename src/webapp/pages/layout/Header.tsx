@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { AppBar, Toolbar, Box, Container, Hidden, IconButton, Drawer } from "@mui/material";
+import WhoLogoBlue from "../../components/WhoLogoBlue";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./LanguageSelector";
 import { Menu as MenuIcon } from "@mui/icons-material";
@@ -106,6 +107,7 @@ const Header = () => {
             <StyledAppBar>
                 <Container maxWidth="xl">
                     <StyledToolbar>
+                        <WhoLogoBlue width="150px" />
                         <Hidden lgUp>
                             <IconButton color="inherit" onClick={toggleDrawer}>
                                 <MenuIcon />
