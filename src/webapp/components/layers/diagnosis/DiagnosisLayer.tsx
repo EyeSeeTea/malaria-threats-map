@@ -11,6 +11,7 @@ import {
     selectRegion,
     selectSelection,
     selectTheme,
+    selectSiteHighlight,
 } from "../../../store/reducers/base-reducer";
 import * as R from "ramda";
 import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
@@ -48,6 +49,7 @@ const mapStateToProps = (state: State) => ({
     diagnosisFilters: selectDiagnosisFilters(state),
     region: selectRegion(state),
     selection: selectSelection(state),
+    siteHighlight: selectSiteHighlight(state),
     hoverSelection: selectHoverSelection(state),
 });
 
@@ -176,6 +178,13 @@ class DiagnosisLayer extends Component<Props> {
             this.props.map.addLayer(layer(resolveMapTypeSymbols()));
 
             setupEffects(this.props.map, DIAGNOSIS_SOURCE_ID, DIAGNOSIS_LAYER_ID);
+
+            if (this.props.siteHighlight) {
+                this.props.map.setFeatureState(
+                    { source: DIAGNOSIS_SOURCE_ID, id: this.props.siteHighlight },
+                    { click: true }
+                );
+            }
 
             this.renderLayer();
         }

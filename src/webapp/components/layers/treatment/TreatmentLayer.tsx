@@ -9,6 +9,7 @@ import {
     selectRegion,
     selectSelection,
     selectTheme,
+    selectSiteHighlight,
 } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
@@ -50,6 +51,7 @@ const mapStateToProps = (state: State) => ({
     treatmentFilters: selectTreatmentFilters(state),
     region: selectRegion(state),
     selection: selectSelection(state),
+    siteHighlight: selectSiteHighlight(state),
     hoverSelection: selectHoverSelection(state),
 });
 const mapDispatchToProps = {
@@ -190,6 +192,13 @@ class TreatmentLayer extends Component<Props> {
             this.props.map.addLayer(layer(resolveMapTypeSymbols(treatmentFilters)));
 
             setupEffects(this.props.map, TREATMENT_SOURCE_ID, TREATMENT_LAYER_ID);
+
+            if (this.props.siteHighlight) {
+                this.props.map.setFeatureState(
+                    { source: TREATMENT_SOURCE_ID, id: this.props.siteHighlight },
+                    { click: true }
+                );
+            }
 
             this.renderLayer();
         }

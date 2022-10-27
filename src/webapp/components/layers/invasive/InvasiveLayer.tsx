@@ -9,6 +9,7 @@ import {
     selectRegion,
     selectSelection,
     selectTheme,
+    selectSiteHighlight,
 } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
@@ -47,6 +48,7 @@ const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
     region: selectRegion(state),
     selection: selectSelection(state),
+    siteHighlight: selectSiteHighlight(state),
     hoverSelection: selectHoverSelection(state),
 });
 
@@ -156,6 +158,13 @@ class InvasiveLayer extends Component<Props> {
             this.props.map.addLayer(layer(resolveMapTypeSymbols()));
 
             setupEffects(this.props.map, INVASIVE_SOURCE_ID, INVASIVE_LAYER_ID);
+
+            if (this.props.siteHighlight) {
+                this.props.map.setFeatureState(
+                    { source: INVASIVE_SOURCE_ID, id: this.props.siteHighlight },
+                    { click: true }
+                );
+            }
 
             this.renderLayer();
         }
