@@ -1,8 +1,9 @@
 import { Study } from "../../domain/entities/Study";
 import { Option } from "../components/BasicSelect";
+import { DiagnosisSelectionData } from "./epics/diagnosis/types";
 import { InvasiveSelectionData } from "./epics/invasive/types";
 
-export type SelectionData = InvasiveSelectionData | CommonSelectionData;
+export type SelectionData = InvasiveSelectionData | DiagnosisSelectionData | CommonSelectionData;
 
 export type CommonSelectionData = {
     kind: "common";
@@ -11,7 +12,7 @@ export type CommonSelectionData = {
     filterOptions?: Option[];
     filterSelection?: Option[];
     studyObject: Study;
-    data?: PreventionChartData | PreventionMechanismChartData | DiagnosisChartData | TreatmentChartData;
+    data?: PreventionChartData | PreventionMechanismChartData | TreatmentChartData;
     dataSources?: CitationDataSource[];
     curations?: CurationSources[];
     othersDetected?: string[];
@@ -44,11 +45,6 @@ export type PreventionMechanismChartData = {
     };
 };
 
-export type DiagnosisChartData = {
-    kind: "diagnosis";
-    data: DiagnosisChartDataItemByYear[];
-};
-
 export type TreatmentChartData = {
     kind: "treatment";
     data: { years: string[]; series: TreatmentChartDataGroup[] };
@@ -79,19 +75,6 @@ export type TreatmentChartDataGroup = {
     color?: string;
     marker: { symbol: string };
     data: number[];
-};
-
-export type DiagnosisChartDataItem = {
-    type: string;
-    samples: string;
-    percentageConfirmed: string;
-};
-
-export type DiagnosisChartDataItemByYear = {
-    header?: string;
-    dataSources: string;
-    year: number;
-    items: DiagnosisChartDataItem[];
 };
 
 export type CitationDataSource = {

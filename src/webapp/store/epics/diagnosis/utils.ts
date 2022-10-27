@@ -4,15 +4,16 @@ import * as R from "ramda";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import { getSiteTitle } from "../../../components/site-title/utils";
 import { formatList } from "../../../utils/string-utils";
-import { CitationDataSource, DiagnosisChartData, SelectionData } from "../../SelectionData";
+import { CitationDataSource } from "../../SelectionData";
 import { SiteSelection } from "../../types";
 import { createCitationDataSources, createCurations, selectDataSourcesByStudies } from "../common/utils";
+import { DiagnosisChartDataContent, DiagnosisSelectionData } from "./types";
 
 export function createDiagnosisSelectionData(
     theme: string,
     selection: SiteSelection | null,
     filteredStudies: DiagnosisStudy[]
-): SelectionData | null {
+): DiagnosisSelectionData | null {
     if (!selection || filteredStudies.length === 0) return null;
 
     //TODO:Remove
@@ -34,24 +35,27 @@ export function createDiagnosisSelectionData(
 
     const years = getMinMaxYears(siteFilteredStudies);
 
-    const subtitle = `${i18next.t("common.diagnosis.chart.gene_deletions.subtitle_1")}
-                       ${years.length === 1 ? surveyType : ""} (${years.join("-")})`;
+    const sampleOrigin =
+        siteFilteredStudies[0].SAMPLE_ORIGIN_TEXT != null ? `\n\n${siteFilteredStudies[0].SAMPLE_ORIGIN_TEXT}` : "";
+
+    const subtitle = `${i18next.t("common.diagnosis.chart.gene_deletions.subtitle_1")} ${
+        years.length === 1 ? surveyType : ""
+    } (${years.join("-")}) ${sampleOrigin}`;
 
     const dataSources = createCitationDataSources(theme, siteFilteredStudies);
 
     return {
-        kind: "common",
+        kind: "diagnosis",
         title: siteFilteredStudies.length > 0 ? getSiteTitle(theme, siteFilteredStudies[0]) : "",
         subtitle,
         studyObject: siteFilteredStudies[0],
         data: getData(siteFilteredStudies, dataSources),
         dataSources: dataSources,
         curations: createCurations(dataSources, siteFilteredStudies),
-        othersDetected: [],
     };
 }
 
-function getData(studies: DiagnosisStudy[], dataSources: CitationDataSource[]): DiagnosisChartData {
+function getData(studies: DiagnosisStudy[], dataSources: CitationDataSource[]): DiagnosisChartDataContent[] {
     const years = getMinMaxYears(studies);
 
     const formatPercentage = (value: string) => `${(parseFloat(value) * 100).toFixed(1)}%`;
@@ -107,10 +111,7 @@ function getData(studies: DiagnosisStudy[], dataSources: CitationDataSource[]): 
         .values()
         .value();
 
-    return {
-        kind: "diagnosis",
-        data: _(groupByYear).orderBy(["year"], ["desc"]).value(),
-    };
+    return _(groupByYear).orderBy(["year"], ["desc"]).value();
 }
 
 function getMinMaxYears(studies: DiagnosisStudy[]): number[] {

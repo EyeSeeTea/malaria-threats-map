@@ -24,6 +24,7 @@ import { CommonSelectionData } from "../../store/SelectionData";
 import { InvasiveSelectionData } from "../../store/epics/invasive/types";
 import { PayloadActionCreator } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
+import { DiagnosisSelectionData } from "../../store/epics/diagnosis/types";
 
 const Container = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};
@@ -85,6 +86,9 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
             case "invasive": {
                 return <InvasiveContent selectionData={selectionData} />;
             }
+            case "diagnosis": {
+                return <DiagnosisContent selectionData={selectionData} />;
+            }
         }
     };
 
@@ -119,6 +123,32 @@ const InvasiveContent: React.FC<{ selectionData: InvasiveSelectionData }> = ({ s
     );
 };
 
+const DiagnosisContent: React.FC<{ selectionData: DiagnosisSelectionData }> = ({ selectionData }) => {
+    return (
+        <>
+            <TopContainer>
+                <SiteTitle title={selectionData.title} />
+                <Typography variant="subtitle2" sx={{ whiteSpace: "pre-line" }}>
+                    {selectionData.subtitle}
+                </Typography>
+            </TopContainer>
+
+            <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
+            <RoundedContainer>
+                {selectionData.data && <DiagnosisChart selectionData={selectionData} />}
+
+                {selectionData.dataSources && (
+                    <CitationNew
+                        dataSources={selectionData.dataSources}
+                        showKey={selectionData.dataSources.length > 1}
+                    />
+                )}
+                {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
+            </RoundedContainer>
+        </>
+    );
+};
+
 const CommonContent: React.FC<{
     selectionData: CommonSelectionData;
     preventionFilters: PreventionFilters;
@@ -137,9 +167,6 @@ const CommonContent: React.FC<{
             case "prevention-mechanism": {
                 return <PreventionMechanismsChart selectionData={selectionData} />;
             }
-            case "diagnosis": {
-                return <DiagnosisChart selectionData={selectionData} />;
-            }
             case "treatment": {
                 return <TreatmentChart selectionData={selectionData} />;
             }
@@ -150,7 +177,9 @@ const CommonContent: React.FC<{
         <>
             <TopContainer>
                 <SiteTitle title={selectionData.title} />
-                <Typography variant="subtitle2">{selectionData.subtitle}</Typography>
+                <Typography variant="subtitle2" sx={{ whiteSpace: "pre-line" }}>
+                    {selectionData.subtitle}
+                </Typography>
                 {selectionData.filterOptions && selectionData.filterOptions.length > 1 && (
                     <Flex>
                         <FormLabel component="legend">Species</FormLabel>
