@@ -251,7 +251,7 @@ class Map extends React.Component<Props, StateTypes> {
             container: this.mapContainer,
             style: style,
             center: [0.0, 28.291565],
-            maxZoom: 8.99999,
+            maxZoom: 6.4,
             minZoom: 1,
             zoom: 1.5,
             maxBounds: undefined,
