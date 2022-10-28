@@ -31,8 +31,10 @@ const CountrySelector = ({ region, countries = [], setRegion, fetchCountryLayer,
     const { t } = useTranslation();
 
     useEffect(() => {
-        fetchCountryLayer();
-    }, [fetchCountryLayer]);
+        if (!countries) {
+            fetchCountryLayer();
+        }
+    }, [fetchCountryLayer, countries]);
 
     const onChange = (selection?: string) => {
         if (selection) sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label: selection });
