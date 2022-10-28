@@ -21,7 +21,7 @@ export const setInsecticideTypes = createAction(ActionTypeEnum.SetInsecticideTyp
 
 export const setAssayTypes = createAction(ActionTypeEnum.SetAssayTypes)<string[]>();
 
-export const setType = createAction(ActionTypeEnum.SetType)<string>();
+export const setType = createAction(ActionTypeEnum.SetType)<string[]>();
 
 export const setProxyType = createAction(ActionTypeEnum.SetProxyType)<string>();
 

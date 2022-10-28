@@ -24,7 +24,7 @@ function MultiFilter({ label, options, onChange, value, analyticsMultiFilterActi
         }
     };
 
-    const selections = options.filter(option => value.includes(option.value));
+    const selections = options.filter(option => value && value.includes(option.value));
 
     return (
         <FilterRowContainer onlyYMargin={onlyYMargin}>

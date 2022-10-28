@@ -146,7 +146,7 @@ export const filterByProxyType = (type: string) => (study: any) => {
 };
 
 export const filterByTypes = (types: string[]) => (study: any) => {
-    return !types.length || types.includes(study.TYPE);
+    return !types || !types.length || types.includes(study.TYPE);
 };
 
 export const filterByTypeSynergist = (synergistTypes: string[]) => (study: any) => {
@@ -389,7 +389,7 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
                 filterByResistanceStatus,
                 filterByInsecticideClass(preventionFilters.insecticideClass),
                 filterByInsecticideTypes(preventionFilters.insecticideTypes),
-                filterByType(preventionFilters.type),
+                filterByTypes(preventionFilters.type),
                 filterBySpecies(preventionFilters.species),
                 filterByYearRange(filters),
                 filterByRegion(region),
@@ -399,7 +399,7 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
                 filterByIntensityStatus,
                 filterByInsecticideClass(preventionFilters.insecticideClass),
                 filterByInsecticideTypes(preventionFilters.insecticideTypes),
-                filterByType(preventionFilters.type),
+                filterByTypes(preventionFilters.type),
                 filterBySpecies(preventionFilters.species),
                 filterByYearRange(filters),
                 filterByRegion(region),
@@ -407,7 +407,7 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
         case PreventionMapType.RESISTANCE_MECHANISM: {
             const base = [
                 filterByResistanceMechanism,
-                filterByType(preventionFilters.type),
+                filterByTypes(preventionFilters.type),
                 filterBySpecies(preventionFilters.species),
                 filterByAssayTypes(preventionFilters.assayTypes),
                 filterByYearRange(filters),
@@ -444,7 +444,7 @@ function buildPreventionFiltersByDownload(
                 filterByAssayTypes([preventionFilters.dataset]),
                 filterByInsecticideClass(preventionFilters.insecticideClass),
                 filterByInsecticideTypes(preventionFilters.insecticideTypes),
-                filterByType(preventionFilters.type),
+                filterByTypes(preventionFilters.type),
                 filterBySpecies(preventionFilters.species),
                 filterByRegion(region),
                 filterByYearRange(filters),
@@ -454,7 +454,7 @@ function buildPreventionFiltersByDownload(
             return [
                 filterByDownload(),
                 filterByAssayTypes([preventionFilters.dataset]),
-                filterByType(preventionFilters.type),
+                filterByTypes(preventionFilters.type),
                 filterBySpecies(preventionFilters.species),
                 filterByRegion(region),
                 filterByYearRange(filters),

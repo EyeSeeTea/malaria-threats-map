@@ -146,7 +146,7 @@ export function preventionFiltersToString(
     const years = getYearsSummary(maxMinYears, yearFilters);
     const insecticideClass = i18next.t(preventionFilters.insecticideClass);
     const insecticideTypes = preventionFilters.insecticideTypes.map(item => i18next.t(item));
-    const type = i18next.t(preventionFilters.type);
+    const type = preventionFilters.type?.map(item => i18next.t(item));
     const species = preventionFilters.species.map(item => i18next.t(item));
     const assayTypes = preventionFilters.assayTypes.map(item => i18next.t(item));
     const synergistTypes = preventionFilters.synergistTypes.map(item => i18next.t(item));
