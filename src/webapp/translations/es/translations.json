@@ -577,8 +577,8 @@
                 "invasive": "Hay {{studies}} detecciones de vectores encontrados con los criterios especificados"
             },
             "insecticide_class": "Clase de insecticida",
-            "insecticide_type": "Tipo de insecticida",
-            "select_insecticide_type": "Seleccionar tipo de insecticida",
+            "insecticide_type": "Insecticida",
+            "select_insecticide_type": "Seleccionar insecticida",
             "test_type": "Tipo de ensayo",
             "select_test_type": "Seleccionar tipo de ensayo",
             "vector_species": "Especies vectoras",
