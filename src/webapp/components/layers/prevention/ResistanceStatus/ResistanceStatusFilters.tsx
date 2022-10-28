@@ -4,6 +4,7 @@ import InsecticideTypeFilter from "../../../filters/InsecticideTypeFilter";
 import TypeFilter from "../../../filters/TypeFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
+import OnlyByHealthMinistriesFilter from "../../../filters/OnlyByHealthMinistriesFilter";
 
 function ResistanceStatusFilters() {
     return (
@@ -13,6 +14,7 @@ function ResistanceStatusFilters() {
             <TypeFilter />
             <SpeciesFilter />
             <YearRangeSelector />
+            <OnlyByHealthMinistriesFilter />
         </div>
     );
 }

@@ -36,3 +36,5 @@ export const setPreventionFilteredStudies = createAction(ActionTypeEnum.SetPreve
 export const setPreventionSelectionStudies = createAction(ActionTypeEnum.SetPreventionSelectionStudies)<
     PreventionStudy[]
 >();
+
+export const setOnlyByHealthMinistries = createAction(ActionTypeEnum.SetOnlyByHealthMinistries)<boolean>();

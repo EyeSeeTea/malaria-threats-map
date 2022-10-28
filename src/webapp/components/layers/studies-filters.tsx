@@ -37,7 +37,8 @@ export const filterPreventionStudies = (
     from: Source = "map"
 ) => {
     const filters = buildPreventionFilters(preventionFilters, yearFilters, region, from);
-    return filters.reduce((studies, filter) => studies.filter(filter), studies);
+    const result = filters.reduce((studies, filter) => studies.filter(filter), studies);
+    return result;
 };
 
 export const filterDiagnosisStudies = (
@@ -147,6 +148,11 @@ export const filterByProxyType = (type: string) => (study: any) => {
 
 export const filterByTypes = (types: string[]) => (study: any) => {
     return !types || !types.length || types.includes(study.TYPE);
+};
+
+export const filterByOnlyDataByHealthMinistries = (value: boolean) => (study: PreventionStudy) => {
+    debugger;
+    return value ? study.INSTITUTION_TYPE === "MoH" : true;
 };
 
 export const filterByTypeSynergist = (synergistTypes: string[]) => (study: any) => {
@@ -393,6 +399,7 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
                 filterBySpecies(preventionFilters.species),
                 filterByYearRange(filters),
                 filterByRegion(region),
+                filterByOnlyDataByHealthMinistries(preventionFilters.onlyByHealthMinistries),
             ];
         case PreventionMapType.INTENSITY_STATUS:
             return [
@@ -403,6 +410,7 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
                 filterBySpecies(preventionFilters.species),
                 filterByYearRange(filters),
                 filterByRegion(region),
+                filterByOnlyDataByHealthMinistries(preventionFilters.onlyByHealthMinistries),
             ];
         case PreventionMapType.RESISTANCE_MECHANISM: {
             const base = [

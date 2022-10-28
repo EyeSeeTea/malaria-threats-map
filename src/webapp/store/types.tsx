@@ -130,6 +130,7 @@ export interface PreventionFilters {
     proxyType: string | null;
     type: string[] | null;
     species: string[];
+    onlyByHealthMinistries: boolean;
 }
 
 export interface PreventionState {

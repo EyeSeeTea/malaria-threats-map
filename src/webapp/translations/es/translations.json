@@ -609,7 +609,8 @@
             "select_site": "Seleccionar sitio",
             "site": "Sitio",
             "exclude_lower_patients": "Excluir los estudios con menos de 20 pacientes",
-            "exclude_lower_samples": "Excluir estudios de menos de 20 muestras"
+            "exclude_lower_samples": "Excluir estudios de menos de 20 muestras",
+            "only_include_data_by_health": "Incluir solo los datos proporcionados a la OMS por los ministerios de salud"
         },
         "topbar": {
             "menu": "Menú",
