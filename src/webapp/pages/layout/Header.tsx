@@ -107,7 +107,6 @@ const Header = () => {
             <StyledAppBar>
                 <Container maxWidth="xl">
                     <StyledToolbar>
-                        <WhoLogoBlue width="150px" />
                         <Hidden lgUp>
                             <IconButton color="inherit" onClick={toggleDrawer}>
                                 <MenuIcon />
@@ -119,6 +118,7 @@ const Header = () => {
                             </MenuContainer>
                             <LanguageSelector />
                         </Hidden>
+                        <WhoLogoBlue width="150px" />
                     </StyledToolbar>
                 </Container>
             </StyledAppBar>
