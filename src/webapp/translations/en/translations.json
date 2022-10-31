@@ -304,6 +304,19 @@
             },
             "sectionsFooter": "Completed forms can be sent to: <2>vectorsurveillance@who.int</2>"
         },
+        "contactPage": {
+            "title": "Contribute to the Malaria Threats Map by sharing your <strong>feedback</strong>",
+            "section1": {
+                "title": "General feedback and enquiries",
+                "description": "We are eager to hear how you use the MTM and how we can improve the platform for all its users. To contact the MTM team, email <1>gmp-maps@who.int</1>"
+            },
+            "section2": {
+                "title1": "Data submission",
+                "description1": "If you would like to submit data to the MTM, please use the <2>share data</2> portal.",
+                "title2": "Technical support",
+                "description2": "If you are having any technical issues with the platform, please contact the IT team by using the “Report bugs” tab on the right-hand-side of the page. Feedback submitted here will go directly to the IT team."
+            }
+        },
         "footer": {
             "policies": {
                 "title": "Policies",
