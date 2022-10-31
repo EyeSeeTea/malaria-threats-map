@@ -1,4 +1,3 @@
-import i18next from "i18next";
 import React, { useContext } from "react";
 import { CountryContextData } from "../../../../../../domain/entities/CountryContextData";
 import { useAppContext } from "../../../../../context/app-context";
@@ -11,9 +10,6 @@ export const useCountryContextData = () => {
     const { compositionRoot } = useAppContext();
 
     const [filteredData, setFilteredData] = React.useState<CountryContextData[]>([]);
-
-    //TODO: Remove when iso3 missing is fixed
-    const [allCountries, setAllCountries] = React.useState<Record<string, string>>({});
 
     React.useEffect(() => {
         if (data === undefined) {
@@ -34,13 +30,7 @@ export const useCountryContextData = () => {
 
         const filtered = data.filter(item => selectedCountries.includes(item.ORGANISATIONUNIT_ISO2));
         setFilteredData(filtered);
-    }, [data, selectedCountries, allCountries]);
-
-    React.useEffect(() => {
-        //TODO: Remove when iso3 missing is fixed
-        const countries = i18next.getResource("en", "translation", "countries");
-        setAllCountries(countries);
-    }, []);
+    }, [data, selectedCountries]);
 
     return {
         data: filteredData,
