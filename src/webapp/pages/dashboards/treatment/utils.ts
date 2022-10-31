@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import {
     filterByDimensionId,
@@ -16,13 +17,13 @@ export function filterStudies(
     years: [number, number],
     excludeLowerPatients: boolean
 ): TreatmentStudy[] {
-    const filters = [
+    const filters = _.compact([
         filterByDimensionId(256),
         filterByPlasmodiumSpecies(plasmodiumSpecies),
         filterByDrugs(drugs || []),
-        filterByYearRange(years),
+        years && filterByYearRange(years),
         filterByExcludeLowerPatients(excludeLowerPatients),
-    ];
+    ]);
 
     const filteredStudies = filters.reduce((studies, filter) => studies.filter(filter), studies);
 

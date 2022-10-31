@@ -26,28 +26,48 @@ export function useTreatment(drugsMulti: boolean) {
     const studiesCount = React.useMemo(() => filteredStudies.length, [filteredStudies]);
 
     React.useEffect(() => {
-        if (drugs === undefined) {
-            if (drugsMulti) {
-                const drugUniques =
-                    filteredStudiesForDrugs.length > 0
-                        ? _.uniq(filteredStudiesForDrugs.map(study => study.DRUG_NAME))
-                        : undefined;
+        if (drugsMulti) {
+            const drugUniques =
+                filteredStudiesForDrugs.length > 0
+                    ? _.uniq(filteredStudiesForDrugs.map(study => study.DRUG_NAME))
+                    : undefined;
 
-                if (drugUniques) {
-                    onDrugsChange(drugUniques);
-                }
-            } else {
-                const drug =
-                    filteredStudiesForDrugs.length > 0
-                        ? _.uniq(filteredStudiesForDrugs.map(study => study.DRUG_NAME))[0]
-                        : undefined;
+            if (drugUniques) {
+                onDrugsChange(drugUniques);
+            }
+        } else {
+            const drug =
+                filteredStudiesForDrugs.length > 0
+                    ? _.uniq(filteredStudiesForDrugs.map(study => study.DRUG_NAME))[0]
+                    : undefined;
 
-                if (drug) {
-                    onDrugsChange([drug]);
-                }
+            if (drug) {
+                onDrugsChange([drug]);
             }
         }
-    }, [filteredStudiesForDrugs, onDrugsChange, drugs, drugsMulti]);
+    }, [filteredStudiesForDrugs, onDrugsChange, drugsMulti]);
+
+    React.useEffect(() => {
+        if (drugsMulti) {
+            const drugUniques =
+                filteredStudiesForDrugs.length > 0
+                    ? _.uniq(filteredStudiesForDrugs.map(study => study.DRUG_NAME))
+                    : undefined;
+
+            if (drugUniques) {
+                onDrugsChange(drugUniques);
+            }
+        } else {
+            const drug =
+                filteredStudiesForDrugs.length > 0
+                    ? _.uniq(filteredStudiesForDrugs.map(study => study.DRUG_NAME))[0]
+                    : undefined;
+
+            if (drug) {
+                onDrugsChange([drug]);
+            }
+        }
+    }, [plasmodiumSpecies, filteredStudiesForDrugs, onDrugsChange, drugsMulti]);
 
     React.useEffect(() => {
         if (molecularMarker) {
@@ -73,16 +93,10 @@ export function useTreatment(drugsMulti: boolean) {
     }, [dashboardsTreatmentStudies, plasmodiumSpecies, drugs, molecularMarker, years, excludeLowerPatients]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(
-            dashboardsTreatmentStudies,
-            plasmodiumSpecies,
-            [],
-            years,
-            excludeLowerPatients
-        );
+        const filteredStudies = filterStudies(dashboardsTreatmentStudies, plasmodiumSpecies, [], undefined, false);
 
         setFilteredStudiesForDrugs(filteredStudies);
-    }, [dashboardsTreatmentStudies, plasmodiumSpecies, molecularMarker, years, excludeLowerPatients]);
+    }, [dashboardsTreatmentStudies, plasmodiumSpecies]);
 
     return {
         filteredStudies,
