@@ -8,38 +8,51 @@ import { Option } from "../../components/BasicSelect";
 import { DashboardsThemeOptions } from "./types";
 import { useDashboards } from "./context/useDashboards";
 import { State } from "../../store/types";
-import { selectCountries } from "../../store/reducers/country-layer-reducer";
-import { fetchCountryLayerRequest } from "../../store/actions/country-layer-actions";
 import { connect } from "react-redux";
+import { selectTranslations } from "../../store/reducers/translations-reducer";
+import { useAppContext } from "../../context/app-context";
+import { Country } from "../../../domain/entities/Country";
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type Props = StateProps;
 
 const mapStateToProps = (state: State) => ({
-    countries: selectCountries(state),
+    translations: selectTranslations(state),
 });
 
-const mapDispatchToProps = {
-    fetchCountryLayer: fetchCountryLayerRequest,
-};
+const ThemeSelectionSection = ({ translations }: Props) => {
+    const [countries, setCountries] = React.useState<Country[]>([]);
+    const [countryOptions, setCountryOptions] = React.useState<Option[]>([]);
 
-const ThemeSelectionSection = ({ countries, fetchCountryLayer }: Props) => {
     const { t } = useTranslation();
+    const { compositionRoot } = useAppContext();
 
     const { theme, selectedCountries, updatedDates, onThemeChange, onSelectedCountriesChange, onGenerate } =
         useDashboards();
 
-    const countrySuggestions: Option[] = countries
-        .filter(({ ENDEMICITY }) => ENDEMICITY === 1)
-        .map(({ ISO_2_CODE }) => ({
-            label: t(ISO_2_CODE),
-            value: ISO_2_CODE,
-        }));
+    useEffect(() => {
+        compositionRoot.countries.get().run(
+            countries => {
+                setCountries(countries);
+            },
+            () => {
+                setCountries([]);
+            }
+        );
+    }, [compositionRoot]);
 
     useEffect(() => {
-        fetchCountryLayer();
-    }, [fetchCountryLayer]);
+        if (translations.length === 0) return;
+
+        const options = countries
+            .filter(({ endemicity }) => endemicity === true)
+            .map(({ iso2Code }) => ({
+                label: t(iso2Code),
+                value: iso2Code,
+            }));
+
+        setCountryOptions(options);
+    }, [translations, countries, t]);
 
     const handleThemeChange = useCallback(
         (_event: React.MouseEvent<HTMLElement>, value: any) => {
@@ -84,7 +97,7 @@ const ThemeSelectionSection = ({ countries, fetchCountryLayer }: Props) => {
                             <SectionTitle>{t("common.dashboard.filtersSection.second.title")}</SectionTitle>
                             <MultiFilter
                                 placeholder={t("common.filters.select_country")}
-                                options={countrySuggestions}
+                                options={countryOptions}
                                 onChange={onSelectedCountriesChange}
                                 value={selectedCountries}
                                 onlyYMargin
@@ -116,7 +129,7 @@ const ThemeSelectionSection = ({ countries, fetchCountryLayer }: Props) => {
     );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(ThemeSelectionSection));
+export default connect(mapStateToProps)(React.memo(ThemeSelectionSection));
 
 type ThemeButtonProps = {
     theme: DashboardsThemeOptions;
