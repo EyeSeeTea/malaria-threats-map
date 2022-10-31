@@ -4,7 +4,7 @@ import { INVASIVE_STATUS } from "./utils";
 export const InvasiveStatusColors: { [key: string]: string[] } = {
     [INVASIVE_STATUS.INVASIVE]: ["#ed5565", "#de182c"],
     [INVASIVE_STATUS.NATIVE]: ["#5abe86", "#3a926f"],
-    [INVASIVE_STATUS.NOTFOUND]: ["#d3d3d3", "#adadad"],
+    [INVASIVE_STATUS.NOTFOUND]: ["#757575", "#616161"],
     [INVASIVE_STATUS.UNKNOWN]: ["#d3d3d3", "#adadad"],
 };
 
