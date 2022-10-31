@@ -92,7 +92,13 @@ const MapContainer: React.FC = () => {
                 },
                 insecticideClass: {
                     selector: (state: State) => state.prevention.filters.insecticideClass,
-                    action: (value: string) => setInsecticideClass(value),
+                    action: (value: string) => {
+                        if (!value) {
+                            return setInsecticideClass("PYRETHROIDS");
+                        }
+
+                        return setInsecticideClass(value);
+                    },
                 },
                 insecticideTypes: {
                     selector: (state: State) => state.prevention.filters.insecticideTypes,

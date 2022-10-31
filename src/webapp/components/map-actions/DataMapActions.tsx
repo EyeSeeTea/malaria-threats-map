@@ -84,7 +84,7 @@ const DataMapActions: React.FC<Props> = ({
         <Box id="dataFilters">
             <ActionGroupItem
                 childrenMaxHeight={"400px"}
-                placeholder={t("mapActions.selectData")}
+                placeholder={from === "map" ? t("mapActions.selectDataMap") : t("mapActions.selectDataDownload")}
                 actionGroupKey={"DATA"}
                 value={
                     selectedFilters && (
