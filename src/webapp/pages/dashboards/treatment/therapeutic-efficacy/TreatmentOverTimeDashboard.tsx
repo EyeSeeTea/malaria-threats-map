@@ -123,6 +123,7 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
                 style: {
                     fontSize: "14px",
                     fontWeight: "bold",
+                    color: "black",
                 },
             },
             tickInterval: 1,
@@ -144,6 +145,7 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
                 style: {
                     fontSize: "14px",
                     fontWeight: "bold",
+                    color: "black",
                 },
             },
             maxPadding: 0.2,
