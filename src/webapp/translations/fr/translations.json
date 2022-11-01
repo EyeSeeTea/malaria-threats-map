@@ -417,6 +417,20 @@
                     "help": {
                         "p1": "This map presents data from <1>synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying results, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how synergist involvement is graded consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
+                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays."
+                    }
+                },
+                "chlorfenapyr_undetermined": {
+                    "help": {
+                        "p1": "Les points gris représentent les données recueillies avec la concentration discriminante recommandée de 100 µg/flacon mais qui ne correspondent pas entièrement aux critères de l'OMS pour la validation du test, soit parce que la température n'a pas été signalée, soit parce que la température est tombée en dehors de la plage recommandée (27 °C ± 2 ° C), parce qu'aucune souche de moustique sensible n'a été testée en parallèle ou parce que les résultats de la souche de moustique sensible n'ont pas été rapportés.",
+                        "p2": "",
+                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays."
+                    }
+                },
+                "pirimiphos_methly_undetermined": {
+                    "help": {
+                        "p1": "Les points gris représentent les données recueillies avec la concentration discriminante de pyrimiphos-méthyl précédemment recommandée de 0,25 %. Ces données doivent être validées par rapport aux nouvelles concentrations discriminantes disponibles dans le Manuel de l'OMS pour le suivi de la résistance aux insecticides chez les moustiques vecteurs et la sélection des interventions appropriées. <4 href='https://www.who.int/publications/i/item/9789240051089'>https://www.who.int/publications/i/item/9789240051089</4>.",
+                        "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
                 }

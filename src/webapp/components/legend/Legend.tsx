@@ -140,12 +140,13 @@ const Legend: React.FC<Props> = ({
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <Stack gap={1} marginTop="10px">
                         <HelpContainer gap={1}>
-                            <Typography variant="caption">
+                            <Typography variant="caption" sx={{ overflowWrap: "break-word" }}>
                                 <Trans i18nKey={`${mapTypeHelpKey}.p1`} t={t}>
                                     This map contains data from <strong>intensity concentration bioassays</strong>. Each
                                     dot on the map represents a study site containing one or more studies. In sites
                                     where studies show varying levels of resistance intensity, the colour of the dot is
-                                    determined by the most recent results.
+                                    determined by the most recent results.{" "}
+                                    <a href="/">WHO manual for resistance monitoring</a>.
                                 </Trans>
                             </Typography>
                             <Typography variant="caption">
