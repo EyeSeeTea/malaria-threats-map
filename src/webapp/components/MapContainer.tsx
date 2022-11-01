@@ -114,7 +114,7 @@ const MapContainer: React.FC = () => {
                 },
                 type: {
                     selector: (state: State) => state.prevention.filters.type,
-                    action: (value: string) => setType(value),
+                    action: (value: string[]) => setType(value),
                 },
                 species: {
                     selector: (state: State) => state.prevention.filters.species,

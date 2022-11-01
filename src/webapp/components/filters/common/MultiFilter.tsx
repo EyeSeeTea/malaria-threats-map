@@ -13,9 +13,19 @@ type Props = {
     value: string[];
     analyticsMultiFilterAction?: string;
     onlyYMargin?: boolean;
+    isClearable?: boolean;
 };
 
-function MultiFilter({ label, options, onChange, value, analyticsMultiFilterAction, placeholder, onlyYMargin }: Props) {
+function MultiFilter({
+    label,
+    options,
+    onChange,
+    value,
+    analyticsMultiFilterAction,
+    placeholder,
+    onlyYMargin,
+    isClearable,
+}: Props) {
     const onSelectionChange = (options: Option[] = []) => {
         onChange((options || []).map(o => o.value));
 
@@ -24,7 +34,7 @@ function MultiFilter({ label, options, onChange, value, analyticsMultiFilterActi
         }
     };
 
-    const selections = options.filter(option => value.includes(option.value));
+    const selections = options.filter(option => value && value.includes(option.value));
 
     return (
         <FilterRowContainer onlyYMargin={onlyYMargin}>
@@ -35,7 +45,7 @@ function MultiFilter({ label, options, onChange, value, analyticsMultiFilterActi
             )}
             <IntegrationReactSelect
                 isMulti
-                isClearable={false}
+                isClearable={isClearable}
                 placeholder={placeholder}
                 suggestions={options}
                 onChange={onSelectionChange}

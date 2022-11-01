@@ -62,7 +62,9 @@ function AssayTypeCheckboxFilter({ assayTypes, preventionFilters, setAssayTypes 
         );
     };
 
-    const types = ASSAY_TYPE_FILTER[preventionFilters.type]
+    const type = preventionFilters.type.length === 1 ? preventionFilters.type[0] : undefined;
+
+    const types = ASSAY_TYPE_FILTER[type]
         .map(value => (assayTypes as Translation[]).find(type => type.VALUE_ === value))
         .filter(Boolean);
 

@@ -591,8 +591,8 @@
                 "invasive": "Hay {{studies}} detecciones de vectores encontrados con los criterios especificados"
             },
             "insecticide_class": "Clase de insecticida",
-            "insecticide_type": "Tipo de insecticida",
-            "select_insecticide_type": "Seleccionar tipo de insecticida",
+            "insecticide_type": "Insecticida",
+            "select_insecticide_type": "Seleccionar insecticida",
             "test_type": "Tipo de ensayo",
             "select_test_type": "Seleccionar tipo de ensayo",
             "vector_species": "Especies vectoras",
@@ -623,7 +623,8 @@
             "select_site": "Seleccionar sitio",
             "site": "Sitio",
             "exclude_lower_patients": "Excluir los estudios con menos de 20 pacientes",
-            "exclude_lower_samples": "Excluir estudios de menos de 20 muestras"
+            "exclude_lower_samples": "Excluir estudios de menos de 20 muestras",
+            "only_include_data_by_health": "Incluir solo los datos proporcionados a la OMS por los ministerios de salud"
         },
         "topbar": {
             "menu": "Menú",

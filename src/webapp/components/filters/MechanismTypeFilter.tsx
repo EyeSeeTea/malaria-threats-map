@@ -37,7 +37,7 @@ function MechanismTypeFilter({ types = [], preventionFilters, setType, logEventA
     const { t } = useTranslation();
     const handleChange = (event: React.ChangeEvent<unknown>) => {
         const newValue = (event.target as HTMLInputElement).value;
-        setType(newValue);
+        setType([newValue]);
         logEventAction({ category: "filter", action: "mechanismType", label: newValue });
     };
     const suggestions: Translation[] = types as Translation[];
@@ -53,12 +53,17 @@ function MechanismTypeFilter({ types = [], preventionFilters, setType, logEventA
             label: t(`TYPE.${mechanism.VALUE_}`),
         }));
 
+    const value = React.useMemo(
+        () => (preventionFilters.type.length === 1 ? preventionFilters.type[0] : undefined),
+        [preventionFilters.type]
+    );
+
     return (
         <RadioGroupFilter
             label={t("common.filters.mechanism_type")}
             options={options}
             handleChange={handleChange}
-            value={preventionFilters.type}
+            value={value}
         />
     );
 }
