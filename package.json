@@ -1,7 +1,7 @@
 {
     "name": "malaria-threats-map",
     "version": "2.11.0",
-    "private": true
+    "private": true,
     "homepage": "./",
     "dependencies": {
         "@date-io/core": "1.3.6",
