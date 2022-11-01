@@ -1,4 +1,4 @@
-import { Alert, Button, Container, Grid, Paper, Snackbar, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Container, Grid, Paper, Snackbar, Stack, TextField, Typography } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import Layout from "../layout/Layout";
@@ -7,11 +7,15 @@ import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectFeedback } from "../../store/reducers/feedback-reducer";
 import { feedbackFieldChange, feedbackSubmit } from "../../store/actions/feedback-actions";
+import { useTranslation, Trans } from "react-i18next";
+import GoodReview from "../../assets/img/contact-page/good-review.png";
+import TecnicalSupportGraphic from "../../assets/img/contact-page/computer-map.png";
+import { Link } from "react-router-dom";
 
 const ImageBanner = styled.div`
     background: linear-gradient(90deg, #bbd7e8 0%, #bbd7e800 100%), url(${HomepageMap});
     background-position: right;
-    height: 50vh;
+    height: 30vh;
     min-height: 260px;
 `;
 
@@ -21,35 +25,19 @@ const TitleContainer = styled(Container)`
     font-size: 8vw;
 `;
 
-const RoundedPaper = styled(Paper)`
-    border-radius: 10px;
-    margin-top: -10vh;
-    margin-bottom: 100px;
-    margin-left: 10vmin;
-    margin-right: 10vmin;
-    padding: 10vmin;
-`;
-
-const SendButton = styled(Button)`
-    &.MuiButton-root {
-        color: white;
-        font-size: 18px;
-        background-color: black;
-        font-weight: bold;
-        width: 190px;
+const GoodReviewImage = styled.img`
+    width: 130px;
+    height: auto;
+    z-index: 2;
+    @media (max-width: 768px) {
+        width: 20%;
     }
 `;
 
-const StyledTextField = styled(TextField)`
-    .MuiInputBase-root {
-        background-color: #f7f7f7;
-        padding-bottom: 10px;
-    }
+const TecnicalSupportImage = styled.img`
+    width: 70%;
+    height: auto;
 `;
-
-const inputProps = {
-    disableUnderline: true,
-};
 
 const mapStateToProps = (state: State) => ({
     feedback: selectFeedback(state),
@@ -64,105 +52,88 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = StateProps & DispatchProps;
 
-const ContactPage: React.FC<Props> = ({ feedback, submit, fieldChange }) => {
-    const handleFieldChange = React.useCallback(
-        (event: React.ChangeEvent<any>) => {
-            event.persist();
-
-            fieldChange({ prop: event.target.name, value: event.target.value });
-        },
-        [fieldChange]
-    );
+const ContactPage: React.FC<Props> = () => {
+    const { t } = useTranslation();
 
     return (
         <Layout>
             <ImageBanner>
                 <TitleContainer maxWidth="xl">
-                    <Typography variant="h2" component="h1" color="inherit" textTransform="uppercase">
-                        Contribute to the Malaria Threats Map by sharing your <strong>feedback</strong>
+                    <Typography variant="h2" component="h1" textTransform="uppercase">
+                        <Trans i18nKey="common.contactPage.title" t={t}>
+                            Contribute to the Malaria Threats Map by sharing your <strong>feedback</strong>
+                        </Trans>
                     </Typography>
                 </TitleContainer>
             </ImageBanner>
             <Container maxWidth="xl">
-                <RoundedPaper>
-                    <Typography variant="h4" component="h2" color="inherit" textAlign="center">
-                        <strong>Send us your feedback</strong>
-                    </Typography>
-                    <form>
-                        <Grid container rowSpacing={3} columnSpacing={2} sx={{ marginTop: 4 }}>
-                            <Grid item md={6} xs={12}>
-                                <StyledTextField
-                                    error={feedback.fieldErrors.name !== undefined}
-                                    fullWidth={true}
-                                    variant="filled"
-                                    name="name"
-                                    placeholder="Your name"
-                                    InputProps={inputProps}
-                                    value={feedback.fields.name}
-                                    helperText={feedback.fieldErrors.name}
-                                    onChange={handleFieldChange}
-                                />
-                            </Grid>
-                            <Grid item md={6} xs={12}>
-                                <StyledTextField
-                                    error={feedback.fieldErrors.email !== undefined}
-                                    fullWidth={true}
-                                    variant="filled"
-                                    name="email"
-                                    placeholder="Your email address"
-                                    InputProps={inputProps}
-                                    value={feedback.fields.email}
-                                    helperText={feedback.fieldErrors.email}
-                                    onChange={handleFieldChange}
-                                />
-                            </Grid>
-                            <Grid item md={12} xs={12}>
-                                <StyledTextField
-                                    error={feedback.fieldErrors.subject !== undefined}
-                                    fullWidth={true}
-                                    variant="filled"
-                                    name="subject"
-                                    placeholder="Subject"
-                                    InputProps={inputProps}
-                                    value={feedback.fields.subject}
-                                    helperText={feedback.fieldErrors.subject}
-                                    onChange={handleFieldChange}
-                                />
-                            </Grid>
-                            <Grid item md={12} xs={12}>
-                                <StyledTextField
-                                    error={feedback.fieldErrors.message !== undefined}
-                                    fullWidth={true}
-                                    multiline
-                                    variant="filled"
-                                    name="message"
-                                    placeholder="Message"
-                                    rows={6}
-                                    InputProps={inputProps}
-                                    value={feedback.fields.message}
-                                    helperText={feedback.fieldErrors.message}
-                                    onChange={handleFieldChange}
-                                />
-                            </Grid>
-
-                            <Grid item xs={2}>
-                                <SendButton onClick={submit}>{"Send"}</SendButton>
-                            </Grid>
-                        </Grid>
-                    </form>
-                </RoundedPaper>
+                <Grid container rowSpacing={12} columnSpacing={2} sx={{ marginTop: 4, marginBottom: 4 }}>
+                    <Grid item md={6} xs={12} display="flex" flexDirection={"column"} justifyContent="center">
+                        <Typography variant="h4" fontWeight="bold" marginBottom="25px" color="#343434">
+                            {t("common.contactPage.section1.title")}
+                        </Typography>
+                        <Typography variant="h6" marginBottom="25px" maxWidth={"90%"}>
+                            <Trans i18nKey="common.contactPage.section1.description" t={t}>
+                                We are eager to hear how you use the MTM and how we can improve the platform for all its
+                                users. To contact the MTM team, email
+                                <a href="mailto:gmp-maps@who.int" target="_blank" rel="noreferrer">
+                                    gmp-maps@who.int
+                                </a>
+                                .
+                            </Trans>
+                        </Typography>
+                    </Grid>
+                    <Grid item md={6} xs={12} display={"flex"} alignItems="center" justifyContent={"center"}>
+                        <Box
+                            borderRadius={"100%"}
+                            bgcolor="#5CCDCE"
+                            width={{ xs: "40vw", sm: "30vw", md: "250px", lg: "300px" }}
+                            height={{ xs: "40vw", sm: "30vw", md: "250px", lg: "300px" }}
+                            border="7px solid gray"
+                            position="absolute"
+                        ></Box>
+                        <GoodReviewImage src={GoodReview} alt="Feedback" />
+                    </Grid>
+                    <Grid
+                        item
+                        md={6}
+                        xs={12}
+                        display={"flex"}
+                        alignItems="center"
+                        justifyContent={{ xs: "center", md: "flex-start" }}
+                        order={{ xs: 4, md: 3 }}
+                    >
+                        <TecnicalSupportImage src={TecnicalSupportGraphic} alt="Tecnical Support Graphic" />
+                    </Grid>
+                    <Grid
+                        item
+                        md={6}
+                        xs={12}
+                        display="flex"
+                        flexDirection={"column"}
+                        justifyContent="center"
+                        order={{ xs: 3, md: 4 }}
+                    >
+                        <Stack>
+                            <Typography variant="h4" fontWeight="bold" marginBottom="25px" color="#343434">
+                                {t("common.contactPage.section2.title1")}
+                            </Typography>
+                            <Typography variant="h6" marginBottom="25px" maxWidth={"90%"}>
+                                <Trans i18nKey="common.contactPage.section2.description1" t={t}>
+                                    If you would like to submit data to the MTM, please use the{" "}
+                                    <Link to="/share-data">share data</Link> portal.
+                                </Trans>
+                            </Typography>
+                            <Typography variant="h4" fontWeight="bold" marginBottom="25px" color="#343434">
+                                {t("common.contactPage.section2.title2")}
+                            </Typography>
+                            <Typography variant="h6" marginBottom="25px" maxWidth={"90%"}>
+                                {t("common.contactPage.section2.description2")}
+                            </Typography>
+                        </Stack>
+                    </Grid>
+                </Grid>
             </Container>
-            {feedback.message && (
-                <Snackbar
-                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                    open={true}
-                    autoHideDuration={3000}
-                >
-                    <Alert severity={feedback.message.type === "success" ? "success" : "error"}>
-                        {feedback.message.text}
-                    </Alert>
-                </Snackbar>
-            )}
         </Layout>
     );
 };

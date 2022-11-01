@@ -304,6 +304,19 @@
             },
             "sectionsFooter": "Les formulaires complétés peuvent être envoyés à: <2>vectorsurveillance@who.int</2>"
         },
+        "contactPage": {
+            "title": "Contribuez à la carte des menaces du paludisme en partageant votre <strong>feedback</strong>",
+            "section1": {
+                "title": "Commentaires et questions d'ordre général",
+                "description": "Nous sommes impatients de savoir comment vous utilisez le MTM et comment nous pouvons améliorer la plateforme pour tous ses utilisateurs. Pour contacter l'équipe du MTM, écrivez à <1>gmp-maps@who.int</1>"
+            },
+            "section2": {
+                "title1": "Soumission des données",
+                "description1": "Si vous souhaitez soumettre des données au MTM, veuillez utiliser le portail <2>share data</2>.",
+                "title2": "Assistance technique",
+                "description2": "Si vous rencontrez des problèmes techniques avec la plate-forme, veuillez contacter l'équipe informatique en utilisant l'onglet \"Signaler les bugs\" sur le côté droit de la page. Les commentaires soumis ici seront directement transmis à l'équipe informatique."
+            }
+        },
         "footer": {
             "policies": {
                 "title": "Stratégies",

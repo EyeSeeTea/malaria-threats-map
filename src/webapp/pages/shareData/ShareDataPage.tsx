@@ -30,10 +30,8 @@ const ShareDataChartImage = styled.img`
     width: 80%;
     height: auto;
     z-index: 2;
-    /* @media (max-width: 768px) {
-        width: 90vw;
-    } */
 `;
+
 const ContributeDataImage = styled.img`
     width: 70%;
     height: auto;
