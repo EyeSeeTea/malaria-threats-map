@@ -1,5 +1,5 @@
 import React from "react";
-import { Dialog, DialogTitle, ListItemText, ListItem, List } from "@mui/material";
+import { Dialog, DialogTitle, ListItemText, ListItem, List, ListItemButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 export const LANGUAGES = [
@@ -42,9 +42,13 @@ export const LanguageSelectorDialog = (props: SimpleDialogProps) => {
             <DialogTitle>{t("common.options.select_language")}</DialogTitle>
             <List sx={{ pt: 0, margin: "auto" }}>
                 {LANGUAGES.map(language => (
-                    <ListItem button onClick={() => handleListItemClick(language.value)} key={language.value}>
+                    <ListItemButton
+                        selected={language.code === selectedValue}
+                        onClick={() => handleListItemClick(language.value)}
+                        key={language.value}
+                    >
                         <ListItemText primary={language.label} />
-                    </ListItem>
+                    </ListItemButton>
                 ))}
             </List>
         </Dialog>
