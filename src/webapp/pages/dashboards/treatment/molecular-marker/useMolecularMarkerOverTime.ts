@@ -16,11 +16,11 @@ export function useMolecularMarker() {
         drugs,
         molecularMarker,
         years,
-        excludeLowerPatients,
+        excludeLowerSamples,
         onPlasmodiumChange,
         onDrugsChange,
         onYearsChange,
-        onExcludeLowerPatientsChange,
+        onExcludeLowerSamplesChange,
         onMolecularMarkerChange,
     } = useTreatment(true);
 
@@ -43,11 +43,11 @@ export function useMolecularMarker() {
         drugs,
         molecularMarker,
         years,
-        excludeLowerPatients,
+        excludeLowerSamples,
         onPlasmodiumChange,
         onDrugsChange,
         onYearsChange,
-        onExcludeLowerPatientsChange,
+        onExcludeLowerSamplesChange,
         onMolecularMarkerChange,
     };
 }

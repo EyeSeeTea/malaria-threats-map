@@ -22,12 +22,12 @@ const MolecularMarkerDashboard: React.FC = () => {
         drugs,
         molecularMarker,
         years,
-        excludeLowerPatients,
+        excludeLowerSamples,
         data,
         onPlasmodiumChange,
         onDrugsChange,
         onYearsChange,
-        onExcludeLowerPatientsChange,
+        onExcludeLowerSamplesChange,
         onMolecularMarkerChange,
     } = useMolecularMarker();
 
@@ -59,11 +59,11 @@ const MolecularMarkerDashboard: React.FC = () => {
             drugs={drugs}
             molecularMarker={molecularMarker}
             years={years}
-            excludeLowerPatients={excludeLowerPatients}
+            excludeLowerSamples={excludeLowerSamples}
             onPlasmodiumChange={onPlasmodiumChange}
             onDrugsChange={onDrugsChange}
             onYearsChange={onYearsChange}
-            onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
+            onExcludeLowerSamplesChange={onExcludeLowerSamplesChange}
             onMolecularMarkerChange={onMolecularMarkerChange}
         >
             <Table>

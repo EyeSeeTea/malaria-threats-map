@@ -4,6 +4,7 @@ import {
     filterByDimensionId,
     filterByDrugs,
     filterByExcludeLowerPatients,
+    filterByExcludeLowerSamples,
     filterByMolecularMarker,
     filterByMolecularMarkerStudy,
     filterByPlasmodiumSpecies,
@@ -34,13 +35,13 @@ export function filterMolecularMarkerStudies(
     studies: TreatmentStudy[],
     molecularMarker: number,
     years: [number, number],
-    excludeLowerPatients: boolean
+    excludeLowerSamples: boolean
 ): TreatmentStudy[] {
     const filters = [
         filterByMolecularMarkerStudy(),
         filterByMolecularMarker(molecularMarker),
         filterByYearRange(years),
-        filterByExcludeLowerPatients(excludeLowerPatients),
+        filterByExcludeLowerSamples(excludeLowerSamples),
     ];
 
     const filteredStudies = filters.reduce((studies, filter) => studies.filter(filter), studies);

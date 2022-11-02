@@ -12,10 +12,12 @@ export function useTreatment(drugsMulti: boolean) {
         molecularMarker,
         years,
         excludeLowerPatients,
+        excludeLowerSamples,
         onPlasmodiumChange,
         onDrugsChange,
         onYearsChange,
         onExcludeLowerPatientsChange,
+        onExcludeLowerSamplesChange,
         onMolecularMarkerChange,
     } = useTreatmentFilters();
 
@@ -70,12 +72,13 @@ export function useTreatment(drugsMulti: boolean) {
     }, [plasmodiumSpecies, filteredStudiesForDrugs, onDrugsChange, drugsMulti]);
 
     React.useEffect(() => {
+        debugger;
         if (molecularMarker) {
             const filteredStudies = filterMolecularMarkerStudies(
                 dashboardsTreatmentStudies,
                 molecularMarker,
                 years,
-                excludeLowerPatients
+                excludeLowerSamples
             );
 
             setFilteredStudies(filteredStudies);
@@ -90,7 +93,15 @@ export function useTreatment(drugsMulti: boolean) {
 
             setFilteredStudies(filteredStudies);
         }
-    }, [dashboardsTreatmentStudies, plasmodiumSpecies, drugs, molecularMarker, years, excludeLowerPatients]);
+    }, [
+        dashboardsTreatmentStudies,
+        plasmodiumSpecies,
+        drugs,
+        molecularMarker,
+        years,
+        excludeLowerPatients,
+        excludeLowerSamples,
+    ]);
 
     React.useEffect(() => {
         const filteredStudies = filterStudies(dashboardsTreatmentStudies, plasmodiumSpecies, [], undefined, false);
@@ -108,10 +119,12 @@ export function useTreatment(drugsMulti: boolean) {
         molecularMarker,
         years,
         excludeLowerPatients,
+        excludeLowerSamples,
         onPlasmodiumChange,
         onDrugsChange,
         onYearsChange,
         onExcludeLowerPatientsChange,
+        onExcludeLowerSamplesChange,
         onMolecularMarkerChange,
     };
 }

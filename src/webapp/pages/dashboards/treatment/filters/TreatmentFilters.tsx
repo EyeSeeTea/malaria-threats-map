@@ -10,6 +10,7 @@ import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MolecularMarkerSelector from "../../../../components/filters/MolecularMarkerSelector";
 import { MolecularMarker } from "../../../../components/filters/MolecularMarkerFilter";
+import ExcludeLowerSamplesSelector from "../../../../components/filters/ExcludeLowerSamplesSelector";
 
 interface TreatmentFiltersProps {
     isMolecularMarkerChart: boolean;
@@ -20,12 +21,14 @@ interface TreatmentFiltersProps {
     drugs: string[];
     molecularMarker: number;
     years: [number, number];
-    excludeLowerPatients: boolean;
+    excludeLowerPatients?: boolean;
+    excludeLowerSamples?: boolean;
     onPlasmodiumSpeciesChange: (value: string) => void;
     onDrugsChange: (values: string[]) => void;
     onMolecularMarkerChange: (value: MolecularMarker) => void;
     onYearsChange: (years: [number, number]) => void;
-    onExcludeLowerPatientsChange: (value: boolean) => void;
+    onExcludeLowerPatientsChange?: (value: boolean) => void;
+    onExcludeLowerSamplesChange?: (value: boolean) => void;
     onCollapse: () => void;
 }
 
@@ -39,11 +42,13 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
     molecularMarker,
     years,
     excludeLowerPatients,
+    excludeLowerSamples,
     onPlasmodiumSpeciesChange,
     onDrugsChange,
     onMolecularMarkerChange,
     onYearsChange,
     onExcludeLowerPatientsChange,
+    onExcludeLowerSamplesChange,
     onCollapse,
 }) => {
     const { t } = useTranslation();
@@ -98,11 +103,21 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
 
             <DashboardsYearRangeSelector years={years} onChange={onYearsChange} />
 
-            <ExcludeLowerPatientsSelector
-                value={excludeLowerPatients}
-                onChange={onExcludeLowerPatientsChange}
-                fontWeight="bold"
-            />
+            {onExcludeLowerSamplesChange && (
+                <ExcludeLowerSamplesSelector
+                    value={excludeLowerSamples}
+                    onChange={onExcludeLowerSamplesChange}
+                    fontWeight="bold"
+                />
+            )}
+
+            {onExcludeLowerPatientsChange && (
+                <ExcludeLowerPatientsSelector
+                    value={excludeLowerPatients}
+                    onChange={onExcludeLowerPatientsChange}
+                    fontWeight="bold"
+                />
+            )}
         </FiltersCard>
     );
 };
