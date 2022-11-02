@@ -122,6 +122,7 @@
                     "lowTransmission": "Transmisión baja",
                     "lessOrEqualtoOneCase": "(0-1 caso por 1000 habitantes)",
                     "malariaFree": "Libre de malaria",
+                    "malariaFreeInfo": "Un área en la que no hay transmisión local continua de malaria transmitida por mosquitos y el riesgo de contraer malaria se limita a la infección por casos introducidos.",
                     "zeroCases": "(0 casos)",
                     "estimatedCases": "Casos estimados",
                     "estimatedDeaths": "Muertes estimadas"
@@ -172,8 +173,8 @@
             },
             "informationModal": {
                 "common": {
-                    "dataPeriod": "<strong>Período de datos:</strong>",
-                    "dataLastUpdated": "<strong>Datos actualizados por última vez:</strong>",
+                    "dataPeriod": "<strong>Período de datos: </strong>",
+                    "dataLastUpdated": "<strong>Datos actualizados por última vez: </strong>",
                     "studyProtocol": "<strong>Protocolo de estudio:</strong> La OMS recomienda que todos los estudios de eficacia terapéutica se realicen según el protocolo estándar de la OMS.",
                     "info": "Para ver más detalles sobre un estudio concreto, vuelva a la interfaz del mapa para ver los datos a nivel de sitio.",
                     "and": "y"

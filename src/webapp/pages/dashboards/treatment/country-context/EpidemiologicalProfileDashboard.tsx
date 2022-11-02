@@ -84,12 +84,14 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                                         title={
                                             <React.Fragment>
                                                 <Typography variant="body2" fontWeight="bold" sx={{ marginBottom: 2 }}>
-                                                    Malaria-free
+                                                    {t(
+                                                        "common.dashboard.countryContextSection.epidemiologicalProfile.malariaFree"
+                                                    )}
                                                 </Typography>
                                                 <Typography variant="body2">
-                                                    An area in which there is no continuing local mosquito borne malaria
-                                                    transmission and the risk for acquiring malaria is limited to
-                                                    infection from introduced cases.
+                                                    {t(
+                                                        "common.dashboard.countryContextSection.epidemiologicalProfile.malariaFreeInfo"
+                                                    )}
                                                 </Typography>
                                             </React.Fragment>
                                         }

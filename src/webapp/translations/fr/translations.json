@@ -122,6 +122,7 @@
                     "lowTransmission": "Faible transmission",
                     "lessOrEqualtoOneCase": "(0-1 cas pour 1000 habitants)",
                     "malariaFree": "Sans paludisme",
+                    "malariaFreeInfo": "Une zone dans laquelle il n'y a pas de transmission locale continue du paludisme transmise par les moustiques et où le risque de contracter le paludisme est limité à l'infection par des cas introduits.",
                     "zeroCases": "(0 cas)",
                     "estimatedCases": "Cas estimés",
                     "estimatedDeaths": "Décès estimés"
@@ -172,8 +173,8 @@
             },
             "informationModal": {
                 "common": {
-                    "dataPeriod": "<strong>Période de données:</strong>",
-                    "dataLastUpdated": "<strong>Données mises à jour pour la dernière fois:</strong>",
+                    "dataPeriod": "<strong>Période de données : </strong>",
+                    "dataLastUpdated": "<strong>Données mises à jour pour la dernière fois : </strong>",
                     "studyProtocol": "<strong>Protocole d'étude:</strong> L'OMS recommande que toutes les études d'efficacité thérapeutique soient menées selon le protocole standard de l'OMS.",
                     "info": "Pour afficher plus de détails sur une étude spécifique, revenez à l'interface cartographique pour afficher les données au niveau du site.",
                     "and": "et"

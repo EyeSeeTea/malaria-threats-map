@@ -122,6 +122,7 @@
                     "lowTransmission": "Low transmission",
                     "lessOrEqualtoOneCase": "(0-1 case per 1000 population)",
                     "malariaFree": "Malaria-free",
+                    "malariaFreeInfo": "An area in which there is no continuing local mosquito borne malaria transmission and the risk for acquiring malaria is limited to infection from introduced cases.",
                     "zeroCases": "(0 cases)",
                     "estimatedCases": "Estimated cases",
                     "estimatedDeaths": "Estimated deaths"
@@ -172,8 +173,8 @@
             },
             "informationModal": {
                 "common": {
-                    "dataPeriod": "<strong>Data period:</strong>",
-                    "dataLastUpdated": "<strong>Data last updated:</strong>",
+                    "dataPeriod": "<strong>Data period: </strong>",
+                    "dataLastUpdated": "<strong>Data last updated: </strong>",
                     "studyProtocol": "<strong>Study protocol:</strong> WHO recommends that all therapeutic efficacy studies are conducted according to the WHO standard protocol.",
                     "info": "To view more details about a specific study, return to the map interface to view the site-level data.",
                     "and": "and"
