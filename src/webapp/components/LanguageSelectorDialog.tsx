@@ -1,5 +1,5 @@
 import React from "react";
-import { Dialog, DialogTitle, ListItemText, ListItem, List, ListItemButton } from "@mui/material";
+import { Dialog, DialogTitle, ListItemText, List, ListItemButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 export const LANGUAGES = [

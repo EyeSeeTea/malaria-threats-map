@@ -17,7 +17,7 @@ const MainContainer = styled.main`
 const SecondaryLayout: React.FC = ({ children }) => {
     return (
         <Container>
-            <Header />
+            <Header showTakeTour={false} />
 
             <MainContainer>{children}</MainContainer>
         </Container>

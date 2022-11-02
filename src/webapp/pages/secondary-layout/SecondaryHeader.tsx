@@ -13,9 +13,10 @@ import { changeLanguage } from "../../config/i18next";
 interface SecondaryHeaderProps {
     onDrawerOpenChange?: (open: boolean) => void;
     action?: ReactNode;
+    showTakeTour?: boolean;
 }
 
-const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, action }) => {
+const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, action, showTakeTour = true }) => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const [changeLanguageOpen, setChangeLanguageOpen] = React.useState(false);
     const [language, setLanguage] = React.useState(i18next.language || window.localStorage.i18nextLng);
@@ -40,8 +41,6 @@ const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, a
     const handleLanguageOpen = () => {
         setChangeLanguageOpen(true);
     };
-
-    console.log({ language });
 
     return (
         <nav>
@@ -71,7 +70,7 @@ const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, a
                 </AppBar>
             </Box>
 
-            <LeftSidebarMenu isMenuOpen={drawerOpen} handleClickOpen={handleLanguageOpen} />
+            <LeftSidebarMenu isMenuOpen={drawerOpen} handleClickOpen={handleLanguageOpen} showTakeTour={showTakeTour} />
 
             <LanguageSelectorDialog selectedValue={language} open={changeLanguageOpen} onClose={handleLanguageClose} />
         </nav>

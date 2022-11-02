@@ -58,8 +58,9 @@ const StyledLink = styled(Link)`
 type Props = {
     isMenuOpen: boolean;
     handleClickOpen: () => void;
+    showTakeTour?: boolean;
 };
-const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
+const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen, showTakeTour = true }: Props) => {
     const { t } = useTranslation();
 
     const handleClickOntour = React.useCallback(() => {
@@ -173,22 +174,24 @@ const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
                     </Typography>
                 </SidebarIconDiv>
 
-                <SidebarIconDiv>
-                    <IconButton onClick={handleClickOntour} disableRipple>
-                        <StyledFab
-                            id="tour-button"
-                            size="small"
-                            color={"default"}
-                            title={t("common.sidebar.take_tour")}
-                            onClick={handleClickOntour}
-                        >
-                            <TakeATourIcon />
-                        </StyledFab>
-                    </IconButton>
-                    <Typography variant="caption" align="center">
-                        {t("common.sidebar.take_tour")}
-                    </Typography>
-                </SidebarIconDiv>
+                {showTakeTour && (
+                    <SidebarIconDiv>
+                        <IconButton onClick={handleClickOntour} disableRipple>
+                            <StyledFab
+                                id="tour-button"
+                                size="small"
+                                color={"default"}
+                                title={t("common.sidebar.take_tour")}
+                                onClick={handleClickOntour}
+                            >
+                                <TakeATourIcon />
+                            </StyledFab>
+                        </IconButton>
+                        <Typography variant="caption" align="center">
+                            {t("common.sidebar.take_tour")}
+                        </Typography>
+                    </SidebarIconDiv>
+                )}
             </SideBarContainer>
         </Drawer>
     );
