@@ -17,6 +17,7 @@ import PreventionIcon from "../../assets/img/prevention-icon.svg";
 import TreatmentIcon from "../../assets/img/treatment-icon.svg";
 import DiagnosisIcon from "../../assets/img/diagnosis-icon.svg";
 import InvasiveIcon from "../../assets/img/invasive-icon.svg";
+import { Link } from "react-router-dom";
 
 const Section = styled.section`
     padding: 10vmin;
@@ -113,8 +114,9 @@ const ThemesSection: React.FC<Props> = ({
                 altText: "Prevention Icon",
                 color: "#5ABE86",
                 colorOpaque: "rgb(90, 190, 134, 0.9)",
-                lastUpdated: loading ? undefined : lastUpdatedDates["prevention"].toLocaleDateString(),
+                lastUpdated: loading ? undefined : lastUpdatedDates["prevention"]?.toLocaleDateString(),
                 numStudies: loading ? undefined : preventionStudies.length,
+                link: "/stories?theme=prevention",
             },
             {
                 title: t("common.themes.invasive"),
@@ -123,8 +125,9 @@ const ThemesSection: React.FC<Props> = ({
                 altText: "Invasive Icon",
                 color: "#5CC579",
                 colorOpaque: "rgb(92, 197, 121, 0.9)",
-                lastUpdated: loading ? undefined : lastUpdatedDates["invasive"].toLocaleDateString(),
+                lastUpdated: loading ? undefined : lastUpdatedDates["invasive"]?.toLocaleDateString(),
                 numStudies: loading ? undefined : invasiveStudies.length,
+                link: "/stories?theme=invasive",
             },
             {
                 title: t("common.themes.treatment"),
@@ -133,8 +136,9 @@ const ThemesSection: React.FC<Props> = ({
                 altText: "Invasive Icon",
                 color: "#5CCDCE",
                 colorOpaque: "rgb(92, 205, 206, 0.9)",
-                lastUpdated: loading ? undefined : lastUpdatedDates["treatment"].toLocaleDateString(),
+                lastUpdated: loading ? undefined : lastUpdatedDates["treatment"]?.toLocaleDateString(),
                 numStudies: loading ? undefined : treatmentStudies.length,
+                link: "/stories?theme=treatment",
             },
             {
                 title: t("common.themes.diagnosis"),
@@ -143,8 +147,9 @@ const ThemesSection: React.FC<Props> = ({
                 altText: "Diagnosis Icon",
                 color: "#1899CC",
                 colorOpaque: "rgb(24, 153, 204, 0.9)",
-                lastUpdated: loading ? undefined : lastUpdatedDates["diagnosis"].toLocaleDateString(),
+                lastUpdated: loading ? undefined : lastUpdatedDates["diagnosis"]?.toLocaleDateString(),
                 numStudies: loading ? undefined : diagnosisStudies.length,
+                link: "/stories?theme=diagnosis",
             },
         ],
         [t, diagnosisStudies, invasiveStudies, lastUpdatedDates, loading, preventionStudies, treatmentStudies]
@@ -210,9 +215,11 @@ const ThemesSection: React.FC<Props> = ({
                                             </Typography>
                                         </Grid>
                                         <Grid item lg={4} md={12} alignContent="center" alignItems="center">
-                                            <StyledCardButton variant="contained">
-                                                {t("common.homepage.media_cards.read_story")}
-                                            </StyledCardButton>
+                                            <Link to={theme.link} style={{ textDecoration: "none" }}>
+                                                <StyledCardButton variant="contained">
+                                                    {t("common.homepage.media_cards.read_story")}
+                                                </StyledCardButton>
+                                            </Link>
                                         </Grid>
                                     </ThemeCardActions>
                                 </ThemeCard>

@@ -1,12 +1,20 @@
-import { Button, Divider, Menu, MenuItem, Typography } from "@mui/material";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Button, Divider, Menu, MenuItem, Typography } from "@mui/material";
+import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Trans } from "react-i18next";
+import makeStyles from "@mui/styles/makeStyles";
 
 interface DirectionProps {
     flexDirection: "column" | "row";
 }
+
+const useStyles = makeStyles({
+    popOverRoot: {
+        pointerEvents: "none",
+    },
+});
 
 const MenuItemContainer = styled.div<DirectionProps>`
     margin-right: ${({ flexDirection }) => (flexDirection === "row" ? "80px" : "0px")};
@@ -21,32 +29,33 @@ const StyledLink = styled(NavLink)<DirectionProps>`
     letter-spacing: 0.235px;
     &.active {
         font-weight: bold;
-      }
-      &:hover {
-          border: none;
-          color: #2FB3AF;
-          font-weight: bold;
-          letter-spacing: 0;
-          padding-bottom: 10px;
-          border-bottom: 5px solid #2FB3AF;
-          border-radius: 0;
-          cursor;
-          transition: none;
-      }
-      &[aria-expanded=true] {
+    }
+    &:hover {
+        border: none;
+        color: #2fb3af;
+        font-weight: bold;
+        letter-spacing: 0;
+        padding-bottom: 10px;
+        border-bottom: 5px solid #2fb3af;
+        border-radius: 0;
+        cursor: pointer;
+        transition: none;
+    }
+    &[aria-expanded="true"] {
         font-weight: bold;
     }
-}`;
+`;
 
 const StyledMenuButton = styled(Button)`
     &.MuiButton-root {
-    width: 100%;
-    padding: 15px 0;
-    color: black;
-    font-weight; 400;
-    letter-spacing: 0.235px;
-    &[aria-expanded=true] {
-        font-weight: bold;
+        width: 100%;
+        padding: 15px 0;
+        color: black;
+        font-weight: 400;
+        letter-spacing: 0.235px;
+        &[aria-expanded="true"] {
+            font-weight: bold;
+        }
     }
 `;
 
@@ -68,7 +77,7 @@ const StyledMenuItem = styled(MenuItem).withConfig({
         font-weight: 400;
         text-align: left;
         text-transform: none;
-        font: normal normal medium 14px/25px "Roboto";
+        font: normal normal medium 14px/25px "Source Sans Pro";
         font-size: 14px;
         letter-spacing: 0.45px;
         color: #343434;
@@ -114,13 +123,35 @@ interface SimpleMenuProps extends DirectionProps {
 }
 
 const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection, t }) => {
+    const navigate = useNavigate();
+    const styles = useStyles();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    let currentlyHovering = false;
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         if (anchorEl !== event.currentTarget) {
             setAnchorEl(event.currentTarget);
         }
     };
+
+    const handleCloseHover = () => {
+        currentlyHovering = false;
+        setTimeout(() => {
+            if (!currentlyHovering) {
+                handleClose();
+            }
+        }, 50);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleHover = () => {
+        currentlyHovering = true;
+    };
+
     switch (menu.kind) {
         case "simple-menu":
             return (
@@ -140,6 +171,8 @@ const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection, t }) => {
                             aria-expanded={Boolean(anchorEl) === true ? "true" : undefined}
                             onClick={handleClick}
                             onMouseOver={handleClick}
+                            onMouseLeave={handleCloseHover}
+                            endIcon={menu.submenus && <KeyboardArrowDownIcon />}
                         >
                             {menu.name}
                         </StyledMenuButton>
@@ -147,32 +180,50 @@ const NavMenu: React.FC<SimpleMenuProps> = ({ menu, flexDirection, t }) => {
                     <Menu
                         anchorEl={anchorEl}
                         open={Boolean(anchorEl)}
-                        onClose={() => setAnchorEl(null)}
+                        onClose={handleClose}
                         variant={"selectedMenu"}
                         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                         transformOrigin={{ vertical: "top", horizontal: "center" }}
-                        MenuListProps={{ onMouseLeave: () => setAnchorEl(null) }}
+                        MenuListProps={{
+                            onMouseEnter: handleHover,
+                            onMouseLeave: handleCloseHover,
+                            style: { pointerEvents: "auto" },
+                        }}
                         PaperProps={{ style: StyledMenu }}
+                        PopoverClasses={{
+                            root: styles.popOverRoot,
+                        }}
                     >
                         {menu.submenus &&
                             menu.submenus.map((submenu, index) => {
                                 return (
                                     <>
-                                        <StyledMenuItem
-                                            key={index}
-                                            onClick={() => setAnchorEl(null)}
-                                            hoverPaddingRight={menu.hoverPaddingRight}
-                                        >
-                                            {submenu.kind === "simple-menu-trans" ? (
+                                        {submenu.kind === "simple-menu-trans" ? (
+                                            <StyledMenuItem
+                                                key={index}
+                                                onClick={() => {
+                                                    navigate(submenu.path);
+                                                    handleClose();
+                                                }}
+                                                hoverPaddingRight={menu.hoverPaddingRight}
+                                            >
                                                 <StyledTypogrpahy variant="body2" color="inherit">
                                                     <Trans i18nKey={submenu.name} t={t}>
                                                         {t(submenu.name)}
                                                     </Trans>
                                                 </StyledTypogrpahy>
-                                            ) : (
-                                                submenu.name
-                                            )}
-                                        </StyledMenuItem>
+                                            </StyledMenuItem>
+                                        ) : (
+                                            submenu.kind === "simple-menu" && (
+                                                <StyledMenuItem
+                                                    key={index}
+                                                    onClick={() => navigate(submenu.path)}
+                                                    hoverPaddingRight={menu.hoverPaddingRight}
+                                                >
+                                                    {submenu.name}
+                                                </StyledMenuItem>
+                                            )
+                                        )}
                                         {index < menu.submenus.length - 1 ? <Divider /> : null}
                                     </>
                                 );

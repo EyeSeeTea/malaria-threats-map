@@ -8,7 +8,7 @@ const countryContextOptions: Record<DashboardsThemeOptions, Option<CountryContex
     prevention: [
         {
             label: i18next.t("common.dashboard.dashboardsFilterSection.countryContextOptions.countryContext"),
-            value: "all",
+            value: "country-context",
         },
         {
             label: i18next.t("common.dashboard.dashboardsFilterSection.countryContextOptions.epidemiologicalProfile"),
@@ -28,7 +28,7 @@ const countryContextOptions: Record<DashboardsThemeOptions, Option<CountryContex
     treatment: [
         {
             label: i18next.t("common.dashboard.dashboardsFilterSection.countryContextOptions.countryContext"),
-            value: "all",
+            value: "country-context",
         },
         {
             label: i18next.t("common.dashboard.dashboardsFilterSection.countryContextOptions.epidemiologicalProfile"),

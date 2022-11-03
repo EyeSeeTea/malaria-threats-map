@@ -2,33 +2,29 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
-import { CountryContext, DashboardsThemeOptions } from "../../types";
+import { DashboardsThemeOptions } from "../../types";
 import CountryContextDataProvider from "./context/CountryContextDataProvider";
 import EpidemiologicalProfileDashboard from "./EpidemiologicalProfileDashboard";
 import MajorAnophelesSpeciesDashboard from "./MajorAnophelesSpeciesDashboard";
 import MajorPlamociumSpeciesDashboard from "./MajorPlamociumSpeciesDashboard";
 import SummaryInsecticideResistanceDashboard from "./SummaryInsecticideResistanceDashboard";
 
-interface CountryContextDashboardProps {
-    countryContext: CountryContext;
-}
-
-interface CountryContextStudiesProps extends CountryContextDashboardProps {
+interface CountryContextStudiesProps {
     theme: DashboardsThemeOptions;
 }
 
-const CountryContextStudies: React.FC<CountryContextStudiesProps> = ({ countryContext, theme }) => {
+const CountryContextStudies: React.FC<CountryContextStudiesProps> = ({ theme }) => {
     const { t } = useTranslation();
 
     return (
         <CountryContextDataProvider>
             <Container>
-                <TitleDivider />
+                <TitleDivider id="country-context" />
                 <Title>{t("common.dashboard.countryContextDashboards.title")}</Title>
                 {theme === "prevention" ? (
-                    <PreventionCountryContextDashboards countryContext={countryContext} />
+                    <PreventionCountryContextDashboards />
                 ) : (
-                    <TreatmentCountryContextDashboards countryContext={countryContext} />
+                    <TreatmentCountryContextDashboards />
                 )}
             </Container>
         </CountryContextDataProvider>
@@ -51,29 +47,21 @@ const Title = styled.h2`
     color: #636463;
 `;
 
-const PreventionCountryContextDashboards: React.FC<CountryContextDashboardProps> = ({ countryContext }) => {
+const PreventionCountryContextDashboards: React.FC = () => {
     return (
         <React.Fragment>
-            {(countryContext === "all" || countryContext === "epidemiological-profile") && (
-                <EpidemiologicalProfileDashboard />
-            )}
-            {(countryContext === "all" || countryContext === "major-anopheles-species") && (
-                <MajorAnophelesSpeciesDashboard />
-            )}
-            {(countryContext === "all" || countryContext === "summary-insecticide-resistance") && (
-                <SummaryInsecticideResistanceDashboard />
-            )}
+            <EpidemiologicalProfileDashboard />
+            <MajorAnophelesSpeciesDashboard />
+            <SummaryInsecticideResistanceDashboard />
         </React.Fragment>
     );
 };
 
-const TreatmentCountryContextDashboards: React.FC<CountryContextDashboardProps> = ({ countryContext }) => {
+const TreatmentCountryContextDashboards: React.FC = () => {
     return (
         <React.Fragment>
-            {(countryContext === "all" || countryContext === "epidemiological-profile") && (
-                <EpidemiologicalProfileDashboard />
-            )}
-            {(countryContext === "all" || countryContext === "major-plasmodium") && <MajorPlamociumSpeciesDashboard />}
+            <EpidemiologicalProfileDashboard />
+            <MajorPlamociumSpeciesDashboard />
         </React.Fragment>
     );
 };

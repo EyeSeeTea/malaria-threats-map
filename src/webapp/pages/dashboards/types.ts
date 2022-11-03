@@ -1,7 +1,7 @@
 export type DashboardsThemeOptions = "prevention" | "treatment";
 
 export type CountryContext =
-    | "all"
+    | "country-context"
     | "epidemiological-profile"
     | "major-plasmodium"
     | "major-anopheles-species"

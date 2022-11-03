@@ -1,23 +1,21 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import clsx from "clsx";
 import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
-import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import Disclaimer from "../../components/Disclaimer";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import { selectFilters, selectStoryMode, selectTheme } from "../../store/reducers/base-reducer";
-import { setMobileOptionsOpen, setStoryModeAction, setThemeAction } from "../../store/actions/base-actions";
+import { selectFilters, selectTheme } from "../../store/reducers/base-reducer";
+import { setMobileOptionsOpen, setThemeAction } from "../../store/actions/base-actions";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
 import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
 import { setPreventionMapType } from "../../store/actions/prevention-actions";
 import { AppBar, IconButton, Tab, Tabs, Toolbar } from "@mui/material";
-import StoryModeStepper from "../../components/StoryModeStepper";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { DiagnosisIcon, FilterIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "../../components/Icons";
 import { colors } from "../../constants/theme";
@@ -109,7 +107,6 @@ const StyledTab = styled(Tab)`
 const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     theme: selectTheme(state),
-    storyMode: selectStoryMode(state),
     preventionFilters: selectPreventionFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
@@ -118,7 +115,6 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
     setPreventionMapType: setPreventionMapType,
-    setStoryMode: setStoryModeAction,
     setTheme: setThemeAction,
 };
 type OwnProps = {
@@ -128,21 +124,8 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
-function MapPage({ setMobileOptionsOpen, storyMode, drawerWidth = "500px", setTheme, setStoryMode, theme }: Props) {
+function MapPage({ setMobileOptionsOpen, drawerWidth = "500px", setTheme, theme }: Props) {
     const classes = useStyles({ drawerWidth });
-    const prevStoryModeRef = useRef<boolean>();
-
-    useEffect(() => {
-        prevStoryModeRef.current = storyMode;
-    });
-
-    const prevStoryMode = prevStoryModeRef.current;
-
-    if (storyMode) {
-        if (prevStoryMode === storyMode) {
-            setStoryMode(!storyMode);
-        }
-    }
 
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
 
@@ -169,24 +152,7 @@ function MapPage({ setMobileOptionsOpen, storyMode, drawerWidth = "500px", setTh
         <div className={`${classes.root}`}>
             <Loader />
             <CssBaseline />
-            {storyMode && (
-                <Drawer
-                    className={classes.drawer}
-                    variant="persistent"
-                    anchor="left"
-                    open={true}
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
-                >
-                    <StoryModeStepper />
-                </Drawer>
-            )}
-            <div
-                className={clsx(classes.content, {
-                    [classes.contentShift]: storyMode,
-                })}
-            >
+            <div className={clsx(classes.content)}>
                 <div className={classes.drawerHeader} />
                 <PageWrapper>
                     <Hidden smUp>

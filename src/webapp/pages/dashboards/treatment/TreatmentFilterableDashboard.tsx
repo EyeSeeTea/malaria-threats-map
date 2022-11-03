@@ -9,36 +9,42 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import DownloadIcon from "@mui/icons-material/Download";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
+import InformationModal from "../../../components/dashboards/InformationModal";
 import HighchartsReact from "highcharts-react-official";
-import html2canvas from "html2canvas";
+import { toPng } from "html-to-image";
+import { MolecularMarker } from "../../../components/filters/MolecularMarkerFilter";
 
 interface TreatmentFilterableDashboardProps {
+    id?: string;
     isMolecularMarkerChart?: boolean;
     drugsMultiple: boolean;
     drugsClearable: boolean;
-    chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject>;
+    chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject[] | HighchartsReact.RefObject>;
     title: string;
+    type: "treatmentFailureByDrug" | "treatmentFailure" | "positiveDay3" | "molecularMarkerStudy";
     filteredStudiesForDrugs: TreatmentStudy[];
     studiesCount: number;
     plasmodiumSpecies: string;
     drugs: string[];
-    molecularMarker: number;
+    molecularMarker: MolecularMarker;
     years: [number, number];
     excludeLowerPatients: boolean;
     onPlasmodiumChange: (value: string) => void;
     onDrugsChange: (value: string[]) => void;
     onYearsChange: (value: [number, number]) => void;
     onExcludeLowerPatientsChange: (value: boolean) => void;
-    onMolecularMarkerChange: (value: number) => void;
+    onMolecularMarkerChange: (value: MolecularMarker) => void;
 }
 
 More(Highcharts);
 const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = ({
+    id,
     isMolecularMarkerChart = false,
     drugsMultiple,
     drugsClearable,
     chartComponentRef,
     title,
+    type,
     filteredStudiesForDrugs,
     studiesCount,
     plasmodiumSpecies,
@@ -54,6 +60,9 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
     children,
 }) => {
     const [filtersVisible, setFiltersVisible] = React.useState(true);
+    const [openInfoModal, setOpenInfoModal] = React.useState(false);
+    const handleOpenInfoModal = () => setOpenInfoModal(true);
+    const handleCloseInfoModal = () => setOpenInfoModal(false);
 
     const { t } = useTranslation();
 
@@ -64,9 +73,13 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
     }, [filtersVisible]);
 
     React.useEffect(() => {
-        const chart = chartComponentRef?.current?.chart;
-
-        chart?.reflow();
+        if (Array.isArray(chartComponentRef?.current)) {
+            chartComponentRef?.current?.forEach(current => {
+                current?.chart?.reflow();
+            });
+        } else {
+            chartComponentRef?.current?.chart.reflow();
+        }
     }, [filtersVisible, chartComponentRef]);
 
     const handleDownload = React.useCallback(() => {
@@ -74,29 +87,32 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
             return;
         }
 
-        html2canvas(ref.current).then(canvas => {
-            const link = document.createElement("a");
-            link.download = title;
-            link.href = canvas.toDataURL();
-            link.click();
-        });
+        toPng(ref.current, { backgroundColor: "#F7F7F7" })
+            .then(dataUrl => {
+                const link = document.createElement("a");
+                link.download = title;
+                link.href = dataUrl;
+                link.click();
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }, [ref, title]);
 
     return (
         <React.Fragment>
             <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Title>{title}</Title>
+                <Title id={id}>{title}</Title>
                 <Stack direction="row" spacing={2}>
                     <Fab color="primary" size="small">
-                        <InfoOutlinedIcon sx={{ color: "white", width: "20px" }} />
+                        <InfoOutlinedIcon sx={{ color: "white", width: "20px" }} onClick={handleOpenInfoModal} />
                     </Fab>
                     <Fab color="primary" size="small" onClick={handleDownload}>
                         <DownloadIcon sx={{ color: "white" }} />
                     </Fab>
                 </Stack>
             </Stack>
-
-            <Grid container spacing={2}>
+            <Grid container spacing={2} ref={ref} sx={{ marginBottom: 3 }}>
                 {filtersVisible && (
                     <Grid item md={3} xs={12}>
                         <Stack direction="column">
@@ -135,6 +151,13 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                         <div ref={ref}>{children}</div>
                     </DasboardCard>
                 </Grid>
+                <InformationModal
+                    title={title}
+                    type={type}
+                    years={years}
+                    openInfoModal={openInfoModal}
+                    handleCloseInfoModal={handleCloseInfoModal}
+                />
             </Grid>
         </React.Fragment>
     );

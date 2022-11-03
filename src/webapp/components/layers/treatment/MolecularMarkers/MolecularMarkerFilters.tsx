@@ -8,7 +8,7 @@ export default function MolecularMarkerFilters() {
         <>
             <MolecularMarkerFilter />
             <ExcludeLowerSamplesFilter />
-            <YearRangeSelector minYear={2015} maxYear={new Date().getFullYear()} />
+            <YearRangeSelector />
         </>
     );
 }

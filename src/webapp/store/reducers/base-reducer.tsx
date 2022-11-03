@@ -17,6 +17,7 @@ const initialState: MalariaState = Object.freeze({
     storyMode: false,
     storyModeStep: 0,
     filters: [2010, new Date().getFullYear()],
+    maxMinYears: [2010, new Date().getFullYear()],
     region: {
         country: "",
         region: "",
@@ -75,6 +76,8 @@ export default createReducer<MalariaState>(initialState, {
     }),
     [ActionTypeEnum.MalariaSetFilters]: (filters: number[] | undefined) =>
         R.assoc("filters", filters || initialState.filters),
+    [ActionTypeEnum.MalariaSetMaxMinYears]: (maxMinYears: number[] | undefined) =>
+        R.assoc("maxMinYears", maxMinYears || initialState.maxMinYears),
     [ActionTypeEnum.MalariaToogleEndemicityLayer]: (visible: boolean) => R.assoc("endemicity", visible),
     [ActionTypeEnum.MalariaSetStoryMode]: (storyMode: boolean) => R.assoc("storyMode", storyMode),
     [ActionTypeEnum.MalariaSetStoryModeStep]: (storyModeStep: number) => R.assoc("storyModeStep", storyModeStep || 0),
@@ -129,6 +132,7 @@ export const selectStoryMode = createSelector(selectMalariaState, state => state
 export const selectAny = createSelector(selectMalariaState, state => state.any);
 export const selectEndemicity = createSelector(selectMalariaState, state => state.endemicity);
 export const selectFilters = createSelector(selectMalariaState, state => state.filters);
+export const selectMaxMinYears = createSelector(selectMalariaState, state => state.maxMinYears);
 export const selectRegion = createSelector(selectMalariaState, state => state.region);
 export const selectActionGroupSelected = createSelector(selectMalariaState, state => state.actionGroupSelected);
 export const selectStoryModeStep = createSelector(selectMalariaState, state => state.storyModeStep);

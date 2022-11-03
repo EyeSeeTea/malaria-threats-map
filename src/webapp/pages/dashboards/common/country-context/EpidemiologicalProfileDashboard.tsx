@@ -16,7 +16,9 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
     return (
         <React.Fragment>
             <DasboardCard>
-                <Title>{t("common.dashboard.countryContextDashboards.epidemiologicalProfile.title")}</Title>
+                <Title id="epidemiological-profile">
+                    {t("common.dashboard.countryContextDashboards.epidemiologicalProfile.title")}
+                </Title>
                 <Table>
                     <thead>
                         <tr>
@@ -120,30 +122,38 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
+                        {/* TODO: move this calculations to presenter (custom hook) */}
                         {data.map(item => {
-                            console.log({ item });
                             return (
                                 <tr key={item.ORGANISATIONUNITNAME}>
                                     <td>
                                         <CellText>{item.ORGANISATIONUNITNAME}</CellText>
                                     </td>
                                     <td>
-                                        <CellText>{item.PERIOD}</CellText>
+                                        <CellText>{item.PERIODID}</CellText>
                                     </td>
                                     <td>
-                                        <CellText>{`${numberFormatter.format(
-                                            item.MAL_CALC_POP_AT_RISK_HIGH
-                                        )} (?%)`}</CellText>
+                                        <CellText>{`${numberFormatter.format(item.MAL_CALC_POP_AT_RISK_HIGH)} (${(
+                                            (item.MAL_CALC_POP_AT_RISK_HIGH / item.MAL_POP_UN) *
+                                            100
+                                        ).toFixed()}%)`}</CellText>
                                     </td>
                                     <td>
                                         <CellText>{`${numberFormatter.format(
                                             item.MAL_CALC_POP_AT_RISK_LOW_HIGH - item.MAL_CALC_POP_AT_RISK_HIGH
-                                        )} (?%)`}</CellText>
+                                        )} (${(
+                                            ((item.MAL_CALC_POP_AT_RISK_LOW_HIGH - item.MAL_CALC_POP_AT_RISK_HIGH) /
+                                                item.MAL_POP_UN) *
+                                            100
+                                        ).toFixed()}%)`}</CellText>
                                     </td>
                                     <td>
                                         <CellText>{`${numberFormatter.format(
                                             item.MAL_POP_UN - item.MAL_CALC_POP_AT_RISK_LOW_HIGH
-                                        )} (?%)`}</CellText>
+                                        )} (${(
+                                            ((item.MAL_POP_UN - item.MAL_CALC_POP_AT_RISK_LOW_HIGH) / item.MAL_POP_UN) *
+                                            100
+                                        ).toFixed()}%)`}</CellText>
                                     </td>
                                     <td>
                                         <CellText>{`${numberFormatter.format(
@@ -208,7 +218,7 @@ const HeadText = styled(Typography)`
 `;
 
 const SubHeadText = styled(Typography)`
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     padding: 0px 30px;
     color: #343434;
@@ -243,9 +253,6 @@ const Table = styled.table`
         border-right: 0;
     }
 
-    tr th:nth-child(3) {
-        border-right: 0;
-    }
     tr th:nth-child(4) {
         border-left: 0;
         border-right: 0;

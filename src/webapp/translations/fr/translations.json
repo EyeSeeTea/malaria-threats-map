@@ -2,6 +2,10 @@
     "common": {
         "layers": "couches",
         "mekong_link": "Aller à la couche du Grand Mékong",
+        "takeATour": "Vous ne savez pas par où commencer ? Faites un tour.",
+        "zoomIn": "Agrandir",
+        "zoomOut": "Dézoomer",
+        "fullscreen": "Afficher en plein écran",
         "title": {
             "title": "Carte des menaces du paludisme",
             "subtitle": "Suivi des défis biologiques liés à la lutte et à l'élimination du paludisme"
@@ -25,12 +29,12 @@
                     "title": "Un aperçu des cartes"
                 },
                 "video2": {
-                    "url": "https://www.youtube.com/embed/VP-pc9oN0dM",
+                    "url": "https://www.youtube.com/embed/diMb_gbUUbM",
                     "alt": "Carte des menaces du paludisme: soutenir les efforts de recherche",
                     "title": "Comment le MTM soutient-il les efforts de recherche?"
                 },
                 "video3": {
-                    "url": "https://www.youtube.com/embed/mkggjD0DKwY",
+                    "url": "https://www.youtube.com/embed/x5P45TynlgM",
                     "alt": "Carte des menaces du paludisme : aider les pays à faire face aux menaces critiques pour le contrôle et l'élimination du paludisme",
                     "title": "Comment le MTM soutient-il les pays?"
                 }
@@ -80,10 +84,10 @@
                 "second": {
                     "title": "2. Sélectionnez le pays",
                     "helper": "Sélectionnez jusqu'à 5 pays",
-                    "lastUpdate": "Dernière mise à jour des données pour cette sélection de filtre :",
+                    "lastUpdate": "Dernière mise à jour: ",
                     "cta": "Générer tableau de bord"
                 },
-                "note": "Note : Un grand nombre de points de données est nécessaire pour créer un tableau de bord. Pour cette raison, les tableaux de bord ne sont actuellement disponibles que pour deux des quatre thèmes : la résistance des vecteurs aux insecticides et l'efficacité et la résistance des médicaments antipaludiques. Les tableaux de bord continueront à se développer au fur et à mesure que des données supplémentaires seront disponibles."
+                "note": "Remarque : Les tableaux de bord ne sont actuellement disponibles que pour deux des quatre thèmes : la résistance des vecteurs aux insecticides et l'efficacité et la résistance des médicaments antipaludiques. Les tableaux de bord continueront à se développer au fur et à mesure que de nouvelles données seront disponibles."
             },
             "dashboardsFilterSection": {
                 "title": "Contenu:",
@@ -107,6 +111,8 @@
             },
             "countryContextDashboards": {
                 "title": "Contexte du pays",
+                "source": "La source:",
+                "whoWorldMalariaReport": "Rapport 2021 de l'OMS sur le paludisme dans le monde",
                 "epidemiologicalProfile": {
                     "title": "PROFIL ÉPIDÉMIOLOGIQUE",
                     "country": "Pays",
@@ -148,13 +154,14 @@
                     "title": "RÉSUMÉ DES TAUX D'ÉCHEC DU TRAITEMENT PAR MÉDICAMENT",
                     "studyOutcome": "Résultat de l'étude:",
                     "numStudies": "Nombre d'études",
+                    "studies": "études",
                     "lessThan10Patients": "<10% des patients en échec thérapeutique",
                     "moreOrEqualThan10Patients": "≥10% des patients en échec thérapeutique"
                 },
                 "treatmentFailureOverTime": {
                     "title": "TAUX D'ÉCHEC DU TRAITEMENT AU FIL DU TEMPS",
                     "numberPatients": "Nombre de patients",
-                    "treatmentFailure": "Échec du traitement %",
+                    "treatmentFailure": "Échec du traitement (%)",
                     "year": "An"
                 },
                 "parasiteClearanceOverTime": {
@@ -165,16 +172,63 @@
             "molecularMarkerDashboards": {
                 "title": "Molecular marker studies",
                 "molecularMarkerOverTime": {
-                    "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
-                    "legendLabel": "Percentage of samples in one study where multiple copy numbers were detected:",
-                    "numStudies": "Number of Studies",
-                    "year": "Year",
-                    "chartTitle": "Percentage of samples in one study where validated or candidate",
-                    "chartSubtitle": "molecular markers of artemisinin resistance were detected:"
+                    "title": "RÉSUMÉ DES RÉSULTATS DE L'ÉTUDE DES MARQUEURS MOLÉCULAIRES AU FIL DU TEMPS",
+                    "numStudies": "Nombre d'études",
+                    "year": "Année",
+                    "artemisininChartTitle": "Pourcentage d'échantillons dans une étude validée ou candidate",
+                    "artemisininChartSubtitle": "des marqueurs moléculaires de la résistance à l'artémisinine ont été détectés:",
+                    "mutationsChartTitle": "Études où des mutations ont été détectées dans:",
+                    "multipleChartTitle": "Études où plusieurs numéros de copie ont été détectés dans:"
                 }
             },
             "treatmentFilters": {
                 "title": "Filtrer les données"
+            },
+            "informationModal": {
+                "common": {
+                    "dataPeriod": "<strong>Période de données:</strong>",
+                    "dataLastUpdated": "<strong>Données mises à jour pour la dernière fois:</strong>",
+                    "studyProtocol": "<strong>Protocole d'étude:</strong> L'OMS recommande que toutes les études d'efficacité thérapeutique soient menées selon le protocole standard de l'OMS.",
+                    "info": "Pour afficher plus de détails sur une étude spécifique, revenez à l'interface cartographique pour afficher les données au niveau du site.",
+                    "and": "et"
+                },
+                "summaryTreatmentFailureRateByDrug": {
+                    "chartInterpretation": "<strong>Interprétation du graphique:</strong> Ce graphique à barres montre le nombre d'études d'efficacité thérapeutique menées dans un ou plusieurs pays sélectionnés. L'utilisateur peut personnaliser le graphique en sélectionnant une espèce de Plasmodium, ainsi qu'en choisissant un ou plusieurs médicaments, et la ou les années qui l'intéressent. L'utilisateur peut également exclure du graphique les études comportant moins de 20 patients. Les études comportant >10% de patients en échec thérapeutique sont indiquées en rouge ; les études comportant {{lessThen}}10% de patients en échec thérapeutique sont indiquées en rose.",
+                    "dataAvailability": "<strong>Disponibilité des données :</strong> toutes les études pour lesquelles des données sont disponibles sont affichées."
+                },
+                "treatmentFailureRateOverTime": {
+                    "chartInterpretation": "<strong>Interprétation du graphique:</strong> Ce diagramme de dispersion affiche le pourcentage de patients en échec thérapeutique, dans une étude d'efficacité thérapeutique menée dans un ou plusieurs pays sélectionnés, par année. L'utilisateur peut personnaliser le graphique en sélectionnant une espèce de Plasmodium, un médicament et les années qui l'intéressent. L'utilisateur peut également exclure du graphique les études comptant moins de 20 patients.",
+                    "description_1": "Chaque cercle représente une étude d'efficacité thérapeutique. La taille du cercle est indicative du nombre total de patients inclus dans l'étude. La couleur du cercle indique le pays où l'étude a été menée.",
+                    "description_2": "L'emplacement des cercles le long de l'axe des x est basé sur l'année au cours de laquelle l'étude a été réalisée. Il y a un léger déplacement horizontal des cercles, dans un intervalle d'une année, afin de réduire l'apparence de cercles qui se chevauchent.",
+                    "dataAvailability": "<strong>Disponibilité des données:</strong> Seules les données concernant <strong><i>P. falciparum</i></strong> et <strong><i>P. vivax</i></strong> sont affichées dans ce graphique."
+                },
+                "parasiteClearanceRatesOverTime": {
+                    "chartInterpretation": "<strong>Interprétation du graphique:</strong> Ce diagramme de dispersion affiche le pourcentage de patients présentant une clairance parasitaire retardée, dans une étude d'efficacité thérapeutique, menée dans un ou plusieurs pays sélectionnés, par année. L'utilisateur peut personnaliser le graphique en sélectionnant une espèce de Plasmodium, un médicament et les années qui l'intéressent. L'utilisateur peut également exclure du graphique les études comptant moins de 20 patients.",
+                    "description_1": "Chaque cercle représente une étude d'efficacité thérapeutique. La taille du cercle est indicative du nombre total de patients inclus dans l'étude. La couleur du cercle indique le pays où l'étude a été menée.",
+                    "description_2": "L'emplacement des cercles le long de l'axe des x est basé sur l'année au cours de laquelle l'étude a été réalisée. Il y a un léger déplacement horizontal des cercles, dans un intervalle d'une année, afin de réduire les cercles qui se chevauchent.",
+                    "dataAvailability": "<strong>Disponibilité des données:</strong> Seules les données concernant <strong>P. falciparum</strong> et <strong>P. vivax</strong> sont affichées dans ce graphique."
+                },
+                "summaryMolecularMarkerStudyOverTime": {
+                    "intro": "Les études sur les marqueurs moléculaires identifient et suivent la prévalence des mutations moléculaires associées à la résistance aux médicaments antipaludiques. L'utilisateur peut personnaliser le graphique en sélectionnant le type d'étude de marqueurs moléculaires et les années d'intérêt. Il peut également exclure du graphique les études portant sur moins de 20 patients.",
+                    "chartInterpretation": "<strong>Interprétation du graphique:</strong> Ce graphique à barres empilées affiche les résultats des études sur les marqueurs moléculaires. La hauteur de la barre est déterminée par le nombre d'études menées cette année-là.",
+                    "pfkelch13": {
+                        "description": "La couleur de la barre représente le pourcentage d'échantillons dans une étude où les marqueurs moléculaires validés et candidats ont été détectés. Le bleu clair indique un faible pourcentage ; le bleu foncé représente un pourcentage élevé.",
+                        "list_1": "Les marqueurs validés comprennent: (F466I, N458Y, Y493H, R539T, I543T, P553L, R561H, P574L, C580Y)",
+                        "list_2": "Les marqueurs associés/candidats comprennent: (P441L, G449A, C469F/Y, A481V, R515K, P527H, N5371/D, G538V, V568G, R6221, A675V)"
+                    },
+                    "pfcrt": "La couleur de la barre représente le pourcentage d'échantillons dans une étude où des mutations ont été détectées. Le bleu clair indique un faible pourcentage ; le bleu foncé représente un pourcentage élevé.",
+                    "pfmdr1": "La couleur de la barre représente le pourcentage d'échantillons dans une étude où des nombres de copies multiples ont été détectés. Le bleu clair indique un faible pourcentage ; le bleu foncé représente un pourcentage élevé.",
+                    "dataAvailability": "<strong>Data availability:</strong> Toutes les études pour lesquelles des données sont disponibles sont présentées."
+                }
+            },
+            "tooltip": {
+                "drug": "Médicament",
+                "numberOfPatients": "Nombre de patients",
+                "treatmentFailureRate": "Taux d'échec du traitement",
+                "source": {
+                    "label": "Source",
+                    "link": "Institut national des allergies et des maladies infectieuses, Instituts nationaux de la santé"
+                }
             }
         },
         "homepage": {
@@ -224,6 +278,59 @@
                 "diagnosis_subtitle": "Les délétions de gènes chez certains parasites du paludisme entraînent des résultats de tests de diagnostic faussement négatifs, ce qui complique la gestion et le contrôle des cas."
             }
         },
+        "storiesPage": {
+            "prevention": {
+                "title": "Résistance des vecteurs aux insecticides",
+                "description": "Découvrez la résistance des vecteurs aux insecticides et ce que l'OMS recommande pour lutter contre cette menace pour le contrôle et l'élimination du paludisme."
+            },
+            "invasive": {
+                "title": "Espèces vectrices envahissantes",
+                "description": "Découvrez les espèces vectorielles envahissantes et ce que l'OMS recommande pour lutter contre cette menace pour le contrôle et l'élimination du paludisme."
+            },
+            "treatment": {
+                "title": "Efficacité et résistance des médicaments antipaludiques",
+                "description": "Découvrez l'efficacité et la résistance des médicaments antipaludiques et ce que l'OMS recommande pour lutter contre cette menace pour le contrôle et l'élimination du paludisme."
+            },
+            "diagnosis": {
+                "title": "Délétions du gène <i>pfhrp2/3</i> parasitaire",
+                "description": "Découvrez les délétions du gène pfhrp2/3 du parasite et ce que l'OMS recommande pour lutter contre cette menace pour le contrôle et l'élimination du paludisme."
+            },
+            "stepper": {
+                "next": "suivant",
+                "back": "arrière"
+            }
+        },
+        "shareDataPage": {
+            "title": "Contribuez à la carte des menaces du paludisme en partageant vos <strong>données</strong>.",
+            "section1": {
+                "title": "Fournir des données sur la résistance aux insecticides",
+                "description": "Nous invitons toutes les personnes et organisations à soumettre des données. Veuillez communiquer vos données en utilisant les formulaires standard de collecte de données de l'OMS suivants. Les formulaires peuvent être téléchargés <2 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>ici</2>.",
+                "list": {
+                    "1": "Résultats des essais biologiques des insecticides synergistes",
+                    "2": "Résultats du test biologique de concentration d'intensité",
+                    "3": "Discriminer les résultats des essais biologiques de concentration",
+                    "4": "Résultats des essais biologiques moléculaires et biochimiques"
+                }
+            },
+            "section2": {
+                "title": "Contribuer aux données de détection de <i>An. stephensi</i>.",
+                "description": "Nous invitons toutes les personnes et organisations à soumettre des données sur la détection de <i>An. stephensi</i> en dehors de ses zones d'origine. Veuillez communiquer vos données en utilisant le formulaire standard de collecte de données de l'OMS, disponible à l'adresse suivante <5 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>ici</5>."
+            },
+            "sectionsFooter": "Les formulaires complétés peuvent être envoyés à: <2>vectorsurveillance@who.int</2>"
+        },
+        "contactPage": {
+            "title": "Contribuez à la carte des menaces du paludisme en partageant votre <strong>feedback</strong>",
+            "section1": {
+                "title": "Commentaires et questions d'ordre général",
+                "description": "Nous sommes impatients de savoir comment vous utilisez le MTM et comment nous pouvons améliorer la plateforme pour tous ses utilisateurs. Pour contacter l'équipe du MTM, écrivez à <1>gmp-maps@who.int</1>"
+            },
+            "section2": {
+                "title1": "Soumission des données",
+                "description1": "Si vous souhaitez soumettre des données au MTM, veuillez utiliser le portail <2>share data</2>.",
+                "title2": "Assistance technique",
+                "description2": "Si vous rencontrez des problèmes techniques avec la plate-forme, veuillez contacter l'équipe informatique en utilisant l'onglet \"Signaler les bugs\" sur le côté droit de la page. Les commentaires soumis ici seront directement transmis à l'équipe informatique."
+            }
+        },
         "footer": {
             "policies": {
                 "title": "Stratégies",
@@ -231,11 +338,9 @@
             },
             "other_who_resources": {
                 "title": "Autres ressources de l'OMS",
-                "resource1": "Surveillance de la résistance aux insecticides par l'OMS",
-                "resource2": "Efficacité et résistance des médicaments antipaludiques de l'OMS",
-                "resource3": "Lignes directrices de l'OMS sur les TDR du paludisme",
-                "resource4": "Directives de l'OMS sur le paludisme",
-                "resource5": "Rapport mondial de l'OMS sur le paludisme"
+                "resource1": "Directives de l'OMS sur le paludisme",
+                "resource2": "Rapport mondial de l'OMS sur le paludisme",
+                "resource3": "Carte des menaces de paludisme de l'OMS"
             },
             "about_who_gmp": {
                 "title": "À propos des BPF de l'OMS",
@@ -339,6 +444,20 @@
                     "help": {
                         "p1": "This map presents data from <1>synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying results, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how synergist involvement is graded consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
+                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays."
+                    }
+                },
+                "chlorfenapyr_undetermined": {
+                    "help": {
+                        "p1": "Les points gris représentent les données recueillies avec la concentration discriminante recommandée de 100 µg/flacon mais qui ne correspondent pas entièrement aux critères de l'OMS pour la validation du test, soit parce que la température n'a pas été signalée, soit parce que la température est tombée en dehors de la plage recommandée (27 °C ± 2 ° C), parce qu'aucune souche de moustique sensible n'a été testée en parallèle ou parce que les résultats de la souche de moustique sensible n'ont pas été rapportés.",
+                        "p2": "",
+                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays."
+                    }
+                },
+                "pirimiphos_methly_undetermined": {
+                    "help": {
+                        "p1": "Les points gris représentent les données recueillies avec la concentration discriminante de pyrimiphos-méthyl précédemment recommandée de 0,25 %. Ces données doivent être validées par rapport aux nouvelles concentrations discriminantes disponibles dans le Manuel de l'OMS pour le suivi de la résistance aux insecticides chez les moustiques vecteurs et la sélection des interventions appropriées. <4 href='https://www.who.int/publications/i/item/9789240051089'>https://www.who.int/publications/i/item/9789240051089</4>.",
+                        "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
                 }
@@ -469,7 +588,8 @@
                 "vector_occurrance": {
                     "invasive": "Envahissante",
                     "native": "Autochtone",
-                    "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
+                    "link": "https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-databases-on-invasive-mosquito-vector-species",
+                    "not_found": "Pas trouvé",
                     "link_text": "formulaire de rapport",
                     "link_content_1": "Si vous avez détecté une espèce invasive vecteur <1>Anopheles</1>, veuillez nous en informer via le ",
                     "help": {
@@ -498,8 +618,8 @@
                 "invasive": "{{studies}} détections de vecteurs trouvés avec des critères spécifiés"
             },
             "insecticide_class": "Classe d'insecticide",
-            "insecticide_type": "Type d'insecticide",
-            "select_insecticide_type": "Sélectionnez type d'insecticide",
+            "insecticide_type": "Insecticide",
+            "select_insecticide_type": "Sélectionnez insecticide",
             "test_type": "Type de test",
             "select_test_type": "Sélectionnez type de test",
             "vector_species": "Espèces vectorielles",
@@ -529,8 +649,9 @@
             "select_sub_region": "Sélectionnez la sous-région",
             "select_site": "Sélectionnez un site",
             "site": "Site",
-            "exclude_lower_patients": "Exclure les études portant sur moins de 20 patients",
-            "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons"
+            "exclude_lower_patients": "Exclure les études comportant moins de 20 patients",
+            "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons",
+            "only_include_data_by_health": "N'inclure que les données fournies à l'OMS par les ministères de la santé"
         },
         "topbar": {
             "menu": "Menu",
@@ -598,10 +719,15 @@
                         "resistance_mechanism_assays_biochemical": "Résultats de l'identification des mécanismes de résistance biochimique"
                     }
                 },
+                "diagnosis": {
+                    "datasets": {
+                        "gene_deletions": "Délétion de pfhrp2/3 gènes"
+                    }
+                },
                 "treatment": {
                     "datasets": {
-                        "therapeutic_efficacy_studies": "Résultats des études d'efficacité thérapeutique",
-                        "molecular_marker_studies": "Résultats des études sur les marqueurs moléculaires de la résistance aux médicaments"
+                        "therapeutic_efficacy_studies": "Études d'efficacité thérapeutique",
+                        "molecular_marker_studies": "Études sur les marqueurs moléculaires de la résistance aux médicaments"
                     }
                 },
                 "invasive": {
@@ -640,21 +766,23 @@
                 "uses_placeHolder": "Nous souhaitons savoir pourquoi vous utilisez les données. Nous apprécierions si vous pouviez fournir une courte description.",
                 "country": "Pays de Résidence",
                 "email": "Email",
-                "message": "L'OMS tient à améliorer les bases de données mondiales et la carte des menaces du paludisme afin de mieux répondre aux besoins de notre communauté d'utilisateurs. Par conséquent, l'OMS souhaite s'engager avec notre communauté d'utilisateurs pour recueillir des suggestions d'amélioration et apprendre des différents cas d'utilisation et des avantages que ces produits leur apportent. Si vous souhaitez partager des commentaires, vous pouvez le faire <1 href='/contact'>ici</1>.",
+                "message": "L'OMS tient à améliorer les bases de données mondiales et la carte des menaces du paludisme afin de mieux répondre aux besoins de notre communauté d'utilisateurs. Par conséquent, l'OMS souhaite s'engager avec notre communauté d'utilisateurs pour recueillir des suggestions d'amélioration et apprendre des différents cas d'utilisation et des avantages que ces produits leur apportent. Si vous souhaitez partager des commentaires, vous pouvez le faire <2 href='/contact'>ici</2>.",
                 "consent1": "J'autorise à être contacté par l'Organisation mondiale de la santé concernant mon expérience avec la Malaria Threat Map et les données des bases de données mondiales.",
                 "consent2": "J'autorise l'Organisation mondiale de la santé à utiliser le nom de mon organisation et la description du projet fournis ci-dessus pour afficher l'utilisation des bases de données mondiales (aucune donnée personnelle ne sera affichée)."
             },
             "data_step": {
                 "title": "Sélectionnez les données",
-                "p1": "Cette boîte de dialogue vous permet de télécharger des données à partir de quatre des bases de données mondiales de l'OMS : la résistance aux insecticides chez les vecteurs du paludisme, les espèces vectrices invasives, l'efficacité et la résistance aux médicaments antipaludiques et les délétions du gène <1>pfhrp2/3</1>. Un lien vers la source de données d'origine et la citation sont inclus dans chaque ensemble de données, le cas échéant.",
+                "p1": "Cette boîte de dialogue vous permet de télécharger les données des quatre bases de données mondiales de l'OMS : la résistance aux insecticides chez les vecteurs du paludisme, les espèces vectrices invasives, l'efficacité et la résistance aux médicaments antipaludiques et les délétions du gène <1>Pfhrp2/3</1>. Un lien vers la source de données originale et la citation sont inclus dans chaque ensemble de données, le cas échéant.",
                 "last_updated": "Le jeu de données sélectionné a été mis à jour pour la dernière fois le :",
                 "add_to_download": "Ajouter au téléchargement",
                 "db_download_list": "Liste de téléchargement de la base de données",
                 "db_download_helper_text": "Votre liste de bases de données sélectionnées pour le téléchargement sera affichée ici. Pour ajouter des données, veuillez filtrer les données dont vous avez besoin sur la droite et cliquez sur “Ajouter au téléchargement“.",
+                "prevention_warning": "Veuillez noter que tous les contributeurs du thème de la résistance des vecteurs aux insecticides ne nous ont pas permis de partager leurs données. Par conséquent, certaines des données de Malaria Threats Map ne sont pas disponibles au téléchargement. Pour les données extraites des publications, veuillez noter que lorsque les valeurs des variables pertinentes n'étaient pas directement fournies dans les publications ou étaient analysées différemment de celles recommandées par l'OMS, les valeurs étaient calculées à partir des données rapportées.",
                 "data_set": "Ensemble de données :",
                 "data": "Données :",
                 "location": "Emplacement :",
-                "studies_in_file": "{{total}} bioessais inclus dans le fichier"
+                "studies_in_file": "{{total}} études included in the file",
+                "bioassays_in_file": "{{total}} bioassays included in the file"
             }
         },
         "report": {
@@ -724,28 +852,6 @@
         "COUNTRY_NA": "Namibie",
         "WEBGL_error_message": "Votre navigateur ne prend pas en charge WebGL. Vous pouvez activer WebGL dans les paramètres avancés de votre navigateur."
     },
-    "diagnosisStory": {
-        "step1": {
-            "part1": "<0>Les délétions de gènes parmi les parasites du paludisme provoquent des résultats de tests de diagnostic faussement négatifs</0>",
-            "part2": "Les tests de diagnostic rapide (TDR) sont utilisés pour le diagnostic du paludisme dans la plupart des zones endémiques. La détection de <i>Plasmodium falciparum</i> - le parasite du paludisme le plus mortel à l'échelle mondiale - repose sur les TDR qui ciblent un antigène appelé protéine riche en histidine 2 (HRP2), ainsi qu'une certaine réactivité croisée avec HRP3, une protéine de parasite structurellement similaire. La grande majorité des TDR fabriqués, achetés et utilisés dans le monde sont basés sur la détection de HRP2, soit seul, soit en association avec d'autres antigènes (tels que le lactate déshydrogénase parasite ou l'aldolase)",
-            "part3": "Cependant, en 2010, une étude parrainée par l'OMS et FIND a révélé que certains parasites de <i>P. falciparum</i> au Pérou manquaient du gène <i>pfhrp2</i>. Sans ce gène, le parasite ne peut pas produire de HRP2 et ne peut pas être détecté par des TDR à base de HRP2. Ce fut le premier rapport à confirmer l'absence du gène <i>pfhrp2</i> chez les parasites de <i>P. falciparum</i> dans un contexte clinique.",
-            "see": "Voir: ",
-            "part4": "Gamboa et al. (2010) Une grande proportion de <i> Les isolats de P. falciparum </i> dans la région amazonienne du Pérou manquent de <i> pfhrp2 </i> et pfhrp3: implications pour les tests de diagnostic rapide du paludisme. PLoS One. 5 (1): e8091"
-        },
-        "step2": {
-            "part1": "<0>Les délétions de <i>pfhrp2/3</i> gènes peuvent avoir d'importantes implications pour la santé publique</0>",
-            "part2": "Les faux résultats de TDR négatifs dus aux suppressions de <i>pfhrp2/3</i> peuvent entraîner un diagnostic incorrect ou retardé et menacer la sécurité du patient. Le patient peut également continuer à être une source de transmission du paludisme jusqu'à ce qu'il soit correctement traité.",
-            "part3": "Depuis 2010, les enquêtes dans plusieurs contextes en Afrique et en Asie ont également trouvé une proportion variable de <i>P. falciparum</i>parasites dépourvus du gène <i>pfhrp2</i>. La prévalence de cette mutation génétique varie à l’intérieur des pays et entre les pays. Si elle est confirmée, les achats des TDR et les pratiques de gestion des cas doivent être adaptés en conséquence. L'OMS recommande de changer pour un TDR qui ne repose pas exclusivement sur le HRP2 pour détection de <i>P. falciparum</i> (c.-à-d. pf-pLDH) si la prévalence des TDR faussement négatifs en raison de la délétion <i>pfhrp2</i> est ≥ 5% parmi les patients symptomatiques.",
-            "link": "https://www.who.int/publications/i/item/WHO-HTM-GMP-2017.18",
-            "supportingStudies": "Lien vers les études à l'appui."
-        },
-        "step3": {
-            "part1": "<0>Une surveillance accrue des délétions de gènes <i>pfhrp2/3</i> parmi le <i>P. falciparum</i> est essentielle</0>",
-            "part2": "Une fois que les délétions <i>pfhrp2/3</i> sont confirmées dans une région géographique, des enquêtes devraient être menées localement et dans les zones voisines pour estimer la prévalence des parasites portant des délétions des gènes. Dans les contextes cliniques, la (les) cause(s) des TDR faussement négatifs devraient faire l'objet d'une enquête.",
-            "part3": "La surveillance sentinelle devrait être instituée avec tous les résultats (positifs et négatifs) signalés. Les données doivent être bien gérées pour aider à hiérarchiser les enquêtes, suivre adéquatement les tendances dans le temps et informer une réponse coordonnée.",
-            "part4": "Depuis 2017, la base de données de l'OMS comprend les données de délétion des gènes <i>pfhrp2/3</i> pour 29 pays dans 5 régions de l'OMS."
-        }
-    },
     "disclaimer": {
         "p1a": "<strong>Source des données:</strong> Programme mondial contre le paludisme.",
         "p1b": "<strong>Production de cartes:</strong> Programme mondial contre le paludisme. Organisation mondiale de la santé.",
@@ -757,9 +863,7 @@
         "p3aLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions",
         "p3b": "Conditions d'utilisation des compilations, agrégations, évaluations et analyses de données de l'OMS.",
         "p4a": "La citation suivante doit être visiblement placée à côté des images ou des fichiers générés à partir de cette application:",
-        "p4b": "Source: ",
-        "p4bLink": "https://www.who.int/malaria/maps/threats/",
-        "p4bLinkText": "Carte des menaces du paludisme de l'OMS.",
+        "p4b": "Source: Carte des menaces du paludisme de l'OMS.",
         "p5a": "Pour plus d'informations, veuillez contacter: ",
         "p5aLink": "mailto:gmp-maps@who.int",
         "p5aLinkText": "gmp-maps@who.int"
@@ -921,32 +1025,30 @@
             "CITATION": "Citation de la publication où les données ont été publiées",
             "CITATION_URL": "URL de la publication où les données ont été publiées",
             "DATA_CURATOR": "Institut qui a compilé les données. Certaines des données de cette base de données ont été compilées par des institutions collaboratrices qui ont partagé leurs collections de données avec l'OMS. Cette colonne indiquera le nom de l'institution ou du groupe qui a compilé les données."
-        }
-    },
-    "invasiveStory": {
-        "step1": {
-            "part1": "<0>La détection d'<i>An. stephensi</i> au Sri Lanka et dans la corne de l'Afrique souligne le potentiel de dissémination et d'établissement des espèces vectrices dans des nouvelles zones géographiques.</0>",
-            "part2": "<0>L'invasion du nord du Brésil par <i>An. gambiae</i> en 1930 est un autre exemple. Son éradication prouve que les invasions de vecteurs peuvent être résorbées.</0>",
-            "part3": "<i>An. stephensi</i> est un vecteur de paludisme urbain très compétent, traditionnellement signalé dans certains pays d'Asie du Sud-Est et dans la péninsule arabique. Depuis 2012, il a été détecté à Djibouti (2012), en Ethiopie (2016), au Sri Lanka (2017) et plus récemment en République du Soudan (2019, rapport non publié).",
-            "part4": "L'invasion d'<i>An. stephensi</i> a contribué à la résurgence du paludisme dans la ville de Djibouti. Au Sri Lanka, la récente invasion de ce vecteur pourrait compromettre les efforts visant à prévenir le rétablissement du paludisme. En Afrique, dans le contexte de l'urbanisation rapide et incontrôlée, la propagation et l'établissement d'<i>An. stephensi</i> en milieu urbain pourraient mettre en péril les progrès réalisés depuis 2000 dans la réduction de la charge du paludisme.",
-            "supporting": "justificative"
         },
-        "step2": {
-            "part1": "<0>La détection opportune des espèces vectrices invasives est cruciale pour contenir leur propagation. </0>",
-            "part2": "<0>Les systèmes de surveillance entomologique fournissent des informations essentielles pour la conception et la mise en œuvre des stratégies de lutte antivectorielle.</0>",
-            "part3": "La connaissance des gîtes de reproduction et de repos des espèces vectrices, de leur comportement, de leurs préférences alimentaires et de leur statut en matière de résistance est nécessaire pour concevoir des interventions efficaces visant à prévenir la propagation des espèces vectrices invasives et leur établissement dans de nouvelles aires géographiques.",
-            "part4": "L'OMS recommande que tous les pays d'endémie palustre effectuent une surveillance entomologique et signalent à l'OMS la détection d'espèces soupçonnées d'être invasives en remplissant et en envoyant le formulaire de l'OMS pour signaler la détection des espèces d’anophèles vectrices invasives",
-            "whoForm": " formulaire de l'OMS pour signaler la détection d'espèces d’anophèles vectrices invasives à ",
-            "part5": "Les indicateurs clés pour la surveillance entomologique sont énumérés au chapitre 5 du manuel de référence de l'OMS intitulé:",
-            "link": "https://cdn.who.int/media/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form-fr.xlsm",
-            "whoManual": " lutte contre le paludisme: surveillance, suivi et évaluation. Un manuel de référence."
-        },
-        "step3": {
-            "part1": "<0>Les stratégies de lutte devraient s'inspirer des meilleures pratiques d'autres pays, faire l'objet d'un suivi et d'une évaluation adéquats et être modifiées au besoin.</0>",
-            "part2": "<0>Les espèces vectrices invasives peuvent s'adapter à leur nouvel environnement en modifiant leurs comportements traditionnels et peuvent devenir résistantes aux insecticides lorsqu'elles sont exposées aux outils de lutte antivectorielle.</0>",
-            "part3": "En raison des ces potentiels changements de comportement adaptatifs des espèces vectrices, les programmes devraient continuellement surveiller et évaluer l'efficacité des interventions de lutte antivectorielle déployées afin d'opérer les ajustements stratégiques nécessaires.",
-            "part4": "L'OMS recommande aux programmes nationaux de lutte contre le paludisme, et à leurs partenaires exécutifs, de consigner les enseignements retenus et de les communiquer à l'OMS (",
-            "part5": ") afin de contribuer à l'élaboration de plan fondé sur des données probantes en matière de lutte et d'éradication des espèces vectrices et invasives du paludisme."
+        "diagnosis": {
+            "ID": "Identifiant unique du bioessai",
+            "COUNTRY_NAME": "Nom du pays où l'essai biologique a été réalisé",
+            "ADMIN1": "Niveau administratif 1 où les moustiques ont été collectés",
+            "ADMIN2": "Niveau administratif 2 où les moustiques ont été collectés",
+            "SITE_NAME": "Site où les moustiques ont été collectés",
+            "LATITUDE": "Latitude du site où les moustiques ont été collectés",
+            "LONGITUDE": "Longitude du site où les moustiques ont été collectés",
+            "YEAR_START": "Année du début de la collecte des moustiques",
+            "SURVEY_TYPE": "Type d'enquête menée",
+            "PATIENT_TYPE": "État clinique du patient",
+            "HRP2_TESTED": "Nombre d'échantillons testés pour les suppressions HRP2",
+            "HRP2_PROPORTION_DELETION": "Pct d'échantillons Pf testés avec des suppressions HRP2",
+            "HRP3_TESTED": "Nombre d'échantillons testés pour les suppressions HRP3",
+            "HRP3_PROPORTION_DELETION": "Pct d'échantillons Pf testés avec des suppressions HRP3",
+            "HRP2_HRP3_TESTED": "Nombre d'échantillons Pf testés pour les suppressions HRP2 ET HRP3",
+            "HRP2_HRP3_PROPORTION_DELETION": "Pct d'échantillons Pf testés avec suppressions HRP2 ET HRP3",
+            "DELETETION_STATUS": "Type de suppression : confirmé ou suspecté",
+            "SAMPLE_ORIGIN": "Lieu d'origine des échantillons, lorsqu'ils sont prélevés sur des voyageurs de retour",
+            "PF_POS_SAMPLES": "Nombre d'échantillons positifs à P.falciparum dans l'enquête totale",
+            "TYPE_SAMPL_ANALYZED": "type d'échantillon analysé - tous, discordants uniquement ou non représentatifs",
+            "CITATION": "Citation de la publication où les données ont été publiées",
+            "CITATION_URL": "URL de la publication où les données ont été publiées"
         }
     },
     "legend": {
@@ -960,100 +1062,32 @@
         "theme": "Thème",
         "selectMapType": "SÉLECTIONNER LE TYPE DE CARTE",
         "mapType": "Carte",
-        "selectData": "FILTRER LES DONNÉES",
+        "selectDataMap": "FILTRER LES DONNÉES",
+        "selectDataDownload": "FILTRER LES DONNÉES (FACULTATIF)",
         "data": "Données",
         "selectLocation": "EMPLACEMENT DU FILTRE (FACULTATIF)",
         "location": "Emplacement",
+        "all": "Tout",
         "selectDataset": "SELECT DATASET",
         "dataset": "Dataset"
-    },
-    "preventionStory": {
-        "step1": {
-            "part1": "<0> Le suivi de la résistance aux insecticides chez les vecteurs du paludisme est essentiel</0>",
-            "part2": "<0>Sur les 89 pays d’endémie palustre, 80 ont déclaré un suivi de la résistance aux insecticides entre 2010 et 2017. La quantité et la qualité des données varient selon les pays.</0>",
-            "part3": "La prévention du paludisme est essentiellement basée sur des outils qui ciblent les vecteurs : les moustiquaires imprégnées à longue durée d’action et les pulvérisations intra-domiciliaires. La résistance des moustiques aux insecticides est une préoccupation majeure, en particulier la résistance aux pyréthrinoïdes, car ils sont la seule classe d'insecticides actuellement approuvée pour l’imprégnation des  moustiquaires.",
-            "part4": "Le Plan mondial de l'OMS pour la gestion de la résistance aux insecticides chez les vecteurs du paludisme (GPIRM) appelle à maintenir l'efficacité de la lutte antivectorielle. Le suivi de la résistance est nécessaire pour orienter les stratégies de réduction et de gestion de la résistance aux insecticides.",
-            "link": "https://apps.who.int/iris/handle/10665/44846",
-            "prevention1": "justificative 1"
-        },
-        "step2": {
-            "part1": "<0>Les activités de suivi ont révélé que la résistance aux insecticides chez les vecteurs du paludisme était très répandue</0>",
-            "part2": "<0>Sur les 89 pays d’endémie palustre, 65 ont rapporté une résistance aux pyréthrinoïdes chez, au moins, un vecteur local depuis 2010</0>",
-            "part3": "La résistance a été détectée chez les vecteurs des six régions de l'OMS et aux quatre classes les plus couramment utilisés dans la lutte contre les vecteurs adultes. La résistance aux pyréthrinoïdes est la plus testée et la plus souvent rapportée.",
-            "link": "https://www.who.int/publications/i/item/9789241514057",
-            "prevention2": "justificative 2"
-        },
-        "step3": {
-            "part1": "<0>Nombreux sont les pays à ne pas disposer de données récentes et complètes sur la résistance aux insecticides</0>",
-            "part2": "<0>Sur les 89 pays d’endémie palustre, 47 ont rapporté des données pour 2017. Les données sont, à quelques exceptions près, assez rares en dehors de l’Afrique. Le suivi ne comprend pas toujours tous les principaux vecteurs, ni toutes les principales classes d'insecticides.</0>",
-            "part3": "Des données à jour et représentatives sont nécessaires pour la planification et la mise en œuvre de la lutte antivectorielle. Le suivi de la résistance devrait être effectué dans tous les pays d’endémie  palustre au moins une fois par an, et périodiquement dans les pays ayant éliminé le paludisme mais qui restent vulnérable à la réintroduction. Le suivi de la résistance devrait inclure tous les principaux vecteurs provenant des différentes zones éco-épidémiologiques. Les tests de sensibilité devraient être effectués avec des classes d'insecticides qui sont soit utilisées, soit prévues pour être utilisées dans la lutte antivectorielle.",
-            "part4": "Les exigences de suivi de la résistance doivent être définies dans le cadre d'un plan national de suivi et de gestion de la résistance aux insecticides.",
-            "prevention3": "justificative 3"
-        },
-        "step4": {
-            "part1": "<0>L’augmentation de la résistance souligne le besoin urgent d’un meilleur suivi</0>",
-            "part2": "<0>Les vecteurs du paludisme dans certaines régions d'Afrique peuvent désormais survivre à une exposition à de fortes concentrations d'insecticides, ce qui indique une résistance intensifiée.</0>",
-            "part3": "Les tests classiques de résistance mesurent le nombre de moustiques qui survivent à l’exposition à une concentration standard d'insecticide. Cependant, l'intensité de la résistance chez les survivants et les mécanismes qui confèrent la résistance sont importants. Un niveau élevé de résistance impose une action urgente qui devrait être guidée par la connaissance des mécanismes impliqués dans la résistance.",
-            "part4": "Les procédures de tests de sensibilité de l'OMS ont récemment été élargies pour inclure des bio-essais qui mesurent l'intensité de la résistance et l'implication des mécanismes métaboliques.",
-            "prevention4": "justificative 4"
-        }
     },
     "tour": {
         "steps": {
             "1": {
-                "title": "Bienvenue sur la Carte des menaces du paludisme",
-                "p1": "Vous êtes sur la plateforme officielle de l’Organisation Mondiale de la Santé, éditée pour présenter l’ampleur et la répartition des quatre défis biologiques à la lutte contre le paludisme et son éradication.",
-                "p2": "Cet assistant vous montrera comment utiliser cette plateforme."
+                "title": "Sélectionnez l'une des 4 menaces biologiques"
             },
             "2": {
-                "title": "Veuillez sélectionner une langue."
+                "title": "Sélectionnez une carte pour explorer les résultats de l'étude"
             },
             "3": {
-                "p1": "Allez sur nos cartes interactives qui présentent les données actualisées sur les trois défis."
+                "title": "Ajouter des filtres pour produire une carte limitée à des critères spécifiques"
             },
             "4": {
-                "p1": "Ouvrez la section des filtres pour choisir parmi les filtres de défi ainsi que les filtres de région"
+                "title": "Sélectionnez une région, une sous-région, un pays et/ou un site."
             },
             "5": {
-                "p1": "Sélectionnez un pays, une région ou une sous-région de votre choix ou laisser ces champs vides pour avoir un aperçu sur tous les pays."
-            },
-            "6": {
-                "p1": "Sélectionnez plusieurs filtres et notez comment la carte s'ajuste automatiquement."
-            },
-            "7": {
-                "p1": "Cliquez sur un site pour accéder au résultat de l’étude correspondant à vos critères de recherche. La fenêtre contextuelle affiche les résultats pour une seule étude. S’il y a plus d’une étude correspondant à vos critères de recherche pour un site, vous pouvez consulter les résultats des autres études en cliquant sur la flèche dirigée vers le haut >"
-            },
-            "8": {
-                "p1": "Consulter les résultats de bioessais par site pour chaque pays."
-            },
-            "9": {
-                "p1": "Cliquez sur un pays pour accéder au récapitulatif sur la résistance."
+                "title": "Cliquez sur un point de la carte pour voir les détails de l'étude"
             }
-        }
-    },
-    "treatmentStory": {
-        "step1": {
-            "part1": "<0>Les parasites du paludisme ont développé de manière successive une résistance au traitement antipaludique</0>",
-            "part2": "<0>Pendant des décennies, la résistance aux médicaments a été l'un des principaux obstacles à la lutte contre le paludisme.</0>",
-            "part3": "La surveillance continue et l’information sur l'efficacité du médicament et sur la résistance des parasites sont essentielles pour garantir aux patients un traitement efficace. L'OMS soutient les programmes nationaux de lutte contre le paludisme afin de surveiller l'efficacité du traitement antipaludique et de suivre les changements génétiques liés à la résistance aux médicaments chez les parasites du paludisme.",
-            "part4": "Le rôle crucial de la surveillance de l'efficacité des médicaments a été observé dans le monde entier. La résistance a été un défi persistant dans la sous-région du Grand Mékong. La région a été très active dans la surveillance de l'efficacité des médicaments."
-        },
-        "step2": {
-            "part1": "<0>La surveillance systématique de l'efficacité des thérapies combinées à base d'artémisinine (ACT) est essentielle pour s'assurer que les patients reçoivent un traitement efficace</0>",
-            "part2": "<0>L'OMS recommande que tous les pays où le paludisme est endémique effectuent des études d'efficacité thérapeutique au moins une fois tous les deux ans pour informer la politique de traitement.</0>",
-            "part3": "La sélection du médicament antipaludique recommandé repose sur l'efficacité du médicament contre le parasite du paludisme. Par conséquent, le suivi de l'efficacité thérapeutique des médicaments antipaludiques est un élément fondamental des stratégies de traitement du paludisme. L'OMS a élaboré un protocole standard pour la surveillance de l'efficacité du traitement antipaludique."
-        },
-        "step3": {
-            "part1": "<0>Les études sur les marqueurs moléculaires fournissent des données essentielles pour la détection et le suivi de la résistance aux médicaments antipaludiques</0>",
-            "part2": "<0>Les marqueurs moléculaires pour la résistance aux médicaments sont des changements génétiques dans le parasite du paludisme qui se sont révélés être associés à une résistance.</0>",
-            "part3": "Par rapport aux études d'efficacité, les études sur les marqueurs moléculaires présentent plusieurs avantages pratiques. Par exemple, un grand nombre d'échantillons peuvent être collectés et analysés rapidement. Les marqueurs moléculaires de la résistance de <i>P. falciparum</i> aux médicaments ont été identifiés comprenant la chloroquine, la piperaquine, la mefloquine, la pyrimethamine, la sulfadoxine, l’atovaquone et l’artémisinine et ses dérivés. Pour les artémisinines, plusieurs mutations dans le domaine du promoteur Kelch 13 (K13) se sont révélées associées à une clearance parasitaire retardée. Il s'agit d'un domaine en constante évolution au fur et à mesure que de nouvelles mutations K13 sont découvertes et nous développons une meilleure compréhension des mutations ayant la plus grande influence.",
-            "part4": "Pour les artémisinines, de nombreuses mutations dans le domaine du promoteur Kelch 13 (K13) se sont révélées associées au dégagement de parasites retardé. Il s'agit d'un champ évolutif au fur et à mesure que de nouvelles mutations K13 sont découvertes et nous développons une meilleure compréhension des mutations les plus influentes."
-        },
-        "step4": {
-            "part1": "<0>La résistance aux médicaments est un défi à la fois pour <i> P. vivax </i> comme dans <i> P. falciparum </i>, les deux espèces les plus courantes de parasites du paludisme humain</0>",
-            "part2": "<0>Il est essentiel de disposer d'informations à jour sur la résistance aux médicaments pour les deux parasites du paludisme</0>",
-            "part3": "Les associations thérapeutiques à base d'artémisinine sont le traitement recommandé pour le parasite le plus mortel du paludisme, <i> P. falciparum</i>. Il existe deux indicateurs clés pour surveiller l'efficacité des ACT: (1) la proportion de traitements échoués et (2) la proportion de patients atteints de parasites le troisième jour après le début du traitement. Une augmentation de la proportion de patients atteints de parasites au troisième jour est un signe avant-coureur de l'existence potentielle d'une résistance à l'artémisinine.",
-            "part4": "La chloroquine est encore utilisée dans de nombreux endroits pour traiter le paludisme à <i>P. vivax</i>. Cependant, comme la résistance à la chloroquine se développe également chez ce parasite, certains pays ont commencé à utiliser le TCA pour le traitement de <i>P. vivax</i>."
         }
     },
     "utils": {

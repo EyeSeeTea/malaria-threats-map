@@ -17,8 +17,8 @@ const StyledButton = styled(Button)`
     text-transform: none;
     padding: 0px;
     border-radius: 12px;
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     background-repeat: no-repeat;
     background-size: cover;
     background-image: url("${LayersImage}");
@@ -26,7 +26,7 @@ const StyledButton = styled(Button)`
 
 const StyledText = styled.span`
     color: white;
-    font-size: 14px;
+    font-size: 11px;
     font-weight: bold;
     position: absolute;
     bottom: 0;

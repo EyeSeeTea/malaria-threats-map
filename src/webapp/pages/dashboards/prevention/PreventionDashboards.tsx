@@ -9,17 +9,19 @@ import { CountryContext } from "../types";
 const PreventionDashboards: React.FC = () => {
     const { dashboardsPreventionStudies, theme } = useDashboards();
 
-    const [countryContext, setCountryContext] = React.useState<CountryContext>("all");
+    const [countryContext, setCountryContext] = React.useState<CountryContext>("country-context");
 
     return (
         <React.Fragment>
-            <Container maxWidth="lg">
-                <ContentsFilterSection countryContext={countryContext} onCountryContextChange={setCountryContext} />
-            </Container>
+            {dashboardsPreventionStudies && (
+                <Container maxWidth="lg">
+                    <ContentsFilterSection countryContext={countryContext} onCountryContextChange={setCountryContext} />
+                </Container>
+            )}
             <DashboardSection>
                 {dashboardsPreventionStudies && (
                     <Container maxWidth="xl">
-                        <CountryContextStudies countryContext={countryContext} theme={theme} />
+                        <CountryContextStudies theme={theme} />
                     </Container>
                 )}
             </DashboardSection>

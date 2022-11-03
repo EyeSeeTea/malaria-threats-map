@@ -7,7 +7,7 @@ import { TherapeuticEfficacy } from "../types";
 const therapeuticEfficacyOptions: Option<TherapeuticEfficacy>[] = [
     {
         label: i18next.t("common.dashboard.dashboardsFilterSection.therapeuticEfficacyOptions.therapeuticEfficacy"),
-        value: "all",
+        value: "therapeutic-efficacy",
     },
     {
         label: i18next.t(

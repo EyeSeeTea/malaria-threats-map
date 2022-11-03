@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Box, Grid, GridSize, IconButton } from "@mui/material";
 import { State } from "../store/types";
 import { connect } from "react-redux";
-import { setActionGroupSelected, setThemeAction } from "../store/actions/base-actions";
+import { setActionGroupSelected, setThemeAction, Source } from "../store/actions/base-actions";
 import { selectTheme } from "../store/reducers/base-reducer";
 import { selectPreventionStudiesError } from "../store/reducers/prevention-reducer";
 import { selectDiagnosisStudiesError } from "../store/reducers/diagnosis-reducer";
@@ -40,7 +40,7 @@ const ThemeButton = styled.div<{ disabled?: boolean }>`
         background-color: #e2e2e2;
     }
     height: 152px;
-    padding 6px;
+    padding: 6px;
 `;
 
 const Title = styled.span`
@@ -65,6 +65,7 @@ const Title = styled.span`
 
 interface ownProps {
     themeItemGridSize?: GridSize;
+    from: Source;
 }
 
 const mapStateToProps = (state: State) => ({
@@ -85,6 +86,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & ownProps;
 
 const ThemeSelector: React.FC<Props> = ({
+    from,
     themeItemGridSize,
     theme,
     setTheme,
@@ -97,24 +99,44 @@ const ThemeSelector: React.FC<Props> = ({
     const { t } = useTranslation();
 
     const handlePreventionClick = React.useCallback(() => {
-        setActionGroupSelected("MAP_TYPE");
-        setTheme("prevention");
-    }, [setTheme, setActionGroupSelected]);
+        setTheme("prevention", from);
+
+        if (from === "map") {
+            setActionGroupSelected("MAP_TYPE");
+        } else {
+            setActionGroupSelected("DATASET");
+        }
+    }, [setTheme, setActionGroupSelected, from]);
 
     const handleInvasiveClick = React.useCallback(() => {
-        setTheme("invasive");
-        setActionGroupSelected("DATA");
-    }, [setTheme, setActionGroupSelected]);
+        setTheme("invasive", from);
+
+        if (from === "map") {
+            setActionGroupSelected("DATA");
+        } else {
+            setActionGroupSelected(null);
+        }
+    }, [setTheme, setActionGroupSelected, from]);
 
     const handleDiagnosisClick = React.useCallback(() => {
-        setTheme("diagnosis");
-        setActionGroupSelected("DATA");
-    }, [setTheme, setActionGroupSelected]);
+        setTheme("diagnosis", from);
+
+        if (from === "map") {
+            setActionGroupSelected("DATA");
+        } else {
+            setActionGroupSelected(null);
+        }
+    }, [setTheme, setActionGroupSelected, from]);
 
     const handleTreatmentClick = React.useCallback(() => {
-        setTheme("treatment");
-        setActionGroupSelected("MAP_TYPE");
-    }, [setTheme, setActionGroupSelected]);
+        setTheme("treatment", from);
+
+        if (from === "map") {
+            setActionGroupSelected("MAP_TYPE");
+        } else {
+            setActionGroupSelected("DATASET");
+        }
+    }, [setTheme, setActionGroupSelected, from]);
 
     return (
         <Box sx={{ flexGrow: 1 }}>

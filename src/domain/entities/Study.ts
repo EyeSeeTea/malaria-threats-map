@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export interface Study {
     OBJECTID: number;
     VILLAGE_NAME: string;
@@ -13,6 +15,7 @@ export interface Study {
     Longitude: string;
     INSTITUTION?: string;
     INSTITUTION_CITY?: string;
+    INSTITUTION_TYPE?: string;
     ASSAY_TYPE: string;
     COUNTRY_NAME: string;
     INSECTICIDE_CLASS: string;
@@ -47,4 +50,14 @@ export interface Study {
     VERSION: number;
     YEAR_END: string;
     YEAR_START: string;
+}
+
+export function getMaxMinYears(studies: Study[]): [number, number] {
+    if (studies.length === 0) return [2010, new Date().getFullYear()];
+    const years = _.compact(_.uniq(studies.map(study => parseInt(study.YEAR_START)).sort()));
+
+    const min = Math.min(...years);
+    const max = Math.max(...years);
+
+    return [min, max];
 }

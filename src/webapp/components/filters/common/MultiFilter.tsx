@@ -2,20 +2,30 @@ import React from "react";
 import { connect } from "react-redux";
 import IntegrationReactSelect, { Option } from "../../BasicSelect";
 import { FilterRowContainer } from "../Filters";
-import FormLabel from "@mui/material/FormLabel";
 import { sendMultiFilterAnalytics } from "../../../utils/analytics";
+import { Typography } from "@mui/material";
 
 type Props = {
-    label: string;
+    label?: string;
     options: Option[];
     placeholder?: string;
     onChange: (selection: string[]) => void;
     value: string[];
     analyticsMultiFilterAction?: string;
     onlyYMargin?: boolean;
+    isClearable?: boolean;
 };
 
-function MultiFilter({ label, options, onChange, value, analyticsMultiFilterAction, placeholder, onlyYMargin }: Props) {
+function MultiFilter({
+    label,
+    options,
+    onChange,
+    value,
+    analyticsMultiFilterAction,
+    placeholder,
+    onlyYMargin,
+    isClearable,
+}: Props) {
     const onSelectionChange = (options: Option[] = []) => {
         onChange((options || []).map(o => o.value));
 
@@ -24,18 +34,18 @@ function MultiFilter({ label, options, onChange, value, analyticsMultiFilterActi
         }
     };
 
-    const selections = options.filter(option => value.includes(option.value));
+    const selections = options.filter(option => value && value.includes(option.value));
 
     return (
         <FilterRowContainer onlyYMargin={onlyYMargin}>
-            {selections && selections.length > 0 && (
-                <FormLabel color="primary" component="legend">
+            {label && selections && selections.length > 0 && (
+                <Typography component="legend" variant="body2">
                     {`${label}:`}&nbsp;
-                </FormLabel>
+                </Typography>
             )}
             <IntegrationReactSelect
                 isMulti
-                isClearable={false}
+                isClearable={isClearable}
                 placeholder={placeholder}
                 suggestions={options}
                 onChange={onSelectionChange}

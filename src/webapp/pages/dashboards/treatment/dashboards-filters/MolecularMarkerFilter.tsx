@@ -7,7 +7,7 @@ import { MolecularMarker } from "../types";
 const molecularMarkerOptions: Option<MolecularMarker>[] = [
     {
         label: i18next.t("common.dashboard.dashboardsFilterSection.molecularMarkerOptions.molecularMarker"),
-        value: "all",
+        value: "molecular-marker",
     },
     {
         label: i18next.t("common.dashboard.dashboardsFilterSection.molecularMarkerOptions.summaryMolecularMarker"),

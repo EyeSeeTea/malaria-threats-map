@@ -12,7 +12,9 @@ const SummaryInsecticideResistanceDashboard: React.FC = () => {
     return (
         <React.Fragment>
             <DasboardCard>
-                <Title>{t("common.dashboard.countryContextDashboards.summaryInsecticideResistance.title")}</Title>
+                <Title id="summary-insecticide-resistance">
+                    {t("common.dashboard.countryContextDashboards.summaryInsecticideResistance.title")}
+                </Title>
                 <Table>
                     <thead>
                         <tr>

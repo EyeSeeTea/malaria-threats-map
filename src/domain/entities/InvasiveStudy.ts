@@ -8,4 +8,6 @@ export interface InvasiveStudy extends Study {
     VECTOR_SPECIES_COMPLEX: string;
     Code: string;
     STAGE: string;
+    BREEDING_HABITAT: string;
+    INVASIVE_STATUS: string;
 }

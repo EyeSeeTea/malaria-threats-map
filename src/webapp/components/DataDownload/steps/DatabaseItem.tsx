@@ -69,9 +69,13 @@ export const DatabaseItem: React.FC<DatabaseItemProps> = ({ database, onRemoveDa
                             <Typography variant="caption">{t(database.location)}</Typography>
                         </Stack>
                         <Typography variant="caption" color="GrayText">
-                            {t("common.data_download.data_step.studies_in_file", {
-                                total: database.filteredStudies.length,
-                            })}
+                            {database.kind === "treatment"
+                                ? t("common.data_download.data_step.studies_in_file", {
+                                      total: database.filteredStudies.length,
+                                  })
+                                : t("common.data_download.data_step.bioassays_in_file", {
+                                      total: database.filteredStudies.length,
+                                  })}
                         </Typography>
                     </Stack>
                 </Grid>

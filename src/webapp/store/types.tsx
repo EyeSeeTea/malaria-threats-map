@@ -47,7 +47,7 @@ export type TreatmentDataset = "THERAPEUTIC_EFFICACY_STUDY" | "MOLECULAR_MARKER_
 
 export type InvasiveDataset = "INVASIVE_VECTOR_SPECIES";
 
-export type DiagnosisDataset = "DIAGNOSIS";
+export type DiagnosisDataset = "PFHRP23_GENE_DELETIONS";
 
 export type LastUpdatedDates = {
     prevention: Date | null;
@@ -64,6 +64,7 @@ export interface MalariaState {
     storyMode: boolean;
     storyModeStep: number;
     filters: number[];
+    maxMinYears: number[];
     region: RegionState;
     lastUpdatedDates: LastUpdatedDates;
     actionGroupSelected: ActionGroup | null;
@@ -127,8 +128,9 @@ export interface PreventionFilters {
     synergistTypes: string[];
     assayTypes: string[];
     proxyType: string | null;
-    type: string | null;
+    type: string[] | null;
     species: string[];
+    onlyByHealthMinistries: boolean;
 }
 
 export interface PreventionState {
