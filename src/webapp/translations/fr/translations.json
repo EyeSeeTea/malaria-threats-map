@@ -107,6 +107,11 @@
                 "molecularMarkerOptions": {
                     "molecularMarker": "Résultats de l'étude des marqueurs moléculaires",
                     "summaryMolecularMarker": "Résumé des résultats des études sur les marqueurs moléculaires au fil du temps"
+                },
+                "phenotypicInsecticideResistanceOptions": {
+                    "phenotypicInsecticideResistance": "Résistance phénotypique aux insecticides",
+                    "statusOfResistanceToInsecticides": "Etat de résistance aux insecticides",
+                    "mosquitoOverTime": "Mosquito Over Time"
                 }
             },
             "countryContextDashboards": {
@@ -179,6 +184,26 @@
                     "artemisininChartSubtitle": "des marqueurs moléculaires de la résistance à l'artémisinine ont été détectés:",
                     "mutationsChartTitle": "Études où des mutations ont été détectées dans:",
                     "multipleChartTitle": "Études où plusieurs numéros de copie ont été détectés dans:"
+                }
+            },
+            "phenotypicInsecticideResistanceDashboards": {
+                "title": "Résistance phénotypique aux insecticides",
+                "numBioassaysByCategory": "Le nombre suivant d'essais biologiques correspond au filtre appliqué :",
+                "numBioassays": "{{count}} biologiques correspond au filtre appliqué ",
+                "numSites": "Nombre de sites",
+                "insecticideResistanceStatus": "Statut de résistance aux insecticides",
+                "byInsecticideClass": "Par classe d'insecticide",
+                "byInsecticide": "Par insecticide",
+                "confirmed": "Confirmé (0 à <90%)",
+                "possible": "Possible (90 à <98%)",
+                "susceptible": "Susceptible (≥98%)",
+                "statusOfResistanceToInsecticides": {
+                    "title": "ÉTAT DE RÉSISTANCE AUX INSECTICIDES"
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MORTALITÉ DES MOUSTIQUES AU FIL DU TEMPS",
+                    "adjustedMortality": "Mortalité ajustée",
+                    "year": "An"
                 }
             },
             "treatmentFilters": {
@@ -649,8 +674,10 @@
             "select_sub_region": "Sélectionnez la sous-région",
             "select_site": "Sélectionnez un site",
             "site": "Site",
-            "exclude_lower_patients": "Exclure les études comportant moins de 20 patients",
+            "exclude_lower_patients": "Exclure les études portant sur moins de 20 patients",
             "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons",
+            "onlyIncludeBioassays": "N'inclure que les essais biologiques avec plus que le nombre de moustiques en cours",
+            "zero_all_bioassays": "0 (tous les essais biologiques)",
             "only_include_data_by_health": "N'inclure que les données fournies à l'OMS par les ministères de la santé"
         },
         "topbar": {

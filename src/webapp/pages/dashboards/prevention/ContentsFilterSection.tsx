@@ -4,15 +4,21 @@ import { Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { CountryContext } from "../types";
 import CountryContextFilter from "../common/dashboards-filters/CountryContextFilter";
+import PhenotypicInsecticideResistanceFilter from "./dashboards-filters/PhenotypicInsecticideResistanceFilter";
+import { PhenotypicInsecticideResistance } from "./types";
 
 interface ContentsFilterSectionProps {
     countryContext: CountryContext;
+    phenotypicInsecticideResistance: PhenotypicInsecticideResistance;
     onCountryContextChange: (value: CountryContext) => void;
+    onPhenotypicInsecticideResistanceChange: (value: PhenotypicInsecticideResistance) => void;
 }
 
 export const ContentsFilterSection: React.FC<ContentsFilterSectionProps> = ({
     countryContext,
+    phenotypicInsecticideResistance,
     onCountryContextChange,
+    onPhenotypicInsecticideResistanceChange,
 }) => {
     const { t } = useTranslation();
 
@@ -23,6 +29,12 @@ export const ContentsFilterSection: React.FC<ContentsFilterSectionProps> = ({
             </Grid>
             <Grid item md={3} xs={12}>
                 <CountryContextFilter theme="prevention" value={countryContext} onChange={onCountryContextChange} />
+            </Grid>
+            <Grid item md={3} xs={12}>
+                <PhenotypicInsecticideResistanceFilter
+                    value={phenotypicInsecticideResistance}
+                    onChange={onPhenotypicInsecticideResistanceChange}
+                />
             </Grid>
         </Grid>
     );

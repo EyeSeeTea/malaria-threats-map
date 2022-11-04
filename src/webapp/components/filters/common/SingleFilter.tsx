@@ -6,6 +6,8 @@ import { FilterRowContainer } from "../Filters";
 import { Typography } from "@mui/material";
 
 type OwnProps = {
+    labelPosition?: "top" | "middle";
+    margin?: string;
     label: string;
     options: Option[];
     onChange: (selection?: string) => void;
@@ -24,6 +26,8 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = OwnProps & DispatchProps;
 
 function SingleFilter({
+    labelPosition,
+    margin,
     label,
     options,
     onChange,
@@ -47,22 +51,29 @@ function SingleFilter({
     const selection = options.find((s: Option) => s.value === value) || null;
 
     return (
-        <FilterRowContainer>
-            {selection && (
-                <Typography component="legend" variant="body2">
-                    {`${label}:`}&nbsp;
+        <React.Fragment>
+            {labelPosition === "top" && (
+                <Typography variant="body2" fontWeight={"bold"}>
+                    {label}
                 </Typography>
             )}
-            <IntegrationReactSelect
-                isMulti={false}
-                isClearable={isClearable}
-                isDisabled={isDisabled}
-                placeholder={placeholder}
-                suggestions={options}
-                onChange={onSelectionChange}
-                value={selection}
-            />
-        </FilterRowContainer>
+            <FilterRowContainer margin={margin}>
+                {labelPosition === "middle" && selection && (
+                    <Typography component="legend" variant="body2">
+                        {`${label}:`}&nbsp;
+                    </Typography>
+                )}
+                <IntegrationReactSelect
+                    isMulti={false}
+                    isClearable={isClearable}
+                    isDisabled={isDisabled}
+                    placeholder={placeholder}
+                    suggestions={options}
+                    onChange={onSelectionChange}
+                    value={selection}
+                />
+            </FilterRowContainer>
+        </React.Fragment>
     );
 }
 

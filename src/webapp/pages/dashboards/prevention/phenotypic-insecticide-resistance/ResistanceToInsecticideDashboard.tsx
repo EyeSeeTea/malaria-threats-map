@@ -1,0 +1,182 @@
+import Highcharts from "highcharts";
+import React, { useRef } from "react";
+import { useTranslation } from "react-i18next";
+import PreventionFilterableDashboard from "../PreventionFilterableDashboard";
+import HighchartsReact from "highcharts-react-official";
+import styled from "styled-components";
+import { useResistanceToInsecticide } from "./useResistanceToInsecticide";
+import { ResistanceToInsecticideSerie } from "./types";
+import i18next from "i18next";
+
+const ResistanceToInsecticideDashboard: React.FC = () => {
+    const { t } = useTranslation();
+
+    const {
+        insecticideTypeOptions,
+        chartType,
+        chartTypes,
+        categories,
+        categoriesCount,
+        data,
+        filters,
+        onInsecticideClassChange,
+        onInsecticideTypesChange,
+        onYearsChange,
+        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
+        onOnlyIncludeDataByHealthChange,
+        onChartTypeChange,
+    } = useResistanceToInsecticide();
+
+    const chartComponentRefs = useRef([]);
+
+    const maxStackedColumn = React.useMemo(() => {
+        const maxValues = Object.values(data).reduce((acc: number[], countrySeries: ResistanceToInsecticideSerie[]) => {
+            const maxValuesByType = countrySeries.reduce((acc, serieItem) => {
+                if (acc.length === 0) {
+                    return serieItem.data;
+                } else {
+                    return serieItem.data.map((value, index) => value + acc[index]);
+                }
+            }, []);
+
+            return [...acc, ...maxValuesByType];
+        }, []);
+
+        return Math.max(...maxValues);
+    }, [data]);
+
+    return (
+        <PreventionFilterableDashboard
+            id="status-resistance-insecticide"
+            insecticideTypeOptions={insecticideTypeOptions}
+            chart="status-of-resistance-of-insecticide"
+            chartTypes={chartTypes}
+            chartType={chartType}
+            count={categoriesCount}
+            chartComponentRef={chartComponentRefs}
+            title={t(
+                "common.dashboard.phenotypicInsecticideResistanceDashboards.statusOfResistanceToInsecticides.title"
+            )}
+            filters={filters}
+            onInsecticideClassesChange={chartType === "by-insecticide-class" ? onInsecticideClassChange : undefined}
+            onInsecticideTypesChange={chartType === "by-insecticide" ? onInsecticideTypesChange : undefined}
+            onYearsChange={onYearsChange}
+            onOnlyIncludeBioassaysWithMoreMosquitoesChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}
+            onOnlyIncludeDataByHealthChange={onOnlyIncludeDataByHealthChange}
+            onChartTypeChange={onChartTypeChange}
+        >
+            <div style={{ overflowX: "auto" }}>
+                <Table>
+                    <tbody>
+                        {Object.keys(data).map((isoCountry, index) => {
+                            return (
+                                <tr key={isoCountry}>
+                                    <td>{t(isoCountry)}</td>
+                                    <td>
+                                        <StyledHighcharts
+                                            highcharts={Highcharts}
+                                            options={chartOptions(
+                                                data[isoCountry],
+                                                categories,
+                                                index === 0,
+                                                index === Object.keys(data).length - 1,
+                                                maxStackedColumn
+                                            )}
+                                            ref={(element: HighchartsReact.RefObject) =>
+                                                chartComponentRefs.current.push(element)
+                                            }
+                                        />
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </Table>
+            </div>
+        </PreventionFilterableDashboard>
+    );
+};
+
+export default React.memo(ResistanceToInsecticideDashboard);
+
+const Table = styled.table`
+    table-layout: fixed;
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    tr:nth-child(even) {
+        border-bottom: 2px solid #0000001a;
+        border-top: 2px solid #0000001a;
+    }
+    tr:last-child {
+        border-bottom: 0px;
+    }
+    tr td:nth-child(2) {
+        width: 90%;
+    }
+`;
+
+const StyledHighcharts = styled(HighchartsReact)``;
+
+function chartOptions(
+    series: ResistanceToInsecticideSerie[],
+    categories: string[],
+    enabledLegend: boolean,
+    visibleYAxisLabels: boolean,
+    max: number
+): Highcharts.Options {
+    const tickInterval = Math.floor(max / 20);
+
+    return {
+        chart: {
+            type: "bar",
+            height: categories.length * 30 + (enabledLegend ? 50 : 0) + (visibleYAxisLabels ? 50 : 0),
+            marginTop: enabledLegend ? 60 : 0,
+            marginBottom: visibleYAxisLabels ? 60 : 0,
+        },
+        title: {
+            align: "left",
+            text: enabledLegend
+                ? i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.insecticideResistanceStatus")
+                : "",
+            style: { fontSize: "14px", fontWeight: "bold", color: "black" },
+        },
+        xAxis: {
+            categories,
+        },
+        yAxis: {
+            title: {
+                text: visibleYAxisLabels
+                    ? i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.numSites")
+                    : "",
+                style: { fontSize: "14px", fontWeight: "bold", color: "black" },
+                y: 20,
+                x: -50,
+            },
+            labels: {
+                enabled: visibleYAxisLabels,
+            },
+            min: 0,
+            max: max,
+            tickInterval: tickInterval,
+        },
+        legend: {
+            verticalAlign: "top",
+            align: "center",
+            reversed: true,
+            enabled: enabledLegend,
+            y: -40,
+            x: 50,
+        },
+        plotOptions: {
+            series: {
+                stacking: "normal",
+            },
+        },
+        series,
+        credits: {
+            enabled: false,
+        },
+    };
+}

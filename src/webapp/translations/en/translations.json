@@ -15,7 +15,6 @@
                 "first": "Learn More About",
                 "second": "The Malaria Threats Map"
             },
-
             "dataSection": {
                 "title": "Where do the data come from?",
                 "content": "Data are collected by National Malaria Programmes, their implementation partners, research institutes and non-governmental organizations. They are either provided directly to WHO Global Malaria Programme (GMP) or extracted from publications. All data are quality controlled, incorporated into WHO global databases and then published to the Malaria Threats Map."
@@ -107,6 +106,11 @@
                 "molecularMarkerOptions": {
                     "molecularMarker": "Molecular marker study results",
                     "summaryMolecularMarker": "Summary of molecular marker study results over time"
+                },
+                "phenotypicInsecticideResistanceOptions": {
+                    "phenotypicInsecticideResistance": "Phenotypic Insecticide Resistance",
+                    "statusOfResistanceToInsecticides": "Status of resistance to insecticides",
+                    "mosquitoOverTime": "Mosquito Over Time"
                 }
             },
             "countryContextDashboards": {
@@ -179,6 +183,26 @@
                     "artemisininChartSubtitle": "molecular markers of artemisinin resistance were detected:",
                     "mutationsChartTitle": "Studies where mutations were detected in:",
                     "multipleChartTitle": "Studies where multiple copy numbers were detected in:"
+                }
+            },
+            "phenotypicInsecticideResistanceDashboards": {
+                "title": "Phenotypic insecticide resistance",
+                "numBioassaysByCategory": "The following number of bioassay meet the applied filter:",
+                "numBioassays": "{{count}} bioassays meet the applied filter",
+                "numSites": "Number of sites",
+                "insecticideResistanceStatus": "Insecticide resistance status",
+                "byInsecticideClass": "By Insecticide Class",
+                "byInsecticide": "By Insecticide",
+                "confirmed": "Confirmed (0 to <90%)",
+                "possible": "Possible (90 to <98%)",
+                "susceptible": "Susceptible (≥98%)",
+                "statusOfResistanceToInsecticides": {
+                    "title": "STATUS OF RESISTANCE TO INSECTICIDES"
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MOSQUITO MORTALITY OVER TIME",
+                    "adjustedMortality": "Adjusted mortality",
+                    "year": "Year"
                 }
             },
             "treatmentFilters": {
@@ -649,8 +673,10 @@
             "select_sub_region": "Select subregion",
             "select_site": "Select site",
             "site": "Site",
-            "exclude_lower_patients": "Exclude studies with fewer than 20 patients",
+            "exclude_lower_patients": "Exclude studies of less than 20 patients",
             "exclude_lower_samples": "Exclude studies of less than 20 samples",
+            "onlyIncludeBioassays": "Only include bioassays with more than the flowing number of mosquitoes",
+            "zero_all_bioassays": "0 (all bioassays)",
             "only_include_data_by_health": "Only include data provided to WHO by ministries of health"
         },
         "topbar": {

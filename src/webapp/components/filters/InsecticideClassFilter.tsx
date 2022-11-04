@@ -9,6 +9,7 @@ import {
 } from "../../store/reducers/prevention-reducer";
 import { setInsecticideClass } from "../../store/actions/prevention-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
+import i18next from "i18next";
 import _ from "lodash";
 import { filterByIntensityStatus, filterByResistanceStatus } from "../layers/studies-filters";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
@@ -35,6 +36,16 @@ export const INSECTICIDE_CLASSES: string[] = [
     "PYRROLES",
 ];
 
+export function getInsecticideClassOptions(insecticideClasses: string[]) {
+    return insecticideClasses
+        .filter(insecticideClass => insecticideClass !== "NA")
+        .sort((a, b) => (INSECTICIDE_CLASSES.indexOf(a) - INSECTICIDE_CLASSES.indexOf(b) > 0 ? 1 : -1))
+        .map(insecticideClass => ({
+            value: insecticideClass,
+            label: i18next.t(insecticideClass),
+        }));
+}
+
 function InsecticideClassFilter({ preventionStudies = [], preventionFilters, setInsecticideClass }: Props) {
     const { t } = useTranslation();
     const handleChange = (event: React.ChangeEvent<unknown>) => {
@@ -43,13 +54,9 @@ function InsecticideClassFilter({ preventionStudies = [], preventionFilters, set
 
     const studies = filterStudiesByMapType(preventionFilters, preventionStudies);
 
-    const options = _.uniq(studies.map(study => study.INSECTICIDE_CLASS))
-        .filter(insecticideClass => insecticideClass !== "NA")
-        .sort((a, b) => (INSECTICIDE_CLASSES.indexOf(a) - INSECTICIDE_CLASSES.indexOf(b) > 0 ? 1 : -1))
-        .map(insecticideClass => ({
-            value: insecticideClass,
-            label: t(insecticideClass),
-        }));
+    const insecticideClasses = _.uniq(studies.map(study => study.INSECTICIDE_CLASS));
+
+    const options = getInsecticideClassOptions(insecticideClasses);
 
     return (
         <RadioGroupFilter

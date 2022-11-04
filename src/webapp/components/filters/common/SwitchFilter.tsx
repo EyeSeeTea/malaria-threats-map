@@ -10,9 +10,9 @@ type OwnProps = {
     value: boolean;
     analyticsFilterAction?: string;
     background?: string;
-    onlyYMargin?: boolean;
-    onlyYPadding?: boolean;
     fontWeight?: string;
+    margin?: string;
+    padding?: string;
 };
 
 const mapDispatchToProps = {
@@ -29,9 +29,9 @@ function SwitchFilter({
     analyticsFilterAction,
     logEventAction,
     background,
-    onlyYMargin,
-    onlyYPadding,
     fontWeight,
+    margin,
+    padding,
 }: Props) {
     const onSelectionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange(event.target.checked);
@@ -42,7 +42,7 @@ function SwitchFilter({
     };
 
     return (
-        <FilterRowContainer background={background} onlyYMargin={onlyYMargin} onlyYPadding={onlyYPadding}>
+        <FilterRowContainer background={background} margin={margin} padding={padding}>
             <Typography variant="body2" fontWeight={fontWeight}>
                 {label}
             </Typography>

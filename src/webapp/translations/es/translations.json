@@ -107,6 +107,11 @@
                 "molecularMarkerOptions": {
                     "molecularMarker": "Resultados del estudio de marcadores moleculares",
                     "summaryMolecularMarker": "Resumen de los resultados del estudio de marcadores moleculares a lo largo del tiempo"
+                },
+                "phenotypicInsecticideResistanceOptions": {
+                    "phenotypicInsecticideResistance": "Resistencia fenotípica a insecticidas",
+                    "statusOfResistanceToInsecticides": "Estado de la resistencia a los insecticidas",
+                    "mosquitoOverTime": "Mosquito Over Time"
                 }
             },
             "countryContextDashboards": {
@@ -179,6 +184,26 @@
                     "artemisininChartSubtitle": "moleculares validados o candidatos de resistencia a la artemisinina:",
                     "mutationsChartTitle": "Estudios donde se detectaron mutaciones en:",
                     "multipleChartTitle": "Estudios en los que se detectaron varios números de copia en:"
+                }
+            },
+            "phenotypicInsecticideResistanceDashboards": {
+                "title": "Resistencia fenotípica a insecticidas",
+                "numBioassaysByCategory": "El siguiente número de bioensayos cumple con el filtro aplicado:",
+                "numBioassays": "{{count}} bioensayos cumplen con el filtro aplicado",
+                "numSites": "Numbero de sitios",
+                "insecticideResistanceStatus": "Estado de resistencia a insecticidas",
+                "byInsecticideClass": "Por clase de insecticida",
+                "byInsecticide": "Por insecticida",
+                "confirmed": "Confirmado (0 a <90%)",
+                "possible": "Posible (90 a <98%)",
+                "susceptible": "Susceptible (≥98%)",
+                "statusOfResistanceToInsecticides": {
+                    "title": "ESTADO DE RESISTENCIA A INSECTICIDAS"
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MORTALIDAD DE MOSQUITOS A LO LARGO DEL TIEMPO",
+                    "adjustedMortality": "Mortalidad ajustada",
+                    "year": "Año"
                 }
             },
             "treatmentFilters": {
@@ -649,8 +674,10 @@
             "select_sub_region": "Seleccionar subregión",
             "select_site": "Seleccionar sitio",
             "site": "Sitio",
-            "exclude_lower_patients": "Excluir los estudios con menos de 20 pacientes",
+            "exclude_lower_patients": "Excluir estudios de menos de 20 pacientes",
             "exclude_lower_samples": "Excluir estudios de menos de 20 muestras",
+            "onlyIncludeBioassays": "Solo incluya bioensayos con más de la cantidad de mosquitos que fluye",
+            "zero_all_bioassays": "0 (todos los bioensayos)",
             "only_include_data_by_health": "Incluir solo los datos proporcionados a la OMS por los ministerios de salud"
         },
         "topbar": {
