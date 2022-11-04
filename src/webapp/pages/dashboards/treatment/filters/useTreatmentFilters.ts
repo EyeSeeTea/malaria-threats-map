@@ -9,6 +9,7 @@ export function useTreatmentFilters() {
     const [molecularMarker, setMolecularMarker] = useState<MolecularMarker>();
     const [years, setYears] = useState<[number, number]>([2010, new Date().getFullYear()]);
     const [excludeLowerPatients, setExcludeLowerPatients] = useState<boolean>(false);
+    const [excludeLowerSamples, setExcludeLowerSamples] = useState<boolean>(false);
 
     const onPlasmodiumChange = React.useCallback((value: string) => {
         setPlasmodiumSpecies(value);
@@ -26,6 +27,10 @@ export function useTreatmentFilters() {
         setExcludeLowerPatients(excludeLowerPatients);
     }, []);
 
+    const onExcludeLowerSamplesChange = React.useCallback((excludeLowerSamples: boolean) => {
+        setExcludeLowerSamples(excludeLowerSamples);
+    }, []);
+
     const onMolecularMarkerChange = React.useCallback((molecularMarker: MolecularMarker) => {
         setMolecularMarker(molecularMarker);
     }, []);
@@ -36,10 +41,12 @@ export function useTreatmentFilters() {
         molecularMarker,
         years,
         excludeLowerPatients,
+        excludeLowerSamples,
         onPlasmodiumChange,
         onDrugsChange,
         onYearsChange,
         onExcludeLowerPatientsChange,
+        onExcludeLowerSamplesChange,
         onMolecularMarkerChange,
     };
 }

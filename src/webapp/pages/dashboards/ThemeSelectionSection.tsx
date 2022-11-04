@@ -109,7 +109,7 @@ const ThemeSelectionSection = ({ translations }: Props) => {
                                 disabled={selectedCountries.length === 0 || theme === undefined}
                                 onClick={onGenerate}
                             >
-                                Generate Dashboard
+                                {t("common.dashboard.filtersSection.second.cta")}
                             </StyledGenerateButton>
                             {updatedDates[theme] && (
                                 <Typography variant="caption" fontSize={"12px"} textAlign="right">

@@ -6,15 +6,20 @@ import LeftSidebarMenu from "../../components/LeftSidebarMenu/LeftSidebarMenu";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import { ReactNode } from "hoist-non-react-statics/node_modules/@types/react";
+import { LanguageSelectorDialog } from "../../components/LanguageSelectorDialog";
+import i18next from "i18next";
+import { changeLanguage } from "../../config/i18next";
 
 interface SecondaryHeaderProps {
     onDrawerOpenChange?: (open: boolean) => void;
-    toggleLanguageModal?: () => void;
     action?: ReactNode;
+    showTakeTour?: boolean;
 }
 
-const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, toggleLanguageModal, action }) => {
+const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, action, showTakeTour = true }) => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
+    const [changeLanguageOpen, setChangeLanguageOpen] = React.useState(false);
+    const [language, setLanguage] = React.useState(i18next.language || window.localStorage.i18nextLng);
     const { t } = useTranslation();
 
     const toggleDrawer = React.useCallback(() => {
@@ -26,6 +31,16 @@ const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, t
             onDrawerOpenChange(value);
         }
     }, [drawerOpen, onDrawerOpenChange]);
+
+    const handleLanguageClose = (value: string) => {
+        changeLanguage(value);
+        setLanguage(value);
+        setChangeLanguageOpen(false);
+    };
+
+    const handleLanguageOpen = () => {
+        setChangeLanguageOpen(true);
+    };
 
     return (
         <nav>
@@ -55,7 +70,9 @@ const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, t
                 </AppBar>
             </Box>
 
-            <LeftSidebarMenu isMenuOpen={drawerOpen} handleClickOpen={toggleLanguageModal} />
+            <LeftSidebarMenu isMenuOpen={drawerOpen} handleClickOpen={handleLanguageOpen} showTakeTour={showTakeTour} />
+
+            <LanguageSelectorDialog selectedValue={language} open={changeLanguageOpen} onClose={handleLanguageClose} />
         </nav>
     );
 };

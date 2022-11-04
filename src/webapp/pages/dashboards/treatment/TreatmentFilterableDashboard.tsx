@@ -27,11 +27,13 @@ interface TreatmentFilterableDashboardProps {
     drugs: string[];
     molecularMarker: MolecularMarker;
     years: [number, number];
-    excludeLowerPatients: boolean;
+    excludeLowerPatients?: boolean;
+    excludeLowerSamples?: boolean;
     onPlasmodiumChange: (value: string) => void;
     onDrugsChange: (value: string[]) => void;
     onYearsChange: (value: [number, number]) => void;
-    onExcludeLowerPatientsChange: (value: boolean) => void;
+    onExcludeLowerPatientsChange?: (value: boolean) => void;
+    onExcludeLowerSamplesChange?: (value: boolean) => void;
     onMolecularMarkerChange: (value: MolecularMarker) => void;
 }
 
@@ -50,10 +52,12 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
     molecularMarker,
     years,
     excludeLowerPatients,
+    excludeLowerSamples,
     onPlasmodiumChange,
     onDrugsChange,
     onYearsChange,
     onExcludeLowerPatientsChange,
+    onExcludeLowerSamplesChange,
     onMolecularMarkerChange,
     children,
 }) => {
@@ -117,11 +121,13 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                                 molecularMarker={molecularMarker}
                                 years={years}
                                 excludeLowerPatients={excludeLowerPatients}
+                                excludeLowerSamples={excludeLowerSamples}
                                 onPlasmodiumSpeciesChange={onPlasmodiumChange}
                                 onDrugsChange={onDrugsChange}
                                 onMolecularMarkerChange={onMolecularMarkerChange}
                                 onYearsChange={onYearsChange}
                                 onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
+                                onExcludeLowerSamplesChange={onExcludeLowerSamplesChange}
                                 onCollapse={onChangeFiltersVisible}
                             ></TreatmentFilters>
                             <StudiesCountCard elevation={0}>

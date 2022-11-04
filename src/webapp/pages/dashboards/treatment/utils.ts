@@ -1,8 +1,10 @@
+import _ from "lodash";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import {
     filterByDimensionId,
     filterByDrugs,
     filterByExcludeLowerPatients,
+    filterByExcludeLowerSamples,
     filterByMolecularMarker,
     filterByMolecularMarkerStudy,
     filterByPlasmodiumSpecies,
@@ -16,13 +18,13 @@ export function filterStudies(
     years: [number, number],
     excludeLowerPatients: boolean
 ): TreatmentStudy[] {
-    const filters = [
+    const filters = _.compact([
         filterByDimensionId(256),
         filterByPlasmodiumSpecies(plasmodiumSpecies),
         filterByDrugs(drugs || []),
-        filterByYearRange(years),
+        years && filterByYearRange(years),
         filterByExcludeLowerPatients(excludeLowerPatients),
-    ];
+    ]);
 
     const filteredStudies = filters.reduce((studies, filter) => studies.filter(filter), studies);
 
@@ -33,13 +35,13 @@ export function filterMolecularMarkerStudies(
     studies: TreatmentStudy[],
     molecularMarker: number,
     years: [number, number],
-    excludeLowerPatients: boolean
+    excludeLowerSamples: boolean
 ): TreatmentStudy[] {
     const filters = [
         filterByMolecularMarkerStudy(),
         filterByMolecularMarker(molecularMarker),
         filterByYearRange(years),
-        filterByExcludeLowerPatients(excludeLowerPatients),
+        filterByExcludeLowerSamples(excludeLowerSamples),
     ];
 
     const filteredStudies = filters.reduce((studies, filter) => studies.filter(filter), studies);

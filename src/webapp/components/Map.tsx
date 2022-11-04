@@ -53,9 +53,6 @@ import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
 import MapActions from "./map-actions/MapActions";
 import { dispatchCustomEvent } from "../utils/dom-utils";
-
-import { changeLanguage } from "../config/i18next";
-import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
 import LastUpdated from "./last-updated/LastUpdated";
 import FloatingLegend from "./legend/FloatingLegendContainer";
 import InfoToastLink from "./InfoToastLink";
@@ -207,8 +204,6 @@ type StateTypes = {
         bearing: number;
         pitch: number;
     };
-    open: boolean;
-    selectedValue: string;
 };
 
 class Map extends React.Component<Props, StateTypes> {
@@ -227,8 +222,6 @@ class Map extends React.Component<Props, StateTypes> {
             bearing: 0,
             pitch: 0,
         },
-        open: false,
-        selectedValue: LANGUAGES[0].value,
     };
     images: any[] = [];
 
@@ -337,11 +330,6 @@ class Map extends React.Component<Props, StateTypes> {
             appBar: { backgroundColor: "white", zIndex: 1400 },
         };
 
-        const handleClose = (value: string) => {
-            changeLanguage(value);
-            this.setState({ open: false, selectedValue: value });
-        };
-
         return (
             <React.Fragment>
                 <div
@@ -376,7 +364,6 @@ class Map extends React.Component<Props, StateTypes> {
                                 </Box>
                             }
                             onDrawerOpenChange={open => this.setState({ menuOpen: open })}
-                            toggleLanguageModal={() => this.setState(prevState => ({ open: !prevState.open }))}
                         />
                     </Hidden>
                 )}
@@ -467,11 +454,7 @@ class Map extends React.Component<Props, StateTypes> {
                         </MapFab>
                     </Tooltip>
                 </BottomRightContainer>
-                <LanguageSelectorDialog
-                    selectedValue={this.state.selectedValue}
-                    open={this.state.open}
-                    onClose={handleClose}
-                />
+
                 {this.shouldShowRightSideBar() && (
                     <Drawer
                         //className={classes.drawer}
