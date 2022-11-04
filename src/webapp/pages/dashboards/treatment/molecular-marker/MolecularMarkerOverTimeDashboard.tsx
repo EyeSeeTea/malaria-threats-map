@@ -49,7 +49,7 @@ const MolecularMarkerDashboard: React.FC = () => {
             chartComponentRef={chartComponentRefs}
             id="summary-molecular-marker"
             isMolecularMarkerChart={true}
-            title={t("common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.title")}
+            title={t("common.dashboard.molecularMarkerDashboards.molecularMarkerOverTime.title")}
             type="molecularMarkerStudy"
             drugsMultiple={true}
             drugsClearable={true}
@@ -137,7 +137,7 @@ function chartOptions(
             text:
                 showLegend &&
                 `<span style="width:100px;">${i18next.t(
-                    `common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.${chartPrefix}ChartTitle`
+                    `common.dashboard.molecularMarkerDashboards.molecularMarkerOverTime.${chartPrefix}ChartTitle`
                 )}</span>`,
             align: "center",
             style: {
@@ -153,7 +153,7 @@ function chartOptions(
                 showLegend &&
                 molecularMarker === 1 &&
                 `<span style="width:100px;">${i18next.t(
-                    `common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.${chartPrefix}ChartSubtitle`
+                    `common.dashboard.molecularMarkerDashboards.molecularMarkerOverTime.${chartPrefix}ChartSubtitle`
                 )}</span>`,
             align: "center",
             style: {
@@ -166,7 +166,7 @@ function chartOptions(
         xAxis: {
             categories: years.map(year => year.toString()),
             title: {
-                text: i18next.t("common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.year"),
+                text: i18next.t("common.dashboard.molecularMarkerDashboards.molecularMarkerOverTime.year"),
                 style: {
                     fontWeight: "bold",
                     color: "black",
@@ -179,7 +179,7 @@ function chartOptions(
             min: 0,
             max,
             title: {
-                text: i18next.t("common.dashboard.MolecularMarkerSection.molecularMarkerOverTime.numStudies"),
+                text: i18next.t("common.dashboard.molecularMarkerDashboards.molecularMarkerOverTime.numStudies"),
                 style: {
                     fontWeight: "bold",
                     color: "black",

@@ -89,25 +89,27 @@
                 },
                 "note": "Nota: Actualmente, los tableros solo están disponibles para dos de los cuatro temas: resistencia a los insecticidas de vectores y eficacia y resistencia a los medicamentos antipalúdicos. Los tableros continuarán desarrollándose a medida que haya más datos disponibles."
             },
-            "contentsSection": {
+            "dashboardsFilterSection": {
                 "title": "Contenidos:",
-                "countryOptions": {
+                "countryContextOptions": {
                     "countryContext": "Contexto del país",
                     "epidemiologicalProfile": "Perfil epidemiológico",
-                    "majorPlasmodium": "Principales especies de Plasmodium y régimen de tratamiento"
+                    "majorPlasmodium": "Principales especies de Plasmodium y régimen de tratamiento",
+                    "majorAnophelesSpecies": "Principales especies de Anopheles",
+                    "summaryInsecticideResistance": "Resumen de la resistencia a los insecticidas"
                 },
-                "therapeuticResultsOptions": {
+                "therapeuticEfficacyOptions": {
                     "therapeuticEfficacy": "Resultados del estudio de eficacia terapéutica",
                     "summaryTreatmentFailures": "Resumen de las tasas de fracaso del tratamiento por fármaco",
                     "treatmentFailureRates": "Tasas de fracaso del tratamiento a lo largo del tiempo",
                     "parasiteClearanceRates": "Índices de eliminación de parásitos a lo largo del tiempo"
                 },
-                "molecularResultsOptions": {
+                "molecularMarkerOptions": {
                     "molecularMarker": "Resultados del estudio de marcadores moleculares",
                     "summaryMolecularMarker": "Resumen de los resultados del estudio de marcadores moleculares a lo largo del tiempo"
                 }
             },
-            "countryContextSection": {
+            "countryContextDashboards": {
                 "title": "Contexto del país",
                 "source": "Fuente:",
                 "whoWorldMalariaReport": "Informe mundial sobre el paludismo de la OMS 2021",
@@ -131,9 +133,21 @@
                     "country": "País",
                     "species": "Especies principales de Plasmodium (%)",
                     "firstLineTreatments": "Tratamientos de primera línea para la malaria sin complicaciones"
+                },
+                "majorAnophelesSpecies": {
+                    "title": "PRINCIPALES ESPECIES DE ANOFELES",
+                    "country": "País",
+                    "species": "Principales especies de Anopheles"
+                },
+                "summaryInsecticideResistance": {
+                    "title": "RESUMEN DE RESISTENCIA A INSECTICIDAS",
+                    "country": "País",
+                    "vectorSpecies": "Especies de vectores que han demostrado resistencia confirmada a uno o más insecticidas",
+                    "insecticideClasses": "Clases de insecticidas a las que se ha detectado resistencia",
+                    "resistanceMechanisms": "Mecanismos de resistencia detectados"
                 }
             },
-            "therapeuticEfficacySection": {
+            "therapeuticEfficacyDashboards": {
                 "title": "Estudios de eficacia terapéutica (EET)",
                 "numStudies": "Los filtros aplicados producen {{count}} estudios",
                 "treatmentFailureByDrug": {
@@ -155,8 +169,8 @@
                     "parasitemiaOnDay3": "Porcentaje de pacientes con parasitemia en el día 3 (%)"
                 }
             },
-            "MolecularMarkerSection": {
-                "title": "Estudios de marcadores moleculares",
+            "molecularMarkerDashboards": {
+                "title": "Molecular marker studies",
                 "molecularMarkerOverTime": {
                     "title": "RESULTADOS DEL ESTUDIO DE MARCADORES MOLECULARES A LO LARGO DEL TIEMPO",
                     "numStudies": "Número de estudios",

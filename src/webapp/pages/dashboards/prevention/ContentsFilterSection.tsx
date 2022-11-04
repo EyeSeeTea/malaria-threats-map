@@ -1,0 +1,37 @@
+import React from "react";
+import styled from "styled-components";
+import { Grid, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { CountryContext } from "../types";
+import CountryContextFilter from "../common/dashboards-filters/CountryContextFilter";
+
+interface ContentsFilterSectionProps {
+    countryContext: CountryContext;
+    onCountryContextChange: (value: CountryContext) => void;
+}
+
+export const ContentsFilterSection: React.FC<ContentsFilterSectionProps> = ({
+    countryContext,
+    onCountryContextChange,
+}) => {
+    const { t } = useTranslation();
+
+    return (
+        <Grid container spacing={3} mt={2} justifyContent="center" alignItems={"center"} sx={{ marginBottom: 4 }}>
+            <Grid item md={"auto"} xs={12}>
+                <SectionTitle>{t("common.dashboard.dashboardsFilterSection.title")}</SectionTitle>
+            </Grid>
+            <Grid item md={3} xs={12}>
+                <CountryContextFilter theme="prevention" value={countryContext} onChange={onCountryContextChange} />
+            </Grid>
+        </Grid>
+    );
+};
+
+export default ContentsFilterSection;
+
+const SectionTitle = styled(Typography)`
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 10px;
+`;

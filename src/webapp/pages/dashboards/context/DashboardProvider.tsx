@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { CountryContext, DashboardsThemeOptions, MolecularMarker, TherapeuticEfficacy } from "../types";
+import { DashboardsThemeOptions } from "../types";
 import React from "react";
 import { selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
 import { fetchTreatmentStudiesRequest } from "../../../store/actions/treatment-actions";
@@ -7,16 +7,21 @@ import { LastUpdatedDates, State } from "../../../store/types";
 import { connect } from "react-redux";
 import { selectLastUpdatedDates } from "../../../store/reducers/base-reducer";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
+import { fetchPreventionStudiesRequest } from "../../../store/actions/prevention-actions";
+import { selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
+import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 
 export const DashboardContext = React.createContext<DashboardState>(null);
 
 const mapStateToProps = (state: State) => ({
+    preventionStudies: selectPreventionStudies(state),
     treatmentStudies: selectTreatmentStudies(state),
     lastUpdatedDates: selectLastUpdatedDates(state),
 });
 
 const mapDispatchToProps = {
     fetchTreatmentStudies: fetchTreatmentStudiesRequest,
+    fetchPreventionStudies: fetchPreventionStudiesRequest,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -25,15 +30,15 @@ type Props = DispatchProps & StateProps;
 
 const DashboardProvider: React.FC<Props> = ({
     children,
+    preventionStudies,
     treatmentStudies,
+    fetchPreventionStudies,
     fetchTreatmentStudies,
     lastUpdatedDates,
 }) => {
     const [theme, setTheme] = useState<DashboardsThemeOptions>();
     const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
-    const [countryContext, setCountryContext] = useState<CountryContext>("country-context");
-    const [therapeuticEfficacy, setTherapeuticEfficacy] = useState<TherapeuticEfficacy>("therapeutic-efficacy");
-    const [molecularMarker, setMolecularMarker] = useState<MolecularMarker>("molecular-marker");
+    const [dashboardsPreventionStudies, setDashboardsPreventionStudies] = useState<PreventionStudy[]>(undefined);
     const [dashboardsTreatmentStudies, setDashboardsTreatmentStudies] = useState<TreatmentStudy[]>(undefined);
     const [updatedDates, setUpdatedDates] = useState<LastUpdatedDates>({
         prevention: null,
@@ -43,8 +48,12 @@ const DashboardProvider: React.FC<Props> = ({
     });
 
     useEffect(() => {
-        fetchTreatmentStudies();
-    }, [fetchTreatmentStudies]);
+        if (theme === "prevention") {
+            fetchPreventionStudies();
+        } else {
+            fetchTreatmentStudies();
+        }
+    }, [theme, fetchPreventionStudies, fetchTreatmentStudies]);
 
     useEffect(() => {
         setUpdatedDates(lastUpdatedDates);
@@ -55,18 +64,15 @@ const DashboardProvider: React.FC<Props> = ({
             value={{
                 theme,
                 selectedCountries,
-                countryContext,
-                therapeuticEfficacy,
-                molecularMarker,
+                preventionStudies,
                 treatmentStudies,
+                dashboardsPreventionStudies,
                 dashboardsTreatmentStudies,
                 updatedDates,
                 setTheme,
                 setSelectedCountries,
-                setCountryContext,
-                setTherapeuticEfficacy,
-                setMolecularMarker,
                 setDashboardsTreatmentStudies,
+                setDashboardsPreventionStudies,
             }}
         >
             {children}
@@ -79,16 +85,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(DashboardProvider);
 interface DashboardState {
     theme: DashboardsThemeOptions;
     selectedCountries: string[];
-    countryContext: CountryContext;
-    therapeuticEfficacy: string;
-    molecularMarker: MolecularMarker;
     treatmentStudies: TreatmentStudy[];
+    preventionStudies: PreventionStudy[];
+    dashboardsPreventionStudies: PreventionStudy[];
     dashboardsTreatmentStudies: TreatmentStudy[];
     updatedDates: LastUpdatedDates;
     setTheme: Dispatch<SetStateAction<DashboardsThemeOptions>>;
     setSelectedCountries: Dispatch<SetStateAction<string[]>>;
-    setCountryContext: Dispatch<SetStateAction<CountryContext>>;
-    setTherapeuticEfficacy: Dispatch<SetStateAction<TherapeuticEfficacy>>;
-    setMolecularMarker: Dispatch<SetStateAction<MolecularMarker>>;
+    setDashboardsPreventionStudies: Dispatch<SetStateAction<PreventionStudy[]>>;
     setDashboardsTreatmentStudies: Dispatch<SetStateAction<TreatmentStudy[]>>;
 }

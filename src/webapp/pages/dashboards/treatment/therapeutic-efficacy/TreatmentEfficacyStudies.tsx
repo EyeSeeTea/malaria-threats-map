@@ -11,7 +11,7 @@ const TreatmentEfficacyStudies: React.FC = () => {
     return (
         <Container>
             <TitleDivider />
-            <Title id="therapeutic-efficacy">{t("common.dashboard.therapeuticEfficacySection.title")}</Title>
+            <Title id="therapeutic-efficacy">{t("common.dashboard.therapeuticEfficacyDashboards.title")}</Title>
             <TreatmentFailureByDrugDashboard />
             <TreatmentOverTimeDashboard id="treatment-failure-rates" type="treatmentFailure" />
             <TreatmentOverTimeDashboard id="parasite-clearance-rates" type="positiveDay3" />

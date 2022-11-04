@@ -151,7 +151,6 @@ export const filterByTypes = (types: string[]) => (study: any) => {
 };
 
 export const filterByOnlyDataByHealthMinistries = (value: boolean) => (study: PreventionStudy) => {
-    debugger;
     return value ? study.INSTITUTION_TYPE === "MoH" : true;
 };
 

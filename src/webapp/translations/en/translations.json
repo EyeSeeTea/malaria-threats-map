@@ -89,25 +89,27 @@
                 },
                 "note": "Note: Dashboards are currently only available for two of the four themes: vector insecticide resistance and antimalarial drug efficacy and resistance. Dashboards will continue to develop as more data becomes available."
             },
-            "contentsSection": {
+            "dashboardsFilterSection": {
                 "title": "Contents:",
-                "countryOptions": {
-                    "countryContext": "Country context",
+                "countryContextOptions": {
+                    "countryContext": "Country Context",
                     "epidemiologicalProfile": "Epidemiological profile",
-                    "majorPlasmodium": "Major Plasmodium species and treatment regimen"
+                    "majorPlasmodium": "Major Plasmodium species and treatment regimen",
+                    "majorAnophelesSpecies": "Major Anopheles species",
+                    "summaryInsecticideResistance": "Summary of insecticide resistance"
                 },
-                "therapeuticResultsOptions": {
+                "therapeuticEfficacyOptions": {
                     "therapeuticEfficacy": "Therapeutic efficacy study results",
                     "summaryTreatmentFailures": "Summary of treatment failure rates by drug",
                     "treatmentFailureRates": "Treatment failure rates over time",
                     "parasiteClearanceRates": "Parasite clearance rates over time"
                 },
-                "molecularResultsOptions": {
+                "molecularMarkerOptions": {
                     "molecularMarker": "Molecular marker study results",
                     "summaryMolecularMarker": "Summary of molecular marker study results over time"
                 }
             },
-            "countryContextSection": {
+            "countryContextDashboards": {
                 "title": "Country Context",
                 "source": "Source:",
                 "whoWorldMalariaReport": "WHO. World malaria report 2021",
@@ -131,9 +133,21 @@
                     "country": "Country",
                     "species": "Major Plasmodium species (%)",
                     "firstLineTreatments": "1st line treatments for uncomplicated malaria"
+                },
+                "majorAnophelesSpecies": {
+                    "title": "MAJOR ANOPHELES SPECIES",
+                    "country": "Country",
+                    "species": "Major Anopheles species"
+                },
+                "summaryInsecticideResistance": {
+                    "title": "SUMMARY OF INSECTICIDE RESISTANCE",
+                    "country": "Country",
+                    "vectorSpecies": "Vector species that have demonstrated confirmed resistance to one or more insecticides",
+                    "insecticideClasses": "Insecticide classes to which resistance has been detected",
+                    "resistanceMechanisms": "Resistance mechanisms detected"
                 }
             },
-            "therapeuticEfficacySection": {
+            "therapeuticEfficacyDashboards": {
                 "title": "Therapeutic efficacy studies (TES)",
                 "numStudies": "The applied filters yield {{count}} studies",
                 "treatmentFailureByDrug": {
@@ -155,7 +169,7 @@
                     "parasitemiaOnDay3": "Percentage of patients with parasitemia on day 3 (%)"
                 }
             },
-            "MolecularMarkerSection": {
+            "molecularMarkerDashboards": {
                 "title": "Molecular marker studies",
                 "molecularMarkerOverTime": {
                     "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",

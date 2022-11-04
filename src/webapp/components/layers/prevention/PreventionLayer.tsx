@@ -165,8 +165,6 @@ class PreventionLayer extends Component<Props> {
         const filters = this.buildFilters();
         const result = filters.reduce((studies, filter) => studies.filter(filter), studies);
 
-        debugger;
-
         return result;
     };
 

@@ -1,22 +1,19 @@
 import { useContext, useCallback } from "react";
-import { CountryContext, DashboardsThemeOptions, MolecularMarker, TherapeuticEfficacy } from "../types";
+import { DashboardsThemeOptions } from "../types";
 import { DashboardContext } from "./DashboardProvider";
 
 export const useDashboards = () => {
     const {
         theme,
         selectedCountries,
-        countryContext,
-        therapeuticEfficacy,
-        molecularMarker,
+        preventionStudies,
         treatmentStudies,
+        dashboardsPreventionStudies,
         dashboardsTreatmentStudies,
         updatedDates,
         setTheme,
         setSelectedCountries,
-        setCountryContext,
-        setTherapeuticEfficacy,
-        setMolecularMarker,
+        setDashboardsPreventionStudies,
         setDashboardsTreatmentStudies,
     } = useContext(DashboardContext);
 
@@ -44,48 +41,37 @@ export const useDashboards = () => {
         [setSelectedCountries, setDashboardsTreatmentStudies]
     );
 
-    const onCountryContextChange = useCallback(
-        (countryContext: CountryContext) => {
-            setCountryContext(countryContext);
-        },
-        [setCountryContext]
-    );
-
-    const onTherapeuticEfficacyChange = useCallback(
-        (therapeuticEfficacy: TherapeuticEfficacy) => {
-            setTherapeuticEfficacy(therapeuticEfficacy);
-        },
-        [setTherapeuticEfficacy]
-    );
-
-    const onMolecularMarkerChange = useCallback(
-        (molecularMarker: MolecularMarker) => {
-            setMolecularMarker(molecularMarker);
-        },
-        [setMolecularMarker]
-    );
-
     const onGenerate = useCallback(() => {
-        const dashboardStudies = treatmentStudies.filter(
-            study => selectedCountries.includes(study.ISO2) || selectedCountries.length === 0
-        );
+        if (theme === "prevention") {
+            const dashboardStudies = preventionStudies.filter(
+                study => selectedCountries.includes(study.ISO2) || selectedCountries.length === 0
+            );
 
-        setDashboardsTreatmentStudies(dashboardStudies);
-    }, [selectedCountries, setDashboardsTreatmentStudies, treatmentStudies]);
+            setDashboardsPreventionStudies(dashboardStudies);
+        } else {
+            const dashboardStudies = treatmentStudies.filter(
+                study => selectedCountries.includes(study.ISO2) || selectedCountries.length === 0
+            );
+
+            setDashboardsTreatmentStudies(dashboardStudies);
+        }
+    }, [
+        theme,
+        selectedCountries,
+        preventionStudies,
+        treatmentStudies,
+        setDashboardsPreventionStudies,
+        setDashboardsTreatmentStudies,
+    ]);
 
     return {
         theme,
         selectedCountries,
-        countryContext,
-        therapeuticEfficacy,
-        molecularMarker,
         dashboardsTreatmentStudies,
+        dashboardsPreventionStudies,
         updatedDates,
         onThemeChange,
         onSelectedCountriesChange,
-        onCountryContextChange,
-        onTherapeuticEfficacyChange,
-        onMolecularMarkerChange,
         onGenerate,
     };
 };
