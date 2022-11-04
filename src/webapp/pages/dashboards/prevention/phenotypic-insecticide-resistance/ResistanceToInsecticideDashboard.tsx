@@ -47,6 +47,7 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
 
     return (
         <PreventionFilterableDashboard
+            id="status-resistance-insecticide"
             insecticideTypeOptions={insecticideTypeOptions}
             chart="status-of-resistance-of-insecticide"
             chartTypes={chartTypes}

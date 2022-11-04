@@ -36,7 +36,7 @@ const BASEMAP_NONIC = "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/re
 
 const FEATURES_SERVER = "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services";
 
-const XMART_URL = "https://frontdoor-r5quteqglawbs.azurefd.net/VECTORS_IR";
+const XMART_URL = "https://frontdoor-r5quteqglawbs.azurefd.net/MAL_THREATS";
 
 const FEEDBACK_EMAIL_FROM = process.env.REACT_APP_FEEDBACK_EMAIL_FROM;
 

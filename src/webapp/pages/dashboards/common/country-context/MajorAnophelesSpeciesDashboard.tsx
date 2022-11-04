@@ -13,7 +13,9 @@ const MajorAnophelesSpeciesDashboard: React.FC = () => {
     return (
         <React.Fragment>
             <DasboardCard>
-                <Title>{t("common.dashboard.countryContextDashboards.majorAnophelesSpecies.title")}</Title>
+                <Title id="major-anopheles-species">
+                    {t("common.dashboard.countryContextDashboards.majorAnophelesSpecies.title")}
+                </Title>
                 <Table>
                     <thead>
                         <tr>

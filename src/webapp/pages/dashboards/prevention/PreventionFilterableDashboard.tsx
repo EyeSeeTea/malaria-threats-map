@@ -14,6 +14,7 @@ import CategoriesCount from "../common/CategoriesCount";
 import { useTranslation } from "react-i18next";
 
 interface PreventionFilterableDashboardProps {
+    id?: string;
     chart: PreventionFilterableChart;
     chartTypes?: Option<ResistanceToInsecticideChartType>[];
     chartType?: ResistanceToInsecticideChartType;
@@ -35,6 +36,7 @@ interface PreventionFilterableDashboardProps {
 }
 
 const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = ({
+    id,
     chart,
     chartTypes,
     chartType,
@@ -85,7 +87,13 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
 
     return (
         <React.Fragment>
-            <DashboardTitle title={title} onDownloadClick={handleDownload} showActions={true} />
+            <DashboardTitle
+                id={id}
+                title={title}
+                onInfoClick={() => {}}
+                onDownloadClick={handleDownload}
+                showActions={true}
+            />
 
             {chartTypes && (
                 <ToggleButtonGroup

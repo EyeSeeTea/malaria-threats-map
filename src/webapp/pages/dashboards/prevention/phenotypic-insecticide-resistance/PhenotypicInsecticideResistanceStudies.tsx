@@ -2,31 +2,18 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
-import { PhenotypicInsecticideResistance } from "../types";
 import MosquitoMortalityOverTimeDashboard from "./MosquitoMortalityOverTimeDashboard";
 import ResistanceToInsecticideDashboard from "./ResistanceToInsecticideDashboard";
 
-interface PhenotypicInsecticideResistanceStudiesProps {
-    phenotypicInsecticideResistance: PhenotypicInsecticideResistance;
-}
-
-const PhenotypicInsecticideResistanceStudies: React.FC<PhenotypicInsecticideResistanceStudiesProps> = ({
-    phenotypicInsecticideResistance,
-}) => {
+const PhenotypicInsecticideResistanceStudies: React.FC = () => {
     const { t } = useTranslation();
 
     return (
         <Container>
             <TitleDivider />
             <Title>{t("common.dashboard.phenotypicInsecticideResistanceDashboards.title")}</Title>
-            {(phenotypicInsecticideResistance === "all" ||
-                phenotypicInsecticideResistance === "status-resistance-insecticide") && (
-                <ResistanceToInsecticideDashboard />
-            )}
-            {(phenotypicInsecticideResistance === "all" ||
-                phenotypicInsecticideResistance === "mosquito-mortality-over-time") && (
-                <MosquitoMortalityOverTimeDashboard />
-            )}
+            <ResistanceToInsecticideDashboard />
+            <MosquitoMortalityOverTimeDashboard />
         </Container>
     );
 };

@@ -5,28 +5,30 @@ import WhoEnglish from "../assets/img/who-logo-blue.png";
 import styled from "styled-components";
 
 const StyledImage = styled.img`
-    width: 100%;
-    max-height: 50px;
+    width: 100px;
+    height: auto;
 `;
 
-const StyledEnglishImage = styled(StyledImage)`
-    max-width: 150px;
+const StyledEnglishImage = styled(StyledImage)<{ width?: string }>`
+    max-width: 200px;
+    width: ${props => (props.width ? props.width : "100%")};
 `;
 
-const StyledSpanFrenImage = styled(StyledImage)`
+const StyledSpanFrenImage = styled(StyledImage)<{ width?: string }>`
     max-width: 180px;
+    width: ${props => (props.width ? props.width : "100%")};
 `;
 
-const WhoLogoBlue = () => {
+const WhoLogoBlue = ({ width }: { width?: string }) => {
     const lng = localStorage.getItem("language");
 
     switch (lng) {
         case "es":
-            return <StyledSpanFrenImage src={WhoSpanish} alt="WHO spanish logo" />;
+            return <StyledSpanFrenImage src={WhoSpanish} alt="WHO spanish logo" width={width} />;
         case "fr":
-            return <StyledSpanFrenImage src={WhoFrench} alt="WHO french logo" />;
+            return <StyledSpanFrenImage src={WhoFrench} alt="WHO french logo" width={width} />;
         default:
-            return <StyledEnglishImage src={WhoEnglish} alt="WHO english logo" />;
+            return <StyledEnglishImage src={WhoEnglish} alt="WHO english logo" width={width} />;
     }
 };
 

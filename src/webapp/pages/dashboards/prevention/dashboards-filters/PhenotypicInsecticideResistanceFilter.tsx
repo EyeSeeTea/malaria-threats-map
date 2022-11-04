@@ -9,7 +9,7 @@ const options: Option<PhenotypicInsecticideResistance>[] = [
         label: i18next.t(
             "common.dashboard.dashboardsFilterSection.phenotypicInsecticideResistanceOptions.phenotypicInsecticideResistance"
         ),
-        value: "all",
+        value: "phenotypic-insecticide-resistance",
     },
     {
         label: i18next.t(

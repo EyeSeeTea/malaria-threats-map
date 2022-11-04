@@ -1,13 +1,19 @@
 import React from "react";
 import { format } from "date-fns";
 import i18next from "i18next";
-import { mapInvasiveStudiesToCSV, mapPreventionStudiesToCSV, mapTreatmentStudiesToCSV } from "./mappers/cvsMapper";
+import {
+    mapDiagnosisStudiesToCSV,
+    mapInvasiveStudiesToCSV,
+    mapPreventionStudiesToCSV,
+    mapTreatmentStudiesToCSV,
+} from "./mappers/cvsMapper";
 import { exportToCSV, Tab } from "./download";
 import { DatabaseSelection, Download, TermsInfo, UserInfo } from "./types";
 import { ActionCreatorTypeMetadata, PayloadActionCreator } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
 import { Source } from "../../store/actions/base-actions";
 import { emailRegexp } from "../../../domain/common/regex";
+import { ActionGroup } from "../../store/types";
 
 export function useDownload(
     logEvent: any,
@@ -21,7 +27,8 @@ export function useDownload(
     }) &
         ActionCreatorTypeMetadata<ActionTypeEnum.MalariaSetTheme>,
     setPreventionDataset: PayloadActionCreator<ActionTypeEnum.SetPreventionDataset, string>,
-    addDownload: PayloadActionCreator<ActionTypeEnum.AddDownloadRequest, Download>
+    addDownload: PayloadActionCreator<ActionTypeEnum.AddDownloadRequest, Download>,
+    setActionGroupSelected: PayloadActionCreator<ActionTypeEnum.MalariaActionGroupSelected, ActionGroup>
 ) {
     const [activeStep, setActiveStep] = React.useState(0);
     const [downloading, setDownloading] = React.useState(false);
@@ -56,6 +63,8 @@ export function useDownload(
 
     const onChangeSelectedDatabases = (databases: DatabaseSelection[]) => {
         setSelectedDatabases(databases);
+        setTheme("prevention", "download");
+        setActionGroupSelected("THEME");
     };
 
     const handleNext = () => {
@@ -96,6 +105,11 @@ export function useDownload(
                     case "prevention": {
                         const preventionTabs = mapPreventionStudiesToCSV(database);
                         changeLoaderAndExportToCSV(preventionTabs, `MTM_${database.dataset}_${dateString}`);
+                        break;
+                    }
+                    case "diagnosis": {
+                        const diagnosisTabs = mapDiagnosisStudiesToCSV(database);
+                        changeLoaderAndExportToCSV(diagnosisTabs, `MTM_${database.dataset}_${dateString}`);
                         break;
                     }
                     case "treatment": {

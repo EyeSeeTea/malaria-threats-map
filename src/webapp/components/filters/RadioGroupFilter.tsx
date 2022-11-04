@@ -11,6 +11,7 @@ import { Typography } from "@mui/material";
 const StyledFormControlLabel = styled(FormControlLabel)`
     & span {
         padding: 2px;
+        font-size: 14px;
     }
     & svg {
         left: 2px;
@@ -42,7 +43,13 @@ function RadioGroupFilter({
 }: RadioGroupProps) {
     return (
         <FilterColumContainer margin={margin} padding={padding} background={background}>
-            <Typography component="legend" fontSize={labelFontSize} fontWeight={labelFontWeight}>
+            <Typography
+                color="dimgray"
+                component="legend"
+                fontSize={labelFontSize}
+                fontWeight={labelFontWeight}
+                variant="body2"
+            >
                 {label}
             </Typography>
             <Divider />

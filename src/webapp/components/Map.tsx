@@ -35,7 +35,7 @@ import {
     updateZoomAction,
     setActionGroupSelected,
 } from "../store/actions/base-actions";
-import { Fade, Box, Fab, Drawer } from "@mui/material";
+import { Fade, Box, Fab, Drawer, Tooltip } from "@mui/material";
 import { Add as ZoomInIcon, Remove as ZoomOutIcon, OpenInFull as MapOnlyIcon } from "@mui/icons-material";
 import LeyendPopover from "./legend/LegendPopover";
 import StoryModeSelector from "./StoryModeSelector";
@@ -44,7 +44,6 @@ import MekongLayer from "./layers/MekongLayer";
 import Screenshot from "./Screenshot";
 import Report from "./Report";
 import Feedback from "./Feedback";
-import InitialDisclaimer from "./InitialDisclaimer";
 import TheaterMode from "./TheaterMode";
 import TourIcon from "./TourIcon";
 import ShareIcon from "./ShareIcon";
@@ -59,7 +58,7 @@ import { changeLanguage } from "../config/i18next";
 import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
 import LastUpdated from "./last-updated/LastUpdated";
 import FloatingLegend from "./legend/FloatingLegendContainer";
-import GreaterMekongLink from "./greater-mekong-link/GreaterMekongLink";
+import InfoToastLink from "./InfoToastLink";
 import SiteSelectionContent from "./site-selection-content/SiteSelectionContent";
 import SecondaryHeader from "../pages/secondary-layout/SecondaryHeader";
 
@@ -160,6 +159,8 @@ const PushoverContainer = styled.div`
 // A Fab ("floating action button") looks like a rounded button.
 const MapFab = styled(Fab)`
     margin: 5px;
+    width: 36px;
+    height: 11px;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -193,8 +194,24 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = StateProps & DispatchProps & WithTranslation;
+type StateTypes = {
+    ready: boolean;
+    theme: string;
+    style: mapboxgl.Style;
+    menuOpen: boolean;
+    viewMapOnly: boolean; // show only the legend and last-data-update boxes
+    viewport: {
+        latitude: number;
+        longitude: number;
+        zoom: number;
+        bearing: number;
+        pitch: number;
+    };
+    open: boolean;
+    selectedValue: string;
+};
 
-class Map extends React.Component<Props> {
+class Map extends React.Component<Props, StateTypes> {
     map: mapboxgl.Map;
     mapContainer: any;
     state = {
@@ -305,7 +322,7 @@ class Map extends React.Component<Props> {
     }
 
     render() {
-        const { theme } = this.props;
+        const { theme, t } = this.props;
         const showOptions = true;
         const ready = this.map && this.state.ready;
         const viewMapOnly = this.state.viewMapOnly;
@@ -339,9 +356,14 @@ class Map extends React.Component<Props> {
                 {ready && <DiagnosisLayer map={this.map} />}
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
+                {ready && (
+                    <TopMiddleContainer>
+                        <InfoToastLink text={this.props.t("common.takeATour")} type="tour" />
+                    </TopMiddleContainer>
+                )}
                 {theme === "treatment" && (
                     <TopMiddleContainer>
-                        <GreaterMekongLink />
+                        <InfoToastLink text={this.props.t("common.mekong_link")} type="greaterMekong" />
                     </TopMiddleContainer>
                 )}
                 {/* TODO:Refactor SecondaryHeader from here and use Secondary Layout in MapPage */}
@@ -354,6 +376,7 @@ class Map extends React.Component<Props> {
                                 </Box>
                             }
                             onDrawerOpenChange={open => this.setState({ menuOpen: open })}
+                            toggleLanguageModal={() => this.setState(prevState => ({ open: !prevState.open }))}
                         />
                     </Hidden>
                 )}
@@ -383,7 +406,6 @@ class Map extends React.Component<Props> {
                     <Fade in={false}>
                         <TopRightContainer>
                             <StoryModeSelector />
-                            <InitialDisclaimer />
 
                             <Feedback />
                             <TourIcon />
@@ -396,7 +418,6 @@ class Map extends React.Component<Props> {
                     <Fade in={showOptions}>
                         <TopRightVerticalContainer>
                             <StoryModeSelector />
-                            <InitialDisclaimer />
 
                             <Feedback />
                         </TopRightVerticalContainer>
@@ -422,23 +443,29 @@ class Map extends React.Component<Props> {
                 </PushoverContainer>
                 <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
                 <BottomRightContainer>
-                    <MapFab size="small" onClick={() => this.zoom(1.25)}>
-                        <ZoomInIcon />
-                    </MapFab>
-                    <MapFab size="small" onClick={() => this.zoom(0.8)}>
-                        <ZoomOutIcon />
-                    </MapFab>
-                    <MapFab
-                        size="small"
-                        onClick={() => this.switchViewMapOnly()}
-                        sx={
-                            viewMapOnly
-                                ? { bgcolor: "#2fb3af", "&:hover": { bgcolor: "#1f938f" } }
-                                : { bgcolor: "white" }
-                        }
-                    >
-                        <MapOnlyIcon />
-                    </MapFab>
+                    <Tooltip title={t("common.zoomIn")} placement="left">
+                        <MapFab size="small" onClick={() => this.zoom(1.25)}>
+                            <ZoomInIcon sx={{ fontSize: "14px" }} />
+                        </MapFab>
+                    </Tooltip>
+                    <Tooltip title={t("common.zoomOut")} placement="left">
+                        <MapFab size="small" onClick={() => this.zoom(0.8)}>
+                            <ZoomOutIcon sx={{ fontSize: "14px" }} />
+                        </MapFab>
+                    </Tooltip>
+                    <Tooltip title={t("common.fullscreen")} placement="left">
+                        <MapFab
+                            size="small"
+                            onClick={() => this.switchViewMapOnly()}
+                            sx={
+                                viewMapOnly
+                                    ? { bgcolor: "#2fb3af", "&:hover": { bgcolor: "#1f938f" } }
+                                    : { bgcolor: "white" }
+                            }
+                        >
+                            <MapOnlyIcon sx={{ fontSize: "14px" }} />
+                        </MapFab>
+                    </Tooltip>
                 </BottomRightContainer>
                 <LanguageSelectorDialog
                     selectedValue={this.state.selectedValue}

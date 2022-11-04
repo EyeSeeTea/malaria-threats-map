@@ -12,7 +12,7 @@ export default function Step2(options: StepProps) {
                     <strong>{t("tour.steps.2.title")}</strong>
                 </Typography>
             </>
-            <Footer {...options} current={2} total={10} />
+            <Footer {...options} current={2} total={5} />
         </>
     );
 }

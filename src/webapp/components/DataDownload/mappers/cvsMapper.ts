@@ -1,11 +1,16 @@
 import i18next from "i18next";
 
-import mappings from "../mappings";
 import * as R from "ramda";
 import { MOLECULAR_MARKERS } from "../../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../filters/PlasmodiumSpeciesFilter";
 import { Option } from "../../BasicSelect";
-import { InvasiveDatabaseSelection, PreventionDatabaseSelection, TreatmentDatabaseSelection } from "../types";
+import {
+    DiagnosisDatabaseSelection,
+    InvasiveDatabaseSelection,
+    PreventionDatabaseSelection,
+    TreatmentDatabaseSelection,
+} from "../types";
+import mappings from "../mappings";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
 
@@ -208,6 +213,57 @@ export const mapPreventionStudiesToCSV = (database: PreventionDatabaseSelection)
             ];
         }
     }
+};
+
+export const mapDiagnosisStudiesToCSV = (database: DiagnosisDatabaseSelection) => {
+    const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+
+    const fields = [
+        "ID",
+        "COUNTRY_NAME",
+        "ADMIN1",
+        "ADMIN2",
+        "ISO2",
+        "SITE_NAME",
+        "LATITUDE",
+        "LONGITUDE",
+        "YEAR_START",
+        "SURVEY_TYPE",
+        "PATIENT_TYPE",
+        "HRP2_TESTED",
+        "HRP2_PROPORTION_DELETION",
+        "HRP3_TESTED",
+        "HRP3_PROPORTION_DELETION",
+        "HRP2_HRP3_TESTED",
+        "HRP2_HRP3_PROPORTION_DELETION",
+        "CITATION",
+        "CITATION_URL",
+        "DELETETION_STATUS",
+        "SAMPLE_ORIGIN",
+        "PF_POS_SAMPLES",
+        "TYPE_SAMPL_ANALYZED",
+    ];
+    return [
+        {
+            name: i18next.t("disclaimerTab.name"),
+            studies: [
+                {
+                    Disclaimer: i18next.t("disclaimerTab.disclaimer"),
+                },
+            ],
+        },
+        {
+            name: "Data",
+            studies: results,
+        },
+        {
+            name: "Glossary",
+            studies: fields.map(field => ({
+                "Variable name": field,
+                Description: i18next.t(`download.diagnosis.${field}`),
+            })),
+        },
+    ];
 };
 
 export const mapTreatmentStudiesToCSV = (database: TreatmentDatabaseSelection) => {

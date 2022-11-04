@@ -12,10 +12,10 @@ import { getLegendLabels, getLegendMapTypeHelpKey, getLegendTitle } from "./util
 import LegendContent, { LegendLabel } from "./LegendContent";
 import { selectTranslations } from "../../store/reducers/translations-reducer";
 import styled from "styled-components";
-import { Button, Collapse, Divider } from "@mui/material";
+import { Button, Collapse, Divider, Stack, Typography } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Trans, useTranslation } from "react-i18next";
-import QuestionIcon from "../icons/QuestionIcon";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 const StyledButton = styled(Button)`
     color: black;
@@ -32,7 +32,7 @@ const Title = styled.span`
     font-weight: bold;
     line-height: 18px;
 `;
-const Subtitle = styled.span`
+const Subtitle = styled(Typography)`
     text-align: start;
     flex-grow: 1;
     color: grey;
@@ -53,7 +53,7 @@ const Question = styled.div`
     flex-direction: row;
 `;
 
-const HelpContainer = styled.div`
+const HelpContainer = styled(Stack)`
     font-size: 12px;
 `;
 
@@ -138,36 +138,39 @@ const Legend: React.FC<Props> = ({
             <Body>
                 <LegendContent labels={labels} />
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <HelpContainer>
-                        <p>
-                            <Trans i18nKey={`${mapTypeHelpKey}.p1`} t={t}>
-                                This map contains data from <strong>intensity concentration bioassays</strong>. Each dot
-                                on the map represents a study site containing one or more studies. In sites where
-                                studies show varying levels of resistance intensity, the colour of the dot is determined
-                                by the most recent results.
-                            </Trans>
-                        </p>
-                        <p>
-                            <Trans i18nKey={`${mapTypeHelpKey}.p2`} t={t}>
-                                For information on how each level is defined, please consult the&nbsp;
-                                <a href="/">WHO manual for resistance monitoring</a>.
-                            </Trans>
-                        </p>
-                    </HelpContainer>
-                    <Footer>
-                        <Subtitle>{t(`${mapTypeHelpKey}.footer`)}</Subtitle>
-                    </Footer>
-                    {(theme === "invasive" || theme === "diagnosis") && (
-                        <Question>
-                            <QuestionIcon />
-                            <span style={{ marginLeft: "6px" }}>
-                                <Trans i18nKey={`${mapTypeHelpKey}.question`} t={t}>
-                                    Please report the detection of invasive Anopheles vector species using this{" "}
-                                    <a href="/">reporting form</a>.
+                    <Stack gap={1} marginTop="10px">
+                        <HelpContainer gap={1}>
+                            <Typography variant="caption" sx={{ overflowWrap: "break-word" }}>
+                                <Trans i18nKey={`${mapTypeHelpKey}.p1`} t={t}>
+                                    This map contains data from <strong>intensity concentration bioassays</strong>. Each
+                                    dot on the map represents a study site containing one or more studies. In sites
+                                    where studies show varying levels of resistance intensity, the colour of the dot is
+                                    determined by the most recent results.{" "}
+                                    <a href="/">WHO manual for resistance monitoring</a>.
                                 </Trans>
-                            </span>
-                        </Question>
-                    )}
+                            </Typography>
+                            <Typography variant="caption">
+                                <Trans i18nKey={`${mapTypeHelpKey}.p2`} t={t}>
+                                    For information on how each level is defined, please consult the&nbsp;
+                                    <a href="/">WHO manual for resistance monitoring</a>.
+                                </Trans>
+                            </Typography>
+                        </HelpContainer>
+                        <Footer>
+                            <Subtitle fontStyle={"italic"}>{t(`${mapTypeHelpKey}.footer`)}</Subtitle>
+                        </Footer>
+                        {(theme === "invasive" || theme === "diagnosis") && (
+                            <Question>
+                                <ErrorOutlineIcon sx={{ color: "#2fb3af" }} />
+                                <span style={{ marginLeft: "6px" }}>
+                                    <Trans i18nKey={`${mapTypeHelpKey}.question`} t={t}>
+                                        Please report the detection of invasive Anopheles vector species using this{" "}
+                                        <a href="/">reporting form</a>.
+                                    </Trans>
+                                </span>
+                            </Question>
+                        )}
+                    </Stack>
                 </Collapse>
             </Body>
         </React.Fragment>

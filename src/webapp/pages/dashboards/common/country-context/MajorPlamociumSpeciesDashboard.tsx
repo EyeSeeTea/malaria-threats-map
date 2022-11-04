@@ -12,7 +12,9 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
     return (
         <React.Fragment>
             <DasboardCard>
-                <Title>{t("common.dashboard.countryContextDashboards.majorPlamociumSpecies.title")}</Title>
+                <Title id="major-plasmodium">
+                    {t("common.dashboard.countryContextDashboards.majorPlamociumSpecies.title")}
+                </Title>
                 <Table>
                     <thead>
                         <tr>

@@ -9,10 +9,11 @@ import { ReactNode } from "hoist-non-react-statics/node_modules/@types/react";
 
 interface SecondaryHeaderProps {
     onDrawerOpenChange?: (open: boolean) => void;
+    toggleLanguageModal?: () => void;
     action?: ReactNode;
 }
 
-const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, action }) => {
+const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, toggleLanguageModal, action }) => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const { t } = useTranslation();
 
@@ -54,7 +55,7 @@ const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, a
                 </AppBar>
             </Box>
 
-            <LeftSidebarMenu isMenuOpen={drawerOpen} handleClickOpen={toggleDrawer} />
+            <LeftSidebarMenu isMenuOpen={drawerOpen} handleClickOpen={toggleLanguageModal} />
         </nav>
     );
 };
@@ -79,19 +80,18 @@ const StyledLink = styled(NavLink)`
     letter-spacing: 0.235px;
     &.active {
         font-weight: bold;
-      }
-      &:hover {
-          border: none;
-          color: #2FB3AF;
-          font-weight: bold;
-          letter-spacing: 0;
-          padding-bottom: 10px;
-          border-bottom: 5px solid #2FB3AF;
-          border-radius: 0;
-          cursor;
-          transition: none;
-      }
-
+    }
+    &:hover {
+        border: none;
+        color: #2fb3af;
+        font-weight: bold;
+        letter-spacing: 0;
+        padding-bottom: 10px;
+        border-bottom: 5px solid #2fb3af;
+        border-radius: 0;
+        cursor: pointer;
+        transition: none;
+    }
 `;
 
 const MenuTypography = styled(Typography)`

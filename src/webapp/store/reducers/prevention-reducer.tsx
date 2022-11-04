@@ -13,13 +13,14 @@ const initialState: PreventionState = Object.freeze({
     filters: {
         mapType: PreventionMapType.RESISTANCE_STATUS,
         dataset: "DISCRIMINATING_CONCENTRATION_BIOASSAY",
-        insecticideClass: "PYRETHROIDS",
+        insecticideClass: null,
         insecticideTypes: [],
         synergistTypes: [],
         assayTypes: [],
         proxyType: null,
         type: null,
         species: [],
+        onlyByHealthMinistries: false,
     },
     selectionStudies: [],
 });
@@ -45,7 +46,7 @@ function updatePreventionDataSet(dataset: PreventionDataset) {
 }
 
 function updateInsecticideClass(insecticideClass: string) {
-    return updateFilter("insecticideClass", insecticideClass, "PYRETHROIDS");
+    return updateFilter("insecticideClass", insecticideClass);
 }
 
 function updateInsecticideTypes(insecticideTypes: string[]) {
@@ -70,6 +71,10 @@ function updateSpecies(species: string[]) {
 
 function updateAssayTypes(assayTypes: string[]) {
     return updateFilter("assayTypes", assayTypes, []);
+}
+
+function updateOnlyByHealthMinistries(value: boolean) {
+    return updateFilter("onlyByHealthMinistries", value, false);
 }
 
 export default createReducer<PreventionState>(initialState, {
@@ -102,6 +107,7 @@ export default createReducer<PreventionState>(initialState, {
         ...state,
         selectionStudies: studies,
     }),
+    [ActionTypeEnum.SetOnlyByHealthMinistries]: updateOnlyByHealthMinistries,
 });
 
 const selectPreventionState = (state: State) => state.prevention;

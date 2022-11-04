@@ -1,7 +1,7 @@
 export type TherapeuticEfficacy =
-    | "all"
+    | "therapeutic-efficacy"
     | "summary-treatment-failures"
     | "treatment-failure-rates"
     | "parasite-clearance-rates";
 
-export type MolecularMarker = "all" | "summary-molecular-marker";
+export type MolecularMarker = "molecular-marker" | "summary-molecular-marker";

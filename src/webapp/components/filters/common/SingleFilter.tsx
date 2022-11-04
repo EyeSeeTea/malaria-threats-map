@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import IntegrationReactSelect, { Option } from "../../BasicSelect";
-import FormLabel from "@mui/material/FormLabel";
 import { logEventAction } from "../../../store/actions/base-actions";
 import { FilterRowContainer } from "../Filters";
 import { Typography } from "@mui/material";
@@ -60,9 +59,9 @@ function SingleFilter({
             )}
             <FilterRowContainer margin={margin}>
                 {labelPosition === "middle" && selection && (
-                    <FormLabel color="primary" component="legend">
+                    <Typography component="legend" variant="body2">
                         {`${label}:`}&nbsp;
-                    </FormLabel>
+                    </Typography>
                 )}
                 <IntegrationReactSelect
                     isMulti={false}

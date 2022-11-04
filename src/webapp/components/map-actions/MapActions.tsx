@@ -23,7 +23,7 @@ const MapActions: React.FC = () => {
     return (
         <RoundedCard>
             <StyledList>
-                <ThemeMapActions />
+                <ThemeMapActions from={"map"} />
                 <Divider />
                 <MapTypeMapActions />
                 <Divider />

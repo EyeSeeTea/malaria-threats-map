@@ -78,7 +78,7 @@ function getTreatmentLegendTitle(filters: TreatmentFilters): string {
             return `${i18next.t("common.treatment.delayed_parasite_clearance")}\n${i18next.t(filters.drug)}`;
         case TreatmentMapType.MOLECULAR_MARKERS:
             return `${i18next.t("common.treatment.molecular_markers")} (
-                ${MOLECULAR_MARKERS[filters.molecularMarker - 1].label})`;
+                ${MOLECULAR_MARKERS[filters.molecularMarker - 1]?.label})`;
         default:
             return "";
     }
@@ -292,6 +292,10 @@ function getInvasiveLegendLabels(filters: InvasiveFilters): LegendLabel[] {
                     label: "invasive.legend.vector_occurrance.native",
                     color: InvasiveStatusColors[INVASIVE_STATUS.NATIVE][0],
                 },
+                {
+                    label: "invasive.legend.vector_occurrance.not_found",
+                    color: InvasiveStatusColors[INVASIVE_STATUS.NOTFOUND][0],
+                },
             ];
         default:
             return [];
@@ -320,17 +324,23 @@ export function getLegendMapTypeHelpKey(
 }
 
 function getPreventionLegendMapTypeHelpKey(filters: PreventionFilters): string {
-    switch (filters.mapType) {
-        case PreventionMapType.RESISTANCE_STATUS:
-            return "common.prevention.legend.resistance_status.help";
-        case PreventionMapType.INTENSITY_STATUS:
-            return "common.prevention.legend.resistance_intensity.help";
-        case PreventionMapType.RESISTANCE_MECHANISM:
-            return "common.prevention.legend.resistance_mechanism.help";
-        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
-            return "common.prevention.legend.synergist_involvement.help";
-        default:
-            return "";
+    if (filters.insecticideClass === "PYRROLES" && filters.insecticideTypes.includes("CHLORFENAPYR")) {
+        return "common.prevention.legend.chlorfenapyr_undetermined.help";
+    } else if (filters.insecticideTypes.includes("PIRIMIPHOS-METHYL")) {
+        return "common.prevention.legend.pirimiphos_methly_undetermined.help";
+    } else {
+        switch (filters.mapType) {
+            case PreventionMapType.RESISTANCE_STATUS:
+                return "common.prevention.legend.resistance_status.help";
+            case PreventionMapType.INTENSITY_STATUS:
+                return "common.prevention.legend.resistance_intensity.help";
+            case PreventionMapType.RESISTANCE_MECHANISM:
+                return "common.prevention.legend.resistance_mechanism.help";
+            case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+                return "common.prevention.legend.synergist_involvement.help";
+            default:
+                return "";
+        }
     }
 }
 

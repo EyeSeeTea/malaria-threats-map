@@ -12,33 +12,35 @@ import { CountryContext } from "../types";
 const TreatmentDashboards: React.FC = () => {
     const { dashboardsTreatmentStudies, theme } = useDashboards();
 
-    const [countryContext, setCountryContext] = React.useState<CountryContext>("all");
-    const [therapeuticEfficacy, setTherapeuticEfficacy] = React.useState<TherapeuticEfficacy>("all");
-    const [molecularMarker, setMolecularMarker] = React.useState<MolecularMarker>("all");
+    const [countryContext, setCountryContext] = React.useState<CountryContext>("country-context");
+    const [therapeuticEfficacy, setTherapeuticEfficacy] = React.useState<TherapeuticEfficacy>("therapeutic-efficacy");
+    const [molecularMarker, setMolecularMarker] = React.useState<MolecularMarker>("molecular-marker");
 
     return (
         <React.Fragment>
-            <Container maxWidth="lg">
-                <ContentsFilterSection
-                    countryContext={countryContext}
-                    therapeuticEfficacy={therapeuticEfficacy}
-                    molecularMarker={molecularMarker}
-                    onCountryContextChange={setCountryContext}
-                    onTherapeuticEfficacyChange={setTherapeuticEfficacy}
-                    onMolecularMarkerChange={setMolecularMarker}
-                />
-            </Container>
+            {dashboardsTreatmentStudies && (
+                <Container maxWidth="lg">
+                    <ContentsFilterSection
+                        countryContext={countryContext}
+                        therapeuticEfficacy={therapeuticEfficacy}
+                        molecularMarker={molecularMarker}
+                        onCountryContextChange={setCountryContext}
+                        onTherapeuticEfficacyChange={setTherapeuticEfficacy}
+                        onMolecularMarkerChange={setMolecularMarker}
+                    />
+                </Container>
+            )}
             <DashboardSection>
                 {dashboardsTreatmentStudies && (
                     <Container maxWidth="xl">
-                        <CountryContextStudies countryContext={countryContext} theme={theme} />
+                        <CountryContextStudies theme={theme} />
                     </Container>
                 )}
             </DashboardSection>
             <DashboardSection>
                 {dashboardsTreatmentStudies && (
                     <Container maxWidth="xl">
-                        <TreatmentEfficacyStudies therapeuticEfficacy={therapeuticEfficacy} />
+                        <TreatmentEfficacyStudies />
                     </Container>
                 )}
             </DashboardSection>
@@ -46,7 +48,7 @@ const TreatmentDashboards: React.FC = () => {
             <DashboardSection>
                 {dashboardsTreatmentStudies && (
                     <Container maxWidth="xl">
-                        <MolecularMarkerStudies molecularMarker={molecularMarker} />
+                        <MolecularMarkerStudies />
                     </Container>
                 )}
             </DashboardSection>

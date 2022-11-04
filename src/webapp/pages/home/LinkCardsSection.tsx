@@ -31,7 +31,7 @@ interface StyledCardMediaProps {
 
 const StyledCardMedia = styled(CardMedia).attrs<StyledCardMediaProps>(props => ({
     component: "img",
-    height: "50%",
+    height: "100%",
     image: props.image,
 }))`
     width: 96%;
@@ -76,7 +76,7 @@ const LinkCardsSection: React.FC = () => {
                 buttonText: t("common.homepage.media_cards.dashboards.button_text"),
             },
             {
-                path: "/data-download",
+                path: "/download",
                 image: DataDownload,
                 title: t("common.homepage.media_cards.data_download.title"),
                 text: t("common.homepage.media_cards.data_download.subtitle"),
@@ -94,7 +94,9 @@ const LinkCardsSection: React.FC = () => {
                         return (
                             <Grid key={index} item md={4} xs={12}>
                                 <RoundedCard sx={{ minHeight: 300 }}>
-                                    <StyledCardMedia image={card.image} />
+                                    <Link to={card.path}>
+                                        <StyledCardMedia image={card.image} />
+                                    </Link>
                                     <StyledCardContent>
                                         <Typography
                                             gutterBottom

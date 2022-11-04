@@ -15,4 +15,5 @@ export interface DiagnosisStudy extends Study {
     PF_POS_SAMPLES: string;
     TYPE_SAMPL_ANALYZED: string;
     TOOLTIP_SITENAME: string;
+    DELETION_STATUS: string;
 }

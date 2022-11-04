@@ -36,7 +36,7 @@ const DashboardProvider: React.FC<Props> = ({
     fetchTreatmentStudies,
     lastUpdatedDates,
 }) => {
-    const [theme, setTheme] = useState<DashboardsThemeOptions>("prevention");
+    const [theme, setTheme] = useState<DashboardsThemeOptions>();
     const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
     const [dashboardsPreventionStudies, setDashboardsPreventionStudies] = useState<PreventionStudy[]>(undefined);
     const [dashboardsTreatmentStudies, setDashboardsTreatmentStudies] = useState<TreatmentStudy[]>(undefined);

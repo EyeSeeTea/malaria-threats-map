@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { AppBar, Toolbar, Box, Container, Hidden, IconButton, Drawer } from "@mui/material";
+import WhoLogoBlue from "../../components/WhoLogoBlue";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./LanguageSelector";
 import { Menu as MenuIcon } from "@mui/icons-material";
@@ -39,8 +40,16 @@ const MenuItems: React.FC<DirectionProps> = ({ flexDirection }) => {
                 hoverPaddingRight: 23,
                 submenus: [
                     { kind: "simple-menu" as const, name: t("common.homepage.tools_submenu.maps"), path: "/maps" },
-                    { kind: "simple-menu" as const, name: t("common.homepage.tools_submenu.dashboards"), path: "/" },
-                    { kind: "simple-menu" as const, name: t("common.homepage.tools_submenu.data_download"), path: "/" },
+                    {
+                        kind: "simple-menu" as const,
+                        name: t("common.homepage.tools_submenu.dashboards"),
+                        path: "/dashboards",
+                    },
+                    {
+                        kind: "simple-menu" as const,
+                        name: t("common.homepage.tools_submenu.data_download"),
+                        path: "/download",
+                    },
                 ],
             },
             {
@@ -48,17 +57,25 @@ const MenuItems: React.FC<DirectionProps> = ({ flexDirection }) => {
                 name: t("common.homepage.menu.stories"),
                 hoverPaddingRight: 7,
                 submenus: [
-                    { kind: "simple-menu" as const, name: t("common.themes.prevention"), path: "/" },
-                    { kind: "simple-menu" as const, name: t("common.themes.invasive"), path: "/" },
                     {
-                        kind: "simple-menu" as const,
+                        kind: "simple-menu-trans" as const,
+                        name: t("common.themes.prevention"),
+                        path: "/stories?theme=prevention",
+                    },
+                    {
+                        kind: "simple-menu-trans" as const,
+                        name: t("common.themes.invasive"),
+                        path: "/stories?theme=invasive",
+                    },
+                    {
+                        kind: "simple-menu-trans" as const,
                         name: t("common.homepage.stories_submenu.antimalarial_drug_efficacy_and_resistance"),
-                        path: "/",
+                        path: "/stories?theme=treatment",
                     },
                     {
                         kind: "simple-menu-trans" as const,
                         name: "common.homepage.stories_submenu.parasite_pfhrp_gene_deletions",
-                        path: "/",
+                        path: "/stories?theme=diagnosis",
                     },
                 ],
             },
@@ -101,6 +118,7 @@ const Header = () => {
                             </MenuContainer>
                             <LanguageSelector />
                         </Hidden>
+                        <WhoLogoBlue width="150px" />
                     </StyledToolbar>
                 </Container>
             </StyledAppBar>

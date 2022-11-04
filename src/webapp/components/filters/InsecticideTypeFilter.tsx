@@ -45,6 +45,7 @@ const InsecticideTypeFilter: React.FC<Props> = ({ preventionFilters, studies, se
             onChange={setInsecticideTypes}
             value={preventionFilters.insecticideTypes}
             analyticsMultiFilterAction={"insecticideType"}
+            isClearable={true}
         />
     );
 };

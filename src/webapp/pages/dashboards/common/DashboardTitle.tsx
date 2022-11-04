@@ -5,18 +5,20 @@ import DownloadIcon from "@mui/icons-material/Download";
 import styled from "styled-components";
 
 interface DashboardTitleProps {
+    id?: string;
     title: string;
     showActions: boolean;
+    onInfoClick: () => void;
     onDownloadClick: () => void;
 }
 
-const DashboardTitle: React.FC<DashboardTitleProps> = ({ title, showActions, onDownloadClick }) => {
+const DashboardTitle: React.FC<DashboardTitleProps> = ({ id, title, showActions, onInfoClick, onDownloadClick }) => {
     return (
         <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <Title>{title}</Title>
+            <Title id={id}>{title}</Title>
             {showActions && (
                 <Stack direction="row" spacing={2}>
-                    <Fab color="primary" size="small">
+                    <Fab color="primary" size="small" onClick={onInfoClick}>
                         <InfoOutlinedIcon sx={{ color: "white", width: "20px" }} />
                     </Fab>
                     <Fab color="primary" size="small" onClick={onDownloadClick}>

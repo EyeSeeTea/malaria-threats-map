@@ -1,11 +1,12 @@
 import React from "react";
 import { useState } from "react";
+import { MolecularMarker } from "../../../../components/filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../../components/filters/PlasmodiumSpeciesFilter";
 
 export function useTreatmentFilters() {
     const [plasmodiumSpecies, setPlasmodiumSpecies] = useState<string>(PLASMODIUM_SPECIES_SUGGESTIONS[0].value);
     const [drugs, setDrugs] = useState<string[]>(undefined);
-    const [molecularMarker, setMolecularMarker] = useState<number>();
+    const [molecularMarker, setMolecularMarker] = useState<MolecularMarker>();
     const [years, setYears] = useState<[number, number]>([2010, new Date().getFullYear()]);
     const [excludeLowerPatients, setExcludeLowerPatients] = useState<boolean>(false);
 
@@ -25,7 +26,7 @@ export function useTreatmentFilters() {
         setExcludeLowerPatients(excludeLowerPatients);
     }, []);
 
-    const onMolecularMarkerChange = React.useCallback((molecularMarker: number) => {
+    const onMolecularMarkerChange = React.useCallback((molecularMarker: MolecularMarker) => {
         setMolecularMarker(molecularMarker);
     }, []);
 

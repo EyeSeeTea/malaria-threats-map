@@ -11,33 +11,33 @@ import { PhenotypicInsecticideResistance } from "./types";
 const PreventionDashboards: React.FC = () => {
     const { dashboardsPreventionStudies, theme } = useDashboards();
 
-    const [countryContext, setCountryContext] = React.useState<CountryContext>("all");
+    const [countryContext, setCountryContext] = React.useState<CountryContext>("country-context");
     const [phenotypicInsecticideResistance, setPhenotypicInsecticideResistance] =
-        React.useState<PhenotypicInsecticideResistance>("all");
+        React.useState<PhenotypicInsecticideResistance>("phenotypic-insecticide-resistance");
 
     return (
         <React.Fragment>
             <Container maxWidth="lg">
-                <ContentsFilterSection
-                    countryContext={countryContext}
-                    phenotypicInsecticideResistance={phenotypicInsecticideResistance}
-                    onCountryContextChange={setCountryContext}
-                    onPhenotypicInsecticideResistanceChange={setPhenotypicInsecticideResistance}
-                />
+                {dashboardsPreventionStudies && (
+                    <ContentsFilterSection
+                        countryContext={countryContext}
+                        phenotypicInsecticideResistance={phenotypicInsecticideResistance}
+                        onCountryContextChange={setCountryContext}
+                        onPhenotypicInsecticideResistanceChange={setPhenotypicInsecticideResistance}
+                    />
+                )}
             </Container>
             <DashboardSection>
                 {dashboardsPreventionStudies && (
                     <Container maxWidth="xl">
-                        <CountryContextStudies countryContext={countryContext} theme={theme} />
+                        <CountryContextStudies theme={theme} />
                     </Container>
                 )}
             </DashboardSection>
             <DashboardSection>
                 {dashboardsPreventionStudies && (
                     <Container maxWidth="xl">
-                        <PhenotypicInsecticideResistanceStudies
-                            phenotypicInsecticideResistance={phenotypicInsecticideResistance}
-                        />
+                        <PhenotypicInsecticideResistanceStudies />
                     </Container>
                 )}
             </DashboardSection>

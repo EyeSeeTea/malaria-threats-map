@@ -4,6 +4,7 @@ import InsecticideTypeFilter from "../../../filters/InsecticideTypeFilter";
 import TypeFilter from "../../../filters/TypeFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
+import OnlyByHealthMinistriesFilter from "../../../filters/OnlyByHealthMinistriesFilter";
 
 export default function IntensityStatusFilters() {
     return (
@@ -12,7 +13,8 @@ export default function IntensityStatusFilters() {
             <InsecticideTypeFilter />
             <TypeFilter />
             <SpeciesFilter />
-            <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
+            <YearRangeSelector />
+            <OnlyByHealthMinistriesFilter />
         </div>
     );
 }

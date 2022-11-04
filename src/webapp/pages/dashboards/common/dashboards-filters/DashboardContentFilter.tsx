@@ -1,6 +1,7 @@
 import React from "react";
 import { Option } from "../types";
 import Select from "react-select";
+import { scrollToSection } from "../country-context/utils";
 
 const selectStyles = {
     control: (base: any) => ({
@@ -24,7 +25,13 @@ interface DashboardContentFilterProps<T> {
 }
 
 function DashboardContentFilter<T>({ options, value, onChange }: DashboardContentFilterProps<T>) {
-    const handleChange = React.useCallback((option: Option<T>) => onChange(option.value), [onChange]);
+    const handleChange = React.useCallback(
+        (option: Option<T>) => {
+            scrollToSection(option.value as unknown as string);
+            onChange(option.value);
+        },
+        [onChange]
+    );
 
     const optionValue = React.useMemo(() => options.find(item => item.value === value), [options, value]);
 

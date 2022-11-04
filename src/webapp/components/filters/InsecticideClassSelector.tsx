@@ -6,6 +6,7 @@ import { selectInsecticideClasses } from "../../store/reducers/translations-redu
 import MultiFilter from "../../components/filters/common/MultiFilter";
 import { getInsecticideClassOptions } from "./InsecticideClassFilter";
 import RadioGroupFilter from "./RadioGroupFilter";
+import { Translation } from "../../types/Translation";
 
 const mapStateToProps = (state: State) => ({
     insecticideClasses: selectInsecticideClasses(state),
@@ -23,7 +24,9 @@ type Props = OwnProps & StateProps;
 function InsecticideClassSelector({ type, insecticideClasses = [], onChange, value }: Props) {
     const { t } = useTranslation();
 
-    const options = getInsecticideClassOptions(insecticideClasses);
+    const options = getInsecticideClassOptions(
+        insecticideClasses.map((insecticide: Translation) => insecticide.VALUE_)
+    );
 
     const handleRadioChange = (event: React.ChangeEvent<unknown>) => {
         const value = (event.target as HTMLInputElement).value;

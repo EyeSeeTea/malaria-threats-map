@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { Button, Grid, ToggleButton, ToggleButtonGroup, Typography, Stack } from "@mui/material";
 import { PreventionIcon, TreatmentIcon } from "../../components/Icons";
@@ -7,18 +7,52 @@ import { useTranslation } from "react-i18next";
 import { Option } from "../../components/BasicSelect";
 import { DashboardsThemeOptions } from "./types";
 import { useDashboards } from "./context/useDashboards";
+import { State } from "../../store/types";
+import { connect } from "react-redux";
+import { selectTranslations } from "../../store/reducers/translations-reducer";
+import { useAppContext } from "../../context/app-context";
+import { Country } from "../../../domain/entities/Country";
 
-const ThemeSelectionSection: React.FC = () => {
+type StateProps = ReturnType<typeof mapStateToProps>;
+type Props = StateProps;
+
+const mapStateToProps = (state: State) => ({
+    translations: selectTranslations(state),
+});
+
+const ThemeSelectionSection = ({ translations }: Props) => {
+    const [countries, setCountries] = React.useState<Country[]>([]);
+    const [countryOptions, setCountryOptions] = React.useState<Option[]>([]);
+
     const { t } = useTranslation();
+    const { compositionRoot } = useAppContext();
 
     const { theme, selectedCountries, updatedDates, onThemeChange, onSelectedCountriesChange, onGenerate } =
         useDashboards();
 
-    const baseCountries = t("countries", { returnObjects: true });
-    const countrySuggestions: Option[] = Object.entries(baseCountries).map(([iso, name]) => ({
-        label: name,
-        value: iso,
-    }));
+    useEffect(() => {
+        compositionRoot.countries.get().run(
+            countries => {
+                setCountries(countries);
+            },
+            () => {
+                setCountries([]);
+            }
+        );
+    }, [compositionRoot]);
+
+    useEffect(() => {
+        if (translations.length === 0) return;
+
+        const options = countries
+            .filter(({ endemicity }) => endemicity === true)
+            .map(({ iso2Code }) => ({
+                label: t(iso2Code),
+                value: iso2Code,
+            }));
+
+        setCountryOptions(options);
+    }, [translations, countries, t]);
 
     const handleThemeChange = useCallback(
         (_event: React.MouseEvent<HTMLElement>, value: any) => {
@@ -62,9 +96,8 @@ const ThemeSelectionSection: React.FC = () => {
                         <Stack>
                             <SectionTitle>{t("common.dashboard.filtersSection.second.title")}</SectionTitle>
                             <MultiFilter
-                                label={t("common.filters.select_country")}
                                 placeholder={t("common.filters.select_country")}
-                                options={countrySuggestions}
+                                options={countryOptions}
                                 onChange={onSelectedCountriesChange}
                                 value={selectedCountries}
                                 margin="10px 0px"
@@ -72,14 +105,19 @@ const ThemeSelectionSection: React.FC = () => {
                             <Typography variant="caption" fontSize={"11px"}>
                                 {t("common.dashboard.filtersSection.second.helper")}
                             </Typography>
-                            <StyledGenerateButton disabled={selectedCountries.length === 0} onClick={onGenerate}>
+                            <StyledGenerateButton
+                                disabled={selectedCountries.length === 0 || theme === undefined}
+                                onClick={onGenerate}
+                            >
                                 Generate Dashboard
                             </StyledGenerateButton>
-                            <Typography variant="caption" fontSize={"12px"} textAlign="right">
-                                {`${t("common.dashboard.filtersSection.second.lastUpdate")} ${
-                                    updatedDates[theme]?.toLocaleDateString() || ""
-                                }`}
-                            </Typography>
+                            {updatedDates[theme] && (
+                                <Typography variant="caption" fontSize={"12px"} textAlign="right">
+                                    {`${t("common.dashboard.filtersSection.second.lastUpdate")} ${
+                                        updatedDates[theme]?.toLocaleDateString() || ""
+                                    }`}
+                                </Typography>
+                            )}
                         </Stack>
                     </Grid>
                 </Grid>
@@ -91,7 +129,7 @@ const ThemeSelectionSection: React.FC = () => {
     );
 };
 
-export default React.memo(ThemeSelectionSection);
+export default connect(mapStateToProps)(React.memo(ThemeSelectionSection));
 
 type ThemeButtonProps = {
     theme: DashboardsThemeOptions;

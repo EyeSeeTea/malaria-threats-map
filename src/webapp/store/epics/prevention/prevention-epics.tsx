@@ -17,6 +17,7 @@ import {
     logEventAction,
     logPageViewAction,
     setFiltersAction,
+    setMaxMinYearsAction,
     setSelectionData,
     setThemeAction,
 } from "../../actions/base-actions";
@@ -72,7 +73,7 @@ export const setPreventionMapTypeEpic = (
             const logPageView = logPageViewAction(pageView);
 
             if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
-                return of(..._.compact([setType("MONO_OXYGENASES"), logPageView]));
+                return of(..._.compact([setType(["MONO_OXYGENASES"]), logPageView]));
             } else if (action.payload === PreventionMapType.INTENSITY_STATUS) {
                 return of(..._.compact([setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
@@ -90,9 +91,9 @@ export const setPreventionTypeEpic = (action$: Observable<ActionType<typeof setT
         ofType(ActionTypeEnum.SetType),
         switchMap(action => {
             const kdr = ["KDR_L1014S", "KDR_L1014F", "KDR_(MUTATION_UNSPECIFIED)"];
-            if (kdr.includes(action.payload)) {
+            if (action.payload && kdr.includes(action.payload[0])) {
                 return of(setAssayTypes([ASSAY_TYPES[0]]));
-            } else if (["ACE1R"].includes(action.payload)) {
+            } else if (action.payload && ["ACE1R"].includes(action.payload[0])) {
                 return of(setAssayTypes([ASSAY_TYPES[0], ASSAY_TYPES[1]]));
             } else {
                 return of(setAssayTypes(ASSAY_TYPES));
@@ -111,7 +112,7 @@ export const setPreventionInsecticideClassEpic = (
             const isTourOpen = state.malaria.tour.open;
             const actions = _.compact([
                 setInsecticideTypes([]),
-                setType(state.prevention.filters.type || "MONO_OXYGENASES"),
+                setType(state.prevention.filters.type ? [state.prevention.filters.type[0]] : ["MONO_OXYGENASES"]),
                 setSpecies([]),
                 isTourOpen
                     ? null
@@ -174,6 +175,16 @@ export const setPreventionThemeEpic = (action$: Observable<ActionType<typeof set
             if ($action.payload !== "prevention") {
                 return of();
             }
-            return of(setFiltersAction([2010, new Date().getFullYear()]));
+
+            const base = [
+                setMaxMinYearsAction([2010, new Date().getFullYear()]),
+                setFiltersAction([2010, new Date().getFullYear()]),
+            ];
+
+            if ($action.from === "map") {
+                return of(...base, setInsecticideClass("PYRETHROIDS"));
+            } else {
+                return of(...base, setInsecticideClass(null));
+            }
         })
     );

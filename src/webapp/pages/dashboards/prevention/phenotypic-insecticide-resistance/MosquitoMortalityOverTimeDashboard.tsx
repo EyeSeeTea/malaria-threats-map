@@ -33,6 +33,7 @@ const MosquitoOverTimeDashboard: React.FC = () => {
 
     return (
         <PreventionFilterableDashboard
+            id="mosquito-mortality-over-time"
             chart="mosquito-mortality-overtime"
             insecticideTypeOptions={insecticideTypeOptions}
             count={count}

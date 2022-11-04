@@ -2,14 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import IntegrationReactSelect, { Option } from "../../BasicSelect";
 import { FilterRowContainer } from "../Filters";
-import FormLabel from "@mui/material/FormLabel";
 import { sendMultiFilterAnalytics } from "../../../utils/analytics";
 import { Typography } from "@mui/material";
 
 type Props = {
     labelPosition?: "top" | "middle";
     margin?: string;
-    label: string;
+    label?: string;
     options: Option[];
     placeholder?: string;
     onChange: (selection: string[]) => void;
@@ -37,20 +36,20 @@ function MultiFilter({
         }
     };
 
-    const selections = options.filter(option => value.includes(option.value));
+    const selections = options.filter(option => value && value.includes(option.value));
 
     return (
         <React.Fragment>
-            {labelPosition === "top" && (
+            {label && labelPosition === "top" && (
                 <Typography variant="body2" fontWeight={"bold"}>
                     {label}
                 </Typography>
             )}
             <FilterRowContainer margin={margin}>
-                {labelPosition === "middle" && selections && selections.length > 0 && (
-                    <FormLabel color="primary" component="legend">
+                {label && labelPosition === "middle" && selections && selections.length > 0 && (
+                    <Typography component="legend" variant="body2">
                         {`${label}:`}&nbsp;
-                    </FormLabel>
+                    </Typography>
                 )}
                 <IntegrationReactSelect
                     isMulti

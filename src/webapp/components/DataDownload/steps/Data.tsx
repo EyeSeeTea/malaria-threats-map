@@ -1,7 +1,13 @@
 import React, { useCallback, useEffect } from "react";
 import { State, MapTheme } from "../../../store/types";
-import { selectFilters, selectLastUpdatedDates, selectRegion, selectTheme } from "../../../store/reducers/base-reducer";
-import { setActionGroupSelected } from "../../../store/actions/base-actions";
+import {
+    selectFilters,
+    selectLastUpdatedDates,
+    selectMaxMinYears,
+    selectRegion,
+    selectTheme,
+} from "../../../store/reducers/base-reducer";
+import { setActionGroupSelected, setFiltersAction, setMaxMinYearsAction } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 
 import { Button, Card, Divider, Grid, List, ListItem, Stack, Typography } from "@mui/material";
@@ -66,6 +72,7 @@ import {
     preventionDatasetSuggestions,
     treatmentDatasetSuggestions,
 } from "../filters/DataSetSelector";
+import { getMaxMinYears } from "../../../../domain/entities/Study";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -81,6 +88,7 @@ const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     treatmentFilters: selectTreatmentFilters(state),
+    maxMinYears: selectMaxMinYears(state),
     yearFilters: selectFilters(state),
     region: selectRegion(state),
     lastUpdatedDates: selectLastUpdatedDates(state),
@@ -96,6 +104,8 @@ const mapDispatchToProps = {
     setDiagnosisFilteredStudies: setDiagnosisFilteredStudiesAction,
     setTreatmentFilteredStudies: setFilteredStudiesAction,
     setInvasiveFilteredStudies: setInvasiveFilteredStudiesAction,
+    setYears: setFiltersAction,
+    setMaxMinYears: setMaxMinYearsAction,
 };
 
 type OwnProps = {
@@ -115,6 +125,7 @@ const Data: React.FC<Props> = ({
     treatmentFilters,
     diagnosisFilters,
     invasiveFilters,
+    maxMinYears,
     yearFilters,
     region,
     fetchPreventionStudies,
@@ -135,6 +146,8 @@ const Data: React.FC<Props> = ({
     setInvasiveFilteredStudies,
     setActionGroupSelected,
     onChangeSelectedDatabases,
+    setYears,
+    setMaxMinYears,
 }) => {
     const { t } = useTranslation();
 
@@ -176,6 +189,20 @@ const Data: React.FC<Props> = ({
         );
     }, [invasiveStudies, invasiveFilters, region, yearFilters, setInvasiveFilteredStudies]);
 
+    useEffect(() => {
+        const minMaxYears =
+            theme === "prevention"
+                ? getMaxMinYears(preventionStudies)
+                : theme === "diagnosis"
+                ? getMaxMinYears(diagnosisStudies)
+                : theme === "treatment"
+                ? getMaxMinYears(treatmentStudies)
+                : getMaxMinYears(invasiveStudies);
+
+        setMaxMinYears(minMaxYears);
+        setYears(minMaxYears);
+    }, [theme, preventionStudies, diagnosisStudies, treatmentStudies, invasiveStudies, setMaxMinYears, setYears]);
+
     const handleAddToDownload = useCallback(() => {
         switch (theme) {
             case "prevention": {
@@ -186,9 +213,11 @@ const Data: React.FC<Props> = ({
                     dataset: preventionDatasetSuggestions
                         .find(ds => ds.value === preventionFilters.dataset)
                         .value.toString(),
-                    filtersValue: preventionFiltersToString(preventionFilters, yearFilters, "download"),
+                    filtersValue:
+                        preventionFiltersToString(preventionFilters, maxMinYears, yearFilters, "download") ||
+                        t("mapActions.all"),
                     filteredStudies: preventionFilteredStudies,
-                    location: getLocation(region),
+                    location: getLocation(region) || t("mapActions.all"),
                 };
 
                 onChangeSelectedDatabases([...selectedDatabases, database]);
@@ -202,9 +231,11 @@ const Data: React.FC<Props> = ({
                     dataset: diagnosisDatasetSuggestions
                         .find(ds => ds.value === diagnosisFilters.dataset)
                         .value.toString(),
-                    filtersValue: diagnosisFiltersToString(diagnosisFilters, yearFilters, "download"),
+                    filtersValue:
+                        diagnosisFiltersToString(diagnosisFilters, maxMinYears, yearFilters, "download") ||
+                        t("mapActions.all"),
                     filteredStudies: diagnosisFilteredStudies,
-                    location: getLocation(region),
+                    location: getLocation(region) || t("mapActions.all"),
                 };
 
                 onChangeSelectedDatabases([...selectedDatabases, database]);
@@ -218,9 +249,11 @@ const Data: React.FC<Props> = ({
                     dataset: invasiveDatasetSuggestions
                         .find(ds => ds.value === invasiveFilters.dataset)
                         .value.toString(),
-                    filtersValue: invasiveFiltersToString(invasiveFilters, yearFilters, "download"),
+                    filtersValue:
+                        invasiveFiltersToString(invasiveFilters, maxMinYears, yearFilters, "download") ||
+                        t("mapActions.all"),
                     filteredStudies: invasiveFilteredStudies,
-                    location: getLocation(region),
+                    location: getLocation(region) || t("mapActions.all"),
                 };
 
                 onChangeSelectedDatabases([...selectedDatabases, database]);
@@ -234,9 +267,11 @@ const Data: React.FC<Props> = ({
                     dataset: treatmentDatasetSuggestions
                         .find(ds => ds.value === treatmentFilters.dataset)
                         .value.toString(),
-                    filtersValue: treatmentFiltersToString(treatmentFilters, yearFilters, "download"),
+                    filtersValue:
+                        treatmentFiltersToString(treatmentFilters, maxMinYears, yearFilters, "download") ||
+                        t("mapActions.all"),
                     filteredStudies: treatmentFilteredStudies,
-                    location: getLocation(region),
+                    location: getLocation(region) || t("mapActions.all"),
                 };
 
                 onChangeSelectedDatabases([...selectedDatabases, database]);
@@ -250,6 +285,7 @@ const Data: React.FC<Props> = ({
         diagnosisFilters,
         treatmentFilters,
         invasiveFilters,
+        maxMinYears,
         yearFilters,
         region,
         preventionFilteredStudies,
@@ -257,6 +293,7 @@ const Data: React.FC<Props> = ({
         treatmentFilteredStudies,
         invasiveFilteredStudies,
         onChangeSelectedDatabases,
+        t,
     ]);
 
     const handleRemoveToDownload = useCallback(
@@ -296,25 +333,35 @@ const Data: React.FC<Props> = ({
                                 {t("common.data_download.data_step.db_download_helper_text")}
                             </Typography>
                         ) : (
-                            <List>
-                                {selectedDatabases.map((database, index) => {
-                                    return (
-                                        <DatabaseItem
-                                            key={database.id}
-                                            database={database}
-                                            onRemoveDatabase={handleRemoveToDownload}
-                                            addDivider={index < selectedDatabases.length - 1}
-                                        />
-                                    );
-                                })}
-                            </List>
+                            <React.Fragment>
+                                <List>
+                                    {selectedDatabases.map((database, index) => {
+                                        return (
+                                            <DatabaseItem
+                                                key={database.id}
+                                                database={database}
+                                                onRemoveDatabase={handleRemoveToDownload}
+                                                addDivider={index < selectedDatabases.length - 1}
+                                            />
+                                        );
+                                    })}
+                                </List>
+                                {selectedDatabases.some(database => database.kind === "prevention") && (
+                                    <React.Fragment>
+                                        <Divider sx={{ marginBottom: 2 }} />
+                                        <Typography variant="caption" lineHeight="6px">
+                                            {t("common.data_download.data_step.prevention_warning")}
+                                        </Typography>
+                                    </React.Fragment>
+                                )}
+                            </React.Fragment>
                         )}
                     </ListCard>
                 </Grid>
                 <Grid item md={6} xs={12}>
                     <DataSelectionCard>
                         <StyledList>
-                            <ThemeMapActions themeItemGridSize={3} />
+                            <ThemeMapActions from="download" themeItemGridSize={3} />
                             <Divider />
                             <DataSetMapActions />
                             <Divider />
@@ -323,8 +370,8 @@ const Data: React.FC<Props> = ({
                             <LocationMapActions />
                             <FooterDivider />
                             <Footer>
-                                <Stack direction="row" justifyContent="space-around" sx={{ width: "100%" }}>
-                                    <Stack direction="column" alignItems="center">
+                                <Stack direction="row" justifyContent="space-between" sx={{ width: "100%" }}>
+                                    <Stack direction="column" alignItems="left">
                                         <Typography variant="body2">
                                             {t("common.data_download.data_step.last_updated")}
                                         </Typography>
