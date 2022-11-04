@@ -12,6 +12,7 @@ const mapDispatchToProps = {
 
 type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
+    showKey?: boolean;
     dataSources: CitationDataSource[];
 };
 type Props = DispatchProps & OwnProps;
@@ -24,7 +25,7 @@ const StyledListItem = styled(ListItem)`
     padding: 0px 0px 2px 0px;
 `;
 
-const CitationNew = ({ dataSources, logOutboundLinkAction }: Props) => {
+const CitationNew = ({ dataSources, logOutboundLinkAction, showKey = true }: Props) => {
     const { t } = useTranslation();
     const logClick = React.useCallback((url: string) => logOutboundLinkAction(url), [logOutboundLinkAction]);
 
@@ -41,7 +42,7 @@ const CitationNew = ({ dataSources, logOutboundLinkAction }: Props) => {
                                 <Typography variant="caption">
                                     {dataSource.url ? (
                                         <span>
-                                            {`(${dataSource.key}) `}
+                                            {showKey && `(${dataSource.key}) `}
                                             <Link
                                                 onClick={() => logClick(dataSource.url)}
                                                 href={dataSource.url}
@@ -51,7 +52,7 @@ const CitationNew = ({ dataSources, logOutboundLinkAction }: Props) => {
                                             </Link>
                                         </span>
                                     ) : (
-                                        `(${dataSource.key}) ${dataSource.text}`
+                                        `(${showKey ? dataSource.key : ""}) ${dataSource.text}`
                                     )}
                                 </Typography>
                             </StyledListItem>

@@ -13,28 +13,31 @@ const Ul = styled.ul`
 `;
 
 type OwnProps = {
-    otherInsecticideClasses: string[];
+    title: string;
+    info: string[];
 };
 
 type Props = OwnProps;
 
-const OtherInsecticideClasses = ({ otherInsecticideClasses }: Props) => {
+const OtherInfo = ({ title, info }: Props) => {
     const { t } = useTranslation();
+
+    console.log({ info });
 
     return (
         <Margin>
             <Typography variant="caption">
-                <b>{t("common.prevention.chart.other_insecticide_class_label")}</b>
+                <b>{title}</b>
             </Typography>
             <br />
 
-            {otherInsecticideClasses.length > 0 ? (
+            {info.length > 0 ? (
                 <Ul>
-                    {otherInsecticideClasses.map(insecticideclass => {
+                    {info.map(item => {
                         return (
-                            <li key={insecticideclass}>
+                            <li key={item}>
                                 <Typography variant="caption" display="block">
-                                    {t(insecticideclass)}
+                                    {item}
                                 </Typography>
                             </li>
                         );
@@ -47,4 +50,4 @@ const OtherInsecticideClasses = ({ otherInsecticideClasses }: Props) => {
     );
 };
 
-export default OtherInsecticideClasses;
+export default OtherInfo;

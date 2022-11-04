@@ -16,7 +16,7 @@ const PreventionChart: React.FC<Props> = ({ mapType, selectionData }) => {
     const { t } = useTranslation();
 
     const data = React.useMemo(() => {
-        if (selectionData.data.kind === "prevention") {
+        if (selectionData.kind === "common" && selectionData.data.kind === "prevention") {
             return selectionData.data.data;
         } else {
             return null;
@@ -34,17 +34,40 @@ const PreventionChart: React.FC<Props> = ({ mapType, selectionData }) => {
                             {t(specie)}
                         </Typography>
                         {dataItems.map((type, typeIndex) => {
+                            const title = data[specie][type].title;
+
                             return (
                                 <>
                                     <Typography variant="caption" fontWeight="bold">
                                         {t(type)}
                                     </Typography>
+                                    {title && (
+                                        <span>
+                                            <Typography
+                                                variant="caption"
+                                                sx={{ color: title.statusColor }}
+                                                display="inline"
+                                            >
+                                                {title.titlePrefix}&nbsp;
+                                            </Typography>
+                                            <Typography variant="caption" display="inline">
+                                                {title.titleContent}&nbsp;
+                                            </Typography>
+                                            <Typography
+                                                variant="caption"
+                                                sx={{ color: title.statusColor }}
+                                                display="inline"
+                                            >
+                                                {title.titleSufix}
+                                            </Typography>
+                                        </span>
+                                    )}
                                     <div key={type}>
                                         <HighchartsReact
                                             highcharts={Highcharts}
                                             options={preventionBarChartOptions(
                                                 mapType,
-                                                data[specie][type],
+                                                data[specie][type].seriesData,
                                                 specieIndex === 0 && specieIndex === 0
                                             )}
                                         />

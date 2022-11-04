@@ -408,6 +408,7 @@
             "chart": {
                 "not_reported": "NR : non signalé",
                 "other_insecticide_class_label": "Autres insecticides auxquels une résistance a été détectée sur ce site:",
+                "other_mechanisms": "Autres mécanismes détectés",
                 "other_insecticide_class_none": "Rien",
                 "resistance": {
                     "mosquito_mortality": "% mortalité de moustique",
@@ -422,7 +423,8 @@
                     "title": "Nombre d'essais de mécanismes",
                     "allelic": "Fréquence allélique à partir d'analyse moléculaire",
                     "count": "Nombre",
-                    "frequency": "Fréquence (%)"
+                    "frequency": "Fréquence (%)",
+                    "not_reported": "Non signalé"
                 },
                 "synergist_involvement": {
                     "no_synergist": "Pas de synergistes"
@@ -606,7 +608,7 @@
                     "sampling_method": "Méthode d’échantillonnage",
                     "study_identification_method": "Méthode d’identification des espèces",
                     "data_collection": "Remerciements pour la collecte de données",
-                    "no_available": "Indisponible"
+                    "not_recorded": "Pas enregistré"
                 }
             },
             "legend": {

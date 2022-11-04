@@ -407,6 +407,7 @@
             "chart": {
                 "not_reported": "NR: not reported",
                 "other_insecticide_class_label": "Other insecticides to which resistance was detected in this site:",
+                "other_mechanisms": "Other mechanisms detected",
                 "other_insecticide_class_none": "None",
                 "resistance": {
                     "mosquito_mortality": "% mosquito mortality",
@@ -416,12 +417,12 @@
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via {{insecticideClasses}} with selected {{type}} {{years}}",
                     "number_of_tests": "No. of mosquitoes tested",
-                    "DETECTED": "Detected",
-                    "NOT_DETECTED": "Not detected",
-                    "title": "Number of mechanism assays",
+                    "DETECTED": "Number of assays that detected resistance mechanisms (count)",
+                    "NOT_DETECTED": "Number of assays that did not detect resistance mechanisms (count)",
                     "allelic": "Allelic frequency from molecular assay",
                     "count": "Count",
-                    "frequency": "Frequency (%)"
+                    "frequency": "Frequency (%)",
+                    "not_reported": "Not reported"
                 },
                 "synergist_involvement": {
                     "no_synergist": "No synergist"
@@ -534,7 +535,7 @@
                     "study_years": "Study year(s)",
                     "health_facility_name": "Study conducted at the",
                     "number_of_patients": "patients included",
-                    "follow_up": "days follow-up",
+                    "follow_up": "-day follow-up. ",
                     "confirmed_resist_pv": "Patients with confirmed resistance",
                     "positive_day_3": "Positive after day 3",
                     "treatment_failure_pp": "Patients with treatment failure, per protocol",
@@ -605,7 +606,7 @@
                     "sampling_method": "Sampling method",
                     "study_identification_method": "Species identification method",
                     "data_collection": "Acknowledgement for data curation",
-                    "no_available": "Not available"
+                    "not_recorded": "Not recorded"
                 }
             },
             "legend": {
