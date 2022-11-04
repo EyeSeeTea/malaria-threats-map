@@ -17,29 +17,31 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
         <React.Fragment>
             <DasboardCard>
                 <Title id="epidemiological-profile">
-                    {t("common.dashboard.countryContextSection.epidemiologicalProfile.title")}
+                    {t("common.dashboard.countryContextDashboards.epidemiologicalProfile.title")}
                 </Title>
                 <Table>
                     <thead>
                         <tr>
                             <th>
                                 <HeadText>
-                                    {t("common.dashboard.countryContextSection.epidemiologicalProfile.country")}
+                                    {t("common.dashboard.countryContextDashboards.epidemiologicalProfile.country")}
                                 </HeadText>
                             </th>
                             <th>
                                 <HeadText>
-                                    {t("common.dashboard.countryContextSection.epidemiologicalProfile.year")}
+                                    {t("common.dashboard.countryContextDashboards.epidemiologicalProfile.year")}
                                 </HeadText>
                             </th>
                             <th colSpan={3}>
                                 <HeadText>
-                                    {t("common.dashboard.countryContextSection.epidemiologicalProfile.transmission")}
+                                    {t("common.dashboard.countryContextDashboards.epidemiologicalProfile.transmission")}
                                 </HeadText>
                             </th>
                             <th colSpan={2}>
                                 <HeadText>
-                                    {t("common.dashboard.countryContextSection.epidemiologicalProfile.burdenEstimates")}
+                                    {t(
+                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.burdenEstimates"
+                                    )}
                                 </HeadText>
                             </th>
                         </tr>
@@ -49,20 +51,24 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                             <th>
                                 <SubHeadText align="left">
                                     {t(
-                                        "common.dashboard.countryContextSection.epidemiologicalProfile.highTransmission"
+                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.highTransmission"
                                     )}
                                 </SubHeadText>
                                 <SubHeadText align="left">
-                                    {t("common.dashboard.countryContextSection.epidemiologicalProfile.moreThanOneCase")}
+                                    {t(
+                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.moreThanOneCase"
+                                    )}
                                 </SubHeadText>
                             </th>
                             <th>
                                 <SubHeadText align="left">
-                                    {t("common.dashboard.countryContextSection.epidemiologicalProfile.lowTransmission")}
+                                    {t(
+                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.lowTransmission"
+                                    )}
                                 </SubHeadText>
                                 <SubHeadText align="left">
                                     {t(
-                                        "common.dashboard.countryContextSection.epidemiologicalProfile.lessOrEqualtoOneCase"
+                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.lessOrEqualtoOneCase"
                                     )}
                                 </SubHeadText>
                             </th>
@@ -71,12 +77,12 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                                     <Stack direction="column">
                                         <SubHeadText align="left">
                                             {t(
-                                                "common.dashboard.countryContextSection.epidemiologicalProfile.malariaFree"
+                                                "common.dashboard.countryContextDashboards.epidemiologicalProfile.malariaFree"
                                             )}
                                         </SubHeadText>
                                         <SubHeadText align="left">
                                             {t(
-                                                "common.dashboard.countryContextSection.epidemiologicalProfile.zeroCases"
+                                                "common.dashboard.countryContextDashboards.epidemiologicalProfile.zeroCases"
                                             )}
                                         </SubHeadText>
                                     </Stack>
@@ -103,12 +109,16 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                             </th>
                             <th>
                                 <SubHeadText align="left">
-                                    {t("common.dashboard.countryContextSection.epidemiologicalProfile.estimatedCases")}
+                                    {t(
+                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.estimatedCases"
+                                    )}
                                 </SubHeadText>
                             </th>
                             <th>
                                 <SubHeadText align="left">
-                                    {t("common.dashboard.countryContextSection.epidemiologicalProfile.estimatedDeaths")}
+                                    {t(
+                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.estimatedDeaths"
+                                    )}
                                 </SubHeadText>
                             </th>
                         </tr>

@@ -6,7 +6,7 @@ import { setMolecularMarker } from "../../store/actions/treatment-actions";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
 import { logEventAction } from "../../store/actions/base-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
-import { Option } from "../../pages/dashboards/ContentsFilterSection";
+import { Option } from "../../pages/dashboards/common/types";
 
 export type pfkelch13 = 1;
 export type pfcrt = 2;

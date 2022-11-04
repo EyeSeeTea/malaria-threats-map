@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
+
 import MolecularMarkerDashboard from "./MolecularMarkerOverTimeDashboard";
 
 const MolecularMarkerStudies: React.FC = () => {
@@ -10,7 +11,7 @@ const MolecularMarkerStudies: React.FC = () => {
     return (
         <Container>
             <TitleDivider />
-            <Title id="molecular-marker">{t("common.dashboard.MolecularMarkerSection.title")}</Title>
+            <Title id="molecular-marker">{t("common.dashboard.molecularMarkerDashboards.title")}</Title>
             <MolecularMarkerDashboard />
         </Container>
     );

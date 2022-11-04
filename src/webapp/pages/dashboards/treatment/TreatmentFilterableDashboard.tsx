@@ -1,18 +1,17 @@
-import { Button, Card, Fab, Grid, Stack } from "@mui/material";
-import Highcharts from "highcharts";
+import { Button, Card, Grid, Stack } from "@mui/material";
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import TreatmentFilters from "./filters/TreatmentFilters";
-import More from "highcharts/highcharts-more";
+
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import DownloadIcon from "@mui/icons-material/Download";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import InformationModal from "../../../components/dashboards/InformationModal";
 import HighchartsReact from "highcharts-react-official";
 import { toPng } from "html-to-image";
 import { MolecularMarker } from "../../../components/filters/MolecularMarkerFilter";
+import { useFiltersVisible } from "../common/filters/useFiltersVisible";
+import DashboardTitle from "../common/DashboardTitle";
 
 interface TreatmentFilterableDashboardProps {
     id?: string;
@@ -38,7 +37,6 @@ interface TreatmentFilterableDashboardProps {
     onMolecularMarkerChange: (value: MolecularMarker) => void;
 }
 
-More(Highcharts);
 const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = ({
     id,
     isMolecularMarkerChart = false,
@@ -63,7 +61,7 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
     onMolecularMarkerChange,
     children,
 }) => {
-    const [filtersVisible, setFiltersVisible] = React.useState(true);
+    const { filtersVisible, onChangeFiltersVisible } = useFiltersVisible();
     const [openInfoModal, setOpenInfoModal] = React.useState(false);
     const handleOpenInfoModal = () => setOpenInfoModal(true);
     const handleCloseInfoModal = () => setOpenInfoModal(false);
@@ -71,10 +69,6 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
     const { t } = useTranslation();
 
     const ref = useRef<HTMLDivElement>(null);
-
-    const handleFiltersVisible = React.useCallback(() => {
-        setFiltersVisible(!filtersVisible);
-    }, [filtersVisible]);
 
     React.useEffect(() => {
         if (Array.isArray(chartComponentRef?.current)) {
@@ -105,17 +99,14 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
 
     return (
         <React.Fragment>
-            <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Title id={id}>{title}</Title>
-                <Stack direction="row" spacing={2}>
-                    <Fab color="primary" size="small">
-                        <InfoOutlinedIcon sx={{ color: "white", width: "20px" }} onClick={handleOpenInfoModal} />
-                    </Fab>
-                    <Fab color="primary" size="small" onClick={handleDownload}>
-                        <DownloadIcon sx={{ color: "white" }} />
-                    </Fab>
-                </Stack>
-            </Stack>
+            <DashboardTitle
+                id={id}
+                title={title}
+                onInfoClick={handleOpenInfoModal}
+                onDownloadClick={handleDownload}
+                showActions={true}
+            />
+
             <Grid container spacing={2} ref={ref} sx={{ marginBottom: 3 }}>
                 {filtersVisible && (
                     <Grid item md={3} xs={12}>
@@ -137,10 +128,10 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                                 onYearsChange={onYearsChange}
                                 onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
                                 onExcludeLowerSamplesChange={onExcludeLowerSamplesChange}
-                                onCollapse={handleFiltersVisible}
+                                onCollapse={onChangeFiltersVisible}
                             ></TreatmentFilters>
                             <StudiesCountCard elevation={0}>
-                                {t("common.dashboard.therapeuticEfficacySection.numStudies", {
+                                {t("common.dashboard.therapeuticEfficacyDashboards.numStudies", {
                                     count: studiesCount,
                                 })}
                             </StudiesCountCard>
@@ -150,7 +141,7 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                 <Grid item md={filtersVisible ? 9 : 12} xs={12}>
                     <DasboardCard elevation={0}>
                         {!filtersVisible && (
-                            <Button startIcon={<FilterAltIcon />} onClick={handleFiltersVisible}>
+                            <Button startIcon={<FilterAltIcon />} onClick={onChangeFiltersVisible}>
                                 {"Filter data"}
                             </Button>
                         )}
@@ -178,11 +169,4 @@ const DasboardCard = styled(Card)`
 
 const StudiesCountCard = styled(Card)`
     padding: 24px;
-`;
-
-const Title = styled.h3`
-    font-size: 23px;
-    margin-bottom: 30px;
-    color: #2ba681;
-    text-transform: uppercase;
 `;

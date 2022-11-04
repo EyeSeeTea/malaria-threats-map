@@ -37,7 +37,8 @@ export const filterPreventionStudies = (
     from: Source = "map"
 ) => {
     const filters = buildPreventionFilters(preventionFilters, yearFilters, region, from);
-    return filters.reduce((studies, filter) => studies.filter(filter), studies);
+    const result = filters.reduce((studies, filter) => studies.filter(filter), studies);
+    return result;
 };
 
 export const filterDiagnosisStudies = (
@@ -146,7 +147,11 @@ export const filterByProxyType = (type: string) => (study: any) => {
 };
 
 export const filterByTypes = (types: string[]) => (study: any) => {
-    return !types.length || types.includes(study.TYPE);
+    return !types || !types.length || types.includes(study.TYPE);
+};
+
+export const filterByOnlyDataByHealthMinistries = (value: boolean) => (study: PreventionStudy) => {
+    return value ? study.INSTITUTION_TYPE === "MoH" : true;
 };
 
 export const filterByTypeSynergist = (synergistTypes: string[]) => (study: any) => {
@@ -389,25 +394,27 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
                 filterByResistanceStatus,
                 filterByInsecticideClass(preventionFilters.insecticideClass),
                 filterByInsecticideTypes(preventionFilters.insecticideTypes),
-                filterByType(preventionFilters.type),
+                filterByTypes(preventionFilters.type),
                 filterBySpecies(preventionFilters.species),
                 filterByYearRange(filters),
                 filterByRegion(region),
+                filterByOnlyDataByHealthMinistries(preventionFilters.onlyByHealthMinistries),
             ];
         case PreventionMapType.INTENSITY_STATUS:
             return [
                 filterByIntensityStatus,
                 filterByInsecticideClass(preventionFilters.insecticideClass),
                 filterByInsecticideTypes(preventionFilters.insecticideTypes),
-                filterByType(preventionFilters.type),
+                filterByTypes(preventionFilters.type),
                 filterBySpecies(preventionFilters.species),
                 filterByYearRange(filters),
                 filterByRegion(region),
+                filterByOnlyDataByHealthMinistries(preventionFilters.onlyByHealthMinistries),
             ];
         case PreventionMapType.RESISTANCE_MECHANISM: {
             const base = [
                 filterByResistanceMechanism,
-                filterByType(preventionFilters.type),
+                filterByTypes(preventionFilters.type),
                 filterBySpecies(preventionFilters.species),
                 filterByAssayTypes(preventionFilters.assayTypes),
                 filterByYearRange(filters),
@@ -444,7 +451,7 @@ function buildPreventionFiltersByDownload(
                 filterByAssayTypes([preventionFilters.dataset]),
                 filterByInsecticideClass(preventionFilters.insecticideClass),
                 filterByInsecticideTypes(preventionFilters.insecticideTypes),
-                filterByType(preventionFilters.type),
+                filterByTypes(preventionFilters.type),
                 filterBySpecies(preventionFilters.species),
                 filterByRegion(region),
                 filterByYearRange(filters),
@@ -454,7 +461,7 @@ function buildPreventionFiltersByDownload(
             return [
                 filterByDownload(),
                 filterByAssayTypes([preventionFilters.dataset]),
-                filterByType(preventionFilters.type),
+                filterByTypes(preventionFilters.type),
                 filterBySpecies(preventionFilters.species),
                 filterByRegion(region),
                 filterByYearRange(filters),

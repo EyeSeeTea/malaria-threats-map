@@ -41,7 +41,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
 
     return (
         <TreatmentFilterableDashboard
-            title={t("common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.title")}
+            title={t("common.dashboard.therapeuticEfficacyDashboards.treatmentFailureByDrug.title")}
             type="treatmentFailureByDrug"
             drugsMultiple={true}
             drugsClearable={true}
@@ -60,7 +60,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
         >
             <Stack direction="column" alignItems="center" id="summary-treatment-failures">
                 <Typography variant="body2" fontWeight="bold">
-                    {t("common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.studyOutcome")}
+                    {t("common.dashboard.therapeuticEfficacyDashboards.treatmentFailureByDrug.studyOutcome")}
                 </Typography>
                 <Stack
                     direction="row"
@@ -72,14 +72,16 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
                     <Stack direction="row" alignItems="center" spacing={1}>
                         <LegendIcon color={treatmentByDrugColors[0]} />
                         <Typography variant="body2">
-                            {t("common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.lessThan10Patients")}
+                            {t(
+                                "common.dashboard.therapeuticEfficacyDashboards.treatmentFailureByDrug.lessThan10Patients"
+                            )}
                         </Typography>
                     </Stack>
                     <Stack direction="row" alignItems="center" spacing={1}>
                         <LegendIcon color={treatmentByDrugColors[1]} />
                         <Typography variant="body2">
                             {t(
-                                "common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.moreOrEqualThan10Patients"
+                                "common.dashboard.therapeuticEfficacyDashboards.treatmentFailureByDrug.moreOrEqualThan10Patients"
                             )}
                         </Typography>
                     </Stack>
@@ -115,7 +117,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
             </div>
             <Stack direction="column" alignItems="center" sx={{ marginBottom: 4 }}>
                 <Typography variant="body2" fontWeight="bold">
-                    {t("common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.numStudies")}
+                    {t("common.dashboard.therapeuticEfficacyDashboards.treatmentFailureByDrug.numStudies")}
                 </Typography>
             </Stack>
             <Stack direction="column">

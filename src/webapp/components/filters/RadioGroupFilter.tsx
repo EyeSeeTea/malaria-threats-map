@@ -20,19 +20,40 @@ const StyledFormControlLabel = styled(FormControlLabel)`
 
 type RadioGroupProps = {
     label: string;
+    labelFontSize?: string;
+    labelFontWeight?: string;
     options: Option[];
     handleChange: (event: React.ChangeEvent<unknown>) => void;
     value: string;
+    margin?: string;
+    padding?: string;
+    background?: string;
 };
 
-function RadioGroupFilter({ label, options, handleChange, value }: RadioGroupProps) {
+function RadioGroupFilter({
+    label,
+    options,
+    handleChange,
+    value,
+    margin,
+    padding,
+    background,
+    labelFontSize,
+    labelFontWeight,
+}: RadioGroupProps) {
     return (
-        <FilterColumContainer>
-            <Typography color="dimgray" component="legend" variant="body2">
+        <FilterColumContainer margin={margin} padding={padding} background={background}>
+            <Typography
+                color="dimgray"
+                component="legend"
+                fontSize={labelFontSize}
+                fontWeight={labelFontWeight}
+                variant="body2"
+            >
                 {label}
             </Typography>
             <Divider />
-            <RadioGroup value={value} onChange={handleChange}>
+            <RadioGroup value={value} onChange={handleChange} sx={{ paddingLeft: 2 }}>
                 {options.map((option: Option) => (
                     <StyledFormControlLabel
                         key={option.value}

@@ -7,9 +7,9 @@ const CountryContextSource: React.FC = () => {
 
     return (
         <React.Fragment>
-            <Typography display="inline">{t("common.dashboard.countryContextSection.source")}&nbsp;</Typography>
+            <Typography display="inline">{t("common.dashboard.countryContextDashboards.source")}&nbsp;</Typography>
             <a href="https://www.who.int/publications/i/item/9789240040496" color="blue">
-                {t("common.dashboard.countryContextSection.whoWorldMalariaReport")}
+                {t("common.dashboard.countryContextDashboards.whoWorldMalariaReport")}
             </a>
         </React.Fragment>
     );

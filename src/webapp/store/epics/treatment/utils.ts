@@ -7,6 +7,7 @@ import { SiteSelection } from "../../types";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../components/filters/PlasmodiumSpeciesFilter";
 import { isNotNull } from "../../../utils/number-utils";
+import LineSymbol from "../../../assets/img/line.svg";
 
 export function createTreatmentSelectionData(
     theme: string,
@@ -30,6 +31,7 @@ export function createTreatmentSelectionData(
     const subtitle = `${plasmodiumSpecies}, ${i18next.t(sortedStudies[0].DRUG_NAME)}`;
 
     return {
+        kind: "common",
         title: siteFilteredStudies.length > 0 ? getSiteTitle(theme, siteFilteredStudies[0]) : "",
         subtitle,
         filterOptions: [],
@@ -69,13 +71,13 @@ function createTreatmentFailureChartData(studies: TreatmentStudy[]): TreatmentCh
             name: "treatment_failure_km",
             color: "#C0575B",
             marker: {
-                symbol: "diamond",
+                symbol: `url(${LineSymbol})`,
             },
         },
         PLASMODIUM_SPECIES === "P._FALCIPARUM"
             ? {
                   name: "positive_day_3",
-                  color: "#FCCFA6",
+                  color: "#FB6A4A",
                   marker: {
                       symbol: "square",
                   },
@@ -89,7 +91,6 @@ function createTreatmentFailureChartData(studies: TreatmentStudy[]): TreatmentCh
         return {
             name: i18next.t(`common.treatment.chart.treatment_failure.${key.name}`),
             color: key.color,
-            lineWidth: 0,
             marker: key.marker,
             data: years.map(year => {
                 const yearFilters: any = studies.filter(study => parseInt(year) === parseInt(study.YEAR_START))[0];
@@ -122,7 +123,9 @@ function createTreatmentAditionalInfo(studies: TreatmentStudy[]): AditionalInfor
                     : "";
 
             const numberOfPatients = `${studyObject.N} patients included`;
-            const followUp = `${studyObject.FOLLOW_UP} days follow-up. `;
+            const followUp = `${studyObject.FOLLOW_UP}${i18next.t(
+                "common.treatment.chart.treatment_failure.follow_up"
+            )}`;
 
             return {
                 year,
@@ -136,5 +139,5 @@ function createTreatmentAditionalInfo(studies: TreatmentStudy[]): AditionalInfor
         }
     });
 
-    return _.compact(aditionalInfoByYears);
+    return _.compact(_.orderBy(aditionalInfoByYears, "year", "desc"));
 }

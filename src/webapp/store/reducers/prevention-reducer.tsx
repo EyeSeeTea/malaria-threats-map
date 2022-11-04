@@ -20,6 +20,7 @@ const initialState: PreventionState = Object.freeze({
         proxyType: null,
         type: null,
         species: [],
+        onlyByHealthMinistries: false,
     },
     selectionStudies: [],
 });
@@ -72,6 +73,10 @@ function updateAssayTypes(assayTypes: string[]) {
     return updateFilter("assayTypes", assayTypes, []);
 }
 
+function updateOnlyByHealthMinistries(value: boolean) {
+    return updateFilter("onlyByHealthMinistries", value, false);
+}
+
 export default createReducer<PreventionState>(initialState, {
     [ActionTypeEnum.FetchPreventionStudiesRequest]: () => (state: PreventionState) => ({
         ...state,
@@ -102,6 +107,7 @@ export default createReducer<PreventionState>(initialState, {
         ...state,
         selectionStudies: studies,
     }),
+    [ActionTypeEnum.SetOnlyByHealthMinistries]: updateOnlyByHealthMinistries,
 });
 
 const selectPreventionState = (state: State) => state.prevention;

@@ -17,8 +17,8 @@ const ExcludeLowerPatientsSelector: React.FC<ExcludeLowerPatientsSelectorProps> 
             onChange={onChange}
             value={value}
             background="transparent"
-            onlyYMargin
-            onlyYPadding
+            margin={"10px 0px"}
+            padding={"10px 0px"}
             fontWeight={fontWeight}
         />
     );

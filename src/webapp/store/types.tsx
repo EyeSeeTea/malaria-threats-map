@@ -128,8 +128,9 @@ export interface PreventionFilters {
     synergistTypes: string[];
     assayTypes: string[];
     proxyType: string | null;
-    type: string | null;
+    type: string[] | null;
     species: string[];
+    onlyByHealthMinistries: boolean;
 }
 
 export interface PreventionState {

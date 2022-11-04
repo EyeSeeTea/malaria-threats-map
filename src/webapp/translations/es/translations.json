@@ -89,25 +89,32 @@
                 },
                 "note": "Nota: Actualmente, los tableros solo están disponibles para dos de los cuatro temas: resistencia a los insecticidas de vectores y eficacia y resistencia a los medicamentos antipalúdicos. Los tableros continuarán desarrollándose a medida que haya más datos disponibles."
             },
-            "contentsSection": {
+            "dashboardsFilterSection": {
                 "title": "Contenidos:",
-                "countryOptions": {
+                "countryContextOptions": {
                     "countryContext": "Contexto del país",
                     "epidemiologicalProfile": "Perfil epidemiológico",
-                    "majorPlasmodium": "Principales especies de Plasmodium y régimen de tratamiento"
+                    "majorPlasmodium": "Principales especies de Plasmodium y régimen de tratamiento",
+                    "majorAnophelesSpecies": "Principales especies de Anopheles",
+                    "summaryInsecticideResistance": "Resumen de la resistencia a los insecticidas"
                 },
-                "therapeuticResultsOptions": {
+                "therapeuticEfficacyOptions": {
                     "therapeuticEfficacy": "Resultados del estudio de eficacia terapéutica",
                     "summaryTreatmentFailures": "Resumen de las tasas de fracaso del tratamiento por fármaco",
                     "treatmentFailureRates": "Tasas de fracaso del tratamiento a lo largo del tiempo",
                     "parasiteClearanceRates": "Índices de eliminación de parásitos a lo largo del tiempo"
                 },
-                "molecularResultsOptions": {
+                "molecularMarkerOptions": {
                     "molecularMarker": "Resultados del estudio de marcadores moleculares",
                     "summaryMolecularMarker": "Resumen de los resultados del estudio de marcadores moleculares a lo largo del tiempo"
+                },
+                "phenotypicInsecticideResistanceOptions": {
+                    "phenotypicInsecticideResistance": "Resistencia fenotípica a insecticidas",
+                    "statusOfResistanceToInsecticides": "Estado de la resistencia a los insecticidas",
+                    "mosquitoOverTime": "Mosquito Over Time"
                 }
             },
-            "countryContextSection": {
+            "countryContextDashboards": {
                 "title": "Contexto del país",
                 "source": "Fuente:",
                 "whoWorldMalariaReport": "Informe mundial sobre el paludismo de la OMS 2021",
@@ -132,9 +139,21 @@
                     "country": "País",
                     "species": "Especies principales de Plasmodium (%)",
                     "firstLineTreatments": "Tratamientos de primera línea para la malaria sin complicaciones"
+                },
+                "majorAnophelesSpecies": {
+                    "title": "PRINCIPALES ESPECIES DE ANOFELES",
+                    "country": "País",
+                    "species": "Principales especies de Anopheles"
+                },
+                "summaryInsecticideResistance": {
+                    "title": "RESUMEN DE RESISTENCIA A INSECTICIDAS",
+                    "country": "País",
+                    "vectorSpecies": "Especies de vectores que han demostrado resistencia confirmada a uno o más insecticidas",
+                    "insecticideClasses": "Clases de insecticidas a las que se ha detectado resistencia",
+                    "resistanceMechanisms": "Mecanismos de resistencia detectados"
                 }
             },
-            "therapeuticEfficacySection": {
+            "therapeuticEfficacyDashboards": {
                 "title": "Estudios de eficacia terapéutica (EET)",
                 "numStudies": "Los filtros aplicados producen {{count}} estudios",
                 "treatmentFailureByDrug": {
@@ -156,8 +175,8 @@
                     "parasitemiaOnDay3": "Porcentaje de pacientes con parasitemia en el día 3 (%)"
                 }
             },
-            "MolecularMarkerSection": {
-                "title": "Estudios de marcadores moleculares",
+            "molecularMarkerDashboards": {
+                "title": "Molecular marker studies",
                 "molecularMarkerOverTime": {
                     "title": "RESULTADOS DEL ESTUDIO DE MARCADORES MOLECULARES A LO LARGO DEL TIEMPO",
                     "numStudies": "Número de estudios",
@@ -166,6 +185,26 @@
                     "artemisininChartSubtitle": "moleculares validados o candidatos de resistencia a la artemisinina:",
                     "mutationsChartTitle": "Estudios donde se detectaron mutaciones en:",
                     "multipleChartTitle": "Estudios en los que se detectaron varios números de copia en:"
+                }
+            },
+            "phenotypicInsecticideResistanceDashboards": {
+                "title": "Resistencia fenotípica a insecticidas",
+                "numBioassaysByCategory": "El siguiente número de bioensayos cumple con el filtro aplicado:",
+                "numBioassays": "{{count}} bioensayos cumplen con el filtro aplicado",
+                "numSites": "Numbero de sitios",
+                "insecticideResistanceStatus": "Estado de resistencia a insecticidas",
+                "byInsecticideClass": "Por clase de insecticida",
+                "byInsecticide": "Por insecticida",
+                "confirmed": "Confirmado (0 a <90%)",
+                "possible": "Posible (90 a <98%)",
+                "susceptible": "Susceptible (≥98%)",
+                "statusOfResistanceToInsecticides": {
+                    "title": "ESTADO DE RESISTENCIA A INSECTICIDAS"
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MORTALIDAD DE MOSQUITOS A LO LARGO DEL TIEMPO",
+                    "adjustedMortality": "Mortalidad ajustada",
+                    "year": "Año"
                 }
             },
             "treatmentFilters": {
@@ -305,6 +344,19 @@
             },
             "sectionsFooter": "Los formularios cumplimentados pueden enviarse a: <2>vectorsurveillance@who.int</2>"
         },
+        "contactPage": {
+            "title": "Contribuye al Mapa de Amenazas de la Malaria compartiendo tus <strong>comentarios</strong>",
+            "section1": {
+                "title": "Comentarios y consultas generales",
+                "description": "Estamos deseando saber cómo utiliza el MTM y cómo podemos mejorar la plataforma para todos sus usuarios. Para ponerse en contacto con el equipo de MTM, envíe un correo electrónico a <1>gmp-maps@who.int</1>"
+            },
+            "section2": {
+                "title1": "Presentación de datos",
+                "description1": "Si desea enviar datos al MTM, utilice el portal <2>compartir datos</2>.",
+                "title2": "Soporte técnico",
+                "description2": "Si tiene algún problema técnico con la plataforma, póngase en contacto con el equipo informático a través de la pestaña \"Informar de errores\" situada en la parte derecha de la página. Los comentarios enviados aquí irán directamente al equipo de TI."
+            }
+        },
         "footer": {
             "policies": {
                 "title": "Políticas",
@@ -357,6 +409,7 @@
             "chart": {
                 "not_reported": "NR: no reportado",
                 "other_insecticide_class_label": "Otros insecticidas a los que se detectó resistencia en este sitio:",
+                "other_mechanisms": "Otros mecanismos detectados",
                 "other_insecticide_class_none": "Ninguno",
                 "resistance": {
                     "mosquito_mortality": "% de mortalidad en los mosquitos",
@@ -371,7 +424,8 @@
                     "title": "Número de pruebas de mecanismos",
                     "allelic": "Frecuencias alélicas",
                     "count": "Número de pruebas",
-                    "frequency": "Frecuencia (%)"
+                    "frequency": "Frecuencia (%)",
+                    "not_reported": "No reportado"
                 },
                 "synergist_involvement": {
                     "no_synergist": "No sinergista"
@@ -418,6 +472,20 @@
                     "help": {
                         "p1": "Este mapa presenta datos de <1>bioensayos de insecticidas sinérgicos</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En los sitios donde los estudios muestran resultados variables, el color del punto está determinada por los resultados más recientes.",
                         "p2": "Para obtener información sobre cómo se clasifica la participación de los sinergistas, consulte el <1 href='/'>Manual de la OMS para el control de la resistencia</1>.",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
+                    }
+                },
+                "chlorfenapyr_undetermined": {
+                    "help": {
+                        "p1": "Los puntos grises representan los datos recopilados con la concentración de discriminación recomendada de 100 µg/botella, pero que no coinciden completamente con los criterios de la OMS para la validación de la prueba, ya sea porque no se informó la temperatura o porque la temperatura cayó fuera del rango recomendado (27 °C ± 2 °C). C), porque no se probó ninguna cepa de mosquito susceptible en paralelo o porque no se informaron los resultados de la cepa de mosquito susceptible.",
+                        "p2": "",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
+                    }
+                },
+                "pirimiphos_methly_undetermined": {
+                    "help": {
+                        "p1": "Los puntos grises representan los datos recopilados con la concentración de discriminación de pirimifos-metilo recomendada anteriormente de 0,25 %. Estos datos deben validarse con las nuevas concentraciones discriminatorias disponibles en el Manual de la OMS para monitorear la resistencia a insecticidas en mosquitos vectores y seleccionar las intervenciones apropiadas. <4 href='https://www.who.int/publications/i/item/9789240051089'>https://www.who.int/publications/i/item/9789240051089</4>.",
+                        "p2": "",
                         "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
                     }
                 }
@@ -541,7 +609,7 @@
                     "sampling_method": "Método de recolección",
                     "study_identification_method": "Método de identificación de especies",
                     "data_collection": "Agrademicimientos por la recopilación de datos",
-                    "no_available": "No disponible"
+                    "not_recorded": "No registrado"
                 }
             },
             "legend": {
@@ -578,8 +646,8 @@
                 "invasive": "Hay {{studies}} detecciones de vectores encontrados con los criterios especificados"
             },
             "insecticide_class": "Clase de insecticida",
-            "insecticide_type": "Tipo de insecticida",
-            "select_insecticide_type": "Seleccionar tipo de insecticida",
+            "insecticide_type": "Insecticida",
+            "select_insecticide_type": "Seleccionar insecticida",
             "test_type": "Tipo de ensayo",
             "select_test_type": "Seleccionar tipo de ensayo",
             "vector_species": "Especies vectoras",
@@ -609,8 +677,11 @@
             "select_sub_region": "Seleccionar subregión",
             "select_site": "Seleccionar sitio",
             "site": "Sitio",
-            "exclude_lower_patients": "Excluir los estudios con menos de 20 pacientes",
-            "exclude_lower_samples": "Excluir estudios de menos de 20 muestras"
+            "exclude_lower_patients": "Excluir estudios de menos de 20 pacientes",
+            "exclude_lower_samples": "Excluir estudios de menos de 20 muestras",
+            "onlyIncludeBioassays": "Solo incluya bioensayos con más de la cantidad de mosquitos que fluye",
+            "zero_all_bioassays": "0 (todos los bioensayos)",
+            "only_include_data_by_health": "Incluir solo los datos proporcionados a la OMS por los ministerios de salud"
         },
         "topbar": {
             "menu": "Menú",
@@ -1020,7 +1091,8 @@
         "theme": "Tema",
         "selectMapType": "SELECCIONA TIPO DE MAPA",
         "mapType": "Mapa",
-        "selectData": "FILTRO DE DATOS (OPCIONAL)",
+        "selectDataMap": "FILTRO DE DATOS",
+        "selectDataDownload": "FILTRO DE DATOS (OPCIONAL)",
         "data": "Datos",
         "selectLocation": "FILTRO DE LOCALIZACIÓN (OPCIONAL)",
         "location": "Localización",

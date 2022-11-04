@@ -6,16 +6,28 @@ import { sendMultiFilterAnalytics } from "../../../utils/analytics";
 import { Typography } from "@mui/material";
 
 type Props = {
+    labelPosition?: "top" | "middle";
+    margin?: string;
     label?: string;
     options: Option[];
     placeholder?: string;
     onChange: (selection: string[]) => void;
     value: string[];
     analyticsMultiFilterAction?: string;
-    onlyYMargin?: boolean;
+    isClearable?: boolean;
 };
 
-function MultiFilter({ label, options, onChange, value, analyticsMultiFilterAction, placeholder, onlyYMargin }: Props) {
+function MultiFilter({
+    labelPosition = "middle",
+    label,
+    options,
+    onChange,
+    value,
+    analyticsMultiFilterAction,
+    placeholder,
+    isClearable = false,
+    margin,
+}: Props) {
     const onSelectionChange = (options: Option[] = []) => {
         onChange((options || []).map(o => o.value));
 
@@ -24,24 +36,31 @@ function MultiFilter({ label, options, onChange, value, analyticsMultiFilterActi
         }
     };
 
-    const selections = options.filter(option => value.includes(option.value));
+    const selections = options.filter(option => value && value.includes(option.value));
 
     return (
-        <FilterRowContainer onlyYMargin={onlyYMargin}>
-            {label && selections && selections.length > 0 && (
-                <Typography component="legend" variant="body2">
-                    {`${label}:`}&nbsp;
+        <React.Fragment>
+            {label && labelPosition === "top" && (
+                <Typography variant="body2" fontWeight={"bold"}>
+                    {label}
                 </Typography>
             )}
-            <IntegrationReactSelect
-                isMulti
-                isClearable={false}
-                placeholder={placeholder}
-                suggestions={options}
-                onChange={onSelectionChange}
-                value={selections}
-            />
-        </FilterRowContainer>
+            <FilterRowContainer margin={margin}>
+                {label && labelPosition === "middle" && selections && selections.length > 0 && (
+                    <Typography component="legend" variant="body2">
+                        {`${label}:`}&nbsp;
+                    </Typography>
+                )}
+                <IntegrationReactSelect
+                    isMulti
+                    isClearable={isClearable}
+                    placeholder={placeholder}
+                    suggestions={options}
+                    onChange={onSelectionChange}
+                    value={selections}
+                />
+            </FilterRowContainer>
+        </React.Fragment>
     );
 }
 

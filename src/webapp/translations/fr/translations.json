@@ -89,25 +89,32 @@
                 },
                 "note": "Remarque : Les tableaux de bord ne sont actuellement disponibles que pour deux des quatre thèmes : la résistance des vecteurs aux insecticides et l'efficacité et la résistance des médicaments antipaludiques. Les tableaux de bord continueront à se développer au fur et à mesure que de nouvelles données seront disponibles."
             },
-            "contentsSection": {
+            "dashboardsFilterSection": {
                 "title": "Contenu:",
-                "countryOptions": {
+                "countryContextOptions": {
                     "countryContext": "Contexte du pays",
                     "epidemiologicalProfile": "Profil épidémiologique",
-                    "majorPlasmodium": "Principales espèces de Plasmodium et régime de traitement"
+                    "majorPlasmodium": "Principales espèces de Plasmodium et régime de traitement",
+                    "majorAnophelesSpecies": "Espèces majeures d'anophèles",
+                    "summaryInsecticideResistance": "Résumé de la résistance aux insecticides"
                 },
-                "therapeuticResultsOptions": {
+                "therapeuticEfficacyOptions": {
                     "therapeuticEfficacy": "Résultats des études sur l'efficacité thérapeutique",
                     "summaryTreatmentFailures": "Résumé des taux d'échec thérapeutique par médicament",
                     "treatmentFailureRates": "Taux d'échec des traitements dans le temps",
                     "parasiteClearanceRates": "Taux d'élimination des parasites dans le temps"
                 },
-                "molecularResultsOptions": {
+                "molecularMarkerOptions": {
                     "molecularMarker": "Résultats de l'étude des marqueurs moléculaires",
                     "summaryMolecularMarker": "Résumé des résultats des études sur les marqueurs moléculaires au fil du temps"
+                },
+                "phenotypicInsecticideResistanceOptions": {
+                    "phenotypicInsecticideResistance": "Résistance phénotypique aux insecticides",
+                    "statusOfResistanceToInsecticides": "Etat de résistance aux insecticides",
+                    "mosquitoOverTime": "Mosquito Over Time"
                 }
             },
-            "countryContextSection": {
+            "countryContextDashboards": {
                 "title": "Contexte du pays",
                 "source": "La source:",
                 "whoWorldMalariaReport": "Rapport 2021 de l'OMS sur le paludisme dans le monde",
@@ -132,9 +139,21 @@
                     "country": "Pays",
                     "species": "Espèces majeures de Plasmodium (%)",
                     "firstLineTreatments": "Traitements de 1ère ligne pour le paludisme non compliqué"
+                },
+                "majorAnophelesSpecies": {
+                    "title": "ESPÈCES MAJEURES D'ANOPHÈLES",
+                    "country": "Pays",
+                    "species": "Espèces majeures d'anophèles"
+                },
+                "summaryInsecticideResistance": {
+                    "title": "RÉSUMÉ DE LA RÉSISTANCE AUX INSECTICIDES",
+                    "country": "Pays",
+                    "vectorSpecies": "Espèces vectrices ayant démontré une résistance confirmée à un ou plusieurs insecticides",
+                    "insecticideClasses": "Classes d'insecticides pour lesquelles une résistance a été détectée",
+                    "resistanceMechanisms": "Mécanismes de résistance détectés"
                 }
             },
-            "therapeuticEfficacySection": {
+            "therapeuticEfficacyDashboards": {
                 "title": "Études d'efficacité thérapeutique (EET)",
                 "numStudies": "Les filtres appliqués génèrent {{count}} études",
                 "treatmentFailureByDrug": {
@@ -156,8 +175,8 @@
                     "parasitemiaOnDay3": "Pourcentage de patients atteints de parasitémie au jour 3 (%)"
                 }
             },
-            "MolecularMarkerSection": {
-                "title": "Études de marqueurs moléculaires",
+            "molecularMarkerDashboards": {
+                "title": "Molecular marker studies",
                 "molecularMarkerOverTime": {
                     "title": "RÉSUMÉ DES RÉSULTATS DE L'ÉTUDE DES MARQUEURS MOLÉCULAIRES AU FIL DU TEMPS",
                     "numStudies": "Nombre d'études",
@@ -166,6 +185,26 @@
                     "artemisininChartSubtitle": "des marqueurs moléculaires de la résistance à l'artémisinine ont été détectés:",
                     "mutationsChartTitle": "Études où des mutations ont été détectées dans:",
                     "multipleChartTitle": "Études où plusieurs numéros de copie ont été détectés dans:"
+                }
+            },
+            "phenotypicInsecticideResistanceDashboards": {
+                "title": "Résistance phénotypique aux insecticides",
+                "numBioassaysByCategory": "Le nombre suivant d'essais biologiques correspond au filtre appliqué :",
+                "numBioassays": "{{count}} biologiques correspond au filtre appliqué ",
+                "numSites": "Nombre de sites",
+                "insecticideResistanceStatus": "Statut de résistance aux insecticides",
+                "byInsecticideClass": "Par classe d'insecticide",
+                "byInsecticide": "Par insecticide",
+                "confirmed": "Confirmé (0 à <90%)",
+                "possible": "Possible (90 à <98%)",
+                "susceptible": "Susceptible (≥98%)",
+                "statusOfResistanceToInsecticides": {
+                    "title": "ÉTAT DE RÉSISTANCE AUX INSECTICIDES"
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MORTALITÉ DES MOUSTIQUES AU FIL DU TEMPS",
+                    "adjustedMortality": "Mortalité ajustée",
+                    "year": "An"
                 }
             },
             "treatmentFilters": {
@@ -305,6 +344,19 @@
             },
             "sectionsFooter": "Les formulaires complétés peuvent être envoyés à: <2>vectorsurveillance@who.int</2>"
         },
+        "contactPage": {
+            "title": "Contribuez à la carte des menaces du paludisme en partageant votre <strong>feedback</strong>",
+            "section1": {
+                "title": "Commentaires et questions d'ordre général",
+                "description": "Nous sommes impatients de savoir comment vous utilisez le MTM et comment nous pouvons améliorer la plateforme pour tous ses utilisateurs. Pour contacter l'équipe du MTM, écrivez à <1>gmp-maps@who.int</1>"
+            },
+            "section2": {
+                "title1": "Soumission des données",
+                "description1": "Si vous souhaitez soumettre des données au MTM, veuillez utiliser le portail <2>share data</2>.",
+                "title2": "Assistance technique",
+                "description2": "Si vous rencontrez des problèmes techniques avec la plate-forme, veuillez contacter l'équipe informatique en utilisant l'onglet \"Signaler les bugs\" sur le côté droit de la page. Les commentaires soumis ici seront directement transmis à l'équipe informatique."
+            }
+        },
         "footer": {
             "policies": {
                 "title": "Stratégies",
@@ -357,6 +409,7 @@
             "chart": {
                 "not_reported": "NR : non signalé",
                 "other_insecticide_class_label": "Autres insecticides auxquels une résistance a été détectée sur ce site:",
+                "other_mechanisms": "Autres mécanismes détectés",
                 "other_insecticide_class_none": "Rien",
                 "resistance": {
                     "mosquito_mortality": "% mortalité de moustique",
@@ -371,7 +424,8 @@
                     "title": "Nombre d'essais de mécanismes",
                     "allelic": "Fréquence allélique à partir d'analyse moléculaire",
                     "count": "Nombre",
-                    "frequency": "Fréquence (%)"
+                    "frequency": "Fréquence (%)",
+                    "not_reported": "Non signalé"
                 },
                 "synergist_involvement": {
                     "no_synergist": "Pas de synergistes"
@@ -418,6 +472,20 @@
                     "help": {
                         "p1": "This map presents data from <1>synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying results, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how synergist involvement is graded consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
+                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays."
+                    }
+                },
+                "chlorfenapyr_undetermined": {
+                    "help": {
+                        "p1": "Les points gris représentent les données recueillies avec la concentration discriminante recommandée de 100 µg/flacon mais qui ne correspondent pas entièrement aux critères de l'OMS pour la validation du test, soit parce que la température n'a pas été signalée, soit parce que la température est tombée en dehors de la plage recommandée (27 °C ± 2 ° C), parce qu'aucune souche de moustique sensible n'a été testée en parallèle ou parce que les résultats de la souche de moustique sensible n'ont pas été rapportés.",
+                        "p2": "",
+                        "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays."
+                    }
+                },
+                "pirimiphos_methly_undetermined": {
+                    "help": {
+                        "p1": "Les points gris représentent les données recueillies avec la concentration discriminante de pyrimiphos-méthyl précédemment recommandée de 0,25 %. Ces données doivent être validées par rapport aux nouvelles concentrations discriminantes disponibles dans le Manuel de l'OMS pour le suivi de la résistance aux insecticides chez les moustiques vecteurs et la sélection des interventions appropriées. <4 href='https://www.who.int/publications/i/item/9789240051089'>https://www.who.int/publications/i/item/9789240051089</4>.",
+                        "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
                 }
@@ -541,7 +609,7 @@
                     "sampling_method": "Méthode d’échantillonnage",
                     "study_identification_method": "Méthode d’identification des espèces",
                     "data_collection": "Remerciements pour la collecte de données",
-                    "no_available": "Indisponible"
+                    "not_recorded": "Pas enregistré"
                 }
             },
             "legend": {
@@ -578,8 +646,8 @@
                 "invasive": "{{studies}} détections de vecteurs trouvés avec des critères spécifiés"
             },
             "insecticide_class": "Classe d'insecticide",
-            "insecticide_type": "Type d'insecticide",
-            "select_insecticide_type": "Sélectionnez type d'insecticide",
+            "insecticide_type": "Insecticide",
+            "select_insecticide_type": "Sélectionnez insecticide",
             "test_type": "Type de test",
             "select_test_type": "Sélectionnez type de test",
             "vector_species": "Espèces vectorielles",
@@ -609,8 +677,11 @@
             "select_sub_region": "Sélectionnez la sous-région",
             "select_site": "Sélectionnez un site",
             "site": "Site",
-            "exclude_lower_patients": "Exclure les études comportant moins de 20 patients",
-            "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons"
+            "exclude_lower_patients": "Exclure les études portant sur moins de 20 patients",
+            "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons",
+            "onlyIncludeBioassays": "N'inclure que les essais biologiques avec plus que le nombre de moustiques en cours",
+            "zero_all_bioassays": "0 (tous les essais biologiques)",
+            "only_include_data_by_health": "N'inclure que les données fournies à l'OMS par les ministères de la santé"
         },
         "topbar": {
             "menu": "Menu",
@@ -1021,7 +1092,8 @@
         "theme": "Thème",
         "selectMapType": "SÉLECTIONNER LE TYPE DE CARTE",
         "mapType": "Carte",
-        "selectData": "FILTRER LES DONNÉES  (FACULTATIF)",
+        "selectDataMap": "FILTRER LES DONNÉES",
+        "selectDataDownload": "FILTRER LES DONNÉES (FACULTATIF)",
         "data": "Données",
         "selectLocation": "EMPLACEMENT DU FILTRE (FACULTATIF)",
         "location": "Emplacement",

@@ -3,15 +3,15 @@ import styled from "styled-components";
 import { Divider, Paper, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import { selectSelectionData } from "../../store/reducers/base-reducer";
-import { State } from "../../store/types";
-import IntegrationReactSelect from "../BasicSelect";
+import { PreventionFilters, State } from "../../store/types";
+import IntegrationReactSelect, { Option } from "../BasicSelect";
 import FormLabel from "@mui/material/FormLabel";
 import { sendAnalytics } from "../../utils/analytics";
 import Hidden from "../hidden/Hidden";
 import SiteTitle from "../site-title/SiteTitle";
 import CitationNew from "../charts/CitationNew";
 import CurationNew from "../charts/CurationNew";
-import OtherInsecticideClasses from "../layers/prevention/common/OtherInsecticideClasses";
+import OtherInfo from "../layers/prevention/common/OtherInfo";
 import { setSelectionDataFilterSelection } from "../../store/actions/base-actions";
 import PreventionChart from "./prevention/PreventionChart";
 import DiagnosisChart from "./diagnosis/DiagnosisChart";
@@ -20,6 +20,11 @@ import InvasiveChart from "./invasive/InvasiveChart";
 import PreventionMechanismsChart from "./prevention/PreventionMechanismsChart";
 import TreatmentChart from "./treatment/TreatmentChart";
 import AditionalInformation from "../layers/treatment/common/Aditionalnformation";
+import { CommonSelectionData } from "../../store/SelectionData";
+import { InvasiveSelectionData } from "../../store/epics/invasive/types";
+import { PayloadActionCreator } from "typesafe-actions";
+import { ActionTypeEnum } from "../../store/actions";
+import { DiagnosisSelectionData } from "../../store/epics/diagnosis/types";
 
 const Container = styled.div<{ width?: string }>`
     width: ${props => props.width || "100%"};
@@ -67,6 +72,88 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = StateProps & DispatchProps;
 
 const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFilterSelection }: Props) => {
+    const chartCataContent = () => {
+        switch (selectionData.kind) {
+            case "common": {
+                return (
+                    <CommonContent
+                        selectionData={selectionData}
+                        preventionFilters={preventionFilters}
+                        setSelectionFilterSelection={setSelectionFilterSelection}
+                    />
+                );
+            }
+            case "invasive": {
+                return <InvasiveContent selectionData={selectionData} />;
+            }
+            case "diagnosis": {
+                return <DiagnosisContent selectionData={selectionData} />;
+            }
+        }
+    };
+
+    return (
+        <>
+            <Hidden smUp>
+                <Container width={"100%"}>{selectionData && chartCataContent()}</Container>
+            </Hidden>
+            <Hidden smDown>
+                <Container width={"500px"}>{selectionData && chartCataContent()}</Container>
+            </Hidden>
+        </>
+    );
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SelectionDataContent);
+
+const InvasiveContent: React.FC<{ selectionData: InvasiveSelectionData }> = ({ selectionData }) => {
+    return (
+        <>
+            <TopContainer>
+                <SiteTitle title={selectionData.title} />
+            </TopContainer>
+
+            <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
+            <RoundedContainer>
+                {selectionData.data && <InvasiveChart selectionData={selectionData} />}
+
+                {selectionData.dataSources && <CitationNew dataSources={selectionData.dataSources} />}
+                {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
+            </RoundedContainer>
+        </>
+    );
+};
+
+const DiagnosisContent: React.FC<{ selectionData: DiagnosisSelectionData }> = ({ selectionData }) => {
+    return (
+        <>
+            <TopContainer>
+                <SiteTitle title={selectionData.title} />
+                <Typography variant="subtitle2" sx={{ whiteSpace: "pre-line" }}>
+                    {selectionData.subtitle}
+                </Typography>
+            </TopContainer>
+
+            <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
+            <RoundedContainer>
+                {selectionData.data && <DiagnosisChart selectionData={selectionData} />}
+
+                {selectionData.dataSources && (
+                    <CitationNew
+                        dataSources={selectionData.dataSources}
+                        showKey={selectionData.dataSources.length > 1}
+                    />
+                )}
+                {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
+            </RoundedContainer>
+        </>
+    );
+};
+
+const CommonContent: React.FC<{
+    selectionData: CommonSelectionData;
+    preventionFilters: PreventionFilters;
+    setSelectionFilterSelection: PayloadActionCreator<ActionTypeEnum.SetSelectionDataFilterSelection, Option[]>;
+}> = ({ selectionData, preventionFilters, setSelectionFilterSelection }) => {
     const onFiltersChange = (value: any) => {
         sendAnalytics({ type: "event", category: "popup", action: "filter" });
         setSelectionFilterSelection(value);
@@ -80,66 +167,49 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
             case "prevention-mechanism": {
                 return <PreventionMechanismsChart selectionData={selectionData} />;
             }
-            case "diagnosis": {
-                return <DiagnosisChart selectionData={selectionData} />;
-            }
-            case "invasive": {
-                return <InvasiveChart selectionData={selectionData} />;
-            }
             case "treatment": {
                 return <TreatmentChart selectionData={selectionData} />;
             }
         }
     };
 
-    const content = () =>
-        selectionData ? (
-            <>
-                <TopContainer>
-                    <SiteTitle title={selectionData.title} />
-                    <Typography variant="subtitle2">{selectionData.subtitle}</Typography>
-                    {selectionData.filterOptions && selectionData.filterOptions.length > 1 && (
-                        <Flex>
-                            <FormLabel component="legend">Species</FormLabel>
-                            <StyledSelect
-                                isClearable
-                                isMulti
-                                suggestions={selectionData.filterOptions}
-                                onChange={onFiltersChange}
-                                value={selectionData.filterSelection}
-                            />
-                        </Flex>
-                    )}
-                </TopContainer>
-
-                <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
-                <RoundedContainer>
-                    {selectionData.data && chartCataContent()}
-
-                    {selectionData.dataSources && <CitationNew dataSources={selectionData.dataSources} />}
-                    {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
-                    {selectionData.aditionalInformation && (
-                        <AditionalInformation info={selectionData.aditionalInformation} />
-                    )}
-                </RoundedContainer>
-
-                {selectionData.othersDetected.length > 0 && (
-                    <RoundedContainer margin="16px 8px">
-                        <OtherInsecticideClasses otherInsecticideClasses={selectionData.othersDetected} />
-                    </RoundedContainer>
-                )}
-            </>
-        ) : null;
-
     return (
         <>
-            <Hidden smUp>
-                <Container width={"100%"}>{content()}</Container>
-            </Hidden>
-            <Hidden smDown>
-                <Container width={"500px"}>{content()}</Container>
-            </Hidden>
+            <TopContainer>
+                <SiteTitle title={selectionData.title} />
+                <Typography variant="subtitle2" sx={{ whiteSpace: "pre-line" }}>
+                    {selectionData.subtitle}
+                </Typography>
+                {selectionData.filterOptions && selectionData.filterOptions.length > 1 && (
+                    <Flex>
+                        <FormLabel component="legend">Species</FormLabel>
+                        <StyledSelect
+                            isClearable
+                            isMulti
+                            suggestions={selectionData.filterOptions}
+                            onChange={onFiltersChange}
+                            value={selectionData.filterSelection}
+                        />
+                    </Flex>
+                )}
+            </TopContainer>
+
+            <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
+            <RoundedContainer>
+                {selectionData.data && chartCataContent()}
+
+                {selectionData.dataSources && <CitationNew dataSources={selectionData.dataSources} />}
+                {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
+                {selectionData.aditionalInformation && (
+                    <AditionalInformation info={selectionData.aditionalInformation} />
+                )}
+            </RoundedContainer>
+
+            {selectionData.othersDetected.length > 0 && (
+                <RoundedContainer margin="16px 8px">
+                    <OtherInfo title={selectionData.othersTitle} info={selectionData.othersDetected} />
+                </RoundedContainer>
+            )}
         </>
     );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(SelectionDataContent);

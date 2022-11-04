@@ -27,13 +27,46 @@ const SubRegionSelector: React.FC<Props> = ({ region, subRegions = [], setRegion
 
     const onChange = (selection?: string) => {
         if (selection) sendAnalytics({ type: "event", category: "geoFilter", action: "subRegion", label: selection });
-        setRegion({ subRegion: selection });
+        let region: string;
+        switch (selection) {
+            case "AFRICA_CENTRAL_SUB-REGION":
+            case "AFRICA_SOUTH-EAST_SUB-REGION":
+            case "AFRICA_WEST_SUB-REGION":
+                region = "AFRICA";
+                break;
+            case "CARIBBEAN":
+            case "CENTRAL_AMERICA":
+                region = "AMERICAS";
+                break;
+            case "SOUTH_AMERICA":
+                region = "AMERICAS";
+                break;
+            case "GREATER_MEKONG":
+                region = "SOUTH-EAST_ASIA";
+                break;
+        }
+        setRegion({ subRegion: selection, region });
     };
 
-    const suggestions: any[] = (subRegions as Translation[]).map(subRegion => ({
-        label: subRegion.VALUE_,
-        value: subRegion.VALUE_,
-    }));
+    const mapSubregions = (region: string) => {
+        switch (region) {
+            case "AFRICA":
+                return ["AFRICA_CENTRAL_SUB-REGION", "AFRICA_SOUTH-EAST_SUB-REGION", "AFRICA_WEST_SUB-REGION"];
+            case "AMERICAS":
+                return ["CARIBBEAN", "CENTRAL_AMERICA"];
+            case "SOUTH-EAST_ASIA":
+                return ["GREATER_MEKONG"];
+            default:
+                return (subRegions as Translation[]).map(el => el.VALUE_);
+        }
+    };
+
+    const suggestions: any[] = (subRegions as Translation[])
+        .filter(el => (region.region ? mapSubregions(region.region).includes(el.VALUE_) : el))
+        .map(subRegion => ({
+            label: subRegion.VALUE_,
+            value: subRegion.VALUE_,
+        }));
 
     console.log({ suggestions });
 

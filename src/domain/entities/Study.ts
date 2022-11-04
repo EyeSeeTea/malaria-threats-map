@@ -15,6 +15,7 @@ export interface Study {
     Longitude: string;
     INSTITUTION?: string;
     INSTITUTION_CITY?: string;
+    INSTITUTION_TYPE?: string;
     ASSAY_TYPE: string;
     COUNTRY_NAME: string;
     INSECTICIDE_CLASS: string;

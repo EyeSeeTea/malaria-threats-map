@@ -15,7 +15,6 @@
                 "first": "Learn More About",
                 "second": "The Malaria Threats Map"
             },
-
             "dataSection": {
                 "title": "Where do the data come from?",
                 "content": "Data are collected by National Malaria Programmes, their implementation partners, research institutes and non-governmental organizations. They are either provided directly to WHO Global Malaria Programme (GMP) or extracted from publications. All data are quality controlled, incorporated into WHO global databases and then published to the Malaria Threats Map."
@@ -89,25 +88,32 @@
                 },
                 "note": "Note: Dashboards are currently only available for two of the four themes: vector insecticide resistance and antimalarial drug efficacy and resistance. Dashboards will continue to develop as more data becomes available."
             },
-            "contentsSection": {
+            "dashboardsFilterSection": {
                 "title": "Contents:",
-                "countryOptions": {
-                    "countryContext": "Country context",
+                "countryContextOptions": {
+                    "countryContext": "Country Context",
                     "epidemiologicalProfile": "Epidemiological profile",
-                    "majorPlasmodium": "Major Plasmodium species and treatment regimen"
+                    "majorPlasmodium": "Major Plasmodium species and treatment regimen",
+                    "majorAnophelesSpecies": "Major Anopheles species",
+                    "summaryInsecticideResistance": "Summary of insecticide resistance"
                 },
-                "therapeuticResultsOptions": {
+                "therapeuticEfficacyOptions": {
                     "therapeuticEfficacy": "Therapeutic efficacy study results",
                     "summaryTreatmentFailures": "Summary of treatment failure rates by drug",
                     "treatmentFailureRates": "Treatment failure rates over time",
                     "parasiteClearanceRates": "Parasite clearance rates over time"
                 },
-                "molecularResultsOptions": {
+                "molecularMarkerOptions": {
                     "molecularMarker": "Molecular marker study results",
                     "summaryMolecularMarker": "Summary of molecular marker study results over time"
+                },
+                "phenotypicInsecticideResistanceOptions": {
+                    "phenotypicInsecticideResistance": "Phenotypic Insecticide Resistance",
+                    "statusOfResistanceToInsecticides": "Status of resistance to insecticides",
+                    "mosquitoOverTime": "Mosquito Over Time"
                 }
             },
-            "countryContextSection": {
+            "countryContextDashboards": {
                 "title": "Country Context",
                 "source": "Source:",
                 "whoWorldMalariaReport": "WHO. World malaria report 2021",
@@ -132,9 +138,21 @@
                     "country": "Country",
                     "species": "Major Plasmodium species (%)",
                     "firstLineTreatments": "1st line treatments for uncomplicated malaria"
+                },
+                "majorAnophelesSpecies": {
+                    "title": "MAJOR ANOPHELES SPECIES",
+                    "country": "Country",
+                    "species": "Major Anopheles species"
+                },
+                "summaryInsecticideResistance": {
+                    "title": "SUMMARY OF INSECTICIDE RESISTANCE",
+                    "country": "Country",
+                    "vectorSpecies": "Vector species that have demonstrated confirmed resistance to one or more insecticides",
+                    "insecticideClasses": "Insecticide classes to which resistance has been detected",
+                    "resistanceMechanisms": "Resistance mechanisms detected"
                 }
             },
-            "therapeuticEfficacySection": {
+            "therapeuticEfficacyDashboards": {
                 "title": "Therapeutic efficacy studies (TES)",
                 "numStudies": "The applied filters yield {{count}} studies",
                 "treatmentFailureByDrug": {
@@ -156,7 +174,7 @@
                     "parasitemiaOnDay3": "Percentage of patients with parasitemia on day 3 (%)"
                 }
             },
-            "MolecularMarkerSection": {
+            "molecularMarkerDashboards": {
                 "title": "Molecular marker studies",
                 "molecularMarkerOverTime": {
                     "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
@@ -166,6 +184,26 @@
                     "artemisininChartSubtitle": "molecular markers of artemisinin resistance were detected:",
                     "mutationsChartTitle": "Studies where mutations were detected in:",
                     "multipleChartTitle": "Studies where multiple copy numbers were detected in:"
+                }
+            },
+            "phenotypicInsecticideResistanceDashboards": {
+                "title": "Phenotypic insecticide resistance",
+                "numBioassaysByCategory": "The following number of bioassay meet the applied filter:",
+                "numBioassays": "{{count}} bioassays meet the applied filter",
+                "numSites": "Number of sites",
+                "insecticideResistanceStatus": "Insecticide resistance status",
+                "byInsecticideClass": "By Insecticide Class",
+                "byInsecticide": "By Insecticide",
+                "confirmed": "Confirmed (0 to <90%)",
+                "possible": "Possible (90 to <98%)",
+                "susceptible": "Susceptible (≥98%)",
+                "statusOfResistanceToInsecticides": {
+                    "title": "STATUS OF RESISTANCE TO INSECTICIDES"
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MOSQUITO MORTALITY OVER TIME",
+                    "adjustedMortality": "Adjusted mortality",
+                    "year": "Year"
                 }
             },
             "treatmentFilters": {
@@ -305,6 +343,19 @@
             },
             "sectionsFooter": "Completed forms can be sent to: <2>vectorsurveillance@who.int</2>"
         },
+        "contactPage": {
+            "title": "Contribute to the Malaria Threats Map by sharing your <strong>feedback</strong>",
+            "section1": {
+                "title": "General feedback and enquiries",
+                "description": "We are eager to hear how you use the MTM and how we can improve the platform for all its users. To contact the MTM team, email <1>gmp-maps@who.int</1>"
+            },
+            "section2": {
+                "title1": "Data submission",
+                "description1": "If you would like to submit data to the MTM, please use the <2>share data</2> portal.",
+                "title2": "Technical support",
+                "description2": "If you are having any technical issues with the platform, please contact the IT team by using the “Report bugs” tab on the right-hand-side of the page. Feedback submitted here will go directly to the IT team."
+            }
+        },
         "footer": {
             "policies": {
                 "title": "Policies",
@@ -357,6 +408,7 @@
             "chart": {
                 "not_reported": "NR: not reported",
                 "other_insecticide_class_label": "Other insecticides to which resistance was detected in this site:",
+                "other_mechanisms": "Other mechanisms detected",
                 "other_insecticide_class_none": "None",
                 "resistance": {
                     "mosquito_mortality": "% mosquito mortality",
@@ -366,12 +418,12 @@
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via {{insecticideClasses}} with selected {{type}} {{years}}",
                     "number_of_tests": "No. of mosquitoes tested",
-                    "DETECTED": "Detected",
-                    "NOT_DETECTED": "Not detected",
-                    "title": "Number of mechanism assays",
+                    "DETECTED": "Number of assays that detected resistance mechanisms (count)",
+                    "NOT_DETECTED": "Number of assays that did not detect resistance mechanisms (count)",
                     "allelic": "Allelic frequency from molecular assay",
                     "count": "Count",
-                    "frequency": "Frequency (%)"
+                    "frequency": "Frequency (%)",
+                    "not_reported": "Not reported"
                 },
                 "synergist_involvement": {
                     "no_synergist": "No synergist"
@@ -418,6 +470,20 @@
                     "help": {
                         "p1": "This map presents data from <1>synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying results, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how synergist involvement is graded consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
+                        "footer": "Data source: Publications and unpublished reports and information from country offices."
+                    }
+                },
+                "chlorfenapyr_undetermined": {
+                    "help": {
+                        "p1": "Grey dots represent data collected with the recommended discriminating concentration of 100 µg/bottle but that do not fully match WHO criteria for test validation, either because the temperature was not reported, because temperature fell outside of the recommended range (27 °C ± 2 °C), because no susceptible mosquito strain was tested in parallel or because results of the susceptible mosquito strain were not reported.",
+                        "p2": "",
+                        "footer": "Data source: Publications and unpublished reports and information from country offices."
+                    }
+                },
+                "pirimiphos_methly_undetermined": {
+                    "help": {
+                        "p1": "Grey dots represent data collected with the formerly recommended pyrimiphos-methyl discriminating concentration of 0.25%. These data should be validated against the new discriminating concentrations available in the WHO Manual for monitoring insecticide resistance in mosquito vectors and selecting appropriate interventions. <4 href='https://www.who.int/publications/i/item/9789240051089'>https://www.who.int/publications/i/item/9789240051089</4>.",
+                        "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
                 }
@@ -470,7 +536,7 @@
                     "study_years": "Study year(s)",
                     "health_facility_name": "Study conducted at the",
                     "number_of_patients": "patients included",
-                    "follow_up": "days follow-up",
+                    "follow_up": "-day follow-up. ",
                     "confirmed_resist_pv": "Patients with confirmed resistance",
                     "positive_day_3": "Positive after day 3",
                     "treatment_failure_pp": "Patients with treatment failure, per protocol",
@@ -541,7 +607,7 @@
                     "sampling_method": "Sampling method",
                     "study_identification_method": "Species identification method",
                     "data_collection": "Acknowledgement for data curation",
-                    "no_available": "Not available"
+                    "not_recorded": "Not recorded"
                 }
             },
             "legend": {
@@ -578,8 +644,8 @@
                 "invasive": "There are {{studies}} vector detections found with the specified criteria"
             },
             "insecticide_class": "Insecticide class",
-            "insecticide_type": "Insecticide type",
-            "select_insecticide_type": "Select insecticide type",
+            "insecticide_type": "Insecticide",
+            "select_insecticide_type": "Select insecticide",
             "test_type": "Test type",
             "select_test_type": "Select test type",
             "vector_species": "Vector species",
@@ -609,8 +675,11 @@
             "select_sub_region": "Select subregion",
             "select_site": "Select site",
             "site": "Site",
-            "exclude_lower_patients": "Exclude studies with fewer than 20 patients",
-            "exclude_lower_samples": "Exclude studies of less than 20 samples"
+            "exclude_lower_patients": "Exclude studies of less than 20 patients",
+            "exclude_lower_samples": "Exclude studies of less than 20 samples",
+            "onlyIncludeBioassays": "Only include bioassays with more than the flowing number of mosquitoes",
+            "zero_all_bioassays": "0 (all bioassays)",
+            "only_include_data_by_health": "Only include data provided to WHO by ministries of health"
         },
         "topbar": {
             "menu": "Menu",
@@ -1020,7 +1089,8 @@
         "theme": "Theme",
         "selectMapType": "SELECT MAP TYPE",
         "mapType": "Map",
-        "selectData": "FILTER DATA (OPTIONAL)",
+        "selectDataMap": "FILTER DATA",
+        "selectDataDownload": "FILTER DATA (OPTIONAL)",
         "data": "Data",
         "selectLocation": "FILTER LOCATION (OPTIONAL)",
         "location": "Location",

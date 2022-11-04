@@ -324,17 +324,23 @@ export function getLegendMapTypeHelpKey(
 }
 
 function getPreventionLegendMapTypeHelpKey(filters: PreventionFilters): string {
-    switch (filters.mapType) {
-        case PreventionMapType.RESISTANCE_STATUS:
-            return "common.prevention.legend.resistance_status.help";
-        case PreventionMapType.INTENSITY_STATUS:
-            return "common.prevention.legend.resistance_intensity.help";
-        case PreventionMapType.RESISTANCE_MECHANISM:
-            return "common.prevention.legend.resistance_mechanism.help";
-        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
-            return "common.prevention.legend.synergist_involvement.help";
-        default:
-            return "";
+    if (filters.insecticideClass === "PYRROLES" && filters.insecticideTypes.includes("CHLORFENAPYR")) {
+        return "common.prevention.legend.chlorfenapyr_undetermined.help";
+    } else if (filters.insecticideTypes.includes("PIRIMIPHOS-METHYL")) {
+        return "common.prevention.legend.pirimiphos_methly_undetermined.help";
+    } else {
+        switch (filters.mapType) {
+            case PreventionMapType.RESISTANCE_STATUS:
+                return "common.prevention.legend.resistance_status.help";
+            case PreventionMapType.INTENSITY_STATUS:
+                return "common.prevention.legend.resistance_intensity.help";
+            case PreventionMapType.RESISTANCE_MECHANISM:
+                return "common.prevention.legend.resistance_mechanism.help";
+            case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+                return "common.prevention.legend.synergist_involvement.help";
+            default:
+                return "";
+        }
     }
 }
 

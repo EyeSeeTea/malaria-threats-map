@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { AppBar, Toolbar, Box, Container, Hidden, IconButton, Drawer } from "@mui/material";
+import WhoLogoBlue from "../../components/WhoLogoBlue";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./LanguageSelector";
 import { Menu as MenuIcon } from "@mui/icons-material";
@@ -117,6 +118,7 @@ const Header = () => {
                             </MenuContainer>
                             <LanguageSelector />
                         </Hidden>
+                        <WhoLogoBlue width="150px" />
                     </StyledToolbar>
                 </Container>
             </StyledAppBar>

@@ -19,6 +19,10 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
         style: {
             ...ChartStyles,
         },
+        scrollablePlotArea: {
+            minWidth: 520,
+            scrollPositionX: 1,
+        },
     },
     tooltip: {
         enabled: false,
@@ -38,7 +42,12 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
             text: translations.percentage,
         },
     },
-
+    plotOptions: {
+        series: {
+            lineWidth: 0,
+            lineColor: "#FFFFFF", // Fix: show line when marker is selected
+        },
+    },
     series: data,
     legend: {
         itemStyle: {
@@ -68,7 +77,7 @@ const TreatmentChart = ({ selectionData }: Props) => {
     const { t } = useTranslation();
 
     const data = React.useMemo(() => {
-        if (selectionData.data.kind === "treatment") {
+        if (selectionData.kind === "common" && selectionData.data.kind === "treatment") {
             return selectionData.data.data;
         } else {
             return null;

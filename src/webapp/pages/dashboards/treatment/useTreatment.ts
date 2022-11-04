@@ -72,7 +72,6 @@ export function useTreatment(drugsMulti: boolean) {
     }, [plasmodiumSpecies, filteredStudiesForDrugs, onDrugsChange, drugsMulti]);
 
     React.useEffect(() => {
-        debugger;
         if (molecularMarker) {
             const filteredStudies = filterMolecularMarkerStudies(
                 dashboardsTreatmentStudies,

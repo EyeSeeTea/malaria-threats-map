@@ -2,10 +2,6 @@ import { DataLabelsFormatterCallbackFunction } from "highcharts";
 import i18next from "i18next";
 import { PreventionChartDataItem } from "../../../store/SelectionData";
 import { PreventionMapType } from "../../../store/types";
-import { IntensityStatusColors } from "../../layers/prevention/IntensityStatus/symbols";
-import { INTENSITY_STATUS } from "../../layers/prevention/IntensityStatus/utils";
-import { LevelOfInvolvementColors } from "../../layers/prevention/Involvement/symbols";
-import { LEVEL_OF_INVOLVEMENT } from "../../layers/prevention/Involvement/utils";
 import { ResistanceStatusColors } from "../../layers/prevention/ResistanceStatus/symbols";
 import { ChartStyles } from "../../charts/Style";
 
@@ -17,11 +13,12 @@ export const preventionBarChartOptions: (
     chart: {
         maxPointWidth: 20,
         type: "bar",
-        height: 90 + data.length * 40,
+        height: (showTitle ? 90 : 50) + data.length * 40,
         style: {
             ...ChartStyles,
         },
         marginLeft: maptype === PreventionMapType.LEVEL_OF_INVOLVEMENT ? 265 : 210,
+        marginRight: 60,
     },
     title: {
         text: showTitle
@@ -56,6 +53,8 @@ export const preventionBarChartOptions: (
     plotOptions: {
         bar: {
             dataLabels: {
+                crop: false,
+                overflow: "allow",
                 formatter: function () {
                     // @ts-ignore
                     return `${this.y}% (${this.point.number})`;
@@ -105,56 +104,28 @@ function getBarZones(maptype: PreventionMapType) {
             ];
         case PreventionMapType.INTENSITY_STATUS:
             return [
-                // {
-                //     value: 0,
-                //     color: IntensityStatusColors[INTENSITY_STATUS.UNKNOWN][0],
-                // },
-                // {
-                //     value: 40,
-                //     color: IntensityStatusColors[INTENSITY_STATUS.SUSCEPTIBLE][0],
-                // },
-                // {
-                //     value: 50,
-                //     color: IntensityStatusColors[INTENSITY_STATUS.LOW_INTENSITY][0],
-                // },
-                // {
-                //     value: 90,
-                //     color: IntensityStatusColors[INTENSITY_STATUS.MODERATE_INTENSITY][0],
-                // },
-                // {
-                //     value: 98,
-                //     color: IntensityStatusColors[INTENSITY_STATUS.MODERATE_TO_HIGH_INTENSITY][0],
-                // },
-                // {
-                //     value: 100.001,
-                //     color: IntensityStatusColors[INTENSITY_STATUS.HIGH_INTENSITY][0],
-                // },
                 {
-                    value: 90,
-                    color: "#D3D3D3",
-                },
-                {
-                    value: 98,
-                    color: IntensityStatusColors[INTENSITY_STATUS.LOW_INTENSITY][0],
+                    value: 100,
+                    color: "#D0CECE",
                 },
                 {
                     value: 100.001,
-                    color: IntensityStatusColors[INTENSITY_STATUS.HIGH_INTENSITY][0],
+                    color: "#717171",
                 },
             ];
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return [
                 {
                     value: 90,
-                    color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT][0],
+                    color: "#D0CECE",
                 },
                 {
                     value: 98,
-                    color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT][0],
+                    color: "#717171",
                 },
                 {
                     value: 100.001,
-                    color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT][0],
+                    color: "#717171",
                 },
             ];
     }

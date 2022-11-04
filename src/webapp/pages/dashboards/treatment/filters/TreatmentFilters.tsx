@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import PlasmodiumSpecieSelector from "../../../../components/filters/PlasmodiumSpecieSelector";
 import DrugsSelector from "../../../../components/filters/DrugsSelector";
-import DashboardsYearRangeSelector from "./DashboardsYearRangeSelector";
+import DashboardsYearRangeSelector from "../../common/filters/DashboardsYearRangeSelector";
 import ExcludeLowerPatientsSelector from "../../../../components/filters/ExcludeLowerPatientsSelector";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
