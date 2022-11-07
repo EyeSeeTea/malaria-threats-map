@@ -144,15 +144,7 @@ export function useDownload(
     };
 
     const isUserFormValid = () => {
-        return (
-            userInfo.firstName &&
-            userInfo.lastName &&
-            userInfo.uses &&
-            userInfo.country &&
-            userInfo.organizationType &&
-            userInfo.organizationName &&
-            emailRegexp.test(userInfo.email)
-        );
+        return emailRegexp.test(userInfo.email) || !userInfo.email;
     };
     const isStepValid = () => {
         switch (activeStep) {

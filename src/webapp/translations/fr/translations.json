@@ -777,6 +777,7 @@
             },
             "personal_step": {
                 "title": "Coordonnées personnelles",
+                "subtitle": "En fournissant vos données personnelles, vous nous aiderez à mieux comprendre notre communauté d'utilisateurs.",
                 "first_name": "Prénom",
                 "last_name": "Nom de famille",
                 "organization_type": "Type d'Organisation",
@@ -794,12 +795,11 @@
                     "other": "Autres"
                 },
                 "organization_name": "Nom de l'organisation",
-                "uses_placeHolder": "Nous souhaitons savoir pourquoi vous utilisez les données. Nous apprécierions si vous pouviez fournir une courte description.",
+                "uses_placeHolder": "Nous apprécierions si vous pouviez fournir une brève description de la manière dont ces données seront utilisées pour soutenir votre travail.",
                 "country": "Pays de Résidence",
                 "email": "Email",
-                "message": "L'OMS tient à améliorer les bases de données mondiales et la carte des menaces du paludisme afin de mieux répondre aux besoins de notre communauté d'utilisateurs. Par conséquent, l'OMS souhaite s'engager avec notre communauté d'utilisateurs pour recueillir des suggestions d'amélioration et apprendre des différents cas d'utilisation et des avantages que ces produits leur apportent. Si vous souhaitez partager des commentaires, vous pouvez le faire <2 href='/contact'>ici</2>.",
-                "consent1": "J'autorise à être contacté par l'Organisation mondiale de la santé concernant mon expérience avec la Malaria Threat Map et les données des bases de données mondiales.",
-                "consent2": "J'autorise l'Organisation mondiale de la santé à utiliser le nom de mon organisation et la description du projet fournis ci-dessus pour afficher l'utilisation des bases de données mondiales (aucune donnée personnelle ne sera affichée)."
+                "message": "Si vous souhaitez nous faire part de vos commentaires, veuillez le faire <2 href='/contact'>ici</2>.",
+                "consent1": "J'autorise à être contacté par l'Organisation mondiale de la santé concernant mon expérience avec la Malaria Threat Map et les données des bases de données mondiales."
             },
             "data_step": {
                 "title": "Sélectionnez les données",
