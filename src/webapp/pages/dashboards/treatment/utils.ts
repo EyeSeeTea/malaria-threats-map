@@ -50,7 +50,12 @@ export function filterMolecularMarkerStudies(
 }
 
 export function getTreatmentFailure(study: TreatmentStudy) {
-    const rawValue = parseFloat(study.TREATMENT_FAILURE_PP) || parseFloat(study.TREATMENT_FAILURE_PP) || -1;
+    const rawValue =
+        study.TREATMENT_FAILURE_PP !== null
+            ? study.TREATMENT_FAILURE_PP
+            : study.TREATMENT_FAILURE_PP !== null
+            ? study.TREATMENT_FAILURE_PP
+            : -1;
 
     return +(rawValue * 100).toFixed(2);
 }

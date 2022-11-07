@@ -118,12 +118,10 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                             const fallbackProp = "TREATMENT_FAILURE_KM";
 
                             const rawValues = followUpCountrySpeciesStudies.map((study: TreatmentStudy) =>
-                                isNotNull(study[defaultProp]) ? study[defaultProp] : study[fallbackProp]
+                                study[defaultProp] !== null ? study[defaultProp] : study[fallbackProp]
                             );
 
-                            const values = rawValues
-                                .map(value => parseFloat(value))
-                                .filter(value => !Number.isNaN(value));
+                            const values = rawValues.filter(value => !Number.isNaN(value));
                             const sortedValues = values.sort();
 
                             const min = values.length ? sortedValues[0] * 100 : "-";

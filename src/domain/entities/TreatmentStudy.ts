@@ -5,10 +5,10 @@ export interface TreatmentStudy extends Study {
     CITATION_URL: string;
     DRUG_NAME: string;
     N: string;
-    CONFIRMED_RESIST_PV: string;
-    POSITIVE_DAY_3: string;
-    TREATMENT_FAILURE_KM: string;
-    TREATMENT_FAILURE_PP: string;
+    CONFIRMED_RESIST_PV: number;
+    POSITIVE_DAY_3: number;
+    TREATMENT_FAILURE_KM: number;
+    TREATMENT_FAILURE_PP: number;
     FOLLOW_UP: string;
     INSTITUTION: string;
     INSTITUTION_CITY: string;

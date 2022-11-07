@@ -61,9 +61,9 @@ export function createTreatmentBubbleChartData(
         const emptyStudies = yearsWithoutStudies.map(year => {
             return {
                 YEAR_START: year,
-                TREATMENT_FAILURE_PP: "-1",
-                TREATMENT_FAILURE_KM: "-1",
-                POSITIVE_DAY_3: " -1",
+                TREATMENT_FAILURE_PP: -1,
+                TREATMENT_FAILURE_KM: -1,
+                POSITIVE_DAY_3: -1,
                 SITE_NAME: "",
                 ISO2: "",
                 DRUG_NAME: "",
@@ -80,12 +80,10 @@ export function createTreatmentBubbleChartData(
             data: finalStudies.map(study => {
                 const rawValue =
                     type === "treatmentFailure"
-                        ? parseFloat(study.TREATMENT_FAILURE_PP) || parseFloat(study.TREATMENT_FAILURE_KM)
-                        : parseFloat(study.POSITIVE_DAY_3);
+                        ? study.TREATMENT_FAILURE_PP || study.TREATMENT_FAILURE_KM
+                        : study.POSITIVE_DAY_3;
 
-                const fixedRawValue = isNaN(rawValue) ? -1 : rawValue;
-
-                const value = +(fixedRawValue * 100).toFixed(2);
+                const value = +(rawValue * 100).toFixed(2);
 
                 const fixedValue = value > 100 ? 100 : value;
 
