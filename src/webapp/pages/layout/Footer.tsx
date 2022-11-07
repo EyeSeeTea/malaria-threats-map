@@ -118,7 +118,7 @@ const Footer = () => {
                                 {t("common.footer.other_who_resources.title")}
                             </ColumnTitle>
                             {otherWhoResources.map(({ label, link }, id) => (
-                                <StyledLink key={id} href={link} variant="body1">
+                                <StyledLink key={id} href={link} variant="body1" target={"_blank"}>
                                     {label}
                                 </StyledLink>
                             ))}
