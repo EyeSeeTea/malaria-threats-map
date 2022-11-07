@@ -74,6 +74,7 @@
         },
         "dashboard": {
             "title": "Dashboards",
+            "not-available": "Not available",
             "filtersSection": {
                 "first": {
                     "title": "1. Select Theme",

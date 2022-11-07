@@ -31,6 +31,8 @@ const MosquitoOverTimeDashboard: React.FC = () => {
 
     const chartComponentRefs = useRef([]);
 
+    console.log({ data });
+
     return (
         <PreventionFilterableDashboard
             id="mosquito-mortality-over-time"
@@ -50,7 +52,7 @@ const MosquitoOverTimeDashboard: React.FC = () => {
             onYearsChange={onYearsChange}
             onInsecticideTypesChange={undefined}
         >
-            <Stack direction="row" alignItems="center">
+            <Stack direction="row" alignItems="center" sx={{ minHeight: 250 }}>
                 <YAxisTitle>
                     {t(
                         "common.dashboard.phenotypicInsecticideResistanceDashboards.mosquitoMortalityOverTime.adjustedMortality"
@@ -63,31 +65,40 @@ const MosquitoOverTimeDashboard: React.FC = () => {
                             {Object.keys(data.dataByCountry).map((isoCountry, countryIndex) => {
                                 const species = Object.keys(data.dataByCountry[isoCountry]);
 
-                                return species.map((specie, specieIndex) => {
-                                    const isLastCountry = countryIndex === Object.keys(data.dataByCountry).length - 1;
-                                    const isLastSpecie = specieIndex === species.length - 1;
-                                    const xAxisVisible = isLastCountry && isLastSpecie;
+                                return species.length > 0 ? (
+                                    species.map((specie, specieIndex) => {
+                                        const isLastCountry =
+                                            countryIndex === Object.keys(data.dataByCountry).length - 1;
+                                        const isLastSpecie = specieIndex === species.length - 1;
+                                        const xAxisVisible = isLastCountry && isLastSpecie;
 
-                                    const dataBySpecie = data.dataByCountry[isoCountry][specie];
+                                        const dataBySpecie = data.dataByCountry[isoCountry][specie];
 
-                                    const options = chartOptions(data.years, dataBySpecie, xAxisVisible);
+                                        const options = chartOptions(data.years, dataBySpecie, xAxisVisible);
 
-                                    return (
-                                        <tr key={`${isoCountry}-${specie}`}>
-                                            {specieIndex === 0 && <td rowSpan={species.length}>{t(isoCountry)}</td>}
-                                            <td>{specie}</td>
-                                            <td>
-                                                <StyledHighcharts
-                                                    highcharts={Highcharts}
-                                                    options={options}
-                                                    ref={(element: HighchartsReact.RefObject) =>
-                                                        chartComponentRefs.current.push(element)
-                                                    }
-                                                />
-                                            </td>
-                                        </tr>
-                                    );
-                                });
+                                        return (
+                                            <tr key={`${isoCountry}-${specie}`}>
+                                                {specieIndex === 0 && <td rowSpan={species.length}>{t(isoCountry)}</td>}
+                                                <td>{specie}</td>
+                                                <td>
+                                                    <StyledHighcharts
+                                                        highcharts={Highcharts}
+                                                        options={options}
+                                                        ref={(element: HighchartsReact.RefObject) =>
+                                                            chartComponentRefs.current.push(element)
+                                                        }
+                                                    />
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+                                ) : (
+                                    <NotAvailableTR key={`${isoCountry}`} style={{ minHeight: 100 }}>
+                                        <td>{t(isoCountry)}</td>
+                                        <td></td>
+                                        <td>{"Not available"}</td>
+                                    </NotAvailableTR>
+                                );
                             })}
                         </tbody>
                     </Table>
@@ -123,6 +134,10 @@ const Table = styled.table`
     tr td:nth-child(3) {
         width: 75%;
     }
+`;
+
+const NotAvailableTR = styled.tr`
+    height: 100px;
 `;
 
 const StyledHighcharts = styled(HighchartsReact)``;
