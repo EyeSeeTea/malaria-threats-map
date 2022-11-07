@@ -151,6 +151,7 @@ class MalariaTour extends PureComponent<Props> {
         this.setInsecticideClass("PYRETHROIDS");
         this.setInsecticideTypes([]);
         this.setSelection(null);
+        this.setActionGroupSelected(null);
         localStorage.setItem("tour", "visited");
         this.props.setTourOpen(false);
     };
@@ -232,13 +233,6 @@ class MalariaTour extends PureComponent<Props> {
                     return <Step4 {...options} {...baseProps} step={7} back={4} />;
                 },
                 observe: "#locationFilters",
-            },
-            {
-                selector: ".mapboxgl-canvas",
-                content: ({ goTo }) => {
-                    this.setRegion("ZM");
-                    setTimeout(() => goTo(9), 300);
-                },
             },
             {
                 selector: ".mapboxgl-canvas",
