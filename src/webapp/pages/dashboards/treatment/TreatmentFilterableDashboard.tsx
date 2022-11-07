@@ -6,7 +6,7 @@ import TreatmentFilters from "./filters/TreatmentFilters";
 
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
-import InformationModal from "../../../components/dashboards/InformationModal";
+import InformationModal from "../../../components/dashboards/TreatmentInformationModal";
 import HighchartsReact from "highcharts-react-official";
 import { toPng } from "html-to-image";
 import { MolecularMarker } from "../../../components/filters/MolecularMarkerFilter";

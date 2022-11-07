@@ -9,6 +9,8 @@ import { useMosquitoMortalityOverTime } from "./useMosquitoMortalityOverTime";
 import { MosquitoOverTimeData } from "./types";
 import { Stack } from "@mui/material";
 import i18next from "i18next";
+import { useInfoPopup } from "../../common/popup/useInfoPopup";
+import MosquitoMortalityOverTimePopup from "../../../../components/dashboards/prevention/MosquitoMortalityOverTimePopup";
 More(Highcharts);
 
 const MosquitoOverTimeDashboard: React.FC = () => {
@@ -29,71 +31,83 @@ const MosquitoOverTimeDashboard: React.FC = () => {
         onOnlyIncludeDataByHealthChange,
     } = useMosquitoMortalityOverTime();
 
+    const { openPopup, onChangeOpenPopup } = useInfoPopup();
+
     const chartComponentRefs = useRef([]);
 
     return (
-        <PreventionFilterableDashboard
-            id="mosquito-mortality-over-time"
-            chart="mosquito-mortality-overtime"
-            insecticideTypeOptions={insecticideTypeOptions}
-            count={count}
-            chartComponentRef={chartComponentRefs}
-            title={t("common.dashboard.phenotypicInsecticideResistanceDashboards.mosquitoMortalityOverTime.title")}
-            filters={filters}
-            speciesOptions={speciesOptions}
-            typeOptions={typeOptions}
-            onInsecticideClassesChange={onInsecticideClassChange}
-            onSpeciesChange={onSpeciesChange}
-            onTypeChange={onTypeChange}
-            onOnlyIncludeBioassaysWithMoreMosquitoesChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}
-            onOnlyIncludeDataByHealthChange={onOnlyIncludeDataByHealthChange}
-            onYearsChange={onYearsChange}
-            onInsecticideTypesChange={undefined}
-        >
-            <Stack direction="row" alignItems="center">
-                <YAxisTitle>
-                    {t(
-                        "common.dashboard.phenotypicInsecticideResistanceDashboards.mosquitoMortalityOverTime.adjustedMortality"
-                    )}
-                </YAxisTitle>
+        <React.Fragment>
+            <PreventionFilterableDashboard
+                id="mosquito-mortality-over-time"
+                chart="mosquito-mortality-overtime"
+                insecticideTypeOptions={insecticideTypeOptions}
+                count={count}
+                chartComponentRef={chartComponentRefs}
+                title={t("common.dashboard.phenotypicInsecticideResistanceDashboards.mosquitoMortalityOverTime.title")}
+                filters={filters}
+                speciesOptions={speciesOptions}
+                typeOptions={typeOptions}
+                onInsecticideClassesChange={onInsecticideClassChange}
+                onSpeciesChange={onSpeciesChange}
+                onTypeChange={onTypeChange}
+                onOnlyIncludeBioassaysWithMoreMosquitoesChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}
+                onOnlyIncludeDataByHealthChange={onOnlyIncludeDataByHealthChange}
+                onYearsChange={onYearsChange}
+                onInsecticideTypesChange={undefined}
+                onInfoClick={onChangeOpenPopup}
+            >
+                <Stack direction="row" alignItems="center">
+                    <YAxisTitle>
+                        {t(
+                            "common.dashboard.phenotypicInsecticideResistanceDashboards.mosquitoMortalityOverTime.adjustedMortality"
+                        )}
+                    </YAxisTitle>
 
-                <div style={{ overflowX: "auto" }}>
-                    <Table>
-                        <tbody>
-                            {Object.keys(data.dataByCountry).map((isoCountry, countryIndex) => {
-                                const species = Object.keys(data.dataByCountry[isoCountry]);
+                    <div style={{ overflowX: "auto" }}>
+                        <Table>
+                            <tbody>
+                                {Object.keys(data.dataByCountry).map((isoCountry, countryIndex) => {
+                                    const species = Object.keys(data.dataByCountry[isoCountry]);
 
-                                return species.map((specie, specieIndex) => {
-                                    const isLastCountry = countryIndex === Object.keys(data.dataByCountry).length - 1;
-                                    const isLastSpecie = specieIndex === species.length - 1;
-                                    const xAxisVisible = isLastCountry && isLastSpecie;
+                                    return species.map((specie, specieIndex) => {
+                                        const isLastCountry =
+                                            countryIndex === Object.keys(data.dataByCountry).length - 1;
+                                        const isLastSpecie = specieIndex === species.length - 1;
+                                        const xAxisVisible = isLastCountry && isLastSpecie;
 
-                                    const dataBySpecie = data.dataByCountry[isoCountry][specie];
+                                        const dataBySpecie = data.dataByCountry[isoCountry][specie];
 
-                                    const options = chartOptions(data.years, dataBySpecie, xAxisVisible);
+                                        const options = chartOptions(data.years, dataBySpecie, xAxisVisible);
 
-                                    return (
-                                        <tr key={`${isoCountry}-${specie}`}>
-                                            {specieIndex === 0 && <td rowSpan={species.length}>{t(isoCountry)}</td>}
-                                            <td>{specie}</td>
-                                            <td>
-                                                <StyledHighcharts
-                                                    highcharts={Highcharts}
-                                                    options={options}
-                                                    ref={(element: HighchartsReact.RefObject) =>
-                                                        chartComponentRefs.current.push(element)
-                                                    }
-                                                />
-                                            </td>
-                                        </tr>
-                                    );
-                                });
-                            })}
-                        </tbody>
-                    </Table>
-                </div>
-            </Stack>
-        </PreventionFilterableDashboard>
+                                        return (
+                                            <tr key={`${isoCountry}-${specie}`}>
+                                                {specieIndex === 0 && <td rowSpan={species.length}>{t(isoCountry)}</td>}
+                                                <td>{specie}</td>
+                                                <td>
+                                                    <StyledHighcharts
+                                                        highcharts={Highcharts}
+                                                        options={options}
+                                                        ref={(element: HighchartsReact.RefObject) =>
+                                                            chartComponentRefs.current.push(element)
+                                                        }
+                                                    />
+                                                </td>
+                                            </tr>
+                                        );
+                                    });
+                                })}
+                            </tbody>
+                        </Table>
+                    </div>
+                </Stack>
+            </PreventionFilterableDashboard>
+
+            <MosquitoMortalityOverTimePopup
+                years={filters.years}
+                openInfoModal={openPopup}
+                handleCloseInfoModal={onChangeOpenPopup}
+            />
+        </React.Fragment>
     );
 };
 
