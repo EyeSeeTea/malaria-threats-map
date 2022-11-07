@@ -140,6 +140,7 @@ function Option(props: OptionProps<OptionType, false>) {
     const isFirstRender = useFirstRender();
     const isFocused = isFirstRender ? false : props.isFocused;
     const plasmodiumStyles = plasmodiumOptions.includes(value) ? { fontStyle: "italic" } : {};
+    const optionStyles = props.getStyles("option", props);
 
     //it doesn't have access to the control/selected value
     return (
@@ -149,6 +150,7 @@ function Option(props: OptionProps<OptionType, false>) {
             selected={isFocused}
             component="div"
             style={{
+                ...optionStyles,
                 fontWeight: props.isSelected ? 800 : 400,
                 ...plasmodiumStyles,
             }}
@@ -237,6 +239,7 @@ export default function IntegrationReactSelect({
     onChange,
     className,
     classes,
+    optionsStyle,
     ...rest
 }: any) {
     const { t } = useTranslation();
@@ -253,12 +256,9 @@ export default function IntegrationReactSelect({
                 font: "inherit",
             },
         }),
-        option: (base: any, state: any) => ({
+        option: (base: any) => ({
             ...base,
-            backgroundColor: state.isSelected ? "red" : "blue",
-            ":active": {
-                backgroundColor: state.isSelected ? "green" : "yellow",
-            },
+            ...optionsStyle,
         }),
     };
 
