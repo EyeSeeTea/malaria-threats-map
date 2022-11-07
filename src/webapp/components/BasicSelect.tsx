@@ -140,7 +140,7 @@ function Option(props: OptionProps<OptionType, false>) {
     const isFirstRender = useFirstRender();
     const isFocused = isFirstRender ? false : props.isFocused;
     const plasmodiumStyles = plasmodiumOptions.includes(value) ? { fontStyle: "italic" } : {};
-    const optionStyles = props.getStyles("option", props);
+    const optionStyles: React.CSSProperties = props.getStyles("option", props);
 
     //it doesn't have access to the control/selected value
     return (
@@ -193,6 +193,7 @@ function ValueContainer(props: ValueContainerProps<OptionType, false>) {
 function MultiValue(props: MultiValueProps<OptionType>) {
     const { t } = useTranslation();
     const value = props.children ? t(props.children.toString()) : "";
+    const optionStyles: React.CSSProperties = props.getStyles("option", props);
 
     return (
         <Chip
@@ -203,6 +204,7 @@ function MultiValue(props: MultiValueProps<OptionType>) {
             })}
             onDelete={props.removeProps.onClick}
             deleteIcon={<CancelIcon {...props.removeProps} />}
+            style={{ fontStyle: optionStyles.fontStyle || "initial" }}
         />
     );
 }
