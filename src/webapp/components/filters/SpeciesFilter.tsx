@@ -95,6 +95,7 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
             onChange={setSpecies}
             value={preventionFilters.species}
             analyticsMultiFilterAction={"vectorSpecies"}
+            optionsStyle={{ fontStyle: "italic" }}
         />
     );
 };
