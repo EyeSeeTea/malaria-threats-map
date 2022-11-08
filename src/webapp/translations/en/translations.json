@@ -74,6 +74,7 @@
         },
         "dashboard": {
             "title": "Dashboards",
+            "not-available": "Not available",
             "filtersSection": {
                 "first": {
                     "title": "1. Select Theme",
@@ -372,7 +373,7 @@
                 "disclaimer": "Disclaimer"
             },
             "other_who_resources": {
-                "title": "Other WHO resources",
+                "title": "WHO resources",
                 "resource1": "WHO malaria guidelines",
                 "resource2": "WHO World malaria report",
                 "resource3": "WHO Malaria threats map"
@@ -783,7 +784,8 @@
                 "choose_other": "Choose other databases"
             },
             "personal_step": {
-                "title": " Personal details",
+                "title": "Personal details",
+                "subtitle": "By providing your personal  details, you will help us to better understand our user community.",
                 "first_name": "First name",
                 "last_name": "Family name",
                 "organization_type": "Organization type",
@@ -801,12 +803,11 @@
                     "other": "Others"
                 },
                 "organization_name": "Organization name",
-                "uses_placeHolder": "We are interested in knowing what you are using the data for. We would appreciate if you could provide a short description.",
+                "uses_placeHolder": "We would appreciate  if you could provide a short description of how these data will be used  to support your work.",
                 "country": "Country of residence",
                 "email": "E-mail",
-                "message": "WHO is keen to improve the global databases and Malaria Threats Map to better serve the needs of our user community. Hence, WHO would like to engage with our user community to collect suggestions for improvement and to learn from different use cases and benefits that these products bring to them. If you would like to share feedback, you can do so <2 href='/contact'>here</2>.",
-                "consent1": "I consent to be contacted by the World Health Organization regarding my experience using the Malaria Threats Map and data from the global databases.",
-                "consent2": "I consent for the World Health Organization to use my organization name and project description provided above to showcase the use of the global databases (no personal data will be shown)."
+                "message": "If you would like to share feedback with us, please do so <2 href='/contact'>here</2>.",
+                "consent1": "I consent to be contacted by the World Health Organization regarding my experience using the Malaria Threats Map and data from the global databases."
             },
             "data_step": {
                 "title": "Select data",

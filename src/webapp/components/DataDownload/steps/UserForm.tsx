@@ -43,18 +43,17 @@ const UserForm = ({ onChange, userInfo }: Props) => {
         onChange("contactConsent", event.target.checked);
     };
 
-    const handleConsent2Change = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onChange("piConsent", event.target.checked);
-    };
-
     const organizationTypes = ORGANIZATION_TYPES.map(ot => t(ot)).sort();
     const countries: FullCountry = t("countries", { returnObjects: true });
 
     //
     return (
         <React.Fragment>
-            <Typography variant="h4" fontWeight="bold" sx={{ marginBottom: 6 }}>
+            <Typography variant="h4" fontWeight="bold" sx={{ marginBottom: 2 }}>
                 {t("common.data_download.personal_step.title")}
+            </Typography>
+            <Typography variant="h6" sx={{ marginBottom: 6 }}>
+                {t("common.data_download.personal_step.subtitle")}
             </Typography>
             <Grid container rowSpacing={3} columnSpacing={2}>
                 <Grid item md={4} xs={12}>
@@ -162,16 +161,6 @@ const UserForm = ({ onChange, userInfo }: Props) => {
                         label={
                             <Typography variant={"body2"}>
                                 {t("common.data_download.personal_step.consent1")}
-                            </Typography>
-                        }
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox checked={userInfo.piConsent} onChange={handleConsent2Change} color="primary" />
-                        }
-                        label={
-                            <Typography variant={"body2"}>
-                                {t("common.data_download.personal_step.consent2")}
                             </Typography>
                         }
                     />
