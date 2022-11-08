@@ -75,6 +75,7 @@
         },
         "dashboard": {
             "title": "Tableros",
+            "not-available": "No disponible",
             "filtersSection": {
                 "first": {
                     "title": "1. Seleccionar tema",
@@ -373,7 +374,7 @@
                 "disclaimer": "Descargo de responsabilidad"
             },
             "other_who_resources": {
-                "title": "Otros recursos de la OMS",
+                "title": "Recursos de la OMS",
                 "resource1": "Directrices de la OMS sobre la malaria",
                 "resource2": "Informe mundial de la OMS sobre la malaria",
                 "resource3": "Mapa de amenazas de la malaria de la OMS"
@@ -786,6 +787,7 @@
             },
             "personal_step": {
                 "title": "Datos de contacto",
+                "subtitle": "Al proporcionar sus datos personales, nos ayudará a comprender mejor a nuestra comunidad de usuarios.",
                 "first_name": "Nombre",
                 "last_name": "Apellidos",
                 "organization_type": "Tipo de organización",
@@ -803,12 +805,11 @@
                     "other": "Otras"
                 },
                 "organization_name": "Nombre de la Organización",
-                "uses_placeHolder": "Nos interesa saber para qué estás utilizando los datos. Le agradeceríamos si pudiera proporcionar una breve descripción.",
+                "uses_placeHolder": "Le agradeceríamos que nos proporcionara una breve descripción de cómo se utilizarán estos datos para respaldar su trabajo.",
                 "country": "País de Residencia",
                 "email": "Email",
-                "message": "La OMS está interesada en mejorar las bases de datos mundiales y el Mapa de amenazas de malaria para atender mejor las necesidades de nuestra comunidad de usuarios. Por lo tanto, a la OMS le gustaría interactuar con nuestra comunidad de usuarios para recopilar sugerencias de mejora y aprender de los diferentes casos de uso y los beneficios que estos productos les brindan. Si desea compartir comentarios, puede hacerlo <2 href='/contact'>aquí</2>.",
-                "consent1": "Autorizo ser contactado por la Organización Mundial de la Salud con respecto a mi experiencia con el Mapa de Amenazas de la Malaria y los datos de las bases de datos globales.",
-                "consent2": "Autorizo a la Organización Mundial de la Salud a usar el nombre de mi organización y la descripción del proyecto proporcionada anteriormente para mostrar el uso de las bases de datos globales (no se mostrarán datos personales)."
+                "message": "Si desea compartir sus comentarios con nosotros, hágalo <2 href='/contact'>aquí</2>.",
+                "consent1": "Autorizo ser contactado por la Organización Mundial de la Salud con respecto a mi experiencia con el Mapa de Amenazas de la Malaria y los datos de las bases de datos globales."
             },
             "data_step": {
                 "title": "Seleccione datos",
