@@ -30,6 +30,16 @@ export function useMosquitoMortalityOverTime() {
     }, [onInsecticideClassChange]);
 
     React.useEffect(() => {
+        onSpeciesChange(speciesOptions.map(option => option.value));
+    }, [onSpeciesChange, speciesOptions]);
+
+    React.useEffect(() => {
+        if (typeOptions.length > 0) {
+            onTypeChange(typeOptions[0].value);
+        }
+    }, [onTypeChange, typeOptions]);
+
+    React.useEffect(() => {
         setCount(filteredStudies.length);
     }, [filteredStudies]);
 

@@ -1,7 +1,9 @@
+import _ from "lodash";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import {
     filterByInsecticideClasses,
     filterByInsecticideTypes,
+    filterByOnlyDataByHealthMinistries,
     filterByResistanceStatus,
     filterBySpecies,
     filterByType,
@@ -13,16 +15,16 @@ export function filterStudies(
     studies: PreventionStudy[],
     preventionFilters: PreventionFiltersState
 ): PreventionStudy[] {
-    const filters = [
+    const filters = _.compact([
         filterByResistanceStatus,
         filterByInsecticideClasses(preventionFilters.insecticideClasses),
         filterByInsecticideTypes(preventionFilters.insecticideTypes),
         filterBySpecies(preventionFilters.species),
         filterByType(preventionFilters.type),
         filterByOnlyIncludeBioassaysWithMoreMosquitoes(preventionFilters.onlyIncludeBioassaysWithMoreMosquitoes),
-        filterByOnlyIncludeDataByHealth(preventionFilters.onlyIncludeDataByHealth),
-        filterByYearRange(preventionFilters.years),
-    ];
+        filterByOnlyDataByHealthMinistries(preventionFilters.onlyIncludeDataByHealth),
+        preventionFilters.years && filterByYearRange(preventionFilters.years),
+    ]);
 
     const filteredStudies = filters.reduce((studies, filter) => studies.filter(filter), studies);
 
@@ -33,7 +35,3 @@ export const filterByOnlyIncludeBioassaysWithMoreMosquitoes =
     (numberMosquitoes: number) => (study: PreventionStudy) => {
         return +study.NUMBER >= numberMosquitoes;
     };
-
-export const filterByOnlyIncludeDataByHealth = (value: boolean) => (study: PreventionStudy) => {
-    return !value || study.INSTITUTION_TYPE === "MoH";
-};

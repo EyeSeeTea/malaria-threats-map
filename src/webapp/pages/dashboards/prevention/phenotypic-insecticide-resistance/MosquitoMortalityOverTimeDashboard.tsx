@@ -35,8 +35,6 @@ const MosquitoOverTimeDashboard: React.FC = () => {
 
     const chartComponentRefs = useRef([]);
 
-    console.log({ data });
-
     return (
         <React.Fragment>
             <PreventionFilterableDashboard
