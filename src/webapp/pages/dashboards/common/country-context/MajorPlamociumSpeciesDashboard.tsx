@@ -39,7 +39,7 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
                                                 item.MAL_PROFILE_MEDICINE_FOR_1ST_LINE_TRT_OF_PF.split("; ").map(
                                                     drug => {
                                                         return (
-                                                            <Typography key={drug}>{`${t(
+                                                            <Typography key={drug} variant="body2">{`${t(
                                                                 `DRUG_${drug}`
                                                             )} (${drug})`}</Typography>
                                                         );
@@ -53,7 +53,7 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
                                             {item.MAL_PROFILE_MEDICINE_FOR_TRT_OF_PVIVAX &&
                                                 item.MAL_PROFILE_MEDICINE_FOR_TRT_OF_PVIVAX.split(";").map(drug => {
                                                     return (
-                                                        <Typography key={drug}>{`${t(
+                                                        <Typography key={drug} variant="body2">{`${t(
                                                             `DRUG_${drug}`
                                                         )} (${drug})`}</Typography>
                                                     );
