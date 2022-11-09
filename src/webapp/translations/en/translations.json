@@ -1050,6 +1050,7 @@
             "LATITUDE": "Latitude of the site where the mosquitoes were collected",
             "LONGITUDE": "Longitude of the site where the mosquitoes were collected",
             "TEST_TYPE": "Mechanism type",
+            "INSECTICIDE_CLASS": "Insecticide class",
             "INSECTICIDE_TYPE": "Insecticide",
             "INSECTICIDE_CONCENTRATION": "Insecticide concentration",
             "YEAR_START": "Year when the mosquito collection started",

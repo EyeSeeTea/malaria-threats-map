@@ -184,7 +184,7 @@ export const setPreventionThemeEpic = (action$: Observable<ActionType<typeof set
             if ($action.from === "map") {
                 return of(...base, setInsecticideClass("PYRETHROIDS"));
             } else {
-                return of(...base, setInsecticideClass(null));
+                return of(setInsecticideClass(null));
             }
         })
     );

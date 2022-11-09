@@ -1052,6 +1052,7 @@
             "LATITUDE": "Latitud del lugar dondes se capturaron los mosquitos",
             "LONGITUDE": "Longitud del lugar dondes se capturaron los mosquitos",
             "TEST_TYPE": "Tipo de mecanismo de resistancia",
+            "INSECTICIDE_CLASS": "Clase de insecticida",
             "INSECTICIDE_TYPE": "Concentración de insecticida",
             "INSECTICIDE_CONCENTRATION": "Concentración de insecticida",
             "YEAR_START": "Año en que comenzó la captura de mosquitos",
