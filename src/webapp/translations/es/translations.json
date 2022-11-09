@@ -246,6 +246,16 @@
                     "pfcrt": "El color de la barra representa el porcentaje de muestras de un estudio en las que se detectaron mutaciones. El azul claro indica un porcentaje bajo; el azul oscuro representa un porcentaje alto.",
                     "pfmdr1": "El color de la barra representa el porcentaje de muestras dentro de un estudio en el que se detectaron números de copias múltiples. El azul claro indica un porcentaje bajo; el azul oscuro representa un porcentaje alto.",
                     "dataAvailability": "<strong>Disponibilidad de datos:</strong> Se muestran todos los estudios de los que se dispone de datos."
+                },
+                "statusOfResistanceToInsecticide": {
+                    "title": "ESTADO DE RESISTENCIA A INSECTICIDAS",
+                    "graphInterpretation": "<0>Interpretación del gráfico:</0> Este gráfico de barras muestra los resultados de los bioensayos de concentración discriminatoria, agrupados por insecticida o clase de insecticida (según la opción elegida). Los resultados del bioensayo se clasifican en tres grupos (resistencia confirmada , posible resistencia y susceptibilidad al insecticida ensayado).",
+                    "typeOfResistance": "<0>Tipo de bioensayo de monitoreo de resistencia:</0> La resistencia a los insecticidas se determinó mediante la mortalidad de mosquitos (bioensayo de botella de los CDC, prueba de tubo de la OMS o bioensayo de botella de la OMS). La resistencia confirmada se clasifica como mortalidad de mosquitos {{lessThan}}90%."
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MORTALIDAD DE MOSQUITOS A LO LARGO DEL TIEMPO",
+                    "graphInterpretation": "<0>Interpretación del gráfico:</0> Este gráfico presenta la mortalidad de mosquitos en bioensayos de susceptibilidad a lo largo del tiempo. El tamaño de la barra representa los valores de los estudios que se encuentran entre el 25 % y el 75 % de los cuartiles de la distribución de la mortalidad. La línea horizontal dentro de la barra representa el valor medio de mortalidad. Las líneas horizontales por encima y por debajo de la barra representan los valores de mortalidad máximo y mínimo, respectivamente.",
+                    "typeOfResistance": "<0>Tipo de bioensayo de monitoreo de resistencia:</0> La resistencia a los insecticidas se determinó mediante la mortalidad de mosquitos (bioensayo de botella de los CDC, prueba de tubo de la OMS o bioensayo de botella de la OMS). La resistencia confirmada se clasifica como mortalidad de mosquitos {{lessThan}}90%."
                 }
             },
             "tooltip": {

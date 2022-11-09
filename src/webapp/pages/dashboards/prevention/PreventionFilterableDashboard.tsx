@@ -33,6 +33,7 @@ interface PreventionFilterableDashboardProps {
     onOnlyIncludeBioassaysWithMoreMosquitoesChange: (value: number) => void;
     onOnlyIncludeDataByHealthChange: (value: boolean) => void;
     onChartTypeChange?: (value: ResistanceToInsecticideChartType) => void;
+    onInfoClick: () => void;
 }
 
 const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = ({
@@ -56,6 +57,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
     children,
     chartComponentRef,
     onChartTypeChange,
+    onInfoClick,
 }) => {
     const { filtersVisible, onChangeFiltersVisible } = useFiltersVisible();
     const { t } = useTranslation();
@@ -90,8 +92,8 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
             <DashboardTitle
                 id={id}
                 title={title}
-                onInfoClick={() => {}}
                 onDownloadClick={handleDownload}
+                onInfoClick={onInfoClick}
                 showActions={true}
             />
 

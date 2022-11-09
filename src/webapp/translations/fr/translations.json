@@ -246,6 +246,16 @@
                     "pfcrt": "La couleur de la barre représente le pourcentage d'échantillons dans une étude où des mutations ont été détectées. Le bleu clair indique un faible pourcentage ; le bleu foncé représente un pourcentage élevé.",
                     "pfmdr1": "La couleur de la barre représente le pourcentage d'échantillons dans une étude où des nombres de copies multiples ont été détectés. Le bleu clair indique un faible pourcentage ; le bleu foncé représente un pourcentage élevé.",
                     "dataAvailability": "<strong>Data availability:</strong> Toutes les études pour lesquelles des données sont disponibles sont présentées."
+                },
+                "statusOfResistanceToInsecticide": {
+                    "title": "ÉTAT DE RÉSISTANCE AUX INSECTICIDES",
+                    "graphInterpretation": "<0>Interprétation du graphique :</0> Ce graphique à barres affiche les résultats des tests biologiques à concentration discriminante, regroupés par insecticide ou classe d'insecticide (selon l'option choisie). Les résultats des tests biologiques sont classés en trois groupes (résistance confirmée , résistance et sensibilité possibles à l'insecticide testé).",
+                    "typeOfResistance": "<0>Type d'essai biologique de surveillance de la résistance :</0> La résistance aux insecticides a été déterminée par la mortalité des moustiques (essai biologique en bouteille CDC, test en tube de l'OMS ou essai biologique en bouteille de l'OMS). La résistance confirmée est classée comme mortalité des moustiques {{lessThan}}90%."
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MORTALITÉ DES MOUSTIQUES AU FIL DU TEMPS",
+                    "graphInterpretation": "<0>Interprétation du graphique :</0> Ce graphique présente la mortalité des moustiques dans les bioessais de sensibilité au fil du temps. La taille de la barre représente les valeurs des études comprises entre les quartiles 25 % et 75 % du distribution de la mortalité. La ligne horizontale à l'intérieur de la barre représente la valeur médiane de la mortalité. Les lignes horizontales au-dessus et en dessous de la barre représentent respectivement les valeurs de mortalité maximale et minimale.",
+                    "typeOfResistance": "<0>Type d'essai biologique de surveillance de la résistance :</0> La résistance aux insecticides a été déterminée par la mortalité des moustiques (essai biologique en bouteille CDC, test en tube de l'OMS ou essai biologique en bouteille de l'OMS). La résistance confirmée est classée comme mortalité des moustiques {{lessThan}}90%."
                 }
             },
             "tooltip": {

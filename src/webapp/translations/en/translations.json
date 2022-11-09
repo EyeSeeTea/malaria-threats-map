@@ -245,6 +245,16 @@
                     "pfcrt": "The colour of the bar represents the percentage of samples within one study where mutations were detected. Light blue indicates a low percentage; dark blue represents a high percentage.",
                     "pfmdr1": "The colour of the bar represents the percentage of samples within one study where multiple copy numbers were detected. Light blue indicates a low percentage; dark blue represents a high percentage.",
                     "dataAvailability": "<strong>Data availability:</strong> All studies for which data are available are shown."
+                },
+                "statusOfResistanceToInsecticide": {
+                    "title": "STATUS OF RESISTANCE TO INSECTICIDES",
+                    "graphInterpretation": "<0>Graph interpretation:</0> This bar chart displays the results of discriminating concentration bioassays, grouped by insecticide or insecticide class (depending on the option chosen). Bioassay results are categorized into three  groups (confirmed resistance, possible resistance and susceptibility to the tested insecticide).",
+                    "typeOfResistance": "<0>Type of resistance monitoring bioassay:</0> Resistance to insecticides was determined by mosquito mortality (CDC bottle bioassay, WHO tube test or WHO bottle bioassay). Confirmed resistance is classified as mosquito mortality {{lessThan}}90%."
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MOSQUITO MORTALITY OVER TIME",
+                    "graphInterpretation": "<0>Graph interpretation:</0> This graph presents the mosquito mortality in susceptibility bioassays over time. The size of the bar represents the values of the studies falling between the 25% and the 75% quartiles of the mortality distribution. The horizontal line within the bar represents the median mortality value. The horizontal lines above and below the bar represent the maximum and minimum mortality values respectively.",
+                    "typeOfResistance": "<0>Type of resistance monitoring bioassay:</0> Resistance to insecticides was determined by mosquito mortality (CDC bottle bioassay, WHO tube test or WHO bottle bioassay). Confirmed resistance is classified as mosquito mortality {{lessThan}}90%."
                 }
             },
             "tooltip": {
