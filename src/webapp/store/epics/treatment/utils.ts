@@ -55,7 +55,7 @@ function rangeYears(startYear: number, endYear: number) {
 
 function createTreatmentFailureChartData(studies: TreatmentStudy[]): TreatmentChartData {
     const currentYear = new Date().getFullYear();
-    const years = rangeYears(2010, currentYear).sort();
+    const years = rangeYears(currentYear - 7, currentYear).sort();
 
     const { PLASMODIUM_SPECIES } = studies[0];
 
