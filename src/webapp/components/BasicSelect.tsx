@@ -180,7 +180,7 @@ function SingleValue(props: SingleValueProps<OptionType>) {
     const value = props.children ? t(props.children.toString()) : "";
 
     return (
-        <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
+        <Typography className={props.selectProps.classes.singleValue} {...props.innerProps} sx={{ width: "100%" }}>
             {plasmodiumOptions.includes(value) ? <i>{value}</i> : value}
         </Typography>
     );

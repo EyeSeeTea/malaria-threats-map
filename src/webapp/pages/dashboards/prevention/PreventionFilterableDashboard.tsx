@@ -88,7 +88,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
     );
 
     return (
-        <React.Fragment>
+        <Container ref={ref}>
             <DashboardTitle
                 id={id}
                 title={title}
@@ -161,11 +161,15 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
                     </DasboardCard>
                 </Grid>
             </Grid>
-        </React.Fragment>
+        </Container>
     );
 };
 
 export default PreventionFilterableDashboard;
+
+const Container = styled.div`
+    padding: 10px;
+`;
 
 const DasboardCard = styled(Card)`
     min-height: 500px;

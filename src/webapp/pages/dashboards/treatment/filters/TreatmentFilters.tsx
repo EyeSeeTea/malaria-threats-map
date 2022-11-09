@@ -56,7 +56,7 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
     return (
         <FiltersCard elevation={0}>
             <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Typography variant="body2" textTransform="uppercase" fontWeight="bold">
+                <Typography variant="body2" textTransform="uppercase" fontWeight="bold" sx={{ width: "100%" }}>
                     {t("common.dashboard.treatmentFilters.title")}
                 </Typography>
 
