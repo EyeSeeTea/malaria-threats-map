@@ -172,6 +172,7 @@ const Data: React.FC<Props> = ({
     }, [preventionStudies, preventionFilters, region, yearFilters, setPreventionFilteredStudies]);
 
     useEffect(() => {
+        debugger;
         setDiagnosisFilteredStudies(
             filterDiagnosisStudies(diagnosisStudies, diagnosisFilters, yearFilters, region, "download")
         );

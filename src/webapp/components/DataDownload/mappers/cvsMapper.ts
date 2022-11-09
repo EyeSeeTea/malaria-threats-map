@@ -222,8 +222,6 @@ export const mapDiagnosisStudiesToCSV = (database: DiagnosisDatabaseSelection) =
     const fields = [
         "ID",
         "COUNTRY_NAME",
-        "ADMIN1",
-        "ADMIN2",
         "ISO2",
         "SITE_NAME",
         "LATITUDE",

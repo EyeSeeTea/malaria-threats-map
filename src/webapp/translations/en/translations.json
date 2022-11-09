@@ -1068,6 +1068,7 @@
         "diagnosis": {
             "ID": "Unique identifier of the bioassay",
             "COUNTRY_NAME": "Name of the country where the bioassay was conducted",
+            "ISO2": "ISO2",
             "ADMIN1": "Administrative level 1 where the mosquitoes where collected",
             "ADMIN2": "Administrative level 2 where the mosquitoes where collected",
             "SITE_NAME": "Site where the mosquitoes were collected",
