@@ -59,7 +59,7 @@ function MechanismTypeFilter({ types = [], preventionFilters, setType, logEventA
     }));
 
     const value = React.useMemo(
-        () => (preventionFilters.type.length === 1 ? preventionFilters.type[0] : undefined),
+        () => (preventionFilters.type?.length === 1 ? preventionFilters.type[0] : undefined),
         [preventionFilters.type]
     );
 

@@ -91,12 +91,12 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                                             <React.Fragment>
                                                 <Typography variant="body2" fontWeight="bold" sx={{ marginBottom: 2 }}>
                                                     {t(
-                                                        "common.dashboard.countryContextSection.epidemiologicalProfile.malariaFree"
+                                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.malariaFree"
                                                     )}
                                                 </Typography>
                                                 <Typography variant="body2">
                                                     {t(
-                                                        "common.dashboard.countryContextSection.epidemiologicalProfile.malariaFreeInfo"
+                                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.malariaFreeInfo"
                                                     )}
                                                 </Typography>
                                             </React.Fragment>

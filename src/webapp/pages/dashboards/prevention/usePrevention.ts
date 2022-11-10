@@ -10,7 +10,6 @@ import {
     PreventionStudy,
 } from "../../../../domain/entities/PreventionStudy";
 import { Option } from "../../../components/BasicSelect";
-import _ from "lodash";
 
 export function usePrevention() {
     const {
@@ -34,10 +33,6 @@ export function usePrevention() {
     React.useEffect(() => {
         const filteredStudies = filterStudies(dashboardsPreventionStudies, filters);
 
-        const countries = _.uniq(filteredStudies.map(s => s.ISO2));
-
-        console.log(countries);
-
         setFilteredStudies(filteredStudies);
     }, [dashboardsPreventionStudies, filters]);
 
@@ -47,9 +42,9 @@ export function usePrevention() {
             insecticideTypes: [],
             species: [],
             type: "",
-            onlyIncludeBioassaysWithMoreMosquitoes: filters.onlyIncludeBioassaysWithMoreMosquitoes,
-            onlyIncludeDataByHealth: filters.onlyIncludeDataByHealth,
-            years: filters.years,
+            onlyIncludeBioassaysWithMoreMosquitoes: 0,
+            onlyIncludeDataByHealth: false,
+            years: undefined,
         });
 
         const insecticideClasses = extractInsecticideClassesOptions(filteredStudies);
@@ -68,20 +63,15 @@ export function usePrevention() {
             insecticideTypes: [],
             species: [],
             type: "",
-            onlyIncludeBioassaysWithMoreMosquitoes: filters.onlyIncludeBioassaysWithMoreMosquitoes,
-            onlyIncludeDataByHealth: filters.onlyIncludeDataByHealth,
-            years: filters.years,
+            onlyIncludeBioassaysWithMoreMosquitoes: 0,
+            onlyIncludeDataByHealth: false,
+            years: undefined,
         });
 
         const insecticideTypes = extractInsecticideTypeOptions(filteredStudies);
 
         setInsecticideTypeOptions(insecticideTypes);
-    }, [
-        dashboardsPreventionStudies,
-        filters.onlyIncludeBioassaysWithMoreMosquitoes,
-        filters.onlyIncludeDataByHealth,
-        filters.years,
-    ]);
+    }, [dashboardsPreventionStudies]);
 
     React.useEffect(() => {
         const filteredStudies = filterStudies(dashboardsPreventionStudies, {
@@ -89,23 +79,15 @@ export function usePrevention() {
             insecticideTypes: [],
             species: [],
             type: "",
-            onlyIncludeBioassaysWithMoreMosquitoes: filters.onlyIncludeBioassaysWithMoreMosquitoes,
-            onlyIncludeDataByHealth: filters.onlyIncludeDataByHealth,
-            years: filters.years,
+            onlyIncludeBioassaysWithMoreMosquitoes: 0,
+            onlyIncludeDataByHealth: false,
+            years: undefined,
         });
 
         const species = extractSpeciesOptions(filteredStudies);
 
         setSpeciesOptions(species);
-        onSpeciesChange(species.map(option => option.value));
-    }, [
-        dashboardsPreventionStudies,
-        filters.insecticideClasses,
-        filters.onlyIncludeBioassaysWithMoreMosquitoes,
-        filters.onlyIncludeDataByHealth,
-        filters.years,
-        onSpeciesChange,
-    ]);
+    }, [dashboardsPreventionStudies, filters.insecticideClasses, onSpeciesChange]);
 
     React.useEffect(() => {
         const filteredStudies = filterStudies(dashboardsPreventionStudies, {
@@ -113,27 +95,15 @@ export function usePrevention() {
             insecticideTypes: [],
             species: filters.species,
             type: "",
-            onlyIncludeBioassaysWithMoreMosquitoes: filters.onlyIncludeBioassaysWithMoreMosquitoes,
-            onlyIncludeDataByHealth: filters.onlyIncludeDataByHealth,
-            years: filters.years,
+            onlyIncludeBioassaysWithMoreMosquitoes: 0,
+            onlyIncludeDataByHealth: false,
+            years: undefined,
         });
 
         const types = extractTypeOptions(filteredStudies);
 
         setTypeOptions(types);
-
-        if (types.length > 0) {
-            onTypeChange(types[0].value);
-        }
-    }, [
-        dashboardsPreventionStudies,
-        filters.insecticideClasses,
-        filters.species,
-        filters.onlyIncludeBioassaysWithMoreMosquitoes,
-        filters.onlyIncludeDataByHealth,
-        filters.years,
-        onTypeChange,
-    ]);
+    }, [dashboardsPreventionStudies, filters.insecticideClasses, filters.species, onTypeChange]);
 
     return {
         filteredStudies,
