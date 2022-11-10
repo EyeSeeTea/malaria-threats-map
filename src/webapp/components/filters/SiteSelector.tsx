@@ -42,7 +42,7 @@ function SiteSelector({
 }: Props) {
     const { t } = useTranslation();
 
-    const studies: Study[] = (() => {
+    const studies: Study[] = React.useMemo(() => {
         switch (theme) {
             case "prevention":
                 return preventionStudies;
@@ -53,19 +53,21 @@ function SiteSelector({
             case "invasive":
                 return invasiveStudies;
         }
-    })();
+    }, [theme, preventionStudies, diagnosisStudies, treatmentStudies, invasiveStudies]);
 
-    const SITES_SUGGESTIONS = R.uniqBy(
-        study => study.value && study.label,
-        studies.map(study => ({
-            label: study.SITE_NAME || study.VILLAGE_NAME,
-            value: study.SITE_ID,
-            iso2: study.ISO2,
-            coords: [study.Latitude, study.Longitude],
-        }))
-    );
-
-    const suggestions = SITES_SUGGESTIONS.filter(s => isNotNull(s.label)).sort((a, b) => (a.label < b.label ? -1 : 1));
+    const suggestions = React.useMemo(() => {
+        return R.uniqBy(
+            study => study.value && study.label,
+            studies.map(study => ({
+                label: study.SITE_NAME || study.VILLAGE_NAME,
+                value: study.SITE_ID,
+                iso2: study.ISO2,
+                coords: [study.Latitude, study.Longitude],
+            }))
+        )
+            .filter(s => isNotNull(s.label))
+            .sort((a, b) => (a.label < b.label ? -1 : 1));
+    }, [studies]);
 
     const onChange = (selection?: string) => {
         const site = suggestions.find(site => site.value === selection);
@@ -81,6 +83,7 @@ function SiteSelector({
 
     return (
         <SingleFilter
+            optimizePerformance={true}
             label={t("common.filters.site")}
             placeholder={t("common.filters.select_site")}
             options={suggestions}

@@ -19,6 +19,7 @@ import * as R from "ramda";
 import { useFirstRender } from "./hooks/use-first-render";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ClearIcon from "@mui/icons-material/Clear";
+import WindowedSelect from "react-windowed-select";
 
 export interface OptionType {
     label: string;
@@ -236,6 +237,7 @@ export type Option = {
 };
 
 export default function IntegrationReactSelect({
+    optimizePerformance = false,
     suggestions = [],
     value,
     onChange,
@@ -266,16 +268,29 @@ export default function IntegrationReactSelect({
 
     return (
         <div className={`${finalClasses.root} ${className}`} role="listbox">
-            <Select
-                classes={finalClasses}
-                styles={selectStyles}
-                components={components}
-                options={R.sortBy<Option>(R.prop("label"), suggestions)}
-                value={value}
-                onChange={onChange}
-                placeholder={t("common.options.select") + "..."}
-                {...rest}
-            />
+            {optimizePerformance ? (
+                <WindowedSelect
+                    classes={finalClasses}
+                    styles={selectStyles}
+                    components={components}
+                    options={R.sortBy<Option>(R.prop("label"), suggestions)}
+                    value={value}
+                    onChange={onChange}
+                    placeholder={t("common.options.select") + "..."}
+                    {...rest}
+                />
+            ) : (
+                <Select
+                    classes={finalClasses}
+                    styles={selectStyles}
+                    components={components}
+                    options={R.sortBy<Option>(R.prop("label"), suggestions)}
+                    value={value}
+                    onChange={onChange}
+                    placeholder={t("common.options.select") + "..."}
+                    {...rest}
+                />
+            )}
         </div>
     );
 }
