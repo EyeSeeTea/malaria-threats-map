@@ -31,7 +31,7 @@ const CountrySelector = ({ region, countries = [], setRegion, fetchCountryLayer,
     const { t } = useTranslation();
 
     useEffect(() => {
-        if (!countries) {
+        if (!countries.length) {
             fetchCountryLayer();
         }
     }, [fetchCountryLayer, countries]);
