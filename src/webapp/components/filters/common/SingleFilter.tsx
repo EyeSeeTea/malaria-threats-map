@@ -16,6 +16,7 @@ type OwnProps = {
     placeholder?: string;
     isClearable?: boolean;
     isDisabled?: boolean;
+    optimizePerformance?: boolean;
 };
 
 const mapDispatchToProps = {
@@ -26,6 +27,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = OwnProps & DispatchProps;
 
 function SingleFilter({
+    optimizePerformance,
     labelPosition,
     margin,
     label,
@@ -64,6 +66,7 @@ function SingleFilter({
                     </Typography>
                 )}
                 <IntegrationReactSelect
+                    optimizePerformance={optimizePerformance}
                     isMulti={false}
                     isClearable={isClearable}
                     isDisabled={isDisabled}
