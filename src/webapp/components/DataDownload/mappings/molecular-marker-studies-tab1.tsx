@@ -38,10 +38,6 @@ const mappings: Option[] = [
         label: "YEAR_START",
     },
     {
-        value: "DRUG_NAME",
-        label: "DRUG_NAME",
-    },
-    {
         value: "PLASMODIUM_SPECIES",
         label: "PLASMODIUM_SPECIES",
     },

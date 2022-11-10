@@ -175,6 +175,8 @@ const filterByPatientType = (patientType: string) => (study: any) => {
 };
 
 export const filterByDeletionType = (deletionType: string) => (study: any) => {
+    if (!deletionType) return true;
+
     return deletionType === DELETION_TYPES.HRP2_PROPORTION_DELETION.value
         ? study.HRP2_PROPORTION_DELETION !== "NR" && study.HRP2_PROPORTION_DELETION !== null
         : study.HRP2_HRP3_PROPORTION_DELETION !== "NR" && study.HRP2_HRP3_PROPORTION_DELETION !== null;
