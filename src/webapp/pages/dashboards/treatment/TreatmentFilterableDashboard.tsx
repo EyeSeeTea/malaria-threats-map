@@ -6,12 +6,12 @@ import TreatmentFilters from "./filters/TreatmentFilters";
 
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
-import InformationModal from "../../../components/dashboards/InformationModal";
+import InformationModal from "../../../components/dashboards/TreatmentInformationModal";
 import HighchartsReact from "highcharts-react-official";
-import { toPng } from "html-to-image";
 import { MolecularMarker } from "../../../components/filters/MolecularMarkerFilter";
 import { useFiltersVisible } from "../common/filters/useFiltersVisible";
 import DashboardTitle from "../common/DashboardTitle";
+import { downloadHtmlElement } from "../utils";
 
 interface TreatmentFilterableDashboardProps {
     id?: string;
@@ -81,24 +81,11 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
     }, [filtersVisible, chartComponentRef]);
 
     const handleDownload = React.useCallback(() => {
-        if (ref.current === null) {
-            return;
-        }
-
-        toPng(ref.current, { backgroundColor: "#F7F7F7" })
-            .then(dataUrl => {
-                const link = document.createElement("a");
-                link.download = title;
-                link.href = dataUrl;
-                link.click();
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        downloadHtmlElement(ref.current, title);
     }, [ref, title]);
 
     return (
-        <React.Fragment>
+        <Container ref={ref}>
             <DashboardTitle
                 id={id}
                 title={title}
@@ -156,11 +143,15 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                     handleCloseInfoModal={handleCloseInfoModal}
                 />
             </Grid>
-        </React.Fragment>
+        </Container>
     );
 };
 
 export default TreatmentFilterableDashboard;
+
+const Container = styled.div`
+    padding: 10px;
+`;
 
 const DasboardCard = styled(Card)`
     min-height: 500px;

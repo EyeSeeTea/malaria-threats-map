@@ -18,10 +18,10 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({ id, title, showActions,
             <Title id={id}>{title}</Title>
             {showActions && (
                 <Stack direction="row" spacing={2}>
-                    <Fab color="primary" size="small" onClick={onInfoClick}>
+                    <Fab color="primary" size="small" onClick={onInfoClick} className={"dashboard-action"}>
                         <InfoOutlinedIcon sx={{ color: "white", width: "20px" }} />
                     </Fab>
-                    <Fab color="primary" size="small" onClick={onDownloadClick}>
+                    <Fab color="primary" size="small" onClick={onDownloadClick} className={"dashboard-action"}>
                         <DownloadIcon sx={{ color: "white" }} />
                     </Fab>
                 </Stack>
@@ -37,4 +37,5 @@ const Title = styled.h3`
     margin-bottom: 30px;
     color: #2ba681;
     text-transform: uppercase;
+    width: 100%;
 `;

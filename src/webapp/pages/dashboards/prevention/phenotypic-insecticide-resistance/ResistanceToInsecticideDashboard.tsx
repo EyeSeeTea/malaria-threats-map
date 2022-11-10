@@ -7,6 +7,8 @@ import styled from "styled-components";
 import { useResistanceToInsecticide } from "./useResistanceToInsecticide";
 import { ResistanceToInsecticideSerie } from "./types";
 import i18next from "i18next";
+import StatusOfResistanceToInsecticidePopup from "../../../../components/dashboards/prevention/StatusOfResistanceToInsecticidePopup";
+import { useInfoPopup } from "../../common/popup/useInfoPopup";
 
 const ResistanceToInsecticideDashboard: React.FC = () => {
     const { t } = useTranslation();
@@ -27,6 +29,8 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
         onChartTypeChange,
     } = useResistanceToInsecticide();
 
+    const { openPopup, onChangeOpenPopup } = useInfoPopup();
+
     const chartComponentRefs = useRef([]);
 
     const maxStackedColumn = React.useMemo(() => {
@@ -46,54 +50,62 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
     }, [data]);
 
     return (
-        <PreventionFilterableDashboard
-            id="status-resistance-insecticide"
-            insecticideTypeOptions={insecticideTypeOptions}
-            chart="status-of-resistance-of-insecticide"
-            chartTypes={chartTypes}
-            chartType={chartType}
-            count={categoriesCount}
-            chartComponentRef={chartComponentRefs}
-            title={t(
-                "common.dashboard.phenotypicInsecticideResistanceDashboards.statusOfResistanceToInsecticides.title"
-            )}
-            filters={filters}
-            onInsecticideClassesChange={chartType === "by-insecticide-class" ? onInsecticideClassChange : undefined}
-            onInsecticideTypesChange={chartType === "by-insecticide" ? onInsecticideTypesChange : undefined}
-            onYearsChange={onYearsChange}
-            onOnlyIncludeBioassaysWithMoreMosquitoesChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}
-            onOnlyIncludeDataByHealthChange={onOnlyIncludeDataByHealthChange}
-            onChartTypeChange={onChartTypeChange}
-        >
-            <div style={{ overflowX: "auto" }}>
-                <Table>
-                    <tbody>
-                        {Object.keys(data).map((isoCountry, index) => {
-                            return (
-                                <tr key={isoCountry}>
-                                    <td>{t(isoCountry)}</td>
-                                    <td>
-                                        <StyledHighcharts
-                                            highcharts={Highcharts}
-                                            options={chartOptions(
-                                                data[isoCountry],
-                                                categories,
-                                                index === 0,
-                                                index === Object.keys(data).length - 1,
-                                                maxStackedColumn
-                                            )}
-                                            ref={(element: HighchartsReact.RefObject) =>
-                                                chartComponentRefs.current.push(element)
-                                            }
-                                        />
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </Table>
-            </div>
-        </PreventionFilterableDashboard>
+        <React.Fragment>
+            <PreventionFilterableDashboard
+                id="status-resistance-insecticide"
+                insecticideTypeOptions={insecticideTypeOptions}
+                chart="status-of-resistance-of-insecticide"
+                chartTypes={chartTypes}
+                chartType={chartType}
+                count={categoriesCount}
+                chartComponentRef={chartComponentRefs}
+                title={t(
+                    "common.dashboard.phenotypicInsecticideResistanceDashboards.statusOfResistanceToInsecticides.title"
+                )}
+                filters={filters}
+                onInsecticideClassesChange={chartType === "by-insecticide-class" ? onInsecticideClassChange : undefined}
+                onInsecticideTypesChange={chartType === "by-insecticide" ? onInsecticideTypesChange : undefined}
+                onYearsChange={onYearsChange}
+                onOnlyIncludeBioassaysWithMoreMosquitoesChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}
+                onOnlyIncludeDataByHealthChange={onOnlyIncludeDataByHealthChange}
+                onChartTypeChange={onChartTypeChange}
+                onInfoClick={onChangeOpenPopup}
+            >
+                <div style={{ overflowX: "auto" }}>
+                    <Table>
+                        <tbody>
+                            {Object.keys(data).map((isoCountry, index) => {
+                                return (
+                                    <tr key={isoCountry}>
+                                        <td>{t(isoCountry)}</td>
+                                        <td>
+                                            <StyledHighcharts
+                                                highcharts={Highcharts}
+                                                options={chartOptions(
+                                                    data[isoCountry],
+                                                    categories,
+                                                    index === 0,
+                                                    index === Object.keys(data).length - 1,
+                                                    maxStackedColumn
+                                                )}
+                                                ref={(element: HighchartsReact.RefObject) =>
+                                                    chartComponentRefs.current.push(element)
+                                                }
+                                            />
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </Table>
+                </div>
+            </PreventionFilterableDashboard>
+            <StatusOfResistanceToInsecticidePopup
+                years={filters.years}
+                openInfoModal={openPopup}
+                handleCloseInfoModal={onChangeOpenPopup}
+            />
+        </React.Fragment>
     );
 };
 
