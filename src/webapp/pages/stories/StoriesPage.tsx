@@ -139,24 +139,49 @@ export const StoriesPage: React.FC = () => {
     const { t } = useTranslation();
     const [storyModeStep, setStoryModeStep] = useState<number>(0);
     const [searchParams] = useSearchParams();
+    const theme = searchParams.get("theme") as ThemeType;
+
+    const imageBannerColors = (theme: ThemeType) => {
+        const bgColors: string[] = [];
+
+        switch (theme) {
+            case "prevention":
+                bgColors.push("#5ABE86", "#5abe8574");
+                break;
+            case "invasive":
+                bgColors.push("#5CC579", "#5cc57a6c");
+                break;
+            case "treatment":
+                bgColors.push("#5DCCCE", "#5dccce6a");
+                break;
+            case "diagnosis":
+                bgColors.push("#1999CB", "#1999cb79");
+                break;
+        }
+        return bgColors;
+    };
 
     return (
         <Layout>
-            <ImageBanner bgColor1="#5ABE86" bgColor2="#5abe8574" minHeight="380px">
+            <ImageBanner
+                bgColor1={imageBannerColors(theme)[0]}
+                bgColor2={imageBannerColors(theme)[1]}
+                minHeight="380px"
+            >
                 <Grid container spacing={3} height="100%">
                     <Grid item xs={4} display="flex" justifyContent={"right"} paddingLeft="0px !important">
-                        <ThemeImage theme={searchParams.get("theme") as ThemeType} />
+                        <ThemeImage theme={theme} />
                     </Grid>
                     <Grid item xs={8} display="flex" justifyContent={"left"} paddingLeft="10px">
                         <TitleContainer>
                             <Stack gap={{ xs: 1, sm: 2, lg: 3 }}>
                                 <Typography component="h1" variant="h4" color="white" textTransform="uppercase">
-                                    <Trans i18nKey={t(`common.storiesPage.${searchParams.get("theme")}.title`)} t={t}>
-                                        {t(`common.storiesPage.${searchParams.get("theme")}.title`)}
+                                    <Trans i18nKey={t(`common.storiesPage.${theme}.title`)} t={t}>
+                                        {t(`common.storiesPage.${theme}.title`)}
                                     </Trans>
                                 </Typography>
                                 <Typography component="h4" variant="h6" color="white" fontWeight={"medium"}>
-                                    {t(`common.storiesPage.${searchParams.get("theme")}.description`)}
+                                    {t(`common.storiesPage.${theme}.description`)}
                                 </Typography>
                             </Stack>
                         </TitleContainer>
@@ -170,11 +195,7 @@ export const StoriesPage: React.FC = () => {
                 sx={{ width: "100%", marginLeft: "0px", paddingLeft: "0px", paddingRight: "0px" }}
             >
                 <Grid item xs={12} md={4} lg={4} xl={3} sx={{ paddingLeft: "0px !important" }} marginBottom={"100px"}>
-                    <StoryModeStepper
-                        theme={searchParams.get("theme") as ThemeType}
-                        storyModeStep={storyModeStep}
-                        setStoryModeStep={setStoryModeStep}
-                    />
+                    <StoryModeStepper theme={theme} storyModeStep={storyModeStep} setStoryModeStep={setStoryModeStep} />
                 </Grid>
                 <Grid
                     item

@@ -109,6 +109,16 @@ class MalariaTour extends PureComponent<Props> {
         visible: false,
     };
 
+    readonly initialBounds = [
+        [-187.93572418723656, -57.24885649484118],
+        [187.9357241872363, 78.02618763542307],
+    ];
+
+    readonly zambiaBounds = [
+        [16.340674519230163, -19.66523734467671],
+        [43.28779140779719, -5.760008504858064],
+    ];
+
     componentDidMount(): void {
         setTimeout(() => this.setState(_state => ({ visible: true })), 200);
     }
@@ -146,11 +156,18 @@ class MalariaTour extends PureComponent<Props> {
         this.props.setActionGroupSelected(selectGroup);
     };
 
+    setBounds = (bounds: number[][]) => {
+        this.props.setBounds(bounds);
+    };
+
     onClose = () => {
         this.setState({ open: false });
         this.setInsecticideClass("PYRETHROIDS");
         this.setInsecticideTypes([]);
         this.setSelection(null);
+        this.setRegion(null);
+        this.setBounds(this.initialBounds);
+        this.setActionGroupSelected(null);
         localStorage.setItem("tour", "visited");
         this.props.setTourOpen(false);
     };
@@ -236,6 +253,7 @@ class MalariaTour extends PureComponent<Props> {
             {
                 selector: ".mapboxgl-canvas",
                 content: ({ goTo }) => {
+                    this.setBounds(this.zambiaBounds);
                     this.setRegion("ZM");
                     setTimeout(() => goTo(9), 300);
                 },

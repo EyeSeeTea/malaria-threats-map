@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import CountrySelector from "../filters/CountrySelector";
 import RegionSelector from "../filters/RegionSelector";
 import SiteSelector from "../filters/SiteSelector";
-import SubRegionSelector from "../filters/SubRegionSelector";
 import ActionGroupItem from "./ActionGroupItem";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -50,7 +49,6 @@ const LocationMapActions: React.FC<StateProps> = ({ region }) => {
             >
                 <>
                     <RegionSelector />
-                    <SubRegionSelector />
                     <CountrySelector />
                     <SiteSelector />
                 </>

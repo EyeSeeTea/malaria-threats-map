@@ -29,6 +29,7 @@ const LANGUAGES = [
 const LanguageSelectorBox = styled(Box)`
     width: 100px;
     padding: 15px;
+    text-align: center;
 `;
 
 const classes = makeStyles((theme: Theme) =>
