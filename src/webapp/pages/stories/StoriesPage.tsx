@@ -1,5 +1,5 @@
-import React from "react";
-import { Grid, Paper, Stack, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Grid, Stack, Typography } from "@mui/material";
 import { Trans, useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
@@ -8,8 +8,19 @@ import PreventionIcon from "../../assets/img/prevention-icon.svg";
 import TreatmentIcon from "../../assets/img/treatment-icon.svg";
 import DiagnosisIcon from "../../assets/img/diagnosis-icon.svg";
 import InvasiveIcon from "../../assets/img/invasive-icon.svg";
-import Map from "../../assets/img/stories-page/map.png";
-import CircleIcon from "@mui/icons-material/Circle";
+
+import diagnosis1 from "../../assets/img/stories-page/diagnosis1.png";
+import diagnosis2 from "../../assets/img/stories-page/diagnosis2.png";
+import diagnosis3 from "../../assets/img/stories-page/diagnosis3.png";
+import invasive1 from "../../assets/img/stories-page/invasive1.png";
+import invasive2 from "../../assets/img/stories-page/invasive2.png";
+import invasive3 from "../../assets/img/stories-page/invasive3.png";
+import prevention1 from "../../assets/img/stories-page/prevention1.png";
+import prevention2 from "../../assets/img/stories-page/prevention2.png";
+import prevention3 from "../../assets/img/stories-page/prevention3.png";
+import prevention4 from "../../assets/img/stories-page/prevention4.png";
+import treatment1 from "../../assets/img/stories-page/treatment1.png";
+import treatment4 from "../../assets/img/stories-page/treatment4.png";
 
 import Layout from "../layout/Layout";
 import StoryModeStepper from "../../components/StoryModeStepper";
@@ -41,20 +52,6 @@ const StyledImage = styled.img`
 const MapImage = styled.img`
     width: 100%;
     height: auto;
-    position: relative;
-`;
-
-const StyledPaper = styled(Paper)`
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    border-radius: 10px;
-    box-shadow: 2;
-    padding: 10px;
-    @media (max-width: 768px) {
-        bottom: 5px;
-        right: 5px;
-    }
 `;
 
 const ThemeImage = ({ theme }: { theme: ThemeType }) => {
@@ -76,8 +73,71 @@ const ThemeImage = ({ theme }: { theme: ThemeType }) => {
     return <StyledImage src={imageSrc} alt="prevention-icon" />;
 };
 
+const MapComponent = ({ theme, storyModeStep }: { theme: string; storyModeStep: number }) => {
+    let imageSrc: string;
+    switch (theme) {
+        case "diagnosis":
+            switch (storyModeStep) {
+                case 0:
+                    imageSrc = diagnosis1;
+                    break;
+                case 1:
+                    imageSrc = diagnosis2;
+                    break;
+                case 2:
+                    imageSrc = diagnosis3;
+                    break;
+            }
+            break;
+        case "invasive":
+            switch (storyModeStep) {
+                case 0:
+                    imageSrc = invasive1;
+                    break;
+                case 1:
+                    imageSrc = invasive2;
+                    break;
+                case 2:
+                case 3:
+                    imageSrc = invasive3;
+                    break;
+            }
+            break;
+        case "prevention":
+            switch (storyModeStep) {
+                case 0:
+                    imageSrc = prevention1;
+                    break;
+                case 1:
+                    imageSrc = prevention2;
+                    break;
+                case 2:
+                    imageSrc = prevention3;
+                    break;
+                case 3:
+                    imageSrc = prevention4;
+                    break;
+            }
+            break;
+        case "treatment":
+            switch (storyModeStep) {
+                case 0:
+                case 1:
+                case 2:
+                    imageSrc = treatment1;
+                    break;
+                case 3:
+                    imageSrc = treatment4;
+                    break;
+            }
+            break;
+    }
+    return <MapImage src={imageSrc} alt="map" />;
+};
+
 export const StoriesPage: React.FC = () => {
     const { t } = useTranslation();
+    const [storyModeStep, setStoryModeStep] = useState<number>(0);
     const [searchParams] = useSearchParams();
     const theme = searchParams.get("theme") as ThemeType;
 
@@ -135,7 +195,7 @@ export const StoriesPage: React.FC = () => {
                 sx={{ width: "100%", marginLeft: "0px", paddingLeft: "0px", paddingRight: "0px" }}
             >
                 <Grid item xs={12} md={4} lg={4} xl={3} sx={{ paddingLeft: "0px !important" }} marginBottom={"100px"}>
-                    <StoryModeStepper theme={theme} />
+                    <StoryModeStepper theme={theme} storyModeStep={storyModeStep} setStoryModeStep={setStoryModeStep} />
                 </Grid>
                 <Grid
                     item
@@ -147,36 +207,7 @@ export const StoriesPage: React.FC = () => {
                     marginTop={{ xs: "16px", md: "55px" }}
                     sx={{ maxWidth: "1200px !important" }}
                 >
-                    <div style={{ position: "relative" }}>
-                        <MapImage src={Map} alt="map" />
-                        <StyledPaper>
-                            <Stack spacing={{ xs: 0, md: 2 }}>
-                                <Typography variant="caption" fontWeight="bold">
-                                    {t(`common.prevention.resistance_status`)}
-                                </Typography>
-                                <Stack>
-                                    <Stack direction={"row"} spacing={1} alignItems="center">
-                                        <CircleIcon sx={{ color: "#869C66", fontSize: 10 }} />
-                                        <Typography variant="caption">
-                                            {t(`common.prevention.legend.resistance_status.confirmed`)}
-                                        </Typography>
-                                    </Stack>
-                                    <Stack direction={"row"} spacing={1} alignItems="center">
-                                        <CircleIcon sx={{ color: "#FD9225", fontSize: 10 }} />
-                                        <Typography variant="caption">
-                                            {t(`common.prevention.legend.resistance_status.possible`)}
-                                        </Typography>
-                                    </Stack>
-                                    <Stack direction={"row"} spacing={1} alignItems="center">
-                                        <CircleIcon sx={{ color: "#E41517", fontSize: 10 }} />
-                                        <Typography variant="caption">
-                                            {t(`common.prevention.legend.resistance_status.susceptible`)}
-                                        </Typography>
-                                    </Stack>
-                                </Stack>
-                            </Stack>
-                        </StyledPaper>
-                    </div>
+                    <MapComponent theme={searchParams.get("theme") as ThemeType} storyModeStep={storyModeStep} />
                 </Grid>
             </Grid>
         </Layout>
