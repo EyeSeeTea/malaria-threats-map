@@ -63,7 +63,7 @@ export function createChartData(studies: TreatmentStudy[], countries: string[]):
 
         const proportionLessThan10: MolecularChartSerie = {
             type: "column",
-            name: "<10%",
+            name: "<10% of samples",
             color: molecularMarkerColors[0],
             data: years.map(year => {
                 const studies = studiesByCountry.filter(
@@ -77,7 +77,7 @@ export function createChartData(studies: TreatmentStudy[], countries: string[]):
 
         const proportion1050: MolecularChartSerie = {
             type: "column",
-            name: "10-50%",
+            name: "10-50% of samples",
             color: molecularMarkerColors[1],
             data: years.map(year => {
                 const studies = studiesByCountry.filter(
@@ -94,7 +94,7 @@ export function createChartData(studies: TreatmentStudy[], countries: string[]):
 
         const proportion5180: MolecularChartSerie = {
             type: "column",
-            name: "51-80%",
+            name: "51-80% of samples",
             color: molecularMarkerColors[2],
             data: years.map(year => {
                 const studies = studiesByCountry.filter(
@@ -111,7 +111,7 @@ export function createChartData(studies: TreatmentStudy[], countries: string[]):
 
         const proportionMoreThan80: MolecularChartSerie = {
             type: "column",
-            name: ">80%",
+            name: ">80% of samples",
             color: molecularMarkerColors[3],
             data: years.map(year => {
                 const studies = studiesByCountry.filter(
