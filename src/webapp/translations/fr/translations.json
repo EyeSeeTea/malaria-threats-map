@@ -112,7 +112,7 @@
                 "phenotypicInsecticideResistanceOptions": {
                     "phenotypicInsecticideResistance": "Résistance phénotypique aux insecticides",
                     "statusOfResistanceToInsecticides": "Etat de résistance aux insecticides",
-                    "mosquitoOverTime": "Mosquito Over Time"
+                    "mosquitoOverTime": "La mortalité des moustiques au fil du temps"
                 }
             },
             "countryContextDashboards": {
@@ -142,7 +142,7 @@
                     "firstLineTreatments": "Traitements de 1ère ligne pour le paludisme non compliqué"
                 },
                 "majorAnophelesSpecies": {
-                    "title": "ESPÈCES MAJEURES D'ANOPHÈLES",
+                    "title": "VECTEURS",
                     "country": "Pays",
                     "species": "Espèces majeures d'anophèles"
                 },
@@ -690,7 +690,7 @@
             "site": "Site",
             "exclude_lower_patients": "Exclure les études portant sur moins de 20 patients",
             "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons",
-            "onlyIncludeBioassays": "N'inclure que les essais biologiques avec plus que le nombre de moustiques en cours",
+            "onlyIncludeBioassays": "N'incluez que les essais biologiques comportant plus que le nombre suivant de moustiques",
             "zero_all_bioassays": "0 (tous les essais biologiques)",
             "only_include_data_by_health": "N'inclure que les données fournies à l'OMS par les ministères de la santé"
         },

@@ -111,7 +111,7 @@
                 "phenotypicInsecticideResistanceOptions": {
                     "phenotypicInsecticideResistance": "Phenotypic Insecticide Resistance",
                     "statusOfResistanceToInsecticides": "Status of resistance to insecticides",
-                    "mosquitoOverTime": "Mosquito Over Time"
+                    "mosquitoOverTime": "Mosquito mortality over time"
                 }
             },
             "countryContextDashboards": {
@@ -141,7 +141,7 @@
                     "firstLineTreatments": "1st line treatments for uncomplicated malaria"
                 },
                 "majorAnophelesSpecies": {
-                    "title": "MAJOR ANOPHELES SPECIES",
+                    "title": "VECTORS",
                     "country": "Country",
                     "species": "Major Anopheles species"
                 },
@@ -688,7 +688,7 @@
             "site": "Site",
             "exclude_lower_patients": "Exclude studies of less than 20 patients",
             "exclude_lower_samples": "Exclude studies of less than 20 samples",
-            "onlyIncludeBioassays": "Only include bioassays with more than the flowing number of mosquitoes",
+            "onlyIncludeBioassays": "Only include bioassays with more than the following number of mosquitoes",
             "zero_all_bioassays": "0 (all bioassays)",
             "only_include_data_by_health": "Only include data provided to WHO by ministries of health"
         },
