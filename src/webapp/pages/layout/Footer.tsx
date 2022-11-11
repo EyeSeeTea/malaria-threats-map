@@ -97,6 +97,7 @@ const Footer = () => {
 
     const subscribeNewsletterLink =
         "https://www.who.int/teams/global-malaria-programme/about/previous-issues-of-the-newsletter";
+    const privacyPolicyLink = "https://www.who.int/about/policies/privacy";
 
     return (
         <footer>
@@ -154,9 +155,14 @@ const Footer = () => {
                         <WhoLogoBlue />
                     </Column>
                     <Stack direction="row" alignItems="center" gap={3}>
-                        <Link href="#" underline="none" variant="body1" textAlign="center" color="black">
-                            {t("common.footer.privacy")}
-                        </Link>
+                        <a
+                            href={privacyPolicyLink}
+                            target={"_blank"}
+                            rel="noreferrer"
+                            style={{ textDecoration: "none" }}
+                        >
+                            <Typography color={"black"}>{t("common.footer.privacy")}</Typography>
+                        </a>
                         <Typography variant="body1" textAlign="center">
                             {t("disclaimer.p1bLinkText", { year: new Date().getFullYear() })}
                         </Typography>
