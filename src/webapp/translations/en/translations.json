@@ -183,8 +183,8 @@
                     "year": "Year",
                     "artemisininChartTitle": "Percentage of samples in one study where validated or candidate",
                     "artemisininChartSubtitle": "molecular markers of artemisinin resistance were detected:",
-                    "mutationsChartTitle": "Studies where mutations were detected in:",
-                    "multipleChartTitle": "Studies where multiple copy numbers were detected in:"
+                    "mutationsChartTitle": "Percentage of samples in one study where mutations were detected:",
+                    "multipleChartTitle": "Percentage of samples in one study where multiple copy numbers were detected:"
                 }
             },
             "phenotypicInsecticideResistanceDashboards": {
