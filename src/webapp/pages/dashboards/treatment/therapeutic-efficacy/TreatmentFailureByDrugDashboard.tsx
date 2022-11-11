@@ -220,7 +220,7 @@ function chartOptions(
         tooltip: {
             headerFormat: "",
             pointFormat: `{point.y} ${i18next.t(
-                "common.dashboard.therapeuticEfficacySection.treatmentFailureByDrug.studies"
+                "common.dashboard.therapeuticEfficacyDashboards.treatmentFailureByDrug.studies"
             )}`,
             style: {
                 width: 150,

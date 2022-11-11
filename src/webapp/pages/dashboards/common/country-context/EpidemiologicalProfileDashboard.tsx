@@ -255,10 +255,16 @@ const Table = styled.table`
         border-right: 0;
     }
 
+    tr:nth-child(2) th:nth-child(3) {
+        border-left: 0;
+        border-right: 0;
+    }
+
     tr th:nth-child(4) {
         border-left: 0;
         border-right: 0;
     }
+
     tr th:nth-child(5) {
         border-left: 0;
         border-right: 0;

@@ -68,6 +68,8 @@ export function createTreatmentBubbleChartData(
                 ISO2: "",
                 DRUG_NAME: "",
                 N: 0,
+                CITATION_URL: "",
+                INSTITUTION: "",
             };
         });
 
@@ -96,6 +98,8 @@ export function createTreatmentBubbleChartData(
                     site: study.SITE_NAME,
                     country: study.ISO2,
                     drug: study.DRUG_NAME,
+                    url: study.CITATION_URL,
+                    urlText: study.INSTITUTION,
                 };
             }),
         };

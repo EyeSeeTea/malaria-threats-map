@@ -1,7 +1,7 @@
 import Highcharts from "highcharts";
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import BubbleChartHelpImage from "../../../../assets/img/dashboards/bubble-chart-help.png";
+//import BubbleChartHelpImage from "../../../../assets/img/dashboards/bubble-chart-help.png";
 import { BubleChartGroup, TreatmentOverTimeType } from "./types";
 import { useTreatmentOverTime } from "./useTreatmentOverTime";
 import HighchartsReact from "highcharts-react-official";
@@ -22,6 +22,8 @@ interface CustomPoint extends Highcharts.Point {
     drug: string;
     site: string;
     country: string;
+    url: string;
+    urlText: string;
 }
 
 const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({ id, type }) => {
@@ -96,20 +98,22 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
             verticalAlign: "top",
             align: "left",
             x: 50,
+            y: -40,
             margin: 20,
         },
 
         title: {
-            useHTML: true,
-            text: `<div style="display: flex;flex-direction: row;align-items: center;"> 
-                    ${i18next.t(
-                        "common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.numberPatients"
-                    )} 
-                    <img width="100px" src=${BubbleChartHelpImage} alt='' />
-                   </div>`,
-            align: "right",
-            x: -30,
-            y: 40,
+            // useHTML: true,
+            // text: `<div style="display: flex;flex-direction: row;align-items: center;">
+            //         ${i18next.t(
+            //             "common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.numberPatients"
+            //         )}
+            //         <img width="100px" src=${BubbleChartHelpImage} alt='' />
+            //        </div>`,
+            text: i18next.t("common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.numberPatients"),
+            x: 100,
+            y: 15,
+            align: "center",
             margin: 20,
             style: {
                 fontSize: "14px",
@@ -178,11 +182,9 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
                     point.y
                 }%</td></tr>
                         <br/>
-                        <tr><th>${i18next.t(
-                            "common.dashboard.tooltip.source.label"
-                        )}</th><td><a href='https://www.niaid.nih.gov/' target='_blank'><i>${i18next.t(
-                    "common.dashboard.tooltip.source.link"
-                )}</i></a></td></tr>
+                        <tr><th>${i18next.t("common.dashboard.tooltip.source.label")}</th><td><a href=${
+                    point.url
+                } target='_blank'><i>${point.urlText}</i></a></td></tr>
                     </table>
                 `;
             },
