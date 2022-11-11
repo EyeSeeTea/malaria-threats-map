@@ -194,7 +194,7 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
             borderRadius: 30,
             shadow: { color: "#000000", offsetX: 1, offsetY: 3, opacity: 0.1, width: 6 },
             borderColor: "#ffffff8b",
-            backgroundColor: "black",
+            backgroundColor: "white",
         },
         series,
         credits: {
