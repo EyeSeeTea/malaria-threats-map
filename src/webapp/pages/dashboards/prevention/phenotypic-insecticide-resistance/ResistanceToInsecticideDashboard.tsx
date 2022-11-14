@@ -125,7 +125,7 @@ const Table = styled.table`
         border-bottom: 0px;
     }
     tr td:nth-child(2) {
-        width: 90%;
+        width: 88%;
     }
 `;
 

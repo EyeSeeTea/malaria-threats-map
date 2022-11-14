@@ -209,6 +209,11 @@ function chartOptions(years: number[], data: MosquitoOverTimeData, xAxisVisible:
                     fillColor: "#2F559780",
                     lineWidth: 1,
                 },
+                tooltip: {
+                    pointFormatter: function () {
+                        return `x: ${this.category} y: ${this.y}`;
+                    },
+                },
             },
         ],
         credits: { enabled: false },
