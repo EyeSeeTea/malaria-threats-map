@@ -239,8 +239,8 @@
                     "chartInterpretation": "<strong>Chart interpretation:</strong> This stacked bar chart displays the molecular marker study results. The height of the bar is determined by the number of studies conducted in that year.",
                     "pfkelch13": {
                         "description": "The colour of the bar represents the percentage of samples within one study where validated and candidate molecular markers were detected. Light blue indicates a low percentage; dark blue represents a high percentage.",
-                        "list_1": "Validated markers include: (F466I, N458Y, Y493H, R539T, I543T, P553L, R561H, P574L, C580Y)",
-                        "list_2": "Associated /candidate markers include: (P441L, G449A, C469F/Y, A481V, R515K, P527H, N5371/D, G538V, V568G, R6221, A675V)"
+                        "list_1": "Validated markers include: (F466I, N458Y, Y493H, R539T, I543T, P553L, R561H, P574L, C580Y, R6221, A675V, M476I)",
+                        "list_2": "Associated /candidate markers include: (P441L, G449A, C469F/Y, A481V, R515K, P527H, N5371/D, G538V, V568G)"
                     },
                     "pfcrt": "The colour of the bar represents the percentage of samples within one study where mutations were detected. Light blue indicates a low percentage; dark blue represents a high percentage.",
                     "pfmdr1": "The colour of the bar represents the percentage of samples within one study where multiple copy numbers were detected. Light blue indicates a low percentage; dark blue represents a high percentage.",

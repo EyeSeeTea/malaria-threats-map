@@ -240,8 +240,8 @@
                     "chartInterpretation": "<strong>Interprétation du graphique:</strong> Ce graphique à barres empilées affiche les résultats des études sur les marqueurs moléculaires. La hauteur de la barre est déterminée par le nombre d'études menées cette année-là.",
                     "pfkelch13": {
                         "description": "La couleur de la barre représente le pourcentage d'échantillons dans une étude où les marqueurs moléculaires validés et candidats ont été détectés. Le bleu clair indique un faible pourcentage ; le bleu foncé représente un pourcentage élevé.",
-                        "list_1": "Les marqueurs validés comprennent: (F466I, N458Y, Y493H, R539T, I543T, P553L, R561H, P574L, C580Y)",
-                        "list_2": "Les marqueurs associés/candidats comprennent: (P441L, G449A, C469F/Y, A481V, R515K, P527H, N5371/D, G538V, V568G, R6221, A675V)"
+                        "list_1": "Les marqueurs validés comprennent: (F466I, N458Y, Y493H, R539T, I543T, P553L, R561H, P574L, C580Y, R6221, A675V, M476I)",
+                        "list_2": "Les marqueurs associés/candidats comprennent: (P441L, G449A, C469F/Y, A481V, R515K, P527H, N5371/D, G538V, V568G)"
                     },
                     "pfcrt": "La couleur de la barre représente le pourcentage d'échantillons dans une étude où des mutations ont été détectées. Le bleu clair indique un faible pourcentage ; le bleu foncé représente un pourcentage élevé.",
                     "pfmdr1": "La couleur de la barre représente le pourcentage d'échantillons dans une étude où des nombres de copies multiples ont été détectés. Le bleu clair indique un faible pourcentage ; le bleu foncé représente un pourcentage élevé.",
