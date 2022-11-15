@@ -13,6 +13,7 @@ type OwnProps = {
     background?: string;
     onlyYMargin?: boolean;
     labelBold?: boolean;
+    isDisabled?: boolean;
 };
 
 type Props = OwnProps;
@@ -47,6 +48,7 @@ function PlasmodiumSpecieSelector({
     background,
     onlyYMargin = false,
     labelBold = false,
+    isDisabled = false,
 }: Props) {
     const onSelectionChange = (value: ValueType<OptionType, false>) => {
         const selection = value as OptionType;
@@ -68,6 +70,7 @@ function PlasmodiumSpecieSelector({
                     onChange={onSelectionChange}
                     value={selection}
                     multi={multi}
+                    isDisabled={isDisabled}
                 />
             </Container>
         </FilterWrapper>

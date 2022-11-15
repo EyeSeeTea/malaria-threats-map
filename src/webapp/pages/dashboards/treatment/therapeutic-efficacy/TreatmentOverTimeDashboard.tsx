@@ -64,6 +64,7 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
             drugs={drugs}
             molecularMarker={molecularMarker}
             years={years}
+            PlasmodiumSpecieDisabled={type === "positiveDay3"}
             excludeLowerPatients={excludeLowerPatients}
             onPlasmodiumChange={onPlasmodiumChange}
             onDrugsChange={onDrugsChange}

@@ -29,6 +29,7 @@ interface TreatmentFilterableDashboardProps {
     years: [number, number];
     excludeLowerPatients?: boolean;
     excludeLowerSamples?: boolean;
+    PlasmodiumSpecieDisabled?: boolean;
     onPlasmodiumChange: (value: string) => void;
     onDrugsChange: (value: string[]) => void;
     onYearsChange: (value: [number, number]) => void;
@@ -53,6 +54,7 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
     years,
     excludeLowerPatients,
     excludeLowerSamples,
+    PlasmodiumSpecieDisabled,
     onPlasmodiumChange,
     onDrugsChange,
     onYearsChange,
@@ -109,6 +111,7 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                                 years={years}
                                 excludeLowerPatients={excludeLowerPatients}
                                 excludeLowerSamples={excludeLowerSamples}
+                                PlasmodiumSpecieDisabled={PlasmodiumSpecieDisabled}
                                 onPlasmodiumSpeciesChange={onPlasmodiumChange}
                                 onDrugsChange={onDrugsChange}
                                 onMolecularMarkerChange={onMolecularMarkerChange}

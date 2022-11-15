@@ -156,12 +156,14 @@
             },
             "therapeuticEfficacyDashboards": {
                 "title": "Estudios de eficacia terapéutica (EET)",
-                "numStudies": "Los filtros aplicados producen {{count}} estudios",
+                "numStudies_one": "Los filtros aplicados producen {{count}} estudio",
+                "numStudies_other": "Los filtros aplicados producen {{count}} estudios",
                 "treatmentFailureByDrug": {
                     "title": "RESUMEN DE LAS TASAS DE FRACASO DEL TRATAMIENTO POR FÁRMACO",
                     "studyOutcome": "Resultado del estudio:",
                     "numStudies": "Número de estudios",
-                    "studies": "estudios",
+                    "studies_one": "{{count}} estudio",
+                    "studies_other": "{{count}} estudios",
                     "lessThan10Patients": "<10% de pacientes con fracaso del tratamiento",
                     "moreOrEqualThan10Patients": "≥10% de los pacientes con fracaso del tratamiento"
                 },
@@ -230,10 +232,10 @@
                     "dataAvailability": "<strong>Disponibilidad de datos:</strong> En este gráfico sólo se muestran los datos de <strong><i>P. falciparum</i></strong> y <strong><i>P. vivax</i></strong>."
                 },
                 "parasiteClearanceRatesOverTime": {
-                    "chartInterpretation": "<strong>Interpretación del gráfico:</strong> Este gráfico de dispersión muestra el porcentaje de pacientes con retraso en la eliminación del parásito, en un estudio de eficacia terapéutica, realizado en un país (o países) seleccionado, por año. El usuario puede personalizar el gráfico seleccionando una especie de Plasmodium, un fármaco y los años de interés. El usuario también puede excluir del gráfico los estudios con menos de 20 pacientes.",
+                    "chartInterpretation": "<strong>Interpretación del gráfico:</strong> Este gráfico de dispersión muestra el porcentaje de pacientes con retraso en la eliminación del parásito, en un estudio de eficacia terapéutica, realizado en un país (o países) seleccionado, por año. El usuario puede personalizar el gráfico seleccionando un fármaco y los años de interés. El usuario también puede excluir del gráfico los estudios con menos de 20 pacientes.",
                     "description_1": "Cada círculo representa un estudio de eficacia terapéutica. El tamaño del círculo es indicativo del número total de pacientes incluidos en el estudio. El color del círculo indica el país donde se realizó el estudio.",
                     "description_2": "La ubicación de los círculos a lo largo del eje x se basa en el año en que se completó el estudio. Hay un ligero desplazamiento horizontal de los círculos, dentro de un intervalo de años, para reducir el solapamiento de los círculos.",
-                    "dataAvailability": "<strong>Disponibilidad de datos:</strong> En este gráfico sólo se muestran los datos de <strong><i>P. falciparum</i></strong> y <strong><i>P. vivax</i></strong>."
+                    "dataAvailability": "<strong>Disponibilidad de datos:</strong> En este gráfico sólo se muestran los datos de <strong><i>P. falciparum</i></strong>."
                 },
                 "summaryMolecularMarkerStudyOverTime": {
                     "intro": "Los estudios de marcadores moleculares identifican y hacen un seguimiento de la prevalencia de las mutaciones moleculares asociadas a la resistencia a los fármacos antipalúdicos. El usuario puede personalizar el gráfico seleccionando el tipo de estudio de marcadores moleculares y los años de interés. El usuario también puede excluir del gráfico los estudios con menos de 20 pacientes.",
