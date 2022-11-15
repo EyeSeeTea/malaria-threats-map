@@ -28,6 +28,8 @@ const StyledToolbar = styled(Toolbar)`
     justify-content: space-between;
 `;
 
+const whoLink = "https://www.who.int";
+
 const MenuItems: React.FC<DirectionProps> = ({ flexDirection }) => {
     const { t } = useTranslation();
 
@@ -118,7 +120,9 @@ const Header = () => {
                             </MenuContainer>
                             <LanguageSelector />
                         </Hidden>
-                        <WhoLogoBlue width="150px" />
+                        <a href={whoLink} target={"_blank"} rel="noreferrer">
+                            <WhoLogoBlue width="150px" />
+                        </a>
                     </StyledToolbar>
                 </Container>
             </StyledAppBar>
