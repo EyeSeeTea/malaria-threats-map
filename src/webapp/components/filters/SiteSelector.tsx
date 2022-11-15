@@ -63,6 +63,7 @@ function SiteSelector({
                 value: study.SITE_ID,
                 iso2: study.ISO2,
                 coords: [study.Latitude, study.Longitude],
+                region: study.REGION_FULL,
             }))
         )
             .filter(s => isNotNull(s.label))
@@ -78,6 +79,7 @@ function SiteSelector({
             siteIso2: site ? site.iso2 : undefined,
             siteCoordinates: site ? [+site.coords[0], +site.coords[1]] : undefined,
             country: site ? site.iso2 : undefined,
+            region: site ? site.region : undefined,
         });
     };
 
