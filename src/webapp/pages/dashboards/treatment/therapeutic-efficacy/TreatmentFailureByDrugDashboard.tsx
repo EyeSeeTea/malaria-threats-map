@@ -219,9 +219,11 @@ function chartOptions(
         },
         tooltip: {
             headerFormat: "",
-            pointFormat: `{point.y} ${i18next.t(
-                "common.dashboard.therapeuticEfficacyDashboards.treatmentFailureByDrug.studies"
-            )}`,
+            pointFormatter: function () {
+                return i18next.t("common.dashboard.therapeuticEfficacyDashboards.treatmentFailureByDrug.studies", {
+                    count: this.y,
+                });
+            },
             style: {
                 width: 150,
             },

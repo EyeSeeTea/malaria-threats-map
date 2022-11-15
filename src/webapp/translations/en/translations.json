@@ -155,12 +155,14 @@
             },
             "therapeuticEfficacyDashboards": {
                 "title": "Therapeutic efficacy studies (TES)",
-                "numStudies": "The applied filters yield {{count}} studies",
+                "numStudies_one": "The applied filters yield {{count}} study",
+                "numStudies_other": "The applied filters yield {{count}} studies",
                 "treatmentFailureByDrug": {
                     "title": "SUMMARY OF TREATMENT FAILURE RATES BY DRUG",
                     "studyOutcome": "Study outcome:",
                     "numStudies": "Number of studies",
-                    "studies": "studies",
+                    "studies_one": "{{count}} study",
+                    "studies_other": "{{count}} studies",
                     "lessThan10Patients": "<10% of patients with treatment failure",
                     "moreOrEqualThan10Patients": "≥10% of patients with treatment failure"
                 },
@@ -229,18 +231,18 @@
                     "dataAvailability": "<strong>Data availability:</strong> Only data for <strong><i>P. falciparum</i></strong> and <strong><i>P. vivax</i></strong> are displayed in this graph."
                 },
                 "parasiteClearanceRatesOverTime": {
-                    "chartInterpretation": "<strong>Chart interpretation:</strong> This scatter plot displays the percentage of patients with delayed parasite clearance, in a therapeutic efficacy study, conducted in a selected country (or countries), by year. The user can customize the chart by selecting a Plasmodium species, a drug, and the years of interest. The user can also exclude studies with less than 20 patients from the chart.",
+                    "chartInterpretation": "<strong>Chart interpretation:</strong> This scatter plot displays the percentage of patients with delayed parasite clearance, in a therapeutic efficacy study, conducted in a selected country (or countries), by year. The user can customize the chart by selecting a drug, and the years of interest. The user can also exclude studies with less than 20 patients from the chart.",
                     "description_1": "Each circle represents one therapeutic efficacy study. The size of the circle is indicative of the total number of patients included in the study. The colour of the circle indicates the country where the study was conducted.",
                     "description_2": "The placement of the circles along the x-axis is based on the year in which the study was completed. There is slight horizontal displacement of the circles, within a year interval, in order to reduce overlapping circles.",
-                    "dataAvailability": "<strong>Data availability:</strong> Only data for <strong><i>P. falciparum</i></strong> and <strong><i>P. vivax</i></strong> are displayed in this graph."
+                    "dataAvailability": "<strong>Data availability:</strong> Only data for <strong><i>P. falciparum</i></strong> is displayed in this graph."
                 },
                 "summaryMolecularMarkerStudyOverTime": {
                     "intro": "Molecular marker studies identify and track the prevalence of molecular mutations associated with antimalarial drug resistance. The user can customize the chart by selecting the type of molecular marker study and the years of interest. The user can also exclude studies with less than 20 patients from the chart.",
                     "chartInterpretation": "<strong>Chart interpretation:</strong> This stacked bar chart displays the molecular marker study results. The height of the bar is determined by the number of studies conducted in that year.",
                     "pfkelch13": {
                         "description": "The colour of the bar represents the percentage of samples within one study where validated and candidate molecular markers were detected. Light blue indicates a low percentage; dark blue represents a high percentage.",
-                        "list_1": "Validated markers include: (F466I, N458Y, Y493H, R539T, I543T, P553L, R561H, P574L, C580Y)",
-                        "list_2": "Associated /candidate markers include: (P441L, G449A, C469F/Y, A481V, R515K, P527H, N5371/D, G538V, V568G, R6221, A675V)"
+                        "list_1": "Validated markers include: (F466I, N458Y, Y493H, R539T, I543T, P553L, R561H, P574L, C580Y, R6221, A675V, M476I)",
+                        "list_2": "Associated /candidate markers include: (P441L, G449A, C469F/Y, A481V, R515K, P527H, N5371/D, G538V, V568G)"
                     },
                     "pfcrt": "The colour of the bar represents the percentage of samples within one study where mutations were detected. Light blue indicates a low percentage; dark blue represents a high percentage.",
                     "pfmdr1": "The colour of the bar represents the percentage of samples within one study where multiple copy numbers were detected. Light blue indicates a low percentage; dark blue represents a high percentage.",

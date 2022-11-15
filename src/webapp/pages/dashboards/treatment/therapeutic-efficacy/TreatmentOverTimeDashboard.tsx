@@ -1,7 +1,7 @@
 import Highcharts from "highcharts";
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
-//import BubbleChartHelpImage from "../../../../assets/img/dashboards/bubble-chart-help.png";
+import BubbleChartHelpImage from "../../../../assets/img/dashboards/bubble-chart-help.png";
 import { BubleChartGroup, TreatmentOverTimeType } from "./types";
 import { useTreatmentOverTime } from "./useTreatmentOverTime";
 import HighchartsReact from "highcharts-react-official";
@@ -64,6 +64,7 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
             drugs={drugs}
             molecularMarker={molecularMarker}
             years={years}
+            PlasmodiumSpecieDisabled={type === "positiveDay3"}
             excludeLowerPatients={excludeLowerPatients}
             onPlasmodiumChange={onPlasmodiumChange}
             onDrugsChange={onDrugsChange}
@@ -96,25 +97,22 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
         legend: {
             enabled: true,
             verticalAlign: "top",
-            align: "left",
-            x: 50,
-            y: -40,
-            margin: 20,
+            align: "center",
+            y: 20,
         },
 
         title: {
-            // useHTML: true,
-            // text: `<div style="display: flex;flex-direction: row;align-items: center;">
-            //         ${i18next.t(
-            //             "common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.numberPatients"
-            //         )}
-            //         <img width="100px" src=${BubbleChartHelpImage} alt='' />
-            //        </div>`,
-            text: i18next.t("common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.numberPatients"),
-            x: 100,
-            y: 15,
-            align: "center",
-            margin: 20,
+            useHTML: true,
+            text: `<div style="display: flex;flex-direction: row;align-items: center;">
+                    ${i18next.t(
+                        "common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.numberPatients"
+                    )}
+                    <img width="100px" src=${BubbleChartHelpImage} alt='' />
+                   </div>`,
+            x: 0,
+            y: 0,
+            align: "right",
+            verticalAlign: "bottom",
             style: {
                 fontSize: "14px",
                 fontWeight: "bold",
@@ -131,6 +129,7 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
                     fontWeight: "bold",
                     color: "black",
                 },
+                y: 30,
             },
             tickInterval: 1,
         },

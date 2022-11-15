@@ -23,6 +23,7 @@ interface TreatmentFiltersProps {
     years: [number, number];
     excludeLowerPatients?: boolean;
     excludeLowerSamples?: boolean;
+    PlasmodiumSpecieDisabled?: boolean;
     onPlasmodiumSpeciesChange: (value: string) => void;
     onDrugsChange: (values: string[]) => void;
     onMolecularMarkerChange: (value: MolecularMarker) => void;
@@ -43,6 +44,7 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
     years,
     excludeLowerPatients,
     excludeLowerSamples,
+    PlasmodiumSpecieDisabled,
     onPlasmodiumSpeciesChange,
     onDrugsChange,
     onMolecularMarkerChange,
@@ -74,6 +76,7 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                         background={"#F7F7F7"}
                         onChange={onPlasmodiumSpeciesChange}
                         value={plasmodiumSpecies}
+                        isDisabled={PlasmodiumSpecieDisabled}
                     />
 
                     <DrugsSelector

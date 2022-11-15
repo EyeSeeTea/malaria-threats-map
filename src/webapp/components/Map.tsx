@@ -123,9 +123,9 @@ const BottomLeftContainer = styled(BaseContainer)`
     align-items: center;
 `;
 
-const TopMiddleContainer = styled(BaseContainer)`
+const TopMiddleContainer = styled(BaseContainer)<{ rightOpen: boolean }>`
     top: 7%;
-    left: 40%;
+    left: ${props => (props.rightOpen ? `30%` : "40%")};
     width: 310px;
 `;
 
@@ -345,12 +345,12 @@ class Map extends React.Component<Props, StateTypes> {
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
                 {ready && (
-                    <TopMiddleContainer>
+                    <TopMiddleContainer rightOpen={this.shouldShowRightSideBar()}>
                         <InfoToastLink text={this.props.t("common.takeATour")} type="tour" />
                     </TopMiddleContainer>
                 )}
                 {theme === "treatment" && (
-                    <TopMiddleContainer>
+                    <TopMiddleContainer rightOpen={this.shouldShowRightSideBar()}>
                         <InfoToastLink text={this.props.t("common.mekong_link")} type="greaterMekong" />
                     </TopMiddleContainer>
                 )}
