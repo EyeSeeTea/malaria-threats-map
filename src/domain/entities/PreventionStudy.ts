@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { Option } from "../../webapp/components/BasicSelect";
+import { sortInsecticideClasses } from "../../webapp/components/filters/InsecticideClassFilter";
 import { Study } from "./Study";
 
 export interface PreventionStudy extends Study {
@@ -14,7 +15,7 @@ export interface PreventionStudy extends Study {
 }
 
 export function extractInsecticideClassesOptions(studies: PreventionStudy[]): Option[] {
-    const uniques = _.uniq(studies.map(study => study.INSECTICIDE_CLASS)).sort();
+    const uniques = sortInsecticideClasses(_.uniq(studies.map(study => study.INSECTICIDE_CLASS)));
 
     return uniques.map((insecticideClass: string) => ({
         label: insecticideClass,
@@ -41,9 +42,20 @@ export function extractTypeOptions(studies: PreventionStudy[]): Option[] {
 }
 
 export function extractInsecticideTypeOptions(studies: PreventionStudy[]): Option[] {
-    const uniques = _.uniq(studies.map(study => study.INSECTICIDE_TYPE));
+    const insecticideTypesByClass = _(studies)
+        .groupBy(({ INSECTICIDE_CLASS }) => INSECTICIDE_CLASS)
+        .mapValues(studies => _.uniq(studies.map(study => study.INSECTICIDE_TYPE)).sort())
+        .value();
 
-    return uniques.map((type: string) => ({
+    const sortedKeys = sortInsecticideClasses(Object.keys(insecticideTypesByClass));
+
+    const insecticideTypesBySortedClass: Record<string, string[]> = sortedKeys.reduce((acc, key) => {
+        return { ...acc, [key]: insecticideTypesByClass[key] };
+    }, {});
+
+    const insecticideTypes = _(insecticideTypesBySortedClass).values().flatten().value();
+
+    return insecticideTypes.map((type: string) => ({
         label: type,
         value: type,
     }));
