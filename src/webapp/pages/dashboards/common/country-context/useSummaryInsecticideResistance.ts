@@ -29,7 +29,7 @@ export function useSummaryInsecticideResistance(): SummaryInsecticideResistanceD
             const resistanceMechanisms = cleanMechanismTypeOptions(
                 _.uniq(mechanismDetectedStudies.map(study => study.TYPE))
             )
-                .map(type => i18next.t(type))
+                .map(type => i18next.t(`TYPE.${type}`))
                 .join(", ");
 
             return {
