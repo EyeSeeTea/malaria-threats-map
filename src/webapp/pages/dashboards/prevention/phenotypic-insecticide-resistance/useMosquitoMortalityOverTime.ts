@@ -92,7 +92,7 @@ function createChartDataBySpecies(studies: PreventionStudy[], years: number[]): 
         const mortalityAjustedByYear = studiesBySpecie.map(study => {
             const yearIndex = years.indexOf(+study.YEAR_START);
 
-            return [yearIndex, +study.MORTALITY_ADJUSTED * 100];
+            return [yearIndex, +(+study.MORTALITY_ADJUSTED * 100).toFixed(1)];
         });
 
         return {
@@ -113,12 +113,12 @@ function calculateBloxpotByYear(studies: PreventionStudy[], year: number): numbe
     if (studiesByYear.length === 0) return [];
 
     const mortalityAjustedValues = studiesByYear.map(study => +study.MORTALITY_ADJUSTED * 100);
-    const mortalityAjustedMin = Math.min(...mortalityAjustedValues);
-    const mortalityAjustedMax = Math.max(...mortalityAjustedValues);
-    const mortalityAjustedDiff = mortalityAjustedMax - mortalityAjustedMin;
-    const mortalityAjustedMiddle = mortalityAjustedMin + Math.floor(mortalityAjustedDiff / 2);
-    const mortalityAjusted25 = mortalityAjustedMin + Math.floor(mortalityAjustedDiff * 0.25);
-    const mortalityAjusted75 = mortalityAjustedMin + Math.floor(mortalityAjustedDiff * 0.75);
+    const mortalityAjustedMin = +Math.min(...mortalityAjustedValues).toFixed(1);
+    const mortalityAjustedMax = +Math.max(...mortalityAjustedValues).toFixed(1);
+    const mortalityAjustedDiff = +(mortalityAjustedMax - mortalityAjustedMin).toFixed(1);
+    const mortalityAjustedMiddle = +(mortalityAjustedMin + Math.floor(mortalityAjustedDiff / 2)).toFixed(1);
+    const mortalityAjusted25 = +(mortalityAjustedMin + Math.floor(mortalityAjustedDiff * 0.25)).toFixed(1);
+    const mortalityAjusted75 = +(mortalityAjustedMin + Math.floor(mortalityAjustedDiff * 0.75)).toFixed(1);
 
     return [mortalityAjustedMin, mortalityAjusted25, mortalityAjustedMiddle, mortalityAjusted75, mortalityAjustedMax];
 }
