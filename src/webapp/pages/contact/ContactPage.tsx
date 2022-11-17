@@ -13,6 +13,7 @@ import TecnicalSupportGraphic from "../../assets/img/contact-page/computer-map.p
 import { Link } from "react-router-dom";
 
 const ImageBanner = styled.div`
+    display: flex;
     background: linear-gradient(90deg, #bbd7e8 0%, #bbd7e800 100%), url(${HomepageMap});
     background-position: right;
     height: 30vh;
@@ -20,9 +21,9 @@ const ImageBanner = styled.div`
 `;
 
 const TitleContainer = styled(Container)`
-    padding-top: 10vh;
+    display: flex;
+    align-items: center;
     font-weight: lighter;
-    font-size: 8vw;
 `;
 
 const GoodReviewImage = styled.img`
@@ -69,10 +70,10 @@ const ContactPage: React.FC<Props> = () => {
             <Container maxWidth="xl">
                 <Grid container rowSpacing={12} columnSpacing={2} sx={{ marginTop: 4, marginBottom: 4 }}>
                     <Grid item md={6} xs={12} display="flex" flexDirection={"column"} justifyContent="center">
-                        <Typography variant="h4" fontWeight="bold" marginBottom="25px" color="#343434">
+                        <Typography variant="h4" fontWeight="bold" marginBottom="25px">
                             {t("common.contactPage.section1.title")}
                         </Typography>
-                        <Typography variant="h6" marginBottom="25px" maxWidth={"90%"}>
+                        <Typography variant="body1" marginBottom="25px" maxWidth={"90%"}>
                             <Trans i18nKey="common.contactPage.section1.description" t={t}>
                                 We are eager to hear how you use the MTM and how we can improve the platform for all its
                                 users. To contact the MTM team, email
@@ -115,19 +116,19 @@ const ContactPage: React.FC<Props> = () => {
                         order={{ xs: 3, md: 4 }}
                     >
                         <Stack>
-                            <Typography variant="h4" fontWeight="bold" marginBottom="25px" color="#343434">
+                            <Typography variant="h4" fontWeight="bold" marginBottom="25px">
                                 {t("common.contactPage.section2.title1")}
                             </Typography>
-                            <Typography variant="h6" marginBottom="25px" maxWidth={"90%"}>
+                            <Typography variant="body1" marginBottom="25px" maxWidth={"90%"}>
                                 <Trans i18nKey="common.contactPage.section2.description1" t={t}>
                                     If you would like to submit data to the MTM, please use the{" "}
                                     <Link to="/share-data">share data</Link> portal.
                                 </Trans>
                             </Typography>
-                            <Typography variant="h4" fontWeight="bold" marginBottom="25px" color="#343434">
+                            <Typography variant="h4" fontWeight="bold" marginBottom="25px">
                                 {t("common.contactPage.section2.title2")}
                             </Typography>
-                            <Typography variant="h6" marginBottom="25px" maxWidth={"90%"}>
+                            <Typography variant="body1" marginBottom="25px" maxWidth={"90%"}>
                                 {t("common.contactPage.section2.description2")}
                             </Typography>
                         </Stack>

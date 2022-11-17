@@ -1,14 +1,20 @@
 import React from "react";
-import { Container, Typography } from "@mui/material";
+import { Container, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import ImageBanner from "../common/ImageBanner";
+import HomepageMap from "../../assets/img/homepage-map.png";
 import styled from "styled-components";
 
+const ImageBanner = styled.div`
+    display: flex;
+    background: linear-gradient(90deg, #bbd7e8 0%, #bbd7e800 100%), url(${HomepageMap});
+    background-position: right;
+    height: 30vh;
+    min-height: 260px;
+`;
+
 const TitleContainer = styled(Container)`
-    padding-top: 12vh;
-    @media (max-width: 425px) {
-        padding: 12vh 20px 0px 20px;
-    }
+    display: flex;
+    align-items: center;
 `;
 
 const BannerSection = () => {
@@ -16,21 +22,29 @@ const BannerSection = () => {
 
     return (
         <section>
-            <ImageBanner height="40vh">
+            <ImageBanner>
                 <TitleContainer maxWidth="xl">
-                    <Typography
-                        variant="h3"
-                        component="h1"
-                        color="inherit"
-                        textTransform="uppercase"
-                        fontWeight="lighter"
-                        sx={{ marginBottom: 2 }}
-                    >
-                        {t("common.aboutPage.title.first")}
-                    </Typography>
-                    <Typography variant="h3" component="h1" color="inherit" textTransform="uppercase" fontWeight="bold">
-                        {t("common.aboutPage.title.second")}
-                    </Typography>
+                    <Stack>
+                        <Typography
+                            variant="h2"
+                            component="h1"
+                            color="inherit"
+                            textTransform="uppercase"
+                            fontWeight="lighter"
+                            sx={{ marginBottom: 2 }}
+                        >
+                            {t("common.aboutPage.title.first")} <br></br>
+                        </Typography>
+                        <Typography
+                            variant="h2"
+                            component="h1"
+                            color="inherit"
+                            textTransform="uppercase"
+                            fontWeight="bold"
+                        >
+                            {t("common.aboutPage.title.second")}
+                        </Typography>
+                    </Stack>
                 </TitleContainer>
             </ImageBanner>
         </section>

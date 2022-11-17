@@ -12,18 +12,17 @@ import ShareDataChart from "../../assets/img/share-data-page/share-data-chart.pn
 import ContributeDataGraphic from "../../assets/img/share-data-page/contribute-data.png";
 
 const ImageBanner = styled.div`
+    display: flex;
     background: linear-gradient(90deg, #bbd7e8 0%, #bbd7e800 100%), url(${HomepageMap});
     background-position: right;
-    height: 25vh;
+    height: 30vh;
     min-height: 260px;
 `;
 
 const TitleContainer = styled(Container)`
-    padding-top: 10vh;
+    display: flex;
+    align-items: center;
     font-weight: lighter;
-    @media (max-width: 768px) {
-        padding-top: 5vh;
-    }
 `;
 
 const ShareDataChartImage = styled.img`
@@ -48,7 +47,7 @@ const mapDispatchToProps = {
 
 const SectionsFooter = ({ t }: { t: TFunction<"translation", undefined> }) => {
     return (
-        <Typography variant="h6">
+        <Typography variant="body1">
             <Trans i18nKey="common.shareDataPage.sectionsFooter" t={t}>
                 Completed forms can be sent to:{" "}
                 <a href="mailto:vectorsurveillance@who.int" target="_blank" rel="noreferrer">
@@ -80,10 +79,10 @@ const ShareDataPage: React.FC<Props> = () => {
             <Container maxWidth="xl">
                 <Grid container rowSpacing={7} columnSpacing={2} sx={{ marginTop: 4, marginBottom: 4 }}>
                     <Grid item md={6} xs={12} display="flex" flexDirection={"column"} justifyContent="center">
-                        <Typography variant="h4" fontWeight="bold" marginBottom="25px" color="#343434">
+                        <Typography variant="h4" fontWeight="bold" marginBottom="25px">
                             {t("common.shareDataPage.section1.title")}
                         </Typography>
-                        <Typography variant="h6" marginBottom="25px" maxWidth={"90%"}>
+                        <Typography variant="body1" marginBottom="25px" maxWidth={"90%"}>
                             <Trans i18nKey="common.shareDataPage.section1.description" t={t}>
                                 We invite data submissions from all individuals and organizations. Please report your
                                 data using the following WHO standard data collection forms. Forms are available for
@@ -100,16 +99,16 @@ const ShareDataPage: React.FC<Props> = () => {
                         </Typography>
                         <ul>
                             <li>
-                                <Typography variant="h6">{t("common.shareDataPage.section1.list.1")}</Typography>
+                                <Typography variant="body1">{t("common.shareDataPage.section1.list.1")}</Typography>
                             </li>
                             <li>
-                                <Typography variant="h6">{t("common.shareDataPage.section1.list.2")}</Typography>
+                                <Typography variant="body1">{t("common.shareDataPage.section1.list.2")}</Typography>
                             </li>
                             <li>
-                                <Typography variant="h6">{t("common.shareDataPage.section1.list.3")}</Typography>
+                                <Typography variant="body1">{t("common.shareDataPage.section1.list.3")}</Typography>
                             </li>
                             <li>
-                                <Typography variant="h6">{t("common.shareDataPage.section1.list.4")}</Typography>
+                                <Typography variant="body1">{t("common.shareDataPage.section1.list.4")}</Typography>
                             </li>
                         </ul>
                         <SectionsFooter t={t} />
@@ -144,12 +143,12 @@ const ShareDataPage: React.FC<Props> = () => {
                         justifyContent="center"
                         order={{ xs: 3, md: 4 }}
                     >
-                        <Typography variant="h4" fontWeight="bold" marginBottom="25px" width={"100%"} color="#343434">
+                        <Typography variant="h4" fontWeight="bold" marginBottom="25px" width={"100%"}>
                             <Trans i18nKey="common.shareDataPage.section2.title" t={t}>
                                 Contribute <i>An. stephensi</i> detection data
                             </Trans>
                         </Typography>
-                        <Typography variant="h6" marginBottom="25px" maxWidth={"90%"}>
+                        <Typography variant="body1" marginBottom="25px" maxWidth={"90%"}>
                             <Trans i18nKey="common.shareDataPage.section2.description" t={t}>
                                 We invite data submissions from all individuals and organizations about{" "}
                                 <i>An. stephensi</i> detection outside of its native areas. Please report your data
