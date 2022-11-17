@@ -146,7 +146,13 @@ const MapContainer: React.FC = () => {
                 },
                 mmType: {
                     selector: (state: State) => state.treatment.filters.molecularMarker,
-                    action: (value: string) => setMolecularMarker(parseInt(value)),
+                    action: (value: string) => {
+                        if (!value) {
+                            return setMolecularMarker(1);
+                        }
+
+                        return setMolecularMarker(parseInt(value));
+                    },
                 },
                 excludeLowerPatients: {
                     selector: (state: State) => state.treatment.filters.excludeLowerPatients,
