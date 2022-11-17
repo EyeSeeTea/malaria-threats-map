@@ -6,21 +6,19 @@ import { useCountryContextData } from "./context/useCountryContextData";
 import CountryContextSource from "./CountryContextSource";
 import _ from "lodash";
 
-const MajorAnophelesSpeciesDashboard: React.FC = () => {
+const VectorsDashboard: React.FC = () => {
     const { t } = useTranslation();
     const { data } = useCountryContextData();
 
     return (
         <React.Fragment>
             <DasboardCard>
-                <Title id="major-anopheles-species">
-                    {t("common.dashboard.countryContextDashboards.majorAnophelesSpecies.title")}
-                </Title>
+                <Title id="vectors">{t("common.dashboard.countryContextDashboards.vectors.title")}</Title>
                 <Table>
                     <thead>
                         <tr>
-                            <th> {t("common.dashboard.countryContextDashboards.majorAnophelesSpecies.country")}</th>
-                            <th>{t("common.dashboard.countryContextDashboards.majorAnophelesSpecies.species")}</th>
+                            <th> {t("common.dashboard.countryContextDashboards.vectors.country")}</th>
+                            <th>{t("common.dashboard.countryContextDashboards.vectors.species")}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,7 +46,7 @@ const MajorAnophelesSpeciesDashboard: React.FC = () => {
     );
 };
 
-export default MajorAnophelesSpeciesDashboard;
+export default VectorsDashboard;
 
 const DasboardCard = styled(Card)`
     padding: 16px 42px;

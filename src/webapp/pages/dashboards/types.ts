@@ -4,5 +4,5 @@ export type CountryContext =
     | "country-context"
     | "epidemiological-profile"
     | "major-plasmodium"
-    | "major-anopheles-species"
+    | "vectors"
     | "summary-insecticide-resistance";

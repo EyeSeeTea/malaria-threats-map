@@ -96,7 +96,7 @@
                     "countryContext": "Contexto del país",
                     "epidemiologicalProfile": "Perfil epidemiológico",
                     "majorPlasmodium": "Principales especies de Plasmodium y régimen de tratamiento",
-                    "majorAnophelesSpecies": "Principales especies de Anopheles",
+                    "vectors": "Vectores",
                     "summaryInsecticideResistance": "Resumen de la resistencia a los insecticidas"
                 },
                 "therapeuticEfficacyOptions": {
@@ -141,10 +141,10 @@
                     "species": "Especies principales de Plasmodium (%)",
                     "firstLineTreatments": "Tratamientos de primera línea para la malaria sin complicaciones"
                 },
-                "majorAnophelesSpecies": {
+                "vectors": {
                     "title": "VECTORES",
                     "country": "País",
-                    "species": "Principales especies de Anopheles"
+                    "species": "Vectores"
                 },
                 "summaryInsecticideResistance": {
                     "title": "RESUMEN DE RESISTENCIA A INSECTICIDAS",

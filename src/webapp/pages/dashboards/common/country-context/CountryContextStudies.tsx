@@ -5,7 +5,7 @@ import { Container } from "../../../../components/site-selection-content/SiteSel
 import { DashboardsThemeOptions } from "../../types";
 import CountryContextDataProvider from "./context/CountryContextDataProvider";
 import EpidemiologicalProfileDashboard from "./EpidemiologicalProfileDashboard";
-import MajorAnophelesSpeciesDashboard from "./MajorAnophelesSpeciesDashboard";
+import VectorsDashboard from "./VectorsDashboard";
 import MajorPlamociumSpeciesDashboard from "./MajorPlamociumSpeciesDashboard";
 import SummaryInsecticideResistanceDashboard from "./SummaryInsecticideResistanceDashboard";
 
@@ -51,7 +51,7 @@ const PreventionCountryContextDashboards: React.FC = () => {
     return (
         <React.Fragment>
             <EpidemiologicalProfileDashboard />
-            <MajorAnophelesSpeciesDashboard />
+            <VectorsDashboard />
             <SummaryInsecticideResistanceDashboard />
         </React.Fragment>
     );

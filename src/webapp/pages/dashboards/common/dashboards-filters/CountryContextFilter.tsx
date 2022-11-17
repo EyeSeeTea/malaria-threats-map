@@ -15,8 +15,8 @@ const countryContextOptions: Record<DashboardsThemeOptions, Option<CountryContex
             value: "epidemiological-profile",
         },
         {
-            label: i18next.t("common.dashboard.dashboardsFilterSection.countryContextOptions.majorAnophelesSpecies"),
-            value: "major-anopheles-species",
+            label: i18next.t("common.dashboard.dashboardsFilterSection.countryContextOptions.vectors"),
+            value: "vectors",
         },
         {
             label: i18next.t(
