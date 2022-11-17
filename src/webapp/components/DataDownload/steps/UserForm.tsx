@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 import { UserInfo } from "../types";
 import { emailRegexp } from "../../../../domain/common/regex";
+import { Link } from "react-router-dom";
 
 export const ORGANIZATION_TYPES = [
     "common.data_download.personal_step.organization_type_options.university",
@@ -144,7 +145,7 @@ const UserForm = ({ onChange, userInfo }: Props) => {
                             needs of our user community. Hence, WHO would like to engage with our user community to
                             collect suggestions for improvement and to learn from different use cases and benefits that
                             these products bring to them. If you would like to share feedback, you can do so{" "}
-                            <a href="/contact">here</a>.
+                            <Link to="/contact">here</Link>.
                         </Trans>
                     </Typography>
                 </Grid>
