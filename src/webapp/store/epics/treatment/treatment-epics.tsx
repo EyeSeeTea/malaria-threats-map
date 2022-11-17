@@ -66,7 +66,7 @@ export const setTreatmentMapTypesEpic = (action$: Observable<ActionType<typeof s
         ofType(ActionTypeEnum.SetTreatmentMapType),
         switchMap(action => {
             if (action.payload === 2) {
-                return of(setMolecularMarker(0));
+                return of(setMolecularMarker(1));
             }
             return of();
         })
