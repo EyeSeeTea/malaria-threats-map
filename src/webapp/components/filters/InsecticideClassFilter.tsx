@@ -36,14 +36,19 @@ export const INSECTICIDE_CLASSES: string[] = [
     "PYRROLES",
 ];
 
+export function sortInsecticideClasses(insecticideClasses: string[]) {
+    return insecticideClasses.sort((a, b) =>
+        INSECTICIDE_CLASSES.indexOf(a) - INSECTICIDE_CLASSES.indexOf(b) > 0 ? 1 : -1
+    );
+}
+
 export function getInsecticideClassOptions(insecticideClasses: string[]) {
-    return insecticideClasses
-        .filter(insecticideClass => insecticideClass !== "NA")
-        .sort((a, b) => (INSECTICIDE_CLASSES.indexOf(a) - INSECTICIDE_CLASSES.indexOf(b) > 0 ? 1 : -1))
-        .map(insecticideClass => ({
+    return sortInsecticideClasses(insecticideClasses.filter(insecticideClass => insecticideClass !== "NA")).map(
+        insecticideClass => ({
             value: insecticideClass,
             label: i18next.t(insecticideClass),
-        }));
+        })
+    );
 }
 
 function InsecticideClassFilter({ preventionStudies = [], preventionFilters, setInsecticideClass }: Props) {

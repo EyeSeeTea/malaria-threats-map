@@ -33,7 +33,7 @@ const DataProvider: React.FC<Props> = ({ fetchTranslations, getLastUpdated, tran
     //We need refactor how dynamic translations are set in i18next, a good option is change '_VALUE' to '{FIELD}.{_VALUE}' as key, example: 'PROXY_TYPE.MONO_OXYGENASES' 'TYPE.MONO_OXYGENASES'
     //But We need refactor this using pararell change and duplicate translations, for the moment wee need to use the two strategies in i18next to avoid breaking changes
     //In the future when there are not any access to dynamic translations only by value we will can to have one strategy or when we have time for a big refactor
-    //remember use '{FIELD}_{_VALUE}' as key for new components when it access to translations
+    //remember use '{FIELD}.{_VALUE}' as key for new components when it access to translations
     useEffect(() => {
         const englishResources = translations.reduce((acc, translation) => {
             const value = translation.VALUE_.replace(".", "%2E");

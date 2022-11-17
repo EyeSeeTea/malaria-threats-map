@@ -93,7 +93,7 @@ export function usePrevention() {
         const filteredStudies = filterStudies(dashboardsPreventionStudies, {
             insecticideClasses: filters.insecticideClasses,
             insecticideTypes: [],
-            species: filters.species,
+            species: [],
             type: "",
             onlyIncludeBioassaysWithMoreMosquitoes: 0,
             onlyIncludeDataByHealth: false,

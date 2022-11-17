@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { sortInsecticideClasses } from "../../../../components/filters/InsecticideClassFilter";
 
 export function usePreventionFilters() {
     const [insecticideTypes, setInsecticideTypes] = useState<string[]>([]);
@@ -11,7 +12,7 @@ export function usePreventionFilters() {
     const [onlyIncludeDataByHealth, setOnlyIncludeDataByHealth] = useState<boolean>(false);
 
     const onInsecticideClassChange = React.useCallback((values: string[]) => {
-        setInsecticideClasses(values);
+        setInsecticideClasses(sortInsecticideClasses(values));
     }, []);
 
     const onSpeciesChange = React.useCallback((values: string[]) => {
