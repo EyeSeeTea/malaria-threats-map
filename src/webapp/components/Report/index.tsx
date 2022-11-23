@@ -1,8 +1,7 @@
 import React from "react";
-import { Fab, Theme } from "@mui/material";
+import { Theme } from "@mui/material";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
-import ReportIcon from "@mui/icons-material/Description";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { State } from "../../store/types";
@@ -11,8 +10,6 @@ import { setReportOpenAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
 import PreventionReport from "./prevention/PreventionReport";
 import TreatmentReport from "./treatment/TreatmentReport";
-import { useTranslation } from "react-i18next";
-import { sendAnalytics } from "../../utils/analytics";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -56,12 +53,11 @@ type Props = StateProps & DispatchProps;
 
 function Report({ isReportOpen, openReport, theme }: Props) {
     const classes = useStyles({});
-    const { t } = useTranslation();
 
-    const handleClickOpen = () => {
+    /* const handleClickOpen = () => {
         sendAnalytics({ type: "event", category: "menu", action: "summary" });
         openReport(true);
-    };
+    }; */
 
     const handleClose = () => {
         openReport(false);
@@ -80,7 +76,7 @@ function Report({ isReportOpen, openReport, theme }: Props) {
 
     return (
         <React.Fragment>
-            <Fab
+            {/* <Fab
                 id="country-button"
                 size="small"
                 color={isReportOpen ? "primary" : "default"}
@@ -89,7 +85,7 @@ function Report({ isReportOpen, openReport, theme }: Props) {
                 title={t("common.icons.summary")}
             >
                 <ReportIcon />
-            </Fab>
+            </Fab> */}
             <Dialog
                 fullWidth
                 maxWidth={"xl"}

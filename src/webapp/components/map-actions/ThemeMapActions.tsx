@@ -8,6 +8,9 @@ import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "../Icons";
+import { Box } from "@mui/material";
+import { GridSize } from "@mui/material";
+import { Source } from "../../store/actions/base-actions";
 
 const Label = styled.span`
     font-weight: bold;
@@ -20,19 +23,25 @@ const Value = styled.span`
 const Row = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
     margin: 0px;
     padding: 0px;
 `;
+
+interface ownProps {
+    themeItemGridSize?: GridSize;
+    from: Source;
+}
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
+type Props = StateProps & ownProps;
 
-const ThemeMapActions: React.FC<StateProps> = ({ theme }) => {
+const ThemeMapActions: React.FC<Props> = ({ theme, themeItemGridSize, from }) => {
     const { t } = useTranslation();
 
     const themeValue = useMemo(() => {
@@ -79,9 +88,11 @@ const ThemeMapActions: React.FC<StateProps> = ({ theme }) => {
     }, [theme, t]);
 
     return (
-        <ActionGroupItem placeholder={t("mapActions.selectTheme")} actionGroupKey={"THEME"} value={themeValue}>
-            <TopicSelector />
-        </ActionGroupItem>
+        <Box id="theme">
+            <ActionGroupItem placeholder={t("mapActions.selectTheme")} actionGroupKey={"THEME"} value={themeValue}>
+                <TopicSelector themeItemGridSize={themeItemGridSize} from={from} />
+            </ActionGroupItem>
+        </Box>
     );
 };
 

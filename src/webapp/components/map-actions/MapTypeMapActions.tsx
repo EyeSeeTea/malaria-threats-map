@@ -11,11 +11,9 @@ import { selectPreventionFilters } from "../../store/reducers/prevention-reducer
 import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
 import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
-import { preventionSuggestions } from "../filters/PreventionMapTypesSelector";
-import { diagnosisSuggestions } from "../filters/DiagnosisMapTypesSelector";
-import { invasiveSuggestions } from "../filters/InvasiveMapTypesSelector";
-import { treatmentSuggestions } from "../filters/TreatmentMapTypesSelector";
 import { setMapTitleAction } from "../../store/actions/base-actions";
+import { getMapType } from "./utils";
+import { Box } from "@mui/material";
 
 const Label = styled.span`
     font-weight: bold;
@@ -53,42 +51,31 @@ const MapTypeMapActions: React.FC<Props> = ({
     const { t } = useTranslation();
 
     const selectedMapType = useMemo(() => {
-        switch (theme) {
-            case "prevention": {
-                return preventionSuggestions[preventionFilters.mapType].title;
-            }
-            case "diagnosis": {
-                return diagnosisSuggestions[diagnosisFilters.mapType].title;
-            }
-            case "invasive": {
-                return invasiveSuggestions[invasiveFilters.mapType].title;
-            }
-            case "treatment": {
-                return treatmentSuggestions[treatmentFilters.mapType].title;
-            }
-        }
-    }, [theme, preventionFilters.mapType, diagnosisFilters.mapType, invasiveFilters.mapType, treatmentFilters.mapType]);
+        return getMapType(theme, preventionFilters, treatmentFilters, diagnosisFilters, invasiveFilters);
+    }, [theme, preventionFilters, diagnosisFilters, invasiveFilters, treatmentFilters]);
 
     React.useEffect(() => {
         setMapTitle(t(selectedMapType));
     }, [selectedMapType, t, setMapTitle]);
 
     return (
-        <ActionGroupItem
-            childrenMaxHeight={"420px"}
-            placeholder={t("mapActions.selectMapType")}
-            value={
-                selectedMapType && (
-                    <span>
-                        <Label>{t("mapActions.mapType")}:&nbsp;</Label>
-                        <Value>{t(selectedMapType)}</Value>
-                    </span>
-                )
-            }
-            actionGroupKey={"MAP_TYPE"}
-        >
-            {theme !== "diagnosis" && theme !== "invasive" && <MapTypesSelector />}
-        </ActionGroupItem>
+        <Box id="mapType">
+            <ActionGroupItem
+                childrenMaxHeight={"420px"}
+                placeholder={t("mapActions.selectMapType")}
+                value={
+                    selectedMapType && (
+                        <span>
+                            <Label>{t("mapActions.mapType")}:&nbsp;</Label>
+                            <Value>{t(selectedMapType)}</Value>
+                        </span>
+                    )
+                }
+                actionGroupKey={"MAP_TYPE"}
+            >
+                {theme !== "diagnosis" && theme !== "invasive" && <MapTypesSelector />}
+            </ActionGroupItem>
+        </Box>
     );
 };
 

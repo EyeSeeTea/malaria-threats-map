@@ -46,6 +46,10 @@ const mappings: Option[] = [
         label: "TEST_TYPE",
     },
     {
+        value: "INSECTICIDE_CLASS",
+        label: "INSECTICIDE_CLASS",
+    },
+    {
         value: "INSECTICIDE_TYPE",
         label: "INSECTICIDE_TYPE",
     },

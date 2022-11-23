@@ -2,19 +2,34 @@ import React from "react";
 import { connect } from "react-redux";
 import IntegrationReactSelect, { Option } from "../../BasicSelect";
 import { FilterRowContainer } from "../Filters";
-import FormLabel from "@mui/material/FormLabel";
 import { sendMultiFilterAnalytics } from "../../../utils/analytics";
+import { Typography } from "@mui/material";
 
 type Props = {
-    label: string;
+    labelPosition?: "top" | "middle";
+    margin?: string;
+    label?: string;
     options: Option[];
     placeholder?: string;
     onChange: (selection: string[]) => void;
     value: string[];
     analyticsMultiFilterAction?: string;
+    isClearable?: boolean;
+    optionsStyle?: React.CSSProperties;
 };
 
-function MultiFilter({ label, options, onChange, value, analyticsMultiFilterAction, placeholder }: Props) {
+function MultiFilter({
+    labelPosition = "middle",
+    label,
+    options,
+    onChange,
+    value,
+    analyticsMultiFilterAction,
+    placeholder,
+    isClearable = false,
+    margin,
+    optionsStyle,
+}: Props) {
     const onSelectionChange = (options: Option[] = []) => {
         onChange((options || []).map(o => o.value));
 
@@ -23,24 +38,32 @@ function MultiFilter({ label, options, onChange, value, analyticsMultiFilterActi
         }
     };
 
-    const selections = options.filter(option => value.includes(option.value));
+    const selections = options.filter(option => value && value.includes(option.value));
 
     return (
-        <FilterRowContainer>
-            {selections && selections.length > 0 && (
-                <FormLabel color="primary" component="legend">
-                    {`${label}:`}&nbsp;
-                </FormLabel>
+        <React.Fragment>
+            {label && labelPosition === "top" && (
+                <Typography variant="body2" fontWeight={"bold"}>
+                    {label}
+                </Typography>
             )}
-            <IntegrationReactSelect
-                isMulti
-                isClearable={false}
-                placeholder={placeholder}
-                suggestions={options}
-                onChange={onSelectionChange}
-                value={selections}
-            />
-        </FilterRowContainer>
+            <FilterRowContainer margin={margin}>
+                {label && labelPosition === "middle" && selections && selections.length > 0 && (
+                    <Typography component="legend" variant="body2">
+                        {`${label}:`}&nbsp;
+                    </Typography>
+                )}
+                <IntegrationReactSelect
+                    isMulti
+                    isClearable={isClearable}
+                    placeholder={placeholder}
+                    suggestions={options}
+                    onChange={onSelectionChange}
+                    value={selections}
+                    optionsStyle={optionsStyle}
+                />
+            </FilterRowContainer>
+        </React.Fragment>
     );
 }
 

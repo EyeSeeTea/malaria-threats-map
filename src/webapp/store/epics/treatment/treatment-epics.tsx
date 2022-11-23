@@ -13,7 +13,13 @@ import {
     setTreatmentMapType,
     setTreatmentPlasmodiumSpecies,
 } from "../../actions/treatment-actions";
-import { logPageViewAction, setSelectionData } from "../../actions/base-actions";
+import {
+    logPageViewAction,
+    setFiltersAction,
+    setMaxMinYearsAction,
+    setSelectionData,
+    setThemeAction,
+} from "../../actions/base-actions";
 import { TreatmentMapType, State } from "../../types";
 import { addNotificationAction } from "../../actions/notifier-actions";
 import { getAnalyticsPageView } from "../../analytics";
@@ -54,12 +60,12 @@ export const getTreatmentStudiesEpic = (
         })
     );
 
-export const setTreatmentThemeEpic = (action$: Observable<ActionType<typeof setTreatmentMapType>>) =>
+export const setTreatmentMapTypesEpic = (action$: Observable<ActionType<typeof setTreatmentMapType>>) =>
     action$.pipe(
         ofType(ActionTypeEnum.SetTreatmentMapType),
         switchMap(action => {
             if (action.payload === 2) {
-                return of(setMolecularMarker(0));
+                return of(setMolecularMarker(1));
             }
             return of();
         })
@@ -103,8 +109,10 @@ export const setTreatmentPlasmodiumSpeciesEpic = (
         switchMap(action => {
             if (["P._FALCIPARUM", "P._KNOWLESI", "P._OVALE"].includes(action.payload)) {
                 return of(setTreatmentDrug("DRUG_AL"));
-            } else {
+            } else if (action.payload !== null) {
                 return of(setTreatmentDrug("DRUG_CQ"));
+            } else {
+                return of();
             }
         })
     );
@@ -125,5 +133,36 @@ export const setTreatmentFilteredStudiesEpic = (
             );
 
             return of(setSelectionData(selectionData));
+        })
+    );
+
+export const setTreatmentThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaSetTheme),
+        switchMap($action => {
+            if ($action.payload !== "treatment") {
+                return of();
+            }
+
+            const base = [
+                setMaxMinYearsAction([2010, new Date().getFullYear()]),
+                setFiltersAction([2015, new Date().getFullYear()]),
+            ];
+
+            if ($action.from === "map") {
+                return of(
+                    ...base,
+                    setTreatmentPlasmodiumSpecies("P._FALCIPARUM"),
+                    setTreatmentDrug("DRUG_AL"),
+                    setMolecularMarker(1)
+                );
+            } else {
+                return of(
+                    ...base,
+                    setTreatmentPlasmodiumSpecies(null),
+                    setTreatmentDrug(null),
+                    setMolecularMarker(null)
+                );
+            }
         })
     );

@@ -4,7 +4,7 @@ import { State } from "../../store/types";
 import { logEventAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
-import CheckBoxFilter from "./common/CheckBoxFilter";
+import SwitchFilter from "./common/SwitchFilter";
 import { setExcludeLowerSamples } from "../../store/actions/treatment-actions";
 
 const mapStateToProps = (state: State) => ({
@@ -24,7 +24,7 @@ const ExcludeLowerPatientsFilter: React.FC<Props> = ({ setExcludeLowerSamples, t
     const { t } = useTranslation();
 
     return (
-        <CheckBoxFilter
+        <SwitchFilter
             label={t("common.filters.exclude_lower_samples")}
             onChange={setExcludeLowerSamples}
             value={treatmentFilters.excludeLowerSamples}

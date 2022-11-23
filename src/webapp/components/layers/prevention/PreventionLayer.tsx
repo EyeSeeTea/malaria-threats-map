@@ -85,6 +85,7 @@ class PreventionLayer extends Component<Props> {
                 species,
                 assayTypes,
                 synergistTypes,
+                onlyByHealthMinistries,
             },
             filters,
             region,
@@ -100,6 +101,9 @@ class PreventionLayer extends Component<Props> {
         const speciesChange = prevProps.preventionFilters.species.length !== species.length;
         const assayTypesChange = prevProps.preventionFilters.assayTypes.length !== assayTypes.length;
         const synergistTypesChange = prevProps.preventionFilters.synergistTypes.length !== synergistTypes.length;
+        const onlyByHealthMinistriesChange =
+            prevProps.preventionFilters.onlyByHealthMinistries !== onlyByHealthMinistries;
+
         if (
             mapTypeChange ||
             yearChange ||
@@ -109,7 +113,8 @@ class PreventionLayer extends Component<Props> {
             typeChange ||
             speciesChange ||
             assayTypesChange ||
-            synergistTypesChange
+            synergistTypesChange ||
+            onlyByHealthMinistriesChange
         ) {
             if (this.popup) {
                 this.popup.remove();
@@ -153,7 +158,9 @@ class PreventionLayer extends Component<Props> {
 
     filterStudies = (studies: PreventionStudy[]) => {
         const filters = this.buildFilters();
-        return filters.reduce((studies, filter) => studies.filter(filter), studies);
+        const result = filters.reduce((studies, filter) => studies.filter(filter), studies);
+
+        return result;
     };
 
     filterSource = () => {

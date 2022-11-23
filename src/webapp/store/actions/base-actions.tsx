@@ -6,15 +6,13 @@ import { AjaxError } from "rxjs/ajax";
 import { UploadFileData } from "../../../domain/usecases/UploadFileUseCase";
 import { Option } from "../../components/BasicSelect";
 
-interface SetThemeOptions {
-    fromHome?: boolean;
-}
+export type Source = "map" | "download";
 
 export const setThemeAction = createCustomAction(
     ActionTypeEnum.MalariaSetTheme,
-    (theme: string, options: SetThemeOptions = {}) => ({
+    (theme: string, from: Source = "map") => ({
         payload: theme,
-        meta: options,
+        from,
     })
 );
 
@@ -40,6 +38,8 @@ export const logOutboundLinkAction = createAction(ActionTypeEnum.MalariaLogOutbo
 export const setRegionAction = createAction(ActionTypeEnum.MalariaSetRegion)<RegionState | null>();
 
 export const setFiltersAction = createAction(ActionTypeEnum.MalariaSetFilters)<number[] | undefined>();
+
+export const setMaxMinYearsAction = createAction(ActionTypeEnum.MalariaSetMaxMinYears)<number[] | undefined>();
 
 export const toggleEndemicityLayerAction = createAction(ActionTypeEnum.MalariaToogleEndemicityLayer)<boolean>();
 
@@ -69,13 +69,9 @@ export const setTourOpenAction = createAction(ActionTypeEnum.SetTourOpen)<boolea
 
 export const setTourStepAction = createAction(ActionTypeEnum.SetTourStep)<number>();
 
-export const setDataDownloadOpenAction = createAction(ActionTypeEnum.SetDataDownloadOpen)<boolean>();
-
 export const setReportOpenAction = createAction(ActionTypeEnum.SetReportOpen)<boolean>();
 
 export const setMapTitleAction = createAction(ActionTypeEnum.SetMapTitle)<string>();
-
-export const setSubscriptionOpenAction = createAction(ActionTypeEnum.SetSubscriptionOpen)<boolean>();
 
 export const setUploadFileOpenAction = createAction(ActionTypeEnum.SetUploadFileOpen)<boolean>();
 

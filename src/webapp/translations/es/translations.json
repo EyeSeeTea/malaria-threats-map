@@ -1,10 +1,393 @@
 {
     "common": {
         "layers": "Capas",
-        "mekong_link": "Ir a la capa Greather Mekong",
+        "mekong_link": "Ir a la capa Greater Mekong",
+        "takeATour": "¿No sabe por dónde empezar? Haga un recorrido.",
+        "zoomIn": "Ampliar",
+        "zoomOut": "Alejar",
+        "fullscreen": "Ver en pantalla completa",
         "title": {
             "title": "Mapa de los desafíos de la malaria",
             "subtitle": "Seguimiento de los desafíos biológicos para el control y la eliminación de la malaria"
+        },
+        "aboutPage": {
+            "title": {
+                "first": "Aprende más sobre",
+                "second": "El mapa de amenazas de malaria"
+            },
+
+            "dataSection": {
+                "title": "De dónde provienen los datos?",
+                "content": "Los datos son recopilados por los Programas Nacionales de Malaria, sus socios implementadores, institutos de investigación y organizaciones no gubernamentales. Se proporcionan directamente al Programa Mundial contra el Paludismo (GMP) de la OMS o se extraen de publicaciones. Todos los datos tienen control de calidad, se incorporan a las bases de datos mundiales de la OMS y luego se publican en el Mapa de Amenazas de la Malaria."
+            },
+            "mapSection": {
+                "title": "Ver: Infórmese sobre la funcionalidad de los mapas dentro del MTM.",
+                "videoLabel": "Ver:",
+                "video1": {
+                    "url": "https://www.youtube.com/embed/dU_xrzpbupU",
+                    "alt": "Mapa de amenazas de malaria: seguimiento de los desafíos biológicos para el control y la eliminación de la malaria",
+                    "title": "Una visión general de los mapas"
+                },
+                "video2": {
+                    "url": "https://www.youtube.com/embed/diMb_gbUUbM",
+                    "alt": "Mapa de amenazas de malaria: apoyando los esfuerzos de investigación",
+                    "title": "Cómo apoya el MTM los esfuerzos de investigación?"
+                },
+                "video3": {
+                    "url": "https://www.youtube.com/embed/x5P45TynlgM",
+                    "alt": "Mapa de amenazas de malaria: ayudar a los países a abordar amenazas críticas para el control y la eliminación de la malaria",
+                    "title": "Cómo está apoyando el MTM a los países?"
+                }
+            },
+            "challengesSection": {
+                "title": "Miles de personas usan el Mapa de Amenazas de la Malaria para comprender los desafíos para el control y la eliminación de la malaria, acceder a datos y guiar la toma de decisiones.",
+                "tabFooter": {
+                    "name": "Nombre",
+                    "globalFund": "Fondo Mundial"
+                },
+                "tab1": {
+                    "name": "Programas Nacionales de Control de la Malaria",
+                    "text": "El MTM me da acceso a los datos públicos más recientes sobre la resistencia de los vectores a los insecticidas; esto me ayuda a tomar decisiones sobre qué productos insecticidas financiar para el IRS y si se deben implementar MTILD estándar o nuevos mosquiteros Piretroides-PBO. La interactividad de la plataforma me permite seleccionar los criterios específicos que me interesan y luego exportar visualizaciones fácilmente para facilitar las discusiones. Ninguna otra plataforma es tan completa como la MTM."
+                },
+                "tab2": {
+                    "name": "ONGs",
+                    "text": "El MTM me da acceso a los datos públicos más recientes sobre la resistencia de los vectores a los insecticidas; esto me ayuda a tomar decisiones sobre qué productos insecticidas financiar para el IRS y si se deben implementar MTILD estándar o nuevos mosquiteros Piretroides-PBO. La interactividad de la plataforma me permite seleccionar los criterios específicos que me interesan y luego exportar visualizaciones fácilmente para facilitar las discusiones. Ninguna otra plataforma es tan completa como la MTM."
+                },
+                "tab3": {
+                    "name": "Donantes",
+                    "text": "El MTM me da acceso a los datos públicos más recientes sobre la resistencia de los vectores a los insecticidas; esto me ayuda a tomar decisiones sobre qué productos insecticidas financiar para el IRS y si se deben implementar MTILD estándar o nuevos mosquiteros Piretroides-PBO. La interactividad de la plataforma me permite seleccionar los criterios específicos que me interesan y luego exportar visualizaciones fácilmente para facilitar las discusiones. Ninguna otra plataforma es tan completa como la MTM."
+                },
+                "tab4": {
+                    "name": "Personal de la OMS",
+                    "text": "El MTM me da acceso a los datos públicos más recientes sobre la resistencia de los vectores a los insecticidas; esto me ayuda a tomar decisiones sobre qué productos insecticidas financiar para el IRS y si se deben implementar MTILD estándar o nuevos mosquiteros Piretroides-PBO. La interactividad de la plataforma me permite seleccionar los criterios específicos que me interesan y luego exportar visualizaciones fácilmente para facilitar las discusiones. Ninguna otra plataforma es tan completa como la MTM."
+                },
+                "tab5": {
+                    "name": "Investigadores",
+                    "text": "El MTM me da acceso a los datos públicos más recientes sobre la resistencia de los vectores a los insecticidas; esto me ayuda a tomar decisiones sobre qué productos insecticidas financiar para el IRS y si se deben implementar MTILD estándar o nuevos mosquiteros Piretroides-PBO. La interactividad de la plataforma me permite seleccionar los criterios específicos que me interesan y luego exportar visualizaciones fácilmente para facilitar las discusiones. Ninguna otra plataforma es tan completa como la MTM."
+                }
+            },
+            "userExperienceSection": {
+                "title": "Pruebas de experiencia de usuario",
+                "p1": "Recientemente llevamos a cabo un proceso de prueba de la experiencia del usuario y estamos agradecidos con todos los que voluntariamente dieron su tiempo para contribuir a la mejora del MTM para todos sus usuarios.",
+                "p2": "Esta prueba de usuario condujo a la adición de páginas de inicio, información y contacto, la creación de paneles, una interfaz de descarga dedicada y una interfaz de mapa más optimizada. También identificamos áreas de mejora adicionales, que estamos trabajando. Estos incluyen una mayor orientación para facilitar la toma de decisiones y capas de mapas adicionales. Queremos hacer que esta herramienta sea lo mejor posible para que juntos tengamos los recursos para controlar y eliminar la malaria.",
+                "button": "Lista de reconocimientos"
+            }
+        },
+        "dashboard": {
+            "title": "Tableros",
+            "not-available": "No disponible",
+            "filtersSection": {
+                "first": {
+                    "title": "1. Seleccionar tema",
+                    "buttonOne": "Resistencia a insecticidas en los vectores de malaria",
+                    "buttonTwo": "Eficacia y resistencia a los medicamentos antipalúdicos"
+                },
+                "second": {
+                    "title": "2. Seleccionar país",
+                    "helper": "Seleccione hasta 5 países",
+                    "lastUpdate": "Última actualización: ",
+                    "cta": "Generar Tablero"
+                },
+                "note": "Nota: Actualmente, los tableros solo están disponibles para dos de los cuatro temas: resistencia a los insecticidas de vectores y eficacia y resistencia a los medicamentos antipalúdicos. Los tableros continuarán desarrollándose a medida que haya más datos disponibles."
+            },
+            "dashboardsFilterSection": {
+                "title": "Contenidos:",
+                "countryContextOptions": {
+                    "countryContext": "Contexto del país",
+                    "epidemiologicalProfile": "Perfil epidemiológico",
+                    "majorPlasmodium": "Principales especies de Plasmodium y régimen de tratamiento",
+                    "vectors": "Vectores",
+                    "summaryInsecticideResistance": "Resumen de la resistencia a los insecticidas"
+                },
+                "therapeuticEfficacyOptions": {
+                    "therapeuticEfficacy": "Resultados del estudio de eficacia terapéutica",
+                    "summaryTreatmentFailures": "Resumen de las tasas de fracaso del tratamiento por fármaco",
+                    "treatmentFailureRates": "Tasas de fracaso del tratamiento a lo largo del tiempo",
+                    "parasiteClearanceRates": "Índices de eliminación de parásitos a lo largo del tiempo"
+                },
+                "molecularMarkerOptions": {
+                    "molecularMarker": "Resultados del estudio de marcadores moleculares",
+                    "summaryMolecularMarker": "Resumen de los resultados del estudio de marcadores moleculares a lo largo del tiempo"
+                },
+                "phenotypicInsecticideResistanceOptions": {
+                    "phenotypicInsecticideResistance": "Resistencia fenotípica a insecticidas",
+                    "statusOfResistanceToInsecticides": "Estado de la resistencia a los insecticidas",
+                    "mosquitoOverTime": "Mortalidad de los mosquitos a lo largo del tiempo"
+                }
+            },
+            "countryContextDashboards": {
+                "title": "Contexto del país",
+                "source": "Fuente:",
+                "whoWorldMalariaReport": "Informe mundial sobre el paludismo de la OMS 2021",
+                "epidemiologicalProfile": {
+                    "title": "PERFIL EPIDEMIOLÓGICO",
+                    "country": "País",
+                    "year": "Año",
+                    "transmission": "Población que vive en áreas de alta transmisión, baja transmisión y libres de malaria",
+                    "burdenEstimates": "Estimaciones de carga",
+                    "highTransmission": "Alta transmisión",
+                    "moreThanOneCase": "(>1 caso por cada 1000 habitantes)",
+                    "lowTransmission": "Transmisión baja",
+                    "lessOrEqualtoOneCase": "(0-1 caso por 1000 habitantes)",
+                    "malariaFree": "Libre de malaria",
+                    "malariaFreeInfo": "Un área en la que no hay transmisión local continua de malaria transmitida por mosquitos y el riesgo de contraer malaria se limita a la infección por casos introducidos.",
+                    "zeroCases": "(0 casos)",
+                    "estimatedCases": "Casos estimados",
+                    "estimatedDeaths": "Muertes estimadas"
+                },
+                "majorPlamociumSpecies": {
+                    "title": "PRINCIPALES ESPECIES DE PLASMODIUM Y RÉGIMEN DE TRATAMIENTO",
+                    "country": "País",
+                    "species": "Especies principales de Plasmodium (%)",
+                    "firstLineTreatments": "Tratamientos de primera línea para la malaria sin complicaciones"
+                },
+                "vectors": {
+                    "title": "VECTORES",
+                    "country": "País",
+                    "species": "Vectores"
+                },
+                "summaryInsecticideResistance": {
+                    "title": "RESUMEN DE RESISTENCIA A INSECTICIDAS",
+                    "country": "País",
+                    "vectorSpecies": "Especies de vectores que han demostrado resistencia confirmada a uno o más insecticidas",
+                    "insecticideClasses": "Clases de insecticidas a las que se ha detectado resistencia",
+                    "resistanceMechanisms": "Mecanismos de resistencia detectados"
+                }
+            },
+            "therapeuticEfficacyDashboards": {
+                "title": "Estudios de eficacia terapéutica (EET)",
+                "numStudies_one": "Los filtros aplicados producen {{count}} estudio",
+                "numStudies_other": "Los filtros aplicados producen {{count}} estudios",
+                "treatmentFailureByDrug": {
+                    "title": "RESUMEN DE LAS TASAS DE FRACASO DEL TRATAMIENTO POR FÁRMACO",
+                    "studyOutcome": "Resultado del estudio:",
+                    "numStudies": "Número de estudios",
+                    "studies_one": "{{count}} estudio",
+                    "studies_other": "{{count}} estudios",
+                    "lessThan10Patients": "<10% de pacientes con fracaso del tratamiento",
+                    "moreOrEqualThan10Patients": "≥10% de los pacientes con fracaso del tratamiento"
+                },
+                "treatmentFailureOverTime": {
+                    "title": "TASAS DE FRACASO DEL TRATAMIENTO A LO LARGO DEL TIEMPO",
+                    "numberPatients": "Número de Pacientes",
+                    "treatmentFailure": "Fracaso del tratamiento (%)",
+                    "year": "Año"
+                },
+                "parasiteClearanceOverTime": {
+                    "title": "TASAS DE ELIMINACIÓN DE PARÁSITOS A LO LARGO DEL TIEMPO",
+                    "parasitemiaOnDay3": "Porcentaje de pacientes con parasitemia en el día 3 (%)"
+                }
+            },
+            "molecularMarkerDashboards": {
+                "title": "Molecular marker studies",
+                "molecularMarkerOverTime": {
+                    "title": "RESULTADOS DEL ESTUDIO DE MARCADORES MOLECULARES A LO LARGO DEL TIEMPO",
+                    "numStudies": "Número de estudios",
+                    "year": "Año",
+                    "artemisininChartTitle": "Porcentaje de muestras en un estudio donde se detectaron marcadores",
+                    "artemisininChartSubtitle": "moleculares validados o candidatos de resistencia a la artemisinina:",
+                    "mutationsChartTitle": "Estudios donde se detectaron mutaciones en:",
+                    "multipleChartTitle": "Estudios en los que se detectaron varios números de copia en:"
+                }
+            },
+            "phenotypicInsecticideResistanceDashboards": {
+                "title": "Resistencia fenotípica a insecticidas",
+                "numBioassaysByCategory": "El siguiente número de bioensayos cumple con el filtro aplicado:",
+                "numBioassays": "{{count}} bioensayos cumplen con el filtro aplicado",
+                "numSites": "Numbero de sitios",
+                "insecticideResistanceStatus": "Estado de resistencia a insecticidas",
+                "byInsecticideClass": "Por clase de insecticida",
+                "byInsecticide": "Por insecticida",
+                "confirmed": "Confirmado (0 a <90%)",
+                "possible": "Posible (90 a <98%)",
+                "susceptible": "Susceptible (≥98%)",
+                "statusOfResistanceToInsecticides": {
+                    "title": "ESTADO DE RESISTENCIA A INSECTICIDAS"
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MORTALIDAD DE MOSQUITOS A LO LARGO DEL TIEMPO",
+                    "adjustedMortality": "Mortalidad ajustada",
+                    "year": "Año"
+                }
+            },
+            "treatmentFilters": {
+                "title": "Filtrar Datos"
+            },
+            "informationModal": {
+                "common": {
+                    "dataPeriod": "<strong>Período de datos: </strong>",
+                    "dataLastUpdated": "<strong>Datos actualizados por última vez: </strong>",
+                    "studyProtocol": "<strong>Protocolo de estudio:</strong> La OMS recomienda que todos los estudios de eficacia terapéutica se realicen según el protocolo estándar de la OMS.",
+                    "info": "Para ver más detalles sobre un estudio concreto, vuelva a la interfaz del mapa para ver los datos a nivel de sitio.",
+                    "and": "y"
+                },
+                "summaryTreatmentFailureRateByDrug": {
+                    "chartInterpretation": "<strong>Interpretación del gráfico:</strong> Este gráfico de barras muestra el número de estudios de eficacia terapéutica realizados en un país (o países) seleccionado. El usuario puede personalizar el gráfico seleccionando una especie de Plasmodium, así como seleccionando uno o más fármacos, y año(s) de interés. El usuario también puede excluir del gráfico los estudios con menos de 20 pacientes. Los estudios con >10% de pacientes con fracaso terapéutico se muestran en rojo; los estudios con {{lessThen}}10% de pacientes con fracaso terapéutico se muestran en rosa.",
+                    "dataAvailability": "<strong>Disponibilidad de datos:</strong> Se muestran todos los estudios de los que se dispone de datos."
+                },
+                "treatmentFailureRateOverTime": {
+                    "chartInterpretation": "<strong>Interpretación del gráfico:</strong> Este gráfico de dispersión muestra el porcentaje de pacientes con fracaso del tratamiento, en un estudio de eficacia terapéutica realizado en un país (o países) seleccionado, por año. El usuario puede personalizar el gráfico seleccionando una especie de Plasmodium, un fármaco y los años de interés. El usuario también puede excluir del gráfico los estudios con menos de 20 pacientes.",
+                    "description_1": "Cada círculo representa un estudio de eficacia terapéutica. El tamaño del círculo es indicativo del número total de pacientes incluidos en el estudio. El color del círculo indica el país donde se realizó el estudio.",
+                    "description_2": "La ubicación de los círculos a lo largo del eje x se basa en el año en que se completó el estudio. Hay un ligero desplazamiento horizontal de los círculos, dentro de un intervalo de un año, para reducir la apariencia de círculos superpuestos.",
+                    "dataAvailability": "<strong>Disponibilidad de datos:</strong> En este gráfico sólo se muestran los datos de <strong><i>P. falciparum</i></strong> y <strong><i>P. vivax</i></strong>."
+                },
+                "parasiteClearanceRatesOverTime": {
+                    "chartInterpretation": "<strong>Interpretación del gráfico:</strong> Este gráfico de dispersión muestra el porcentaje de pacientes con retraso en la eliminación del parásito, en un estudio de eficacia terapéutica, realizado en un país (o países) seleccionado, por año. El usuario puede personalizar el gráfico seleccionando un fármaco y los años de interés. El usuario también puede excluir del gráfico los estudios con menos de 20 pacientes.",
+                    "description_1": "Cada círculo representa un estudio de eficacia terapéutica. El tamaño del círculo es indicativo del número total de pacientes incluidos en el estudio. El color del círculo indica el país donde se realizó el estudio.",
+                    "description_2": "La ubicación de los círculos a lo largo del eje x se basa en el año en que se completó el estudio. Hay un ligero desplazamiento horizontal de los círculos, dentro de un intervalo de años, para reducir el solapamiento de los círculos.",
+                    "dataAvailability": "<strong>Disponibilidad de datos:</strong> En este gráfico sólo se muestran los datos de <strong><i>P. falciparum</i></strong>."
+                },
+                "summaryMolecularMarkerStudyOverTime": {
+                    "intro": "Los estudios de marcadores moleculares identifican y hacen un seguimiento de la prevalencia de las mutaciones moleculares asociadas a la resistencia a los fármacos antipalúdicos. El usuario puede personalizar el gráfico seleccionando el tipo de estudio de marcadores moleculares y los años de interés. El usuario también puede excluir del gráfico los estudios con menos de 20 pacientes.",
+                    "chartInterpretation": "<strong>Interpretación del gráfico:</strong> Este gráfico de barras apiladas muestra los resultados de los estudios de marcadores moleculares. La altura de la barra está determinada por el número de estudios realizados en ese año.",
+                    "pfkelch13": {
+                        "description": "El color de la barra representa el porcentaje de muestras dentro de un estudio donde se detectaron marcadores moleculares validados y candidatos. El azul claro indica un porcentaje bajo; el azul oscuro representa un porcentaje alto.",
+                        "list_1": "Los marcadores validados incluyen: (F466I, N458Y, Y493H, R539T, I543T, P553L, R561H, P574L, C580Y, R6221, A675V, M476I)",
+                        "list_2": "Los marcadores asociados/candidatos incluyen: (P441L, G449A, C469F/Y, A481V, R515K, P527H, N5371/D, G538V, V568G)"
+                    },
+                    "pfcrt": "El color de la barra representa el porcentaje de muestras de un estudio en las que se detectaron mutaciones. El azul claro indica un porcentaje bajo; el azul oscuro representa un porcentaje alto.",
+                    "pfmdr1": "El color de la barra representa el porcentaje de muestras dentro de un estudio en el que se detectaron números de copias múltiples. El azul claro indica un porcentaje bajo; el azul oscuro representa un porcentaje alto.",
+                    "dataAvailability": "<strong>Disponibilidad de datos:</strong> Se muestran todos los estudios de los que se dispone de datos."
+                },
+                "statusOfResistanceToInsecticide": {
+                    "title": "ESTADO DE RESISTENCIA A INSECTICIDAS",
+                    "graphInterpretation": "<0>Interpretación del gráfico:</0> Este gráfico de barras muestra los resultados de los bioensayos de concentración discriminatoria, agrupados por insecticida o clase de insecticida (según la opción elegida). Los resultados del bioensayo se clasifican en tres grupos (resistencia confirmada , posible resistencia y susceptibilidad al insecticida ensayado).",
+                    "typeOfResistance": "<0>Tipo de bioensayo de monitoreo de resistencia:</0> La resistencia a los insecticidas se determinó mediante la mortalidad de mosquitos (bioensayo de botella de los CDC, prueba de tubo de la OMS o bioensayo de botella de la OMS). La resistencia confirmada se clasifica como mortalidad de mosquitos {{lessThan}}90%."
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MORTALIDAD DE MOSQUITOS A LO LARGO DEL TIEMPO",
+                    "graphInterpretation": "<0>Interpretación del gráfico:</0> Este gráfico presenta la mortalidad de mosquitos en bioensayos de susceptibilidad a lo largo del tiempo. El tamaño de la barra representa los valores de los estudios que se encuentran entre el 25 % y el 75 % de los cuartiles de la distribución de la mortalidad. La línea horizontal dentro de la barra representa el valor medio de mortalidad. Las líneas horizontales por encima y por debajo de la barra representan los valores de mortalidad máximo y mínimo, respectivamente.",
+                    "typeOfResistance": "<0>Tipo de bioensayo de monitoreo de resistencia:</0> La resistencia a los insecticidas se determinó mediante la mortalidad de mosquitos (bioensayo de botella de los CDC, prueba de tubo de la OMS o bioensayo de botella de la OMS). La resistencia confirmada se clasifica como mortalidad de mosquitos {{lessThan}}90%."
+                }
+            },
+            "tooltip": {
+                "drug": "Fármaco",
+                "numberOfPatients": "Número de pacientes",
+                "treatmentFailureRate": "Tasa de fracaso del tratamiento",
+                "source": {
+                    "label": "Fuente",
+                    "link": "Instituto Nacional de Alergia y Enfermedades Infecciosas, Institutos Nacionales de Salud"
+                }
+            }
+        },
+        "homepage": {
+            "menu": {
+                "home": "Casa",
+                "tools": "Instrumentos",
+                "stories": "Cuentos",
+                "about": "Acerca de",
+                "contact": "Contacto",
+                "share_data": "Compartir datos"
+            },
+            "tools_submenu": {
+                "maps": "Mapas",
+                "dashboards": "Tableros",
+                "data_download": "Descarga de datos"
+            },
+            "stories_submenu": {
+                "antimalarial_drug_efficacy_and_resistance": "Eficacia y resistencia a fármacos antipalúdicos",
+                "parasite_pfhrp_gene_deletions": "Deleciones del gen <i>pfhrp2/3</i> del parásito"
+            },
+            "title": "Mapa de <br /> <strong>amenazas de malaria</strong>",
+            "subtitle": "Explore datos sobre las principales amenazas biológicas para el control y la eliminación de la malaria.",
+            "media_cards": {
+                "maps": {
+                    "title": "Mapas",
+                    "subtitle": "Explore estudios individuales y datos a nivel de sitio para todas las amenazas.",
+                    "button_text": "Entrar en el mapa"
+                },
+                "dashboards": {
+                    "title": "Tableros",
+                    "subtitle": "Vea resúmenes de las amenazas en diferentes niveles geográficos.",
+                    "button_text": "Ver paneles"
+                },
+                "data_download": {
+                    "title": "Descarga de datos",
+                    "subtitle": "Descargue los datos detrás del MTM para su propio análisis.",
+                    "button_text": "Descarga de datos"
+                },
+                "db_last_updated": "Base de datos actualizada por última vez",
+                "read_story": "Leer historia"
+            },
+            "header": "El Malaria Threats Map es la plataforma más completa sobre las cuatro amenazas biológicas para el control y la eliminación de la malaria.",
+            "theme_paper": {
+                "prevention_subtitle": "La resistencia de los vectores a los insecticidas utilizados para el control de vectores amenaza los esfuerzos de control de la malaria.",
+                "invasive_subtitle": "La propagación de ciertas especies de vectores anofelinos y su establecimiento en nuevos ecosistemas representa una amenaza para el control de la malaria.",
+                "treatment_subtitle": "La resistencia a los medicamentos antipalúdicos sigue siendo una de las principales amenazas para los esfuerzos mundiales de control de la malaria, particularmente en la subregión del Gran Mekong.",
+                "diagnosis_subtitle": "Las deleciones de genes entre algunos parásitos de la malaria provocan resultados falsos negativos en las pruebas de diagnóstico, lo que complica la gestión y el control de los casos."
+            }
+        },
+        "storiesPage": {
+            "prevention": {
+                "title": "Resistencia de los vectores a los insecticidas",
+                "description": "Infórmese sobre la resistencia de los vectores a los insecticidas y lo que la OMS recomienda para combatir esta amenaza para el control y la eliminación del paludismo."
+            },
+            "invasive": {
+                "title": "Especies vectoriales invasoras",
+                "description": "Conozca las especies vectoriales invasoras y las recomendaciones de la OMS para combatir esta amenaza para el control y la eliminación del paludismo."
+            },
+            "treatment": {
+                "title": "Eficacia y resistencia de los medicamentos antipalúdicos",
+                "description": "Infórmese sobre la eficacia y la resistencia de los medicamentos antipalúdicos y sobre las recomendaciones de la OMS para combatir esta amenaza para el control y la eliminación del paludismo."
+            },
+            "diagnosis": {
+                "title": "Supresiones del gen <i>pfhrp2/3</i> del parásito",
+                "description": "Conozca las deleciones del gen pfhrp2/3 del parásito y las recomendaciones de la OMS para combatir esta amenaza para el control y la eliminación del paludismo."
+            },
+            "stepper": {
+                "next": "siguiente",
+                "back": "volver"
+            }
+        },
+        "shareDataPage": {
+            "title": "Contribuye al Mapa de Amenazas de la Malaria compartiendo tus <strong>datos</strong>",
+            "section1": {
+                "title": "Aportar datos sobre la resistencia a los insecticidas",
+                "description": "Invitamos a todas las personas y organizaciones a presentar sus datos. Por favor, comunique sus datos utilizando los siguientes formularios estándar de recogida de datos de la OMS. Los formularios están disponibles para su descarga <2 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>aquí</2>.",
+                "list": {
+                    "1": "Resultados del bioensayo del insecticida sinérgico",
+                    "2": "Resultados del bioensayo de concentración de intensidad",
+                    "3": "Resultados del bioensayo de concentración discriminante",
+                    "4": "Resultados de los bioensayos moleculares y bioquímicos"
+                }
+            },
+            "section2": {
+                "title": "Aportar datos de detección de <i>An. stephensi</i>",
+                "description": "Invitamos a todas las personas y organizaciones a que envíen datos sobre la detección de <i>An. stephensi</i> fuera de sus zonas nativas. Le rogamos que comunique sus datos utilizando el formulario estándar de recogida de datos de la OMS, disponible <5 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>aquí</5>."
+            },
+            "sectionsFooter": "Los formularios cumplimentados pueden enviarse a: <2>vectorsurveillance@who.int</2>"
+        },
+        "contactPage": {
+            "title": "Contribuye al Mapa de Amenazas de la Malaria compartiendo tus <strong>comentarios</strong>",
+            "section1": {
+                "title": "Comentarios y consultas generales",
+                "description": "Estamos deseando saber cómo utiliza el MTM y cómo podemos mejorar la plataforma para todos sus usuarios. Para ponerse en contacto con el equipo de MTM, envíe un correo electrónico a <1>gmp-maps@who.int</1>"
+            },
+            "section2": {
+                "title1": "Presentación de datos",
+                "description1": "Si desea enviar datos al MTM, utilice el portal <2>compartir datos</2>.",
+                "title2": "Soporte técnico",
+                "description2": "Si tiene algún problema técnico con la plataforma, póngase en contacto con el equipo informático a través de la pestaña \"Informar de errores\" situada en la parte derecha de la página. Los comentarios enviados aquí irán directamente al equipo de TI."
+            }
+        },
+        "footer": {
+            "policies": {
+                "title": "Políticas",
+                "disclaimer": "Descargo de responsabilidad"
+            },
+            "other_who_resources": {
+                "title": "Recursos de la OMS",
+                "resource1": "Directrices de la OMS sobre la malaria",
+                "resource2": "Informe mundial de la OMS sobre la malaria",
+                "resource3": "Mapa de amenazas de la malaria de la OMS"
+            },
+            "about_who_gmp": {
+                "title": "Acerca de las BPF de la OMS",
+                "resource1": "Programa Mundial contra la Malaria de la OMS",
+                "resource2": "Contacta con nosotros"
+            },
+            "subscribe_newsletter": "SUSCRÍBETE AL BOLETÍN DE GMP",
+            "privacy": "Política de privacidad de la OMS"
         },
         "themes": {
             "prevention": "Resistencia a insecticidas en los vectores de malaria",
@@ -39,6 +422,7 @@
             "chart": {
                 "not_reported": "NR: no reportado",
                 "other_insecticide_class_label": "Otros insecticidas a los que se detectó resistencia en este sitio:",
+                "other_mechanisms": "Otros mecanismos detectados",
                 "other_insecticide_class_none": "Ninguno",
                 "resistance": {
                     "mosquito_mortality": "% de mortalidad en los mosquitos",
@@ -53,7 +437,8 @@
                     "title": "Número de pruebas de mecanismos",
                     "allelic": "Frecuencias alélicas",
                     "count": "Número de pruebas",
-                    "frequency": "Frecuencia (%)"
+                    "frequency": "Frecuencia (%)",
+                    "not_reported": "No reportado"
                 },
                 "synergist_involvement": {
                     "no_synergist": "No sinergista"
@@ -76,6 +461,7 @@
                     "confirmed": "Confirmado (0 to <90%)",
                     "possible": "Posible (90 to <98%)",
                     "susceptible": "Susceptible (≥98%)",
+                    "undetermined": "Indeterminado",
                     "help": {
                         "p1": "Este mapa contiene datos de <1>bioensayos de concentración discriminatoria</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En sitios donde los estudios muestran niveles variables de intensidad de resistencia, el color de el punto está determinado por los resultados más recientes.",
                         "p2": "Para obtener información sobre cómo se define cada nivel, consulte el <1 href='/'>manual de la OMS para el control de la resistencia</1>.",
@@ -93,12 +479,26 @@
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "Mortalidad por mosquito",
-                    "full_involvement": "Participación total",
-                    "partial_involvement": "Participación parcial",
-                    "no_involvement": "Sin participación",
+                    "full_restoration": "Restauración completa",
+                    "partial_restoration": "Restauración parcial",
+                    "no_restoration": "Sin restauración",
                     "help": {
                         "p1": "Este mapa presenta datos de <1>bioensayos de insecticidas sinérgicos</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En los sitios donde los estudios muestran resultados variables, el color del punto está determinada por los resultados más recientes.",
                         "p2": "Para obtener información sobre cómo se clasifica la participación de los sinergistas, consulte el <1 href='/'>Manual de la OMS para el control de la resistencia</1>.",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
+                    }
+                },
+                "chlorfenapyr_undetermined": {
+                    "help": {
+                        "p1": "Los puntos grises representan los datos recopilados con la concentración de discriminación recomendada de 100 µg/botella, pero que no coinciden completamente con los criterios de la OMS para la validación de la prueba, ya sea porque no se informó la temperatura o porque la temperatura cayó fuera del rango recomendado (27 °C ± 2 °C). C), porque no se probó ninguna cepa de mosquito susceptible en paralelo o porque no se informaron los resultados de la cepa de mosquito susceptible.",
+                        "p2": "",
+                        "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
+                    }
+                },
+                "pirimiphos_methly_undetermined": {
+                    "help": {
+                        "p1": "Los puntos grises representan los datos recopilados con la concentración de discriminación de pirimifos-metilo recomendada anteriormente de 0,25 %. Estos datos deben validarse con las nuevas concentraciones discriminatorias disponibles en el Manual de la OMS para monitorear la resistencia a insecticidas en mosquitos vectores y seleccionar las intervenciones apropiadas. <4 href='https://www.who.int/publications/i/item/9789240051089'>https://www.who.int/publications/i/item/9789240051089</4>.",
+                        "p2": "",
                         "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
                     }
                 }
@@ -158,7 +558,9 @@
                     "treatment_failure_km": "Pacientes con fallo terapeutico, Kaplan-Meier",
                     "days": "días",
                     "studies": "estudio(s)",
-                    "aditional_information_title": "Información adicional: "
+                    "aditional_information_title": "Información adicional: ",
+                    "show_more": "Mostrar más",
+                    "show_less": "Mostrar menos"
                 },
                 "molecular_markers": {
                     "subtitle": "Se han observado las siguientes mutaciones {{molecularMarker}}",
@@ -218,16 +620,17 @@
                     "sampling_method": "Método de recolección",
                     "study_identification_method": "Método de identificación de especies",
                     "data_collection": "Agrademicimientos por la recopilación de datos",
-                    "no_available": "No disponible"
+                    "not_recorded": "No registrado"
                 }
             },
             "legend": {
                 "vector_occurrance": {
                     "invasive": "Invasora",
                     "native": "Nativa",
-                    "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
+                    "link": "https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-databases-on-invasive-mosquito-vector-species",
+                    "not_found": "No encontrado",
                     "link_text": "formulario de reporte",
-                    "link_content_1": "Si ha detectado especies invasoras de vectores de Anopheles, infórmenos a través del ",
+                    "link_content_1": "Si ha detectado especies invasoras de vectores de <1>Anopheles</1>, infórmenos a través del ",
                     "help": {
                         "p1": "Este mapa representa datos de la <1>vigilancia de vectores de mosquitos Anopheles</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. El color del punto muestra si la especie es invasora o nativa de la zona.",
                         "p2": "",
@@ -254,8 +657,8 @@
                 "invasive": "Hay {{studies}} detecciones de vectores encontrados con los criterios especificados"
             },
             "insecticide_class": "Clase de insecticida",
-            "insecticide_type": "Tipo de insecticida",
-            "select_insecticide_type": "Seleccionar tipo de insecticida",
+            "insecticide_type": "Insecticida",
+            "select_insecticide_type": "Seleccionar insecticida",
             "test_type": "Tipo de ensayo",
             "select_test_type": "Seleccionar tipo de ensayo",
             "vector_species": "Especies vectoras",
@@ -263,6 +666,7 @@
             "plasmodium_species": "Especie de plasmodium",
             "drug": "Tratamiento",
             "molecular_marker": "Marcador molecular",
+            "proxy_type": "Tipo de sinergia",
             "mechanism_type": "Tipo de mecanismo",
             "assay_type": "Tipo de ensayo",
             "synergist_type": "Tipo de test",
@@ -285,16 +689,19 @@
             "select_site": "Seleccionar sitio",
             "site": "Sitio",
             "exclude_lower_patients": "Excluir estudios de menos de 20 pacientes",
-            "exclude_lower_samples": "Excluir estudios de menos de 20 muestras"
+            "exclude_lower_samples": "Excluir estudios de menos de 20 muestras",
+            "onlyIncludeBioassays": "Incluya sólo los bioensayos con más del siguiente número de mosquitos",
+            "zero_all_bioassays": "0 (todos los bioensayos)",
+            "only_include_data_by_health": "Incluir solo los datos proporcionados a la OMS por los ministerios de salud"
         },
         "topbar": {
             "menu": "Menú",
             "maps": "Mapas",
-            "dashboards": "Tableros",
-            "stories": "Cuentos"
+            "dashboards": "Tableros"
         },
         "sidebar": {
             "home": "Casa",
+            "stories": "Cuentos",
             "about": "Sobre",
             "contact": "Contactar",
             "share_data": "Compartir datos",
@@ -318,7 +725,7 @@
         },
         "copyright": {
             "mobile": "Haga clic aquí para leer la advertencia que se aplica al mapa de arriba",
-            "content": "Las denominaciones empleadas en esta publicación y la forma en que aparecen presentados los datos que contiene no implican, por parte de la Organización Mundial de la Salud, juicio alguno sobre la condición jurídica de países, territorios, ciudades o zonas, o de sus autoridades, ni con respecto al trazado de sus fronteras o límites. Las líneas de puntos, así como las líneas discontinuas y las áreas marcadas en gris, en los mapas representan de manera aproximada las fronteras y áreas respecto de las cuales puede que no haya pleno acuerdo. Las fronteras del mapa proporcionadas reflejan la situación política y geográfica actual a partir de la fecha de publicación ({{year}}). Sin embargo, la información técnica sobre la salud se basa en datos precisos con respecto al año seleccionado. Debe destacarse la desconexión en esta disposición, pero no debe extraerse ninguna implicación de carácter político o terminológico de esta disposición, ya que es puramente una función de limitaciones técnicas y gráficas. Fuente de datos: Programa Mundial \nsobre Paludismo. Producción de mapas: Programa Mundial sobre Paludismo. Organización Mundial de la Salud."
+            "content": "Las denominaciones empleadas en esta publicación y la forma en que aparecen presentados los datos que contiene no implican, por parte de la OMS, juicio alguno sobre la condición jurídica de países, territorios, ciudades o zonas, o de sus autoridades, ni respecto del trazado de sus fronteras o límites. Las líneas discontinuas en los mapas representan de manera aproximada fronteras respecto de las cuales puede que no haya pleno acuerdo. Fuente de datos: Programa Mundial sobre Paludismo. Producción de mapas: Programa Mundial sobre Paludismo. Organización Mundial de la Salud. OMS {{year}}."
         },
         "options": {
             "title": "Opciones",
@@ -340,9 +747,8 @@
             },
             "buttons": {
                 "back": "Anterior",
-                "next": "Siguiente",
-                "download": "Descargar",
-                "close": "Cerrar"
+                "next": "Siguiente Paso",
+                "download": "Descargar"
             },
             "filters": {
                 "prevention": {
@@ -354,10 +760,15 @@
                         "resistance_mechanism_assays_biochemical": "Resultados de pruebas de detección de mecanismos bioquímicos de la resistencia"
                     }
                 },
+                "diagnosis": {
+                    "datasets": {
+                        "gene_deletions": "Deleción del gen pfhrp2/3"
+                    }
+                },
                 "treatment": {
                     "datasets": {
-                        "therapeutic_efficacy_studies": "Resultados de los estudios de eficacia terapéutica",
-                        "molecular_marker_studies": "Resultados de  los estudios de marcadores moleculares de la resistencia a los medicamentos"
+                        "therapeutic_efficacy_studies": "Estudios de eficacia terapéutica",
+                        "molecular_marker_studies": "Estudios de marcadores moleculares de la resistencia a los medicamentos"
                     }
                 },
                 "invasive": {
@@ -366,25 +777,17 @@
                     }
                 }
             },
-            "step0": {
-                "title": "Mensaje de bienvenida",
-                "p1": "¡Bienvenido al diálogo de descarga de datos del Mapa de los desafíos de la malaria!",
-                "p2": "Este diálogo le permitirá descargar datos de las bases de datos mundiales de la OMS sobre la resistencia a los insecticidas en los vectores de la malaria, la eficacia y resistencia de los parásitos a los medicamentos antipalúdicos y las especies vectoras invasoras.",
-                "p3": "Los datos  contenidos en estas tres bases de datos globales han sido puestos a disposición del  Programa Mundial sobre Paludismo de la Organización Mundial de la Salud (OMS) por los Ministerios de Salud o sus asociados en el desarrollo, o mediante su extracción de publicaciones científicas por parte de la OMS o sus socios. Para reconocer sus contribuciones, cada conjunto de datos incluye una columna con sus fuentes. Tenga en cuenta que no todos los contribuyentes nos han permitido compartir sus datos. Por lo tanto, algunos de los datos que usted puede ver en el Mapa de los desafíos de la malaria no están disponibles para descarga. En el caso de datos extraídos de las publicaciones, tenga en cuenta que cuando las publicaciones no proporcionan directamente los valores de las variables incluidas en las bases de datos globales, o cuando estos se calculan de manera diferente a la recomendada por la OMS, los valores de las bases de datos han sido calculados por la OMS a partir de los datos disponibles.",
-                "p4a": "El uso de los datos está sujeto a los ",
-                "p4bLinkText": "Términos y condiciones de uso para compilaciones, agregaciones, evaluaciones y análisis de datos de la OMS",
-                "p4bLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions",
-                "p4c": ". Al utilizar los Conjuntos de datos o cualquier representación derivada de ellos, usted acepta respetar y adherirse a estos términos y condiciones, que pueden ser modificados por la OMS de vez en cuando a su exclusivo criterio.",
-                "p5": "Usted deberá reconocer el uso de estos conjuntos de datos incluyendo la siguiente referencia en sus publicaciones: OMS, Mapa de los desafíos de la malaria (https://www.who.int/malaria/maps/threats/), fecha de acceso, reconocimiento a los países que proporcionaron los datos subyacentes (en caso de que la fuente se refiera a los ministerios de salud o programas nacionales de control de la malaria de países específicos).",
-                "p6": "El Programa Mundial sobre el Paludismo de la OMS está interesado en hacer seguimiento y de mostrar la utilidad de las bases de datos globales. Por lo tanto, a continuación le haremos algunas preguntas sobre el propósito para el cual desea descargar datos.",
-                "p7a": "Si tiene alguna pregunta, no dude en contactarnos en: ",
-                "p7bEmail": "gmp-maps@who.int",
-                "p8a": "Marque aquí para indicar que ha leído y acepta los ",
-                "p8bLinkText": "Términos y condiciones de uso para compilaciones, agregaciones, evaluaciones y análisis de datos de la OMS",
-                "p8bLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions"
+            "terms_step": {
+                "title": "Terminos and Condiciones",
+                "p1": "The use of all data is subject to the Terms and conditions of use for WHO compilations, aggregations, evaluations and analyses. By using the Datasets or any presentations of data derived from them, you agree to be bound by and adhere to these Terms and Conditions, as may be amended from time to time by WHO at its sole discretion. If any datasets are credited to a source other than WHO, then those materials are not covered by these Terms and Conditions, and permission should be sought from the source.",
+                "p2": "Please acknowledge the use of these datasets by including the following reference in your publications: WHO, Malaria Threats Map, year, date of access, acknowledgement of the countries having provided the underlying data (in the event that the source refers to ministries of health or national malaria control programs of specific countries).",
+                "summary_title": "Download List",
+                "check": "Check here to indicated that you have read and agree to the Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses.",
+                "choose_other": "Choose other databases"
             },
-            "step1": {
+            "personal_step": {
                 "title": "Datos de contacto",
+                "subtitle": "Al proporcionar sus datos personales, nos ayudará a comprender mejor a nuestra comunidad de usuarios.",
                 "first_name": "Nombre",
                 "last_name": "Apellidos",
                 "organization_type": "Tipo de organización",
@@ -402,40 +805,25 @@
                     "other": "Otras"
                 },
                 "organization_name": "Nombre de la Organización",
-                "position": "Position",
+                "uses_placeHolder": "Le agradeceríamos que nos proporcionara una breve descripción de cómo se utilizarán estos datos para respaldar su trabajo.",
                 "country": "País de Residencia",
-                "email": "Email"
+                "email": "Email",
+                "message": "Si desea compartir sus comentarios con nosotros, hágalo <2 href='/contact'>aquí</2>.",
+                "consent1": "Autorizo ser contactado por la Organización Mundial de la Salud con respecto a mi experiencia con el Mapa de Amenazas de la Malaria y los datos de las bases de datos globales."
             },
-            "step2": {
-                "title": "Propósito de la descarga",
-                "data_use": "¿Con qué propósito se utilizarán estos datos?",
-                "data_use_options": {
-                    "research": "Investigación",
-                    "grant": "Desarrollar propuestas de proyectos",
-                    "treatments": "Desarrollo de nuevos tratamientos antipalúdicos",
-                    "vector": "Desarrollar nuevas herramientas de control de vectores",
-                    "diagnosis": "Desarrollar nuevas herramientas de diagnóstico",
-                    "policies": "Desarrollo de políticas nacionales, estrategias y / o planes de trabajo (por ejemplo, Plan Estratégico Nacional contra la Malaria, políticas o directrices de tratamiento, planes nacionales de monitoreo y manejo de la resistencia a insecticidas en vectores del paludismo)",
-                    "advocacy": "Abogacía"
-                },
-                "date_use_options_content": {
-                    "research": " Proporcione una breve descripción del proyecto o pregunta de investigación para la cual se utilizarán los datos (mínimo 100 palabras)",
-                    "policies": "Proporcione el título o una breve descripción de la política, estrategia o plan para la que se utilizarán los datos.",
-                    "tools": "Describa brevemente los nuevos tratamiento o las nuevas herramientas diagnóstico o de control de vectores que pretende desarrollar (mínimo 100 palabras)",
-                    "date": "¿Cuándo tiene previsto terminar su proyecto, política, estrategia o plan?"
-                },
-                "countries": "Países donde se implementará el proyecto, política, estrategia o plan",
-                "message": "La OMS desea mejorar las bases de datos mundiales y el Mapa de los desafíos de la malaria para satisfacer mejor las necesidades de su comunidad de usuarios. Por lo tanto, la OMS pretende comunicarse con los usuarios para recopilar sugerencias de mejora y aprender de los diferentes casos de uso de estos productos y los beneficios que estos productos les reportan.",
-                "consent1": "Autorizo a la Organización Mundial de la Salud a usar mis datos personales para contactarme con respecto a mi experiencia usando el Mapa de los desafíos de la malaria y los datos de las bases de datos globales. ",
-                "consent2": "Autorizo a la Organización Mundial de la Salud a usar el nombre de la organización y las descripciones de proyectos que he proporcionado para presentar los casos de uso de las bases de datos globales (no se mostrarán datos personales)."
-            },
-            "step3": {
-                "title": "Filtrar datos a descargar",
-                "filters": {
-                    "additional": "Filtros adicionales",
-                    "theme": "Seleccione un tema",
-                    "dataset": "Seleccione un conjunto de datos"
-                }
+            "data_step": {
+                "title": "Seleccione datos",
+                "p1": "Este cuadro de diálogo le permite descargar datos de las cuatro bases de datos mundiales de la OMS: resistencia a los insecticidas en los vectores de la malaria, especies de vectores invasivos, eficacia y resistencia a los medicamentos antipalúdicos y deleciones del gen <1>Pfhrp2/3</1>. Se incluye un enlace a la fuente de datos original y la cita en cada conjunto de datos, cuando esté disponible.",
+                "last_updated": "El conjunto de datos seleccionado se actualizó por última vez el:",
+                "add_to_download": "Agregar para descargar",
+                "db_download_list": "Lista de descargas de la base de datos",
+                "db_download_helper_text": "Su lista de bases de datos seleccionadas para descargar se mostrará aquí. Para agregar datos, filtre los datos que necesita a la derecha y haga clic en “Agregar para descargar“.",
+                "prevention_warning": "Tenga en cuenta que no todos los contribuyentes del tema de la resistencia de los vectores a los insecticidas nos han permitido compartir sus datos. Por lo tanto, algunos de los datos en Malaria Threats Map no están disponibles para descargar. Para los datos extraídos de las publicaciones, tenga en cuenta que cuando los valores de las variables relevantes no se proporcionaron directamente en las publicaciones o se analizaron de manera diferente a la recomendada por la OMS, los valores se calcularon a partir de los datos informados.",
+                "data_set": "Conjunto de datos:",
+                "data": "Datos:",
+                "location": "Ubicación:",
+                "studies_in_file": "{{total}} estudios incluidos en el archivo",
+                "bioassays_in_file": "{{total}} bioensayos incluidos en el archivo"
             }
         },
         "report": {
@@ -460,27 +848,6 @@
                 "studies": "Número de estudios",
                 "percentile_25": "Percentile 25",
                 "percentile_75": "Percentile 75"
-            }
-        },
-        "subscription": {
-            "title": "Suscríbase para recibir actualizaciones sobre estos cuatro desafíos en la lucha contra la malaria!",
-            "first_name": "Nombre",
-            "last_name": "Apellidos",
-            "email": "Email",
-            "country": "País",
-            "organization": "Organización",
-            "button": "Subscríbete",
-            "institutions": {
-                "nmcp": "PNLM",
-                "funding_organization": "Entidad financiadora",
-                "research_organization": "Centro de investigación",
-                "who_collaborating_centers": "Centro colaborador de la OMS",
-                "private_sector": "Sector privado",
-                "ngo": "ONG",
-                "media_organization": "Agencia de comunicación",
-                "who_country_office": "OMS - Oficina de país",
-                "who_regional_office": "OMS - Oficina Regional",
-                "who_headquarters": "OMS - Sede"
             }
         },
         "uploadFile": {
@@ -513,7 +880,6 @@
             "image": "Exportar mapa",
             "summary": "Informe resumen",
             "disclaimer": "Aviso Legal",
-            "subscribe": "Suscríbase",
             "uploadFile": "Subir fichero y descargar plantilla",
             "comments": "Envíe sus comentarios",
             "help": "Ayuda",
@@ -527,28 +893,6 @@
         "COUNTRY_NA": "Namibia",
         "WEBGL_error_message": "Su navegador no es compatible con WebGL. Puede habilitar WebGL en la configuración avanzada de su navegador."
     },
-    "diagnosisStory": {
-        "step1": {
-            "part1": "<0>Las supresiones de genes entre los parásitos de la malaria causan falsos negativos en las pruebas de diagnóstico.</0>",
-            "part2": "Las pruebas de diagnóstico rápido (PDR) se utilizan para el diagnóstico de la malaria en la mayoría de las áreas endémicas. La detección de <i> Plasmodium falciparum </i>, el parásito de la malaria que causa más mortalidad en el mundo, depende de las PDR dirigidas a la detección de un antígeno llamado HRP2 (proteína 2 rica en histidina), así como cierta reactividad cruzada con HRP3, una proteína de los parásitos estructuralmente similar al HRP2. La gran mayoría de los PDR fabricadas, adquiridas y utilizadas en todo el mundo se basan en la detección de HRP2 ya sea solos o en combinación con otros antígenos (como la lactato-deshidrogenasa o la aldolasa).",
-            "part3": "Sin embargo, en 2010 un estudio patrocinado por la OMS y FIND encontró que algunos parásitos de <i>P. falciparum</i> en el Perú carecían del gen <i>pfhrp2</i>. Sin este gen, el parásito no puede producir HRP2 y, por tanto, las pruebas rápidas basadas en HRP2 no lo detectan. Este fue el primer informe que confirmó la ausencia del gen <i>pfhrp2</i> entre parásitos de la especie <i>P. falciparum</i> en un entorno clínico.",
-            "see": "Ver: ",
-            "part4": "Gamboa et al. (2010) Una gran proporción de aislamientos de <i>P. falciparum</i> en la región amazónica del Perú carece de <i>pfhrp2</i> y pfhrp3: implicaciones para las pruebas de diagnóstico rápido del paludismo. PLoS One. 5(1):e8091"
-        },
-        "step2": {
-            "part1": "<0>Las supresiones de los genes <i> pfhrp2/3 </i> pueden tener implicaciones significativas para la salud pública</0>",
-            "part2": "Los falsos negativos obtenidos mediante PDR causados por supresiones de <i>pfhrp2/3</i> pueden conducir a un diagnóstico incorrecto o tardío y amenazar la seguridad del paciente. Además, el paciente puede seguir siendo una fuente de transmisión de la malaria hasta que se le trate adecuadamente.",
-            "part3": "Desde 2010, varios estudios realizados en distintas regiones de África y Asia también encontraron parásitos <i>P. falciparum</i> que carecen del gen <i>pfhrp2</i>. La prevalencia de esta mutación genética varía según los países. En los lugares donde se confirma la supresión del gen, las prácticas de compra de PDR y gestión de casos deben adaptarse en consecuencia. En los casos en los que la prevalencia de falsos negativos debido a la supresión del <i>pfhrp2</i> supera el 5% la OMS recomienda usar una PDR que no esté basada exclusivamente en la detección de HRP2 para detectar parásitos de la especie <i>P. falciparum</i> (pf-pLDH) en pacientes sintomáticos.",
-            "link": "https://www.who.int/publications/i/item/WHO-HTM-GMP-2017.18",
-            "supportingStudies": "Enlace a estudios de apoyo."
-        },
-        "step3": {
-            "part1": "<0>Una mayor vigilancia de las supresiones del gen <i>pfhrp2/3</i> entre las poblaciones de <i>P. falciparum</i> es esencial</0>",
-            "part2": "Una vez que se confirman las supresiones en una región geográfica, deben realizarse estudios localmente y en zonas vecinas para estimar la prevalencia de los parásitos con supresión del gen. En contextos clínicos, es importante investigar la causa o causas de los falsos negativos en las PDR.",
-            "part3": "La vigilancia centinela debe ser diseñada para reportar los hallazgos tanto positivos como negativos. Los datos deben gestionarse bien para ayudar a priorizar los estudios, analizar adecuadamente las tendencias a lo largo del tiempo e informar una respuesta coordinada a esta amenaza.",
-            "part4": "A partir de 2017, la base de datos de la OMS incluye datos de supresión de genes pfhrp2/3 para 29 países en 5 de las regiones de la OMS."
-        }
-    },
     "disclaimer": {
         "p1a": "<strong>Fuente de datos:</strong> Programa Mundial sobre el Paludismo",
         "p1b": "<strong>Elaboración de mapas:</strong> Programa mundial de paludismo. Organización Mundial de la Salud.",
@@ -560,9 +904,7 @@
         "p3aLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions",
         "p3b": "Términos y condiciones de uso para compilaciones, agregaciones, evaluaciones y análisis de datos de la OMS.",
         "p4a": "La siguiente cita deberá proporcionarse visiblemente junto con las imágenes o archivos generados desde la aplicación.",
-        "p4b": "Fuente: ",
-        "p4bLink": "https://www.who.int/malaria/maps/threats/",
-        "p4bLinkText": "Mapa de los desafíos de la malaria.",
+        "p4b": "Fuente: Mapa de los desafíos de la malaria.",
         "p5a": "Para obtener más información, póngase en contacto con: ",
         "p5aLink": "mailto:gmp-maps@who.int",
         "p5aLinkText": "gmp-maps@who.int"
@@ -710,6 +1052,7 @@
             "LATITUDE": "Latitud del lugar dondes se capturaron los mosquitos",
             "LONGITUDE": "Longitud del lugar dondes se capturaron los mosquitos",
             "TEST_TYPE": "Tipo de mecanismo de resistancia",
+            "INSECTICIDE_CLASS": "Clase de insecticida",
             "INSECTICIDE_TYPE": "Concentración de insecticida",
             "INSECTICIDE_CONCENTRATION": "Concentración de insecticida",
             "YEAR_START": "Año en que comenzó la captura de mosquitos",
@@ -723,32 +1066,30 @@
             "CITATION": "Cita de la publicación donde se publicaron los datos",
             "CITATION_URL": "URL de la publicación donde se publicaron los datos",
             "DATA_CURATOR": "Instituto que compiló los datos. Parte de los datos en esta base de datos ha sido compilada por instituciones colaboradoras que compartieron sus colecciones de datos con la OMS. Esta columna indicará el nombre de la institución o grupo que compiló los datos."
-        }
-    },
-    "invasiveStory": {
-        "step1": {
-            "part1": "<0>La detección de <i>An. stephensi</i> en Sri Lanka y el cuerno de África resalta la capacidad de las especies de vectores de extenderse a nuevas áreas geográficas.</0>",
-            "part2": "<0>Otro ejemplo lo proporciona la introducción de <i>An. gambiae</i> en el norte de Brasil en 1930. Su eliminación demuestra que las invasiones de vectores pueden controlarse.</0>",
-            "part3": "<i>An. stephensi</i> es un vector de malaria urbana altamente eficiente. Aunque es tradicionalmente nativo de ciertos países del sudeste asiático y la Península Arábiga, desde 2012 ha sido detectado en Djibouti (2012), Etiopía (2016), Sri Lanka (2017) y más recientemente en la República del Sudán (2019, datos no publicados).",
-            "part4": "La propagación de <i>An. Stephensi</i> ha contribuido al resurgimiento de la malaria en la ciudad de Djibouti. En Sri Lanka, podría poner en peligro los esfuerzos de prevención del restablecimiento de la malaria. En África, dado la rápida y descontrolada urbanización, la propagación de <i>An. stephensi</i> en el medio urbano podría poner en riesgo los logros en la reducción de la carga de malaria conseguidos desde el año 2000.",
-            "supporting": "secundaria"
         },
-        "step2": {
-            "part1": "<0>La detección oportuna de las especies de vectores invasoras es crucialpara contener su propagación.</0>",
-            "part2": "<0>Los sistemas de vigilancia entomológica proporcionan información crítica para el diseño e implementación de las estrategias de control vectorial.</0>",
-            "part3": "Para diseñar intervenciones efectivas que eviten una mayor propagación de las especies de vectores invasoras y su establecimiento en nuevas áreas geográficas, es necesario comprender los hábitats de reproducción y descanso de las especies de vectores, su comportamiento, sus preferencias alimenticias y su estado de resistencia.",
-            "part4": "La OMS recomienda a todos los países endémicos realizar una vigilancia entomológica e informar a la OMS sobre la detección de especies sospechosas de ser invasoras completando, y enviando a",
-            "whoForm": " el formulario de la OMS para informar sobre la detección de las especies invasoras de vectores Anopheles a ",
-            "link": "https://www.who.int/publications/i/item/who-form-to-report-detection-of-invasive-anopheles-vector-species",
-            "part5": "KLos principales indicadores que deben ser monitoreados a través de la vigilancia entomológica pueden consultarse en el capítulo 5 del",
-            "whoManual": " manual de referencia para la vigilancia, el seguimiento y la evaluación de la malaria. "
-        },
-        "step3": {
-            "part1": "<0>Las estrategias de control vectorial deben diseñarse basándose en las mejores prácticas implementados por otros países, deben monitorearse y evaluarse adecuadamente y modificarse cuando sea necesario.</0>",
-            "part2": "<0>Las especies de vectores invasoras pueden adaptarse a su nuevo entorno cambiando sus comportamientos tradicionales y/o volviéndose resistentes a los insecticidas cuando son expuestas a intervenciones de control vectorial.</0>",
-            "part3": "Debido a estos potenciales cambios, los programas nacionales deben monitorear y evaluar continuamente la efectividad de las intervenciones de control vectorial desplegadas y modificarlas estratégicamente cuando sea necesario.",
-            "part4": "La OMS recomienda a los programas nacionales, y sus socios implementadores, documentar las lecciones aprendidas y comunicarlas a la OMS a través del e-mail ",
-            "part5": ". Esto es crucial para construir la evidencia científica necesaria para formular estrategias para el control y eliminación de las especies de vectores invasora."
+        "diagnosis": {
+            "ID": "Identificador único del bioensayo",
+            "COUNTRY_NAME": "Nombre del país donde se realizó el bioensayo",
+            "ADMIN1": "Nivel administrativo 1 donde se recolectaron los mosquitos",
+            "ADMIN2": "Nivel administrativo 2 donde se colectaron los mosquitos",
+            "SITE_NAME": "Sitio donde se recolectaron los mosquitos",
+            "LATITUDE": "Latitud del sitio donde se colectaron los mosquitos",
+            "LONGITUDE": "Longitud del sitio donde se recolectaron los mosquitos",
+            "YEAR_START": "Año en que comenzó la recolección de mosquitos",
+            "SURVEY_TYPE": "Tipo de Encuesta realizada",
+            "PATIENT_TYPE": "Estado clínico del paciente",
+            "HRP2_TESTED": "Número de muestras analizadas para deleciones HRP2",
+            "HRP2_PROPORTION_DELETION": "Porcentaje de muestras de Pf analizadas con deleciones HRP2",
+            "HRP3_TESTED": "Número de muestras analizadas para deleciones HRP3",
+            "HRP3_PROPORTION_DELETION": "Porcentaje de muestras de Pf analizadas con deleciones HRP3",
+            "HRP2_HRP3_TESTED": "Número de muestras de Pf analizadas para deleciones HRP2 Y HRP3",
+            "HRP2_HRP3_PROPORTION_DELETION": "Porcentaje de muestras de Pf analizadas con deleciones HRP2 Y HRP3",
+            "DELETETION_STATUS": "Tipo de borrado: confirmado o sospechoso",
+            "SAMPLE_ORIGIN": "Muestras lugar de origen, cuando se toman de viajeros que regresan",
+            "PF_POS_SAMPLES": "Número de muestras positivas de P. falciparum en la encuesta total",
+            "TYPE_SAMPL_ANALYZED": "tipo de muestra analizada: todas, solo discordantes o no representativas",
+            "CITATION": "Cita de la publicación donde se publicaron los datos",
+            "CITATION_URL": "URL de la publicación donde se publicaron los datos"
         }
     },
     "legend": {
@@ -762,98 +1103,32 @@
         "theme": "Tema",
         "selectMapType": "SELECCIONA TIPO DE MAPA",
         "mapType": "Mapa",
-        "selectData": "FILTRO DE DATOS",
+        "selectDataMap": "FILTRO DE DATOS",
+        "selectDataDownload": "FILTRO DE DATOS (OPCIONAL)",
         "data": "Datos",
         "selectLocation": "FILTRO DE LOCALIZACIÓN (OPCIONAL)",
-        "location": "Localización"
-    },
-    "preventionStory": {
-        "step1": {
-            "part1": "<0>El seguimiento de la resistencia a los insecticidas en los vectores de la malaria es fundamental</0>",
-            "part2": "<0>80 de los 89 países donde la malaria es endémica informaron de un seguimiento de la resistencia a los insecticidas entre 2010 y 2017. El alcance y la calidad de los datos varían entre los países.</0>",
-            "part3": "La prevención de la malaria depende en gran medida de las herramientas básicas que se dirigen a los mosquitos de la malaria: mosquiteros insecticidas de larga duración y aerosoles insecticidas residuales para interiores. La resistencia de los mosquitos a los insecticidas es una preocupación importante, en particular para los piretroides, ya que son la única clase de insecticidas actualmente aprobada para su uso en mosquiteros.",
-            "part4": "El Plan mundial de la OMS para el manejo de la resistencia a los insecticidas en los vectores de la malaria (GPIRM) es un llamado a la acción para mantener la eficacia del control de los vectores de la malaria. El monitoreo de la resistencia es necesario para informar las estrategias de manejo y mitigación de la resistencia.",
-            "link": "https://apps.who.int/iris/handle/10665/44846",
-            "prevention1": "secundaria 1"
-        },
-        "step2": {
-            "part1": "<0>Los resultados de la vigilancia muestran que la resistencia a los insecticidas está muy extendida en los vectores de malaria</0>",
-            "part2": "<0>65 de los 89 países endémicos de malaria han reportado resistencia a los piretroides en al menos un vector local desde 2010</0>",
-            "part3": "A día de hoy, ya ha detectado resistencia a las cuatro clases de insecticidas más comúnmente utilizadas en el control de vectores adultos de malaria en las seis regiones de la OMS. La resistencia a los piretroides es generalmente la más vigilada y la más reportada.",
-            "link": "https://www.who.int/publications/i/item/9789241514057",
-            "prevention2": "secundaria 2"
-        },
-        "step3": {
-            "part1": "<0>Aún faltan datos recientes y completos sobre la resistencia a los insecticidas en muchos países</0>",
-            "part2": "<0>47 de 89 países endémicos de malaria reportaron datos para 2017. Los datos de las regiones fuera de África son limitados. La vigilancia a menudo no incluye todas las principales especies de vectores ni todas las clases de insecticidas relevantes.</0>",
-            "part3": "Se necesitan datos actualizados y representativos para planear e implementar intervenciones de control de vectores. La vigilancia de la resistencia a los insecticidas debe realizarse en todos los países endémicos de malaria al menos una vez al año, y periódicamente en aquellos países que han eliminado la malaria, pero son vulnerables a su reintroducción. Esta vigilancia debe incluir todos los vectores principales de las diferentes zonas eco-epidemiológicas. Las pruebas deben realizarse con los insecticidas que estén en uso o que se planee usar en el futuro para el control de vectores.",
-            "part4": "Los requerimientos para la vigilancia deben definirse mediante un plan nacional de vigilancia y manejo de la resistencia a los insecticidas.",
-            "prevention3": "secundaria 3"
-        },
-        "step4": {
-            "part1": "<0>El aumento de la resistencia resalta la necesidad urgente de mejorar la vigilancia de la resistencia a los insecticidas</0>",
-            "part2": "<0>Los vectores de malaria en algunas zonas de África están sobreviviendo a la exposición a altas concentraciones de insecticidas, lo que indica una resistencia de una intensidad cada vez mayor.</0>",
-            "part3": "Las pruebas de resistencia miden el número de mosquitos que sobreviven a la exposición a una concentración estándar de insecticida. Sin embargo, conocer la intensidad de la resistencia en los sobrevivientes y los mecanismos que confieren esta resistencia es importante. La resistencia de alta intensidad pone de manifiesto la necesidad de una acción urgente que debe guiarse por el conocimiento de los mecanismos de resistencia presentes.",
-            "part4": "Los procedimientos para las pruebas de la OMS se ampliaron recientemente para incluir bioensayos que miden la intensidad de la resistencia y la implicación de los mecanismos metabólicos.",
-            "prevention4": "secundaria 4"
-        }
+        "location": "Localización",
+        "all": "Todos",
+        "selectDataset": "SELECT DATASET",
+        "dataset": "Dataset"
     },
     "tour": {
         "steps": {
             "1": {
-                "title": "Bienvenido al Mapa de los desafíos de la malaria!",
-                "p1": "Usted se encuentra en una plataforma oficial de la OMS creada con el objetivo de mostrar la magnitud y la distribución geográfica de cuatro desafíos biológicos para el control y eliminación de la malaria.",
-                "p2": "Este asistente le mostrará cómo utilizar la plataforma."
+                "title": "Seleccione una de las 4 amenazas biológicas"
             },
             "2": {
-                "title": "Por favor, selecciona un idioma."
+                "title": "Seleccione un mapa para explorar los resultados del estudio"
             },
             "3": {
-                "p1": "Abra nuestros mapas interactivos que muestran datos recientes sobre los tres desafíos."
+                "title": "Añadir filtros para producir un mapa limitado a criterios específicos"
             },
             "4": {
-                "p1": "Abra la sección filtros para aplicar filtros aplicables al desafío asi como filtros por regiones"
+                "title": "Seleccione una región, subregión, país y/o sitio"
             },
             "5": {
-                "p1": "Seleccione un país, una región o una sub-región o deje estos campos vacíos si prefiere ver todos los países a la vez."
-            },
-            "6": {
-                "p1": "Seleccione varios filtros y observer cómo el mapa cambia automáticamente."
-            },
-            "7": {
-                "p1": "Haga clic en un punto para acceder a los resultados de los bioensayos que cumplen sus criterios de búsqueda. La ventana emergente muestra los resultados para un solo estudio. Si hubiera más estudios que cumple sus criterios de búsqueda para ese punto, puede ver los resultados haciendo clic en la flecha >"
-            },
-            "8": {
-                "p1": "Consulte los resultados de los bioensayos de resistencia efectuados en cada lugar de monitoria de cada país."
-            },
-            "9": {
-                "p1": "Haga clic en un país para ver un resumen del estado de la resistance para dicho país."
+                "title": "Haga clic en un punto del mapa para ver los detalles del estudio"
             }
-        }
-    },
-    "treatmentStory": {
-        "step1": {
-            "part1": "<0>Los parásitos de la malaria han desarrollado repetidamente resistencia al tratamiento antimalárico</0>",
-            "part2": "<0>Durante décadas, la resistencia de los parásitos a los medicamentos ha sido uno de los principales obstáculos en la lucha contra la malaria.</0>",
-            "part3": "La vigilancia continua y notificación de la eficacia terapéutica y la resistencia de los parásitos a los antimaláricos, es fundamental para asegurar que los pacientes reciban un tratamiento eficaz. La OMS apoya a los programas nacionales de control de la malaria para vigilar la eficacia terapéutica de los antimaláricos y para rastrear los cambios genéticos relacionados con la resistencia a los medicamentos en los parásitos de la malaria.",
-            "part4": "El rol crítico que juega el control de la eficacia de los fármacos se ha observado en todo el mundo. La resistencia ha sido un reto persistente en la subregión del Gran Mekong. La región ha vigilado muy activamente la eficacia de estos fármacos."
-        },
-        "step2": {
-            "part1": "<0>La vigilancia rutinaria de la eficacia de las terapias combinadas basadas en artemisinina (TCA) es esencial para asegurar que los pacientes reciban un tratamiento eficaz</0>",
-            "part2": "<0>La OMS recomienda que todos los países endémicos de malaria realicen estudios de eficacia terapéutica al menos una vez cada dos años para informar sus directivas de tratamiento.</0>",
-            "part3": "La selección del medicamento antimaláricos se basa en la eficacia del medicamento contra el parásito de la malaria. Consecuentemente, el monitoreo de la eficacia terapéutica de los antimaláricos es un componente fundamental de las estrategias de tratamiento de la malaria. La OMS ha elaborado un protocolo estándar para medir la eficacia del tratamiento de los antimaláricos."
-        },
-        "step3": {
-            "part1": "<0>Los estudios de marcadores moleculares proporcionan datos esenciales para la detección y seguimiento de la resistencia a los medicamentos antimaláricos</0>",
-            "part2": "<0>Los marcadores moleculares de la resistencia a fármacos son cambios genéticos en el parásito de la malaria que se asocian con la resistencia a los antimaláricos</0>",
-            "part3": "En comparación con los estudios de eficacia, los estudios de marcadores moleculares tienen varias ventajas prácticas, por ejemplo, se puede recoger y analizar rápidamente un gran número de muestras. Ya se han identificado marcadores moleculares de resistencia de <i>P. falciparum</i> a diferentes fármacos, incluyendo la cloroquina, piperaquina, mefloquina, pirimetamina, sulfadoxina, atovacuona y artemisininas.",
-            "part4": "En el caso de las artemisininas, se ha encontrado varias mutaciones en el dominio de los propelentes de Kelch 13 (K13) que están asociadas con la desaparición retardada del parásito. Este es un campo en desarrollo, ya que se van descubriendo poco a poco más mutaciones del K13 y se va construyendo una mejor comprensión de las mutaciones que tienen mayor influencia en la resistencia."
-        },
-        "step4": {
-            "part1": "<0>La resistencia a los fármacos es un desafío tanto en <i>P. vivax</i> como en <i>P. falciparum</i>, las dos especies más comunes de parásitos de la malaria humana</0>",
-            "part2": "<0>Es critico contar con información actualizada sobre la resistencia a fármacos para ambos parásitos de la malaria</0>",
-            "part3": "Las terapias combinadas basadas en la artemisinina son el tratamiento recomendado para el parásito más mortal de la malaria, <i>P. falciparum</i>. Existen dos indicadores clave para vigilar la eficacia de las TCA: (1) la proporción de tratamientos fallidos y (2) la proporción de pacientes que presenta parásitos al tercer día después del inicio del tratamiento. Un aumento en la proporción de pacientes con parásitos al tercer día es un signo que advierte de la potencial existencia de resistencia a la artemisinina.",
-            "part4": "La cloroquina se sigue utilizando en muchos lugares para tratar la malaria por <i>P. vivax</i>. Sin embargo, como la resistencia a la cloroquina también se está desarrollando en este parásito, algunos países han comenzado a utilizar TCA para el tratamiento de la malaria por <i>P. vivax</i>."
         }
     },
     "utils": {
@@ -899,6 +1174,7 @@
         "BG": "Bulgaria",
         "BF": "Burkina Faso",
         "BI": "Burundi",
+        "BT": "Bután",
         "CV": "Cabo Verde",
         "KH": "Camboya",
         "CM": "Camerún",
@@ -940,6 +1216,7 @@
         "DE": "Alemania",
         "GH": "Ghana",
         "GR": "Grecia",
+        "GF": "Guayana Francesa",
         "GD": "Grenada",
         "GT": "Guatemala",
         "GN": "Guinea",
@@ -983,6 +1260,7 @@
         "MU": "Mauricio",
         "MX": "México",
         "FM": "Micronesia (Estados Federados de)",
+        "YT": "Mayotte",
         "MC": "Mónaco",
         "MN": "Mongolia",
         "ME": "Montenegro",

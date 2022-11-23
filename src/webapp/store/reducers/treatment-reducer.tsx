@@ -2,7 +2,7 @@ import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { State, TreatmentMapType, TreatmentState } from "../types";
+import { State, TreatmentDataset, TreatmentMapType, TreatmentState } from "../types";
 import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
 
 const initialState: TreatmentState = Object.freeze({
@@ -12,9 +12,10 @@ const initialState: TreatmentState = Object.freeze({
     filteredStudies: [],
     filters: {
         mapType: TreatmentMapType.TREATMENT_FAILURE,
-        plasmodiumSpecies: "P._FALCIPARUM",
-        drug: "DRUG_AL",
-        molecularMarker: 1,
+        dataset: "THERAPEUTIC_EFFICACY_STUDY",
+        plasmodiumSpecies: null,
+        drug: null,
+        molecularMarker: null,
         excludeLowerPatients: false,
         excludeLowerSamples: false,
     },
@@ -37,16 +38,20 @@ function updateMapType(mapType: TreatmentMapType) {
     return updateFilter("mapType", mapType, TreatmentMapType.TREATMENT_FAILURE);
 }
 
+function updateDataset(dataset: TreatmentDataset) {
+    return updateFilter("dataset", dataset, "THERAPEUTIC_EFFICACY_STUDY");
+}
+
 function updatePlasmodiumSpecies(plasmodiumSpecies: string) {
-    return updateFilter("plasmodiumSpecies", plasmodiumSpecies, "P._FALCIPARUM");
+    return updateFilter("plasmodiumSpecies", plasmodiumSpecies);
 }
 
 function updateDrug(drug: string) {
-    return updateFilter("drug", drug, "DRUG_AL");
+    return updateFilter("drug", drug);
 }
 
 function updateMolecularMarker(molecularMarker: number) {
-    return updateFilter("molecularMarker", molecularMarker, 1);
+    return updateFilter("molecularMarker", molecularMarker);
 }
 
 function updateExcludeLowerPatients(value: boolean) {
@@ -73,6 +78,7 @@ export default createReducer<TreatmentState>(initialState, {
         loading: false,
     }),
     [ActionTypeEnum.SetTreatmentMapType]: updateMapType,
+    [ActionTypeEnum.SetTreatmentDataset]: updateDataset,
     [ActionTypeEnum.SetPlasmodiumSpecies]: updatePlasmodiumSpecies,
     [ActionTypeEnum.SetDrug]: updateDrug,
     [ActionTypeEnum.SetMolecularMarker]: updateMolecularMarker,

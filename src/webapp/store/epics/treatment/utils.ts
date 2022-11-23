@@ -16,6 +16,7 @@ import { isNotNull } from "../../../utils/number-utils";
 import { MutationColors } from "../../../components/layers/treatment/MolecularMarkers/utils";
 import { MOLECULAR_MARKERS } from "../../../components/filters/MolecularMarkerFilter";
 import { createCitationDataSources, selectDataSourcesByStudies } from "../common/utils";
+import LineSymbol from "../../../assets/img/line.svg";
 
 export function createTreatmentSelectionData(
     theme: string,
@@ -36,6 +37,7 @@ export function createTreatmentSelectionData(
     const studyObject = sortedStudies[0];
 
     return {
+        kind: "common",
         title: siteFilteredStudies.length > 0 ? getSiteTitle(theme, siteFilteredStudies[0]) : "",
         subtitle: geSubtitle(treatmentFilters, studyObject),
         filterOptions: [],
@@ -83,7 +85,7 @@ function rangeYears(startYear: number, endYear: number) {
 
 function createTreatmentFailureChartData(studies: TreatmentStudy[]): TreatmentChartData {
     const currentYear = new Date().getFullYear();
-    const years = rangeYears(2010, currentYear).sort();
+    const years = rangeYears(currentYear - 7, currentYear).sort();
 
     const { PLASMODIUM_SPECIES } = studies[0];
 
@@ -99,13 +101,13 @@ function createTreatmentFailureChartData(studies: TreatmentStudy[]): TreatmentCh
             name: "treatment_failure_km",
             color: "#C0575B",
             marker: {
-                symbol: "diamond",
+                symbol: `url(${LineSymbol})`,
             },
         },
         PLASMODIUM_SPECIES === "P._FALCIPARUM"
             ? {
                   name: "positive_day_3",
-                  color: "#FCCFA6",
+                  color: "#FB6A4A",
                   marker: {
                       symbol: "square",
                   },
@@ -119,7 +121,6 @@ function createTreatmentFailureChartData(studies: TreatmentStudy[]): TreatmentCh
         return {
             name: i18next.t(`common.treatment.chart.treatment_failure.${key.name}`),
             color: key.color,
-            lineWidth: 0,
             marker: key.marker,
             data: years.map(year => {
                 const yearFilters: any = studies.filter(study => parseInt(year) === parseInt(study.YEAR_START))[0];
@@ -165,6 +166,12 @@ function createMolecularMarkersChartData(
             years,
             series,
             markers: {
+                Wildtype: [
+                    {
+                        name: "WT",
+                        color: MutationColors["WT"].color,
+                    },
+                ],
                 "Validated markers": Object.keys(k13Groups)
                     .map(genotype => ({
                         name: genotype,
@@ -172,12 +179,6 @@ function createMolecularMarkersChartData(
                     }))
                     .filter(marker => marker.name !== "WT"),
                 "Associated markers": [],
-                Wildtype: [
-                    {
-                        name: "WT",
-                        color: MutationColors["WT"].color,
-                    },
-                ],
                 "Other markers": [],
             },
         },
@@ -203,7 +204,9 @@ function createTreatmentAditionalInfo(studies: TreatmentStudy[]): AditionalInfor
                     : "";
 
             const numberOfPatients = `${studyObject.N} patients included`;
-            const followUp = `${studyObject.FOLLOW_UP} days follow-up. `;
+            const followUp = `${studyObject.FOLLOW_UP}${i18next.t(
+                "common.treatment.chart.treatment_failure.follow_up"
+            )}`;
 
             return {
                 year,
@@ -217,5 +220,5 @@ function createTreatmentAditionalInfo(studies: TreatmentStudy[]): AditionalInfor
         }
     });
 
-    return _.compact(aditionalInfoByYears);
+    return _.compact(_.orderBy(aditionalInfoByYears, "year", "desc"));
 }

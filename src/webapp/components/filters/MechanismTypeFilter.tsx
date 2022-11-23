@@ -4,14 +4,11 @@ import { connect } from "react-redux";
 import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
 import { selectTypes } from "../../store/reducers/translations-reducer";
-import { selectPreventionFilters, selectPreventionStudies } from "../../store/reducers/prevention-reducer";
+import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { setType } from "../../store/actions/prevention-actions";
-import { filterByLevelOfInvolvement, filterByRegion, filterByYearRange } from "../layers/studies-filters";
-import * as R from "ramda";
-import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import { logEventAction } from "../../store/actions/base-actions";
-import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import RadioGroupFilter from "./RadioGroupFilter";
+import i18next from "i18next";
 
 export const WHITELISTED_TYPES = [
     "MONO_OXYGENASES",
@@ -24,11 +21,8 @@ export const WHITELISTED_TYPES = [
 ];
 
 const mapStateToProps = (state: State) => ({
-    studies: selectPreventionStudies(state),
     types: selectTypes(state),
     preventionFilters: selectPreventionFilters(state),
-    yearFilter: selectFilters(state),
-    region: selectRegion(state),
 });
 
 const mapDispatchToProps = {
@@ -36,55 +30,45 @@ const mapDispatchToProps = {
     logEventAction: logEventAction,
 };
 
-type OwnProps = {
-    fromDb?: boolean;
-};
-
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps & OwnProps;
+type Props = DispatchProps & StateProps;
 
-function MechanismTypeFilter({
-    studies,
-    types = [],
-    preventionFilters,
-    setType,
-    fromDb,
-    yearFilter,
-    region,
-    logEventAction,
-}: Props) {
+export function cleanMechanismTypeOptions(values: string[]) {
+    const filteredTypes = WHITELISTED_TYPES.map(wl_type => values.find((value: any) => value === wl_type)).filter(
+        Boolean
+    );
+
+    const options = filteredTypes.filter(value => value !== "NA");
+
+    return options;
+}
+
+function MechanismTypeFilter({ types = [], preventionFilters, setType, logEventAction }: Props) {
     const { t } = useTranslation();
     const handleChange = (event: React.ChangeEvent<unknown>) => {
         const newValue = (event.target as HTMLInputElement).value;
-        setType(newValue);
+        setType([newValue]);
         logEventAction({ category: "filter", action: "mechanismType", label: newValue });
     };
+    const suggestions: Translation[] = types as Translation[];
 
-    const filters = [filterByLevelOfInvolvement, filterByYearRange(yearFilter), filterByRegion(region)];
+    const options = cleanMechanismTypeOptions(suggestions.map((type: Translation) => type.VALUE_)).map(value => ({
+        value: value,
+        label: i18next.t(`TYPE.${value}`),
+    }));
 
-    const filteredStudies: PreventionStudy[] = filters.reduce((studies, filter) => studies.filter(filter), studies);
+    const value = React.useMemo(
+        () => (preventionFilters.type?.length === 1 ? preventionFilters.type[0] : undefined),
+        [preventionFilters.type]
+    );
 
-    const uniques = R.map(unique => ({ VALUE_: unique }), R.uniq(R.map(R.prop("TYPE"), filteredStudies)));
-
-    const suggestions: Translation[] = (fromDb ? uniques : types) as Translation[];
-
-    const filteredTypes = fromDb
-        ? suggestions
-        : WHITELISTED_TYPES.map(value => suggestions.find((type: any) => type.VALUE_ === value)).filter(Boolean);
-
-    const options = filteredTypes
-        .filter(translation => translation.VALUE_ !== "NA")
-        .map(mechanism => ({
-            value: mechanism.VALUE_,
-            label: t(mechanism.VALUE_),
-        }));
     return (
         <RadioGroupFilter
             label={t("common.filters.mechanism_type")}
             options={options}
             handleChange={handleChange}
-            value={preventionFilters.type}
+            value={value}
         />
     );
 }

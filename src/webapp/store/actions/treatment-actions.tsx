@@ -11,7 +11,9 @@ export const fetchTreatmentStudiesSuccess = createAction(ActionTypeEnum.FetchTre
 
 export const fetchTreatmentStudiesError = createAction(ActionTypeEnum.FetchTreatmentStudiesError)();
 
-export const setTreatmentMapType = createAction(ActionTypeEnum.SetTreatmentMapType)<TreatmentMapType>();
+export const setTreatmentMapType = createAction(ActionTypeEnum.SetTreatmentMapType)<TreatmentMapType | null>();
+
+export const setTreatmentDataset = createAction(ActionTypeEnum.SetTreatmentDataset)<string | null>();
 
 export const setTreatmentPlasmodiumSpecies = createAction(ActionTypeEnum.SetPlasmodiumSpecies)<string>();
 

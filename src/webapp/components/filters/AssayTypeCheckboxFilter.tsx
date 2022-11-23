@@ -6,11 +6,10 @@ import { selectAssayTypes } from "../../store/reducers/translations-reducer";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { connect } from "react-redux";
 import { setAssayTypes } from "../../store/actions/prevention-actions";
-import { Checkbox, FormGroup } from "@mui/material";
+import { Checkbox, FormGroup, Typography } from "@mui/material";
 import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
 import { Divider, FilterColumContainer } from "./Filters";
-import FormLabel from "@mui/material/FormLabel";
 import { logEventAction } from "../../store/actions/base-actions";
 import { sendMultiFilterAnalytics } from "../../utils/analytics";
 
@@ -29,6 +28,7 @@ const ASSAY_TYPE_FILTER: { [key: string]: string[] } = {
 const StyledFormControlLabel = styled(FormControlLabel)`
     & span {
         padding: 2px;
+        font-size: 14px;
     }
 `;
 
@@ -62,7 +62,9 @@ function AssayTypeCheckboxFilter({ assayTypes, preventionFilters, setAssayTypes 
         );
     };
 
-    const types = ASSAY_TYPE_FILTER[preventionFilters.type]
+    const type = preventionFilters.type.length === 1 ? preventionFilters.type[0] : undefined;
+
+    const types = ASSAY_TYPE_FILTER[type]
         .map(value => (assayTypes as Translation[]).find(type => type.VALUE_ === value))
         .filter(Boolean);
 
@@ -70,7 +72,9 @@ function AssayTypeCheckboxFilter({ assayTypes, preventionFilters, setAssayTypes 
 
     return (
         <FilterColumContainer>
-            <FormLabel component="legend">{t("common.filters.assay_type")}</FormLabel>
+            <Typography component="legend" variant="body2" color={"dimgray"}>
+                {t("common.filters.assay_type")}
+            </Typography>
             <Divider />
             <FormGroup>
                 {types.map(type => (

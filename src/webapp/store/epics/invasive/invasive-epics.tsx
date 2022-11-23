@@ -10,7 +10,13 @@ import {
     setInvasiveFilteredStudiesAction,
     setInvasiveMapType,
 } from "../../actions/invasive-actions";
-import { setFiltersAction, setThemeAction, logPageViewAction, setSelectionData } from "../../actions/base-actions";
+import {
+    setFiltersAction,
+    setThemeAction,
+    logPageViewAction,
+    setSelectionData,
+    setMaxMinYearsAction,
+} from "../../actions/base-actions";
 import { InvasiveMapType, State } from "../../types";
 import { addNotificationAction } from "../../actions/notifier-actions";
 import { getAnalyticsPageView } from "../../analytics";
@@ -61,7 +67,10 @@ export const setInvasiveThemeEpic = (action$: Observable<ActionType<typeof setTh
             if ($action.payload !== "invasive") {
                 return of();
             }
-            return of(setFiltersAction([1985, new Date().getFullYear()]));
+            return of(
+                setMaxMinYearsAction([1985, new Date().getFullYear()]),
+                setFiltersAction([1985, new Date().getFullYear()])
+            );
         })
     );
 

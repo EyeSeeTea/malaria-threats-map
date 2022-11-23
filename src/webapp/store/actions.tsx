@@ -6,6 +6,7 @@ export enum ActionTypeEnum {
     MalariaLogOutboundLink = "malaria/LOG_OUTBOUND_LINK",
     MalariaSetRegion = "malaria/SET_REGION",
     MalariaSetFilters = "malaria/SET_FILTERS",
+    MalariaSetMaxMinYears = "malaria/SET_MAX_MIN_YEARS",
     MalariaToogleEndemicityLayer = "malaria/TOGGLE_ENDEMICITY_LAYER",
     MalariaSetStoryMode = "malaria/SET_STORY_MODE",
     MalariaSetStoryModeStep = "malaria/SET_STORY_MODE_STEP",
@@ -21,10 +22,8 @@ export enum ActionTypeEnum {
     SetBounds = "malaria/SET_BOUNDS",
     SetTourOpen = "malaria/SET_TOUR_OPEN",
     SetTourStep = "malaria/SET_TOUR_STEP",
-    SetDataDownloadOpen = "malaria/SET_DATA_DOWNLOAD_OPEN",
     SetReportOpen = "malaria/SET_REPORT_OPEN",
     SetMapTitle = "malaria/SET_MAP_TITLE",
-    SetSubscriptionOpen = "malaria/SET_SUBSCRIPTION_OPEN",
     SetUploadFileOpen = "malaria/SET_UPLOAD_FILE_OPEN",
     SetFeedbackOpen = "malaria/SET_FEEDBACK_OPEN",
     SetTheaterMode = "malaria/SET_THEATER_MODE_OPEN",
@@ -38,15 +37,20 @@ export enum ActionTypeEnum {
     FetchPreventionStudiesError = "prevention/FETCH_PREVENTION_STUDIES_ERROR",
 
     SetPreventionMapType = "prevention/SET_PREVENTION_MAP_TYPE",
+    SetPreventionDataset = "prevention/SET_PREVENTION_DATASET",
     SetInsecticideClass = "prevention/SET_INSECTICIDE_CLASS",
     SetInsecticideTypes = "prevention/SET_INSECTICIDE_TYPES",
+    SetProxyType = "prevention/SET_PROXY_TYPE",
     SetType = "prevention/SET_TYPE",
     SetSynergistTypes = "prevention/SET_SYNERGIST_TYPES",
     SetSpecies = "prevention/SET_SPECIES",
     SetAssayTypes = "prevention/SET_ASSAY_TYPES",
     SetPreventionFilteredStudies = "prevention/SET_FILTER_STUDIES",
+    SetPreventionSelectionStudies = "prevention/SET_SELECTION_STUDIES",
+    SetOnlyByHealthMinistries = "prevention/SET_ONLY_BY_HEALTH_MINISTRIES",
 
-    SetDiagnosisMapType = "prevention/SET_DIAGNOSIS_MAP_TYPE",
+    SetDiagnosisMapType = "diagnosis/SET_DIAGNOSIS_MAP_TYPE",
+    SetDiagnosisDataset = "diagnosis/SET_DIAGNOSIS_DATASET",
 
     FetchDiagnosisStudiesRequest = "diagnosis/FETCH_DIAGNOSIS_STUDIES_REQUEST",
     FetchDiagnosisStudiesSuccess = "diagnosis/FETCH_DIAGNOSIS_STUDIES_SUCCESS",
@@ -62,6 +66,7 @@ export enum ActionTypeEnum {
     FetchTreatmentStudiesError = "treatment/FETCH_TREATMENT_STUDIES_ERROR",
 
     SetTreatmentMapType = "treatment/SET_TREATMENT_MAP_TYPE",
+    SetTreatmentDataset = "treatment/SET_TREATMENT_DATASET",
     SetPlasmodiumSpecies = "treatment/SET_TREATMENT_PLASMODIUM_SPECIES",
     SetDrug = "treatment/SET_TREATMENT_DRUG",
     SetMolecularMarker = "treatment/SET_MOLECULAR_MARKER",
@@ -74,6 +79,7 @@ export enum ActionTypeEnum {
     FetchInvasiveStudiesError = "invasive/FETCH_INVASIVE_STUDIES_ERROR",
 
     SetInvasiveMapType = "invasive/SET_INVASIVE_MAP_TYPE",
+    SetInvasiveDataset = "invasive/SET_INVASIVE_DATASET",
     SetInvasiveVectorSpecies = "invasive/SET_INVASIVE_VECTOR_SPECIES",
     SetInvasiveFilteredStudies = "invasive/SET_FILTER_STUDIES",
 
@@ -98,11 +104,14 @@ export enum ActionTypeEnum {
 
     AddDownloadRequest = "downloads/ADD_DOWNLOAD_REQUEST",
 
-    AddSubscriptionContactRequest = "downloads/ADD_SUBSCRIPTION_CONTACT_REQUEST",
-    AddSubscriptionContactSuccess = "downloads/ADD_SUBSCRIPTION_CONTACT_SUCCESS",
-    AddSubscriptionContactError = "downloads/ADD_SUBSCRIPTION_CONTACT_ERROR",
-
     UploadFileRequest = "uploadFile/REQUEST",
     UploadFileSuccess = "uploadFile/SUCCESS",
     UploadFileError = "uploadFile/ERROR",
+
+    FeedbackSetFields = "feedback/SET_FIELDS",
+    FeedbackFieldChange = "feedback/SET_FIELD_CHANGE",
+    FeedbackSetFieldErros = "feedback/SET_FIELD_ERRORS",
+    FeedbackSubmit = "feedback/SUBMIT",
+    FeedbackSuccess = "feedback/SUCCESS",
+    FeedbackError = "feedback/ERROR",
 }

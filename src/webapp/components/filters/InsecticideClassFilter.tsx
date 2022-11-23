@@ -1,15 +1,21 @@
 import React from "react";
-import { State } from "../../store/types";
+import { PreventionFilters, PreventionMapType, State } from "../../store/types";
 import { connect } from "react-redux";
-import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
-import { selectInsecticideClasses } from "../../store/reducers/translations-reducer";
-import { selectFilteredPreventionStudies, selectPreventionFilters } from "../../store/reducers/prevention-reducer";
+import {
+    selectFilteredPreventionStudies,
+    selectPreventionFilters,
+    selectPreventionStudies,
+} from "../../store/reducers/prevention-reducer";
 import { setInsecticideClass } from "../../store/actions/prevention-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
+import i18next from "i18next";
+import _ from "lodash";
+import { filterByIntensityStatus, filterByResistanceStatus } from "../layers/studies-filters";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 const mapStateToProps = (state: State) => ({
-    insecticideClasses: selectInsecticideClasses(state),
+    preventionStudies: selectPreventionStudies(state),
     preventionFilters: selectPreventionFilters(state),
     filteredStudies: selectFilteredPreventionStudies(state),
 });
@@ -30,19 +36,32 @@ export const INSECTICIDE_CLASSES: string[] = [
     "PYRROLES",
 ];
 
-function InsecticideClassFilter({ insecticideClasses = [], preventionFilters, setInsecticideClass }: Props) {
+export function sortInsecticideClasses(insecticideClasses: string[]) {
+    return insecticideClasses.sort((a, b) =>
+        INSECTICIDE_CLASSES.indexOf(a) - INSECTICIDE_CLASSES.indexOf(b) > 0 ? 1 : -1
+    );
+}
+
+export function getInsecticideClassOptions(insecticideClasses: string[]) {
+    return sortInsecticideClasses(insecticideClasses.filter(insecticideClass => insecticideClass !== "NA")).map(
+        insecticideClass => ({
+            value: insecticideClass,
+            label: i18next.t(insecticideClass),
+        })
+    );
+}
+
+function InsecticideClassFilter({ preventionStudies = [], preventionFilters, setInsecticideClass }: Props) {
     const { t } = useTranslation();
     const handleChange = (event: React.ChangeEvent<unknown>) => {
         setInsecticideClass((event.target as HTMLInputElement).value);
     };
 
-    const options = (insecticideClasses as Translation[])
-        .filter(translation => translation.VALUE_ !== "NA")
-        .sort((a, b) => (INSECTICIDE_CLASSES.indexOf(a.VALUE_) - INSECTICIDE_CLASSES.indexOf(b.VALUE_) > 0 ? 1 : -1))
-        .map(insecticide => ({
-            value: insecticide.VALUE_,
-            label: t(insecticide.VALUE_),
-        }));
+    const studies = filterStudiesByMapType(preventionFilters, preventionStudies);
+
+    const insecticideClasses = _.uniq(studies.map(study => study.INSECTICIDE_CLASS));
+
+    const options = getInsecticideClassOptions(insecticideClasses);
 
     return (
         <RadioGroupFilter
@@ -52,6 +71,23 @@ function InsecticideClassFilter({ insecticideClasses = [], preventionFilters, se
             value={preventionFilters.insecticideClass}
         />
     );
+}
+
+function filterStudiesByMapType(preventionFilters: PreventionFilters, studies: PreventionStudy[]) {
+    const filters = buildFilters(preventionFilters);
+
+    return filters.reduce((studies, filter) => studies.filter(filter), studies);
+}
+
+function buildFilters(preventionFilters: PreventionFilters) {
+    switch (preventionFilters.mapType) {
+        case PreventionMapType.RESISTANCE_STATUS:
+            return [filterByResistanceStatus];
+        case PreventionMapType.INTENSITY_STATUS:
+            return [filterByIntensityStatus];
+        default:
+            return [];
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InsecticideClassFilter);

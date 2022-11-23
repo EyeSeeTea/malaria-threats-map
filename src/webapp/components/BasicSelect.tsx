@@ -19,6 +19,7 @@ import * as R from "ramda";
 import { useFirstRender } from "./hooks/use-first-render";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ClearIcon from "@mui/icons-material/Clear";
+import WindowedSelect from "react-windowed-select";
 
 export interface OptionType {
     label: string;
@@ -68,13 +69,13 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(1, 2),
         },
         singleValue: {
-            fontSize: 16,
+            fontSize: 14,
         },
         placeholder: {
             position: "absolute",
             left: 2,
             bottom: 6,
-            fontSize: 16,
+            fontSize: 14,
         },
         paper: {
             position: "absolute",
@@ -140,6 +141,7 @@ function Option(props: OptionProps<OptionType, false>) {
     const isFirstRender = useFirstRender();
     const isFocused = isFirstRender ? false : props.isFocused;
     const plasmodiumStyles = plasmodiumOptions.includes(value) ? { fontStyle: "italic" } : {};
+    const optionStyles: React.CSSProperties = props.getStyles("option", props);
 
     //it doesn't have access to the control/selected value
     return (
@@ -149,6 +151,7 @@ function Option(props: OptionProps<OptionType, false>) {
             selected={isFocused}
             component="div"
             style={{
+                ...optionStyles,
                 fontWeight: props.isSelected ? 800 : 400,
                 ...plasmodiumStyles,
             }}
@@ -178,7 +181,7 @@ function SingleValue(props: SingleValueProps<OptionType>) {
     const value = props.children ? t(props.children.toString()) : "";
 
     return (
-        <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
+        <Typography className={props.selectProps.classes.singleValue} {...props.innerProps} sx={{ width: "100%" }}>
             {plasmodiumOptions.includes(value) ? <i>{value}</i> : value}
         </Typography>
     );
@@ -191,6 +194,7 @@ function ValueContainer(props: ValueContainerProps<OptionType, false>) {
 function MultiValue(props: MultiValueProps<OptionType>) {
     const { t } = useTranslation();
     const value = props.children ? t(props.children.toString()) : "";
+    const optionStyles: React.CSSProperties = props.getStyles("option", props);
 
     return (
         <Chip
@@ -201,6 +205,7 @@ function MultiValue(props: MultiValueProps<OptionType>) {
             })}
             onDelete={props.removeProps.onClick}
             deleteIcon={<CancelIcon {...props.removeProps} />}
+            style={{ fontStyle: optionStyles.fontStyle || "initial" }}
         />
     );
 }
@@ -231,9 +236,19 @@ export type Option = {
     value: string;
 };
 
-export default function IntegrationReactSelect({ suggestions = [], value, onChange, className, ...rest }: any) {
+export default function IntegrationReactSelect({
+    optimizePerformance = false,
+    suggestions = [],
+    value,
+    onChange,
+    className,
+    classes,
+    optionsStyle,
+    ...rest
+}: any) {
     const { t } = useTranslation();
-    const classes = useStyles(rest);
+    const defaultClasses = useStyles(rest);
+    const finalClasses = classes || defaultClasses;
     const theme = useTheme();
 
     const selectStyles = {
@@ -245,27 +260,37 @@ export default function IntegrationReactSelect({ suggestions = [], value, onChan
                 font: "inherit",
             },
         }),
-        option: (base: any, state: any) => ({
+        option: (base: any) => ({
             ...base,
-            backgroundColor: state.isSelected ? "red" : "blue",
-            ":active": {
-                backgroundColor: state.isSelected ? "green" : "yellow",
-            },
+            ...optionsStyle,
         }),
     };
 
     return (
-        <div className={`${classes.root} ${className}`} role="listbox">
-            <Select
-                classes={classes}
-                styles={selectStyles}
-                components={components}
-                options={R.sortBy<Option>(R.prop("label"), suggestions)}
-                value={value}
-                onChange={onChange}
-                placeholder={t("common.options.select") + "..."}
-                {...rest}
-            />
+        <div className={`${finalClasses.root} ${className}`} role="listbox">
+            {optimizePerformance ? (
+                <WindowedSelect
+                    classes={finalClasses}
+                    styles={selectStyles}
+                    components={components}
+                    options={R.sortBy<Option>(R.prop("label"), suggestions)}
+                    value={value}
+                    onChange={onChange}
+                    placeholder={t("common.options.select") + "..."}
+                    {...rest}
+                />
+            ) : (
+                <Select
+                    classes={finalClasses}
+                    styles={selectStyles}
+                    components={components}
+                    options={R.sortBy<Option>(R.prop("label"), suggestions)}
+                    value={value}
+                    onChange={onChange}
+                    placeholder={t("common.options.select") + "..."}
+                    {...rest}
+                />
+            )}
         </div>
     );
 }

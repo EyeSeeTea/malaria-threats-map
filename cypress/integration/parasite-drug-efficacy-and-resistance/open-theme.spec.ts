@@ -5,11 +5,11 @@ describe("Open theme", () => {
         cy.loadPage(themes.parasiteDrugEfficacy);
     });
 
-    it("should contains treatment failure subtheme by default", () => {
+    it("should contain treatment failure subtheme by default", () => {
         cy.contains("Treatment failure");
     });
 
-    it("should contains english language by default", () => {
+    it("should contain english language by default", () => {
         cy.contains("English");
     });
 });

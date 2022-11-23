@@ -11,6 +11,7 @@ import {
     SelectionData,
     PreventionMechanismChartData,
     PreventionMechanismChartDataGroup,
+    preventionChartDataTitle,
 } from "../../SelectionData";
 import * as R from "ramda";
 import { createCitationDataSources, createCurations, selectDataSourcesByStudies } from "../common/utils";
@@ -18,6 +19,15 @@ import _ from "lodash";
 import { ResistanceMechanismColors } from "../../../components/layers/prevention/ResistanceMechanisms/symbols";
 import { RESISTANCE_MECHANISM } from "../../../components/layers/prevention/ResistanceMechanisms/utils";
 import { PreventionMapType, SiteSelection } from "../../types";
+import {
+    filterByIntensityStatus,
+    filterByLevelOfInvolvement,
+    filterByResistanceMechanism,
+    filterByResistanceStatus,
+} from "../../../components/layers/studies-filters";
+import { cleanMechanismTypeOptions } from "../../../components/filters/MechanismTypeFilter";
+
+type SortDirection = boolean | "asc" | "desc";
 
 export function createPreventionSelectionData(
     theme: string,
@@ -33,11 +43,15 @@ export function createPreventionSelectionData(
 
     if (siteFilteredStudies.length === 0) return null;
 
-    const siteNonFilteredStudies = nonFilteredStudies.filter(study => study.SITE_ID === selection.SITE_ID);
+    const siteNonFilteredStudies = nonFilteredStudies
+        .filter(study => study.SITE_ID === selection.SITE_ID)
+        .filter(buildMapTypeFilter(mapType));
 
-    const dataSources = createCitationDataSources(theme, siteFilteredStudies);
+    const sortedStudies = _.orderBy(siteFilteredStudies, study => +study.YEAR_START, "desc");
 
-    const speciesOptions = R.uniq(R.map(s => s.SPECIES, siteFilteredStudies));
+    const dataSources = createCitationDataSources(theme, sortedStudies);
+
+    const speciesOptions = R.uniq(R.map(s => s.SPECIES, sortedStudies));
     const speciesFilterOptions: Option[] = speciesOptions.map((specie: string) => ({
         label: specie,
         value: specie,
@@ -45,21 +59,23 @@ export function createPreventionSelectionData(
 
     const speciesSelection = speciesFilter || speciesFilterOptions;
 
-    const studyObject = siteFilteredStudies[0];
+    const studyObject = sortedStudies[0];
 
     return {
-        title: siteFilteredStudies.length > 0 ? getSiteTitle(theme, siteFilteredStudies[0]) : "",
+        kind: "common",
+        title: sortedStudies.length > 0 ? getSiteTitle(theme, sortedStudies[0]) : "",
         subtitle: i18next.t(studyObject?.ASSAY_TYPE),
         filterOptions: speciesFilterOptions,
         filterSelection: speciesSelection,
         studyObject,
         data:
             mapType === PreventionMapType.RESISTANCE_MECHANISM
-                ? createPreventionMechanismChartData(dataSources, siteFilteredStudies, speciesSelection)
-                : createPreventionChartData(mapType, dataSources, siteFilteredStudies, speciesSelection),
+                ? createPreventionMechanismChartData(dataSources, sortedStudies, speciesSelection)
+                : createPreventionChartData(mapType, dataSources, sortedStudies, speciesSelection),
         dataSources: dataSources,
-        curations: createCurations(dataSources, siteFilteredStudies),
-        othersDetected: otherDetected(mapType, siteFilteredStudies, siteNonFilteredStudies),
+        curations: createCurations(dataSources, sortedStudies),
+        othersTitle: getOtherTitle(mapType),
+        othersDetected: otherDetected(mapType, sortedStudies, siteNonFilteredStudies),
     };
 }
 
@@ -73,12 +89,34 @@ function createPreventionChartData(
         study => !speciesFilter || !speciesFilter.length || speciesFilter.map(s => s.value).includes(study.SPECIES)
     );
 
+    //const mostRecentStudy = getByMostRecentYearAndInvolvement(studies);
+
+    const title: preventionChartDataTitle = undefined;
+    /*mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT
+            ? {
+                  statusColor:
+                      mostRecentStudy.MECHANISM_PROXY === LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT
+                          ? LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT][1]
+                          : mostRecentStudy.MECHANISM_PROXY === LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT
+                          ? LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT][1]
+                          : LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT][1],
+                  titlePrefix:
+                      mostRecentStudy.MECHANISM_PROXY === LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT
+                          ? "PBO fully"
+                          : mostRecentStudy.MECHANISM_PROXY === LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT
+                          ? "PBO partially"
+                          : "PBO no",
+                  titleContent: "restores susceptibility to",
+                  titleSufix: "Pyrethroids",
+              }
+            : undefined;*/
+
     const bySpeciesAndInsecticideType = _(studiesFiltered)
         .groupBy(({ SPECIES }) => SPECIES)
         .mapValues(studies => {
             return _(studies)
                 .groupBy(({ TYPE }) => TYPE)
-                .mapValues(studies => createChartDataItems(mapType, dataSources, studies))
+                .mapValues(studies => ({ title, seriesData: createChartDataItems(mapType, dataSources, studies) }))
                 .value();
         })
         .value();
@@ -125,22 +163,34 @@ function createPreventionMechanismChartData(
 function createPreventionMechanismAssays(
     years: number[],
     studies: PreventionStudy[],
-    _dataSources: CitationDataSource[]
+    dataSources: CitationDataSource[]
 ): PreventionMechanismChartDataGroup[] {
-    const detected = years.map(year => {
+    const yearsObjects = years.map(year => {
         const yearStudies = studies.filter(study => parseInt(study.YEAR_START) === year);
+
+        const dataSourceKeys = selectDataSourcesByStudies(dataSources, yearStudies);
+
+        return { year, name: `${year.toString()} (${dataSourceKeys.join(", ")}) ` };
+    });
+
+    const detected = yearsObjects.map(yearObject => {
+        const yearStudies = studies.filter(study => parseInt(study.YEAR_START) === yearObject.year);
         const d = yearStudies.filter(study => study.MECHANISM_STATUS === "DETECTED");
+
         return {
-            name: year.toString(),
-            y: -d.length,
+            name: yearObject.name,
+            y: d.length === 0 ? -0.1 : -d.length,
+            yName: d.length.toString(),
         };
     });
-    const notDetected = years.map(year => {
-        const yearStudies = studies.filter(study => parseInt(study.YEAR_START) === year);
+    const notDetected = yearsObjects.map(yearObject => {
+        const yearStudies = studies.filter(study => parseInt(study.YEAR_START) === yearObject.year);
         const nD = yearStudies.filter(study => study.MECHANISM_STATUS !== "DETECTED");
+
         return {
-            name: year.toString(),
+            name: yearObject.name,
             y: nD.length,
+            yName: nD.length.toString(),
         };
     });
     return [
@@ -172,17 +222,21 @@ function createPreventionMechanismAllelics(
             data: years.map(year => {
                 const study = studies.filter(study => year === parseInt(study.YEAR_START))[0];
 
-                const y = parseFloat(study?.MECHANISM_FREQUENCY);
+                const y =
+                    study && !isNA(study.MECHANISM_FREQUENCY) && !isNR(study.MECHANISM_FREQUENCY)
+                        ? parseFloat(study?.MECHANISM_FREQUENCY)
+                        : 0;
 
                 return {
                     name: `${year}`,
-                    y: study && !isNA(study.MECHANISM_FREQUENCY) && !isNR(study.MECHANISM_FREQUENCY) ? y : 0,
+                    y,
+                    yName: y.toString(),
                     value: !study
-                        ? "NR"
+                        ? i18next.t("common.prevention.chart.resistance_mechanism.not_reported")
                         : isNA(study.MECHANISM_FREQUENCY)
                         ? "N/A"
                         : isNR(study.MECHANISM_FREQUENCY)
-                        ? "Not reported"
+                        ? i18next.t("common.prevention.chart.resistance_mechanism.not_reported")
                         : `${y}%`,
                 };
             }),
@@ -221,13 +275,23 @@ function createChartDataItems(
         return getStudyName(mapType, study);
     }, sortedStudies);
 
-    const simplifiedStudies = R.sortWith(
-        [R.descend(R.prop("YEAR_START")), R.ascend(R.prop("INSECTICIDE_TYPE"))],
-        R.values(cleanedStudies).map(
-            (groupStudies: PreventionStudy[]) =>
-                R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
-        )
+    const firstStudiesOfGroups = Object.values(cleanedStudies).map(
+        (groupStudies: PreventionStudy[]) => R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
     );
+
+    const orders: [string | ((study: PreventionStudy) => unknown), SortDirection][] = _.compact([
+        ["YEAR_START", "desc"],
+        ["INSECTICIDE_TYPE", "asc"],
+        mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT ? ["SYNERGIST_TYPE", "asc"] : undefined,
+        mapType === PreventionMapType.INTENSITY_STATUS
+            ? [(study: PreventionStudy) => +study.INSECTICIDE_INTENSITY.replace("x", ""), "asc"]
+            : undefined,
+    ]);
+
+    const orderFields: _.Many<_.ListIteratee<PreventionStudy>> = orders.map(order => order[0]);
+    const orderDirections = orders.map(order => order[1]);
+
+    const simplifiedStudies = _.orderBy(firstStudiesOfGroups, orderFields, orderDirections);
 
     const data = simplifiedStudies.map(study => {
         const studiesByGroup = cleanedStudies[getStudyName(mapType, study)];
@@ -255,7 +319,7 @@ function otherDetected(mapType: PreventionMapType, siteFilteredStudies: Study[],
                 .map(study => study.TYPE)
         );
 
-        return othertMechanisms;
+        return cleanMechanismTypeOptions(othertMechanisms).map(type => i18next.t(`TYPE.${type}`));
     } else {
         const currentInsecticideClasses = _.uniq(siteFilteredStudies.map(study => study.INSECTICIDE_CLASS));
         const otherInsecticideClasses = _.uniq(
@@ -265,9 +329,32 @@ function otherDetected(mapType: PreventionMapType, siteFilteredStudies: Study[],
                         !currentInsecticideClasses.includes(study.INSECTICIDE_CLASS) &&
                         isNotNull(study.INSECTICIDE_CLASS)
                 )
-                .map(study => study.INSECTICIDE_CLASS)
+                .map(study => i18next.t(study.INSECTICIDE_CLASS))
         );
 
         return otherInsecticideClasses;
+    }
+}
+
+function getOtherTitle(mapType: PreventionMapType) {
+    if (mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
+        return "";
+    } else if (mapType === PreventionMapType.RESISTANCE_MECHANISM) {
+        return i18next.t("common.prevention.chart.other_mechanisms");
+    } else {
+        return i18next.t("common.prevention.chart.other_insecticide_class_label");
+    }
+}
+
+function buildMapTypeFilter(mapType: PreventionMapType) {
+    switch (mapType) {
+        case PreventionMapType.RESISTANCE_STATUS:
+            return filterByResistanceStatus;
+        case PreventionMapType.INTENSITY_STATUS:
+            return filterByIntensityStatus;
+        case PreventionMapType.RESISTANCE_MECHANISM:
+            return filterByResistanceMechanism;
+        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+            return filterByLevelOfInvolvement;
     }
 }

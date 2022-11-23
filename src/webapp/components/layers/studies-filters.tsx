@@ -2,11 +2,21 @@ import { VectorSpeciesKey } from "../filters/VectorSpeciesFilter";
 import {
     DiagnosisFilters,
     DiagnosisMapType,
+    InvasiveFilters,
+    InvasiveMapType,
     PreventionFilters,
     PreventionMapType,
     RegionState,
+    TreatmentFilters,
+    TreatmentMapType,
 } from "../../store/types";
 import { isSynergyst } from "./prevention/ResistanceMechanisms/ResistanceMechanismFilters";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
+import { DiagnosisStudy } from "../../../domain/entities/DiagnosisStudy";
+import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
+import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
+import { BIOCHEMICAL_MECHANISM_TYPES, MOLECULAR_MECHANISM_TYPES } from "../DataDownload/mappers/cvsMapper";
+import { Source } from "../../store/actions/base-actions";
 
 export const DELETION_TYPES = {
     HRP2_PROPORTION_DELETION: {
@@ -17,6 +27,51 @@ export const DELETION_TYPES = {
         label: "pfhrp2 + pfhrp3 (dual)",
         value: "HRP2_HRP3_PROPORTION_DELETION",
     },
+};
+
+export const filterPreventionStudies = (
+    studies: PreventionStudy[],
+    preventionFilters: PreventionFilters,
+    yearFilters: number[],
+    region: RegionState,
+    from: Source = "map"
+) => {
+    const filters = buildPreventionFilters(preventionFilters, yearFilters, region, from);
+    const result = filters.reduce((studies, filter) => studies.filter(filter), studies);
+    return result;
+};
+
+export const filterDiagnosisStudies = (
+    studies: DiagnosisStudy[],
+    diagnosisFilters: DiagnosisFilters,
+    yearFilters: number[],
+    region: RegionState,
+    from: Source = "map"
+) => {
+    const filters = buildDiagnosisFilters(diagnosisFilters, yearFilters, region, from);
+    return filters.reduce((studies, filter) => studies.filter(filter), studies);
+};
+
+export const filterTreatmentStudies = (
+    studies: TreatmentStudy[],
+    treatmentFilters: TreatmentFilters,
+    yearFilters: number[],
+    region: RegionState,
+    from: Source = "map"
+) => {
+    const filters = buildTreatmentFilters(treatmentFilters, yearFilters, region, from);
+    return filters.reduce((studies, filter) => studies.filter(filter), studies);
+};
+
+export const filterInvasiveStudies = (
+    studies: InvasiveStudy[],
+    invasiveFilters: InvasiveFilters,
+    yearFilters: number[],
+    region: RegionState,
+    from: Source = "map"
+) => {
+    const filters = buildInvasiveFilters(invasiveFilters, yearFilters, region, from);
+    return filters.reduce((studies, filter) => studies.filter(filter), studies);
 };
 
 export const filterByYearRange =
@@ -72,7 +127,7 @@ export const filterByCountries = (countries: string[]) => (study: any) => {
 };
 
 export const filterByInsecticideClass = (insecticideClass: string) => (study: any) => {
-    return !study.INSECTICIDE_CLASS || study.INSECTICIDE_CLASS === insecticideClass;
+    return !insecticideClass || study.INSECTICIDE_CLASS === insecticideClass;
 };
 
 export const filterByInsecticideClasses = (insecticideClasses: string[]) => (study: any) => {
@@ -92,11 +147,15 @@ export const filterByProxyType = (type: string) => (study: any) => {
 };
 
 export const filterByTypes = (types: string[]) => (study: any) => {
-    return !types.length || types.includes(study.TYPE);
+    return !types || !types.length || types.includes(study.TYPE);
+};
+
+export const filterByOnlyDataByHealthMinistries = (value: boolean) => (study: PreventionStudy) => {
+    return value ? study.INSTITUTION_TYPE === "MoH" : true;
 };
 
 export const filterByTypeSynergist = (synergistTypes: string[]) => (study: any) => {
-    return !synergistTypes.length || synergistTypes.includes(study.TYPE_SYNERGIST);
+    return !synergistTypes.length || synergistTypes.includes(study.TYPE);
 };
 
 export const filterBySpecies = (species: string[]) => (study: any) => {
@@ -116,6 +175,8 @@ const filterByPatientType = (patientType: string) => (study: any) => {
 };
 
 export const filterByDeletionType = (deletionType: string) => (study: any) => {
+    if (!deletionType) return true;
+
     return deletionType === DELETION_TYPES.HRP2_PROPORTION_DELETION.value
         ? study.HRP2_PROPORTION_DELETION !== "NR" && study.HRP2_PROPORTION_DELETION !== null
         : study.HRP2_HRP3_PROPORTION_DELETION !== "NR" && study.HRP2_HRP3_PROPORTION_DELETION !== null;
@@ -126,7 +187,7 @@ export const filterByDimensionId = (dimensionId: number) => (study: any) => {
 };
 
 export const filterByPlasmodiumSpecies = (plasmodiumSpecies: string) => (study: any) => {
-    return study.PLASMODIUM_SPECIES === plasmodiumSpecies;
+    return !plasmodiumSpecies || study.PLASMODIUM_SPECIES === plasmodiumSpecies;
 };
 
 export const filterByManyPlasmodiumSpecies = (plasmodiumSpecies: string[]) => (study: any) => {
@@ -134,7 +195,7 @@ export const filterByManyPlasmodiumSpecies = (plasmodiumSpecies: string[]) => (s
 };
 
 export const filterByDrug = (drug: string) => (study: any) => {
-    return study.DRUG_NAME === drug;
+    return !drug || study.DRUG_NAME === drug;
 };
 
 export const filterByDrugs = (drugs: string[]) => (study: any) => {
@@ -157,8 +218,8 @@ export const filterByMolecularMarkerStudyDimension256 = () => (study: any) => {
     return study.DimensionID === 256;
 };
 
-export const filterByMolecularMarker = (molecularMarker: number) => (study: any) => {
-    return study.MM_TYPE === molecularMarker.toString();
+export const filterByMolecularMarker = (molecularMarker?: number) => (study: any) => {
+    return !molecularMarker || study.MM_TYPE === molecularMarker.toString();
 };
 
 export const filterByMolecularMarkers = (molecularMarkers: string[]) => (study: any) => {
@@ -176,57 +237,73 @@ export const filterByExcludeLowerSamples = (value: boolean) => (study: any) => {
 export const buildPreventionFilters = (
     preventionFilters: PreventionFilters,
     filters: number[],
-    region: RegionState
+    region: RegionState,
+    from: Source = "map"
 ) => {
-    switch (preventionFilters.mapType) {
-        case PreventionMapType.RESISTANCE_STATUS:
+    return from === "map"
+        ? buildPreventionFiltersByMap(preventionFilters, filters, region)
+        : buildPreventionFiltersByDownload(preventionFilters, filters, region);
+};
+
+export const buildDiagnosisFilters = (
+    diagnosisFilters: DiagnosisFilters,
+    filters: number[],
+    region: RegionState,
+    from: Source = "map"
+) => {
+    return from === "map"
+        ? buildDiagnosisFiltersByMap(diagnosisFilters, filters, region)
+        : buildDiagnosisFiltersByDownload(diagnosisFilters, filters, region);
+};
+
+export const buildTreatmentFilters = (
+    treatmentFilters: TreatmentFilters,
+    filters: number[],
+    region: RegionState,
+    from: Source = "map"
+) => {
+    return from === "map"
+        ? buildTreatmentFiltersByMap(treatmentFilters, filters, region)
+        : buildTreatmentFiltersByDownload(treatmentFilters, filters, region);
+};
+
+export const buildInvasiveFilters = (
+    invasiveFilters: InvasiveFilters,
+    filters: number[],
+    region: RegionState,
+    from: Source = "map"
+) => {
+    return from === "map"
+        ? buildInvasiveFiltersByMap(invasiveFilters, filters, region)
+        : buildInvasiveFiltersByDownload(invasiveFilters, filters, region);
+};
+function buildInvasiveFiltersByMap(invasiveFilters: InvasiveFilters, filters: number[], region: RegionState) {
+    switch (invasiveFilters.mapType) {
+        case InvasiveMapType.VECTOR_OCCURANCE:
             return [
-                filterByResistanceStatus,
-                filterByInsecticideClass(preventionFilters.insecticideClass),
-                filterByInsecticideTypes(preventionFilters.insecticideTypes),
-                filterByType(preventionFilters.type),
-                filterBySpecies(preventionFilters.species),
-                filterByYearRange(filters),
-                filterByRegion(region),
-            ];
-        case PreventionMapType.INTENSITY_STATUS:
-            return [
-                filterByIntensityStatus,
-                filterByInsecticideClass(preventionFilters.insecticideClass),
-                filterByInsecticideTypes(preventionFilters.insecticideTypes),
-                filterByType(preventionFilters.type),
-                filterBySpecies(preventionFilters.species),
-                filterByYearRange(filters),
-                filterByRegion(region),
-            ];
-        case PreventionMapType.RESISTANCE_MECHANISM: {
-            const base = [
-                filterByResistanceMechanism,
-                filterByType(preventionFilters.type),
-                filterBySpecies(preventionFilters.species),
-                filterByAssayTypes(preventionFilters.assayTypes),
-                filterByYearRange(filters),
-                filterByRegion(region),
-            ];
-            return isSynergyst(preventionFilters)
-                ? [...base, filterByTypeSynergist(preventionFilters.synergistTypes)]
-                : base;
-        }
-        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
-            return [
-                filterByLevelOfInvolvement,
-                filterByType(preventionFilters.type),
-                filterBySpecies(preventionFilters.species),
-                filterByTypeSynergist(preventionFilters.synergistTypes),
-                filterByYearRange(filters),
+                filterByVectorSpecies(invasiveFilters.vectorSpecies),
+                filterByYearRange(filters, true),
                 filterByRegion(region),
             ];
         default:
-            return [];
+            return [filterByRegion(region)];
     }
-};
+}
 
-export const buildDiagnosisFilters = (diagnosisFilters: DiagnosisFilters, filters: number[], region: RegionState) => {
+function buildInvasiveFiltersByDownload(invasiveFilters: InvasiveFilters, filters: number[], region: RegionState) {
+    switch (invasiveFilters.mapType) {
+        case InvasiveMapType.VECTOR_OCCURANCE:
+            return [
+                filterByVectorSpecies(invasiveFilters.vectorSpecies),
+                filterByYearRange(filters, true),
+                filterByRegion(region),
+            ];
+        default:
+            return [filterByRegion(region)];
+    }
+}
+
+function buildDiagnosisFiltersByMap(diagnosisFilters: DiagnosisFilters, filters: number[], region: RegionState) {
     switch (diagnosisFilters.mapType) {
         case DiagnosisMapType.GENE_DELETIONS:
             return [
@@ -239,4 +316,179 @@ export const buildDiagnosisFilters = (diagnosisFilters: DiagnosisFilters, filter
         default:
             return [];
     }
-};
+}
+
+function buildDiagnosisFiltersByDownload(diagnosisFilters: DiagnosisFilters, filters: number[], region: RegionState) {
+    switch (diagnosisFilters.dataset) {
+        case "PFHRP23_GENE_DELETIONS":
+            return [
+                filterByDeletionType(diagnosisFilters.deletionType),
+                filterBySurveyTypes(diagnosisFilters.surveyTypes),
+                filterByPatientType(diagnosisFilters.patientType),
+                filterByYearRange(filters),
+                filterByRegion(region),
+            ];
+        default:
+            return [];
+    }
+}
+
+function buildTreatmentFiltersByMap(treatmentFilters: TreatmentFilters, filters: number[], region: RegionState) {
+    switch (treatmentFilters.mapType) {
+        case TreatmentMapType.TREATMENT_FAILURE:
+            return [
+                filterByDimensionId(256),
+                filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
+                filterByDrug(treatmentFilters.drug),
+                filterByYearRange(filters),
+                filterByRegion(region),
+                filterByExcludeLowerPatients(treatmentFilters.excludeLowerPatients),
+            ];
+        case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
+            return [
+                filterByDimensionId(256),
+                filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
+                filterByDrug(treatmentFilters.drug),
+                filterByYearRange(filters),
+                filterByRegion(region),
+                filterByExcludeLowerPatients(treatmentFilters.excludeLowerPatients),
+            ];
+        case TreatmentMapType.MOLECULAR_MARKERS:
+            return [
+                filterByMolecularMarkerStudy(),
+                filterByMolecularMarker(treatmentFilters.molecularMarker),
+                filterByYearRange(filters),
+                filterByRegion(region),
+                filterByExcludeLowerSamples(treatmentFilters.excludeLowerSamples),
+            ];
+        default:
+            return [];
+    }
+}
+
+function buildTreatmentFiltersByDownload(treatmentFilters: TreatmentFilters, filters: number[], region: RegionState) {
+    switch (treatmentFilters.dataset) {
+        case "THERAPEUTIC_EFFICACY_STUDY":
+            return [
+                filterByDimensionId(256),
+                filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
+                filterByDrug(treatmentFilters.drug),
+                filterByYearRange(filters),
+                filterByRegion(region),
+            ];
+        case "MOLECULAR_MARKER_STUDY":
+            return [
+                filterByMolecularMarkerStudyDimension255(),
+                filterByMolecularMarker(treatmentFilters.molecularMarker),
+                filterByYearRange(filters),
+                filterByYearRange(filters),
+                filterByRegion(region),
+            ];
+        default:
+            return [];
+    }
+}
+
+function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filters: number[], region: RegionState) {
+    switch (preventionFilters.mapType) {
+        case PreventionMapType.RESISTANCE_STATUS:
+            return [
+                filterByResistanceStatus,
+                filterByInsecticideClass(preventionFilters.insecticideClass),
+                filterByInsecticideTypes(preventionFilters.insecticideTypes),
+                filterByTypes(preventionFilters.type),
+                filterBySpecies(preventionFilters.species),
+                filterByYearRange(filters),
+                filterByRegion(region),
+                filterByOnlyDataByHealthMinistries(preventionFilters.onlyByHealthMinistries),
+            ];
+        case PreventionMapType.INTENSITY_STATUS:
+            return [
+                filterByIntensityStatus,
+                filterByInsecticideClass(preventionFilters.insecticideClass),
+                filterByInsecticideTypes(preventionFilters.insecticideTypes),
+                filterByTypes(preventionFilters.type),
+                filterBySpecies(preventionFilters.species),
+                filterByYearRange(filters),
+                filterByRegion(region),
+                filterByOnlyDataByHealthMinistries(preventionFilters.onlyByHealthMinistries),
+            ];
+        case PreventionMapType.RESISTANCE_MECHANISM: {
+            const base = [
+                filterByResistanceMechanism,
+                filterByTypes(preventionFilters.type),
+                filterBySpecies(preventionFilters.species),
+                filterByAssayTypes(preventionFilters.assayTypes),
+                filterByYearRange(filters),
+                filterByRegion(region),
+            ];
+            return isSynergyst(preventionFilters)
+                ? [...base, filterByTypeSynergist(preventionFilters.synergistTypes)]
+                : base;
+        }
+        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+            return [
+                filterByLevelOfInvolvement,
+                filterByProxyType(preventionFilters.proxyType),
+                filterBySpecies(preventionFilters.species),
+                filterByTypeSynergist(preventionFilters.synergistTypes),
+                filterByYearRange(filters),
+                filterByRegion(region),
+            ];
+        default:
+            return [];
+    }
+}
+
+function buildPreventionFiltersByDownload(
+    preventionFilters: PreventionFilters,
+    filters: number[],
+    region: RegionState
+) {
+    switch (preventionFilters.dataset) {
+        case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
+        case "INTENSITY_CONCENTRATION_BIOASSAY": {
+            return [
+                filterByDownload(),
+                filterByAssayTypes([preventionFilters.dataset]),
+                filterByInsecticideClass(preventionFilters.insecticideClass),
+                filterByInsecticideTypes(preventionFilters.insecticideTypes),
+                filterByTypes(preventionFilters.type),
+                filterBySpecies(preventionFilters.species),
+                filterByRegion(region),
+                filterByYearRange(filters),
+            ];
+        }
+        case "SYNERGIST-INSECTICIDE_BIOASSAY": {
+            return [
+                filterByDownload(),
+                filterByAssayTypes([preventionFilters.dataset]),
+                filterByTypes(preventionFilters.type),
+                filterBySpecies(preventionFilters.species),
+                filterByRegion(region),
+                filterByYearRange(filters),
+            ];
+        }
+        case "MOLECULAR_ASSAY": {
+            return [
+                filterByDownload(),
+                filterByAssayTypes(["MOLECULAR_ASSAY", "BIOCHEMICAL_ASSAY"]),
+                filterByTypes(MOLECULAR_MECHANISM_TYPES),
+                filterBySpecies(preventionFilters.species),
+                filterByRegion(region),
+                filterByRegion(region),
+            ];
+        }
+        case "BIOCHEMICAL_ASSAY": {
+            return [
+                filterByDownload(),
+                filterByTypes(BIOCHEMICAL_MECHANISM_TYPES),
+                filterBySpecies(preventionFilters.species),
+                filterByRegion(region),
+                filterByYearRange(filters),
+            ];
+        }
+        default:
+            return [];
+    }
+}

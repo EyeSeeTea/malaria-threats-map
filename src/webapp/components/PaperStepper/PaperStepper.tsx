@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledStepper = styled(Stepper)`
-    padding: 24px;
+    padding: 24px 0px;
 `;
 
 interface PaperStepperProps extends StepperProps {}

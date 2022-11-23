@@ -4,6 +4,23 @@ import _ from "lodash";
 import { ActionTypeEnum } from "../../actions";
 import { Observable, of } from "rxjs";
 import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
+
+import { createPreventionSelectionData } from "./utils";
+import { PreventionMapType, State } from "../../types";
+import { EpicDependencies } from "../..";
+import { fromFuture } from "../utils";
+import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
+import { getAnalyticsPageView } from "../../analytics";
+import { addNotificationAction } from "../../actions/notifier-actions";
+import { ASSAY_TYPES } from "../../../components/filters/AssayTypeCheckboxFilter";
+import {
+    logEventAction,
+    logPageViewAction,
+    setFiltersAction,
+    setMaxMinYearsAction,
+    setSelectionData,
+    setThemeAction,
+} from "../../actions/base-actions";
 import {
     fetchPreventionStudiesError,
     fetchPreventionStudiesRequest,
@@ -13,18 +30,10 @@ import {
     setInsecticideTypes,
     setPreventionFilteredStudies,
     setPreventionMapType,
+    setProxyType,
     setSpecies,
     setType,
 } from "../../actions/prevention-actions";
-import { PreventionMapType, State } from "../../types";
-import { logEventAction, logPageViewAction, setSelectionData } from "../../actions/base-actions";
-import { ASSAY_TYPES } from "../../../components/filters/AssayTypeCheckboxFilter";
-import { addNotificationAction } from "../../actions/notifier-actions";
-import { getAnalyticsPageView } from "../../analytics";
-import { fromFuture } from "../utils";
-import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
-import { EpicDependencies } from "../../index";
-import { createPreventionSelectionData } from "./utils";
 
 export const getPreventionStudiesEpic = (
     action$: Observable<ActionType<typeof fetchPreventionStudiesRequest>>,
@@ -63,13 +72,13 @@ export const setPreventionMapTypeEpic = (
             const logPageView = logPageViewAction(pageView);
 
             if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
-                return of(..._.compact([setType("MONO_OXYGENASES"), logPageView]));
+                return of(..._.compact([setType(["MONO_OXYGENASES"]), logPageView]));
             } else if (action.payload === PreventionMapType.INTENSITY_STATUS) {
                 return of(..._.compact([setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
                 return of(..._.compact([setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
-                return of(..._.compact([setType("MONO_OXYGENASES"), logPageView]));
+                return of(..._.compact([setProxyType("MONO_OXYGENASES"), logPageView]));
             } else {
                 return of(..._.compact([setType(undefined), logPageView]));
             }
@@ -81,9 +90,9 @@ export const setPreventionTypeEpic = (action$: Observable<ActionType<typeof setT
         ofType(ActionTypeEnum.SetType),
         switchMap(action => {
             const kdr = ["KDR_L1014S", "KDR_L1014F", "KDR_(MUTATION_UNSPECIFIED)"];
-            if (kdr.includes(action.payload)) {
+            if (action.payload && kdr.includes(action.payload[0])) {
                 return of(setAssayTypes([ASSAY_TYPES[0]]));
-            } else if (["ACE1R"].includes(action.payload)) {
+            } else if (action.payload && ["ACE1R"].includes(action.payload[0])) {
                 return of(setAssayTypes([ASSAY_TYPES[0], ASSAY_TYPES[1]]));
             } else {
                 return of(setAssayTypes(ASSAY_TYPES));
@@ -102,7 +111,7 @@ export const setPreventionInsecticideClassEpic = (
             const isTourOpen = state.malaria.tour.open;
             const actions = _.compact([
                 setInsecticideTypes([]),
-                setType(state.prevention.filters.type || "MONO_OXYGENASES"),
+                setType(state.prevention.filters.type ? [state.prevention.filters.type[0]] : ["MONO_OXYGENASES"]),
                 setSpecies([]),
                 isTourOpen
                     ? null
@@ -146,5 +155,26 @@ export const setPreventionFilteredStudiesEpic = (
             );
 
             return of(setSelectionData(selectionData));
+        })
+    );
+
+export const setPreventionThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaSetTheme),
+        switchMap($action => {
+            if ($action.payload !== "prevention") {
+                return of();
+            }
+
+            const base = [
+                setMaxMinYearsAction([2010, new Date().getFullYear()]),
+                setFiltersAction([2010, new Date().getFullYear()]),
+            ];
+
+            if ($action.from === "map") {
+                return of(...base, setInsecticideClass("PYRETHROIDS"));
+            } else {
+                return of(setInsecticideClass(null));
+            }
         })
     );

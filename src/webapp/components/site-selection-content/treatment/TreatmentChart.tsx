@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../store/reducers/base-reducer";
 import { State } from "../../../store/types";
 import { SelectionData } from "../../../store/SelectionData";
+import { ChartStyles } from "../../charts/Style";
 
 const options: (data: any, categories: any[], translations: any) => Highcharts.Options = (
     data,
@@ -15,7 +16,11 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
     chart: {
         height: 400,
         style: {
-            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+            ...ChartStyles,
+        },
+        scrollablePlotArea: {
+            minWidth: 520,
+            scrollPositionX: 1,
         },
     },
     tooltip: {
@@ -36,7 +41,12 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
             text: translations.percentage,
         },
     },
-
+    plotOptions: {
+        series: {
+            lineWidth: 0,
+            lineColor: "#FFFFFF", // Fix: show line when marker is selected
+        },
+    },
     series: data,
     legend: {
         itemStyle: {
@@ -65,7 +75,7 @@ const TreatmentChart = ({ selectionData }: Props) => {
     const { t } = useTranslation();
 
     const data = React.useMemo(() => {
-        if (selectionData.data.kind === "treatment") {
+        if (selectionData.kind === "common" && selectionData.data.kind === "treatment") {
             return selectionData.data.data;
         } else {
             return null;

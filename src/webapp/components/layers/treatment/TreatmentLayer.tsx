@@ -12,18 +12,8 @@ import {
 } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
-import {
-    filterByDimensionId,
-    filterByDrug,
-    filterByExcludeLowerPatients,
-    filterByExcludeLowerSamples,
-    filterByMolecularMarker,
-    filterByMolecularMarkerStudy,
-    filterByPlasmodiumSpecies,
-    filterByRegion,
-    filterByYearRange,
-} from "../studies-filters";
-import { State, TreatmentMapType } from "../../../store/types";
+import { buildTreatmentFilters } from "../studies-filters";
+import { State } from "../../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { fetchTreatmentStudiesRequest, setFilteredStudiesAction } from "../../../store/actions/treatment-actions";
 import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
@@ -146,36 +136,7 @@ class TreatmentLayer extends Component<Props> {
 
     buildFilters = () => {
         const { treatmentFilters, filters, region } = this.props;
-        switch (treatmentFilters.mapType) {
-            case TreatmentMapType.TREATMENT_FAILURE:
-                return [
-                    filterByDimensionId(256),
-                    filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
-                    filterByDrug(treatmentFilters.drug),
-                    filterByYearRange(filters),
-                    filterByRegion(region),
-                    filterByExcludeLowerPatients(treatmentFilters.excludeLowerPatients),
-                ];
-            case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
-                return [
-                    filterByDimensionId(256),
-                    filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
-                    filterByDrug(treatmentFilters.drug),
-                    filterByYearRange(filters),
-                    filterByRegion(region),
-                    filterByExcludeLowerPatients(treatmentFilters.excludeLowerPatients),
-                ];
-            case TreatmentMapType.MOLECULAR_MARKERS:
-                return [
-                    filterByMolecularMarkerStudy(),
-                    filterByMolecularMarker(treatmentFilters.molecularMarker),
-                    filterByYearRange(filters),
-                    filterByRegion(region),
-                    filterByExcludeLowerSamples(treatmentFilters.excludeLowerSamples),
-                ];
-            default:
-                return [];
-        }
+        return buildTreatmentFilters(treatmentFilters, filters, region);
     };
 
     filterStudies = (studies: TreatmentStudy[]) => {

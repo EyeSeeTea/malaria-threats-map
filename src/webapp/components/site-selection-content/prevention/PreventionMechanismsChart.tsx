@@ -7,50 +7,30 @@ import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../store/reducers/base-reducer";
 import { State } from "../../../store/types";
 import { Divider, Typography } from "@mui/material";
-import i18next from "i18next";
 import { SelectionData } from "../../../store/SelectionData";
+import { ChartStyles } from "../../charts/Style";
 
-const Flex = styled.div`
-    display: flex;
-`;
+function calculateChartHeight(yearsCount: number) {
+    return yearsCount * 60;
+}
 
-const FlexCol = styled.div<{ flex?: number }>`
-    flex: ${props => props.flex || 1};
-`;
-
-const preventionMechanismAssaysBarChartOptions: (
-    data: any,
-    years: string[],
-    translations: any
-) => Highcharts.Options = (data, years, translations) => ({
+const preventionMechanismAssaysBarChartOptions: (data: any, years: string[]) => Highcharts.Options = (data, years) => ({
     chart: {
         maxPointWidth: 20,
         type: "bar",
-        height: 120 + years.length * 40,
+        height: calculateChartHeight(years.length),
         style: {
-            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+            ...ChartStyles,
         },
     },
     legend: {
-        verticalAlign: "top",
-        align: "center",
-        x: 25,
-        enabled: true,
-        symbolWidth: 0.001,
-        symbolPadding: 0.001,
-        symbolHeight: 0.001,
-        itemStyle: { fontWeight: "normal" },
+        enabled: false,
     },
     credits: {
         enabled: false,
     },
     title: {
-        x: 25,
-        y: 25,
-        text: translations.title,
-        style: {
-            fontSize: "12px",
-        },
+        text: "",
     },
     xAxis: [
         {
@@ -73,10 +53,12 @@ const preventionMechanismAssaysBarChartOptions: (
     },
     plotOptions: {
         bar: {
+            crop: false,
+            overflow: "none",
             dataLabels: {
                 formatter: function () {
                     // @ts-ignore
-                    return this.y < 0 ? this.y * -1 : this.y;
+                    return this.point.yName;
                 } as DataLabelsFormatterCallbackFunction,
                 enabled: true,
             },
@@ -86,30 +68,23 @@ const preventionMechanismAssaysBarChartOptions: (
     series: data,
 });
 
-const preventionMechanismAllelicBarChartOptions: (
-    data: any,
-    years: string[],
-    translations: any
-) => Highcharts.Options = (data, years, translations) => ({
+const preventionMechanismAllelicBarChartOptions: (data: any, years: string[]) => Highcharts.Options = (
+    data,
+    years
+) => ({
     chart: {
         maxPointWidth: 20,
         type: "bar",
-        height: 120 + years.length * 40,
-        width: 150,
+        height: calculateChartHeight(years.length),
         style: {
-            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif;',
+            ...ChartStyles,
         },
-        marginTop: 95,
     },
     credits: {
         enabled: false,
     },
     title: {
-        text: translations.title,
-        style: {
-            fontSize: "12px",
-        },
-        y: 25,
+        text: "",
     },
     xAxis: {
         categories: years,
@@ -120,10 +95,14 @@ const preventionMechanismAllelicBarChartOptions: (
             text: "",
         },
         visible: false,
+        min: 0,
+        max: 100,
     },
     plotOptions: {
         bar: {
             dataLabels: {
+                crop: false,
+                overflow: "allow",
                 formatter: function () {
                     // @ts-ignore
                     return this.point.value;
@@ -137,13 +116,6 @@ const preventionMechanismAllelicBarChartOptions: (
         enabled: false,
     },
 });
-
-const translations = {
-    title: i18next.t("common.prevention.chart.resistance_mechanism.title"),
-};
-const translations2 = {
-    title: i18next.t("common.prevention.chart.resistance_mechanism.allelic"),
-};
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -159,7 +131,7 @@ const PreventionMechanismsChart = ({ selectionData }: Props) => {
     const { t } = useTranslation();
 
     const data = React.useMemo(() => {
-        if (selectionData.data.kind === "prevention-mechanism") {
+        if (selectionData.kind === "common" && selectionData.data.kind === "prevention-mechanism") {
             return selectionData.data.data;
         } else {
             return null;
@@ -183,28 +155,41 @@ const PreventionMechanismsChart = ({ selectionData }: Props) => {
                                         {t(type)}
                                     </Typography>
                                     <div key={`chart_${type}`}>
-                                        <Flex>
-                                            <FlexCol>
-                                                <HighchartsReact
-                                                    highcharts={Highcharts}
-                                                    options={preventionMechanismAssaysBarChartOptions(
-                                                        data[specie][type].assays,
-                                                        data[specie][type].years.map(year => year.toString()),
-                                                        translations
-                                                    )}
-                                                />
-                                            </FlexCol>
-                                            <FlexCol>
-                                                <HighchartsReact
-                                                    highcharts={Highcharts}
-                                                    options={preventionMechanismAllelicBarChartOptions(
-                                                        data[specie][type].allelics,
-                                                        data[specie][type].years.map(year => year.toString()),
-                                                        translations2
-                                                    )}
-                                                />
-                                            </FlexCol>
-                                        </Flex>
+                                        <Table height={calculateChartHeight(data[specie][type].years.length)}>
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        {t("common.prevention.chart.resistance_mechanism.DETECTED")}
+                                                    </th>
+                                                    <th>
+                                                        {t("common.prevention.chart.resistance_mechanism.NOT_DETECTED")}
+                                                    </th>
+                                                    <th>{t("common.prevention.chart.resistance_mechanism.allelic")}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colSpan={2}>
+                                                        <HighchartsReact
+                                                            highcharts={Highcharts}
+                                                            options={preventionMechanismAssaysBarChartOptions(
+                                                                data[specie][type].assays,
+                                                                data[specie][type].years.map(year => year.toString())
+                                                            )}
+                                                        />
+                                                    </td>
+                                                    <td>
+                                                        <HighchartsReact
+                                                            highcharts={Highcharts}
+                                                            options={preventionMechanismAllelicBarChartOptions(
+                                                                data[specie][type].allelics,
+                                                                data[specie][type].years.map(year => year.toString())
+                                                            )}
+                                                        />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </Table>
                                         {typeIndex < dataItems.length - 1 ? <Divider sx={{ marginBottom: 2 }} /> : null}
                                     </div>
                                 </>
@@ -220,3 +205,27 @@ const PreventionMechanismsChart = ({ selectionData }: Props) => {
     );
 };
 export default connect(mapStateToProps)(PreventionMechanismsChart);
+
+const Table = styled.table<{ height: number }>`
+    height: ${props => props.height}px;
+    margin-top: 24px;
+    width: 100%;
+    border-collapse: collapse;
+    tr th {
+        font-weight: normal;
+        text-align: left;
+        vertical-align: top;
+    }
+    tr th:nth-child(1) {
+        padding-left: 60px;
+        width: 35%;
+    }
+    tr th:nth-child(2) {
+        padding-left: 10px;
+        padding-right: 5px;
+        width: 30%;
+    }
+    tr th:nth-child(3) {
+        width: 30%;
+    }
+`;

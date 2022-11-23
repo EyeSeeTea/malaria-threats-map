@@ -1,5 +1,7 @@
 type ConfigProps = {
+    publicUrl: string;
     mapServerUrl: string;
+    xmartServerUrl: string;
     featuresServerUrl: string;
     mapTilesBaseUrl: string;
     backendUrl: string;
@@ -19,6 +21,9 @@ type ConfigProps = {
             branch: string;
         };
     };
+    feedbackEmailTo: string;
+    feedbackEmailFrom: string;
+    feedbackEmailSecureToken: string;
 };
 
 const WHO_MALARIA_THREATS_MAP_STAGING =
@@ -30,6 +35,26 @@ const BASEMAP_NONIC_UAT = "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgi
 const BASEMAP_NONIC = "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/basemap_test/MapServer";
 
 const FEATURES_SERVER = "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services";
+
+const XMART_URL = "https://frontdoor-r5quteqglawbs.azurefd.net/MAL_THREATS";
+
+const FEEDBACK_EMAIL_FROM = process.env.REACT_APP_FEEDBACK_EMAIL_FROM;
+
+if (!FEEDBACK_EMAIL_FROM) {
+    throw Error("REACT_APP_FEEDBACK_EMAIL_FROM is not configured");
+}
+
+const FEEDBACK_EMAIL_TO = process.env.REACT_APP_FEEDBACK_EMAIL_TO;
+
+if (!FEEDBACK_EMAIL_TO) {
+    throw Error("REACT_APP_FEEDBACK_EMAIL_TO is not configured");
+}
+
+const FEEDBACK_EMAIL_SECURE_TOKEN = process.env.REACT_APP_FEEDBACK_EMAIL_SECURE_TOKEN;
+
+if (!FEEDBACK_EMAIL_SECURE_TOKEN) {
+    throw Error("REACT_APP_FEEDBACK_EMAIL_SECURE_TOKEN is not configured");
+}
 
 const stagingMapServer = {
     mapServerUrl: WHO_MALARIA_THREATS_MAP_STAGING,
@@ -62,41 +87,62 @@ const localFeedbackConfig = {
     issues: { repository: "EyeSeeTea/malaria-threats-map", title: "[User feedback] {title}" },
 };
 
+const publicUrl = process.env.PUBLIC_URL;
+
+const base: Pick<ConfigProps, "feedback" | "publicUrl" | "xmartServerUrl"> = {
+    publicUrl: publicUrl === "." ? "/" : publicUrl,
+    feedback: localFeedbackConfig,
+    xmartServerUrl: XMART_URL,
+};
+
 const configurations: { [key: string]: ConfigProps } = {
     local: {
+        ...base,
         ...stagingMapServer,
         ...stagingMapTile,
         backendUrl: process.env.REACT_APP_BACKEND_URL || `https://portal-uat.who.int/malthreats-api/`,
         gaAppId: "UA-191197789-1",
         env: "local",
         feedback: localFeedbackConfig,
+        feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
+        feedbackEmailTo: FEEDBACK_EMAIL_TO,
+        feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
     },
     dev: {
+        ...base,
         ...stagingMapServer,
         ...stagingMapTile,
         backendUrl: `https://portal-uat.who.int/malthreats-api/`,
         gaAppId: "UA-191197789-2",
         env: "dev",
         hotjar: { hjid: 2287362, hjsv: 6 },
-        feedback: feedbackConfig,
+        feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
+        feedbackEmailTo: FEEDBACK_EMAIL_TO,
+        feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
     },
     staging: {
+        ...base,
         ...stagingMapServer,
         ...stagingMapTile,
         backendUrl: `https://portal-uat.who.int/malthreats-api/`,
         gaAppId: "UA-191197789-1",
         env: "staging",
         hotjar: { hjid: 2280607, hjsv: 6 },
-        feedback: feedbackConfig,
+        feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
+        feedbackEmailTo: FEEDBACK_EMAIL_TO,
+        feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
     },
     prod: {
+        ...base,
         ...prodMapServer,
         ...prodMapTile,
         backendUrl: `https://extranet.who.int/malthreats-api/`,
         gaAppId: "UA-140410266-1",
         env: "prod",
         hotjar: { hjid: 2269048, hjsv: 6 },
-        feedback: feedbackConfig,
+        feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
+        feedbackEmailTo: FEEDBACK_EMAIL_TO,
+        feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
     },
 };
 

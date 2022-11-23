@@ -2,8 +2,7 @@ import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { DiagnosisMapType, DiagnosisState, State } from "../types";
-import { DELETION_TYPES } from "../../components/filters/DeletionTypeFilter";
+import { DiagnosisDataset, DiagnosisMapType, DiagnosisState, State } from "../types";
 import { DiagnosisStudy } from "../../../domain/entities/DiagnosisStudy";
 
 const initialState: DiagnosisState = Object.freeze({
@@ -13,7 +12,8 @@ const initialState: DiagnosisState = Object.freeze({
     filteredStudies: [],
     filters: {
         mapType: DiagnosisMapType.GENE_DELETIONS,
-        deletionType: DELETION_TYPES.HRP2_PROPORTION_DELETION.value,
+        dataset: "PFHRP23_GENE_DELETIONS",
+        deletionType: undefined,
         surveyTypes: [],
         patientType: null,
     },
@@ -36,6 +36,10 @@ function updateMapType(mapType: DiagnosisMapType) {
     return updateFilter("mapType", mapType, DiagnosisMapType.GENE_DELETIONS);
 }
 
+function updateDataset(dataset: DiagnosisDataset) {
+    return updateFilter("dataset", dataset, "DIAGNOSIS");
+}
+
 function updateSurveyTypes(surveyTypes: string[]) {
     return updateFilter("surveyTypes", surveyTypes, []);
 }
@@ -45,7 +49,7 @@ function updatePatientType(patientType: string) {
 }
 
 function updateDeletionType(deletionType: string) {
-    return updateFilter("deletionType", deletionType, DELETION_TYPES.HRP2_PROPORTION_DELETION.value);
+    return updateFilter("deletionType", deletionType);
 }
 
 export default createReducer<DiagnosisState>(initialState, {
@@ -64,6 +68,7 @@ export default createReducer<DiagnosisState>(initialState, {
         loading: false,
     }),
     [ActionTypeEnum.SetDiagnosisMapType]: updateMapType,
+    [ActionTypeEnum.SetDiagnosisDataset]: updateDataset,
     [ActionTypeEnum.SetSurveyTypes]: updateSurveyTypes,
     [ActionTypeEnum.SetPatientType]: updatePatientType,
     [ActionTypeEnum.SetDeletionType]: updateDeletionType,

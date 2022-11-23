@@ -1,28 +1,36 @@
 import React from "react";
-import { connect } from "react-redux";
-import { State } from "../../store/types";
-import { selectDrugs } from "../../store/reducers/translations-reducer";
-import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
-import MultiFilter from "./common/MultiFilter";
+import { ValueType } from "react-select";
+import IntegrationReactSelect, { OptionType } from "../BasicSelect";
+import styled from "styled-components";
+import { Divider, FilterWrapper } from "./Filters";
+import { Typography } from "@mui/material";
+import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
 
-const mapStateToProps = (state: State) => ({
-    drugs: selectDrugs(state),
-    studies: selectTreatmentStudies(state),
-});
-
-type OwnProps = {
+type DrugsSelectorProps = {
+    studies: TreatmentStudy[];
     onChange: (selection: string[]) => void;
     value: string[];
+    multi?: boolean;
+    background?: string;
+    onlyYMargin?: boolean;
+    labelBold?: boolean;
+    isClearable?: boolean;
 };
 
-type StateProps = ReturnType<typeof mapStateToProps>;
-type Props = StateProps & OwnProps;
-
-const DrugsSelector: React.FC<Props> = ({ studies, onChange, value }) => {
+const DrugsSelector: React.FC<DrugsSelectorProps> = ({
+    studies,
+    onChange,
+    value,
+    multi = true,
+    background,
+    onlyYMargin = false,
+    labelBold = false,
+    isClearable = false,
+}) => {
     const { t } = useTranslation();
-    const uniques = R.uniq(R.map(R.prop("DRUG_NAME"), studies)).filter(Boolean);
+    const uniques = R.uniq(R.map(R.prop("DRUG_NAME"), studies)).map(value => value.replace(".", "%2E"));
 
     const suggestions = uniques.map((drug: string) => ({
         label: t(drug),
@@ -31,9 +39,39 @@ const DrugsSelector: React.FC<Props> = ({ studies, onChange, value }) => {
 
     const sortedSuggestions = R.sortBy(R.prop("label"), suggestions);
 
+    const onSelectionChange = (selected: ValueType<OptionType, false>) => {
+        if (Array.isArray(selected)) {
+            onChange(selected.map(v => v.value));
+        } else {
+            onChange([selected?.value]);
+        }
+    };
+
+    const selection = sortedSuggestions.filter(suggestion => value && value.includes(suggestion.value));
+
     return (
-        <MultiFilter label={t("common.filters.drug")} options={sortedSuggestions} onChange={onChange} value={value} />
+        <FilterWrapper onlyYMargin={onlyYMargin}>
+            <Typography variant="body2" fontWeight={labelBold ? "bold" : undefined}>
+                {t("common.filters.drug")}
+            </Typography>
+            <Divider />
+            <Container background={background}>
+                <IntegrationReactSelect
+                    suggestions={sortedSuggestions}
+                    onChange={onSelectionChange}
+                    value={selection}
+                    isMulti={multi}
+                    isClearable={isClearable}
+                />
+            </Container>
+        </FilterWrapper>
     );
 };
 
-export default connect(mapStateToProps, null)(DrugsSelector);
+export default DrugsSelector;
+
+const Container = styled.div<{ background: string }>`
+    background: ${props => props.background || "transparent"};
+    padding: ${props => (props.background ? "6px 16px;" : "0px;")};
+    border-radius: ${props => (props.background ? "10px;" : "0px;")};
+`;

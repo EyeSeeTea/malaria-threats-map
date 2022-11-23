@@ -6,9 +6,12 @@ import TakeATourIcon from "./Icons/TakeATourIcon";
 import LanguageIcon from "./Icons/LanguageIcon";
 import ContactIcon from "./Icons/ContactIcon";
 import ShareDataIcon from "./Icons/ShareDataIcon";
+import StoriesIcon from "./Icons/StoriesIcon";
 
 import { Fab, Drawer, Typography, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { sendAnalytics } from "../../utils/analytics";
 
 const drawerWidth = 100;
 
@@ -44,18 +47,27 @@ const DrawerHeader = styled("div")(({ theme }) => ({
     justifyContent: "flex-end",
 }));
 
+const StyledLink = styled(Link)`
+    margin: auto;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
 type Props = {
     isMenuOpen: boolean;
     handleClickOpen: () => void;
+    showTakeTour?: boolean;
 };
-const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
+const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen, showTakeTour = true }: Props) => {
     const { t } = useTranslation();
 
     const handleClickOntour = React.useCallback(() => {
-        // sendAnalytics({ type: "event", category: "menu", action: "tour" });
-        // localStorage.setItem("tour", "");
-        // window.history.pushState({}, document.title, window.location.href.split("?")[0]);
-        // window.location.reload();
+        sendAnalytics({ type: "event", category: "menu", action: "tour" });
+        localStorage.setItem("tour", "");
+        window.history.pushState({}, document.title, window.location.href.split("?")[0]);
+        window.location.reload();
     }, []);
 
     return (
@@ -77,44 +89,73 @@ const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
             <DrawerHeader></DrawerHeader>
             <SideBarContainer>
                 <SidebarIconDiv>
-                    <StyledFab id="home-button" size="small" color={"default"} title={t("common.sidebar.home")}>
-                        <HomeIcon />
-                    </StyledFab>
-                    <Typography variant="caption" align="center">
-                        {t("common.sidebar.home")}
-                    </Typography>
+                    <StyledLink to="/">
+                        <StyledFab id="home-button" size="small" color={"default"} title={t("common.sidebar.home")}>
+                            <HomeIcon />
+                        </StyledFab>
+                        <Typography variant="caption" align="center">
+                            {t("common.sidebar.home")}
+                        </Typography>
+                    </StyledLink>
                 </SidebarIconDiv>
 
                 <SidebarIconDiv>
-                    <StyledFab id="about-button" size="small" color={"default"} title={t("common.sidebar.about")}>
-                        <AboutIcon />
-                    </StyledFab>
-                    <Typography variant="caption" align="center">
-                        {t("common.sidebar.about")}
-                    </Typography>
+                    <StyledLink to="/stories?theme=prevention">
+                        <StyledFab
+                            id="stories-button"
+                            size="small"
+                            color={"default"}
+                            title={t("common.sidebar.stories")}
+                        >
+                            <StoriesIcon />
+                        </StyledFab>
+                        <Typography variant="caption" align="center">
+                            {t("common.sidebar.stories")}
+                        </Typography>
+                    </StyledLink>
                 </SidebarIconDiv>
 
                 <SidebarIconDiv>
-                    <StyledFab id="contact-button" size="small" color={"default"} title={t("common.sidebar.contact")}>
-                        <ContactIcon />
-                    </StyledFab>
-                    <Typography variant="caption" align="center">
-                        {t("common.sidebar.contact")}
-                    </Typography>
+                    <StyledLink to="/about">
+                        <StyledFab id="about-button" size="small" color={"default"} title={t("common.sidebar.about")}>
+                            <AboutIcon />
+                        </StyledFab>
+                        <Typography variant="caption" align="center">
+                            {t("common.sidebar.about")}
+                        </Typography>
+                    </StyledLink>
                 </SidebarIconDiv>
 
                 <SidebarIconDiv>
-                    <StyledFab
-                        id="contact-button"
-                        size="small"
-                        color={"default"}
-                        title={t("common.sidebar.share_data")}
-                    >
-                        <ShareDataIcon />
-                    </StyledFab>
-                    <Typography variant="caption" align="center">
-                        {t("common.sidebar.share_data")}
-                    </Typography>
+                    <StyledLink to="/contact">
+                        <StyledFab
+                            id="contact-button"
+                            size="small"
+                            color={"default"}
+                            title={t("common.sidebar.contact")}
+                        >
+                            <ContactIcon />
+                        </StyledFab>
+                        <Typography variant="caption" align="center">
+                            {t("common.sidebar.contact")}
+                        </Typography>
+                    </StyledLink>
+                </SidebarIconDiv>
+
+                <SidebarIconDiv>
+                    <StyledLink to="/share-data">
+                        <StyledFab
+                            id="contact-button"
+                            size="small"
+                            color={"default"}
+                            title={t("common.sidebar.share_data")}
+                        >
+                            <ShareDataIcon />
+                        </StyledFab>
+                        <Typography variant="caption" align="center">
+                            {t("common.sidebar.share_data")}
+                        </Typography>
+                    </StyledLink>
                 </SidebarIconDiv>
 
                 <SidebarIconDiv>
@@ -133,20 +174,24 @@ const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen }: Props) => {
                     </Typography>
                 </SidebarIconDiv>
 
-                <SidebarIconDiv>
-                    <StyledFab
-                        id="tour-button"
-                        size="small"
-                        color={"default"}
-                        title={t("common.sidebar.take_tour")}
-                        onClick={handleClickOntour}
-                    >
-                        <TakeATourIcon />
-                    </StyledFab>
-                    <Typography variant="caption" align="center">
-                        {t("common.sidebar.take_tour")}
-                    </Typography>
-                </SidebarIconDiv>
+                {showTakeTour && (
+                    <SidebarIconDiv>
+                        <IconButton onClick={handleClickOntour} disableRipple>
+                            <StyledFab
+                                id="tour-button"
+                                size="small"
+                                color={"default"}
+                                title={t("common.sidebar.take_tour")}
+                                onClick={handleClickOntour}
+                            >
+                                <TakeATourIcon />
+                            </StyledFab>
+                        </IconButton>
+                        <Typography variant="caption" align="center">
+                            {t("common.sidebar.take_tour")}
+                        </Typography>
+                    </SidebarIconDiv>
+                )}
             </SideBarContainer>
         </Drawer>
     );

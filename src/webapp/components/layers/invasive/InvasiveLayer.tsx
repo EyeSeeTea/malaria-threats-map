@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { InvasiveMapType, State } from "../../../store/types";
+import { State } from "../../../store/types";
 import { studiesToGeoJson } from "../layer-utils";
 import setupEffects from "../effects";
 import {
@@ -12,7 +12,7 @@ import {
 } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
 import * as R from "ramda";
-import { filterByRegion, filterByVectorSpecies, filterByYearRange } from "../studies-filters";
+import { buildInvasiveFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectInvasiveFilters, selectInvasiveStudies } from "../../../store/reducers/invasive-reducer";
 import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
@@ -118,16 +118,7 @@ class InvasiveLayer extends Component<Props> {
 
     buildFilters = () => {
         const { invasiveFilters, filters, region } = this.props;
-        switch (invasiveFilters.mapType) {
-            case InvasiveMapType.VECTOR_OCCURANCE:
-                return [
-                    filterByVectorSpecies(invasiveFilters.vectorSpecies),
-                    filterByYearRange(filters, true),
-                    filterByRegion(region),
-                ];
-            default:
-                return [filterByRegion(region)];
-        }
+        return buildInvasiveFilters(invasiveFilters, filters, region);
     };
 
     filterStudies = (studies: InvasiveStudy[]) => {

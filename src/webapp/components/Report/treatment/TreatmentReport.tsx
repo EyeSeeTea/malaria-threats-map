@@ -232,6 +232,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                         plasmodiumSpecie={plasmodiumSpecie}
                         setPlasmodiumSpecie={setPlasmodiumSpecie}
                         onClick={() => downloadData()}
+                        treatmentStudies={studies}
                     />
                     <TableContainer>
                         <Table

@@ -13,7 +13,7 @@ import {
     filterByRegion,
     filterByResistanceMechanism,
     filterByResistanceStatus,
-    filterByType,
+    filterByTypes,
     filterByTypeSynergist,
     filterByYearRange,
 } from "../layers/studies-filters";
@@ -47,7 +47,7 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
             filterByIntensityStatus,
             filterByInsecticideClass(preventionFilters.insecticideClass),
             filterByInsecticideTypes(preventionFilters.insecticideTypes),
-            filterByType(preventionFilters.type),
+            filterByTypes(preventionFilters.type),
             filterByYearRange(yearFilter),
             filterByRegion(region),
         ],
@@ -55,20 +55,20 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
             filterByResistanceStatus,
             filterByInsecticideClass(preventionFilters.insecticideClass),
             filterByInsecticideTypes(preventionFilters.insecticideTypes),
-            filterByType(preventionFilters.type),
+            filterByTypes(preventionFilters.type),
             filterByYearRange(yearFilter),
             filterByRegion(region),
         ],
         [PreventionMapType.RESISTANCE_MECHANISM]: [
             filterByResistanceMechanism,
-            filterByType(preventionFilters.type),
+            filterByTypes(preventionFilters.type),
             filterByAssayTypes(preventionFilters.assayTypes),
             filterByYearRange(yearFilter),
             filterByRegion(region),
         ],
         [PreventionMapType.LEVEL_OF_INVOLVEMENT]: [
             filterByLevelOfInvolvement,
-            filterByType(preventionFilters.type),
+            filterByTypes(preventionFilters.type),
             filterByTypeSynergist(preventionFilters.synergistTypes),
             filterByYearRange(yearFilter),
             filterByRegion(region),
@@ -95,6 +95,7 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
             onChange={setSpecies}
             value={preventionFilters.species}
             analyticsMultiFilterAction={"vectorSpecies"}
+            optionsStyle={{ fontStyle: "italic" }}
         />
     );
 };

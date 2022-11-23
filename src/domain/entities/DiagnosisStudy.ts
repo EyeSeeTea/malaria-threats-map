@@ -12,6 +12,9 @@ export interface DiagnosisStudy extends Study {
     SURVEY_TYPE: string;
     Code: string;
     SAMPLE_ORIGIN: string;
+    SAMPLE_ORIGIN_TEXT: string;
     PF_POS_SAMPLES: string;
     TYPE_SAMPL_ANALYZED: string;
+    TOOLTIP_SITENAME: string;
+    DELETION_STATUS: string;
 }

@@ -1,10 +1,392 @@
 {
     "common": {
         "layers": "Layers",
-        "mekong_link": "Go to the Greather Mekong Layer",
+        "mekong_link": "Go to the Greater Mekong Layer",
+        "takeATour": "Unsure where to start? Take a tour.",
+        "zoomIn": "Zoom in",
+        "zoomOut": "Zoom out",
+        "fullscreen": "View full screen",
         "title": {
             "title": "Malaria Threats Map",
             "subtitle": "Tracking biological challenges to malaria control and elimination"
+        },
+        "aboutPage": {
+            "title": {
+                "first": "Learn More About",
+                "second": "The Malaria Threats Map"
+            },
+            "dataSection": {
+                "title": "Where do the data come from?",
+                "content": "Data are collected by National Malaria Programmes, their implementation partners, research institutes and non-governmental organizations. They are either provided directly to WHO Global Malaria Programme (GMP) or extracted from publications. All data are quality controlled, incorporated into WHO global databases and then published to the Malaria Threats Map."
+            },
+            "mapSection": {
+                "title": "Watch: Find out about the functionality of the maps within the MTM",
+                "videoLabel": "Watch:",
+                "video1": {
+                    "url": "https://www.youtube.com/embed/dU_xrzpbupU",
+                    "alt": "Malaria Threats Map: tracking biological challenges to malaria control and elimination",
+                    "title": "An overview of the maps"
+                },
+                "video2": {
+                    "url": "https://www.youtube.com/embed/diMb_gbUUbM",
+                    "alt": "Malaria Threats Map: supporting research efforts",
+                    "title": "How is the MTM supporting research efforts?"
+                },
+                "video3": {
+                    "url": "https://www.youtube.com/embed/x5P45TynlgM",
+                    "alt": "Malaria Threats Map: helping countries address critical threats for malaria control and elimination",
+                    "title": "How is the MTM supporting countries?"
+                }
+            },
+            "challengesSection": {
+                "title": " Thousands of people use the Malaria Threats Map to understand challenges to malaria control and elimination, access data and guide decision-making.",
+                "tabFooter": {
+                    "name": "Name",
+                    "globalFund": "Global Fund"
+                },
+                "tab1": {
+                    "name": "National Malaria Control Programmes",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab2": {
+                    "name": "NGOs",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab3": {
+                    "name": "Donors",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab4": {
+                    "name": "WHO Staff",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                },
+                "tab5": {
+                    "name": "Researchers",
+                    "text": "The MTM gives me access to the most recent public data on vector insecticide resistance – this helps me make decisions around which insecticide products to fund for IRS and whether standard LLINs or new Pyrethroid-PBO nets should be deployed. The interactivity of the platform allows me to select the specific criteria that I am interested in – and then easily export visualisations to facilitate discussions. No other platform is as comprehensive as the MTM."
+                }
+            },
+            "userExperienceSection": {
+                "title": "User experience testing",
+                "p1": "We have recently undertaken a process of user experience testing and are grateful to all who willingly gave of their time to contribute to the improvement of the MTM for all its users.",
+                "p2": "This user testing has led to the addition of the home, about and contact pages, the creation of the dashboards, a dedicated download interface, and a more streamlined map interface. We have also identified additional areas of improvement, which we are working on. These include increased guidance to facilitate decision-making, and additional map layers. We want to make this tool the best it can be so that together we have the resources to control and eliminate malaria.",
+                "button": "Acknowledgements List"
+            }
+        },
+        "dashboard": {
+            "title": "Dashboards",
+            "not-available": "Not available",
+            "filtersSection": {
+                "first": {
+                    "title": "1. Select Theme",
+                    "buttonOne": "Vector insecticide resistance",
+                    "buttonTwo": "Antimalarial drug efficacy and resistance"
+                },
+                "second": {
+                    "title": "2. Select Country",
+                    "helper": "Select up to 5 countries",
+                    "lastUpdate": "Last update: ",
+                    "cta": "Generate Dashboard"
+                },
+                "note": "Note: Dashboards are currently only available for two of the four themes: vector insecticide resistance and antimalarial drug efficacy and resistance. Dashboards will continue to develop as more data becomes available."
+            },
+            "dashboardsFilterSection": {
+                "title": "Contents:",
+                "countryContextOptions": {
+                    "countryContext": "Country Context",
+                    "epidemiologicalProfile": "Epidemiological profile",
+                    "majorPlasmodium": "Major Plasmodium species and treatment regimen",
+                    "vectors": "Vectors",
+                    "summaryInsecticideResistance": "Summary of insecticide resistance"
+                },
+                "therapeuticEfficacyOptions": {
+                    "therapeuticEfficacy": "Therapeutic efficacy study results",
+                    "summaryTreatmentFailures": "Summary of treatment failure rates by drug",
+                    "treatmentFailureRates": "Treatment failure rates over time",
+                    "parasiteClearanceRates": "Parasite clearance rates over time"
+                },
+                "molecularMarkerOptions": {
+                    "molecularMarker": "Molecular marker study results",
+                    "summaryMolecularMarker": "Summary of molecular marker study results over time"
+                },
+                "phenotypicInsecticideResistanceOptions": {
+                    "phenotypicInsecticideResistance": "Phenotypic Insecticide Resistance",
+                    "statusOfResistanceToInsecticides": "Status of resistance to insecticides",
+                    "mosquitoOverTime": "Mosquito mortality over time"
+                }
+            },
+            "countryContextDashboards": {
+                "title": "Country Context",
+                "source": "Source:",
+                "whoWorldMalariaReport": "WHO. World malaria report 2021",
+                "epidemiologicalProfile": {
+                    "title": "EPIDEMIOLOGICAL PROFILE",
+                    "country": "Country",
+                    "year": "Year",
+                    "transmission": " Population living in high transmission, low transmission and malaria-free areas",
+                    "burdenEstimates": "Burden estimates",
+                    "highTransmission": "High transmission",
+                    "moreThanOneCase": "(>1 case per 1000 population)",
+                    "lowTransmission": "Low transmission",
+                    "lessOrEqualtoOneCase": "(0-1 case per 1000 population)",
+                    "malariaFree": "Malaria-free",
+                    "malariaFreeInfo": "An area in which there is no continuing local mosquito borne malaria transmission and the risk for acquiring malaria is limited to infection from introduced cases.",
+                    "zeroCases": "(0 cases)",
+                    "estimatedCases": "Estimated cases",
+                    "estimatedDeaths": "Estimated deaths"
+                },
+                "majorPlamociumSpecies": {
+                    "title": "MAJOR PLASMODIUM SPECIES AND TREATMENT REGIMEN",
+                    "country": "Country",
+                    "species": "Major Plasmodium species (%)",
+                    "firstLineTreatments": "1st line treatments for uncomplicated malaria"
+                },
+                "vectors": {
+                    "title": "VECTORS",
+                    "country": "Country",
+                    "species": "Vectors"
+                },
+                "summaryInsecticideResistance": {
+                    "title": "SUMMARY OF INSECTICIDE RESISTANCE",
+                    "country": "Country",
+                    "vectorSpecies": "Vector species that have demonstrated confirmed resistance to one or more insecticides",
+                    "insecticideClasses": "Insecticide classes to which resistance has been detected",
+                    "resistanceMechanisms": "Resistance mechanisms detected"
+                }
+            },
+            "therapeuticEfficacyDashboards": {
+                "title": "Therapeutic efficacy studies (TES)",
+                "numStudies_one": "The applied filters yield {{count}} study",
+                "numStudies_other": "The applied filters yield {{count}} studies",
+                "treatmentFailureByDrug": {
+                    "title": "SUMMARY OF TREATMENT FAILURE RATES BY DRUG",
+                    "studyOutcome": "Study outcome:",
+                    "numStudies": "Number of studies",
+                    "studies_one": "{{count}} study",
+                    "studies_other": "{{count}} studies",
+                    "lessThan10Patients": "<10% of patients with treatment failure",
+                    "moreOrEqualThan10Patients": "≥10% of patients with treatment failure"
+                },
+                "treatmentFailureOverTime": {
+                    "title": "TREATMENT FAILURE RATES OVER TIME",
+                    "numberPatients": "Number of Patients",
+                    "treatmentFailure": "Treatment failure (%)",
+                    "year": "Year"
+                },
+                "parasiteClearanceOverTime": {
+                    "title": "PARASITE CLEARANCE RATES OVER TIME",
+                    "parasitemiaOnDay3": "Percentage of patients with parasitemia on day 3 (%)"
+                }
+            },
+            "molecularMarkerDashboards": {
+                "title": "Molecular marker studies",
+                "molecularMarkerOverTime": {
+                    "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
+                    "numStudies": "Number of studies",
+                    "year": "Year",
+                    "artemisininChartTitle": "Percentage of samples in one study where validated or candidate",
+                    "artemisininChartSubtitle": "molecular markers of artemisinin resistance were detected:",
+                    "mutationsChartTitle": "Percentage of samples in one study where mutations were detected:",
+                    "multipleChartTitle": "Percentage of samples in one study where multiple copy numbers were detected:"
+                }
+            },
+            "phenotypicInsecticideResistanceDashboards": {
+                "title": "Phenotypic insecticide resistance",
+                "numBioassaysByCategory": "The following number of bioassay meet the applied filter:",
+                "numBioassays": "{{count}} bioassays meet the applied filter",
+                "numSites": "Number of sites",
+                "insecticideResistanceStatus": "Insecticide resistance status",
+                "byInsecticideClass": "By Insecticide Class",
+                "byInsecticide": "By Insecticide",
+                "confirmed": "Confirmed (0 to <90%)",
+                "possible": "Possible (90 to <98%)",
+                "susceptible": "Susceptible (≥98%)",
+                "statusOfResistanceToInsecticides": {
+                    "title": "STATUS OF RESISTANCE TO INSECTICIDES"
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MOSQUITO MORTALITY OVER TIME",
+                    "adjustedMortality": "Adjusted mortality",
+                    "year": "Year"
+                }
+            },
+            "treatmentFilters": {
+                "title": "Filter Data"
+            },
+            "informationModal": {
+                "common": {
+                    "dataPeriod": "<strong>Data period: </strong>",
+                    "dataLastUpdated": "<strong>Data last updated: </strong>",
+                    "studyProtocol": "<strong>Study protocol:</strong> WHO recommends that all therapeutic efficacy studies are conducted according to the WHO standard protocol.",
+                    "info": "To view more details about a specific study, return to the map interface to view the site-level data.",
+                    "and": "and"
+                },
+                "summaryTreatmentFailureRateByDrug": {
+                    "chartInterpretation": "<strong>Chart interpretation:</strong> This bar chart shows the number of therapeutic efficacy studies conducted in a selected country (or countries). The user can customize the chart by selecting one Plasmodium species, as well as selecting one or more drugs, and year(s) of interest. The user can also exclude studies with less than 20 patients from the chart. Studies with >10% of patients with treatment failure are shown in red; studies with {{lessThen}}10% of patients with treatment failure are shown in pink.",
+                    "dataAvailability": "<strong>Data availability:</strong> All studies for which data are available are shown."
+                },
+                "treatmentFailureRateOverTime": {
+                    "chartInterpretation": "<strong>Chart interpretation:</strong> This scatter plot displays the percentage of patients with treatment failure, in a therapeutic efficacy study conducted in a selected country (or countries), by year. The user can customize the chart by selecting a Plasmodium species, a drug, and the years of interest. The user can also exclude studies with less than 20 patients from the chart.",
+                    "description_1": "Each circle represents one therapeutic efficacy study. The size of the circle is indicative of the total number of patients included in the study. The colour of the circle indicates the country where the study was conducted.",
+                    "description_2": "The placement of the circles along the x-axis is based on the year in which the study was completed. There is a slight horizontal displacement of the circles, within a year interval, in order to reduce the appearance of overlapping circles.",
+                    "dataAvailability": "<strong>Data availability:</strong> Only data for <strong><i>P. falciparum</i></strong> and <strong><i>P. vivax</i></strong> are displayed in this graph."
+                },
+                "parasiteClearanceRatesOverTime": {
+                    "chartInterpretation": "<strong>Chart interpretation:</strong> This scatter plot displays the percentage of patients with delayed parasite clearance, in a therapeutic efficacy study, conducted in a selected country (or countries), by year. The user can customize the chart by selecting a drug, and the years of interest. The user can also exclude studies with less than 20 patients from the chart.",
+                    "description_1": "Each circle represents one therapeutic efficacy study. The size of the circle is indicative of the total number of patients included in the study. The colour of the circle indicates the country where the study was conducted.",
+                    "description_2": "The placement of the circles along the x-axis is based on the year in which the study was completed. There is slight horizontal displacement of the circles, within a year interval, in order to reduce overlapping circles.",
+                    "dataAvailability": "<strong>Data availability:</strong> Only data for <strong><i>P. falciparum</i></strong> is displayed in this graph."
+                },
+                "summaryMolecularMarkerStudyOverTime": {
+                    "intro": "Molecular marker studies identify and track the prevalence of molecular mutations associated with antimalarial drug resistance. The user can customize the chart by selecting the type of molecular marker study and the years of interest. The user can also exclude studies with less than 20 patients from the chart.",
+                    "chartInterpretation": "<strong>Chart interpretation:</strong> This stacked bar chart displays the molecular marker study results. The height of the bar is determined by the number of studies conducted in that year.",
+                    "pfkelch13": {
+                        "description": "The colour of the bar represents the percentage of samples within one study where validated and candidate molecular markers were detected. Light blue indicates a low percentage; dark blue represents a high percentage.",
+                        "list_1": "Validated markers include: (F466I, N458Y, Y493H, R539T, I543T, P553L, R561H, P574L, C580Y, R6221, A675V, M476I)",
+                        "list_2": "Associated /candidate markers include: (P441L, G449A, C469F/Y, A481V, R515K, P527H, N5371/D, G538V, V568G)"
+                    },
+                    "pfcrt": "The colour of the bar represents the percentage of samples within one study where mutations were detected. Light blue indicates a low percentage; dark blue represents a high percentage.",
+                    "pfmdr1": "The colour of the bar represents the percentage of samples within one study where multiple copy numbers were detected. Light blue indicates a low percentage; dark blue represents a high percentage.",
+                    "dataAvailability": "<strong>Data availability:</strong> All studies for which data are available are shown."
+                },
+                "statusOfResistanceToInsecticide": {
+                    "title": "STATUS OF RESISTANCE TO INSECTICIDES",
+                    "graphInterpretation": "<0>Graph interpretation:</0> This bar chart displays the results of discriminating concentration bioassays, grouped by insecticide or insecticide class (depending on the option chosen). Bioassay results are categorized into three  groups (confirmed resistance, possible resistance and susceptibility to the tested insecticide).",
+                    "typeOfResistance": "<0>Type of resistance monitoring bioassay:</0> Resistance to insecticides was determined by mosquito mortality (CDC bottle bioassay, WHO tube test or WHO bottle bioassay). Confirmed resistance is classified as mosquito mortality {{lessThan}}90%."
+                },
+                "mosquitoMortalityOverTime": {
+                    "title": "MOSQUITO MORTALITY OVER TIME",
+                    "graphInterpretation": "<0>Graph interpretation:</0> This graph presents the mosquito mortality in susceptibility bioassays over time. The size of the bar represents the values of the studies falling between the 25% and the 75% quartiles of the mortality distribution. The horizontal line within the bar represents the median mortality value. The horizontal lines above and below the bar represent the maximum and minimum mortality values respectively.",
+                    "typeOfResistance": "<0>Type of resistance monitoring bioassay:</0> Resistance to insecticides was determined by mosquito mortality (CDC bottle bioassay, WHO tube test or WHO bottle bioassay). Confirmed resistance is classified as mosquito mortality {{lessThan}}90%."
+                }
+            },
+            "tooltip": {
+                "drug": "Drug",
+                "numberOfPatients": "Number of patients",
+                "treatmentFailureRate": "Treatment failure rate",
+                "source": {
+                    "label": "Source",
+                    "link": "National Institute of Allergy and Infectious Diseases, National Institutes of Health"
+                }
+            }
+        },
+        "homepage": {
+            "menu": {
+                "home": "Home",
+                "tools": "Tools",
+                "stories": "Stories",
+                "about": "About",
+                "contact": "Contact",
+                "share_data": "Share Data"
+            },
+            "tools_submenu": {
+                "maps": "Maps",
+                "dashboards": "Dashboards",
+                "data_download": "Data download"
+            },
+            "stories_submenu": {
+                "antimalarial_drug_efficacy_and_resistance": "Antimalarial drug efficacy and resistance",
+                "parasite_pfhrp_gene_deletions": "Parasite <i>pfhrp2/3</i> gene deletions"
+            },
+            "title": "Malaria <br /> <strong>Threats Map</strong>",
+            "subtitle": "Explore data about the major biological threats to malaria control and elimination.",
+            "media_cards": {
+                "maps": {
+                    "title": "Maps",
+                    "subtitle": "Explore individual studies and site-level data for all the threats.",
+                    "button_text": "Enter Map"
+                },
+                "dashboards": {
+                    "title": "Dashboards",
+                    "subtitle": "View summaries of the threats at different geographical levels.",
+                    "button_text": "View Dashboards"
+                },
+                "data_download": {
+                    "title": "Data download",
+                    "subtitle": "Download the data behind the MTM for your own analysis.",
+                    "button_text": "Download data"
+                },
+                "db_last_updated": "Database last updated",
+                "read_story": "Read Story"
+            },
+            "header": "The Malaria Threats Map is the most comprehensive platform on the four biological threats to malaria control and elimination.",
+            "theme_paper": {
+                "prevention_subtitle": "Vector resistance to the insecticides used for vector control  threatens malaria control efforts.",
+                "invasive_subtitle": "The spread of certain anopheline vector species and their establishment in new ecosystems poses a threat to malaria control.",
+                "treatment_subtitle": "Antimalarial drug resistance remains one of the key threats to global malaria control efforts, particularly in the Greater Mekong Subregion.",
+                "diagnosis_subtitle": "Gene deletions among some malaria parasites cause false negative diagnostic test results, complicating case management and control."
+            }
+        },
+        "storiesPage": {
+            "prevention": {
+                "title": "Vector insecticide resistance",
+                "description": "Find out about vector insecticide resistance and what the WHO recommends to combat this threat to malaria control and elimination."
+            },
+            "invasive": {
+                "title": "Invasive vector species",
+                "description": "Find out about invasive vector species and what the WHO recommends to combat this threat to malaria control and elimination."
+            },
+            "treatment": {
+                "title": "Antimalarial drug efficacy and resistance",
+                "description": "Find out about antimalarial drug efficacy and resistance and what the WHO recommends to combat this threat to malaria control and elimination."
+            },
+            "diagnosis": {
+                "title": "Parasite <i>pfhrp2/3</i> gene deletions",
+                "description": "Find out about Parasite pfhrp2/3 gene deletions and what the WHO recommends to combat this threat to malaria control and elimination."
+            },
+            "stepper": {
+                "next": "next",
+                "back": "back"
+            }
+        },
+        "shareDataPage": {
+            "title": "Contribute to the Malaria Threats Map by sharing your <strong>data</strong>",
+            "section1": {
+                "title": "Contribute insecticide resistance data",
+                "description": "We invite data submissions from all individuals and organizations. Please report your data using the following WHO standard data collection forms. Forms are available for download <2 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>here</2>.",
+                "list": {
+                    "1": "Synergist insecticide bioassay results",
+                    "2": "Intensity concentration bioassay results",
+                    "3": "Discriminating concentration bioassay results",
+                    "4": "Molecular and biochemical bioassay results"
+                }
+            },
+            "section2": {
+                "title": "Contribute <i>An. stephensi</i> detection data",
+                "description": "We invite data submissions from all individuals and organizations about <i>An. stephensi</i> detection outside of its native areas. Please report your data using the WHO standard data collection form, available <5 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>here</5>."
+            },
+            "sectionsFooter": "Completed forms can be sent to: <2>vectorsurveillance@who.int</2>"
+        },
+        "contactPage": {
+            "title": "Contribute to the Malaria Threats Map by sharing your <strong>feedback</strong>",
+            "section1": {
+                "title": "General feedback and enquiries",
+                "description": "We are eager to hear how you use the MTM and how we can improve the platform for all its users. To contact the MTM team, email <1>gmp-maps@who.int</1>"
+            },
+            "section2": {
+                "title1": "Data submission",
+                "description1": "If you would like to submit data to the MTM, please use the <2>share data</2> portal.",
+                "title2": "Technical support",
+                "description2": "If you are having any technical issues with the platform, please contact the IT team by using the “Report bugs” tab on the right-hand-side of the page. Feedback submitted here will go directly to the IT team."
+            }
+        },
+        "footer": {
+            "policies": {
+                "title": "Policies",
+                "disclaimer": "Disclaimer"
+            },
+            "other_who_resources": {
+                "title": "WHO resources",
+                "resource1": "WHO malaria guidelines",
+                "resource2": "WHO World malaria report",
+                "resource3": "WHO Malaria threats map"
+            },
+            "about_who_gmp": {
+                "title": "About WHO GMP",
+                "resource1": "WHO Global Malaria Programme",
+                "resource2": "Contact us"
+            },
+            "subscribe_newsletter": "SUBSCRIBE TO GMP NEWSLETTER",
+            "privacy": "WHO privacy policy"
         },
         "themes": {
             "prevention": "Vector insecticide resistance",
@@ -39,6 +421,7 @@
             "chart": {
                 "not_reported": "NR: not reported",
                 "other_insecticide_class_label": "Other insecticides to which resistance was detected in this site:",
+                "other_mechanisms": "Other mechanisms detected",
                 "other_insecticide_class_none": "None",
                 "resistance": {
                     "mosquito_mortality": "% mosquito mortality",
@@ -47,13 +430,13 @@
                 "resistance_mechanism": {
                     "content_1": "{{nStudies}} test(s) on ",
                     "content_2": " malaria vectors via {{insecticideClasses}} with selected {{type}} {{years}}",
-                    "number_of_tests": "# of tests",
-                    "DETECTED": "Detected",
-                    "NOT_DETECTED": "Not detected",
-                    "title": "Number of mechanism assays",
+                    "number_of_tests": "No. of mosquitoes tested",
+                    "DETECTED": "Number of assays that detected resistance mechanisms (count)",
+                    "NOT_DETECTED": "Number of assays that did not detect resistance mechanisms (count)",
                     "allelic": "Allelic frequency from molecular assay",
                     "count": "Count",
-                    "frequency": "Frequency (%)"
+                    "frequency": "Frequency (%)",
+                    "not_reported": "Not reported"
                 },
                 "synergist_involvement": {
                     "no_synergist": "No synergist"
@@ -76,8 +459,9 @@
                     "confirmed": "Confirmed (0 to <90%)",
                     "possible": "Possible (90 to <98%)",
                     "susceptible": "Susceptible (≥98%)",
+                    "undetermined": "Undetermined",
                     "help": {
-                        "p1": "This map contains data from <1>discriminating concentration bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying levels of resistance intensity, the colour of the dot is determined by the most recent results.",
+                        "p1": "This map contains data from <1>discriminating concentration bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying levels of resistance, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how each level is defined, please consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
@@ -93,12 +477,26 @@
                 },
                 "synergist_involvement": {
                     "mosquito_mortality": "mortality (%)",
-                    "full_involvement": "Full Involvement",
-                    "partial_involvement": "Partial Involvement",
-                    "no_involvement": "No Involvement",
+                    "full_restoration": "Full restoration",
+                    "partial_restoration": "Partial restoration",
+                    "no_restoration": "No restoration",
                     "help": {
                         "p1": "This map presents data from <1>synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying results, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how synergist involvement is graded consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
+                        "footer": "Data source: Publications and unpublished reports and information from country offices."
+                    }
+                },
+                "chlorfenapyr_undetermined": {
+                    "help": {
+                        "p1": "Grey dots represent data collected with the recommended discriminating concentration of 100 µg/bottle but that do not fully match WHO criteria for test validation, either because the temperature was not reported, because temperature fell outside of the recommended range (27 °C ± 2 °C), because no susceptible mosquito strain was tested in parallel or because results of the susceptible mosquito strain were not reported.",
+                        "p2": "",
+                        "footer": "Data source: Publications and unpublished reports and information from country offices."
+                    }
+                },
+                "pirimiphos_methly_undetermined": {
+                    "help": {
+                        "p1": "Grey dots represent data collected with the formerly recommended pyrimiphos-methyl discriminating concentration of 0.25%. These data should be validated against the new discriminating concentrations available in the WHO Manual for monitoring insecticide resistance in mosquito vectors and selecting appropriate interventions. <4 href='https://www.who.int/publications/i/item/9789240051089'>https://www.who.int/publications/i/item/9789240051089</4>.",
+                        "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
                 }
@@ -151,14 +549,16 @@
                     "study_years": "Study year(s)",
                     "health_facility_name": "Study conducted at the",
                     "number_of_patients": "patients included",
-                    "follow_up": "days follow-up",
+                    "follow_up": "-day follow-up. ",
                     "confirmed_resist_pv": "Patients with confirmed resistance",
                     "positive_day_3": "Positive after day 3",
                     "treatment_failure_pp": "Patients with treatment failure, per protocol",
                     "treatment_failure_km": "Patients with treatment failure, Kaplan-Meier",
                     "days": "days",
                     "studies": "study(s)",
-                    "aditional_information_title": "Aditional information: "
+                    "aditional_information_title": "Aditional information: ",
+                    "show_more": "Show more",
+                    "show_less": "Show less"
                 },
                 "molecular_markers": {
                     "subtitle": "The folowing {{molecularMarker}} mutations has been observed",
@@ -218,18 +618,19 @@
                     "sampling_method": "Sampling method",
                     "study_identification_method": "Species identification method",
                     "data_collection": "Acknowledgement for data curation",
-                    "no_available": "Not available"
+                    "not_recorded": "Not recorded"
                 }
             },
             "legend": {
                 "vector_occurrance": {
                     "invasive": "Invasive",
                     "native": "Native",
-                    "link": "https://www.who.int/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form.xlsm",
+                    "link": "https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-databases-on-invasive-mosquito-vector-species",
+                    "not_found": "Not found",
                     "link_text": "reporting form",
-                    "link_content_1": "If you have detected invasive Anopheles vector species please report to us through the ",
+                    "link_content_1": "If you have detected invasive <1>Anopheles</1> vector species please report to us through the ",
                     "help": {
-                        "p1": "This map represents data from <1>vector surveillance of Anopheles mosquitoes</1>. Each dot on the map represents a study site containing one or more studies. The colour of the dot shows whether the species is invasive or native to the area.",
+                        "p1": "This map represents sites where <1><i>Anopheles</i> mosquitoes</1> (of the species selected in the filter) have been detected. The colour of the dots shows whether the species is invasive or native to the site.",
                         "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices.",
                         "question": "Please report the detection of invasive Anopheles vector species using this <2 href='/'>reporting form</2>."
@@ -240,7 +641,7 @@
         "filters": {
             "filters": "Filters",
             "pfhrp23_note": "Across surveys, the criteria for selecting samples to test for <i>pfhrp 2/3</i> deletions varies; therefore, refer to the full report cited for more details.",
-            "last_updated": "Last Data Updated:",
+            "last_updated": "Last Data Update:",
             "no_records": "There are no studies available with the specified criteria",
             "records": {
                 "prevention": {
@@ -254,8 +655,8 @@
                 "invasive": "There are {{studies}} vector detections found with the specified criteria"
             },
             "insecticide_class": "Insecticide class",
-            "insecticide_type": "Insecticide type",
-            "select_insecticide_type": "Select insecticide type",
+            "insecticide_type": "Insecticide",
+            "select_insecticide_type": "Select insecticide",
             "test_type": "Test type",
             "select_test_type": "Select test type",
             "vector_species": "Vector species",
@@ -263,6 +664,7 @@
             "plasmodium_species": "Plasmodium species",
             "drug": "Drug",
             "molecular_marker": "Molecular marker",
+            "proxy_type": "Type of synergy",
             "mechanism_type": "Mechanism type",
             "assay_type": "Assay type",
             "synergist_type": "Test type",
@@ -276,30 +678,33 @@
             "select_patient_type": "Select patient type",
             "years": "Years",
             "country": "Country",
-            "select_country": "Select Country",
+            "select_country": "Select country",
             "countries": "Countries",
             "region": "Region",
-            "select_region": "Select Region",
+            "select_region": "Select region",
             "sub_region": "Subregion",
-            "select_sub_region": "Select Subregion",
-            "select_site": "Select Site",
+            "select_sub_region": "Select subregion",
+            "select_site": "Select site",
             "site": "Site",
             "exclude_lower_patients": "Exclude studies of less than 20 patients",
-            "exclude_lower_samples": "Exclude studies of less than 20 samples"
+            "exclude_lower_samples": "Exclude studies of less than 20 samples",
+            "onlyIncludeBioassays": "Only include bioassays with more than the following number of mosquitoes",
+            "zero_all_bioassays": "0 (all bioassays)",
+            "only_include_data_by_health": "Only include data provided to WHO by ministries of health"
         },
         "topbar": {
             "menu": "Menu",
             "maps": "Maps",
-            "dashboards": "Dashboards",
-            "stories": "Stories"
+            "dashboards": "Dashboards"
         },
         "sidebar": {
             "home": "Home",
+            "stories": "Stories",
             "about": "About",
             "contact": "Contact",
             "share_data": "Share data",
             "language": "Language",
-            "take_tour": "Take a tour"
+            "take_tour": "Take a Tour"
         },
         "legend": {
             "subtitle": "Determined by the most recent data in a site",
@@ -318,7 +723,7 @@
         },
         "copyright": {
             "mobile": "Click here to read the disclaimer that applies to the above map",
-            "content": "The boundaries and names shown and the designations used on this map do not imply the expression of any opinion whatsoever on the part of the World Health Organization concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Dotted and dashed lines or grey areas on maps represent approximate border lines or areas for which there may not yet be full agreement. The borders of the map provided reflect the current political and geographic status as of the date of publication ({{year}}). However, the technical health information is based on data accurate with respect to the year selected. The disconnect in this arrangement should be noted but no implications regarding political or terminological status should be drawn from this arrangement as it is purely a function of technical and graphical limitations. Data source: Global Malaria Programme. Map production: Global Malaria Programme. World Health Organization. WHO {{year}}. All rights reserved."
+            "content": "The designations employed and the presentation of the material in this publication do not imply the expression of any opinion whatsoever on the part of WHO concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Dotted and dashed lines on maps represent approximate border lines for which there may not yet be full agreement. Data source: Global Malaria Programme. Map production: Global Malaria Programme. World Health Organization. WHO {{year}}."
         },
         "options": {
             "title": "Options",
@@ -340,9 +745,8 @@
             },
             "buttons": {
                 "back": "Back",
-                "next": "Next",
-                "download": "Download",
-                "close": "Close"
+                "next": "Next Step",
+                "download": "Download"
             },
             "filters": {
                 "prevention": {
@@ -354,10 +758,15 @@
                         "resistance_mechanism_assays_biochemical": "Results of biochemical resistance mechanism identification"
                     }
                 },
+                "diagnosis": {
+                    "datasets": {
+                        "gene_deletions": "pfhrp2/3 gene deletions"
+                    }
+                },
                 "treatment": {
                     "datasets": {
-                        "therapeutic_efficacy_studies": "Results of therapeutic efficacy studies",
-                        "molecular_marker_studies": "Results of molecular marker studies"
+                        "therapeutic_efficacy_studies": "Therapeutic efficacy studies",
+                        "molecular_marker_studies": "Molecular marker studies"
                     }
                 },
                 "invasive": {
@@ -366,28 +775,20 @@
                     }
                 }
             },
-            "step0": {
-                "title": "Welcome message",
-                "p1": "Welcome to the Malaria Threats data download dialogue!",
-                "p2": "This dialogue will allow you to download data from the WHO global databases on insecticide resistance in malaria vectors, on drug efficacy and resistance and on invasive vector species.",
-                "p3": "These three WHO global databases contain data submitted to us by our Members states, research institutions and partners, as well as data extracted from scientific publications. To credit their contributions, a column containing the sources of the data is included in every datasets. Please note that not every contributor has allowed us to share their data. Hence some of the data in Malaria Threats Map is not available for download. For data extracted from publications, please note that when the values of relevant variables were not directly provided in the publications or were analyzed differently than recommended by WHO, values were calculated from the reported data.",
-                "p4a": "The use of all data is subject to the ",
-                "p4bLinkText": "Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses",
-                "p4bLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions",
-                "p4c": ". By using the Datasets or any presentations of data derived from them, you agree to be bound by and adhere to these Terms and Conditions, as may be amended from time to time by WHO at its sole discretion. If any datasets are credited to a source other than WHO, then those materials are not covered by these Terms and Conditions, and permission should be sought from the source.",
-                "p5": "Please acknowledge the use of these datasets by including the following reference in your publications: WHO, Malaria Threats Map, year, date of access, acknowledgement of the countries having provided the underlying data (in the event that the source refers to ministries of health or national malaria control programs of specific countries).",
-                "p6": "The Global Malaria Programme is keen on tracking and showcasing the use of the global databases. Therefore, we will ask you a few questions about the intended use of the data you wish to download.",
-                "p7a": "If you have any questions, do not hesitate to contact us on: ",
-                "p7bEmail": "gmp-maps@who.int",
-                "p8a": "Check here to indicate that you have read and agree to the ",
-                "p8bLinkText": "Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses",
-                "p8bLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions"
+            "terms_step": {
+                "title": "Terms and Conditions",
+                "p1": "The use of all data is subject to the Terms and conditions of use for WHO compilations, aggregations, evaluations and analyses. By using the Datasets or any presentations of data derived from them, you agree to be bound by and adhere to these Terms and Conditions, as may be amended from time to time by WHO at its sole discretion. If any datasets are credited to a source other than WHO, then those materials are not covered by these Terms and Conditions, and permission should be sought from the source.",
+                "p2": "Please acknowledge the use of these datasets by including the following reference in your publications: WHO, Malaria Threats Map, year, date of access, acknowledgement of the countries having provided the underlying data (in the event that the source refers to ministries of health or national malaria control programs of specific countries).",
+                "summary_title": "Download List",
+                "check": "Check here to indicated that you have read and agree to the Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses.",
+                "choose_other": "Choose other databases"
             },
-            "step1": {
-                "title": " Personal contact details",
-                "first_name": "First Name",
-                "last_name": "Family Name",
-                "organization_type": "Organization Type",
+            "personal_step": {
+                "title": "Personal details",
+                "subtitle": "By providing your personal  details, you will help us to better understand our user community.",
+                "first_name": "First name",
+                "last_name": "Family name",
+                "organization_type": "Organization type",
                 "organization_type_options": {
                     "university": "University or Research center",
                     "ngos": "NGOs",
@@ -401,41 +802,26 @@
                     "private": "Other private companies",
                     "other": "Others"
                 },
-                "organization_name": "Organization Name",
-                "position": "Position",
-                "country": "Country of Residency",
-                "email": "Email"
+                "organization_name": "Organization name",
+                "uses_placeHolder": "We would appreciate  if you could provide a short description of how these data will be used  to support your work.",
+                "country": "Country of residence",
+                "email": "E-mail",
+                "message": "If you would like to share feedback with us, please do so <2 href='/contact'>here</2>.",
+                "consent1": "I consent to be contacted by the World Health Organization regarding my experience using the Malaria Threats Map and data from the global databases."
             },
-            "step2": {
-                "title": "Purpose of data download",
-                "data_use": "What will you use the data for?",
-                "data_use_options": {
-                    "research": "Research",
-                    "grant": "Develop grant or project proposals",
-                    "treatments": "Development of new anti-malaria treatments",
-                    "vector": "Development of new vector control tools",
-                    "diagnosis": "Development of new diagnosis tools",
-                    "policies": "Development of national policies, strategies and/or work plans (e.g. Malaria National Strategy Plan development, National treatment policy or guidelines, Insecticide Resistance Monitoring and Management Plans)",
-                    "advocacy": "Advocacy"
-                },
-                "date_use_options_content": {
-                    "research": "Please provide a short description of the project or research question for which data will be used (minimum 100 words)",
-                    "policies": "Please provide the title or a short description of the policy, strategy or plan for which data will be used",
-                    "tools": " Please describe briefly the new treatment, diagnosis or vector control tools you aim to develop (minimum 100 words)",
-                    "date": "When are you planning to finish your project, policy, strategy or plan?"
-                },
-                "countries": "Countries where the project, policy, strategy or plan will be implemented",
-                "message": "WHO is keen to improve the global databases and Malaria Threats Map to better serve the needs of our user community. Hence, WHO would like to engage with our user community to collect suggestions for improvement and to learn from different use cases and benefits that these products bring to them.",
-                "consent1": "I consent the World Health Organization on using my personal data to contact me regarding my experience using Malaria Threats Map and data from the global databases. ",
-                "consent2": "I consent the World Health Organization on using the organization name and project descriptions I provided to showcase the uses of the global databases (no personal data will be shown)."
-            },
-            "step3": {
-                "title": "Filter the data",
-                "filters": {
-                    "additional": "Additional filters",
-                    "theme": "Select Theme",
-                    "dataset": "Select Dataset"
-                }
+            "data_step": {
+                "title": "Select data",
+                "p1": "This dialogue allows you to download data from the four WHO global databases: insecticide resistance in malaria vectors, invasive vector species, antimalarial drug efficacy and resistance, and <1>Pfhrp2/3</1> gene deletions. A link to the original data source and citation are included in each dataset, where available.",
+                "last_updated": "The selected dataset was last updated on:",
+                "add_to_download": "Add to Download",
+                "db_download_list": "Database Download List",
+                "db_download_helper_text": "Your list of databases selected for download will be shown here. To add data, please filter for the data you require on the right and click “Add to download”.",
+                "prevention_warning": "Please note that not every contributor of the vector insecticide resistance theme has allowed us to share their data. Hence some of the data in Malaria Threats Map is not available for download. For data extracted from publications, please note that when the values of relevant variables were not directly provided in the publications or were analyzed differently than recommended by WHO, values were calculated from the reported data.",
+                "data_set": "Dataset:",
+                "data": "Data:",
+                "location": "Location:",
+                "studies_in_file": "{{total}} studies included in the file",
+                "bioassays_in_file": "{{total}} bioassays included in the file"
             }
         },
         "report": {
@@ -460,27 +846,6 @@
                 "studies": "Number of studies",
                 "percentile_25": "Percentile 25th",
                 "percentile_75": "Percentile 75th"
-            }
-        },
-        "subscription": {
-            "title": "Subscribe to receive Threats Updates!",
-            "first_name": "First name",
-            "last_name": "Last name",
-            "email": "Email",
-            "country": "Country",
-            "organization": "Organization",
-            "button": "Subscribe",
-            "institutions": {
-                "nmcp": "NMCP",
-                "funding_organization": "Funding Organization",
-                "research_organization": "Research Organization",
-                "who_collaborating_centers": "WHO Collaborating Centers",
-                "private_sector": "Private Sector",
-                "ngo": "NGO",
-                "media_organization": "Media Organization",
-                "who_country_office": "WHO Country Office",
-                "who_regional_office": "WHO Regional Office",
-                "who_headquarters": "WHO Headquarters"
             }
         },
         "uploadFile": {
@@ -513,7 +878,6 @@
             "image": "Export map",
             "summary": "Summary Report",
             "disclaimer": "Disclaimer",
-            "subscribe": "Subscribe",
             "uploadFile": "Upload file and download template",
             "comments": "Provide your feedback",
             "help": "Help",
@@ -527,28 +891,6 @@
         "COUNTRY_NA": "Namibia",
         "WEBGL_error_message": "Your browser does not support WebGL. You can enable WebGL in the advanced settings of your browser."
     },
-    "diagnosisStory": {
-        "step1": {
-            "part1": "<0>Gene deletions among malaria parasites causes false-negative diagnostic test results</0>",
-            "part2": "Rapid diagnostic tests (RDT) are used for malaria diagnosis in most endemic areas. Detection of <i>Plasmodium falciparum</i> - the most deadly malaria parasite globally - relies heavily on RDTs that target an antigen called histidine-rich protein 2 (HRP2), as well as some cross-reactivity with HRP3, a structurally similar parasite protein. The vast majority of RDTs manufactured, procured and used around the world are based on detection of HRP2 either alone or in combination with other antigens (such as parasite lactate dehydrogenase or aldolase).",
-            "part3": "However, in 2010 a study sponsored by WHO and FIND found that some <i>P. falciparum</i> parasites in Peru lacked the <i>pfhrp2</i> gene. Without this gene, the parasite cannot produce HRP2 and cannot be detected by HRP2-based RDTs. This was the first report to confirm the absence of the <i>pfhrp2</i> gene among <i>P. falciparum</i> parasites in a clinical setting.",
-            "see": "See: ",
-            "part4": "Gamboa et al. (2010) A large proportion of <i>P. falciparum</i> isolates in the Amazon region of Peru lack <i>pfhrp2</i> and pfhrp3: implications for malaria rapid diagnostic tests. PLoS One. 5(1):e8091"
-        },
-        "step2": {
-            "part1": "<0> <i> pfhrp2/3 </i> gene deletions may have significant implications for public health</0>",
-            "part2": "False negative RDT results due to <i>pfhrp2/3</i> deletions can lead to incorrect or delayed diagnosis and threaten patient safety. The patient may also continue to be a source of malaria transmission until properly treated.",
-            "part3": "Since 2010, surveys in several settings in Africa and Asia have also found a varying proportion of <i>P. falciparum</i> parasites lacking the <i>pfhrp2</i> gene. The prevalence of this genetic mutation reportedly varies between and within countries. If confirmed, RDT procurement and case management practices need to be tailored accordingly. WHO recommends a change to an RDT that is not exclusively based on HRP2 for <i>P. falciparum</i> detection (ie. pf-pLDH) if the prevalence of false negative RDTs due to <i>pfhrp2</i> deletion is ≥ 5% amongst symptomatic patients.",
-            "link": "https://www.who.int/publications/i/item/WHO-HTM-GMP-2017.18",
-            "supportingStudies": "Link to supporting studies."
-        },
-        "step3": {
-            "part1": "<0>Increased monitoring of <i>P. falciparum</i> populations for <i>pfhrp2/3</i> gene deletions is essential</0>",
-            "part2": "Once <i>pfhrp2/3</i> deletions are confirmed in a geographical region, surveys should be conducted locally and in neighbouring areas to estimate the prevalence of the parasites carrying gene deletions. In clinical settings the cause(s) of false negative RDTs should be investigated.",
-            "part3": "Sentinel surveillance should be instituted with all findings (positive and negative) reported. Data must be managed well to help prioritize surveys, adequately monitoring trends over time, and to inform a coordinated response.",
-            "part4": "As of 2018, the WHO database includes <i>pfhrp2/3</i> gene deletion data for 29 countries across five WHO regions"
-        }
-    },
     "disclaimer": {
         "p1a": "<strong>Data source:</strong> Global Malaria Programme",
         "p1b": "<strong>Map production:</strong> Global Malaria Programme. World Health Organization.",
@@ -560,9 +902,7 @@
         "p3aLink": "https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions",
         "p3b": "Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses.",
         "p4a": "The following citation shall be conspicuously provided alongside images or files generated from the application.",
-        "p4b": "Source: ",
-        "p4bLink": "https://www.who.int/malaria/maps/threats/",
-        "p4bLinkText": "WHO Malaria Threats Map.",
+        "p4b": "Source: WHO Malaria Threats Map.",
         "p5a": "For further information, please contact: ",
         "p5aLink": "mailto:gmp-maps@who.int",
         "p5aLinkText": "gmp-maps@who.int"
@@ -710,6 +1050,7 @@
             "LATITUDE": "Latitude of the site where the mosquitoes were collected",
             "LONGITUDE": "Longitude of the site where the mosquitoes were collected",
             "TEST_TYPE": "Mechanism type",
+            "INSECTICIDE_CLASS": "Insecticide class",
             "INSECTICIDE_TYPE": "Insecticide",
             "INSECTICIDE_CONCENTRATION": "Insecticide concentration",
             "YEAR_START": "Year when the mosquito collection started",
@@ -723,32 +1064,31 @@
             "CITATION": "Citation of the publication where the data was published",
             "CITATION_URL": "URL of the publication where the data was published",
             "DATA_CURATOR": "Institute that compiled the data. Part of the data in this databases has been compiled by WHO's partner institutions and submited to or shared with WHO.This column will indicate the name of the institution or group that compiled the data."
-        }
-    },
-    "invasiveStory": {
-        "step1": {
-            "part1": "<0>The recent detection of <i>An. stephensi</i> in Sri Lanka and the horn of Africa underscores the potential for vector species to spread and establish in new geographical areas.</0>",
-            "part2": "<0><i>An. Gambiae</i>’s invasion of northern Brazil in 1930 provides another example. Its elimination between 1930s and early 40s proves that vector invasions can be controlled.</0>",
-            "part3": "<i>An. stephensi</i> is a highly efficient urban malaria vector traditionally reported from certain countries in South-East Asia and the Arabian Peninsula. Since 2012, it has been detected in Djibouti (2012), Ethiopia (2016), Sri Lanka (2017) and most recently in the Republic of the Sudan (2019, unpublished report).",
-            "part4": "The invasion of <i>An. stephensi</i> has contributed to the resurgence of malaria in Djibouti City. In Sri Lanka, the recent invasion of this vector could jeopardize efforts to prevent the re-establishment of malaria. In Africa, given the rapid and uncontrolled growth of cities, further spread and establishment of <i>An. stephensi</i> in urban environments could put at risk the gains in malaria burden reduction made since 2000.",
-            "supporting": "supporting"
         },
-        "step2": {
-            "part1": "<0>Timely detection of invasive vector species is crucial to contain their spread.</0>",
-            "part2": "<0>Entomological surveillance systems provide critical information to inform the design and implementation of vector control strategies.</0>",
-            "part3": "Understanding vector species’ breeding and resting habitats, behaviour, feeding preferences and resistance status is required to design effective interventions to prevent further spread of invasive vector species and establishment in new geographical areas.",
-            "part4": "WHO recommends that all malaria endemic countries conduct entomological surveillance and report detection of suspected invasive species to WHO by filling and sending the",
-            "whoForm": " WHO form to report detection of invasive Anopheles vector species to ",
-            "part5": "Key indicators for entomological surveillance entomological surveillance are listed in chapter 5 of the",
-            "link": "https://cdn.who.int/media/docs/default-source/documents/publications/gmp/whogmp-invasive-species-reporting-form_7501f4ad-dee6-4a8b-ac0a-d423281fe1fe.xls?sfvrsn=8c82af32_25",
-            "whoManual": " WHO Malaria Surveillance, monitoring and evaluation: a reference manual."
-        },
-        "step3": {
-            "part1": "<0>Control strategies should be informed by best practices from other countries, be adequately monitored and evaluated, and be modified where required.</0>",
-            "part2": "<0>Invasive vector species may adapt to their new environment by changing their traditional behaviours, including their choice of breeding habitats and resting sites, and may become insecticide resistant when exposed to vector control interventions.</0>",
-            "part3": "National programmes aiming to control and eliminate invasive vector species, should initially draw on best practices from countries where the species is indigenous and has been successfully controlled. However, due to the potential adaptive behavioural changes of vector species, programmes should continuously monitor and evaluate the effectiveness of the deployed vector control interventions to inform strategic adjustments when required.",
-            "part4": "The WHO recommends that national malaria control programs, and their executive partners, record lessons learned and send them to WHO (",
-            "part5": ") in order to contribute to the development of a plan based on evidence for the control and eradication of vector and invasive species of malaria."
+        "diagnosis": {
+            "ID": "Unique identifier of the bioassay",
+            "COUNTRY_NAME": "Name of the country where the bioassay was conducted",
+            "ISO2": "ISO2",
+            "ADMIN1": "Administrative level 1 where the mosquitoes where collected",
+            "ADMIN2": "Administrative level 2 where the mosquitoes where collected",
+            "SITE_NAME": "Site where the mosquitoes were collected",
+            "LATITUDE": "Latitude of the site where the mosquitoes were collected",
+            "LONGITUDE": "Longitude of the site where the mosquitoes were collected",
+            "YEAR_START": "Year when the mosquito collection started",
+            "SURVEY_TYPE": "Type of Survey conducted",
+            "PATIENT_TYPE": "Patient  clinical status",
+            "HRP2_TESTED": "Number of samples tested for HRP2 deletions",
+            "HRP2_PROPORTION_DELETION": "Pct of Pf samples tested with HRP2 deletions",
+            "HRP3_TESTED": "Number of samples tested for HRP3 deletions",
+            "HRP3_PROPORTION_DELETION": "Pct of Pf samples tested with HRP3 deletions",
+            "HRP2_HRP3_TESTED": "Number  of Pf samples tested for HRP2 AND HRP3 deletions",
+            "HRP2_HRP3_PROPORTION_DELETION": "Pct of Pf samples tested with HRP2 AND HRP3 deletions",
+            "DELETETION_STATUS": "Deletion type: confirmed or suspected",
+            "SAMPLE_ORIGIN": "Samples place of origin, when taken from returning travellers",
+            "PF_POS_SAMPLES": "Number of P.falciparum positive samples in total survey",
+            "TYPE_SAMPL_ANALYZED": "type  of sample analyzed - all, discordant only, or non-representative",
+            "CITATION": "Citation of the publication where the data was published",
+            "CITATION_URL": "URL of the publication where the data was published"
         }
     },
     "legend": {
@@ -762,98 +1102,32 @@
         "theme": "Theme",
         "selectMapType": "SELECT MAP TYPE",
         "mapType": "Map",
-        "selectData": "FILTER DATA",
+        "selectDataMap": "FILTER DATA",
+        "selectDataDownload": "FILTER DATA (OPTIONAL)",
         "data": "Data",
         "selectLocation": "FILTER LOCATION (OPTIONAL)",
-        "location": "Location"
-    },
-    "preventionStory": {
-        "step1": {
-            "part1": "<0>Monitoring insecticide resistance in malaria vectors is essential</0>",
-            "part2": "<0>80 of 89 malaria-endemic countries reported monitoring for insecticide resistance between 2010 and 2017. The extent and quality of data varies between countries.</0>",
-            "part3": "Malaria prevention is heavily reliant on core tools that target malaria mosquitoes: long-lasting insecticidal nets and indoor residual insecticide sprays. Resistance of mosquitoes to insecticides is a major concern particularly for pyrethroids as these are the only insecticide class currently approved for use on nets.",
-            "part4": "The WHO Global Plan for Insecticide Resistance Management in malaria vectors (GPIRM) is a call to action to maintain the effectiveness of malaria vector control. Resistance monitoring is needed to inform resistance mitigation and management strategies.",
-            "link": "https://apps.who.int/iris/handle/10665/44846",
-            "prevention1": "prevention 1"
-        },
-        "step2": {
-            "part1": "<0>Monitoring has found that insecticide resistance is widespread in malaria vectors</0>",
-            "part2": "<0>65 of 89 malaria-endemic countries have reported pyrethroid resistance in at least one local vector since 2010</0>",
-            "part3": "Resistance has been found in vectors from all six WHO regions and to all four classes of insecticide currently used in adult malaria vector control. Pyrethroid resistance is most commonly tested and reported.",
-            "link": "https://www.who.int/publications/i/item/9789241514057",
-            "prevention2": "prevention 2"
-        },
-        "step3": {
-            "part1": "<0>Recent and complete data on insecticide resistance are lacking for many countries</0>",
-            "part2": "<0>47 of 89 malaria-endemic countries reported data for 2017. There are relatively few data in regions other than Africa, such as South-East Asia. Monitoring often does not include all major vector species and all relevant insecticide classes.</0>",
-            "part3": "Up-to-date and representative data are needed for planning and implementation of vector control. Monitoring should be conducted in all malaria-endemic countries at least once per year, and should include all major vector species from the different eco-epidemiological zones. Tests should be conducted with insecticide classes that are either in use or planned for use in vector control.",
-            "part4": "Monitoring requirements are to be defined through a comprehensive national insecticide resistance monitoring and management plan.",
-            "prevention3": "prevention 3"
-        },
-        "step4": {
-            "part1": "<0>Increasing resistance underscores the urgent need for enhanced monitoring</0>",
-            "part2": "<0>Malaria vectors in some areas of Africa can now survive exposure to high concentrations of insecticides, indicating intensified resistance.</0>",
-            "part3": "Classical resistance tests measure the number of mosquitoes that survive exposure to a standard concentration of insecticide. However, intensity of resistance in survivors and the mechanisms that confer resistance are important. High intensity resistance warrants urgent action that should be guided by knowledge of the underlying resistance mechanisms.",
-            "part4": "WHO test procedures were recently extended to include bioassays that measure resistance intensity and metabolic mechanism involvement.",
-            "prevention4": "prevention 4"
-        }
+        "location": "Location",
+        "all": "All",
+        "selectDataset": "SELECT DATASET",
+        "dataset": "Dataset"
     },
     "tour": {
         "steps": {
             "1": {
-                "title": "Welcome to Malaria Threats Map!",
-                "p1": "You are at a WHO official platform created to present the magnitude and spread of four biological challenges for malaria control and elimination.",
-                "p2": "This wizard will show how to use the platform"
+                "title": "Select one of the 4 biological threats"
             },
             "2": {
-                "title": "Choose a language"
+                "title": "Select a map to explore study results"
             },
             "3": {
-                "p1": "Open our interactive maps containing the latest data for the four challenges"
+                "title": "Add filters to produce a map limited to specific criteria"
             },
             "4": {
-                "p1": "Open the filters section to chose from the challenge filters as well as region filters"
+                "title": "Select a region, subregion, country and/or site"
             },
             "5": {
-                "p1": "Select the country, region or sub region of your interest or leave this filters blank to explore all countries"
-            },
-            "6": {
-                "p1": "Select several filters and notice how the map adjusts automatically."
-            },
-            "7": {
-                "p1": "Click on a site to see individual study result meeting your filter criteria. Results for one study at time are shown in the window. If there is more than one study meeting your criteria, you can visualize other study results by clicking the upper arrow."
-            },
-            "8": {
-                "p1": "Click on the country view to the number of studies performed in such country"
-            },
-            "9": {
-                "p1": "Click on a country to see a summary of resistance status for that country"
+                "title": "Click on a map point to see study details"
             }
-        }
-    },
-    "treatmentStory": {
-        "step1": {
-            "part1": "<0>Malaria parasites repeatedly develop resistance to antimalarial treatment</0>",
-            "part2": "<0>For decades, drug resistance has been one of the main obstacles in the fight against malaria.</0>",
-            "part3": "Continuous global monitoring and reporting of drug efficacy and parasite resistance is critical to ensure patients receive effective treatment. WHO supports national malaria control programmes to monitor antimalarial treatment efficacy and to track the genetic changes linked to drug resistance in malaria parasites.",
-            "part4": "The critical role of monitoring drug efficacy has been observed worldwide. Resistance has been a persistent challenge in the Greater Mekong Subregion. The region has been very active in monitoring drug efficacy."
-        },
-        "step2": {
-            "part1": "<0>Routine monitoring of the efficacy of artemisinin-based combination therapies (ACTs) is essential to ensure that patients receive effective treatment</0>",
-            "part2": "<0>WHO recommends that all malaria endemic countries conduct therapeutic efficacy studies at least once every two years to inform treatment policy.</0>",
-            "part3": "The selection of the recommended antimalarial drug is based on the medicine’s efficacy against the malaria parasite. As such, monitoring the therapeutic efficacy of antimalarial medicine is a fundamental component of malaria treatment strategies. WHO has developed a standard protocol for monitoring the treatment efficacy of antimalarial medicine."
-        },
-        "step3": {
-            "part1": "<0>Studies of molecular prevention provide essential data for detecting and tracking antimalarial drug resistance</0>",
-            "part2": "<0>Molecular prevention for drug resistance are genetic changes in the malaria parasite found to be associated with resistance.</0>",
-            "part3": "Compared to efficacy studies, studies of molecular prevention have several practical advantages. For example, a large number of samples can be collected and rapidly analysed. Molecular prevention of drug resistance have been identified for different drugs, including <i>P. falciparum</i> resistance to chloroquine, piperaquine, mefloquine, pyrimethamine, sulfadoxine, atovaquone and artemisinins.",
-            "part4": "For artemisinins, several mutations in the Kelch 13 (K13)-propeller domain have been found to be associated with delayed parasite clearance. This is an evolving field as more K13 mutations are discovered and we develop a better understanding of which mutations are of greatest influence."
-        },
-        "step4": {
-            "part1": "<0>Drug resistance is a challenge in both <i>P. vivax</i> and <i>P. falciparum</i>, the two most common human malaria parasite species </0>",
-            "part2": "<0>Up-to-date information on drug resistance for both <i>P. vivax</i> and <i>P. falciparum</i> malaria is critical.</0>",
-            "part3": "Artemisinin-based combination therapies (ACTs) are the recommended treatment for the most deadly malaria parasite, <i>P. falciparum</i>. There are two key outcome measures for monitoring the efficacy of ACTs: (1) the proportion of treatment failures and, (2) the proportion of patients with parasites on the third day after starting treatment. An increase in the proportion of patients with parasites on day 3 is a warning sign of artemisinin resistance.",
-            "part4": "Chloroquine is still used in many places to treat <i>P. vivax</i> malaria. However, as chloroquine resistance is also developing in <i>P. vivax</i> parasites, some countries have shifted to ACTs for treating <i>P. vivax</i> malaria."
         }
     },
     "utils": {
@@ -899,6 +1173,7 @@
         "BG": "Bulgaria",
         "BF": "Burkina Faso",
         "BI": "Burundi",
+        "BT": "Bhutan",
         "CV": "Cabo Verde",
         "KH": "Cambodia",
         "CM": "Cameroon",
@@ -940,6 +1215,7 @@
         "DE": "Germany",
         "GH": "Ghana",
         "GR": "Greece",
+        "GF": "French Guiana",
         "GD": "Grenada",
         "GT": "Guatemala",
         "GN": "Guinea",
@@ -983,6 +1259,7 @@
         "MU": "Mauritius",
         "MX": "Mexico",
         "FM": "Micronesia (Federated States of)",
+        "YT": "Mayotte",
         "MC": "Monaco",
         "MN": "Mongolia",
         "ME": "Montenegro",

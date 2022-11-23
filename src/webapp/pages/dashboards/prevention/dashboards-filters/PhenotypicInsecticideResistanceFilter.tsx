@@ -1,0 +1,40 @@
+import React from "react";
+import i18next from "i18next";
+import DashboardContentFilter from "../../common/dashboards-filters/DashboardContentFilter";
+import { Option } from "../../common/types";
+import { PhenotypicInsecticideResistance } from "../types";
+
+const options: Option<PhenotypicInsecticideResistance>[] = [
+    {
+        label: i18next.t(
+            "common.dashboard.dashboardsFilterSection.phenotypicInsecticideResistanceOptions.phenotypicInsecticideResistance"
+        ),
+        value: "phenotypic-insecticide-resistance",
+    },
+    {
+        label: i18next.t(
+            "common.dashboard.dashboardsFilterSection.phenotypicInsecticideResistanceOptions.statusOfResistanceToInsecticides"
+        ),
+        value: "status-resistance-insecticide",
+    },
+    {
+        label: i18next.t(
+            "common.dashboard.dashboardsFilterSection.phenotypicInsecticideResistanceOptions.mosquitoOverTime"
+        ),
+        value: "mosquito-mortality-over-time",
+    },
+];
+
+interface PhenotypicInsecticideResistanceFilterProps {
+    value: PhenotypicInsecticideResistance;
+    onChange: (value: PhenotypicInsecticideResistance) => void;
+}
+
+const PhenotypicInsecticideResistanceFilter: React.FC<PhenotypicInsecticideResistanceFilterProps> = ({
+    value,
+    onChange,
+}) => {
+    return <DashboardContentFilter options={options} value={value} onChange={onChange} />;
+};
+
+export default PhenotypicInsecticideResistanceFilter;

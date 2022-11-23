@@ -20,8 +20,8 @@ const InvasiveChart: React.FC<Props> = ({ selectionData }) => {
     const { t } = useTranslation();
 
     const data = React.useMemo(() => {
-        if (selectionData.data.kind === "invasive") {
-            return selectionData.data.data;
+        if (selectionData.kind === "invasive") {
+            return selectionData.data;
         } else {
             return null;
         }

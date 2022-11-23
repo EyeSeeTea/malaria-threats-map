@@ -12,6 +12,7 @@ import { sendAnalytics } from "../../utils/analytics";
 import { Study } from "../../../domain/entities/Study";
 import { useTranslation } from "react-i18next";
 import SingleFilter from "./common/SingleFilter";
+import { isNotNull } from "../../utils/number-utils";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -41,7 +42,7 @@ function SiteSelector({
 }: Props) {
     const { t } = useTranslation();
 
-    const studies: Study[] = (() => {
+    const studies: Study[] = React.useMemo(() => {
         switch (theme) {
             case "prevention":
                 return preventionStudies;
@@ -52,19 +53,22 @@ function SiteSelector({
             case "invasive":
                 return invasiveStudies;
         }
-    })();
+    }, [theme, preventionStudies, diagnosisStudies, treatmentStudies, invasiveStudies]);
 
-    const SITES_SUGGESTIONS = R.uniqBy(
-        study => study.value,
-        studies.map(study => ({
-            label: study.SITE_NAME || study.VILLAGE_NAME,
-            value: study.SITE_ID,
-            iso2: study.ISO2,
-            coords: [study.Latitude, study.Longitude],
-        }))
-    );
-
-    const suggestions = SITES_SUGGESTIONS.sort((a, b) => (a.label < b.label ? -1 : 1)).slice(0, 10);
+    const suggestions = React.useMemo(() => {
+        return R.uniqBy(
+            study => study.value && study.label,
+            studies.map(study => ({
+                label: study.SITE_NAME || study.VILLAGE_NAME,
+                value: study.SITE_ID,
+                iso2: study.ISO2,
+                coords: [study.Latitude, study.Longitude],
+                region: study.REGION_FULL,
+            }))
+        )
+            .filter(s => isNotNull(s.label))
+            .sort((a, b) => (a.label < b.label ? -1 : 1));
+    }, [studies]);
 
     const onChange = (selection?: string) => {
         const site = suggestions.find(site => site.value === selection);
@@ -75,11 +79,13 @@ function SiteSelector({
             siteIso2: site ? site.iso2 : undefined,
             siteCoordinates: site ? [+site.coords[0], +site.coords[1]] : undefined,
             country: site ? site.iso2 : undefined,
+            region: site ? site.region : undefined,
         });
     };
 
     return (
         <SingleFilter
+            optimizePerformance={true}
             label={t("common.filters.site")}
             placeholder={t("common.filters.select_site")}
             options={suggestions}

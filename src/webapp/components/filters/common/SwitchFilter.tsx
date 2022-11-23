@@ -1,15 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
 import { FilterRowContainer } from "../Filters";
-import FormLabel from "@mui/material/FormLabel";
 import { logEventAction } from "../../../store/actions/base-actions";
-import { Switch } from "@mui/material";
+import { Switch, Typography } from "@mui/material";
 
 type OwnProps = {
     label: string;
     onChange: (check: boolean) => void;
     value: boolean;
     analyticsFilterAction?: string;
+    background?: string;
+    fontWeight?: string;
+    margin?: string;
+    padding?: string;
 };
 
 const mapDispatchToProps = {
@@ -19,7 +22,17 @@ const mapDispatchToProps = {
 type DispatchProps = typeof mapDispatchToProps;
 type Props = OwnProps & DispatchProps;
 
-function SwitchFilter({ label, onChange, value, analyticsFilterAction, logEventAction }: Props) {
+function SwitchFilter({
+    label,
+    onChange,
+    value,
+    analyticsFilterAction,
+    logEventAction,
+    background,
+    fontWeight,
+    margin,
+    padding,
+}: Props) {
     const onSelectionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange(event.target.checked);
 
@@ -29,8 +42,10 @@ function SwitchFilter({ label, onChange, value, analyticsFilterAction, logEventA
     };
 
     return (
-        <FilterRowContainer>
-            <FormLabel component="legend">{label}</FormLabel>
+        <FilterRowContainer background={background} margin={margin} padding={padding}>
+            <Typography variant="body2" fontWeight={fontWeight}>
+                {label}
+            </Typography>
             <Switch color="primary" checked={value} onChange={onSelectionChange} />
         </FilterRowContainer>
     );

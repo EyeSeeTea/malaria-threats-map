@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@m
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { SelectionData } from "../../../store/SelectionData";
+import { DiagnosisSelectionData } from "../../../store/epics/diagnosis/types";
 
 // const SpacedTypography = styled(Typography)`
 //     margin-bottom: 5px;
@@ -35,15 +35,15 @@ const StyledTable = styled(Table)`
 `;
 
 type Props = {
-    selectionData: SelectionData;
+    selectionData: DiagnosisSelectionData;
 };
 
 const DiagnosisChart: React.FC<Props> = ({ selectionData }) => {
     const { t } = useTranslation();
 
     const data = React.useMemo(() => {
-        if (selectionData.data.kind === "diagnosis") {
-            return selectionData.data.data;
+        if (selectionData.kind === "diagnosis") {
+            return selectionData.data;
         } else {
             return null;
         }

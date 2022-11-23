@@ -34,6 +34,10 @@ const mappings: Option[] = [
         label: "YEAR_START",
     },
     {
+        value: "YEAR_END",
+        label: "YEAR_END",
+    },
+    {
         value: "DRUG_NAME",
         label: "DRUG_NAME",
     },

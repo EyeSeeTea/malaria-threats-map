@@ -1,28 +1,35 @@
 import { Study } from "../../domain/entities/Study";
 import { Option } from "../components/BasicSelect";
+import { DiagnosisSelectionData } from "./epics/diagnosis/types";
+import { InvasiveSelectionData } from "./epics/invasive/types";
 
-export type SelectionData = {
+export type SelectionData = InvasiveSelectionData | DiagnosisSelectionData | CommonSelectionData;
+
+export type CommonSelectionData = {
+    kind: "common";
     title: string;
     subtitle: string;
     filterOptions?: Option[];
     filterSelection?: Option[];
     studyObject: Study;
-    data?:
-        | PreventionChartData
-        | PreventionMechanismChartData
-        | DiagnosisChartData
-        | InvasiveChartData
-        | TreatmentChartData
-        | TreatmentMolecularMarkersChartData;
+    data?: PreventionChartData | PreventionMechanismChartData | TreatmentChartData | TreatmentMolecularMarkersChartData;
     dataSources?: CitationDataSource[];
     curations?: CurationSources[];
     othersDetected?: string[];
+    othersTitle?: string;
     aditionalInformation?: AditionalInformation[];
+};
+
+export type preventionChartDataTitle = {
+    statusColor: string;
+    titlePrefix: string;
+    titleContent: string;
+    titleSufix: string;
 };
 
 export type PreventionChartData = {
     kind: "prevention";
-    data: { [x: string]: { [x: string]: PreventionChartDataItem[] } };
+    data: { [x: string]: { [x: string]: { title?: preventionChartDataTitle; seriesData: PreventionChartDataItem[] } } };
 };
 
 export type PreventionMechanismChartData = {
@@ -36,16 +43,6 @@ export type PreventionMechanismChartData = {
             };
         };
     };
-};
-
-export type DiagnosisChartData = {
-    kind: "diagnosis";
-    data: DiagnosisChartDataItemByYear[];
-};
-
-export type InvasiveChartData = {
-    kind: "invasive";
-    data: InvasiveChartDataContent;
 };
 
 export type TreatmentChartData = {
@@ -78,6 +75,7 @@ export type PreventionChartDataItem = {
 export type PreventionMechanismChartDataItem = {
     name: string;
     y: number;
+    yName: string;
     value?: string;
 };
 
@@ -91,30 +89,8 @@ export type PreventionMechanismChartDataGroup = {
 export type TreatmentChartDataGroup = {
     name: string;
     color?: string;
-    lineWidth: number;
     marker: { symbol: string };
     data: number[];
-};
-
-export type DiagnosisChartDataItem = {
-    type: string;
-    samples: string;
-    percentageConfirmed: string;
-};
-
-export type DiagnosisChartDataItemByYear = {
-    header?: string;
-    dataSources: string;
-    year: number;
-    items: DiagnosisChartDataItem[];
-};
-
-export type InvasiveChartDataContent = {
-    species?: string;
-    samplingPeriod?: string;
-    samplingMethod?: string;
-    speciedIdentificationMethod?: string;
-    vectorStage?: string;
 };
 
 export type CitationDataSource = {

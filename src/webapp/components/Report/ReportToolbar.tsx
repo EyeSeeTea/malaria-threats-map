@@ -7,6 +7,8 @@ import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import React from "react";
 import ReportFilterPopover from "./ReportFilterPopover";
+import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 interface ReportToolbarProps {
     title: string;
@@ -21,6 +23,8 @@ interface ReportToolbarProps {
     plasmodiumSpecie?: string;
     setPlasmodiumSpecie?: any;
     onClick: any;
+    preventionStudies?: PreventionStudy[];
+    treatmentStudies?: TreatmentStudy[];
 }
 
 const useToolbarStyles = makeStyles((theme: Theme) =>
@@ -63,6 +67,8 @@ const ReportToolbar: React.FC<ReportToolbarProps> = ({
     plasmodiumSpecie,
     setPlasmodiumSpecie,
     onClick,
+    preventionStudies,
+    treatmentStudies,
 }) => {
     const { t } = useTranslation();
     const classes = useToolbarStyles({});
@@ -116,6 +122,8 @@ const ReportToolbar: React.FC<ReportToolbarProps> = ({
                         setDrugs={setDrugs}
                         plasmodiumSpecie={plasmodiumSpecie}
                         setPlasmodiumSpecie={setPlasmodiumSpecie}
+                        treatmentStudies={treatmentStudies}
+                        preventionStudies={preventionStudies}
                     />
                 </>
             )}

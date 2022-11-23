@@ -16,6 +16,7 @@ import {
     setThemeAction,
     logPageViewAction,
     setSelectionData,
+    setMaxMinYearsAction,
 } from "../../actions/base-actions";
 import { DiagnosisMapType, State } from "../../types";
 import { addNotificationAction } from "../../actions/notifier-actions";
@@ -25,6 +26,7 @@ import { EpicDependencies } from "../../index";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import { ActionTypeEnum } from "../../actions";
 import { createDiagnosisSelectionData } from "./utils";
+import { DELETION_TYPES } from "../../../components/filters/DeletionTypeFilter";
 
 export const getDiagnosisStudiesEpic = (
     action$: Observable<ActionType<typeof fetchDiagnosisStudiesRequest>>,
@@ -55,7 +57,17 @@ export const setDiagnosisThemeEpic = (action$: Observable<ActionType<typeof setT
             if ($action.payload !== "diagnosis") {
                 return of();
             }
-            return of(setFiltersAction([1998, new Date().getFullYear()]));
+
+            const base = [
+                setMaxMinYearsAction([1998, new Date().getFullYear()]),
+                setFiltersAction([1998, new Date().getFullYear()]),
+            ];
+
+            if ($action.from === "map") {
+                return of(...base, setDiagnosisDeletionType(DELETION_TYPES.HRP2_PROPORTION_DELETION.value));
+            } else {
+                return of(...base, setDiagnosisDeletionType(null));
+            }
         })
     );
 
@@ -91,7 +103,7 @@ export const setDiagnosisFilteredStudiesEpic = (
     action$: Observable<ActionType<typeof setDiagnosisFilteredStudiesAction>>,
     state$: StateObservable<State>
 ) =>
-    action$.pipe(skip(1)).pipe(
+    action$.pipe(
         ofType(ActionTypeEnum.SetDiagnosisFilteredStudies),
         withLatestFrom(state$),
         switchMap(([, state]) => {

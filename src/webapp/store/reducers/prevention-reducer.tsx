@@ -2,7 +2,7 @@ import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { PreventionMapType, PreventionState, State } from "../types";
+import { PreventionDataset, PreventionMapType, PreventionState, State } from "../types";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 const initialState: PreventionState = Object.freeze({
@@ -12,12 +12,15 @@ const initialState: PreventionState = Object.freeze({
     filteredStudies: [],
     filters: {
         mapType: PreventionMapType.RESISTANCE_STATUS,
-        insecticideClass: "PYRETHROIDS",
+        dataset: "DISCRIMINATING_CONCENTRATION_BIOASSAY",
+        insecticideClass: null,
         insecticideTypes: [],
         synergistTypes: [],
         assayTypes: [],
+        proxyType: null,
         type: null,
         species: [],
+        onlyByHealthMinistries: false,
     },
     selectionStudies: [],
 });
@@ -38,8 +41,12 @@ function updatePreventionMapType(mapType: PreventionMapType) {
     return updateFilter("mapType", mapType, PreventionMapType.RESISTANCE_STATUS);
 }
 
+function updatePreventionDataSet(dataset: PreventionDataset) {
+    return updateFilter("dataset", dataset, "DISCRIMINATING_CONCENTRATION_BIOASSAY");
+}
+
 function updateInsecticideClass(insecticideClass: string) {
-    return updateFilter("insecticideClass", insecticideClass, "PYRETHROIDS");
+    return updateFilter("insecticideClass", insecticideClass);
 }
 
 function updateInsecticideTypes(insecticideTypes: string[]) {
@@ -49,6 +56,11 @@ function updateInsecticideTypes(insecticideTypes: string[]) {
 function updateType(type: string) {
     return updateFilter("type", type);
 }
+
+function updateProxyType(proxyType: string) {
+    return updateFilter("proxyType", proxyType);
+}
+
 function updateSynergistTypes(synergistTypes: string[]) {
     return updateFilter("synergistTypes", synergistTypes, []);
 }
@@ -59,6 +71,10 @@ function updateSpecies(species: string[]) {
 
 function updateAssayTypes(assayTypes: string[]) {
     return updateFilter("assayTypes", assayTypes, []);
+}
+
+function updateOnlyByHealthMinistries(value: boolean) {
+    return updateFilter("onlyByHealthMinistries", value, false);
 }
 
 export default createReducer<PreventionState>(initialState, {
@@ -77,14 +93,21 @@ export default createReducer<PreventionState>(initialState, {
         loading: false,
     }),
     [ActionTypeEnum.SetPreventionMapType]: updatePreventionMapType,
+    [ActionTypeEnum.SetPreventionDataset]: updatePreventionDataSet,
     [ActionTypeEnum.SetInsecticideClass]: updateInsecticideClass,
     [ActionTypeEnum.SetInsecticideTypes]: updateInsecticideTypes,
     [ActionTypeEnum.SetAssayTypes]: updateAssayTypes,
     [ActionTypeEnum.SetSynergistTypes]: updateSynergistTypes,
     [ActionTypeEnum.SetType]: updateType,
+    [ActionTypeEnum.SetProxyType]: updateProxyType,
     [ActionTypeEnum.SetSpecies]: updateSpecies,
     [ActionTypeEnum.SetPreventionFilteredStudies]: (filteredStudies: PreventionStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
+    [ActionTypeEnum.SetPreventionSelectionStudies]: (studies: PreventionStudy[]) => (state: PreventionState) => ({
+        ...state,
+        selectionStudies: studies,
+    }),
+    [ActionTypeEnum.SetOnlyByHealthMinistries]: updateOnlyByHealthMinistries,
 });
 
 const selectPreventionState = (state: State) => state.prevention;
