@@ -8,12 +8,22 @@ const TitleContainer = styled(Container)`
     padding-top: 12vh;
 `;
 
+const StyledImageBanner = styled(ImageBanner)`
+    height: 50vh;
+    @media (max-width: 1800px) {
+        height: 73vh;
+    }
+    @media (max-width: 768px) {
+        height: 68vh;
+    }
+`;
+
 const BannerSection = () => {
     const { t } = useTranslation();
 
     return (
         <section>
-            <ImageBanner height="70vh">
+            <StyledImageBanner>
                 <TitleContainer maxWidth="xl">
                     <Typography variant="h2" color={"inherit"} textTransform="uppercase">
                         Malaria
@@ -25,7 +35,7 @@ const BannerSection = () => {
                         {t("common.homepage.subtitle")}
                     </Typography>
                 </TitleContainer>
-            </ImageBanner>
+            </StyledImageBanner>
         </section>
     );
 };

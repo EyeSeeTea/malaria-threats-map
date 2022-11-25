@@ -9,6 +9,9 @@ import { Link } from "react-router-dom";
 
 const Section = styled.section`
     margin-top: -250px;
+    @media (max-width: 768px) {
+        margin-top: -150px;
+    }
 `;
 
 const RoundedCard = styled(Card)`
@@ -107,7 +110,7 @@ const LinkCardsSection: React.FC = () => {
                                         >
                                             {card.title}
                                         </Typography>
-                                        <Typography variant="body2" color="black" textAlign="center">
+                                        <Typography variant="body1" color="black" textAlign="center">
                                             {card.text}
                                         </Typography>
                                     </StyledCardContent>
