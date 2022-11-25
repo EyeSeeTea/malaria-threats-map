@@ -16,6 +16,7 @@ import { Button, Collapse, Divider, Stack, Typography } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Trans, useTranslation } from "react-i18next";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { Link } from "react-router-dom";
 
 const StyledButton = styled(Button)`
     color: black;
@@ -99,6 +100,8 @@ const Legend: React.FC<Props> = ({
 
     const { t } = useTranslation();
 
+    const WhoManualLink = "https://www.who.int/publications/i/item/9789240051089";
+
     const handleExpand = React.useCallback(() => {
         setExpanded(!expanded);
     }, [expanded]);
@@ -152,7 +155,10 @@ const Legend: React.FC<Props> = ({
                             <Typography variant="caption">
                                 <Trans i18nKey={`${mapTypeHelpKey}.p2`} t={t}>
                                     For information on how each level is defined, please consult the&nbsp;
-                                    <a href="/">WHO manual for resistance monitoring</a>.
+                                    <a href={WhoManualLink} target="_blank" rel="noreferrer">
+                                        WHO manual for resistance monitoring
+                                    </a>
+                                    .
                                 </Trans>
                             </Typography>
                         </HelpContainer>
@@ -165,7 +171,7 @@ const Legend: React.FC<Props> = ({
                                 <span style={{ marginLeft: "6px" }}>
                                     <Trans i18nKey={`${mapTypeHelpKey}.question`} t={t}>
                                         Please report the detection of invasive Anopheles vector species using this{" "}
-                                        <a href="/">reporting form</a>.
+                                        <Link to="/share-data">reporting form</Link>.
                                     </Trans>
                                 </span>
                             </Question>
