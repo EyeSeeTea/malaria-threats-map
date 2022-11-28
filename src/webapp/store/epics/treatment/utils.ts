@@ -30,9 +30,13 @@ export function createTreatmentSelectionData(
 
     if (siteFilteredStudies.length === 0) return null;
 
-    const dataSources = createCitationDataSources(theme, siteFilteredStudies);
+    const sortedStudies = _.orderBy(
+        siteFilteredStudies,
+        study => parseInt(study.YEAR_START),
+        treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS ? "desc" : "asc"
+    );
 
-    const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), siteFilteredStudies);
+    const dataSources = createCitationDataSources(theme, sortedStudies);
 
     const studyObject = sortedStudies[0];
 
@@ -138,21 +142,20 @@ function createMolecularMarkersChartData(
     studies: TreatmentStudy[],
     dataSources: CitationDataSource[]
 ): TreatmentMolecularMarkersChartData {
-    const sortedStudies = R.reverse(R.sortBy(study => parseInt(study.YEAR_START), studies));
-    const years = sortedStudies.map(study => {
+    const years = studies.map(study => {
         const dataSourceKeys = selectDataSourcesByStudies(dataSources, [study]);
         return `${study.YEAR_START} (${dataSourceKeys.join(",")})`;
     });
-    const groupStudies = R.flatten(sortedStudies.map(study => study.groupStudies));
+    const groupStudies = R.flatten(studies.map(study => study.groupStudies));
     const k13Groups = R.groupBy(R.prop("GENOTYPE"), groupStudies);
     const series = Object.keys(k13Groups).map((genotype: string) => {
-        const studies: TreatmentStudy[] = k13Groups[genotype];
+        const k13StudiesByGroup: TreatmentStudy[] = k13Groups[genotype];
         return {
             maxPointWidth: 20,
             name: genotype,
             color: MutationColors[genotype] ? MutationColors[genotype].color : "000",
-            data: sortedStudies.map(k13Study => {
-                const study = studies.find(study => k13Study.Code === study.K13_CODE);
+            data: studies.map(k13Study => {
+                const study = k13StudiesByGroup.find(study => k13Study.Code === study.K13_CODE);
                 return {
                     y: study ? parseFloat((study.PROPORTION * 100).toFixed(1)) : undefined,
                 };
@@ -166,23 +169,29 @@ function createMolecularMarkersChartData(
             years,
             series,
             markers: {
-                Wildtype: [
-                    {
-                        name: "WT",
-                        color: MutationColors["WT"].color,
-                    },
-                ],
-                "Validated markers": Object.keys(k13Groups)
-                    .map(genotype => ({
-                        name: genotype,
-                        color: MutationColors[genotype] ? MutationColors[genotype].color : "#000",
-                    }))
-                    .filter(marker => marker.name !== "WT"),
-                "Associated markers": [],
-                "Other markers": [],
+                Wildtype: extractMarkersByMutationCategory(groupStudies, "wild type"),
+                "Validated markers": extractMarkersByMutationCategory(groupStudies, "validated"),
+                "Associated markers": extractMarkersByMutationCategory(groupStudies, "associated"),
+                "Other markers": extractMarkersByMutationCategory(groupStudies, "other"),
             },
         },
     };
+}
+
+function extractMarkersByMutationCategory(mutationStudies: TreatmentStudy[], category: String) {
+    const k13Mutations = _.uniqBy(
+        mutationStudies.map(s => ({ GENOTYPE: s.GENOTYPE, MUT_CAT: s.MUT_CAT, MUT_ORDER: +s.MUT_ORDER })),
+        "GENOTYPE"
+    );
+
+    return _.orderBy(
+        k13Mutations.filter(m => m.MUT_CAT === category),
+        "MUT_ORDER",
+        "asc"
+    ).map(mutation => ({
+        name: mutation.GENOTYPE,
+        color: MutationColors[mutation.GENOTYPE] ? MutationColors[mutation.GENOTYPE].color : "#000",
+    }));
 }
 
 function createTreatmentAditionalInfo(studies: TreatmentStudy[]): AditionalInformation[] {

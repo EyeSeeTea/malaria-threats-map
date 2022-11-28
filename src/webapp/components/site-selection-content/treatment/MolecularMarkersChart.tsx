@@ -81,6 +81,7 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
         maxPointWidth: 20,
         type: "bar",
         height: 250,
+        marginRight: 40,
         style: {
             ...ChartStyles,
         },
@@ -166,5 +167,5 @@ const MarkerContainer = styled.div`
     margin: 0px;
     padding: 0px;
     margin: 0px 2px;
-    width: 70px;
+    width: 90px;
 `;

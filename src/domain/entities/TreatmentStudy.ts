@@ -20,6 +20,8 @@ export interface TreatmentStudy extends Study {
     groupStudies: TreatmentStudy[];
     PROPORTION: number;
     GENOTYPE: string;
+    MUT_CAT: string;
+    MUT_ORDER: string;
     PROP_RELATED: number;
     Code: number;
     HEALTHFACILITY_NAME: string;
