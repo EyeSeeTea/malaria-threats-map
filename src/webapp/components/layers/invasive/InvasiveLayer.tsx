@@ -75,6 +75,8 @@ class InvasiveLayer extends Component<Props> {
     }
 
     componentDidUpdate(prevProps: Props) {
+        if (this.props.theme !== "invasive") return;
+
         this.loadStudiesIfRequired();
 
         const {

@@ -85,6 +85,8 @@ class TreatmentLayer extends Component<Props> {
     }
 
     componentDidUpdate(prevProps: Props) {
+        if (this.props.theme !== "treatment") return;
+
         this.loadStudiesIfRequired();
 
         const {
