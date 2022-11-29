@@ -13,6 +13,15 @@ export const MutationColors: { [key: string]: { color: string } } = {
     C469F: {
         color: "#FEB25C",
     },
+    F483I: {
+        color: "#c1e425",
+    },
+    F506I: {
+        color: "#25e488",
+    },
+    F506V: {
+        color: "#34cbd5",
+    },
     G538V: {
         color: "#DE7702",
     },
@@ -784,6 +793,9 @@ export const MutationColors: { [key: string]: { color: string } } = {
     N523T: {
         color: "#FFEFDB",
     },
+    "N523S&T535A&T593A": {
+        color: "#85cd3c",
+    },
     N525D: {
         color: "#37F4D7",
     },
@@ -1093,6 +1105,9 @@ export const MutationColors: { [key: string]: { color: string } } = {
     S577A: {
         color: "#43F5DB",
     },
+    S577L: {
+        color: "#e4d425",
+    },
     S577P: {
         color: "#7A8B8B",
     },
@@ -1361,7 +1376,7 @@ export const MutationColors: { [key: string]: { color: string } } = {
         color: "#31E7B4",
     },
     Y653N: {
-        color: "#4F81BD",
+        color: "#0b81bd",
     },
     A675V: {
         color: "#960018",
@@ -1428,6 +1443,9 @@ export const MutationColors: { [key: string]: { color: string } } = {
     },
     "R561H&C580Y": {
         color: "#DE1902",
+    },
+    T474A: {
+        color: "#7525e4",
     },
     Y493H: {
         color: "#BF2513",
