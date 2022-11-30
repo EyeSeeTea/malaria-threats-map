@@ -111,8 +111,10 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
         },
     },
     tooltip: {
-        headerFormat: "<span style='color:grey;font-size:11px;'>{point.x}</span><br/>",
-        pointFormat: "{series.name}: &nbsp;&nbsp;<b style='font-size:16px'>{point.y}%</b>",
+        useHTML: true,
+        headerFormat: "",
+        pointFormat:
+            "<div>{series.name}:&nbsp;&nbsp;<b style='font-size:16px'>{point.y}%</b><div><div>n:&nbsp;<b style='font-size:14px'>{point.n}</b><div>",
         style: {
             width: 200,
         },
