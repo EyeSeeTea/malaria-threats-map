@@ -2,10 +2,10 @@ import React from "react";
 
 import Layout from "../layout/Layout";
 import BannerSection from "./BannerSection";
-import ChallengesSection from "./ChallengesSection";
+//import ChallengesSection from "./ChallengesSection";
 import DataSection from "./DataSection";
 import MapSection from "./MapSection";
-// import UserExperience from "./UserExperienceSection";
+import UserExperience from "./UserExperienceSection";
 
 /* const StyledDivider = styled(Divider)`
     width: 100%;
@@ -19,9 +19,13 @@ export const AboutPage: React.FC = () => {
             <BannerSection />
             <DataSection />
             <MapSection />
-            <ChallengesSection />
-            {/* <StyledDivider variant="fullWidth" /> */}
-            {/* <UserExperience /> */}
+            {/*
+              * Temporarily hide Challenges Section
+              *
+                <ChallengesSection />
+                <StyledDivider variant="fullWidth" />
+            */}
+            <UserExperience />
         </Layout>
     );
 };
