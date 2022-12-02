@@ -79,6 +79,8 @@ class PreventionLayer extends Component<Props> {
     }
 
     componentDidUpdate(prevProps: Props) {
+        if (this.props.theme !== "prevention") return;
+
         this.loadStudiesIfRequired();
 
         const {
