@@ -72,6 +72,8 @@ class DiagnosisLayer extends Component<Props> {
     }
 
     componentDidUpdate(prevProps: Props) {
+        if (this.props.theme !== "diagnosis") return;
+
         this.loadStudiesIfRequired();
 
         const {

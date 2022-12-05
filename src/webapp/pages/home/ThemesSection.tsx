@@ -184,7 +184,7 @@ const ThemesSection: React.FC<Props> = ({
                                             <Typography gutterBottom variant="h5" textAlign="left">
                                                 {theme.title}
                                             </Typography>
-                                            <Typography gutterBottom variant="body2" component="div" textAlign="left">
+                                            <Typography gutterBottom variant="body1" component="div" textAlign="left">
                                                 {theme.subtitle}
                                             </Typography>
                                         </Grid>

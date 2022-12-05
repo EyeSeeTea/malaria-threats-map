@@ -21,6 +21,7 @@ import LineSymbol from "../../../assets/img/line.svg";
 export function createTreatmentSelectionData(
     theme: string,
     treatmentFilters: TreatmentFilters,
+    yearFilters: number[],
     selection: SiteSelection | null,
     filteredStudies: TreatmentStudy[]
 ): SelectionData | null {
@@ -50,7 +51,7 @@ export function createTreatmentSelectionData(
         data:
             treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS
                 ? createMolecularMarkersChartData(sortedStudies, dataSources)
-                : createTreatmentFailureChartData(sortedStudies),
+                : createTreatmentFailureChartData(sortedStudies, yearFilters),
         dataSources: treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS ? dataSources : undefined,
         curations: [],
         othersDetected: [],
@@ -87,9 +88,13 @@ function rangeYears(startYear: number, endYear: number) {
     return years;
 }
 
-function createTreatmentFailureChartData(studies: TreatmentStudy[]): TreatmentChartData {
+function createTreatmentFailureChartData(studies: TreatmentStudy[], yearFilters: number[]): TreatmentChartData {
     const currentYear = new Date().getFullYear();
-    const years = rangeYears(currentYear - 7, currentYear).sort();
+
+    const startYear = yearFilters.length !== 0 ? yearFilters[0] : currentYear - 7;
+    const endYear = yearFilters.length === 2 ? yearFilters[1] : currentYear;
+
+    const years = rangeYears(startYear, endYear).sort();
 
     const { PLASMODIUM_SPECIES } = studies[0];
 
@@ -142,7 +147,6 @@ function createMolecularMarkersChartData(
     studies: TreatmentStudy[],
     dataSources: CitationDataSource[]
 ): TreatmentMolecularMarkersChartData {
-    debugger;
     const studies255 = studies;
 
     const years = studies255.map(study => {

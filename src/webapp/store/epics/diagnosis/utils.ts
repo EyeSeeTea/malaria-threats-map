@@ -20,7 +20,9 @@ export function createDiagnosisSelectionData(
 
     if (siteFilteredStudies.length === 0) return null;
 
-    const surveyTypes = _.uniq(siteFilteredStudies.map(study => study.SURVEY_TYPE)).map(type => {
+    const sortedStudies = _.orderBy(siteFilteredStudies, study => +study.YEAR_START, "desc");
+
+    const surveyTypes = _.uniq(sortedStudies.map(study => study.SURVEY_TYPE)).map(type => {
         const dhs = i18next.t("common.diagnosis.chart.gene_deletions.DHS");
         return i18next.t(type).toLowerCase().replace(new RegExp(dhs, "i"), dhs);
     });
@@ -29,25 +31,25 @@ export function createDiagnosisSelectionData(
         surveyTypes: formatList(surveyTypes),
     });
 
-    const years = getMinMaxYears(siteFilteredStudies);
+    const years = getMinMaxYears(sortedStudies);
 
     const sampleOrigin =
-        siteFilteredStudies[0].SAMPLE_ORIGIN_TEXT != null ? `\n\n${siteFilteredStudies[0].SAMPLE_ORIGIN_TEXT}` : "";
+        sortedStudies[0].SAMPLE_ORIGIN_TEXT != null ? `\n\n${sortedStudies[0].SAMPLE_ORIGIN_TEXT}` : "";
 
     const subtitle = `${i18next.t("common.diagnosis.chart.gene_deletions.subtitle_1")} ${
         years.length === 1 ? surveyType : ""
     } (${years.join("-")}) ${sampleOrigin}`;
 
-    const dataSources = createCitationDataSources(theme, siteFilteredStudies);
+    const dataSources = createCitationDataSources(theme, sortedStudies);
 
     return {
         kind: "diagnosis",
-        title: siteFilteredStudies.length > 0 ? getSiteTitle(theme, siteFilteredStudies[0]) : "",
+        title: sortedStudies.length > 0 ? getSiteTitle(theme, sortedStudies[0]) : "",
         subtitle,
-        studyObject: siteFilteredStudies[0],
-        data: getData(siteFilteredStudies, dataSources),
+        studyObject: sortedStudies[0],
+        data: getData(sortedStudies, dataSources),
         dataSources: dataSources,
-        curations: createCurations(dataSources, siteFilteredStudies),
+        curations: createCurations(dataSources, sortedStudies),
     };
 }
 

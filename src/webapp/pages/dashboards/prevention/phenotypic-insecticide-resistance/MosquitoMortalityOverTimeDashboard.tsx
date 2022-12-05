@@ -202,7 +202,7 @@ function chartOptions(years: number[], data: MosquitoOverTimeData, xAxisVisible:
                 data: data.boxplotData,
             },
             {
-                name: "Outliers",
+                name: "",
                 type: "scatter",
                 data: data.outliersData,
                 marker: {
