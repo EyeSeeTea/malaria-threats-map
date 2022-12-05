@@ -78,7 +78,7 @@ const feedbackConfig = {
     token: ["ghp_mKe29w1W0ww54C", "ah9NfIMlJdEpP2Mw3RU7FO"],
     createIssue: true,
     issues: { repository: "WorldHealthOrganization/malaria-threats-map", title: "[User feedback] {title}" },
-    snapshots: { repository: "EyeSeeTeaBotTest/snapshots", branch: "master" },
+    snapshots: { repository: "EyeSeeTea/feedback-ci", branch: "master" },
     buttonPosition: "right",
 };
 
