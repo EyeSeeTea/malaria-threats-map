@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Typography, Button, Container, Grid } from "@mui/material";
+import { Typography, Container, Grid } from "@mui/material";
 import UXTesting from "../../assets/img/about-page/about-page-ux-testing.png";
 import { useTranslation } from "react-i18next";
 
@@ -9,14 +9,14 @@ const Section = styled.section`
     padding: 10vmin 4vmin 4vmin 4vmin;
 `;
 
-const StyledAcknowledgementsButton = styled(Button)`
+/* const StyledAcknowledgementsButton = styled(Button)`
     &.MuiButton-root {
         color: white;
         background-color: #343434;
         font-weight: bold;
         max-width: 265px;
     }
-`;
+`; */
 
 const UserExperienceSection = () => {
     const { t } = useTranslation();
@@ -38,9 +38,13 @@ const UserExperienceSection = () => {
                         <Typography variant="body1" sx={{ marginBottom: 4 }}>
                             {t("common.aboutPage.userExperienceSection.p2")}
                         </Typography>
-                        <StyledAcknowledgementsButton size="large" variant="contained">
-                            {t("common.aboutPage.userExperienceSection.button")}
-                        </StyledAcknowledgementsButton>
+                        {/* 
+                          * Temporarily hide acknowledgement button
+                          *
+                            <StyledAcknowledgementsButton size="large" variant="contained">
+                                {t("common.aboutPage.userExperienceSection.button")}
+                            </StyledAcknowledgementsButton>
+                        */}
                     </Grid>
                 </Grid>
             </Container>

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Typography, Divider, Tabs, Tab, Container, Grid } from "@mui/material";
+import { Typography, Tabs, Tab, Container, Grid } from "@mui/material";
 import DonorsOption from "../../assets/img/about-page/about-page-donors-option.png";
 import { useTranslation } from "react-i18next";
 
@@ -47,12 +47,6 @@ const TabContent = styled.div`
 const TabFooter = styled.div`
     display: flex;
     justify-content: flex-end;
-`;
-
-const StyledDivider = styled(Divider)`
-    width: 100%;
-    margin-top: 60px;
-    background-color: #a1c5b7;
 `;
 
 interface TabPanelProps {
@@ -175,7 +169,6 @@ const ChallengesSection: React.FC = () => {
                         </TabPanel>
                     );
                 })}
-                <StyledDivider variant="fullWidth" />
             </Container>
         </Section>
     );
