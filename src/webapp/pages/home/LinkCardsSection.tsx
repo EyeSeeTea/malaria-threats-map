@@ -12,6 +12,9 @@ const Section = styled.section`
     @media (max-width: 768px) {
         margin-top: -150px;
     }
+    @media (min-width: 768px) and (max-height: 640px) {
+        margin-top: -100px;
+    }
 `;
 
 const RoundedCard = styled(Card)`

@@ -5,11 +5,12 @@ import ImageBanner from "../common/ImageBanner";
 import styled from "styled-components";
 
 const TitleContainer = styled(Container)`
-    padding-top: 12vh;
+    padding-top: 10vh;
 `;
 
 const StyledImageBanner = styled(ImageBanner)`
-    height: 50vh;
+    background-repeat: repeat-x;
+    height: 700px;
     @media (max-width: 1800px) {
         height: 73vh;
     }
