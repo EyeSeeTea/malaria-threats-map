@@ -17,11 +17,7 @@ import {
     selectTheme,
 } from "../../../store/reducers/base-reducer";
 import mapboxgl from "mapbox-gl";
-import {
-    fetchPreventionStudiesRequest,
-    setPreventionFilteredStudies,
-    setPreventionSelectionStudies,
-} from "../../../store/actions/prevention-actions";
+import { fetchPreventionStudiesRequest, setPreventionFilteredStudies } from "../../../store/actions/prevention-actions";
 import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import SitePopover from "../common/SitePopover";
@@ -60,7 +56,6 @@ const mapDispatchToProps = {
     setFilteredStudies: setPreventionFilteredStudies,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
-    setPreventionSelectionStudies: setPreventionSelectionStudies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -79,8 +74,6 @@ class PreventionLayer extends Component<Props> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (this.props.theme !== "prevention") return;
-
         this.loadStudiesIfRequired();
 
         const {
@@ -99,6 +92,9 @@ class PreventionLayer extends Component<Props> {
         } = this.props;
         this.mountLayer(prevProps);
         this.renderLayer();
+
+        if (this.props.theme !== "prevention") return;
+
         const mapTypeChange = prevProps.preventionFilters.mapType !== mapType;
         const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
         const countryChange = prevProps.region !== region;

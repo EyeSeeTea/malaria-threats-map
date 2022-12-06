@@ -9,7 +9,6 @@ import {
     fetchInvasiveStudiesSuccess,
     setInvasiveFilteredStudiesAction,
     setInvasiveMapType,
-    setInvasiveSelectionStudies,
 } from "../../actions/invasive-actions";
 import {
     setFiltersAction,
@@ -83,16 +82,12 @@ export const setInvasiveFilteredStudiesEpic = (
         ofType(ActionTypeEnum.SetInvasiveFilteredStudies),
         withLatestFrom(state$),
         switchMap(([, state]) => {
-            const siteFilteredStudies = state.malaria.selection
-                ? state.invasive.filteredStudies.filter(study => study.SITE_ID === state.malaria.selection.SITE_ID)
-                : [];
-
             const selectionData = createInvasiveSelectionData(
                 state.malaria.theme,
                 state.malaria.selection,
                 state.invasive.filteredStudies
             );
 
-            return of(setInvasiveSelectionStudies(siteFilteredStudies), setSelectionData(selectionData));
+            return of(setSelectionData(selectionData));
         })
     );

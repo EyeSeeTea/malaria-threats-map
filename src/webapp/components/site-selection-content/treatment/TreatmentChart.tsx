@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../store/reducers/base-reducer";
 import { State } from "../../../store/types";
-import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { SelectionData } from "../../../store/SelectionData";
 import { ChartStyles } from "../../charts/Style";
 
@@ -68,7 +67,6 @@ const mapStateToProps = (state: State) => ({
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
-    studies?: TreatmentStudy[];
     selectionData?: SelectionData;
 };
 type Props = StateProps & OwnProps;

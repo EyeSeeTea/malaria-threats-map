@@ -1,16 +1,26 @@
 import i18next from "i18next";
 import { getSiteTitle } from "../../../components/site-title/utils";
-import { AditionalInformation, SelectionData, TreatmentChartData } from "../../SelectionData";
+import {
+    AditionalInformation,
+    CitationDataSource,
+    SelectionData,
+    TreatmentChartData,
+    TreatmentMolecularMarkersChartData,
+} from "../../SelectionData";
 import * as R from "ramda";
 import _ from "lodash";
-import { SiteSelection } from "../../types";
+import { SiteSelection, TreatmentFilters, TreatmentMapType } from "../../types";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../components/filters/PlasmodiumSpeciesFilter";
 import { isNotNull } from "../../../utils/number-utils";
+import { MutationColors } from "../../../components/layers/treatment/MolecularMarkers/utils";
+import { MOLECULAR_MARKERS } from "../../../components/filters/MolecularMarkerFilter";
+import { createCitationDataSources, selectDataSourcesByStudies } from "../common/utils";
 import LineSymbol from "../../../assets/img/line.svg";
 
 export function createTreatmentSelectionData(
     theme: string,
+    treatmentFilters: TreatmentFilters,
     yearFilters: number[],
     selection: SiteSelection | null,
     filteredStudies: TreatmentStudy[]
@@ -21,29 +31,53 @@ export function createTreatmentSelectionData(
 
     if (siteFilteredStudies.length === 0) return null;
 
-    const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), siteFilteredStudies);
+    const sortedStudies = _.orderBy(
+        siteFilteredStudies,
+        study => parseInt(study.YEAR_START),
+        treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS ? "desc" : "asc"
+    );
+
+    const dataSources = createCitationDataSources(theme, sortedStudies);
 
     const studyObject = sortedStudies[0];
-
-    const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.find(
-        (species: any) => species.value === sortedStudies[0].PLASMODIUM_SPECIES
-    ).label;
-
-    const subtitle = `${plasmodiumSpecies}, ${i18next.t(sortedStudies[0].DRUG_NAME)}`;
 
     return {
         kind: "common",
         title: siteFilteredStudies.length > 0 ? getSiteTitle(theme, siteFilteredStudies[0]) : "",
-        subtitle,
+        subtitle: geSubtitle(treatmentFilters, studyObject),
         filterOptions: [],
         filterSelection: [],
         studyObject,
-        data: createTreatmentFailureChartData(sortedStudies, yearFilters),
-        dataSources: undefined,
+        data:
+            treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS
+                ? createMolecularMarkersChartData(sortedStudies, dataSources)
+                : createTreatmentFailureChartData(sortedStudies, yearFilters),
+        dataSources: treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS ? dataSources : undefined,
         curations: [],
         othersDetected: [],
-        aditionalInformation: createTreatmentAditionalInfo(sortedStudies),
+        aditionalInformation:
+            treatmentFilters.mapType !== TreatmentMapType.MOLECULAR_MARKERS
+                ? createTreatmentAditionalInfo(sortedStudies)
+                : undefined,
     };
+}
+
+function geSubtitle(treatmentFilters: TreatmentFilters, studyObject: TreatmentStudy) {
+    if (treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS) {
+        const molecularMarker = i18next.t(
+            MOLECULAR_MARKERS.find((m: any) => m.value === treatmentFilters.molecularMarker).label
+        );
+
+        return i18next.t("common.treatment.chart.molecular_markers.subtitle", {
+            molecularMarker,
+        });
+    } else {
+        const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.find(
+            (species: any) => species.value === studyObject.PLASMODIUM_SPECIES
+        ).label;
+
+        return `${plasmodiumSpecies}, ${i18next.t(studyObject.DRUG_NAME)}`;
+    }
 }
 
 function rangeYears(startYear: number, endYear: number) {
@@ -107,6 +141,68 @@ function createTreatmentFailureChartData(studies: TreatmentStudy[], yearFilters:
     });
 
     return { kind: "treatment", data: { series, years } };
+}
+
+function createMolecularMarkersChartData(
+    studies: TreatmentStudy[],
+    dataSources: CitationDataSource[]
+): TreatmentMolecularMarkersChartData {
+    const studies255 = studies;
+
+    const years = studies255.map(study => {
+        const dataSourceKeys = selectDataSourcesByStudies(dataSources, [study]);
+        return `${study.YEAR_START} (${dataSourceKeys.join(",")})`;
+    });
+    const allStudies257 = R.flatten(studies255.map(study => study.groupStudies));
+    const studies257ByGenotype = R.groupBy(R.prop("GENOTYPE"), allStudies257);
+    const genotypes = Object.keys(studies257ByGenotype);
+
+    const series = genotypes.map((genotype: string) => {
+        const studies257: TreatmentStudy[] = studies257ByGenotype[genotype];
+
+        return {
+            maxPointWidth: 20,
+            name: genotype,
+            color: MutationColors[genotype] ? MutationColors[genotype].color : "000",
+            data: studies255.map(study255 => {
+                const study = studies257.find(study => study255.Code === study.K13_CODE);
+                return {
+                    y: study ? parseFloat((study.PROPORTION * 100).toFixed(1)) : undefined,
+                    n: study255.N,
+                };
+            }),
+        };
+    });
+
+    return {
+        kind: "treatment-molecular-markers",
+        data: {
+            years,
+            series,
+            markers: {
+                Wildtype: extractMarkersByMutationCategory(allStudies257, "wild type"),
+                "Validated markers": extractMarkersByMutationCategory(allStudies257, "validated"),
+                "Associated markers": extractMarkersByMutationCategory(allStudies257, "associated"),
+                "Other markers": extractMarkersByMutationCategory(allStudies257, "other"),
+            },
+        },
+    };
+}
+
+function extractMarkersByMutationCategory(mutationStudies: TreatmentStudy[], category: String) {
+    const k13Mutations = _.uniqBy(
+        mutationStudies.map(s => ({ GENOTYPE: s.GENOTYPE, MUT_CAT: s.MUT_CAT, MUT_ORDER: +s.MUT_ORDER })),
+        "GENOTYPE"
+    );
+
+    return _.orderBy(
+        k13Mutations.filter(m => m.MUT_CAT === category),
+        "MUT_ORDER",
+        "asc"
+    ).map(mutation => ({
+        name: mutation.GENOTYPE,
+        color: MutationColors[mutation.GENOTYPE] ? MutationColors[mutation.GENOTYPE].color : "#000",
+    }));
 }
 
 function createTreatmentAditionalInfo(studies: TreatmentStudy[]): AditionalInformation[] {

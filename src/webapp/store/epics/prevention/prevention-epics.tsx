@@ -30,7 +30,6 @@ import {
     setInsecticideTypes,
     setPreventionFilteredStudies,
     setPreventionMapType,
-    setPreventionSelectionStudies,
     setProxyType,
     setSpecies,
     setType,
@@ -147,10 +146,6 @@ export const setPreventionFilteredStudiesEpic = (
         ofType(ActionTypeEnum.SetPreventionFilteredStudies),
         withLatestFrom(state$),
         switchMap(([, state]) => {
-            const siteFilteredStudies = state.malaria.selection
-                ? state.prevention.filteredStudies.filter(study => study.SITE_ID === state.malaria.selection.SITE_ID)
-                : [];
-
             const selectionData = createPreventionSelectionData(
                 state.malaria.theme,
                 state.prevention.filters.mapType,
@@ -159,12 +154,7 @@ export const setPreventionFilteredStudiesEpic = (
                 state.prevention.studies
             );
 
-            const actions = _.compact([
-                setPreventionSelectionStudies(siteFilteredStudies),
-                setSelectionData(selectionData),
-            ]);
-
-            return of(...actions);
+            return of(setSelectionData(selectionData));
         })
     );
 

@@ -41,6 +41,8 @@ export function createPreventionSelectionData(
 
     const siteFilteredStudies = filteredStudies.filter(study => study.SITE_ID === selection.SITE_ID);
 
+    if (siteFilteredStudies.length === 0) return null;
+
     const siteNonFilteredStudies = nonFilteredStudies
         .filter(study => study.SITE_ID === selection.SITE_ID)
         .filter(buildMapTypeFilter(mapType));

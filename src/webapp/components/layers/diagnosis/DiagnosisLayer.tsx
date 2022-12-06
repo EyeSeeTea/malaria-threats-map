@@ -20,7 +20,6 @@ import { DIAGNOSIS_STATUS } from "./GeneDeletions/utils";
 import {
     fetchDiagnosisStudiesRequest,
     setDiagnosisFilteredStudiesAction,
-    setDiagnosisSelectionStudies,
 } from "../../../store/actions/diagnosis-actions";
 import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
@@ -56,7 +55,6 @@ const mapDispatchToProps = {
     setFilteredStudies: setDiagnosisFilteredStudiesAction,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
-    setDiagnosisSelectionStudies: setDiagnosisSelectionStudies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -74,8 +72,6 @@ class DiagnosisLayer extends Component<Props> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (this.props.theme !== "diagnosis") return;
-
         this.loadStudiesIfRequired();
 
         const {
@@ -86,6 +82,9 @@ class DiagnosisLayer extends Component<Props> {
 
         this.mountLayer(prevProps);
         this.renderLayer();
+
+        if (this.props.theme !== "diagnosis") return;
+
         const mapTypeChange = prevProps.diagnosisFilters.mapType !== mapType;
         const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
         const surveyTypesChange = prevProps.diagnosisFilters.surveyTypes.length !== surveyTypes.length;

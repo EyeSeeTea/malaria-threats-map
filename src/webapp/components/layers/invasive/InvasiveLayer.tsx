@@ -15,7 +15,7 @@ import * as R from "ramda";
 import { buildInvasiveFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectInvasiveFilters, selectInvasiveStudies } from "../../../store/reducers/invasive-reducer";
-import { setInvasiveFilteredStudiesAction, setInvasiveSelectionStudies } from "../../../store/actions/invasive-actions";
+import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
 import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
 import { fetchInvasiveStudiesRequest } from "../../../store/actions/invasive-actions";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
@@ -55,7 +55,6 @@ const mapDispatchToProps = {
     setFilteredStudies: setInvasiveFilteredStudiesAction,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
-    setInvasiveSelectionStudies: setInvasiveSelectionStudies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -75,8 +74,6 @@ class InvasiveLayer extends Component<Props> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (this.props.theme !== "invasive") return;
-
         this.loadStudiesIfRequired();
 
         const {
@@ -87,6 +84,9 @@ class InvasiveLayer extends Component<Props> {
 
         this.mountLayer(prevProps);
         this.renderLayer();
+
+        if (this.props.theme !== "invasive") return;
+
         const mapTypeChange = prevProps.invasiveFilters.mapType !== mapType;
         const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
         const countryChange = prevProps.region !== region;

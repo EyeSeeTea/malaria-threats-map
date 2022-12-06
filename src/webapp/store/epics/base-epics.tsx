@@ -37,12 +37,8 @@ import { fromFuture } from "./utils";
 import { EpicDependencies } from "..";
 import { ActionTypeEnum } from "../actions";
 import { createPreventionSelectionData } from "./prevention/utils";
-import { setPreventionSelectionStudies } from "../actions/prevention-actions";
-import { setDiagnosisSelectionStudies } from "../actions/diagnosis-actions";
 import { createDiagnosisSelectionData } from "./diagnosis/utils";
 import { createInvasiveSelectionData } from "./invasive/utils";
-import { setInvasiveSelectionStudies } from "../actions/invasive-actions";
-import { setTreatmentSelectionStudies } from "../actions/treatment-actions";
 import { createTreatmentSelectionData } from "./treatment/utils";
 
 export const setThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>, state$: StateObservable<State>) =>
@@ -329,12 +325,6 @@ export const setSelectionEpic = (
         switchMap(([, state]) => {
             switch (state.malaria.theme) {
                 case "prevention": {
-                    const siteFilteredStudies = state.malaria.selection
-                        ? state.prevention.filteredStudies.filter(
-                              study => study.SITE_ID === state.malaria.selection.SITE_ID
-                          )
-                        : [];
-
                     const selectionData = createPreventionSelectionData(
                         state.malaria.theme,
                         state.prevention.filters.mapType,
@@ -343,73 +333,36 @@ export const setSelectionEpic = (
                         state.prevention.studies
                     );
 
-                    const actions = _.compact([
-                        setPreventionSelectionStudies(siteFilteredStudies),
-                        setSelectionData(selectionData),
-                    ]);
-
-                    return of(...actions);
+                    return of(setSelectionData(selectionData));
                 }
                 case "diagnosis": {
-                    const siteFilteredStudies = state.malaria.selection
-                        ? state.diagnosis.filteredStudies.filter(
-                              study => study.SITE_ID === state.malaria.selection.SITE_ID
-                          )
-                        : [];
-
                     const selectionData = createDiagnosisSelectionData(
                         state.malaria.theme,
                         state.malaria.selection,
                         state.diagnosis.filteredStudies
                     );
 
-                    const actions = _.compact([
-                        setDiagnosisSelectionStudies(siteFilteredStudies),
-                        setSelectionData(selectionData),
-                    ]);
-
-                    return of(...actions);
+                    return of(setSelectionData(selectionData));
                 }
                 case "treatment": {
-                    const siteFilteredStudies = state.malaria.selection
-                        ? state.treatment.filteredStudies.filter(
-                              study => study.SITE_ID === state.malaria.selection.SITE_ID
-                          )
-                        : [];
-
                     const selectionData = createTreatmentSelectionData(
                         state.malaria.theme,
+                        state.treatment.filters,
                         state.malaria.filters,
                         state.malaria.selection,
                         state.treatment.filteredStudies
                     );
 
-                    const actions = _.compact([
-                        setTreatmentSelectionStudies(siteFilteredStudies),
-                        setSelectionData(selectionData),
-                    ]);
-
-                    return of(...actions);
+                    return of(setSelectionData(selectionData));
                 }
                 case "invasive": {
-                    const siteFilteredStudies = state.malaria.selection
-                        ? state.invasive.filteredStudies.filter(
-                              study => study.SITE_ID === state.malaria.selection.SITE_ID
-                          )
-                        : [];
-
                     const selectionData = createInvasiveSelectionData(
                         state.malaria.theme,
                         state.malaria.selection,
                         state.invasive.filteredStudies
                     );
 
-                    const actions = _.compact([
-                        setInvasiveSelectionStudies(siteFilteredStudies),
-                        setSelectionData(selectionData),
-                    ]);
-
-                    return of(...actions);
+                    return of(setSelectionData(selectionData));
                 }
                 default:
                     return of();

@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { selectTheme } from "../../../store/reducers/base-reducer";
 import { State } from "../../../store/types";
-import { selectPreventionSelectionStudies } from "../../../store/reducers/prevention-reducer";
 import { Divider, Typography } from "@mui/material";
 import { SelectionData } from "../../../store/SelectionData";
 import { ChartStyles } from "../../charts/Style";
@@ -120,7 +119,6 @@ const preventionMechanismAllelicBarChartOptions: (data: any, years: string[]) =>
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
-    preventionSelectionStudies: selectPreventionSelectionStudies(state),
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

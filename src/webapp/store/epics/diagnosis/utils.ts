@@ -18,6 +18,8 @@ export function createDiagnosisSelectionData(
 
     const siteFilteredStudies = filteredStudies.filter(study => study.SITE_ID === selection.SITE_ID);
 
+    if (siteFilteredStudies.length === 0) return null;
+
     const sortedStudies = _.orderBy(siteFilteredStudies, study => +study.YEAR_START, "desc");
 
     const surveyTypes = _.uniq(sortedStudies.map(study => study.SURVEY_TYPE)).map(type => {

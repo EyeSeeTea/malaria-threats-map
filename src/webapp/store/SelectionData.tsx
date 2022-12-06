@@ -12,7 +12,7 @@ export type CommonSelectionData = {
     filterOptions?: Option[];
     filterSelection?: Option[];
     studyObject: Study;
-    data?: PreventionChartData | PreventionMechanismChartData | TreatmentChartData;
+    data?: PreventionChartData | PreventionMechanismChartData | TreatmentChartData | TreatmentMolecularMarkersChartData;
     dataSources?: CitationDataSource[];
     curations?: CurationSources[];
     othersDetected?: string[];
@@ -48,6 +48,22 @@ export type PreventionMechanismChartData = {
 export type TreatmentChartData = {
     kind: "treatment";
     data: { years: string[]; series: TreatmentChartDataGroup[] };
+};
+
+export type TreatmentMolecularMarkersChartData = {
+    kind: "treatment-molecular-markers";
+    data: {
+        years: string[];
+        series: TreatmentChartDataSerie[];
+        markers: { [group: string]: { name: string; color?: string }[] };
+    };
+};
+
+export type TreatmentChartDataSerie = {
+    maxPointWidth: number;
+    name: string;
+    color?: string;
+    data: { y: number }[];
 };
 
 export type PreventionChartDataItem = {

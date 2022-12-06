@@ -9,7 +9,6 @@ import {
     setDiagnosisDeletionType,
     setDiagnosisFilteredStudiesAction,
     setDiagnosisMapType,
-    setDiagnosisSelectionStudies,
 } from "../../actions/diagnosis-actions";
 import {
     logEventAction,
@@ -108,16 +107,12 @@ export const setDiagnosisFilteredStudiesEpic = (
         ofType(ActionTypeEnum.SetDiagnosisFilteredStudies),
         withLatestFrom(state$),
         switchMap(([, state]) => {
-            const siteFilteredStudies = state.malaria.selection
-                ? state.diagnosis.filteredStudies.filter(study => study.SITE_ID === state.malaria.selection.SITE_ID)
-                : [];
-
             const selectionData = createDiagnosisSelectionData(
                 state.malaria.theme,
                 state.malaria.selection,
-                siteFilteredStudies
+                state.diagnosis.filteredStudies
             );
 
-            return of(setDiagnosisSelectionStudies(siteFilteredStudies), setSelectionData(selectionData));
+            return of(setSelectionData(selectionData));
         })
     );

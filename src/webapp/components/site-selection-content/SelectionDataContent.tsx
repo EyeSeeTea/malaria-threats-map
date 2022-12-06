@@ -11,8 +11,8 @@ import Hidden from "../hidden/Hidden";
 import SiteTitle from "../site-title/SiteTitle";
 import CitationNew from "../charts/CitationNew";
 import CurationNew from "../charts/CurationNew";
+import { setSelection, setSelectionDataFilterSelection } from "../../store/actions/base-actions";
 import OtherInfo from "../layers/prevention/common/OtherInfo";
-import { setSelectionDataFilterSelection } from "../../store/actions/base-actions";
 import PreventionChart from "./prevention/PreventionChart";
 import DiagnosisChart from "./diagnosis/DiagnosisChart";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
@@ -20,14 +20,16 @@ import InvasiveChart from "./invasive/InvasiveChart";
 import PreventionMechanismsChart from "./prevention/PreventionMechanismsChart";
 import TreatmentChart from "./treatment/TreatmentChart";
 import AditionalInformation from "../layers/treatment/common/Aditionalnformation";
+import MolecularMarkersChart from "./treatment/MolecularMarkersChart";
 import { CommonSelectionData } from "../../store/SelectionData";
 import { InvasiveSelectionData } from "../../store/epics/invasive/types";
 import { PayloadActionCreator } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
 import { DiagnosisSelectionData } from "../../store/epics/diagnosis/types";
 
-const Container = styled.div<{ width?: string }>`
+const Container = styled.div<{ width?: string; padding?: string }>`
     width: ${props => props.width || "100%"};
+    padding: ${props => props.padding || "70px 0px;"};
 `;
 
 const TopContainer = styled.div`
@@ -57,6 +59,13 @@ const Flex = styled.div`
     align-items: center;
 `;
 
+export const Row = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`;
+
 const mapStateToProps = (state: State) => ({
     preventionFilters: selectPreventionFilters(state),
     selectionData: selectSelectionData(state),
@@ -66,6 +75,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 
 const mapDispatchToProps = {
     setSelectionFilterSelection: setSelectionDataFilterSelection,
+    setSelection: setSelection,
 };
 type DispatchProps = typeof mapDispatchToProps;
 
@@ -169,6 +179,9 @@ const CommonContent: React.FC<{
             }
             case "treatment": {
                 return <TreatmentChart selectionData={selectionData} />;
+            }
+            case "treatment-molecular-markers": {
+                return <MolecularMarkersChart selectionData={selectionData} />;
             }
         }
     };

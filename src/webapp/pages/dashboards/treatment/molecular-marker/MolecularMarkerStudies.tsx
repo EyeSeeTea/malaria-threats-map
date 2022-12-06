@@ -1,7 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
 
 import MolecularMarkerDashboard from "./MolecularMarkerOverTimeDashboard";
 
@@ -18,6 +17,11 @@ const MolecularMarkerStudies: React.FC = () => {
 };
 
 export default MolecularMarkerStudies;
+
+const Container = styled.div<{ width?: string; padding?: string }>`
+    width: ${props => props.width || "100%"};
+    padding: ${props => props.padding || "70px 0px;"};
+`;
 
 const TitleDivider = styled.div`
     height: 4px;

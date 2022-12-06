@@ -17,16 +17,17 @@ import {
     selectAny,
     selectRegion,
     selectSelection,
+    selectSelectionData,
     selectSetBounds,
     selectSetZoom,
     selectTheaterMode,
     selectTheme,
     selectTour,
 } from "../store/reducers/base-reducer";
-import { selectPreventionSelectionStudies, selectPreventionStudies } from "../store/reducers/prevention-reducer";
-import { selectDiagnosisSelectionStudies, selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
-import { selectTreatmentSelectionStudies, selectTreatmentStudies } from "../store/reducers/treatment-reducer";
-import { selectInvasiveSelectionStudies, selectInvasiveStudies } from "../store/reducers/invasive-reducer";
+import { selectPreventionStudies } from "../store/reducers/prevention-reducer";
+import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
+import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
+import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import {
     setRegionAction,
@@ -56,8 +57,8 @@ import { dispatchCustomEvent } from "../utils/dom-utils";
 import LastUpdated from "./last-updated/LastUpdated";
 import FloatingLegend from "./legend/FloatingLegendContainer";
 import InfoToastLink from "./InfoToastLink";
-import SiteSelectionContent from "./site-selection-content/SiteSelectionContent";
 import SecondaryHeader from "../pages/secondary-layout/SecondaryHeader";
+import SelectionDataContent from "./site-selection-content/SelectionDataContent";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
@@ -172,11 +173,8 @@ const mapStateToProps = (state: State) => ({
     treatmentStudies: selectTreatmentStudies(state),
     invasiveStudies: selectInvasiveStudies(state),
     tour: selectTour(state),
-    preventionSelectionStudies: selectPreventionSelectionStudies(state),
-    diagnosisSelectionStudies: selectDiagnosisSelectionStudies(state),
-    treatmentSelectionStudies: selectTreatmentSelectionStudies(state),
-    invasiveSelectionStudies: selectInvasiveSelectionStudies(state),
     selection: selectSelection(state),
+    selectionData: selectSelectionData(state),
 });
 
 const mapDispatchToProps = {
@@ -225,14 +223,8 @@ class Map extends React.Component<Props, StateTypes> {
     };
     images: any[] = [];
 
-    shouldShowRightSideBar() {
-        return (
-            this.props.selection &&
-            (this.props.preventionSelectionStudies.length > 0 ||
-                this.props.diagnosisSelectionStudies.length > 0 ||
-                this.props.treatmentSelectionStudies.length > 0 ||
-                this.props.invasiveSelectionStudies.length > 0)
-        );
+    shouldShowRightSideBar(): boolean {
+        return this.props.selection !== null && this.props.selectionData !== null;
     }
 
     componentDidMount() {
@@ -467,7 +459,7 @@ class Map extends React.Component<Props, StateTypes> {
                             },
                         }}
                     >
-                        <SiteSelectionContent />
+                        <SelectionDataContent />
                     </Drawer>
                 )}
             </React.Fragment>

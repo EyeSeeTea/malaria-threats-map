@@ -15,11 +15,7 @@ import * as R from "ramda";
 import { buildTreatmentFilters } from "../studies-filters";
 import { State } from "../../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
-import {
-    fetchTreatmentStudiesRequest,
-    setFilteredStudiesAction,
-    setTreatmentSelectionStudies,
-} from "../../../store/actions/treatment-actions";
+import { fetchTreatmentStudiesRequest, setFilteredStudiesAction } from "../../../store/actions/treatment-actions";
 import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SitePopover from "../common/SitePopover";
@@ -57,7 +53,6 @@ const mapDispatchToProps = {
     setFilteredStudies: setFilteredStudiesAction,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
-    setTreatmentSelectionStudies: setTreatmentSelectionStudies,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -71,22 +66,12 @@ type Props = StateProps & OwnProps & DispatchProps;
 class TreatmentLayer extends Component<Props> {
     popup: mapboxgl.Popup;
 
-    updatePreventionSelectionStudies() {
-        const selectionStudies = this.props.selection
-            ? this.filterStudies(this.props.studies).filter(study => study.SITE_ID === this.props.selection.SITE_ID)
-            : [];
-
-        this.props.setTreatmentSelectionStudies(selectionStudies);
-    }
-
     componentDidMount() {
         this.loadStudiesIfRequired();
         this.mountLayer();
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (this.props.theme !== "treatment") return;
-
         this.loadStudiesIfRequired();
 
         const {
@@ -104,6 +89,9 @@ class TreatmentLayer extends Component<Props> {
 
         this.mountLayer(prevProps);
         this.renderLayer();
+
+        if (this.props.theme !== "treatment") return;
+
         const mapTypeChange = prevProps.treatmentFilters.mapType !== mapType;
         const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
         const countryChange = prevProps.region !== region;
@@ -127,10 +115,6 @@ class TreatmentLayer extends Component<Props> {
             }
             this.filterSource();
             this.applyMapTypeSymbols();
-
-            this.updatePreventionSelectionStudies();
-        } else if (prevProps.selection !== this.props.selection) {
-            this.updatePreventionSelectionStudies();
         }
     }
 

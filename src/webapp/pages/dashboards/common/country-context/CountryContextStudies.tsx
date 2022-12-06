@@ -1,7 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
 import { DashboardsThemeOptions } from "../../types";
 import CountryContextDataProvider from "./context/CountryContextDataProvider";
 import EpidemiologicalProfileDashboard from "./EpidemiologicalProfileDashboard";
@@ -32,6 +31,11 @@ const CountryContextStudies: React.FC<CountryContextStudiesProps> = ({ theme }) 
 };
 
 export default React.memo(CountryContextStudies);
+
+const Container = styled.div<{ width?: string; padding?: string }>`
+    width: ${props => props.width || "100%"};
+    padding: ${props => props.padding || "70px 0px;"};
+`;
 
 const TitleDivider = styled.div`
     height: 4px;

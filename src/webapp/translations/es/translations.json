@@ -563,9 +563,7 @@
                     "show_less": "Mostrar menos"
                 },
                 "molecular_markers": {
-                    "content": "{{nStudies}} estudios de marcadores moleculares efectuados en {{molecularMarker}} {{years}}",
-                    "site_content_1": "En este estudio de {{year}}, se han observado mutaciones ",
-                    "site_content_2": " en {{nStudies}} muestras",
+                    "subtitle": "Se han observado las siguientes mutaciones {{molecularMarker}}",
                     "percentage": "%",
                     "studies": "Estudios",
                     "study_years": "Año(s) del estudio",

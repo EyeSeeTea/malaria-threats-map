@@ -121,5 +121,3 @@ export const selectPreventionStudiesError = createSelector(selectPreventionState
 export const selectFilteredPreventionStudies = createSelector(selectPreventionState, state => state.filteredStudies);
 
 export const selectPreventionFilters = createSelector(selectPreventionState, state => state.filters);
-
-export const selectPreventionSelectionStudies = createSelector(selectPreventionState, state => state.selectionStudies);

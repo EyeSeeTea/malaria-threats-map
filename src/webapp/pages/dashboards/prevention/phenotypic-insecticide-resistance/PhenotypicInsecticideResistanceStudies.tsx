@@ -1,7 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { Container } from "../../../../components/site-selection-content/SiteSelectionContent";
 import MosquitoMortalityOverTimeDashboard from "./MosquitoMortalityOverTimeDashboard";
 import ResistanceToInsecticideDashboard from "./ResistanceToInsecticideDashboard";
 
@@ -19,6 +18,11 @@ const PhenotypicInsecticideResistanceStudies: React.FC = () => {
 };
 
 export default PhenotypicInsecticideResistanceStudies;
+
+const Container = styled.div<{ width?: string; padding?: string }>`
+    width: ${props => props.width || "100%"};
+    padding: ${props => props.padding || "70px 0px;"};
+`;
 
 const TitleDivider = styled.div`
     height: 4px;

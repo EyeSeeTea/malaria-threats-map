@@ -57,10 +57,6 @@ export default createReducer<InvasiveState>(initialState, {
     [ActionTypeEnum.SetInvasiveVectorSpecies]: updateSpecies,
     [ActionTypeEnum.SetInvasiveFilteredStudies]: (filteredStudies: InvasiveStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
-    [ActionTypeEnum.SetInvasiveSelectionStudies]: (studies: InvasiveStudy[]) => (state: InvasiveState) => ({
-        ...state,
-        selectionStudies: studies,
-    }),
 });
 
 const selectInvasiveState = (state: State) => state.invasive;
@@ -77,5 +73,3 @@ export const selectFilteredInvasiveStudies = createSelector(
 );
 
 export const selectInvasiveFilters = createSelector(selectInvasiveState, invasiveState => invasiveState.filters);
-
-export const selectInvasiveSelectionStudies = createSelector(selectInvasiveState, state => state.selectionStudies);
