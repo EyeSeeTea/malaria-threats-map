@@ -28,3 +28,11 @@ export interface XMartApiResponse<T> {
     "@odata.context": string;
     value: T[];
 }
+
+export interface CountryData {
+    name: string;
+    iso2Code: string;
+    region: string;
+    subregion: string;
+    endemicity: number;
+}
