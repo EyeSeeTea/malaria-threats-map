@@ -72,8 +72,6 @@ class DiagnosisLayer extends Component<Props> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (this.props.theme !== "diagnosis") return;
-
         this.loadStudiesIfRequired();
 
         const {
@@ -84,6 +82,9 @@ class DiagnosisLayer extends Component<Props> {
 
         this.mountLayer(prevProps);
         this.renderLayer();
+
+        if (this.props.theme !== "diagnosis") return;
+
         const mapTypeChange = prevProps.diagnosisFilters.mapType !== mapType;
         const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
         const surveyTypesChange = prevProps.diagnosisFilters.surveyTypes.length !== surveyTypes.length;

@@ -74,8 +74,6 @@ class InvasiveLayer extends Component<Props> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (this.props.theme !== "invasive") return;
-
         this.loadStudiesIfRequired();
 
         const {
@@ -86,6 +84,9 @@ class InvasiveLayer extends Component<Props> {
 
         this.mountLayer(prevProps);
         this.renderLayer();
+
+        if (this.props.theme !== "invasive") return;
+
         const mapTypeChange = prevProps.invasiveFilters.mapType !== mapType;
         const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
         const countryChange = prevProps.region !== region;

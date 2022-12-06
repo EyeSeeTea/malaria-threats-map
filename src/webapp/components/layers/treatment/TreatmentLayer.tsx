@@ -72,8 +72,6 @@ class TreatmentLayer extends Component<Props> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (this.props.theme !== "treatment") return;
-
         this.loadStudiesIfRequired();
 
         const {
@@ -91,6 +89,9 @@ class TreatmentLayer extends Component<Props> {
 
         this.mountLayer(prevProps);
         this.renderLayer();
+
+        if (this.props.theme !== "treatment") return;
+
         const mapTypeChange = prevProps.treatmentFilters.mapType !== mapType;
         const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
         const countryChange = prevProps.region !== region;

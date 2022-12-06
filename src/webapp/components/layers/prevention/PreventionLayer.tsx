@@ -74,8 +74,6 @@ class PreventionLayer extends Component<Props> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (this.props.theme !== "prevention") return;
-
         this.loadStudiesIfRequired();
 
         const {
@@ -94,6 +92,9 @@ class PreventionLayer extends Component<Props> {
         } = this.props;
         this.mountLayer(prevProps);
         this.renderLayer();
+
+        if (this.props.theme !== "prevention") return;
+
         const mapTypeChange = prevProps.preventionFilters.mapType !== mapType;
         const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
         const countryChange = prevProps.region !== region;
