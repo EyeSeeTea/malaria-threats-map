@@ -24,8 +24,8 @@ export class CompositionRoot {
     private diagnosisRepository = new DiagnosisApiRepository(config.mapServerUrl);
     private treatmentRepository = new TreatmentApiRepository(config.mapServerUrl);
     private invasiveRepository = new InvasiveApiRepository(config.mapServerUrl);
-    private countryLayerRepository = new CountryLayerApiRepository(config.featuresServerUrl, config.backendUrl);
-    private countryRepository = new CountryApiRepository(config.backendUrl);
+    private countryLayerRepository = new CountryLayerApiRepository(config.featuresServerUrl, config.xmartServerUrl);
+    private countryRepository = new CountryApiRepository(config.xmartServerUrl);
     private emailRepository = new SmtpJsEmailRepository(config.feedbackEmailSecureToken);
     private countryContextRepository = new CountryContextApiRepository(config.xmartServerUrl);
     private _districtsUrl: string;
