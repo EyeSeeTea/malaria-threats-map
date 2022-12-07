@@ -78,7 +78,7 @@ const feedbackConfig = {
     token: ["ghp_mKe29w1W0ww54C", "ah9NfIMlJdEpP2Mw3RU7FO"],
     createIssue: true,
     issues: { repository: "WorldHealthOrganization/malaria-threats-map", title: "[User feedback] {title}" },
-    snapshots: { repository: "EyeSeeTea/feedback-ci", branch: "master" },
+    snapshots: { repository: "EyeSeeTeaBotTest/snapshots", branch: "master" },
     buttonPosition: "right",
 };
 
@@ -116,6 +116,7 @@ const configurations: { [key: string]: ConfigProps } = {
         gaAppId: "UA-191197789-2",
         env: "dev",
         hotjar: { hjid: 2287362, hjsv: 6 },
+        feedback: localFeedbackConfig,
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
@@ -128,6 +129,7 @@ const configurations: { [key: string]: ConfigProps } = {
         gaAppId: "UA-191197789-1",
         env: "staging",
         hotjar: { hjid: 2280607, hjsv: 6 },
+        feedback: localFeedbackConfig,
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
@@ -140,6 +142,7 @@ const configurations: { [key: string]: ConfigProps } = {
         gaAppId: "UA-140410266-1",
         env: "prod",
         hotjar: { hjid: 2269048, hjsv: 6 },
+        feedback: feedbackConfig,
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
