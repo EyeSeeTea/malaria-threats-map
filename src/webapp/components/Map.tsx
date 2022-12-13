@@ -172,7 +172,7 @@ class Map extends React.Component<Props> {
             style: style,
             center: [0.0, 28.291565],
             maxZoom: 8.99999,
-            minZoom: 1.2,
+            minZoom: 1,
             zoom: 1.5,
             maxBounds: undefined,
             preserveDrawingBuffer: true,

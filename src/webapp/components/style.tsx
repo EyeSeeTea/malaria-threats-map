@@ -1,367 +1,111 @@
 import config from "../config";
 
-/** Source: https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/WHO_Point_Basemap_with_labels_VTP/VectorTileServer/resources/styles */
-
 export const style: mapboxgl.Style = {
     version: 8,
     sources: {
-        esri: {
-            type: "vector",
-            attribution: "",
-            bounds: [-180, -79.1713, 180, 85.0511],
-            minzoom: 0,
-            maxzoom: 22,
+        "raster-tiles": {
+            type: "raster",
             tiles: [`${config.mapTilesBaseUrl}/tile/{z}/{y}/{x}?blankTile=false`],
+            tileSize: 256,
+            attribution: "",
         },
+
+        /**
+         * Vector type source
+         */
+        // "vector-tiles": {
+        //     type: "vector",
+        //     tiles: [`https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/WHO_Polygon_Basemap_with_labels_VTP/VectorTileServer/tile/{z}/{y}/{x}?blankTile=false`],
+        //     attribution: "",
+        // },
+
+        // "vector-tiles-admin1": {
+        //     type: "vector",
+        //     tiles: [
+        //         `https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/Admin1/VectorTileServer/tile/{z}/{y}/{x}?blankTile=false`,
+        //     ],
+        //     attribution: "",
+        // },
+
+        // "vector-tiles-disputed": {
+        //     type: "vector",
+        //     tiles: [
+        //         `https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/WHO_Polygon_Basemap_Disputed_Areas_and_Borders_VTP/VectorTileServer/tile/{z}/{y}/{x}?blankTile=false`,
+        //     ],
+        //     attribution: "",
+        // },
     },
     layers: [
         {
-            id: "Background_VTP/1",
-            type: "fill",
-            source: "esri",
-            "source-layer": "Background_VTP",
-            layout: {},
-            paint: { "fill-color": "#E8E9EC" },
-        },
-        {
-            id: "Land (ADM0)/1",
-            type: "fill",
-            source: "esri",
-            "source-layer": "Land (ADM0)",
-            layout: {},
-            paint: { "fill-color": "#FFFFFF" },
-        },
-        {
-            id: "Boundaries/GLOBAL_ADM_L_Merge_20201201/2",
-            type: "line",
-            source: "esri",
-            "source-layer": "GLOBAL_ADM_L_Merge_20201201",
-            filter: ["==", "_symbol", 2],
-            minzoom: 8,
-            layout: { "line-cap": "round", "line-join": "round" },
-            paint: {
-                "line-color": "#828282",
-                "line-width": {
-                    stops: [
-                        [8, 0.4],
-                        [13, 1.33333],
-                    ],
-                },
-            },
-        },
-        {
-            id: "Boundaries/GLOBAL_ADM_L_Merge_20201201/1",
-            type: "line",
-            source: "esri",
-            "source-layer": "GLOBAL_ADM_L_Merge_20201201",
-            filter: ["==", "_symbol", 1],
-            minzoom: 4,
-            layout: { "line-cap": "round", "line-join": "round" },
-            paint: {
-                "line-color": "#828282",
-                "line-width": {
-                    stops: [
-                        [0, 0.08],
-                        [8, 0.8],
-                        [12, 1.86667],
-                        [18, 5.33333],
-                    ],
-                },
-            },
-        },
-        {
-            id: "Boundaries/GLOBAL_ADM_L_Merge_20201201/0",
-            type: "line",
-            source: "esri",
-            "source-layer": "GLOBAL_ADM_L_Merge_20201201",
-            filter: ["==", "_symbol", 0],
-            minzoom: 0,
-            layout: { "line-cap": "round", "line-join": "round" },
-            paint: {
-                "line-color": "#828282",
-                "line-width": {
-                    stops: [
-                        [0, 0.133333],
-                        [7, 1.33333],
-                        [12, 2.66667],
-                        [18, 8],
-                    ],
-                },
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_AREAS/Aral Sea; Great Lakes of NA; Lake Albert; Lake Malawi; Lake Tanganyika; Lake Titicaca; Lake Victoria",
-            type: "fill",
-            source: "esri",
-            "source-layer": "DISPUTED_AREAS",
-            filter: ["==", "_symbol", 1],
-            layout: {},
-            paint: { "fill-color": "#E8E9EC" },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_AREAS/Golan; Jammu and Kashmir; Western Sahara; Abyei",
-            type: "fill",
-            source: "esri",
-            "source-layer": "DISPUTED_AREAS",
-            filter: ["==", "_symbol", 0],
-            layout: {},
-            paint: { "fill-color": "#FFFFFF" },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_BORDERS/Aksai Chin (IND Claim); Arunachal Pradesh; Halayib Triangle (EGY Claim); Aksai Chin (CHN Claim); Bir Tawil (EGY Claim); Jammu and Kashmir; Western Sahara; Golan",
-            type: "line",
-            source: "esri",
-            "source-layer": "DISPUTED_BORDERS",
-            filter: ["==", "_symbol", 2],
-            layout: { "line-cap": "round", "line-join": "round" },
-            paint: {
-                "line-color": "#828282",
-                "line-width": {
-                    stops: [
-                        [0, 0.133333],
-                        [7, 1.33333],
-                        [12, 2.66667],
-                        [18, 8],
-                    ],
-                },
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_BORDERS/Sudan-South Sudan; Gaza Strip; West Bank; Ethiopia-Somalia; Halayib Triangle (SDN Claim); Korean DMZ; J&K (IND Claim); J&K (PAK Claim); Bir Tawil (SDN Claim)/1",
-            type: "line",
-            source: "esri",
-            "source-layer": "DISPUTED_BORDERS",
-            filter: ["==", "_symbol", 1],
-            layout: { "line-join": "round" },
-            paint: {
-                "line-color": "#FAFAFA",
-                "line-width": {
-                    stops: [
-                        [0, 0.133333],
-                        [7, 1.33333],
-                        [12, 2.66667],
-                        [18, 8],
-                    ],
-                },
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_BORDERS/Sudan-South Sudan; Gaza Strip; West Bank; Ethiopia-Somalia; Halayib Triangle (SDN Claim); Korean DMZ; J&K (IND Claim); J&K (PAK Claim); Bir Tawil (SDN Claim)/0",
-            type: "line",
-            source: "esri",
-            "source-layer": "DISPUTED_BORDERS",
-            filter: ["==", "_symbol", 1],
-            layout: { "line-join": "round" },
-            paint: {
-                "line-color": "#828282",
-                "line-dasharray": [5, 4],
-                "line-width": {
-                    stops: [
-                        [0, 0.133333],
-                        [7, 1.33333],
-                        [12, 2.66667],
-                        [18, 8],
-                    ],
-                },
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_BORDERS/Kosovo",
-            type: "line",
-            source: "esri",
-            "source-layer": "DISPUTED_BORDERS",
-            filter: ["==", "_symbol", 0],
-            layout: { "line-join": "round" },
-            paint: {
-                "line-color": "#828282",
-                "line-dasharray": [2, 2],
-                "line-width": {
-                    stops: [
-                        [0, 0.133333],
-                        [7, 1.33333],
-                        [12, 2.66667],
-                        [18, 8],
-                    ],
-                },
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DisputedBorderDots_P 72k",
-            type: "circle",
-            source: "esri",
-            "source-layer": "DisputedBorderDots_P 72k",
-            minzoom: 12,
-            layout: {},
-            paint: {
-                "circle-radius": 2.26667,
-                "circle-color": "#828282",
-                "circle-stroke-color": "rgba(0,0,0,0)",
-                "circle-stroke-width": 0,
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DisputedBorderDots_P 144k",
-            type: "circle",
-            source: "esri",
-            "source-layer": "DisputedBorderDots_P 144k",
-            minzoom: 11,
-            maxzoom: 12,
-            layout: {},
-            paint: {
-                "circle-radius": 2.13333,
-                "circle-color": "#828282",
-                "circle-stroke-color": "rgba(0,0,0,0)",
-                "circle-stroke-width": 0,
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DisputedBorderDots_P 288k",
-            type: "circle",
-            source: "esri",
-            "source-layer": "DisputedBorderDots_P 288k",
-            minzoom: 10,
-            maxzoom: 11,
-            layout: {},
-            paint: {
-                "circle-radius": 2,
-                "circle-color": "#828282",
-                "circle-stroke-color": "rgba(0,0,0,0)",
-                "circle-stroke-width": 0,
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DisputedBorderDots_P 577k",
-            type: "circle",
-            source: "esri",
-            "source-layer": "DisputedBorderDots_P 577k",
-            minzoom: 9,
-            maxzoom: 10,
-            layout: {},
-            paint: {
-                "circle-radius": 1.86667,
-                "circle-color": "#828282",
-                "circle-stroke-color": "rgba(0,0,0,0)",
-                "circle-stroke-width": 0,
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DisputedBorderDots_P 1M",
-            type: "circle",
-            source: "esri",
-            "source-layer": "DisputedBorderDots_P 1M",
-            minzoom: 8,
-            maxzoom: 9,
-            layout: {},
-            paint: {
-                "circle-radius": 1.73333,
-                "circle-color": "#828282",
-                "circle-stroke-color": "rgba(0,0,0,0)",
-                "circle-stroke-width": 0,
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DisputedBorderDots_P 2M",
-            type: "circle",
-            source: "esri",
-            "source-layer": "DisputedBorderDots_P 2M",
-            minzoom: 7,
+            id: "raster-tiles",
+            type: "raster",
+            source: "raster-tiles",
+            minzoom: 1,
             maxzoom: 8,
-            layout: {},
-            paint: {
-                "circle-radius": 1.6,
-                "circle-color": "#828282",
-                "circle-stroke-color": "rgba(0,0,0,0)",
-                "circle-stroke-width": 0,
-            },
         },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DisputedBorderDots_P 4M",
-            type: "circle",
-            source: "esri",
-            "source-layer": "DisputedBorderDots_P 4M",
-            minzoom: 6,
-            maxzoom: 7,
-            layout: {},
-            paint: {
-                "circle-radius": 1.46667,
-                "circle-color": "#828282",
-                "circle-stroke-color": "rgba(0,0,0,0)",
-                "circle-stroke-width": 0,
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DisputedBorderDots_P 9M",
-            type: "circle",
-            source: "esri",
-            "source-layer": "DisputedBorderDots_P 9M",
-            minzoom: 5,
-            maxzoom: 6,
-            layout: {},
-            paint: {
-                "circle-radius": 1.33333,
-                "circle-color": "#828282",
-                "circle-stroke-color": "rgba(0,0,0,0)",
-                "circle-stroke-width": 0,
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DisputedBorderDots_P 18M",
-            type: "circle",
-            source: "esri",
-            "source-layer": "DisputedBorderDots_P 18M",
-            minzoom: 4,
-            maxzoom: 5,
-            layout: {},
-            paint: {
-                "circle-radius": 1.2,
-                "circle-color": "#828282",
-                "circle-stroke-color": "rgba(0,0,0,0)",
-                "circle-stroke-width": 0,
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DisputedBorderDots_P 36M",
-            type: "circle",
-            source: "esri",
-            "source-layer": "DisputedBorderDots_P 36M",
-            minzoom: 3,
-            maxzoom: 4,
-            layout: {},
-            paint: {
-                "circle-radius": 1.06667,
-                "circle-color": "#828282",
-                "circle-stroke-color": "rgba(0,0,0,0)",
-                "circle-stroke-width": 0,
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DisputedBorderDots_P 73M",
-            type: "circle",
-            source: "esri",
-            "source-layer": "DisputedBorderDots_P 73M",
-            minzoom: 2,
-            maxzoom: 3,
-            layout: {},
-            paint: {
-                "circle-radius": 0.933333,
-                "circle-color": "#828282",
-                "circle-stroke-color": "rgba(0,0,0,0)",
-                "circle-stroke-width": 0,
-            },
-        },
-        {
-            id: "Boundaries/DISPUTED BORDERS AND AREAS/DisputedBorderDots_P 147M and up",
-            type: "circle",
-            source: "esri",
-            "source-layer": "DisputedBorderDots_P 147M and up",
-            maxzoom: 2,
-            layout: {},
-            paint: {
-                "circle-radius": 0.8,
-                "circle-color": "#828282",
-                "circle-stroke-color": "rgba(0,0,0,0)",
-                "circle-stroke-width": 0,
-            },
-        },
+        /**
+         * Vector type layers
+         */
+        // {
+        //     id: "land-lines",
+        //     type: "line",
+        //     source: "vector-tiles",
+        //     "source-layer": "Land (ADM0)",
+        //     minzoom: 1,
+        //     maxzoom: 8,
+        // },
+        // {
+        //     id: "vector-tiles-background",
+        //     type: "background",
+        //     source: "vector-tiles",
+        //     "source-layer": "Background_VTP",
+        //     paint: {
+        //         "background-opacity": 0.8,
+        //         "background-color": "#b2d1db",
+        //     },
+        // },
+
+        // {
+        //     id: "vector-land-fill",
+        //     type: "fill",
+        //     source: "vector-tiles",
+        //     "source-layer": "Land (ADM0)",
+        //     paint: {
+        //         "fill-color": "#efebe0",
+        //         "fill-opacity": 0.8,
+        //     },
+        // },
+        // {
+        //     id: "vector-land-lines",
+        //     type: "line",
+        //     source: "vector-tiles",
+        //     "source-layer": "GLOBAL_ADM_L_Merge_20201201",
+        //     paint: {
+        //         "line-color": "#f8bbd0",
+        //         "line-opacity": 0.5,
+        //         "line-width": 2,
+        //     },
+        // },
+        // {
+        //     id: "vector-admin1",
+        //     type: "line",
+        //     source: "vector-tiles-admin1",
+        //     "source-layer": "Admin1",
+        //     paint: {
+        //         "line-color": "#f8bbd0",
+        //         "line-opacity": 0.5,
+        //         "line-width": 0.5,
+        //     },
+        //     minzoom: 4,
+        // },
+        // {
+        //     id: "vector-disputed",
+        //     type: "fill",
+        //     source: "vector-tiles-disputed",
+        //     "source-layer": "DISPUTED_AREAS",
+        //     paint: {
+        //         "fill-color": "#cfcfcf",
+        //     },
+        // },
     ],
 };
