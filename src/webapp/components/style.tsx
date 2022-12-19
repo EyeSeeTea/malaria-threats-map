@@ -96,7 +96,7 @@ export const style: mapboxgl.Style = {
             "source-layer": "DISPUTED_AREAS",
             filter: ["==", "_symbol", 1],
             layout: {},
-            paint: { "fill-color": "#E8E9EC" },
+            paint: { "fill-color": "#a8a6a6" },
         },
         {
             id: "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_AREAS/Golan; Jammu and Kashmir; Western Sahara; Abyei",
