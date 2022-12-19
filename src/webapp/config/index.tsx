@@ -103,7 +103,6 @@ const configurations: { [key: string]: ConfigProps } = {
         backendUrl: process.env.REACT_APP_BACKEND_URL || "https://extranet.who.int/malthreats-api/", // https://portal-uat.who.int/malthreats-api/ has a temporary problem
         gaAppId: "UA-191197789-1",
         env: "local",
-        feedback: localFeedbackConfig,
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
@@ -116,7 +115,6 @@ const configurations: { [key: string]: ConfigProps } = {
         gaAppId: "UA-191197789-2",
         env: "dev",
         hotjar: { hjid: 2287362, hjsv: 6 },
-        feedback: localFeedbackConfig,
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
@@ -129,7 +127,6 @@ const configurations: { [key: string]: ConfigProps } = {
         gaAppId: "UA-191197789-1",
         env: "staging",
         hotjar: { hjid: 2280607, hjsv: 6 },
-        feedback: localFeedbackConfig,
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
