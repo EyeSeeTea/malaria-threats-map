@@ -38,7 +38,8 @@ const BASEMAP_NONIC =
 
 const FEATURES_SERVER = "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services";
 
-const XMART_URL = "https://frontdoor-r5quteqglawbs.azurefd.net/MAL_THREATS";
+const XMART_URL_STAGING = "https://frontdoor-r5quteqglawbs.azurefd.net/MAL_THREATS";
+const XMART_URL_PROD = "https://frontdoor-l4uikgap6gz3m.azurefd.net/MAL_THREATS";
 
 const FEEDBACK_EMAIL_FROM = process.env.REACT_APP_FEEDBACK_EMAIL_FROM;
 
@@ -91,10 +92,9 @@ const localFeedbackConfig = {
 
 const publicUrl = process.env.PUBLIC_URL;
 
-const base: Pick<ConfigProps, "feedback" | "publicUrl" | "xmartServerUrl"> = {
+const base: Pick<ConfigProps, "feedback" | "publicUrl"> = {
     publicUrl: publicUrl === "." ? "/" : publicUrl,
     feedback: localFeedbackConfig,
-    xmartServerUrl: XMART_URL,
 };
 
 const configurations: { [key: string]: ConfigProps } = {
@@ -109,6 +109,7 @@ const configurations: { [key: string]: ConfigProps } = {
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
+        xmartServerUrl: XMART_URL_STAGING,
     },
     dev: {
         ...base,
@@ -121,6 +122,7 @@ const configurations: { [key: string]: ConfigProps } = {
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
+        xmartServerUrl: XMART_URL_STAGING,
     },
     staging: {
         ...base,
@@ -133,6 +135,7 @@ const configurations: { [key: string]: ConfigProps } = {
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
+        xmartServerUrl: XMART_URL_STAGING,
     },
     prod: {
         ...base,
@@ -145,6 +148,7 @@ const configurations: { [key: string]: ConfigProps } = {
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
+        xmartServerUrl: XMART_URL_PROD,
     },
 };
 
