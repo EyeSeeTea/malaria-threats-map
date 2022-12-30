@@ -155,7 +155,9 @@ function createMolecularMarkersChartData(
     });
     const allStudies257 = R.flatten(studies255.map(study => study.groupStudies));
     const studies257ByGenotype = R.groupBy(R.prop("GENOTYPE"), allStudies257);
-    const genotypes = Object.keys(studies257ByGenotype);
+    const genotypes = Object.keys(studies257ByGenotype)
+        .sort()
+        .filter(genotype => genotype !== "unspecified");
 
     const series = genotypes.map((genotype: string) => {
         const studies257: TreatmentStudy[] = studies257ByGenotype[genotype];
@@ -182,7 +184,8 @@ function createMolecularMarkersChartData(
             markers: {
                 Wildtype: extractMarkersByMutationCategory(allStudies257, "wild type"),
                 "Validated markers": extractMarkersByMutationCategory(allStudies257, "validated"),
-                "Associated markers": extractMarkersByMutationCategory(allStudies257, "associated"),
+                "Candidated markers": extractMarkersByMutationCategory(allStudies257, "associated"),
+                MC: extractMarkersByMutationCategory(allStudies257, "multiple copy number"),
                 "Other markers": extractMarkersByMutationCategory(allStudies257, "other"),
             },
         },
