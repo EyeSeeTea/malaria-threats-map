@@ -1,7 +1,7 @@
 {
     "common": {
         "layers": "couches",
-        "mekong_link": "Aller à la couche du Grand Mékong",
+        "mekong_link": "Aller à la sous-région du Grand Mékong",
         "takeATour": "Vous ne savez pas par où commencer ? Faites un tour.",
         "zoomIn": "Agrandir",
         "zoomOut": "Dézoomer",
