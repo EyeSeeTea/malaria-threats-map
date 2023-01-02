@@ -1118,13 +1118,13 @@
                 "title": "Seleccione una de las 4 amenazas biológicas"
             },
             "2": {
-                "title": "Seleccione un mapa para explorar los resultados del estudio"
+                "title": "Seleccione un mapa para explorar los estudios"
             },
             "3": {
                 "title": "Añadir filtros para producir un mapa limitado a criterios específicos"
             },
             "4": {
-                "title": "Seleccione una región, subregión, país y/o sitio"
+                "title": "Seleccione una región, país y/o sitio"
             },
             "5": {
                 "title": "Haga clic en un punto del mapa para ver los detalles del estudio"
