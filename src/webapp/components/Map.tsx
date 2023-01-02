@@ -336,7 +336,7 @@ class Map extends React.Component<Props, StateTypes> {
                 {ready && <DiagnosisLayer map={this.map} />}
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
-                {ready && (
+                {ready && theme !== "treatment" && (
                     <TopMiddleContainer rightOpen={this.shouldShowRightSideBar()}>
                         <InfoToastLink text={this.props.t("common.takeATour")} type="tour" />
                     </TopMiddleContainer>
