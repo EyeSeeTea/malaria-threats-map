@@ -6,7 +6,7 @@ const PROPERTY = "MECHANISM_PROXY";
 export const LevelOfInvolvementColors = {
     [LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT]: ["#8E4585", "#5b2c55"],
     [LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT]: ["#DAACD5", "#c277ba"],
-    [LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT]: ["#d3d3d3", "#adadad"],
+    [LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT]: ["#BEBEBE", "#838383"],
 };
 
 const involvementSymbols = {
