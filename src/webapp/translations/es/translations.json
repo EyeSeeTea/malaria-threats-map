@@ -103,7 +103,7 @@
                     "therapeuticEfficacy": "Resultados del estudio de eficacia terapéutica",
                     "summaryTreatmentFailures": "Resumen de las tasas de fracaso del tratamiento por fármaco",
                     "treatmentFailureRates": "Tasas de fracaso del tratamiento a lo largo del tiempo",
-                    "parasiteClearanceRates": "Índices de eliminación de parásitos a lo largo del tiempo"
+                    "parasiteClearance": "Eliminación de parásitos a lo largo del tiempo"
                 },
                 "molecularMarkerOptions": {
                     "molecularMarker": "Resultados del estudio de marcadores moleculares",
@@ -174,7 +174,7 @@
                     "year": "Año"
                 },
                 "parasiteClearanceOverTime": {
-                    "title": "TASAS DE ELIMINACIÓN DE PARÁSITOS A LO LARGO DEL TIEMPO",
+                    "title": "ELIMINACIÓN DE PARÁSITOS A LO LARGO DEL TIEMPO",
                     "parasitemiaOnDay3": "Porcentaje de pacientes con parasitemia en el día 3 (%)"
                 }
             },

@@ -103,7 +103,7 @@
                     "therapeuticEfficacy": "Résultats des études sur l'efficacité thérapeutique",
                     "summaryTreatmentFailures": "Résumé des taux d'échec thérapeutique par médicament",
                     "treatmentFailureRates": "Taux d'échec des traitements dans le temps",
-                    "parasiteClearanceRates": "Taux d'élimination des parasites dans le temps"
+                    "parasiteClearance": "Elimination des parasites au fil du temps"
                 },
                 "molecularMarkerOptions": {
                     "molecularMarker": "Résultats de l'étude des marqueurs moléculaires",
@@ -174,7 +174,7 @@
                     "year": "An"
                 },
                 "parasiteClearanceOverTime": {
-                    "title": "TAUX D'ÉLIMINATION DES PARASITES AU FIL DU TEMPS",
+                    "title": "ÉLIMINATION DES PARASITES AU FIL DU TEMPS",
                     "parasitemiaOnDay3": "Pourcentage de patients atteints de parasitémie au jour 3 (%)"
                 }
             },
