@@ -11,7 +11,7 @@ import TreatmentLayer from "./layers/treatment/TreatmentLayer";
 import InvasiveLayer from "./layers/invasive/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
 import RegionLayer from "./layers/RegionLayer";
-import WhoLogo from "./WhoLogo";
+import WhoLogoBlue from "./WhoLogoBlue";
 
 import {
     selectAny,
@@ -417,7 +417,7 @@ class Map extends React.Component<Props, StateTypes> {
                     <BottomLeftContainer>
                         {viewMapOnly || <LayersButton />} {/* Layers selector box */}
                         <Box width={20} />
-                        <WhoLogo />
+                        <WhoLogoBlue width="180px" />
                     </BottomLeftContainer>
                 </PushoverContainer>
                 <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
