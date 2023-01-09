@@ -1,7 +1,7 @@
 {
     "common": {
         "layers": "Capas",
-        "mekong_link": "Ir a la capa Greater Mekong",
+        "mekong_link": "Ir a la subregión del Gran Mekong",
         "takeATour": "¿No sabe por dónde empezar? Haga un recorrido.",
         "zoomIn": "Ampliar",
         "zoomOut": "Alejar",
@@ -896,7 +896,7 @@
     "disclaimer": {
         "p1a": "<strong>Fuente de datos:</strong> Programa Mundial sobre el Paludismo",
         "p1b": "<strong>Elaboración de mapas:</strong> Programa mundial de paludismo. Organización Mundial de la Salud.",
-        "p1bLink": "https://www.who.int/about/copyright/",
+        "p1bLink": "https://www.who.int/about/policies/publishing/copyright",
         "p1bLinkText": "© WHO {{year}}. ",
         "p1c": "Todos los privilegios reservados.",
         "p2": "A menos que se especifique lo contrario, la información contenida en esta aplicación Web ha sido puesta a disposición del Programa Mundial sobre Paludismo de la Organización Mundial de la Salud (OMS) por los Ministerios de Salud o sus asociados en el desarrollo, o mediante su extracción de publicaciones científicas por parte de la OMS o sus socios. Por consiguiente, la OMS no garantiza la validez, exactitud o integridad de esta información.",
@@ -1118,13 +1118,13 @@
                 "title": "Seleccione una de las 4 amenazas biológicas"
             },
             "2": {
-                "title": "Seleccione un mapa para explorar los resultados del estudio"
+                "title": "Seleccione un mapa para explorar los estudios"
             },
             "3": {
                 "title": "Añadir filtros para producir un mapa limitado a criterios específicos"
             },
             "4": {
-                "title": "Seleccione una región, subregión, país y/o sitio"
+                "title": "Seleccione una región, país y/o sitio"
             },
             "5": {
                 "title": "Haga clic en un punto del mapa para ver los detalles del estudio"

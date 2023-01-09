@@ -1,7 +1,7 @@
 {
     "common": {
         "layers": "Layers",
-        "mekong_link": "Go to the Greater Mekong Layer",
+        "mekong_link": "Go to the Greater Mekong Subregion",
         "takeATour": "Unsure where to start? Take a tour.",
         "zoomIn": "Zoom in",
         "zoomOut": "Zoom out",
@@ -894,7 +894,7 @@
     "disclaimer": {
         "p1a": "<strong>Data source:</strong> Global Malaria Programme",
         "p1b": "<strong>Map production:</strong> Global Malaria Programme. World Health Organization.",
-        "p1bLink": "https://www.who.int/about/copyright/",
+        "p1bLink": "https://www.who.int/about/policies/publishing/copyright",
         "p1bLinkText": "© WHO {{year}}. ",
         "p1c": "All rights reserved.",
         "p2": "Unless otherwise specifically stated, the information contained in this application has been made available to the World Health Organization (WHO) Global Malaria Programme by Ministries of Health or their development partners, or through extraction by WHO or contracted partners from publications in international peer-reviewed scientific journals. WHO therefore provides no assurance as to the validity, accuracy or completeness of this information.",
@@ -1117,13 +1117,13 @@
                 "title": "Select one of the 4 biological threats"
             },
             "2": {
-                "title": "Select a map to explore study results"
+                "title": "Select a map to explore studies"
             },
             "3": {
                 "title": "Add filters to produce a map limited to specific criteria"
             },
             "4": {
-                "title": "Select a region, subregion, country and/or site"
+                "title": "Select a region, country and/or site"
             },
             "5": {
                 "title": "Click on a map point to see study details"

@@ -1,7 +1,7 @@
 {
     "common": {
         "layers": "couches",
-        "mekong_link": "Aller à la couche du Grand Mékong",
+        "mekong_link": "Aller à la sous-région du Grand Mékong",
         "takeATour": "Vous ne savez pas par où commencer ? Faites un tour.",
         "zoomIn": "Agrandir",
         "zoomOut": "Dézoomer",
@@ -896,7 +896,7 @@
     "disclaimer": {
         "p1a": "<strong>Source des données:</strong> Programme mondial contre le paludisme.",
         "p1b": "<strong>Production de cartes:</strong> Programme mondial contre le paludisme. Organisation mondiale de la santé.",
-        "p1bLink": "https://www.who.int/about/copyright/",
+        "p1bLink": "https://www.who.int/about/policies/publishing/copyright",
         "p1bLinkText": "© WHO {{year}}. ",
         "p1c": "Tous droits réservés.",
         "p2": "Sauf indication contraire, les informations contenues dans cette demande ont été mises à la disposition du Programme mondial de lutte contre le paludisme de l'Organisation mondiale de la santé (OMS) par les ministères de la Santé ou leurs partenaires de développement; ou par leur extraction de publications scientifiques par l'OMS ou ses partenaires. L'OMS ne fournit donc aucune assurance quant à la validité, l'exactitude ou l'exhaustivité de ces informations.",
@@ -1119,13 +1119,13 @@
                 "title": "Sélectionnez l'une des 4 menaces biologiques"
             },
             "2": {
-                "title": "Sélectionnez une carte pour explorer les résultats de l'étude"
+                "title": "Sélectionnez une carte pour explorer les études"
             },
             "3": {
                 "title": "Ajouter des filtres pour produire une carte limitée à des critères spécifiques"
             },
             "4": {
-                "title": "Sélectionnez une région, une sous-région, un pays et/ou un site."
+                "title": "Sélectionnez une région, un pays et/ou un site."
             },
             "5": {
                 "title": "Cliquez sur un point de la carte pour voir les détails de l'étude"
