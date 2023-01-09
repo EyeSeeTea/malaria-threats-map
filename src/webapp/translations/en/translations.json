@@ -102,7 +102,7 @@
                     "therapeuticEfficacy": "Therapeutic efficacy study results",
                     "summaryTreatmentFailures": "Summary of treatment failure rates by drug",
                     "treatmentFailureRates": "Treatment failure rates over time",
-                    "parasiteClearanceRates": "Parasite clearance rates over time"
+                    "parasiteClearance": "Parasite clearance over time"
                 },
                 "molecularMarkerOptions": {
                     "molecularMarker": "Molecular marker study results",
@@ -173,7 +173,7 @@
                     "year": "Year"
                 },
                 "parasiteClearanceOverTime": {
-                    "title": "PARASITE CLEARANCE RATES OVER TIME",
+                    "title": "PARASITE CLEARANCE OVER TIME",
                     "parasitemiaOnDay3": "Percentage of patients with parasitemia on day 3 (%)"
                 }
             },

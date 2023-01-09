@@ -20,7 +20,7 @@ const therapeuticEfficacyOptions: Option<TherapeuticEfficacy>[] = [
         value: "treatment-failure-rates",
     },
     {
-        label: i18next.t("common.dashboard.dashboardsFilterSection.therapeuticEfficacyOptions.parasiteClearanceRates"),
+        label: i18next.t("common.dashboard.dashboardsFilterSection.therapeuticEfficacyOptions.parasiteClearance"),
         value: "parasite-clearance-rates",
     },
 ];
