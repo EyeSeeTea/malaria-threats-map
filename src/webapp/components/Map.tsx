@@ -36,7 +36,7 @@ import {
     updateZoomAction,
     setActionGroupSelected,
 } from "../store/actions/base-actions";
-import { Fade, Box, Fab, Drawer, Tooltip } from "@mui/material";
+import { Fade, Box, Fab, Drawer, Tooltip, Stack } from "@mui/material";
 import { Add as ZoomInIcon, Remove as ZoomOutIcon, OpenInFull as MapOnlyIcon } from "@mui/icons-material";
 import LeyendPopover from "./legend/LegendPopover";
 import StoryModeSelector from "./StoryModeSelector";
@@ -338,12 +338,12 @@ class Map extends React.Component<Props, StateTypes> {
                 {ready && <InvasiveLayer map={this.map} />}
                 {ready && (
                     <TopMiddleContainer rightOpen={this.shouldShowRightSideBar()}>
-                        <InfoToastLink text={this.props.t("common.takeATour")} type="tour" />
-                    </TopMiddleContainer>
-                )}
-                {theme === "treatment" && (
-                    <TopMiddleContainer rightOpen={this.shouldShowRightSideBar()}>
-                        <InfoToastLink text={this.props.t("common.mekong_link")} type="greaterMekong" />
+                        <Stack spacing={1}>
+                            <InfoToastLink text={this.props.t("common.takeATour")} type="tour" />
+                            {theme === "treatment" && (
+                                <InfoToastLink text={this.props.t("common.mekong_link")} type="greaterMekong" />
+                            )}
+                        </Stack>
                     </TopMiddleContainer>
                 )}
                 {/* TODO:Refactor SecondaryHeader from here and use Secondary Layout in MapPage */}
