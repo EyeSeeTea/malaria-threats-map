@@ -4,7 +4,7 @@ import Layout from "../layout/Layout";
 import BannerSection from "./BannerSection";
 //import ChallengesSection from "./ChallengesSection";
 import DataSection from "./DataSection";
-import MapSection from "./MapSection";
+//import MapSection from "./MapSection";
 import UserExperience from "./UserExperienceSection";
 
 /* const StyledDivider = styled(Divider)`
@@ -18,10 +18,10 @@ export const AboutPage: React.FC = () => {
         <Layout>
             <BannerSection />
             <DataSection />
-            <MapSection />
             {/*
-              * Temporarily hide Challenges Section
+              * Temporarily hide MapSection & ChallengesSection
               *
+                <MapSection />
                 <ChallengesSection />
                 <StyledDivider variant="fullWidth" />
             */}
