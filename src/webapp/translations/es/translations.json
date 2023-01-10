@@ -272,9 +272,9 @@
         },
         "homepage": {
             "menu": {
-                "home": "Casa",
+                "home": "Inicio",
                 "tools": "Instrumentos",
-                "stories": "Cuentos",
+                "stories": "Historias",
                 "about": "Acerca de",
                 "contact": "Contacto",
                 "share_data": "Compartir datos"
@@ -700,8 +700,8 @@
             "dashboards": "Tableros"
         },
         "sidebar": {
-            "home": "Casa",
-            "stories": "Cuentos",
+            "home": "Inicio",
+            "stories": "Historias",
             "about": "Sobre",
             "contact": "Contactar",
             "share_data": "Compartir datos",
