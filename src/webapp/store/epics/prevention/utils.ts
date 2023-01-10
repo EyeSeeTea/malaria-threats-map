@@ -315,7 +315,12 @@ function otherDetected(mapType: PreventionMapType, siteFilteredStudies: Study[],
         const currentMechanisms = _.uniq(siteFilteredStudies.map(study => study.TYPE));
         const othertMechanisms = _.uniq(
             siteNonFilteredStudies
-                .filter(study => !currentMechanisms.includes(study.TYPE) && isNotNull(study.TYPE))
+                .filter(
+                    study =>
+                        !currentMechanisms.includes(study.TYPE) &&
+                        isNotNull(study.TYPE) &&
+                        study.MECHANISM_STATUS === "DETECTED"
+                )
                 .map(study => study.TYPE)
         );
 
