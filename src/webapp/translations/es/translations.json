@@ -17,7 +17,7 @@
             },
 
             "dataSection": {
-                "title": "De dónde provienen los datos?",
+                "title": "¿De dónde provienen los datos?",
                 "content": "Los datos son recopilados por los Programas Nacionales de Malaria, sus socios implementadores, institutos de investigación y organizaciones no gubernamentales. Se proporcionan directamente al Programa Mundial contra el Paludismo (GMP) de la OMS o se extraen de publicaciones. Todos los datos tienen control de calidad, se incorporan a las bases de datos mundiales de la OMS y luego se publican en el Mapa de Amenazas de la Malaria."
             },
             "mapSection": {
@@ -68,8 +68,8 @@
             },
             "userExperienceSection": {
                 "title": "Pruebas de experiencia de usuario",
-                "p1": "Recientemente llevamos a cabo un proceso de prueba de la experiencia del usuario y estamos agradecidos con todos los que voluntariamente dieron su tiempo para contribuir a la mejora del MTM para todos sus usuarios.",
-                "p2": "Esta prueba de usuario condujo a la adición de páginas de inicio, información y contacto, la creación de paneles, una interfaz de descarga dedicada y una interfaz de mapa más optimizada. También identificamos áreas de mejora adicionales, que estamos trabajando. Estos incluyen una mayor orientación para facilitar la toma de decisiones y capas de mapas adicionales. Queremos hacer que esta herramienta sea lo mejor posible para que juntos tengamos los recursos para controlar y eliminar la malaria.",
+                "p1": "Para este proyecto hemos llevado a cabo un proceso de prueba de la experiencia del usuario y estamos muy agradecidos a todas las personas que voluntariamente dieron su tiempo para contribuir a la mejora de MTM.",
+                "p2": "Esta prueba de usuario condujo a la adición de páginas de inicio, información y contacto, la creación de tableros, una interfaz de descarga y una interfaz del mapa más optimizada. También identificamos áreas de mejora adicionales en que estamos trabajando. Esto incluyen más ayuda para facilitar la toma de decisiones y capas adicionales en el mapa. Queremos hacer que esta herramienta sea lo mejor posible para que juntos tengamos los recursos para controlar y eliminar la malaria.",
                 "button": "Lista de reconocimientos"
             }
         },
@@ -303,13 +303,13 @@
                 },
                 "data_download": {
                     "title": "Descarga de datos",
-                    "subtitle": "Descargue los datos detrás del MTM para su propio análisis.",
+                    "subtitle": "Descargue los datos detrás de MTM para su propio análisis.",
                     "button_text": "Descarga de datos"
                 },
                 "db_last_updated": "Base de datos actualizada por última vez",
                 "read_story": "Leer historia"
             },
-            "header": "El Malaria Threats Map es una plataforma exhaustiva sobre las cuatro amenazas biológicas para el control y la eliminación de la malaria.",
+            "header": "Malaria Threats Map es una plataforma extensiva sobre las cuatro  amenazas biológicas para el control y la eliminación de la malaria.",
             "theme_paper": {
                 "prevention_subtitle": "La resistencia de los vectores a los insecticidas utilizados para el control de vectores amenaza los esfuerzos de control de la malaria.",
                 "invasive_subtitle": "La propagación de ciertas especies de vectores anofelinos y su establecimiento en nuevos ecosistemas representa una amenaza para el control de la malaria.",
@@ -336,14 +336,14 @@
             },
             "stepper": {
                 "next": "siguiente",
-                "back": "volver"
+                "back": "anterior"
             }
         },
         "shareDataPage": {
-            "title": "Contribuye al Mapa de Amenazas de la Malaria compartiendo tus <strong>datos</strong>",
+            "title": "Contribuya al Mapa de Amenazas de la Malaria compartiendo tus <strong>datos</strong>",
             "section1": {
                 "title": "Aportar datos sobre la resistencia a los insecticidas",
-                "description": "Invitamos a todas las personas y organizaciones a presentar sus datos. Por favor, comunique sus datos utilizando los siguientes formularios estándar de recogida de datos de la OMS. Los formularios están disponibles para su descarga <2 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>aquí</2>.",
+                "description": "Invitamos a todas las personas y organizaciones a compartir sus datos. Por favor, envíe sus datos utilizando los formularios estándar de recogida de datos de la OMS. Los formularios están disponibles para su descarga <2 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>aquí</2>.",
                 "list": {
                     "1": "Resultados del bioensayo del insecticida sinérgico",
                     "2": "Resultados del bioensayo de concentración de intensidad",
@@ -358,22 +358,22 @@
             "sectionsFooter": "Los formularios cumplimentados pueden enviarse a: <2>vectorsurveillance@who.int</2>"
         },
         "contactPage": {
-            "title": "Contribuye al Mapa de Amenazas de la Malaria compartiendo tus <strong>comentarios</strong>",
+            "title": "Contribuya al Mapa de Amenazas de la Malaria compartiendo sus <strong>comentarios</strong>",
             "section1": {
                 "title": "Comentarios y consultas generales",
                 "description": "Estamos deseando saber cómo utiliza el MTM y cómo podemos mejorar la plataforma para todos sus usuarios. Para ponerse en contacto con el equipo de MTM, envíe un correo electrónico a <1>gmp-maps@who.int</1>"
             },
             "section2": {
-                "title1": "Presentación de datos",
+                "title1": "Compartir datos",
                 "description1": "Si desea enviar datos al MTM, utilice el portal <2>compartir datos</2>.",
                 "title2": "Soporte técnico",
-                "description2": "Si tiene algún problema técnico con la plataforma, póngase en contacto con el equipo informático a través de la pestaña \"Informar de errores\" situada en la parte derecha de la página. Los comentarios enviados aquí irán directamente al equipo de TI."
+                "description2": "Si tiene algún problema técnico con la plataforma, póngase en contacto con el equipo informático a través de la pestaña \"Report Bugs\" situada en la parte derecha de la página. Los comentarios enviados aquí irán directamente al equipo de IT."
             }
         },
         "footer": {
             "policies": {
                 "title": "Políticas",
-                "disclaimer": "Descargo de responsabilidad"
+                "disclaimer": "Aviso legal"
             },
             "other_who_resources": {
                 "title": "Recursos de la OMS",
@@ -384,9 +384,9 @@
             "about_who_gmp": {
                 "title": "Acerca de las BPF de la OMS",
                 "resource1": "Programa Mundial contra la Malaria de la OMS",
-                "resource2": "Contacta con nosotros"
+                "resource2": "Contacte con nosotros"
             },
-            "subscribe_newsletter": "SUSCRÍBETE AL BOLETÍN DE GMP",
+            "subscribe_newsletter": "SUSCRÍBASE AL BOLETÍN DE GMP",
             "privacy": "Política de privacidad de la OMS"
         },
         "themes": {
