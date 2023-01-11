@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { AboutPage } from "./about/AboutPage";
 import ContactPage from "./contact/ContactPage";
 import DashboardsPage from "./dashboards/DashboardsPage";
@@ -11,9 +11,20 @@ import ShareDataPage from "./shareData/ShareDataPage";
 
 import config from "../config";
 
+const ScrollToTop = (): JSX.Element => {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+};
+
 export const Router: React.FC = React.memo(() => {
     return (
         <BrowserRouter basename={config.publicUrl}>
+            <ScrollToTop />
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />
