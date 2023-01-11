@@ -195,7 +195,7 @@
                 "numBioassaysByCategory": "El siguiente número de bioensayos cumple con el filtro aplicado:",
                 "numBioassays": "{{count}} bioensayos cumplen con el filtro aplicado",
                 "numSites": "Numbero de sitios",
-                "insecticideResistanceStatus": "Estado de resistencia a insecticidas",
+                "insecticideResistanceStatus": "Estado de resistencia a insecticidas:",
                 "byInsecticideClass": "Por clase de insecticida",
                 "byInsecticide": "Por insecticida",
                 "confirmed": "Confirmado (0 a <90%)",

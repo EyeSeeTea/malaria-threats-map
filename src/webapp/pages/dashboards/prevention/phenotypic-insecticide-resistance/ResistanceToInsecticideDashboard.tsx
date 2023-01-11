@@ -143,12 +143,12 @@ function chartOptions(
     return {
         chart: {
             type: "bar",
-            height: categories.length * 30 + (enabledLegend ? 50 : 0) + (visibleYAxisLabels ? 50 : 0),
-            marginTop: enabledLegend ? 60 : 0,
+            height: categories.length * 40 + (enabledLegend ? 50 : 0) + (visibleYAxisLabels ? 50 : 0),
+            marginTop: enabledLegend ? 100 : 0,
             marginBottom: visibleYAxisLabels ? 60 : 0,
         },
         title: {
-            align: "left",
+            align: "center",
             text: enabledLegend
                 ? i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.insecticideResistanceStatus")
                 : "",
@@ -178,8 +178,8 @@ function chartOptions(
             align: "center",
             reversed: true,
             enabled: enabledLegend,
-            y: -40,
-            x: 50,
+            y: -20,
+            x: -20,
         },
         plotOptions: {
             series: {
