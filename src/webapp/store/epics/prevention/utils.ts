@@ -332,7 +332,8 @@ function otherDetected(mapType: PreventionMapType, siteFilteredStudies: Study[],
                 .filter(
                     study =>
                         !currentInsecticideClasses.includes(study.INSECTICIDE_CLASS) &&
-                        isNotNull(study.INSECTICIDE_CLASS)
+                        isNotNull(study.INSECTICIDE_CLASS) &&
+                        study.RESISTANCE_STATUS === "CONFIRMED_RESISTANCE"
                 )
                 .map(study => i18next.t(study.INSECTICIDE_CLASS))
         );
