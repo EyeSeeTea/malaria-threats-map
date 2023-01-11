@@ -561,7 +561,7 @@
                     "show_less": "Show less"
                 },
                 "molecular_markers": {
-                    "subtitle": "The folowing {{molecularMarker}} mutations were observed",
+                    "subtitle": "Prevalence of {{molecularMarker}} mutations:",
                     "percentage": "Percentage (%)",
                     "studies": "Studies",
                     "study_years": "Study year(s)",
