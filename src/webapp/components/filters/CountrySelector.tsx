@@ -52,7 +52,7 @@ const CountrySelector = ({ region, countries = [], setRegion, fetchCountryLayer,
     const suggestions: Option[] = translatedCountries
         .filter(el => (region.region ? el.REGION_FULL === region.region.replace("_", " ") : el))
         .map((country: CountryProperties) => ({
-            label: t(country.ISO_2_CODE),
+            label: t(`countries.${country.ISO_2_CODE}`),
             value: country.ISO_2_CODE,
         }))
         .filter(sug => sug.label);
