@@ -194,7 +194,7 @@
                 "numBioassaysByCategory": "The following number of bioassay meet the applied filter:",
                 "numBioassays": "{{count}} bioassays meet the applied filter",
                 "numSites": "Number of sites",
-                "insecticideResistanceStatus": "Insecticide resistance status",
+                "insecticideResistanceStatus": "Insecticide resistance status:",
                 "byInsecticideClass": "By Insecticide Class",
                 "byInsecticide": "By Insecticide",
                 "confirmed": "Confirmed (0 to <90%)",
