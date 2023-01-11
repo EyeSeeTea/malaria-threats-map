@@ -541,7 +541,7 @@
             "delayed_parasite_clearance_subtitle": "Results of therapeutic efficacy studies",
             "delayed_parasite_clearance_italics": "Delayed parasite clearance (<i>P.f </i>)",
             "molecular_markers": "Molecular markers of drug resistance",
-            "molecular_markers_subtitle": "Results of studies of molecular prevention",
+            "molecular_markers_subtitle": "Results of molecular marker studies",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against <i>{{plasmodiumSpecies}}</i> {{years}}",
