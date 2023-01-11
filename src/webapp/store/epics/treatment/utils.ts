@@ -50,7 +50,7 @@ export function createTreatmentSelectionData(
         studyObject,
         data:
             treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS
-                ? createMolecularMarkersChartData(sortedStudies, dataSources)
+                ? createMolecularMarkersChartData(sortedStudies, dataSources, treatmentFilters)
                 : createTreatmentFailureChartData(sortedStudies, yearFilters),
         dataSources: treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS ? dataSources : undefined,
         curations: [],
@@ -145,7 +145,8 @@ function createTreatmentFailureChartData(studies: TreatmentStudy[], yearFilters:
 
 function createMolecularMarkersChartData(
     studies: TreatmentStudy[],
-    dataSources: CitationDataSource[]
+    dataSources: CitationDataSource[],
+    treatmentFilters: TreatmentFilters
 ): TreatmentMolecularMarkersChartData {
     const studies255 = studies;
 
@@ -181,13 +182,20 @@ function createMolecularMarkersChartData(
         data: {
             years,
             series,
-            markers: {
-                Wildtype: extractMarkersByMutationCategory(allStudies257, "wild type"),
-                "Validated markers": extractMarkersByMutationCategory(allStudies257, "validated"),
-                "Candidated markers": extractMarkersByMutationCategory(allStudies257, "associated"),
-                MC: extractMarkersByMutationCategory(allStudies257, "multiple copy number"),
-                "Other markers": extractMarkersByMutationCategory(allStudies257, "other"),
-            },
+            markers:
+                treatmentFilters.molecularMarker === 1
+                    ? {
+                          "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
+                          "Validated markers": extractMarkersByMutationCategory(allStudies257, "validated"),
+                          "Candidated markers": extractMarkersByMutationCategory(allStudies257, "associated"),
+                          MC: extractMarkersByMutationCategory(allStudies257, "multiple copy number"),
+                          "Other markers": extractMarkersByMutationCategory(allStudies257, "other"),
+                      }
+                    : {
+                          "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
+                          MC: extractMarkersByMutationCategory(allStudies257, "multiple copy number"),
+                          Mutations: extractMarkersByMutationCategory(allStudies257, "mutations"),
+                      },
         },
     };
 }
