@@ -234,7 +234,7 @@
                     "chartInterpretation": "<strong>Chart interpretation:</strong> This scatter plot displays the percentage of patients with delayed parasite clearance, in a therapeutic efficacy study, conducted in a selected country (or countries), by year. The user can customize the chart by selecting a drug, and the years of interest. The user can also exclude studies with less than 20 patients from the chart.",
                     "description_1": "Each circle represents one therapeutic efficacy study. The size of the circle is indicative of the total number of patients included in the study. The colour of the circle indicates the country where the study was conducted.",
                     "description_2": "The placement of the circles along the x-axis is based on the year in which the study was completed. There is slight horizontal displacement of the circles, within a year interval, in order to reduce overlapping circles.",
-                    "dataAvailability": "<strong>Data availability:</strong> Only data for <strong><i>P. falciparum</i></strong> is displayed in this graph."
+                    "dataAvailability": "<strong>Data availability:</strong> Only data for <strong><i>P. falciparum</i></strong> are displayed in this graph."
                 },
                 "summaryMolecularMarkerStudyOverTime": {
                     "intro": "Molecular marker studies identify and track the prevalence of molecular mutations associated with antimalarial drug resistance. The user can customize the chart by selecting the type of molecular marker study and the years of interest. The user can also exclude studies with less than 20 patients from the chart.",
@@ -308,7 +308,7 @@
                 "db_last_updated": "Database last updated",
                 "read_story": "Read Story"
             },
-            "header": "The Malaria Threats Map is the most comprehensive platform on the four biological threats to malaria control and elimination.",
+            "header": "The Malaria Threats Map is a comprehensive platform on the four biological threats to malaria control and elimination.",
             "theme_paper": {
                 "prevention_subtitle": "Vector resistance to the insecticides used for vector control  threatens malaria control efforts.",
                 "invasive_subtitle": "The spread of certain anopheline vector species and their establishment in new ecosystems poses a threat to malaria control.",
@@ -376,7 +376,7 @@
             },
             "other_who_resources": {
                 "title": "WHO resources",
-                "resource1": "WHO malaria guidelines",
+                "resource1": "WHO Guidelines for malaria",
                 "resource2": "WHO World malaria report",
                 "resource3": "WHO Malaria threats map"
             },
