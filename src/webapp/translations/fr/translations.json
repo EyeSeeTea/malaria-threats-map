@@ -543,7 +543,7 @@
             "delayed_parasite_clearance_subtitle": "Résultats des études d'efficacité thérapeutique",
             "delayed_parasite_clearance_italics": "Retard dans l'élimination des parasites (<i>P.f </i>)",
             "molecular_markers": "Marqueurs moléculaires de la résistance aux médicaments",
-            "molecular_markers_subtitle": "Résultats des études de prévention moléculaire",
+            "molecular_markers_subtitle": "Résultats des études sur les marqueurs moléculaires",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre <i>{{plasmodiumSpecies}}</i> {{years}}",
