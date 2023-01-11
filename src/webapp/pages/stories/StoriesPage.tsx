@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Stack, Typography } from "@mui/material";
 import { Trans, useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
@@ -140,6 +140,10 @@ export const StoriesPage: React.FC = () => {
     const [storyModeStep, setStoryModeStep] = useState<number>(0);
     const [searchParams] = useSearchParams();
     const theme = searchParams.get("theme") as ThemeType;
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [theme]);
 
     const imageBannerColors = (theme: ThemeType) => {
         const bgColors: string[] = [];
