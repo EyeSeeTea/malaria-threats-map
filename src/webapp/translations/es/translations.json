@@ -273,7 +273,7 @@
         "homepage": {
             "menu": {
                 "home": "Inicio",
-                "tools": "Instrumentos",
+                "tools": "Herramientas",
                 "stories": "Historias",
                 "about": "Acerca de",
                 "contact": "Contacto",
@@ -702,7 +702,7 @@
         "sidebar": {
             "home": "Inicio",
             "stories": "Historias",
-            "about": "Sobre",
+            "about": "Acerca de",
             "contact": "Contactar",
             "share_data": "Compartir datos",
             "language": "Idioma",
