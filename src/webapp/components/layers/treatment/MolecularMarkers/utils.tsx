@@ -1310,7 +1310,7 @@ export const MutationColors: { [key: string]: { color: string } } = {
         color: "#C6E2FF",
     },
     WT: {
-        color: "#012164",
+        color: "#9FB4DD",
     },
     Y482H: {
         color: "#7B68EE",
@@ -1455,5 +1455,8 @@ export const MutationColors: { [key: string]: { color: string } } = {
     },
     "Y519H&C580Y": {
         color: "#FE1D02",
+    },
+    MC: {
+        color: "#D62E1A",
     },
 };
