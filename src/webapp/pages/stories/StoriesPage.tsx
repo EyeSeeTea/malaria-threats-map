@@ -14,13 +14,11 @@ import diagnosis2 from "../../assets/img/stories-page/diagnosis2.png";
 import diagnosis3 from "../../assets/img/stories-page/diagnosis3.png";
 import invasive1 from "../../assets/img/stories-page/invasive1.png";
 import invasive2 from "../../assets/img/stories-page/invasive2.png";
-import invasive3 from "../../assets/img/stories-page/invasive3.png";
 import prevention1 from "../../assets/img/stories-page/prevention1.png";
-import prevention2 from "../../assets/img/stories-page/prevention2.png";
 import prevention3 from "../../assets/img/stories-page/prevention3.png";
-import prevention4 from "../../assets/img/stories-page/prevention4.png";
 import treatment1 from "../../assets/img/stories-page/treatment1.png";
-import treatment4 from "../../assets/img/stories-page/treatment4.png";
+import treatment2 from "../../assets/img/stories-page/treatment2.png";
+import treatment3 from "../../assets/img/stories-page/treatment3.png";
 
 import Layout from "../layout/Layout";
 import StoryModeStepper from "../../components/StoryModeStepper";
@@ -95,39 +93,32 @@ const MapComponent = ({ theme, storyModeStep }: { theme: string; storyModeStep: 
                     imageSrc = invasive1;
                     break;
                 case 1:
-                    imageSrc = invasive2;
-                    break;
                 case 2:
-                case 3:
-                    imageSrc = invasive3;
+                    imageSrc = invasive2;
                     break;
             }
             break;
         case "prevention":
             switch (storyModeStep) {
                 case 0:
-                    imageSrc = prevention1;
-                    break;
                 case 1:
-                    imageSrc = prevention2;
+                    imageSrc = prevention1;
                     break;
                 case 2:
                     imageSrc = prevention3;
-                    break;
-                case 3:
-                    imageSrc = prevention4;
                     break;
             }
             break;
         case "treatment":
             switch (storyModeStep) {
                 case 0:
-                case 1:
-                case 2:
                     imageSrc = treatment1;
                     break;
-                case 3:
-                    imageSrc = treatment4;
+                case 1:
+                    imageSrc = treatment2;
+                    break;
+                case 2:
+                    imageSrc = treatment3;
                     break;
             }
             break;

@@ -74,8 +74,8 @@ type Steps = { [value: string]: string[] };
 const themeMap = {
     invasive: ["invasiveStory_step1", "invasiveStory_step2", "invasiveStory_step3"],
     diagnosis: ["diagnosisStory_step1", "diagnosisStory_step2", "diagnosisStory_step3"],
-    treatment: ["treatmentStory_step1", "treatmentStory_step2", "treatmentStory_step3", "treatmentStory_step4"],
-    prevention: ["preventionStory_step1", "preventionStory_step2", "preventionStory_step3", "preventionStory_step4"],
+    treatment: ["treatmentStory_step1", "treatmentStory_step2", "treatmentStory_step3"],
+    prevention: ["preventionStory_step1", "preventionStory_step2", "preventionStory_step3"],
 } as Steps;
 
 function StoryModeStepper({ theme, storyModeStep, setStoryModeStep }: Props) {
