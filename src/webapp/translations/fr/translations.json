@@ -206,7 +206,7 @@
                 },
                 "mosquitoMortalityOverTime": {
                     "title": "MORTALITÉ DES MOUSTIQUES AU FIL DU TEMPS",
-                    "adjustedMortality": "Mortalité ajustée",
+                    "adjustedMortality": "Mortalité ajustée (%)",
                     "year": "An"
                 }
             },
