@@ -205,7 +205,7 @@
                 },
                 "mosquitoMortalityOverTime": {
                     "title": "MOSQUITO MORTALITY OVER TIME",
-                    "adjustedMortality": "Adjusted mortality",
+                    "adjustedMortality": "Adjusted mortality (%)",
                     "year": "Year"
                 }
             },
