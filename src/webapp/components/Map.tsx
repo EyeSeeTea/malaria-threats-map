@@ -192,7 +192,6 @@ type Props = StateProps & DispatchProps & WithTranslation;
 type StateTypes = {
     ready: boolean;
     theme: string;
-    style: mapboxgl.Style;
     menuOpen: boolean;
     viewMapOnly: boolean; // show only the legend and last-data-update boxes
     viewport: {
@@ -210,7 +209,6 @@ class Map extends React.Component<Props, StateTypes> {
     state = {
         ready: false,
         theme: "prevention",
-        style: style,
         menuOpen: false,
         viewMapOnly: false, // show only the legend and last-data-update boxes
         viewport: {
