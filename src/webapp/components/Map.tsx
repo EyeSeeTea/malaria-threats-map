@@ -35,6 +35,7 @@ import {
     updateBoundsAction,
     updateZoomAction,
     setActionGroupSelected,
+    setSelection,
 } from "../store/actions/base-actions";
 import { Fade, Box, Fab, Drawer, Tooltip, Stack } from "@mui/material";
 import { Add as ZoomInIcon, Remove as ZoomOutIcon, OpenInFull as MapOnlyIcon } from "@mui/icons-material";
@@ -180,6 +181,7 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     setTheme: setThemeAction,
     setRegion: setRegionAction,
+    setSelection: setSelection,
     updateZoom: updateZoomAction,
     updateBounds: updateBoundsAction,
     addNotification: addNotificationAction,
@@ -193,6 +195,7 @@ type StateTypes = {
     ready: boolean;
     theme: string;
     menuOpen: boolean;
+    sidebarOpen: boolean;
     viewMapOnly: boolean; // show only the legend and last-data-update boxes
     viewport: {
         latitude: number;
@@ -210,6 +213,7 @@ class Map extends React.Component<Props, StateTypes> {
         ready: false,
         theme: "prevention",
         menuOpen: false,
+        sidebarOpen: false,
         viewMapOnly: false, // show only the legend and last-data-update boxes
         viewport: {
             latitude: 40,
@@ -220,10 +224,6 @@ class Map extends React.Component<Props, StateTypes> {
         },
     };
     images: any[] = [];
-
-    shouldShowRightSideBar(): boolean {
-        return this.props.selection !== null && this.props.selectionData !== null;
-    }
 
     componentDidMount() {
         if (!mapboxgl.supported()) {
@@ -277,12 +277,24 @@ class Map extends React.Component<Props, StateTypes> {
         });
     }
 
-    componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {
+    componentDidUpdate(prevProps: any, prevState: any, _snapshot?: any): void {
         if (this.props.setBounds && this.props.setBounds !== prevProps.setBounds) {
             const [[b0, b1], [b2, b3]] = this.props.setBounds;
             this.map.fitBounds([b0, b1, b2, b3], {
                 padding: 100,
             });
+        }
+        if (
+            this.props.selection !== null &&
+            this.props.selectionData !== null &&
+            this.props.selectionData !== prevProps.selectionData &&
+            !prevState.sidebarOpen
+        ) {
+            this.setState({ sidebarOpen: true });
+        }
+
+        if (this.props.selection === null && this.props.selectionData === null && prevState.sidebarOpen) {
+            this.setState({ sidebarOpen: false });
         }
     }
 
@@ -302,6 +314,11 @@ class Map extends React.Component<Props, StateTypes> {
         if (!viewMapOnly && document.fullscreenElement) {
             document.exitFullscreen();
         }
+    }
+
+    handleSidebarClose() {
+        this.setState({ sidebarOpen: false });
+        this.props.setSelection(null);
     }
 
     render() {
@@ -335,7 +352,7 @@ class Map extends React.Component<Props, StateTypes> {
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
                 {ready && (
-                    <TopMiddleContainer rightOpen={this.shouldShowRightSideBar()}>
+                    <TopMiddleContainer rightOpen={this.state.sidebarOpen}>
                         <Stack spacing={1}>
                             <InfoToastLink text={this.props.t("common.takeATour")} type="tour" />
                             {theme === "treatment" && (
@@ -401,7 +418,7 @@ class Map extends React.Component<Props, StateTypes> {
                     </Fade>
                 </Hidden>
                 <Fade in={showOptions}>
-                    <LegendContainer id={"legend"} rightOpen={this.shouldShowRightSideBar()}>
+                    <LegendContainer id={"legend"} rightOpen={this.state.sidebarOpen}>
                         <Hidden smUp>
                             <LeyendPopover />
                         </Hidden>
@@ -444,22 +461,18 @@ class Map extends React.Component<Props, StateTypes> {
                         </MapFab>
                     </Tooltip>
                 </BottomRightContainer>
-
-                {this.shouldShowRightSideBar() && (
-                    <Drawer
-                        //className={classes.drawer}
-                        variant="persistent"
-                        anchor={"right"}
-                        open={true}
-                        PaperProps={{
-                            sx: {
-                                backgroundColor: "#f3f3f3",
-                            },
-                        }}
-                    >
-                        <SelectionDataContent />
-                    </Drawer>
-                )}
+                <Drawer
+                    variant="persistent"
+                    anchor={"right"}
+                    open={this.state.sidebarOpen}
+                    PaperProps={{
+                        sx: {
+                            backgroundColor: "#f3f3f3",
+                        },
+                    }}
+                >
+                    <SelectionDataContent onClose={() => this.handleSidebarClose()} />
+                </Drawer>
             </React.Fragment>
         );
     }
