@@ -12,6 +12,7 @@ const getSiteSelectionByFeature = (e: any, feature: any) => {
         ISO_2_CODE: feature.properties.ISO_2_CODE,
         SITE_ID: feature.properties.SITE_ID,
         coordinates: coordinates,
+        OBJECTID: feature.properties.OBJECTID,
     };
 };
 

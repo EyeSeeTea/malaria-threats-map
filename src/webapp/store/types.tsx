@@ -192,6 +192,7 @@ export interface SiteSelection {
     ISO_2_CODE: string;
     SITE_ID: string;
     coordinates: [number, number];
+    OBJECTID?: number;
 }
 
 interface TourState {

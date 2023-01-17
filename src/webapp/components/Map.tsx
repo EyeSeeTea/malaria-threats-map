@@ -319,6 +319,11 @@ class Map extends React.Component<Props, StateTypes> {
     handleSidebarClose() {
         this.setState({ sidebarOpen: false });
         this.props.setSelection(null);
+
+        this.map.setFeatureState(
+            { source: `${this.props.theme}-source`, id: this.props.selection.OBJECTID },
+            { click: false }
+        );
     }
 
     render() {
