@@ -39,3 +39,16 @@ export const getSiteSelectionOnMove = (e: any, map: mapboxgl.Map, layer: string)
         return null;
     }
 };
+
+export const getLayerSource = (theme: string) => {
+    switch (theme) {
+        case "prevention":
+            return "prevention-source";
+        case "invasive":
+            return "invasive-source";
+        case "treatment":
+            return "treatment-source";
+        case "diagnosis":
+            return "diagnosis-source";
+    }
+};
