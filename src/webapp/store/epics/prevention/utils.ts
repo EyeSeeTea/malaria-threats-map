@@ -302,6 +302,7 @@ function createChartDataItems(
             name: `${getStudyName(mapType, study)} (${dataSourceKeys.join(", ")}) `,
             y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
             number: study.NUMBER,
+            resistanceStatus: study.RESISTANCE_STATUS,
         };
     });
 
