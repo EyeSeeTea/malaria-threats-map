@@ -1,7 +1,6 @@
 import React from "react";
 import { style } from "./style";
 import styled from "styled-components";
-import LayersButton from "./layers_button/LayersButton";
 import mapboxgl from "mapbox-gl";
 import { State } from "../store/types";
 import { connect } from "react-redux";
@@ -436,7 +435,7 @@ class Map extends React.Component<Props, StateTypes> {
                 </Fade>
                 <PushoverContainer menuOpen={this.state.menuOpen}>
                     <BottomLeftContainer>
-                        {viewMapOnly || <LayersButton />} {/* Layers selector box */}
+                        {/* {viewMapOnly || <LayersButton />}  */}
                         <Box width={20} />
                         <WhoLogoBlue width="180px" />
                     </BottomLeftContainer>
