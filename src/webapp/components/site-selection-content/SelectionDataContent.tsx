@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Divider, Paper, Typography } from "@mui/material";
+import { Divider, Paper, Typography, IconButton } from "@mui/material";
 import { connect } from "react-redux";
 import { selectSelectionData } from "../../store/reducers/base-reducer";
 import { PreventionFilters, State } from "../../store/types";
@@ -26,6 +26,7 @@ import { InvasiveSelectionData } from "../../store/epics/invasive/types";
 import { PayloadActionCreator } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
 import { DiagnosisSelectionData } from "../../store/epics/diagnosis/types";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Container = styled.div<{ width?: string; padding?: string }>`
     width: ${props => props.width || "100%"};
@@ -59,6 +60,12 @@ const Flex = styled.div`
     align-items: center;
 `;
 
+const StyledIconButton = styled(IconButton)`
+    position: absolute;
+    top: 65px;
+    right: 10px;
+`;
+
 export const Row = styled.div`
     display: flex;
     flex-direction: row;
@@ -79,9 +86,13 @@ const mapDispatchToProps = {
 };
 type DispatchProps = typeof mapDispatchToProps;
 
-type Props = StateProps & DispatchProps;
+type OwnProps = {
+    onClose: () => void;
+};
 
-const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFilterSelection }: Props) => {
+type Props = StateProps & DispatchProps & OwnProps;
+
+const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFilterSelection, onClose }: Props) => {
     const chartCataContent = () => {
         switch (selectionData.kind) {
             case "common": {
@@ -110,6 +121,9 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
             <Hidden smDown>
                 <Container width={"500px"}>{selectionData && chartCataContent()}</Container>
             </Hidden>
+            <StyledIconButton onClick={onClose}>
+                <CloseIcon />
+            </StyledIconButton>
         </>
     );
 };

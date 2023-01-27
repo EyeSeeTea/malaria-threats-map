@@ -12,6 +12,7 @@ const getSiteSelectionByFeature = (e: any, feature: any) => {
         ISO_2_CODE: feature.properties.ISO_2_CODE,
         SITE_ID: feature.properties.SITE_ID,
         coordinates: coordinates,
+        OBJECTID: feature.properties.OBJECTID,
     };
 };
 
@@ -36,5 +37,18 @@ export const getSiteSelectionOnMove = (e: any, map: mapboxgl.Map, layer: string)
         return selection;
     } else {
         return null;
+    }
+};
+
+export const getLayerSource = (theme: string) => {
+    switch (theme) {
+        case "prevention":
+            return "prevention-source";
+        case "invasive":
+            return "invasive-source";
+        case "treatment":
+            return "treatment-source";
+        case "diagnosis":
+            return "diagnosis-source";
     }
 };
