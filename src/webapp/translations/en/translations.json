@@ -168,7 +168,7 @@
                 },
                 "treatmentFailureOverTime": {
                     "title": "TREATMENT FAILURE RATES OVER TIME",
-                    "numberPatients": "Number of Patients",
+                    "numberPatients": "Number of patients",
                     "treatmentFailure": "Treatment failure (%)",
                     "year": "Year"
                 },

@@ -91,7 +91,7 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
         plotOptions: {
             bubble: {
                 minSize: 1,
-                maxSize: 30,
+                maxSize: 25,
             },
         },
         legend: {
@@ -107,10 +107,10 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
                     ${i18next.t(
                         "common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.numberPatients"
                     )}
-                    <img width="100px" src=${BubbleChartHelpImage} alt='' />
+                    <img width="120px" src=${BubbleChartHelpImage} alt='' />
                    </div>`,
             x: 0,
-            y: 0,
+            y: -8,
             align: "right",
             verticalAlign: "bottom",
             style: {
