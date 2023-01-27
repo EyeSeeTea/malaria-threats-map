@@ -551,7 +551,7 @@
                     "number_of_patients": "patients included",
                     "follow_up": "-day follow-up. ",
                     "confirmed_resist_pv": "Patients with confirmed resistance",
-                    "positive_day_3": "Positive after day 3",
+                    "positive_day_3": "Patients with parasitemia on day 3",
                     "treatment_failure_pp": "Patients with treatment failure, per protocol",
                     "treatment_failure_km": "Patients with treatment failure, Kaplan-Meier",
                     "days": "days",
