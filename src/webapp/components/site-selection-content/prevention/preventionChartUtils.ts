@@ -5,6 +5,10 @@ import { PreventionMapType } from "../../../store/types";
 import { ResistanceStatusColors } from "../../layers/prevention/ResistanceStatus/symbols";
 import { ChartStyles } from "../../charts/Style";
 
+const isGreyInsecticideTypes = (data: PreventionChartDataItem) => {
+    return data.resistanceStatus === "UNDETERMINED";
+};
+
 export const preventionBarChartOptions: (
     maptype: PreventionMapType,
     data: PreventionChartDataItem[],
@@ -64,7 +68,8 @@ export const preventionBarChartOptions: (
                     fontWeight: "normal",
                 },
             },
-            zones: getBarZones(maptype),
+            color: isGreyInsecticideTypes(data[0]) ? ResistanceStatusColors.Undetermined[0] : undefined,
+            zones: !isGreyInsecticideTypes(data[0]) ? getBarZones(maptype) : [],
         },
     },
     tooltip: {

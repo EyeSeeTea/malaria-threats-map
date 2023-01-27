@@ -3,9 +3,10 @@ import { Divider, Typography } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useTranslation } from "react-i18next";
-import { SelectionData } from "../../../store/SelectionData";
+import { PreventionChartDataContent, SelectionData } from "../../../store/SelectionData";
 import { preventionBarChartOptions } from "./preventionChartUtils";
 import { PreventionMapType } from "../../../store/types";
+import { useEffect, useState } from "react";
 
 type Props = {
     mapType: PreventionMapType;
@@ -14,12 +15,22 @@ type Props = {
 
 const PreventionChart: React.FC<Props> = ({ mapType, selectionData }) => {
     const { t } = useTranslation();
+    const [data, setData] = useState<PreventionChartDataContent>({});
 
-    const data = React.useMemo(() => {
+    useEffect(() => {
         if (selectionData.kind === "common" && selectionData.data.kind === "prevention") {
-            return selectionData.data.data;
+            // There are a bug in highcharts that some times when a filter change and this component render
+            // the xaxis labels are mixed. If the component content is unmount and mouunt the work successfully then
+            // previously reset data and set data with a timeout to avoid this bug
+            setData({});
+
+            const timer = setTimeout(() => {
+                setData(selectionData.data.data as PreventionChartDataContent);
+            }, 10);
+
+            return () => clearTimeout(timer);
         } else {
-            return null;
+            setData({});
         }
     }, [selectionData]);
 

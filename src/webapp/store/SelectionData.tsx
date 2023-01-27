@@ -27,9 +27,13 @@ export type preventionChartDataTitle = {
     titleSufix: string;
 };
 
+export type PreventionChartDataContent = {
+    [x: string]: { [x: string]: { title?: preventionChartDataTitle; seriesData: PreventionChartDataItem[] } };
+};
+
 export type PreventionChartData = {
     kind: "prevention";
-    data: { [x: string]: { [x: string]: { title?: preventionChartDataTitle; seriesData: PreventionChartDataItem[] } } };
+    data: PreventionChartDataContent;
 };
 
 export type PreventionMechanismChartData = {
@@ -70,6 +74,7 @@ export type PreventionChartDataItem = {
     name: string;
     y: number;
     number: string;
+    resistanceStatus: string;
 };
 
 export type PreventionMechanismChartDataItem = {
