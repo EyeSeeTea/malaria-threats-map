@@ -64,10 +64,13 @@ export const setTreatmentMapTypesEpic = (action$: Observable<ActionType<typeof s
     action$.pipe(
         ofType(ActionTypeEnum.SetTreatmentMapType),
         switchMap(action => {
-            if (action.payload === 2) {
+            if (action.payload === TreatmentMapType.MOLECULAR_MARKERS) {
                 return of(setMolecularMarker(1));
+            } else if (action.payload === TreatmentMapType.DELAYED_PARASITE_CLEARANCE) {
+                return of(setTreatmentPlasmodiumSpecies("P._FALCIPARUM"));
+            } else {
+                return of();
             }
-            return of();
         })
     );
 
