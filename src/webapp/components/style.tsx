@@ -89,8 +89,7 @@ export const style: mapboxgl.Style = {
             },
         },
         {
-            id:
-                "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_AREAS/Aral Sea; Great Lakes of NA; Lake Albert; Lake Malawi; Lake Tanganyika; Lake Titicaca; Lake Victoria",
+            id: "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_AREAS/Aral Sea; Great Lakes of NA; Lake Albert; Lake Malawi; Lake Tanganyika; Lake Titicaca; Lake Victoria",
             type: "fill",
             source: "esri",
             "source-layer": "DISPUTED_AREAS",
@@ -108,8 +107,7 @@ export const style: mapboxgl.Style = {
             paint: { "fill-color": "#FFFFFF" },
         },
         {
-            id:
-                "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_BORDERS/Aksai Chin (IND Claim); Arunachal Pradesh; Halayib Triangle (EGY Claim); Aksai Chin (CHN Claim); Bir Tawil (EGY Claim); Jammu and Kashmir; Western Sahara; Golan",
+            id: "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_BORDERS/Aksai Chin (IND Claim); Arunachal Pradesh; Halayib Triangle (EGY Claim); Aksai Chin (CHN Claim); Bir Tawil (EGY Claim); Jammu and Kashmir; Western Sahara; Golan",
             type: "line",
             source: "esri",
             "source-layer": "DISPUTED_BORDERS",
@@ -128,8 +126,7 @@ export const style: mapboxgl.Style = {
             },
         },
         {
-            id:
-                "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_BORDERS/Sudan-South Sudan; Gaza Strip; West Bank; Ethiopia-Somalia; Halayib Triangle (SDN Claim); Korean DMZ; J&K (IND Claim); J&K (PAK Claim); Bir Tawil (SDN Claim)/1",
+            id: "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_BORDERS/Sudan-South Sudan; Gaza Strip; West Bank; Ethiopia-Somalia; Halayib Triangle (SDN Claim); Korean DMZ; J&K (IND Claim); J&K (PAK Claim); Bir Tawil (SDN Claim)/1",
             type: "line",
             source: "esri",
             "source-layer": "DISPUTED_BORDERS",
@@ -148,8 +145,7 @@ export const style: mapboxgl.Style = {
             },
         },
         {
-            id:
-                "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_BORDERS/Sudan-South Sudan; Gaza Strip; West Bank; Ethiopia-Somalia; Halayib Triangle (SDN Claim); Korean DMZ; J&K (IND Claim); J&K (PAK Claim); Bir Tawil (SDN Claim)/0",
+            id: "Boundaries/DISPUTED BORDERS AND AREAS/DISPUTED_BORDERS/Sudan-South Sudan; Gaza Strip; West Bank; Ethiopia-Somalia; Halayib Triangle (SDN Claim); Korean DMZ; J&K (IND Claim); J&K (PAK Claim); Bir Tawil (SDN Claim)/0",
             type: "line",
             source: "esri",
             "source-layer": "DISPUTED_BORDERS",
