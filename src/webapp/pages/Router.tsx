@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { HashRouter, Route, Routes, useLocation } from "react-router-dom";
 import { AboutPage } from "./about/AboutPage";
 import ContactPage from "./contact/ContactPage";
 import DashboardsPage from "./dashboards/DashboardsPage";
@@ -8,8 +8,6 @@ import { StoriesPage } from "./stories/StoriesPage";
 import HomePage from "./home/HomePage";
 import MapPage from "./map/MapPage";
 import ShareDataPage from "./shareData/ShareDataPage";
-
-import config from "../config";
 
 const ScrollToTop = (): JSX.Element => {
     const { pathname } = useLocation();
@@ -23,7 +21,7 @@ const ScrollToTop = (): JSX.Element => {
 
 export const Router: React.FC = React.memo(() => {
     return (
-        <BrowserRouter basename={config.publicUrl}>
+        <HashRouter>
             <ScrollToTop />
             <Routes>
                 <Route path="/" element={<HomePage />} />
@@ -39,6 +37,6 @@ export const Router: React.FC = React.memo(() => {
                 {/* Default route */}
                 <Route element={<HomePage />} />
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
     );
 });

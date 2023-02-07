@@ -1,5 +1,4 @@
 type ConfigProps = {
-    publicUrl: string;
     mapServerUrl: string;
     xmartServerUrl: string;
     featuresServerUrl: string;
@@ -90,10 +89,7 @@ const localFeedbackConfig = {
     issues: { repository: "EyeSeeTea/malaria-threats-map", title: "[User feedback] {title}" },
 };
 
-const publicUrl = process.env.PUBLIC_URL;
-
-const base: Pick<ConfigProps, "feedback" | "publicUrl"> = {
-    publicUrl: publicUrl === "." ? "/" : publicUrl,
+const base: Pick<ConfigProps, "feedback"> = {
     feedback: localFeedbackConfig,
 };
 
