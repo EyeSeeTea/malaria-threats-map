@@ -163,9 +163,16 @@ const Footer = () => {
                         >
                             <Typography color={"black"}>{t("common.footer.privacy")}</Typography>
                         </a>
-                        <Typography variant="body1" textAlign="center">
-                            {t("disclaimer.p1bLinkText", { year: new Date().getFullYear() })}
-                        </Typography>
+                        <a
+                            href={t("disclaimer.p1bLink")}
+                            target={"_blank"}
+                            rel="noreferrer"
+                            style={{ textDecoration: "none" }}
+                        >
+                            <Typography variant="body1" textAlign="center" color={"black"}>
+                                {t("disclaimer.p1bLinkText", { year: new Date().getFullYear() })}
+                            </Typography>
+                        </a>
                     </Stack>
                 </PrivacyCopyrightStack>
             </FooterContainer>
