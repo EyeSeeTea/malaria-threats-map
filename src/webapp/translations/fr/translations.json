@@ -647,14 +647,21 @@
             "no_records": "Aucun enregistrement n'est disponible avec les critères spécifiés",
             "records": {
                 "prevention": {
-                    "0": "Il y a {{studies}} tests avec les critères spécifiés",
-                    "1": "Il y a {{studies}} tests avec les critères spécifiés",
-                    "2": "Il y a {{studies}} tests avec les critères spécifiés",
-                    "3": "Il y a {{studies}} tests avec les critères spécifiés"
+                    "0_one": "Il y a {{count}} test avec les critères spécifiés",
+                    "0_other": "Il y a {{count}} tests avec les critères spécifiés",
+                    "1_one": "Il y a {{count}} test avec les critères spécifiés",
+                    "1_other": "Il y a {{count}} tests avec les critères spécifiés",
+                    "2_one": "Il y a {{count}} test avec les critères spécifiés",
+                    "2_other": "Il y a {{count}} tests avec les critères spécifiés",
+                    "3_one": "Il y a {{count}} test avec les critères spécifiés",
+                    "3_other": "Il y a {{count}} tests avec les critères spécifiés"
                 },
-                "diagnosis": "{{studies}} enquêtes trouvés avec des critères spécifiés",
-                "treatment": "{{studies}} études trouvés avec des critères spécifiés",
-                "invasive": "{{studies}} détections de vecteurs trouvés avec des critères spécifiés"
+                "diagnosis_one": "{{count}} enquête trouvés avec des critères spécifiés",
+                "diagnosis_other": "{{count}} enquêtes trouvés avec des critères spécifiés",
+                "treatment_one": "{{count}} étude trouvés avec des critères spécifiés",
+                "treatment_other": "{{count}} études trouvés avec des critères spécifiés",
+                "invasive_one": "{{count}} détection de vecteurs trouvés avec des critères spécifiés",
+                "invasive_other": "{{count}} détections de vecteurs trouvés avec des critères spécifiés"
             },
             "insecticide_class": "Classe d'insecticide",
             "insecticide_type": "Insecticide",
