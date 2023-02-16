@@ -82,7 +82,7 @@
                     "buttonTwo": "Antimalarial drug efficacy and resistance"
                 },
                 "second": {
-                    "title": "2. Select Country",
+                    "title": "2. Select Country or Area",
                     "helper": "Select up to 5 countries",
                     "lastUpdate": "Last update: ",
                     "cta": "Generate Dashboard"
@@ -678,7 +678,7 @@
             "select_patient_type": "Select patient type",
             "years": "Years",
             "country": "Country",
-            "select_country": "Select country",
+            "select_country": "Select country or area",
             "countries": "Countries",
             "region": "Region",
             "select_region": "Select region",

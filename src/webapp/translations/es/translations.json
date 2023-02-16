@@ -83,7 +83,7 @@
                     "buttonTwo": "Eficacia y resistencia a los medicamentos antipalúdicos"
                 },
                 "second": {
-                    "title": "2. Seleccionar país",
+                    "title": "2. Seleccionar país o zona",
                     "helper": "Seleccione hasta 5 países",
                     "lastUpdate": "Última actualización: ",
                     "cta": "Generar Tablero"
@@ -680,7 +680,7 @@
             "select_patient_type": "Seleccionar tipos de pacientes",
             "years": "Años",
             "country": "País",
-            "select_country": "Seleccionar país",
+            "select_country": "Seleccionar país o zona",
             "countries": "Países",
             "region": "Región",
             "select_region": "Seleccione región",
