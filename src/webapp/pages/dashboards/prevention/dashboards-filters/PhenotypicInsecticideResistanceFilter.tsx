@@ -1,26 +1,24 @@
 import React from "react";
-import i18next from "i18next";
+import { TFunction, useTranslation } from "react-i18next";
 import DashboardContentFilter from "../../common/dashboards-filters/DashboardContentFilter";
 import { Option } from "../../common/types";
 import { PhenotypicInsecticideResistance } from "../types";
 
-const options: Option<PhenotypicInsecticideResistance>[] = [
+const options = (t: TFunction<"translation", undefined>): Option<PhenotypicInsecticideResistance>[] => [
     {
-        label: i18next.t(
+        label: t(
             "common.dashboard.dashboardsFilterSection.phenotypicInsecticideResistanceOptions.phenotypicInsecticideResistance"
         ),
         value: "phenotypic-insecticide-resistance",
     },
     {
-        label: i18next.t(
+        label: t(
             "common.dashboard.dashboardsFilterSection.phenotypicInsecticideResistanceOptions.statusOfResistanceToInsecticides"
         ),
         value: "status-resistance-insecticide",
     },
     {
-        label: i18next.t(
-            "common.dashboard.dashboardsFilterSection.phenotypicInsecticideResistanceOptions.mosquitoOverTime"
-        ),
+        label: t("common.dashboard.dashboardsFilterSection.phenotypicInsecticideResistanceOptions.mosquitoOverTime"),
         value: "mosquito-mortality-over-time",
     },
 ];
@@ -34,7 +32,8 @@ const PhenotypicInsecticideResistanceFilter: React.FC<PhenotypicInsecticideResis
     value,
     onChange,
 }) => {
-    return <DashboardContentFilter options={options} value={value} onChange={onChange} />;
+    const { t } = useTranslation();
+    return <DashboardContentFilter options={options(t)} value={value} onChange={onChange} />;
 };
 
 export default PhenotypicInsecticideResistanceFilter;
