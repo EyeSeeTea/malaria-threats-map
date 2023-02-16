@@ -92,7 +92,7 @@
             "dashboardsFilterSection": {
                 "title": "Contents:",
                 "countryContextOptions": {
-                    "countryContext": "Country Context",
+                    "countryContext": "Country context",
                     "epidemiologicalProfile": "Epidemiological profile",
                     "majorPlasmodium": "Major Plasmodium species and treatment regimen",
                     "vectors": "Vectors",
@@ -115,7 +115,7 @@
                 }
             },
             "countryContextDashboards": {
-                "title": "Country Context",
+                "title": "Country context",
                 "source": "Source:",
                 "whoWorldMalariaReport": "WHO. World malaria report 2021",
                 "epidemiologicalProfile": {
