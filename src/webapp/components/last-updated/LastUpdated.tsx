@@ -79,7 +79,7 @@ const LastUpdated = ({
                         `common.filters.records.${theme}${
                             theme === "prevention" ? `.${preventionFilters.mapType}` : ""
                         }`,
-                        { studies: filteredStudies.length }
+                        { count: filteredStudies.length }
                     )}
                 </Typography>
             )}

@@ -645,14 +645,21 @@
             "no_records": "There are no studies available with the specified criteria",
             "records": {
                 "prevention": {
-                    "0": "There are {{studies}} bioassays found with the specified criteria",
-                    "1": "There are {{studies}} bioassays found with the specified criteria",
-                    "2": "There are {{studies}} assays found with the specified criteria",
-                    "3": "There are {{studies}} bioassays found with the specified criteria"
+                    "0_one": "There is {{count}} bioassay found with the specified criteria",
+                    "0_other": "There are {{count}} bioassays found with the specified criteria",
+                    "1_one": "There is {{count}} bioassay found with the specified criteria",
+                    "1_other": "There are {{count}} bioassays found with the specified criteria",
+                    "2_one": "There is {{count}} assay found with the specified criteria",
+                    "2_other": "There are {{count}} assays found with the specified criteria",
+                    "3_one": "There is {{count}} bioassay found with the specified criteria",
+                    "3_other": "There are {{count}} bioassays found with the specified criteria"
                 },
-                "diagnosis": "There are {{studies}} surveys found with the specified criteria",
-                "treatment": "There are {{studies}} studies found with the specified criteria",
-                "invasive": "There are {{studies}} vector detections found with the specified criteria"
+                "diagnosis_one": "There is {{count}} survey found with the specified criteria",
+                "diagnosis_other": "There are {{count}} surveys found with the specified criteria",
+                "treatment_one": "There is {{count}} study found with the specified criteria",
+                "treatment_other": "There are {{count}} studies found with the specified criteria",
+                "invasive_one": "There is {{count}} vector detection found with the specified criteria",
+                "invasive_other": "There are {{count}} vector detections found with the specified criteria"
             },
             "insecticide_class": "Insecticide class",
             "insecticide_type": "Insecticide",

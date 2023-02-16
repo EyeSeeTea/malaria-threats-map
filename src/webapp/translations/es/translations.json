@@ -647,14 +647,21 @@
             "no_records": "No hay registros disponibles con los criterios especificados",
             "records": {
                 "prevention": {
-                    "0": "Hay {{studies}} pruebas con los criterios especificados",
-                    "1": "Hay {{studies}} pruebas con los criterios especificados",
-                    "2": "Hay {{studies}} ensayo con los criterios especificados",
-                    "3": "Hay {{studies}} pruebas con los criterios especificados"
+                    "0_one": "Hay {{count}} prueba con los criterios especificados",
+                    "0_other": "Hay {{count}} pruebas con los criterios especificados",
+                    "1_one": "Hay {{count}} prueba con los criterios especificados",
+                    "1_other": "Hay {{count}} pruebas con los criterios especificados",
+                    "2_one": "Hay {{count}} ensayo con los criterios especificados",
+                    "2_other": "Hay {{count}} ensayos con los criterios especificados",
+                    "3_one": "Hay {{count}} prueba con los criterios especificados",
+                    "3_other": "Hay {{count}} pruebas con los criterios especificados"
                 },
-                "diagnosis": "Hay {{studies}} encuestas con los criterios especificados",
-                "treatment": "Hay {{studies}} estudios con los criterios especificados",
-                "invasive": "Hay {{studies}} detecciones de vectores encontrados con los criterios especificados"
+                "diagnosis_one": "Hay {{count}} encuesta con los criterios especificados",
+                "diagnosis_other": "Hay {{count}} encuestas con los criterios especificados",
+                "treatment_one": "Hay {{count}} estudio con los criterios especificados",
+                "treatment_other": "Hay {{count}} estudios con los criterios especificados",
+                "invasive_one": "Hay {{count}} deteccione de vectores encontrado con los criterios especificados",
+                "invasive_other": "Hay {{count}} detecciones de vectores encontrados con los criterios especificados"
             },
             "insecticide_class": "Clase de insecticida",
             "insecticide_type": "Insecticida",
