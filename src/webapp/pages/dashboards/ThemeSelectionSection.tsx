@@ -47,7 +47,7 @@ const ThemeSelectionSection = ({ translations }: Props) => {
         const options = countries
             .filter(({ endemicity }) => endemicity === true)
             .map(({ iso2Code }) => ({
-                label: t(`countries.${iso2Code}`),
+                label: t(`COUNTRY_NAME.${iso2Code}`),
                 value: iso2Code,
             }));
 

@@ -134,7 +134,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
                             return {
                                 ID: `${country}_${drug}`,
-                                COUNTRY: t(`countries.${country}`),
+                                COUNTRY: t(`COUNTRY_NAME.${country}`),
                                 ISO2: country,
                                 DRUG: t(drug),
                                 COUNTRY_NUMBER: nStudies,
