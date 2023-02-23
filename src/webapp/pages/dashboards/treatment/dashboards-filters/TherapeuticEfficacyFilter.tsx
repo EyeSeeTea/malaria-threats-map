@@ -1,26 +1,24 @@
 import React from "react";
-import i18next from "i18next";
+import { TFunction, useTranslation } from "react-i18next";
 import DashboardContentFilter from "../../common/dashboards-filters/DashboardContentFilter";
 import { Option } from "../../common/types";
 import { TherapeuticEfficacy } from "../types";
 
-const therapeuticEfficacyOptions: Option<TherapeuticEfficacy>[] = [
+const therapeuticEfficacyOptions = (t: TFunction<"translation", undefined>): Option<TherapeuticEfficacy>[] => [
     {
-        label: i18next.t("common.dashboard.dashboardsFilterSection.therapeuticEfficacyOptions.therapeuticEfficacy"),
+        label: t("common.dashboard.dashboardsFilterSection.therapeuticEfficacyOptions.therapeuticEfficacy"),
         value: "therapeutic-efficacy",
     },
     {
-        label: i18next.t(
-            "common.dashboard.dashboardsFilterSection.therapeuticEfficacyOptions.summaryTreatmentFailures"
-        ),
+        label: t("common.dashboard.dashboardsFilterSection.therapeuticEfficacyOptions.summaryTreatmentFailures"),
         value: "summary-treatment-failures",
     },
     {
-        label: i18next.t("common.dashboard.dashboardsFilterSection.therapeuticEfficacyOptions.treatmentFailureRates"),
+        label: t("common.dashboard.dashboardsFilterSection.therapeuticEfficacyOptions.treatmentFailureRates"),
         value: "treatment-failure-rates",
     },
     {
-        label: i18next.t("common.dashboard.dashboardsFilterSection.therapeuticEfficacyOptions.parasiteClearance"),
+        label: t("common.dashboard.dashboardsFilterSection.therapeuticEfficacyOptions.parasiteClearance"),
         value: "parasite-clearance-rates",
     },
 ];
@@ -31,7 +29,8 @@ interface TherapeuticEfficacyFilterProps {
 }
 
 const TherapeuticEfficacyFilter: React.FC<TherapeuticEfficacyFilterProps> = ({ value, onChange }) => {
-    return <DashboardContentFilter options={therapeuticEfficacyOptions} value={value} onChange={onChange} />;
+    const { t } = useTranslation();
+    return <DashboardContentFilter options={therapeuticEfficacyOptions(t)} value={value} onChange={onChange} />;
 };
 
 export default TherapeuticEfficacyFilter;

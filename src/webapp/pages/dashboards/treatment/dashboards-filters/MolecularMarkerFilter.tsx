@@ -1,16 +1,16 @@
 import React from "react";
-import i18next from "i18next";
+import { TFunction, useTranslation } from "react-i18next";
 import DashboardContentFilter from "../../common/dashboards-filters/DashboardContentFilter";
 import { Option } from "../../common/types";
 import { MolecularMarker } from "../types";
 
-const molecularMarkerOptions: Option<MolecularMarker>[] = [
+const molecularMarkerOptions = (t: TFunction<"translation", undefined>): Option<MolecularMarker>[] => [
     {
-        label: i18next.t("common.dashboard.dashboardsFilterSection.molecularMarkerOptions.molecularMarker"),
+        label: t("common.dashboard.dashboardsFilterSection.molecularMarkerOptions.molecularMarker"),
         value: "molecular-marker",
     },
     {
-        label: i18next.t("common.dashboard.dashboardsFilterSection.molecularMarkerOptions.summaryMolecularMarker"),
+        label: t("common.dashboard.dashboardsFilterSection.molecularMarkerOptions.summaryMolecularMarker"),
         value: "summary-molecular-marker",
     },
 ];
@@ -21,7 +21,8 @@ interface MolecularMarkerFilterProps {
 }
 
 const MolecularMarkerFilter: React.FC<MolecularMarkerFilterProps> = ({ value, onChange }) => {
-    return <DashboardContentFilter options={molecularMarkerOptions} value={value} onChange={onChange} />;
+    const { t } = useTranslation();
+    return <DashboardContentFilter options={molecularMarkerOptions(t)} value={value} onChange={onChange} />;
 };
 
 export default MolecularMarkerFilter;

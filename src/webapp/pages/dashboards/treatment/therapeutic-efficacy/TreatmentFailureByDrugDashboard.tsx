@@ -36,7 +36,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
     }, [selectedCountries, t]);
 
     const drugLegend = React.useMemo(() => {
-        return drugs?.length > 0 ? drugs.map(drug => `${drug.replace("DRUG_", "")}:${t(drug)}`).join("; ") : "";
+        return drugs?.length > 0 ? drugs.map(drug => `${drug.replace("DRUG_", "")}: ${t(drug)}`).join("; ") : "";
     }, [drugs, t]);
 
     return (

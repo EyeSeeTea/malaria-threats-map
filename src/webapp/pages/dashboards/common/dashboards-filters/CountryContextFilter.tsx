@@ -1,44 +1,46 @@
 import React from "react";
-import i18next from "i18next";
+import { TFunction, useTranslation } from "react-i18next";
 import { CountryContext, DashboardsThemeOptions } from "../../types";
 import { Option } from "../types";
 import DashboardContentFilter from "./DashboardContentFilter";
 
-const countryContextOptions: Record<DashboardsThemeOptions, Option<CountryContext>[]> = {
-    prevention: [
-        {
-            label: i18next.t("common.dashboard.dashboardsFilterSection.countryContextOptions.countryContext"),
-            value: "country-context",
-        },
-        {
-            label: i18next.t("common.dashboard.dashboardsFilterSection.countryContextOptions.epidemiologicalProfile"),
-            value: "epidemiological-profile",
-        },
-        {
-            label: i18next.t("common.dashboard.dashboardsFilterSection.countryContextOptions.vectors"),
-            value: "vectors",
-        },
-        {
-            label: i18next.t(
-                "common.dashboard.dashboardsFilterSection.countryContextOptions.summaryInsecticideResistance"
-            ),
-            value: "summary-insecticide-resistance",
-        },
-    ],
-    treatment: [
-        {
-            label: i18next.t("common.dashboard.dashboardsFilterSection.countryContextOptions.countryContext"),
-            value: "country-context",
-        },
-        {
-            label: i18next.t("common.dashboard.dashboardsFilterSection.countryContextOptions.epidemiologicalProfile"),
-            value: "epidemiological-profile",
-        },
-        {
-            label: i18next.t("common.dashboard.dashboardsFilterSection.countryContextOptions.majorPlasmodium"),
-            value: "major-plasmodium",
-        },
-    ],
+const countryContextOptions = (
+    t: TFunction<"translation", undefined>
+): Record<DashboardsThemeOptions, Option<CountryContext>[]> => {
+    return {
+        prevention: [
+            {
+                label: t("common.dashboard.dashboardsFilterSection.countryContextOptions.countryContext"),
+                value: "country-context",
+            },
+            {
+                label: t("common.dashboard.dashboardsFilterSection.countryContextOptions.epidemiologicalProfile"),
+                value: "epidemiological-profile",
+            },
+            {
+                label: t("common.dashboard.dashboardsFilterSection.countryContextOptions.vectors"),
+                value: "vectors",
+            },
+            {
+                label: t("common.dashboard.dashboardsFilterSection.countryContextOptions.summaryInsecticideResistance"),
+                value: "summary-insecticide-resistance",
+            },
+        ],
+        treatment: [
+            {
+                label: t("common.dashboard.dashboardsFilterSection.countryContextOptions.countryContext"),
+                value: "country-context",
+            },
+            {
+                label: t("common.dashboard.dashboardsFilterSection.countryContextOptions.epidemiologicalProfile"),
+                value: "epidemiological-profile",
+            },
+            {
+                label: t("common.dashboard.dashboardsFilterSection.countryContextOptions.majorPlasmodium"),
+                value: "major-plasmodium",
+            },
+        ],
+    };
 };
 
 interface CountryContextFilterProps {
@@ -48,7 +50,8 @@ interface CountryContextFilterProps {
 }
 
 const CountryContextFilter: React.FC<CountryContextFilterProps> = ({ theme, value, onChange }) => {
-    return <DashboardContentFilter options={countryContextOptions[theme]} value={value} onChange={onChange} />;
+    const { t } = useTranslation();
+    return <DashboardContentFilter options={countryContextOptions(t)[theme]} value={value} onChange={onChange} />;
 };
 
 export default CountryContextFilter;
