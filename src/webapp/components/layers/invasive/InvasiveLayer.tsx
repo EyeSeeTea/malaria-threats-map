@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
 import { studiesToGeoJson } from "../layer-utils";
-import setupEffects from "../effects";
+import setupEffects, { updateSelectionAfterFilter } from "../effects";
 import {
     selectFilters,
     selectHoverSelection,
@@ -130,13 +130,17 @@ class InvasiveLayer extends Component<Props> {
     };
 
     filterSource = () => {
-        const { studies } = this.props;
+        const { studies, selection, setSelection } = this.props;
         const source: any = this.props.map.getSource(INVASIVE_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            source.setData(studiesToGeoJson(geoStudies));
+            const geoJsonData = studiesToGeoJson(geoStudies);
+
+            source.setData(geoJsonData);
+
+            updateSelectionAfterFilter(this.props.map, INVASIVE_SOURCE_ID, selection, geoJsonData, setSelection);
         }
     };
 

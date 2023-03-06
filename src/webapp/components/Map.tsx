@@ -60,6 +60,7 @@ import InfoToastLink from "./InfoToastLink";
 import SecondaryHeader from "../pages/secondary-layout/SecondaryHeader";
 import SelectionDataContent from "./site-selection-content/SelectionDataContent";
 import { getLayerSource } from "./layers/common/utils";
+import { resetSelectionInFeatures } from "./layers/effects";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
@@ -320,10 +321,7 @@ class Map extends React.Component<Props, StateTypes> {
         this.setState({ sidebarOpen: false });
         this.props.setSelection(null);
 
-        this.map.setFeatureState(
-            { source: getLayerSource(this.props.theme), id: this.props.selection.OBJECTID },
-            { click: false }
-        );
+        resetSelectionInFeatures(this.map, getLayerSource(this.props.theme), this.props.selection);
     }
 
     render() {

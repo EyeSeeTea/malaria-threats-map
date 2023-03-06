@@ -1,3 +1,9 @@
+import _ from "lodash";
+import { PayloadActionCreator } from "typesafe-actions";
+import { ActionTypeEnum } from "../../store/actions";
+import { SiteSelection } from "../../store/types";
+import { FeatureCollection } from "./layer-utils";
+
 export default function setupEffects(map: mapboxgl.Map, source: string, layer: string) {
     let hoveredStateId: any = null;
     let clickedStateId: any = null;
@@ -8,6 +14,7 @@ export default function setupEffects(map: mapboxgl.Map, source: string, layer: s
                 map.setFeatureState({ source: source, id: hoveredStateId }, { hover: false });
             }
             hoveredStateId = e.features[0].properties.OBJECTID;
+
             map.setFeatureState({ source: source, id: hoveredStateId }, { hover: true });
         }
     });
@@ -22,6 +29,7 @@ export default function setupEffects(map: mapboxgl.Map, source: string, layer: s
     map.on("click", layer, (e: any) => {
         if (e.features.length > 0) {
             const id = e.features[0].properties.OBJECTID;
+
             setTimeout(() => {
                 clickedStateId = id;
                 map.setFeatureState({ source: source, id: clickedStateId }, { click: true });
@@ -34,5 +42,40 @@ export default function setupEffects(map: mapboxgl.Map, source: string, layer: s
             map.setFeatureState({ source: source, id: clickedStateId }, { click: false });
         }
         clickedStateId = null;
+    });
+}
+
+export function updateSelectionAfterFilter(
+    map: mapboxgl.Map,
+    source: string,
+    selection: SiteSelection,
+    geoJsonData: FeatureCollection,
+    setSelection: PayloadActionCreator<ActionTypeEnum.SetSelection, SiteSelection>
+) {
+    if (selection) {
+        const selectedFeature = geoJsonData.features.find(f => f.properties.SITE_ID === selection.SITE_ID);
+
+        const objectIds = _.uniq([...selection.OBJECTIDs, selectedFeature.id]);
+
+        const newSelection = { ...selection, OBJECTIDs: objectIds };
+
+        setSelection(newSelection);
+
+        if (selectedFeature) {
+            map.setFeatureState({ source, id: selectedFeature.id }, { click: true });
+        }
+
+        map.on("click", (e: any) => {
+            debugger;
+            if (!e.features) {
+                resetSelectionInFeatures(map, source, newSelection);
+            }
+        });
+    }
+}
+
+export function resetSelectionInFeatures(map: mapboxgl.Map, source: string, selection?: SiteSelection) {
+    selection?.OBJECTIDs.forEach(objectId => {
+        map.setFeatureState({ source: source, id: objectId }, { click: false });
     });
 }

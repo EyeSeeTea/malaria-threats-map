@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { studiesToGeoJson } from "../layer-utils";
-import setupEffects from "../effects";
+import setupEffects, { updateSelectionAfterFilter } from "../effects";
 import { selectTreatmentFilters, selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
 import {
     selectFilters,
@@ -148,13 +148,18 @@ class TreatmentLayer extends Component<Props> {
     };
 
     filterSource = () => {
-        const { studies } = this.props;
+        const { studies, selection, setSelection } = this.props;
         const source: any = this.props.map.getSource(TREATMENT_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            source.setData(studiesToGeoJson(geoStudies));
+
+            const geoJsonData = studiesToGeoJson(geoStudies);
+
+            source.setData(geoJsonData);
+
+            updateSelectionAfterFilter(this.props.map, TREATMENT_SOURCE_ID, selection, geoJsonData, setSelection);
         }
     };
 

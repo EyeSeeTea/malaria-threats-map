@@ -58,15 +58,6 @@ const initialState: MalariaState = Object.freeze({
     isUploadingFile: false,
 });
 
-const getSelection = (state: MalariaState, selection: SiteSelection) => {
-    const propsHasChanged = () =>
-        state.selection?.SITE_ID !== selection.SITE_ID && state.selection?.coordinates !== selection.coordinates;
-
-    return (state.selection === null && selection !== null) || selection == null || propsHasChanged()
-        ? selection
-        : state.selection;
-};
-
 export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.MalariaSetTheme]: (theme: string) => R.assoc("theme", theme),
     [ActionTypeEnum.MalariaSetAny]: (any: any) => R.assoc("any", any),
@@ -85,13 +76,13 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.SetSelection]: (selection: SiteSelection) => (state: MalariaState) => {
         return {
             ...state,
-            selection: getSelection(state, selection),
+            selection,
         };
     },
     [ActionTypeEnum.SetHoverSelection]: (hoverSelection: SiteSelection) => (state: MalariaState) => {
         return {
             ...state,
-            hoverSelection: getSelection(state, hoverSelection),
+            hoverSelection,
         };
     },
     [ActionTypeEnum.SetSelectionData]: (selectionData: SelectionData) => (state: MalariaState) => ({

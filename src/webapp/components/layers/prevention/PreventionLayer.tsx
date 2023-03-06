@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
 import { studiesToGeoJson } from "../layer-utils";
-import setupEffects from "../effects";
+import setupEffects, { updateSelectionAfterFilter } from "../effects";
 import * as R from "ramda";
 import resistanceStatusSymbols from "./ResistanceStatus/symbols";
 import { resolveResistanceStatus } from "./ResistanceStatus/utils";
@@ -167,13 +167,18 @@ class PreventionLayer extends Component<Props> {
     };
 
     filterSource = () => {
-        const { studies } = this.props;
+        const { studies, selection, setSelection } = this.props;
         const source: any = this.props.map.getSource(PREVENTION_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            source.setData(studiesToGeoJson(geoStudies));
+
+            const geoJsonData = studiesToGeoJson(geoStudies);
+
+            source.setData(geoJsonData);
+
+            updateSelectionAfterFilter(this.props.map, PREVENTION_SOURCE_ID, selection, geoJsonData, setSelection);
         }
     };
 
@@ -189,9 +194,11 @@ class PreventionLayer extends Component<Props> {
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
 
+            const geoJsonData = studiesToGeoJson(geoStudies);
+
             const source: any = {
                 type: "geojson",
-                data: studiesToGeoJson(geoStudies),
+                data: geoJsonData,
             };
             this.props.map.addSource(PREVENTION_SOURCE_ID, source);
             this.props.map.addLayer(layer(resolveMapTypeSymbols(preventionFilters)));
