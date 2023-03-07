@@ -66,7 +66,6 @@ export function updateSelectionAfterFilter(
         }
 
         map.on("click", (e: any) => {
-            debugger;
             if (!e.features) {
                 resetSelectionInFeatures(map, source, newSelection);
             }
