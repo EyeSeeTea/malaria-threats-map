@@ -360,9 +360,9 @@ class Map extends React.Component<Props, StateTypes> {
                     <TopMiddleContainer rightOpen={this.state.sidebarOpen}>
                         <Stack spacing={1}>
                             <InfoToastLink text={this.props.t("common.takeATour")} type="tour" />
-                            {theme === "treatment" && (
+                            {/* {theme === "treatment" && (
                                 <InfoToastLink text={this.props.t("common.mekong_link")} type="greaterMekong" />
-                            )}
+                            )} */}
                         </Stack>
                     </TopMiddleContainer>
                 )}
