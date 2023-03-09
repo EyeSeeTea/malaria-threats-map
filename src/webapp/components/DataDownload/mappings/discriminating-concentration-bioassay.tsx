@@ -58,6 +58,10 @@ const mappings: Option[] = [
         label: "INSECTICIDE_CONC",
     },
     {
+        value: "INSECTICIDE_INTENSITY",
+        label: "INSECTICIDE_INTENSITY",
+    },
+    {
         value: "YEAR_START",
         label: "YEAR_START",
     },
