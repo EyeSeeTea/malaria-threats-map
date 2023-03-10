@@ -159,6 +159,8 @@ function chartOptions(years: number[], data: MosquitoOverTimeData, xAxisVisible:
         chart: {
             type: "boxplot",
             height: 300,
+            marginTop: 30,
+            marginBottom: 30,
         },
 
         title: {
@@ -188,19 +190,8 @@ function chartOptions(years: number[], data: MosquitoOverTimeData, xAxisVisible:
             title: {
                 text: "",
             },
-            labels: {
-                formatter: function () {
-                    const label = this.axis.defaultLabelFormatter.call(this);
-
-                    // Use thousands separator for four-digit numbers too
-                    if (+label > 100) {
-                        return "";
-                    }
-                    return label;
-                },
-            },
             min: 0,
-            max: 120,
+            max: 100,
         },
 
         series: [
