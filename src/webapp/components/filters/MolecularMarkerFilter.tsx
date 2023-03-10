@@ -15,6 +15,13 @@ export type pfplasmepsin = 4;
 
 export type MolecularMarker = pfkelch13 | pfcrt | pfmdr1 | pfplasmepsin;
 
+export const molecularMarkersMap = {
+    Pfkelch13: 1,
+    Pfcrt: 2,
+    Pfmdr1: 3,
+    "Pfplasmepsin 2-3": 4,
+};
+
 export const MOLECULAR_MARKERS: Option<MolecularMarker>[] = [
     {
         label: "Pfkelch13",
