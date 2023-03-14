@@ -12,7 +12,8 @@ export interface PreventionStudy extends Study {
     ADMIN2: string;
     ADMIN2_GUID: string;
     Code: string;
-    INSECTICIDE_CONCENTRATION: string;
+    INSECTICIDE_CONC: string;
+    INSECTICIDE_INTENSITY: string;
 }
 
 export function extractInsecticideClassesOptions(studies: PreventionStudy[]): Option[] {
