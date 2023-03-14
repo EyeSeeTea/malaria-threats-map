@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { State } from "../../../store/types";
 import { circleLayout, studiesToGeoJson } from "../layer-utils";
 import diagnosisSymbols from "../symbols/diagnosis";
-import setupEffects from "../effects";
+import setupEffects, { updateSelectionAfterFilter } from "../effects";
 import { selectDiagnosisFilters, selectDiagnosisStudies } from "../../../store/reducers/diagnosis-reducer";
 import {
     selectFilters,
@@ -148,13 +148,18 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     filterSource = () => {
-        const { studies } = this.props;
+        const { studies, selection, setSelection } = this.props;
         const source: any = this.props.map.getSource(DIAGNOSIS_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            source.setData(studiesToGeoJson(geoStudies));
+
+            const geoJsonData = studiesToGeoJson(geoStudies);
+
+            source.setData(geoJsonData);
+
+            updateSelectionAfterFilter(this.props.map, DIAGNOSIS_SOURCE_ID, selection, geoJsonData, setSelection);
         }
     };
 
