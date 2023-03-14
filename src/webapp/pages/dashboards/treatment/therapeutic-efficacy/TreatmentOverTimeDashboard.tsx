@@ -102,21 +102,22 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
         },
 
         title: {
-            useHTML: true,
-            text: `<div style="display: flex;flex-direction: row;align-items: center;">
-                    ${i18next.t(
-                        "common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.numberPatients"
-                    )}
-                    <img width="120px" src=${BubbleChartHelpImage} alt='' />
-                   </div>`,
-            x: 0,
-            y: -8,
-            align: "right",
-            verticalAlign: "bottom",
-            style: {
-                fontSize: "14px",
-                fontWeight: "bold",
-            },
+            text: "",
+            // useHTML: true,
+            // text: `<div style="display: flex;flex-direction: row;align-items: center;">
+            //         ${i18next.t(
+            //             "common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.numberPatients"
+            //         )}
+            //         <img width="120px" src=${BubbleChartHelpImage} alt='' />
+            //        </div>`,
+            // x: 0,
+            // y: -8,
+            // align: "right",
+            // verticalAlign: "bottom",
+            // style: {
+            //     fontSize: "14px",
+            //     fontWeight: "bold",
+            // },
         },
 
         xAxis: {
@@ -129,7 +130,6 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
                     fontWeight: "bold",
                     color: "black",
                 },
-                y: 30,
             },
             tickInterval: 1,
         },
