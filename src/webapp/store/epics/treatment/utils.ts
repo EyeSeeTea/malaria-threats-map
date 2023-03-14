@@ -14,7 +14,7 @@ import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../components/filters/PlasmodiumSpeciesFilter";
 import { isNotNull } from "../../../utils/number-utils";
 import { MutationColors } from "../../../components/layers/treatment/MolecularMarkers/utils";
-import { MOLECULAR_MARKERS } from "../../../components/filters/MolecularMarkerFilter";
+import { molecularMarkersMap, MOLECULAR_MARKERS } from "../../../components/filters/MolecularMarkerFilter";
 import { createCitationDataSources, selectDataSourcesByStudies } from "../common/utils";
 import LineSymbol from "../../../assets/img/line.svg";
 
@@ -183,18 +183,24 @@ function createMolecularMarkersChartData(
             years,
             series,
             markers:
-                treatmentFilters.molecularMarker === 1
+                treatmentFilters.molecularMarker === molecularMarkersMap.Pfkelch13
                     ? {
                           "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
                           "Validated markers": extractMarkersByMutationCategory(allStudies257, "validated"),
-                          "Candidated markers": extractMarkersByMutationCategory(allStudies257, "associated"),
-                          MC: extractMarkersByMutationCategory(allStudies257, "multiple copy number"),
+                          "Candidate markers": extractMarkersByMutationCategory(allStudies257, "associated"),
                           "Other markers": extractMarkersByMutationCategory(allStudies257, "other"),
+                      }
+                    : treatmentFilters.molecularMarker === molecularMarkersMap.Pfcrt
+                    ? {
+                          "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
+                          Mutations: extractMarkersByMutationCategory(allStudies257, "mutations"),
                       }
                     : {
                           "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
-                          MC: extractMarkersByMutationCategory(allStudies257, "multiple copy number"),
-                          Mutations: extractMarkersByMutationCategory(allStudies257, "mutations"),
+                          "Multiple copy numbers": extractMarkersByMutationCategory(
+                              allStudies257,
+                              "multiple copy number"
+                          ),
                       },
         },
     };
