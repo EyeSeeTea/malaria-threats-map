@@ -55,7 +55,7 @@ export function updateSelectionAfterFilter(
     if (selection) {
         const selectedFeature = geoJsonData.features.find(f => f.properties.SITE_ID === selection.SITE_ID);
 
-        const newObjectIds = _.uniq([...selection.OBJECTIDs, selectedFeature.id]);
+        const newObjectIds = _.uniq(_.compact([...selection.OBJECTIDs, selectedFeature?.id]));
 
         const newSelection = { ...selection, OBJECTIDs: newObjectIds };
 
