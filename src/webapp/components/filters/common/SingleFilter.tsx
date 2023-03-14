@@ -65,16 +65,24 @@ function SingleFilter({
                         {`${label}:`}&nbsp;
                     </Typography>
                 )}
-                <IntegrationReactSelect
-                    optimizePerformance={optimizePerformance}
-                    isMulti={false}
-                    isClearable={isClearable}
-                    isDisabled={isDisabled}
-                    placeholder={placeholder}
-                    suggestions={options}
-                    onChange={onSelectionChange}
-                    value={selection}
-                />
+
+                {isDisabled ? (
+                    <Typography variant="body2" style={{ marginBottom: 4, marginTop: 4 }}>
+                        {" "}
+                        {selection.label}{" "}
+                    </Typography>
+                ) : (
+                    <IntegrationReactSelect
+                        optimizePerformance={optimizePerformance}
+                        isMulti={false}
+                        isClearable={isClearable}
+                        isDisabled={isDisabled}
+                        placeholder={placeholder}
+                        suggestions={options}
+                        onChange={onSelectionChange}
+                        value={selection}
+                    />
+                )}
             </FilterRowContainer>
         </React.Fragment>
     );
