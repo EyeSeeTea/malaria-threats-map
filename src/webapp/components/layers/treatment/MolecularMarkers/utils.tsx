@@ -1459,4 +1459,7 @@ export const MutationColors: { [key: string]: { color: string } } = {
     MC: {
         color: "#D62E1A",
     },
+    Pfcrt: {
+        color: "#D62E1A",
+    },
 };
