@@ -26,6 +26,8 @@ import {
     filterByResistanceStatus,
 } from "../../../components/layers/studies-filters";
 import { cleanMechanismTypeOptions } from "../../../components/filters/MechanismTypeFilter";
+import { getMostPriorityUsignResistanceStatus } from "../../../components/layers/prevention/utils";
+import { ResistanceStatusColors } from "../../../components/layers/prevention/ResistanceStatus/symbols";
 
 type SortDirection = boolean | "asc" | "desc";
 
@@ -265,6 +267,32 @@ function getStudyName(mapType: PreventionMapType, study: Study): string {
     }
 }
 
+function getColor(mapType: PreventionMapType, study: Study): string {
+    const resistanceColors: Record<string, string> = {
+        CONFIRMED_RESISTANCE: ResistanceStatusColors.Confirmed[0],
+        UNDETERMINED: ResistanceStatusColors.Undetermined[0],
+        POSSIBLE_RESISTANCE: ResistanceStatusColors.Possible[0],
+        SUSCEPTIBLE: ResistanceStatusColors.Susceptible[0],
+    };
+
+    const mortalityAdjusted = getMorlatityAdjusted(study);
+
+    switch (mapType) {
+        case PreventionMapType.RESISTANCE_STATUS:
+            return resistanceColors[study.RESISTANCE_STATUS];
+        case PreventionMapType.INTENSITY_STATUS:
+            return mortalityAdjusted < 100 ? "#D0CECE" : "#717171";
+        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+            return mortalityAdjusted < 90 ? "#D0CECE" : "#717171";
+        default:
+            return undefined;
+    }
+}
+
+function getMorlatityAdjusted(study: Study): number {
+    return Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100);
+}
+
 function createChartDataItems(
     mapType: PreventionMapType,
     dataSources: CitationDataSource[],
@@ -275,8 +303,8 @@ function createChartDataItems(
         return getStudyName(mapType, study);
     }, sortedStudies);
 
-    const firstStudiesOfGroups = Object.values(cleanedStudies).map(
-        (groupStudies: PreventionStudy[]) => R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), groupStudies)[0]
+    const firstStudiesOfGroups = Object.values(cleanedStudies).map((groupStudies: PreventionStudy[]) =>
+        getMostPriorityUsignResistanceStatus(groupStudies)
     );
 
     const orders: [string | ((study: PreventionStudy) => unknown), SortDirection][] = _.compact([
@@ -300,9 +328,10 @@ function createChartDataItems(
 
         return {
             name: `${getStudyName(mapType, study)} (${dataSourceKeys.join(", ")}) `,
-            y: Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100),
+            y: getMorlatityAdjusted(study),
             number: study.NUMBER,
             resistanceStatus: study.RESISTANCE_STATUS,
+            color: getColor(mapType, study),
         };
     });
 
