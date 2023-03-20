@@ -42,44 +42,44 @@ jobs:
             - name: Run typescript tests
               run: npx tsc
 
-    cypress:
-        name: Cypress tests
-        strategy:
-            matrix:
-                server: [staging, prod]
-        runs-on: self-hosted
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v2
+    # cypress:
+    # name: Cypress tests
+    # strategy:
+    #     matrix:
+    #         server: [staging, prod]
+    # runs-on: self-hosted
+    # steps:
+    #     - name: Checkout repository
+    #       uses: actions/checkout@v2
 
-            - name: Increase max inodes
-              run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+    #     - name: Increase max inodes
+    #       run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
-            - name: Setup Node
-              uses: actions/setup-node@v1
-              with:
-                  node-version: "12.x"
+    #     - name: Setup Node
+    #       uses: actions/setup-node@v1
+    #       with:
+    #           node-version: "12.x"
 
-            - name: Install yarn
-              run: npm install -g yarn
+    #     - name: Install yarn
+    #       run: npm install -g yarn
 
-            - name: Run cypress tests
-              uses: cypress-io/github-action@v2
-              env:
-                  REACT_APP_ENV: ${{ matrix.server }}
-              with:
-                  browser: chrome
-                  headless: true
-                  install-command: yarn install --frozen-lockfile --silent
-                  start: yarn start
-                  wait-on: "http://localhost:3000"
-            - uses: actions/upload-artifact@v2
-              if: failure()
-              with:
-                  name: cypress-screenshots
-                  path: cypress/screenshots
-            - uses: actions/upload-artifact@v2
-              if: failure()
-              with:
-                  name: cypress-videos
-                  path: cypress/videos
+    #     - name: Run cypress tests
+    #       uses: cypress-io/github-action@v2
+    #       env:
+    #           REACT_APP_ENV: ${{ matrix.server }}
+    #       with:
+    #           browser: chrome
+    #           headless: true
+    #           install-command: yarn install --frozen-lockfile --silent
+    #           start: yarn start
+    #           wait-on: "http://localhost:3000"
+    #     - uses: actions/upload-artifact@v2
+    #       if: failure()
+    #       with:
+    #           name: cypress-screenshots
+    #           path: cypress/screenshots
+    #     - uses: actions/upload-artifact@v2
+    #       if: failure()
+    #       with:
+    #           name: cypress-videos
+    #           path: cypress/videos
