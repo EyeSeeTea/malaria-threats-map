@@ -16,13 +16,13 @@ import { buildInvasiveFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { selectInvasiveFilters, selectInvasiveStudies } from "../../../store/reducers/invasive-reducer";
 import { setInvasiveFilteredStudiesAction } from "../../../store/actions/invasive-actions";
-import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
+import { setHoverSelection, setRegionAction, setSelection } from "../../../store/actions/base-actions";
 import { fetchInvasiveStudiesRequest } from "../../../store/actions/invasive-actions";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../hidden/Hidden";
 import SiteTitle from "../../site-title/SiteTitle";
-import { getSiteSelectionOnClick, getSiteSelectionOnMove } from "../common/utils";
+import { getSiteSelectionOnClick, getSiteSelectionOnMove, updateSelectionAndRegionAfterClick } from "../common/utils";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
@@ -55,6 +55,7 @@ const mapDispatchToProps = {
     setFilteredStudies: setInvasiveFilteredStudiesAction,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
+    setRegion: setRegionAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -168,11 +169,14 @@ class InvasiveLayer extends Component<Props> {
     }
 
     onClickListener = (e: any) => {
-        const selection = getSiteSelectionOnClick(e, this.props.map, INVASIVE_LAYER_ID);
-
-        setTimeout(() => {
-            this.props.setSelection(selection);
-        }, 100);
+        updateSelectionAndRegionAfterClick(
+            e,
+            this.props.map,
+            INVASIVE_LAYER_ID,
+            this.props.region,
+            this.props.setSelection,
+            this.props.setRegion
+        );
     };
 
     onMouseMoveListener = (e: any) => {

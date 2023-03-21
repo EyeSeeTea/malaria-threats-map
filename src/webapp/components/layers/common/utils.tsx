@@ -1,5 +1,8 @@
-import mapboxgl from "mapbox-gl";
-import { SiteSelection } from "../../../store/types";
+import mapboxgl, { MapMouseEvent } from "mapbox-gl";
+import { PayloadActionCreator } from "typesafe-actions";
+import { getRegionBySite } from "../../../../domain/entities/Study";
+import { ActionTypeEnum } from "../../../store/actions";
+import { RegionState, SiteSelection } from "../../../store/types";
 
 const getSiteSelectionByFeature = (e: any, feature: any) => {
     const coordinates = feature.geometry.coordinates.slice();
@@ -16,6 +19,29 @@ const getSiteSelectionByFeature = (e: any, feature: any) => {
     };
 };
 
+export const updateSelectionAndRegionAfterClick = (
+    event: MapMouseEvent,
+    map: mapboxgl.Map,
+    layer: string,
+    currentRegion: RegionState,
+    setSelection: PayloadActionCreator<ActionTypeEnum.SetSelection, SiteSelection>,
+    setRegion: PayloadActionCreator<ActionTypeEnum.MalariaSetRegion, RegionState>
+): void => {
+    const selection = getSiteSelectionOnClick(event, map, layer);
+
+    setTimeout(() => {
+        setSelection(selection);
+
+        if (currentRegion) {
+            const region = getRegionBySiteOnClick(event, map, layer);
+
+            if (region) {
+                setRegion(region);
+            }
+        }
+    }, 100);
+};
+
 export const getSiteSelectionOnClick = (e: any, map: mapboxgl.Map, layer: string): SiteSelection => {
     const features: any = map.queryRenderedFeatures(e.point, { layers: [layer] });
 
@@ -23,6 +49,18 @@ export const getSiteSelectionOnClick = (e: any, map: mapboxgl.Map, layer: string
         const selection = getSiteSelectionByFeature(e, features[0]);
 
         return selection;
+    } else {
+        return null;
+    }
+};
+
+export const getRegionBySiteOnClick = (e: any, map: mapboxgl.Map, layer: string): RegionState => {
+    const features: any = map.queryRenderedFeatures(e.point, { layers: [layer] });
+
+    if (features && features.length > 0) {
+        const region = getRegionBySite(features[0].properties);
+
+        return region;
     } else {
         return null;
     }

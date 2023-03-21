@@ -16,12 +16,12 @@ import { buildTreatmentFilters } from "../studies-filters";
 import { State } from "../../../store/types";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { fetchTreatmentStudiesRequest, setFilteredStudiesAction } from "../../../store/actions/treatment-actions";
-import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
+import { setHoverSelection, setRegionAction, setSelection } from "../../../store/actions/base-actions";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../hidden/Hidden";
 import SiteTitle from "../../site-title/SiteTitle";
-import { getSiteSelectionOnClick, getSiteSelectionOnMove } from "../common/utils";
+import { getSiteSelectionOnClick, getSiteSelectionOnMove, updateSelectionAndRegionAfterClick } from "../common/utils";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
@@ -53,6 +53,7 @@ const mapDispatchToProps = {
     setFilteredStudies: setFilteredStudiesAction,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
+    setRegion: setRegionAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -187,11 +188,14 @@ class TreatmentLayer extends Component<Props> {
     }
 
     onClickListener = (e: any) => {
-        const selection = getSiteSelectionOnClick(e, this.props.map, TREATMENT_LAYER_ID);
-
-        setTimeout(() => {
-            this.props.setSelection(selection);
-        }, 100);
+        updateSelectionAndRegionAfterClick(
+            e,
+            this.props.map,
+            TREATMENT_LAYER_ID,
+            this.props.region,
+            this.props.setSelection,
+            this.props.setRegion
+        );
     };
 
     onMouseMoveListener = (e: any) => {
