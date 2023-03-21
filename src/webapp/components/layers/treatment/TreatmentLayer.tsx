@@ -21,7 +21,7 @@ import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../hidden/Hidden";
 import SiteTitle from "../../site-title/SiteTitle";
-import { getSiteSelectionOnClick, getSiteSelectionOnMove, updateSelectionAndRegionAfterClick } from "../common/utils";
+import { getSiteSelectionOnMove, updateSelectionAndRegionAfterClick } from "../common/utils";
 
 const TREATMENT = "treatment";
 const TREATMENT_LAYER_ID = "treatment-layer";
