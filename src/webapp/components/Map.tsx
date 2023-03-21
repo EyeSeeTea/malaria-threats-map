@@ -288,9 +288,10 @@ class Map extends React.Component<Props, StateTypes> {
         if (
             this.props.selection !== null &&
             this.props.selectionData !== null &&
-            this.props.selectionData !== prevProps.selectionData &&
-            !prevState.sidebarOpen
+            this.props.selectionData !== prevProps.selectionData
         ) {
+            resetSelectionInFeatures(this.map, getLayerSource(this.props.theme), prevProps.selection);
+
             this.setState({ sidebarOpen: true });
         }
 

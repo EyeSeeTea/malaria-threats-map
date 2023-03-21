@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setRegionAction } from "../../store/actions/base-actions";
+import { setRegionAction, setSelection } from "../../store/actions/base-actions";
 import { selectRegion, selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { selectFilteredPreventionStudies } from "../../store/reducers/prevention-reducer";
@@ -9,7 +9,7 @@ import { selectFilteredTreatmentStudies } from "../../store/reducers/treatment-r
 import { selectFilteredInvasiveStudies } from "../../store/reducers/invasive-reducer";
 import * as R from "ramda";
 import { sendAnalytics } from "../../utils/analytics";
-import { Study } from "../../../domain/entities/Study";
+import { getRegionBySite, Study } from "../../../domain/entities/Study";
 import { useTranslation } from "react-i18next";
 import SingleFilter from "./common/SingleFilter";
 import { isNotNull } from "../../utils/number-utils";
@@ -25,6 +25,7 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setRegion: setRegionAction,
+    setSelection: setSelection,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -39,6 +40,7 @@ function SiteSelector({
     invasiveStudies,
     region,
     setRegion,
+    setSelection,
 }: Props) {
     const { t } = useTranslation();
 
@@ -55,32 +57,37 @@ function SiteSelector({
         }
     }, [theme, preventionStudies, diagnosisStudies, treatmentStudies, invasiveStudies]);
 
-    const suggestions = React.useMemo(() => {
+    const siteRegions = React.useMemo(() => {
         return R.uniqBy(
-            study => study.value && study.label,
-            studies.map(study => ({
-                label: study.SITE_NAME || study.VILLAGE_NAME,
-                value: study.SITE_ID,
-                iso2: study.ISO2,
-                coords: [study.Latitude, study.Longitude],
-                region: study.REGION_FULL,
-            }))
+            study => study.site && study.siteLabel,
+            studies.map(study => getRegionBySite(study))
         )
-            .filter(s => isNotNull(s.label))
-            .sort((a, b) => (a.label < b.label ? -1 : 1));
+            .filter(s => isNotNull(s.siteLabel))
+            .sort((a, b) => (a.siteLabel < b.siteLabel ? -1 : 1));
     }, [studies]);
 
-    const onChange = (selection?: string) => {
-        const site = suggestions.find(site => site.value === selection);
-        if (site) sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label: selection });
-        setRegion({
-            site: site ? site.value : undefined,
-            siteLabel: site ? site.label : undefined,
-            siteIso2: site ? site.iso2 : undefined,
-            siteCoordinates: site ? [+site.coords[0], +site.coords[1]] : undefined,
-            country: site ? site.iso2 : undefined,
-            region: site ? site.region : undefined,
+    const suggestions = React.useMemo(() => {
+        return siteRegions.map(siteRegion => {
+            return {
+                label: siteRegion.siteLabel,
+                value: siteRegion.site,
+            };
         });
+    }, [siteRegions]);
+
+    const onChange = (selection?: string) => {
+        const site = siteRegions.find(site => site.site === selection);
+        if (site) sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label: selection });
+        setRegion(site);
+
+        if (site) {
+            setSelection({
+                ISO_2_CODE: site.siteIso2,
+                SITE_ID: site.site,
+                coordinates: site.siteCoordinates,
+                OBJECTIDs: [],
+            });
+        }
     };
 
     return (

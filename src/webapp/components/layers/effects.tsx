@@ -74,7 +74,7 @@ export function updateSelectionAfterFilter(
 }
 
 export function resetSelectionInFeatures(map: mapboxgl.Map, source: string, selection?: SiteSelection) {
-    selection?.OBJECTIDs.forEach(objectId => {
+    selection?.OBJECTIDs?.forEach(objectId => {
         map.setFeatureState({ source: source, id: objectId }, { click: false });
     });
 }
