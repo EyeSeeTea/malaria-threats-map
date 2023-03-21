@@ -32,7 +32,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
     } = useTreatmentFailureByDrug();
 
     const countryLegend = React.useMemo(() => {
-        return selectedCountries.map(iso => `${iso}:${t(iso)}`).join("; ");
+        return selectedCountries.map(iso => `${iso}: ${t(iso)}`).join("; ");
     }, [selectedCountries, t]);
 
     const drugLegend = React.useMemo(() => {
