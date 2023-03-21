@@ -1,7 +1,7 @@
 import Highcharts from "highcharts";
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import BubbleChartHelpImage from "../../../../assets/img/dashboards/bubble-chart-help.png";
+//import BubbleChartHelpImage from "../../../../assets/img/dashboards/bubble-chart-help.png";
 import { BubleChartGroup, TreatmentOverTimeType } from "./types";
 import { useTreatmentOverTime } from "./useTreatmentOverTime";
 import HighchartsReact from "highcharts-react-official";

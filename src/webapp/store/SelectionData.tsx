@@ -75,6 +75,7 @@ export type PreventionChartDataItem = {
     y: number;
     number: string;
     resistanceStatus: string;
+    color: string;
 };
 
 export type PreventionMechanismChartDataItem = {

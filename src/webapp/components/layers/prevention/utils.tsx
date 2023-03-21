@@ -87,17 +87,28 @@ export function getMostRecent(studies: PreventionStudy[]): PreventionStudy | und
     return sortedStudiesByYear.length > 0 ? sortedStudiesByYear[0] : undefined;
 }
 
-const filterByMostRecentYear = (group: any[]) => {
+const filterByMostRecentYear = (group: PreventionStudy[]) => {
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), group);
     // We filter all studies conducted that year.
     return R.filter(study => parseInt(study.YEAR_START) === parseInt(sortedStudies[0].YEAR_START), group);
 };
 
-function getByMostRecentYearAndMortalityAdjusted(group: any[]) {
-    const filteredStudies = filterByMostRecentYear(group);
-    // We sort remaining records by MORTALITY_ADJUSTED
-    const filteredSortedStudies = R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), filteredStudies);
-    return filteredSortedStudies[0];
+export function getMostPriorityUsignResistanceStatus(studies: PreventionStudy[]) {
+    const priorities: Record<string, number> = {
+        CONFIRMED_RESISTANCE: 1,
+        UNDETERMINED: 2,
+        POSSIBLE_RESISTANCE: 3,
+        SUSCEPTIBLE: 4,
+    };
+
+    const studiesWithPriority = studies.map(study => {
+        return {
+            ...study,
+            priority: priorities[study.RESISTANCE_STATUS],
+        };
+    });
+
+    return R.sortBy(study => study.priority, studiesWithPriority)[0];
 }
 
 const ResistanceIntensityOrder: { [value: string]: number } = {
@@ -150,10 +161,11 @@ export function getByMostRecentYearAndInvolvement(group: any[]) {
     return filteredSortedStudies[0];
 }
 
-export const studySelector = (group: any[], mapType: PreventionMapType) => {
+export const studySelector = (group: PreventionStudy[], mapType: PreventionMapType) => {
     switch (mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
-            return getByMostRecentYearAndMortalityAdjusted(group);
+            //return getByMostRecentYearAndMortalityAdjusted(group);
+            return getMostPriorityUsignResistanceStatus(group);
         case PreventionMapType.INTENSITY_STATUS:
             return getByMostRecentYearAndResistanceIntensity(group);
         case PreventionMapType.RESISTANCE_MECHANISM:

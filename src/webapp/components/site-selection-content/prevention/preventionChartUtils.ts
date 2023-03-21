@@ -2,12 +2,7 @@ import { DataLabelsFormatterCallbackFunction } from "highcharts";
 import i18next from "i18next";
 import { PreventionChartDataItem } from "../../../store/SelectionData";
 import { PreventionMapType } from "../../../store/types";
-import { ResistanceStatusColors } from "../../layers/prevention/ResistanceStatus/symbols";
 import { ChartStyles } from "../../charts/Style";
-
-const isGreyInsecticideTypes = (data: PreventionChartDataItem) => {
-    return data.resistanceStatus === "UNDETERMINED";
-};
 
 export const preventionBarChartOptions: (
     maptype: PreventionMapType,
@@ -68,8 +63,7 @@ export const preventionBarChartOptions: (
                     fontWeight: "normal",
                 },
             },
-            color: isGreyInsecticideTypes(data[0]) ? ResistanceStatusColors.Undetermined[0] : undefined,
-            zones: !isGreyInsecticideTypes(data[0]) ? getBarZones(maptype) : [],
+            zones: getBarZones(maptype),
         },
     },
     tooltip: {
@@ -92,21 +86,6 @@ export const preventionBarChartOptions: (
 
 function getBarZones(maptype: PreventionMapType) {
     switch (maptype) {
-        case PreventionMapType.RESISTANCE_STATUS:
-            return [
-                {
-                    value: 90,
-                    color: ResistanceStatusColors.Confirmed[0],
-                },
-                {
-                    value: 98,
-                    color: ResistanceStatusColors.Possible[0],
-                },
-                {
-                    value: 100.001,
-                    color: ResistanceStatusColors.Susceptible[0],
-                },
-            ];
         case PreventionMapType.INTENSITY_STATUS:
             return [
                 {
@@ -118,20 +97,20 @@ function getBarZones(maptype: PreventionMapType) {
                     color: "#717171",
                 },
             ];
-        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
-            return [
-                {
-                    value: 90,
-                    color: "#D0CECE",
-                },
-                {
-                    value: 98,
-                    color: "#717171",
-                },
-                {
-                    value: 100.001,
-                    color: "#717171",
-                },
-            ];
+        // case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+        //     return [
+        //         {
+        //             value: 90,
+        //             color: "#D0CECE",
+        //         },
+        //         {
+        //             value: 98,
+        //             color: "#717171",
+        //         },
+        //         {
+        //             value: 100.001,
+        //             color: "#717171",
+        //         },
+        //     ];
     }
 }
