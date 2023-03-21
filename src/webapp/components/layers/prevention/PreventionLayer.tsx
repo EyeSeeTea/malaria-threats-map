@@ -16,14 +16,14 @@ import {
     selectSelection,
     selectTheme,
 } from "../../../store/reducers/base-reducer";
-import mapboxgl from "mapbox-gl";
+import mapboxgl, { MapMouseEvent } from "mapbox-gl";
 import { fetchPreventionStudiesRequest, setPreventionFilteredStudies } from "../../../store/actions/prevention-actions";
-import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
+import { setHoverSelection, setRegionAction, setSelection } from "../../../store/actions/base-actions";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../../components/hidden/Hidden";
 import SiteTitle from "../../site-title/SiteTitle";
-import { getSiteSelectionOnClick, getSiteSelectionOnMove } from "../common/utils";
+import { getSiteSelectionOnMove, updateSelectionAndRegionAfterClick } from "../common/utils";
 
 export const PREVENTION = "prevention";
 const PREVENTION_LAYER_ID = "prevention-layer";
@@ -56,6 +56,7 @@ const mapDispatchToProps = {
     setFilteredStudies: setPreventionFilteredStudies,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
+    setRegion: setRegionAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -209,12 +210,15 @@ class PreventionLayer extends Component<Props> {
         }
     }
 
-    onClickListener = (e: any) => {
-        const selection = getSiteSelectionOnClick(e, this.props.map, PREVENTION_LAYER_ID);
-
-        setTimeout(() => {
-            this.props.setSelection(selection);
-        }, 100);
+    onClickListener = (e: MapMouseEvent) => {
+        updateSelectionAndRegionAfterClick(
+            e,
+            this.props.map,
+            PREVENTION_LAYER_ID,
+            this.props.region,
+            this.props.setSelection,
+            this.props.setRegion
+        );
     };
 
     onMouseMoveListener = (e: any) => {

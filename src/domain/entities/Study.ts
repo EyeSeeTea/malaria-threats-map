@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { RegionState } from "../../webapp/store/types";
 
 export interface Study {
     OBJECTID: number;
@@ -60,4 +61,15 @@ export function getMaxMinYears(studies: Study[]): [number, number] {
     const max = Math.max(...years);
 
     return [min, max];
+}
+
+export function getRegionBySite(study: Study): RegionState {
+    return {
+        siteLabel: study.SITE_NAME || study.VILLAGE_NAME,
+        site: study.SITE_ID,
+        siteIso2: study.ISO2,
+        siteCoordinates: [+study.Latitude, +study.Longitude],
+        region: study.REGION_FULL,
+        country: study.ISO2,
+    };
 }

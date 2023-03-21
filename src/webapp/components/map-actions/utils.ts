@@ -111,7 +111,7 @@ export function getDataset(
 }
 
 export function getLocation(region: RegionState) {
-    return region.region || region.subRegion || region.siteLabel || region.country;
+    return region ? region.region || region.subRegion || region.siteLabel || region.country : "";
 }
 
 export function getFilters(

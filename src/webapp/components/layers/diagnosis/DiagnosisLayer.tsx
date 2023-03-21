@@ -21,12 +21,12 @@ import {
     fetchDiagnosisStudiesRequest,
     setDiagnosisFilteredStudiesAction,
 } from "../../../store/actions/diagnosis-actions";
-import { setHoverSelection, setSelection } from "../../../store/actions/base-actions";
+import { setHoverSelection, setRegionAction, setSelection } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
 import Hidden from "../../hidden/Hidden";
 import SiteTitle from "../../site-title/SiteTitle";
-import { getSiteSelectionOnClick, getSiteSelectionOnMove } from "../common/utils";
+import { getSiteSelectionOnMove, updateSelectionAndRegionAfterClick } from "../common/utils";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -55,6 +55,7 @@ const mapDispatchToProps = {
     setFilteredStudies: setDiagnosisFilteredStudiesAction,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
+    setRegion: setRegionAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -188,11 +189,14 @@ class DiagnosisLayer extends Component<Props> {
     }
 
     onClickListener = (e: any) => {
-        const selection = getSiteSelectionOnClick(e, this.props.map, DIAGNOSIS_LAYER_ID);
-
-        setTimeout(() => {
-            this.props.setSelection(selection);
-        }, 100);
+        updateSelectionAndRegionAfterClick(
+            e,
+            this.props.map,
+            DIAGNOSIS_LAYER_ID,
+            this.props.region,
+            this.props.setSelection,
+            this.props.setRegion
+        );
     };
 
     onMouseMoveListener = (e: any) => {
