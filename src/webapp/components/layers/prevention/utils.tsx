@@ -93,6 +93,12 @@ const filterByMostRecentYear = (group: PreventionStudy[]) => {
     return R.filter(study => parseInt(study.YEAR_START) === parseInt(sortedStudies[0].YEAR_START), group);
 };
 
+export function getByMostRecentYearAndMostPriorityUsignResistanceStatus(studies: PreventionStudy[]) {
+    const filteredStudies = filterByMostRecentYear(studies);
+
+    return getMostPriorityUsignResistanceStatus(filteredStudies);
+}
+
 export function getMostPriorityUsignResistanceStatus(studies: PreventionStudy[]) {
     const priorities: Record<string, number> = {
         CONFIRMED_RESISTANCE: 1,
@@ -165,7 +171,7 @@ export const studySelector = (group: PreventionStudy[], mapType: PreventionMapTy
     switch (mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
             //return getByMostRecentYearAndMortalityAdjusted(group);
-            return getMostPriorityUsignResistanceStatus(group);
+            return getByMostRecentYearAndMostPriorityUsignResistanceStatus(group);
         case PreventionMapType.INTENSITY_STATUS:
             return getByMostRecentYearAndResistanceIntensity(group);
         case PreventionMapType.RESISTANCE_MECHANISM:
