@@ -154,11 +154,19 @@ function createMolecularMarkersChartData(
         const dataSourceKeys = selectDataSourcesByStudies(dataSources, [study]);
         return `${study.YEAR_START} (${dataSourceKeys.join(",")})`;
     });
+
+    const prioritiesByMutationCategory: Record<string, number> = {
+        "wild type": 4,
+        validated: 3,
+        associated: 2,
+        other: 1,
+    };
+
     const allStudies257 = R.flatten(studies255.map(study => study.groupStudies));
-    const studies257ByGenotype = R.groupBy(R.prop("GENOTYPE"), allStudies257);
-    const genotypes = Object.keys(studies257ByGenotype)
-        .sort()
-        .filter(genotype => genotype !== "unspecified");
+    const allStudies257ByPriority = R.sortBy(study => prioritiesByMutationCategory[study.MUT_CAT], allStudies257);
+
+    const studies257ByGenotype = R.groupBy(R.prop("GENOTYPE"), allStudies257ByPriority);
+    const genotypes = Object.keys(studies257ByGenotype).filter(genotype => genotype !== "unspecified");
 
     const series = genotypes.map((genotype: string) => {
         const studies257: TreatmentStudy[] = studies257ByGenotype[genotype];
@@ -168,9 +176,9 @@ function createMolecularMarkersChartData(
             name: genotype,
             color: MutationColors[genotype] ? MutationColors[genotype].color : "000",
             data: studies255.map(study255 => {
-                const study = studies257.find(study => study255.Code === study.K13_CODE);
+                const study257 = studies257.find(study => study255.Code === study.K13_CODE);
                 return {
-                    y: study ? parseFloat((study.PROPORTION * 100).toFixed(1)) : undefined,
+                    y: study257 ? parseFloat((study257.PROPORTION * 100).toFixed(1)) : undefined,
                     n: study255.N,
                 };
             }),
