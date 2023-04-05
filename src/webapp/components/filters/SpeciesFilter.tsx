@@ -10,6 +10,7 @@ import {
     filterByInsecticideTypes,
     filterByIntensityStatus,
     filterByLevelOfInvolvement,
+    filterByProxyType,
     filterByRegion,
     filterByResistanceMechanism,
     filterByResistanceStatus,
@@ -68,7 +69,7 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
         ],
         [PreventionMapType.LEVEL_OF_INVOLVEMENT]: [
             filterByLevelOfInvolvement,
-            filterByTypes(preventionFilters.type),
+            filterByProxyType(preventionFilters.proxyType),
             filterByTypeSynergist(preventionFilters.synergistTypes),
             filterByYearRange(yearFilter),
             filterByRegion(region),
