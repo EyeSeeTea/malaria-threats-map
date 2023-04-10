@@ -129,6 +129,7 @@ export interface PreventionFilters {
     proxyType: string | null;
     type: string[] | null;
     species: string[];
+    onlyIncludeBioassaysWithMoreMosquitoes: number;
     onlyByHealthMinistries: boolean;
 }
 

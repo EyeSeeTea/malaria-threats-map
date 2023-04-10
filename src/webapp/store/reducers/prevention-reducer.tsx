@@ -21,6 +21,7 @@ const initialState: PreventionState = Object.freeze({
         type: null,
         species: [],
         onlyByHealthMinistries: false,
+        onlyIncludeBioassaysWithMoreMosquitoes: 0,
     },
     selectionStudies: [],
 });
@@ -77,6 +78,10 @@ function updateOnlyByHealthMinistries(value: boolean) {
     return updateFilter("onlyByHealthMinistries", value, false);
 }
 
+function updateOnlyIncludeBioassaysWithMoreMosquitoes(value: number) {
+    return updateFilter("onlyIncludeBioassaysWithMoreMosquitoes", value, 0);
+}
+
 export default createReducer<PreventionState>(initialState, {
     [ActionTypeEnum.FetchPreventionStudiesRequest]: () => (state: PreventionState) => ({
         ...state,
@@ -108,6 +113,7 @@ export default createReducer<PreventionState>(initialState, {
         selectionStudies: studies,
     }),
     [ActionTypeEnum.SetOnlyByHealthMinistries]: updateOnlyByHealthMinistries,
+    [ActionTypeEnum.SetOnlyIncludeBioassaysWithMoreMosquitoes]: updateOnlyIncludeBioassaysWithMoreMosquitoes,
 });
 
 const selectPreventionState = (state: State) => state.prevention;

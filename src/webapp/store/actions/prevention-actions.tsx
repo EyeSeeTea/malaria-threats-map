@@ -34,3 +34,6 @@ export const setPreventionFilteredStudies = createAction(ActionTypeEnum.SetPreve
 >();
 
 export const setOnlyByHealthMinistries = createAction(ActionTypeEnum.SetOnlyByHealthMinistries)<boolean>();
+export const setOnlyIncludeBioassaysWithMoreMosquitoes = createAction(
+    ActionTypeEnum.SetOnlyIncludeBioassaysWithMoreMosquitoes
+)<number>();
