@@ -61,10 +61,12 @@ const initialState: MalariaState = Object.freeze({
 export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.MalariaSetTheme]: (theme: string) => R.assoc("theme", theme),
     [ActionTypeEnum.MalariaSetAny]: (any: any) => R.assoc("any", any),
-    [ActionTypeEnum.MalariaSetRegion]: (region: RegionState | null) => (state: MalariaState) => ({
-        ...state,
-        region: region ? { ...initialState.region, ...region } : null,
-    }),
+    [ActionTypeEnum.MalariaSetRegion]: (region: RegionState | null) => (state: MalariaState) => {
+        return {
+            ...state,
+            region: region ? { ...initialState.region, ...region } : {},
+        };
+    },
     [ActionTypeEnum.MalariaSetFilters]: (filters: number[] | undefined) =>
         R.assoc("filters", filters || initialState.filters),
     [ActionTypeEnum.MalariaSetMaxMinYears]: (maxMinYears: number[] | undefined) =>
