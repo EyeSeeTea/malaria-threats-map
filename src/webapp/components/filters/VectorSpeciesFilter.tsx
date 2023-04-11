@@ -35,6 +35,10 @@ export const suggestions = [
         label: "An. stephensi form unspecified",
         value: "AN_STEPHENSI_FORM_UNSPECIFIED",
     },
+    {
+        label: "An. stephensi (not found)",
+        value: "AN_STEPHENSI_NOT_FOUND",
+    },
 ];
 
 export const VectorSpeciesKey: { [key: string]: string } = {
@@ -42,6 +46,7 @@ export const VectorSpeciesKey: { [key: string]: string } = {
     AN_STEPHENSI_MYSORENSIS: "An. stephensi mysorensis",
     AN_STEPHENSI_INTERMEDIATE_FORM: "An. stephensi intermediate form",
     AN_STEPHENSI_FORM_UNSPECIFIED: "NR",
+    AN_STEPHENSI_NOT_FOUND: "An. stephensi (not found)",
 };
 
 const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, setVectorSpecies }) => {
