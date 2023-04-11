@@ -1,7 +1,7 @@
 import React from "react";
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import { getTreatmentFailure } from "../utils";
-import { treatmentByDrugColors, TreatmentFailureSeriesItem } from "./types";
+import { treatmentByDrugColors, TreatmentFailureSeries, TreatmentFailureSeriesItem } from "./types";
 import { useTreatment } from "../useTreatment";
 
 export function useTreatmentFailureByDrug() {
@@ -22,7 +22,7 @@ export function useTreatmentFailureByDrug() {
         onMolecularMarkerChange,
     } = useTreatment(true);
 
-    const [data, setData] = React.useState<Record<string, TreatmentFailureSeriesItem[]>>({});
+    const [data, setData] = React.useState<TreatmentFailureSeries>({ maxYAxis: 0, itemsByDrug: {} });
 
     React.useEffect(() => {
         setData(createChartData(filteredStudies, drugs || [], selectedCountries));
@@ -50,7 +50,7 @@ export function createChartData(
     studies: TreatmentStudy[],
     drugs: string[],
     countries: string[]
-): Record<string, TreatmentFailureSeriesItem[]> {
+): TreatmentFailureSeries {
     const getSeriesByDrug = (drug: string) => {
         const studiesByDrug = studies.filter(study => study.DRUG_NAME === drug);
 
@@ -83,11 +83,32 @@ export function createChartData(
         return [failureMoreThan10, failureLessThan10];
     };
 
-    return drugs.reduce(
+    const itemsByDrug: Record<string, TreatmentFailureSeriesItem[]> = drugs.reduce(
         (acc, drug) => ({
             ...acc,
             [drug.replace("DRUG_", "")]: getSeriesByDrug(drug),
         }),
         {}
     );
+
+    const maxYAxis = getMaxYAxis(itemsByDrug);
+
+    return { maxYAxis, itemsByDrug };
+}
+
+function getMaxYAxis(itemsByDrug: Record<string, TreatmentFailureSeriesItem[]>) {
+    return Object.keys(itemsByDrug).reduce((acc, currentDrug) => {
+        const drugData = itemsByDrug[currentDrug];
+
+        const failureMoreThan10 = drugData[0];
+        const failureLessThan10 = drugData[1];
+
+        const sumFailures = failureMoreThan10.data.map(
+            (dataByCountry, index) => dataByCountry + failureLessThan10.data[index]
+        );
+
+        const maxByDrug = Math.max(...sumFailures);
+
+        return acc > maxByDrug ? acc : maxByDrug;
+    }, 0);
 }
