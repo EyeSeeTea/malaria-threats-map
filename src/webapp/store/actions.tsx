@@ -48,6 +48,7 @@ export enum ActionTypeEnum {
     SetPreventionFilteredStudies = "prevention/SET_FILTER_STUDIES",
     SetPreventionSelectionStudies = "prevention/SET_SELECTION_STUDIES",
     SetOnlyByHealthMinistries = "prevention/SET_ONLY_BY_HEALTH_MINISTRIES",
+    SetOnlyIncludeBioassaysWithMoreMosquitoes = "prevention/SET_ONLY_INCLUDE_BIOASSAYS_WITH_MORE_MOSQUITOES",
 
     SetDiagnosisMapType = "diagnosis/SET_DIAGNOSIS_MAP_TYPE",
     SetDiagnosisDataset = "diagnosis/SET_DIAGNOSIS_DATASET",

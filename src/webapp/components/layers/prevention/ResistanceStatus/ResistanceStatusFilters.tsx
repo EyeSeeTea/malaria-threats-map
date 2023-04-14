@@ -5,6 +5,7 @@ import TypeFilter from "../../../filters/TypeFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
 import OnlyByHealthMinistriesFilter from "../../../filters/OnlyByHealthMinistriesFilter";
+import OnlyIncludeBioassaysWithMoreMosquitoesFilter from "../../../filters/OnlyIncludeBioassaysWithMoreMosquitoesFilter";
 
 function ResistanceStatusFilters() {
     return (
@@ -14,6 +15,7 @@ function ResistanceStatusFilters() {
             <TypeFilter />
             <SpeciesFilter />
             <YearRangeSelector />
+            <OnlyIncludeBioassaysWithMoreMosquitoesFilter />
             <OnlyByHealthMinistriesFilter />
         </div>
     );

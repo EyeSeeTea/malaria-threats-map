@@ -154,6 +154,11 @@ export const filterByOnlyDataByHealthMinistries = (value: boolean) => (study: Pr
     return value ? study.INSTITUTION_TYPE === "MoH" : true;
 };
 
+export const filterByOnlyIncludeBioassaysWithMoreMosquitoes =
+    (numberMosquitoes: number) => (study: PreventionStudy) => {
+        return +study.NUMBER >= numberMosquitoes;
+    };
+
 export const filterByTypeSynergist = (synergistTypes: string[]) => (study: any) => {
     return !synergistTypes.length || synergistTypes.includes(study.TYPE);
 };
@@ -401,6 +406,9 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
                 filterByYearRange(filters),
                 filterByRegion(region),
                 filterByOnlyDataByHealthMinistries(preventionFilters.onlyByHealthMinistries),
+                filterByOnlyIncludeBioassaysWithMoreMosquitoes(
+                    preventionFilters.onlyIncludeBioassaysWithMoreMosquitoes
+                ),
             ];
         case PreventionMapType.INTENSITY_STATUS:
             return [
@@ -412,6 +420,9 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
                 filterByYearRange(filters),
                 filterByRegion(region),
                 filterByOnlyDataByHealthMinistries(preventionFilters.onlyByHealthMinistries),
+                filterByOnlyIncludeBioassaysWithMoreMosquitoes(
+                    preventionFilters.onlyIncludeBioassaysWithMoreMosquitoes
+                ),
             ];
         case PreventionMapType.RESISTANCE_MECHANISM: {
             const base = [

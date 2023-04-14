@@ -87,6 +87,7 @@ class PreventionLayer extends Component<Props> {
                 assayTypes,
                 synergistTypes,
                 onlyByHealthMinistries,
+                onlyIncludeBioassaysWithMoreMosquitoes,
             },
             filters,
             region,
@@ -107,6 +108,9 @@ class PreventionLayer extends Component<Props> {
         const synergistTypesChange = prevProps.preventionFilters.synergistTypes.length !== synergistTypes.length;
         const onlyByHealthMinistriesChange =
             prevProps.preventionFilters.onlyByHealthMinistries !== onlyByHealthMinistries;
+        const onlyIncludeBioassaysWithMoreMosquitoesChange =
+            prevProps.preventionFilters.onlyIncludeBioassaysWithMoreMosquitoes !==
+            onlyIncludeBioassaysWithMoreMosquitoes;
 
         if (
             mapTypeChange ||
@@ -118,7 +122,8 @@ class PreventionLayer extends Component<Props> {
             speciesChange ||
             assayTypesChange ||
             synergistTypesChange ||
-            onlyByHealthMinistriesChange
+            onlyByHealthMinistriesChange ||
+            onlyIncludeBioassaysWithMoreMosquitoesChange
         ) {
             if (this.popup) {
                 this.popup.remove();

@@ -4,6 +4,7 @@ import {
     filterByInsecticideClasses,
     filterByInsecticideTypes,
     filterByOnlyDataByHealthMinistries,
+    filterByOnlyIncludeBioassaysWithMoreMosquitoes,
     filterByResistanceStatus,
     filterBySpecies,
     filterByType,
@@ -30,8 +31,3 @@ export function filterStudies(
 
     return filteredStudies;
 }
-
-export const filterByOnlyIncludeBioassaysWithMoreMosquitoes =
-    (numberMosquitoes: number) => (study: PreventionStudy) => {
-        return +study.NUMBER >= numberMosquitoes;
-    };
