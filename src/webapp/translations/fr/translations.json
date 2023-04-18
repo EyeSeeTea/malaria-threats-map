@@ -175,7 +175,7 @@
                 },
                 "parasiteClearanceOverTime": {
                     "title": "ÉLIMINATION DES PARASITES AU FIL DU TEMPS",
-                    "parasitemiaOnDay3": "Pourcentage de patients atteints de parasitémie au jour 3 (%)"
+                    "parasitemiaOnDay3": "POURCENTAGE DE PATIENTS ATTEINTS DE PARASITÉMIE AU JOUR 3 (%)"
                 }
             },
             "molecularMarkerDashboards": {
@@ -264,6 +264,7 @@
                 "drug": "Médicament",
                 "numberOfPatients": "Nombre de patients",
                 "treatmentFailureRate": "Taux d'échec du traitement",
+                "patientsWithParasitemiaOnDay3": "Patients atteints de parasitémie au jour 3",
                 "source": {
                     "label": "Source",
                     "link": "Institut national des allergies et des maladies infectieuses, Instituts nationaux de la santé"

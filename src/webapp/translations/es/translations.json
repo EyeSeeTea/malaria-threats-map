@@ -174,7 +174,7 @@
                     "year": "Año"
                 },
                 "parasiteClearanceOverTime": {
-                    "title": "ELIMINACIÓN DE PARÁSITOS A LO LARGO DEL TIEMPO",
+                    "title": "PORCENTAJE DE PACIENTES CON PARASITEMIA EN EL DÍA 3",
                     "parasitemiaOnDay3": "Porcentaje de pacientes con parasitemia en el día 3 (%)"
                 }
             },
@@ -264,6 +264,7 @@
                 "drug": "Fármaco",
                 "numberOfPatients": "Número de pacientes",
                 "treatmentFailureRate": "Tasa de fracaso del tratamiento",
+                "patientsWithParasitemiaOnDay3": "Pacientes con parasitemia el día 3",
                 "source": {
                     "label": "Fuente",
                     "link": "Instituto Nacional de Alergia y Enfermedades Infecciosas, Institutos Nacionales de Salud"

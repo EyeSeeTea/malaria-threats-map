@@ -173,7 +173,7 @@
                     "year": "Year"
                 },
                 "parasiteClearanceOverTime": {
-                    "title": "PARASITE CLEARANCE OVER TIME",
+                    "title": "PERCENTAGE OF PATIENTS WITH PARASITEMIA ON DAY 3",
                     "parasitemiaOnDay3": "Percentage of patients with parasitemia on day 3 (%)"
                 }
             },
@@ -263,6 +263,7 @@
                 "drug": "Drug",
                 "numberOfPatients": "Number of patients",
                 "treatmentFailureRate": "Treatment failure rate",
+                "patientsWithParasitemiaOnDay3": "Patients with parasitemia on day 3",
                 "source": {
                     "label": "Source",
                     "link": "National Institute of Allergy and Infectious Diseases, National Institutes of Health"

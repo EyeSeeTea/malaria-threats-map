@@ -177,9 +177,11 @@ function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): H
                         <tr><th colspan="2"><h3>${point.site}, ${i18next.t(point.country)} (${point.x})</h3></th></tr>
                         <tr><th>${i18next.t("common.dashboard.tooltip.drug")}</th><td>${i18next.t(point.drug)}</td></tr>
                         <tr><th>${i18next.t("common.dashboard.tooltip.numberOfPatients")}</th><td>${point.z}</td></tr>
-                        <tr><th>${i18next.t("common.dashboard.tooltip.treatmentFailureRate")}</th><td>${
-                    point.y
-                }%</td></tr>
+                        <tr><th>${
+                            type === "treatmentFailure"
+                                ? i18next.t("common.dashboard.tooltip.treatmentFailureRate")
+                                : i18next.t("common.dashboard.tooltip.patientsWithParasitemiaOnDay3")
+                        }</th><td>${point.y}%</td></tr>
                         <br/>
                         <tr><th>${i18next.t("common.dashboard.tooltip.source.label")}</th><td><a href=${
                     point.url
