@@ -28,6 +28,10 @@ const Terms = ({ onChange, termsInfo, selectedDatabases, onChooseOther }: OwnPro
                     </Typography>
                     <Typography variant={"body1"}>{t("common.data_download.terms_step.p1")}</Typography>
                     <br />
+                    <Typography variant={"h5"} gutterBottom>
+                        {t("common.data_download.terms_step.acknowledgements")}
+                    </Typography>
+
                     <Typography variant={"body1"}>{t("common.data_download.terms_step.p2")}</Typography>
                 </Grid>
                 <Grid item md={6} xs={12}>
