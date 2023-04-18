@@ -56,6 +56,8 @@ const preventionMechanismAssaysBarChartOptions: (data: any, years: string[]) => 
             crop: false,
             overflow: "none",
             dataLabels: {
+                inside: false,
+                color: "black",
                 formatter: function () {
                     // @ts-ignore
                     return this.point.yName;

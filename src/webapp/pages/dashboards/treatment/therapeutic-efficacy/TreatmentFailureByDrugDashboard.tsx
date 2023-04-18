@@ -88,7 +88,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
                 </Stack>
             </Stack>
             <div style={{ overflowX: "auto" }}>
-                <Table width={Object.keys(data).length * 400}>
+                <Table width={Object.keys(data.itemsByDrug).length * 400}>
                     <thead>
                         <tr>
                             {Object.keys(data).map(drug => {
@@ -99,13 +99,18 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
 
                     <tbody>
                         <tr>
-                            {Object.keys(data).map((drug, index) => {
+                            {Object.keys(data.itemsByDrug).map((drug, index) => {
                                 return (
                                     <td key={drug}>
                                         {
                                             <HighchartsReact
                                                 highcharts={Highcharts}
-                                                options={chartOptions(index === 0, selectedCountries, data[drug])}
+                                                options={chartOptions(
+                                                    index === 0,
+                                                    selectedCountries,
+                                                    data.itemsByDrug[drug],
+                                                    data.maxYAxis
+                                                )}
                                             />
                                         }
                                     </td>
@@ -181,7 +186,8 @@ const Table = styled.table<{ width: number }>`
 function chartOptions(
     firstChart: boolean,
     countries: string[],
-    series: TreatmentFailureSeriesItem[]
+    series: TreatmentFailureSeriesItem[],
+    maxYAxis: number
 ): Highcharts.Options {
     return {
         chart: {
@@ -211,6 +217,7 @@ function chartOptions(
             title: {
                 text: "",
             },
+            max: maxYAxis,
         },
         plotOptions: {
             series: {
