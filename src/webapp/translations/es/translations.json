@@ -787,6 +787,7 @@
             "terms_step": {
                 "title": "Terminos and Condiciones",
                 "p1": "The use of all data is subject to the Terms and conditions of use for WHO compilations, aggregations, evaluations and analyses. By using the Datasets or any presentations of data derived from them, you agree to be bound by and adhere to these Terms and Conditions, as may be amended from time to time by WHO at its sole discretion. If any datasets are credited to a source other than WHO, then those materials are not covered by these Terms and Conditions, and permission should be sought from the source.",
+                "acknowledgements": "Agrademicimientos",
                 "p2": "Please acknowledge the use of these datasets by including the following reference in your publications: WHO, Malaria Threats Map, year, date of access, acknowledgement of the countries having provided the underlying data (in the event that the source refers to ministries of health or national malaria control programs of specific countries).",
                 "summary_title": "Download List",
                 "check": "Check here to indicated that you have read and agree to the Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses.",
