@@ -53,6 +53,7 @@ export function createChartData(
 ): TreatmentFailureSeries {
     const getSeriesByDrug = (drug: string) => {
         const studiesByDrug = studies.filter(study => study.DRUG_NAME === drug);
+        const maxPointWidth = 15;
 
         const failureLessThan10: TreatmentFailureSeriesItem = {
             type: "bar",
@@ -64,7 +65,7 @@ export function createChartData(
 
                 return studies.length;
             }),
-            maxPointWidth: 15,
+            maxPointWidth,
         };
 
         const failureMoreThan10: TreatmentFailureSeriesItem = {
@@ -77,7 +78,7 @@ export function createChartData(
 
                 return studies.length;
             }),
-            maxPointWidth: 15,
+            maxPointWidth,
         };
 
         return [failureMoreThan10, failureLessThan10];
