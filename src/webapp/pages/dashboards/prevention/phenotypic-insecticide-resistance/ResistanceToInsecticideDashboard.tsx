@@ -163,7 +163,7 @@ function chartOptions(
                     ? i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.numSites")
                     : "",
                 style: { fontSize: "14px", fontWeight: "bold", color: "black" },
-                y: 20,
+                y: 15,
                 x: -50,
             },
             labels: {
