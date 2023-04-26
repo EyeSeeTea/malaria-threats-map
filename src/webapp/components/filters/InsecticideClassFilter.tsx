@@ -29,10 +29,11 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 export const INSECTICIDE_CLASSES: string[] = [
-    "PYRETHROIDS",
-    "ORGANOCHLORINES",
     "CARBAMATES",
+    "NEONICOTINOIDS",
+    "ORGANOCHLORINES",
     "ORGANOPHOSPHATES",
+    "PYRETHROIDS",
     "PYRROLES",
 ];
 
