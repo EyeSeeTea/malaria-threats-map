@@ -48,7 +48,7 @@ const PreventionChart: React.FC<Props> = ({ mapType, selectionData }) => {
                             const title = data[specie][type].title;
 
                             return (
-                                <>
+                                <React.Fragment key={`${specie}-${type}`}>
                                     <Typography variant="caption" fontWeight="bold">
                                         {t(type)}
                                     </Typography>
@@ -84,7 +84,7 @@ const PreventionChart: React.FC<Props> = ({ mapType, selectionData }) => {
                                         />
                                         {typeIndex < dataItems.length - 1 ? <Divider sx={{ marginBottom: 2 }} /> : null}
                                     </div>
-                                </>
+                                </React.Fragment>
                             );
                         })}
                         {specieIndex < Object.keys(data).length - 1 ? (

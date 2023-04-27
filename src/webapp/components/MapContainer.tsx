@@ -202,7 +202,7 @@ const MapContainer: React.FC = () => {
                         }
                     },
                     action: (value: string) => {
-                        const [type, ...rest] = value.split(":");
+                        const [type, ...rest] = (value || "").split(":");
                         switch (type) {
                             case "country":
                                 return setRegionAction({ country: rest[1] });
@@ -221,7 +221,7 @@ const MapContainer: React.FC = () => {
                                 });
                             }
                             default:
-                                return setRegionAction({ subRegion: rest[1] });
+                                return setRegionAction({});
                         }
                     },
                 },

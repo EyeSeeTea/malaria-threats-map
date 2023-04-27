@@ -29,7 +29,6 @@ import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import {
-    setRegionAction,
     setThemeAction,
     updateBoundsAction,
     updateZoomAction,
@@ -181,7 +180,6 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setTheme: setThemeAction,
-    setRegion: setRegionAction,
     setSelection: setSelection,
     updateZoom: updateZoomAction,
     updateBounds: updateBoundsAction,

@@ -5,7 +5,7 @@ import { RegionState, State } from "../../store/types";
 import * as R from "ramda";
 import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
 import { selectRegion } from "../../store/reducers/base-reducer";
-import { setRegionAction, setSelection } from "../../store/actions/base-actions";
+import { setSelection } from "../../store/actions/base-actions";
 import { CountryLayer } from "../../../domain/entities/CountryLayer";
 
 const REGION_LAYER_ID = "regions-layer";
@@ -34,7 +34,6 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setSelection: setSelection,
-    setRegion: setRegionAction,
 };
 
 interface OwnProps {
