@@ -253,5 +253,7 @@ export function invasiveFiltersToString(
 }
 
 function getYearsSummary(maxMinYears: number[], yearFilters: number[]) {
-    return maxMinYears[0] === yearFilters[0] && maxMinYears[1] === yearFilters[1] ? "" : yearFilters.join("-");
+    return maxMinYears[0] === yearFilters[0] && maxMinYears[1] === yearFilters[1]
+        ? maxMinYears.join("-")
+        : yearFilters.join("-");
 }
