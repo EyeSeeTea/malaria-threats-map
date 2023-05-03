@@ -17,6 +17,7 @@ import {
     logPageViewAction,
     setFiltersAction,
     setMaxMinYearsAction,
+    setRegionAction,
     setSelectionData,
     setThemeAction,
 } from "../../actions/base-actions";
@@ -27,6 +28,7 @@ import { fromFuture } from "../utils";
 import { EpicDependencies } from "../../index";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { createTreatmentSelectionData } from "./utils";
+import { molecularMarkersMap } from "../../../components/filters/MolecularMarkerFilter";
 
 function groupStudies(studies: TreatmentStudy[]) {
     const filtered255Studies = studies.filter(study => study.DimensionID === 255 || study.DimensionID === 256);
@@ -84,6 +86,18 @@ export const setPlasmodiumSpeciesEpic = (action$: Observable<ActionType<typeof s
                 return of(setTreatmentDrug("DRUG_CQ"));
             }
             return of();
+        })
+    );
+
+export const setMolecularMarkerEpic = (action$: Observable<ActionType<typeof setMolecularMarker>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetMolecularMarker),
+        switchMap(action => {
+            if (action.payload === molecularMarkersMap.Pfcrt) {
+                return of(setRegionAction({ region: "AMERICAS" }));
+            } else {
+                return of(setRegionAction({}));
+            }
         })
     );
 
