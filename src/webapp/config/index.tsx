@@ -2,7 +2,6 @@ type ConfigProps = {
     mapServerUrl: string;
     xmartServerUrl: string;
     featuresServerUrl: string;
-    mapTilesBaseUrl: string;
     backendUrl: string;
     gaAppId: string;
     env: string;
@@ -28,12 +27,6 @@ type ConfigProps = {
 const WHO_MALARIA_THREATS_MAP_STAGING =
     "https://extranet.who.int/gis/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer";
 const WHO_MALARIA_THREATS_MAP = "https://extranet.who.int/gis/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP/MapServer";
-
-const BASEMAP_NONIC_UAT =
-    "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/WHO_Point_Basemap_no_labels/VectorTileServer";
-
-const BASEMAP_NONIC =
-    "https://tiles.arcgis.com/tiles/5T5nSi527N4F7luB/arcgis/rest/services/WHO_Point_Basemap_no_labels/VectorTileServer";
 
 const FEATURES_SERVER = "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services";
 
@@ -68,14 +61,6 @@ const prodMapServer = {
     featuresServerUrl: FEATURES_SERVER,
 };
 
-const stagingMapTile = {
-    mapTilesBaseUrl: BASEMAP_NONIC_UAT,
-};
-
-const prodMapTile = {
-    mapTilesBaseUrl: BASEMAP_NONIC,
-};
-
 const feedbackConfig = {
     token: ["ghp_mKe29w1W0ww54C", "ah9NfIMlJdEpP2Mw3RU7FO"],
     createIssue: true,
@@ -97,7 +82,6 @@ const configurations: { [key: string]: ConfigProps } = {
     local: {
         ...base,
         ...stagingMapServer,
-        ...stagingMapTile,
         backendUrl: process.env.REACT_APP_BACKEND_URL || "https://extranet.who.int/malthreats-api/", // https://portal-uat.who.int/malthreats-api/ has a temporary problem
         gaAppId: "UA-191197789-1",
         env: "local",
@@ -109,7 +93,6 @@ const configurations: { [key: string]: ConfigProps } = {
     dev: {
         ...base,
         ...stagingMapServer,
-        ...stagingMapTile,
         backendUrl: "https://extranet.who.int/malthreats-api/", // https://portal-uat.who.int/malthreats-api/ has a temporary problem
         gaAppId: "UA-191197789-2",
         env: "dev",
@@ -122,7 +105,6 @@ const configurations: { [key: string]: ConfigProps } = {
     staging: {
         ...base,
         ...stagingMapServer,
-        ...stagingMapTile,
         backendUrl: "https://extranet.who.int/malthreats-api/", // https://portal-uat.who.int/malthreats-api/ has a temporary problem
         gaAppId: "UA-191197789-1",
         env: "staging",
@@ -135,7 +117,6 @@ const configurations: { [key: string]: ConfigProps } = {
     prod: {
         ...base,
         ...prodMapServer,
-        ...prodMapTile,
         backendUrl: `https://extranet.who.int/malthreats-api/`,
         gaAppId: "UA-140410266-1",
         env: "prod",
