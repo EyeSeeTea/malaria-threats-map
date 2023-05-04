@@ -160,6 +160,8 @@ function createMolecularMarkersChartData(
         validated: 3,
         associated: 2,
         other: 1,
+        Mutations: 1,
+        "multiple copy number": 1,
     };
 
     const allStudies257 = R.flatten(studies255.map(study => study.groupStudies));
