@@ -83,7 +83,7 @@
                 },
                 "second": {
                     "title": "2. Select Country or Area",
-                    "helper": "Select up to 5 countries",
+                    "helper": "Select up to 5 countries or areas",
                     "lastUpdate": "Last update: ",
                     "cta": "Generate Dashboard"
                 },
@@ -92,7 +92,7 @@
             "dashboardsFilterSection": {
                 "title": "Contents:",
                 "countryContextOptions": {
-                    "countryContext": "Country context",
+                    "countryContext": "Country / Area context",
                     "epidemiologicalProfile": "Epidemiological profile",
                     "majorPlasmodium": "Major Plasmodium species and treatment regimen",
                     "vectors": "Vectors",
@@ -115,12 +115,12 @@
                 }
             },
             "countryContextDashboards": {
-                "title": "Country context",
+                "title": "Country / Area context",
                 "source": "Source:",
                 "whoWorldMalariaReport": "WHO. World malaria report 2021",
                 "epidemiologicalProfile": {
                     "title": "EPIDEMIOLOGICAL PROFILE",
-                    "country": "Country",
+                    "country": "Country / Area",
                     "year": "Year",
                     "transmission": " Population living in high transmission, low transmission and malaria-free areas",
                     "burdenEstimates": "Burden estimates",
@@ -136,18 +136,18 @@
                 },
                 "majorPlamociumSpecies": {
                     "title": "MAJOR PLASMODIUM SPECIES AND TREATMENT REGIMEN",
-                    "country": "Country",
+                    "country": "Country / Area",
                     "species": "Major Plasmodium species (%)",
                     "firstLineTreatments": "1st line treatments for uncomplicated malaria"
                 },
                 "vectors": {
                     "title": "VECTORS",
-                    "country": "Country",
+                    "country": "Country / Area",
                     "species": "Vectors"
                 },
                 "summaryInsecticideResistance": {
                     "title": "SUMMARY OF INSECTICIDE RESISTANCE",
-                    "country": "Country",
+                    "country": "Country / Area",
                     "vectorSpecies": "Vector species that have demonstrated confirmed resistance to one or more insecticides",
                     "insecticideClasses": "Insecticide classes to which resistance has been detected",
                     "resistanceMechanisms": "Resistance mechanisms detected"
