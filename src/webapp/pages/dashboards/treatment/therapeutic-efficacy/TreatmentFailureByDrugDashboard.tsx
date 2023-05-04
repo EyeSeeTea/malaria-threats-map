@@ -91,7 +91,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
                 <Table width={Object.keys(data.itemsByDrug).length * 400}>
                     <thead>
                         <tr>
-                            {Object.keys(data).map(drug => {
+                            {Object.keys(data.itemsByDrug).map(drug => {
                                 return <th key={drug}>{drug}</th>;
                             })}
                         </tr>
