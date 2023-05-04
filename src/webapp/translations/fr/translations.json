@@ -84,7 +84,7 @@
                 },
                 "second": {
                     "title": "2. Sélectionnez le pays ou la région",
-                    "helper": "Sélectionnez jusqu'à 5 pays",
+                    "helper": "Sélectionnez jusqu'à 5 pays ou régions",
                     "lastUpdate": "Dernière mise à jour: ",
                     "cta": "Générer tableau de bord"
                 },
@@ -93,7 +93,7 @@
             "dashboardsFilterSection": {
                 "title": "Contenu:",
                 "countryContextOptions": {
-                    "countryContext": "Contexte du pays",
+                    "countryContext": "Contexte du Pays / Région",
                     "epidemiologicalProfile": "Profil épidémiologique",
                     "majorPlasmodium": "Principales espèces de Plasmodium et régime de traitement",
                     "vectors": "Vecteurs",
@@ -116,12 +116,12 @@
                 }
             },
             "countryContextDashboards": {
-                "title": "Contexte du pays",
+                "title": "Contexte du Pays / Région",
                 "source": "La source:",
                 "whoWorldMalariaReport": "Rapport 2021 de l'OMS sur le paludisme dans le monde",
                 "epidemiologicalProfile": {
                     "title": "PROFIL ÉPIDÉMIOLOGIQUE",
-                    "country": "Pays",
+                    "country": "Pays / Région",
                     "year": "Année",
                     "transmission": "Population vivant dans des zones à forte transmission, à faible transmission et exemptes de paludisme",
                     "burdenEstimates": "Estimations de la charge",
@@ -137,18 +137,18 @@
                 },
                 "majorPlamociumSpecies": {
                     "title": "PRINCIPALES ESPÈCES DE PLASMODIUM ET RÉGIME DE TRAITEMENT",
-                    "country": "Pays",
+                    "country": "Pays / Région",
                     "species": "Espèces majeures de Plasmodium (%)",
                     "firstLineTreatments": "Traitements de 1ère ligne pour le paludisme non compliqué"
                 },
                 "vectors": {
                     "title": "VECTEURS",
-                    "country": "Pays",
+                    "country": "Pays / Région",
                     "species": "Vecteurs"
                 },
                 "summaryInsecticideResistance": {
                     "title": "RÉSUMÉ DE LA RÉSISTANCE AUX INSECTICIDES",
-                    "country": "Pays",
+                    "country": "Pays / Région",
                     "vectorSpecies": "Espèces vectrices ayant démontré une résistance confirmée à un ou plusieurs insecticides",
                     "insecticideClasses": "Classes d'insecticides pour lesquelles une résistance a été détectée",
                     "resistanceMechanisms": "Mécanismes de résistance détectés"

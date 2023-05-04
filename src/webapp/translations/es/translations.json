@@ -84,7 +84,7 @@
                 },
                 "second": {
                     "title": "2. Seleccionar país o zona",
-                    "helper": "Seleccione hasta 5 países",
+                    "helper": "Seleccione hasta 5 países o zonas",
                     "lastUpdate": "Última actualización: ",
                     "cta": "Generar Tablero"
                 },
@@ -93,7 +93,7 @@
             "dashboardsFilterSection": {
                 "title": "Contenidos:",
                 "countryContextOptions": {
-                    "countryContext": "Contexto del país",
+                    "countryContext": "Contexto del País / Zona",
                     "epidemiologicalProfile": "Perfil epidemiológico",
                     "majorPlasmodium": "Principales especies de Plasmodium y régimen de tratamiento",
                     "vectors": "Vectores",
@@ -116,12 +116,12 @@
                 }
             },
             "countryContextDashboards": {
-                "title": "Contexto del país",
+                "title": "Contexto del País / Zona",
                 "source": "Fuente:",
                 "whoWorldMalariaReport": "Informe mundial sobre el paludismo de la OMS 2021",
                 "epidemiologicalProfile": {
                     "title": "PERFIL EPIDEMIOLÓGICO",
-                    "country": "País",
+                    "country": "País / Zona",
                     "year": "Año",
                     "transmission": "Población que vive en áreas de alta transmisión, baja transmisión y libres de malaria",
                     "burdenEstimates": "Estimaciones de carga",
@@ -137,18 +137,18 @@
                 },
                 "majorPlamociumSpecies": {
                     "title": "PRINCIPALES ESPECIES DE PLASMODIUM Y RÉGIMEN DE TRATAMIENTO",
-                    "country": "País",
+                    "country": "País / Zona",
                     "species": "Especies principales de Plasmodium (%)",
                     "firstLineTreatments": "Tratamientos de primera línea para la malaria sin complicaciones"
                 },
                 "vectors": {
                     "title": "VECTORES",
-                    "country": "País",
+                    "country": "País / Zona",
                     "species": "Vectores"
                 },
                 "summaryInsecticideResistance": {
                     "title": "RESUMEN DE RESISTENCIA A INSECTICIDAS",
-                    "country": "País",
+                    "country": "País / Zona",
                     "vectorSpecies": "Especies de vectores que han demostrado resistencia confirmada a uno o más insecticidas",
                     "insecticideClasses": "Clases de insecticidas a las que se ha detectado resistencia",
                     "resistanceMechanisms": "Mecanismos de resistencia detectados"
