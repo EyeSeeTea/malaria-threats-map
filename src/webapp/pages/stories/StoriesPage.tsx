@@ -10,12 +10,8 @@ import DiagnosisIcon from "../../assets/img/diagnosis-icon.svg";
 import InvasiveIcon from "../../assets/img/invasive-icon.svg";
 
 import diagnosis1 from "../../assets/img/stories-page/diagnosis1.png";
-import diagnosis2 from "../../assets/img/stories-page/diagnosis2.png";
-import diagnosis3 from "../../assets/img/stories-page/diagnosis3.png";
 import invasive1 from "../../assets/img/stories-page/invasive1.png";
-import invasive2 from "../../assets/img/stories-page/invasive2.png";
 import prevention1 from "../../assets/img/stories-page/prevention1.png";
-import prevention3 from "../../assets/img/stories-page/prevention3.png";
 import treatment1 from "../../assets/img/stories-page/treatment1.png";
 import treatment2 from "../../assets/img/stories-page/treatment2.png";
 import treatment3 from "../../assets/img/stories-page/treatment3.png";
@@ -77,24 +73,18 @@ const MapComponent = ({ theme, storyModeStep }: { theme: string; storyModeStep: 
         case "diagnosis":
             switch (storyModeStep) {
                 case 0:
-                    imageSrc = diagnosis1;
-                    break;
                 case 1:
-                    imageSrc = diagnosis2;
-                    break;
                 case 2:
-                    imageSrc = diagnosis3;
+                    imageSrc = diagnosis1;
                     break;
             }
             break;
         case "invasive":
             switch (storyModeStep) {
                 case 0:
-                    imageSrc = invasive1;
-                    break;
                 case 1:
                 case 2:
-                    imageSrc = invasive2;
+                    imageSrc = invasive1;
                     break;
             }
             break;
@@ -102,10 +92,8 @@ const MapComponent = ({ theme, storyModeStep }: { theme: string; storyModeStep: 
             switch (storyModeStep) {
                 case 0:
                 case 1:
-                    imageSrc = prevention1;
-                    break;
                 case 2:
-                    imageSrc = prevention3;
+                    imageSrc = prevention1;
                     break;
             }
             break;
