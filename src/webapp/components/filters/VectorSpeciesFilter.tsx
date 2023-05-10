@@ -4,7 +4,7 @@ import { State } from "../../store/types";
 import { setInvasiveVectorSpecies } from "../../store/actions/invasive-actions";
 import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
 import MultiFilter from "./common/MultiFilter";
-import { useTranslation } from "react-i18next";
+import { TFunction, useTranslation } from "react-i18next";
 
 const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
@@ -18,25 +18,25 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-export const suggestions = [
+export const suggestions = (t: TFunction<"translation", undefined>) => [
     {
-        label: "An. stephensi type form",
+        label: t("common.filters.vector_species_options.AN_STEPHENSI_TYPE_FORM"),
         value: "AN_STEPHENSI_TYPE_FORM",
     },
     {
-        label: "An. stephensi mysorensis",
+        label: t("common.filters.vector_species_options.AN_STEPHENSI_MYSORENSIS"),
         value: "AN_STEPHENSI_MYSORENSIS",
     },
     {
-        label: "An. stephensi intermediate form",
+        label: t("common.filters.vector_species_options.AN_STEPHENSI_INTERMEDIATE_FORM"),
         value: "AN_STEPHENSI_INTERMEDIATE_FORM",
     },
     {
-        label: "An. stephensi form unspecified",
+        label: t("common.filters.vector_species_options.AN_STEPHENSI_FORM_UNSPECIFIED"),
         value: "AN_STEPHENSI_FORM_UNSPECIFIED",
     },
     {
-        label: "An. stephensi (not found)",
+        label: t("common.filters.vector_species_options.AN_STEPHENSI_NOT_FOUND"),
         value: "AN_STEPHENSI_NOT_FOUND",
     },
 ];
@@ -56,7 +56,7 @@ const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, setVectorSpecie
         <MultiFilter
             label={t("common.filters.vector_species")}
             placeholder={t("common.filters.select_vector_species")}
-            options={suggestions}
+            options={suggestions(t)}
             onChange={setVectorSpecies}
             value={invasiveFilters.vectorSpecies}
             analyticsMultiFilterAction={"vectorSpecies"}

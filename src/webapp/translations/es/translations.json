@@ -671,6 +671,13 @@
             "select_test_type": "Seleccionar tipo de ensayo",
             "vector_species": "Especies vectoras",
             "select_vector_species": "Seleccionar sspecies vectoras",
+            "vector_species_options": {
+                "AN_STEPHENSI_TYPE_FORM": "An. stephensi forma tipo",
+                "AN_STEPHENSI_MYSORENSIS": "An. stephensi mysorensis",
+                "AN_STEPHENSI_INTERMEDIATE_FORM": "An. stephensi forma intermedia",
+                "AN_STEPHENSI_FORM_UNSPECIFIED": "An. stephensi forma no especificada",
+                "AN_STEPHENSI_NOT_FOUND": "An. stephensi (no encontrado)"
+            },
             "plasmodium_species": "Especie de plasmodium",
             "drug": "Tratamiento",
             "molecular_marker": "Marcador molecular",
