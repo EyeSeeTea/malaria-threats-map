@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectInsecticideTypes } from "../../store/reducers/translations-reducer";
@@ -30,20 +30,36 @@ type Props = DispatchProps & StateProps;
 
 const InsecticideTypeFilter: React.FC<Props> = ({ preventionFilters, studies, setInsecticideTypes }) => {
     const { t } = useTranslation();
+    const [insecticideType, setInsecticideType] = useState(["all"]);
+
+    const changeType = (e: string[]) => {
+        setInsecticideType(e);
+        if (e.includes("all")) {
+            return setInsecticideTypes([]);
+        } else {
+            return setInsecticideTypes(e);
+        }
+    };
 
     const filters = [filterByInsecticideClass(preventionFilters.insecticideClass)];
 
     const filteredStudies = filters.reduce((studies, filter) => studies.filter(filter), studies);
 
-    const suggestions = extractInsecticideTypeOptions(filteredStudies);
+    const suggestions = [
+        {
+            label: t("common.filters.all"),
+            value: "all",
+        },
+        ...extractInsecticideTypeOptions(filteredStudies),
+    ];
 
     return (
         <MultiFilter
             label={t("common.filters.insecticide_type")}
             placeholder={t("common.filters.select_insecticide_type")}
             options={suggestions}
-            onChange={setInsecticideTypes}
-            value={preventionFilters.insecticideTypes}
+            onChange={e => changeType(e)}
+            value={insecticideType}
             analyticsMultiFilterAction={"insecticideType"}
             isClearable={true}
         />

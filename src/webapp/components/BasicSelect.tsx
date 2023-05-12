@@ -266,6 +266,15 @@ export default function IntegrationReactSelect({
         }),
     };
 
+    const options = () => {
+        const allOption = (suggestions as Option[]).find(el => el.value === "all");
+        if (allOption) {
+            return R.uniq([allOption, ...R.sortBy<Option>(R.prop("label"), suggestions)]);
+        } else {
+            return R.sortBy<Option>(R.prop("label"), suggestions);
+        }
+    };
+
     return (
         <div className={`${finalClasses.root} ${className}`} role="listbox">
             {optimizePerformance ? (
@@ -273,7 +282,7 @@ export default function IntegrationReactSelect({
                     classes={finalClasses}
                     styles={selectStyles}
                     components={components}
-                    options={R.sortBy<Option>(R.prop("label"), suggestions)}
+                    options={options()}
                     value={value}
                     onChange={onChange}
                     placeholder={t("common.options.select") + "..."}
@@ -284,7 +293,7 @@ export default function IntegrationReactSelect({
                     classes={finalClasses}
                     styles={selectStyles}
                     components={components}
-                    options={R.sortBy<Option>(R.prop("label"), suggestions)}
+                    options={options()}
                     value={value}
                     onChange={onChange}
                     placeholder={t("common.options.select") + "..."}

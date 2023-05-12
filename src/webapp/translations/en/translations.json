@@ -698,7 +698,8 @@
             "exclude_lower_samples": "Exclude studies of less than 20 samples",
             "onlyIncludeBioassays": "Only include bioassays with more than the following number of mosquitoes",
             "zero_all_bioassays": "0 (all bioassays)",
-            "only_include_data_by_health": "Only include data provided to WHO by ministries of health"
+            "only_include_data_by_health": "Only include data provided to WHO by ministries of health",
+            "all": "All"
         },
         "topbar": {
             "menu": "Menu",

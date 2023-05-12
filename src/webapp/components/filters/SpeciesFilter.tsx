@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { PreventionMapType, State } from "../../store/types";
 import { selectSpecies } from "../../store/reducers/translations-reducer";
@@ -43,6 +43,17 @@ type Props = DispatchProps & StateProps;
 const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter, region, setSpecies }) => {
     const { t } = useTranslation();
     const { mapType } = preventionFilters;
+    const [vectorSpecies, setVectorSpecies] = useState(["all"]);
+
+    const changeType = (e: string[]) => {
+        setVectorSpecies(e);
+        if (e.includes("all")) {
+            return setSpecies([]);
+        } else {
+            return setSpecies(e);
+        }
+    };
+
     const filtersMap: { [mapType: string]: any[] } = {
         [PreventionMapType.INTENSITY_STATUS]: [
             filterByIntensityStatus,
@@ -83,18 +94,24 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
 
     const uniques = R.uniq(R.map(R.prop("SPECIES"), filteredStudies)).sort();
 
-    const suggestions: any[] = uniques.map((specie: string) => ({
-        label: specie,
-        value: specie,
-    }));
+    const suggestions: any[] = [
+        ...uniques.map((specie: string) => ({
+            label: specie,
+            value: specie,
+        })),
+        {
+            label: t("common.filters.all"),
+            value: "all",
+        },
+    ];
 
     return (
         <MultiFilter
             label={t("common.filters.vector_species")}
             placeholder={t("common.filters.select_vector_species")}
             options={suggestions}
-            onChange={setSpecies}
-            value={preventionFilters.species}
+            onChange={e => changeType(e)}
+            value={vectorSpecies}
             analyticsMultiFilterAction={"vectorSpecies"}
             optionsStyle={{ fontStyle: "italic" }}
         />

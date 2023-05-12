@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { PreventionMapType, State } from "../../store/types";
 import { selectTypes } from "../../store/reducers/translations-reducer";
@@ -43,6 +43,16 @@ type Props = DispatchProps & StateProps;
 const TypeFilter: React.FC<Props> = ({ setType, preventionFilters, studies, yearFilter, region }) => {
     const { t } = useTranslation();
     const { mapType } = preventionFilters;
+    const [testType, setTestType] = useState(["all"]);
+
+    const changeType = (e: string[]) => {
+        setTestType(e);
+        if (e.includes("all")) {
+            return setType([]);
+        } else {
+            return setType(e);
+        }
+    };
 
     const filtersMap: { [mapType: string]: any[] } = {
         [PreventionMapType.INTENSITY_STATUS]: [
@@ -80,18 +90,24 @@ const TypeFilter: React.FC<Props> = ({ setType, preventionFilters, studies, year
 
     const uniques = R.uniq(R.map(R.prop("TYPE"), filteredStudies));
 
-    const suggestions: any[] = uniques.map((type: string) => ({
-        label: type,
-        value: type,
-    }));
+    const suggestions: any[] = [
+        ...uniques.map((type: string) => ({
+            label: type,
+            value: type,
+        })),
+        {
+            label: t("common.filters.all"),
+            value: "all",
+        },
+    ];
 
     return (
         <MultiFilter
             label={t("common.filters.test_type")}
             placeholder={t("common.filters.select_test_type")}
             options={suggestions}
-            onChange={setType}
-            value={preventionFilters.type}
+            onChange={e => changeType(e)}
+            value={testType}
             analyticsMultiFilterAction="testType"
         />
     );

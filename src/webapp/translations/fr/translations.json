@@ -700,7 +700,8 @@
             "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons",
             "onlyIncludeBioassays": "N'incluez que les essais biologiques comportant plus que le nombre suivant de moustiques",
             "zero_all_bioassays": "0 (tous les essais biologiques)",
-            "only_include_data_by_health": "N'inclure que les données fournies à l'OMS par les ministères de la santé"
+            "only_include_data_by_health": "N'inclure que les données fournies à l'OMS par les ministères de la santé",
+            "all": "Tout"
         },
         "topbar": {
             "menu": "Menu",

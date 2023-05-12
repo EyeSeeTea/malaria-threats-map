@@ -700,7 +700,8 @@
             "exclude_lower_samples": "Excluir estudios de menos de 20 muestras",
             "onlyIncludeBioassays": "Incluya sólo los bioensayos con más del siguiente número de mosquitos",
             "zero_all_bioassays": "0 (todos los bioensayos)",
-            "only_include_data_by_health": "Incluir solo los datos proporcionados a la OMS por los ministerios de salud"
+            "only_include_data_by_health": "Incluir solo los datos proporcionados a la OMS por los ministerios de salud",
+            "all": "Todos"
         },
         "topbar": {
             "menu": "Menú",
