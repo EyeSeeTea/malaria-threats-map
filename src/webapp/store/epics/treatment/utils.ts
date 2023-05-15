@@ -164,7 +164,7 @@ function createMolecularMarkersChartData(
         "multiple copy number": 1,
     };
 
-    const allStudies257 = R.flatten(studies255.map(study => study.groupStudies));
+    const allStudies257 = R.flatten(studies255.map(study => study.groupStudies)).filter(study => +study.PROPORTION > 0);
     const allStudies257ByPriority = R.sortBy(study => prioritiesByMutationCategory[study.MUT_CAT], allStudies257);
 
     const studies257ByGenotype = R.groupBy(R.prop("GENOTYPE"), allStudies257ByPriority);
