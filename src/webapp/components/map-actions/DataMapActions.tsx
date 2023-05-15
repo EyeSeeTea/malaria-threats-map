@@ -66,18 +66,20 @@ const DataMapActions: React.FC<Props> = ({
             invasiveFilters,
             maxMinYears,
             yearFilters,
-            from
+            from,
+            t
         );
     }, [
-        theme,
-        preventionFilters,
-        treatmentFilters,
-        translations,
-        maxMinYears,
-        yearFilters,
         diagnosisFilters,
-        invasiveFilters,
         from,
+        invasiveFilters,
+        maxMinYears,
+        preventionFilters,
+        t,
+        theme,
+        translations,
+        treatmentFilters,
+        yearFilters,
     ]);
 
     return (
