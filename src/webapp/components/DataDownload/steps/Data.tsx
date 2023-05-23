@@ -250,7 +250,7 @@ const Data: React.FC<Props> = ({
                         .find(ds => ds.value === invasiveFilters.dataset)
                         .value.toString(),
                     filtersValue:
-                        invasiveFiltersToString(invasiveFilters, maxMinYears, yearFilters, "download", t) ||
+                        invasiveFiltersToString(invasiveFilters, maxMinYears, yearFilters, "download") ||
                         t("mapActions.all"),
                     filteredStudies: invasiveFilteredStudies,
                     location: getLocation(region) || t("mapActions.all"),

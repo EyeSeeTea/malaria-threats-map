@@ -66,8 +66,7 @@ const DataMapActions: React.FC<Props> = ({
             invasiveFilters,
             maxMinYears,
             yearFilters,
-            from,
-            t
+            from
         );
     }, [
         translations,
@@ -79,7 +78,6 @@ const DataMapActions: React.FC<Props> = ({
         maxMinYears,
         yearFilters,
         from,
-        t,
     ]);
 
     return (
