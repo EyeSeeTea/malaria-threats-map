@@ -194,7 +194,7 @@
                 "title": "Résistance phénotypique aux insecticides",
                 "numBioassaysByCategory": "Le nombre suivant d'essais biologiques correspond au filtre appliqué :",
                 "numBioassays": "{{count}} biologiques correspond au filtre appliqué ",
-                "numSites": "Nombre d'essais biologiques",
+                "numSites": "Nombre de sites",
                 "insecticideResistanceStatus": "Statut de résistance aux insecticides:",
                 "byInsecticideClass": "Par classe d'insecticide",
                 "byInsecticide": "Par insecticide",

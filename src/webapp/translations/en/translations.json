@@ -193,7 +193,7 @@
                 "title": "Phenotypic insecticide resistance",
                 "numBioassaysByCategory": "The following number of bioassay meet the applied filter:",
                 "numBioassays": "{{count}} bioassays meet the applied filter",
-                "numSites": "Number of bioassays",
+                "numSites": "Number of sites",
                 "insecticideResistanceStatus": "Insecticide resistance status:",
                 "byInsecticideClass": "By Insecticide Class",
                 "byInsecticide": "By Insecticide",
