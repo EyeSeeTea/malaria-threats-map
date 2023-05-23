@@ -68,6 +68,7 @@ const DataMapActions: React.FC<Props> = ({
             yearFilters,
             from
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         theme,
         preventionFilters,
@@ -78,6 +79,7 @@ const DataMapActions: React.FC<Props> = ({
         diagnosisFilters,
         invasiveFilters,
         from,
+        t,
     ]);
 
     return (
