@@ -4,7 +4,8 @@ import { State } from "../../store/types";
 import { setInvasiveVectorSpecies } from "../../store/actions/invasive-actions";
 import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
 import MultiFilter from "./common/MultiFilter";
-import { TFunction, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
@@ -18,25 +19,25 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-export const suggestions = (t: TFunction<"translation", undefined>) => [
+export const suggestions = () => [
     {
-        label: t("common.filters.vector_species_options.AN_STEPHENSI_TYPE_FORM"),
+        label: i18next.t("common.filters.vector_species_options.AN_STEPHENSI_TYPE_FORM"),
         value: "AN_STEPHENSI_TYPE_FORM",
     },
     {
-        label: t("common.filters.vector_species_options.AN_STEPHENSI_MYSORENSIS"),
+        label: i18next.t("common.filters.vector_species_options.AN_STEPHENSI_MYSORENSIS"),
         value: "AN_STEPHENSI_MYSORENSIS",
     },
     {
-        label: t("common.filters.vector_species_options.AN_STEPHENSI_INTERMEDIATE_FORM"),
+        label: i18next.t("common.filters.vector_species_options.AN_STEPHENSI_INTERMEDIATE_FORM"),
         value: "AN_STEPHENSI_INTERMEDIATE_FORM",
     },
     {
-        label: t("common.filters.vector_species_options.AN_STEPHENSI_FORM_UNSPECIFIED"),
+        label: i18next.t("common.filters.vector_species_options.AN_STEPHENSI_FORM_UNSPECIFIED"),
         value: "AN_STEPHENSI_FORM_UNSPECIFIED",
     },
     {
-        label: t("common.filters.vector_species_options.AN_STEPHENSI_NOT_FOUND"),
+        label: i18next.t("common.filters.vector_species_options.AN_STEPHENSI_NOT_FOUND"),
         value: "AN_STEPHENSI_NOT_FOUND",
     },
 ];
@@ -56,7 +57,7 @@ const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, setVectorSpecie
         <MultiFilter
             label={t("common.filters.vector_species")}
             placeholder={t("common.filters.select_vector_species")}
-            options={suggestions(t)}
+            options={suggestions()}
             onChange={setVectorSpecies}
             value={invasiveFilters.vectorSpecies}
             analyticsMultiFilterAction={"vectorSpecies"}

@@ -1,4 +1,4 @@
-import i18next, { TFunction } from "i18next";
+import i18next from "i18next";
 import _ from "lodash";
 import { Source } from "../../store/actions/base-actions";
 import {
@@ -32,8 +32,7 @@ export function filtersToString(
     invasiveFilters: InvasiveFilters,
     maxMinYears: number[],
     yearFilters: number[],
-    from: Source,
-    t: TFunction
+    from: Source
 ) {
     switch (theme) {
         case "prevention": {
@@ -43,7 +42,7 @@ export function filtersToString(
             return diagnosisFiltersToString(diagnosisFilters, maxMinYears, yearFilters, from);
         }
         case "invasive": {
-            return invasiveFiltersToString(invasiveFilters, maxMinYears, yearFilters, from, t);
+            return invasiveFiltersToString(invasiveFilters, maxMinYears, yearFilters, from);
         }
         case "treatment": {
             return treatmentFiltersToString(treatmentFilters, maxMinYears, yearFilters, from);
@@ -241,13 +240,12 @@ export function invasiveFiltersToString(
     invasiveFilters: InvasiveFilters,
     maxMinYears: number[],
     yearFilters: number[],
-    _from: Source,
-    t: TFunction
+    _from: Source
 ) {
     const years = getYearsSummary(maxMinYears, yearFilters);
 
     const vectorSpecies = invasiveFilters.vectorSpecies.map(item => {
-        const vectorSpecie = suggestions(t).find(sug => sug.value === item);
+        const vectorSpecie = suggestions().find(sug => sug.value === item);
         return vectorSpecie.label;
     });
 
