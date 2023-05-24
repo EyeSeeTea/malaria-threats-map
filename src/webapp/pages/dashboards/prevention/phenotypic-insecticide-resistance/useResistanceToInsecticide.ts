@@ -105,55 +105,169 @@ export function createChartData(
     filters: PreventionFiltersState,
     type: ResistanceToInsecticideChartType
 ): ResistanceToInsecticideSeriesGroup {
+    if (type === "by-insecticide") {
+        return createChartDataByInsecticideType(studies, selectedCountries, filters, type);
+    } else {
+        return createChartDataByInsecticideClass(studies, selectedCountries, filters, type);
+    }
+}
+
+export function createChartDataByInsecticideClass(
+    studies: PreventionStudy[],
+    selectedCountries: string[],
+    filters: PreventionFiltersState,
+    type: ResistanceToInsecticideChartType
+): ResistanceToInsecticideSeriesGroup {
+    if (filters.insecticideClasses.length === 0) return {};
+
     const result = selectedCountries.reduce((acc, countryISO) => {
         const studiesByCountry = studies.filter(study => study.ISO2 === countryISO);
 
-        const resistanceConfirmedStudies = studiesByCountry.filter(
-            study => study.RESISTANCE_STATUS === "CONFIRMED_RESISTANCE"
+        const insecticityTypes = _.uniq(studiesByCountry.map(study => study.INSECTICIDE_TYPE));
+
+        const accByInsecityce = insecticityTypes.reduce(
+            (acc: ResistanceToInsecticideSeriesGroup, insecticityType: string) => {
+                const studiesByInsecticide = studiesByCountry.filter(
+                    study => study.INSECTICIDE_TYPE === insecticityType
+                );
+
+                const resistanceConfirmed = createSerieByStatus(
+                    studiesByInsecticide,
+                    type,
+                    filters,
+                    "CONFIRMED_RESISTANCE",
+                    i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.confirmed"),
+                    ResistanceStatusColors.Confirmed[0]
+                );
+
+                const resistancePosible = createSerieByStatus(
+                    studiesByInsecticide,
+                    type,
+                    filters,
+                    "POSSIBLE_RESISTANCE",
+                    i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.possible"),
+                    ResistanceStatusColors.Possible[0]
+                );
+
+                const resistanceSusceptible = createSerieByStatus(
+                    studiesByInsecticide,
+                    type,
+                    filters,
+                    "SUSCEPTIBLE",
+                    i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.susceptible"),
+                    ResistanceStatusColors.Susceptible[0]
+                );
+
+                const countrySeries = {
+                    ...acc[countryISO],
+                    [insecticityType]: [resistanceSusceptible, resistancePosible, resistanceConfirmed],
+                };
+
+                return {
+                    ...acc,
+                    [countryISO]: countrySeries,
+                };
+            },
+            acc
         );
 
-        const resistanceConfirmed = {
-            type: "bar" as const,
-            name: i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.confirmed"),
-            color: ResistanceStatusColors.Confirmed[0],
-            data:
-                type === "by-insecticide-class"
-                    ? getCountByInsecticideClass(resistanceConfirmedStudies, filters.insecticideClasses)
-                    : getCountByInsecticideType(resistanceConfirmedStudies, filters.insecticideTypes),
+        return {
+            ...acc,
+            ...accByInsecityce,
         };
-
-        const resistancePosibleStudies = studiesByCountry.filter(
-            study => study.RESISTANCE_STATUS === "POSSIBLE_RESISTANCE"
-        );
-
-        const resistancePosible = {
-            type: "bar" as const,
-            name: i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.possible"),
-            color: ResistanceStatusColors.Possible[0],
-            data:
-                type === "by-insecticide-class"
-                    ? getCountByInsecticideClass(resistancePosibleStudies, filters.insecticideClasses)
-                    : getCountByInsecticideType(resistancePosibleStudies, filters.insecticideTypes),
-        };
-
-        const resistanceSusceptibleStudies = studiesByCountry.filter(
-            study => study.RESISTANCE_STATUS === "SUSCEPTIBLE"
-        );
-
-        const resistanceSusceptible = {
-            type: "bar" as const,
-            name: i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.susceptible"),
-            color: ResistanceStatusColors.Susceptible[0],
-            data:
-                type === "by-insecticide-class"
-                    ? getCountByInsecticideClass(resistanceSusceptibleStudies, filters.insecticideClasses)
-                    : getCountByInsecticideType(resistanceSusceptibleStudies, filters.insecticideTypes),
-        };
-
-        return { ...acc, [countryISO]: [resistanceSusceptible, resistancePosible, resistanceConfirmed] };
     }, {});
 
     return result;
+}
+
+export function createChartDataByInsecticideType(
+    studies: PreventionStudy[],
+    selectedCountries: string[],
+    filters: PreventionFiltersState,
+    type: ResistanceToInsecticideChartType
+): ResistanceToInsecticideSeriesGroup {
+    if (filters.insecticideTypes.length === 0) return {};
+
+    const result = selectedCountries.reduce((acc, countryISO) => {
+        const studiesByCountry = studies.filter(study => study.ISO2 === countryISO);
+
+        const insecticityClasses = _.uniq(studiesByCountry.map(study => study.INSECTICIDE_CLASS));
+
+        const accByInsecityceClass = insecticityClasses.reduce(
+            (acc: ResistanceToInsecticideSeriesGroup, insecticityClass: string) => {
+                const studiesByInsecticideClass = studiesByCountry.filter(
+                    study => study.INSECTICIDE_CLASS === insecticityClass
+                );
+
+                const resistanceConfirmed = createSerieByStatus(
+                    studiesByInsecticideClass,
+                    type,
+                    filters,
+                    "CONFIRMED_RESISTANCE",
+                    i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.confirmed"),
+                    ResistanceStatusColors.Confirmed[0]
+                );
+
+                const resistancePosible = createSerieByStatus(
+                    studiesByInsecticideClass,
+                    type,
+                    filters,
+                    "POSSIBLE_RESISTANCE",
+                    i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.possible"),
+                    ResistanceStatusColors.Possible[0]
+                );
+
+                const resistanceSusceptible = createSerieByStatus(
+                    studiesByInsecticideClass,
+                    type,
+                    filters,
+                    "SUSCEPTIBLE",
+                    i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.susceptible"),
+                    ResistanceStatusColors.Susceptible[0]
+                );
+
+                const countrySeries = {
+                    ...acc[countryISO],
+                    [insecticityClass]: [resistanceSusceptible, resistancePosible, resistanceConfirmed],
+                };
+
+                return {
+                    ...acc,
+                    [countryISO]: countrySeries,
+                };
+            },
+            acc
+        );
+
+        return {
+            ...acc,
+            ...accByInsecityceClass,
+        };
+    }, {});
+
+    return result;
+}
+
+function createSerieByStatus(
+    studies: PreventionStudy[],
+    type: string,
+    filters: PreventionFiltersState,
+    resitanceStatus: string,
+    name: string,
+    color: string
+) {
+    const resistanceConfirmedStudies = studies.filter(study => study.RESISTANCE_STATUS === resitanceStatus);
+
+    const resistanceConfirmed = {
+        type: "bar" as const,
+        name,
+        color,
+        data:
+            type === "by-insecticide-class"
+                ? getCountByInsecticideClass(resistanceConfirmedStudies, filters.insecticideClasses)
+                : getCountByInsecticideType(resistanceConfirmedStudies, filters.insecticideTypes),
+    };
+    return resistanceConfirmed;
 }
 
 function getCountByInsecticideClass(studies: PreventionStudy[], insecticideClasses: string[]) {
