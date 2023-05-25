@@ -1,4 +1,7 @@
-export type ResistanceToInsecticideSeriesGroup = Record<string, Record<string, ResistanceToInsecticideSerie[]>>;
+export type ResistanceToInsecticideSeriesGroup = Record<
+    string,
+    Record<string, { categories: string[]; series: ResistanceToInsecticideSerie[] }>
+>;
 
 export interface ResistanceToInsecticideSerie {
     type: "bar";

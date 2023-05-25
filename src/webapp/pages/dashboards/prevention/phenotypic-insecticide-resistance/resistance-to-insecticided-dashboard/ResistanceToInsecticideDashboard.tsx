@@ -1,14 +1,14 @@
 import Highcharts from "highcharts";
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import PreventionFilterableDashboard from "../PreventionFilterableDashboard";
+import PreventionFilterableDashboard from "../../PreventionFilterableDashboard";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import { useResistanceToInsecticide } from "./useResistanceToInsecticide";
-import { ResistanceToInsecticideSerie } from "./types";
+import { ResistanceToInsecticideSerie } from "../types";
 import i18next from "i18next";
-import StatusOfResistanceToInsecticidePopup from "../../../../components/dashboards/prevention/StatusOfResistanceToInsecticidePopup";
-import { useInfoPopup } from "../../common/popup/useInfoPopup";
+import StatusOfResistanceToInsecticidePopup from "../../../../../components/dashboards/prevention/StatusOfResistanceToInsecticidePopup";
+import { useInfoPopup } from "../../../common/popup/useInfoPopup";
 
 const ResistanceToInsecticideDashboard: React.FC = () => {
     const { t } = useTranslation();
@@ -17,7 +17,6 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
         insecticideTypeOptions,
         chartType,
         chartTypes,
-        categories,
         categoriesCount,
         data,
         filters,
@@ -35,7 +34,11 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
 
     const maxStackedColumn = React.useMemo(() => {
         const valuesBySubGroups = Object.values(data);
-        const values = valuesBySubGroups.map(group => Object.values(group)).flat();
+        const values = valuesBySubGroups
+            .map(group => Object.values(group))
+            .flat()
+            .map(({ series }) => series);
+
         const maxValues = values.reduce((acc: number[], countrySeries: ResistanceToInsecticideSerie[]) => {
             const maxValuesByType = countrySeries.reduce((acc, serieItem) => {
                 if (acc.length === 0) {
@@ -95,8 +98,8 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
                                                 <StyledHighcharts
                                                     highcharts={Highcharts}
                                                     options={chartOptions(
-                                                        data[isoCountry][subGroup],
-                                                        categories,
+                                                        data[isoCountry][subGroup].series,
+                                                        data[isoCountry][subGroup].categories,
                                                         isFirstChart,
                                                         isLastChart,
                                                         maxStackedColumn
@@ -159,6 +162,10 @@ const Table = styled.table`
     tr:nth-child(1) td:nth-child(1) {
         padding-top: 80px;
     }
+
+    tr:last-child td:nth-child(1) {
+        padding-bottom: 50px;
+    }
 `;
 
 const StyledHighcharts = styled(HighchartsReact)``;
@@ -175,9 +182,10 @@ function chartOptions(
     return {
         chart: {
             type: "bar",
-            height: categories.length * 50 + (enabledLegend ? 80 : 0) + (visibleYAxisLabels ? 50 : 0),
+            height: categories.length * 50 + (enabledLegend ? 100 : 0) + (visibleYAxisLabels ? 60 : 0),
             marginTop: enabledLegend ? 100 : 0,
             marginBottom: visibleYAxisLabels ? 60 : 0,
+            marginLeft: 150,
         },
         title: {
             align: "center",

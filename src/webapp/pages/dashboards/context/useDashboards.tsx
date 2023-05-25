@@ -67,6 +67,8 @@ export const useDashboards = () => {
     return {
         theme,
         selectedCountries,
+        preventionStudies,
+        treatmentStudies,
         dashboardsTreatmentStudies,
         dashboardsPreventionStudies,
         updatedDates,
