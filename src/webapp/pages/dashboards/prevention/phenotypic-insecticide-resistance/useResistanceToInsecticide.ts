@@ -157,13 +157,23 @@ export function createChartData(
 }
 
 function getCountByInsecticideClass(studies: PreventionStudy[], insecticideClasses: string[]) {
-    return insecticideClasses.map(
-        insecticideClass => studies.filter(study => study.INSECTICIDE_CLASS === insecticideClass).length
-    );
+    return insecticideClasses.map(insecticideClass => {
+        const studiesByClass = studies.filter(study => study.INSECTICIDE_CLASS === insecticideClass);
+
+        return _(studiesByClass)
+            .groupBy(study => study.SITE_ID)
+            .keys()
+            .value().length;
+    });
 }
 
 function getCountByInsecticideType(studies: PreventionStudy[], insecticideTypes: string[]) {
-    return insecticideTypes.map(
-        insecticideType => studies.filter(study => study.INSECTICIDE_TYPE === insecticideType).length
-    );
+    return insecticideTypes.map(insecticideType => {
+        const studiesByType = studies.filter(study => study.INSECTICIDE_TYPE === insecticideType);
+
+        return _(studiesByType)
+            .groupBy(study => study.SITE_ID)
+            .keys()
+            .value().length;
+    });
 }
