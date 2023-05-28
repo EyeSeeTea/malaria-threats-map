@@ -670,7 +670,7 @@
             "test_type": "Tipo de ensayo",
             "select_test_type": "Seleccionar tipo de ensayo",
             "vector_species": "Especies vectoras",
-            "select_vector_species": "Seleccionar sspecies vectoras",
+            "select_vector_species": "Seleccionar especies vectoras",
             "vector_species_options": {
                 "AN_STEPHENSI_TYPE_FORM": "An. stephensi forma tipo",
                 "AN_STEPHENSI_MYSORENSIS": "An. stephensi mysorensis",
