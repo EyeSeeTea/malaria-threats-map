@@ -110,7 +110,7 @@ const Legend: React.FC<Props> = ({
         if (!translations) return;
 
         return setTitle(getLegendTitle(theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters));
-    }, [theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters, translations]);
+    }, [theme, preventionFilters, diagnosisFilters, treatmentFilters, invasiveFilters, translations, t]);
 
     React.useEffect(() => {
         return setMapTypeHelpKey(
