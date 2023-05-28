@@ -245,7 +245,7 @@ export function invasiveFiltersToString(
     const years = getYearsSummary(maxMinYears, yearFilters);
 
     const vectorSpecies = invasiveFilters.vectorSpecies.map(item => {
-        const vectorSpecie = suggestions.find(sug => sug.value === item);
+        const vectorSpecie = suggestions().find(sug => sug.value === item);
         return vectorSpecie.label;
     });
 
