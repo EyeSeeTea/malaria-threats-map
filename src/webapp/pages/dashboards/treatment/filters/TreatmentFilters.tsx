@@ -104,7 +104,7 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                 </React.Fragment>
             )}
 
-            <DashboardsYearRangeSelector years={years} onChange={onYearsChange} />
+            <DashboardsYearRangeSelector years={years} minYear={2006} onChange={onYearsChange} />
 
             {onExcludeLowerSamplesChange && (
                 <ExcludeLowerSamplesSelector
