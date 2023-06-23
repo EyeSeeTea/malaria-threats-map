@@ -31,12 +31,6 @@ interface TreatmentFiltersProps {
     onExcludeLowerPatientsChange?: (value: boolean) => void;
     onExcludeLowerSamplesChange?: (value: boolean) => void;
     onCollapse: () => void;
-    isCollapseDisabled?: boolean;
-    isDrugsSelectorDisabled?: boolean;
-    isMolecularMarkerSelectorDisabled?: boolean;
-    isYearRangeSelectorDisabled?: boolean;
-    isExcludeLowerSamplesSelectorDisabled?: boolean;
-    isExcludeLowerPatientsSelectorDisabled?: boolean;
 }
 
 const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
@@ -58,12 +52,6 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
     onExcludeLowerPatientsChange,
     onExcludeLowerSamplesChange,
     onCollapse,
-    isCollapseDisabled = false,
-    isDrugsSelectorDisabled = false,
-    isMolecularMarkerSelectorDisabled = false,
-    isYearRangeSelectorDisabled = false,
-    isExcludeLowerSamplesSelectorDisabled = false,
-    isExcludeLowerPatientsSelectorDisabled = false,
 }) => {
     const { t } = useTranslation();
 
@@ -74,7 +62,7 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                     {t("common.dashboard.treatmentFilters.title")}
                 </Typography>
 
-                <IconButton onClick={onCollapse} size="small" disabled={isCollapseDisabled}>
+                <IconButton onClick={onCollapse} size="small">
                     <ArrowBackIosIcon />
                 </IconButton>
             </Stack>
@@ -100,7 +88,6 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                         studies={studies}
                         onChange={onDrugsChange}
                         value={drugs}
-                        isDisabled={isDrugsSelectorDisabled}
                     />
                 </React.Fragment>
             )}
@@ -113,7 +100,6 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                         background={"#F7F7F7"}
                         onChange={onMolecularMarkerChange}
                         value={molecularMarker}
-                        isDisabled={isMolecularMarkerSelectorDisabled}
                     />
                 </React.Fragment>
             )}
@@ -121,7 +107,6 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
             <StyledDashboardsYearRangeSelector
                 years={years}
                 onChange={onYearsChange}
-                isDisabled={isYearRangeSelectorDisabled}
             />
 
             {onExcludeLowerSamplesChange && (
@@ -129,7 +114,6 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                     value={excludeLowerSamples}
                     onChange={onExcludeLowerSamplesChange}
                     fontWeight="bold"
-                    isDisabled={isExcludeLowerSamplesSelectorDisabled}
                 />
             )}
 
@@ -138,7 +122,6 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                     value={excludeLowerPatients}
                     onChange={onExcludeLowerPatientsChange}
                     fontWeight="bold"
-                    isDisabled={isExcludeLowerPatientsSelectorDisabled}
                 />
             )}
         </FiltersCard>

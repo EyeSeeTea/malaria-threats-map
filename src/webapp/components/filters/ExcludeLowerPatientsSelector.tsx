@@ -6,10 +6,9 @@ interface ExcludeLowerPatientsSelectorProps {
     value: boolean;
     onChange: (value: boolean) => void;
     fontWeight?: string;
-    isDisabled?: boolean;
 }
 
-const ExcludeLowerPatientsSelector: React.FC<ExcludeLowerPatientsSelectorProps> = ({ value, onChange, fontWeight, isDisabled = false }) => {
+const ExcludeLowerPatientsSelector: React.FC<ExcludeLowerPatientsSelectorProps> = ({ value, onChange, fontWeight }) => {
     const { t } = useTranslation();
 
     return (
@@ -21,7 +20,6 @@ const ExcludeLowerPatientsSelector: React.FC<ExcludeLowerPatientsSelectorProps> 
             margin={"10px 0px"}
             padding={"10px 0px"}
             fontWeight={fontWeight}
-            isDisabled={isDisabled}
         />
     );
 };

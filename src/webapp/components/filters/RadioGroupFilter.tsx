@@ -28,7 +28,6 @@ type RadioGroupProps = {
     margin?: string;
     padding?: string;
     background?: string;
-    isDisabled?: boolean;
 };
 
 function RadioGroupFilter({
@@ -41,7 +40,6 @@ function RadioGroupFilter({
     background,
     labelFontSize,
     labelFontWeight,
-    isDisabled = false,
 }: RadioGroupProps) {
     return (
         <FilterColumContainer margin={margin} padding={padding} background={background}>
@@ -62,7 +60,6 @@ function RadioGroupFilter({
                         value={option.value}
                         control={<Radio />}
                         label={option.label}
-                        disabled={isDisabled}
                     />
                 ))}
             </RadioGroup>

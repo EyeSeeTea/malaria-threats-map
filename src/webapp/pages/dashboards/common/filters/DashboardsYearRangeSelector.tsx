@@ -35,7 +35,6 @@ type DashboardsYearRangeSelectorProps = {
     maxYear?: number;
     years: [number, number];
     onChange: (years: [number, number]) => void;
-    isDisabled?: boolean
 };
 
 export function range(start: number, end: number, reverse?: boolean) {
@@ -50,7 +49,6 @@ const DashboardsYearRangeSelector: React.FC<DashboardsYearRangeSelectorProps> = 
     onChange,
     minYear = 2010,
     maxYear = new Date().getFullYear(),
-    isDisabled = false,
 }) => {
     const { t } = useTranslation();
 
@@ -80,7 +78,6 @@ const DashboardsYearRangeSelector: React.FC<DashboardsYearRangeSelectorProps> = 
                 step={1}
                 min={minYear}
                 max={maxYear}
-                disabled={isDisabled}
             />
             <Row>
                 {[minYear, Math.floor((minYear + maxYear) / 2), maxYear].map(year => {

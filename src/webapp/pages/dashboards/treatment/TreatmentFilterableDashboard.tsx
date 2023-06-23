@@ -119,13 +119,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                                 onYearsChange={onYearsChange}
                                 onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
                                 onExcludeLowerSamplesChange={onExcludeLowerSamplesChange}
-                                onCollapse={onChangeFiltersVisible}
-                                isCollapseDisabled={isScreenshot}
-                                isDrugsSelectorDisabled={isScreenshot}
-                                isMolecularMarkerSelectorDisabled={isScreenshot}
-                                isYearRangeSelectorDisabled={isScreenshot}
-                                isExcludeLowerSamplesSelectorDisabled={isScreenshot}
-                                isExcludeLowerPatientsSelectorDisabled={isScreenshot}
+                                onCollapse={onChangeFiltersVisible} 
                             ></TreatmentFilters>
                             <StudiesCountCard elevation={0}>
                                 {t("common.dashboard.therapeuticEfficacyDashboards.numStudies", {

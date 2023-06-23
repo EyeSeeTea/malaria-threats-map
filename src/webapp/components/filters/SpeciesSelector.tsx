@@ -10,7 +10,6 @@ type SpeciesSelectorProps = {
     labelPosition?: "top" | "middle";
     margin?: string;
     isClearable?: boolean;
-    isDisabled?: boolean;
 };
 
 const SpeciesSelector: React.FC<SpeciesSelectorProps> = ({
@@ -20,7 +19,6 @@ const SpeciesSelector: React.FC<SpeciesSelectorProps> = ({
     labelPosition,
     margin,
     isClearable,
-    isDisabled = false,
 }) => {
     const { t } = useTranslation();
 
@@ -33,7 +31,6 @@ const SpeciesSelector: React.FC<SpeciesSelectorProps> = ({
             onChange={onChange}
             value={value}
             isClearable={isClearable}
-            isDisabled={isDisabled}
         />
     );
 };

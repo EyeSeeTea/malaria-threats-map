@@ -137,14 +137,6 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                                     }
                                     onOnlyIncludeDataByHealthChange={onOnlyIncludeDataByHealthChange}
                                     onCollapse={onChangeFiltersVisible}
-                                    isCollapseDisabled={isScreenshot}
-                                    isInsecticideClassSelectorDisabled={isScreenshot}
-                                    isSpeciesSelectorDisabled={isScreenshot}
-                                    isTypeFilterDisabled={isScreenshot}
-                                    isInsecticideTypesDisabled={isScreenshot}
-                                    isDashboardsYearRangeSelectorDisabled={isScreenshot}
-                                    isOnlyIncludeBioassaysWithMoreMosquitoesDisabled={isScreenshot}
-                                    isOnlyIncudeDataByHealthDisabled={isScreenshot}
                                 />
                             </FiltersCard>
                             <StudiesCountCard elevation={0}>

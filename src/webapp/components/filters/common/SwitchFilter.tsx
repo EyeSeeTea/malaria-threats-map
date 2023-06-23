@@ -13,7 +13,6 @@ type OwnProps = {
     fontWeight?: string;
     margin?: string;
     padding?: string;
-    isDisabled?: boolean;
 };
 
 const mapDispatchToProps = {
@@ -33,7 +32,6 @@ function SwitchFilter({
     fontWeight,
     margin,
     padding,
-    isDisabled = false,
 }: Props) {
     const onSelectionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange(event.target.checked);
@@ -48,7 +46,7 @@ function SwitchFilter({
             <Typography variant="body2" fontWeight={fontWeight}>
                 {label}
             </Typography>
-            <Switch color="primary" checked={value} onChange={onSelectionChange} disabled={isDisabled}/>
+            <Switch color="primary" checked={value} onChange={onSelectionChange} />
         </FilterRowContainer>
     );
 }
