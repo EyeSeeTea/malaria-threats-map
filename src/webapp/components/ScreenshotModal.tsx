@@ -38,7 +38,7 @@ function ScreenshotModal({ open = false, onClose, title, children }: ScreenshotM
                     </StyledScreenshotButton>
                 </Header>
                 <Content>
-                    <ScreenshotContainer className="screenshotRef" ref={ref}>
+                    <ScreenshotContainer className="screenshot-container" ref={ref}>
                         {children}
                     </ScreenshotContainer>
                 </Content>
@@ -84,6 +84,12 @@ const Content = styled.div`
 
 const ScreenshotContainer = styled.div`
     width: fit-content;
+    * {
+        pointer-events: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
 `;
 
 const Header = styled.div`
