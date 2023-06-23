@@ -15,6 +15,7 @@ type DrugsSelectorProps = {
     onlyYMargin?: boolean;
     labelBold?: boolean;
     isClearable?: boolean;
+    isDisabled?: boolean;
 };
 
 const MolecularMarkerSelector: React.FC<DrugsSelectorProps> = ({
@@ -25,6 +26,7 @@ const MolecularMarkerSelector: React.FC<DrugsSelectorProps> = ({
     onlyYMargin = false,
     labelBold = false,
     isClearable = false,
+    isDisabled = false,
 }) => {
     const { t } = useTranslation();
 
@@ -52,6 +54,7 @@ const MolecularMarkerSelector: React.FC<DrugsSelectorProps> = ({
                     value={selection}
                     isMulti={multi}
                     isClearable={isClearable}
+                    isDisabled={isDisabled}
                 />
             </Container>
         </FilterWrapper>

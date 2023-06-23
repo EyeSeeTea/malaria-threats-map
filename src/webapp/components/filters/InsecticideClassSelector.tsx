@@ -17,11 +17,12 @@ interface OwnProps {
     type: "radio" | "select";
     onChange: (selection: string[]) => void;
     value: string[];
+    isDisabled?: boolean;
 }
 
 type Props = OwnProps & StateProps;
 
-function InsecticideClassSelector({ type, insecticideClasses = [], onChange, value }: Props) {
+function InsecticideClassSelector({ type, insecticideClasses = [], onChange, value, isDisabled = false }: Props) {
     const { t } = useTranslation();
 
     const options = getInsecticideClassOptions(
@@ -42,6 +43,7 @@ function InsecticideClassSelector({ type, insecticideClasses = [], onChange, val
             value={value}
             margin={"10px 0px"}
             isClearable={true}
+            isDisabled={isDisabled}
         />
     ) : (
         <RadioGroupFilter
@@ -54,6 +56,7 @@ function InsecticideClassSelector({ type, insecticideClasses = [], onChange, val
             background={"white"}
             labelFontSize="14px"
             labelFontWeight="bold"
+            isDisabled={isDisabled}
         />
     );
 }

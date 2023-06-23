@@ -17,6 +17,7 @@ type DrugsSelectorProps = {
     onlyYMargin?: boolean;
     labelBold?: boolean;
     isClearable?: boolean;
+    isDisabled?: boolean;
 };
 
 const DrugsSelector: React.FC<DrugsSelectorProps> = ({
@@ -28,6 +29,7 @@ const DrugsSelector: React.FC<DrugsSelectorProps> = ({
     onlyYMargin = false,
     labelBold = false,
     isClearable = false,
+    isDisabled = false,
 }) => {
     const { t } = useTranslation();
     const uniques = R.uniq(R.map(R.prop("DRUG_NAME"), studies)).map(value => value.replace(".", "%2E"));
@@ -62,6 +64,7 @@ const DrugsSelector: React.FC<DrugsSelectorProps> = ({
                     value={selection}
                     isMulti={multi}
                     isClearable={isClearable}
+                    isDisabled={isDisabled}
                 />
             </Container>
         </FilterWrapper>

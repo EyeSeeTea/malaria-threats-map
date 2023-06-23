@@ -18,6 +18,7 @@ type OwnProps = {
     fontWeight?: string;
     margin?: string;
     padding?: string;
+    isDisabled?: boolean;
 };
 
 const mapDispatchToProps = {
@@ -41,6 +42,7 @@ function SliderFilter({
     fontWeight,
     margin,
     padding,
+    isDisabled = false,
 }: Props) {
     const handleChange = (_event: Event, newValue: number | number[]) => {
         if (!Array.isArray(newValue)) {
@@ -68,6 +70,7 @@ function SliderFilter({
                 step={1}
                 min={min}
                 max={max}
+                disabled={isDisabled}
             />
             <Row>
                 <Typography variant="caption" fontWeight={fontWeight}>

@@ -28,6 +28,14 @@ interface PreventionFiltersProps {
     onOnlyIncludeBioassaysWithMoreMosquitoesChange: (value: number) => void;
     onOnlyIncludeDataByHealthChange: (value: boolean) => void;
     onCollapse: () => void;
+    isCollapseDisabled?: boolean;
+    isInsecticideClassSelectorDisabled?: boolean;
+    isSpeciesSelectorDisabled?: boolean;
+    isTypeFilterDisabled?: boolean;
+    isInsecticideTypesDisabled?: boolean;
+    isDashboardsYearRangeSelectorDisabled?: boolean;
+    isOnlyIncludeBioassaysWithMoreMosquitoesDisabled?: boolean;
+    isOnlyIncudeDataByHealthDisabled?: boolean;
 }
 
 const PreventionFilters: React.FC<PreventionFiltersProps> = ({
@@ -44,6 +52,14 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
     onOnlyIncludeBioassaysWithMoreMosquitoesChange,
     onOnlyIncludeDataByHealthChange,
     onCollapse,
+    isCollapseDisabled = false,
+    isInsecticideClassSelectorDisabled = false,
+    isSpeciesSelectorDisabled = false,
+    isTypeFilterDisabled = false,
+    isInsecticideTypesDisabled = false,
+    isDashboardsYearRangeSelectorDisabled = false,
+    isOnlyIncludeBioassaysWithMoreMosquitoesDisabled = false,
+    isOnlyIncudeDataByHealthDisabled = false,
 }) => {
     const { t } = useTranslation();
 
@@ -54,7 +70,7 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                     {t("common.dashboard.treatmentFilters.title")}
                 </Typography>
 
-                <IconButton onClick={onCollapse} size="small">
+                <IconButton onClick={onCollapse} size="small" disabled={isCollapseDisabled}>
                     <ArrowBackIosIcon />
                 </IconButton>
             </Stack>
@@ -64,6 +80,7 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                     onChange={onInsecticideClassesChange}
                     value={filters.insecticideClasses}
                     type={chart === "mosquito-mortality-overtime" ? "radio" : "select"}
+                    isDisabled={isInsecticideClassSelectorDisabled}
                 />
             )}
 
@@ -75,6 +92,7 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                     onChange={onSpeciesChange}
                     value={filters.species}
                     isClearable={true}
+                    isDisabled={isSpeciesSelectorDisabled}
                 />
             )}
 
@@ -86,6 +104,7 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                     options={typeOptions}
                     onChange={onTypeChange}
                     value={filters.type}
+                    isDisabled={isTypeFilterDisabled}
                 />
             )}
 
@@ -98,17 +117,20 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                     value={filters.insecticideTypes}
                     margin={"10px 0px"}
                     isClearable={true}
+                    isDisabled={isInsecticideTypesDisabled}
                 />
             )}
 
-            <DashboardsYearRangeSelector years={filters.years} onChange={onYearsChange} />
+            <DashboardsYearRangeSelector years={filters.years} onChange={onYearsChange} isDisabled={isDashboardsYearRangeSelectorDisabled} />
             <OnlyIncludeBioassaysWithMoreMosquitoes
                 value={filters.onlyIncludeBioassaysWithMoreMosquitoes}
                 onChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}
+                isDisabled={isOnlyIncludeBioassaysWithMoreMosquitoesDisabled}
             />
             <OnlyIncudeDataByHealth
                 value={filters.onlyIncludeDataByHealth}
                 onChange={onOnlyIncludeDataByHealthChange}
+                isDisabled={isOnlyIncudeDataByHealthDisabled}
             />
         </React.Fragment>
     );

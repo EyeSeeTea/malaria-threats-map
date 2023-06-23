@@ -5,9 +5,10 @@ import SliderFilter from "../../../../components/filters/common/SliderFilter";
 type DashboardsYearRangeSelectorProps = {
     value: number;
     onChange: (value: number) => void;
+    isDisabled?: boolean;
 };
 
-const OnlyIncludeBioassaysWithMoreMosquitoes: React.FC<DashboardsYearRangeSelectorProps> = ({ value, onChange }) => {
+const OnlyIncludeBioassaysWithMoreMosquitoes: React.FC<DashboardsYearRangeSelectorProps> = ({ value, onChange, isDisabled = false }) => {
     const { t } = useTranslation();
 
     return (
@@ -23,6 +24,7 @@ const OnlyIncludeBioassaysWithMoreMosquitoes: React.FC<DashboardsYearRangeSelect
             margin={"10px 0px"}
             padding={"10px 0px"}
             fontWeight={"bold"}
+            isDisabled={isDisabled}
         />
     );
 };

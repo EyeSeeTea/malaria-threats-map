@@ -6,9 +6,10 @@ interface ExcludeLowerSamplesSelectorProps {
     value: boolean;
     onChange: (value: boolean) => void;
     fontWeight?: string;
+    isDisabled?: boolean;
 }
 
-const ExcludeLowerSamplesSelector: React.FC<ExcludeLowerSamplesSelectorProps> = ({ value, onChange, fontWeight }) => {
+const ExcludeLowerSamplesSelector: React.FC<ExcludeLowerSamplesSelectorProps> = ({ value, onChange, fontWeight, isDisabled = false }) => {
     const { t } = useTranslation();
 
     return (
@@ -20,6 +21,7 @@ const ExcludeLowerSamplesSelector: React.FC<ExcludeLowerSamplesSelectorProps> = 
             margin={"10px 0px"}
             padding={"10px 0px"}
             fontWeight={fontWeight}
+            isDisabled={isDisabled}
         />
     );
 };
