@@ -1,14 +1,14 @@
 import Highcharts from "highcharts";
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import PreventionFilterableDashboard from "../PreventionFilterableDashboard";
+import PreventionFilterableDashboard from "../../PreventionFilterableDashboard";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import { useResistanceToInsecticide } from "./useResistanceToInsecticide";
-import { ResistanceToInsecticideSerie } from "./types";
+import { ResistanceToInsecticideSerie } from "../types";
 import i18next from "i18next";
-import StatusOfResistanceToInsecticidePopup from "../../../../components/dashboards/prevention/StatusOfResistanceToInsecticidePopup";
-import { useInfoPopup } from "../../common/popup/useInfoPopup";
+import StatusOfResistanceToInsecticidePopup from "../../../../../components/dashboards/prevention/StatusOfResistanceToInsecticidePopup";
+import { useInfoPopup } from "../../../common/popup/useInfoPopup";
 
 const ResistanceToInsecticideDashboard: React.FC = () => {
     const { t } = useTranslation();
@@ -17,7 +17,6 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
         insecticideTypeOptions,
         chartType,
         chartTypes,
-        categories,
         categoriesCount,
         data,
         filters,
@@ -34,7 +33,13 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
     const chartComponentRefs = useRef([]);
 
     const maxStackedColumn = React.useMemo(() => {
-        const maxValues = Object.values(data).reduce((acc: number[], countrySeries: ResistanceToInsecticideSerie[]) => {
+        const valuesBySubGroups = Object.values(data);
+        const values = valuesBySubGroups
+            .map(group => Object.values(group))
+            .flat()
+            .map(({ series }) => series);
+
+        const maxValues = values.reduce((acc: number[], countrySeries: ResistanceToInsecticideSerie[]) => {
             const maxValuesByType = countrySeries.reduce((acc, serieItem) => {
                 if (acc.length === 0) {
                     return serieItem.data;
@@ -74,27 +79,39 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
                 <div style={{ overflowX: "auto" }}>
                     <Table>
                         <tbody>
-                            {Object.keys(data).map((isoCountry, index) => {
-                                return (
-                                    <tr key={isoCountry}>
-                                        <td>{t(isoCountry)}</td>
-                                        <td>
-                                            <StyledHighcharts
-                                                highcharts={Highcharts}
-                                                options={chartOptions(
-                                                    data[isoCountry],
-                                                    categories,
-                                                    index === 0,
-                                                    index === Object.keys(data).length - 1,
-                                                    maxStackedColumn
-                                                )}
-                                                ref={(element: HighchartsReact.RefObject) =>
-                                                    chartComponentRefs.current.push(element)
-                                                }
-                                            />
-                                        </td>
-                                    </tr>
-                                );
+                            {Object.keys(data).map((isoCountry, countryIndex) => {
+                                const rowSpan = Object.values(data[isoCountry]).length;
+
+                                return Object.keys(data[isoCountry]).map((subGroup, groupIndex) => {
+                                    const isLastChart =
+                                        countryIndex === Object.keys(data).length - 1 &&
+                                        groupIndex === Object.values(data[isoCountry]).length - 1;
+
+                                    const isFirstChart = countryIndex === 0 && groupIndex === 0;
+
+                                    return (
+                                        <tr key={`${isoCountry}-${subGroup}`}>
+                                            {groupIndex === 0 && <td rowSpan={rowSpan}>{t(isoCountry)}</td>}
+
+                                            <td>{t(subGroup)}</td>
+                                            <td>
+                                                <StyledHighcharts
+                                                    highcharts={Highcharts}
+                                                    options={chartOptions(
+                                                        data[isoCountry][subGroup].series,
+                                                        data[isoCountry][subGroup].categories,
+                                                        isFirstChart,
+                                                        isLastChart,
+                                                        maxStackedColumn
+                                                    )}
+                                                    ref={(element: HighchartsReact.RefObject) =>
+                                                        chartComponentRefs.current.push(element)
+                                                    }
+                                                />
+                                            </td>
+                                        </tr>
+                                    );
+                                });
                             })}
                         </tbody>
                     </Table>
@@ -124,8 +141,30 @@ const Table = styled.table`
     tr:last-child {
         border-bottom: 0px;
     }
+    tr td:nth-child(1) {
+        width: 10%;
+        font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        color: #666666;
+    }
     tr td:nth-child(2) {
-        width: 88%;
+        width: 15%;
+        font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        color: #666666;
+    }
+    tr td:nth-child(3) {
+        width: 75%;
+    }
+    tr:nth-child(1) td:nth-child(2) {
+        padding-top: 80px;
+    }
+    tr:nth-child(1) td:nth-child(1) {
+        padding-top: 80px;
+    }
+
+    tr:last-child td:nth-child(1) {
+        padding-bottom: 50px;
     }
 `;
 
@@ -143,9 +182,10 @@ function chartOptions(
     return {
         chart: {
             type: "bar",
-            height: categories.length * 40 + (enabledLegend ? 50 : 0) + (visibleYAxisLabels ? 50 : 0),
+            height: categories.length * 50 + (enabledLegend ? 100 : 0) + (visibleYAxisLabels ? 60 : 0),
             marginTop: enabledLegend ? 100 : 0,
             marginBottom: visibleYAxisLabels ? 60 : 0,
+            marginLeft: 150,
         },
         title: {
             align: "center",
@@ -178,7 +218,7 @@ function chartOptions(
             align: "center",
             reversed: true,
             enabled: enabledLegend,
-            y: -20,
+            y: -10,
             x: -20,
         },
         plotOptions: {

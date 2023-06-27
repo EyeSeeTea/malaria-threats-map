@@ -28,7 +28,7 @@ export function usePrevention() {
     const [insecticideTypeOptions, setInsecticideTypeOptions] = React.useState<Option[]>([]);
     const [speciesOptions, setSpeciesOptions] = React.useState<Option[]>([]);
     const [typeOptions, setTypeOptions] = React.useState<Option[]>([]);
-    const { dashboardsPreventionStudies, selectedCountries } = useDashboards();
+    const { preventionStudies, dashboardsPreventionStudies, selectedCountries } = useDashboards();
 
     React.useEffect(() => {
         const filteredStudies = filterStudies(dashboardsPreventionStudies, filters);
@@ -37,7 +37,7 @@ export function usePrevention() {
     }, [dashboardsPreventionStudies, filters]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(dashboardsPreventionStudies, {
+        const filteredStudies = filterStudies(preventionStudies, {
             insecticideClasses: [],
             insecticideTypes: [],
             species: [],
@@ -51,14 +51,14 @@ export function usePrevention() {
 
         setInsecticideClassOptions(insecticideClasses);
     }, [
-        dashboardsPreventionStudies,
+        preventionStudies,
         filters.onlyIncludeBioassaysWithMoreMosquitoes,
         filters.onlyIncludeDataByHealth,
         filters.years,
     ]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(dashboardsPreventionStudies, {
+        const filteredStudies = filterStudies(preventionStudies, {
             insecticideClasses: [],
             insecticideTypes: [],
             species: [],
@@ -71,10 +71,10 @@ export function usePrevention() {
         const insecticideTypes = extractInsecticideTypeOptions(filteredStudies);
 
         setInsecticideTypeOptions(insecticideTypes);
-    }, [dashboardsPreventionStudies]);
+    }, [preventionStudies]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(dashboardsPreventionStudies, {
+        const filteredStudies = filterStudies(preventionStudies, {
             insecticideClasses: filters.insecticideClasses,
             insecticideTypes: [],
             species: [],
@@ -87,10 +87,10 @@ export function usePrevention() {
         const species = extractSpeciesOptions(filteredStudies);
 
         setSpeciesOptions(species);
-    }, [dashboardsPreventionStudies, filters.insecticideClasses, onSpeciesChange]);
+    }, [preventionStudies, filters.insecticideClasses, onSpeciesChange]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(dashboardsPreventionStudies, {
+        const filteredStudies = filterStudies(preventionStudies, {
             insecticideClasses: filters.insecticideClasses,
             insecticideTypes: [],
             species: [],
@@ -103,9 +103,10 @@ export function usePrevention() {
         const types = extractTypeOptions(filteredStudies);
 
         setTypeOptions(types);
-    }, [dashboardsPreventionStudies, filters.insecticideClasses, filters.species, onTypeChange]);
+    }, [preventionStudies, filters.insecticideClasses, filters.species, onTypeChange]);
 
     return {
+        preventionStudies,
         filteredStudies,
         insecticideClassOptions,
         insecticideTypeOptions,
