@@ -1,5 +1,5 @@
 import { Button, Card, Grid, Stack } from "@mui/material";
-import React, { useRef } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import TreatmentFilters from "./filters/TreatmentFilters";
@@ -11,7 +11,7 @@ import HighchartsReact from "highcharts-react-official";
 import { MolecularMarker } from "../../../components/filters/MolecularMarkerFilter";
 import { useFiltersVisible } from "../common/filters/useFiltersVisible";
 import DashboardTitle from "../common/DashboardTitle";
-import { downloadHtmlElement } from "../utils";
+import ScreenshotModal from "../../../components/ScreenshotModal";
 
 interface TreatmentFilterableDashboardProps {
     id?: string;
@@ -38,7 +38,12 @@ interface TreatmentFilterableDashboardProps {
     onMolecularMarkerChange: (value: MolecularMarker) => void;
 }
 
-const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = ({
+interface TreatmentFilterableDashboardComponentProps extends TreatmentFilterableDashboardProps {
+    onScreenshot?: () => void;
+    isScreenshot?: boolean;
+}
+
+const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboardComponentProps> = ({
     id,
     isMolecularMarkerChart = false,
     drugsMultiple,
@@ -62,6 +67,8 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
     onExcludeLowerSamplesChange,
     onMolecularMarkerChange,
     children,
+    onScreenshot,
+    isScreenshot = false,
 }) => {
     const { filtersVisible, onChangeFiltersVisible } = useFiltersVisible();
     const [openInfoModal, setOpenInfoModal] = React.useState(false);
@@ -69,8 +76,6 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
     const handleCloseInfoModal = () => setOpenInfoModal(false);
 
     const { t } = useTranslation();
-
-    const ref = useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
         if (Array.isArray(chartComponentRef?.current)) {
@@ -82,23 +87,19 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
         }
     }, [filtersVisible, chartComponentRef]);
 
-    const handleDownload = React.useCallback(() => {
-        downloadHtmlElement(ref.current, title);
-    }, [ref, title]);
-
     return (
-        <Container ref={ref}>
+        <Container isScreenshot={isScreenshot}>
             <DashboardTitle
                 id={id}
                 title={title}
                 onInfoClick={handleOpenInfoModal}
-                onDownloadClick={handleDownload}
-                showActions={true}
+                onDownloadClick={onScreenshot}
+                showActions={!isScreenshot}
             />
 
-            <Grid container spacing={2} ref={ref} sx={{ marginBottom: 3 }}>
+            <StyledGridContainer container spacing={2} sx={{ marginBottom: 3 }} isScreenshot={isScreenshot}>
                 {filtersVisible && (
-                    <Grid item md={3} xs={12}>
+                    <StyledGridItem item md={3} xs={12} isScreenshot={isScreenshot}>
                         <Stack direction="column">
                             <TreatmentFilters
                                 isMolecularMarkerChart={isMolecularMarkerChart}
@@ -111,14 +112,14 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                                 years={years}
                                 excludeLowerPatients={excludeLowerPatients}
                                 excludeLowerSamples={excludeLowerSamples}
-                                PlasmodiumSpecieDisabled={PlasmodiumSpecieDisabled}
+                                PlasmodiumSpecieDisabled={PlasmodiumSpecieDisabled || isScreenshot}
                                 onPlasmodiumSpeciesChange={onPlasmodiumChange}
                                 onDrugsChange={onDrugsChange}
                                 onMolecularMarkerChange={onMolecularMarkerChange}
                                 onYearsChange={onYearsChange}
                                 onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
                                 onExcludeLowerSamplesChange={onExcludeLowerSamplesChange}
-                                onCollapse={onChangeFiltersVisible}
+                                onCollapse={onChangeFiltersVisible} 
                             ></TreatmentFilters>
                             <StudiesCountCard elevation={0}>
                                 {t("common.dashboard.therapeuticEfficacyDashboards.numStudies", {
@@ -126,18 +127,18 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                                 })}
                             </StudiesCountCard>
                         </Stack>
-                    </Grid>
+                    </StyledGridItem>
                 )}
-                <Grid item md={filtersVisible ? 9 : 12} xs={12}>
+                <StyledGridItem item md={filtersVisible ? 9 : 12} xs={12} isScreenshot={isScreenshot}>
                     <DasboardCard elevation={0}>
                         {!filtersVisible && (
                             <Button startIcon={<FilterAltIcon />} onClick={onChangeFiltersVisible}>
                                 {"Filter data"}
                             </Button>
                         )}
-                        <div ref={ref}>{children}</div>
+                        <div>{children}</div>
                     </DasboardCard>
-                </Grid>
+                </StyledGridItem>
                 <InformationModal
                     title={title}
                     type={type}
@@ -145,15 +146,49 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                     openInfoModal={openInfoModal}
                     handleCloseInfoModal={handleCloseInfoModal}
                 />
-            </Grid>
+            </StyledGridContainer>
         </Container>
+    );
+};
+
+const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = (props) => {
+    const [open, setOpen] = React.useState(false);
+
+    const handleScreenshot = React.useCallback(() => {
+        setOpen(true);
+    }, []);
+
+    const handleCloseScreenshot = React.useCallback(() => {
+        setOpen(false);
+    }, []);
+
+    return (
+        <>
+            <TreatmentFilterableDashboardComponent {...props} onScreenshot={handleScreenshot}/>
+            <ScreenshotModal open={open} onClose={handleCloseScreenshot} title={props.title}>
+                <TreatmentFilterableDashboardComponent {...props} isScreenshot/>
+            </ScreenshotModal>
+        </>
     );
 };
 
 export default TreatmentFilterableDashboard;
 
-const Container = styled.div`
+const Container = styled.div<{ isScreenshot: boolean }>`
     padding: 10px;
+    width: ${props => props?.isScreenshot && 'fit-content'};
+`;
+
+const StyledGridItem = styled(Grid)<{ isScreenshot: boolean }>`
+    width: ${props => props?.isScreenshot && 'fit-content' };
+    max-width: ${props => props?.isScreenshot && 'fit-content' };
+    .MuiChip-root, .MuiChip-label {
+        overflow: ${props => props?.isScreenshot && 'initial' };
+    }
+`;
+
+const StyledGridContainer = styled(Grid)<{ isScreenshot: boolean }>`
+    flex-wrap: ${props => props?.isScreenshot && 'nowrap' };
 `;
 
 const DasboardCard = styled(Card)`

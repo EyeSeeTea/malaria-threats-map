@@ -104,7 +104,10 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                 </React.Fragment>
             )}
 
-            <DashboardsYearRangeSelector years={years} onChange={onYearsChange} />
+            <StyledDashboardsYearRangeSelector
+                years={years}
+                onChange={onYearsChange}
+            />
 
             {onExcludeLowerSamplesChange && (
                 <ExcludeLowerSamplesSelector
@@ -135,4 +138,7 @@ const FiltersCard = styled(Card)`
     flex-direction: column;
     justify-content: space-evenly;
     overflow: visible;
+`;
+
+const StyledDashboardsYearRangeSelector = styled(DashboardsYearRangeSelector)`
 `;
