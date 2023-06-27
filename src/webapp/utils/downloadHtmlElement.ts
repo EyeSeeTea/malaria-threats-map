@@ -1,20 +1,25 @@
 import { toPng } from "html-to-image";
 
-export function downloadHtmlElement(element: HTMLDivElement, name: string) {
+const DEFAULT_BACKGROUND_COLOR = "#FFFFFF";
+
+export function downloadHtmlElement(
+    element: HTMLDivElement,
+    name: string,
+    options?: { backgroundColor?: string; exclusionClasses?: string[] }
+) {
+
     if (element === null) {
         return;
     }
 
     const filter = (element: HTMLElement) => {
-        const exclusionClasses = ["dashboard-action"];
-
         return (
             element.classList === undefined ||
-            !exclusionClasses.some(classname => element.classList.contains(classname))
+            !options?.exclusionClasses?.some(classname => element.classList.contains(classname))
         );
     };
 
-    toPng(element, { backgroundColor: "#F7F7F7", filter: filter })
+    toPng(element, { backgroundColor: options?.backgroundColor || DEFAULT_BACKGROUND_COLOR, filter: filter })
         .then(dataUrl => {
             const link = document.createElement("a");
             link.download = name;

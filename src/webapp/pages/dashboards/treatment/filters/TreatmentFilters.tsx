@@ -104,7 +104,7 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                 </React.Fragment>
             )}
 
-            <StyledDashboardsYearRangeSelector
+            <DashboardsYearRangeSelector
                 years={years}
                 onChange={onYearsChange}
             />
@@ -138,7 +138,4 @@ const FiltersCard = styled(Card)`
     flex-direction: column;
     justify-content: space-evenly;
     overflow: visible;
-`;
-
-const StyledDashboardsYearRangeSelector = styled(DashboardsYearRangeSelector)`
 `;

@@ -13,6 +13,9 @@ import { useFiltersVisible } from "../common/filters/useFiltersVisible";
 import DashboardTitle from "../common/DashboardTitle";
 import ScreenshotModal from "../../../components/ScreenshotModal";
 
+const SCREENSHOT_BACKGROUND_COLOR = "#F7F7F7";
+const SCREENSHOT_EXCLUSION_CLASSES = ["dashboard-action"];
+
 interface TreatmentFilterableDashboardProps {
     id?: string;
     isMolecularMarkerChart?: boolean;
@@ -165,7 +168,13 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
     return (
         <>
             <TreatmentFilterableDashboardComponent {...props} onScreenshot={handleScreenshot}/>
-            <ScreenshotModal open={open} onClose={handleCloseScreenshot} title={props.title}>
+            <ScreenshotModal
+                open={open}
+                onClose={handleCloseScreenshot}
+                title={props.title}
+                backgroundColor={SCREENSHOT_BACKGROUND_COLOR}
+                exclusionClasses={SCREENSHOT_EXCLUSION_CLASSES}
+            >
                 <TreatmentFilterableDashboardComponent {...props} isScreenshot/>
             </ScreenshotModal>
         </>

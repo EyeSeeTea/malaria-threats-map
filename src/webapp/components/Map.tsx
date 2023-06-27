@@ -41,7 +41,6 @@ import LeyendPopover from "./legend/LegendPopover";
 import StoryModeSelector from "./StoryModeSelector";
 import MalariaTour from "./tour/MalariaTour";
 import MekongLayer from "./layers/MekongLayer";
-import Screenshot from "./Screenshot";
 import Report from "./Report";
 import Feedback from "./Feedback";
 import TheaterMode from "./TheaterMode";
@@ -60,6 +59,7 @@ import SecondaryHeader from "../pages/secondary-layout/SecondaryHeader";
 import SelectionDataContent from "./site-selection-content/SelectionDataContent";
 import { getLayerSource } from "./layers/common/utils";
 import { resetSelectionInFeatures } from "./layers/effects";
+import MapScreenshot from "./MapScreenshot";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
@@ -369,7 +369,7 @@ class Map extends React.Component<Props, StateTypes> {
                         <SecondaryHeader
                             action={
                                 <Box sx={classes.screenshotBox}>
-                                    <Screenshot map={this.map} />
+                                    <MapScreenshot map={this.map}/>
                                 </Box>
                             }
                             onDrawerOpenChange={open => this.setState({ menuOpen: open })}

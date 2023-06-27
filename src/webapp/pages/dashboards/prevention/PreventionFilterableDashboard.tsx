@@ -13,6 +13,9 @@ import CategoriesCount from "../common/CategoriesCount";
 import { useTranslation } from "react-i18next";
 import ScreenshotModal from "../../../components/ScreenshotModal";
 
+const SCREENSHOT_BACKGROUND_COLOR = "#F7F7F7";
+const SCREENSHOT_EXCLUSION_CLASSES = ["dashboard-action"];
+
 interface PreventionFilterableDashboardProps {
     id?: string;
     chart: PreventionFilterableChart;
@@ -180,7 +183,13 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
     return (
         <>
             <PreventionFilterableDashboardComponent {...props} onScreenshot={handleScreenshot}/>
-            <ScreenshotModal open={open} onClose={handleCloseScreenshot} title={props.title}>
+            <ScreenshotModal
+                open={open}
+                onClose={handleCloseScreenshot}
+                title={props.title}
+                backgroundColor={SCREENSHOT_BACKGROUND_COLOR}
+                exclusionClasses={SCREENSHOT_EXCLUSION_CLASSES}
+            >
                 <PreventionFilterableDashboardComponent {...props} isScreenshot/>
             </ScreenshotModal>
         </>
