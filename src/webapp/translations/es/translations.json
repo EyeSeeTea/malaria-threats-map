@@ -709,6 +709,27 @@
             "zero_all_bioassays": "0 (todos los bioensayos)",
             "only_include_data_by_health": "Incluir solo los datos proporcionados a la OMS por los ministerios de salud"
         },
+        "map_info_summary": {
+            "all": "Todos",
+            "years": "Periodos de datos",
+            "country": "País",
+            "last_updated": "Última actualización de datos",
+            "insecticideClass": "Clase de insecticida",
+            "insecticideTypes": "Tipo de insecticida",
+            "mechanismType": "Tipo de mecanismo",
+            "testType": "Tipos de test",
+            "species": "Especies vectoras",
+            "assayTypes": "Tipos de ensayo",
+            "synergistTypes": "Tipos de sinergia",
+            "deletionType": "Tipo de deleción",
+            "surveyTypes": "Tipo de encuesta",
+            "patientType": "Tipos de pacientes",
+            "vectorSpecies": "Especies vectoras",
+            "plasmodiumSpecies": "Especie de plasmodium",
+            "drug": "Tratamiento",
+            "excludeStudies": "Excluido",
+            "molecularMarker": "Marcador molecular"
+        },
         "topbar": {
             "menu": "Menú",
             "maps": "Mapas",
@@ -732,7 +753,10 @@
         "screenshot": {
             "screenshot": "Captura de pantalla",
             "download_screenshot": "Descargar captura de pantalla",
-            "generating_screenshot": "Generando captura de pantalla"
+            "generating_screenshot": "Generando captura de pantalla",
+            "footer_data_source": "Fuente de datos: Malaria Threats Map",
+            "footer_production": "Producción: Programa Mundial contra la Malaria de la Organización Mundial de la Salud",
+            "footer_who_logo": "@WHO {{year}}. Todos los derechos reservados."
         },
         "chart": {
             "studies": "Estudios",
