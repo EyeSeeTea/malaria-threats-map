@@ -74,7 +74,7 @@ export function usePrevention() {
     }, [preventionStudies]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(preventionStudies, {
+        const filteredStudies = filterStudies(dashboardsPreventionStudies, {
             insecticideClasses: filters.insecticideClasses,
             insecticideTypes: [],
             species: [],
@@ -87,7 +87,7 @@ export function usePrevention() {
         const species = extractSpeciesOptions(filteredStudies);
 
         setSpeciesOptions(species);
-    }, [preventionStudies, filters.insecticideClasses, onSpeciesChange]);
+    }, [dashboardsPreventionStudies, filters.insecticideClasses, onSpeciesChange]);
 
     React.useEffect(() => {
         const filteredStudies = filterStudies(preventionStudies, {
