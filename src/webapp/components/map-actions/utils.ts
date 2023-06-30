@@ -356,6 +356,9 @@ export function treatmentFiltersToString(
             case TreatmentMapType.MOLECULAR_MARKERS: {
                 return _.compact([molecularMarker?.label, exlude, years]).join(" | ");
             }
+            case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES: {
+                return _.compact([plasmodiumSpecies?.label, drug, years]).join(" | ");
+            }
         }
     } else {
         switch (treatmentFilters.dataset) {

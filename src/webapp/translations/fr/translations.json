@@ -545,6 +545,8 @@
             "delayed_parasite_clearance_italics": "Retard dans l'élimination des parasites (<i>P.f </i>)",
             "molecular_markers": "Marqueurs moléculaires de la résistance aux médicaments",
             "molecular_markers_subtitle": "Résultats des études sur les marqueurs moléculaires",
+            "therapeutic_efficacy_studies": "Études d'efficacité thérapeutique en cours et prévues",
+            "therapeutic_efficacy_studies_subtitle": "Détails des études d'efficacité thérapeutique",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre <i>{{plasmodiumSpecies}}</i> {{years}}",
@@ -606,6 +608,17 @@
                     "low": "< 10%",
                     "help": {
                         "p1": "Cette carte présente les données d'<1>études de marqueurs moléculaires</1>. La couleur du point est déterminée par le pourcentage d'échantillons présentant des mutations moléculaires. Les résultats les plus récents sont présentés par défaut.",
+                        "p2": "",
+                        "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
+                    }
+                },
+                "therapeutic_efficacy_studies": {
+                    "title": "Statut des études d'efficacité thérapeutique",
+                    "ongoing": "En cours",
+                    "planned": "Prévu",
+                    "completed": "Terminé (résultats en attente)",
+                    "help": {
+                        "p1": "",
                         "p2": "",
                         "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
                     }

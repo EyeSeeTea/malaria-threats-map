@@ -366,6 +366,14 @@ function buildTreatmentFiltersByMap(treatmentFilters: TreatmentFilters, filters:
                 filterByRegion(region),
                 filterByExcludeLowerSamples(treatmentFilters.excludeLowerSamples),
             ];
+        case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
+            return [
+                filterByDimensionId(300),
+                filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
+                filterByDrug(treatmentFilters.drug),
+                filterByYearRange(filters),
+                filterByRegion(region),
+            ];
         default:
             return [];
     }
