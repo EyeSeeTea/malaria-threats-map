@@ -145,6 +145,7 @@ export enum TreatmentMapType {
     TREATMENT_FAILURE,
     DELAYED_PARASITE_CLEARANCE,
     MOLECULAR_MARKERS,
+    THERAPEUTIC_EFFICACY_STUDIES,
 }
 
 export interface TreatmentFilters {

@@ -31,8 +31,8 @@ import { createTreatmentSelectionData } from "./utils";
 import { molecularMarkersMap } from "../../../components/filters/MolecularMarkerFilter";
 
 function groupStudies(studies: TreatmentStudy[]) {
-    const filtered255Studies = studies.filter(study => study.DimensionID === 255 || study.DimensionID === 256);
-    return filtered255Studies.map(study => ({
+    const filteredMainStudies = studies.filter(study => study.DimensionID === 255 || study.DimensionID === 256 || study.DimensionID === 300);
+    return filteredMainStudies.map(study => ({
         ...study,
         groupStudies: studies.filter(
             relatedStudy => relatedStudy.DimensionID === 257 && relatedStudy.K13_CODE === study.Code
