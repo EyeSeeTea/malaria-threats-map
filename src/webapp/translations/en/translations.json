@@ -543,6 +543,8 @@
             "delayed_parasite_clearance_italics": "Delayed parasite clearance (<i>P.f </i>)",
             "molecular_markers": "Molecular markers of drug resistance",
             "molecular_markers_subtitle": "Results of molecular marker studies",
+            "therapeutic_efficacy_studies": "Ongoing and planned therapeutic efficacy studies",
+            "therapeutic_efficacy_studies_subtitle": "Details of therapeutic efficacy studies",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against <i>{{plasmodiumSpecies}}</i> {{years}}",
@@ -604,6 +606,17 @@
                     "low": "< 10%",
                     "help": {
                         "p1": "This map presents data from <1>molecular marker studies</1>. The colour of the dot is determined by the percentage of samples which have molecular mutations. The most recent results are presented by default.",
+                        "p2": "",
+                        "footer": "Data source: WHO Global database on antimalarial drug efficacy and resistance."
+                    }
+                },
+                "therapeutic_efficacy_studies": {
+                    "title": "Status of therapeutic efficacy studies",
+                    "ongoing": "Ongoing",
+                    "planned": "Planned",
+                    "completed": "Completed (results pending)",
+                    "help": {
+                        "p1": "",
                         "p2": "",
                         "footer": "Data source: WHO Global database on antimalarial drug efficacy and resistance."
                     }
