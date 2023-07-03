@@ -344,7 +344,13 @@ export function treatmentFiltersToString(
     const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.find(
         item => item.value === treatmentFilters.plasmodiumSpecies
     );
+    const plasmodiumSpeciesArray = PLASMODIUM_SPECIES_SUGGESTIONS.filter(item =>
+        treatmentFilters.plasmodiumSpeciesArray.includes(item.value)
+    ).map(plasmodiumSpecies => plasmodiumSpecies.label);
+
     const drug = i18next.t(treatmentFilters.drug);
+    const drugs = treatmentFilters.drugs.map(drug => i18next.t(drug));
+
     const molecularMarker = MOLECULAR_MARKERS.find(item => item.value === treatmentFilters.molecularMarker);
 
     if (from === "map") {
@@ -357,7 +363,7 @@ export function treatmentFiltersToString(
                 return _.compact([molecularMarker?.label, exlude, years]).join(" | ");
             }
             case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES: {
-                return _.compact([plasmodiumSpecies?.label, drug, years]).join(" | ");
+                return _.compact([...plasmodiumSpeciesArray, ...drugs, years]).join(" | ");
             }
         }
     } else {

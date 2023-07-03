@@ -152,7 +152,9 @@ export interface TreatmentFilters {
     mapType: TreatmentMapType;
     dataset: TreatmentDataset;
     plasmodiumSpecies: string;
+    plasmodiumSpeciesArray: string[];
     drug: string;
+    drugs: string[];
     molecularMarker: number;
     excludeLowerPatients: boolean;
     excludeLowerSamples: boolean;

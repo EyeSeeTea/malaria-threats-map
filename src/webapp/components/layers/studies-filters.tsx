@@ -369,8 +369,8 @@ function buildTreatmentFiltersByMap(treatmentFilters: TreatmentFilters, filters:
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
             return [
                 filterByDimensionId(300),
-                filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
-                filterByDrug(treatmentFilters.drug),
+                filterByManyPlasmodiumSpecies(treatmentFilters.plasmodiumSpeciesArray),
+                filterByDrugs(treatmentFilters.drugs),
                 filterByYearRange(filters),
                 filterByRegion(region),
             ];

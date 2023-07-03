@@ -6,8 +6,8 @@ import DrugsFilter from "../../../filters/DrugsFilter";
 export default function TherapeuticEfficacyStudiesFilters() {
     return (
         <>
-            <PlasmodiumSpeciesFilter />
-            <DrugsFilter />
+            <PlasmodiumSpeciesFilter isMulti />
+            <DrugsFilter isMulti />
             <YearRangeSelector />
         </>
     );
