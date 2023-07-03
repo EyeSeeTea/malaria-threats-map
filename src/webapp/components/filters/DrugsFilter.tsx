@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectDrugs } from "../../store/reducers/translations-reducer";
 import { selectTreatmentFilters, selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
-import { setTreatmentDrug } from "../../store/actions/treatment-actions";
+import { setTreatmentDrug, setTreatmentDrugs } from "../../store/actions/treatment-actions";
 import {
     filterByDimensionId,
     filterByPlasmodiumSpecies,
     filterByRegion,
     filterByYearRange,
+    filterByManyPlasmodiumSpecies,
 } from "../../components/layers/studies-filters";
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import * as R from "ramda";
@@ -17,6 +18,7 @@ import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
 import SingleFilter from "./common/SingleFilter";
 import { useTranslation } from "react-i18next";
 import { OptionType } from "../BasicSelect";
+import MultiFilter from "./common/MultiFilter";
 
 const mapStateToProps = (state: State) => ({
     drugs: selectDrugs(state),
@@ -28,22 +30,41 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setDrug: setTreatmentDrug,
+    setDrugs: setTreatmentDrugs,
     logEventAction: logEventAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type OwnProps = {
+    isMulti?: boolean;
+};
+type Props = DispatchProps & StateProps & OwnProps;
 
-const DrugsFilter: React.FC<Props> = ({ setDrug, treatmentFilters, studies, yearFilter, region }) => {
+const DrugsFilter: React.FC<Props> = ({
+    setDrug,
+    setDrugs,
+    treatmentFilters,
+    studies,
+    yearFilter,
+    region,
+    isMulti = false,
+}) => {
     const { t } = useTranslation();
 
-    const filters = [
-        filterByDimensionId(256),
-        filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
-        filterByYearRange(yearFilter),
-        filterByRegion(region),
-    ];
+    const filters = isMulti
+        ? [
+              filterByDimensionId(300),
+              filterByManyPlasmodiumSpecies(treatmentFilters.plasmodiumSpeciesArray),
+              filterByYearRange(yearFilter),
+              filterByRegion(region),
+          ]
+        : [
+              filterByDimensionId(256),
+              filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
+              filterByYearRange(yearFilter),
+              filterByRegion(region),
+          ];
 
     const filteredStudies: TreatmentStudy[] = filters.reduce((studies, filter) => studies.filter(filter), studies);
 
@@ -54,7 +75,20 @@ const DrugsFilter: React.FC<Props> = ({ setDrug, treatmentFilters, studies, year
         value: drug,
     }));
 
-    return (
+    return isMulti ? (
+        <MultiFilter
+            placeholder={t("common.filters.select_drugs")}
+            options={
+                treatmentFilters.mapType === 1
+                    ? suggestions.filter((drug: OptionType) => drug.label !== "DRUG_AQ+SP" && drug.label !== "DRUG_AP")
+                    : suggestions
+            }
+            onChange={setDrugs}
+            value={treatmentFilters.drugs}
+            analyticsMultiFilterAction={"drug"}
+            isClearable={true}
+        />
+    ) : (
         <SingleFilter
             label={t("common.filters.drug")}
             options={
