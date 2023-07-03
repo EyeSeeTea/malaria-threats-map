@@ -690,7 +690,9 @@
                 "AN_STEPHENSI_NOT_FOUND": "An. stephensi (not found)"
             },
             "plasmodium_species": "Plasmodium species",
+            "select_plasmodium_species": "Select plasmodium species",
             "drug": "Drug",
+            "select_drugs": "Select drugs",
             "molecular_marker": "Molecular marker",
             "proxy_type": "Type of synergy",
             "mechanism_type": "Mechanism type",
