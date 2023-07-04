@@ -283,12 +283,12 @@ function getTreatmentLegendLabels(filters: TreatmentFilters): LegendLabel[] {
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
             return [
                 {
-                    label: "treatment.legend.therapeutic_efficacy_studies.ongoing",
-                    color: TherapeuticEfficacyStudiesColors[THERAPEUTIC_EFFICACY_STUDIES_STATUS.ONGOING][0],
-                },
-                {
                     label: "treatment.legend.therapeutic_efficacy_studies.planned",
                     color: TherapeuticEfficacyStudiesColors[THERAPEUTIC_EFFICACY_STUDIES_STATUS.PLANNED][0],
+                },
+                {
+                    label: "treatment.legend.therapeutic_efficacy_studies.ongoing",
+                    color: TherapeuticEfficacyStudiesColors[THERAPEUTIC_EFFICACY_STUDIES_STATUS.ONGOING][0],
                 },
                 {
                     label: "treatment.legend.therapeutic_efficacy_studies.completed",
