@@ -739,7 +739,9 @@
             "patientType": "Patient type",
             "vectorSpecies": "Vector species",
             "plasmodiumSpecies": "Plasmodium species",
+            "plasmodiumSpeciesArray": "Plasmodium species",
             "drug": "Drugs",
+            "drugs": "Drugs",
             "excludeStudies": "Excluded",
             "molecularMarker": "Molecular marker"
         },
