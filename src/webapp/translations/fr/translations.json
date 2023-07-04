@@ -574,6 +574,22 @@
                     "mutation_detected": "Échantillons avec mutations détectées",
                     "wt_tudy": "Échantillons de type sauvage",
                     "mc_study": "Échantillons avec plusieurs numéros de copie"
+                },
+                "therapeutic_efficacy_studies": {
+                    "subtitle": "Détails des études d'efficacité thérapeutique",
+                    "overview": "Vue d'ensemble",
+                    "study_details": "Etude {{number}} détails",
+                    "ongoing": "En cours",
+                    "planned": "Prévu",
+                    "completed_results_pending": "Terminé (résultats en attente)",
+                    "status": "Statut de l'étude",
+                    "proposed_timeframe": "Calendrier proposé",
+                    "lead_institution": "Institution chef de file",
+                    "funding_source": "Source de financement",
+                    "age_group": "Groupe d'âge",
+                    "species": "Espèces de plasmodium",
+                    "drug": "Traitement",
+                    "genotyping": "Génotypage"
                 }
             },
             "legend": {

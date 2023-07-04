@@ -12,6 +12,7 @@ import {
     PreventionMechanismChartData,
     PreventionMechanismChartDataGroup,
     preventionChartDataTitle,
+    COMMON_SELECTION_DATA_TYPES,
 } from "../../SelectionData";
 import * as R from "ramda";
 import { createCitationDataSources, createCurations, selectDataSourcesByStudies } from "../common/utils";
@@ -123,7 +124,7 @@ function createPreventionChartData(
         })
         .value();
 
-    return { kind: "prevention", data: bySpeciesAndInsecticideType };
+    return { kind: COMMON_SELECTION_DATA_TYPES.PREVENTION, data: bySpeciesAndInsecticideType };
 }
 
 function createPreventionMechanismChartData(
@@ -159,7 +160,7 @@ function createPreventionMechanismChartData(
         })
         .value();
 
-    return { kind: "prevention-mechanism", data: bySpeciesAndInsecticideType };
+    return { kind: COMMON_SELECTION_DATA_TYPES.PREVENTION_MECHANISM, data: bySpeciesAndInsecticideType };
 }
 
 function createPreventionMechanismAssays(

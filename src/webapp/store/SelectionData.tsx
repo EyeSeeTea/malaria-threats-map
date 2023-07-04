@@ -1,4 +1,5 @@
 import { Study } from "../../domain/entities/Study";
+import { TreatmentStudy } from "../../domain/entities/TreatmentStudy";
 import { Option } from "../components/BasicSelect";
 import { DiagnosisSelectionData } from "./epics/diagnosis/types";
 import { InvasiveSelectionData } from "./epics/invasive/types";
@@ -12,13 +13,26 @@ export type CommonSelectionData = {
     filterOptions?: Option[];
     filterSelection?: Option[];
     studyObject: Study;
-    data?: PreventionChartData | PreventionMechanismChartData | TreatmentChartData | TreatmentMolecularMarkersChartData;
+    data?:
+        | PreventionChartData
+        | PreventionMechanismChartData
+        | TreatmentChartData
+        | TreatmentMolecularMarkersChartData
+        | TherapeuticEfficacyStudiesData;
     dataSources?: CitationDataSource[];
     curations?: CurationSources[];
     othersDetected?: string[];
     othersTitle?: string;
     aditionalInformation?: AditionalInformation[];
 };
+
+export enum COMMON_SELECTION_DATA_TYPES {
+    PREVENTION = "prevention",
+    PREVENTION_MECHANISM = "prevention-mechanism",
+    TREATMENT = "treatment",
+    TREATMENT_MOLECULAR_MARKERS = "treatment-molecular-markers",
+    THERAPEUTIC_EFFICACY_STUDIES = "therapeutic-efficacy-studies",
+}
 
 export type preventionChartDataTitle = {
     statusColor: string;
@@ -32,12 +46,12 @@ export type PreventionChartDataContent = {
 };
 
 export type PreventionChartData = {
-    kind: "prevention";
+    kind: COMMON_SELECTION_DATA_TYPES.PREVENTION;
     data: PreventionChartDataContent;
 };
 
 export type PreventionMechanismChartData = {
-    kind: "prevention-mechanism";
+    kind: COMMON_SELECTION_DATA_TYPES.PREVENTION_MECHANISM;
     data: {
         [x: string]: {
             [x: string]: {
@@ -50,17 +64,22 @@ export type PreventionMechanismChartData = {
 };
 
 export type TreatmentChartData = {
-    kind: "treatment";
+    kind: COMMON_SELECTION_DATA_TYPES.TREATMENT;
     data: { years: string[]; series: TreatmentChartDataGroup[] };
 };
 
 export type TreatmentMolecularMarkersChartData = {
-    kind: "treatment-molecular-markers";
+    kind: COMMON_SELECTION_DATA_TYPES.TREATMENT_MOLECULAR_MARKERS;
     data: {
         years: string[];
         series: TreatmentChartDataSerie[];
         markers: { [group: string]: { name: string; color?: string }[] };
     };
+};
+
+export type TherapeuticEfficacyStudiesData = {
+    kind: COMMON_SELECTION_DATA_TYPES.THERAPEUTIC_EFFICACY_STUDIES;
+    data: TreatmentStudy[];
 };
 
 export type TreatmentChartDataSerie = {

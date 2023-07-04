@@ -2,6 +2,7 @@ import i18next from "i18next";
 import { getSiteTitle } from "../../../components/site-title/utils";
 import {
     AditionalInformation,
+    COMMON_SELECTION_DATA_TYPES,
     CitationDataSource,
     SelectionData,
     TreatmentChartData,
@@ -17,6 +18,7 @@ import { MutationColors } from "../../../components/layers/treatment/MolecularMa
 import { molecularMarkersMap, MOLECULAR_MARKERS } from "../../../components/filters/MolecularMarkerFilter";
 import { createCitationDataSources, selectDataSourcesByStudies } from "../common/utils";
 import LineSymbol from "../../../assets/img/line.svg";
+import { sortTherapeuticEfficacyStudies } from "../../../components/layers/treatment/TherapeuticEfficacyStudies/utils";
 
 export function createTreatmentSelectionData(
     theme: string,
@@ -31,12 +33,7 @@ export function createTreatmentSelectionData(
 
     if (siteFilteredStudies.length === 0) return null;
 
-    const sortedStudies = _.orderBy(
-        siteFilteredStudies,
-        study => parseInt(study.YEAR_START),
-        treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS ? "desc" : "asc"
-    );
-
+    const sortedStudies = sortStudies(siteFilteredStudies, treatmentFilters);
     const dataSources = createCitationDataSources(theme, sortedStudies);
 
     const studyObject = sortedStudies[0];
@@ -51,15 +48,33 @@ export function createTreatmentSelectionData(
         data:
             treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS
                 ? createMolecularMarkersChartData(sortedStudies, dataSources, treatmentFilters)
+                : treatmentFilters.mapType === TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES
+                ? {
+                      kind: COMMON_SELECTION_DATA_TYPES.THERAPEUTIC_EFFICACY_STUDIES,
+                      data: sortedStudies,
+                  }
                 : createTreatmentFailureChartData(sortedStudies, yearFilters),
         dataSources: treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS ? dataSources : undefined,
         curations: [],
         othersDetected: [],
         aditionalInformation:
-            treatmentFilters.mapType !== TreatmentMapType.MOLECULAR_MARKERS
+            treatmentFilters.mapType !== TreatmentMapType.MOLECULAR_MARKERS &&
+            treatmentFilters.mapType !== TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES
                 ? createTreatmentAditionalInfo(sortedStudies)
                 : undefined,
     };
+}
+
+function sortStudies(studies: TreatmentStudy[], treatmentFilters: TreatmentFilters) {
+    if (treatmentFilters.mapType === TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES) {
+        return sortTherapeuticEfficacyStudies(studies);
+    }
+
+    return _.orderBy(
+        studies,
+        study => parseInt(study.YEAR_START),
+        treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS ? "desc" : "asc"
+    );
 }
 
 function geSubtitle(treatmentFilters: TreatmentFilters, studyObject: TreatmentStudy) {
@@ -71,13 +86,17 @@ function geSubtitle(treatmentFilters: TreatmentFilters, studyObject: TreatmentSt
         return i18next.t("common.treatment.chart.molecular_markers.subtitle", {
             molecularMarker,
         });
-    } else {
-        const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.find(
-            (species: any) => species.value === studyObject.PLASMODIUM_SPECIES
-        ).label;
-
-        return `${plasmodiumSpecies}, ${i18next.t(studyObject.DRUG_NAME)}`;
     }
+
+    if (treatmentFilters.mapType === TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES) {
+        return i18next.t("common.treatment.chart.therapeutic_efficacy_studies.subtitle");
+    }
+
+    const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.find(
+        (species: any) => species.value === studyObject.PLASMODIUM_SPECIES
+    ).label;
+
+    return `${plasmodiumSpecies}, ${i18next.t(studyObject.DRUG_NAME)}`;
 }
 
 function rangeYears(startYear: number, endYear: number) {
@@ -140,7 +159,7 @@ function createTreatmentFailureChartData(studies: TreatmentStudy[], yearFilters:
         };
     });
 
-    return { kind: "treatment", data: { series, years } };
+    return { kind: COMMON_SELECTION_DATA_TYPES.TREATMENT, data: { series, years } };
 }
 
 function createMolecularMarkersChartData(
@@ -188,7 +207,7 @@ function createMolecularMarkersChartData(
     });
 
     return {
-        kind: "treatment-molecular-markers",
+        kind: COMMON_SELECTION_DATA_TYPES.TREATMENT_MOLECULAR_MARKERS,
         data: {
             years,
             series,
