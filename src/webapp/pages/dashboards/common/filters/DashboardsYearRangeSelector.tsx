@@ -4,6 +4,9 @@ import { useTranslation } from "react-i18next";
 import * as R from "ramda";
 import styled from "styled-components";
 import { Divider } from "../../../../components/filters/Filters";
+import { State } from "../../../../store/types";
+import { selectMaxMinYears } from "../../../../store/reducers/base-reducer";
+import { connect } from "react-redux";
 
 const StyledSlider = MuiStyled(Slider)(() => ({
     display: "table",
@@ -26,13 +29,16 @@ const StyledSlider = MuiStyled(Slider)(() => ({
     },
 }));
 
+const mapStateToProps = (state: State) => ({
+    maxMinYears: selectMaxMinYears(state),
+});
+
 function valuetext(value: number) {
     return `${value}°C`;
 }
 
 type DashboardsYearRangeSelectorProps = {
-    minYear?: number;
-    maxYear?: number;
+    maxMinYears: number[];
     years: [number, number];
     onChange: (years: [number, number]) => void;
 };
@@ -44,12 +50,7 @@ export function range(start: number, end: number, reverse?: boolean) {
     return reverse ? R.reverse(years) : years;
 }
 
-const DashboardsYearRangeSelector: React.FC<DashboardsYearRangeSelectorProps> = ({
-    years,
-    onChange,
-    minYear = 2010,
-    maxYear = new Date().getFullYear(),
-}) => {
+const DashboardsYearRangeSelector: React.FC<DashboardsYearRangeSelectorProps> = ({ years, onChange, maxMinYears }) => {
     const { t } = useTranslation();
 
     const handleChange = (_event: Event, newValue: number | number[]) => {
@@ -76,18 +77,18 @@ const DashboardsYearRangeSelector: React.FC<DashboardsYearRangeSelectorProps> = 
                 aria-labelledby="range-slider"
                 getAriaValueText={valuetext}
                 step={1}
-                min={minYear}
-                max={maxYear}
+                min={maxMinYears[0]}
+                max={maxMinYears[1]}
             />
             <Row>
-                {[minYear, Math.floor((minYear + maxYear) / 2), maxYear].map(year => {
+                {[maxMinYears[0], Math.floor((maxMinYears[0] + maxMinYears[1]) / 2), maxMinYears[1]].map(year => {
                     return <span key={year}>{year}</span>;
                 })}
             </Row>
         </Container>
     );
 };
-export default DashboardsYearRangeSelector;
+export default connect(mapStateToProps)(DashboardsYearRangeSelector);
 
 const Row = styled.div`
     display: flex;

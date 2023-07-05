@@ -7,7 +7,7 @@ export function useTreatmentFilters() {
     const [plasmodiumSpecies, setPlasmodiumSpecies] = useState<string>(PLASMODIUM_SPECIES_SUGGESTIONS[0].value);
     const [drugs, setDrugs] = useState<string[]>(undefined);
     const [molecularMarker, setMolecularMarker] = useState<MolecularMarker>();
-    const [years, setYears] = useState<[number, number]>([2010, new Date().getFullYear()]);
+    const [years, setYears] = useState<[number, number]>([2015, new Date().getFullYear()]);
     const [excludeLowerPatients, setExcludeLowerPatients] = useState<boolean>(false);
     const [excludeLowerSamples, setExcludeLowerSamples] = useState<boolean>(false);
 
