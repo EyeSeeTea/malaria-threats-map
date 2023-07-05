@@ -118,7 +118,7 @@ const configurations: { [key: string]: ConfigProps } = {
         ...base,
         ...prodMapServer,
         backendUrl: `https://extranet.who.int/malthreats-api/`,
-        gaAppId: "UA-140410266-1",
+        gaAppId: "G-L4JVKD6B9R",
         env: "prod",
         hotjar: { hjid: 2269048, hjsv: 6 },
         feedback: feedbackConfig,
