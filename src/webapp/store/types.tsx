@@ -151,9 +151,7 @@ export enum TreatmentMapType {
 export interface TreatmentFilters {
     mapType: TreatmentMapType;
     dataset: TreatmentDataset;
-    plasmodiumSpecies: string;
-    plasmodiumSpeciesArray: string[];
-    drug: string;
+    plasmodiumSpecies: string[];
     drugs: string[];
     molecularMarker: number;
     excludeLowerPatients: boolean;

@@ -7,20 +7,20 @@ import {
     filterByExcludeLowerSamples,
     filterByMolecularMarker,
     filterByMolecularMarkerStudy,
-    filterByPlasmodiumSpecies,
+    filterByPlasmodiumSpecie,
     filterByYearRange,
 } from "../../../components/layers/studies-filters";
 
 export function filterStudies(
     studies: TreatmentStudy[],
-    plasmodiumSpecies: string,
+    plasmodiumSpecie: string,
     drugs: string[],
     years: [number, number],
     excludeLowerPatients: boolean
 ): TreatmentStudy[] {
     const filters = _.compact([
         filterByDimensionId(256),
-        filterByPlasmodiumSpecies(plasmodiumSpecies),
+        filterByPlasmodiumSpecie(plasmodiumSpecie),
         filterByDrugs(drugs || []),
         years && filterByYearRange(years),
         filterByExcludeLowerPatients(excludeLowerPatients),

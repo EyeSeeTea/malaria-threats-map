@@ -191,16 +191,12 @@ export const filterByDimensionId = (dimensionId: number) => (study: any) => {
     return study.DimensionID === dimensionId;
 };
 
-export const filterByPlasmodiumSpecies = (plasmodiumSpecies: string) => (study: any) => {
-    return !plasmodiumSpecies || study.PLASMODIUM_SPECIES === plasmodiumSpecies;
+export const filterByPlasmodiumSpecie = (plasmodiumSpecie: string) => (study: any) => {
+    return !plasmodiumSpecie || study.PLASMODIUM_SPECIES === plasmodiumSpecie;
 };
 
-export const filterByManyPlasmodiumSpecies = (plasmodiumSpecies: string[]) => (study: any) => {
+export const filterByPlasmodiumSpecies = (plasmodiumSpecies: string[]) => (study: any) => {
     return !plasmodiumSpecies.length || plasmodiumSpecies.includes(study.PLASMODIUM_SPECIES);
-};
-
-export const filterByDrug = (drug: string) => (study: any) => {
-    return !drug || study.DRUG_NAME === drug;
 };
 
 export const filterByDrugs = (drugs: string[]) => (study: any) => {
@@ -344,7 +340,7 @@ function buildTreatmentFiltersByMap(treatmentFilters: TreatmentFilters, filters:
             return [
                 filterByDimensionId(256),
                 filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
-                filterByDrug(treatmentFilters.drug),
+                filterByDrugs(treatmentFilters.drugs),
                 filterByYearRange(filters),
                 filterByRegion(region),
                 filterByExcludeLowerPatients(treatmentFilters.excludeLowerPatients),
@@ -353,7 +349,7 @@ function buildTreatmentFiltersByMap(treatmentFilters: TreatmentFilters, filters:
             return [
                 filterByDimensionId(256),
                 filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
-                filterByDrug(treatmentFilters.drug),
+                filterByDrugs(treatmentFilters.drugs),
                 filterByYearRange(filters),
                 filterByRegion(region),
                 filterByExcludeLowerPatients(treatmentFilters.excludeLowerPatients),
@@ -369,7 +365,7 @@ function buildTreatmentFiltersByMap(treatmentFilters: TreatmentFilters, filters:
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
             return [
                 filterByDimensionId(300),
-                filterByManyPlasmodiumSpecies(treatmentFilters.plasmodiumSpeciesArray),
+                filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
                 filterByDrugs(treatmentFilters.drugs),
                 filterByYearRange(filters),
                 filterByRegion(region),
@@ -385,7 +381,7 @@ function buildTreatmentFiltersByDownload(treatmentFilters: TreatmentFilters, fil
             return [
                 filterByDimensionId(256),
                 filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
-                filterByDrug(treatmentFilters.drug),
+                filterByDrugs(treatmentFilters.drugs),
                 filterByYearRange(filters),
                 filterByRegion(region),
             ];

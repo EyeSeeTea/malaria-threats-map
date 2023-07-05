@@ -15,11 +15,7 @@ export const setTreatmentMapType = createAction(ActionTypeEnum.SetTreatmentMapTy
 
 export const setTreatmentDataset = createAction(ActionTypeEnum.SetTreatmentDataset)<string | null>();
 
-export const setTreatmentPlasmodiumSpecies = createAction(ActionTypeEnum.SetPlasmodiumSpecies)<string>();
-
-export const setTreatmentPlasmodiumSpeciesArray = createAction(ActionTypeEnum.SetPlasmodiumSpeciesArray)<string[]>();
-
-export const setTreatmentDrug = createAction(ActionTypeEnum.SetDrug)<string>();
+export const setTreatmentPlasmodiumSpecies = createAction(ActionTypeEnum.SetPlasmodiumSpecies)<string[]>();
 
 export const setTreatmentDrugs = createAction(ActionTypeEnum.SetDrugs)<string[]>();
 

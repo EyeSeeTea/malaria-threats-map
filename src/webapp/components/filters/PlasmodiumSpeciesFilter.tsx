@@ -3,10 +3,7 @@ import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectPlasmodiumSpecies } from "../../store/reducers/translations-reducer";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
-import {
-    setTreatmentPlasmodiumSpecies,
-    setTreatmentPlasmodiumSpeciesArray,
-} from "../../store/actions/treatment-actions";
+import { setTreatmentPlasmodiumSpecies } from "../../store/actions/treatment-actions";
 import { logEventAction } from "../../store/actions/base-actions";
 import SingleFilter from "./common/SingleFilter";
 import { useTranslation } from "react-i18next";
@@ -19,7 +16,6 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setPlasmodiumSpecies: setTreatmentPlasmodiumSpecies,
-    setPlasmodiumSpeciesArray: setTreatmentPlasmodiumSpeciesArray,
     logEventAction: logEventAction,
 };
 
@@ -53,20 +49,34 @@ export const PLASMODIUM_SPECIES_SUGGESTIONS: any[] = [
     },
 ];
 
-const PlasmodiumSpeciesFilter: React.FC<Props> = ({
-    setPlasmodiumSpecies,
-    setPlasmodiumSpeciesArray,
-    treatmentFilters,
-    isMulti = false,
-}) => {
+const PlasmodiumSpeciesFilter: React.FC<Props> = ({ setPlasmodiumSpecies, treatmentFilters, isMulti = false }) => {
     const { t } = useTranslation();
+
+    const handleChange = React.useCallback(
+        (selection?: string | string[]) => {
+            if (isMulti && Array.isArray(selection)) {
+                setPlasmodiumSpecies(selection);
+            } else {
+                const selectedPlasmodiumSpecie = selection && typeof selection === "string" ? [selection] : [];
+                setPlasmodiumSpecies(selectedPlasmodiumSpecie);
+            }
+        },
+        [isMulti, setPlasmodiumSpecies]
+    );
+
+    const value: string | string[] = React.useMemo(() => {
+        if (isMulti) {
+            return treatmentFilters.plasmodiumSpecies ?? [];
+        }
+        return treatmentFilters.plasmodiumSpecies ? treatmentFilters.plasmodiumSpecies[0] : null;
+    }, [isMulti, treatmentFilters.plasmodiumSpecies]);
 
     return isMulti ? (
         <MultiFilter
             placeholder={t("common.filters.select_plasmodium_species")}
             options={PLASMODIUM_SPECIES_SUGGESTIONS}
-            onChange={setPlasmodiumSpeciesArray}
-            value={treatmentFilters.plasmodiumSpeciesArray}
+            onChange={handleChange}
+            value={value as string[]}
             analyticsMultiFilterAction={"plasmodiumSpecies"}
             isClearable={true}
         />
@@ -74,8 +84,8 @@ const PlasmodiumSpeciesFilter: React.FC<Props> = ({
         <SingleFilter
             label={t("common.filters.plasmodium_species")}
             options={PLASMODIUM_SPECIES_SUGGESTIONS}
-            onChange={setPlasmodiumSpecies}
-            value={treatmentFilters.plasmodiumSpecies}
+            onChange={handleChange}
+            value={value as string}
             analyticsFilterAction={"plasmodiumSpecies"}
             isClearable={false}
             isDisabled={treatmentFilters.mapType === 1}

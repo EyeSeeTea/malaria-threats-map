@@ -75,9 +75,9 @@ function getDiagnosisLegendTitle(filters: DiagnosisFilters) {
 function getTreatmentLegendTitle(filters: TreatmentFilters): string {
     switch (filters.mapType) {
         case TreatmentMapType.TREATMENT_FAILURE:
-            return `${i18next.t("common.treatment.treatment_failure")}\n${i18next.t(filters.drug)}`;
+            return `${i18next.t("common.treatment.treatment_failure")}\n${i18next.t(filters.drugs[0])}`;
         case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
-            return `${i18next.t("common.treatment.delayed_parasite_clearance")}\n${i18next.t(filters.drug)}`;
+            return `${i18next.t("common.treatment.delayed_parasite_clearance")}\n${i18next.t(filters.drugs[0])}`;
         case TreatmentMapType.MOLECULAR_MARKERS:
             return `${i18next.t("common.treatment.molecular_markers")}\n(${
                 MOLECULAR_MARKERS[filters.molecularMarker - 1]?.label
