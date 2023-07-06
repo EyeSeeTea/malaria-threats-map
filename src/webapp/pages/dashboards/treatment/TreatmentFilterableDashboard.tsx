@@ -91,7 +91,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
     }, [filtersVisible, chartComponentRef]);
 
     return (
-        <Container isScreenshot={isScreenshot}>
+        <Container $isScreenshot={isScreenshot}>
             <DashboardTitle
                 id={id}
                 title={title}
@@ -100,9 +100,9 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                 showActions={!isScreenshot}
             />
 
-            <StyledGridContainer container spacing={2} sx={{ marginBottom: 3 }} isScreenshot={isScreenshot}>
+            <StyledGridContainer container spacing={2} sx={{ marginBottom: 3 }} $isScreenshot={isScreenshot}>
                 {filtersVisible && (
-                    <StyledGridItem item md={3} xs={12} isScreenshot={isScreenshot}>
+                    <StyledGridItem item md={3} xs={12} $isScreenshot={isScreenshot}>
                         <Stack direction="column">
                             <TreatmentFilters
                                 isMolecularMarkerChart={isMolecularMarkerChart}
@@ -122,7 +122,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                                 onYearsChange={onYearsChange}
                                 onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
                                 onExcludeLowerSamplesChange={onExcludeLowerSamplesChange}
-                                onCollapse={onChangeFiltersVisible} 
+                                onCollapse={onChangeFiltersVisible}
                             ></TreatmentFilters>
                             <StudiesCountCard elevation={0}>
                                 {t("common.dashboard.therapeuticEfficacyDashboards.numStudies", {
@@ -132,7 +132,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                         </Stack>
                     </StyledGridItem>
                 )}
-                <StyledGridItem item md={filtersVisible ? 9 : 12} xs={12} isScreenshot={isScreenshot}>
+                <StyledGridItem item md={filtersVisible ? 9 : 12} xs={12} $isScreenshot={isScreenshot}>
                     <DasboardCard elevation={0}>
                         {!filtersVisible && (
                             <Button startIcon={<FilterAltIcon />} onClick={onChangeFiltersVisible}>
@@ -154,7 +154,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
     );
 };
 
-const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = (props) => {
+const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = props => {
     const [open, setOpen] = React.useState(false);
 
     const handleScreenshot = React.useCallback(() => {
@@ -167,7 +167,7 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
 
     return (
         <>
-            <TreatmentFilterableDashboardComponent {...props} onScreenshot={handleScreenshot}/>
+            <TreatmentFilterableDashboardComponent {...props} onScreenshot={handleScreenshot} />
             <ScreenshotModal
                 open={open}
                 onClose={handleCloseScreenshot}
@@ -175,7 +175,7 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                 backgroundColor={SCREENSHOT_BACKGROUND_COLOR}
                 exclusionClasses={SCREENSHOT_EXCLUSION_CLASSES}
             >
-                <TreatmentFilterableDashboardComponent {...props} isScreenshot/>
+                <TreatmentFilterableDashboardComponent {...props} isScreenshot />
             </ScreenshotModal>
         </>
     );
@@ -183,21 +183,22 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
 
 export default TreatmentFilterableDashboard;
 
-const Container = styled.div<{ isScreenshot: boolean }>`
+const Container = styled.div<{ $isScreenshot: boolean }>`
     padding: 10px;
-    width: ${props => props?.isScreenshot && 'fit-content'};
+    width: ${props => props?.$isScreenshot && "fit-content"};
 `;
 
-const StyledGridItem = styled(Grid)<{ isScreenshot: boolean }>`
-    width: ${props => props?.isScreenshot && 'fit-content' };
-    max-width: ${props => props?.isScreenshot && 'fit-content' };
-    .MuiChip-root, .MuiChip-label {
-        overflow: ${props => props?.isScreenshot && 'initial' };
+const StyledGridItem = styled(Grid)<{ $isScreenshot: boolean }>`
+    width: ${props => props?.$isScreenshot && "fit-content"};
+    max-width: ${props => props?.$isScreenshot && "fit-content"};
+    .MuiChip-root,
+    .MuiChip-label {
+        overflow: ${props => props?.$isScreenshot && "initial"};
     }
 `;
 
-const StyledGridContainer = styled(Grid)<{ isScreenshot: boolean }>`
-    flex-wrap: ${props => props?.isScreenshot && 'nowrap' };
+const StyledGridContainer = styled(Grid)<{ $isScreenshot: boolean }>`
+    flex-wrap: ${props => props?.$isScreenshot && "nowrap"};
 `;
 
 const DasboardCard = styled(Card)`
