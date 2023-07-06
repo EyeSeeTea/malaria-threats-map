@@ -163,10 +163,6 @@ export function treatmentValueLabelFilters(
     switch (treatmentFilters.mapType) {
         case TreatmentMapType.TREATMENT_FAILURE:
         case TreatmentMapType.DELAYED_PARASITE_CLEARANCE: {
-            const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.find(
-                item => item.value === treatmentFilters.plasmodiumSpecies
-            );
-
             return {
                 years,
                 plasmodiumSpecies: plasmodiumSpecies?.length
