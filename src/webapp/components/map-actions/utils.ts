@@ -184,7 +184,7 @@ export function treatmentValueLabelFilters(
             return {
                 years,
                 drugs: drugs.length ? _.compact(drugs).join(" | ") : i18next.t("common.map_info_summary.all"),
-                plasmodiumSpeciesArray: plasmodiumSpecies?.length
+                plasmodiumSpecies: plasmodiumSpecies?.length
                     ? _.compact(plasmodiumSpecies).join(" | ")
                     : i18next.t("common.map_info_summary.all"),
             };

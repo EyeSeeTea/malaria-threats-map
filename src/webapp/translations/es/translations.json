@@ -741,7 +741,6 @@
             "patientType": "Tipos de pacientes",
             "vectorSpecies": "Especies vectoras",
             "plasmodiumSpecies": "Especie de plasmodium",
-            "plasmodiumSpeciesArray": "Especies de plasmodium",
             "drug": "Tratamiento",
             "drugs": "Tratamientos",
             "excludeStudies": "Excluido",
