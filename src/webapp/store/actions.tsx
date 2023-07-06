@@ -69,8 +69,6 @@ export enum ActionTypeEnum {
     SetTreatmentMapType = "treatment/SET_TREATMENT_MAP_TYPE",
     SetTreatmentDataset = "treatment/SET_TREATMENT_DATASET",
     SetPlasmodiumSpecies = "treatment/SET_TREATMENT_PLASMODIUM_SPECIES",
-    SetPlasmodiumSpeciesArray = "treatment/SET_TREATMENT_PLASMODIUM_SPECIES_ARRAY",
-    SetDrug = "treatment/SET_TREATMENT_DRUG",
     SetDrugs = "treatment/SET_TREATMENT_DRUGS",
     SetMolecularMarker = "treatment/SET_MOLECULAR_MARKER",
     SetTreatmentFilteredStudies = "treatment/SET_FILTER_STUDIES",

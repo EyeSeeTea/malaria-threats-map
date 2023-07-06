@@ -738,6 +738,27 @@
             "zero_all_bioassays": "0 (all bioassays)",
             "only_include_data_by_health": "Only include data provided to WHO by ministries of health"
         },
+        "map_info_summary": {
+            "all": "All",
+            "years": "Data periods",
+            "country": "Country",
+            "last_updated": "Last data update",
+            "insecticideClass": "Insecticide class",
+            "insecticideTypes": "Insecticide types",
+            "mechanismType": "Mechanism type",
+            "testType": "Test types",
+            "species": "Vector species",
+            "assayTypes": "Assay types",
+            "synergistTypes": "Synergist types",
+            "deletionType": "Deletion type",
+            "surveyTypes": "Survey types",
+            "patientType": "Patient type",
+            "vectorSpecies": "Vector species",
+            "plasmodiumSpecies": "Plasmodium species",
+            "drug": "Drugs",
+            "excludeStudies": "Excluded",
+            "molecularMarker": "Molecular marker"
+        },
         "topbar": {
             "menu": "Menu",
             "maps": "Maps",
@@ -761,7 +782,10 @@
         "screenshot": {
             "screenshot": "Screenshot",
             "download_screenshot": "Download screenshot",
-            "generating_screenshot": "Generating screenshot"
+            "generating_screenshot": "Generating screenshot",
+            "footer_data_source": "Data source: Malaria Threats Map",
+            "footer_production": "Production: Global Malaria Programme World Health Organization",
+            "footer_who_logo": "@WHO {{year}}. All rights reserved."
         },
         "chart": {
             "studies": "Studies",

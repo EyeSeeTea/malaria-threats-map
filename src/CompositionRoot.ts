@@ -22,7 +22,7 @@ import { GetCountryUseCase } from "./domain/usecases/GetCountryUseCase";
 export class CompositionRoot {
     private preventionRepository = new PreventionApiRepository(config.mapServerUrl);
     private diagnosisRepository = new DiagnosisApiRepository(config.mapServerUrl);
-    private treatmentRepository = new TreatmentApiRepository(config.mapServerUrl);
+    private treatmentRepository = new TreatmentApiRepository(config.mapServerUrl, config.xmartServerUrl);
     private invasiveRepository = new InvasiveApiRepository(config.mapServerUrl);
     private countryLayerRepository = new CountryLayerApiRepository(config.featuresServerUrl, config.xmartServerUrl);
     private countryRepository = new CountryApiRepository(config.xmartServerUrl);

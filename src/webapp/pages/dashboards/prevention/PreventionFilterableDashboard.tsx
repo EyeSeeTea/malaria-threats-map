@@ -1,17 +1,20 @@
 import { Button, Card, Grid, Stack, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import React, { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import HighchartsReact from "highcharts-react-official";
 import PreventionFilters, { PreventionFilterableChart } from "./filters/PreventionFilters";
 import { useFiltersVisible } from "../common/filters/useFiltersVisible";
-import { downloadHtmlElement } from "../utils";
 import DashboardTitle from "../common/DashboardTitle";
 import { Option } from "../common/types";
 import { ResistanceToInsecticideChartType } from "./types";
 import { PreventionFiltersState } from "./filters/PreventionFiltersState";
 import CategoriesCount from "../common/CategoriesCount";
 import { useTranslation } from "react-i18next";
+import ScreenshotModal from "../../../components/ScreenshotModal";
+
+const SCREENSHOT_BACKGROUND_COLOR = "#F7F7F7";
+const SCREENSHOT_EXCLUSION_CLASSES = ["dashboard-action"];
 
 interface PreventionFilterableDashboardProps {
     id?: string;
@@ -36,7 +39,12 @@ interface PreventionFilterableDashboardProps {
     onInfoClick: () => void;
 }
 
-const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = ({
+interface PreventionFilterableDashboardComponentProps extends PreventionFilterableDashboardProps {
+    onScreenshot?: () => void;
+    isScreenshot?: boolean;
+}
+
+const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashboardComponentProps> = ({
     id,
     chart,
     chartTypes,
@@ -58,11 +66,11 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
     chartComponentRef,
     onChartTypeChange,
     onInfoClick,
+    onScreenshot,
+    isScreenshot = false,
 }) => {
     const { filtersVisible, onChangeFiltersVisible } = useFiltersVisible();
     const { t } = useTranslation();
-
-    const ref = useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
         if (Array.isArray(chartComponentRef?.current)) {
@@ -74,10 +82,6 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
         }
     }, [filtersVisible, chartComponentRef]);
 
-    const handleDownload = React.useCallback(() => {
-        downloadHtmlElement(ref.current, title);
-    }, [ref, title]);
-
     const handleChartTypeChange = React.useCallback(
         (_event: React.MouseEvent<HTMLElement>, value: ResistanceToInsecticideChartType) => {
             if (onChartTypeChange) {
@@ -88,16 +92,16 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
     );
 
     return (
-        <Container ref={ref}>
+        <Container isScreenshot={isScreenshot}>
             <DashboardTitle
                 id={id}
                 title={title}
-                onDownloadClick={handleDownload}
+                onDownloadClick={onScreenshot}
                 onInfoClick={onInfoClick}
-                showActions={true}
+                showActions={!isScreenshot}
             />
 
-            {chartTypes && (
+            {chartTypes && !isScreenshot && (
                 <ToggleButtonGroup
                     value={chartType}
                     exclusive
@@ -115,9 +119,9 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
                 </ToggleButtonGroup>
             )}
 
-            <Grid container spacing={2} ref={ref}>
+            <StyledGridContainer container spacing={2} isScreenshot={isScreenshot}>
                 {filtersVisible && (
-                    <Grid item md={3} xs={12}>
+                    <StyledGridItem item md={3} xs={12} isScreenshot={isScreenshot}>
                         <Stack direction="column">
                             <FiltersCard>
                                 <PreventionFilters
@@ -148,9 +152,9 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
                                 )}
                             </StudiesCountCard>
                         </Stack>
-                    </Grid>
+                    </StyledGridItem>
                 )}
-                <Grid item md={filtersVisible ? 9 : 12} xs={12}>
+                <StyledGridItem item md={filtersVisible ? 9 : 12} xs={12} isScreenshot={isScreenshot}>
                     <DasboardCard elevation={0}>
                         {!filtersVisible && (
                             <Button startIcon={<FilterAltIcon />} onClick={onChangeFiltersVisible}>
@@ -159,16 +163,56 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
                         )}
                         <div>{children}</div>
                     </DasboardCard>
-                </Grid>
-            </Grid>
+                </StyledGridItem>
+            </StyledGridContainer>
         </Container>
+    );
+};
+
+const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = (props) => {
+    const [open, setOpen] = React.useState(false);
+
+    const handleScreenshot = React.useCallback(() => {
+        setOpen(true);
+    }, []);
+
+    const handleCloseScreenshot = React.useCallback(() => {
+        setOpen(false);
+    }, []);
+
+    return (
+        <>
+            <PreventionFilterableDashboardComponent {...props} onScreenshot={handleScreenshot}/>
+            <ScreenshotModal
+                open={open}
+                onClose={handleCloseScreenshot}
+                title={props.title}
+                backgroundColor={SCREENSHOT_BACKGROUND_COLOR}
+                exclusionClasses={SCREENSHOT_EXCLUSION_CLASSES}
+            >
+                <PreventionFilterableDashboardComponent {...props} isScreenshot/>
+            </ScreenshotModal>
+        </>
     );
 };
 
 export default PreventionFilterableDashboard;
 
-const Container = styled.div`
+const Container = styled.div<{ isScreenshot: boolean }>`
     padding: 10px;
+    width: ${props => props?.isScreenshot && 'fit-content' };
+`;
+
+const StyledGridItem = styled(Grid)<{ isScreenshot: boolean }>`
+    width: ${props => props?.isScreenshot && 'fit-content' };
+    max-width: ${props => props?.isScreenshot && 'fit-content' };
+    .MuiChip-root, .MuiChip-label {
+        overflow: ${props => props?.isScreenshot && 'initial' };
+    }
+`;
+
+const StyledGridContainer = styled(Grid)<{ isScreenshot: boolean }>`
+    flex-wrap: ${props => props?.isScreenshot && 'nowrap' };
 `;
 
 const DasboardCard = styled(Card)`

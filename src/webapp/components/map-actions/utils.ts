@@ -24,6 +24,165 @@ import { preventionSuggestions } from "../filters/PreventionMapTypesSelector";
 import { treatmentSuggestions } from "../filters/TreatmentMapTypesSelector";
 import { suggestions } from "../filters/VectorSpeciesFilter";
 
+export function getValueLabelFilters(
+    theme: string,
+    preventionFilters: PreventionFilters,
+    treatmentFilters: TreatmentFilters,
+    diagnosisFilters: DiagnosisFilters,
+    invasiveFilters: InvasiveFilters,
+    maxMinYears: number[],
+    yearFilters: number[]
+) {
+    switch (theme) {
+        case "prevention": {
+            return preventionValueLabelFilters(preventionFilters, maxMinYears, yearFilters);
+        }
+        case "diagnosis": {
+            return diagnosisValueLabelFilters(diagnosisFilters, maxMinYears, yearFilters);
+        }
+        case "invasive": {
+            return invasiveValueLabelFilters(invasiveFilters, maxMinYears, yearFilters);
+        }
+        case "treatment": {
+            return treatmentValueLabelFilters(treatmentFilters, maxMinYears, yearFilters);
+        }
+    }
+}
+
+export function preventionValueLabelFilters(
+    preventionFilters: PreventionFilters,
+    maxMinYears: number[],
+    yearFilters: number[]
+) {
+    const years = getYearsSummary(maxMinYears, yearFilters);
+    const insecticideClass = i18next.t(preventionFilters.insecticideClass);
+    const insecticideTypes = preventionFilters.insecticideTypes.map(item => i18next.t(item));
+    const type = preventionFilters.type?.map(item => i18next.t(item));
+    const species = preventionFilters.species.map(item => i18next.t(item));
+    const assayTypes = preventionFilters.assayTypes.map(item => i18next.t(item));
+    const synergistTypes = preventionFilters.synergistTypes.map(item => i18next.t(item));
+
+    switch (preventionFilters.mapType) {
+        case PreventionMapType.RESISTANCE_STATUS: {
+            return {
+                years,
+                insecticideClass,
+                insecticideTypes: insecticideTypes?.length
+                    ? _.compact(insecticideTypes).join(" | ")
+                    : i18next.t("common.map_info_summary.all"),
+                testType: type?.length ? _.compact(type).join(" | ") : i18next.t("common.map_info_summary.all"),
+                species: species?.length ? _.compact(species).join(" | ") : i18next.t("common.map_info_summary.all"),
+            };
+        }
+        case PreventionMapType.INTENSITY_STATUS: {
+            return {
+                years,
+                insecticideClass,
+                insecticideTypes: insecticideTypes?.length
+                    ? _.compact(insecticideTypes).join(" | ")
+                    : i18next.t("common.map_info_summary.all"),
+                testType: type?.length ? _.compact(type).join(" | ") : i18next.t("common.map_info_summary.all"),
+                species: species?.length ? _.compact(species).join(" | ") : i18next.t("common.map_info_summary.all"),
+            };
+        }
+        case PreventionMapType.RESISTANCE_MECHANISM: {
+            return {
+                years,
+                assayTypes: _.compact(assayTypes).join(" | "),
+                mechanismType: type?.length ? _.compact(type).join(" | ") : i18next.t("common.map_info_summary.all"),
+                species: species?.length ? _.compact(species).join(" | ") : i18next.t("common.map_info_summary.all"),
+            };
+        }
+        case PreventionMapType.LEVEL_OF_INVOLVEMENT: {
+            return {
+                years,
+                synergistTypes: _.compact(synergistTypes).join(" | "),
+                testType: type?.length ? _.compact(type).join(" | ") : i18next.t("common.map_info_summary.all"),
+                species: species?.length ? _.compact(species).join(" | ") : i18next.t("common.map_info_summary.all"),
+            };
+        }
+    }
+}
+
+export function diagnosisValueLabelFilters(
+    diagnosisFilters: DiagnosisFilters,
+    maxMinYears: number[],
+    yearFilters: number[]
+) {
+    const years = getYearsSummary(maxMinYears, yearFilters);
+
+    const deletionType = i18next.t(diagnosisFilters.deletionType);
+    const surveyTypes = diagnosisFilters.surveyTypes.map(item => i18next.t(item));
+    const patientType = i18next.t(diagnosisFilters.patientType);
+    return {
+        years,
+        deletionType,
+        surveyTypes: surveyTypes?.length
+            ? _.compact(surveyTypes).join(" | ")
+            : i18next.t("common.map_info_summary.all"),
+        patientType,
+    };
+}
+
+export function invasiveValueLabelFilters(
+    invasiveFilters: InvasiveFilters,
+    maxMinYears: number[],
+    yearFilters: number[]
+) {
+    const years = getYearsSummary(maxMinYears, yearFilters);
+
+    const vectorSpecies = invasiveFilters.vectorSpecies.map(item => {
+        const vectorSpecie = suggestions().find(sug => sug.value === item);
+        return vectorSpecie.label;
+    });
+
+    return {
+        years,
+        vectorSpecies: vectorSpecies?.length
+            ? _.compact(vectorSpecies).join(" | ")
+            : i18next.t("common.map_info_summary.all"),
+    };
+}
+
+export function treatmentValueLabelFilters(
+    treatmentFilters: TreatmentFilters,
+    maxMinYears: number[],
+    yearFilters: number[]
+) {
+    const years = getYearsSummary(maxMinYears, yearFilters);
+    const excludeStudies = treatmentFilters.excludeLowerPatients
+        ? i18next.t("common.filters.exclude_lower_patients")
+        : undefined;
+
+    const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.filter(item =>
+        treatmentFilters.plasmodiumSpecies.includes(item.value)
+    ).map(plasmodiumSpecies => plasmodiumSpecies.label);
+
+    const drugs = treatmentFilters.drugs.map(drug => i18next.t(drug));
+    const molecularMarker = MOLECULAR_MARKERS.find(item => item.value === treatmentFilters.molecularMarker);
+
+    switch (treatmentFilters.mapType) {
+        case TreatmentMapType.TREATMENT_FAILURE:
+        case TreatmentMapType.DELAYED_PARASITE_CLEARANCE: {
+            return {
+                years,
+                plasmodiumSpecies: plasmodiumSpecies?.length
+                    ? _.compact(plasmodiumSpecies).join(" | ")
+                    : i18next.t("common.map_info_summary.all"),
+                drugs: drugs?.length ? _.compact(drugs).join(" | ") : i18next.t("common.map_info_summary.all"),
+                excludeStudies,
+            };
+        }
+        case TreatmentMapType.MOLECULAR_MARKERS: {
+            return {
+                years,
+                molecularMarker: molecularMarker?.label,
+                excludeStudies,
+            };
+        }
+    }
+}
+
 export function filtersToString(
     theme: string,
     preventionFilters: PreventionFilters,
@@ -193,14 +352,11 @@ export function treatmentFiltersToString(
     const exlude = treatmentFilters.excludeLowerPatients
         ? i18next.t("common.filters.exclude_lower_patients")
         : undefined;
-    const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.find(
-        item => item.value === treatmentFilters.plasmodiumSpecies
-    );
-    const plasmodiumSpeciesArray = PLASMODIUM_SPECIES_SUGGESTIONS.filter(item =>
-        treatmentFilters.plasmodiumSpeciesArray.includes(item.value)
+
+    const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.filter(item =>
+        treatmentFilters.plasmodiumSpecies.includes(item.value)
     ).map(plasmodiumSpecies => plasmodiumSpecies.label);
 
-    const drug = i18next.t(treatmentFilters.drug);
     const drugs = treatmentFilters.drugs.map(drug => i18next.t(drug));
 
     const molecularMarker = MOLECULAR_MARKERS.find(item => item.value === treatmentFilters.molecularMarker);
@@ -209,19 +365,19 @@ export function treatmentFiltersToString(
         switch (treatmentFilters.mapType) {
             case TreatmentMapType.TREATMENT_FAILURE:
             case TreatmentMapType.DELAYED_PARASITE_CLEARANCE: {
-                return _.compact([plasmodiumSpecies?.label, drug, exlude, years]).join(" | ");
+                return _.compact([...plasmodiumSpecies, ...drugs, exlude, years]).join(" | ");
             }
             case TreatmentMapType.MOLECULAR_MARKERS: {
                 return _.compact([molecularMarker?.label, exlude, years]).join(" | ");
             }
             case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES: {
-                return _.compact([...plasmodiumSpeciesArray, ...drugs, years]).join(" | ");
+                return _.compact([...plasmodiumSpecies, ...drugs, years]).join(" | ");
             }
         }
     } else {
         switch (treatmentFilters.dataset) {
             case "THERAPEUTIC_EFFICACY_STUDY": {
-                return _.compact([plasmodiumSpecies?.label, drug, exlude, years]).join(" | ");
+                return _.compact([...plasmodiumSpecies, ...drugs, exlude, years]).join(" | ");
             }
             case "MOLECULAR_MARKER_STUDY": {
                 return _.compact([molecularMarker?.label, exlude, years]).join(" | ");

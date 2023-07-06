@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import MosquitoMortalityOverTimeDashboard from "./MosquitoMortalityOverTimeDashboard";
-import ResistanceToInsecticideDashboard from "./ResistanceToInsecticideDashboard";
+import ResistanceToInsecticideDashboard from "./resistance-to-insecticided-dashboard/ResistanceToInsecticideDashboard";
 
 const PhenotypicInsecticideResistanceStudies: React.FC = () => {
     const { t } = useTranslation();

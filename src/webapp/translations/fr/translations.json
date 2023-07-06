@@ -740,6 +740,27 @@
             "zero_all_bioassays": "0 (tous les essais biologiques)",
             "only_include_data_by_health": "N'inclure que les données fournies à l'OMS par les ministères de la santé"
         },
+        "map_info_summary": {
+            "all": "Tous",
+            "years": "Périodes de données",
+            "country": "Pays",
+            "last_updated": "Dernière mise à jour des données",
+            "insecticideClass": "Classe d'insecticide",
+            "insecticideTypes": "Types d'insecticides",
+            "mechanismType": "Type de mécanisme",
+            "testType": "Type de test",
+            "species": "Espèces vectorielles",
+            "assayTypes": "Type d'analyse",
+            "synergistTypes": "Types du mécanismes métaboliques",
+            "deletionType": "Type de délétion",
+            "surveyTypes": "Type d'enquête",
+            "patientType": "Type de patient",
+            "vectorSpecies": "Espèces vectorielles",
+            "plasmodiumSpecies": "Espèces de plasmodium",
+            "drug": "Médicament",
+            "excludeStudies": "Exclus",
+            "molecularMarker": "Marqueur moléculaire"
+        },
         "topbar": {
             "menu": "Menu",
             "maps": "Plans",
@@ -763,7 +784,10 @@
         "screenshot": {
             "screenshot": "Capture d'écran",
             "download_screenshot": "Télécharger la capture d'écran",
-            "generating_screenshot": "Génération de capture d'écran"
+            "generating_screenshot": "Génération de capture d'écran",
+            "footer_data_source": "Source des données: Malaria Threats Map",
+            "footer_production": "Production: Programme mondial de lutte contre le paludisme de l'Organisation mondiale de la Santé",
+            "footer_who_logo": "@WHO {{year}}. Tous droits réservés."
         },
         "chart": {
             "studies": "Études",
