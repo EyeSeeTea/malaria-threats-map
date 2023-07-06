@@ -29,7 +29,7 @@ import {
     setExcludeLowerPatients,
     setExcludeLowerSamples,
     setMolecularMarker,
-    setTreatmentDrug,
+    setTreatmentDrugs,
     setTreatmentMapType,
     setTreatmentPlasmodiumSpecies,
 } from "../store/actions/treatment-actions";
@@ -138,11 +138,11 @@ const MapContainer: React.FC = () => {
                 },
                 plasmodiumSpecies: {
                     selector: (state: State) => state.treatment.filters.plasmodiumSpecies,
-                    action: (value: string) => setTreatmentPlasmodiumSpecies(value),
+                    action: (value: string) => setTreatmentPlasmodiumSpecies(value ? value.split(",") : []),
                 },
-                drug: {
-                    selector: (state: State) => state.treatment.filters.drug,
-                    action: (value: string) => setTreatmentDrug(value),
+                drugs: {
+                    selector: (state: State) => state.treatment.filters.drugs,
+                    action: (value: string) => setTreatmentDrugs(value ? value.split(",") : []),
                 },
                 mmType: {
                     selector: (state: State) => state.treatment.filters.molecularMarker,

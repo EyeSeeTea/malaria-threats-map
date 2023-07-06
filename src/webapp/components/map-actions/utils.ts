@@ -154,6 +154,13 @@ export function treatmentValueLabelFilters(
         ? i18next.t("common.filters.exclude_lower_patients")
         : undefined;
 
+    const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.filter(item =>
+        treatmentFilters.plasmodiumSpecies.includes(item.value)
+    ).map(plasmodiumSpecies => plasmodiumSpecies.label);
+
+    const drugs = treatmentFilters.drugs.map(drug => i18next.t(drug));
+    const molecularMarker = MOLECULAR_MARKERS.find(item => item.value === treatmentFilters.molecularMarker);
+
     switch (treatmentFilters.mapType) {
         case TreatmentMapType.TREATMENT_FAILURE:
         case TreatmentMapType.DELAYED_PARASITE_CLEARANCE: {
@@ -165,8 +172,10 @@ export function treatmentValueLabelFilters(
 
             return {
                 years,
-                plasmodiumSpecies: plasmodiumSpecies?.label,
-                drug,
+                plasmodiumSpecies: plasmodiumSpecies?.length
+                    ? _.compact(plasmodiumSpecies).join(" | ")
+                    : i18next.t("common.map_info_summary.all"),
+                drugs: drugs?.length ? _.compact(drugs).join(" | ") : i18next.t("common.map_info_summary.all"),
                 excludeStudies,
             };
         }
@@ -365,14 +374,11 @@ export function treatmentFiltersToString(
     const exlude = treatmentFilters.excludeLowerPatients
         ? i18next.t("common.filters.exclude_lower_patients")
         : undefined;
-    const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.find(
-        item => item.value === treatmentFilters.plasmodiumSpecies
-    );
-    const plasmodiumSpeciesArray = PLASMODIUM_SPECIES_SUGGESTIONS.filter(item =>
-        treatmentFilters.plasmodiumSpeciesArray.includes(item.value)
+
+    const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.filter(item =>
+        treatmentFilters.plasmodiumSpecies.includes(item.value)
     ).map(plasmodiumSpecies => plasmodiumSpecies.label);
 
-    const drug = i18next.t(treatmentFilters.drug);
     const drugs = treatmentFilters.drugs.map(drug => i18next.t(drug));
 
     const molecularMarker = MOLECULAR_MARKERS.find(item => item.value === treatmentFilters.molecularMarker);
@@ -381,19 +387,19 @@ export function treatmentFiltersToString(
         switch (treatmentFilters.mapType) {
             case TreatmentMapType.TREATMENT_FAILURE:
             case TreatmentMapType.DELAYED_PARASITE_CLEARANCE: {
-                return _.compact([plasmodiumSpecies?.label, drug, exlude, years]).join(" | ");
+                return _.compact([...plasmodiumSpecies, ...drugs, exlude, years]).join(" | ");
             }
             case TreatmentMapType.MOLECULAR_MARKERS: {
                 return _.compact([molecularMarker?.label, exlude, years]).join(" | ");
             }
             case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES: {
-                return _.compact([...plasmodiumSpeciesArray, ...drugs, years]).join(" | ");
+                return _.compact([...plasmodiumSpecies, ...drugs, years]).join(" | ");
             }
         }
     } else {
         switch (treatmentFilters.dataset) {
             case "THERAPEUTIC_EFFICACY_STUDY": {
-                return _.compact([plasmodiumSpecies?.label, drug, exlude, years]).join(" | ");
+                return _.compact([...plasmodiumSpecies, ...drugs, exlude, years]).join(" | ");
             }
             case "MOLECULAR_MARKER_STUDY": {
                 return _.compact([molecularMarker?.label, exlude, years]).join(" | ");
