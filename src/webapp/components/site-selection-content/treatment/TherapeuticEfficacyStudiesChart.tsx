@@ -37,6 +37,11 @@ type StudyDetails = {
     };
 };
 
+type StudyDetailsConfig = {
+    title: string;
+    config: StudyDetails;
+};
+
 type TherapeuticEfficacyStudiesChartProps = {
     studyObject: Study;
     data: TreatmentStudy[];
@@ -74,25 +79,31 @@ const TherapeuticEfficacyStudiesChart = ({ studyObject, data }: TherapeuticEffic
         t,
     ]);
 
-    const studyDetailsTablesConfig: StudyDetails[] = React.useMemo(() => {
+    const studyDetailsTablesConfig: StudyDetailsConfig[] = React.useMemo(() => {
         return data.map(item => ({
-            [STUDY_DETAILS_KEYS.AGE_GROUP]: {
-                label: t(`common.treatment.chart.therapeutic_efficacy_studies.age_group`),
-                value: item.AGE_GP_ID,
-            },
-            [STUDY_DETAILS_KEYS.SPECIES]: {
-                label: t(`common.treatment.chart.therapeutic_efficacy_studies.species`),
-                value:
-                    PLASMODIUM_SPECIES_SUGGESTIONS.find(species => species.value === item.PLASMODIUM_SPECIES)?.label ||
-                    item.PLASMODIUM_SPECIES,
-            },
-            [STUDY_DETAILS_KEYS.DRUG]: {
-                label: t(`common.treatment.chart.therapeutic_efficacy_studies.drug`),
-                value: t(item.DRUG_NAME),
-            },
-            [STUDY_DETAILS_KEYS.GENOTYPING]: {
-                label: t(`common.treatment.chart.therapeutic_efficacy_studies.genotyping`),
-                value: item.MM_LIST,
+            title: t(`common.treatment.chart.therapeutic_efficacy_studies.study_details`, {
+                number: item.STUDY_SEQ,
+                count: data.length,
+            }),
+            config: {
+                [STUDY_DETAILS_KEYS.AGE_GROUP]: {
+                    label: t(`common.treatment.chart.therapeutic_efficacy_studies.age_group`),
+                    value: item.AGE_GP,
+                },
+                [STUDY_DETAILS_KEYS.SPECIES]: {
+                    label: t(`common.treatment.chart.therapeutic_efficacy_studies.species`),
+                    value:
+                        PLASMODIUM_SPECIES_SUGGESTIONS.find(species => species.value === item.PLASMODIUM_SPECIES)
+                            ?.label || item.PLASMODIUM_SPECIES,
+                },
+                [STUDY_DETAILS_KEYS.DRUG]: {
+                    label: t(`common.treatment.chart.therapeutic_efficacy_studies.drug`),
+                    value: t(item.DRUG_NAME),
+                },
+                [STUDY_DETAILS_KEYS.GENOTYPING]: {
+                    label: t(`common.treatment.chart.therapeutic_efficacy_studies.genotyping`),
+                    value: item.MM_LIST,
+                },
             },
         }));
     }, [data, t]);
@@ -134,14 +145,10 @@ const TherapeuticEfficacyStudiesChart = ({ studyObject, data }: TherapeuticEffic
                 </Table>
             </RoundedContainer>
             <StyledDivider />
-            {studyDetailsTablesConfig.map((studyDetailsConfig, index) => (
-                <React.Fragment key={`study_number_${index}`}>
+            {studyDetailsTablesConfig.map(({ title, config: studyDetailsConfig }, index) => (
+                <React.Fragment key={title}>
                     <RoundedContainer $isLast={index === studyDetailsTablesConfig.length - 1}>
-                        <StyledTypography>
-                            {t(`common.treatment.chart.therapeutic_efficacy_studies.study_details`, {
-                                number: index + 1,
-                            })}
-                        </StyledTypography>
+                        <StyledTypography>{title}</StyledTypography>
                         <Table>
                             <TableBody>
                                 {Object.entries(studyDetailsConfig).map(([key, { label, value }], index) => (

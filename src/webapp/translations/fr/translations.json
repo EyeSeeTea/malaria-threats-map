@@ -578,7 +578,8 @@
                 "therapeutic_efficacy_studies": {
                     "subtitle": "Détails des études d'efficacité thérapeutique",
                     "overview": "Vue d'ensemble",
-                    "study_details": "Etude {{number}} détails",
+                    "study_details_one": "Etude détails",
+                    "study_details_other": "Etude {{number}} détails",
                     "ongoing": "En cours",
                     "planned": "Prévu",
                     "completed_results_pending": "Terminé (résultats en attente)",

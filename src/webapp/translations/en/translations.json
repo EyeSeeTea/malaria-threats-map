@@ -576,7 +576,8 @@
                 "therapeutic_efficacy_studies": {
                     "subtitle": "Details of therapeutic efficacy studies",
                     "overview": "Overview",
-                    "study_details": "Study {{number}} details",
+                    "study_details_one": "Study details",
+                    "study_details_other": "Study {{number}} details",
                     "ongoing": "Ongoing",
                     "planned": "Planned",
                     "completed_results_pending": "Completed (results pending)",
