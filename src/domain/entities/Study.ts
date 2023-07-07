@@ -2,7 +2,6 @@ import _ from "lodash";
 import { RegionState } from "../../webapp/store/types";
 
 export interface Study {
-    AGE_GP_ID?: string;
     OBJECTID: number;
     VILLAGE_NAME: string;
     SITE_ID: string;

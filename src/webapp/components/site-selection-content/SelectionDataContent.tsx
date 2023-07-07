@@ -22,7 +22,7 @@ import TreatmentChart from "./treatment/TreatmentChart";
 import AditionalInformation from "../layers/treatment/common/Aditionalnformation";
 import MolecularMarkersChart from "./treatment/MolecularMarkersChart";
 import TherapeuticEfficacyStudiesChart from "./treatment/TherapeuticEfficacyStudiesChart";
-import { COMMON_SELECTION_DATA_TYPES, CommonSelectionData } from "../../store/SelectionData";
+import { CommonSelectionData } from "../../store/SelectionData";
 import { InvasiveSelectionData } from "../../store/epics/invasive/types";
 import { PayloadActionCreator } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
@@ -186,16 +186,16 @@ const CommonContent: React.FC<{
 
     const chartCataContent = () => {
         switch (selectionData.data.kind) {
-            case COMMON_SELECTION_DATA_TYPES.PREVENTION: {
+            case "prevention": {
                 return <PreventionChart mapType={preventionFilters.mapType} selectionData={selectionData} />;
             }
-            case COMMON_SELECTION_DATA_TYPES.PREVENTION_MECHANISM: {
+            case "prevention-mechanism": {
                 return <PreventionMechanismsChart selectionData={selectionData} />;
             }
-            case COMMON_SELECTION_DATA_TYPES.TREATMENT: {
+            case "treatment": {
                 return <TreatmentChart selectionData={selectionData} />;
             }
-            case COMMON_SELECTION_DATA_TYPES.TREATMENT_MOLECULAR_MARKERS: {
+            case "treatment-molecular-markers": {
                 return <MolecularMarkersChart selectionData={selectionData} />;
             }
         }
@@ -223,11 +223,8 @@ const CommonContent: React.FC<{
             </TopContainer>
 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
-            {selectionData.data.kind === COMMON_SELECTION_DATA_TYPES.THERAPEUTIC_EFFICACY_STUDIES ? (
-                <TherapeuticEfficacyStudiesChart
-                    studyObject={selectionData.studyObject}
-                    data={selectionData.data.data}
-                />
+            {selectionData.data.kind === "therapeutic-efficacy-studies" ? (
+                <TherapeuticEfficacyStudiesChart selectionData={selectionData} />
             ) : (
                 <RoundedContainer>
                     {selectionData.data && chartCataContent()}

@@ -1,5 +1,4 @@
 import { Study } from "../../domain/entities/Study";
-import { TreatmentStudy } from "../../domain/entities/TreatmentStudy";
 import { Option } from "../components/BasicSelect";
 import { DiagnosisSelectionData } from "./epics/diagnosis/types";
 import { InvasiveSelectionData } from "./epics/invasive/types";
@@ -26,14 +25,6 @@ export type CommonSelectionData = {
     aditionalInformation?: AditionalInformation[];
 };
 
-export enum COMMON_SELECTION_DATA_TYPES {
-    PREVENTION = "prevention",
-    PREVENTION_MECHANISM = "prevention-mechanism",
-    TREATMENT = "treatment",
-    TREATMENT_MOLECULAR_MARKERS = "treatment-molecular-markers",
-    THERAPEUTIC_EFFICACY_STUDIES = "therapeutic-efficacy-studies",
-}
-
 export type preventionChartDataTitle = {
     statusColor: string;
     titlePrefix: string;
@@ -46,12 +37,12 @@ export type PreventionChartDataContent = {
 };
 
 export type PreventionChartData = {
-    kind: COMMON_SELECTION_DATA_TYPES.PREVENTION;
+    kind: "prevention";
     data: PreventionChartDataContent;
 };
 
 export type PreventionMechanismChartData = {
-    kind: COMMON_SELECTION_DATA_TYPES.PREVENTION_MECHANISM;
+    kind: "prevention-mechanism";
     data: {
         [x: string]: {
             [x: string]: {
@@ -64,12 +55,12 @@ export type PreventionMechanismChartData = {
 };
 
 export type TreatmentChartData = {
-    kind: COMMON_SELECTION_DATA_TYPES.TREATMENT;
+    kind: "treatment";
     data: { years: string[]; series: TreatmentChartDataGroup[] };
 };
 
 export type TreatmentMolecularMarkersChartData = {
-    kind: COMMON_SELECTION_DATA_TYPES.TREATMENT_MOLECULAR_MARKERS;
+    kind: "treatment-molecular-markers";
     data: {
         years: string[];
         series: TreatmentChartDataSerie[];
@@ -77,9 +68,45 @@ export type TreatmentMolecularMarkersChartData = {
     };
 };
 
+export enum THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS {
+    STATUS = "status",
+    PROPOSED_TIMEFRAME = "proposedTimeframe",
+    LEAD_INSTITUTION = "leadInstitution",
+    FUNDING_SOURCE = "fundingSource",
+}
+
+export type TherapeuticEfficacyStudiesOverviewInfo = {
+    [K in THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS]: {
+        label: string;
+        value: string;
+    };
+};
+
+export enum THERAPEUTIC_EFFICACY_STUDY_DETAILS_KEYS {
+    AGE_GROUP = "ageGroup",
+    SPECIES = "species",
+    DRUG = "drug",
+    GENOTYPING = "genotyping",
+}
+
+type TherapeuticEfficacyStudyDetails = {
+    [K in THERAPEUTIC_EFFICACY_STUDY_DETAILS_KEYS]: {
+        label: string;
+        value: string;
+    };
+};
+
+export type TherapeuticEfficacyStudiesDetailsConfig = {
+    title: string;
+    studyDetails: TherapeuticEfficacyStudyDetails;
+};
+
 export type TherapeuticEfficacyStudiesData = {
-    kind: COMMON_SELECTION_DATA_TYPES.THERAPEUTIC_EFFICACY_STUDIES;
-    data: TreatmentStudy[];
+    kind: "therapeutic-efficacy-studies";
+    data: {
+        overviewInfo: TherapeuticEfficacyStudiesOverviewInfo;
+        studiesDetailsConfig: TherapeuticEfficacyStudiesDetailsConfig[];
+    };
 };
 
 export type TreatmentChartDataSerie = {
