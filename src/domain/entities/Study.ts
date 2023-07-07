@@ -12,8 +12,6 @@ export interface Study {
     CURATION: string;
     CITATION_URL: string;
     CITATION: string;
-    DRUG_NAME?: string;
-    FUNDING_SOURCE?: string;
     Latitude: string;
     Longitude: string;
     INSTITUTION?: string;
@@ -32,12 +30,10 @@ export interface Study {
     MECHANISM_PROXY: string;
     MECHANISM_STATUS: string;
     METHOD_STANDARD: number;
-    MM_LIST?: string;
     MONTH_END: string;
     MONTH_START: string;
     MORTALITY_ADJUSTED: string;
     NUMBER: string;
-    PLASMODIUM_SPECIES?: string;
     PROXY_TYPE: string;
     REGION_FULL: string;
     RESISTANCE_FREQUENCY: string;
@@ -47,7 +43,6 @@ export interface Study {
     SPECIES: string;
     STAGE_ORIGIN: string;
     SUBREGION: string;
-    SURV_STATUS?: number;
     SYNERGIST_CONC: string;
     SYNERGIST_TYPE: string;
     TIME: string;
