@@ -10,6 +10,7 @@ import {
     PreventionStudy,
 } from "../../../../domain/entities/PreventionStudy";
 import { Option } from "../../../components/BasicSelect";
+import { getMaxMinYears } from "../../../../domain/entities/Study";
 
 export function usePrevention() {
     const {
@@ -29,6 +30,8 @@ export function usePrevention() {
     const [speciesOptions, setSpeciesOptions] = React.useState<Option[]>([]);
     const [typeOptions, setTypeOptions] = React.useState<Option[]>([]);
     const { preventionStudies, dashboardsPreventionStudies, selectedCountries } = useDashboards();
+
+    const minMaxYears = getMaxMinYears(dashboardsPreventionStudies);
 
     React.useEffect(() => {
         const filteredStudies = filterStudies(dashboardsPreventionStudies, filters);
@@ -115,6 +118,7 @@ export function usePrevention() {
         speciesOptions,
         typeOptions,
         dashboardsPreventionStudies,
+        minMaxYears,
         onInsecticideClassChange,
         onSpeciesChange,
         onInsecticideTypesChange,
