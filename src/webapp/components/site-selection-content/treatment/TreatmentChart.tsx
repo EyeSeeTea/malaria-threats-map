@@ -24,7 +24,7 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
         },
     },
     tooltip: {
-        enabled: true,
+        enabled: false,
     },
     title: {
         text: "",

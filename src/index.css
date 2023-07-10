@@ -211,11 +211,6 @@ code {
 .highcharts-tooltip table {
     height: auto;
     width: 400px;
-    z-index: 20 !important;
-}
-
-.highcharts-tooltip-container {
-    z-index: 10000 !important;
 }
 
 .tour-modal {
