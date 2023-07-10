@@ -26,13 +26,30 @@ const Terms = ({ onChange, termsInfo, selectedDatabases, onChooseOther }: OwnPro
                     <Typography variant="h4" fontWeight="bold" sx={{ marginBottom: 6 }}>
                         {t("common.data_download.terms_step.title")}
                     </Typography>
-                    <Typography variant={"body1"}>{t("common.data_download.terms_step.p1")}</Typography>
-                    <br />
-                    <Typography variant={"h5"} gutterBottom>
-                        {t("common.data_download.terms_step.acknowledgements")}
-                    </Typography>
-
-                    <Typography variant={"body1"}>{t("common.data_download.terms_step.p2")}</Typography>
+                    <TermsContainer>
+                        <div>
+                            <Typography variant={"body1"}>{t("common.data_download.terms_step.p1")}</Typography>
+                            <br />
+                            <Typography variant={"h5"} gutterBottom>
+                                {t("common.data_download.terms_step.acknowledgements")}
+                            </Typography>
+                            <Typography variant={"body1"}>{t("common.data_download.terms_step.p2")}</Typography>
+                        </div>
+                        <FormControlLabel
+                            sx={{ paddingTop: 3 }}
+                            control={
+                                <Checkbox
+                                    name="checkedA"
+                                    checked={termsInfo.agreement}
+                                    onChange={handleChange}
+                                    color="primary"
+                                />
+                            }
+                            label={
+                                <Typography variant={"body2"}>{t("common.data_download.terms_step.check")}</Typography>
+                            }
+                        />
+                    </TermsContainer>
                 </Grid>
                 <Grid item md={6} xs={12}>
                     <RoundedCard elevation={0}>
@@ -66,20 +83,6 @@ const Terms = ({ onChange, termsInfo, selectedDatabases, onChooseOther }: OwnPro
                         </Stack>
                     </RoundedCard>
                 </Grid>
-                <Grid item xs={12}>
-                    <FormControlLabel
-                        sx={{ marginTop: 8 }}
-                        control={
-                            <Checkbox
-                                name="checkedA"
-                                checked={termsInfo.agreement}
-                                onChange={handleChange}
-                                color="primary"
-                            />
-                        }
-                        label={<Typography variant={"body2"}>{t("common.data_download.terms_step.check")}</Typography>}
-                    />
-                </Grid>
             </Grid>
         </React.Fragment>
     );
@@ -94,4 +97,11 @@ const RoundedCard = styled(Card)`
     min-height: 300px;
     display: flex;
     flex-direction: column;
+`;
+
+const TermsContainer = styled.div`
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 `;
