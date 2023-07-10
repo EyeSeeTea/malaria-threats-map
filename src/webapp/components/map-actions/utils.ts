@@ -18,11 +18,11 @@ import {
 } from "../DataDownload/filters/DataSetSelector";
 import { diagnosisSuggestions } from "../filters/DiagnosisMapTypesSelector";
 import { invasiveSuggestions } from "../filters/InvasiveMapTypesSelector";
-import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
 import { preventionSuggestions } from "../filters/PreventionMapTypesSelector";
 import { treatmentSuggestions } from "../filters/TreatmentMapTypesSelector";
 import { suggestions } from "../filters/VectorSpeciesFilter";
+import { MOLECULAR_MARKERS_LABELS } from "../layers/treatment/MolecularMarkersOngoingStudies/utils";
 
 export function getValueLabelFilters(
     theme: string,
@@ -160,6 +160,10 @@ export function treatmentValueLabelFilters(
 
     const drugs = treatmentFilters.drugs.map(drug => i18next.t(drug));
 
+    const molecularMarkers = MOLECULAR_MARKERS_LABELS.filter(item =>
+        treatmentFilters.molecularMarkers.includes(item.value)
+    ).map(molecularMarkers => molecularMarkers.label);
+
     switch (treatmentFilters.mapType) {
         case TreatmentMapType.TREATMENT_FAILURE:
         case TreatmentMapType.DELAYED_PARASITE_CLEARANCE: {
@@ -173,10 +177,11 @@ export function treatmentValueLabelFilters(
             };
         }
         case TreatmentMapType.MOLECULAR_MARKERS: {
-            const molecularMarker = MOLECULAR_MARKERS.find(item => item.value === treatmentFilters.molecularMarker);
             return {
                 years,
-                molecularMarker: molecularMarker?.label,
+                molecularMarkers: molecularMarkers?.length
+                    ? _.compact(molecularMarkers).join(" | ")
+                    : i18next.t("common.map_info_summary.all"),
                 excludeStudies,
             };
         }
@@ -189,6 +194,13 @@ export function treatmentValueLabelFilters(
                     : i18next.t("common.map_info_summary.all"),
             };
         }
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return {
+                years,
+                molecularMarkers: molecularMarkers?.length
+                    ? _.compact(molecularMarkers).join(" | ")
+                    : i18next.t("common.map_info_summary.all"),
+            };
     }
 }
 
@@ -368,7 +380,9 @@ export function treatmentFiltersToString(
 
     const drugs = treatmentFilters.drugs.map(drug => i18next.t(drug));
 
-    const molecularMarker = MOLECULAR_MARKERS.find(item => item.value === treatmentFilters.molecularMarker);
+    const molecularMarkers = MOLECULAR_MARKERS_LABELS.filter(item =>
+        treatmentFilters.molecularMarkers.includes(item.value)
+    ).map(molecularMarkers => molecularMarkers.label);
 
     if (from === "map") {
         switch (treatmentFilters.mapType) {
@@ -377,10 +391,13 @@ export function treatmentFiltersToString(
                 return _.compact([...plasmodiumSpecies, ...drugs, exlude, years]).join(" | ");
             }
             case TreatmentMapType.MOLECULAR_MARKERS: {
-                return _.compact([molecularMarker?.label, exlude, years]).join(" | ");
+                return _.compact([...molecularMarkers, exlude, years]).join(" | ");
             }
             case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES: {
                 return _.compact([...plasmodiumSpecies, ...drugs, years]).join(" | ");
+            }
+            case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES: {
+                return _.compact([...molecularMarkers, years]).join(" | ");
             }
         }
     } else {
@@ -389,7 +406,7 @@ export function treatmentFiltersToString(
                 return _.compact([...plasmodiumSpecies, ...drugs, exlude, years]).join(" | ");
             }
             case "MOLECULAR_MARKER_STUDY": {
-                return _.compact([molecularMarker?.label, exlude, years]).join(" | ");
+                return _.compact([...molecularMarkers, exlude, years]).join(" | ");
             }
         }
     }

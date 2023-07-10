@@ -5,7 +5,7 @@ import IntegrationReactSelect, { OptionType } from "../BasicSelect";
 import styled from "styled-components";
 import { Divider, FilterWrapper } from "./Filters";
 import { Typography } from "@mui/material";
-import { MolecularMarker, MOLECULAR_MARKERS } from "./MolecularMarkerFilter";
+import { MolecularMarker, MOLECULAR_MARKERS } from "./MolecularMarkerRadioFilter";
 
 type DrugsSelectorProps = {
     onChange: (selection: MolecularMarker) => void;

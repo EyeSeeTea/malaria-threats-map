@@ -8,7 +8,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import InformationModal from "../../../components/dashboards/TreatmentInformationModal";
 import HighchartsReact from "highcharts-react-official";
-import { MolecularMarker } from "../../../components/filters/MolecularMarkerFilter";
+import { MolecularMarker } from "../../../components/filters/MolecularMarkerRadioFilter";
 import { useFiltersVisible } from "../common/filters/useFiltersVisible";
 import DashboardTitle from "../common/DashboardTitle";
 import ScreenshotModal from "../../../components/ScreenshotModal";
@@ -122,7 +122,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                                 onYearsChange={onYearsChange}
                                 onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
                                 onExcludeLowerSamplesChange={onExcludeLowerSamplesChange}
-                                onCollapse={onChangeFiltersVisible} 
+                                onCollapse={onChangeFiltersVisible}
                             ></TreatmentFilters>
                             <StudiesCountCard elevation={0}>
                                 {t("common.dashboard.therapeuticEfficacyDashboards.numStudies", {
@@ -154,7 +154,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
     );
 };
 
-const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = (props) => {
+const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = props => {
     const [open, setOpen] = React.useState(false);
 
     const handleScreenshot = React.useCallback(() => {
@@ -167,7 +167,7 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
 
     return (
         <>
-            <TreatmentFilterableDashboardComponent {...props} onScreenshot={handleScreenshot}/>
+            <TreatmentFilterableDashboardComponent {...props} onScreenshot={handleScreenshot} />
             <ScreenshotModal
                 open={open}
                 onClose={handleCloseScreenshot}
@@ -175,7 +175,7 @@ const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> 
                 backgroundColor={SCREENSHOT_BACKGROUND_COLOR}
                 exclusionClasses={SCREENSHOT_EXCLUSION_CLASSES}
             >
-                <TreatmentFilterableDashboardComponent {...props} isScreenshot/>
+                <TreatmentFilterableDashboardComponent {...props} isScreenshot />
             </ScreenshotModal>
         </>
     );
@@ -185,19 +185,20 @@ export default TreatmentFilterableDashboard;
 
 const Container = styled.div<{ isScreenshot: boolean }>`
     padding: 10px;
-    width: ${props => props?.isScreenshot && 'fit-content'};
+    width: ${props => props?.isScreenshot && "fit-content"};
 `;
 
 const StyledGridItem = styled(Grid)<{ isScreenshot: boolean }>`
-    width: ${props => props?.isScreenshot && 'fit-content' };
-    max-width: ${props => props?.isScreenshot && 'fit-content' };
-    .MuiChip-root, .MuiChip-label {
-        overflow: ${props => props?.isScreenshot && 'initial' };
+    width: ${props => props?.isScreenshot && "fit-content"};
+    max-width: ${props => props?.isScreenshot && "fit-content"};
+    .MuiChip-root,
+    .MuiChip-label {
+        overflow: ${props => props?.isScreenshot && "initial"};
     }
 `;
 
 const StyledGridContainer = styled(Grid)<{ isScreenshot: boolean }>`
-    flex-wrap: ${props => props?.isScreenshot && 'nowrap' };
+    flex-wrap: ${props => props?.isScreenshot && "nowrap"};
 `;
 
 const DasboardCard = styled(Card)`

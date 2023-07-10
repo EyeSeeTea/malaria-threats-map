@@ -547,6 +547,8 @@
             "molecular_markers_subtitle": "Résultats des études sur les marqueurs moléculaires",
             "therapeutic_efficacy_studies": "Études d'efficacité thérapeutique en cours et prévues",
             "therapeutic_efficacy_studies_subtitle": "Détails des études d'efficacité thérapeutique",
+            "molecular_markers_ongoing_studies": "Études sur les marqueurs moléculaires en cours et prévues",
+            "molecular_markers_ongoing_studies_subtitle": "Détails des études sur les marqueurs moléculaires",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre <i>{{plasmodiumSpecies}}</i> {{years}}",
@@ -637,7 +639,18 @@
                     "help": {
                         "p1": "",
                         "p2": "",
-                        "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
+                        "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
+                    }
+                },
+                "molecular_markers_ongoing_studies": {
+                    "title": "Statut des études sur les marqueurs moléculaires",
+                    "ongoing": "En cours",
+                    "planned": "Prévu",
+                    "completed": "Terminé (résultats en attente)",
+                    "help": {
+                        "p1": "",
+                        "p2": "",
+                        "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
                     }
                 }
             }
@@ -761,7 +774,8 @@
             "drug": "Médicament",
             "drugs": "Médicaments",
             "excludeStudies": "Exclus",
-            "molecularMarker": "Marqueur moléculaire"
+            "molecularMarker": "Marqueur moléculaire",
+            "molecularMarkers": "Marqueurs moléculaires"
         },
         "topbar": {
             "menu": "Menu",

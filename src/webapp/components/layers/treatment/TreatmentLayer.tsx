@@ -81,7 +81,7 @@ class TreatmentLayer extends Component<Props> {
                 mapType,
                 plasmodiumSpecies,
                 drugs,
-                molecularMarker,
+                molecularMarkers,
                 excludeLowerPatients,
                 excludeLowerSamples,
             },
@@ -99,7 +99,7 @@ class TreatmentLayer extends Component<Props> {
         const countryChange = prevProps.region !== region;
         const plasmodiumSpeciesChange = !_.isEqual(prevProps.treatmentFilters.plasmodiumSpecies, plasmodiumSpecies);
         const drugChange = !_.isEqual(prevProps.treatmentFilters.drugs, drugs);
-        const molecularMarkerChange = prevProps.treatmentFilters.molecularMarker !== molecularMarker;
+        const molecularMarkerChange = !_.isEqual(prevProps.treatmentFilters.molecularMarkers, molecularMarkers);
         const excludeLowerPatientsChange = prevProps.treatmentFilters.excludeLowerPatients !== excludeLowerPatients;
         const excludeLowerSamplesChange = prevProps.treatmentFilters.excludeLowerSamples !== excludeLowerSamples;
         if (

@@ -17,7 +17,7 @@ import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../components/filters/PlasmodiumSpeciesFilter";
 import { isNotNull } from "../../../utils/number-utils";
 import { MutationColors } from "../../../components/layers/treatment/MolecularMarkers/utils";
-import { molecularMarkersMap, MOLECULAR_MARKERS } from "../../../components/filters/MolecularMarkerFilter";
+import { molecularMarkersMap, MOLECULAR_MARKERS } from "../../../components/filters/MolecularMarkerRadioFilter";
 import { createCitationDataSources, selectDataSourcesByStudies } from "../common/utils";
 import LineSymbol from "../../../assets/img/line.svg";
 import {
@@ -96,7 +96,7 @@ function sortStudies(studies: TreatmentStudy[], treatmentFilters: TreatmentFilte
 function geSubtitle(treatmentFilters: TreatmentFilters, studyObject: TreatmentStudy) {
     if (treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS) {
         const molecularMarker = i18next.t(
-            MOLECULAR_MARKERS.find((m: any) => m.value === treatmentFilters.molecularMarker).label
+            MOLECULAR_MARKERS.find((m: any) => treatmentFilters.molecularMarkers.includes(m.value)).label
         );
 
         return i18next.t("common.treatment.chart.molecular_markers.subtitle", {
@@ -227,26 +227,22 @@ function createMolecularMarkersChartData(
         data: {
             years,
             series,
-            markers:
-                treatmentFilters.molecularMarker === molecularMarkersMap.Pfkelch13
-                    ? {
-                          "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
-                          "Validated markers": extractMarkersByMutationCategory(allStudies257, "validated"),
-                          "Candidate markers": extractMarkersByMutationCategory(allStudies257, "associated"),
-                          "Other markers": extractMarkersByMutationCategory(allStudies257, "other"),
-                      }
-                    : treatmentFilters.molecularMarker === molecularMarkersMap.Pfcrt
-                    ? {
-                          "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
-                          Mutations: extractMarkersByMutationCategory(allStudies257, "mutations"),
-                      }
-                    : {
-                          "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
-                          "Multiple copy numbers": extractMarkersByMutationCategory(
-                              allStudies257,
-                              "multiple copy number"
-                          ),
-                      },
+            markers: treatmentFilters.molecularMarkers.includes(molecularMarkersMap.Pfkelch13)
+                ? {
+                      "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
+                      "Validated markers": extractMarkersByMutationCategory(allStudies257, "validated"),
+                      "Candidate markers": extractMarkersByMutationCategory(allStudies257, "associated"),
+                      "Other markers": extractMarkersByMutationCategory(allStudies257, "other"),
+                  }
+                : treatmentFilters.molecularMarkers.includes(molecularMarkersMap.Pfcrt)
+                ? {
+                      "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
+                      Mutations: extractMarkersByMutationCategory(allStudies257, "mutations"),
+                  }
+                : {
+                      "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
+                      "Multiple copy numbers": extractMarkersByMutationCategory(allStudies257, "multiple copy number"),
+                  },
         },
     };
 }

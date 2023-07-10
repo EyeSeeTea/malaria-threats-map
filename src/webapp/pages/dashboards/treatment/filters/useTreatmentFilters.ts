@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { MolecularMarker } from "../../../../components/filters/MolecularMarkerFilter";
+import { MolecularMarker } from "../../../../components/filters/MolecularMarkerRadioFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../../components/filters/PlasmodiumSpeciesFilter";
 
 export function useTreatmentFilters() {

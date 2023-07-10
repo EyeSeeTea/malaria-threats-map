@@ -5,9 +5,15 @@ import styled from "styled-components";
 
 import { getValueLabelFilters } from "./map-actions/utils";
 import { State } from "../store/types";
-import { selectFilters, selectLastUpdatedDates, selectMaxMinYears, selectRegion, selectTheme } from "../store/reducers/base-reducer";
+import {
+    selectFilters,
+    selectLastUpdatedDates,
+    selectMaxMinYears,
+    selectRegion,
+    selectTheme,
+} from "../store/reducers/base-reducer";
 import { selectDiagnosisFilters } from "../store/reducers/diagnosis-reducer";
-import { selectPreventionFilters } from '../store/reducers/prevention-reducer';
+import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 import { selectTranslations } from "../store/reducers/translations-reducer";
@@ -41,7 +47,7 @@ function MapInfoSummaryLegend({
     lastUpdatedDates,
 }: MapInfoSummaryLegendProps) {
     const { t } = useTranslation();
-  
+
     const selectedValueLabelFilters = React.useMemo(() => {
         if (!translations?.length) return;
 
@@ -52,7 +58,7 @@ function MapInfoSummaryLegend({
             diagnosisFilters,
             invasiveFilters,
             maxMinYears,
-            yearFilters,
+            yearFilters
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
@@ -100,7 +106,7 @@ export default connect(mapStateToProps)(MapInfoSummaryLegend);
 const MapInfoSummaryLegendContainer = styled.div`
     padding: 15px 20px;
     border-radius: 12px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     width: 100%;
 `;
 

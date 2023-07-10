@@ -17,6 +17,7 @@ import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
 import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
 import { BIOCHEMICAL_MECHANISM_TYPES, MOLECULAR_MECHANISM_TYPES } from "../DataDownload/mappers/cvsMapper";
 import { Source } from "../../store/actions/base-actions";
+import { MOLECULAR_MARKERS_MAP } from "./treatment/MolecularMarkersOngoingStudies/utils";
 
 export const DELETION_TYPES = {
     HRP2_PROPORTION_DELETION: {
@@ -223,8 +224,17 @@ export const filterByMolecularMarker = (molecularMarker?: number) => (study: any
     return !molecularMarker || study.MM_TYPE === molecularMarker.toString();
 };
 
-export const filterByMolecularMarkers = (molecularMarkers: string[]) => (study: any) => {
+export const filterByTheMolecularMarkerInStudy = (molecularMarkers: number[]) => (study: any) => {
     return !molecularMarkers.length || molecularMarkers.includes(study.MM_TYPE);
+};
+
+export const filterByManyMolecularMarkersInStudies = (molecularMarkers: number[]) => (study: any) => {
+    return (
+        !molecularMarkers.length ||
+        Object.entries(MOLECULAR_MARKERS_MAP).some(
+            ([key, value]) => study[key] === 1 && molecularMarkers.includes(value)
+        )
+    );
 };
 
 export const filterByExcludeLowerPatients = (value: boolean) => (study: any) => {
@@ -357,7 +367,7 @@ function buildTreatmentFiltersByMap(treatmentFilters: TreatmentFilters, filters:
         case TreatmentMapType.MOLECULAR_MARKERS:
             return [
                 filterByMolecularMarkerStudy(),
-                filterByMolecularMarker(treatmentFilters.molecularMarker),
+                filterByTheMolecularMarkerInStudy(treatmentFilters.molecularMarkers),
                 filterByYearRange(filters),
                 filterByRegion(region),
                 filterByExcludeLowerSamples(treatmentFilters.excludeLowerSamples),
@@ -367,6 +377,13 @@ function buildTreatmentFiltersByMap(treatmentFilters: TreatmentFilters, filters:
                 filterByDimensionId(300),
                 filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
                 filterByDrugs(treatmentFilters.drugs),
+                filterByYearRange(filters),
+                filterByRegion(region),
+            ];
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return [
+                filterByDimensionId(301),
+                filterByManyMolecularMarkersInStudies(treatmentFilters.molecularMarkers),
                 filterByYearRange(filters),
                 filterByRegion(region),
             ];
@@ -388,8 +405,7 @@ function buildTreatmentFiltersByDownload(treatmentFilters: TreatmentFilters, fil
         case "MOLECULAR_MARKER_STUDY":
             return [
                 filterByMolecularMarkerStudyDimension255(),
-                filterByMolecularMarker(treatmentFilters.molecularMarker),
-                filterByYearRange(filters),
+                filterByTheMolecularMarkerInStudy(treatmentFilters.molecularMarkers),
                 filterByYearRange(filters),
                 filterByRegion(region),
             ];

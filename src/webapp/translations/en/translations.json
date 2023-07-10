@@ -545,6 +545,8 @@
             "molecular_markers_subtitle": "Results of molecular marker studies",
             "therapeutic_efficacy_studies": "Ongoing and planned therapeutic efficacy studies",
             "therapeutic_efficacy_studies_subtitle": "Details of therapeutic efficacy studies",
+            "molecular_markers_ongoing_studies": "Ongoing and planned molecular marker studies",
+            "molecular_markers_ongoing_studies_subtitle": "Details of molecular marker studies",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against <i>{{plasmodiumSpecies}}</i> {{years}}",
@@ -629,6 +631,17 @@
                 },
                 "therapeutic_efficacy_studies": {
                     "title": "Status of therapeutic efficacy studies",
+                    "ongoing": "Ongoing",
+                    "planned": "Planned",
+                    "completed": "Completed (results pending)",
+                    "help": {
+                        "p1": "",
+                        "p2": "",
+                        "footer": "Data source: WHO Global database on antimalarial drug efficacy and resistance."
+                    }
+                },
+                "molecular_markers_ongoing_studies": {
+                    "title": "Status of molecular marker studies",
                     "ongoing": "Ongoing",
                     "planned": "Planned",
                     "completed": "Completed (results pending)",
@@ -759,7 +772,8 @@
             "drug": "Drugs",
             "drugs": "Drugs",
             "excludeStudies": "Excluded",
-            "molecularMarker": "Molecular marker"
+            "molecularMarker": "Molecular marker",
+            "molecularMarkers": "Molecular markers"
         },
         "topbar": {
             "menu": "Menu",

@@ -9,10 +9,9 @@ import { DELAYED_PARASITE_CLEARANCE_STATUS } from "./DelayedParasiteClearance/ut
 import { MOLECULAR_MARKER_STATUS } from "./MolecularMarkers/utils";
 import { MolecularMarkerStudy, TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import therapeuticEfficacyStudiesSymbols from "./TherapeuticEfficacyStudies/therapeuticEfficacyStudiesSymbols";
-import {
-    getTherapeuticEfficacyStudiesStatusFromStatusId,
-    sortTherapeuticEfficacyStudies,
-} from "./TherapeuticEfficacyStudies/utils";
+import { THERAPEUTIC_EFFICACY_STUDIES_STATUS } from "./TherapeuticEfficacyStudies/utils";
+import molecularMarkersOngoingStudiesSymbols from "./MolecularMarkersOngoingStudies/MolecularMarkersOngoingStudiesSymbols";
+import { MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS } from "./MolecularMarkersOngoingStudies/utils";
 
 export const resolveMapTypeSymbols = (treatmentFilters: TreatmentFilters) => {
     switch (treatmentFilters.mapType) {
@@ -24,6 +23,8 @@ export const resolveMapTypeSymbols = (treatmentFilters: TreatmentFilters) => {
             return molecularMarkerSymbols;
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
             return therapeuticEfficacyStudiesSymbols;
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return molecularMarkersOngoingStudiesSymbols;
         default:
             return <span />;
     }
@@ -123,12 +124,65 @@ function getByMostRecentYearAndMolecularMarker(group: any[]) {
     };
 }
 
-function getByStudySeqAndTherapeuticEfficacyStudiesStatus(group: TreatmentStudy[]) {
-    const sortedStudiesByStudySeq = sortTherapeuticEfficacyStudies(group);
+const resolveTherapeuticEfficacyStudies = (statusId: number) => {
+    const statusOptions: Record<string, number> = {
+        [THERAPEUTIC_EFFICACY_STUDIES_STATUS.PLANNED]: 1,
+        [THERAPEUTIC_EFFICACY_STUDIES_STATUS.ONGOING]: 2,
+        [THERAPEUTIC_EFFICACY_STUDIES_STATUS.COMPLETED_RESULTS_PENDING]: 3,
+    };
+
+    if (statusOptions[THERAPEUTIC_EFFICACY_STUDIES_STATUS.PLANNED] === statusId) {
+        return THERAPEUTIC_EFFICACY_STUDIES_STATUS.PLANNED;
+    }
+
+    if (statusOptions[THERAPEUTIC_EFFICACY_STUDIES_STATUS.ONGOING] === statusId) {
+        return THERAPEUTIC_EFFICACY_STUDIES_STATUS.ONGOING;
+    }
+
+    if (statusOptions[THERAPEUTIC_EFFICACY_STUDIES_STATUS.COMPLETED_RESULTS_PENDING] === statusId) {
+        return THERAPEUTIC_EFFICACY_STUDIES_STATUS.COMPLETED_RESULTS_PENDING;
+    }
+
+    return THERAPEUTIC_EFFICACY_STUDIES_STATUS.UNKNOWN;
+};
+
+function getByStudySeqAndTherapeuticEfficacyStudiesStatus(group: any[]) {
+    const sortedStudiesByStudySeq = R.sortBy(study => study.STUDY_SEQ, group);
 
     return {
         ...sortedStudiesByStudySeq[0],
-        THERAPEUTIC_EFFICACY_STUDIES_STATUS: getTherapeuticEfficacyStudiesStatusFromStatusId(
+        THERAPEUTIC_EFFICACY_STUDIES_STATUS: resolveTherapeuticEfficacyStudies(sortedStudiesByStudySeq[0].SURV_STATUS),
+    };
+}
+
+const resolveMolecularMarkersOngoingStudies = (statusId: number) => {
+    const statusOptions: Record<string, number> = {
+        [MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.PLANNED]: 1,
+        [MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.ONGOING]: 2,
+        [MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.COMPLETED_RESULTS_PENDING]: 3,
+    };
+
+    if (statusOptions[MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.PLANNED] === statusId) {
+        return MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.PLANNED;
+    }
+
+    if (statusOptions[MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.ONGOING] === statusId) {
+        return MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.ONGOING;
+    }
+
+    if (statusOptions[MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.COMPLETED_RESULTS_PENDING] === statusId) {
+        return MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.COMPLETED_RESULTS_PENDING;
+    }
+
+    return MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.UNKNOWN;
+};
+
+function getByStudySeqAndMolecularMarkersOngoingStudiesStatus(group: any[]) {
+    const sortedStudiesByStudySeq = R.sortBy(study => study.STUDY_SEQ, group);
+
+    return {
+        ...sortedStudiesByStudySeq[0],
+        MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS: resolveMolecularMarkersOngoingStudies(
             sortedStudiesByStudySeq[0].SURV_STATUS
         ),
     };
@@ -144,6 +198,8 @@ export const studySelector = (group: any[], mapType: TreatmentMapType) => {
             return getByMostRecentYearAndMolecularMarker(group);
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
             return getByStudySeqAndTherapeuticEfficacyStudiesStatus(group);
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return getByStudySeqAndMolecularMarkersOngoingStudiesStatus(group);
         default:
             return group[0];
     }

@@ -22,8 +22,11 @@ export class TreatmentApiRepository implements TreatmentRepository {
             amderoTes: request<XMartApiResponse<TreatmentStudy>>({
                 url: `${this.xmartBaseUrl}/FACT_AMDERO_TES_VIEW`,
             }).map(response => response.value),
-        }).map(({ treatmentArcGis, amderoTes }) => {
-            return [...treatmentArcGis, ...amderoTes];
+            amderoMm: request<XMartApiResponse<TreatmentStudy>>({
+                url: `${this.xmartBaseUrl}/FACT_AMDERO_MM_VIEW`,
+            }).map(response => response.value),
+        }).map(({ treatmentArcGis, amderoTes, amderoMm }) => {
+            return [...treatmentArcGis, ...amderoTes, ...amderoMm];
         });
     }
 }
