@@ -11,6 +11,8 @@ import SpeciesSelector from "../../../../components/filters/SpeciesSelector";
 import { Option } from "../../../../components/BasicSelect";
 import SingleFilter from "../../../../components/filters/common/SingleFilter";
 import MultiFilter from "../../../../components/filters/common/MultiFilter";
+import { getMaxMinYears } from "../../../../../domain/entities/Study";
+import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 
 export type PreventionFilterableChart = "status-of-resistance-of-insecticide" | "mosquito-mortality-overtime";
 
@@ -20,6 +22,7 @@ interface PreventionFiltersProps {
     filters: PreventionFiltersState;
     speciesOptions?: Option[];
     typeOptions?: Option[];
+    studies?: PreventionStudy[];
     onInsecticideClassesChange?: (value: string[]) => void;
     onSpeciesChange?: (value: string[]) => void;
     onInsecticideTypesChange?: (value: string[]) => void;
@@ -36,6 +39,7 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
     filters,
     speciesOptions,
     typeOptions,
+    studies,
     onInsecticideClassesChange,
     onSpeciesChange,
     onInsecticideTypesChange,
@@ -101,7 +105,11 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                 />
             )}
 
-            <DashboardsYearRangeSelector years={filters.years} onChange={onYearsChange} />
+            <DashboardsYearRangeSelector
+                years={filters.years}
+                maxMinYears={getMaxMinYears(studies)}
+                onChange={onYearsChange}
+            />
             <OnlyIncludeBioassaysWithMoreMosquitoes
                 value={filters.onlyIncludeBioassaysWithMoreMosquitoes}
                 onChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}

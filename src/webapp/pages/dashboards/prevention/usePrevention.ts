@@ -113,6 +113,7 @@ export function usePrevention() {
         filters,
         speciesOptions,
         typeOptions,
+        dashboardsPreventionStudies,
         onInsecticideClassChange,
         onSpeciesChange,
         onInsecticideTypesChange,

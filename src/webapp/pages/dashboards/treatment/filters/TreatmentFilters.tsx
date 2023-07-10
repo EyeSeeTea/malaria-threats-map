@@ -11,6 +11,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MolecularMarkerSelector from "../../../../components/filters/MolecularMarkerSelector";
 import { MolecularMarker } from "../../../../components/filters/MolecularMarkerFilter";
 import ExcludeLowerSamplesSelector from "../../../../components/filters/ExcludeLowerSamplesSelector";
+import { getMaxMinYears } from "../../../../../domain/entities/Study";
 
 interface TreatmentFiltersProps {
     isMolecularMarkerChart: boolean;
@@ -104,7 +105,7 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                 </React.Fragment>
             )}
 
-            <DashboardsYearRangeSelector years={years} onChange={onYearsChange} />
+            <DashboardsYearRangeSelector years={years} onChange={onYearsChange} maxMinYears={getMaxMinYears(studies)} />
 
             {onExcludeLowerSamplesChange && (
                 <ExcludeLowerSamplesSelector

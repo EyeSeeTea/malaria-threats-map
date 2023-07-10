@@ -4,9 +4,6 @@ import { useTranslation } from "react-i18next";
 import * as R from "ramda";
 import styled from "styled-components";
 import { Divider } from "../../../../components/filters/Filters";
-import { State } from "../../../../store/types";
-import { selectMaxMinYears } from "../../../../store/reducers/base-reducer";
-import { connect } from "react-redux";
 
 const StyledSlider = MuiStyled(Slider)(() => ({
     display: "table",
@@ -29,10 +26,6 @@ const StyledSlider = MuiStyled(Slider)(() => ({
     },
 }));
 
-const mapStateToProps = (state: State) => ({
-    maxMinYears: selectMaxMinYears(state),
-});
-
 function valuetext(value: number) {
     return `${value}°C`;
 }
@@ -52,6 +45,7 @@ export function range(start: number, end: number, reverse?: boolean) {
 
 const DashboardsYearRangeSelector: React.FC<DashboardsYearRangeSelectorProps> = ({ years, onChange, maxMinYears }) => {
     const { t } = useTranslation();
+    const maxYear = new Date().getFullYear();
 
     const handleChange = (_event: Event, newValue: number | number[]) => {
         const [start, end] = newValue as number[];
@@ -78,17 +72,17 @@ const DashboardsYearRangeSelector: React.FC<DashboardsYearRangeSelectorProps> = 
                 getAriaValueText={valuetext}
                 step={1}
                 min={maxMinYears[0]}
-                max={maxMinYears[1]}
+                max={maxYear}
             />
             <Row>
-                {[maxMinYears[0], Math.floor((maxMinYears[0] + maxMinYears[1]) / 2), maxMinYears[1]].map(year => {
+                {[maxMinYears[0], Math.floor((maxMinYears[0] + maxYear) / 2), maxYear].map(year => {
                     return <span key={year}>{year}</span>;
                 })}
             </Row>
         </Container>
     );
 };
-export default connect(mapStateToProps)(DashboardsYearRangeSelector);
+export default DashboardsYearRangeSelector;
 
 const Row = styled.div`
     display: flex;

@@ -21,6 +21,7 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
         categoriesCount,
         data,
         filters,
+        dashboardsPreventionStudies,
         onInsecticideClassChange,
         onInsecticideTypesChange,
         onYearsChange,
@@ -63,6 +64,7 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
                     "common.dashboard.phenotypicInsecticideResistanceDashboards.statusOfResistanceToInsecticides.title"
                 )}
                 filters={filters}
+                studies={dashboardsPreventionStudies}
                 onInsecticideClassesChange={chartType === "by-insecticide-class" ? onInsecticideClassChange : undefined}
                 onInsecticideTypesChange={chartType === "by-insecticide" ? onInsecticideTypesChange : undefined}
                 onYearsChange={onYearsChange}

@@ -12,6 +12,7 @@ import { ResistanceToInsecticideChartType } from "./types";
 import { PreventionFiltersState } from "./filters/PreventionFiltersState";
 import CategoriesCount from "../common/CategoriesCount";
 import { useTranslation } from "react-i18next";
+import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 
 interface PreventionFilterableDashboardProps {
     id?: string;
@@ -25,6 +26,7 @@ interface PreventionFilterableDashboardProps {
     count: number | Record<string, number>;
     chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject[] | HighchartsReact.RefObject>;
     filters: PreventionFiltersState;
+    studies: PreventionStudy[];
     onYearsChange: (years: [number, number]) => void;
     onInsecticideClassesChange?: (value: string[]) => void;
     onSpeciesChange?: (value: string[]) => void;
@@ -47,6 +49,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
     filters,
     speciesOptions,
     typeOptions,
+    studies,
     onInsecticideClassesChange,
     onSpeciesChange,
     onInsecticideTypesChange,
@@ -126,6 +129,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
                                     filters={filters}
                                     speciesOptions={speciesOptions}
                                     typeOptions={typeOptions}
+                                    studies={studies}
                                     onInsecticideClassesChange={onInsecticideClassesChange}
                                     onSpeciesChange={onSpeciesChange}
                                     onInsecticideTypesChange={onInsecticideTypesChange}
