@@ -31,8 +31,8 @@ function valuetext(value: number) {
 }
 
 type DashboardsYearRangeSelectorProps = {
-    maxMinYears: number[];
     years: [number, number];
+    maxMinYears: [number, number];
     onChange: (years: [number, number]) => void;
 };
 
@@ -45,7 +45,6 @@ export function range(start: number, end: number, reverse?: boolean) {
 
 const DashboardsYearRangeSelector: React.FC<DashboardsYearRangeSelectorProps> = ({ years, onChange, maxMinYears }) => {
     const { t } = useTranslation();
-    const maxYear = new Date().getFullYear();
 
     const handleChange = (_event: Event, newValue: number | number[]) => {
         const [start, end] = newValue as number[];
@@ -72,10 +71,10 @@ const DashboardsYearRangeSelector: React.FC<DashboardsYearRangeSelectorProps> = 
                 getAriaValueText={valuetext}
                 step={1}
                 min={maxMinYears[0]}
-                max={maxYear}
+                max={maxMinYears[1]}
             />
             <Row>
-                {[maxMinYears[0], Math.floor((maxMinYears[0] + maxYear) / 2), maxYear].map(year => {
+                {[maxMinYears[0], Math.floor((maxMinYears[0] + maxMinYears[1]) / 2), maxMinYears[1]].map(year => {
                     return <span key={year}>{year}</span>;
                 })}
             </Row>
