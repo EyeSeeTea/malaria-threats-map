@@ -543,6 +543,8 @@
             "delayed_parasite_clearance_italics": "Delayed parasite clearance (<i>P.f </i>)",
             "molecular_markers": "Molecular markers of drug resistance",
             "molecular_markers_subtitle": "Results of molecular marker studies",
+            "therapeutic_efficacy_studies": "Ongoing and planned therapeutic efficacy studies",
+            "therapeutic_efficacy_studies_subtitle": "Details of therapeutic efficacy studies",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} therapeutic efficacy studies conducted on the efficacy of {{drug}} against <i>{{plasmodiumSpecies}}</i> {{years}}",
@@ -570,6 +572,23 @@
                     "mutation_detected": "Samples with mutations detected",
                     "wt_tudy": "Samples with wildtype",
                     "mc_study": "Samples with multiple copy numbers"
+                },
+                "therapeutic_efficacy_studies": {
+                    "subtitle": "Details of therapeutic efficacy studies",
+                    "overview": "Overview",
+                    "study_details_one": "Study details",
+                    "study_details_other": "Study {{number}} details",
+                    "ongoing": "Ongoing",
+                    "planned": "Planned",
+                    "completed_results_pending": "Completed (results pending)",
+                    "status": "Study status",
+                    "proposed_timeframe": "Proposed timeframe",
+                    "lead_institution": "Lead institution",
+                    "funding_source": "Funding source",
+                    "age_group": "Age group",
+                    "species": "Species",
+                    "drug": "Treatment",
+                    "genotyping": "Genotyping"
                 }
             },
             "legend": {
@@ -604,6 +623,17 @@
                     "low": "< 10%",
                     "help": {
                         "p1": "This map presents data from <1>molecular marker studies</1>. The colour of the dot is determined by the percentage of samples which have molecular mutations. The most recent results are presented by default.",
+                        "p2": "",
+                        "footer": "Data source: WHO Global database on antimalarial drug efficacy and resistance."
+                    }
+                },
+                "therapeutic_efficacy_studies": {
+                    "title": "Status of therapeutic efficacy studies",
+                    "ongoing": "Ongoing",
+                    "planned": "Planned",
+                    "completed": "Completed (results pending)",
+                    "help": {
+                        "p1": "",
                         "p2": "",
                         "footer": "Data source: WHO Global database on antimalarial drug efficacy and resistance."
                     }
@@ -677,7 +707,9 @@
                 "AN_STEPHENSI_NOT_FOUND": "An. stephensi (not found)"
             },
             "plasmodium_species": "Plasmodium species",
+            "select_plasmodium_species": "Select plasmodium species",
             "drug": "Drug",
+            "select_drugs": "Select drugs",
             "molecular_marker": "Molecular marker",
             "proxy_type": "Type of synergy",
             "mechanism_type": "Mechanism type",
@@ -725,6 +757,7 @@
             "vectorSpecies": "Vector species",
             "plasmodiumSpecies": "Plasmodium species",
             "drug": "Drugs",
+            "drugs": "Drugs",
             "excludeStudies": "Excluded",
             "molecularMarker": "Molecular marker"
         },

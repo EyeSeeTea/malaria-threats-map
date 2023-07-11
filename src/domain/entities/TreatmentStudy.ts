@@ -25,6 +25,11 @@ export interface TreatmentStudy extends Study {
     PROP_RELATED: number;
     Code: number;
     HEALTHFACILITY_NAME: string;
+    SURV_STATUS?: number;
+    FUNDING_SOURCE?: string;
+    MM_LIST?: string;
+    STUDY_SEQ?: number;
+    AGE_GP?: string;
 }
 
 export interface MolecularMarkerStudy extends TreatmentStudy {

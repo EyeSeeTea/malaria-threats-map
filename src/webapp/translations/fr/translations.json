@@ -545,6 +545,8 @@
             "delayed_parasite_clearance_italics": "Retard dans l'élimination des parasites (<i>P.f </i>)",
             "molecular_markers": "Marqueurs moléculaires de la résistance aux médicaments",
             "molecular_markers_subtitle": "Résultats des études sur les marqueurs moléculaires",
+            "therapeutic_efficacy_studies": "Études d'efficacité thérapeutique en cours et prévues",
+            "therapeutic_efficacy_studies_subtitle": "Détails des études d'efficacité thérapeutique",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre <i>{{plasmodiumSpecies}}</i> {{years}}",
@@ -572,6 +574,23 @@
                     "mutation_detected": "Échantillons avec mutations détectées",
                     "wt_tudy": "Échantillons de type sauvage",
                     "mc_study": "Échantillons avec plusieurs numéros de copie"
+                },
+                "therapeutic_efficacy_studies": {
+                    "subtitle": "Détails des études d'efficacité thérapeutique",
+                    "overview": "Vue d'ensemble",
+                    "study_details_one": "Etude détails",
+                    "study_details_other": "Etude {{number}} détails",
+                    "ongoing": "En cours",
+                    "planned": "Prévu",
+                    "completed_results_pending": "Terminé (résultats en attente)",
+                    "status": "Statut de l'étude",
+                    "proposed_timeframe": "Calendrier proposé",
+                    "lead_institution": "Institution chef de file",
+                    "funding_source": "Source de financement",
+                    "age_group": "Groupe d'âge",
+                    "species": "Espèces de plasmodium",
+                    "drug": "Traitement",
+                    "genotyping": "Génotypage"
                 }
             },
             "legend": {
@@ -606,6 +625,17 @@
                     "low": "< 10%",
                     "help": {
                         "p1": "Cette carte présente les données d'<1>études de marqueurs moléculaires</1>. La couleur du point est déterminée par le pourcentage d'échantillons présentant des mutations moléculaires. Les résultats les plus récents sont présentés par défaut.",
+                        "p2": "",
+                        "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
+                    }
+                },
+                "therapeutic_efficacy_studies": {
+                    "title": "Statut des études d'efficacité thérapeutique",
+                    "ongoing": "En cours",
+                    "planned": "Prévu",
+                    "completed": "Terminé (résultats en attente)",
+                    "help": {
+                        "p1": "",
                         "p2": "",
                         "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
                     }
@@ -679,7 +709,9 @@
                 "AN_STEPHENSI_NOT_FOUND": "An. stephensi (non trouvé)"
             },
             "plasmodium_species": "Espèces de plasmodium",
+            "select_plasmodium_species": "Sélectionnez espèces de plasmodium",
             "drug": "Médicament",
+            "select_drugs": "Sélectionnez médicament",
             "molecular_marker": "Marqueur moléculaire",
             "proxy_type": "Type de synergie",
             "mechanism_type": "Type de mécanisme",
@@ -727,6 +759,7 @@
             "vectorSpecies": "Espèces vectorielles",
             "plasmodiumSpecies": "Espèces de plasmodium",
             "drug": "Médicament",
+            "drugs": "Médicaments",
             "excludeStudies": "Exclus",
             "molecularMarker": "Marqueur moléculaire"
         },

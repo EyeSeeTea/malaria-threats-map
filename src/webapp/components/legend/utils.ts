@@ -29,6 +29,8 @@ import { TREATMENT_FAILURE_STATUS } from "../layers/treatment/TreatmentFailure/u
 import { LegendLabel } from "./LegendContent";
 
 import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
+import { TherapeuticEfficacyStudiesColors } from "../layers/treatment/TherapeuticEfficacyStudies/therapeuticEfficacyStudiesSymbols";
+import { THERAPEUTIC_EFFICACY_STUDIES_STATUS } from "../layers/treatment/TherapeuticEfficacyStudies/utils";
 
 export function getLegendTitle(
     theme: string,
@@ -73,13 +75,15 @@ function getDiagnosisLegendTitle(filters: DiagnosisFilters) {
 function getTreatmentLegendTitle(filters: TreatmentFilters): string {
     switch (filters.mapType) {
         case TreatmentMapType.TREATMENT_FAILURE:
-            return `${i18next.t("common.treatment.treatment_failure")}\n${i18next.t(filters.drug)}`;
+            return `${i18next.t("common.treatment.treatment_failure")}\n${i18next.t(filters.drugs[0])}`;
         case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
-            return `${i18next.t("common.treatment.delayed_parasite_clearance")}\n${i18next.t(filters.drug)}`;
+            return `${i18next.t("common.treatment.delayed_parasite_clearance")}\n${i18next.t(filters.drugs[0])}`;
         case TreatmentMapType.MOLECULAR_MARKERS:
             return `${i18next.t("common.treatment.molecular_markers")}\n(${
                 MOLECULAR_MARKERS[filters.molecularMarker - 1]?.label
             })`;
+        case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
+            return i18next.t("common.treatment.legend.therapeutic_efficacy_studies.title");
         default:
             return "";
     }
@@ -276,6 +280,23 @@ function getTreatmentLegendLabels(filters: TreatmentFilters): LegendLabel[] {
                     color: MolecularMarkerColors[MOLECULAR_MARKER_STATUS.LOW][0],
                 },
             ];
+        case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
+            return [
+                {
+                    label: "treatment.legend.therapeutic_efficacy_studies.planned",
+                    color: TherapeuticEfficacyStudiesColors[THERAPEUTIC_EFFICACY_STUDIES_STATUS.PLANNED][0],
+                },
+                {
+                    label: "treatment.legend.therapeutic_efficacy_studies.ongoing",
+                    color: TherapeuticEfficacyStudiesColors[THERAPEUTIC_EFFICACY_STUDIES_STATUS.ONGOING][0],
+                },
+                {
+                    label: "treatment.legend.therapeutic_efficacy_studies.completed",
+                    color: TherapeuticEfficacyStudiesColors[
+                        THERAPEUTIC_EFFICACY_STUDIES_STATUS.COMPLETED_RESULTS_PENDING
+                    ][0],
+                },
+            ];
         default:
             return [];
     }
@@ -362,6 +383,8 @@ function getTreatmentLegendMapTypeHelpKey(filters: TreatmentFilters): string {
             return "common.treatment.legend.delayed_parasite_clearance.help";
         case TreatmentMapType.MOLECULAR_MARKERS:
             return "common.treatment.legend.molecular_markers.help";
+        case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
+            return "common.treatment.legend.therapeutic_efficacy_studies.help";
         default:
             return "";
     }

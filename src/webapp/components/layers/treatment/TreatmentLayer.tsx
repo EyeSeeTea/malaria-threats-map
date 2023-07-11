@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import _ from "lodash";
 import { studiesToGeoJson } from "../layer-utils";
 import setupEffects, { updateSelectionAfterFilter } from "../effects";
 import { selectTreatmentFilters, selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
@@ -79,7 +80,7 @@ class TreatmentLayer extends Component<Props> {
             treatmentFilters: {
                 mapType,
                 plasmodiumSpecies,
-                drug,
+                drugs,
                 molecularMarker,
                 excludeLowerPatients,
                 excludeLowerSamples,
@@ -96,8 +97,8 @@ class TreatmentLayer extends Component<Props> {
         const mapTypeChange = prevProps.treatmentFilters.mapType !== mapType;
         const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
         const countryChange = prevProps.region !== region;
-        const plasmodiumSpeciesChange = prevProps.treatmentFilters.plasmodiumSpecies !== plasmodiumSpecies;
-        const drugChange = prevProps.treatmentFilters.drug !== drug;
+        const plasmodiumSpeciesChange = !_.isEqual(prevProps.treatmentFilters.plasmodiumSpecies, plasmodiumSpecies);
+        const drugChange = !_.isEqual(prevProps.treatmentFilters.drugs, drugs);
         const molecularMarkerChange = prevProps.treatmentFilters.molecularMarker !== molecularMarker;
         const excludeLowerPatientsChange = prevProps.treatmentFilters.excludeLowerPatients !== excludeLowerPatients;
         const excludeLowerSamplesChange = prevProps.treatmentFilters.excludeLowerSamples !== excludeLowerSamples;

@@ -47,7 +47,7 @@ function MultiFilter({
                     {label}
                 </Typography>
             )}
-            <FilterRowContainer margin={margin}>
+            <FilterRowContainer margin={margin} className="MultiFilter-container">
                 {label && labelPosition === "middle" && selections && selections.length > 0 && (
                     <Typography component="legend" variant="body2">
                         {`${label}:`}&nbsp;

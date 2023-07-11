@@ -38,6 +38,11 @@ export const treatmentSuggestions: ListSelectorItem[] = [
         subtitle: "common.treatment.molecular_markers_subtitle",
         value: TreatmentMapType.MOLECULAR_MARKERS,
     },
+    {
+        title: "common.treatment.therapeutic_efficacy_studies",
+        subtitle: "common.treatment.therapeutic_efficacy_studies_subtitle",
+        value: TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES,
+    },
 ];
 
 function TreatmentMapTypesSelector({

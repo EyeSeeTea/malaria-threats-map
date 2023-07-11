@@ -8,7 +8,7 @@ import { Data, headCells } from "./columns";
 import {
     filterByCountries,
     filterByDrugs,
-    filterByManyPlasmodiumSpecies,
+    filterByPlasmodiumSpecies,
     filterByMolecularMarkerStudyDimension256,
 } from "../../layers/studies-filters";
 import { exportToCSV } from "../../DataDownload/download";
@@ -83,7 +83,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
     const filters = [
         (study: TreatmentStudy) => isNotNull(study.DRUG_NAME),
         filterByMolecularMarkerStudyDimension256(),
-        filterByManyPlasmodiumSpecies([plasmodiumSpecie]),
+        filterByPlasmodiumSpecies([plasmodiumSpecie]),
         filterByCountries(countries),
         filterByDrugs(drugs),
     ];

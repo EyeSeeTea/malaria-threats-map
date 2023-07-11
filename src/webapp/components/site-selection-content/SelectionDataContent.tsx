@@ -21,6 +21,7 @@ import PreventionMechanismsChart from "./prevention/PreventionMechanismsChart";
 import TreatmentChart from "./treatment/TreatmentChart";
 import AditionalInformation from "../layers/treatment/common/Aditionalnformation";
 import MolecularMarkersChart from "./treatment/MolecularMarkersChart";
+import TherapeuticEfficacyStudiesChart from "./treatment/TherapeuticEfficacyStudiesChart";
 import { CommonSelectionData } from "../../store/SelectionData";
 import { InvasiveSelectionData } from "../../store/epics/invasive/types";
 import { PayloadActionCreator } from "typesafe-actions";
@@ -222,15 +223,19 @@ const CommonContent: React.FC<{
             </TopContainer>
 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
-            <RoundedContainer>
-                {selectionData.data && chartCataContent()}
+            {selectionData.data.kind === "therapeutic-efficacy-studies" ? (
+                <TherapeuticEfficacyStudiesChart selectionData={selectionData} />
+            ) : (
+                <RoundedContainer>
+                    {selectionData.data && chartCataContent()}
 
-                {selectionData.dataSources && <CitationNew dataSources={selectionData.dataSources} />}
-                {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
-                {selectionData.aditionalInformation && (
-                    <AditionalInformation info={selectionData.aditionalInformation} />
-                )}
-            </RoundedContainer>
+                    {selectionData.dataSources && <CitationNew dataSources={selectionData.dataSources} />}
+                    {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
+                    {selectionData.aditionalInformation && (
+                        <AditionalInformation info={selectionData.aditionalInformation} />
+                    )}
+                </RoundedContainer>
+            )}
 
             {selectionData.othersDetected.length > 0 && (
                 <RoundedContainer margin="16px 8px">
