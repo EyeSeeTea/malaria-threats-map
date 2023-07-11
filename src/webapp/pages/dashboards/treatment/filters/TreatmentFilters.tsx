@@ -11,7 +11,6 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MolecularMarkerSelector from "../../../../components/filters/MolecularMarkerSelector";
 import { MolecularMarker } from "../../../../components/filters/MolecularMarkerFilter";
 import ExcludeLowerSamplesSelector from "../../../../components/filters/ExcludeLowerSamplesSelector";
-import { getMaxMinYears } from "../../../../../domain/entities/Study";
 
 interface TreatmentFiltersProps {
     isMolecularMarkerChart: boolean;
@@ -22,6 +21,7 @@ interface TreatmentFiltersProps {
     drugs: string[];
     molecularMarker: number;
     years: [number, number];
+    maxMinYears: [number, number];
     excludeLowerPatients?: boolean;
     excludeLowerSamples?: boolean;
     PlasmodiumSpecieDisabled?: boolean;
@@ -43,6 +43,7 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
     drugs,
     molecularMarker,
     years,
+    maxMinYears,
     excludeLowerPatients,
     excludeLowerSamples,
     PlasmodiumSpecieDisabled,
@@ -105,7 +106,7 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                 </React.Fragment>
             )}
 
-            <DashboardsYearRangeSelector years={years} onChange={onYearsChange} maxMinYears={getMaxMinYears(studies)} />
+            <DashboardsYearRangeSelector years={years} onChange={onYearsChange} maxMinYears={maxMinYears} />
 
             {onExcludeLowerSamplesChange && (
                 <ExcludeLowerSamplesSelector
