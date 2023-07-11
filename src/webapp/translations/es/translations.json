@@ -577,8 +577,7 @@
                     "wt_tudy": "Muestras con wildtype",
                     "mc_study": "Muestras con multiple copy numbers"
                 },
-                "therapeutic_efficacy_studies": {
-                    "subtitle": "Detalles de los estudios de eficacia terapéutica",
+                "ongoing_and_planned_treatment_studies": {
                     "overview": "Visión general",
                     "study_details_one": "Detalles del estudio",
                     "study_details_other": "Detalles del estudio {{number}}",
@@ -588,11 +587,20 @@
                     "status": "Estado del estudio",
                     "proposed_timeframe": "Plazo propuesto",
                     "lead_institution": "Institución principal",
-                    "funding_source": "Fuente de financiación",
+                    "funding_source": "Fuente de financiación"
+                },
+                "therapeutic_efficacy_studies": {
+                    "subtitle": "Detalles de los estudios de eficacia terapéutica",
                     "age_group": "Grupo de edad",
                     "species": "Especie de plasmodium",
                     "drug": "Tratamiento",
                     "genotyping": "Genotipado"
+                },
+                "molecular_markers_ongoing_studies": {
+                    "subtitle": "Detalles de los estudios de marcadores molecular",
+                    "study_initiated_following": "Estudio iniciado siguiendo",
+                    "sampling_strategy": "Estrategia de muestreo",
+                    "study_design": "Diseño de la encuesta o estudio"
                 }
             },
             "legend": {

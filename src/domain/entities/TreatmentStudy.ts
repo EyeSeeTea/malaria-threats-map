@@ -30,6 +30,9 @@ export interface TreatmentStudy extends Study {
     MM_LIST?: string;
     STUDY_SEQ?: number;
     AGE_GP?: string;
+    PROMPT_NAME?: any;
+    GEOGR_SCOPE_NAME?: string;
+    PROT_TYPE_NAME?: any;
 }
 
 export interface MolecularMarkerStudy extends TreatmentStudy {

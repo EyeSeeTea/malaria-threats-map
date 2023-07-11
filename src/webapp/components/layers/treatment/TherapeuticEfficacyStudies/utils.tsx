@@ -1,6 +1,3 @@
-import _ from "lodash";
-import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
-
 export enum THERAPEUTIC_EFFICACY_STUDIES_STATUS {
     ONGOING = "ONGOING",
     PLANNED = "PLANNED",
@@ -28,8 +25,4 @@ export const getTherapeuticEfficacyStudiesStatusFromStatusId = (statusId: number
     }
 
     return THERAPEUTIC_EFFICACY_STUDIES_STATUS.UNKNOWN;
-};
-
-export const sortTherapeuticEfficacyStudies = (studies: TreatmentStudy[]) => {
-    return _.orderBy(studies, ["STUDY_SEQ"]);
 };

@@ -4,41 +4,72 @@ import styled from "styled-components";
 import { Table, TableCell, TableRow, Typography, Divider, Paper, TableBody } from "@mui/material";
 
 import {
+    ONGOING_AND_PLANNED_TREATMENT_STUDY_OVERVIEW_INFO_KEYS,
+    OngoingAndPlannedTreatmentStudiesDetailsConfig,
+    OngoingAndPlannedTreatmentStudiesOverviewInfo,
     SelectionData,
     THERAPEUTIC_EFFICACY_STUDY_DETAILS_KEYS,
-    THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS,
-    TherapeuticEfficacyStudiesDetailsConfig,
-    TherapeuticEfficacyStudiesOverviewInfo,
 } from "../../../store/SelectionData";
+import { MolecularMarkersOngoingStudiesColors } from "../../layers/treatment/MolecularMarkersOngoingStudies/MolecularMarkersOngoingStudiesSymbols";
 import { TherapeuticEfficacyStudiesColors } from "../../layers/treatment/TherapeuticEfficacyStudies/therapeuticEfficacyStudiesSymbols";
 
-type TherapeuticEfficacyStudiesChartProps = {
+type OngoingAndPlannedTreatmentStudiesChartProps = {
     selectionData: SelectionData;
 };
 
-const TherapeuticEfficacyStudiesChart = ({ selectionData }: TherapeuticEfficacyStudiesChartProps) => {
+const OngoingAndPlannedTreatmentStudiesChart = ({ selectionData }: OngoingAndPlannedTreatmentStudiesChartProps) => {
     const { t } = useTranslation();
 
-    const studiesDetailsConfig: TherapeuticEfficacyStudiesDetailsConfig[] = React.useMemo(() => {
-        if (selectionData.kind === "common" && selectionData.data.kind === "therapeutic-efficacy-studies") {
+    const studiesDetailsConfig: OngoingAndPlannedTreatmentStudiesDetailsConfig[] = React.useMemo(() => {
+        if (
+            selectionData.kind === "common" &&
+            (selectionData.data.kind === "therapeutic-efficacy-studies" ||
+                selectionData.data.kind === "molecular-markers-ongoing-studies")
+        ) {
             return selectionData.data.data.studiesDetailsConfig;
         } else {
             return null;
         }
     }, [selectionData]);
 
-    const overviewInfo: TherapeuticEfficacyStudiesOverviewInfo = React.useMemo(() => {
-        if (selectionData.kind === "common" && selectionData.data.kind === "therapeutic-efficacy-studies") {
+    const overviewInfo: OngoingAndPlannedTreatmentStudiesOverviewInfo = React.useMemo(() => {
+        if (
+            selectionData.kind === "common" &&
+            (selectionData.data.kind === "therapeutic-efficacy-studies" ||
+                selectionData.data.kind === "molecular-markers-ongoing-studies")
+        ) {
             return selectionData.data.data.overviewInfo;
         } else {
             return null;
         }
     }, [selectionData]);
 
+    const getStatusColors = React.useCallback(
+        statusValue => {
+            if (selectionData.kind === "common" && selectionData.data.kind === "therapeutic-efficacy-studies") {
+                return {
+                    color: TherapeuticEfficacyStudiesColors[statusValue][0],
+                    borderColor: TherapeuticEfficacyStudiesColors[statusValue][1],
+                };
+            }
+
+            if (selectionData.kind === "common" && selectionData.data.kind === "molecular-markers-ongoing-studies") {
+                return {
+                    color: MolecularMarkersOngoingStudiesColors[statusValue][0],
+                    borderColor: MolecularMarkersOngoingStudiesColors[statusValue][1],
+                };
+            }
+            return null;
+        },
+        [selectionData]
+    );
+
     return (
         <Container>
             <RoundedContainer $isFirst>
-                <StyledTypography>{t(`common.treatment.chart.therapeutic_efficacy_studies.overview`)}</StyledTypography>
+                <StyledTypography>
+                    {t(`common.treatment.chart.ongoing_and_planned_treatment_studies.overview`)}
+                </StyledTypography>
                 <Table>
                     <TableBody>
                         {Object.entries(overviewInfo).map(([key, { label, value }], index) => (
@@ -51,14 +82,14 @@ const TherapeuticEfficacyStudiesChart = ({ selectionData }: TherapeuticEfficacyS
                                 </StyledTableHeader>
                                 <StyledTableCell $noShadow={index === Object.values(overviewInfo).length - 1}>
                                     <StyledWrapper>
-                                        {key === THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS.STATUS ? (
+                                        {key === ONGOING_AND_PLANNED_TREATMENT_STUDY_OVERVIEW_INFO_KEYS.STATUS ? (
                                             <React.Fragment>
                                                 <StatusSymbol
-                                                    color={TherapeuticEfficacyStudiesColors[value][0]}
-                                                    borderColor={TherapeuticEfficacyStudiesColors[value][1]}
+                                                    color={getStatusColors(value)?.color}
+                                                    borderColor={getStatusColors(value)?.borderColor}
                                                 />
                                                 {t(
-                                                    `common.treatment.chart.therapeutic_efficacy_studies.${value.toLowerCase()}`
+                                                    `common.treatment.chart.ongoing_and_planned_treatment_studies.${value.toLowerCase()}`
                                                 )}
                                             </React.Fragment>
                                         ) : (
@@ -105,7 +136,7 @@ const TherapeuticEfficacyStudiesChart = ({ selectionData }: TherapeuticEfficacyS
     );
 };
 
-export default TherapeuticEfficacyStudiesChart;
+export default OngoingAndPlannedTreatmentStudiesChart;
 
 const RoundedContainer = styled(Paper)<{ $isFirst?: boolean; $isLast?: boolean }>`
     padding: 12px 20px;
