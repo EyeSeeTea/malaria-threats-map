@@ -20,7 +20,6 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
         categoriesCount,
         data,
         filters,
-        minMaxYears,
         onInsecticideClassChange,
         onInsecticideTypesChange,
         onYearsChange,
@@ -69,7 +68,6 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
                     "common.dashboard.phenotypicInsecticideResistanceDashboards.statusOfResistanceToInsecticides.title"
                 )}
                 filters={filters}
-                minMaxYears={minMaxYears}
                 onInsecticideClassesChange={chartType === "by-insecticide-class" ? onInsecticideClassChange : undefined}
                 onInsecticideTypesChange={chartType === "by-insecticide" ? onInsecticideTypesChange : undefined}
                 onYearsChange={onYearsChange}

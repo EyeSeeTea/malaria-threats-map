@@ -28,7 +28,6 @@ interface PreventionFilterableDashboardProps {
     count: number | Record<string, number>;
     chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject[] | HighchartsReact.RefObject>;
     filters: PreventionFiltersState;
-    minMaxYears: number[];
     onYearsChange: (years: [number, number]) => void;
     onInsecticideClassesChange?: (value: string[]) => void;
     onSpeciesChange?: (value: string[]) => void;
@@ -56,7 +55,6 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
     filters,
     speciesOptions,
     typeOptions,
-    minMaxYears,
     onInsecticideClassesChange,
     onSpeciesChange,
     onInsecticideTypesChange,
@@ -132,7 +130,6 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                                     filters={filters}
                                     speciesOptions={speciesOptions}
                                     typeOptions={typeOptions}
-                                    minMaxYears={minMaxYears}
                                     onInsecticideClassesChange={onInsecticideClassesChange}
                                     onSpeciesChange={onSpeciesChange}
                                     onInsecticideTypesChange={onInsecticideTypesChange}

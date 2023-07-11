@@ -20,7 +20,6 @@ interface PreventionFiltersProps {
     filters: PreventionFiltersState;
     speciesOptions?: Option[];
     typeOptions?: Option[];
-    minMaxYears?: number[];
     onInsecticideClassesChange?: (value: string[]) => void;
     onSpeciesChange?: (value: string[]) => void;
     onInsecticideTypesChange?: (value: string[]) => void;
@@ -37,7 +36,6 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
     filters,
     speciesOptions,
     typeOptions,
-    minMaxYears,
     onInsecticideClassesChange,
     onSpeciesChange,
     onInsecticideTypesChange,
@@ -103,7 +101,11 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                 />
             )}
 
-            <DashboardsYearRangeSelector years={filters.years} maxMinYears={minMaxYears} onChange={onYearsChange} />
+            <DashboardsYearRangeSelector
+                years={filters.years}
+                maxMinYears={filters.maxMinYears}
+                onChange={onYearsChange}
+            />
             <OnlyIncludeBioassaysWithMoreMosquitoes
                 value={filters.onlyIncludeBioassaysWithMoreMosquitoes}
                 onChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}

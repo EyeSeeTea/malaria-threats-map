@@ -1,8 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import { sortInsecticideClasses } from "../../../../components/filters/InsecticideClassFilter";
+import { getMaxMinYears } from "../../../../../domain/entities/Study";
+import { useDashboards } from "../../context/useDashboards";
 
 export function usePreventionFilters() {
+    const { dashboardsPreventionStudies } = useDashboards();
+
     const [insecticideTypes, setInsecticideTypes] = useState<string[]>([]);
     const [insecticideClasses, setInsecticideClasses] = useState<string[]>([]);
     const [species, setSpecies] = useState<string[]>([]);
@@ -10,6 +14,7 @@ export function usePreventionFilters() {
     const [years, setYears] = useState<[number, number]>([2010, new Date().getFullYear()]);
     const [onlyIncludeBioassaysWithMoreMosquitoes, setOnlyIncludeBioassaysWithMoreMosquitoes] = useState<number>(0);
     const [onlyIncludeDataByHealth, setOnlyIncludeDataByHealth] = useState<boolean>(false);
+    const maxMinYears = getMaxMinYears(dashboardsPreventionStudies);
 
     const onInsecticideClassChange = React.useCallback((values: string[]) => {
         setInsecticideClasses(sortInsecticideClasses(values));
@@ -48,6 +53,7 @@ export function usePreventionFilters() {
             years,
             onlyIncludeBioassaysWithMoreMosquitoes,
             onlyIncludeDataByHealth,
+            maxMinYears: [maxMinYears[0], new Date().getFullYear()] as [number, number],
         };
     }, [
         insecticideClasses,
@@ -57,6 +63,7 @@ export function usePreventionFilters() {
         years,
         onlyIncludeBioassaysWithMoreMosquitoes,
         onlyIncludeDataByHealth,
+        maxMinYears,
     ]);
 
     return {

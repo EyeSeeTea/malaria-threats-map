@@ -23,7 +23,6 @@ const MosquitoOverTimeDashboard: React.FC = () => {
         count,
         data,
         filters,
-        minMaxYears,
         onInsecticideClassChange,
         onSpeciesChange,
         onYearsChange,
@@ -48,7 +47,6 @@ const MosquitoOverTimeDashboard: React.FC = () => {
                 filters={filters}
                 speciesOptions={speciesOptions}
                 typeOptions={typeOptions}
-                minMaxYears={minMaxYears}
                 onInsecticideClassesChange={onInsecticideClassChange}
                 onSpeciesChange={onSpeciesChange}
                 onTypeChange={onTypeChange}
