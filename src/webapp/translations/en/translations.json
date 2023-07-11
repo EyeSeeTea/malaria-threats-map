@@ -572,6 +572,23 @@
                     "mutation_detected": "Samples with mutations detected",
                     "wt_tudy": "Samples with wildtype",
                     "mc_study": "Samples with multiple copy numbers"
+                },
+                "therapeutic_efficacy_studies": {
+                    "subtitle": "Details of therapeutic efficacy studies",
+                    "overview": "Overview",
+                    "study_details_one": "Study details",
+                    "study_details_other": "Study {{number}} details",
+                    "ongoing": "Ongoing",
+                    "planned": "Planned",
+                    "completed_results_pending": "Completed (results pending)",
+                    "status": "Study status",
+                    "proposed_timeframe": "Proposed timeframe",
+                    "lead_institution": "Lead institution",
+                    "funding_source": "Funding source",
+                    "age_group": "Age group",
+                    "species": "Species",
+                    "drug": "Treatment",
+                    "genotyping": "Genotyping"
                 }
             },
             "legend": {

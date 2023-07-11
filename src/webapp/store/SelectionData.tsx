@@ -12,7 +12,12 @@ export type CommonSelectionData = {
     filterOptions?: Option[];
     filterSelection?: Option[];
     studyObject: Study;
-    data?: PreventionChartData | PreventionMechanismChartData | TreatmentChartData | TreatmentMolecularMarkersChartData;
+    data?:
+        | PreventionChartData
+        | PreventionMechanismChartData
+        | TreatmentChartData
+        | TreatmentMolecularMarkersChartData
+        | TherapeuticEfficacyStudiesData;
     dataSources?: CitationDataSource[];
     curations?: CurationSources[];
     othersDetected?: string[];
@@ -60,6 +65,47 @@ export type TreatmentMolecularMarkersChartData = {
         years: string[];
         series: TreatmentChartDataSerie[];
         markers: { [group: string]: { name: string; color?: string }[] };
+    };
+};
+
+export enum THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS {
+    STATUS = "status",
+    PROPOSED_TIMEFRAME = "proposedTimeframe",
+    LEAD_INSTITUTION = "leadInstitution",
+    FUNDING_SOURCE = "fundingSource",
+}
+
+export type TherapeuticEfficacyStudiesOverviewInfo = {
+    [K in THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS]: {
+        label: string;
+        value: string;
+    };
+};
+
+export enum THERAPEUTIC_EFFICACY_STUDY_DETAILS_KEYS {
+    AGE_GROUP = "ageGroup",
+    SPECIES = "species",
+    DRUG = "drug",
+    GENOTYPING = "genotyping",
+}
+
+type TherapeuticEfficacyStudyDetails = {
+    [K in THERAPEUTIC_EFFICACY_STUDY_DETAILS_KEYS]: {
+        label: string;
+        value: string;
+    };
+};
+
+export type TherapeuticEfficacyStudiesDetailsConfig = {
+    title: string;
+    studyDetails: TherapeuticEfficacyStudyDetails;
+};
+
+export type TherapeuticEfficacyStudiesData = {
+    kind: "therapeutic-efficacy-studies";
+    data: {
+        overviewInfo: TherapeuticEfficacyStudiesOverviewInfo;
+        studiesDetailsConfig: TherapeuticEfficacyStudiesDetailsConfig[];
     };
 };
 
