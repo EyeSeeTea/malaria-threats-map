@@ -545,6 +545,8 @@
             "delayed_parasite_clearance_italics": "Eliminación tardía de parásitos (<i>P.f </i>)",
             "molecular_markers": "Marcadores moleculares de resistencia a los medicamentos",
             "molecular_markers_subtitle": "Resultados de los estudios de marcadores moleculares",
+            "therapeutic_efficacy_studies": "Estudios de eficacia terapéutica en curso y previstos",
+            "therapeutic_efficacy_studies_subtitle": "Detalles de los estudios de eficacia terapéutica",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} estudios de eficacia terapéutica efectuados en la eficacia {{drug}} contra <i>{{plasmodiumSpecies}}</i> {{years}}",
@@ -606,6 +608,17 @@
                     "low": "< 10%",
                     "help": {
                         "p1": "Este mapa presenta datos de <1>estudios de marcadores moleculares</1>. El color del punto está determinado por el porcentaje de muestras que tienen mutaciones moleculares. Los resultados más recientes se presentan de forma predeterminada.",
+                        "p2": "",
+                        "footer": "Fuente de datos: Base de datos mundial de la OMS sobre eficacia y resistencia a los medicamentos antipalúdicos."
+                    }
+                },
+                "therapeutic_efficacy_studies": {
+                    "title": "Estado de los estudios de eficacia terapéutica",
+                    "ongoing": "En curso",
+                    "planned": "Planificado",
+                    "completed": "Finalizado (resultados pendientes)",
+                    "help": {
+                        "p1": "",
                         "p2": "",
                         "footer": "Fuente de datos: Base de datos mundial de la OMS sobre eficacia y resistencia a los medicamentos antipalúdicos."
                     }
@@ -679,7 +692,9 @@
                 "AN_STEPHENSI_NOT_FOUND": "An. stephensi (no encontrado)"
             },
             "plasmodium_species": "Especie de plasmodium",
+            "select_plasmodium_species": "Seleccionar especie de plasmodium",
             "drug": "Tratamiento",
+            "select_drugs": "Seleccionar tratamiento",
             "molecular_marker": "Marcador molecular",
             "proxy_type": "Tipo de sinergia",
             "mechanism_type": "Tipo de mecanismo",

@@ -145,13 +145,14 @@ export enum TreatmentMapType {
     TREATMENT_FAILURE,
     DELAYED_PARASITE_CLEARANCE,
     MOLECULAR_MARKERS,
+    THERAPEUTIC_EFFICACY_STUDIES,
 }
 
 export interface TreatmentFilters {
     mapType: TreatmentMapType;
     dataset: TreatmentDataset;
-    plasmodiumSpecies: string;
-    drug: string;
+    plasmodiumSpecies: string[];
+    drugs: string[];
     molecularMarker: number;
     excludeLowerPatients: boolean;
     excludeLowerSamples: boolean;

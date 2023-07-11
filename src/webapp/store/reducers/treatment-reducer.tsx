@@ -13,8 +13,8 @@ const initialState: TreatmentState = Object.freeze({
     filters: {
         mapType: TreatmentMapType.TREATMENT_FAILURE,
         dataset: "THERAPEUTIC_EFFICACY_STUDY",
-        plasmodiumSpecies: null,
-        drug: null,
+        plasmodiumSpecies: [],
+        drugs: [],
         molecularMarker: null,
         excludeLowerPatients: false,
         excludeLowerSamples: false,
@@ -42,12 +42,12 @@ function updateDataset(dataset: TreatmentDataset) {
     return updateFilter("dataset", dataset, "THERAPEUTIC_EFFICACY_STUDY");
 }
 
-function updatePlasmodiumSpecies(plasmodiumSpecies: string) {
-    return updateFilter("plasmodiumSpecies", plasmodiumSpecies);
+function updatePlasmodiumSpecies(plasmodiumSpecies: string[]) {
+    return updateFilter("plasmodiumSpecies", plasmodiumSpecies, []);
 }
 
-function updateDrug(drug: string) {
-    return updateFilter("drug", drug);
+function updateDrugs(drugs: string[]) {
+    return updateFilter("drugs", drugs, []);
 }
 
 function updateMolecularMarker(molecularMarker: number) {
@@ -80,7 +80,7 @@ export default createReducer<TreatmentState>(initialState, {
     [ActionTypeEnum.SetTreatmentMapType]: updateMapType,
     [ActionTypeEnum.SetTreatmentDataset]: updateDataset,
     [ActionTypeEnum.SetPlasmodiumSpecies]: updatePlasmodiumSpecies,
-    [ActionTypeEnum.SetDrug]: updateDrug,
+    [ActionTypeEnum.SetDrugs]: updateDrugs,
     [ActionTypeEnum.SetMolecularMarker]: updateMolecularMarker,
     [ActionTypeEnum.SetExcludeLowerPatients]: updateExcludeLowerPatients,
     [ActionTypeEnum.SetExcludeLowerSamples]: updateExcludeLowerSamples,

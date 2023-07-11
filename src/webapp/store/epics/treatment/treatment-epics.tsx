@@ -9,7 +9,7 @@ import {
     fetchTreatmentStudiesSuccess,
     setFilteredStudiesAction,
     setMolecularMarker,
-    setTreatmentDrug,
+    setTreatmentDrugs,
     setTreatmentMapType,
     setTreatmentPlasmodiumSpecies,
 } from "../../actions/treatment-actions";
@@ -31,8 +31,10 @@ import { createTreatmentSelectionData } from "./utils";
 import { molecularMarkersMap } from "../../../components/filters/MolecularMarkerFilter";
 
 function groupStudies(studies: TreatmentStudy[]) {
-    const filtered255Studies = studies.filter(study => study.DimensionID === 255 || study.DimensionID === 256);
-    return filtered255Studies.map(study => ({
+    const filteredMainStudies = studies.filter(
+        study => study.DimensionID === 255 || study.DimensionID === 256 || study.DimensionID === 300
+    );
+    return filteredMainStudies.map(study => ({
         ...study,
         groupStudies: studies.filter(
             relatedStudy => relatedStudy.DimensionID === 257 && relatedStudy.K13_CODE === study.Code
@@ -69,7 +71,7 @@ export const setTreatmentMapTypesEpic = (action$: Observable<ActionType<typeof s
             if (action.payload === TreatmentMapType.MOLECULAR_MARKERS) {
                 return of(setMolecularMarker(1));
             } else if (action.payload === TreatmentMapType.DELAYED_PARASITE_CLEARANCE) {
-                return of(setTreatmentPlasmodiumSpecies("P._FALCIPARUM"));
+                return of(setTreatmentPlasmodiumSpecies(["P._FALCIPARUM"]));
             } else {
                 return of();
             }
@@ -80,10 +82,10 @@ export const setPlasmodiumSpeciesEpic = (action$: Observable<ActionType<typeof s
     action$.pipe(
         ofType(ActionTypeEnum.SetPlasmodiumSpecies),
         switchMap(action => {
-            if (action.payload === "P._FALCIPARUM") {
-                return of(setTreatmentDrug("DRUG_AL"));
-            } else if (action.payload === "P._VIVAX") {
-                return of(setTreatmentDrug("DRUG_CQ"));
+            if (action.payload.includes("P._FALCIPARUM")) {
+                return of(setTreatmentDrugs(["DRUG_AL"]));
+            } else if (action.payload.includes("P._VIVAX")) {
+                return of(setTreatmentDrugs(["DRUG_CQ"]));
             }
             return of();
         })
@@ -124,10 +126,10 @@ export const setTreatmentPlasmodiumSpeciesEpic = (
     action$.pipe(skip(1)).pipe(
         ofType(ActionTypeEnum.SetPlasmodiumSpecies),
         switchMap(action => {
-            if (["P._FALCIPARUM", "P._KNOWLESI", "P._OVALE"].includes(action.payload)) {
-                return of(setTreatmentDrug("DRUG_AL"));
-            } else if (action.payload !== null) {
-                return of(setTreatmentDrug("DRUG_CQ"));
+            if (action.payload.some(species => ["P._FALCIPARUM", "P._KNOWLESI", "P._OVALE"].includes(species))) {
+                return of(setTreatmentDrugs(["DRUG_AL"]));
+            } else if (action.payload !== null && action.payload?.length) {
+                return of(setTreatmentDrugs(["DRUG_CQ"]));
             } else {
                 return of();
             }
@@ -170,17 +172,12 @@ export const setTreatmentThemeEpic = (action$: Observable<ActionType<typeof setT
             if ($action.from === "map") {
                 return of(
                     ...base,
-                    setTreatmentPlasmodiumSpecies("P._FALCIPARUM"),
-                    setTreatmentDrug("DRUG_AL"),
+                    setTreatmentPlasmodiumSpecies(["P._FALCIPARUM"]),
+                    setTreatmentDrugs(["DRUG_AL"]),
                     setMolecularMarker(1)
                 );
             } else {
-                return of(
-                    ...base,
-                    setTreatmentPlasmodiumSpecies(null),
-                    setTreatmentDrug(null),
-                    setMolecularMarker(null)
-                );
+                return of(...base, setTreatmentPlasmodiumSpecies([]), setTreatmentDrugs([]), setMolecularMarker(null));
             }
         })
     );

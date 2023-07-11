@@ -16,6 +16,7 @@ import VectorOccuranceFilters from "../../layers/invasive/VectorOccurance/Vector
 import { selectInvasiveFilters } from "../../../store/reducers/invasive-reducer";
 import DelayedParasiteClearanceFilters from "../../layers/treatment/DelayedParasiteClearance/DelayedParasiteClearanceFilters";
 import MolecularMarkerFilters from "../../layers/treatment/MolecularMarkers/MolecularMarkerFilters";
+import TherapeuticEfficacyStudiesFilters from "../../layers/treatment/TherapeuticEfficacyStudies/TherapeuticEfficacyStudiesFilters";
 
 const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
@@ -70,6 +71,8 @@ const MapFiltersContent: React.FC<Props> = ({
                     return <DelayedParasiteClearanceFilters />;
                 case TreatmentMapType.MOLECULAR_MARKERS:
                     return <MolecularMarkerFilters />;
+                case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
+                    return <TherapeuticEfficacyStudiesFilters />;
                 default:
                     return <div />;
             }
