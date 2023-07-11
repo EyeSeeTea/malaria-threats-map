@@ -759,6 +759,7 @@
             "vectorSpecies": "Espèces vectorielles",
             "plasmodiumSpecies": "Espèces de plasmodium",
             "drug": "Médicament",
+            "drugs": "Médicaments",
             "excludeStudies": "Exclus",
             "molecularMarker": "Marqueur moléculaire"
         },
