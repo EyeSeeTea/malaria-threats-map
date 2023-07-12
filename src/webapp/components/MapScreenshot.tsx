@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { State } from "../store/types";
 import { selectMapTitle, selectTheme } from "../store/reducers/base-reducer";
 import { useWindowDimensions } from "./hooks/use-window-dimensions";
-import ScreenshotModal from './ScreenshotModal';
+import ScreenshotModal from "./ScreenshotModal";
 import Legend from "./legend/Legend";
 import whoLogoWhite from "../assets/img/who-logo-blue.png";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
@@ -29,11 +29,7 @@ type OwnProps = {
 };
 type MapScreenshotProps = StateProps & OwnProps;
 
-function MapScreenshot({
-    map,
-    theme,
-    title,
-}: MapScreenshotProps) {
+function MapScreenshot({ map, theme, title }: MapScreenshotProps) {
     const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
     const [mapImage, setMapImage] = React.useState(null);
@@ -74,14 +70,11 @@ function MapScreenshot({
                 <StyledCamaraIcon />
                 {t("common.screenshot.screenshot")}
             </OpenScreenshotButton>
-            <ScreenshotModal
-                open={open}
-                onClose={handleCloseScreenshot}
-                title={title}
-            >
+            <ScreenshotModal open={open} onClose={handleCloseScreenshot} title={title}>
                 <>
                     <TitleWrapper>
-                        {Icon}<Title>{_.capitalize(title)}</Title>
+                        {Icon}
+                        <Title>{_.capitalize(title)}</Title>
                     </TitleWrapper>
                     <MapContainer>
                         <MapInfoSummaryContainer>
@@ -97,15 +90,21 @@ function MapScreenshot({
                             <WHOInfoWrapper>
                                 <div>
                                     <StyledSpan>{t("common.screenshot.footer_data_source")}</StyledSpan>
-                                    <StyledAnchor href={MALARIA_THREATS_MAP_URL}>{MALARIA_THREATS_MAP_URL}</StyledAnchor>
+                                    <StyledAnchor href={MALARIA_THREATS_MAP_URL}>
+                                        {MALARIA_THREATS_MAP_URL}
+                                    </StyledAnchor>
                                 </div>
                                 <StyledSpan>{t("common.screenshot.footer_production")}</StyledSpan>
                             </WHOInfoWrapper>
-                            <StyledParagraph>{t("common.copyright.content", { year: new Date().getFullYear() })}</StyledParagraph>
+                            <StyledParagraph>
+                                {t("common.copyright.content", { year: new Date().getFullYear() })}
+                            </StyledParagraph>
                         </WHOInfoWrapper>
                         <WHOLogoWrapper>
-                            <img alt="WHO logo" src={whoLogoWhite} width={230} height={70}/>
-                            <WHOLogoSubtitle>{t("common.screenshot.footer_who_logo", { year: new Date().getFullYear() })}</WHOLogoSubtitle>
+                            <img alt="WHO logo" src={whoLogoWhite} width={230} height={70} />
+                            <WHOLogoSubtitle>
+                                {t("common.screenshot.footer_who_logo", { year: new Date().getFullYear() })}
+                            </WHOLogoSubtitle>
                         </WHOLogoWrapper>
                     </WHOInfoContainer>
                 </>
@@ -159,7 +158,7 @@ const MapInfoSummaryContainer = styled.div`
 
 const LegendContainer = styled.div`
     border-radius: 12px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     position: absolute;
     bottom: 20px;
     right: 30px;
@@ -167,10 +166,12 @@ const LegendContainer = styled.div`
         width: fit-content;
         max-width: fit-content;
     }
-    span, p {
+    span,
+    p {
         white-space: nowrap;
     }
-    hr, .MuiSvgIcon-root {
+    hr,
+    .MuiSvgIcon-root {
         display: none;
     }
     .MuiButtonBase-root {

@@ -169,7 +169,7 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
     );
 };
 
-const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = (props) => {
+const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = props => {
     const [open, setOpen] = React.useState(false);
 
     const handleScreenshot = React.useCallback(() => {
@@ -182,7 +182,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
 
     return (
         <>
-            <PreventionFilterableDashboardComponent {...props} onScreenshot={handleScreenshot}/>
+            <PreventionFilterableDashboardComponent {...props} onScreenshot={handleScreenshot} />
             <ScreenshotModal
                 open={open}
                 onClose={handleCloseScreenshot}
@@ -190,7 +190,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
                 backgroundColor={SCREENSHOT_BACKGROUND_COLOR}
                 exclusionClasses={SCREENSHOT_EXCLUSION_CLASSES}
             >
-                <PreventionFilterableDashboardComponent {...props} isScreenshot/>
+                <PreventionFilterableDashboardComponent {...props} isScreenshot />
             </ScreenshotModal>
         </>
     );
@@ -200,19 +200,20 @@ export default PreventionFilterableDashboard;
 
 const Container = styled.div<{ isScreenshot: boolean }>`
     padding: 10px;
-    width: ${props => props?.isScreenshot && 'fit-content' };
+    width: ${props => props?.isScreenshot && "fit-content"};
 `;
 
 const StyledGridItem = styled(Grid)<{ isScreenshot: boolean }>`
-    width: ${props => props?.isScreenshot && 'fit-content' };
-    max-width: ${props => props?.isScreenshot && 'fit-content' };
-    .MuiChip-root, .MuiChip-label {
-        overflow: ${props => props?.isScreenshot && 'initial' };
+    width: ${props => props?.isScreenshot && "fit-content"};
+    max-width: ${props => props?.isScreenshot && "fit-content"};
+    .MuiChip-root,
+    .MuiChip-label {
+        overflow: ${props => props?.isScreenshot && "initial"};
     }
 `;
 
 const StyledGridContainer = styled(Grid)<{ isScreenshot: boolean }>`
-    flex-wrap: ${props => props?.isScreenshot && 'nowrap' };
+    flex-wrap: ${props => props?.isScreenshot && "nowrap"};
 `;
 
 const DasboardCard = styled(Card)`

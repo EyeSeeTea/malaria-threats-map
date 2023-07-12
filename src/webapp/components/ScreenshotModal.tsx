@@ -13,15 +13,22 @@ interface ScreenshotModalProps {
     title: string;
     children: React.ReactNode;
     backgroundColor?: string;
-    exclusionClasses?: string[]
+    exclusionClasses?: string[];
 }
 
-function ScreenshotModal({ open = false, onClose, title, backgroundColor, exclusionClasses, children }: ScreenshotModalProps) {
+function ScreenshotModal({
+    open = false,
+    onClose,
+    title,
+    backgroundColor,
+    exclusionClasses,
+    children,
+}: ScreenshotModalProps) {
     const { t } = useTranslation();
-    const ref = useRef<HTMLDivElement>(null)
+    const ref = useRef<HTMLDivElement>(null);
 
     const handleDownload = useCallback(() => {
-        downloadHtmlElement(ref.current, title.replace('.', '_'), { backgroundColor, exclusionClasses });
+        downloadHtmlElement(ref.current, title.replace(".", "_"), { backgroundColor, exclusionClasses });
     }, [backgroundColor, exclusionClasses, title]);
 
     return (
@@ -31,7 +38,7 @@ function ScreenshotModal({ open = false, onClose, title, backgroundColor, exclus
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-           <StyledBox backgroundColor={backgroundColor}>
+            <StyledBox backgroundColor={backgroundColor}>
                 <Header>
                     <Title>{_.capitalize(title)}</Title>
                     <StyledScreenshotButton variant="contained" onClick={handleDownload}>
@@ -58,7 +65,7 @@ const StyledBox = styled(Box)<{ backgroundColor: string }>`
     top: 54%;
     width: 90vw;
     height: 90vh;
-    background-color: ${props => props?.backgroundColor ?? "#FFFFFF" };
+    background-color: ${props => props?.backgroundColor ?? "#FFFFFF"};
     border-radius: 10px;
 `;
 
