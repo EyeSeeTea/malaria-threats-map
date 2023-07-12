@@ -7,7 +7,6 @@ export function downloadHtmlElement(
     name: string,
     options?: { backgroundColor?: string; exclusionClasses?: string[] }
 ) {
-
     if (element === null) {
         return;
     }
