@@ -45,7 +45,7 @@ export function usePrevention() {
             onlyIncludeBioassaysWithMoreMosquitoes: 0,
             onlyIncludeDataByHealth: false,
             years: undefined,
-            maxMinYears: filters.maxMinYears,
+            maxMinYears: undefined,
         });
 
         const insecticideClasses = extractInsecticideClassesOptions(filteredStudies);
@@ -56,7 +56,6 @@ export function usePrevention() {
         filters.onlyIncludeBioassaysWithMoreMosquitoes,
         filters.onlyIncludeDataByHealth,
         filters.years,
-        filters.maxMinYears,
     ]);
 
     React.useEffect(() => {
@@ -68,13 +67,13 @@ export function usePrevention() {
             onlyIncludeBioassaysWithMoreMosquitoes: 0,
             onlyIncludeDataByHealth: false,
             years: undefined,
-            maxMinYears: filters.maxMinYears,
+            maxMinYears: undefined,
         });
 
         const insecticideTypes = extractInsecticideTypeOptions(filteredStudies);
 
         setInsecticideTypeOptions(insecticideTypes);
-    }, [filters.maxMinYears, preventionStudies]);
+    }, [preventionStudies]);
 
     React.useEffect(() => {
         const filteredStudies = filterStudies(dashboardsPreventionStudies, {
@@ -85,13 +84,13 @@ export function usePrevention() {
             onlyIncludeBioassaysWithMoreMosquitoes: 0,
             onlyIncludeDataByHealth: false,
             years: undefined,
-            maxMinYears: filters.maxMinYears,
+            maxMinYears: undefined,
         });
 
         const species = extractSpeciesOptions(filteredStudies);
 
         setSpeciesOptions(species);
-    }, [dashboardsPreventionStudies, filters.insecticideClasses, onSpeciesChange, filters.maxMinYears]);
+    }, [dashboardsPreventionStudies, filters.insecticideClasses, onSpeciesChange]);
 
     React.useEffect(() => {
         const filteredStudies = filterStudies(preventionStudies, {
@@ -102,13 +101,13 @@ export function usePrevention() {
             onlyIncludeBioassaysWithMoreMosquitoes: 0,
             onlyIncludeDataByHealth: false,
             years: undefined,
-            maxMinYears: filters.maxMinYears,
+            maxMinYears: undefined,
         });
 
         const types = extractTypeOptions(filteredStudies);
 
         setTypeOptions(types);
-    }, [preventionStudies, filters.insecticideClasses, filters.species, onTypeChange, filters.maxMinYears]);
+    }, [preventionStudies, filters.insecticideClasses, filters.species, onTypeChange]);
 
     return {
         preventionStudies,
