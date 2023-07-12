@@ -21,13 +21,13 @@ import PreventionMechanismsChart from "./prevention/PreventionMechanismsChart";
 import TreatmentChart from "./treatment/TreatmentChart";
 import AditionalInformation from "../layers/treatment/common/Aditionalnformation";
 import MolecularMarkersChart from "./treatment/MolecularMarkersChart";
-import TherapeuticEfficacyStudiesChart from "./treatment/TherapeuticEfficacyStudiesChart";
 import { CommonSelectionData } from "../../store/SelectionData";
 import { InvasiveSelectionData } from "../../store/epics/invasive/types";
 import { PayloadActionCreator } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
 import { DiagnosisSelectionData } from "../../store/epics/diagnosis/types";
 import CloseIcon from "@mui/icons-material/Close";
+import OngoingAndPlannedTreatmentStudiesChart from "./treatment/OngoingAndPlannedTreatmentStudiesChart";
 
 const Container = styled.div<{ width?: string; padding?: string }>`
     width: ${props => props.width || "100%"};
@@ -184,7 +184,7 @@ const CommonContent: React.FC<{
         setSelectionFilterSelection(value);
     };
 
-    const chartCataContent = () => {
+    const chartDataContent = () => {
         switch (selectionData.data.kind) {
             case "prevention": {
                 return <PreventionChart mapType={preventionFilters.mapType} selectionData={selectionData} />;
@@ -223,11 +223,12 @@ const CommonContent: React.FC<{
             </TopContainer>
 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
-            {selectionData.data.kind === "therapeutic-efficacy-studies" ? (
-                <TherapeuticEfficacyStudiesChart selectionData={selectionData} />
+            {selectionData.data.kind === "therapeutic-efficacy-studies" ||
+            selectionData.data.kind === "molecular-markers-ongoing-studies" ? (
+                <OngoingAndPlannedTreatmentStudiesChart selectionData={selectionData} />
             ) : (
                 <RoundedContainer>
-                    {selectionData.data && chartCataContent()}
+                    {selectionData.data && chartDataContent()}
 
                     {selectionData.dataSources && <CitationNew dataSources={selectionData.dataSources} />}
                     {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}

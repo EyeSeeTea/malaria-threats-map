@@ -1,5 +1,6 @@
 import { Study } from "../../domain/entities/Study";
 import { Option } from "../components/BasicSelect";
+import { MolecularMarkersLabel } from "../components/layers/treatment/MolecularMarkersOngoingStudies/utils";
 import { DiagnosisSelectionData } from "./epics/diagnosis/types";
 import { InvasiveSelectionData } from "./epics/invasive/types";
 
@@ -17,7 +18,8 @@ export type CommonSelectionData = {
         | PreventionMechanismChartData
         | TreatmentChartData
         | TreatmentMolecularMarkersChartData
-        | TherapeuticEfficacyStudiesData;
+        | TherapeuticEfficacyStudiesData
+        | MolecularMarkersOngoingStudiesData;
     dataSources?: CitationDataSource[];
     curations?: CurationSources[];
     othersDetected?: string[];
@@ -68,20 +70,6 @@ export type TreatmentMolecularMarkersChartData = {
     };
 };
 
-export enum THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS {
-    STATUS = "status",
-    PROPOSED_TIMEFRAME = "proposedTimeframe",
-    LEAD_INSTITUTION = "leadInstitution",
-    FUNDING_SOURCE = "fundingSource",
-}
-
-export type TherapeuticEfficacyStudiesOverviewInfo = {
-    [K in THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS]: {
-        label: string;
-        value: string;
-    };
-};
-
 export enum THERAPEUTIC_EFFICACY_STUDY_DETAILS_KEYS {
     AGE_GROUP = "ageGroup",
     SPECIES = "species",
@@ -96,16 +84,52 @@ type TherapeuticEfficacyStudyDetails = {
     };
 };
 
-export type TherapeuticEfficacyStudiesDetailsConfig = {
+export enum MOLECULAR_MARKERS_ONGOING_STUDY_DETAILS_KEYS {
+    PROMPT_NAME = "studyInitiatedFollowing",
+    GEOGR_SCOPE_NAME = "samplingStrategy",
+    PROT_TYPE_NAME = "studyDesign",
+}
+
+type MolecularMarkersOngoingStudyDetails = {
+    [K in MOLECULAR_MARKERS_ONGOING_STUDY_DETAILS_KEYS]: {
+        label: string;
+        value: string;
+    };
+};
+
+export enum ONGOING_AND_PLANNED_TREATMENT_STUDY_OVERVIEW_INFO_KEYS {
+    STATUS = "status",
+    PROPOSED_TIMEFRAME = "proposedTimeframe",
+    LEAD_INSTITUTION = "leadInstitution",
+    FUNDING_SOURCE = "fundingSource",
+}
+
+export type OngoingAndPlannedTreatmentStudiesOverviewInfo = {
+    [K in ONGOING_AND_PLANNED_TREATMENT_STUDY_OVERVIEW_INFO_KEYS]: {
+        label: string;
+        value: string;
+    };
+};
+
+export type OngoingAndPlannedTreatmentStudiesDetailsConfig = {
     title: string;
-    studyDetails: TherapeuticEfficacyStudyDetails;
+    studyDetails: TherapeuticEfficacyStudyDetails | MolecularMarkersOngoingStudyDetails;
+    molecularMarkersIncluded?: MolecularMarkersLabel[];
 };
 
 export type TherapeuticEfficacyStudiesData = {
     kind: "therapeutic-efficacy-studies";
     data: {
-        overviewInfo: TherapeuticEfficacyStudiesOverviewInfo;
-        studiesDetailsConfig: TherapeuticEfficacyStudiesDetailsConfig[];
+        overviewInfo: OngoingAndPlannedTreatmentStudiesOverviewInfo;
+        studiesDetailsConfig: OngoingAndPlannedTreatmentStudiesDetailsConfig[];
+    };
+};
+
+export type MolecularMarkersOngoingStudiesData = {
+    kind: "molecular-markers-ongoing-studies";
+    data: {
+        overviewInfo: OngoingAndPlannedTreatmentStudiesOverviewInfo;
+        studiesDetailsConfig: OngoingAndPlannedTreatmentStudiesDetailsConfig[];
     };
 };
 

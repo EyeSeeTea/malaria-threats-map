@@ -4,41 +4,72 @@ import styled from "styled-components";
 import { Table, TableCell, TableRow, Typography, Divider, Paper, TableBody } from "@mui/material";
 
 import {
+    ONGOING_AND_PLANNED_TREATMENT_STUDY_OVERVIEW_INFO_KEYS,
+    OngoingAndPlannedTreatmentStudiesDetailsConfig,
+    OngoingAndPlannedTreatmentStudiesOverviewInfo,
     SelectionData,
     THERAPEUTIC_EFFICACY_STUDY_DETAILS_KEYS,
-    THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS,
-    TherapeuticEfficacyStudiesDetailsConfig,
-    TherapeuticEfficacyStudiesOverviewInfo,
 } from "../../../store/SelectionData";
+import { MolecularMarkersOngoingStudiesColors } from "../../layers/treatment/MolecularMarkersOngoingStudies/MolecularMarkersOngoingStudiesSymbols";
 import { TherapeuticEfficacyStudiesColors } from "../../layers/treatment/TherapeuticEfficacyStudies/therapeuticEfficacyStudiesSymbols";
 
-type TherapeuticEfficacyStudiesChartProps = {
+type OngoingAndPlannedTreatmentStudiesChartProps = {
     selectionData: SelectionData;
 };
 
-const TherapeuticEfficacyStudiesChart = ({ selectionData }: TherapeuticEfficacyStudiesChartProps) => {
+const OngoingAndPlannedTreatmentStudiesChart = ({ selectionData }: OngoingAndPlannedTreatmentStudiesChartProps) => {
     const { t } = useTranslation();
 
-    const studiesDetailsConfig: TherapeuticEfficacyStudiesDetailsConfig[] = React.useMemo(() => {
-        if (selectionData.kind === "common" && selectionData.data.kind === "therapeutic-efficacy-studies") {
+    const studiesDetailsConfig: OngoingAndPlannedTreatmentStudiesDetailsConfig[] = React.useMemo(() => {
+        if (
+            selectionData.kind === "common" &&
+            (selectionData.data.kind === "therapeutic-efficacy-studies" ||
+                selectionData.data.kind === "molecular-markers-ongoing-studies")
+        ) {
             return selectionData.data.data.studiesDetailsConfig;
         } else {
             return null;
         }
     }, [selectionData]);
 
-    const overviewInfo: TherapeuticEfficacyStudiesOverviewInfo = React.useMemo(() => {
-        if (selectionData.kind === "common" && selectionData.data.kind === "therapeutic-efficacy-studies") {
+    const overviewInfo: OngoingAndPlannedTreatmentStudiesOverviewInfo = React.useMemo(() => {
+        if (
+            selectionData.kind === "common" &&
+            (selectionData.data.kind === "therapeutic-efficacy-studies" ||
+                selectionData.data.kind === "molecular-markers-ongoing-studies")
+        ) {
             return selectionData.data.data.overviewInfo;
         } else {
             return null;
         }
     }, [selectionData]);
 
+    const getStatusColors = React.useCallback(
+        statusValue => {
+            if (selectionData.kind === "common" && selectionData.data.kind === "therapeutic-efficacy-studies") {
+                return {
+                    color: TherapeuticEfficacyStudiesColors[statusValue][0],
+                    borderColor: TherapeuticEfficacyStudiesColors[statusValue][1],
+                };
+            }
+
+            if (selectionData.kind === "common" && selectionData.data.kind === "molecular-markers-ongoing-studies") {
+                return {
+                    color: MolecularMarkersOngoingStudiesColors[statusValue][0],
+                    borderColor: MolecularMarkersOngoingStudiesColors[statusValue][1],
+                };
+            }
+            return null;
+        },
+        [selectionData]
+    );
+
     return (
         <Container>
             <RoundedContainer $isFirst>
-                <StyledTypography>{t(`common.treatment.chart.therapeutic_efficacy_studies.overview`)}</StyledTypography>
+                <StyledTypographyMargin>
+                    {t(`common.treatment.chart.ongoing_and_planned_treatment_studies.overview`)}
+                </StyledTypographyMargin>
                 <Table>
                     <TableBody>
                         {Object.entries(overviewInfo).map(([key, { label, value }], index) => (
@@ -50,21 +81,21 @@ const TherapeuticEfficacyStudiesChart = ({ selectionData }: TherapeuticEfficacyS
                                     {label}
                                 </StyledTableHeader>
                                 <StyledTableCell $noShadow={index === Object.values(overviewInfo).length - 1}>
-                                    <StyledWrapper>
-                                        {key === THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS.STATUS ? (
+                                    <StyledStatusWrapper>
+                                        {key === ONGOING_AND_PLANNED_TREATMENT_STUDY_OVERVIEW_INFO_KEYS.STATUS ? (
                                             <React.Fragment>
                                                 <StatusSymbol
-                                                    color={TherapeuticEfficacyStudiesColors[value][0]}
-                                                    borderColor={TherapeuticEfficacyStudiesColors[value][1]}
+                                                    color={getStatusColors(value)?.color}
+                                                    borderColor={getStatusColors(value)?.borderColor}
                                                 />
                                                 {t(
-                                                    `common.treatment.chart.therapeutic_efficacy_studies.${value.toLowerCase()}`
+                                                    `common.treatment.chart.ongoing_and_planned_treatment_studies.${value.toLowerCase()}`
                                                 )}
                                             </React.Fragment>
                                         ) : (
                                             value
                                         )}
-                                    </StyledWrapper>
+                                    </StyledStatusWrapper>
                                 </StyledTableCell>
                             </TableRow>
                         ))}
@@ -72,10 +103,10 @@ const TherapeuticEfficacyStudiesChart = ({ selectionData }: TherapeuticEfficacyS
                 </Table>
             </RoundedContainer>
             <StyledDivider />
-            {studiesDetailsConfig.map(({ title, studyDetails }, index) => (
+            {studiesDetailsConfig.map(({ title, studyDetails, molecularMarkersIncluded }, index) => (
                 <React.Fragment key={title}>
                     <RoundedContainer $isLast={index === studiesDetailsConfig.length - 1}>
-                        <StyledTypography>{title}</StyledTypography>
+                        <StyledTypographyMargin>{title}</StyledTypographyMargin>
                         <Table>
                             <TableBody>
                                 {Object.entries(studyDetails).map(([key, { label, value }], index) => (
@@ -97,6 +128,16 @@ const TherapeuticEfficacyStudiesChart = ({ selectionData }: TherapeuticEfficacyS
                                 ))}
                             </TableBody>
                         </Table>
+                        {molecularMarkersIncluded?.length ? (
+                            <StyledWrapper>
+                                <StyledTypography>
+                                    {t(
+                                        `common.treatment.chart.ongoing_and_planned_treatment_studies.molecular_markers_list`
+                                    )}
+                                </StyledTypography>
+                                {molecularMarkersIncluded.map(({ label }) => label).join(", ")}
+                            </StyledWrapper>
+                        ) : null}
                     </RoundedContainer>
                     {index === studiesDetailsConfig.length - 1 ? null : <StyledDivider />}
                 </React.Fragment>
@@ -105,7 +146,7 @@ const TherapeuticEfficacyStudiesChart = ({ selectionData }: TherapeuticEfficacyS
     );
 };
 
-export default TherapeuticEfficacyStudiesChart;
+export default OngoingAndPlannedTreatmentStudiesChart;
 
 const RoundedContainer = styled(Paper)<{ $isFirst?: boolean; $isLast?: boolean }>`
     padding: 12px 20px;
@@ -124,7 +165,19 @@ const Container = styled.div`
     margin: 15px 9px;
 `;
 
+const StyledTypography = styled(Typography)`
+    font-size: 12px;
+    color: #343434;
+    font-weight: bold;
+`;
+
 const StyledWrapper = styled.div`
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+`;
+
+const StyledStatusWrapper = styled.div`
     display: flex;
     align-items: center;
     gap: 5px;
@@ -134,10 +187,7 @@ const StyledDivider = styled(Divider)`
     border-color: #00000033;
 `;
 
-const StyledTypography = styled(Typography)`
-    font-size: 12px;
-    color: #343434;
-    font-weight: bold;
+const StyledTypographyMargin = styled(StyledTypography)`
     margin-bottom: 15px;
 `;
 

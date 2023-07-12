@@ -575,8 +575,7 @@
                     "wt_tudy": "Samples with wildtype",
                     "mc_study": "Samples with multiple copy numbers"
                 },
-                "therapeutic_efficacy_studies": {
-                    "subtitle": "Details of therapeutic efficacy studies",
+                "ongoing_and_planned_treatment_studies": {
                     "overview": "Overview",
                     "study_details_one": "Study details",
                     "study_details_other": "Study {{number}} details",
@@ -587,10 +586,20 @@
                     "proposed_timeframe": "Proposed timeframe",
                     "lead_institution": "Lead institution",
                     "funding_source": "Funding source",
+                    "molecular_markers_list": "List of all molecular markers included in this study:"
+                },
+                "therapeutic_efficacy_studies": {
+                    "subtitle": "Details of therapeutic efficacy studies",
                     "age_group": "Age group",
                     "species": "Species",
                     "drug": "Treatment",
                     "genotyping": "Genotyping"
+                },
+                "molecular_markers_ongoing_studies": {
+                    "subtitle": "Details of molecular marker studies",
+                    "study_initiated_following": "Study initiated following",
+                    "sampling_strategy": "Sampling strategy",
+                    "study_design": "Survey or study design"
                 }
             },
             "legend": {

@@ -3,9 +3,12 @@ import { getSiteTitle } from "../../../components/site-title/utils";
 import {
     AditionalInformation,
     CitationDataSource,
+    MOLECULAR_MARKERS_ONGOING_STUDY_DETAILS_KEYS,
+    MolecularMarkersOngoingStudiesData,
+    ONGOING_AND_PLANNED_TREATMENT_STUDY_OVERVIEW_INFO_KEYS,
+    OngoingAndPlannedTreatmentStudiesOverviewInfo,
     SelectionData,
     THERAPEUTIC_EFFICACY_STUDY_DETAILS_KEYS,
-    THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS,
     TherapeuticEfficacyStudiesData,
     TreatmentChartData,
     TreatmentMolecularMarkersChartData,
@@ -21,9 +24,10 @@ import { molecularMarkersMap, MOLECULAR_MARKERS } from "../../../components/filt
 import { createCitationDataSources, selectDataSourcesByStudies } from "../common/utils";
 import LineSymbol from "../../../assets/img/line.svg";
 import {
-    getTherapeuticEfficacyStudiesStatusFromStatusId,
-    sortTherapeuticEfficacyStudies,
-} from "../../../components/layers/treatment/TherapeuticEfficacyStudies/utils";
+    MOLECULAR_MARKERS_LABELS,
+    MolecularMarkersLabel,
+    getMolecularMarkersOngoingStudiesStatusFromStatusId,
+} from "../../../components/layers/treatment/MolecularMarkersOngoingStudies/utils";
 
 export function createTreatmentSelectionData(
     theme: string,
@@ -50,19 +54,19 @@ export function createTreatmentSelectionData(
         filterOptions: [],
         filterSelection: [],
         studyObject,
-        data: getTreatmentDataByMaType(sortedStudies, dataSources, { treatmentFilters, yearFilters }),
+        data: getTreatmentDataByMapType(sortedStudies, dataSources, { treatmentFilters, yearFilters }),
         dataSources: treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS ? dataSources : undefined,
         curations: [],
         othersDetected: [],
         aditionalInformation:
-            treatmentFilters.mapType !== TreatmentMapType.MOLECULAR_MARKERS &&
-            treatmentFilters.mapType !== TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES
+            treatmentFilters.mapType === TreatmentMapType.TREATMENT_FAILURE ||
+            treatmentFilters.mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE
                 ? createTreatmentAditionalInfo(sortedStudies)
                 : undefined,
     };
 }
 
-function getTreatmentDataByMaType(
+function getTreatmentDataByMapType(
     sortedStudies: TreatmentStudy[],
     dataSources: CitationDataSource[],
     filters: {
@@ -78,41 +82,53 @@ function getTreatmentDataByMaType(
             return createMolecularMarkersChartData(sortedStudies, dataSources, filters.treatmentFilters);
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
             return createTherapeuticEfficacyStudies(sortedStudies);
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return createMolecularMarkersOngoingStudies(sortedStudies);
     }
+}
+
+export function sortOngoingAndPlannedStudies(studies: TreatmentStudy[]) {
+    return _.orderBy(studies, ["STUDY_SEQ"]);
 }
 
 function sortStudies(studies: TreatmentStudy[], treatmentFilters: TreatmentFilters) {
-    if (treatmentFilters.mapType === TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES) {
-        return sortTherapeuticEfficacyStudies(studies);
+    switch (treatmentFilters.mapType) {
+        case TreatmentMapType.TREATMENT_FAILURE:
+        case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
+        case TreatmentMapType.MOLECULAR_MARKERS:
+            return _.orderBy(
+                studies,
+                study => parseInt(study.YEAR_START),
+                treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS ? "desc" : "asc"
+            );
+        case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return sortOngoingAndPlannedStudies(studies);
     }
-
-    return _.orderBy(
-        studies,
-        study => parseInt(study.YEAR_START),
-        treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS ? "desc" : "asc"
-    );
 }
 
 function geSubtitle(treatmentFilters: TreatmentFilters, studyObject: TreatmentStudy) {
-    if (treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS) {
-        const molecularMarker = i18next.t(
-            MOLECULAR_MARKERS.find((m: any) => treatmentFilters.molecularMarkers.includes(m.value)).label
-        );
-
-        return i18next.t("common.treatment.chart.molecular_markers.subtitle", {
-            molecularMarker,
-        });
-    }
-
-    if (treatmentFilters.mapType === TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES) {
-        return i18next.t("common.treatment.chart.therapeutic_efficacy_studies.subtitle");
-    }
-
     const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.find(
         (species: any) => species.value === studyObject.PLASMODIUM_SPECIES
-    ).label;
+    )?.label;
 
-    return `${plasmodiumSpecies}, ${i18next.t(studyObject.DRUG_NAME)}`;
+    const molecularMarker = i18next.t(
+        MOLECULAR_MARKERS.find((m: any) => treatmentFilters.molecularMarkers.includes(m.value))?.label
+    );
+
+    switch (treatmentFilters.mapType) {
+        case TreatmentMapType.TREATMENT_FAILURE:
+        case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
+            return `${plasmodiumSpecies}, ${i18next.t(studyObject.DRUG_NAME)}`;
+        case TreatmentMapType.MOLECULAR_MARKERS:
+            return i18next.t("common.treatment.chart.molecular_markers.subtitle", {
+                molecularMarker,
+            });
+        case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
+            return i18next.t("common.treatment.chart.therapeutic_efficacy_studies.subtitle");
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return i18next.t("common.treatment.chart.molecular_markers_ongoing_studies.subtitle");
+    }
 }
 
 function rangeYears(startYear: number, endYear: number) {
@@ -247,33 +263,40 @@ function createMolecularMarkersChartData(
     };
 }
 
-function createTherapeuticEfficacyStudies(sortedStudies: TreatmentStudy[]): TherapeuticEfficacyStudiesData {
-    const studyObject = sortedStudies[0];
-    const status = getTherapeuticEfficacyStudiesStatusFromStatusId(studyObject.SURV_STATUS);
+function createOngoingAndPlannedTreatmentStudiesOverviewInfo(
+    studyObject: TreatmentStudy
+): OngoingAndPlannedTreatmentStudiesOverviewInfo {
+    const status = getMolecularMarkersOngoingStudiesStatusFromStatusId(studyObject.SURV_STATUS);
 
     const overviewInfo = {
-        [THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS.STATUS]: {
-            label: i18next.t(`common.treatment.chart.therapeutic_efficacy_studies.status`),
+        [ONGOING_AND_PLANNED_TREATMENT_STUDY_OVERVIEW_INFO_KEYS.STATUS]: {
+            label: i18next.t(`common.treatment.chart.ongoing_and_planned_treatment_studies.status`),
             value: status,
         },
-        [THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS.PROPOSED_TIMEFRAME]: {
-            label: i18next.t(`common.treatment.chart.therapeutic_efficacy_studies.proposed_timeframe`),
+        [ONGOING_AND_PLANNED_TREATMENT_STUDY_OVERVIEW_INFO_KEYS.PROPOSED_TIMEFRAME]: {
+            label: i18next.t(`common.treatment.chart.ongoing_and_planned_treatment_studies.proposed_timeframe`),
             value: `${studyObject.YEAR_START} - ${studyObject.YEAR_END}`,
         },
-        [THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS.LEAD_INSTITUTION]: {
-            label: i18next.t(`common.treatment.chart.therapeutic_efficacy_studies.lead_institution`),
+        [ONGOING_AND_PLANNED_TREATMENT_STUDY_OVERVIEW_INFO_KEYS.LEAD_INSTITUTION]: {
+            label: i18next.t(`common.treatment.chart.ongoing_and_planned_treatment_studies.lead_institution`),
             value: `${studyObject.INSTITUTION}${
                 studyObject.INSTITUTION_CITY ? `, ${studyObject.INSTITUTION_CITY}` : ""
             }`,
         },
-        [THERAPEUTIC_EFFICACY_STUDY_OVERVIEW_INFO_KEYS.FUNDING_SOURCE]: {
-            label: i18next.t(`common.treatment.chart.therapeutic_efficacy_studies.funding_source`),
+        [ONGOING_AND_PLANNED_TREATMENT_STUDY_OVERVIEW_INFO_KEYS.FUNDING_SOURCE]: {
+            label: i18next.t(`common.treatment.chart.ongoing_and_planned_treatment_studies.funding_source`),
             value: studyObject.FUNDING_SOURCE,
         },
     };
 
+    return overviewInfo;
+}
+
+function createTherapeuticEfficacyStudies(sortedStudies: TreatmentStudy[]): TherapeuticEfficacyStudiesData {
+    const studyObject = sortedStudies[0];
+
     const studiesDetailsConfig = sortedStudies.map(study => ({
-        title: i18next.t(`common.treatment.chart.therapeutic_efficacy_studies.study_details`, {
+        title: i18next.t(`common.treatment.chart.ongoing_and_planned_treatment_studies.study_details`, {
             number: study.STUDY_SEQ,
             count: sortedStudies.length,
         }),
@@ -302,10 +325,51 @@ function createTherapeuticEfficacyStudies(sortedStudies: TreatmentStudy[]): Ther
     return {
         kind: "therapeutic-efficacy-studies",
         data: {
-            overviewInfo,
+            overviewInfo: createOngoingAndPlannedTreatmentStudiesOverviewInfo(studyObject),
             studiesDetailsConfig,
         },
     };
+}
+
+function createMolecularMarkersOngoingStudies(sortedStudies: TreatmentStudy[]): MolecularMarkersOngoingStudiesData {
+    const studyObject = sortedStudies[0];
+
+    const studiesDetailsConfig = sortedStudies.map(study => ({
+        title: i18next.t(`common.treatment.chart.ongoing_and_planned_treatment_studies.study_details`, {
+            number: study.STUDY_SEQ,
+            count: sortedStudies.length,
+        }),
+        studyDetails: {
+            [MOLECULAR_MARKERS_ONGOING_STUDY_DETAILS_KEYS.PROMPT_NAME]: {
+                label: i18next.t(`common.treatment.chart.molecular_markers_ongoing_studies.study_initiated_following`),
+                value: study.PROMPT_NAME,
+            },
+            [MOLECULAR_MARKERS_ONGOING_STUDY_DETAILS_KEYS.GEOGR_SCOPE_NAME]: {
+                label: i18next.t(`common.treatment.chart.molecular_markers_ongoing_studies.sampling_strategy`),
+                value: i18next.t(study.GEOGR_SCOPE_NAME),
+            },
+            [MOLECULAR_MARKERS_ONGOING_STUDY_DETAILS_KEYS.PROT_TYPE_NAME]: {
+                label: i18next.t(`common.treatment.chart.molecular_markers_ongoing_studies.study_design`),
+                value: study.PROT_TYPE_NAME,
+            },
+        },
+        molecularMarkersIncluded: getMolecularMarkersIncluded(study),
+    }));
+
+    return {
+        kind: "molecular-markers-ongoing-studies",
+        data: {
+            overviewInfo: createOngoingAndPlannedTreatmentStudiesOverviewInfo(studyObject),
+            studiesDetailsConfig,
+        },
+    };
+}
+
+function getMolecularMarkersIncluded(study: TreatmentStudy): MolecularMarkersLabel[] {
+    const molecularMarkersIncluded = MOLECULAR_MARKERS_LABELS.filter(
+        ({ key }) => study[key as keyof TreatmentStudy] === 1
+    );
+    return molecularMarkersIncluded;
 }
 
 function extractMarkersByMutationCategory(mutationStudies: TreatmentStudy[], category: String) {

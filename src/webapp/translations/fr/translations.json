@@ -577,8 +577,7 @@
                     "wt_tudy": "Échantillons de type sauvage",
                     "mc_study": "Échantillons avec plusieurs numéros de copie"
                 },
-                "therapeutic_efficacy_studies": {
-                    "subtitle": "Détails des études d'efficacité thérapeutique",
+                "ongoing_and_planned_treatment_studies": {
                     "overview": "Vue d'ensemble",
                     "study_details_one": "Etude détails",
                     "study_details_other": "Etude {{number}} détails",
@@ -589,10 +588,20 @@
                     "proposed_timeframe": "Calendrier proposé",
                     "lead_institution": "Institution chef de file",
                     "funding_source": "Source de financement",
+                    "molecular_markers_list": "Liste de tous les marqueurs moléculaires inclus dans cette étude:"
+                },
+                "therapeutic_efficacy_studies": {
+                    "subtitle": "Détails des études d'efficacité thérapeutique",
                     "age_group": "Groupe d'âge",
                     "species": "Espèces de plasmodium",
                     "drug": "Traitement",
                     "genotyping": "Génotypage"
+                },
+                "molecular_markers_ongoing_studies": {
+                    "subtitle": "Détails des études sur les marqueurs moléculaires",
+                    "study_initiated_following": "L'étude a été lancée à la suite de",
+                    "sampling_strategy": "Stratégie d'échantillonnage",
+                    "study_design": "Conception de l'enquête ou de l'étude"
                 }
             },
             "legend": {
