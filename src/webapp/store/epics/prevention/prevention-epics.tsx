@@ -158,17 +158,44 @@ export const setPreventionFilteredStudiesEpic = (
         })
     );
 
-export const setPreventionThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>) =>
+export const setYearsFiltersEpic = (
+    action$: Observable<ActionType<typeof setFiltersAction>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaSetFilters),
+        withLatestFrom(state$),
+        switchMap(([$action, $state]) => {
+            if ($action.payload === undefined && $state.malaria.theme === "prevention") {
+                const start = getMinTearStart($state.prevention.studies);
+
+                return of(
+                    setMaxMinYearsAction([start, new Date().getFullYear()]),
+                    setFiltersAction([start, new Date().getFullYear()])
+                );
+            } else {
+                return of();
+            }
+        })
+    );
+
+export const setPreventionThemeEpic = (
+    action$: Observable<ActionType<typeof setThemeAction>>,
+    state$: StateObservable<State>
+) =>
     action$.pipe(
         ofType(ActionTypeEnum.MalariaSetTheme),
-        switchMap($action => {
+        withLatestFrom(state$),
+        switchMap(([$action, $state]) => {
             if ($action.payload !== "prevention") {
                 return of();
             }
 
+            const start = getMinTearStart($state.prevention.studies);
+
             const base = [
-                setMaxMinYearsAction([2010, new Date().getFullYear()]),
-                setFiltersAction([2010, new Date().getFullYear()]),
+                setMaxMinYearsAction([start, new Date().getFullYear()]),
+                setFiltersAction([start, new Date().getFullYear()]),
             ];
 
             if ($action.from === "map") {
@@ -178,3 +205,10 @@ export const setPreventionThemeEpic = (action$: Observable<ActionType<typeof set
             }
         })
     );
+
+function getMinTearStart(studies: PreventionStudy[]) {
+    return +studies
+        .map(study => study.YEAR_START)
+        .sort()
+        .shift();
+}
