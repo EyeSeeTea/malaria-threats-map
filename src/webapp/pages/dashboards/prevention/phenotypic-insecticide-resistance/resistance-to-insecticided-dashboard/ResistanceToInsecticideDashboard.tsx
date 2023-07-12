@@ -5,7 +5,11 @@ import PreventionFilterableDashboard from "../../PreventionFilterableDashboard";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import { useResistanceToInsecticide } from "./useResistanceToInsecticide";
-import { ResistanceToInsecticideSerie } from "../types";
+import {
+    ResistanceToInsecticideDataByClass,
+    ResistanceToInsecticideDataByType,
+    ResistanceToInsecticideSerie,
+} from "../types";
 import i18next from "i18next";
 import StatusOfResistanceToInsecticidePopup from "../../../../../components/dashboards/prevention/StatusOfResistanceToInsecticidePopup";
 import { useInfoPopup } from "../../../common/popup/useInfoPopup";
@@ -32,28 +36,6 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
 
     const chartComponentRefs = useRef([]);
 
-    const maxStackedColumn = React.useMemo(() => {
-        const valuesBySubGroups = Object.values(data);
-        const values = valuesBySubGroups
-            .map(group => Object.values(group))
-            .flat()
-            .map(({ series }) => series);
-
-        const maxValues = values.reduce((acc: number[], countrySeries: ResistanceToInsecticideSerie[]) => {
-            const maxValuesByType = countrySeries.reduce((acc, serieItem) => {
-                if (acc.length === 0) {
-                    return serieItem.data;
-                } else {
-                    return serieItem.data.map((value, index) => value + acc[index]);
-                }
-            }, []);
-
-            return [...acc, ...maxValuesByType];
-        }, []);
-
-        return Math.max(...maxValues);
-    }, [data]);
-
     return (
         <React.Fragment>
             <PreventionFilterableDashboard
@@ -76,46 +58,11 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
                 onChartTypeChange={onChartTypeChange}
                 onInfoClick={onChangeOpenPopup}
             >
-                <div style={{ overflowX: "auto" }}>
-                    <Table>
-                        <tbody>
-                            {Object.keys(data).map((isoCountry, countryIndex) => {
-                                const rowSpan = Object.values(data[isoCountry]).length;
-
-                                return Object.keys(data[isoCountry]).map((subGroup, groupIndex) => {
-                                    const isLastChart =
-                                        countryIndex === Object.keys(data).length - 1 &&
-                                        groupIndex === Object.values(data[isoCountry]).length - 1;
-
-                                    const isFirstChart = countryIndex === 0 && groupIndex === 0;
-
-                                    return (
-                                        <tr key={`${isoCountry}-${subGroup}`}>
-                                            {groupIndex === 0 && <td rowSpan={rowSpan}>{t(isoCountry)}</td>}
-
-                                            <td>{t(subGroup)}</td>
-                                            <td>
-                                                <StyledHighcharts
-                                                    highcharts={Highcharts}
-                                                    options={chartOptions(
-                                                        data[isoCountry][subGroup].series,
-                                                        data[isoCountry][subGroup].categories,
-                                                        isFirstChart,
-                                                        isLastChart,
-                                                        maxStackedColumn
-                                                    )}
-                                                    ref={(element: HighchartsReact.RefObject) =>
-                                                        chartComponentRefs.current.push(element)
-                                                    }
-                                                />
-                                            </td>
-                                        </tr>
-                                    );
-                                });
-                            })}
-                        </tbody>
-                    </Table>
-                </div>
+                {data.kind === "InsecticideByClass" ? (
+                    <ChartByClass data={data.data} chartComponentRefs={chartComponentRefs} />
+                ) : (
+                    <ChartByType data={data.data} chartComponentRefs={chartComponentRefs} />
+                )}
             </PreventionFilterableDashboard>
             <StatusOfResistanceToInsecticidePopup
                 years={filters.years}
@@ -126,9 +73,140 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
     );
 };
 
+const ChartByClass: React.FC<{
+    data: ResistanceToInsecticideDataByClass;
+    chartComponentRefs: React.MutableRefObject<HighchartsReact.RefObject[]>;
+}> = ({ data, chartComponentRefs }) => {
+    const { t } = useTranslation();
+
+    const maxStackedColumn = React.useMemo(() => {
+        return getMaxStakedColumnByClass(data);
+    }, [data]);
+
+    return (
+        <div style={{ overflowX: "auto" }}>
+            <TableByClass>
+                <tbody>
+                    {Object.keys(data).map((isoCountry, index) => {
+                        return (
+                            <tr key={isoCountry}>
+                                <td>{t(isoCountry)}</td>
+                                <td>
+                                    <StyledHighcharts
+                                        highcharts={Highcharts}
+                                        options={chartOptions(
+                                            data[isoCountry].series,
+                                            data[isoCountry].categories,
+                                            index === 0,
+                                            index === Object.keys(data).length - 1,
+                                            maxStackedColumn
+                                        )}
+                                        ref={(element: HighchartsReact.RefObject) =>
+                                            chartComponentRefs.current.push(element)
+                                        }
+                                    />
+                                </td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </TableByClass>
+        </div>
+    );
+};
+
+const ChartByType: React.FC<{
+    data: ResistanceToInsecticideDataByType;
+    chartComponentRefs: React.MutableRefObject<HighchartsReact.RefObject[]>;
+}> = ({ data, chartComponentRefs }) => {
+    const { t } = useTranslation();
+
+    const maxStackedColumn = React.useMemo(() => {
+        return getMaxStakedColumnByType(data);
+    }, [data]);
+
+    return (
+        <div style={{ overflowX: "auto" }}>
+            <TableByType>
+                <tbody>
+                    {Object.keys(data).map((isoCountry, countryIndex) => {
+                        const rowSpan = Object.values(data[isoCountry]).length;
+
+                        return Object.keys(data[isoCountry]).map((subGroup, groupIndex) => {
+                            const isLastChart =
+                                countryIndex === Object.keys(data).length - 1 &&
+                                groupIndex === Object.values(data[isoCountry]).length - 1;
+
+                            const isFirstChart = countryIndex === 0 && groupIndex === 0;
+
+                            return (
+                                <tr key={`${isoCountry}-${subGroup}`}>
+                                    {groupIndex === 0 && <td rowSpan={rowSpan}>{t(isoCountry)}</td>}
+
+                                    <td>{<strong>{t(subGroup)}</strong>}</td>
+                                    <td>
+                                        <StyledHighcharts
+                                            highcharts={Highcharts}
+                                            options={chartOptions(
+                                                data[isoCountry][subGroup].series,
+                                                data[isoCountry][subGroup].categories,
+                                                isFirstChart,
+                                                isLastChart,
+                                                maxStackedColumn
+                                            )}
+                                            ref={(element: HighchartsReact.RefObject) =>
+                                                chartComponentRefs.current.push(element)
+                                            }
+                                        />
+                                    </td>
+                                </tr>
+                            );
+                        });
+                    })}
+                </tbody>
+            </TableByType>
+        </div>
+    );
+};
+
 export default React.memo(ResistanceToInsecticideDashboard);
 
-const Table = styled.table`
+const TableByClass = styled.table`
+    table-layout: fixed;
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    tr:nth-child(even) {
+        border-bottom: 2px solid #0000001a;
+        border-top: 2px solid #0000001a;
+    }
+    tr:last-child {
+        border-bottom: 0px;
+    }
+    tr td:nth-child(1) {
+        width: 10%;
+        font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        color: #666666;
+    }
+
+    tr td:nth-child(2) {
+        width: 90%;
+    }
+    tr:nth-child(1) td:nth-child(2) {
+        padding-top: 80px;
+    }
+    tr:nth-child(1) td:nth-child(1) {
+        padding-top: 80px;
+    }
+
+    tr:last-child td:nth-child(1) {
+        padding-bottom: 50px;
+    }
+`;
+
+const TableByType = styled.table`
     table-layout: fixed;
     width: 100%;
     max-width: 100%;
@@ -170,6 +248,56 @@ const Table = styled.table`
 
 const StyledHighcharts = styled(HighchartsReact)``;
 
+// function getMaxStakedColumn(chartData: ResistanceToInsecticideChartData) {
+//     switch (chartData.kind) {
+//         case "InsecticideByClass":
+//             return getMaxStakedColumnByClass(chartData.data);
+//         case "InsecticideByType":
+//             return getMaxStakedColumnByType(chartData.data);
+//     }
+// }
+
+function getMaxStakedColumnByType(data: ResistanceToInsecticideDataByType) {
+    const valuesBySubGroups = Object.values(data);
+    const values = valuesBySubGroups
+        .map(group => Object.values(group))
+        .flat()
+        .map(({ series }) => series);
+
+    const maxValues = values.reduce((acc: number[], countrySeries: ResistanceToInsecticideSerie[]) => {
+        const maxValuesByType = countrySeries.reduce((acc, serieItem) => {
+            if (acc.length === 0) {
+                return serieItem.data;
+            } else {
+                return serieItem.data.map((value, index) => value + acc[index]);
+            }
+        }, []);
+
+        return [...acc, ...maxValuesByType];
+    }, []);
+
+    return Math.max(...maxValues);
+}
+
+function getMaxStakedColumnByClass(data: ResistanceToInsecticideDataByClass) {
+    const maxValues = Object.values(data).reduce(
+        (acc: number[], dataByCountry: { categories: string[]; series: ResistanceToInsecticideSerie[] }) => {
+            const maxValuesByType = dataByCountry.series.reduce((acc, serieItem) => {
+                if (acc.length === 0) {
+                    return serieItem.data;
+                } else {
+                    return serieItem.data.map((value, index) => value + acc[index]);
+                }
+            }, []);
+
+            return [...acc, ...maxValuesByType];
+        },
+        []
+    );
+
+    return Math.max(...maxValues);
+}
+
 function chartOptions(
     series: ResistanceToInsecticideSerie[],
     categories: string[],
@@ -184,7 +312,7 @@ function chartOptions(
             type: "bar",
             height: categories.length * 50 + (enabledLegend ? 100 : 0) + (visibleYAxisLabels ? 60 : 0),
             marginTop: enabledLegend ? 100 : 0,
-            marginBottom: visibleYAxisLabels ? 60 : 0,
+            marginBottom: visibleYAxisLabels ? 90 : 0,
             marginLeft: 150,
         },
         title: {
