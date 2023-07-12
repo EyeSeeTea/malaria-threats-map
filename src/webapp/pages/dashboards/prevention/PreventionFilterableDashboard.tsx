@@ -92,7 +92,7 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
     );
 
     return (
-        <Container isScreenshot={isScreenshot}>
+        <Container $isScreenshot={isScreenshot}>
             <DashboardTitle
                 id={id}
                 title={title}
@@ -119,11 +119,11 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                 </ToggleButtonGroup>
             )}
 
-            <StyledGridContainer container spacing={2} isScreenshot={isScreenshot}>
+            <StyledGridContainer container spacing={2} $isScreenshot={isScreenshot}>
                 {filtersVisible && (
-                    <StyledGridItem item md={3} xs={12} isScreenshot={isScreenshot}>
+                    <StyledGridItem item md={3} xs={12} $isScreenshot={isScreenshot}>
                         <Stack direction="column">
-                            <FiltersCard>
+                            <FiltersCard $isScreenshot={isScreenshot}>
                                 <PreventionFilters
                                     chart={chart}
                                     insecticideTypeOptions={insecticideTypeOptions}
@@ -154,7 +154,7 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                         </Stack>
                     </StyledGridItem>
                 )}
-                <StyledGridItem item md={filtersVisible ? 9 : 12} xs={12} isScreenshot={isScreenshot}>
+                <StyledGridItem item md={filtersVisible ? 9 : 12} xs={12} $isScreenshot={isScreenshot}>
                     <DasboardCard elevation={0}>
                         {!filtersVisible && (
                             <Button startIcon={<FilterAltIcon />} onClick={onChangeFiltersVisible}>
@@ -169,7 +169,7 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
     );
 };
 
-const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = (props) => {
+const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = props => {
     const [open, setOpen] = React.useState(false);
 
     const handleScreenshot = React.useCallback(() => {
@@ -182,7 +182,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
 
     return (
         <>
-            <PreventionFilterableDashboardComponent {...props} onScreenshot={handleScreenshot}/>
+            <PreventionFilterableDashboardComponent {...props} onScreenshot={handleScreenshot} />
             <ScreenshotModal
                 open={open}
                 onClose={handleCloseScreenshot}
@@ -190,7 +190,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
                 backgroundColor={SCREENSHOT_BACKGROUND_COLOR}
                 exclusionClasses={SCREENSHOT_EXCLUSION_CLASSES}
             >
-                <PreventionFilterableDashboardComponent {...props} isScreenshot/>
+                <PreventionFilterableDashboardComponent {...props} isScreenshot />
             </ScreenshotModal>
         </>
     );
@@ -198,21 +198,22 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
 
 export default PreventionFilterableDashboard;
 
-const Container = styled.div<{ isScreenshot: boolean }>`
+const Container = styled.div<{ $isScreenshot: boolean }>`
     padding: 10px;
-    width: ${props => props?.isScreenshot && 'fit-content' };
+    width: ${props => props?.$isScreenshot && "fit-content"};
 `;
 
-const StyledGridItem = styled(Grid)<{ isScreenshot: boolean }>`
-    width: ${props => props?.isScreenshot && 'fit-content' };
-    max-width: ${props => props?.isScreenshot && 'fit-content' };
-    .MuiChip-root, .MuiChip-label {
-        overflow: ${props => props?.isScreenshot && 'initial' };
+const StyledGridItem = styled(Grid)<{ $isScreenshot: boolean }>`
+    width: ${props => props?.$isScreenshot && "fit-content"};
+    max-width: ${props => props?.$isScreenshot && "fit-content"};
+    .MuiChip-root,
+    .MuiChip-label {
+        overflow: ${props => props?.$isScreenshot && "initial"};
     }
 `;
 
-const StyledGridContainer = styled(Grid)<{ isScreenshot: boolean }>`
-    flex-wrap: ${props => props?.isScreenshot && 'nowrap' };
+const StyledGridContainer = styled(Grid)<{ $isScreenshot: boolean }>`
+    flex-wrap: ${props => props?.$isScreenshot && "nowrap"};
 `;
 
 const DasboardCard = styled(Card)`
@@ -224,13 +225,17 @@ const StudiesCountCard = styled(Card)`
     padding: 24px;
 `;
 
-const FiltersCard = styled(Card)`
+const FiltersCard = styled(Card)<{ $isScreenshot: boolean }>`
     min-height: 470px;
     margin-bottom: 15px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    .MultiFilter-container {
+        max-height: ${props => (props?.$isScreenshot ? "initial" : "500px")};
+        overflow: ${props => (props?.$isScreenshot ? "initial" : "auto")};
+    }
 `;
 
 const StyledToggleButton = styled(ToggleButton)`

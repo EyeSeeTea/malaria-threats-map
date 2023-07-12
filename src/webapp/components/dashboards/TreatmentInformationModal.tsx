@@ -16,12 +16,14 @@ const TreatmentFailureByDrugContent = () => {
     return (
         <>
             <Typography variant="body1">
-                <Trans
-                    i18nKey="common.dashboard.informationModal.summaryTreatmentFailureRateByDrug.chartInterpretation"
-                    t={t}
-                    shouldUnescape={true}
-                    values={{ lessThen: escape("<") }}
-                ></Trans>
+                {
+                    <Trans
+                        i18nKey="common.dashboard.informationModal.summaryTreatmentFailureRateByDrug.chartInterpretation"
+                        t={t}
+                        shouldUnescape
+                        values={{ lessThen: "&lt;" }}
+                    ></Trans>
+                }
             </Typography>
             <Typography variant="body1">
                 <Trans
