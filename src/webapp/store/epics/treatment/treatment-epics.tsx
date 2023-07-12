@@ -99,7 +99,7 @@ export const setMolecularMarkersEpic = (action$: Observable<ActionType<typeof se
     action$.pipe(
         ofType(ActionTypeEnum.SetMolecularMarkers),
         switchMap(action => {
-            if (action.payload.includes(molecularMarkersMap.Pfcrt)) {
+            if (action.payload.includes(molecularMarkersMap.Pfcrt) && action.payload?.length === 1) {
                 return of(setRegionAction({ region: "AMERICAS" }));
             } else {
                 return of(setRegionAction({}));
