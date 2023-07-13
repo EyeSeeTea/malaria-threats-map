@@ -3,6 +3,7 @@ import _ from "lodash";
 import { Source } from "../../store/actions/base-actions";
 import {
     DiagnosisFilters,
+    DiagnosisMapType,
     InvasiveFilters,
     PreventionFilters,
     PreventionMapType,
@@ -114,14 +115,19 @@ export function diagnosisValueLabelFilters(
     const deletionType = i18next.t(diagnosisFilters.deletionType);
     const surveyTypes = diagnosisFilters.surveyTypes.map(item => i18next.t(item));
     const patientType = i18next.t(diagnosisFilters.patientType);
-    return {
-        years,
-        deletionType,
-        surveyTypes: surveyTypes?.length
-            ? _.compact(surveyTypes).join(" | ")
-            : i18next.t("common.map_info_summary.all"),
-        patientType,
-    };
+    switch (diagnosisFilters.mapType) {
+        case DiagnosisMapType.GENE_DELETIONS:
+            return {
+                years,
+                deletionType,
+                surveyTypes: surveyTypes?.length
+                    ? _.compact(surveyTypes).join(" | ")
+                    : i18next.t("common.map_info_summary.all"),
+                patientType,
+            };
+        case DiagnosisMapType.HRP23_STUDIES:
+            return { years };
+    }
 }
 
 export function invasiveValueLabelFilters(
@@ -423,8 +429,12 @@ export function diagnosisFiltersToString(
     const deletionType = i18next.t(diagnosisFilters.deletionType);
     const surveyTypes = diagnosisFilters.surveyTypes.map(item => i18next.t(item));
     const patientType = i18next.t(diagnosisFilters.patientType);
-
-    return _.compact([deletionType, ...surveyTypes, patientType, years]).join(" | ");
+    switch (diagnosisFilters.mapType) {
+        case DiagnosisMapType.GENE_DELETIONS:
+            return _.compact([deletionType, ...surveyTypes, patientType, years]).join(" | ");
+        case DiagnosisMapType.HRP23_STUDIES:
+            return years;
+    }
 }
 
 export function invasiveFiltersToString(

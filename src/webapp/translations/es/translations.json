@@ -507,6 +507,7 @@
         },
         "diagnosis": {
             "gene_deletions": "Deleciones del gen pfhrp2/3",
+            "hrp23_studies": "Estudios en curso y previstos sobre la deleción de los genes pfhrp2/3",
             "chart": {
                 "gene_deletions": {
                     "subtitle_1": "Datos recolectados",
@@ -533,6 +534,17 @@
                         "p2": "",
                         "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país.",
                         "question": "En las encuestas, los criterios para seleccionar muestras para analizar las deleciones de pfhrp 2/3 varían; por lo tanto, consulte el informe completo citado para obtener más detalles."
+                    }
+                },
+                "hrp23_studies": {
+                    "title": "Estado de los estudios sobre la deleción del gen <i>Pfhrp2</i>",
+                    "ongoing": "En curso",
+                    "planned": "Planificado",
+                    "completed": "Finalizado (resultados pendientes)",
+                    "help": {
+                        "p1": "",
+                        "p2": "",
+                        "footer": "Fuente de datos: Base de datos mundial de la OMS sobre eficacia y resistencia a los medicamentos antipalúdicos."
                     }
                 }
             }

@@ -505,6 +505,7 @@
         },
         "diagnosis": {
             "gene_deletions": "pfhrp2/3 gene deletions",
+            "hrp23_studies": "Ongoing and planned pfhrp2/3 gene deletion studies",
             "chart": {
                 "gene_deletions": {
                     "subtitle_1": "Data collected",
@@ -531,6 +532,17 @@
                         "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices.",
                         "question": "Across surveys, the criteria for selecting samples to test for pfhrp 2/3 deletions varies; therefore, refer to the full report cited for more details."
+                    }
+                },
+                "hrp23_studies": {
+                    "title": "Status of <i>Pfhrp2</i> gene deletion studies",
+                    "ongoing": "Ongoing",
+                    "planned": "Planned",
+                    "completed": "Completed (results pending)",
+                    "help": {
+                        "p1": "",
+                        "p2": "",
+                        "footer": "Data source: WHO Global database on antimalarial drug efficacy and resistance."
                     }
                 }
             }

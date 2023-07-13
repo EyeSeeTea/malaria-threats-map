@@ -110,6 +110,7 @@ export interface DiagnosisFilters {
 
 export enum DiagnosisMapType {
     GENE_DELETIONS,
+    HRP23_STUDIES,
 }
 
 export enum PreventionMapType {

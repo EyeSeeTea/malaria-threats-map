@@ -73,7 +73,7 @@ const MapTypeMapActions: React.FC<Props> = ({
                 }
                 actionGroupKey={"MAP_TYPE"}
             >
-                {theme !== "diagnosis" && theme !== "invasive" && <MapTypesSelector />}
+                {theme !== "invasive" && <MapTypesSelector />}
             </ActionGroupItem>
         </Box>
     );

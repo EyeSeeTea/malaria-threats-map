@@ -192,6 +192,10 @@ export const filterByDimensionId = (dimensionId: number) => (study: any) => {
     return study.DimensionID === dimensionId;
 };
 
+export const filterByDiagnosisGeneDeletions = () => (study: any) => {
+    return study?.DimensionID !== 302;
+};
+
 export const filterByPlasmodiumSpecie = (plasmodiumSpecie: string) => (study: any) => {
     return !plasmodiumSpecie || study.PLASMODIUM_SPECIES === plasmodiumSpecie;
 };
@@ -318,12 +322,15 @@ function buildDiagnosisFiltersByMap(diagnosisFilters: DiagnosisFilters, filters:
     switch (diagnosisFilters.mapType) {
         case DiagnosisMapType.GENE_DELETIONS:
             return [
+                filterByDiagnosisGeneDeletions(),
                 filterByDeletionType(diagnosisFilters.deletionType),
                 filterBySurveyTypes(diagnosisFilters.surveyTypes),
                 filterByPatientType(diagnosisFilters.patientType),
                 filterByYearRange(filters),
                 filterByRegion(region),
             ];
+        case DiagnosisMapType.HRP23_STUDIES:
+            return [filterByDimensionId(302), filterByYearRange(filters), filterByRegion(region)];
         default:
             return [];
     }
