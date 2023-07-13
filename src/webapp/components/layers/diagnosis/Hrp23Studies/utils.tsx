@@ -1,3 +1,6 @@
+import _ from "lodash";
+import { DiagnosisStudy } from "../../../../../domain/entities/DiagnosisStudy";
+
 export enum HRP23_STUDIES_STATUS {
     ONGOING = "ONGOING",
     PLANNED = "PLANNED",
@@ -26,3 +29,7 @@ export const getHrp23StudiesStatusFromStatusId = (statusId: number) => {
 
     return HRP23_STUDIES_STATUS.UNKNOWN;
 };
+
+export function sortHrp23Studies(studies: DiagnosisStudy[]) {
+    return _.orderBy(studies, ["STUDY_SEQ"]);
+}

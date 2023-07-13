@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@m
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { DiagnosisSelectionData } from "../../../store/epics/diagnosis/types";
+import { DiagnosisSelectionData, GeneDeletionsChartDataContent } from "../../../store/epics/diagnosis/types";
 
 // const SpacedTypography = styled(Typography)`
 //     margin-bottom: 5px;
@@ -38,12 +38,15 @@ type Props = {
     selectionData: DiagnosisSelectionData;
 };
 
-const DiagnosisChart: React.FC<Props> = ({ selectionData }) => {
+const GeneDeletionsChart: React.FC<Props> = ({ selectionData }) => {
     const { t } = useTranslation();
 
-    const data = React.useMemo(() => {
-        if (selectionData.kind === "diagnosis") {
-            return selectionData.data;
+    const data: GeneDeletionsChartDataContent[] = React.useMemo(() => {
+        if (
+            selectionData.kind === "diagnosis" &&
+            (selectionData.data.kind === "gene-deletions" || selectionData.data.kind === "hrp23-studies")
+        ) {
+            return selectionData.data.data as GeneDeletionsChartDataContent[];
         } else {
             return null;
         }
@@ -117,4 +120,4 @@ const DiagnosisChart: React.FC<Props> = ({ selectionData }) => {
     );
 };
 
-export default DiagnosisChart;
+export default GeneDeletionsChart;

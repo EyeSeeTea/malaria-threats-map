@@ -519,6 +519,20 @@
                     "deletion_type": "Type of deletion",
                     "no_tested": "Number of samples tested (N)",
                     "percentage": "Percentage with confirmed deletions (%)"
+                },
+                "hrp23_studies": {
+                    "subtitle": "Details of hrp2/3 gene deletion studies",
+                    "ongoing": "Ongoing",
+                    "planned": "Planned",
+                    "completed_results_pending": "Completed (results pending)",
+                    "status": "Study status",
+                    "proposed_timeframe": "Proposed timeframe",
+                    "study_population": "Study population",
+                    "genotyping": "Genotyping",
+                    "study_initiated_following": "Study initiated following",
+                    "study_sites": "Study sites selected by",
+                    "lead_institution": "Lead institution",
+                    "funding_source": "Funding source"
                 }
             },
             "legend": {

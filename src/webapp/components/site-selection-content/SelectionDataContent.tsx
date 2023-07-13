@@ -14,7 +14,6 @@ import CurationNew from "../charts/CurationNew";
 import { setSelection, setSelectionDataFilterSelection } from "../../store/actions/base-actions";
 import OtherInfo from "../layers/prevention/common/OtherInfo";
 import PreventionChart from "./prevention/PreventionChart";
-import DiagnosisChart from "./diagnosis/DiagnosisChart";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import InvasiveChart from "./invasive/InvasiveChart";
 import PreventionMechanismsChart from "./prevention/PreventionMechanismsChart";
@@ -28,6 +27,8 @@ import { ActionTypeEnum } from "../../store/actions";
 import { DiagnosisSelectionData } from "../../store/epics/diagnosis/types";
 import CloseIcon from "@mui/icons-material/Close";
 import OngoingAndPlannedTreatmentStudiesChart from "./treatment/OngoingAndPlannedTreatmentStudiesChart";
+import Hrp23StudiesChart from "./diagnosis/Hrp23StudiesChart";
+import GeneDeletionsChart from "./diagnosis/GeneDeletionsChart";
 
 const Container = styled.div<{ width?: string; padding?: string }>`
     width: ${props => props.width || "100%"};
@@ -159,17 +160,21 @@ const DiagnosisContent: React.FC<{ selectionData: DiagnosisSelectionData }> = ({
             </TopContainer>
 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
-            <RoundedContainer>
-                {selectionData.data && <DiagnosisChart selectionData={selectionData} />}
+            {selectionData.data.kind === "hrp23-studies" ? (
+                <Hrp23StudiesChart selectionData={selectionData} />
+            ) : (
+                <RoundedContainer>
+                    {selectionData.data && <GeneDeletionsChart selectionData={selectionData} />}
 
-                {selectionData.dataSources && (
-                    <CitationNew
-                        dataSources={selectionData.dataSources}
-                        showKey={selectionData.dataSources.length > 1}
-                    />
-                )}
-                {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
-            </RoundedContainer>
+                    {selectionData.dataSources && (
+                        <CitationNew
+                            dataSources={selectionData.dataSources}
+                            showKey={selectionData.dataSources.length > 1}
+                        />
+                    )}
+                    {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
+                </RoundedContainer>
+            )}
         </>
     );
 };

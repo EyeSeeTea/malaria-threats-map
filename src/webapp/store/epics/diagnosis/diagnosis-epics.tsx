@@ -110,6 +110,7 @@ export const setDiagnosisFilteredStudiesEpic = (
             const selectionData = createDiagnosisSelectionData(
                 state.malaria.theme,
                 state.malaria.selection,
+                state.diagnosis.filters,
                 state.diagnosis.filteredStudies
             );
 

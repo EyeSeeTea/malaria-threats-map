@@ -521,6 +521,20 @@
                     "deletion_type": "Tipo de deleción",
                     "no_tested": "Número de muestras analizadas (N)",
                     "percentage": "Porcentaje con deleciones confirmadas (%)"
+                },
+                "hrp23_studies": {
+                    "subtitle": "Detalles de los estudios de deleción de los genes hrp2/3",
+                    "ongoing": "En curso",
+                    "planned": "Planificado",
+                    "completed": "Finalizado (resultados pendientes)",
+                    "status": "Estado del estudio",
+                    "proposed_timeframe": "Plazo propuesto",
+                    "study_population": "Población de estudio",
+                    "genotyping": "Genotipado",
+                    "study_initiated_following": "Estudio iniciado siguiendo",
+                    "study_sites": "Centros de estudio seleccionados por",
+                    "lead_institution": "Institución principal",
+                    "funding_source": "Fuente de financiación"
                 }
             },
             "legend": {

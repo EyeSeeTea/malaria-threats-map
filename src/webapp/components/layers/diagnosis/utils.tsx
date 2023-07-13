@@ -1,12 +1,11 @@
 import React from "react";
 import * as R from "ramda";
-import _ from "lodash";
 
 import { DiagnosisFilters, DiagnosisMapType } from "../../../store/types";
 import { DIAGNOSIS_STATUS } from "./GeneDeletions/utils";
 import pfhrp2Symbols from "./GeneDeletions/symbols";
 import hrp23StudiesSymbols from "./Hrp23Studies/symbols";
-import { getHrp23StudiesStatusFromStatusId } from "./Hrp23Studies/utils";
+import { getHrp23StudiesStatusFromStatusId, sortHrp23Studies } from "./Hrp23Studies/utils";
 
 export const resolveMapTypeSymbols = (diagnosisFilters: DiagnosisFilters) => {
     switch (diagnosisFilters.mapType) {
@@ -37,7 +36,7 @@ function getByMostRecentYearAndDeletionType(group: any[], deletionType: string) 
 }
 
 function getByStudySeqAndStudyStatus(group: any[]) {
-    const sortedStudiesByStudySeq = _.orderBy(group, ["STUDY_SEQ"]);
+    const sortedStudiesByStudySeq = sortHrp23Studies(group);
 
     return {
         ...sortedStudiesByStudySeq[0],

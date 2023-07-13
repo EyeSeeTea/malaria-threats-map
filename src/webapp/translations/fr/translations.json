@@ -521,6 +521,20 @@
                     "deletion_type": "Type de délétion",
                     "no_tested": "Nombre d'échantillons testés (N)",
                     "percentage": "Pourcentage de suppressions confirmées (%)"
+                },
+                "hrp23_studies": {
+                    "subtitle": "Détails des études de délétion du gène hrp2/3",
+                    "ongoing": "En cours",
+                    "planned": "Prévu",
+                    "completed": "Terminé (résultats en attente)",
+                    "status": "Statut de l'étude",
+                    "proposed_timeframe": "Calendrier proposé",
+                    "study_population": "Population de l'étude",
+                    "genotyping": "Génotypage",
+                    "study_initiated_following": "L'étude a été lancée à la suite de",
+                    "study_sites": "Sites d'étude sélectionnés par",
+                    "lead_institution": "Institution chef de file",
+                    "funding_source": "Source de financement"
                 }
             },
             "legend": {

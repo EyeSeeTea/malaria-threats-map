@@ -17,4 +17,10 @@ export interface DiagnosisStudy extends Study {
     TYPE_SAMPL_ANALYZED: string;
     TOOLTIP_SITENAME: string;
     DELETION_STATUS: string;
+    SURV_STATUS?: number;
+    SYMP_STAT_NAME?: string;
+    HRP_GENO_NAME?: string;
+    PROMPT_NAME?: string;
+    GEOGR_SCOPE_NAME?: string;
+    FUNDING_SOURCE?: string;
 }
