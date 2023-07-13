@@ -213,6 +213,7 @@ class RegionLayer extends Component<Props> {
             zoom: 5,
             essential: true,
             maxDuration: 5000,
+            padding: { top: 0, bottom: 0, left: 0, right: 350 },
         });
     };
 
