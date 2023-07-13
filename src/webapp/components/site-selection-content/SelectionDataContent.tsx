@@ -95,7 +95,7 @@ type OwnProps = {
 type Props = StateProps & DispatchProps & OwnProps;
 
 const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFilterSelection, onClose }: Props) => {
-    const chartCataContent = () => {
+    const chartDataContent = () => {
         switch (selectionData.kind) {
             case "common": {
                 return (
@@ -118,10 +118,10 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
     return (
         <>
             <Hidden smUp>
-                <Container width={"100%"}>{selectionData && chartCataContent()}</Container>
+                <Container width={"100%"}>{selectionData && chartDataContent()}</Container>
             </Hidden>
             <Hidden smDown>
-                <Container width={"500px"}>{selectionData && chartCataContent()}</Container>
+                <Container width={"500px"}>{selectionData && chartDataContent()}</Container>
             </Hidden>
             <StyledIconButton onClick={onClose}>
                 <CloseIcon />
