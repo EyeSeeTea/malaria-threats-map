@@ -83,7 +83,10 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type OwnProps = {
+    isMinimizedVersion?: boolean;
+};
+type Props = DispatchProps & StateProps & OwnProps;
 
 const Legend: React.FC<Props> = ({
     theme,
@@ -92,6 +95,7 @@ const Legend: React.FC<Props> = ({
     treatmentFilters,
     invasiveFilters,
     translations,
+    isMinimizedVersion,
 }) => {
     const [expanded, setExpanded] = React.useState<boolean>(false);
     const [title, setTitle] = React.useState<string>("");
@@ -134,51 +138,53 @@ const Legend: React.FC<Props> = ({
                     </Title>
                     {!expanded && <Subtitle>{t("common.legend.subtitle")}</Subtitle>}
                 </TitleContainer>
-                {expanded ? <ExpandLess /> : <ExpandMore />}
+                {!isMinimizedVersion && (expanded ? <ExpandLess /> : <ExpandMore />)}
             </StyledButton>
 
             <Divider />
-            <Body>
-                <LegendContent labels={labels} />
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <Stack gap={1} marginTop="10px">
-                        <HelpContainer gap={1}>
-                            <Typography variant="caption" sx={{ overflowWrap: "break-word" }}>
-                                <Trans i18nKey={`${mapTypeHelpKey}.p1`} t={t}>
-                                    This map contains data from <strong>intensity concentration bioassays</strong>. Each
-                                    dot on the map represents a study site containing one or more studies. In sites
-                                    where studies show varying levels of resistance intensity, the colour of the dot is
-                                    determined by the most recent results.{" "}
-                                    <a href="/">WHO manual for resistance monitoring</a>.
-                                </Trans>
-                            </Typography>
-                            <Typography variant="caption">
-                                <Trans i18nKey={`${mapTypeHelpKey}.p2`} t={t}>
-                                    For information on how each level is defined, please consult the&nbsp;
-                                    <a href={WhoManualLink} target="_blank" rel="noreferrer">
-                                        WHO manual for resistance monitoring
-                                    </a>
-                                    .
-                                </Trans>
-                            </Typography>
-                        </HelpContainer>
-                        <Footer>
-                            <Subtitle fontStyle={"italic"}>{t(`${mapTypeHelpKey}.footer`)}</Subtitle>
-                        </Footer>
-                        {(theme === "invasive" || theme === "diagnosis") && (
-                            <Question>
-                                <ErrorOutlineIcon sx={{ color: "#2fb3af" }} />
-                                <span style={{ marginLeft: "6px" }}>
-                                    <Trans i18nKey={`${mapTypeHelpKey}.question`} t={t}>
-                                        Please report the detection of invasive Anopheles vector species using this{" "}
-                                        <Link to="/share-data">reporting form</Link>.
+            {!isMinimizedVersion && (
+                <Body>
+                    <LegendContent labels={labels} />
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <Stack gap={1} marginTop="10px">
+                            <HelpContainer gap={1}>
+                                <Typography variant="caption" sx={{ overflowWrap: "break-word" }}>
+                                    <Trans i18nKey={`${mapTypeHelpKey}.p1`} t={t}>
+                                        This map contains data from <strong>intensity concentration bioassays</strong>.
+                                        Each dot on the map represents a study site containing one or more studies. In
+                                        sites where studies show varying levels of resistance intensity, the colour of
+                                        the dot is determined by the most recent results.{" "}
+                                        <a href="/">WHO manual for resistance monitoring</a>.
                                     </Trans>
-                                </span>
-                            </Question>
-                        )}
-                    </Stack>
-                </Collapse>
-            </Body>
+                                </Typography>
+                                <Typography variant="caption">
+                                    <Trans i18nKey={`${mapTypeHelpKey}.p2`} t={t}>
+                                        For information on how each level is defined, please consult the&nbsp;
+                                        <a href={WhoManualLink} target="_blank" rel="noreferrer">
+                                            WHO manual for resistance monitoring
+                                        </a>
+                                        .
+                                    </Trans>
+                                </Typography>
+                            </HelpContainer>
+                            <Footer>
+                                <Subtitle fontStyle={"italic"}>{t(`${mapTypeHelpKey}.footer`)}</Subtitle>
+                            </Footer>
+                            {(theme === "invasive" || theme === "diagnosis") && (
+                                <Question>
+                                    <ErrorOutlineIcon sx={{ color: "#2fb3af" }} />
+                                    <span style={{ marginLeft: "6px" }}>
+                                        <Trans i18nKey={`${mapTypeHelpKey}.question`} t={t}>
+                                            Please report the detection of invasive Anopheles vector species using this{" "}
+                                            <Link to="/share-data">reporting form</Link>.
+                                        </Trans>
+                                    </span>
+                                </Question>
+                            )}
+                        </Stack>
+                    </Collapse>
+                </Body>
+            )}
         </React.Fragment>
     );
 };
