@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { DiagnosisMapType, State } from "../../store/types";
 import { setDiagnosisMapType } from "../../store/actions/diagnosis-actions";
 import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
-import { setMapTitleAction } from "../../store/actions/base-actions";
+import { setActionGroupSelected, setMapTitleAction } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
 import { sendAnalyticsMapMenuChange } from "../../store/analytics";
 import ListSelector, { ListSelectorItem } from "../list-selector/ListSelector";
@@ -15,6 +15,7 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     setDiagnosisMapType: setDiagnosisMapType,
     setMapTitle: setMapTitleAction,
+    setActionGroupSelected: setActionGroupSelected,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -26,13 +27,19 @@ export const diagnosisSuggestions: ListSelectorItem[] = [
     { title: "common.diagnosis.hrp23_studies", value: DiagnosisMapType.HRP23_STUDIES },
 ];
 
-function DiagnosisMapTypesSelector({ setDiagnosisMapType, setMapTitle, diagnosisFilters }: Props) {
+function DiagnosisMapTypesSelector({
+    setDiagnosisMapType,
+    setMapTitle,
+    diagnosisFilters,
+    setActionGroupSelected,
+}: Props) {
     const { t } = useTranslation();
 
     const onChange = (selection: ListSelectorItem) => {
         setDiagnosisMapType(selection.value as DiagnosisMapType);
         setMapTitle(t(selection.title));
         sendAnalyticsMapMenuChange("diagnosis", selection.value as DiagnosisMapType);
+        setActionGroupSelected("DATA");
     };
 
     const onMouseOver = (selection: ListSelectorItem) => {
