@@ -6,7 +6,8 @@ import { setTreatmentMapType } from "../../store/actions/treatment-actions";
 import { useTranslation } from "react-i18next";
 import { setActionGroupSelected, setMapTitleAction } from "../../store/actions/base-actions";
 import { sendAnalyticsMapMenuChange } from "../../store/analytics";
-import ListSelector, { ListSelectorItem } from "../list-selector/ListSelector";
+import { ListSelectorItem } from "../list-selector/ListSelector";
+import MapTypeStudyGroups from "./common/MapTypeStudyGroups";
 
 const mapStateToProps = (state: State) => ({
     treatmentFilters: selectTreatmentFilters(state),
@@ -22,7 +23,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-export const treatmentSuggestions: ListSelectorItem[] = [
+const treatmentStudyResultsSuggestions: ListSelectorItem[] = [
     {
         title: "common.treatment.treatment_failure",
         subtitle: "common.treatment.treatment_failure_subtitle",
@@ -38,6 +39,9 @@ export const treatmentSuggestions: ListSelectorItem[] = [
         subtitle: "common.treatment.molecular_markers_subtitle",
         value: TreatmentMapType.MOLECULAR_MARKERS,
     },
+];
+
+const treatmentOngoingAndPlannedStudiesSuggestions: ListSelectorItem[] = [
     {
         title: "common.treatment.therapeutic_efficacy_studies",
         subtitle: "common.treatment.therapeutic_efficacy_studies_subtitle",
@@ -48,6 +52,11 @@ export const treatmentSuggestions: ListSelectorItem[] = [
         subtitle: "common.treatment.molecular_markers_ongoing_studies_subtitle",
         value: TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES,
     },
+];
+
+export const treatmentSuggestions: ListSelectorItem[] = [
+    ...treatmentStudyResultsSuggestions,
+    ...treatmentOngoingAndPlannedStudiesSuggestions,
 ];
 
 function TreatmentMapTypesSelector({
@@ -74,14 +83,46 @@ function TreatmentMapTypesSelector({
         setMapTitle(t(selection.title));
     });
 
-    const items = React.useMemo(
-        () => treatmentSuggestions.map(item => ({ ...item, title: t(item.title), subtitle: t(item.subtitle) })),
+    const studyResultsItems = React.useMemo(
+        () =>
+            treatmentStudyResultsSuggestions.map(item => ({
+                ...item,
+                title: t(item.title),
+                subtitle: t(item.subtitle),
+            })),
         [t]
     );
 
-    const value = React.useMemo(() => items.find(s => s.value === treatmentFilters.mapType), [treatmentFilters, items]);
+    const ongoingAndPlannedStudiesItems = React.useMemo(
+        () =>
+            treatmentOngoingAndPlannedStudiesSuggestions.map(item => ({
+                ...item,
+                title: t(item.title),
+                subtitle: t(item.subtitle),
+            })),
+        [t]
+    );
 
-    return <ListSelector items={items} onChange={onChange} onMouseOver={onMouseOver} value={value} />;
+    const studyResultsValue = React.useMemo(
+        () => studyResultsItems.find(s => s.value === treatmentFilters.mapType),
+        [studyResultsItems, treatmentFilters.mapType]
+    );
+
+    const ongoingAndPlannedStudiesValue = React.useMemo(
+        () => ongoingAndPlannedStudiesItems.find(s => s.value === treatmentFilters.mapType),
+        [ongoingAndPlannedStudiesItems, treatmentFilters.mapType]
+    );
+
+    return (
+        <MapTypeStudyGroups
+            onChange={onChange}
+            onMouseOver={onMouseOver}
+            studyResults={studyResultsItems}
+            ongoingAndPlannedStudies={ongoingAndPlannedStudiesItems}
+            studyResultsValue={studyResultsValue}
+            ongoingAndPlannedStudiesValue={ongoingAndPlannedStudiesValue}
+        />
+    );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TreatmentMapTypesSelector);

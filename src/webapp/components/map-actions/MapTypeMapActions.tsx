@@ -67,7 +67,7 @@ const MapTypeMapActions: React.FC<Props> = ({
                     selectedMapType && (
                         <span>
                             <Label>{t("mapActions.mapType")}:&nbsp;</Label>
-                            <Value>{t(selectedMapType)}</Value>
+                            <Value>{t(`${selectedMapType}_selected`)}</Value>
                         </span>
                     )
                 }

@@ -412,12 +412,16 @@
         },
         "prevention": {
             "resistance_status": "État de résistance aux insecticides",
+            "resistance_status_selected": "État de résistance aux insecticides",
             "resistance_status_subtitle": "Résultats d'essais biologiques de concentration discriminante",
             "resistance_intensity": "Intensité de la résistance aux insecticides",
+            "resistance_intensity_selected": "Intensité de la résistance aux insecticides",
             "resistance_intensity_subtitle": "Résultats des essais biologiques de concentration d'intensité",
             "resistance_mechanism": "Mécanismes de résistance aux insecticides",
+            "resistance_mechanism_selected": "Mécanismes de résistance aux insecticides",
             "resistance_mechanism_subtitle": "Résultats d'essais moléculaires, d'essais biochimiques et d'essais biologiques synergiste-insecticide",
             "synergist_involvement": "Effet synergiste de la susceptibilité",
+            "synergist_involvement_selected": "Effet synergiste de la susceptibilité",
             "synergist_involvement_subtitle": "Effet synergiste de la susceptibilité",
             "synergist_involvement_legend": "Effet de la synergie sur la susceptibilité",
             "chart": {
@@ -507,7 +511,11 @@
         },
         "diagnosis": {
             "gene_deletions": "Délétions du gène pfhrp2/3",
-            "hrp23_studies": "Études en cours et prévues sur la délétion du gène pfhrp2/3",
+            "gene_deletions_selected": "Résultats de l'étude : délétions du gène pfhrp2/3",
+            "gene_deletions_subtitle": "Résultats des délétions du gène pfhrp2/3",
+            "hrp23_studies": "Études de délétion du gène pfhrp2/3",
+            "hrp23_studies_selected": "Études en cours et prévues: études de délétion du gène pfhrp2/3",
+            "hrp23_studies_subtitle": "Détails des études de délétion du gène pfhrp2/3",
             "chart": {
                 "gene_deletions": {
                     "subtitle_1": "Données collectées",
@@ -565,15 +573,20 @@
         },
         "treatment": {
             "treatment_failure": "Échec du traitement",
+            "treatment_failure_selected": "Résultats de l'étude: Échec du traitement",
             "treatment_failure_subtitle": "Résultats des études d'efficacité thérapeutique",
             "delayed_parasite_clearance": "Retard dans l'élimination des parasites (P.f)",
+            "delayed_parasite_clearance_selected": "Résultats de l'étude: Retard dans l'élimination des parasites (P.f)",
             "delayed_parasite_clearance_subtitle": "Résultats des études d'efficacité thérapeutique",
             "delayed_parasite_clearance_italics": "Retard dans l'élimination des parasites (<i>P.f </i>)",
             "molecular_markers": "Marqueurs moléculaires de la résistance aux médicaments",
+            "molecular_markers_selected": "Résultats de l'étude: Marqueurs moléculaires de la résistance aux médicaments",
             "molecular_markers_subtitle": "Résultats des études sur les marqueurs moléculaires",
-            "therapeutic_efficacy_studies": "Études d'efficacité thérapeutique en cours et prévues",
+            "therapeutic_efficacy_studies": "Études d'efficacité thérapeutique",
+            "therapeutic_efficacy_studies_selected": "Études en cours et prévues: Études d'efficacité thérapeutique",
             "therapeutic_efficacy_studies_subtitle": "Détails des études d'efficacité thérapeutique",
-            "molecular_markers_ongoing_studies": "Études sur les marqueurs moléculaires en cours et prévues",
+            "molecular_markers_ongoing_studies": "Études sur les marqueurs moléculaires",
+            "molecular_markers_ongoing_studies_selected": "Études en cours et prévues: Études sur les marqueurs moléculaires",
             "molecular_markers_ongoing_studies_subtitle": "Détails des études sur les marqueurs moléculaires",
             "chart": {
                 "treatment_failure": {
@@ -692,6 +705,7 @@
         },
         "invasive": {
             "vector_occurrance": "Espèces vectorielles invasives",
+            "vector_occurrance_selected": "Espèces vectorielles invasives",
             "chart": {
                 "vector_occurrance": {
                     "species": "Espèces",
@@ -1227,6 +1241,8 @@
         "theme": "Thème",
         "selectMapType": "SÉLECTIONNER LE TYPE DE CARTE",
         "mapType": "Carte",
+        "mapTypeStudyResults": "Résultats de l'étude",
+        "mapTypeOngoingAndPlannedStudies": "Études en cours et prévues",
         "selectDataMap": "FILTRER LES DONNÉES",
         "selectDataDownload": "FILTRER LES DONNÉES (FACULTATIF)",
         "data": "Données",
