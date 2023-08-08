@@ -223,8 +223,8 @@ const CommonContent: React.FC<{
             </TopContainer>
 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
-            {selectionData.data.kind === "therapeutic-efficacy-studies" ||
-            selectionData.data.kind === "molecular-markers-ongoing-studies" ? (
+            {selectionData.data?.kind === "therapeutic-efficacy-studies" ||
+            selectionData.data?.kind === "molecular-markers-ongoing-studies" ? (
                 <OngoingAndPlannedTreatmentStudiesChart selectionData={selectionData} />
             ) : (
                 <RoundedContainer>
