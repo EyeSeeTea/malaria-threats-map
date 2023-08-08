@@ -110,7 +110,7 @@ function geSubtitle(treatmentFilters: TreatmentFilters, studyObject: TreatmentSt
 
     const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.find(
         (species: any) => species.value === studyObject.PLASMODIUM_SPECIES
-    ).label;
+    )?.label;
 
     return `${plasmodiumSpecies}, ${i18next.t(studyObject.DRUG_NAME)}`;
 }
