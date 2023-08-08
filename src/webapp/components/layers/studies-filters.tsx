@@ -229,11 +229,8 @@ export const filterByTheMolecularMarkerInStudy = (molecularMarkers: number[]) =>
 };
 
 export const filterByManyMolecularMarkersInStudies = (molecularMarkers: number[]) => (study: any) => {
-    return (
-        !molecularMarkers.length ||
-        Object.entries(MOLECULAR_MARKERS_MAP).some(
-            ([key, value]) => study[key] === 1 && molecularMarkers.includes(value)
-        )
+    return Object.entries(MOLECULAR_MARKERS_MAP).some(
+        ([key, value]) => study[key] === 1 && molecularMarkers.includes(value)
     );
 };
 
