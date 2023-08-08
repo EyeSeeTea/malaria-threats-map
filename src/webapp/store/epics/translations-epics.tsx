@@ -18,8 +18,7 @@ export const getTranslationsEpic = (action$: Observable<ActionType<typeof fetchT
     action$.pipe(
         ofType(ActionTypeEnum.FetchTranslationsRequest),
         switchMap(() => {
-            const url = ajax.cacheCircunvent(config.xmartServerUrl + "/TRANSLATIONS");
-            return ajax.getUrl<XMartApiResponse<Translation>>(url).pipe(
+            return ajax.getUrl<XMartApiResponse<Translation>>(config.xmartServerUrl + "/TRANSLATIONS").pipe(
                 mergeMap((response: XMartApiResponse<Translation>) => {
                     const oldResponse = {
                         displayFieldName: "",
