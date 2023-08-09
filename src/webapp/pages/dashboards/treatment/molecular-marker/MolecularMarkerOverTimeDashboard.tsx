@@ -8,7 +8,7 @@ import TreatmentFilterableDashboard from "../TreatmentFilterableDashboard";
 import i18next from "i18next";
 import { Typography } from "@mui/material";
 import { MolecularChartSerie } from "./types";
-import { MolecularMarker } from "../../../../components/filters/MolecularMarkerFilter";
+import { MolecularMarker } from "../../../../components/filters/MolecularMarkerRadioFilter";
 import styled from "styled-components";
 import { ChartStyles } from "../../../../components/charts/Style";
 

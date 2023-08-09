@@ -9,10 +9,10 @@ import { DELAYED_PARASITE_CLEARANCE_STATUS } from "./DelayedParasiteClearance/ut
 import { MOLECULAR_MARKER_STATUS } from "./MolecularMarkers/utils";
 import { MolecularMarkerStudy, TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import therapeuticEfficacyStudiesSymbols from "./TherapeuticEfficacyStudies/therapeuticEfficacyStudiesSymbols";
-import {
-    getTherapeuticEfficacyStudiesStatusFromStatusId,
-    sortTherapeuticEfficacyStudies,
-} from "./TherapeuticEfficacyStudies/utils";
+import { getTherapeuticEfficacyStudiesStatusFromStatusId } from "./TherapeuticEfficacyStudies/utils";
+import molecularMarkersOngoingStudiesSymbols from "./MolecularMarkersOngoingStudies/MolecularMarkersOngoingStudiesSymbols";
+import { getMolecularMarkersOngoingStudiesStatusFromStatusId } from "./MolecularMarkersOngoingStudies/utils";
+import { sortOngoingAndPlannedStudies } from "../../../store/epics/treatment/utils";
 
 export const resolveMapTypeSymbols = (treatmentFilters: TreatmentFilters) => {
     switch (treatmentFilters.mapType) {
@@ -24,6 +24,8 @@ export const resolveMapTypeSymbols = (treatmentFilters: TreatmentFilters) => {
             return molecularMarkerSymbols;
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
             return therapeuticEfficacyStudiesSymbols;
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return molecularMarkersOngoingStudiesSymbols;
         default:
             return <span />;
     }
@@ -123,12 +125,23 @@ function getByMostRecentYearAndMolecularMarker(group: any[]) {
     };
 }
 
-function getByStudySeqAndTherapeuticEfficacyStudiesStatus(group: TreatmentStudy[]) {
-    const sortedStudiesByStudySeq = sortTherapeuticEfficacyStudies(group);
+function getByStudySeqAndTherapeuticEfficacyStudiesStatus(group: any[]) {
+    const sortedStudiesByStudySeq = sortOngoingAndPlannedStudies(group);
 
     return {
         ...sortedStudiesByStudySeq[0],
         THERAPEUTIC_EFFICACY_STUDIES_STATUS: getTherapeuticEfficacyStudiesStatusFromStatusId(
+            sortedStudiesByStudySeq[0].SURV_STATUS
+        ),
+    };
+}
+
+function getByStudySeqAndMolecularMarkersOngoingStudiesStatus(group: any[]) {
+    const sortedStudiesByStudySeq = sortOngoingAndPlannedStudies(group);
+
+    return {
+        ...sortedStudiesByStudySeq[0],
+        MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS: getMolecularMarkersOngoingStudiesStatusFromStatusId(
             sortedStudiesByStudySeq[0].SURV_STATUS
         ),
     };
@@ -144,6 +157,8 @@ export const studySelector = (group: any[], mapType: TreatmentMapType) => {
             return getByMostRecentYearAndMolecularMarker(group);
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
             return getByStudySeqAndTherapeuticEfficacyStudiesStatus(group);
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return getByStudySeqAndMolecularMarkersOngoingStudiesStatus(group);
         default:
             return group[0];
     }

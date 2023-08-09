@@ -8,8 +8,8 @@ import {
     fetchTreatmentStudiesRequest,
     fetchTreatmentStudiesSuccess,
     setFilteredStudiesAction,
-    setMolecularMarker,
     setTreatmentDrugs,
+    setMolecularMarkers,
     setTreatmentMapType,
     setTreatmentPlasmodiumSpecies,
 } from "../../actions/treatment-actions";
@@ -28,11 +28,15 @@ import { fromFuture } from "../utils";
 import { EpicDependencies } from "../../index";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { createTreatmentSelectionData } from "./utils";
-import { molecularMarkersMap } from "../../../components/filters/MolecularMarkerFilter";
+import { molecularMarkersMap } from "../../../components/filters/MolecularMarkerRadioFilter";
 
 function groupStudies(studies: TreatmentStudy[]) {
     const filteredMainStudies = studies.filter(
-        study => study.DimensionID === 255 || study.DimensionID === 256 || study.DimensionID === 300
+        study =>
+            study.DimensionID === 255 ||
+            study.DimensionID === 256 ||
+            study.DimensionID === 300 ||
+            study.DimensionID === 301
     );
     return filteredMainStudies.map(study => ({
         ...study,
@@ -69,7 +73,7 @@ export const setTreatmentMapTypesEpic = (action$: Observable<ActionType<typeof s
         ofType(ActionTypeEnum.SetTreatmentMapType),
         switchMap(action => {
             if (action.payload === TreatmentMapType.MOLECULAR_MARKERS) {
-                return of(setMolecularMarker(1));
+                return of(setMolecularMarkers([1]));
             } else if (action.payload === TreatmentMapType.DELAYED_PARASITE_CLEARANCE) {
                 return of(setTreatmentPlasmodiumSpecies(["P._FALCIPARUM"]));
             } else {
@@ -91,11 +95,11 @@ export const setPlasmodiumSpeciesEpic = (action$: Observable<ActionType<typeof s
         })
     );
 
-export const setMolecularMarkerEpic = (action$: Observable<ActionType<typeof setMolecularMarker>>) =>
+export const setMolecularMarkersEpic = (action$: Observable<ActionType<typeof setMolecularMarkers>>) =>
     action$.pipe(
-        ofType(ActionTypeEnum.SetMolecularMarker),
+        ofType(ActionTypeEnum.SetMolecularMarkers),
         switchMap(action => {
-            if (action.payload === molecularMarkersMap.Pfcrt) {
+            if (action.payload.includes(molecularMarkersMap.Pfcrt) && action.payload?.length === 1) {
                 return of(setRegionAction({ region: "AMERICAS" }));
             } else {
                 return of(setRegionAction({}));
@@ -174,10 +178,10 @@ export const setTreatmentThemeEpic = (action$: Observable<ActionType<typeof setT
                     ...base,
                     setTreatmentPlasmodiumSpecies(["P._FALCIPARUM"]),
                     setTreatmentDrugs(["DRUG_AL"]),
-                    setMolecularMarker(1)
+                    setMolecularMarkers([1])
                 );
             } else {
-                return of(...base, setTreatmentPlasmodiumSpecies([]), setTreatmentDrugs([]), setMolecularMarker(null));
+                return of(...base, setTreatmentPlasmodiumSpecies([]), setTreatmentDrugs([]), setMolecularMarkers([]));
             }
         })
     );

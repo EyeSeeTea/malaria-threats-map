@@ -2,7 +2,7 @@ import React from "react";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { setMolecularMarker } from "../../store/actions/treatment-actions";
+import { setMolecularMarkers } from "../../store/actions/treatment-actions";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
 import { logEventAction } from "../../store/actions/base-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
@@ -46,7 +46,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-    setMolecularMarker: setMolecularMarker,
+    setMolecularMarkers: setMolecularMarkers,
     logEventAction: logEventAction,
 };
 
@@ -54,14 +54,14 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function MolecularMarkerFilter({ treatmentFilters, setMolecularMarker, logEventAction }: Props) {
+function MolecularMarkerRadioButtonFilter({ treatmentFilters, setMolecularMarkers, logEventAction }: Props) {
     const { t } = useTranslation();
     const handleChange = (event: React.ChangeEvent<unknown>) => {
         const molecularMarker = MOLECULAR_MARKERS.find(
             marker => marker.label === (event.target as HTMLInputElement).value
         );
         const label = molecularMarker.label;
-        setMolecularMarker(molecularMarker.value);
+        setMolecularMarkers([molecularMarker.value]);
         logEventAction({ category: "filter", action: "molecularMarkers", label });
     };
 
@@ -71,7 +71,7 @@ function MolecularMarkerFilter({ treatmentFilters, setMolecularMarker, logEventA
     }));
 
     const value = React.useMemo(() => {
-        return MOLECULAR_MARKERS.find(marker => marker.value === treatmentFilters.molecularMarker)?.label;
+        return MOLECULAR_MARKERS.find(marker => treatmentFilters.molecularMarkers.includes(marker.value))?.label;
     }, [treatmentFilters]);
 
     return (
@@ -84,4 +84,4 @@ function MolecularMarkerFilter({ treatmentFilters, setMolecularMarker, logEventA
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MolecularMarkerFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(MolecularMarkerRadioButtonFilter);

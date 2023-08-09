@@ -9,7 +9,7 @@ import ExcludeLowerPatientsSelector from "../../../../components/filters/Exclude
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MolecularMarkerSelector from "../../../../components/filters/MolecularMarkerSelector";
-import { MolecularMarker } from "../../../../components/filters/MolecularMarkerFilter";
+import { MolecularMarker } from "../../../../components/filters/MolecularMarkerRadioFilter";
 import ExcludeLowerSamplesSelector from "../../../../components/filters/ExcludeLowerSamplesSelector";
 
 interface TreatmentFiltersProps {

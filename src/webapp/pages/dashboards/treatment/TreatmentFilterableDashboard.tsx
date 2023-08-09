@@ -8,7 +8,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import InformationModal from "../../../components/dashboards/TreatmentInformationModal";
 import HighchartsReact from "highcharts-react-official";
-import { MolecularMarker } from "../../../components/filters/MolecularMarkerFilter";
+import { MolecularMarker } from "../../../components/filters/MolecularMarkerRadioFilter";
 import { useFiltersVisible } from "../common/filters/useFiltersVisible";
 import DashboardTitle from "../common/DashboardTitle";
 import ScreenshotModal from "../../../components/ScreenshotModal";

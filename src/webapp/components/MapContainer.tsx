@@ -28,8 +28,8 @@ import {
 import {
     setExcludeLowerPatients,
     setExcludeLowerSamples,
-    setMolecularMarker,
     setTreatmentDrugs,
+    setMolecularMarkers,
     setTreatmentMapType,
     setTreatmentPlasmodiumSpecies,
 } from "../store/actions/treatment-actions";
@@ -145,13 +145,13 @@ const MapContainer: React.FC = () => {
                     action: (value: string) => setTreatmentDrugs(value ? value.split(",") : []),
                 },
                 mmType: {
-                    selector: (state: State) => state.treatment.filters.molecularMarker,
+                    selector: (state: State) => state.treatment.filters.molecularMarkers,
                     action: (value: string) => {
                         if (!value) {
-                            return setMolecularMarker(1);
+                            return setMolecularMarkers([1]);
                         }
 
-                        return setMolecularMarker(parseInt(value));
+                        return setMolecularMarkers([parseInt(value)]);
                     },
                 },
                 excludeLowerPatients: {

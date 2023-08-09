@@ -70,7 +70,7 @@ export enum ActionTypeEnum {
     SetTreatmentDataset = "treatment/SET_TREATMENT_DATASET",
     SetPlasmodiumSpecies = "treatment/SET_TREATMENT_PLASMODIUM_SPECIES",
     SetDrugs = "treatment/SET_TREATMENT_DRUGS",
-    SetMolecularMarker = "treatment/SET_MOLECULAR_MARKER",
+    SetMolecularMarkers = "treatment/SET_MOLECULAR_MARKERS",
     SetTreatmentFilteredStudies = "treatment/SET_FILTER_STUDIES",
     SetExcludeLowerPatients = "treatment/SET_EXCLUDE_LOWER_PATIENTS",
     SetExcludeLowerSamples = "treatment/SET_EXCLUDE_LOWER_SAMPLES",
