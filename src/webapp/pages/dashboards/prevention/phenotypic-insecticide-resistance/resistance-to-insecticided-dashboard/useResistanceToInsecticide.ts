@@ -6,7 +6,7 @@ import { Option } from "../../../common/types";
 import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
 import { ResistanceToInsecticideChartType } from "../../types";
 import { usePrevention } from "../../usePrevention";
-import { ResistanceToInsecticideSeriesGroup } from "../types";
+import { ResistanceToInsecticideChartData } from "../types";
 import { createChartDataByInsecticideClass } from "./createChartDataByInsecticideClass";
 import { createChartDataByInsecticideType } from "./createChartDataByInsecticideType";
 
@@ -37,7 +37,7 @@ export function useResistanceToInsecticide() {
         onOnlyIncludeDataByHealthChange,
     } = usePrevention();
 
-    const [data, setData] = React.useState<ResistanceToInsecticideSeriesGroup>({});
+    const [data, setData] = React.useState<ResistanceToInsecticideChartData>({ kind: "InsecticideByClass", data: {} });
     const [categoriesCount, setCategoriesCount] = React.useState<Record<string, number>>({});
     const [chartType, setChartType] = React.useState<ResistanceToInsecticideChartType>("by-insecticide-class");
 
@@ -97,7 +97,7 @@ export function createChartData(
     selectedCountries: string[],
     filters: PreventionFiltersState,
     type: ResistanceToInsecticideChartType
-): ResistanceToInsecticideSeriesGroup {
+): ResistanceToInsecticideChartData {
     if (type === "by-insecticide") {
         return createChartDataByInsecticideType(allStudies, filteredsStudies, selectedCountries, filters);
     } else {

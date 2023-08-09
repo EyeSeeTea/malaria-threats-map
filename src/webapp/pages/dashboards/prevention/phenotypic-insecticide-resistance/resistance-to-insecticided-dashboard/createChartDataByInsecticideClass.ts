@@ -1,86 +1,65 @@
 import i18next from "i18next";
 import _ from "lodash";
 import { PreventionStudy } from "../../../../../../domain/entities/PreventionStudy";
+import { sortInsecticideClasses } from "../../../../../components/filters/InsecticideClassFilter";
 import { ResistanceStatusColors } from "../../../../../components/layers/prevention/ResistanceStatus/symbols";
 import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
-import { ResistanceToInsecticideSeriesGroup } from "../types";
+import { ResistanceToInsecticideChartDataByClass } from "../types";
 
 export function createChartDataByInsecticideClass(
     allStudies: PreventionStudy[],
     studies: PreventionStudy[],
     selectedCountries: string[],
     filters: PreventionFiltersState
-): ResistanceToInsecticideSeriesGroup {
-    if (filters.insecticideClasses.length === 0) return {};
+): ResistanceToInsecticideChartDataByClass {
+    if (filters.insecticideClasses.length === 0) return { kind: "InsecticideByClass", data: {} };
 
     const result = selectedCountries.reduce((acc, countryISO) => {
         const studiesByCountry = studies.filter(study => study.ISO2 === countryISO);
 
-        const insecticityTypes = _.uniq(studiesByCountry.map(study => study.INSECTICIDE_TYPE));
-
-        const accByInsecityce = insecticityTypes.reduce(
-            (acc: ResistanceToInsecticideSeriesGroup, insecticityType: string) => {
-                const studiesByInsecticide = studiesByCountry.filter(
-                    study => study.INSECTICIDE_TYPE === insecticityType
-                );
-
-                const insecticideClasses = _.uniq(
-                    allStudies
-                        .filter(
-                            study =>
-                                study.INSECTICIDE_TYPE === insecticityType &&
-                                filters.insecticideClasses.includes(study.INSECTICIDE_CLASS)
-                        )
-                        .map(study => study.INSECTICIDE_CLASS)
-                );
-
-                const resistanceConfirmed = createSerieByStatusAndInsecticideClass(
-                    studiesByInsecticide,
-                    insecticideClasses,
-                    "CONFIRMED_RESISTANCE",
-                    i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.confirmed"),
-                    ResistanceStatusColors.Confirmed[0]
-                );
-
-                const resistancePosible = createSerieByStatusAndInsecticideClass(
-                    studiesByInsecticide,
-                    insecticideClasses,
-                    "POSSIBLE_RESISTANCE",
-                    i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.possible"),
-                    ResistanceStatusColors.Possible[0]
-                );
-
-                const resistanceSusceptible = createSerieByStatusAndInsecticideClass(
-                    studiesByInsecticide,
-                    insecticideClasses,
-                    "SUSCEPTIBLE",
-                    i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.susceptible"),
-                    ResistanceStatusColors.Susceptible[0]
-                );
-
-                const countrySeries = {
-                    ...acc[countryISO],
-                    [insecticityType]: {
-                        categories: insecticideClasses.map(insecticideClass => i18next.t(insecticideClass)),
-                        series: [resistanceSusceptible, resistancePosible, resistanceConfirmed],
-                    },
-                };
-
-                return {
-                    ...acc,
-                    [countryISO]: countrySeries,
-                };
-            },
-            acc
+        const insecticideClasses = sortInsecticideClasses(
+            _.uniq(
+                allStudies
+                    .filter(study => filters.insecticideClasses.includes(study.INSECTICIDE_CLASS))
+                    .map(study => study.INSECTICIDE_CLASS)
+            )
         );
 
+        const resistanceConfirmed = createSerieByStatusAndInsecticideClass(
+            studiesByCountry,
+            insecticideClasses,
+            "CONFIRMED_RESISTANCE",
+            i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.confirmed"),
+            ResistanceStatusColors.Confirmed[0]
+        );
+
+        const resistancePosible = createSerieByStatusAndInsecticideClass(
+            studiesByCountry,
+            insecticideClasses,
+            "POSSIBLE_RESISTANCE",
+            i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.possible"),
+            ResistanceStatusColors.Possible[0]
+        );
+
+        const resistanceSusceptible = createSerieByStatusAndInsecticideClass(
+            studiesByCountry,
+            insecticideClasses,
+            "SUSCEPTIBLE",
+            i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.susceptible"),
+            ResistanceStatusColors.Susceptible[0]
+        );
+
+        const countrySeries = {
+            categories: insecticideClasses.map(insecticideClass => i18next.t(insecticideClass)),
+            series: [resistanceSusceptible, resistancePosible, resistanceConfirmed],
+        };
         return {
             ...acc,
-            ...accByInsecityce,
+            [countryISO]: countrySeries,
         };
     }, {});
 
-    return result;
+    return { kind: "InsecticideByClass", data: result };
 }
 
 function createSerieByStatusAndInsecticideClass(

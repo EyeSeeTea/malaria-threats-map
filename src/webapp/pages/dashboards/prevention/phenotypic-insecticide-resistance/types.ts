@@ -1,7 +1,26 @@
-export type ResistanceToInsecticideSeriesGroup = Record<
+export type ResistanceToInsecticideChartDataByClass = {
+    kind: "InsecticideByClass";
+    data: ResistanceToInsecticideDataByClass;
+};
+
+export type ResistanceToInsecticideDataByClass = Record<
+    string,
+    { categories: string[]; series: ResistanceToInsecticideSerie[] }
+>;
+
+export type ResistanceToInsecticideChartDataByType = {
+    kind: "InsecticideByType";
+    data: ResistanceToInsecticideDataByType;
+};
+
+export type ResistanceToInsecticideDataByType = Record<
     string,
     Record<string, { categories: string[]; series: ResistanceToInsecticideSerie[] }>
 >;
+
+export type ResistanceToInsecticideChartData =
+    | ResistanceToInsecticideChartDataByClass
+    | ResistanceToInsecticideChartDataByType;
 
 export interface ResistanceToInsecticideSerie {
     type: "bar";

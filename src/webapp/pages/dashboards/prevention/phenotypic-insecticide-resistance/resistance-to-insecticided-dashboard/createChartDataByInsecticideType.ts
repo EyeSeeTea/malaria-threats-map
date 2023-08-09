@@ -1,25 +1,28 @@
 import i18next from "i18next";
 import _ from "lodash";
 import { PreventionStudy } from "../../../../../../domain/entities/PreventionStudy";
+import { sortInsecticideClasses } from "../../../../../components/filters/InsecticideClassFilter";
 import { ResistanceStatusColors } from "../../../../../components/layers/prevention/ResistanceStatus/symbols";
 import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
-import { ResistanceToInsecticideSeriesGroup } from "../types";
+import { ResistanceToInsecticideChartDataByType, ResistanceToInsecticideDataByType } from "../types";
 
 export function createChartDataByInsecticideType(
     allStudies: PreventionStudy[],
     filteredStudies: PreventionStudy[],
     selectedCountries: string[],
     filters: PreventionFiltersState
-): ResistanceToInsecticideSeriesGroup {
-    if (filters.insecticideTypes.length === 0) return {};
+): ResistanceToInsecticideChartDataByType {
+    if (filters.insecticideTypes.length === 0) return { kind: "InsecticideByType", data: {} };
 
     const result = selectedCountries.reduce((acc, countryISO) => {
         const studiesByCountry = filteredStudies.filter(study => study.ISO2 === countryISO);
 
-        const insecticityClasses = _.uniq(studiesByCountry.map(study => study.INSECTICIDE_CLASS));
+        const insecticityClasses = sortInsecticideClasses(
+            _.uniq(studiesByCountry.map(study => study.INSECTICIDE_CLASS))
+        );
 
         const accByInsecityceClass = insecticityClasses.reduce(
-            (acc: ResistanceToInsecticideSeriesGroup, insecticityClass: string) => {
+            (acc: ResistanceToInsecticideDataByType, insecticityClass: string) => {
                 const studiesByInsecticideClass = studiesByCountry.filter(
                     study => study.INSECTICIDE_CLASS === insecticityClass
                 );
@@ -32,7 +35,7 @@ export function createChartDataByInsecticideType(
                                 filters.insecticideTypes.includes(study.INSECTICIDE_TYPE)
                         )
                         .map(study => study.INSECTICIDE_TYPE)
-                );
+                ).sort();
 
                 const resistanceConfirmed = createSerieByStatusAndInsecticideType(
                     studiesByInsecticideClass,
@@ -80,7 +83,7 @@ export function createChartDataByInsecticideType(
         };
     }, {});
 
-    return result;
+    return { kind: "InsecticideByType", data: result };
 }
 
 function createSerieByStatusAndInsecticideType(
