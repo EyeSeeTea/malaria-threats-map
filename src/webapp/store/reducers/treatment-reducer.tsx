@@ -15,7 +15,7 @@ const initialState: TreatmentState = Object.freeze({
         dataset: "THERAPEUTIC_EFFICACY_STUDY",
         plasmodiumSpecies: [],
         drugs: [],
-        molecularMarker: null,
+        molecularMarkers: [],
         excludeLowerPatients: false,
         excludeLowerSamples: false,
     },
@@ -50,8 +50,8 @@ function updateDrugs(drugs: string[]) {
     return updateFilter("drugs", drugs, []);
 }
 
-function updateMolecularMarker(molecularMarker: number) {
-    return updateFilter("molecularMarker", molecularMarker);
+function updateMolecularMarkers(molecularMarkers: number[]) {
+    return updateFilter("molecularMarkers", molecularMarkers);
 }
 
 function updateExcludeLowerPatients(value: boolean) {
@@ -81,7 +81,7 @@ export default createReducer<TreatmentState>(initialState, {
     [ActionTypeEnum.SetTreatmentDataset]: updateDataset,
     [ActionTypeEnum.SetPlasmodiumSpecies]: updatePlasmodiumSpecies,
     [ActionTypeEnum.SetDrugs]: updateDrugs,
-    [ActionTypeEnum.SetMolecularMarker]: updateMolecularMarker,
+    [ActionTypeEnum.SetMolecularMarkers]: updateMolecularMarkers,
     [ActionTypeEnum.SetExcludeLowerPatients]: updateExcludeLowerPatients,
     [ActionTypeEnum.SetExcludeLowerSamples]: updateExcludeLowerSamples,
     [ActionTypeEnum.SetTreatmentFilteredStudies]: (filteredStudies: TreatmentStudy[]) =>

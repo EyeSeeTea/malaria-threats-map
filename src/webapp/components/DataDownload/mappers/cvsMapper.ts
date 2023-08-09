@@ -1,7 +1,7 @@
 import i18next from "i18next";
 
 import * as R from "ramda";
-import { MOLECULAR_MARKERS } from "../../filters/MolecularMarkerFilter";
+import { MOLECULAR_MARKERS } from "../../filters/MolecularMarkerRadioFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../filters/PlasmodiumSpeciesFilter";
 import { Option } from "../../BasicSelect";
 import {

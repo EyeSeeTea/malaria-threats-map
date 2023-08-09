@@ -30,6 +30,18 @@ export interface TreatmentStudy extends Study {
     MM_LIST?: string;
     STUDY_SEQ?: number;
     AGE_GP?: string;
+    PROMPT_NAME?: any;
+    GEOGR_SCOPE_NAME?: string;
+    PROT_TYPE_NAME?: any;
+    MM_PFK13?: number;
+    MM_PFCRT?: number;
+    MM_PFMDR1?: number;
+    MM_PFPM23?: number;
+    MM_PFMDR1_CN?: number;
+    MM_PFMDR1_MU?: number;
+    MM_PFDHFR?: number;
+    MM_PFDHPS?: number;
+    MM_PFHRP23?: number;
 }
 
 export interface MolecularMarkerStudy extends TreatmentStudy {

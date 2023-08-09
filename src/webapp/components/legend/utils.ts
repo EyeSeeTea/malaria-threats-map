@@ -28,9 +28,13 @@ import { TreatmentFailureColors } from "../layers/treatment/TreatmentFailure/tre
 import { TREATMENT_FAILURE_STATUS } from "../layers/treatment/TreatmentFailure/utils";
 import { LegendLabel } from "./LegendContent";
 
-import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerFilter";
+import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerRadioFilter";
 import { TherapeuticEfficacyStudiesColors } from "../layers/treatment/TherapeuticEfficacyStudies/therapeuticEfficacyStudiesSymbols";
 import { THERAPEUTIC_EFFICACY_STUDIES_STATUS } from "../layers/treatment/TherapeuticEfficacyStudies/utils";
+import { MolecularMarkersOngoingStudiesColors } from "../layers/treatment/MolecularMarkersOngoingStudies/MolecularMarkersOngoingStudiesSymbols";
+import { MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS } from "../layers/treatment/MolecularMarkersOngoingStudies/utils";
+import { Hrp23StudiesColors } from "../layers/diagnosis/Hrp23Studies/symbols";
+import { HRP23_STUDIES_STATUS } from "../layers/diagnosis/Hrp23Studies/utils";
 
 export function getLegendTitle(
     theme: string,
@@ -69,7 +73,14 @@ function getPreventionLegendTitle(filters: PreventionFilters): string {
 }
 
 function getDiagnosisLegendTitle(filters: DiagnosisFilters) {
-    return i18next.t(`common.diagnosis.legend.gene_deletions.${filters.deletionType}`);
+    switch (filters.mapType) {
+        case DiagnosisMapType.GENE_DELETIONS:
+            return i18next.t(`common.diagnosis.legend.gene_deletions.${filters.deletionType}`);
+        case DiagnosisMapType.HRP23_STUDIES:
+            return i18next.t(`common.diagnosis.legend.hrp23_studies.title`);
+        default:
+            return "";
+    }
 }
 
 function getTreatmentLegendTitle(filters: TreatmentFilters): string {
@@ -80,10 +91,12 @@ function getTreatmentLegendTitle(filters: TreatmentFilters): string {
             return `${i18next.t("common.treatment.delayed_parasite_clearance")}\n${i18next.t(filters.drugs[0])}`;
         case TreatmentMapType.MOLECULAR_MARKERS:
             return `${i18next.t("common.treatment.molecular_markers")}\n(${
-                MOLECULAR_MARKERS[filters.molecularMarker - 1]?.label
+                MOLECULAR_MARKERS[filters.molecularMarkers[0] - 1]?.label
             })`;
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
             return i18next.t("common.treatment.legend.therapeutic_efficacy_studies.title");
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return i18next.t("common.treatment.legend.molecular_markers_ongoing_studies.title");
         default:
             return "";
     }
@@ -199,17 +212,37 @@ function getPreventionLegendLabels(filters: PreventionFilters): LegendLabel[] {
     }
 }
 
-function getDiagnosisLegendLabels(_: DiagnosisFilters): LegendLabel[] {
-    return [
-        {
-            label: "diagnosis.legend.gene_deletions.confirmed",
-            color: DiagnosisStatusColors[DIAGNOSIS_STATUS.CONFIRMED][0],
-        },
-        {
-            label: "diagnosis.legend.gene_deletions.not_identified",
-            color: DiagnosisStatusColors[DIAGNOSIS_STATUS.NOT_IDENTIFIED][0],
-        },
-    ];
+function getDiagnosisLegendLabels(filters: DiagnosisFilters): LegendLabel[] {
+    switch (filters.mapType) {
+        case DiagnosisMapType.GENE_DELETIONS:
+            return [
+                {
+                    label: "diagnosis.legend.gene_deletions.confirmed",
+                    color: DiagnosisStatusColors[DIAGNOSIS_STATUS.CONFIRMED][0],
+                },
+                {
+                    label: "diagnosis.legend.gene_deletions.not_identified",
+                    color: DiagnosisStatusColors[DIAGNOSIS_STATUS.NOT_IDENTIFIED][0],
+                },
+            ];
+        case DiagnosisMapType.HRP23_STUDIES:
+            return [
+                {
+                    label: "diagnosis.legend.hrp23_studies.planned",
+                    color: Hrp23StudiesColors[HRP23_STUDIES_STATUS.PLANNED][0],
+                },
+                {
+                    label: "diagnosis.legend.hrp23_studies.ongoing",
+                    color: Hrp23StudiesColors[HRP23_STUDIES_STATUS.ONGOING][0],
+                },
+                {
+                    label: "diagnosis.legend.hrp23_studies.completed",
+                    color: Hrp23StudiesColors[HRP23_STUDIES_STATUS.COMPLETED_RESULTS_PENDING][0],
+                },
+            ];
+        default:
+            return [];
+    }
 }
 
 function getTreatmentLegendLabels(filters: TreatmentFilters): LegendLabel[] {
@@ -297,6 +330,23 @@ function getTreatmentLegendLabels(filters: TreatmentFilters): LegendLabel[] {
                     ][0],
                 },
             ];
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return [
+                {
+                    label: "treatment.legend.molecular_markers_ongoing_studies.planned",
+                    color: MolecularMarkersOngoingStudiesColors[MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.PLANNED][0],
+                },
+                {
+                    label: "treatment.legend.molecular_markers_ongoing_studies.ongoing",
+                    color: MolecularMarkersOngoingStudiesColors[MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.ONGOING][0],
+                },
+                {
+                    label: "treatment.legend.molecular_markers_ongoing_studies.completed",
+                    color: MolecularMarkersOngoingStudiesColors[
+                        MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.COMPLETED_RESULTS_PENDING
+                    ][0],
+                },
+            ];
         default:
             return [];
     }
@@ -370,6 +420,8 @@ function getDiagnosisLegendMapTypeHelpKey(filters: DiagnosisFilters) {
     switch (filters.mapType) {
         case DiagnosisMapType.GENE_DELETIONS:
             return "common.diagnosis.legend.gene_deletions.help";
+        case DiagnosisMapType.HRP23_STUDIES:
+            return "common.diagnosis.legend.hrp23_studies.help";
         default:
             return "";
     }
@@ -385,6 +437,8 @@ function getTreatmentLegendMapTypeHelpKey(filters: TreatmentFilters): string {
             return "common.treatment.legend.molecular_markers.help";
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
             return "common.treatment.legend.therapeutic_efficacy_studies.help";
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return "common.treatment.legend.molecular_markers_ongoing_studies.help";
         default:
             return "";
     }

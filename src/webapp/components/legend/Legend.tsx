@@ -129,7 +129,7 @@ const Legend: React.FC<Props> = ({
                 <TitleContainer>
                     <Title>
                         {title.split("\n").map(str => (
-                            <div key={str}>{str}</div>
+                            <div key={str}>{<Trans i18nKey={str} />}</div>
                         ))}
                     </Title>
                     {!expanded && <Subtitle>{t("common.legend.subtitle")}</Subtitle>}

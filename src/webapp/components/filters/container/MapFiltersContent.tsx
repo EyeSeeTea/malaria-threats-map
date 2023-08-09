@@ -17,6 +17,8 @@ import { selectInvasiveFilters } from "../../../store/reducers/invasive-reducer"
 import DelayedParasiteClearanceFilters from "../../layers/treatment/DelayedParasiteClearance/DelayedParasiteClearanceFilters";
 import MolecularMarkerFilters from "../../layers/treatment/MolecularMarkers/MolecularMarkerFilters";
 import TherapeuticEfficacyStudiesFilters from "../../layers/treatment/TherapeuticEfficacyStudies/TherapeuticEfficacyStudiesFilters";
+import MolecularMarkersOngoingStudiesFilters from "../../layers/treatment/MolecularMarkersOngoingStudies/MolecularMarkersOngoingStudiesFilters";
+import Hrp23StudiesFilters from "../../layers/diagnosis/Hrp23Studies/Hrp23StudiesFilters";
 
 const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
@@ -60,6 +62,8 @@ const MapFiltersContent: React.FC<Props> = ({
             switch (diagnosisFilters.mapType) {
                 case DiagnosisMapType.GENE_DELETIONS:
                     return <GeneDeletionFilters />;
+                case DiagnosisMapType.HRP23_STUDIES:
+                    return <Hrp23StudiesFilters />;
                 default:
                     return <div />;
             }
@@ -73,6 +77,8 @@ const MapFiltersContent: React.FC<Props> = ({
                     return <MolecularMarkerFilters />;
                 case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
                     return <TherapeuticEfficacyStudiesFilters />;
+                case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+                    return <MolecularMarkersOngoingStudiesFilters />;
                 default:
                     return <div />;
             }

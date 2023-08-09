@@ -9,7 +9,7 @@ import ExcludeLowerPatientsSelector from "../../../../components/filters/Exclude
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MolecularMarkerSelector from "../../../../components/filters/MolecularMarkerSelector";
-import { MolecularMarker } from "../../../../components/filters/MolecularMarkerFilter";
+import { MolecularMarker } from "../../../../components/filters/MolecularMarkerRadioFilter";
 import ExcludeLowerSamplesSelector from "../../../../components/filters/ExcludeLowerSamplesSelector";
 
 interface TreatmentFiltersProps {
@@ -21,6 +21,7 @@ interface TreatmentFiltersProps {
     drugs: string[];
     molecularMarker: number;
     years: [number, number];
+    maxMinYears: [number, number];
     excludeLowerPatients?: boolean;
     excludeLowerSamples?: boolean;
     PlasmodiumSpecieDisabled?: boolean;
@@ -42,6 +43,7 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
     drugs,
     molecularMarker,
     years,
+    maxMinYears,
     excludeLowerPatients,
     excludeLowerSamples,
     PlasmodiumSpecieDisabled,
@@ -104,7 +106,7 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                 </React.Fragment>
             )}
 
-            <DashboardsYearRangeSelector years={years} onChange={onYearsChange} />
+            <DashboardsYearRangeSelector years={years} onChange={onYearsChange} maxMinYears={maxMinYears} />
 
             {onExcludeLowerSamplesChange && (
                 <ExcludeLowerSamplesSelector

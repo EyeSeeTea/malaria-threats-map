@@ -14,7 +14,7 @@ const StyledButton = styled(Button)`
 const Placeholder = styled.span`
     text-align: start;
     flex-grow: 1;
-    font-weight_bold
+    font-weight: bold;
 `;
 
 const Value = styled.span`

@@ -80,7 +80,6 @@ class DiagnosisLayer extends Component<Props> {
             filters,
             region,
         } = this.props;
-
         this.mountLayer(prevProps);
         this.renderLayer();
 
@@ -165,7 +164,7 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     mountLayer(prevProps?: Props) {
-        const { studies } = this.props;
+        const { studies, diagnosisFilters } = this.props;
         if (!prevProps || prevProps.studies.length !== studies.length) {
             if (this.props.map.getSource(DIAGNOSIS_SOURCE_ID)) {
                 this.props.map.removeLayer(DIAGNOSIS_LAYER_ID);
@@ -180,7 +179,7 @@ class DiagnosisLayer extends Component<Props> {
                 data: studiesToGeoJson(geoStudies),
             };
             this.props.map.addSource(DIAGNOSIS_SOURCE_ID, source);
-            this.props.map.addLayer(layer(resolveMapTypeSymbols()));
+            this.props.map.addLayer(layer(resolveMapTypeSymbols(diagnosisFilters)));
 
             setupEffects(this.props.map, DIAGNOSIS_SOURCE_ID, DIAGNOSIS_LAYER_ID);
 
@@ -224,8 +223,9 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     applyMapTypeSymbols = () => {
+        const { diagnosisFilters } = this.props;
         const layer = this.props.map.getLayer(DIAGNOSIS_LAYER_ID);
-        const mapTypeSymbols = resolveMapTypeSymbols();
+        const mapTypeSymbols: { [key: string]: any } = resolveMapTypeSymbols(diagnosisFilters);
         if (layer && mapTypeSymbols) {
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-radius", mapTypeSymbols["circle-radius"]);
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-color", mapTypeSymbols["circle-color"]);

@@ -8,7 +8,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import InformationModal from "../../../components/dashboards/TreatmentInformationModal";
 import HighchartsReact from "highcharts-react-official";
-import { MolecularMarker } from "../../../components/filters/MolecularMarkerFilter";
+import { MolecularMarker } from "../../../components/filters/MolecularMarkerRadioFilter";
 import { useFiltersVisible } from "../common/filters/useFiltersVisible";
 import DashboardTitle from "../common/DashboardTitle";
 import ScreenshotModal from "../../../components/ScreenshotModal";
@@ -30,6 +30,7 @@ interface TreatmentFilterableDashboardProps {
     drugs: string[];
     molecularMarker: MolecularMarker;
     years: [number, number];
+    maxMinYears: [number, number];
     excludeLowerPatients?: boolean;
     excludeLowerSamples?: boolean;
     PlasmodiumSpecieDisabled?: boolean;
@@ -60,6 +61,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
     drugs,
     molecularMarker,
     years,
+    maxMinYears,
     excludeLowerPatients,
     excludeLowerSamples,
     PlasmodiumSpecieDisabled,
@@ -113,6 +115,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                                 drugs={drugs}
                                 molecularMarker={molecularMarker}
                                 years={years}
+                                maxMinYears={maxMinYears}
                                 excludeLowerPatients={excludeLowerPatients}
                                 excludeLowerSamples={excludeLowerSamples}
                                 PlasmodiumSpecieDisabled={PlasmodiumSpecieDisabled || isScreenshot}

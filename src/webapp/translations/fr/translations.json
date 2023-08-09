@@ -412,12 +412,16 @@
         },
         "prevention": {
             "resistance_status": "État de résistance aux insecticides",
+            "resistance_status_selected": "État de résistance aux insecticides",
             "resistance_status_subtitle": "Résultats d'essais biologiques de concentration discriminante",
             "resistance_intensity": "Intensité de la résistance aux insecticides",
+            "resistance_intensity_selected": "Intensité de la résistance aux insecticides",
             "resistance_intensity_subtitle": "Résultats des essais biologiques de concentration d'intensité",
             "resistance_mechanism": "Mécanismes de résistance aux insecticides",
+            "resistance_mechanism_selected": "Mécanismes de résistance aux insecticides",
             "resistance_mechanism_subtitle": "Résultats d'essais moléculaires, d'essais biochimiques et d'essais biologiques synergiste-insecticide",
             "synergist_involvement": "Effet synergiste de la susceptibilité",
+            "synergist_involvement_selected": "Effet synergiste de la susceptibilité",
             "synergist_involvement_subtitle": "Effet synergiste de la susceptibilité",
             "synergist_involvement_legend": "Effet de la synergie sur la susceptibilité",
             "chart": {
@@ -507,6 +511,11 @@
         },
         "diagnosis": {
             "gene_deletions": "Délétions du gène pfhrp2/3",
+            "gene_deletions_selected": "Résultats de l'étude : délétions du gène pfhrp2/3",
+            "gene_deletions_subtitle": "Résultats des délétions du gène pfhrp2/3",
+            "hrp23_studies": "Études de délétion du gène pfhrp2/3",
+            "hrp23_studies_selected": "Études en cours et prévues: études de délétion du gène pfhrp2/3",
+            "hrp23_studies_subtitle": "Détails des études de délétion du gène pfhrp2/3",
             "chart": {
                 "gene_deletions": {
                     "subtitle_1": "Données collectées",
@@ -520,6 +529,20 @@
                     "deletion_type": "Type de délétion",
                     "no_tested": "Nombre d'échantillons testés (N)",
                     "percentage": "Pourcentage de suppressions confirmées (%)"
+                },
+                "hrp23_studies": {
+                    "subtitle": "Détails des études de délétion du gène hrp2/3",
+                    "ongoing": "En cours",
+                    "planned": "Prévu",
+                    "completed": "Terminé (résultats en attente)",
+                    "status": "Statut de l'étude",
+                    "proposed_timeframe": "Calendrier proposé",
+                    "study_population": "Population de l'étude",
+                    "genotyping": "Génotypage",
+                    "study_initiated_following": "L'étude a été lancée à la suite de",
+                    "study_sites": "Sites d'étude sélectionnés par",
+                    "lead_institution": "Institution chef de file",
+                    "funding_source": "Source de financement"
                 }
             },
             "legend": {
@@ -534,19 +557,37 @@
                         "footer": "Source des données: publications et rapports non publiés et informations des bureaux de pays.",
                         "question": "D'une enquête à l'autre, les critères de sélection des échantillons pour tester les suppressions de pfhrp 2/3 varient; par conséquent, reportez-vous au rapport complet cité pour plus de détails."
                     }
+                },
+                "hrp23_studies": {
+                    "title": "État des études sur la délétion du gène <i>Pfhrp2</i>",
+                    "ongoing": "En cours",
+                    "planned": "Prévu",
+                    "completed": "Terminé (résultats en attente)",
+                    "help": {
+                        "p1": "",
+                        "p2": "",
+                        "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
+                    }
                 }
             }
         },
         "treatment": {
             "treatment_failure": "Échec du traitement",
+            "treatment_failure_selected": "Résultats de l'étude: Échec du traitement",
             "treatment_failure_subtitle": "Résultats des études d'efficacité thérapeutique",
             "delayed_parasite_clearance": "Retard dans l'élimination des parasites (P.f)",
+            "delayed_parasite_clearance_selected": "Résultats de l'étude: Retard dans l'élimination des parasites (P.f)",
             "delayed_parasite_clearance_subtitle": "Résultats des études d'efficacité thérapeutique",
             "delayed_parasite_clearance_italics": "Retard dans l'élimination des parasites (<i>P.f </i>)",
             "molecular_markers": "Marqueurs moléculaires de la résistance aux médicaments",
+            "molecular_markers_selected": "Résultats de l'étude: Marqueurs moléculaires de la résistance aux médicaments",
             "molecular_markers_subtitle": "Résultats des études sur les marqueurs moléculaires",
-            "therapeutic_efficacy_studies": "Études d'efficacité thérapeutique en cours et prévues",
+            "therapeutic_efficacy_studies": "Études d'efficacité thérapeutique",
+            "therapeutic_efficacy_studies_selected": "Études en cours et prévues: Études d'efficacité thérapeutique",
             "therapeutic_efficacy_studies_subtitle": "Détails des études d'efficacité thérapeutique",
+            "molecular_markers_ongoing_studies": "Études sur les marqueurs moléculaires",
+            "molecular_markers_ongoing_studies_selected": "Études en cours et prévues: Études sur les marqueurs moléculaires",
+            "molecular_markers_ongoing_studies_subtitle": "Détails des études sur les marqueurs moléculaires",
             "chart": {
                 "treatment_failure": {
                     "content": "{{nStudies}} test d’efficacité thérapeutique effectuée sur l'efficacité de {{drug}} contre <i>{{plasmodiumSpecies}}</i> {{years}}",
@@ -575,8 +616,7 @@
                     "wt_tudy": "Échantillons de type sauvage",
                     "mc_study": "Échantillons avec plusieurs numéros de copie"
                 },
-                "therapeutic_efficacy_studies": {
-                    "subtitle": "Détails des études d'efficacité thérapeutique",
+                "ongoing_and_planned_treatment_studies": {
                     "overview": "Vue d'ensemble",
                     "study_details_one": "Etude détails",
                     "study_details_other": "Etude {{number}} détails",
@@ -587,10 +627,20 @@
                     "proposed_timeframe": "Calendrier proposé",
                     "lead_institution": "Institution chef de file",
                     "funding_source": "Source de financement",
+                    "molecular_markers_list": "Liste de tous les marqueurs moléculaires inclus dans cette étude:"
+                },
+                "therapeutic_efficacy_studies": {
+                    "subtitle": "Détails des études d'efficacité thérapeutique",
                     "age_group": "Groupe d'âge",
                     "species": "Espèces de plasmodium",
                     "drug": "Traitement",
                     "genotyping": "Génotypage"
+                },
+                "molecular_markers_ongoing_studies": {
+                    "subtitle": "Détails des études sur les marqueurs moléculaires",
+                    "study_initiated_following": "L'étude a été lancée à la suite de",
+                    "sampling_strategy": "Stratégie d'échantillonnage",
+                    "study_design": "Conception de l'enquête ou de l'étude"
                 }
             },
             "legend": {
@@ -637,13 +687,25 @@
                     "help": {
                         "p1": "",
                         "p2": "",
-                        "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
+                        "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
+                    }
+                },
+                "molecular_markers_ongoing_studies": {
+                    "title": "Statut des études sur les marqueurs moléculaires",
+                    "ongoing": "En cours",
+                    "planned": "Prévu",
+                    "completed": "Terminé (résultats en attente)",
+                    "help": {
+                        "p1": "",
+                        "p2": "",
+                        "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
                     }
                 }
             }
         },
         "invasive": {
             "vector_occurrance": "Espèces vectorielles invasives",
+            "vector_occurrance_selected": "Espèces vectorielles invasives",
             "chart": {
                 "vector_occurrance": {
                     "species": "Espèces",
@@ -761,7 +823,8 @@
             "drug": "Médicament",
             "drugs": "Médicaments",
             "excludeStudies": "Exclus",
-            "molecularMarker": "Marqueur moléculaire"
+            "molecularMarker": "Marqueur moléculaire",
+            "molecularMarkers": "Marqueurs moléculaires"
         },
         "topbar": {
             "menu": "Menu",
@@ -1178,6 +1241,8 @@
         "theme": "Thème",
         "selectMapType": "SÉLECTIONNER LE TYPE DE CARTE",
         "mapType": "Carte",
+        "mapTypeStudyResults": "Résultats de l'étude",
+        "mapTypeOngoingAndPlannedStudies": "Études en cours et prévues",
         "selectDataMap": "FILTRER LES DONNÉES",
         "selectDataDownload": "FILTRER LES DONNÉES (FACULTATIF)",
         "data": "Données",

@@ -19,7 +19,7 @@ export const setTreatmentPlasmodiumSpecies = createAction(ActionTypeEnum.SetPlas
 
 export const setTreatmentDrugs = createAction(ActionTypeEnum.SetDrugs)<string[]>();
 
-export const setMolecularMarker = createAction(ActionTypeEnum.SetMolecularMarker)<number>();
+export const setMolecularMarkers = createAction(ActionTypeEnum.SetMolecularMarkers)<number[]>();
 
 export const setExcludeLowerPatients = createAction(ActionTypeEnum.SetExcludeLowerPatients)<boolean>();
 

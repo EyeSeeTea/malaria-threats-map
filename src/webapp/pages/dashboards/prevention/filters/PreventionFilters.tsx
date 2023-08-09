@@ -101,7 +101,11 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                 />
             )}
 
-            <DashboardsYearRangeSelector years={filters.years} onChange={onYearsChange} />
+            <DashboardsYearRangeSelector
+                years={filters.years}
+                maxMinYears={filters.maxMinYears}
+                onChange={onYearsChange}
+            />
             <OnlyIncludeBioassaysWithMoreMosquitoes
                 value={filters.onlyIncludeBioassaysWithMoreMosquitoes}
                 onChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}

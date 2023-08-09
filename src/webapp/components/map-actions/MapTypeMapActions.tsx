@@ -67,13 +67,13 @@ const MapTypeMapActions: React.FC<Props> = ({
                     selectedMapType && (
                         <span>
                             <Label>{t("mapActions.mapType")}:&nbsp;</Label>
-                            <Value>{t(selectedMapType)}</Value>
+                            <Value>{t(`${selectedMapType}_selected`)}</Value>
                         </span>
                     )
                 }
                 actionGroupKey={"MAP_TYPE"}
             >
-                {theme !== "diagnosis" && theme !== "invasive" && <MapTypesSelector />}
+                {theme !== "invasive" && <MapTypesSelector />}
             </ActionGroupItem>
         </Box>
     );

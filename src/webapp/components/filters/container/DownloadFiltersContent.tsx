@@ -18,7 +18,7 @@ import SurveyTypeFilter from "../SurveyTypeFilter";
 import PatientTypeFilter from "../PatientTypeFilter";
 import PlasmodiumSpeciesFilter from "../PlasmodiumSpeciesFilter";
 import DrugsFilter from "../DrugsFilter";
-import MolecularMarkerFilter from "../MolecularMarkerFilter";
+import MolecularMarkerRadioFilter from "../MolecularMarkerRadioFilter";
 import VectorSpeciesFilter from "../VectorSpeciesFilter";
 
 const mapStateToProps = (state: State) => ({
@@ -115,7 +115,7 @@ const DownloadFiltersContent: React.FC<Props> = ({
                 case "MOLECULAR_MARKER_STUDY":
                     return (
                         <div>
-                            <MolecularMarkerFilter />
+                            <MolecularMarkerRadioFilter />
                             <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );

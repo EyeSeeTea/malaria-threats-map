@@ -1,9 +1,22 @@
-import pfhrp2Symbols from "./GeneDeletions/symbols";
-import { DiagnosisMapType } from "../../../store/types";
+import React from "react";
 import * as R from "ramda";
-import { DIAGNOSIS_STATUS } from "./GeneDeletions/utils";
 
-export const resolveMapTypeSymbols = () => pfhrp2Symbols;
+import { DiagnosisFilters, DiagnosisMapType } from "../../../store/types";
+import { DIAGNOSIS_STATUS } from "./GeneDeletions/utils";
+import pfhrp2Symbols from "./GeneDeletions/symbols";
+import hrp23StudiesSymbols from "./Hrp23Studies/symbols";
+import { getHrp23StudiesStatusFromStatusId, sortHrp23Studies } from "./Hrp23Studies/utils";
+
+export const resolveMapTypeSymbols = (diagnosisFilters: DiagnosisFilters) => {
+    switch (diagnosisFilters.mapType) {
+        case DiagnosisMapType.GENE_DELETIONS:
+            return pfhrp2Symbols;
+        case DiagnosisMapType.HRP23_STUDIES:
+            return hrp23StudiesSymbols;
+        default:
+            return <span />;
+    }
+};
 
 const filterByMostRecentYear = (group: any[]) => {
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), group);
@@ -22,10 +35,22 @@ function getByMostRecentYearAndDeletionType(group: any[], deletionType: string) 
     };
 }
 
+function getByStudySeqAndStudyStatus(group: any[]) {
+    const sortedStudiesByStudySeq = sortHrp23Studies(group);
+
+    return {
+        ...sortedStudiesByStudySeq[0],
+        HRP23_STUDIES_STATUS: getHrp23StudiesStatusFromStatusId(sortedStudiesByStudySeq[0].SURV_STATUS),
+    };
+}
+
 export const studySelector = (group: any[], mapType: DiagnosisMapType, deletionType: string) => {
-    if (mapType === DiagnosisMapType.GENE_DELETIONS) {
-        return getByMostRecentYearAndDeletionType(group, deletionType);
-    } else {
-        return group[0];
+    switch (mapType) {
+        case DiagnosisMapType.GENE_DELETIONS:
+            return getByMostRecentYearAndDeletionType(group, deletionType);
+        case DiagnosisMapType.HRP23_STUDIES:
+            return getByStudySeqAndStudyStatus(group);
+        default:
+            return group[0];
     }
 };

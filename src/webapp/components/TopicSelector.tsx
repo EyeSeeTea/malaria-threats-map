@@ -122,7 +122,7 @@ const ThemeSelector: React.FC<Props> = ({
         setTheme("diagnosis", from);
 
         if (from === "map") {
-            setActionGroupSelected("DATA");
+            setActionGroupSelected("MAP_TYPE");
         } else {
             setActionGroupSelected(null);
         }

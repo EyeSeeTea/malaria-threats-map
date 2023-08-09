@@ -110,6 +110,7 @@ export interface DiagnosisFilters {
 
 export enum DiagnosisMapType {
     GENE_DELETIONS,
+    HRP23_STUDIES,
 }
 
 export enum PreventionMapType {
@@ -146,6 +147,7 @@ export enum TreatmentMapType {
     DELAYED_PARASITE_CLEARANCE,
     MOLECULAR_MARKERS,
     THERAPEUTIC_EFFICACY_STUDIES,
+    MOLECULAR_MARKERS_ONGOING_STUDIES,
 }
 
 export interface TreatmentFilters {
@@ -153,7 +155,7 @@ export interface TreatmentFilters {
     dataset: TreatmentDataset;
     plasmodiumSpecies: string[];
     drugs: string[];
-    molecularMarker: number;
+    molecularMarkers: number[];
     excludeLowerPatients: boolean;
     excludeLowerSamples: boolean;
 }

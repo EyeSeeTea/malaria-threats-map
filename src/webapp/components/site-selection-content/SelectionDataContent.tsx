@@ -14,20 +14,21 @@ import CurationNew from "../charts/CurationNew";
 import { setSelection, setSelectionDataFilterSelection } from "../../store/actions/base-actions";
 import OtherInfo from "../layers/prevention/common/OtherInfo";
 import PreventionChart from "./prevention/PreventionChart";
-import DiagnosisChart from "./diagnosis/DiagnosisChart";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import InvasiveChart from "./invasive/InvasiveChart";
 import PreventionMechanismsChart from "./prevention/PreventionMechanismsChart";
 import TreatmentChart from "./treatment/TreatmentChart";
 import AditionalInformation from "../layers/treatment/common/Aditionalnformation";
 import MolecularMarkersChart from "./treatment/MolecularMarkersChart";
-import TherapeuticEfficacyStudiesChart from "./treatment/TherapeuticEfficacyStudiesChart";
 import { CommonSelectionData } from "../../store/SelectionData";
 import { InvasiveSelectionData } from "../../store/epics/invasive/types";
 import { PayloadActionCreator } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
 import { DiagnosisSelectionData } from "../../store/epics/diagnosis/types";
 import CloseIcon from "@mui/icons-material/Close";
+import OngoingAndPlannedTreatmentStudiesChart from "./treatment/OngoingAndPlannedTreatmentStudiesChart";
+import Hrp23StudiesChart from "./diagnosis/Hrp23StudiesChart";
+import GeneDeletionsChart from "./diagnosis/GeneDeletionsChart";
 
 const Container = styled.div<{ width?: string; padding?: string }>`
     width: ${props => props.width || "100%"};
@@ -94,7 +95,7 @@ type OwnProps = {
 type Props = StateProps & DispatchProps & OwnProps;
 
 const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFilterSelection, onClose }: Props) => {
-    const chartCataContent = () => {
+    const chartDataContent = () => {
         switch (selectionData.kind) {
             case "common": {
                 return (
@@ -117,10 +118,10 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
     return (
         <>
             <Hidden smUp>
-                <Container width={"100%"}>{selectionData && chartCataContent()}</Container>
+                <Container width={"100%"}>{selectionData && chartDataContent()}</Container>
             </Hidden>
             <Hidden smDown>
-                <Container width={"500px"}>{selectionData && chartCataContent()}</Container>
+                <Container width={"500px"}>{selectionData && chartDataContent()}</Container>
             </Hidden>
             <StyledIconButton onClick={onClose}>
                 <CloseIcon />
@@ -159,17 +160,21 @@ const DiagnosisContent: React.FC<{ selectionData: DiagnosisSelectionData }> = ({
             </TopContainer>
 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
-            <RoundedContainer>
-                {selectionData.data && <DiagnosisChart selectionData={selectionData} />}
+            {selectionData.data.kind === "hrp23-studies" ? (
+                <Hrp23StudiesChart selectionData={selectionData} />
+            ) : (
+                <RoundedContainer>
+                    {selectionData.data && <GeneDeletionsChart selectionData={selectionData} />}
 
-                {selectionData.dataSources && (
-                    <CitationNew
-                        dataSources={selectionData.dataSources}
-                        showKey={selectionData.dataSources.length > 1}
-                    />
-                )}
-                {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
-            </RoundedContainer>
+                    {selectionData.dataSources && (
+                        <CitationNew
+                            dataSources={selectionData.dataSources}
+                            showKey={selectionData.dataSources.length > 1}
+                        />
+                    )}
+                    {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
+                </RoundedContainer>
+            )}
         </>
     );
 };
@@ -184,7 +189,7 @@ const CommonContent: React.FC<{
         setSelectionFilterSelection(value);
     };
 
-    const chartCataContent = () => {
+    const chartDataContent = () => {
         switch (selectionData.data.kind) {
             case "prevention": {
                 return <PreventionChart mapType={preventionFilters.mapType} selectionData={selectionData} />;
@@ -223,11 +228,12 @@ const CommonContent: React.FC<{
             </TopContainer>
 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
-            {selectionData.data.kind === "therapeutic-efficacy-studies" ? (
-                <TherapeuticEfficacyStudiesChart selectionData={selectionData} />
+            {selectionData.data?.kind === "therapeutic-efficacy-studies" ||
+            selectionData.data?.kind === "molecular-markers-ongoing-studies" ? (
+                <OngoingAndPlannedTreatmentStudiesChart selectionData={selectionData} />
             ) : (
                 <RoundedContainer>
-                    {selectionData.data && chartCataContent()}
+                    {selectionData.data && chartDataContent()}
 
                     {selectionData.dataSources && <CitationNew dataSources={selectionData.dataSources} />}
                     {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
