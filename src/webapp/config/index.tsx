@@ -88,7 +88,7 @@ const configurations: { [key: string]: ConfigProps } = {
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
-        xmartServerUrl: XMART_URL_PROD, // NOTICE: This is a temporal change
+        xmartServerUrl: XMART_URL_STAGING,
     },
     dev: {
         ...base,
