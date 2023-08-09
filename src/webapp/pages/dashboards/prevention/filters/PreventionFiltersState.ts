@@ -6,4 +6,5 @@ export interface PreventionFiltersState {
     years: [number, number];
     onlyIncludeBioassaysWithMoreMosquitoes: number;
     onlyIncludeDataByHealth: boolean;
+    maxMinYears: [number, number];
 }

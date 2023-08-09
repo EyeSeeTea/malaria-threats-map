@@ -22,6 +22,7 @@ const MolecularMarkerDashboard: React.FC = () => {
         drugs,
         molecularMarker,
         years,
+        maxMinYears,
         excludeLowerSamples,
         data,
         onPlasmodiumChange,
@@ -48,6 +49,7 @@ const MolecularMarkerDashboard: React.FC = () => {
             drugs={drugs}
             molecularMarker={molecularMarker}
             years={years}
+            maxMinYears={maxMinYears}
             excludeLowerSamples={excludeLowerSamples}
             onPlasmodiumChange={onPlasmodiumChange}
             onDrugsChange={onDrugsChange}

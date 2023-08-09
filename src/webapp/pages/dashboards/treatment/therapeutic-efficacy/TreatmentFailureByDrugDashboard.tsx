@@ -22,6 +22,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
         drugs,
         molecularMarker,
         years,
+        maxMinYears,
         excludeLowerPatients,
         data,
         onPlasmodiumChange,
@@ -51,6 +52,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
             drugs={drugs}
             molecularMarker={molecularMarker}
             years={years}
+            maxMinYears={maxMinYears}
             excludeLowerPatients={excludeLowerPatients}
             onPlasmodiumChange={onPlasmodiumChange}
             onDrugsChange={onDrugsChange}

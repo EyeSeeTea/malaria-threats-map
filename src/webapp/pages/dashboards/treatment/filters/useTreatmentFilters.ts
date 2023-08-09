@@ -2,14 +2,19 @@ import React from "react";
 import { useState } from "react";
 import { MolecularMarker } from "../../../../components/filters/MolecularMarkerRadioFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../../components/filters/PlasmodiumSpeciesFilter";
+import { getMaxMinYears } from "../../../../../domain/entities/Study";
+import { useDashboards } from "../../context/useDashboards";
 
 export function useTreatmentFilters() {
+    const { dashboardsTreatmentStudies } = useDashboards();
+
     const [plasmodiumSpecies, setPlasmodiumSpecies] = useState<string>(PLASMODIUM_SPECIES_SUGGESTIONS[0].value);
     const [drugs, setDrugs] = useState<string[]>(undefined);
     const [molecularMarker, setMolecularMarker] = useState<MolecularMarker>();
-    const [years, setYears] = useState<[number, number]>([2010, new Date().getFullYear()]);
+    const [years, setYears] = useState<[number, number]>([2015, new Date().getFullYear()]);
     const [excludeLowerPatients, setExcludeLowerPatients] = useState<boolean>(false);
     const [excludeLowerSamples, setExcludeLowerSamples] = useState<boolean>(false);
+    const [maxMinYears] = useState<[number, number]>(getMaxMinYears(dashboardsTreatmentStudies));
 
     const onPlasmodiumChange = React.useCallback((value: string) => {
         setPlasmodiumSpecies(value);
@@ -40,6 +45,7 @@ export function useTreatmentFilters() {
         drugs,
         molecularMarker,
         years,
+        maxMinYears: [maxMinYears[0], new Date().getFullYear()] as [number, number],
         excludeLowerPatients,
         excludeLowerSamples,
         onPlasmodiumChange,
