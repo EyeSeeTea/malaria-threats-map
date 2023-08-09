@@ -97,6 +97,7 @@ const StyledTableHeader = styled(TableCell)<{ $noShadow?: boolean }>`
     font-size: 12px;
     border-bottom: none;
     box-shadow: ${props => (props.$noShadow ? "none" : "inset 0px -1px 0px #cccccc")};
+    width: 145px;
 `;
 
 const StyledTableCell = styled(TableCell)<{ $noShadow: boolean }>`
