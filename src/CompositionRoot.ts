@@ -18,6 +18,8 @@ import { CountryContextApiRepository } from "./data/repositories/CountryContextA
 import { GetCountryContextUseCase } from "./domain/usecases/GetCountryContextUseCase";
 import { CountryApiRepository } from "./data/repositories/CountryApiRepository";
 import { GetCountryUseCase } from "./domain/usecases/GetCountryUseCase";
+import {  GetTranslationsUseCase } from "./domain/usecases/GetTranslationsUseCase";
+import { TranslationApiRepository } from "./data/repositories/TranslationApiRepository";
 
 export class CompositionRoot {
     private preventionRepository = new PreventionApiRepository(config.mapServerUrl);
@@ -28,6 +30,7 @@ export class CompositionRoot {
     private countryRepository = new CountryApiRepository(config.xmartServerUrl);
     private emailRepository = new SmtpJsEmailRepository(config.feedbackEmailSecureToken);
     private countryContextRepository = new CountryContextApiRepository(config.xmartServerUrl);
+    private translationRepository = new TranslationApiRepository( config.xmartServerUrl);
     private _districtsUrl: string;
 
     constructor() {
@@ -89,6 +92,12 @@ export class CompositionRoot {
     public get countryContext() {
         return getExecute({
             get: new GetCountryContextUseCase(this.countryContextRepository),
+        });
+    }
+
+    public get translations() {
+        return getExecute({
+            get: new GetTranslationsUseCase(this.translationRepository),
         });
     }
 
