@@ -45,6 +45,7 @@ export function usePrevention() {
             onlyIncludeBioassaysWithMoreMosquitoes: 0,
             onlyIncludeDataByHealth: false,
             years: undefined,
+            maxMinYears: undefined,
         });
 
         const insecticideClasses = extractInsecticideClassesOptions(filteredStudies);
@@ -66,6 +67,7 @@ export function usePrevention() {
             onlyIncludeBioassaysWithMoreMosquitoes: 0,
             onlyIncludeDataByHealth: false,
             years: undefined,
+            maxMinYears: undefined,
         });
 
         const insecticideTypes = extractInsecticideTypeOptions(filteredStudies);
@@ -82,6 +84,7 @@ export function usePrevention() {
             onlyIncludeBioassaysWithMoreMosquitoes: 0,
             onlyIncludeDataByHealth: false,
             years: undefined,
+            maxMinYears: undefined,
         });
 
         const species = extractSpeciesOptions(filteredStudies);
@@ -98,6 +101,7 @@ export function usePrevention() {
             onlyIncludeBioassaysWithMoreMosquitoes: 0,
             onlyIncludeDataByHealth: false,
             years: undefined,
+            maxMinYears: undefined,
         });
 
         const types = extractTypeOptions(filteredStudies);
@@ -114,6 +118,7 @@ export function usePrevention() {
         filters,
         speciesOptions,
         typeOptions,
+        dashboardsPreventionStudies,
         onInsecticideClassChange,
         onSpeciesChange,
         onInsecticideTypesChange,

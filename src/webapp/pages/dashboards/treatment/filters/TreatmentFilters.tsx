@@ -21,6 +21,7 @@ interface TreatmentFiltersProps {
     drugs: string[];
     molecularMarker: number;
     years: [number, number];
+    maxMinYears: [number, number];
     excludeLowerPatients?: boolean;
     excludeLowerSamples?: boolean;
     PlasmodiumSpecieDisabled?: boolean;
@@ -42,6 +43,7 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
     drugs,
     molecularMarker,
     years,
+    maxMinYears,
     excludeLowerPatients,
     excludeLowerSamples,
     PlasmodiumSpecieDisabled,
@@ -104,10 +106,7 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                 </React.Fragment>
             )}
 
-            <DashboardsYearRangeSelector
-                years={years}
-                onChange={onYearsChange}
-            />
+            <DashboardsYearRangeSelector years={years} onChange={onYearsChange} maxMinYears={maxMinYears} />
 
             {onExcludeLowerSamplesChange && (
                 <ExcludeLowerSamplesSelector

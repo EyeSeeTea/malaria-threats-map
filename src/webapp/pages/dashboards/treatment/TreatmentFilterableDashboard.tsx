@@ -30,6 +30,7 @@ interface TreatmentFilterableDashboardProps {
     drugs: string[];
     molecularMarker: MolecularMarker;
     years: [number, number];
+    maxMinYears: [number, number];
     excludeLowerPatients?: boolean;
     excludeLowerSamples?: boolean;
     PlasmodiumSpecieDisabled?: boolean;
@@ -60,6 +61,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
     drugs,
     molecularMarker,
     years,
+    maxMinYears,
     excludeLowerPatients,
     excludeLowerSamples,
     PlasmodiumSpecieDisabled,
@@ -113,6 +115,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                                 drugs={drugs}
                                 molecularMarker={molecularMarker}
                                 years={years}
+                                maxMinYears={maxMinYears}
                                 excludeLowerPatients={excludeLowerPatients}
                                 excludeLowerSamples={excludeLowerSamples}
                                 PlasmodiumSpecieDisabled={PlasmodiumSpecieDisabled || isScreenshot}
