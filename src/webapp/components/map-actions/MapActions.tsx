@@ -19,17 +19,21 @@ const StyledList = styled(List)`
     padding: 0px;
 `;
 
-const MapActions: React.FC = () => {
+const MapActions: React.FC<{ isMinimizedVersion?: boolean }> = ({ isMinimizedVersion }) => {
     return (
         <RoundedCard>
             <StyledList>
                 <ThemeMapActions from={"map"} />
                 <Divider />
-                <MapTypeMapActions />
-                <Divider />
-                <DataMapActions from={"map"} />
-                <Divider />
-                <LocationMapActions />
+                {!isMinimizedVersion && (
+                    <>
+                        <MapTypeMapActions />
+                        <Divider />
+                        <DataMapActions from={"map"} />
+                        <Divider />
+                        <LocationMapActions />
+                    </>
+                )}
             </StyledList>
         </RoundedCard>
     );

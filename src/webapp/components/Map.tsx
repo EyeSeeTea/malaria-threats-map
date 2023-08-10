@@ -356,7 +356,14 @@ class Map extends React.Component<Props, StateTypes> {
                 {ready && (
                     <TopMiddleContainer rightOpen={this.state.sidebarOpen}>
                         <Stack spacing={1}>
-                            <InfoToastLink text={this.props.t("common.takeATour")} type="tour" />
+                            <InfoToastLink
+                                text={
+                                    this.state.viewMapOnly
+                                        ? this.props.t("common.minimizedTakeATour")
+                                        : this.props.t("common.takeATour")
+                                }
+                                type="tour"
+                            />
                             {/* {theme === "treatment" && (
                                 <InfoToastLink text={this.props.t("common.mekong_link")} type="greaterMekong" />
                             )} */}
@@ -394,7 +401,7 @@ class Map extends React.Component<Props, StateTypes> {
                 <Fade in={showOptions}>
                     <PushoverContainer menuOpen={this.state.menuOpen}>
                         <FloatingActionContainer>
-                            <MapActions />
+                            <MapActions isMinimizedVersion={this.state.viewMapOnly} />
                         </FloatingActionContainer>
                     </PushoverContainer>
                 </Fade>
@@ -425,9 +432,9 @@ class Map extends React.Component<Props, StateTypes> {
                             <LeyendPopover />
                         </Hidden>
                         <Hidden smDown>
-                            <FloatingLegend /> {/* Legend box */}
+                            <FloatingLegend isMinimizedVersion={this.state.viewMapOnly} /> {/* Legend box */}
                         </Hidden>
-                        <LastUpdated /> {/* Last updated box */}
+                        {!this.state.viewMapOnly && <LastUpdated /> /* Last updated box */}
                     </LegendContainer>
                 </Fade>
                 <PushoverContainer menuOpen={this.state.menuOpen}>

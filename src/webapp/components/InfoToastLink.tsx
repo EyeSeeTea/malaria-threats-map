@@ -9,7 +9,8 @@ import { getAnalyticsPageView } from "../store/analytics";
 import { setRegionAction } from "../store/actions/base-actions";
 
 const RoundedCard = styled(Card)`
-    padding: 12px;
+    width: fit-content;
+    padding: 12px 18px;
     border-radius: 12px;
     background: #f5f5f5;
 `;
@@ -18,6 +19,7 @@ const Content = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    gap: 5px;
 `;
 
 const Circle = styled.div`
