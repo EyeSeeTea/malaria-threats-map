@@ -99,10 +99,6 @@ export enum ActionTypeEnum {
     FetchDistrictsSuccess = "layers/FETCH_DISTRICTS_SUCCESS",
     FetchDistrictsError = "layers/FETCH_DISTRICTS_ERROR",
 
-    FetchDownloadsRequest = "downloads/FETCH_DOWNLOADS_REQUEST",
-    FetchDownloadsSuccess = "downloads/FETCH_DOWNLOADS_SUCCESS",
-    FetchDownloadsError = "downloads/FETCH_DOWNLOADS_ERROR",
-
     AddDownloadRequest = "downloads/ADD_DOWNLOAD_REQUEST",
 
     UploadFileRequest = "uploadFile/REQUEST",

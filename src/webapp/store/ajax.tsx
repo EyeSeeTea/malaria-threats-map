@@ -48,21 +48,9 @@ export const get = <T extends unknown>(path: string) =>
         path,
     });
 
-
 export const getFull = <T extends unknown>(path: string) =>
     makeRequestAndHandleUnauthorized<T>({
         method: "GET",
         path,
-        customPath: true,
-    });
-
-export const postFull = <T extends unknown>(path: string, request: any) =>
-    makeRequestAndHandleUnauthorized<T>({
-        method: "POST",
-        path,
-        body: request,
-        headers: {
-            "Content-Type": "application/json",
-        },
         customPath: true,
     });
