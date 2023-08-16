@@ -414,6 +414,9 @@ export function treatmentFiltersToString(
             case "MOLECULAR_MARKER_STUDY": {
                 return _.compact([...molecularMarkers, exlude, years]).join(" | ");
             }
+            case "AMDERO_TES": {
+                return _.compact([...plasmodiumSpecies, ...drugs, years]).join(" | ");
+            }
         }
     }
 }
