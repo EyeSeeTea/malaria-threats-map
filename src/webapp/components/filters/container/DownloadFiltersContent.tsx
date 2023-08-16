@@ -119,6 +119,14 @@ const DownloadFiltersContent: React.FC<Props> = ({
                             <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );
+                case "AMDERO_TES":
+                    return (
+                        <div>
+                            <PlasmodiumSpeciesFilter isMulti />
+                            <DrugsFilter isMulti />
+                            <YearRangeSelector />
+                        </div>
+                    );
                 default:
                     return <div />;
             }
