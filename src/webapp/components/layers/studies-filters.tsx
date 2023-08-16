@@ -413,6 +413,14 @@ function buildTreatmentFiltersByDownload(treatmentFilters: TreatmentFilters, fil
                 filterByYearRange(filters),
                 filterByRegion(region),
             ];
+        case "AMDERO_TES":
+            return [
+                filterByDimensionId(300),
+                filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
+                filterByDrugs(treatmentFilters.drugs),
+                filterByYearRange(filters),
+                filterByRegion(region),
+            ];
         default:
             return [];
     }
