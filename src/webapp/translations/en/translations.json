@@ -1228,6 +1228,25 @@
             "TYPE_SAMPL_ANALYZED": "type  of sample analyzed - all, discordant only, or non-representative",
             "CITATION": "Citation of the publication where the data was published",
             "CITATION_URL": "URL of the publication where the data was published"
+        },
+        "ongoing_therapeutic_efficacy": {
+            "ID": "Unique identifier of the study",
+            "COUNTRY_NAME": "Name of the country where the study was conducted",
+            "ADMIN2": "Administrative level 2 where the study was conducted",
+            "SITE_NAME": "Site where the study was conducted",
+            "LATITUDE": "Latitude of the site where the study was conducted",
+            "LONGITUDE": "Longitude of the site where the study was conducted",
+            "YEAR_START": "Year when the study started",
+            "YEAR_END": "Year when the study ended",
+            "DRUG_NAME": "Treatment administered to patients during the study.\nNote: only shown if the data comes from a Therapeutic efficacy study.",
+            "PLASMODIUM_SPECIES": "Plasmodium species",
+            "DATA_SOURCE": "Institution or group that conducted the study",
+            "CITATION_URL": "URL of the publication where the data was published",
+            "SURV_STATUS": "Study status",
+            "STUDY_SEQ": "Stufy seq",
+            "FUNDING_SOURCE": "Funding source",
+            "MM_LIST": "Genotyping",
+            "AGE_GP": "Age Group"
         }
     },
     "legend": {

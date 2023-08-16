@@ -11,6 +11,7 @@ import {
     TreatmentDatabaseSelection,
 } from "../types";
 import mappings from "../mappings";
+import { getTherapeuticEfficacyStudiesStatusFromStatusId } from "../../layers/treatment/TherapeuticEfficacyStudies/utils";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
 
@@ -360,6 +361,50 @@ export const mapTreatmentStudiesToCSV = (database: TreatmentDatabaseSelection) =
                 },
             ];
         }
+        case "AMDERO_TES": {
+            const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+
+            const fields = [
+                "ID",
+                "COUNTRY_NAME",
+                "ADMIN2",
+                "SITE_NAME",
+                "LATITUDE",
+                "LONGITUDE",
+                "YEAR_START",
+                "YEAR_END",
+                "DRUG_NAME",
+                "PLASMODIUM_SPECIES",
+                "DATA_SOURCE",
+                "CITATION_URL",
+                "SURV_STATUS",
+                "STUDY_SEQ",
+                "FUNDING_SOURCE",
+                "MM_LIST",
+                "AGE_GP",
+            ];
+            return [
+                {
+                    name: i18next.t("disclaimerTab.name"),
+                    studies: [
+                        {
+                            Disclaimer: i18next.t("disclaimerTab.disclaimer"),
+                        },
+                    ],
+                },
+                {
+                    name: "Data",
+                    studies: results,
+                },
+                {
+                    name: "Glossary",
+                    studies: fields.map(field => ({
+                        "Variable name": field,
+                        Description: i18next.t(`download.ongoing_therapeutic_efficacy.${field}`),
+                    })),
+                },
+            ];
+        }
     }
 };
 
@@ -427,6 +472,11 @@ const mapStudies = (studies: any, mappings: Option[]) => {
 };
 
 const resolveValue = (field: Option, study: any) => {
+    if (field.value === "SURV_STATUS") {
+        const value = getTherapeuticEfficacyStudiesStatusFromStatusId(study[field.value]);
+
+        return i18next.t(`common.treatment.chart.ongoing_and_planned_treatment_studies.${value.toLowerCase()}`);
+    }
     if (field.value === "MM_TYPE") {
         return MOLECULAR_MARKERS.find(mm => mm.value === Number(study[field.value])).label;
     }
