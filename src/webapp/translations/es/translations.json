@@ -904,7 +904,8 @@
                 "treatment": {
                     "datasets": {
                         "therapeutic_efficacy_studies": "Estudios de eficacia terapéutica",
-                        "molecular_marker_studies": "Estudios de marcadores moleculares de la resistencia a los medicamentos"
+                        "molecular_marker_studies": "Estudios de marcadores moleculares de la resistencia a los medicamentos",
+                        "amdero_tes": "Estudios de eficacia terapéutica en curso"
                     }
                 },
                 "invasive": {

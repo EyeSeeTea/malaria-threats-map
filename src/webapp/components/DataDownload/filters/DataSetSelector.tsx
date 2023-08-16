@@ -66,6 +66,10 @@ export const treatmentDatasetSuggestions: ListSelectorItem[] = [
         title: "common.data_download.filters.treatment.datasets.molecular_marker_studies",
         value: "MOLECULAR_MARKER_STUDY",
     },
+    {
+        title: "common.data_download.filters.treatment.datasets.amdero_tes",
+        value: "AMDERO_TES",
+    },
 ];
 
 export const diagnosisDatasetSuggestions: ListSelectorItem[] = [
