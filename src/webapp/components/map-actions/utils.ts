@@ -417,6 +417,9 @@ export function treatmentFiltersToString(
             case "AMDERO_TES": {
                 return _.compact([...plasmodiumSpecies, ...drugs, years]).join(" | ");
             }
+            case "AMDERO_MM": {
+                return _.compact([...molecularMarkers, years]).join(" | ");
+            }
         }
     }
 }
