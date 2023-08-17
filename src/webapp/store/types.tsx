@@ -43,7 +43,7 @@ export type PreventionDataset =
     | "MOLECULAR_ASSAY"
     | "BIOCHEMICAL_ASSAY";
 
-export type TreatmentDataset = "THERAPEUTIC_EFFICACY_STUDY" | "MOLECULAR_MARKER_STUDY" | "AMDERO_TES";
+export type TreatmentDataset = "THERAPEUTIC_EFFICACY_STUDY" | "MOLECULAR_MARKER_STUDY" | "AMDERO_TES" | "AMDERO_MM";
 
 export type InvasiveDataset = "INVASIVE_VECTOR_SPECIES";
 
