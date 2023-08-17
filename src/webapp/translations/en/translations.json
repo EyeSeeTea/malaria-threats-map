@@ -903,7 +903,8 @@
                     "datasets": {
                         "therapeutic_efficacy_studies": "Therapeutic efficacy studies",
                         "molecular_marker_studies": "Molecular marker studies",
-                        "amdero_tes": "Ongoing therapeutic efficacy studies"
+                        "amdero_tes": "Ongoing therapeutic efficacy studies",
+                        "amdero_mm": "Ongoing molecular marker studies"
                     }
                 },
                 "invasive": {
