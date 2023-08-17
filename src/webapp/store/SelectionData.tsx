@@ -117,20 +117,24 @@ export type OngoingAndPlannedTreatmentStudiesDetailsConfig = {
     molecularMarkersIncluded?: MolecularMarkersLabel[];
 };
 
+export type TherapeuticEfficacyStudiesDataWithSameSurvId = {
+    overviewInfo: OngoingAndPlannedTreatmentStudiesOverviewInfo;
+    studiesDetailsConfig: OngoingAndPlannedTreatmentStudiesDetailsConfig[];
+};
+
 export type TherapeuticEfficacyStudiesData = {
     kind: "therapeutic-efficacy-studies";
-    data: {
-        overviewInfo: OngoingAndPlannedTreatmentStudiesOverviewInfo;
-        studiesDetailsConfig: OngoingAndPlannedTreatmentStudiesDetailsConfig[];
-    };
+    data: TherapeuticEfficacyStudiesDataWithSameSurvId[];
+};
+
+export type MolecularMarkersOngoingStudiesDataWithSameSurvId = {
+    overviewInfo: OngoingAndPlannedTreatmentStudiesOverviewInfo;
+    studiesDetailsConfig: OngoingAndPlannedTreatmentStudiesDetailsConfig[];
 };
 
 export type MolecularMarkersOngoingStudiesData = {
     kind: "molecular-markers-ongoing-studies";
-    data: {
-        overviewInfo: OngoingAndPlannedTreatmentStudiesOverviewInfo;
-        studiesDetailsConfig: OngoingAndPlannedTreatmentStudiesDetailsConfig[];
-    };
+    data: MolecularMarkersOngoingStudiesDataWithSameSurvId[];
 };
 
 export type TreatmentChartDataSerie = {

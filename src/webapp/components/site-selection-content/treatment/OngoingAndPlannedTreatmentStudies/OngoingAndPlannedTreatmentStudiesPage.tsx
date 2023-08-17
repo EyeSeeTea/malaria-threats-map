@@ -9,40 +9,22 @@ import {
     OngoingAndPlannedTreatmentStudiesOverviewInfo,
     SelectionData,
     THERAPEUTIC_EFFICACY_STUDY_DETAILS_KEYS,
-} from "../../../store/SelectionData";
-import { MolecularMarkersOngoingStudiesColors } from "../../layers/treatment/MolecularMarkersOngoingStudies/MolecularMarkersOngoingStudiesSymbols";
-import { TherapeuticEfficacyStudiesColors } from "../../layers/treatment/TherapeuticEfficacyStudies/therapeuticEfficacyStudiesSymbols";
+} from "../../../../store/SelectionData";
+import { MolecularMarkersOngoingStudiesColors } from "../../../layers/treatment/MolecularMarkersOngoingStudies/MolecularMarkersOngoingStudiesSymbols";
+import { TherapeuticEfficacyStudiesColors } from "../../../layers/treatment/TherapeuticEfficacyStudies/therapeuticEfficacyStudiesSymbols";
 
-type OngoingAndPlannedTreatmentStudiesChartProps = {
+type OngoingAndPlannedTreatmentStudiesPageProps = {
     selectionData: SelectionData;
+    studiesDetailsConfig: OngoingAndPlannedTreatmentStudiesDetailsConfig[];
+    overviewInfo: OngoingAndPlannedTreatmentStudiesOverviewInfo;
 };
 
-const OngoingAndPlannedTreatmentStudiesChart = ({ selectionData }: OngoingAndPlannedTreatmentStudiesChartProps) => {
+const OngoingAndPlannedTreatmentStudiesPage = ({
+    selectionData,
+    overviewInfo,
+    studiesDetailsConfig,
+}: OngoingAndPlannedTreatmentStudiesPageProps) => {
     const { t } = useTranslation();
-
-    const studiesDetailsConfig: OngoingAndPlannedTreatmentStudiesDetailsConfig[] = React.useMemo(() => {
-        if (
-            selectionData.kind === "common" &&
-            (selectionData.data.kind === "therapeutic-efficacy-studies" ||
-                selectionData.data.kind === "molecular-markers-ongoing-studies")
-        ) {
-            return selectionData.data.data.studiesDetailsConfig;
-        } else {
-            return null;
-        }
-    }, [selectionData]);
-
-    const overviewInfo: OngoingAndPlannedTreatmentStudiesOverviewInfo = React.useMemo(() => {
-        if (
-            selectionData.kind === "common" &&
-            (selectionData.data.kind === "therapeutic-efficacy-studies" ||
-                selectionData.data.kind === "molecular-markers-ongoing-studies")
-        ) {
-            return selectionData.data.data.overviewInfo;
-        } else {
-            return null;
-        }
-    }, [selectionData]);
 
     const getStatusColors = React.useCallback(
         statusValue => {
@@ -65,7 +47,7 @@ const OngoingAndPlannedTreatmentStudiesChart = ({ selectionData }: OngoingAndPla
     );
 
     return (
-        <Container>
+        <>
             <RoundedContainer $isFirst>
                 <StyledTypographyMargin>
                     {t(`common.treatment.chart.ongoing_and_planned_treatment_studies.overview`)}
@@ -142,11 +124,11 @@ const OngoingAndPlannedTreatmentStudiesChart = ({ selectionData }: OngoingAndPla
                     {index === studiesDetailsConfig.length - 1 ? null : <StyledDivider />}
                 </React.Fragment>
             ))}
-        </Container>
+        </>
     );
 };
 
-export default OngoingAndPlannedTreatmentStudiesChart;
+export default OngoingAndPlannedTreatmentStudiesPage;
 
 const RoundedContainer = styled(Paper)<{ $isFirst?: boolean; $isLast?: boolean }>`
     padding: 12px 20px;
@@ -159,10 +141,6 @@ const RoundedContainer = styled(Paper)<{ $isFirst?: boolean; $isLast?: boolean }
     border-bottom-left-radius: ${props => (props.$isLast ? "10px" : "unset")};
     box-shadow: none;
     padding-bottom: ${props => props.$isLast && "46px"};
-`;
-
-const Container = styled.div`
-    margin: 15px 9px;
 `;
 
 const StyledTypography = styled(Typography)`

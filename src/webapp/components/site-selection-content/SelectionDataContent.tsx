@@ -26,7 +26,7 @@ import { PayloadActionCreator } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
 import { DiagnosisSelectionData } from "../../store/epics/diagnosis/types";
 import CloseIcon from "@mui/icons-material/Close";
-import OngoingAndPlannedTreatmentStudiesChart from "./treatment/OngoingAndPlannedTreatmentStudiesChart";
+import OngoingAndPlannedTreatmentStudiesChart from "./treatment/OngoingAndPlannedTreatmentStudies/OngoingAndPlannedTreatmentStudiesChart";
 import Hrp23StudiesChart from "./diagnosis/Hrp23StudiesChart";
 import GeneDeletionsChart from "./diagnosis/GeneDeletionsChart";
 
