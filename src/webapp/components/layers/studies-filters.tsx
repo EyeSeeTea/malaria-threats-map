@@ -421,6 +421,13 @@ function buildTreatmentFiltersByDownload(treatmentFilters: TreatmentFilters, fil
                 filterByYearRange(filters),
                 filterByRegion(region),
             ];
+        case "AMDERO_MM":
+            return [
+                filterByDimensionId(301),
+                filterByManyMolecularMarkersInStudies(treatmentFilters.molecularMarkers),
+                filterByYearRange(filters),
+                filterByRegion(region),
+            ];
         default:
             return [];
     }
