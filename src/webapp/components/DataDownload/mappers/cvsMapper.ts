@@ -379,6 +379,7 @@ export const mapTreatmentStudiesToCSV = (database: TreatmentDatabaseSelection) =
                 "CITATION_URL",
                 "SURV_STATUS",
                 "STUDY_SEQ",
+                "SURV_ID",
                 "FUNDING_SOURCE",
                 "MM_LIST",
                 "AGE_GP",
@@ -401,6 +402,58 @@ export const mapTreatmentStudiesToCSV = (database: TreatmentDatabaseSelection) =
                     studies: fields.map(field => ({
                         "Variable name": field,
                         Description: i18next.t(`download.ongoing_therapeutic_efficacy.${field}`),
+                    })),
+                },
+            ];
+        }
+        case "AMDERO_MM": {
+            const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+
+            const fields = [
+                "ID",
+                "COUNTRY_NAME",
+                "ADMIN2",
+                "SITE_NAME",
+                "LATITUDE",
+                "LONGITUDE",
+                "YEAR_START",
+                "YEAR_END",
+                "DATA_SOURCE",
+                "CITATION_URL",
+                "SURV_STATUS",
+                "STUDY_SEQ",
+                "SURV_ID",
+                "FUNDING_SOURCE",
+                "PROMPT_NAME",
+                "GEOGR_SCOPE_NAME",
+                "PROT_TYPE_NAME",
+                "MM_PFK13",
+                "MM_PFCRT",
+                "MM_PFPM23",
+                "MM_PFMDR1_CN",
+                "MM_PFMDR1_MU",
+                "MM_PFDHFR",
+                "MM_PFDHPS",
+                "MM_PFHRP23",
+            ];
+            return [
+                {
+                    name: i18next.t("disclaimerTab.name"),
+                    studies: [
+                        {
+                            Disclaimer: i18next.t("disclaimerTab.disclaimer"),
+                        },
+                    ],
+                },
+                {
+                    name: "Data",
+                    studies: results,
+                },
+                {
+                    name: "Glossary",
+                    studies: fields.map(field => ({
+                        "Variable name": field,
+                        Description: i18next.t(`download.ongoing_molecular_marker.${field}`),
                     })),
                 },
             ];

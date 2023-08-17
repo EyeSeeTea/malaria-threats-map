@@ -10,10 +10,6 @@ const mappings: Option[] = [
         label: "COUNTRY_NAME",
     },
     {
-        value: "ISO2",
-        label: "ISO2",
-    },
-    {
         value: "PROVINCE",
         label: "ADMIN2",
     },
@@ -36,14 +32,6 @@ const mappings: Option[] = [
     {
         value: "YEAR_END",
         label: "YEAR_END",
-    },
-    {
-        value: "DRUG_NAME",
-        label: "DRUG_NAME",
-    },
-    {
-        value: "PLASMODIUM_SPECIES",
-        label: "PLASMODIUM_SPECIES",
     },
     {
         value: "INSTITUTION",
@@ -74,12 +62,48 @@ const mappings: Option[] = [
         label: "FUNDING_SOURCE",
     },
     {
-        value: "MM_LIST",
-        label: "MM_LIST",
+        value: "PROMPT_NAME",
+        label: "PROMPT_NAME",
     },
     {
-        value: "AGE_GP",
-        label: "AGE_GP",
+        value: "GEOGR_SCOPE_NAME",
+        label: "GEOGR_SCOPE_NAME",
+    },
+    {
+        value: "PROT_TYPE_NAME",
+        label: "PROT_TYPE_NAME",
+    },
+    {
+        value: "MM_PFK13",
+        label: "MM_PFK13",
+    },
+    {
+        value: "MM_PFCRT",
+        label: "MM_PFCRT",
+    },
+    {
+        value: "MM_PFPM23",
+        label: "MM_PFPM23",
+    },
+    {
+        value: "MM_PFMDR1_CN",
+        label: "MM_PFMDR1_CN",
+    },
+    {
+        value: "MM_PFMDR1_MU",
+        label: "MM_PFMDR1_MU",
+    },
+    {
+        value: "MM_PFDHFR",
+        label: "MM_PFDHFR",
+    },
+    {
+        value: "MM_PFDHPS",
+        label: "MM_PFDHPS",
+    },
+    {
+        value: "MM_PFHRP23",
+        label: "MM_PFHRP23",
     },
 ];
 
