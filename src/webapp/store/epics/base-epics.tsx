@@ -333,7 +333,7 @@ export const setSelectionEpic = (
                         state.prevention.studies
                     );
 
-                    return of(setSelectionData(selectionData));
+                    return of(setSelectionData(null), setSelectionData(selectionData));
                 }
                 case "diagnosis": {
                     const selectionData = createDiagnosisSelectionData(
@@ -343,7 +343,7 @@ export const setSelectionEpic = (
                         state.diagnosis.filteredStudies
                     );
 
-                    return of(setSelectionData(selectionData));
+                    return of(setSelectionData(null), setSelectionData(selectionData));
                 }
                 case "treatment": {
                     const selectionData = createTreatmentSelectionData(
@@ -354,7 +354,7 @@ export const setSelectionEpic = (
                         state.treatment.filteredStudies
                     );
 
-                    return of(setSelectionData(selectionData));
+                    return of(setSelectionData(null), setSelectionData(selectionData));
                 }
                 case "invasive": {
                     const selectionData = createInvasiveSelectionData(
@@ -363,7 +363,7 @@ export const setSelectionEpic = (
                         state.invasive.filteredStudies
                     );
 
-                    return of(setSelectionData(selectionData));
+                    return of(setSelectionData(null), setSelectionData(selectionData));
                 }
                 default:
                     return of();
@@ -390,7 +390,7 @@ export const setSelectionDataFilterSelectionEpic = (
                         action.payload
                     );
 
-                    return of(setSelectionData(selectionData));
+                    return of(setSelectionData(null), setSelectionData(selectionData));
                 }
                 default:
                     return of();

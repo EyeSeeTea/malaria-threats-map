@@ -154,7 +154,7 @@ export const setPreventionFilteredStudiesEpic = (
                 state.prevention.studies
             );
 
-            return of(setSelectionData(selectionData));
+            return of(setSelectionData(null), setSelectionData(selectionData));
         })
     );
 
