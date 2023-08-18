@@ -343,6 +343,8 @@ function buildDiagnosisFiltersByDownload(diagnosisFilters: DiagnosisFilters, fil
                 filterByYearRange(filters),
                 filterByRegion(region),
             ];
+        case "HRPO":
+            return [filterByDimensionId(302), filterByYearRange(filters), filterByRegion(region)];
         default:
             return [];
     }
