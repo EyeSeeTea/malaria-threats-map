@@ -100,6 +100,12 @@ const DownloadFiltersContent: React.FC<Props> = ({
                             <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );
+                case "HRPO":
+                    return (
+                        <div>
+                            <YearRangeSelector showTheatherMode={false} />
+                        </div>
+                    );
                 default:
                     return <div />;
             }

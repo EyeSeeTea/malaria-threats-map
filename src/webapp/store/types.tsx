@@ -47,7 +47,7 @@ export type TreatmentDataset = "THERAPEUTIC_EFFICACY_STUDY" | "MOLECULAR_MARKER_
 
 export type InvasiveDataset = "INVASIVE_VECTOR_SPECIES";
 
-export type DiagnosisDataset = "PFHRP23_GENE_DELETIONS";
+export type DiagnosisDataset = "PFHRP23_GENE_DELETIONS" | "HRPO";
 
 export type LastUpdatedDates = {
     prevention: Date | null;
