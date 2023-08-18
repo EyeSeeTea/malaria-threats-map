@@ -383,7 +383,6 @@ export const mapTreatmentStudiesToCSV = (database: TreatmentDatabaseSelection) =
                 "CITATION_URL",
                 "GENOTYPE",
                 "PROPORTION",
-                "SURV_ID",
             ];
             return [
                 {
