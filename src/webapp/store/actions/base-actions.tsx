@@ -53,7 +53,7 @@ export const setSelection = createAction(ActionTypeEnum.SetSelection)<SiteSelect
 
 export const setHoverSelection = createAction(ActionTypeEnum.SetHoverSelection)<SiteSelection | null>();
 
-export const setSelectionData = createAction(ActionTypeEnum.SetSelectionData)<SelectionData>();
+export const setSelectionData = createAction(ActionTypeEnum.SetSelectionData)<SelectionData | null>();
 
 export const setSelectionDataFilterSelection = createAction(ActionTypeEnum.SetSelectionDataFilterSelection)<Option[]>();
 

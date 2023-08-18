@@ -32,10 +32,12 @@ const OngoingAndPlannedTreatmentStudiesChart = ({ selectionData }: OngoingAndPla
         if (
             selectionData.kind === "common" &&
             (selectionData.data.kind === "therapeutic-efficacy-studies" ||
-                selectionData.data.kind === "molecular-markers-ongoing-studies")
+                selectionData.data.kind === "molecular-markers-ongoing-studies") &&
+            selectionData.data.data[currentPage - 1]
         ) {
-            return selectionData.data.data.length && selectionData.data.data[currentPage - 1].studiesDetailsConfig;
+            return selectionData.data.data[currentPage - 1].studiesDetailsConfig;
         } else {
+            setCurrentPage(1);
             return null;
         }
     }, [selectionData, currentPage]);
@@ -44,10 +46,12 @@ const OngoingAndPlannedTreatmentStudiesChart = ({ selectionData }: OngoingAndPla
         if (
             selectionData.kind === "common" &&
             (selectionData.data.kind === "therapeutic-efficacy-studies" ||
-                selectionData.data.kind === "molecular-markers-ongoing-studies")
+                selectionData.data.kind === "molecular-markers-ongoing-studies") &&
+            selectionData.data.data[currentPage - 1]
         ) {
-            return selectionData.data.data && selectionData.data.data[currentPage - 1].overviewInfo;
+            return selectionData.data.data[currentPage - 1].overviewInfo;
         } else {
+            setCurrentPage(1);
             return null;
         }
     }, [selectionData, currentPage]);
