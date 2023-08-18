@@ -11,6 +11,7 @@ import { Option } from "../../BasicSelect";
 import diagnosisMappings from "./pfhrp23-gene-deletions";
 import ongoingTherapeuticMappings from "./ongoing-therapeutic-efficacy-studies";
 import ongoingMolecularMarkerMappings from "./ongoing-molecular-marker-studies";
+import pfhrp23GeneDeletionsStudies from "./pfhrp23-gene-deletions-studies";
 
 const mappings: { [key: string]: Option[] } = {
     DISCRIMINATING_CONCENTRATION_BIOASSAY: concentrationMappings,
@@ -25,6 +26,7 @@ const mappings: { [key: string]: Option[] } = {
     PFHRP23_GENE_DELETIONS: diagnosisMappings,
     AMDERO_TES: ongoingTherapeuticMappings,
     AMDERO_MM: ongoingMolecularMarkerMappings,
+    HRPO: pfhrp23GeneDeletionsStudies,
 };
 
 export default mappings;

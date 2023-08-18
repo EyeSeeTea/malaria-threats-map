@@ -219,52 +219,101 @@ export const mapPreventionStudiesToCSV = (database: PreventionDatabaseSelection)
 };
 
 export const mapDiagnosisStudiesToCSV = (database: DiagnosisDatabaseSelection) => {
-    const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+    switch (database.dataset) {
+        case "PFHRP23_GENE_DELETIONS": {
+            const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
 
-    const fields = [
-        "ID",
-        "COUNTRY_NAME",
-        "ISO2",
-        "SITE_NAME",
-        "LATITUDE",
-        "LONGITUDE",
-        "YEAR_START",
-        "SURVEY_TYPE",
-        "PATIENT_TYPE",
-        "HRP2_TESTED",
-        "HRP2_PROPORTION_DELETION",
-        "HRP3_TESTED",
-        "HRP3_PROPORTION_DELETION",
-        "HRP2_HRP3_TESTED",
-        "HRP2_HRP3_PROPORTION_DELETION",
-        "CITATION",
-        "CITATION_URL",
-        "DELETETION_STATUS",
-        "SAMPLE_ORIGIN",
-        "PF_POS_SAMPLES",
-        "TYPE_SAMPL_ANALYZED",
-    ];
-    return [
-        {
-            name: i18next.t("disclaimerTab.name"),
-            studies: [
+            const fields = [
+                "ID",
+                "COUNTRY_NAME",
+                "SITE_NAME",
+                "LATITUDE",
+                "LONGITUDE",
+                "YEAR_START",
+                "YEAR_END",
+                "SURVEY_TYPE",
+                "PATIENT_TYPE",
+                "HRP2_TESTED",
+                "HRP2_PROPORTION_DELETION",
+                "HRP3_TESTED",
+                "HRP3_PROPORTION_DELETION",
+                "HRP2_HRP3_TESTED",
+                "HRP2_HRP3_PROPORTION_DELETION",
+                "CITATION",
+                "CITATION_URL",
+                "DELETETION_STATUS",
+                "SAMPLE_ORIGIN",
+                "PF_POS_SAMPLES",
+                "TYPE_SAMPL_ANALYZED",
+            ];
+            return [
                 {
-                    Disclaimer: i18next.t("disclaimerTab.disclaimer"),
+                    name: i18next.t("disclaimerTab.name"),
+                    studies: [
+                        {
+                            Disclaimer: i18next.t("disclaimerTab.disclaimer"),
+                        },
+                    ],
                 },
-            ],
-        },
-        {
-            name: "Data",
-            studies: results,
-        },
-        {
-            name: "Glossary",
-            studies: fields.map(field => ({
-                "Variable name": field,
-                Description: i18next.t(`download.diagnosis.${field}`),
-            })),
-        },
-    ];
+                {
+                    name: "Data",
+                    studies: results,
+                },
+                {
+                    name: "Glossary",
+                    studies: fields.map(field => ({
+                        "Variable name": field,
+                        Description: i18next.t(`download.diagnosis.${field}`),
+                    })),
+                },
+            ];
+        }
+        case "HRPO": {
+            const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+
+            const fields = [
+                "ID",
+                "COUNTRY_NAME",
+                "SITE_NAME",
+                "LATITUDE",
+                "LONGITUDE",
+                "YEAR_START",
+                "YEAR_END",
+                "CITATION",
+                "CITATION_URL",
+                "SURV_STATUS",
+                "SURV_ID",
+                "SYMP_STAT_NAME",
+                "HRP_GENO_NAME",
+                "PROMPT_NAME",
+                "GEOGR_SCOPE_NAME",
+                "INSTITUTION",
+                "INSTITUTION_CITY",
+                "FUNDING_SOURCE",
+            ];
+            return [
+                {
+                    name: i18next.t("disclaimerTab.name"),
+                    studies: [
+                        {
+                            Disclaimer: i18next.t("disclaimerTab.disclaimer"),
+                        },
+                    ],
+                },
+                {
+                    name: "Data",
+                    studies: results,
+                },
+                {
+                    name: "Glossary",
+                    studies: fields.map(field => ({
+                        "Variable name": field,
+                        Description: i18next.t(`download.hrpo.${field}`),
+                    })),
+                },
+            ];
+        }
+    }
 };
 
 export const mapTreatmentStudiesToCSV = (database: TreatmentDatabaseSelection) => {
@@ -334,6 +383,7 @@ export const mapTreatmentStudiesToCSV = (database: TreatmentDatabaseSelection) =
                 "CITATION_URL",
                 "GENOTYPE",
                 "PROPORTION",
+                "SURV_ID",
             ];
             return [
                 {
