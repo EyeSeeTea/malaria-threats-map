@@ -81,6 +81,11 @@ export const diagnosisDatasetSuggestions: ListSelectorItem[] = [
         title: "common.data_download.filters.diagnosis.datasets.gene_deletions",
         value: "PFHRP23_GENE_DELETIONS",
     },
+    {
+        title: "common.data_download.filters.diagnosis.datasets.hrpo",
+        value: "HRPO",
+    },
+    
 ];
 
 export const invasiveDatasetSuggestions: ListSelectorItem[] = [

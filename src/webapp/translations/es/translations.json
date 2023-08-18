@@ -898,7 +898,8 @@
                 },
                 "diagnosis": {
                     "datasets": {
-                        "gene_deletions": "Deleción del gen pfhrp2/3"
+                        "gene_deletions": "Deleción del gen pfhrp2/3",
+                        "hrpo": "Estudios en curso sobre deleciones del gen pfhrp2/3"
                     }
                 },
                 "treatment": {
