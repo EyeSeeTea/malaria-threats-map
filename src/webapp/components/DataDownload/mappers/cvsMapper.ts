@@ -11,6 +11,7 @@ import {
     TreatmentDatabaseSelection,
 } from "../types";
 import mappings from "../mappings";
+import { getTherapeuticEfficacyStudiesStatusFromStatusId } from "../../layers/treatment/TherapeuticEfficacyStudies/utils";
 
 export const MOLECULAR_MECHANISM_TYPES = ["MONO_OXYGENASES", "ESTERASES", "GSTS"];
 
@@ -218,52 +219,101 @@ export const mapPreventionStudiesToCSV = (database: PreventionDatabaseSelection)
 };
 
 export const mapDiagnosisStudiesToCSV = (database: DiagnosisDatabaseSelection) => {
-    const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+    switch (database.dataset) {
+        case "PFHRP23_GENE_DELETIONS": {
+            const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
 
-    const fields = [
-        "ID",
-        "COUNTRY_NAME",
-        "ISO2",
-        "SITE_NAME",
-        "LATITUDE",
-        "LONGITUDE",
-        "YEAR_START",
-        "SURVEY_TYPE",
-        "PATIENT_TYPE",
-        "HRP2_TESTED",
-        "HRP2_PROPORTION_DELETION",
-        "HRP3_TESTED",
-        "HRP3_PROPORTION_DELETION",
-        "HRP2_HRP3_TESTED",
-        "HRP2_HRP3_PROPORTION_DELETION",
-        "CITATION",
-        "CITATION_URL",
-        "DELETETION_STATUS",
-        "SAMPLE_ORIGIN",
-        "PF_POS_SAMPLES",
-        "TYPE_SAMPL_ANALYZED",
-    ];
-    return [
-        {
-            name: i18next.t("disclaimerTab.name"),
-            studies: [
+            const fields = [
+                "ID",
+                "COUNTRY_NAME",
+                "SITE_NAME",
+                "LATITUDE",
+                "LONGITUDE",
+                "YEAR_START",
+                "YEAR_END",
+                "SURVEY_TYPE",
+                "PATIENT_TYPE",
+                "HRP2_TESTED",
+                "HRP2_PROPORTION_DELETION",
+                "HRP3_TESTED",
+                "HRP3_PROPORTION_DELETION",
+                "HRP2_HRP3_TESTED",
+                "HRP2_HRP3_PROPORTION_DELETION",
+                "CITATION",
+                "CITATION_URL",
+                "DELETETION_STATUS",
+                "SAMPLE_ORIGIN",
+                "PF_POS_SAMPLES",
+                "TYPE_SAMPL_ANALYZED",
+            ];
+            return [
                 {
-                    Disclaimer: i18next.t("disclaimerTab.disclaimer"),
+                    name: i18next.t("disclaimerTab.name"),
+                    studies: [
+                        {
+                            Disclaimer: i18next.t("disclaimerTab.disclaimer"),
+                        },
+                    ],
                 },
-            ],
-        },
-        {
-            name: "Data",
-            studies: results,
-        },
-        {
-            name: "Glossary",
-            studies: fields.map(field => ({
-                "Variable name": field,
-                Description: i18next.t(`download.diagnosis.${field}`),
-            })),
-        },
-    ];
+                {
+                    name: "Data",
+                    studies: results,
+                },
+                {
+                    name: "Glossary",
+                    studies: fields.map(field => ({
+                        "Variable name": field,
+                        Description: i18next.t(`download.diagnosis.${field}`),
+                    })),
+                },
+            ];
+        }
+        case "HRPO": {
+            const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+
+            const fields = [
+                "ID",
+                "COUNTRY_NAME",
+                "SITE_NAME",
+                "LATITUDE",
+                "LONGITUDE",
+                "YEAR_START",
+                "YEAR_END",
+                "CITATION",
+                "CITATION_URL",
+                "SURV_STATUS",
+                "SURV_ID",
+                "SYMP_STAT_NAME",
+                "HRP_GENO_NAME",
+                "PROMPT_NAME",
+                "GEOGR_SCOPE_NAME",
+                "INSTITUTION",
+                "INSTITUTION_CITY",
+                "FUNDING_SOURCE",
+            ];
+            return [
+                {
+                    name: i18next.t("disclaimerTab.name"),
+                    studies: [
+                        {
+                            Disclaimer: i18next.t("disclaimerTab.disclaimer"),
+                        },
+                    ],
+                },
+                {
+                    name: "Data",
+                    studies: results,
+                },
+                {
+                    name: "Glossary",
+                    studies: fields.map(field => ({
+                        "Variable name": field,
+                        Description: i18next.t(`download.hrpo.${field}`),
+                    })),
+                },
+            ];
+        }
+    }
 };
 
 export const mapTreatmentStudiesToCSV = (database: TreatmentDatabaseSelection) => {
@@ -360,6 +410,103 @@ export const mapTreatmentStudiesToCSV = (database: TreatmentDatabaseSelection) =
                 },
             ];
         }
+        case "AMDERO_TES": {
+            const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+
+            const fields = [
+                "ID",
+                "COUNTRY_NAME",
+                "ADMIN2",
+                "SITE_NAME",
+                "LATITUDE",
+                "LONGITUDE",
+                "YEAR_START",
+                "YEAR_END",
+                "DRUG_NAME",
+                "PLASMODIUM_SPECIES",
+                "DATA_SOURCE",
+                "CITATION_URL",
+                "SURV_STATUS",
+                "STUDY_SEQ",
+                "SURV_ID",
+                "FUNDING_SOURCE",
+                "MM_LIST",
+                "AGE_GP",
+            ];
+            return [
+                {
+                    name: i18next.t("disclaimerTab.name"),
+                    studies: [
+                        {
+                            Disclaimer: i18next.t("disclaimerTab.disclaimer"),
+                        },
+                    ],
+                },
+                {
+                    name: "Data",
+                    studies: results,
+                },
+                {
+                    name: "Glossary",
+                    studies: fields.map(field => ({
+                        "Variable name": field,
+                        Description: i18next.t(`download.ongoing_therapeutic_efficacy.${field}`),
+                    })),
+                },
+            ];
+        }
+        case "AMDERO_MM": {
+            const results = mapStudies(database.filteredStudies, mappings[database.dataset]);
+
+            const fields = [
+                "ID",
+                "COUNTRY_NAME",
+                "ADMIN2",
+                "SITE_NAME",
+                "LATITUDE",
+                "LONGITUDE",
+                "YEAR_START",
+                "YEAR_END",
+                "DATA_SOURCE",
+                "CITATION_URL",
+                "SURV_STATUS",
+                "STUDY_SEQ",
+                "SURV_ID",
+                "FUNDING_SOURCE",
+                "PROMPT_NAME",
+                "GEOGR_SCOPE_NAME",
+                "PROT_TYPE_NAME",
+                "MM_PFK13",
+                "MM_PFCRT",
+                "MM_PFPM23",
+                "MM_PFMDR1_CN",
+                "MM_PFMDR1_MU",
+                "MM_PFDHFR",
+                "MM_PFDHPS",
+                "MM_PFHRP23",
+            ];
+            return [
+                {
+                    name: i18next.t("disclaimerTab.name"),
+                    studies: [
+                        {
+                            Disclaimer: i18next.t("disclaimerTab.disclaimer"),
+                        },
+                    ],
+                },
+                {
+                    name: "Data",
+                    studies: results,
+                },
+                {
+                    name: "Glossary",
+                    studies: fields.map(field => ({
+                        "Variable name": field,
+                        Description: i18next.t(`download.ongoing_molecular_marker.${field}`),
+                    })),
+                },
+            ];
+        }
     }
 };
 
@@ -427,6 +574,11 @@ const mapStudies = (studies: any, mappings: Option[]) => {
 };
 
 const resolveValue = (field: Option, study: any) => {
+    if (field.value === "SURV_STATUS") {
+        const value = getTherapeuticEfficacyStudiesStatusFromStatusId(study[field.value]);
+
+        return i18next.t(`common.treatment.chart.ongoing_and_planned_treatment_studies.${value.toLowerCase()}`);
+    }
     if (field.value === "MM_TYPE") {
         return MOLECULAR_MARKERS.find(mm => mm.value === Number(study[field.value])).label;
     }

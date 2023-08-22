@@ -270,6 +270,7 @@ export default function IntegrationReactSelect({
         <div className={`${finalClasses.root} ${className}`} role="listbox">
             {optimizePerformance ? (
                 <WindowedSelect
+                    className="basic-select-container"
                     classes={finalClasses}
                     styles={selectStyles}
                     components={components}
@@ -281,6 +282,7 @@ export default function IntegrationReactSelect({
                 />
             ) : (
                 <Select
+                    className="basic-select-container"
                     classes={finalClasses}
                     styles={selectStyles}
                     components={components}

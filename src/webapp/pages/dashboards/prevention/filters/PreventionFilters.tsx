@@ -98,6 +98,7 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                     value={filters.insecticideTypes}
                     margin={"10px 0px"}
                     isClearable={true}
+                    className="InsecticideTypeMultiSelector"
                 />
             )}
 

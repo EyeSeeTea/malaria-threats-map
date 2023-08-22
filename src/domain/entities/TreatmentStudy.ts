@@ -29,6 +29,7 @@ export interface TreatmentStudy extends Study {
     SURV_STATUS?: number;
     FUNDING_SOURCE?: string;
     MM_LIST?: string;
+    SURV_ID?: number;
     STUDY_SEQ?: number;
     AGE_GP?: string;
     PROMPT_NAME?: any;
