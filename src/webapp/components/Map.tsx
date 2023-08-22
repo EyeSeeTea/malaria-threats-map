@@ -356,14 +356,9 @@ class Map extends React.Component<Props, StateTypes> {
                 {ready && (
                     <TopMiddleContainer rightOpen={this.state.sidebarOpen}>
                         <Stack spacing={1}>
-                            <InfoToastLink
-                                text={
-                                    this.state.viewMapOnly
-                                        ? this.props.t("common.minimizedTakeATour")
-                                        : this.props.t("common.takeATour")
-                                }
-                                type="tour"
-                            />
+                            {!this.state.viewMapOnly && (
+                                <InfoToastLink text={this.props.t("common.takeATour")} type="tour" />
+                            )}
                             {/* {theme === "treatment" && (
                                 <InfoToastLink text={this.props.t("common.mekong_link")} type="greaterMekong" />
                             )} */}
