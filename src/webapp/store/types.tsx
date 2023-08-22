@@ -43,11 +43,11 @@ export type PreventionDataset =
     | "MOLECULAR_ASSAY"
     | "BIOCHEMICAL_ASSAY";
 
-export type TreatmentDataset = "THERAPEUTIC_EFFICACY_STUDY" | "MOLECULAR_MARKER_STUDY";
+export type TreatmentDataset = "THERAPEUTIC_EFFICACY_STUDY" | "MOLECULAR_MARKER_STUDY" | "AMDERO_TES" | "AMDERO_MM";
 
 export type InvasiveDataset = "INVASIVE_VECTOR_SPECIES";
 
-export type DiagnosisDataset = "PFHRP23_GENE_DELETIONS";
+export type DiagnosisDataset = "PFHRP23_GENE_DELETIONS" | "HRPO";
 
 export type LastUpdatedDates = {
     prevention: Date | null;
