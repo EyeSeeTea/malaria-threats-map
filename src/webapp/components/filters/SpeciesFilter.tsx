@@ -91,7 +91,7 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
     return (
         <MultiFilter
             label={t("common.filters.vector_species")}
-            placeholder={t("common.filters.select_vector_species")}
+            placeholder={t("common.filters.select_vector_species_placeholder")}
             options={suggestions}
             onChange={setSpecies}
             value={preventionFilters.species}
