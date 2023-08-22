@@ -232,9 +232,19 @@ const FiltersCard = styled(Card)<{ $isScreenshot: boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    .MultiFilter-container {
-        max-height: ${props => (props?.$isScreenshot ? "initial" : "500px")};
-        overflow: ${props => (props?.$isScreenshot ? "initial" : "auto")};
+    .InsecticideClassMultiSelector,
+    .InsecticideTypeMultiSelector {
+        position: relative;
+        .basic-select-container {
+            overflow: ${props => (props?.$isScreenshot ? "initial" : "auto")};
+            position: unset;
+        }
+        .MuiFormControl-root {
+            max-height: ${props => (props?.$isScreenshot ? "initial" : "500px")};
+        }
+        .MuiPaper-root {
+            margin-top: 10px;
+        }
     }
 `;
 

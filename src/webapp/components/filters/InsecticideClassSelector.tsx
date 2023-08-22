@@ -35,6 +35,7 @@ function InsecticideClassSelector({ type, insecticideClasses = [], onChange, val
 
     return type === "select" ? (
         <MultiFilter
+            className="InsecticideClassMultiSelector"
             labelPosition="top"
             label={t("common.filters.insecticide_class")}
             options={options}

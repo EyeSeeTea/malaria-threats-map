@@ -16,6 +16,7 @@ type Props = {
     analyticsMultiFilterAction?: string;
     isClearable?: boolean;
     optionsStyle?: React.CSSProperties;
+    className?: string;
 };
 
 function MultiFilter({
@@ -29,6 +30,7 @@ function MultiFilter({
     isClearable = false,
     margin,
     optionsStyle,
+    className = "",
 }: Props) {
     const onSelectionChange = (options: Option[] = []) => {
         onChange((options || []).map(o => o.value));
@@ -61,6 +63,7 @@ function MultiFilter({
                     onChange={onSelectionChange}
                     value={selections}
                     optionsStyle={optionsStyle}
+                    className={className}
                 />
             </FilterRowContainer>
         </React.Fragment>
