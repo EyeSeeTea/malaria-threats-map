@@ -66,6 +66,14 @@ export const treatmentDatasetSuggestions: ListSelectorItem[] = [
         title: "common.data_download.filters.treatment.datasets.molecular_marker_studies",
         value: "MOLECULAR_MARKER_STUDY",
     },
+    {
+        title: "common.data_download.filters.treatment.datasets.amdero_tes",
+        value: "AMDERO_TES",
+    },
+    {
+        title: "common.data_download.filters.treatment.datasets.amdero_mm",
+        value: "AMDERO_MM",
+    },
 ];
 
 export const diagnosisDatasetSuggestions: ListSelectorItem[] = [
@@ -73,6 +81,11 @@ export const diagnosisDatasetSuggestions: ListSelectorItem[] = [
         title: "common.data_download.filters.diagnosis.datasets.gene_deletions",
         value: "PFHRP23_GENE_DELETIONS",
     },
+    {
+        title: "common.data_download.filters.diagnosis.datasets.hrpo",
+        value: "HRPO",
+    },
+    
 ];
 
 export const invasiveDatasetSuggestions: ListSelectorItem[] = [

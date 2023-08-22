@@ -10,10 +10,10 @@ const RoundedCard = styled(Card)`
     width: 313px;
 `;
 
-const FloatingLegendContainer: React.FC = () => {
+const FloatingLegendContainer: React.FC<{ isMinimizedVersion?: boolean }> = ({ isMinimizedVersion }) => {
     return (
         <RoundedCard>
-            <Legend />
+            <Legend isMinimizedVersion={isMinimizedVersion} />
         </RoundedCard>
     );
 };

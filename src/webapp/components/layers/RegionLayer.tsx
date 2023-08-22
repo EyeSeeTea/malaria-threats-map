@@ -214,6 +214,7 @@ class RegionLayer extends Component<Props> {
             essential: true,
             maxDuration: 5000,
             speed: 0.8,
+            padding: { top: 200, bottom: 0, left: 0, right: 350 },
         });
     };
 

@@ -3,6 +3,7 @@
         "layers": "couches",
         "mekong_link": "Aller à la sous-région du Grand Mékong",
         "takeATour": "Vous ne savez pas par où commencer ? Faites un tour.",
+        "minimizedTakeATour": "Faites un tour.",
         "zoomIn": "Agrandir",
         "zoomOut": "Dézoomer",
         "fullscreen": "Afficher en plein écran",
@@ -897,13 +898,16 @@
                 },
                 "diagnosis": {
                     "datasets": {
-                        "gene_deletions": "Délétion de pfhrp2/3 gènes"
+                        "gene_deletions": "Délétion de pfhrp2/3 gènes",
+                        "hrpo": "Études en cours sur les délétions du gène pfhrp2/3"
                     }
                 },
                 "treatment": {
                     "datasets": {
                         "therapeutic_efficacy_studies": "Études d'efficacité thérapeutique",
-                        "molecular_marker_studies": "Études sur les marqueurs moléculaires de la résistance aux médicaments"
+                        "molecular_marker_studies": "Études sur les marqueurs moléculaires de la résistance aux médicaments",
+                        "amdero_tes": "Etudes d'efficacité thérapeutique en cours",
+                        "amdero_mm": "Études en cours sur les marqueurs moléculaires"
                     }
                 },
                 "invasive": {
@@ -1214,6 +1218,7 @@
             "LATITUDE": "Latitude du site où les moustiques ont été collectés",
             "LONGITUDE": "Longitude du site où les moustiques ont été collectés",
             "YEAR_START": "Année du début de la collecte des moustiques",
+            "YEAR_END": "Année de fin de collecte des moustiques",
             "SURVEY_TYPE": "Type d'enquête menée",
             "PATIENT_TYPE": "État clinique du patient",
             "HRP2_TESTED": "Nombre d'échantillons testés pour les suppressions HRP2",
@@ -1228,6 +1233,77 @@
             "TYPE_SAMPL_ANALYZED": "type d'échantillon analysé - tous, discordants uniquement ou non représentatifs",
             "CITATION": "Citation de la publication où les données ont été publiées",
             "CITATION_URL": "URL de la publication où les données ont été publiées"
+        },
+        "hrpo": {
+            "ID": "Identifiant unique de l'étude",
+            "COUNTRY_NAME": "Nom du pays où l'étude a été réalisée",
+            "ADMIN2": "Niveau administratif 2 où l'étude a été réalisée",
+            "SITE_NAME": "Lieu où l'étude a été réalisée",
+            "LATITUDE": "Latitude du lieu où l'étude a été réalisée",
+            "LONGITUDE": "Longitude du lieu où l'étude a été réalisée",
+            "YEAR_START": "Année de début de l'étude",
+            "YEAR_END": "Année de fin de l'étude",
+            "ISO2": "ISO2",
+            "CITATION": "Citation de la publication où les données ont été publiées",
+            "CITATION_URL": "URL de la publication où les données ont été publiées",
+            "SURV_STATUS": "Statut de l'étude",
+            "SURV_ID": "Identifiant de survie",
+            "SYMP_STAT_NAME": "Population de l'étude",
+            "HRP_GENO_NAME": "Génotypage",
+            "PROMPT_NAME": "L'étude a commencé après",
+            "GEOGR_SCOPE_NAME": "Centres d'études sélectionnés par",
+            "INSTITUTION_CITY": "Établissement principal",
+            "INSTITUTION": "Établissement principal",
+            "FUNDING_SOURCE": "Source de financement"
+        },
+        "ongoing-therapeutic_efficacy": {
+            "ID": "Identifiant unique de l'étude",
+            "COUNTRY_NAME": "Le nom du pays où l'étude a été menée",
+            "ADMIN2": "Niveau administratif 2 où l'étude a été menée",
+            "SITE_NAME": "Site où l'étude a été menée",
+            "LATITUDE": "Latitude du site où l'étude a été menée",
+            "LONGITUDE": "Longitude du site où l'étude a été menée",
+            "YEAR_START": "Année de début de l'étude",
+            "YEAR_END": "Année de fin de l'étude",
+            "DRUG_NAME": "Traitement administré aux patients pendant l'étude.\nNote: uniquement indiqué si les données proviennent d'une étude d'efficacité thérapeutique.",
+            "PLASMODIUM_SPECIES": "Le espèce de Plasmodium",
+            "DATA_SOURCE": "Institution ou groupe qui a mené l'étude",
+            "CITATION_URL": "URL de la publication où les données ont été publiées",
+            "SURV_STATUS": "Statut de l'étude",
+            "STUDY_SEQ": "Études séquence",
+            "SURV_ID": "Surv id",
+            "FUNDING_SOURCE": "Source de financement",
+            "MM_LIST": "Génotypage",
+            "AGE_GP": "Tranche d'âge"
+        },
+        "ongoing_molecular_marker": {
+            "ID": "Identifiant unique de l'étude",
+            "COUNTRY_NAME": "Le nom du pays où l'étude a été menée",
+            "ADMIN2": "Niveau administratif 2 où l'étude a été menée",
+            "SITE_NAME": "Site où l'étude a été menée",
+            "LATITUDE": "Latitude du site où l'étude a été menée",
+            "LONGITUDE": "Longitude du site où l'étude a été menée",
+            "YEAR_START": "Année de début de l'étude",
+            "YEAR_END": "Année de fin de l'étude",
+            "DRUG_NAME": "Traitement administré aux patients pendant l'étude.\nNote: uniquement indiqué si les données proviennent d'une étude d'efficacité thérapeutique.",
+            "PLASMODIUM_SPECIES": "Le espèce de Plasmodium",
+            "DATA_SOURCE": "Institution ou groupe qui a mené l'étude",
+            "CITATION_URL": "URL de la publication où les données ont été publiées",
+            "SURV_STATUS": "Statut de l'étude",
+            "STUDY_SEQ": "Études séquence",
+            "SURV_ID": "Surv id",
+            "FUNDING_SOURCE": "Source de financement",
+            "PROMPT_NAME": "Étude lancée après",
+            "GEOGR_SCOPE_NAME": "Stratégie d'échantillonnage",
+            "PROT_TYPE_NAME": "Conception d'enquête ou d'étude",
+            "MM_PFK13": "Pfkelch13",
+            "MM_PFCRT": "Pfcrt",
+            "MM_PFPM23": "Pfplasmepsin 2-3",
+            "MM_PFMDR1_CN": "Pfmdr1 copy number",
+            "MM_PFMDR1_MU": "Pfmdr1 mutation",
+            "MM_PFDHFR": "Pfdhfr",
+            "MM_PFDHPS": "Pfdhps",
+            "MM_PFHRP23": "Pfhrp23"
         }
     },
     "legend": {

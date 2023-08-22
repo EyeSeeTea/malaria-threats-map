@@ -23,4 +23,5 @@ export interface DiagnosisStudy extends Study {
     PROMPT_NAME?: string;
     GEOGR_SCOPE_NAME?: string;
     FUNDING_SOURCE?: string;
+    SURV_ID?: number;
 }
