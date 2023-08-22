@@ -191,7 +191,7 @@ export const setPreventionThemeEpic = (
                 return of();
             }
 
-            const start = getMinTearStart($state.prevention.studies);
+            const start = $state.prevention.studies.length ? getMinTearStart($state.prevention.studies) : 1978;
 
             const base = [
                 setMaxMinYearsAction([start, new Date().getFullYear()]),
