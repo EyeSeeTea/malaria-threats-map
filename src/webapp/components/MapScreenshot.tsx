@@ -15,8 +15,11 @@ import Legend from "./legend/Legend";
 import whoLogoWhite from "../assets/img/who-logo-blue.png";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import MapInfoSummaryLegend from "./MapInfoSummaryLegend";
+import SelectionDataContent from "./site-selection-content/SelectionDataContent";
 
 const MALARIA_THREATS_MAP_URL = "https://apps.who.int/malaria/maps/threats/";
+
+const fakeFunction = () => {};
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -26,10 +29,11 @@ const mapStateToProps = (state: State) => ({
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
     map: mapboxgl.Map;
+    showMapSidebar?: boolean;
 };
 type MapScreenshotProps = StateProps & OwnProps;
 
-function MapScreenshot({ map, theme, title }: MapScreenshotProps) {
+function MapScreenshot({ map, theme, title, showMapSidebar = false }: MapScreenshotProps) {
     const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
     const [mapImage, setMapImage] = React.useState(null);
@@ -49,8 +53,8 @@ function MapScreenshot({ map, theme, title }: MapScreenshotProps) {
     }, [theme]);
 
     const handleOpenScreenshot = React.useCallback(() => {
-        const img = map?.getCanvas().toDataURL();
-        setMapImage(img);
+        const imgSrc = map?.getCanvas()?.toDataURL();
+        setMapImage(imgSrc);
         setOpen(true);
     }, [map]);
 
@@ -60,9 +64,11 @@ function MapScreenshot({ map, theme, title }: MapScreenshotProps) {
     }, []);
 
     React.useEffect(() => {
-        const img = map?.getCanvas().toDataURL();
-        setMapImage(img);
-    }, [width, height, map]);
+        if (open) {
+            const imgSrc = map?.getCanvas()?.toDataURL();
+            setMapImage(imgSrc);
+        }
+    }, [width, height, map, open]);
 
     return (
         <>
@@ -76,15 +82,22 @@ function MapScreenshot({ map, theme, title }: MapScreenshotProps) {
                         {Icon}
                         <Title>{_.capitalize(title)}</Title>
                     </TitleWrapper>
-                    <MapContainer>
-                        <MapInfoSummaryContainer>
-                            <MapInfoSummaryLegend />
-                        </MapInfoSummaryContainer>
-                        <LegendContainer>
-                            <Legend />
-                        </LegendContainer>
-                        <StyledImage alt="Map screenshot" src={mapImage} />
-                    </MapContainer>
+                    <MapAndSidebarContainer>
+                        <MapContainer>
+                            <MapInfoSummaryContainer>
+                                <MapInfoSummaryLegend />
+                            </MapInfoSummaryContainer>
+                            <LegendContainer>
+                                <Legend />
+                            </LegendContainer>
+                            <StyledImage alt="Map screenshot" src={mapImage} $hasSidebar={showMapSidebar} />
+                        </MapContainer>
+                        {showMapSidebar ? (
+                            <MapSidebarContainer>
+                                <SelectionDataContent onClose={fakeFunction} isScreenshot />
+                            </MapSidebarContainer>
+                        ) : null}
+                    </MapAndSidebarContainer>
                     <WHOInfoContainer>
                         <WHOInfoWrapper>
                             <WHOInfoWrapper>
@@ -145,7 +158,26 @@ const Title = styled.h2`
 
 const MapContainer = styled.div`
     position: relative;
+    height: fit-content;
+    width: fit-content;
+`;
+
+const MapAndSidebarContainer = styled.div`
     padding: 20px 20px 0 20px;
+    display: flex;
+`;
+
+const MapSidebarContainer = styled.div`
+    padding: 16px 0;
+    width: 100%;
+    min-width: 500px;
+    max-width: 800px;
+    border-radius: 0 10px 10px 0;
+    background-color: #f3f3f3;
+    margin-bottom: 5px;
+    .additional-information-link {
+        display: none;
+    }
 `;
 
 const MapInfoSummaryContainer = styled.div`
@@ -179,8 +211,11 @@ const LegendContainer = styled.div`
     }
 `;
 
-const StyledImage = styled.img`
-    border-radius: 10px;
+const StyledImage = styled.img<{ $hasSidebar?: boolean }>`
+    border-top-left-radius: 10px;
+    border-top-right-radius: ${props => (props.$hasSidebar ? "unset" : "10px")};
+    border-bottom-right-radius: ${props => (props.$hasSidebar ? "unset" : "10px")};
+    border-bottom-left-radius: 10px;
 `;
 
 const WHOInfoContainer = styled.div`

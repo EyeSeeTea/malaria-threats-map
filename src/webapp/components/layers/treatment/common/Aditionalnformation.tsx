@@ -45,7 +45,7 @@ const AditionalInformationContent: React.FC<Props> = ({ info }) => {
                     <b>{t("common.treatment.chart.treatment_failure.aditional_information_title")}</b>
                 </Typography>
 
-                <StyledLink onClick={handleExpand}>
+                <StyledLink onClick={handleExpand} className="additional-information-link">
                     <b>
                         {expanded
                             ? t("common.treatment.chart.treatment_failure.show_less")

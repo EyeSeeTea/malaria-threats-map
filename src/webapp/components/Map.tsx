@@ -376,7 +376,7 @@ class Map extends React.Component<Props, StateTypes> {
                         <SecondaryHeader
                             action={
                                 <Box sx={classes.screenshotBox}>
-                                    <MapScreenshot map={this.map} />
+                                    <MapScreenshot map={this.map} showMapSidebar={this.state.sidebarOpen} />
                                 </Box>
                             }
                             onDrawerOpenChange={open => this.setState({ menuOpen: open })}

@@ -2,18 +2,18 @@ import * as React from "react";
 import styled from "styled-components";
 import { Pagination } from "@mui/material";
 
-import {
-    OngoingAndPlannedTreatmentStudiesDetailsConfig,
-    OngoingAndPlannedTreatmentStudiesOverviewInfo,
-    SelectionData,
-} from "../../../../store/SelectionData";
+import { SelectionData } from "../../../../store/SelectionData";
 import OngoingAndPlannedTreatmentStudiesPage from "./OngoingAndPlannedTreatmentStudiesPage";
 
 type OngoingAndPlannedTreatmentStudiesChartProps = {
     selectionData: SelectionData;
+    isPaginated?: boolean;
 };
 
-const OngoingAndPlannedTreatmentStudiesChart = ({ selectionData }: OngoingAndPlannedTreatmentStudiesChartProps) => {
+const OngoingAndPlannedTreatmentStudiesChart = ({
+    selectionData,
+    isPaginated = true,
+}: OngoingAndPlannedTreatmentStudiesChartProps) => {
     const [currentPage, setCurrentPage] = React.useState<number>(1);
 
     const totalPages: number = React.useMemo(() => {
@@ -28,50 +28,78 @@ const OngoingAndPlannedTreatmentStudiesChart = ({ selectionData }: OngoingAndPla
         }
     }, [selectionData]);
 
-    const studiesDetailsConfig: OngoingAndPlannedTreatmentStudiesDetailsConfig[] = React.useMemo(() => {
-        if (
-            selectionData.kind === "common" &&
-            (selectionData.data.kind === "therapeutic-efficacy-studies" ||
-                selectionData.data.kind === "molecular-markers-ongoing-studies") &&
-            selectionData.data.data[currentPage - 1]
-        ) {
-            return selectionData.data.data[currentPage - 1].studiesDetailsConfig;
-        } else {
-            setCurrentPage(1);
-            return null;
-        }
-    }, [selectionData, currentPage]);
+    const getStudiesDetailsConfig = React.useCallback(
+        dataPage => {
+            if (
+                selectionData.kind === "common" &&
+                (selectionData.data.kind === "therapeutic-efficacy-studies" ||
+                    selectionData.data.kind === "molecular-markers-ongoing-studies") &&
+                selectionData.data.data[dataPage]
+            ) {
+                return selectionData.data.data[dataPage].studiesDetailsConfig;
+            } else {
+                setCurrentPage(1);
+                return null;
+            }
+        },
+        [selectionData]
+    );
 
-    const overviewInfo: OngoingAndPlannedTreatmentStudiesOverviewInfo = React.useMemo(() => {
-        if (
-            selectionData.kind === "common" &&
-            (selectionData.data.kind === "therapeutic-efficacy-studies" ||
-                selectionData.data.kind === "molecular-markers-ongoing-studies") &&
-            selectionData.data.data[currentPage - 1]
-        ) {
-            return selectionData.data.data[currentPage - 1].overviewInfo;
-        } else {
-            setCurrentPage(1);
-            return null;
-        }
-    }, [selectionData, currentPage]);
+    const getOverviewInfo = React.useCallback(
+        dataPage => {
+            if (
+                selectionData.kind === "common" &&
+                (selectionData.data.kind === "therapeutic-efficacy-studies" ||
+                    selectionData.data.kind === "molecular-markers-ongoing-studies") &&
+                selectionData.data.data[dataPage]
+            ) {
+                return selectionData.data.data[dataPage].overviewInfo;
+            } else {
+                setCurrentPage(1);
+                return null;
+            }
+        },
+        [selectionData]
+    );
+
+    if (
+        selectionData.kind !== "common" ||
+        (selectionData.data.kind !== "therapeutic-efficacy-studies" &&
+            selectionData.data.kind !== "molecular-markers-ongoing-studies")
+    ) {
+        return null;
+    }
 
     return (
         <Container>
-            <OngoingAndPlannedTreatmentStudiesPage
-                selectionData={selectionData}
-                overviewInfo={overviewInfo}
-                studiesDetailsConfig={studiesDetailsConfig}
-            />
-            {totalPages > 1 && (
-                <PaginationContainer>
-                    <Pagination
-                        page={currentPage}
-                        count={totalPages}
-                        onChange={(_event, pageSelected) => setCurrentPage(pageSelected)}
-                        shape="rounded"
+            {isPaginated ? (
+                <>
+                    <OngoingAndPlannedTreatmentStudiesPage
+                        selectionData={selectionData}
+                        overviewInfo={getOverviewInfo(currentPage - 1)}
+                        studiesDetailsConfig={getStudiesDetailsConfig(currentPage - 1)}
                     />
-                </PaginationContainer>
+                    {totalPages > 1 && (
+                        <PaginationContainer>
+                            <Pagination
+                                page={currentPage}
+                                count={totalPages}
+                                onChange={(_event, pageSelected) => setCurrentPage(pageSelected)}
+                                shape="rounded"
+                            />
+                        </PaginationContainer>
+                    )}
+                </>
+            ) : (
+                Array.from(new Array(totalPages).keys()).map(page => (
+                    <Container key={`OngoingAndPlannedTreatmentStudies_${page}`}>
+                        <OngoingAndPlannedTreatmentStudiesPage
+                            selectionData={selectionData}
+                            overviewInfo={getOverviewInfo(page)}
+                            studiesDetailsConfig={getStudiesDetailsConfig(page)}
+                        />
+                    </Container>
+                ))
             )}
         </Container>
     );
