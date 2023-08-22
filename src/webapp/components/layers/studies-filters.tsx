@@ -343,6 +343,8 @@ function buildDiagnosisFiltersByDownload(diagnosisFilters: DiagnosisFilters, fil
                 filterByYearRange(filters),
                 filterByRegion(region),
             ];
+        case "HRPO":
+            return [filterByDimensionId(302), filterByYearRange(filters), filterByRegion(region)];
         default:
             return [];
     }
@@ -410,6 +412,21 @@ function buildTreatmentFiltersByDownload(treatmentFilters: TreatmentFilters, fil
             return [
                 filterByMolecularMarkerStudyDimension255(),
                 filterByTheMolecularMarkerInStudy(treatmentFilters.molecularMarkers),
+                filterByYearRange(filters),
+                filterByRegion(region),
+            ];
+        case "AMDERO_TES":
+            return [
+                filterByDimensionId(300),
+                filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
+                filterByDrugs(treatmentFilters.drugs),
+                filterByYearRange(filters),
+                filterByRegion(region),
+            ];
+        case "AMDERO_MM":
+            return [
+                filterByDimensionId(301),
+                filterByManyMolecularMarkersInStudies(treatmentFilters.molecularMarkers),
                 filterByYearRange(filters),
                 filterByRegion(region),
             ];

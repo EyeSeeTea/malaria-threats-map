@@ -20,6 +20,7 @@ import PlasmodiumSpeciesFilter from "../PlasmodiumSpeciesFilter";
 import DrugsFilter from "../DrugsFilter";
 import MolecularMarkerRadioFilter from "../MolecularMarkerRadioFilter";
 import VectorSpeciesFilter from "../VectorSpeciesFilter";
+import MolecularMarkerCheckboxFilter from "../MolecularMarkerCheckboxFilter";
 
 const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
@@ -99,6 +100,12 @@ const DownloadFiltersContent: React.FC<Props> = ({
                             <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );
+                case "HRPO":
+                    return (
+                        <div>
+                            <YearRangeSelector showTheatherMode={false} />
+                        </div>
+                    );
                 default:
                     return <div />;
             }
@@ -117,6 +124,21 @@ const DownloadFiltersContent: React.FC<Props> = ({
                         <div>
                             <MolecularMarkerRadioFilter />
                             <YearRangeSelector showTheatherMode={false} />
+                        </div>
+                    );
+                case "AMDERO_TES":
+                    return (
+                        <div>
+                            <PlasmodiumSpeciesFilter isMulti />
+                            <DrugsFilter isMulti />
+                            <YearRangeSelector />
+                        </div>
+                    );
+                case "AMDERO_MM":
+                    return (
+                        <div>
+                            <MolecularMarkerCheckboxFilter />
+                            <YearRangeSelector />
                         </div>
                     );
                 default:

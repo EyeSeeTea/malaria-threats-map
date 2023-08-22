@@ -414,6 +414,12 @@ export function treatmentFiltersToString(
             case "MOLECULAR_MARKER_STUDY": {
                 return _.compact([...molecularMarkers, exlude, years]).join(" | ");
             }
+            case "AMDERO_TES": {
+                return _.compact([...plasmodiumSpecies, ...drugs, years]).join(" | ");
+            }
+            case "AMDERO_MM": {
+                return _.compact([...molecularMarkers, years]).join(" | ");
+            }
         }
     }
 }
@@ -422,18 +428,28 @@ export function diagnosisFiltersToString(
     diagnosisFilters: DiagnosisFilters,
     maxMinYears: number[],
     yearFilters: number[],
-    _from: Source
+    from: Source
 ) {
     const years = getYearsSummary(maxMinYears, yearFilters);
 
     const deletionType = i18next.t(diagnosisFilters.deletionType);
     const surveyTypes = diagnosisFilters.surveyTypes.map(item => i18next.t(item));
     const patientType = i18next.t(diagnosisFilters.patientType);
-    switch (diagnosisFilters.mapType) {
-        case DiagnosisMapType.GENE_DELETIONS:
-            return _.compact([deletionType, ...surveyTypes, patientType, years]).join(" | ");
-        case DiagnosisMapType.HRP23_STUDIES:
-            return years;
+
+    if (from === "map") {
+        switch (diagnosisFilters.mapType) {
+            case DiagnosisMapType.GENE_DELETIONS:
+                return _.compact([deletionType, ...surveyTypes, patientType, years]).join(" | ");
+            case DiagnosisMapType.HRP23_STUDIES:
+                return years;
+        }
+    } else {
+        switch (diagnosisFilters.dataset) {
+            case "PFHRP23_GENE_DELETIONS":
+                return _.compact([deletionType, ...surveyTypes, patientType, years]).join(" | ");
+            case "HRPO":
+                return years;
+        }
     }
 }
 

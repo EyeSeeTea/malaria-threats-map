@@ -896,13 +896,16 @@
                 },
                 "diagnosis": {
                     "datasets": {
-                        "gene_deletions": "pfhrp2/3 gene deletions"
+                        "gene_deletions": "pfhrp2/3 gene deletions",
+                        "hrpo": "Ongoing pfhrp2/3 gene deletions studies"
                     }
                 },
                 "treatment": {
                     "datasets": {
                         "therapeutic_efficacy_studies": "Therapeutic efficacy studies",
-                        "molecular_marker_studies": "Molecular marker studies"
+                        "molecular_marker_studies": "Molecular marker studies",
+                        "amdero_tes": "Ongoing therapeutic efficacy studies",
+                        "amdero_mm": "Ongoing molecular marker studies"
                     }
                 },
                 "invasive": {
@@ -1213,8 +1216,7 @@
             "LATITUDE": "Latitude of the site where the mosquitoes were collected",
             "LONGITUDE": "Longitude of the site where the mosquitoes were collected",
             "YEAR_START": "Year when the mosquito collection started",
-            "SURVEY_TYPE": "Type of Survey conducted",
-            "PATIENT_TYPE": "Patient  clinical status",
+            "YEAR_END": "Year when the mosquito collection ended",
             "HRP2_TESTED": "Number of samples tested for HRP2 deletions",
             "HRP2_PROPORTION_DELETION": "Pct of Pf samples tested with HRP2 deletions",
             "HRP3_TESTED": "Number of samples tested for HRP3 deletions",
@@ -1227,6 +1229,77 @@
             "TYPE_SAMPL_ANALYZED": "type  of sample analyzed - all, discordant only, or non-representative",
             "CITATION": "Citation of the publication where the data was published",
             "CITATION_URL": "URL of the publication where the data was published"
+        },
+        "hrpo": {
+            "ID": "Unique identifier of the study",
+            "COUNTRY_NAME": "Name of the country where the study was conducted",
+            "ISO2": "ISO2",
+            "ADMIN2": "Administrative level 2 where the study was conducted",
+            "SITE_NAME": "Site where the study was conducted",
+            "LATITUDE": "Latitude of the site where the study was conducted",
+            "LONGITUDE": "Longitude of the site where the study was conducted",
+            "YEAR_START": "Year when the study started",
+            "YEAR_END": "Year when the study ended",
+            "SURVEY_TYPE": "Type of Survey conducted",
+            "PATIENT_TYPE": "Patient  clinical status",
+            "CITATION": "Citation of the publication where the data was published",
+            "CITATION_URL": "URL of the publication where the data was published",
+            "SURV_STATUS": "Study status",
+            "SURV_ID": "Surv id",
+            "SYMP_STAT_NAME": "Study population",
+            "HRP_GENO_NAME": "Genotyping",
+            "PROMPT_NAME": "Study initiated following",
+            "GEOGR_SCOPE_NAME": "Study sites selected by",
+            "INSTITUTION_CITY": "Lead institution",
+            "INSTITUTION": "Lead institution",
+            "FUNDING_SOURCE": "Funding source"
+        },
+        "ongoing_therapeutic_efficacy": {
+            "ID": "Unique identifier of the study",
+            "COUNTRY_NAME": "Name of the country where the study was conducted",
+            "ADMIN2": "Administrative level 2 where the study was conducted",
+            "SITE_NAME": "Site where the study was conducted",
+            "LATITUDE": "Latitude of the site where the study was conducted",
+            "LONGITUDE": "Longitude of the site where the study was conducted",
+            "YEAR_START": "Year when the study started",
+            "YEAR_END": "Year when the study ended",
+            "DRUG_NAME": "Treatment administered to patients during the study.\nNote: only shown if the data comes from a Therapeutic efficacy study.",
+            "PLASMODIUM_SPECIES": "Plasmodium species",
+            "DATA_SOURCE": "Institution or group that conducted the study",
+            "CITATION_URL": "URL of the publication where the data was published",
+            "SURV_STATUS": "Study status",
+            "STUDY_SEQ": "Study seq",
+            "SURV_ID": "Surv id",
+            "FUNDING_SOURCE": "Funding source",
+            "MM_LIST": "Genotyping",
+            "AGE_GP": "Age Group"
+        },
+        "ongoing_molecular_marker": {
+            "ID": "Unique identifier of the study",
+            "COUNTRY_NAME": "Name of the country where the study was conducted",
+            "ADMIN2": "Administrative level 2 where the study was conducted",
+            "SITE_NAME": "Site where the study was conducted",
+            "LATITUDE": "Latitude of the site where the study was conducted",
+            "LONGITUDE": "Longitude of the site where the study was conducted",
+            "YEAR_START": "Year when the study started",
+            "YEAR_END": "Year when the study ended",
+            "DATA_SOURCE": "Institution or group that conducted the study",
+            "CITATION_URL": "URL of the publication where the data was published",
+            "SURV_STATUS": "Study status",
+            "STUDY_SEQ": "Stufy seq",
+            "SURV_ID": "Surv id",
+            "FUNDING_SOURCE": "Funding source",
+            "PROMPT_NAME": "Study initiated following",
+            "GEOGR_SCOPE_NAME": "Sampling strategy",
+            "PROT_TYPE_NAME": "Survey or study design",
+            "MM_PFK13": "Pfkelch13",
+            "MM_PFCRT": "Pfcrt",
+            "MM_PFPM23": "Pfplasmepsin 2-3",
+            "MM_PFMDR1_CN": "Pfmdr1 copy number",
+            "MM_PFMDR1_MU": "Pfmdr1 mutation",
+            "MM_PFDHFR": "Pfdhfr",
+            "MM_PFDHPS": "Pfdhps",
+            "MM_PFHRP23": "Pfhrp23"
         }
     },
     "legend": {
