@@ -25,7 +25,6 @@ export interface TreatmentStudy extends Study {
     PROP_RELATED: number;
     Code: number;
     HEALTHFACILITY_NAME: string;
-    SURV_ID?: number;
     SURV_STATUS?: number;
     FUNDING_SOURCE?: string;
     MM_LIST?: string;
