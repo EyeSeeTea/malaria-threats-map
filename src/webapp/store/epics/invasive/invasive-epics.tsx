@@ -88,6 +88,6 @@ export const setInvasiveFilteredStudiesEpic = (
                 state.invasive.filteredStudies
             );
 
-            return of(setSelectionData(selectionData));
+            return of(setSelectionData(null), setSelectionData(selectionData));
         })
     );
