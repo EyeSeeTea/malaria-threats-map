@@ -1,5 +1,5 @@
 import { ofType, StateObservable } from "redux-observable";
-import { ActionType } from "typesafe-actions";
+import { ActionType, PayloadAction } from "typesafe-actions";
 import _ from "lodash";
 import { ActionTypeEnum } from "../../actions";
 import { Observable, of } from "rxjs";
@@ -47,7 +47,18 @@ export const getPreventionStudiesEpic = (
             if (state.prevention.studies.length === 0 && !state.prevention.error) {
                 return fromFuture(compositionRoot.prevention.getStudies()).pipe(
                     mergeMap((studies: PreventionStudy[]) => {
-                        return of(fetchPreventionStudiesSuccess(studies));
+                        let base: (
+                            | PayloadAction<ActionTypeEnum.MalariaSetFilters, number[]>
+                            | PayloadAction<ActionTypeEnum.MalariaSetMaxMinYears, number[]>
+                        )[] = [];
+                        const start = getMinYearStart(studies);
+                        if (state.malaria?.filters[0] !== start && state.malaria?.maxMinYears[0] !== start) {
+                            base = [
+                                setMaxMinYearsAction([start, new Date().getFullYear()]),
+                                setFiltersAction([start, new Date().getFullYear()]),
+                            ];
+                        }
+                        return of(...base, fetchPreventionStudiesSuccess(studies));
                     }),
                     catchError((error: Error) =>
                         of(addNotificationAction(error.message), fetchPreventionStudiesError())
@@ -167,7 +178,7 @@ export const setYearsFiltersEpic = (
         withLatestFrom(state$),
         switchMap(([$action, $state]) => {
             if ($action.payload === undefined && $state.malaria.theme === "prevention") {
-                const start = getMinTearStart($state.prevention.studies);
+                const start = getMinYearStart($state.prevention.studies);
 
                 return of(
                     setMaxMinYearsAction([start, new Date().getFullYear()]),
@@ -191,14 +202,18 @@ export const setPreventionThemeEpic = (
                 return of();
             }
 
-            const start = $state.prevention.studies.length ? getMinTearStart($state.prevention.studies) : 1978;
-
-            const base = [
-                setMaxMinYearsAction([start, new Date().getFullYear()]),
-                setFiltersAction([start, new Date().getFullYear()]),
-            ];
-
             if ($action.from === "map") {
+                let base: (
+                    | PayloadAction<ActionTypeEnum.MalariaSetFilters, number[]>
+                    | PayloadAction<ActionTypeEnum.MalariaSetMaxMinYears, number[]>
+                )[] = [];
+                if ($state.prevention.studies.length) {
+                    const start = getMinYearStart($state.prevention.studies);
+                    base = [
+                        setMaxMinYearsAction([start, new Date().getFullYear()]),
+                        setFiltersAction([start, new Date().getFullYear()]),
+                    ];
+                }
                 return of(...base, setInsecticideClass("PYRETHROIDS"));
             } else {
                 return of(setInsecticideClass(null));
@@ -206,7 +221,7 @@ export const setPreventionThemeEpic = (
         })
     );
 
-function getMinTearStart(studies: PreventionStudy[]) {
+function getMinYearStart(studies: PreventionStudy[]) {
     return +studies
         .map(study => study.YEAR_START)
         .sort()
