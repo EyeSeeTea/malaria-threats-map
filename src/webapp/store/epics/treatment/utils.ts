@@ -103,7 +103,7 @@ export function groupOngoingAndPlannedStudiesBySurvId(studies: TreatmentStudy[])
 }
 
 export function sortOngoingAndPlannedStudies(studies: TreatmentStudy[]) {
-    return _.orderBy(studies, ["STUDY_SEQ"]);
+    return _.orderBy(studies, ["SURV_ID", "STUDY_SEQ"]);
 }
 
 function sortStudies(studies: TreatmentStudy[], treatmentFilters: TreatmentFilters) {
