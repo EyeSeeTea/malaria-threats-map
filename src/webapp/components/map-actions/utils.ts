@@ -344,24 +344,20 @@ const buildFilters = (
 ) => {
     const value = `${i18next.t(`common.map_info_summary.${type}`)}: `;
 
-    if (filterValues) {
-        if (Array.isArray(filterValues)) {
-            return [
-                value.concat(
-                    `${
-                        filterValues && filterValues?.length > 0
-                            ? filterValues?.map(item => i18next.t(item)).join(", ")
-                            : i18next.t("common.map_info_summary.all")
-                    }`
-                ),
-            ];
-        } else {
-            return value.concat(`${filterValues || i18next.t("common.map_info_summary.all")}`);
-        }
-    } else {
-        if (type !== "excludeStudies") {
-            return value.concat(i18next.t("common.map_info_summary.all"));
-        }
+    if (filterValues && Array.isArray(filterValues)) {
+        return [
+            value.concat(
+                `${
+                    filterValues && filterValues?.length > 0
+                        ? filterValues?.map(item => i18next.t(item)).join(", ")
+                        : i18next.t("common.map_info_summary.all")
+                }`
+            ),
+        ];
+    }
+
+    if (filterValues || (!filterValues && type !== "excludeStudies")) {
+        return value.concat(`${filterValues || i18next.t("common.map_info_summary.all")}`);
     }
 };
 
