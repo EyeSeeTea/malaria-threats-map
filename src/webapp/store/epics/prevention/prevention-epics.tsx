@@ -1,5 +1,5 @@
 import { ofType, StateObservable } from "redux-observable";
-import { ActionType, PayloadAction } from "typesafe-actions";
+import { ActionType } from "typesafe-actions";
 import _ from "lodash";
 import { ActionTypeEnum } from "../../actions";
 import { Observable, of } from "rxjs";
@@ -47,17 +47,17 @@ export const getPreventionStudiesEpic = (
             if (state.prevention.studies.length === 0 && !state.prevention.error) {
                 return fromFuture(compositionRoot.prevention.getStudies()).pipe(
                     mergeMap((studies: PreventionStudy[]) => {
-                        let base: (
-                            | PayloadAction<ActionTypeEnum.MalariaSetFilters, number[]>
-                            | PayloadAction<ActionTypeEnum.MalariaSetMaxMinYears, number[]>
-                        )[] = [];
                         const start = getMinYearStart(studies);
-                        if (state.malaria?.filters[0] !== start && state.malaria?.maxMinYears[0] !== start) {
-                            base = [
-                                setMaxMinYearsAction([start, new Date().getFullYear()]),
-                                setFiltersAction([start, new Date().getFullYear()]),
-                            ];
-                        }
+                        const resetDatesIsRequired =
+                            state.malaria?.filters[0] !== start && state.malaria?.maxMinYears[0] !== start;
+
+                        const base: unknown[] = resetDatesIsRequired
+                            ? [
+                                  setMaxMinYearsAction([start, new Date().getFullYear()]),
+                                  setFiltersAction([start, new Date().getFullYear()]),
+                              ]
+                            : [];
+
                         return of(...base, fetchPreventionStudiesSuccess(studies));
                     }),
                     catchError((error: Error) =>
@@ -203,17 +203,14 @@ export const setPreventionThemeEpic = (
             }
 
             if ($action.from === "map") {
-                let base: (
-                    | PayloadAction<ActionTypeEnum.MalariaSetFilters, number[]>
-                    | PayloadAction<ActionTypeEnum.MalariaSetMaxMinYears, number[]>
-                )[] = [];
-                if ($state.prevention.studies.length) {
-                    const start = getMinYearStart($state.prevention.studies);
-                    base = [
-                        setMaxMinYearsAction([start, new Date().getFullYear()]),
-                        setFiltersAction([start, new Date().getFullYear()]),
-                    ];
-                }
+                const start = getMinYearStart($state.prevention.studies);
+                const base: unknown[] = $state.prevention.studies?.length
+                    ? [
+                          setMaxMinYearsAction([start, new Date().getFullYear()]),
+                          setFiltersAction([start, new Date().getFullYear()]),
+                      ]
+                    : [];
+
                 return of(...base, setInsecticideClass("PYRETHROIDS"));
             } else {
                 return of(setInsecticideClass(null));
