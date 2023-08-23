@@ -356,11 +356,11 @@ const buildFilters = (
                 ),
             ];
         } else {
-            return value.concat(`${filterValues || "all"}`);
+            return value.concat(`${filterValues || i18next.t("common.map_info_summary.all")}`);
         }
     } else {
         if (type !== "excludeStudies") {
-            return value.concat("all");
+            return value.concat(i18next.t("common.map_info_summary.all"));
         }
     }
 };
