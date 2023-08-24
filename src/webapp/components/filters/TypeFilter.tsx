@@ -88,7 +88,7 @@ const TypeFilter: React.FC<Props> = ({ setType, preventionFilters, studies, year
     return (
         <MultiFilter
             label={t("common.filters.test_type")}
-            placeholder={t("common.filters.select_test_type")}
+            placeholder={t("common.filters.select_test_type_placeholder")}
             options={suggestions}
             onChange={setType}
             value={preventionFilters.type}
