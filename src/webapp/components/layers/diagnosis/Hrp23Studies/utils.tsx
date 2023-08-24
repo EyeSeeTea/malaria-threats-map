@@ -31,5 +31,5 @@ export const getHrp23StudiesStatusFromStatusId = (statusId: number) => {
 };
 
 export function sortHrp23Studies(studies: DiagnosisStudy[]) {
-    return _.orderBy(studies, ["STUDY_SEQ"]);
+    return _.orderBy(studies, ["SURV_ID", "STUDY_SEQ"]);
 }
