@@ -171,7 +171,9 @@
                     "title": "TASAS DE FRACASO DEL TRATAMIENTO A LO LARGO DEL TIEMPO",
                     "numberPatients": "Número de pacientes",
                     "treatmentFailure": "Fracaso del tratamiento (%)",
-                    "year": "Año"
+                    "year": "Año",
+                    "graph": "Gráfica",
+                    "table": "Tabla"
                 },
                 "parasiteClearanceOverTime": {
                     "title": "PORCENTAJE DE PACIENTES CON PARASITEMIA EN EL DÍA 3",

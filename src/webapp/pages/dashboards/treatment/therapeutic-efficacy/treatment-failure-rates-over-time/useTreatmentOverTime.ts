@@ -1,9 +1,22 @@
 import i18next from "i18next";
 import _ from "lodash";
 import React from "react";
-import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
-import { BubleChartGroup, treatmentdashboardColors, TreatmentOverTimeType } from "./types";
-import { useTreatment } from "../useTreatment";
+import { TreatmentStudy } from "../../../../../../domain/entities/TreatmentStudy";
+import { BubleChartGroup, treatmentdashboardColors, TreatmentOverTimeType } from "../types";
+import { useTreatment } from "../../useTreatment";
+import { Option } from "../../../common/types";
+import { ResistanceToInsecticideChartType } from "../../../prevention/types";
+
+const chartTypes: Option<string>[] = [
+    {
+        label: i18next.t("common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.graph"),
+        value: "graph",
+    },
+    {
+        label: i18next.t("common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.table"),
+        value: "table",
+    },
+];
 
 export function useTreatmentOverTime(type: TreatmentOverTimeType) {
     const {
@@ -24,12 +37,15 @@ export function useTreatmentOverTime(type: TreatmentOverTimeType) {
     } = useTreatment(false);
 
     const [series, setSeries] = React.useState<BubleChartGroup[]>([]);
+    const [chartType] = React.useState<string>(chartTypes[0].value);
 
     React.useEffect(() => {
         setSeries(createTreatmentBubbleChartData(filteredStudies, type, years));
     }, [filteredStudies, type, years]);
 
     return {
+        chartTypes,
+        chartType,
         studiesCount,
         filteredStudiesForDrugs,
         series,

@@ -1,4 +1,4 @@
-import { Button, Card, Grid, Stack, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Button, Card, Grid, Stack, ToggleButtonGroup } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
@@ -12,6 +12,7 @@ import { PreventionFiltersState } from "./filters/PreventionFiltersState";
 import CategoriesCount from "../common/CategoriesCount";
 import { useTranslation } from "react-i18next";
 import ScreenshotModal from "../../../components/ScreenshotModal";
+import { ChartTypeOption } from "../common/chart-type-option/ChartTypeOption";
 
 const SCREENSHOT_BACKGROUND_COLOR = "#F7F7F7";
 const SCREENSHOT_EXCLUSION_CLASSES = ["dashboard-action"];
@@ -111,9 +112,9 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                 >
                     {chartTypes.map(type => {
                         return (
-                            <StyledToggleButton key={type.value} value={type.value}>
+                            <ChartTypeOption key={type.value} value={type.value}>
                                 {type.label}
-                            </StyledToggleButton>
+                            </ChartTypeOption>
                         );
                     })}
                 </ToggleButtonGroup>
@@ -245,18 +246,5 @@ const FiltersCard = styled(Card)<{ $isScreenshot: boolean }>`
         .MuiPaper-root {
             margin-top: 10px;
         }
-    }
-`;
-
-const StyledToggleButton = styled(ToggleButton)`
-    border-radius: 5px !important;
-    margin-right: 16px;
-    padding: 16px 32px;
-    color: black;
-    background-color: white;
-    border: 0px;
-    &.Mui-selected {
-        color: white;
-        background-color: #2fb3af;
     }
 `;

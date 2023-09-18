@@ -171,7 +171,9 @@
                     "title": "TAUX D'ÉCHEC DU TRAITEMENT AU FIL DU TEMPS",
                     "numberPatients": "Nombre de patients",
                     "treatmentFailure": "Échec du traitement (%)",
-                    "year": "An"
+                    "year": "An",
+                    "graph": "Graphique",
+                    "table": "Tableau"
                 },
                 "parasiteClearanceOverTime": {
                     "title": "ÉLIMINATION DES PARASITES AU FIL DU TEMPS",

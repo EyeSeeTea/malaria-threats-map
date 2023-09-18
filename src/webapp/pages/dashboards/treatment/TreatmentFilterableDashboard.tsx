@@ -1,4 +1,4 @@
-import { Button, Card, Grid, Stack } from "@mui/material";
+import { Button, Card, Grid, Stack, ToggleButtonGroup } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -12,12 +12,16 @@ import { MolecularMarker } from "../../../components/filters/MolecularMarkerRadi
 import { useFiltersVisible } from "../common/filters/useFiltersVisible";
 import DashboardTitle from "../common/DashboardTitle";
 import ScreenshotModal from "../../../components/ScreenshotModal";
+import { Option } from "../common/types";
+import { ChartTypeOption } from "../common/chart-type-option/ChartTypeOption";
 
 const SCREENSHOT_BACKGROUND_COLOR = "#F7F7F7";
 const SCREENSHOT_EXCLUSION_CLASSES = ["dashboard-action"];
 
 interface TreatmentFilterableDashboardProps {
     id?: string;
+    chartTypes?: Option<string>[];
+    chartType?: string;
     isMolecularMarkerChart?: boolean;
     drugsMultiple: boolean;
     drugsClearable: boolean;
@@ -40,6 +44,7 @@ interface TreatmentFilterableDashboardProps {
     onExcludeLowerPatientsChange?: (value: boolean) => void;
     onExcludeLowerSamplesChange?: (value: boolean) => void;
     onMolecularMarkerChange: (value: MolecularMarker) => void;
+    onChartTypeChange?: (value: string) => void;
 }
 
 interface TreatmentFilterableDashboardComponentProps extends TreatmentFilterableDashboardProps {
@@ -49,6 +54,8 @@ interface TreatmentFilterableDashboardComponentProps extends TreatmentFilterable
 
 const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboardComponentProps> = ({
     id,
+    chartTypes,
+    chartType,
     isMolecularMarkerChart = false,
     drugsMultiple,
     drugsClearable,
@@ -74,6 +81,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
     children,
     onScreenshot,
     isScreenshot = false,
+    onChartTypeChange,
 }) => {
     const { filtersVisible, onChangeFiltersVisible } = useFiltersVisible();
     const [openInfoModal, setOpenInfoModal] = React.useState(false);
@@ -92,6 +100,15 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
         }
     }, [filtersVisible, chartComponentRef]);
 
+    const handleChartTypeChange = React.useCallback(
+        (_event: React.MouseEvent<HTMLElement>, value: string) => {
+            if (onChartTypeChange) {
+                onChartTypeChange(value);
+            }
+        },
+        [onChartTypeChange]
+    );
+
     return (
         <Container $isScreenshot={isScreenshot}>
             <DashboardTitle
@@ -101,6 +118,24 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                 onDownloadClick={onScreenshot}
                 showActions={!isScreenshot}
             />
+
+            {chartTypes && !isScreenshot && (
+                <ToggleButtonGroup
+                    value={chartType}
+                    exclusive
+                    onChange={handleChartTypeChange}
+                    aria-label="text alignment"
+                    sx={{ marginBottom: 2 }}
+                >
+                    {chartTypes.map(type => {
+                        return (
+                            <ChartTypeOption key={type.value} value={type.value}>
+                                {type.label}
+                            </ChartTypeOption>
+                        );
+                    })}
+                </ToggleButtonGroup>
+            )}
 
             <StyledGridContainer container spacing={2} sx={{ marginBottom: 3 }} $isScreenshot={isScreenshot}>
                 {filtersVisible && (

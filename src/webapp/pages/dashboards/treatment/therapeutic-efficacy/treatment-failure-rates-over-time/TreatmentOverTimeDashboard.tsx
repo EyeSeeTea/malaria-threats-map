@@ -2,13 +2,14 @@ import Highcharts from "highcharts";
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 //import BubbleChartHelpImage from "../../../../assets/img/dashboards/bubble-chart-help.png";
-import { BubleChartGroup, TreatmentOverTimeType } from "./types";
+import { BubleChartGroup, TreatmentOverTimeType } from "../types";
 import { useTreatmentOverTime } from "./useTreatmentOverTime";
 import HighchartsReact from "highcharts-react-official";
 import More from "highcharts/highcharts-more";
-import TreatmentFilterableDashboard from "../TreatmentFilterableDashboard";
+import TreatmentFilterableDashboard from "../../TreatmentFilterableDashboard";
 import i18next from "i18next";
-import { ChartStyles } from "../../../../components/charts/Style";
+import { ChartStyles } from "../../../../../components/charts/Style";
+import { Option } from "../../../common/types";
 
 More(Highcharts);
 
@@ -29,6 +30,8 @@ interface CustomPoint extends Highcharts.Point {
 const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({ id, type }) => {
     const { t } = useTranslation();
     const {
+        chartTypes,
+        chartType,
         filteredStudiesForDrugs,
         studiesCount,
         series,
@@ -50,6 +53,8 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
     return (
         <TreatmentFilterableDashboard
             id={id}
+            chartTypes={type === "treatmentFailure" ? chartTypes : []}
+            chartType={type === "treatmentFailure" ? chartType : undefined}
             chartComponentRef={chartComponentRef}
             title={
                 type === "treatmentFailure"
