@@ -5,46 +5,20 @@ import { treatmentByDrugColors, TreatmentFailureSeries, TreatmentFailureSeriesIt
 import { useTreatment } from "../useTreatment";
 
 export function useTreatmentFailureByDrug() {
-    const {
-        filteredStudies,
-        selectedCountries,
-        filteredStudiesForDrugs,
-        studiesCount,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerPatients,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerPatientsChange,
-        onMolecularMarkerChange,
-    } = useTreatment(true);
+    const { filteredStudies, selectedCountries, filteredStudiesForDrugs, studiesCount, filters } = useTreatment(true);
 
     const [data, setData] = React.useState<TreatmentFailureSeries>({ maxYAxis: 0, itemsByDrug: {} });
 
     React.useEffect(() => {
-        setData(createChartData(filteredStudies, drugs || [], selectedCountries));
-    }, [filteredStudies, drugs, selectedCountries]);
+        setData(createChartData(filteredStudies, filters.drugs || [], selectedCountries));
+    }, [filteredStudies, filters.drugs, selectedCountries]);
 
     return {
         filteredStudiesForDrugs,
         selectedCountries,
         studiesCount,
         data,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerPatients,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerPatientsChange,
-        onMolecularMarkerChange,
+        filters,
     };
 }
 

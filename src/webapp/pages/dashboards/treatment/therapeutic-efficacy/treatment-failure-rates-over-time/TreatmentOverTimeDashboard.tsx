@@ -9,7 +9,6 @@ import More from "highcharts/highcharts-more";
 import TreatmentFilterableDashboard from "../../TreatmentFilterableDashboard";
 import i18next from "i18next";
 import { ChartStyles } from "../../../../../components/charts/Style";
-import { Option } from "../../../common/types";
 
 More(Highcharts);
 
@@ -29,24 +28,8 @@ interface CustomPoint extends Highcharts.Point {
 
 const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({ id, type }) => {
     const { t } = useTranslation();
-    const {
-        chartTypes,
-        chartType,
-        filteredStudiesForDrugs,
-        studiesCount,
-        series,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerPatients,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerPatientsChange,
-        onMolecularMarkerChange,
-    } = useTreatmentOverTime(type);
+    const { chartTypes, chartType, filteredStudiesForDrugs, studiesCount, series, filters } =
+        useTreatmentOverTime(type);
 
     const chartComponentRef = useRef(null);
 
@@ -66,18 +49,8 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
             drugsClearable={false}
             filteredStudiesForDrugs={filteredStudiesForDrugs}
             studiesCount={studiesCount}
-            plasmodiumSpecies={plasmodiumSpecies}
-            drugs={drugs}
-            molecularMarker={molecularMarker}
-            years={years}
-            maxMinYears={maxMinYears}
-            PlasmodiumSpecieDisabled={type === "positiveDay3"}
-            excludeLowerPatients={excludeLowerPatients}
-            onPlasmodiumChange={onPlasmodiumChange}
-            onDrugsChange={onDrugsChange}
-            onYearsChange={onYearsChange}
-            onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
-            onMolecularMarkerChange={onMolecularMarkerChange}
+            plasmodiumSpecieDisabled={type === "positiveDay3"}
+            filters={filters}
         >
             <HighchartsReact highcharts={Highcharts} options={chartOptions(type, series)} ref={chartComponentRef} />
         </TreatmentFilterableDashboard>

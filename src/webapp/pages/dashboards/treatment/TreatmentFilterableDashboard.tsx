@@ -8,12 +8,12 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import InformationModal from "../../../components/dashboards/TreatmentInformationModal";
 import HighchartsReact from "highcharts-react-official";
-import { MolecularMarker } from "../../../components/filters/MolecularMarkerRadioFilter";
 import { useFiltersVisible } from "../common/filters/useFiltersVisible";
 import DashboardTitle from "../common/DashboardTitle";
 import ScreenshotModal from "../../../components/ScreenshotModal";
 import { Option } from "../common/types";
 import { ChartTypeOption } from "../common/chart-type-option/ChartTypeOption";
+import { TreatmentFiltersState } from "./filters/TreatmentFiltersState";
 
 const SCREENSHOT_BACKGROUND_COLOR = "#F7F7F7";
 const SCREENSHOT_EXCLUSION_CLASSES = ["dashboard-action"];
@@ -30,20 +30,8 @@ interface TreatmentFilterableDashboardProps {
     type: "treatmentFailureByDrug" | "treatmentFailure" | "positiveDay3" | "molecularMarkerStudy";
     filteredStudiesForDrugs: TreatmentStudy[];
     studiesCount: number;
-    plasmodiumSpecies: string;
-    drugs: string[];
-    molecularMarker: MolecularMarker;
-    years: [number, number];
-    maxMinYears: [number, number];
-    excludeLowerPatients?: boolean;
-    excludeLowerSamples?: boolean;
-    PlasmodiumSpecieDisabled?: boolean;
-    onPlasmodiumChange: (value: string) => void;
-    onDrugsChange: (value: string[]) => void;
-    onYearsChange: (value: [number, number]) => void;
-    onExcludeLowerPatientsChange?: (value: boolean) => void;
-    onExcludeLowerSamplesChange?: (value: boolean) => void;
-    onMolecularMarkerChange: (value: MolecularMarker) => void;
+    filters: TreatmentFiltersState;
+    plasmodiumSpecieDisabled?: boolean;
     onChartTypeChange?: (value: string) => void;
 }
 
@@ -64,20 +52,8 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
     type,
     filteredStudiesForDrugs,
     studiesCount,
-    plasmodiumSpecies,
-    drugs,
-    molecularMarker,
-    years,
-    maxMinYears,
-    excludeLowerPatients,
-    excludeLowerSamples,
-    PlasmodiumSpecieDisabled,
-    onPlasmodiumChange,
-    onDrugsChange,
-    onYearsChange,
-    onExcludeLowerPatientsChange,
-    onExcludeLowerSamplesChange,
-    onMolecularMarkerChange,
+    plasmodiumSpecieDisabled,
+    filters,
     children,
     onScreenshot,
     isScreenshot = false,
@@ -146,20 +122,8 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                                 studies={filteredStudiesForDrugs}
                                 drugsMultiple={drugsMultiple}
                                 drugsClearable={drugsClearable}
-                                plasmodiumSpecies={plasmodiumSpecies}
-                                drugs={drugs}
-                                molecularMarker={molecularMarker}
-                                years={years}
-                                maxMinYears={maxMinYears}
-                                excludeLowerPatients={excludeLowerPatients}
-                                excludeLowerSamples={excludeLowerSamples}
-                                PlasmodiumSpecieDisabled={PlasmodiumSpecieDisabled || isScreenshot}
-                                onPlasmodiumSpeciesChange={onPlasmodiumChange}
-                                onDrugsChange={onDrugsChange}
-                                onMolecularMarkerChange={onMolecularMarkerChange}
-                                onYearsChange={onYearsChange}
-                                onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
-                                onExcludeLowerSamplesChange={onExcludeLowerSamplesChange}
+                                plasmodiumSpecieDisabled={plasmodiumSpecieDisabled || isScreenshot}
+                                filters={filters}
                                 onCollapse={onChangeFiltersVisible}
                             ></TreatmentFilters>
                             <StudiesCountCard elevation={0}>
@@ -183,7 +147,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                 <InformationModal
                     title={title}
                     type={type}
-                    years={years}
+                    years={filters.years}
                     openInfoModal={openInfoModal}
                     handleCloseInfoModal={handleCloseInfoModal}
                 />

@@ -9,28 +9,16 @@ import ExcludeLowerPatientsSelector from "../../../../components/filters/Exclude
 import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MolecularMarkerSelector from "../../../../components/filters/MolecularMarkerSelector";
-import { MolecularMarker } from "../../../../components/filters/MolecularMarkerRadioFilter";
 import ExcludeLowerSamplesSelector from "../../../../components/filters/ExcludeLowerSamplesSelector";
+import { TreatmentFiltersState } from "./TreatmentFiltersState";
 
 interface TreatmentFiltersProps {
     isMolecularMarkerChart: boolean;
     studies: TreatmentStudy[];
     drugsMultiple?: boolean;
     drugsClearable?: boolean;
-    plasmodiumSpecies: string;
-    drugs: string[];
-    molecularMarker: number;
-    years: [number, number];
-    maxMinYears: [number, number];
-    excludeLowerPatients?: boolean;
-    excludeLowerSamples?: boolean;
-    PlasmodiumSpecieDisabled?: boolean;
-    onPlasmodiumSpeciesChange: (value: string) => void;
-    onDrugsChange: (values: string[]) => void;
-    onMolecularMarkerChange: (value: MolecularMarker) => void;
-    onYearsChange: (years: [number, number]) => void;
-    onExcludeLowerPatientsChange?: (value: boolean) => void;
-    onExcludeLowerSamplesChange?: (value: boolean) => void;
+    filters: TreatmentFiltersState;
+    plasmodiumSpecieDisabled: boolean;
     onCollapse: () => void;
 }
 
@@ -39,20 +27,8 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
     studies,
     drugsMultiple = false,
     drugsClearable = false,
-    plasmodiumSpecies,
-    drugs,
-    molecularMarker,
-    years,
-    maxMinYears,
-    excludeLowerPatients,
-    excludeLowerSamples,
-    PlasmodiumSpecieDisabled,
-    onPlasmodiumSpeciesChange,
-    onDrugsChange,
-    onMolecularMarkerChange,
-    onYearsChange,
-    onExcludeLowerPatientsChange,
-    onExcludeLowerSamplesChange,
+    filters,
+    plasmodiumSpecieDisabled,
     onCollapse,
 }) => {
     const { t } = useTranslation();
@@ -76,9 +52,9 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                         labelBold
                         multi={false}
                         background={"#F7F7F7"}
-                        onChange={onPlasmodiumSpeciesChange}
-                        value={plasmodiumSpecies}
-                        isDisabled={PlasmodiumSpecieDisabled}
+                        onChange={filters.onPlasmodiumChange}
+                        value={filters.plasmodiumSpecies}
+                        isDisabled={plasmodiumSpecieDisabled}
                     />
 
                     <DrugsSelector
@@ -88,8 +64,8 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                         isClearable={drugsClearable}
                         background={"#F7F7F7"}
                         studies={studies}
-                        onChange={onDrugsChange}
-                        value={drugs}
+                        onChange={filters.onDrugsChange}
+                        value={filters.drugs}
                     />
                 </React.Fragment>
             )}
@@ -100,26 +76,30 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                         labelBold
                         multi={false}
                         background={"#F7F7F7"}
-                        onChange={onMolecularMarkerChange}
-                        value={molecularMarker}
+                        onChange={filters.onMolecularMarkerChange}
+                        value={filters.molecularMarker}
                     />
                 </React.Fragment>
             )}
 
-            <DashboardsYearRangeSelector years={years} onChange={onYearsChange} maxMinYears={maxMinYears} />
+            <DashboardsYearRangeSelector
+                years={filters.years}
+                onChange={filters.onYearsChange}
+                maxMinYears={filters.maxMinYears}
+            />
 
-            {onExcludeLowerSamplesChange && (
+            {filters.onExcludeLowerSamplesChange && (
                 <ExcludeLowerSamplesSelector
-                    value={excludeLowerSamples}
-                    onChange={onExcludeLowerSamplesChange}
+                    value={filters.excludeLowerSamples}
+                    onChange={filters.onExcludeLowerSamplesChange}
                     fontWeight="bold"
                 />
             )}
 
-            {onExcludeLowerPatientsChange && (
+            {filters.onExcludeLowerPatientsChange && (
                 <ExcludeLowerPatientsSelector
-                    value={excludeLowerPatients}
-                    onChange={onExcludeLowerPatientsChange}
+                    value={filters.excludeLowerPatients}
+                    onChange={filters.onExcludeLowerPatientsChange}
                     fontWeight="bold"
                 />
             )}

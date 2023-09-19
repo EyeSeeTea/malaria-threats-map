@@ -5,7 +5,6 @@ import { TreatmentStudy } from "../../../../../../domain/entities/TreatmentStudy
 import { BubleChartGroup, treatmentdashboardColors, TreatmentOverTimeType } from "../types";
 import { useTreatment } from "../../useTreatment";
 import { Option } from "../../../common/types";
-import { ResistanceToInsecticideChartType } from "../../../prevention/types";
 
 const chartTypes: Option<string>[] = [
     {
@@ -19,29 +18,14 @@ const chartTypes: Option<string>[] = [
 ];
 
 export function useTreatmentOverTime(type: TreatmentOverTimeType) {
-    const {
-        filteredStudies,
-        filteredStudiesForDrugs,
-        studiesCount,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerPatients,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerPatientsChange,
-        onMolecularMarkerChange,
-    } = useTreatment(false);
+    const { filteredStudies, filteredStudiesForDrugs, studiesCount, filters } = useTreatment(false);
 
     const [series, setSeries] = React.useState<BubleChartGroup[]>([]);
     const [chartType] = React.useState<string>(chartTypes[0].value);
 
     React.useEffect(() => {
-        setSeries(createTreatmentBubbleChartData(filteredStudies, type, years));
-    }, [filteredStudies, type, years]);
+        setSeries(createTreatmentBubbleChartData(filteredStudies, type, filters.years));
+    }, [filteredStudies, type, filters.years]);
 
     return {
         chartTypes,
@@ -49,17 +33,7 @@ export function useTreatmentOverTime(type: TreatmentOverTimeType) {
         studiesCount,
         filteredStudiesForDrugs,
         series,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerPatients,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerPatientsChange,
-        onMolecularMarkerChange,
+        filters,
     };
 }
 

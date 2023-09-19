@@ -4,8 +4,9 @@ import { MolecularMarker } from "../../../../components/filters/MolecularMarkerR
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../../components/filters/PlasmodiumSpeciesFilter";
 import { getMaxMinYears } from "../../../../../domain/entities/Study";
 import { useDashboards } from "../../context/useDashboards";
+import { TreatmentFiltersState } from "./TreatmentFiltersState";
 
-export function useTreatmentFilters() {
+export function useTreatmentFilters(): TreatmentFiltersState {
     const { dashboardsTreatmentStudies } = useDashboards();
 
     const [plasmodiumSpecies, setPlasmodiumSpecies] = useState<string>(PLASMODIUM_SPECIES_SUGGESTIONS[0].value);

@@ -7,50 +7,25 @@ import { useTreatment } from "../useTreatment";
 import { MolecularChart, MolecularChartSerie, molecularMarkerColors } from "./types";
 
 export function useMolecularMarker() {
-    const {
-        filteredStudies,
-        selectedCountries,
-        filteredStudiesForDrugs,
-        studiesCount,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerSamples,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerSamplesChange,
-        onMolecularMarkerChange,
-    } = useTreatment(true);
+    const { filteredStudies, selectedCountries, filteredStudiesForDrugs, studiesCount, filters } = useTreatment(true);
 
     const [data, setData] = React.useState<MolecularChart>();
 
     React.useEffect(() => {
-        onMolecularMarkerChange(1);
-    }, [onMolecularMarkerChange]);
+        filters.onMolecularMarkerChange(1);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filters.onMolecularMarkerChange]);
 
     React.useEffect(() => {
         setData(createChartData(filteredStudies, selectedCountries));
-    }, [filteredStudies, drugs, selectedCountries]);
+    }, [filteredStudies, filters.drugs, selectedCountries]);
 
     return {
         filteredStudiesForDrugs,
         selectedCountries,
         studiesCount,
         data,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerSamples,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerSamplesChange,
-        onMolecularMarkerChange,
+        filters,
     };
 }
 
