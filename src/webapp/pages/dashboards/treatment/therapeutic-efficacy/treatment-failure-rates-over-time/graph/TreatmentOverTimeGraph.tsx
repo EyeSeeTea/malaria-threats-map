@@ -5,15 +5,14 @@ import React from "react";
 import HighchartsReact from "highcharts-react-official";
 import More from "highcharts/highcharts-more";
 import i18next from "i18next";
-
 import { ChartStyles } from "../../../../../../components/charts/Style";
-import { BubleChartGroup, TreatmentOverTimeType } from "../../types";
+import { ChartSerie, TreatmentOverTimeType } from "../TreatmentOverTimeState";
 
 More(Highcharts);
 
 interface TreatmentOverTimeGraphProps {
     type: TreatmentOverTimeType;
-    series: BubleChartGroup[];
+    series: ChartSerie[];
     ref: React.MutableRefObject<any>;
 }
 
@@ -32,7 +31,7 @@ const TreatmentOverTimeGraph: React.FC<TreatmentOverTimeGraphProps> = ({ type, s
 
 export default React.memo(TreatmentOverTimeGraph);
 
-function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): Highcharts.Options {
+function chartOptions(type: TreatmentOverTimeType, series: ChartSerie[]): Highcharts.Options {
     return {
         chart: {
             type: "bubble",

@@ -1,14 +1,13 @@
 import Highcharts from "highcharts";
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
-//import BubbleChartHelpImage from "../../../../assets/img/dashboards/bubble-chart-help.png";
-import { TreatmentOverTimeType } from "../types";
-import { ChartType, useTreatmentOverTime } from "./useTreatmentOverTime";
+import { useTreatmentOverTime } from "./useTreatmentOverTime";
 import More from "highcharts/highcharts-more";
 import TreatmentFilterableDashboard from "../../TreatmentFilterableDashboard";
 import { useCallback } from "react";
 import TreatmentOverTimeGraph from "./graph/TreatmentOverTimeGraph";
 import TreatmentOverTimeTable from "./table/TreatmentOverTimeTable";
+import { ChartType, TreatmentOverTimeType } from "./TreatmentOverTimeState";
 
 More(Highcharts);
 
@@ -19,7 +18,7 @@ interface TreatmentOverTimeDashboardProps {
 
 const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({ id, type }) => {
     const { t } = useTranslation();
-    const { chartTypes, chartType, filteredStudiesForDrugs, studiesCount, series, filters, onChartTypeChange } =
+    const { chartTypes, chartType, filteredStudiesForDrugs, studiesCount, data, filters, onChartTypeChange } =
         useTreatmentOverTime(type);
 
     const chartComponentRef = useRef(null);
@@ -54,7 +53,7 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
             {type === "treatmentFailure" && chartType === "table" ? (
                 <TreatmentOverTimeTable studies={filteredStudiesForDrugs} />
             ) : (
-                <TreatmentOverTimeGraph type={type} series={series} ref={chartComponentRef} />
+                <TreatmentOverTimeGraph type={type} series={data} ref={chartComponentRef} />
             )}
         </TreatmentFilterableDashboard>
     );

@@ -2,11 +2,10 @@ import i18next from "i18next";
 import _ from "lodash";
 import React, { useCallback } from "react";
 import { TreatmentStudy } from "../../../../../../domain/entities/TreatmentStudy";
-import { BubleChartGroup, treatmentdashboardColors, TreatmentOverTimeType } from "../types";
+import { treatmentdashboardColors } from "../types";
 import { useTreatment } from "../../useTreatment";
 import { Option } from "../../../common/types";
-
-export type ChartType = "graph" | "table";
+import { ChartSerie, ChartType, TreatmentOverTimeState, TreatmentOverTimeType } from "./TreatmentOverTimeState";
 
 const chartTypes: Option<ChartType>[] = [
     {
@@ -19,15 +18,15 @@ const chartTypes: Option<ChartType>[] = [
     },
 ];
 
-export function useTreatmentOverTime(type: TreatmentOverTimeType) {
+export function useTreatmentOverTime(treatmentType: TreatmentOverTimeType): TreatmentOverTimeState {
     const { filteredStudies, filteredStudiesForDrugs, studiesCount, filters } = useTreatment(false);
 
-    const [series, setSeries] = React.useState<BubleChartGroup[]>([]);
+    const [data, setData] = React.useState<ChartSerie[]>([]);
     const [chartType, setChartType] = React.useState<ChartType>(chartTypes[0].value);
 
     React.useEffect(() => {
-        setSeries(createTreatmentBubbleChartData(filteredStudies, type, filters.years));
-    }, [filteredStudies, type, filters.years]);
+        setData(createTreatmentBubbleChartData(filteredStudies, treatmentType, filters.years));
+    }, [filteredStudies, treatmentType, filters.years]);
 
     const onChartTypeChange = useCallback((type: ChartType) => {
         setChartType(type);
@@ -38,7 +37,7 @@ export function useTreatmentOverTime(type: TreatmentOverTimeType) {
         chartType,
         studiesCount,
         filteredStudiesForDrugs,
-        series,
+        data,
         filters,
         onChartTypeChange,
     };
@@ -48,7 +47,7 @@ export function createTreatmentBubbleChartData(
     studies: TreatmentStudy[],
     type: TreatmentOverTimeType,
     yearsFilter: [number, number]
-): BubleChartGroup[] {
+): ChartSerie[] {
     const countries = _.uniq(studies.map(study => study.ISO2));
 
     const years = _.range(yearsFilter[0], yearsFilter[1] + 1);
