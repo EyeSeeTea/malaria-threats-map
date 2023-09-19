@@ -192,99 +192,97 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ studies
         !["ID", "COUNTRY", "COUNTRY_NUMBER", "ISO2"].includes(field);
     return (
         <div className={classes.root}>
-            <Paper className={classes.paper}>
-                <div className={classes.wrapper}>
-                    <ReportToolbar
-                        title={t("common.report.treatment.title")}
-                        subtitle={t(plasmodiumSpecie.replace(".", "%2E"))}
-                        numSelected={selected.length}
-                        countries={countries}
-                        setCountries={setCountries}
-                        drugs={drugs}
-                        setDrugs={setDrugs}
-                        plasmodiumSpecie={plasmodiumSpecie}
-                        setPlasmodiumSpecie={setPlasmodiumSpecie}
-                        onClick={() => downloadData()}
-                        treatmentStudies={studies}
-                    />
-                    <TableContainer>
-                        <Table
-                            className={classes.table}
-                            aria-labelledby="tableTitle"
-                            size={"small"}
-                            aria-label="enhanced table"
-                        >
-                            <EnhancedTableHead
-                                classes={classes}
-                                numSelected={selected.length}
-                                order={order}
-                                orderBy={orderBy}
-                                onSelectAllClick={handleSelectAllClick}
-                                onRequestSort={handleRequestSort}
-                                rowCount={groups.length}
-                            />
-                            <TableBody>
-                                {rows.map((row, index) => {
-                                    const isItemSelected = isSelected(row.ID);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
-                                    return (
-                                        <TableRow
-                                            tabIndex={-1}
-                                            key={`${row.ID}_${row.ISO2}_${row.FOLLOW_UP}`}
-                                            selected={isItemSelected}
-                                        >
-                                            {(index === 0 || tablePage[index].ISO2 !== tablePage[index - 1].ISO2) && (
-                                                <>
+            <div className={classes.wrapper}>
+                <ReportToolbar
+                    title={t("common.report.treatment.title")}
+                    subtitle={t(plasmodiumSpecie.replace(".", "%2E"))}
+                    numSelected={selected.length}
+                    countries={countries}
+                    setCountries={setCountries}
+                    drugs={drugs}
+                    setDrugs={setDrugs}
+                    plasmodiumSpecie={plasmodiumSpecie}
+                    setPlasmodiumSpecie={setPlasmodiumSpecie}
+                    onClick={() => downloadData()}
+                    treatmentStudies={studies}
+                />
+                <TableContainer>
+                    <Table
+                        className={classes.table}
+                        aria-labelledby="tableTitle"
+                        size={"small"}
+                        aria-label="enhanced table"
+                    >
+                        <EnhancedTableHead
+                            classes={classes}
+                            numSelected={selected.length}
+                            order={order}
+                            orderBy={orderBy}
+                            onSelectAllClick={handleSelectAllClick}
+                            onRequestSort={handleRequestSort}
+                            rowCount={groups.length}
+                        />
+                        <TableBody>
+                            {rows.map((row, index) => {
+                                const isItemSelected = isSelected(row.ID);
+                                const labelId = `enhanced-table-checkbox-${index}`;
+                                return (
+                                    <TableRow
+                                        tabIndex={-1}
+                                        key={`${row.ID}_${row.ISO2}_${row.FOLLOW_UP}`}
+                                        selected={isItemSelected}
+                                    >
+                                        {(index === 0 || tablePage[index].ISO2 !== tablePage[index - 1].ISO2) && (
+                                            <>
+                                                <StyledCell
+                                                    component="th"
+                                                    id={labelId}
+                                                    scope="row"
+                                                    padding="none"
+                                                    rowSpan={row.COUNTRY_NUMBER}
+                                                >
+                                                    {row.COUNTRY}
+                                                </StyledCell>
+                                            </>
+                                        )}
+                                        {Object.entries(row)
+                                            .filter(filterColumnsToDisplay)
+                                            .map(([field, value]) => {
+                                                const header = headCells.find(cell => cell.id === field);
+                                                const number = Number(value);
+                                                const isNumber = !Number.isNaN(number);
+                                                return (
                                                     <StyledCell
+                                                        key={`${field}_${index}`}
                                                         component="th"
                                                         id={labelId}
                                                         scope="row"
                                                         padding="none"
-                                                        rowSpan={row.COUNTRY_NUMBER}
+                                                        isRight={header.align === "right"}
+                                                        divider={header.divider}
                                                     >
-                                                        {row.COUNTRY}
+                                                        {header && header.numeric && isNumber
+                                                            ? `${number.toFixed(header.decimalPositions | 0)}`
+                                                            : value || "-"}
                                                     </StyledCell>
-                                                </>
-                                            )}
-                                            {Object.entries(row)
-                                                .filter(filterColumnsToDisplay)
-                                                .map(([field, value]) => {
-                                                    const header = headCells.find(cell => cell.id === field);
-                                                    const number = Number(value);
-                                                    const isNumber = !Number.isNaN(number);
-                                                    return (
-                                                        <StyledCell
-                                                            key={`${field}_${index}`}
-                                                            component="th"
-                                                            id={labelId}
-                                                            scope="row"
-                                                            padding="none"
-                                                            isRight={header.align === "right"}
-                                                            divider={header.divider}
-                                                        >
-                                                            {header && header.numeric && isNumber
-                                                                ? `${number.toFixed(header.decimalPositions | 0)}`
-                                                                : value || "-"}
-                                                        </StyledCell>
-                                                    );
-                                                })}
-                                        </TableRow>
-                                    );
-                                })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 15, 20]}
-                        component="div"
-                        count={groups.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                    />
-                </div>
-            </Paper>
+                                                );
+                                            })}
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 15, 20]}
+                    component="div"
+                    count={groups.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+            </div>
         </div>
     );
 };

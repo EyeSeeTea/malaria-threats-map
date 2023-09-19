@@ -205,7 +205,7 @@ const StyledGridContainer = styled(Grid)<{ $isScreenshot: boolean }>`
 
 const DasboardCard = styled(Card)`
     min-height: 500px;
-    padding: 42px;
+    padding: 24px;
 `;
 
 const StudiesCountCard = styled(Card)`
