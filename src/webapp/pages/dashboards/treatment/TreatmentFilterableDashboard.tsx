@@ -20,8 +20,8 @@ const SCREENSHOT_EXCLUSION_CLASSES = ["dashboard-action"];
 
 interface TreatmentFilterableDashboardProps {
     id?: string;
-    chartTypes?: Option<string>[];
-    chartType?: string;
+    chartTypes?: Option<unknown>[];
+    chartType?: unknown;
     isMolecularMarkerChart?: boolean;
     drugsMultiple: boolean;
     drugsClearable: boolean;
@@ -32,7 +32,7 @@ interface TreatmentFilterableDashboardProps {
     studiesCount: number;
     filters: TreatmentFiltersState;
     plasmodiumSpecieDisabled?: boolean;
-    onChartTypeChange?: (value: string) => void;
+    onChartTypeChange?: (value: unknown) => void;
 }
 
 interface TreatmentFilterableDashboardComponentProps extends TreatmentFilterableDashboardProps {
@@ -103,9 +103,9 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                     aria-label="text alignment"
                     sx={{ marginBottom: 2 }}
                 >
-                    {chartTypes.map(type => {
+                    {chartTypes.map((type, index) => {
                         return (
-                            <ChartTypeOption key={type.value} value={type.value}>
+                            <ChartTypeOption key={index} value={type.value}>
                                 {type.label}
                             </ChartTypeOption>
                         );
