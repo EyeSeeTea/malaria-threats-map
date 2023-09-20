@@ -4,9 +4,10 @@ import { useTranslation } from "react-i18next";
 import { TableData } from "./TableData";
 
 import { TableHeadCell } from "../../../../../../components/Report/TableHeadCell";
-import { getComparator, Order } from "../../../../../../components/Report/utils";
+import { Order } from "../../../../../../components/Report/utils";
 import { EnhancedTableProps, HeadCell, StyledCell, useStyles } from "../../../../../../components/Report/types";
 import styled from "styled-components";
+import _ from "lodash";
 
 interface TreatmentOverTimeTableProps {
     rows: TableData[];
@@ -37,11 +38,9 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows, p
         setPage(0);
     };
 
-    const sortedGroups = rows.sort((a, b) => (t(`common.${a.COUNTRY}`) < t(`common.${b.COUNTRY}`) ? -1 : 1));
+    const sortedRows = _.orderBy(rows, ["COUNTRY", orderBy], ["asc", order]);
 
-    const tablePage = sortedGroups
-        .sort(getComparator(order, orderBy))
-        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    const tablePage = sortedRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     const finalRows: TableData[] = tablePage.map(row => ({
         ...row,

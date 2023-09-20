@@ -1,5 +1,4 @@
 import i18next from "i18next";
-import _ from "lodash";
 import React, { useCallback } from "react";
 import { useTreatment } from "../../useTreatment";
 import { Option } from "../../../common/types";
@@ -38,9 +37,18 @@ export function useTreatmentOverTime(treatmentType: TreatmentOverTimeType): Trea
         }
     }, [filteredStudies, treatmentType, filters.years, chartType, filters.plasmodiumSpecies]);
 
-    const onChartTypeChange = useCallback((type: ChartType) => {
-        setChartType(type);
-    }, []);
+    const onChartTypeChange = useCallback(
+        (type: ChartType) => {
+            if (type === "graph") {
+                const firstDrug = filters.drugs[0];
+
+                if (firstDrug) filters.onDrugsChange([firstDrug]);
+            }
+
+            setChartType(type);
+        },
+        [filters]
+    );
 
     return {
         chartTypes,

@@ -70,7 +70,7 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
                     : t("common.dashboard.therapeuticEfficacyDashboards.parasiteClearanceOverTime.title")
             }
             type={type}
-            drugsMultiple={false}
+            drugsMultiple={chartType === "table"}
             drugsClearable={false}
             filteredStudiesForDrugs={filteredStudiesForDrugs}
             studiesCount={studiesCount}
