@@ -50,10 +50,10 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
             filters={filters}
             onChartTypeChange={handleChartTypeChange}
         >
-            {type === "treatmentFailure" && chartType === "table" ? (
-                <TreatmentOverTimeTable studies={filteredStudiesForDrugs} />
+            {data.kind === "TableData" ? (
+                <TreatmentOverTimeTable studies={data.studies} />
             ) : (
-                <TreatmentOverTimeGraph type={type} series={data} ref={chartComponentRef} />
+                <TreatmentOverTimeGraph type={type} series={data.series} ref={chartComponentRef} />
             )}
         </TreatmentFilterableDashboard>
     );

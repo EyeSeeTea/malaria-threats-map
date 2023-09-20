@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, Paper } from "@mui/material";
+import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
 import { Data, headCells } from "./columns";

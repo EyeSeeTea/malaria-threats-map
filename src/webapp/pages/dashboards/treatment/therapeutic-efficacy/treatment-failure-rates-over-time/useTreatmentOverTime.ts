@@ -5,7 +5,14 @@ import { TreatmentStudy } from "../../../../../../domain/entities/TreatmentStudy
 import { treatmentdashboardColors } from "../types";
 import { useTreatment } from "../../useTreatment";
 import { Option } from "../../../common/types";
-import { ChartSerie, ChartType, TreatmentOverTimeState, TreatmentOverTimeType } from "./TreatmentOverTimeState";
+import {
+    ChartType,
+    TreatmentOverTimeData,
+    TreatmentOverTimeGraphData,
+    TreatmentOverTimeState,
+    TreatmentOverTimeTableData,
+    TreatmentOverTimeType,
+} from "./TreatmentOverTimeState";
 
 const chartTypes: Option<ChartType>[] = [
     {
@@ -21,12 +28,16 @@ const chartTypes: Option<ChartType>[] = [
 export function useTreatmentOverTime(treatmentType: TreatmentOverTimeType): TreatmentOverTimeState {
     const { filteredStudies, filteredStudiesForDrugs, studiesCount, filters } = useTreatment(false);
 
-    const [data, setData] = React.useState<ChartSerie[]>([]);
+    const [data, setData] = React.useState<TreatmentOverTimeData>({ kind: "GraphData", series: [] });
     const [chartType, setChartType] = React.useState<ChartType>(chartTypes[0].value);
 
     React.useEffect(() => {
-        setData(createTreatmentBubbleChartData(filteredStudies, treatmentType, filters.years));
-    }, [filteredStudies, treatmentType, filters.years]);
+        if (chartType === "graph") {
+            setData(createTreatmentBubbleChartData(filteredStudies, treatmentType, filters.years));
+        } else {
+            setData(createTreatmentTableData(filteredStudies, treatmentType, filters.years));
+        }
+    }, [filteredStudies, treatmentType, filters.years, chartType]);
 
     const onChartTypeChange = useCallback((type: ChartType) => {
         setChartType(type);
@@ -47,7 +58,7 @@ export function createTreatmentBubbleChartData(
     studies: TreatmentStudy[],
     type: TreatmentOverTimeType,
     yearsFilter: [number, number]
-): ChartSerie[] {
+): TreatmentOverTimeGraphData {
     const countries = _.uniq(studies.map(study => study.ISO2));
 
     const years = _.range(yearsFilter[0], yearsFilter[1] + 1);
@@ -103,5 +114,19 @@ export function createTreatmentBubbleChartData(
         };
     });
 
-    return series;
+    return {
+        kind: "GraphData",
+        series,
+    };
+}
+
+export function createTreatmentTableData(
+    studies: TreatmentStudy[],
+    type: TreatmentOverTimeType,
+    yearsFilter: [number, number]
+): TreatmentOverTimeTableData {
+    return {
+        kind: "TableData",
+        studies,
+    };
 }

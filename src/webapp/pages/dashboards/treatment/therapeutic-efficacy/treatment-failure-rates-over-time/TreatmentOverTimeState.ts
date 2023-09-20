@@ -9,10 +9,22 @@ export interface TreatmentOverTimeState {
     chartType: ChartType;
     studiesCount: number;
     filteredStudiesForDrugs: TreatmentStudy[];
-    data: ChartSerie[];
+    data: TreatmentOverTimeData;
     filters: TreatmentFiltersState;
     onChartTypeChange: (type: ChartType) => void;
 }
+
+export type TreatmentOverTimeGraphData = {
+    kind: "GraphData";
+    series: ChartSerie[];
+};
+
+export type TreatmentOverTimeTableData = {
+    kind: "TableData";
+    studies: TreatmentStudy[];
+};
+
+export type TreatmentOverTimeData = TreatmentOverTimeGraphData | TreatmentOverTimeTableData;
 
 export type ChartType = "graph" | "table";
 
