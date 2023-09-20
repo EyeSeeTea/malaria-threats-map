@@ -39,9 +39,9 @@ export function useTreatmentOverTime(treatmentType: TreatmentOverTimeType): Trea
         if (chartType === "graph") {
             setData(createTreatmentBubbleChartData(filteredStudies, treatmentType, filters.years));
         } else {
-            setData(createTreatmentTableData(filteredStudies));
+            setData(createTreatmentTableData(filteredStudies, filters.plasmodiumSpecies));
         }
-    }, [filteredStudies, treatmentType, filters.years, chartType]);
+    }, [filteredStudies, treatmentType, filters.years, chartType, filters.plasmodiumSpecies]);
 
     const onChartTypeChange = useCallback((type: ChartType) => {
         setChartType(type);
@@ -124,7 +124,10 @@ export function createTreatmentBubbleChartData(
     };
 }
 
-export function createTreatmentTableData(studies: TreatmentStudy[]): TreatmentOverTimeTableData {
+export function createTreatmentTableData(
+    studies: TreatmentStudy[],
+    plasmodiumSpecies: string
+): TreatmentOverTimeTableData {
     const countryStudyGroups = R.groupBy((study: TreatmentStudy) => `${study.ISO2}`, studies);
 
     const rows: TableData[] = R.flatten(
@@ -180,7 +183,6 @@ export function createTreatmentTableData(studies: TreatmentStudy[]): TreatmentOv
                             PERCENTILE_75: percentile75,
                         };
                     });
-                    //.sort(getComparator(order, orderBy));
                 })
             );
         })
@@ -189,5 +191,6 @@ export function createTreatmentTableData(studies: TreatmentStudy[]): TreatmentOv
     return {
         kind: "TableData",
         rows,
+        plasmodiumSpecies,
     };
 }

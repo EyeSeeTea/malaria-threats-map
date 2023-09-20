@@ -14,9 +14,9 @@ export type CellProps = {
 };
 
 export const StyledCell = styled(TableCell)<CellProps>`
-    font-size: ${props => (props.isBold ? "12px" : "11.5px")} !important;
+    font-size: ${props => (props.isBold ? "13px" : "12.5px")} !important;
     line-height: 1rem !important;
-    padding: 3px 6px !important;
+    padding: 3px 4px !important;
     font-weight: ${props => (props.isBold ? "bold" : "normal")} !important;
     color: ${props => props.color || "inherit"} !important;
     ${props => props.isRight && "text-align: right !important"};
@@ -58,7 +58,7 @@ export interface EnhancedTableProps<T> {
     classes: ReturnType<typeof useStyles>;
     numSelected: number;
     onRequestSort: (event: React.MouseEvent<unknown>, property: keyof T) => void;
-    onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+    onSelectAllClick?: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
     order: Order;
     orderBy: string;
     rowCount: number;

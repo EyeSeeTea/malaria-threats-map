@@ -33,6 +33,7 @@ interface TreatmentFilterableDashboardProps {
     filters: TreatmentFiltersState;
     plasmodiumSpecieDisabled?: boolean;
     onChartTypeChange?: (value: unknown) => void;
+    onDownload?: () => void;
 }
 
 interface TreatmentFilterableDashboardComponentProps extends TreatmentFilterableDashboardProps {
@@ -156,12 +157,16 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
     );
 };
 
-const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = props => {
+const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = ({ onDownload, ...props }) => {
     const [open, setOpen] = React.useState(false);
 
     const handleScreenshot = React.useCallback(() => {
-        setOpen(true);
-    }, []);
+        if (onDownload) {
+            onDownload();
+        } else {
+            setOpen(true);
+        }
+    }, [onDownload]);
 
     const handleCloseScreenshot = React.useCallback(() => {
         setOpen(false);

@@ -24,6 +24,7 @@ export type TreatmentOverTimeGraphData = {
 export type TreatmentOverTimeTableData = {
     kind: "TableData";
     rows: TableData[];
+    plasmodiumSpecies: string;
 };
 
 export type TreatmentOverTimeData = TreatmentOverTimeGraphData | TreatmentOverTimeTableData;

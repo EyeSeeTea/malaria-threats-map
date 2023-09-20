@@ -1,87 +1,31 @@
 import React from "react";
-import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
-import * as R from "ramda";
+import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { TableData, headCells } from "./TableData";
+import { TableData } from "./TableData";
 
-import { format } from "date-fns";
-
-import ReportToolbar from "../../../../../../components/Report/ReportToolbar";
-import { exportToCSV } from "../../../../../../components/DataDownload/download";
 import { TableHeadCell } from "../../../../../../components/Report/TableHeadCell";
-import { sendAnalytics } from "../../../../../../utils/analytics";
-import { getComparator, Order, stableSort } from "../../../../../../components/Report/utils";
-import { EnhancedTableProps, StyledCell, useStyles } from "../../../../../../components/Report/types";
+import { getComparator, Order } from "../../../../../../components/Report/utils";
+import { EnhancedTableProps, HeadCell, StyledCell, useStyles } from "../../../../../../components/Report/types";
+import styled from "styled-components";
 
 interface TreatmentOverTimeTableProps {
     rows: TableData[];
+    plasmodiumSpecie?: string;
 }
 
-const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows }) => {
+const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows, plasmodiumSpecie }) => {
     const classes = useStyles({});
     const { t } = useTranslation();
     const [order, setOrder] = React.useState<Order>("desc");
     const [orderBy, setOrderBy] = React.useState<keyof TableData>("DRUG");
-    const [selected, setSelected] = React.useState<string[]>([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(20);
-
-    const [countries, doSetCountries] = React.useState<string[]>([]);
-    const [drugs, doSetDrugs] = React.useState<string[]>([]);
-    const [plasmodiumSpecie, doSetPlasmodiumSpecie] = React.useState<string>("P._FALCIPARUM");
-
-    const setCountries = (countries: string[]) => {
-        doSetCountries(countries);
-        setPage(0);
-    };
-
-    const setDrugs = (species: string[]) => {
-        doSetDrugs(species);
-        setPage(0);
-    };
-
-    const setPlasmodiumSpecie = (specie: string) => {
-        doSetPlasmodiumSpecie(specie);
-        setPage(0);
-    };
-
-    const downloadData = () => {
-        const studies = R.map(group => {
-            const study = { ...group };
-            delete study.ID;
-            delete study.COUNTRY_NUMBER;
-            return study;
-        }, rows);
-        const tabs = [
-            {
-                name: "Data",
-                studies: studies,
-            },
-        ];
-        const dateString = format(new Date(), "yyyyMMdd");
-        exportToCSV(tabs, `MTM_TREATMENT_${dateString}`);
-        sendAnalytics({
-            type: "event",
-            category: "tableView",
-            action: "download",
-            label: "treatment",
-        });
-    };
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TableData) => {
         const isAsc = orderBy === property && order === "asc";
         setOrder(isAsc ? "desc" : "asc");
         setOrderBy(property);
         setPage(0);
-    };
-
-    const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.checked) {
-            const newSelecteds = rows.map(n => n.ID);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
     };
 
     const handleChangePage = (event: unknown, newPage: number) => {
@@ -93,14 +37,12 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows })
         setPage(0);
     };
 
-    const isSelected = (name: string) => selected.indexOf(name) !== -1;
+    const sortedGroups = rows.sort((a, b) => (t(`common.${a.COUNTRY}`) < t(`common.${b.COUNTRY}`) ? -1 : 1));
 
-    const sortedGroups = R.sort((a, b) => (t(`common.${a.COUNTRY}`) < t(`common.${b.COUNTRY}`) ? -1 : 1), rows);
+    const tablePage = sortedGroups
+        .sort(getComparator(order, orderBy))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
-    const tablePage = stableSort(sortedGroups, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-    );
     const finalRows: TableData[] = tablePage.map(row => ({
         ...row,
         COUNTRY_NUMBER: tablePage.filter(r => r.COUNTRY === row.COUNTRY).length,
@@ -111,19 +53,19 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows })
     return (
         <div className={classes.root}>
             <div className={classes.wrapper}>
-                <ReportToolbar
-                    title={t("common.report.treatment.title")}
-                    subtitle={t(plasmodiumSpecie.replace(".", "%2E"))}
-                    numSelected={selected.length}
-                    countries={countries}
-                    setCountries={setCountries}
-                    drugs={drugs}
-                    setDrugs={setDrugs}
-                    plasmodiumSpecie={plasmodiumSpecie}
-                    setPlasmodiumSpecie={setPlasmodiumSpecie}
-                    onClick={() => downloadData()}
-                />
-                <TableContainer>
+                <Typography variant="h6" id="tableTitle" display="block" fontWeight="bold" gutterBottom>
+                    {t("common.report.treatment.title")}
+                    {plasmodiumSpecie && (
+                        <>
+                            <br />
+                            <Typography variant="body1" id="tableTitle">
+                                ({t(plasmodiumSpecie.replace(".", "%2E"))})
+                            </Typography>
+                        </>
+                    )}
+                </Typography>
+
+                <StyledTableContainer>
                     <Table
                         className={classes.table}
                         aria-labelledby="tableTitle"
@@ -132,23 +74,17 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows })
                     >
                         <EnhancedTableHead
                             classes={classes}
-                            numSelected={selected.length}
+                            numSelected={0}
                             order={order}
                             orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
                         />
                         <TableBody>
                             {finalRows.map((row, index) => {
-                                const isItemSelected = isSelected(row.ID);
                                 const labelId = `enhanced-table-checkbox-${index}`;
                                 return (
-                                    <TableRow
-                                        tabIndex={-1}
-                                        key={`${row.ID}_${row.ISO2}_${row.FOLLOW_UP}`}
-                                        selected={isItemSelected}
-                                    >
+                                    <TableRow tabIndex={-1} key={`${row.ID}_${row.ISO2}_${row.FOLLOW_UP}`}>
                                         {(index === 0 || tablePage[index].ISO2 !== tablePage[index - 1].ISO2) && (
                                             <>
                                                 <StyledCell
@@ -189,7 +125,7 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows })
                             })}
                         </TableBody>
                     </Table>
-                </TableContainer>
+                </StyledTableContainer>
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 15, 20]}
                     component="div"
@@ -227,3 +163,102 @@ function EnhancedTableHead(props: EnhancedTableProps<TableData>) {
         </TableHead>
     );
 }
+
+const StyledTableContainer = styled(TableContainer)`
+    height: 400px;
+`;
+
+const headCells: HeadCell<TableData>[] = [
+    {
+        id: "COUNTRY",
+        numeric: false,
+        disablePadding: false,
+        label: "common.report.treatment.country",
+    },
+    {
+        id: "DRUG",
+        numeric: false,
+        disablePadding: false,
+        divider: true,
+        label: "common.report.treatment.drug",
+    },
+    {
+        id: "FOLLOW_UP",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.treatment.follow",
+        sortable: true,
+        align: "right",
+        divider: true,
+        decimalPositions: 0,
+    },
+    {
+        id: "STUDY_YEARS",
+        numeric: false,
+        disablePadding: false,
+        label: "common.report.treatment.period",
+        sortable: true,
+        align: "right",
+        divider: true,
+    },
+    {
+        id: "NUMBER_OF_STUDIES",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.treatment.studies",
+        sortable: true,
+        align: "right",
+        divider: true,
+        decimalPositions: 0,
+    },
+    {
+        id: "MEDIAN",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.treatment.median",
+        sortable: true,
+        align: "right",
+        divider: true,
+        decimalPositions: 2,
+    },
+    {
+        id: "MIN",
+        numeric: true,
+        disablePadding: false,
+        label: "Min",
+        sortable: true,
+        align: "right",
+        divider: true,
+        decimalPositions: 2,
+    },
+    {
+        id: "MAX",
+        numeric: true,
+        disablePadding: false,
+        label: "Max",
+        sortable: true,
+        align: "right",
+        divider: true,
+        decimalPositions: 2,
+    },
+    {
+        id: "PERCENTILE_25",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.treatment.percentile_25",
+        sortable: true,
+        align: "right",
+        divider: true,
+        decimalPositions: 2,
+    },
+    {
+        id: "PERCENTILE_75",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.treatment.percentile_75",
+        sortable: true,
+        align: "right",
+        divider: true,
+        decimalPositions: 2,
+    },
+];

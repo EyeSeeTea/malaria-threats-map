@@ -8,6 +8,9 @@ import { useCallback } from "react";
 import TreatmentOverTimeGraph from "./graph/TreatmentOverTimeGraph";
 import TreatmentOverTimeTable from "./table/TreatmentOverTimeTable";
 import { ChartType, TreatmentOverTimeType } from "./TreatmentOverTimeState";
+import format from "date-fns/format";
+import { exportToCSV } from "../../../../../components/DataDownload/download";
+import { sendAnalytics } from "../../../../../utils/analytics";
 
 More(Highcharts);
 
@@ -30,6 +33,31 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
         [onChartTypeChange]
     );
 
+    const downloadTable = () => {
+        if (data.kind === "TableData") {
+            const studies = data.rows.map(row => {
+                const study = { ...row };
+                delete study.ID;
+                delete study.COUNTRY_NUMBER;
+                return study;
+            });
+            const tabs = [
+                {
+                    name: "Data",
+                    studies: studies,
+                },
+            ];
+            const dateString = format(new Date(), "yyyyMMdd");
+            exportToCSV(tabs, `MTM_TREATMENT_${dateString}`);
+            sendAnalytics({
+                type: "event",
+                category: "tableView",
+                action: "download",
+                label: "treatment",
+            });
+        }
+    };
+
     return (
         <TreatmentFilterableDashboard
             id={id}
@@ -49,9 +77,10 @@ const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({
             plasmodiumSpecieDisabled={type === "positiveDay3"}
             filters={filters}
             onChartTypeChange={handleChartTypeChange}
+            onDownload={data.kind === "TableData" ? downloadTable : undefined}
         >
             {data.kind === "TableData" ? (
-                <TreatmentOverTimeTable rows={data.rows} />
+                <TreatmentOverTimeTable rows={data.rows} plasmodiumSpecie={data.plasmodiumSpecies} />
             ) : (
                 <TreatmentOverTimeGraph type={type} series={data.series} ref={chartComponentRef} />
             )}
