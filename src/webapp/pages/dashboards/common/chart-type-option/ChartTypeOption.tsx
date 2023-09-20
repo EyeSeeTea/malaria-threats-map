@@ -12,4 +12,5 @@ export const ChartTypeOption = styled(ToggleButton)`
         color: white;
         background-color: #2fb3af;
     }
+    min-width: 180px;
 `;
