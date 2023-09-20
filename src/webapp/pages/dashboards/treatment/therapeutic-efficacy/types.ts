@@ -1,5 +1,3 @@
-export const treatmentdashboardColors = ["#7EA0C3", "#FEAF59", "#F78185", "#94CFCA", "#7BC280"];
-
 export const treatmentByDrugColors = ["#E39B9E", "#A00101"];
 
 export interface TreatmentFailureSeries {
