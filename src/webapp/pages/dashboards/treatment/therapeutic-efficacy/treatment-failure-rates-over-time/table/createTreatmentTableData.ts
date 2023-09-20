@@ -1,4 +1,5 @@
 import i18next from "i18next";
+import _ from "lodash";
 import * as R from "ramda";
 import { TreatmentStudy } from "../../../../../../../domain/entities/TreatmentStudy";
 import { percentile } from "../../../../../../components/Report/utils";
@@ -10,18 +11,18 @@ export function createTreatmentTableData(
     studies: TreatmentStudy[],
     plasmodiumSpecies: string
 ): TreatmentOverTimeTableData {
-    const countryStudyGroups = R.groupBy((study: TreatmentStudy) => `${study.ISO2}`, studies);
+    const countryStudyGroups = _.groupBy(studies, (study: TreatmentStudy) => `${study.ISO2}`);
 
-    const rows: TableData[] = R.flatten(
+    const rows: TableData[] = _.flatten(
         Object.entries(countryStudyGroups).map(([country, countryStudies]) => {
-            const countrySpeciesGroup = R.groupBy((study: TreatmentStudy) => `${study.DRUG_NAME}`, countryStudies);
+            const countrySpeciesGroup = _.groupBy(countryStudies, (study: TreatmentStudy) => `${study.DRUG_NAME}`);
             const entries = Object.entries(countrySpeciesGroup);
             let nStudies = 0;
-            return R.flatten(
+            return _.flatten(
                 entries.map(([drug, countrySpeciesStudies]) => {
-                    const followUpCountrySpeciesGroup = R.groupBy(
-                        (study: TreatmentStudy) => `${study.FOLLOW_UP}`,
-                        countrySpeciesStudies
+                    const followUpCountrySpeciesGroup = _.groupBy(
+                        countrySpeciesStudies,
+                        (study: TreatmentStudy) => `${study.FOLLOW_UP}`
                     );
 
                     const followUpCountrySpeciesGroupStudies = Object.entries(followUpCountrySpeciesGroup);
