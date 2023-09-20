@@ -2,34 +2,26 @@ import React from "react";
 import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
-import { Data, headCells } from "./columns";
+import { TableData, headCells } from "./TableData";
 
 import { format } from "date-fns";
 
-import {
-    filterByCountries,
-    filterByDrugs,
-    filterByMolecularMarkerStudyDimension256,
-    filterByPlasmodiumSpecies,
-} from "../../../../../../components/layers/studies-filters";
 import ReportToolbar from "../../../../../../components/Report/ReportToolbar";
 import { exportToCSV } from "../../../../../../components/DataDownload/download";
 import { TableHeadCell } from "../../../../../../components/Report/TableHeadCell";
-import { TreatmentStudy } from "../../../../../../../domain/entities/TreatmentStudy";
 import { sendAnalytics } from "../../../../../../utils/analytics";
-import { getComparator, Order, percentile, stableSort } from "../../../../../../components/Report/utils";
-import { isNotNull } from "../../../../../../utils/number-utils";
+import { getComparator, Order, stableSort } from "../../../../../../components/Report/utils";
 import { EnhancedTableProps, StyledCell, useStyles } from "../../../../../../components/Report/types";
 
 interface TreatmentOverTimeTableProps {
-    studies: TreatmentStudy[];
+    rows: TableData[];
 }
 
-const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ studies: baseStudies }) => {
+const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows }) => {
     const classes = useStyles({});
     const { t } = useTranslation();
     const [order, setOrder] = React.useState<Order>("desc");
-    const [orderBy, setOrderBy] = React.useState<keyof Data>("DRUG");
+    const [orderBy, setOrderBy] = React.useState<keyof TableData>("DRUG");
     const [selected, setSelected] = React.useState<string[]>([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(20);
@@ -53,87 +45,13 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ studies
         setPage(0);
     };
 
-    const filters = [
-        (study: TreatmentStudy) => isNotNull(study.DRUG_NAME),
-        filterByMolecularMarkerStudyDimension256(),
-        filterByPlasmodiumSpecies([plasmodiumSpecie]),
-        filterByCountries(countries),
-        filterByDrugs(drugs),
-    ];
-
-    const studies = filters.reduce((studies, filter) => studies.filter(filter), baseStudies);
-
-    const countryStudyGroups = R.groupBy((study: TreatmentStudy) => `${study.ISO2}`, studies);
-
-    const groups: Data[] = R.flatten(
-        Object.entries(countryStudyGroups).map(([country, countryStudies]) => {
-            const countrySpeciesGroup = R.groupBy((study: TreatmentStudy) => `${study.DRUG_NAME}`, countryStudies);
-            const entries = Object.entries(countrySpeciesGroup);
-            let nStudies = 0;
-            return R.flatten(
-                entries.map(([drug, countrySpeciesStudies]) => {
-                    const followUpCountrySpeciesGroup = R.groupBy(
-                        (study: TreatmentStudy) => `${study.FOLLOW_UP}`,
-                        countrySpeciesStudies
-                    );
-
-                    const followUpCountrySpeciesGroupStudies = Object.entries(followUpCountrySpeciesGroup);
-                    nStudies += followUpCountrySpeciesGroupStudies.length;
-                    return followUpCountrySpeciesGroupStudies
-                        .map(([followUpDays, followUpCountrySpeciesStudies]) => {
-                            const yearSortedStudies = followUpCountrySpeciesStudies
-                                .map((study: TreatmentStudy) => parseInt(study.YEAR_START))
-                                .sort();
-                            const minYear = yearSortedStudies[0];
-                            const maxYear = yearSortedStudies[yearSortedStudies.length - 1];
-
-                            const defaultProp = "TREATMENT_FAILURE_PP";
-                            const fallbackProp = "TREATMENT_FAILURE_KM";
-
-                            const rawValues = followUpCountrySpeciesStudies.map((study: TreatmentStudy) =>
-                                isNotNull(study[defaultProp]) ? study[defaultProp] : study[fallbackProp]
-                            );
-
-                            const values = rawValues
-                                .map(value => parseFloat(value))
-                                .filter(value => !Number.isNaN(value));
-                            const sortedValues = values.sort();
-
-                            const min = values.length ? sortedValues[0] * 100 : "-";
-                            const max = values.length ? sortedValues[values.length - 1] * 100 : "-";
-                            const median = values.length ? R.median(sortedValues) * 100 : "-";
-                            const percentile25 = values.length ? percentile(sortedValues, 0.25) * 100 : "-";
-                            const percentile75 = values.length ? percentile(sortedValues, 0.75) * 100 : "-";
-
-                            return {
-                                ID: `${country}_${drug}`,
-                                COUNTRY: t(`COUNTRY_NAME.${country}`),
-                                ISO2: country,
-                                DRUG: t(drug),
-                                COUNTRY_NUMBER: nStudies,
-                                FOLLOW_UP: followUpDays,
-                                STUDY_YEARS: `${minYear} - ${maxYear}`,
-                                NUMBER_OF_STUDIES: followUpCountrySpeciesStudies.length,
-                                MEDIAN: median,
-                                MIN: min,
-                                MAX: max,
-                                PERCENTILE_25: percentile25,
-                                PERCENTILE_75: percentile75,
-                            };
-                        })
-                        .sort(getComparator(order, orderBy));
-                })
-            );
-        })
-    );
-
     const downloadData = () => {
         const studies = R.map(group => {
             const study = { ...group };
             delete study.ID;
             delete study.COUNTRY_NUMBER;
             return study;
-        }, groups);
+        }, rows);
         const tabs = [
             {
                 name: "Data",
@@ -150,7 +68,7 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ studies
         });
     };
 
-    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
+    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TableData) => {
         const isAsc = orderBy === property && order === "asc";
         setOrder(isAsc ? "desc" : "asc");
         setOrderBy(property);
@@ -159,7 +77,7 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ studies
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds = groups.map(n => n.ID);
+            const newSelecteds = rows.map(n => n.ID);
             setSelected(newSelecteds);
             return;
         }
@@ -177,13 +95,13 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ studies
 
     const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
-    const sortedGroups = R.sort((a, b) => (t(`common.${a.COUNTRY}`) < t(`common.${b.COUNTRY}`) ? -1 : 1), groups);
+    const sortedGroups = R.sort((a, b) => (t(`common.${a.COUNTRY}`) < t(`common.${b.COUNTRY}`) ? -1 : 1), rows);
 
     const tablePage = stableSort(sortedGroups, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
     );
-    const rows: Data[] = tablePage.map(row => ({
+    const finalRows: TableData[] = tablePage.map(row => ({
         ...row,
         COUNTRY_NUMBER: tablePage.filter(r => r.COUNTRY === row.COUNTRY).length,
     }));
@@ -204,7 +122,6 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ studies
                     plasmodiumSpecie={plasmodiumSpecie}
                     setPlasmodiumSpecie={setPlasmodiumSpecie}
                     onClick={() => downloadData()}
-                    treatmentStudies={studies}
                 />
                 <TableContainer>
                     <Table
@@ -220,10 +137,10 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ studies
                             orderBy={orderBy}
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
-                            rowCount={groups.length}
+                            rowCount={rows.length}
                         />
                         <TableBody>
-                            {rows.map((row, index) => {
+                            {finalRows.map((row, index) => {
                                 const isItemSelected = isSelected(row.ID);
                                 const labelId = `enhanced-table-checkbox-${index}`;
                                 return (
@@ -276,7 +193,7 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ studies
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 15, 20]}
                     component="div"
-                    count={groups.length}
+                    count={rows.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
@@ -289,7 +206,7 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ studies
 
 export default React.memo(TreatmentOverTimeTable);
 
-function EnhancedTableHead(props: EnhancedTableProps<Data>) {
+function EnhancedTableHead(props: EnhancedTableProps<TableData>) {
     const { classes, order, orderBy, onRequestSort } = props;
 
     return (

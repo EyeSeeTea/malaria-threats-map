@@ -1,6 +1,8 @@
 import { TreatmentStudy } from "../../../../../../domain/entities/TreatmentStudy";
 import { Option } from "../../../common/types";
 import { TreatmentFiltersState } from "../../filters/TreatmentFiltersState";
+import { ChartSerie } from "./graph/ChartSerie";
+import { TableData } from "./table/TableData";
 
 export type TreatmentOverTimeType = "treatmentFailure" | "positiveDay3";
 
@@ -21,22 +23,9 @@ export type TreatmentOverTimeGraphData = {
 
 export type TreatmentOverTimeTableData = {
     kind: "TableData";
-    studies: TreatmentStudy[];
+    rows: TableData[];
 };
 
 export type TreatmentOverTimeData = TreatmentOverTimeGraphData | TreatmentOverTimeTableData;
 
 export type ChartType = "graph" | "table";
-
-export type ChartSerie = {
-    type: "bubble";
-    name: string;
-    color: string;
-    data: BubleChartItem[];
-};
-
-export type BubleChartItem = {
-    x: number; //year
-    y: number; //treatment failure
-    z: number; //number patients
-};

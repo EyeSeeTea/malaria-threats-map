@@ -13,6 +13,10 @@ import {
     TreatmentOverTimeTableData,
     TreatmentOverTimeType,
 } from "./TreatmentOverTimeState";
+import * as R from "ramda";
+import { isNotNull } from "../../../../../utils/number-utils";
+import { getComparator, percentile } from "../../../../../components/Report/utils";
+import { TableData } from "./table/TableData";
 
 const chartTypes: Option<ChartType>[] = [
     {
@@ -35,7 +39,7 @@ export function useTreatmentOverTime(treatmentType: TreatmentOverTimeType): Trea
         if (chartType === "graph") {
             setData(createTreatmentBubbleChartData(filteredStudies, treatmentType, filters.years));
         } else {
-            setData(createTreatmentTableData(filteredStudies, treatmentType, filters.years));
+            setData(createTreatmentTableData(filteredStudies));
         }
     }, [filteredStudies, treatmentType, filters.years, chartType]);
 
@@ -120,13 +124,70 @@ export function createTreatmentBubbleChartData(
     };
 }
 
-export function createTreatmentTableData(
-    studies: TreatmentStudy[],
-    type: TreatmentOverTimeType,
-    yearsFilter: [number, number]
-): TreatmentOverTimeTableData {
+export function createTreatmentTableData(studies: TreatmentStudy[]): TreatmentOverTimeTableData {
+    const countryStudyGroups = R.groupBy((study: TreatmentStudy) => `${study.ISO2}`, studies);
+
+    const rows: TableData[] = R.flatten(
+        Object.entries(countryStudyGroups).map(([country, countryStudies]) => {
+            const countrySpeciesGroup = R.groupBy((study: TreatmentStudy) => `${study.DRUG_NAME}`, countryStudies);
+            const entries = Object.entries(countrySpeciesGroup);
+            let nStudies = 0;
+            return R.flatten(
+                entries.map(([drug, countrySpeciesStudies]) => {
+                    const followUpCountrySpeciesGroup = R.groupBy(
+                        (study: TreatmentStudy) => `${study.FOLLOW_UP}`,
+                        countrySpeciesStudies
+                    );
+
+                    const followUpCountrySpeciesGroupStudies = Object.entries(followUpCountrySpeciesGroup);
+                    nStudies += followUpCountrySpeciesGroupStudies.length;
+                    return followUpCountrySpeciesGroupStudies.map(([followUpDays, followUpCountrySpeciesStudies]) => {
+                        const yearSortedStudies = followUpCountrySpeciesStudies
+                            .map((study: TreatmentStudy) => parseInt(study.YEAR_START))
+                            .sort();
+                        const minYear = yearSortedStudies[0];
+                        const maxYear = yearSortedStudies[yearSortedStudies.length - 1];
+
+                        const defaultProp = "TREATMENT_FAILURE_PP";
+                        const fallbackProp = "TREATMENT_FAILURE_KM";
+
+                        const rawValues = followUpCountrySpeciesStudies.map((study: TreatmentStudy) =>
+                            isNotNull(study[defaultProp]) ? study[defaultProp] : study[fallbackProp]
+                        );
+
+                        const values = rawValues.map(value => parseFloat(value)).filter(value => !Number.isNaN(value));
+                        const sortedValues = values.sort();
+
+                        const min = values.length ? sortedValues[0] * 100 : "-";
+                        const max = values.length ? sortedValues[values.length - 1] * 100 : "-";
+                        const median = values.length ? R.median(sortedValues) * 100 : "-";
+                        const percentile25 = values.length ? percentile(sortedValues, 0.25) * 100 : "-";
+                        const percentile75 = values.length ? percentile(sortedValues, 0.75) * 100 : "-";
+
+                        return {
+                            ID: `${country}_${drug}`,
+                            COUNTRY: i18next.t(`COUNTRY_NAME.${country}`),
+                            ISO2: country,
+                            DRUG: i18next.t(drug),
+                            COUNTRY_NUMBER: nStudies,
+                            FOLLOW_UP: followUpDays,
+                            STUDY_YEARS: `${minYear} - ${maxYear}`,
+                            NUMBER_OF_STUDIES: followUpCountrySpeciesStudies.length,
+                            MEDIAN: median,
+                            MIN: min,
+                            MAX: max,
+                            PERCENTILE_25: percentile25,
+                            PERCENTILE_75: percentile75,
+                        };
+                    });
+                    //.sort(getComparator(order, orderBy));
+                })
+            );
+        })
+    );
+
     return {
         kind: "TableData",
-        studies,
+        rows,
     };
 }

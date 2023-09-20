@@ -6,7 +6,8 @@ import HighchartsReact from "highcharts-react-official";
 import More from "highcharts/highcharts-more";
 import i18next from "i18next";
 import { ChartStyles } from "../../../../../../components/charts/Style";
-import { ChartSerie, TreatmentOverTimeType } from "../TreatmentOverTimeState";
+import { TreatmentOverTimeType } from "../TreatmentOverTimeState";
+import { ChartSerie } from "./ChartSerie";
 
 More(Highcharts);
 

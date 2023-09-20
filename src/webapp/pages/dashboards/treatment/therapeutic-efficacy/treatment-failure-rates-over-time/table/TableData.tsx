@@ -2,7 +2,7 @@ import { HeadCell } from "../../../../../../components/Report/types";
 
 type NumberOrHyphen = number | string;
 
-export interface Data {
+export interface TableData {
     ID: string;
     ISO2: string;
     COUNTRY: string;
@@ -18,7 +18,7 @@ export interface Data {
     PERCENTILE_75: NumberOrHyphen;
 }
 
-export const headCells: HeadCell<Data>[] = [
+export const headCells: HeadCell<TableData>[] = [
     {
         id: "COUNTRY",
         numeric: false,
