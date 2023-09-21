@@ -11,6 +11,7 @@ import {
 
 import { createTreatmentBubbleChartData } from "./graph/createTreatmentBubbleChartData";
 import { createTreatmentTableData } from "./table/createTreatmentTableData";
+import { TreatmentFiltersState } from "../../filters/TreatmentFiltersState";
 
 const chartTypes: Option<ChartType>[] = [
     {
@@ -56,7 +57,10 @@ export function useTreatmentOverTime(treatmentType: TreatmentOverTimeType): Trea
         studiesCount,
         filteredStudiesForDrugs,
         data,
-        filters,
+        filters:
+            chartType === "table"
+                ? filters
+                : ({ ...filters, onChangeShowDataForAllCountries: undefined } as TreatmentFiltersState),
         onChartTypeChange,
     };
 }

@@ -3,6 +3,7 @@ import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import { getTreatmentFailure } from "../utils";
 import { treatmentByDrugColors, TreatmentFailureSeries, TreatmentFailureSeriesItem } from "./types";
 import { useTreatment } from "../useTreatment";
+import { TreatmentFiltersState } from "../filters/TreatmentFiltersState";
 
 export function useTreatmentFailureByDrug() {
     const { filteredStudies, selectedCountries, filteredStudiesForDrugs, studiesCount, filters } = useTreatment(true);
@@ -18,7 +19,7 @@ export function useTreatmentFailureByDrug() {
         selectedCountries,
         studiesCount,
         data,
-        filters,
+        filters: { ...filters, onChangeShowDataForAllCountries: undefined } as TreatmentFiltersState,
     };
 }
 

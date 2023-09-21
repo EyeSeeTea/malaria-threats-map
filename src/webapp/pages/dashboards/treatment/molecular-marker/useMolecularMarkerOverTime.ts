@@ -3,6 +3,7 @@ import * as R from "ramda";
 import React from "react";
 import { MolecularMarkerStudy, TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import { getMolecularMarkerStudies } from "../../../../components/layers/treatment/utils";
+import { TreatmentFiltersState } from "../filters/TreatmentFiltersState";
 import { useTreatment } from "../useTreatment";
 import { MolecularChart, MolecularChartSerie, molecularMarkerColors } from "./types";
 
@@ -25,7 +26,7 @@ export function useMolecularMarker() {
         selectedCountries,
         studiesCount,
         data,
-        filters,
+        filters: { ...filters, onChangeShowDataForAllCountries: undefined } as TreatmentFiltersState,
     };
 }
 

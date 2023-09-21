@@ -8,10 +8,14 @@ export interface TreatmentFiltersState {
     excludeLowerPatients: boolean;
     excludeLowerSamples: boolean;
     maxMinYears: [number, number];
+    showDataForAllCountries: ShowDataForCountries;
     onPlasmodiumChange: (value: string) => void;
     onDrugsChange: (values: string[]) => void;
     onYearsChange: (years: [number, number]) => void;
     onExcludeLowerPatientsChange: (excludeLowerPatients: boolean) => void;
     onExcludeLowerSamplesChange: (excludeLowerSamples: boolean) => void;
     onMolecularMarkerChange: (molecularMarker: MolecularMarker) => void;
+    onChangeShowDataForAllCountries?: (value: ShowDataForCountries) => void;
 }
+
+export type ShowDataForCountries = "all" | "selected";

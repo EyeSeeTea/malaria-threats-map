@@ -11,6 +11,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import MolecularMarkerSelector from "../../../../components/filters/MolecularMarkerSelector";
 import ExcludeLowerSamplesSelector from "../../../../components/filters/ExcludeLowerSamplesSelector";
 import { TreatmentFiltersState } from "./TreatmentFiltersState";
+import ShowDataForAllCountriesSelector from "../../common/filters/ShowDataForAllCountriesSelector";
 
 interface TreatmentFiltersProps {
     isMolecularMarkerChart: boolean;
@@ -80,6 +81,13 @@ const TreatmentFilters: React.FC<TreatmentFiltersProps> = ({
                         value={filters.molecularMarker}
                     />
                 </React.Fragment>
+            )}
+
+            {filters.onChangeShowDataForAllCountries && (
+                <ShowDataForAllCountriesSelector
+                    value={filters.showDataForAllCountries}
+                    onChange={filters.onChangeShowDataForAllCountries}
+                />
             )}
 
             <DashboardsYearRangeSelector
