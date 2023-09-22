@@ -12,6 +12,7 @@ import {
     setMolecularMarkers,
     setTreatmentMapType,
     setTreatmentPlasmodiumSpecies,
+    setTreatmentDataset,
 } from "../../actions/treatment-actions";
 import {
     logPageViewAction,
@@ -30,6 +31,7 @@ import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { createTreatmentSelectionData } from "./utils";
 import { molecularMarkersMap } from "../../../components/filters/MolecularMarkerRadioFilter";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
+import { MOLECULAR_MARKERS_MAP } from "../../../components/layers/treatment/MolecularMarkersOngoingStudies/utils";
 
 function groupStudies(studies: TreatmentStudy[]) {
     const filteredMainStudies = studies.filter(
@@ -83,6 +85,19 @@ export const setTreatmentMapTypesEpic = (action$: Observable<ActionType<typeof s
                 return of(setMolecularMarkers([1]));
             } else if (action.payload === TreatmentMapType.DELAYED_PARASITE_CLEARANCE) {
                 return of(setTreatmentPlasmodiumSpecies(["P._FALCIPARUM"]));
+            } else {
+                return of();
+            }
+        })
+    );
+
+export const setTreatmentDatasetEpic = (action$: Observable<ActionType<typeof setTreatmentDataset>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetTreatmentDataset),
+        switchMap(action => {
+            if (action.payload === "AMDERO_MM") {
+                const molecularMarkers = Object.values(MOLECULAR_MARKERS_MAP);
+                return of(setMolecularMarkers(molecularMarkers));
             } else {
                 return of();
             }
