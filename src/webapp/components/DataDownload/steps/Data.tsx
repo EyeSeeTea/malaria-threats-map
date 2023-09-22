@@ -72,7 +72,7 @@ import {
     preventionDatasetSuggestions,
     treatmentDatasetSuggestions,
 } from "../filters/DataSetSelector";
-import { getMaxMinYears } from "../../../../domain/entities/Study";
+import { getMinMaxYears } from "../../../../domain/entities/Study";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -192,12 +192,12 @@ const Data: React.FC<Props> = ({
     useEffect(() => {
         const minMaxYears =
             theme === "prevention"
-                ? getMaxMinYears(preventionStudies)
+                ? getMinMaxYears(preventionStudies)
                 : theme === "diagnosis"
-                ? getMaxMinYears(diagnosisStudies)
+                ? getMinMaxYears(diagnosisStudies, false)
                 : theme === "treatment"
-                ? getMaxMinYears(treatmentStudies)
-                : getMaxMinYears(invasiveStudies);
+                ? getMinMaxYears(treatmentStudies, false)
+                : getMinMaxYears(invasiveStudies);
 
         setMaxMinYears(minMaxYears);
         setYears(minMaxYears);

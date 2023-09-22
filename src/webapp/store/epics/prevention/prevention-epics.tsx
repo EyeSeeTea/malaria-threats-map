@@ -34,6 +34,7 @@ import {
     setSpecies,
     setType,
 } from "../../actions/prevention-actions";
+import { getMinMaxYears } from "../../../../domain/entities/Study";
 
 export const getPreventionStudiesEpic = (
     action$: Observable<ActionType<typeof fetchPreventionStudiesRequest>>,
@@ -47,15 +48,12 @@ export const getPreventionStudiesEpic = (
             if (state.prevention.studies.length === 0 && !state.prevention.error) {
                 return fromFuture(compositionRoot.prevention.getStudies()).pipe(
                     mergeMap((studies: PreventionStudy[]) => {
-                        const start = getMinYearStart(studies);
+                        const [start, end] = getMinMaxYears(studies);
                         const resetDatesIsRequired =
                             state.malaria?.filters[0] !== start && state.malaria?.maxMinYears[0] !== start;
 
                         const base: unknown[] = resetDatesIsRequired
-                            ? [
-                                  setMaxMinYearsAction([start, new Date().getFullYear()]),
-                                  setFiltersAction([start, new Date().getFullYear()]),
-                              ]
+                            ? [setMaxMinYearsAction([start, end]), setFiltersAction([start, end])]
                             : [];
 
                         return of(...base, fetchPreventionStudiesSuccess(studies));
@@ -178,12 +176,9 @@ export const setYearsFiltersEpic = (
         withLatestFrom(state$),
         switchMap(([$action, $state]) => {
             if ($action.payload === undefined && $state.malaria.theme === "prevention") {
-                const start = getMinYearStart($state.prevention.studies);
+                const [start, end] = getMinMaxYears($state.prevention.studies);
 
-                return of(
-                    setMaxMinYearsAction([start, new Date().getFullYear()]),
-                    setFiltersAction([start, new Date().getFullYear()])
-                );
+                return of(setMaxMinYearsAction([start, end]), setFiltersAction([start, end]));
             } else {
                 return of();
             }
@@ -203,12 +198,9 @@ export const setPreventionThemeEpic = (
             }
 
             if ($action.from === "map") {
-                const start = getMinYearStart($state.prevention.studies);
+                const [start, end] = getMinMaxYears($state.prevention.studies);
                 const base: unknown[] = $state.prevention.studies?.length
-                    ? [
-                          setMaxMinYearsAction([start, new Date().getFullYear()]),
-                          setFiltersAction([start, new Date().getFullYear()]),
-                      ]
+                    ? [setMaxMinYearsAction([start, end]), setFiltersAction([start, end])]
                     : [];
 
                 return of(...base, setInsecticideClass("PYRETHROIDS"));
@@ -217,10 +209,3 @@ export const setPreventionThemeEpic = (
             }
         })
     );
-
-function getMinYearStart(studies: PreventionStudy[]) {
-    return +studies
-        .map(study => study.YEAR_START)
-        .sort()
-        .shift();
-}
