@@ -16,5 +16,4 @@ export class TranslationApiRepository implements TranslationRepository {
                 return Future.success([]);
             });
     }
-
 }

@@ -64,7 +64,7 @@ const DataSetMapActions: React.FC<Props> = ({
             }
             actionGroupKey={"DATASET"}
         >
-            { theme !== "invasive" && <DataSetSelector />}
+            {theme !== "invasive" && <DataSetSelector />}
         </ActionGroupItem>
     );
 };
