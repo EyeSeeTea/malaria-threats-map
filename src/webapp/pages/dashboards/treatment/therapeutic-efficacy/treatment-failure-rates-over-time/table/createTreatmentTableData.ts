@@ -71,9 +71,11 @@ export function createTreatmentTableData(
         })
     );
 
+    const sortedRows = _.orderBy(rows, ["COUNTRY"], ["asc"]);
+
     return {
         kind: "TableData",
-        rows,
+        rows: sortedRows,
         plasmodiumSpecies,
     };
 }
