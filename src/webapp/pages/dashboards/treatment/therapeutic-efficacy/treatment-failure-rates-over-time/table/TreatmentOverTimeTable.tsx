@@ -164,7 +164,7 @@ function EnhancedTableHead(props: EnhancedTableProps<TableData>) {
 }
 
 const StyledTableContainer = styled(TableContainer)`
-    height: 400px;
+    height: 450px;
 `;
 
 const headCells: HeadCell<TableData>[] = [
