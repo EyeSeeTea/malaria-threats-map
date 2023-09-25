@@ -44,6 +44,7 @@ export function useTreatmentOverTime(treatmentType: TreatmentOverTimeType): Trea
                 const firstDrug = filters.drugs[0];
 
                 if (firstDrug) filters.onDrugsChange([firstDrug]);
+                filters.onChangeShowDataForAllCountries("selected");
             }
 
             setChartType(type);
