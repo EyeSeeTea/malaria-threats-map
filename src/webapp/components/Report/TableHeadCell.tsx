@@ -2,7 +2,7 @@ import React from "react";
 import { TableSortLabel } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Data as TreatmentData } from "./treatment/columns";
-import { Data as PreventionData } from "./prevention/columns";
+import { Data as PreventionData } from "../../pages/dashboards/prevention/molecular-mechanism-detection/insecticide-resistance-resistance-mechanisms-dashboard/table/columns";
 import { HeadCell, StyledCell, useStyles } from "./types";
 import { Order } from "./utils";
 

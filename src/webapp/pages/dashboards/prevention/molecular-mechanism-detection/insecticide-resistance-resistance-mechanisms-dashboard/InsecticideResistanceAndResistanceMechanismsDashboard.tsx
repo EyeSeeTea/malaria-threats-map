@@ -6,6 +6,7 @@ import StatusOfResistanceToInsecticidePopup from "../../../../../components/dash
 import { useInfoPopup } from "../../../common/popup/useInfoPopup";
 import { useInsecticideResistanceAndResistanceMechanisms } from "./useInsecticideResistanceAndResistanceMechanisms";
 import { ChartType } from "./InsecticideResistanceAndResistanceState";
+import InsecticideResistanceAndResistanceMechanismsTable from "./table/InsecticideResistanceAndResistanceMechanismsTable";
 
 const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
     const { t } = useTranslation();
@@ -41,7 +42,7 @@ const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
                 onChartTypeChange={handleChartTypeChange}
                 onInfoClick={onChangeOpenPopup}
             >
-                {chartType === "graph" ? <div>Graph</div> : <div>Table</div>}
+                {chartType === "graph" ? <div>Graph</div> : <InsecticideResistanceAndResistanceMechanismsTable />}
             </PreventionFilterableDashboard>
             <StatusOfResistanceToInsecticidePopup
                 years={filters.years}
