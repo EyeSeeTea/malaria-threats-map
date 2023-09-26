@@ -7,6 +7,7 @@ import CountryContextStudies from "../common/country-context/CountryContextStudi
 import { CountryContext } from "../types";
 import PhenotypicInsecticideResistanceStudies from "./phenotypic-insecticide-resistance/PhenotypicInsecticideResistanceStudies";
 import { PhenotypicInsecticideResistance } from "./types";
+import MolecularMechanismDetection from "./molecular-mechanism-detection/MolecularMechanismDetection";
 
 const PreventionDashboards: React.FC = () => {
     const { dashboardsPreventionStudies, theme } = useDashboards();
@@ -38,6 +39,13 @@ const PreventionDashboards: React.FC = () => {
                 {dashboardsPreventionStudies && (
                     <Container maxWidth="xl">
                         <PhenotypicInsecticideResistanceStudies />
+                    </Container>
+                )}
+            </DashboardSection>
+            <DashboardSection>
+                {dashboardsPreventionStudies && (
+                    <Container maxWidth="xl">
+                        <MolecularMechanismDetection />
                     </Container>
                 )}
             </DashboardSection>

@@ -211,6 +211,14 @@
                     "year": "Year"
                 }
             },
+            "molecularMechanismDetectionDashboards": {
+                "title": "Molecular mechanism detection",
+                "insecticideResistanceAndResistanceMechanisms": {
+                    "title": "INSECTICIDE RESISTANCE AND RESISTANCE MECHANISMS DETECTED PER VECTOR SPECIES",
+                    "graph": "Graph",
+                    "table": "Table"
+                }
+            },
             "treatmentFilters": {
                 "title": "Filter Data"
             },

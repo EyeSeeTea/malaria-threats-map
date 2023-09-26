@@ -20,8 +20,8 @@ const SCREENSHOT_EXCLUSION_CLASSES = ["dashboard-action"];
 interface PreventionFilterableDashboardProps {
     id?: string;
     chart: PreventionFilterableChart;
-    chartTypes?: Option<ResistanceToInsecticideChartType>[];
-    chartType?: ResistanceToInsecticideChartType;
+    chartTypes?: Option<unknown>[];
+    chartType?: unknown;
     speciesOptions?: Option<string>[];
     typeOptions?: Option<string>[];
     insecticideTypeOptions?: Option<string>[];
@@ -29,7 +29,7 @@ interface PreventionFilterableDashboardProps {
     count: number | Record<string, number>;
     chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject[] | HighchartsReact.RefObject>;
     filters: PreventionFiltersState;
-    onChartTypeChange?: (value: ResistanceToInsecticideChartType) => void;
+    onChartTypeChange?: (value: unknown) => void;
     onInfoClick: () => void;
 }
 
@@ -98,7 +98,7 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                 >
                     {chartTypes.map(type => {
                         return (
-                            <ChartTypeOption key={type.value} value={type.value}>
+                            <ChartTypeOption key={type.label} value={type.value}>
                                 {type.label}
                             </ChartTypeOption>
                         );
