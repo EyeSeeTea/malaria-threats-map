@@ -29,13 +29,6 @@ interface PreventionFilterableDashboardProps {
     count: number | Record<string, number>;
     chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject[] | HighchartsReact.RefObject>;
     filters: PreventionFiltersState;
-    onYearsChange: (years: [number, number]) => void;
-    onInsecticideClassesChange?: (value: string[]) => void;
-    onSpeciesChange?: (value: string[]) => void;
-    onTypeChange?: (value: string) => void;
-    onInsecticideTypesChange?: (value: string[]) => void;
-    onOnlyIncludeBioassaysWithMoreMosquitoesChange: (value: number) => void;
-    onOnlyIncludeDataByHealthChange: (value: boolean) => void;
     onChartTypeChange?: (value: ResistanceToInsecticideChartType) => void;
     onInfoClick: () => void;
 }
@@ -56,13 +49,6 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
     filters,
     speciesOptions,
     typeOptions,
-    onInsecticideClassesChange,
-    onSpeciesChange,
-    onInsecticideTypesChange,
-    onTypeChange,
-    onYearsChange,
-    onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-    onOnlyIncludeDataByHealthChange,
     children,
     chartComponentRef,
     onChartTypeChange,
@@ -131,15 +117,6 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                                     filters={filters}
                                     speciesOptions={speciesOptions}
                                     typeOptions={typeOptions}
-                                    onInsecticideClassesChange={onInsecticideClassesChange}
-                                    onSpeciesChange={onSpeciesChange}
-                                    onInsecticideTypesChange={onInsecticideTypesChange}
-                                    onTypeChange={onTypeChange}
-                                    onYearsChange={onYearsChange}
-                                    onOnlyIncludeBioassaysWithMoreMosquitoesChange={
-                                        onOnlyIncludeBioassaysWithMoreMosquitoesChange
-                                    }
-                                    onOnlyIncludeDataByHealthChange={onOnlyIncludeDataByHealthChange}
                                     onCollapse={onChangeFiltersVisible}
                                 />
                             </FiltersCard>

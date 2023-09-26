@@ -14,7 +14,17 @@ import { PreventionFiltersState } from "./filters/PreventionFiltersState";
 
 export function filterStudies(
     studies: PreventionStudy[],
-    preventionFilters: PreventionFiltersState
+    preventionFilters: Pick<
+        PreventionFiltersState,
+        | "insecticideClasses"
+        | "insecticideTypes"
+        | "species"
+        | "type"
+        | "years"
+        | "onlyIncludeBioassaysWithMoreMosquitoes"
+        | "onlyIncludeDataByHealth"
+        | "maxMinYears"
+    >
 ): PreventionStudy[] {
     const filters = _.compact([
         filterByResistanceStatus,

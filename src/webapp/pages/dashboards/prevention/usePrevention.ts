@@ -12,16 +12,7 @@ import {
 import { Option } from "../../../components/BasicSelect";
 
 export function usePrevention() {
-    const {
-        filters,
-        onInsecticideClassChange,
-        onSpeciesChange,
-        onInsecticideTypesChange,
-        onTypeChange,
-        onYearsChange,
-        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-        onOnlyIncludeDataByHealthChange,
-    } = usePreventionFilters();
+    const filters = usePreventionFilters();
 
     const [filteredStudies, setFilteredStudies] = React.useState<PreventionStudy[]>([]);
     const [insecticideClassOptions, setInsecticideClassOptions] = React.useState<Option[]>([]);
@@ -90,7 +81,7 @@ export function usePrevention() {
         const species = extractSpeciesOptions(filteredStudies);
 
         setSpeciesOptions(species);
-    }, [dashboardsPreventionStudies, filters.insecticideClasses, onSpeciesChange]);
+    }, [dashboardsPreventionStudies, filters.insecticideClasses]);
 
     React.useEffect(() => {
         const filteredStudies = filterStudies(preventionStudies, {
@@ -107,7 +98,7 @@ export function usePrevention() {
         const types = extractTypeOptions(filteredStudies);
 
         setTypeOptions(types);
-    }, [preventionStudies, filters.insecticideClasses, filters.species, onTypeChange]);
+    }, [preventionStudies, filters.insecticideClasses, filters.species]);
 
     return {
         preventionStudies,
@@ -119,12 +110,5 @@ export function usePrevention() {
         speciesOptions,
         typeOptions,
         dashboardsPreventionStudies,
-        onInsecticideClassChange,
-        onSpeciesChange,
-        onInsecticideTypesChange,
-        onTypeChange,
-        onYearsChange,
-        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-        onOnlyIncludeDataByHealthChange,
     };
 }

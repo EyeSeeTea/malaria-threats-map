@@ -29,12 +29,6 @@ export function useResistanceToInsecticide() {
         insecticideTypeOptions,
         selectedCountries,
         filters,
-        onInsecticideClassChange,
-        onSpeciesChange,
-        onInsecticideTypesChange,
-        onYearsChange,
-        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-        onOnlyIncludeDataByHealthChange,
     } = usePrevention();
 
     const [data, setData] = React.useState<ResistanceToInsecticideChartData>({ kind: "InsecticideByClass", data: {} });
@@ -47,16 +41,17 @@ export function useResistanceToInsecticide() {
 
     React.useEffect(() => {
         if (chartType === "by-insecticide-class") {
-            onInsecticideClassChange(insecticideClassOptions.map(op => op.value));
-            onInsecticideTypesChange([]);
+            filters.onInsecticideClassChange(insecticideClassOptions.map(op => op.value));
+            filters.onInsecticideTypesChange([]);
         } else {
-            onInsecticideClassChange([]);
-            onInsecticideTypesChange(insecticideTypeOptions.map(op => op.value));
+            filters.onInsecticideClassChange([]);
+            filters.onInsecticideTypesChange(insecticideTypeOptions.map(op => op.value));
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         chartType,
-        onInsecticideClassChange,
-        onInsecticideTypesChange,
+        filters.onInsecticideClassChange,
+        filters.onInsecticideTypesChange,
         insecticideClassOptions,
         insecticideTypeOptions,
     ]);
@@ -80,14 +75,14 @@ export function useResistanceToInsecticide() {
         chartTypes,
         chartType,
         data,
-        filters,
+        filters: {
+            ...filters,
+            onInsecticideClassesChange:
+                chartType === "by-insecticide-class" ? filters.onInsecticideClassChange : undefined,
+            onInsecticideTypesChange: chartType === "by-insecticide" ? filters.onInsecticideTypesChange : undefined,
+            onTypeChange: undefined,
+        } as PreventionFiltersState,
         onChartTypeChange,
-        onInsecticideClassChange,
-        onSpeciesChange,
-        onInsecticideTypesChange,
-        onYearsChange,
-        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-        onOnlyIncludeDataByHealthChange,
     };
 }
 

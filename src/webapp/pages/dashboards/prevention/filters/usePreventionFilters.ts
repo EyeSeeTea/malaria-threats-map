@@ -3,8 +3,9 @@ import { useState } from "react";
 import { sortInsecticideClasses } from "../../../../components/filters/InsecticideClassFilter";
 import { getMaxMinYears } from "../../../../../domain/entities/Study";
 import { useDashboards } from "../../context/useDashboards";
+import { PreventionFiltersState } from "./PreventionFiltersState";
 
-export function usePreventionFilters() {
+export function usePreventionFilters(): PreventionFiltersState {
     const { dashboardsPreventionStudies } = useDashboards();
 
     const [insecticideTypes, setInsecticideTypes] = useState<string[]>([]);
@@ -44,18 +45,7 @@ export function usePreventionFilters() {
         setOnlyIncludeDataByHealth(value);
     }, []);
 
-    const filters = React.useMemo(() => {
-        return {
-            insecticideClasses,
-            species,
-            insecticideTypes,
-            type,
-            years,
-            onlyIncludeBioassaysWithMoreMosquitoes,
-            onlyIncludeDataByHealth,
-            maxMinYears: [maxMinYears[0], new Date().getFullYear()] as [number, number],
-        };
-    }, [
+    return {
         insecticideClasses,
         species,
         insecticideTypes,
@@ -63,11 +53,7 @@ export function usePreventionFilters() {
         years,
         onlyIncludeBioassaysWithMoreMosquitoes,
         onlyIncludeDataByHealth,
-        maxMinYears,
-    ]);
-
-    return {
-        filters,
+        maxMinYears: [maxMinYears[0], new Date().getFullYear()] as [number, number],
         onInsecticideClassChange,
         onSpeciesChange,
         onInsecticideTypesChange,

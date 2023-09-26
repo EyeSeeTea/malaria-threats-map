@@ -17,20 +17,8 @@ import { useInfoPopup } from "../../../common/popup/useInfoPopup";
 const ResistanceToInsecticideDashboard: React.FC = () => {
     const { t } = useTranslation();
 
-    const {
-        insecticideTypeOptions,
-        chartType,
-        chartTypes,
-        categoriesCount,
-        data,
-        filters,
-        onInsecticideClassChange,
-        onInsecticideTypesChange,
-        onYearsChange,
-        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-        onOnlyIncludeDataByHealthChange,
-        onChartTypeChange,
-    } = useResistanceToInsecticide();
+    const { insecticideTypeOptions, chartType, chartTypes, categoriesCount, data, filters, onChartTypeChange } =
+        useResistanceToInsecticide();
 
     const { openPopup, onChangeOpenPopup } = useInfoPopup();
 
@@ -50,11 +38,6 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
                     "common.dashboard.phenotypicInsecticideResistanceDashboards.statusOfResistanceToInsecticides.title"
                 )}
                 filters={filters}
-                onInsecticideClassesChange={chartType === "by-insecticide-class" ? onInsecticideClassChange : undefined}
-                onInsecticideTypesChange={chartType === "by-insecticide" ? onInsecticideTypesChange : undefined}
-                onYearsChange={onYearsChange}
-                onOnlyIncludeBioassaysWithMoreMosquitoesChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}
-                onOnlyIncludeDataByHealthChange={onOnlyIncludeDataByHealthChange}
                 onChartTypeChange={onChartTypeChange}
                 onInfoClick={onChangeOpenPopup}
             >
