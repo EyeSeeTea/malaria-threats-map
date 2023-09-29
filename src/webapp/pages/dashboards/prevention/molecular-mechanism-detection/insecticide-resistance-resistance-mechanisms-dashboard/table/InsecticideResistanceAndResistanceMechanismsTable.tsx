@@ -1,14 +1,5 @@
 import React from "react";
-import {
-    Table,
-    TableBody,
-    TableContainer,
-    TableHead,
-    TablePagination,
-    TableRow,
-    Typography,
-    Paper,
-} from "@mui/material";
+import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
@@ -26,73 +17,6 @@ import { filterByCountries, filterBySpecies } from "../../../../../../components
 import { exportToCSV } from "../../../../../../components/DataDownload/download";
 import { getComparator, Order, stableSort } from "../../../../../../components/Report/utils";
 import { EnhancedTableProps, StyledCell, useStyles } from "../../../../../../components/Report/types";
-
-function EnhancedTableHead(props: EnhancedTableProps<Data>) {
-    const { t } = useTranslation();
-    const { classes, order, orderBy, onRequestSort } = props;
-
-    return (
-        <TableHead>
-            <TableRow>
-                <StyledCell isBold colSpan={3} />
-                <StyledCell isBold colSpan={8} divider>
-                    {t("common.report.prevention.resistance")}
-                </StyledCell>
-                <StyledCell isBold colSpan={7} divider>
-                    {t("common.report.prevention.mechanism")}
-                </StyledCell>
-            </TableRow>
-            <TableRow>
-                <StyledCell isBold colSpan={3} />
-                <StyledCell isBold colSpan={2} divider>
-                    Pyrethroids
-                </StyledCell>
-                <StyledCell isBold colSpan={2}>
-                    Organochlorines
-                </StyledCell>
-                <StyledCell isBold colSpan={2}>
-                    Carbamates
-                </StyledCell>
-                <StyledCell isBold colSpan={2}>
-                    Organophosphates
-                </StyledCell>
-                <StyledCell isBold colSpan={1} divider>
-                    Mono oxygenases
-                </StyledCell>
-                <StyledCell isBold colSpan={1}>
-                    Esterases
-                </StyledCell>
-                <StyledCell isBold colSpan={1}>
-                    GSTs
-                </StyledCell>
-                <StyledCell isBold colSpan={1}>
-                    kdr (K1014S)
-                </StyledCell>
-                <StyledCell isBold colSpan={1}>
-                    kdr (K1014F)
-                </StyledCell>
-                <StyledCell isBold colSpan={1}>
-                    kdr (unspecified mutation)
-                </StyledCell>
-                <StyledCell isBold colSpan={1}>
-                    Ace-1R
-                </StyledCell>
-            </TableRow>
-            <TableRow>
-                {headCells.map(headCell => (
-                    <TableHeadCell
-                        key={headCell.id}
-                        classes={classes}
-                        headCell={headCell}
-                        order={order}
-                        orderBy={orderBy}
-                        onRequestSort={onRequestSort}
-                    />
-                ))}
-            </TableRow>
-        </TableHead>
-    );
-}
 
 const mapStateToProps = (state: State) => ({
     studies: selectPreventionStudies(state),
@@ -313,127 +237,190 @@ function InsecticideResistanceAndResistanceMechanismsTable({ studies: baseStudie
 
     return (
         <div className={classes.root}>
-            <Paper className={classes.paper}>
-                <div className={classes.wrapper}>
-                    <ReportToolbar
-                        title={t("common.report.prevention.title")}
-                        numSelected={selected.length}
-                        countries={countries}
-                        setCountries={setCountries}
-                        species={species}
-                        setSpecies={setSpecies}
-                        onClick={downloadData}
-                        preventionStudies={studies}
-                    />
-                    <TableContainer>
-                        <Table
-                            className={classes.table}
-                            aria-labelledby="tableTitle"
-                            size={"small"}
-                            aria-label="enhanced table"
-                        >
-                            <EnhancedTableHead
-                                classes={classes}
-                                numSelected={selected.length}
-                                order={order}
-                                orderBy={orderBy}
-                                onSelectAllClick={handleSelectAllClick}
-                                onRequestSort={handleRequestSort}
-                                rowCount={groups.length}
-                            />
-                            <TableBody>
-                                {rows.map((row, index) => {
-                                    const isItemSelected = isSelected(row.ID);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
-                                    return (
-                                        <TableRow tabIndex={-1} key={row.ID} selected={isItemSelected}>
-                                            {(index === 0 || tablePage[index].ISO2 !== tablePage[index - 1].ISO2) && (
-                                                <>
+            <div className={classes.wrapper}>
+                <ReportToolbar
+                    title={t("common.report.prevention.title")}
+                    numSelected={selected.length}
+                    countries={countries}
+                    setCountries={setCountries}
+                    species={species}
+                    setSpecies={setSpecies}
+                    onClick={downloadData}
+                    preventionStudies={studies}
+                />
+                <TableContainer>
+                    <Table
+                        className={classes.table}
+                        aria-labelledby="tableTitle"
+                        size={"small"}
+                        aria-label="enhanced table"
+                    >
+                        <EnhancedTableHead
+                            classes={classes}
+                            numSelected={selected.length}
+                            order={order}
+                            orderBy={orderBy}
+                            onSelectAllClick={handleSelectAllClick}
+                            onRequestSort={handleRequestSort}
+                            rowCount={groups.length}
+                        />
+                        <TableBody>
+                            {rows.map((row, index) => {
+                                const isItemSelected = isSelected(row.ID);
+                                const labelId = `enhanced-table-checkbox-${index}`;
+                                return (
+                                    <TableRow tabIndex={-1} key={row.ID} selected={isItemSelected}>
+                                        {(index === 0 || tablePage[index].ISO2 !== tablePage[index - 1].ISO2) && (
+                                            <>
+                                                <StyledCell
+                                                    component="th"
+                                                    id={labelId}
+                                                    scope="row"
+                                                    padding="none"
+                                                    rowSpan={row.COUNTRY_NUMBER}
+                                                    align={"left"}
+                                                >
+                                                    {row.COUNTRY}
+                                                </StyledCell>
+                                                <StyledCell
+                                                    component="th"
+                                                    id={labelId}
+                                                    scope="row"
+                                                    padding="none"
+                                                    rowSpan={row.COUNTRY_NUMBER}
+                                                    align={"center"}
+                                                    divider={true}
+                                                >
+                                                    {row.INSECTICIDE_CLASSES}
+                                                </StyledCell>
+                                            </>
+                                        )}
+                                        {Object.entries(row)
+                                            .filter(entry => !COLUMNS.includes(entry[0]))
+                                            .map((entry, index) => {
+                                                const number = Number(entry[1]);
+                                                const header = headCells.find(cell => cell.id === entry[0]);
+                                                const isNumber = !Number.isNaN(number);
+                                                const percentage = ERROR_COLUMNS.includes(entry[0]);
+                                                const cell = entry[0].split("_")[0];
+
+                                                const active = (row as any)[`${cell}_N`];
+                                                const active2 = (row as any)[`${entry[0]}_NUMBER_SITES`];
+                                                const finalActive = active !== undefined ? active : active2;
+
+                                                const error =
+                                                    percentage && entry[0].indexOf("AVERAGE") > -1 && number > 0;
+                                                const grey = GREY_COLUMNS.includes(entry[0]);
+                                                const darkGrey =
+                                                    grey && (row as any)[`${entry[0]}_NUMBER_SITES`] > 0
+                                                        ? "dimgrey"
+                                                        : "darkgray";
+                                                return (
                                                     <StyledCell
+                                                        key={`${entry[0]}_${index}`}
                                                         component="th"
                                                         id={labelId}
                                                         scope="row"
                                                         padding="none"
-                                                        rowSpan={row.COUNTRY_NUMBER}
-                                                        align={"left"}
+                                                        color={error ? "red" : grey ? darkGrey : undefined}
+                                                        isRight={header.align === "right"}
+                                                        divider={header.divider}
                                                     >
-                                                        {row.COUNTRY}
+                                                        {header && header.numeric && isNumber
+                                                            ? `${number.toFixed(1)}% ${
+                                                                  finalActive !== undefined ? `(${finalActive})` : ""
+                                                              }`
+                                                            : entry[1] || "-"}
                                                     </StyledCell>
-                                                    <StyledCell
-                                                        component="th"
-                                                        id={labelId}
-                                                        scope="row"
-                                                        padding="none"
-                                                        rowSpan={row.COUNTRY_NUMBER}
-                                                        align={"center"}
-                                                        divider={true}
-                                                    >
-                                                        {row.INSECTICIDE_CLASSES}
-                                                    </StyledCell>
-                                                </>
-                                            )}
-                                            {Object.entries(row)
-                                                .filter(entry => !COLUMNS.includes(entry[0]))
-                                                .map((entry, index) => {
-                                                    const number = Number(entry[1]);
-                                                    const header = headCells.find(cell => cell.id === entry[0]);
-                                                    const isNumber = !Number.isNaN(number);
-                                                    const percentage = ERROR_COLUMNS.includes(entry[0]);
-                                                    const cell = entry[0].split("_")[0];
-
-                                                    const active = (row as any)[`${cell}_N`];
-                                                    const active2 = (row as any)[`${entry[0]}_NUMBER_SITES`];
-                                                    const finalActive = active !== undefined ? active : active2;
-
-                                                    const error =
-                                                        percentage && entry[0].indexOf("AVERAGE") > -1 && number > 0;
-                                                    const grey = GREY_COLUMNS.includes(entry[0]);
-                                                    const darkGrey =
-                                                        grey && (row as any)[`${entry[0]}_NUMBER_SITES`] > 0
-                                                            ? "dimgrey"
-                                                            : "darkgray";
-                                                    return (
-                                                        <StyledCell
-                                                            key={`${entry[0]}_${index}`}
-                                                            component="th"
-                                                            id={labelId}
-                                                            scope="row"
-                                                            padding="none"
-                                                            color={error ? "red" : grey ? darkGrey : undefined}
-                                                            isRight={header.align === "right"}
-                                                            divider={header.divider}
-                                                        >
-                                                            {header && header.numeric && isNumber
-                                                                ? `${number.toFixed(1)}% ${
-                                                                      finalActive !== undefined
-                                                                          ? `(${finalActive})`
-                                                                          : ""
-                                                                  }`
-                                                                : entry[1] || "-"}
-                                                        </StyledCell>
-                                                    );
-                                                })}
-                                        </TableRow>
-                                    );
-                                })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 15, 20]}
-                        component="div"
-                        count={groups.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                    />
-                    <Typography variant={"body2"}>{t("common.data_download.footer")}</Typography>
-                    <br />
-                </div>
-            </Paper>
+                                                );
+                                            })}
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 15, 20]}
+                    component="div"
+                    count={groups.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+                <Typography variant={"body2"}>{t("common.data_download.footer")}</Typography>
+                <br />
+            </div>
         </div>
     );
 }
 
 export default connect(mapStateToProps)(InsecticideResistanceAndResistanceMechanismsTable);
+
+function EnhancedTableHead(props: EnhancedTableProps<Data>) {
+    const { t } = useTranslation();
+    const { classes, order, orderBy, onRequestSort } = props;
+
+    return (
+        <TableHead>
+            <TableRow>
+                <StyledCell isBold colSpan={3} />
+                <StyledCell isBold colSpan={8} divider>
+                    {t("common.report.prevention.resistance")}
+                </StyledCell>
+                <StyledCell isBold colSpan={7} divider>
+                    {t("common.report.prevention.mechanism")}
+                </StyledCell>
+            </TableRow>
+            <TableRow>
+                <StyledCell isBold colSpan={3} />
+                <StyledCell isBold colSpan={2} divider>
+                    Pyrethroids
+                </StyledCell>
+                <StyledCell isBold colSpan={2}>
+                    Organochlorines
+                </StyledCell>
+                <StyledCell isBold colSpan={2}>
+                    Carbamates
+                </StyledCell>
+                <StyledCell isBold colSpan={2}>
+                    Organophosphates
+                </StyledCell>
+                <StyledCell isBold colSpan={1} divider>
+                    Mono oxygenases
+                </StyledCell>
+                <StyledCell isBold colSpan={1}>
+                    Esterases
+                </StyledCell>
+                <StyledCell isBold colSpan={1}>
+                    GSTs
+                </StyledCell>
+                <StyledCell isBold colSpan={1}>
+                    kdr (K1014S)
+                </StyledCell>
+                <StyledCell isBold colSpan={1}>
+                    kdr (K1014F)
+                </StyledCell>
+                <StyledCell isBold colSpan={1}>
+                    kdr (unspecified mutation)
+                </StyledCell>
+                <StyledCell isBold colSpan={1}>
+                    Ace-1R
+                </StyledCell>
+            </TableRow>
+            <TableRow>
+                {headCells.map(headCell => (
+                    <TableHeadCell
+                        key={headCell.id}
+                        classes={classes}
+                        headCell={headCell}
+                        order={order}
+                        orderBy={orderBy}
+                        onRequestSort={onRequestSort}
+                    />
+                ))}
+            </TableRow>
+        </TableHead>
+    );
+}
