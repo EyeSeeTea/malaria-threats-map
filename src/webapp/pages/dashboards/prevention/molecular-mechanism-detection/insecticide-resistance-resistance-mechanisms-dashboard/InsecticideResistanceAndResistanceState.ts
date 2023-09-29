@@ -1,16 +1,16 @@
+import { PreventionStudy } from "../../../../../../domain/entities/PreventionStudy";
 import { TableData } from "./table/TableData";
 
 export type ChartType = "graph" | "table";
 
 export type InsecticideResistanceAndResistanceGraphData = {
     kind: "GraphData";
-    series: unknown[];
+    series: PreventionStudy[];
 };
 
 export type InsecticideResistanceAndResistanceTableData = {
     kind: "TableData";
     rows: TableData[];
-    plasmodiumSpecies: string;
 };
 
 export type InsecticideResistanceAndResistanceData =

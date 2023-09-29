@@ -1,9 +1,11 @@
 import i18next from "i18next";
 import React from "react";
+import { PreventionStudy } from "../../../../../../domain/entities/PreventionStudy";
 import { Option } from "../../../common/types";
 import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
 import { usePrevention } from "../../usePrevention";
-import { ChartType } from "./InsecticideResistanceAndResistanceState";
+import { ChartType, InsecticideResistanceAndResistanceData } from "./InsecticideResistanceAndResistanceState";
+import { createTableData } from "./table/createTableData";
 
 const chartTypes: Option<ChartType>[] = [
     {
@@ -21,32 +23,24 @@ const chartTypes: Option<ChartType>[] = [
 ];
 
 export function useInsecticideResistanceAndResistanceMechanisms() {
-    const {
-        preventionStudies,
-        filteredStudies,
-        insecticideClassOptions,
-        insecticideTypeOptions,
-        selectedCountries,
-        filters,
-    } = usePrevention();
+    const { preventionStudies, filteredStudies, selectedCountries, filters } = usePrevention();
 
-    //const [data, setData] = React.useState<ResistanceToInsecticideChartData>({ kind: "InsecticideByClass", data: {} });
+    const [data, setData] = React.useState<InsecticideResistanceAndResistanceData>({ kind: "GraphData", series: [] });
     const [chartType, setChartType] = React.useState<ChartType>("graph");
 
-    // React.useEffect(() => {
-    //     setData(createChartData(preventionStudies, filteredStudies, selectedCountries, filters, chartType));
-    // }, [preventionStudies, filteredStudies, selectedCountries, filters, chartType]);
+    React.useEffect(() => {
+        setData(createChartData(filteredStudies, filters, chartType));
+    }, [preventionStudies, filteredStudies, selectedCountries, filters, chartType]);
 
     const onChartTypeChange = React.useCallback((type: ChartType) => {
         setChartType(type);
     }, []);
 
     return {
-        insecticideTypeOptions,
         filteredStudies,
         chartTypes,
         chartType,
-        //data,
+        data,
         filters: {
             ...filters,
             onTypeChange: undefined,
@@ -57,16 +51,14 @@ export function useInsecticideResistanceAndResistanceMechanisms() {
     };
 }
 
-// export function createChartData(
-//     allStudies: PreventionStudy[],
-//     filteredsStudies: PreventionStudy[],
-//     selectedCountries: string[],
-//     filters: PreventionFiltersState,
-//     type: ResistanceToInsecticideChartType
-// ): ResistanceToInsecticideChartData {
-//     if (type === "by-insecticide") {
-//         return createChartDataByInsecticideType(allStudies, filteredsStudies, selectedCountries, filters);
-//     } else {
-//         return createChartDataByInsecticideClass(allStudies, filteredsStudies, selectedCountries, filters);
-//     }
-// }
+export function createChartData(
+    filteredsStudies: PreventionStudy[],
+    filters: PreventionFiltersState,
+    type: ChartType
+): InsecticideResistanceAndResistanceData {
+    if (type === "graph") {
+        return { kind: "GraphData", series: [] as PreventionStudy[] };
+    } else {
+        return { kind: "TableData", rows: createTableData(filteredsStudies) };
+    }
+}

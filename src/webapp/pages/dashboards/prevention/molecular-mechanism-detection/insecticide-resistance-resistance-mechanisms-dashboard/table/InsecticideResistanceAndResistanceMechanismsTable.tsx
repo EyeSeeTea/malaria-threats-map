@@ -1,31 +1,22 @@
 import React from "react";
 import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material";
-import { connect } from "react-redux";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
 import { TableHeadCell } from "../../../../../../components/Report/TableHeadCell";
-import { PreventionStudy } from "../../../../../../../domain/entities/PreventionStudy";
-import { State } from "../../../../../../store/types";
-import { selectPreventionStudies } from "../../../../../../store/reducers/prevention-reducer";
-import { resolvePyrethroids } from "../../../../../../components/Report/resolvers/resistanceStatus";
 import { sendAnalytics } from "../../../../../../utils/analytics";
-import { resolveMechanism } from "../../../../../../components/Report/resolvers/resistanceMechanism";
-import { filterByCountries, filterBySpecies } from "../../../../../../components/layers/studies-filters";
 import { exportToCSV } from "../../../../../../components/DataDownload/download";
 import { getComparator, Order, stableSort } from "../../../../../../components/Report/utils";
 import { EnhancedTableProps, HeadCell, StyledCell, useStyles } from "../../../../../../components/Report/types";
 import { TableData } from "./TableData";
 
-const mapStateToProps = (state: State) => ({
-    studies: selectPreventionStudies(state),
-});
+interface InsecticideResistanceAndResistanceMechanismTableProps {
+    rows: TableData[];
+}
 
-type StateProps = ReturnType<typeof mapStateToProps>;
-type OwnProps = {};
-type Props = StateProps & OwnProps;
-
-function InsecticideResistanceAndResistanceMechanismsTable({ studies }: Props) {
+const InsecticideResistanceAndResistanceMechanismsTable: React.FC<
+    InsecticideResistanceAndResistanceMechanismTableProps
+> = ({ rows }) => {
     const classes = useStyles({});
     const { t } = useTranslation();
     const [order, setOrder] = React.useState<Order>("desc");
@@ -33,112 +24,6 @@ function InsecticideResistanceAndResistanceMechanismsTable({ studies }: Props) {
     const [selected, setSelected] = React.useState<string[]>([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-    const countryStudyGroups = R.groupBy((study: PreventionStudy) => `${study.ISO2}`, studies);
-
-    const groups: TableData[] = R.flatten(
-        Object.entries(countryStudyGroups).map(([country, countryStudies]) => {
-            const countrySpeciesGroup = R.groupBy((study: PreventionStudy) => `${study.SPECIES}`, countryStudies);
-
-            const insecticideClasses = R.uniqBy(
-                study => study.INSECTICIDE_CLASS,
-                countryStudies.filter(study => parseFloat(study.MORTALITY_ADJUSTED) < 0.9)
-            );
-
-            const entries = Object.entries(countrySpeciesGroup);
-            return entries
-                .map(([species, countrySpeciesStudies]) => {
-                    const {
-                        percentage: pyrethroidsPercentage,
-                        sorted: sortedPyrethroidsStudies,
-                        n: pyrethroidsStudies,
-                    } = resolvePyrethroids("PYRETHROIDS", countrySpeciesStudies);
-                    const {
-                        percentage: organochlorinesPercentage,
-                        sorted: sortedOrganochlorinesStudies,
-                        n: organochlorinesStudies,
-                    } = resolvePyrethroids("ORGANOCHLORINES", countrySpeciesStudies);
-                    const {
-                        percentage: carbamatesPercentage,
-                        sorted: sortedCarbamatesStudies,
-                        n: carbamatesStudies,
-                    } = resolvePyrethroids("CARBAMATES", countrySpeciesStudies);
-                    const {
-                        percentage: organophosphatesPercentage,
-                        sorted: sortedOrganophosphatesStudies,
-                        n: organophosphatesStudies,
-                    } = resolvePyrethroids("ORGANOPHOSPHATES", countrySpeciesStudies);
-
-                    const { percentage: monoOxygenases, n: monoOxygenasesNumber } = resolveMechanism(
-                        "MONO_OXYGENASES",
-                        countrySpeciesStudies
-                    );
-                    const { percentage: esterases, n: esterasesNumber } = resolveMechanism(
-                        "ESTERASES",
-                        countrySpeciesStudies
-                    );
-                    const { percentage: gsts, n: gstsNumber } = resolveMechanism("GSTS", countrySpeciesStudies);
-                    const { percentage: kdrL1014s, n: kdrL1014sNumber } = resolveMechanism(
-                        "KDR_L1014S",
-                        countrySpeciesStudies
-                    );
-                    const { percentage: kdrL1014f, n: kdrL1014fNumber } = resolveMechanism(
-                        "KDR_L1014F",
-                        countrySpeciesStudies
-                    );
-                    const { percentage: kdrUnspecified, n: kdrUnspecifiedNumber } = resolveMechanism(
-                        "KDR_(MUTATION_UNSPECIFIED)",
-                        countrySpeciesStudies
-                    );
-                    const { percentage: ace1r, n: ace1rNumber } = resolveMechanism("ACE1R", countrySpeciesStudies);
-
-                    return {
-                        ID: `${country}_${species}`,
-                        ISO2: country,
-                        COUNTRY: t(country),
-                        COUNTRY_NUMBER: entries.length,
-                        SPECIES: species,
-                        INSECTICIDE_CLASSES: `${insecticideClasses.length}`,
-                        PYRETHROIDS_AVERAGE_MORTALITY: pyrethroidsPercentage,
-                        PYRETHROIDS_LAST_YEAR: `${
-                            sortedPyrethroidsStudies.length ? sortedPyrethroidsStudies[0].YEAR_START : "-"
-                        }`,
-                        PYRETHROIDS_N: pyrethroidsStudies,
-                        ORGANOCHLORINES_AVERAGE_MORTALITY: organochlorinesPercentage,
-                        ORGANOCHLORINES_LAST_YEAR: `${
-                            sortedOrganochlorinesStudies.length ? sortedOrganochlorinesStudies[0].YEAR_START : "-"
-                        }`,
-
-                        ORGANOCHLORINES_N: organochlorinesStudies,
-                        CARBAMATES_AVERAGE_MORTALITY: carbamatesPercentage,
-                        CARBAMATES_LAST_YEAR: `${
-                            sortedCarbamatesStudies.length ? sortedCarbamatesStudies[0].YEAR_START : "-"
-                        }`,
-                        CARBAMATES_N: carbamatesStudies,
-                        ORGANOPHOSPHATES_AVERAGE_MORTALITY: organophosphatesPercentage,
-                        ORGANOPHOSPHATES_LAST_YEAR: `${
-                            sortedOrganophosphatesStudies.length ? sortedOrganophosphatesStudies[0].YEAR_START : "-"
-                        }`,
-                        ORGANOPHOSPHATES_N: organophosphatesStudies,
-                        MONOXYGENASES_PERCENT_SITES_DETECTED: monoOxygenases,
-                        MONOXYGENASES_PERCENT_SITES_DETECTED_NUMBER_SITES: monoOxygenasesNumber,
-                        ESTERASES_PERCENT_SITES_DETECTED: esterases,
-                        ESTERASES_PERCENT_SITES_DETECTED_NUMBER_SITES: esterasesNumber,
-                        GSTS_PERCENT_SITES_DETECTED: gsts,
-                        GSTS_PERCENT_SITES_DETECTED_NUMBER_SITES: gstsNumber,
-                        K1014S_PERCENT_SITES_DETECTED: kdrL1014s,
-                        K1014S_PERCENT_SITES_DETECTED_NUMBER_SITES: kdrL1014sNumber,
-                        K1014F_PERCENT_SITES_DETECTED: kdrL1014f,
-                        K1014F_PERCENT_SITES_DETECTED_NUMBER_SITES: kdrL1014fNumber,
-                        KDR_UNSPECIFIED_PERCENT_SITES_DETECTED: kdrUnspecified,
-                        KDR_UNSPECIFIED_PERCENT_SITES_DETECTED_NUMBER_SITES: kdrUnspecifiedNumber,
-                        ACE1R_PERCENT_SITES_DETECTED: ace1r,
-                        ACE1R_PERCENT_SITES_DETECTED_NUMBER_SITES: ace1rNumber,
-                    };
-                })
-                .sort(getComparator(order, orderBy));
-        })
-    );
 
     const downloadData = () => {
         const studies = R.map(
@@ -153,7 +38,7 @@ function InsecticideResistanceAndResistanceMechanismsTable({ studies }: Props) {
                         };
                     }
                 }, {}),
-            groups
+            rows
         );
         const tabs = [
             {
@@ -180,7 +65,7 @@ function InsecticideResistanceAndResistanceMechanismsTable({ studies }: Props) {
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds = groups.map(n => n.ID);
+            const newSelecteds = rows.map(n => n.ID);
             setSelected(newSelecteds);
             return;
         }
@@ -203,7 +88,7 @@ function InsecticideResistanceAndResistanceMechanismsTable({ studies }: Props) {
             t(a.ISO2 === "NA" ? "common.COUNTRY_NA" : a.ISO2) < t(b.ISO2 === "NA" ? "common.COUNTRY_NA" : b.ISO2)
                 ? -1
                 : 1,
-        groups
+        rows
     );
 
     const tablePage = stableSort(sortedGroups, getComparator(order, orderBy)).slice(
@@ -211,7 +96,7 @@ function InsecticideResistanceAndResistanceMechanismsTable({ studies }: Props) {
         page * rowsPerPage + rowsPerPage
     );
 
-    const rows: TableData[] = tablePage.map(row => ({
+    const finalRows: TableData[] = tablePage.map(row => ({
         ...row,
         COUNTRY_NUMBER: tablePage.filter(r => r.ISO2 === row.ISO2).length,
     }));
@@ -237,10 +122,10 @@ function InsecticideResistanceAndResistanceMechanismsTable({ studies }: Props) {
                             orderBy={orderBy}
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
-                            rowCount={groups.length}
+                            rowCount={rows.length}
                         />
                         <TableBody>
-                            {rows.map((row, index) => {
+                            {finalRows.map((row, index) => {
                                 const isItemSelected = isSelected(row.ID);
                                 const labelId = `enhanced-table-checkbox-${index}`;
                                 return (
@@ -318,7 +203,7 @@ function InsecticideResistanceAndResistanceMechanismsTable({ studies }: Props) {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 15, 20]}
                     component="div"
-                    count={groups.length}
+                    count={rows.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
@@ -329,9 +214,9 @@ function InsecticideResistanceAndResistanceMechanismsTable({ studies }: Props) {
             </div>
         </div>
     );
-}
+};
 
-export default connect(mapStateToProps)(InsecticideResistanceAndResistanceMechanismsTable);
+export default InsecticideResistanceAndResistanceMechanismsTable;
 
 function EnhancedTableHead(props: EnhancedTableProps<TableData>) {
     const { t } = useTranslation();

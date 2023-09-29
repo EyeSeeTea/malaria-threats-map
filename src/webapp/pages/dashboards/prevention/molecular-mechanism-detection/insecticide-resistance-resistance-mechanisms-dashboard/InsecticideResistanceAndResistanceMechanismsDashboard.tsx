@@ -11,7 +11,7 @@ import InsecticideResistanceAndResistanceMechanismsTable from "./table/Insectici
 const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
     const { t } = useTranslation();
 
-    const { insecticideTypeOptions, chartType, chartTypes, filters, onChartTypeChange } =
+    const { chartType, chartTypes, filters, data, onChartTypeChange } =
         useInsecticideResistanceAndResistanceMechanisms();
 
     const { openPopup, onChangeOpenPopup } = useInfoPopup();
@@ -29,7 +29,6 @@ const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
         <React.Fragment>
             <PreventionFilterableDashboard
                 id="status-resistance-insecticide"
-                insecticideTypeOptions={insecticideTypeOptions}
                 chart="status-of-resistance-of-insecticide"
                 chartTypes={chartTypes}
                 chartType={chartType}
@@ -42,7 +41,11 @@ const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
                 onChartTypeChange={handleChartTypeChange}
                 onInfoClick={onChangeOpenPopup}
             >
-                {chartType === "graph" ? <div>Graph</div> : <InsecticideResistanceAndResistanceMechanismsTable />}
+                {data.kind === "GraphData" ? (
+                    <div>Graph</div>
+                ) : (
+                    <InsecticideResistanceAndResistanceMechanismsTable rows={data.rows} />
+                )}
             </PreventionFilterableDashboard>
             <StatusOfResistanceToInsecticidePopup
                 years={filters.years}
