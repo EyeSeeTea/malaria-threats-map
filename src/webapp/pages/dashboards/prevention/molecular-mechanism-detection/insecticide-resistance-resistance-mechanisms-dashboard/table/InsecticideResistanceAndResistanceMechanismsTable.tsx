@@ -3,9 +3,7 @@ import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow,
 import { connect } from "react-redux";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
-import { COLUMNS, Data, ERROR_COLUMNS, GREY_COLUMNS, headCells } from "./columns";
 import { format } from "date-fns";
-import ReportToolbar from "../../../../../../components/Report/ReportToolbar";
 import { TableHeadCell } from "../../../../../../components/Report/TableHeadCell";
 import { PreventionStudy } from "../../../../../../../domain/entities/PreventionStudy";
 import { State } from "../../../../../../store/types";
@@ -16,7 +14,8 @@ import { resolveMechanism } from "../../../../../../components/Report/resolvers/
 import { filterByCountries, filterBySpecies } from "../../../../../../components/layers/studies-filters";
 import { exportToCSV } from "../../../../../../components/DataDownload/download";
 import { getComparator, Order, stableSort } from "../../../../../../components/Report/utils";
-import { EnhancedTableProps, StyledCell, useStyles } from "../../../../../../components/Report/types";
+import { EnhancedTableProps, HeadCell, StyledCell, useStyles } from "../../../../../../components/Report/types";
+import { TableData } from "./TableData";
 
 const mapStateToProps = (state: State) => ({
     studies: selectPreventionStudies(state),
@@ -26,36 +25,18 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {};
 type Props = StateProps & OwnProps;
 
-function InsecticideResistanceAndResistanceMechanismsTable({ studies: baseStudies }: Props) {
+function InsecticideResistanceAndResistanceMechanismsTable({ studies }: Props) {
     const classes = useStyles({});
     const { t } = useTranslation();
     const [order, setOrder] = React.useState<Order>("desc");
-    const [orderBy, setOrderBy] = React.useState<keyof Data>("PYRETHROIDS_AVERAGE_MORTALITY");
+    const [orderBy, setOrderBy] = React.useState<keyof TableData>("PYRETHROIDS_AVERAGE_MORTALITY");
     const [selected, setSelected] = React.useState<string[]>([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-    const [countries, doSetCountries] = React.useState<string[]>([]);
-    const [species, doSetSpecies] = React.useState<string[]>([]);
-
-    const setCountries = (countries: string[]) => {
-        doSetCountries(countries);
-
-        setPage(0);
-    };
-
-    const setSpecies = (species: string[]) => {
-        doSetSpecies(species);
-        setPage(0);
-    };
-
-    const filters = [filterByCountries(countries), filterBySpecies(species)];
-
-    const studies = filters.reduce((studies, filter) => studies.filter(filter), baseStudies);
-
     const countryStudyGroups = R.groupBy((study: PreventionStudy) => `${study.ISO2}`, studies);
 
-    const groups: Data[] = R.flatten(
+    const groups: TableData[] = R.flatten(
         Object.entries(countryStudyGroups).map(([country, countryStudies]) => {
             const countrySpeciesGroup = R.groupBy((study: PreventionStudy) => `${study.SPECIES}`, countryStudies);
 
@@ -190,7 +171,7 @@ function InsecticideResistanceAndResistanceMechanismsTable({ studies: baseStudie
         });
     };
 
-    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
+    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TableData) => {
         const isAsc = orderBy === property && order === "asc";
         setOrder(isAsc ? "desc" : "asc");
         setOrderBy(property);
@@ -230,7 +211,7 @@ function InsecticideResistanceAndResistanceMechanismsTable({ studies: baseStudie
         page * rowsPerPage + rowsPerPage
     );
 
-    const rows: Data[] = tablePage.map(row => ({
+    const rows: TableData[] = tablePage.map(row => ({
         ...row,
         COUNTRY_NUMBER: tablePage.filter(r => r.ISO2 === row.ISO2).length,
     }));
@@ -238,16 +219,10 @@ function InsecticideResistanceAndResistanceMechanismsTable({ studies: baseStudie
     return (
         <div className={classes.root}>
             <div className={classes.wrapper}>
-                <ReportToolbar
-                    title={t("common.report.prevention.title")}
-                    numSelected={selected.length}
-                    countries={countries}
-                    setCountries={setCountries}
-                    species={species}
-                    setSpecies={setSpecies}
-                    onClick={downloadData}
-                    preventionStudies={studies}
-                />
+                <Typography variant="h6" id="tableTitle" display="block" fontWeight="bold" gutterBottom>
+                    {t("common.report.prevention.title")}
+                </Typography>
+
                 <TableContainer>
                     <Table
                         className={classes.table}
@@ -358,7 +333,7 @@ function InsecticideResistanceAndResistanceMechanismsTable({ studies: baseStudie
 
 export default connect(mapStateToProps)(InsecticideResistanceAndResistanceMechanismsTable);
 
-function EnhancedTableHead(props: EnhancedTableProps<Data>) {
+function EnhancedTableHead(props: EnhancedTableProps<TableData>) {
     const { t } = useTranslation();
     const { classes, order, orderBy, onRequestSort } = props;
 
@@ -424,3 +399,181 @@ function EnhancedTableHead(props: EnhancedTableProps<Data>) {
         </TableHead>
     );
 }
+
+export const ERROR_COLUMNS = [
+    "PYRETHROIDS_AVERAGE_MORTALITY",
+    "ORGANOCHLORINES_AVERAGE_MORTALITY",
+    "CARBAMATES_AVERAGE_MORTALITY",
+    "ORGANOPHOSPHATES_AVERAGE_MORTALITY",
+];
+
+export const GREY_COLUMNS = [
+    "MONOXYGENASES_PERCENT_SITES_DETECTED",
+    "ESTERASES_PERCENT_SITES_DETECTED",
+    "GSTS_PERCENT_SITES_DETECTED",
+    "K1014S_PERCENT_SITES_DETECTED",
+    "K1014F_PERCENT_SITES_DETECTED",
+    "KDR_UNSPECIFIED_PERCENT_SITES_DETECTED",
+    "ACE1R_PERCENT_SITES_DETECTED",
+];
+
+export const COLUMNS = [
+    "ID",
+    "INSECTICIDE_CLASSES",
+    "COUNTRY",
+    "COUNTRY_NUMBER",
+    "ISO2",
+    "PYRETHROIDS_N",
+    "ORGANOCHLORINES_N",
+    "CARBAMATES_N",
+    "ORGANOPHOSPHATES_N",
+    "MONOXYGENASES_PERCENT_SITES_DETECTED_NUMBER_SITES",
+    "ESTERASES_PERCENT_SITES_DETECTED_NUMBER_SITES",
+    "GSTS_PERCENT_SITES_DETECTED_NUMBER_SITES",
+    "K1014S_PERCENT_SITES_DETECTED_NUMBER_SITES",
+    "K1014F_PERCENT_SITES_DETECTED_NUMBER_SITES",
+    "KDR_UNSPECIFIED_PERCENT_SITES_DETECTED_NUMBER_SITES",
+    "ACE1R_PERCENT_SITES_DETECTED_NUMBER_SITES",
+];
+
+export const headCells: HeadCell<TableData>[] = [
+    {
+        id: "COUNTRY",
+        numeric: false,
+        disablePadding: false,
+        label: "common.report.prevention.country",
+    },
+    {
+        id: "INSECTICIDE_CLASSES",
+        numeric: false,
+        disablePadding: false,
+        label: "common.report.prevention.insecticide",
+        align: "center",
+        divider: true,
+    },
+    {
+        id: "SPECIES",
+        numeric: false,
+        disablePadding: false,
+        label: "common.report.prevention.species",
+        divider: true,
+    },
+    {
+        id: "PYRETHROIDS_AVERAGE_MORTALITY",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.prevention.resistance_percentage",
+        sortable: true,
+        align: "right",
+        divider: true,
+    },
+    {
+        id: "PYRETHROIDS_LAST_YEAR",
+        numeric: false,
+        disablePadding: false,
+        label: "common.report.prevention.resistance_year",
+        sortable: true,
+        align: "right",
+    },
+    {
+        id: "ORGANOCHLORINES_AVERAGE_MORTALITY",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.prevention.resistance_percentage",
+        sortable: true,
+        align: "right",
+        divider: true,
+    },
+    {
+        id: "ORGANOCHLORINES_LAST_YEAR",
+        numeric: false,
+        disablePadding: false,
+        label: "common.report.prevention.resistance_year",
+        sortable: true,
+        align: "right",
+    },
+    {
+        id: "CARBAMATES_AVERAGE_MORTALITY",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.prevention.resistance_percentage",
+        sortable: true,
+        align: "right",
+        divider: true,
+    },
+    {
+        id: "CARBAMATES_LAST_YEAR",
+        numeric: false,
+        disablePadding: false,
+        label: "common.report.prevention.resistance_year",
+        sortable: true,
+        align: "right",
+    },
+    {
+        id: "ORGANOPHOSPHATES_AVERAGE_MORTALITY",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.prevention.resistance_percentage",
+        sortable: true,
+        align: "right",
+        divider: true,
+    },
+    {
+        id: "ORGANOPHOSPHATES_LAST_YEAR",
+        numeric: false,
+        disablePadding: false,
+        label: "common.report.prevention.resistance_year",
+        sortable: true,
+        align: "right",
+    },
+    {
+        id: "MONOXYGENASES_PERCENT_SITES_DETECTED",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.prevention.mechanism_percentage",
+        align: "right",
+        divider: true,
+    },
+    {
+        id: "ESTERASES_PERCENT_SITES_DETECTED",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.prevention.mechanism_percentage",
+        align: "right",
+    },
+    {
+        id: "GSTS_PERCENT_SITES_DETECTED",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.prevention.mechanism_percentage",
+        align: "right",
+    },
+    {
+        id: "K1014S_PERCENT_SITES_DETECTED",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.prevention.mechanism_percentage",
+        align: "right",
+    },
+    {
+        id: "K1014F_PERCENT_SITES_DETECTED",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.prevention.mechanism_percentage",
+        align: "right",
+    },
+    {
+        id: "KDR_UNSPECIFIED_PERCENT_SITES_DETECTED",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.prevention.mechanism_percentage",
+        align: "right",
+    },
+    {
+        id: "ACE1R_PERCENT_SITES_DETECTED",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.prevention.mechanism_percentage",
+        align: "right",
+    },
+];
