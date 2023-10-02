@@ -7,6 +7,7 @@ import { TableHeadCell } from "../../../../../../components/Report/TableHeadCell
 import { getComparator, Order, stableSort } from "../../../../../../components/Report/utils";
 import { EnhancedTableProps, HeadCell, StyledCell, useStyles } from "../../../../../../components/Report/types";
 import { TableData } from "./TableData";
+import styled from "styled-components";
 
 interface InsecticideResistanceAndResistanceMechanismTableProps {
     rows: TableData[];
@@ -75,7 +76,7 @@ const InsecticideResistanceAndResistanceMechanismsTable: React.FC<
                     {t("common.report.prevention.title")}
                 </Typography>
 
-                <TableContainer>
+                <StyledTableContainer>
                     <Table
                         className={classes.table}
                         aria-labelledby="tableTitle"
@@ -166,7 +167,7 @@ const InsecticideResistanceAndResistanceMechanismsTable: React.FC<
                             })}
                         </TableBody>
                     </Table>
-                </TableContainer>
+                </StyledTableContainer>
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 15, 20]}
                     component="div"
@@ -184,6 +185,10 @@ const InsecticideResistanceAndResistanceMechanismsTable: React.FC<
 };
 
 export default InsecticideResistanceAndResistanceMechanismsTable;
+
+const StyledTableContainer = styled(TableContainer)`
+    height: 450px;
+`;
 
 function EnhancedTableHead(props: EnhancedTableProps<TableData>) {
     const { t } = useTranslation();
