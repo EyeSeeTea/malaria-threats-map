@@ -8,6 +8,7 @@ import { getComparator, Order, stableSort } from "../../../../../../components/R
 import { EnhancedTableProps, HeadCell, StyledCell, useStyles } from "../../../../../../components/Report/types";
 import { TableData } from "./TableData";
 import styled from "styled-components";
+import _ from "lodash";
 
 interface InsecticideResistanceAndResistanceMechanismTableProps {
     rows: TableData[];
@@ -39,18 +40,9 @@ const InsecticideResistanceAndResistanceMechanismsTable: React.FC<
         setPage(0);
     };
 
-    const sortedGroups = R.sort(
-        (a, b) =>
-            t(a.ISO2 === "NA" ? "common.COUNTRY_NA" : a.ISO2) < t(b.ISO2 === "NA" ? "common.COUNTRY_NA" : b.ISO2)
-                ? -1
-                : 1,
-        rows
-    );
+    const sortedRows = _.orderBy(rows, ["COUNTRY", orderBy], ["asc", order]);
 
-    const tablePage = stableSort(sortedGroups, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-    );
+    const tablePage = sortedRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     const finalRows: TableData[] = tablePage.map(row => ({
         ...row,

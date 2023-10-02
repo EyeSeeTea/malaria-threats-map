@@ -7,6 +7,7 @@ import {
     filterByType,
 } from "../../../../../../components/layers/studies-filters";
 import i18next from "i18next";
+import _ from "lodash";
 
 export function createTableData(studies: PreventionStudy[]) {
     const countryStudyGroups = R.groupBy((study: PreventionStudy) => `${study.ISO2}`, studies);
@@ -113,7 +114,9 @@ export function createTableData(studies: PreventionStudy[]) {
         })
     );
 
-    return rows;
+    const sortedRows = _.orderBy(rows, ["COUNTRY"], ["asc"]);
+
+    return sortedRows;
 }
 
 export function resolvePyrethroids(insecticideClass: string, countrySpeciesStudies: PreventionStudy[]) {
