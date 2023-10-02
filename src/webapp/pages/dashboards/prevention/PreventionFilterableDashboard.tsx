@@ -31,6 +31,7 @@ interface PreventionFilterableDashboardProps {
     filters: PreventionFiltersState;
     onChartTypeChange?: (value: unknown) => void;
     onInfoClick: () => void;
+    onDownload?: () => void;
 }
 
 interface PreventionFilterableDashboardComponentProps extends PreventionFilterableDashboardProps {
@@ -55,6 +56,7 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
     onInfoClick,
     onScreenshot,
     isScreenshot = false,
+    onDownload,
 }) => {
     const { filtersVisible, onChangeFiltersVisible } = useFiltersVisible();
     const { t } = useTranslation();
@@ -147,12 +149,16 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
     );
 };
 
-const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = props => {
+const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = ({ onDownload, ...props }) => {
     const [open, setOpen] = React.useState(false);
 
     const handleScreenshot = React.useCallback(() => {
-        setOpen(true);
-    }, []);
+        if (onDownload) {
+            onDownload();
+        } else {
+            setOpen(true);
+        }
+    }, [onDownload]);
 
     const handleCloseScreenshot = React.useCallback(() => {
         setOpen(false);

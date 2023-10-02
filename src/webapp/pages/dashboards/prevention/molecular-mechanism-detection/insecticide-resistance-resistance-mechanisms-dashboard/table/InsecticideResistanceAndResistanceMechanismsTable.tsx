@@ -2,10 +2,8 @@ import React from "react";
 import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material";
 import * as R from "ramda";
 import { useTranslation } from "react-i18next";
-import { format } from "date-fns";
+
 import { TableHeadCell } from "../../../../../../components/Report/TableHeadCell";
-import { sendAnalytics } from "../../../../../../utils/analytics";
-import { exportToCSV } from "../../../../../../components/DataDownload/download";
 import { getComparator, Order, stableSort } from "../../../../../../components/Report/utils";
 import { EnhancedTableProps, HeadCell, StyledCell, useStyles } from "../../../../../../components/Report/types";
 import { TableData } from "./TableData";
@@ -24,37 +22,6 @@ const InsecticideResistanceAndResistanceMechanismsTable: React.FC<
     const [selected, setSelected] = React.useState<string[]>([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-    const downloadData = () => {
-        const studies = R.map(
-            group =>
-                Object.entries(group).reduce((acc, [field, value]) => {
-                    if (field === "ID") {
-                        return acc;
-                    } else {
-                        return {
-                            ...acc,
-                            [field]: (typeof value === "number" && isNaN(value)) || value === "-" ? "" : value,
-                        };
-                    }
-                }, {}),
-            rows
-        );
-        const tabs = [
-            {
-                name: "Data",
-                studies: studies,
-            },
-        ];
-        const dateString = format(new Date(), "yyyyMMdd");
-        exportToCSV(tabs, `MTM_PREVENTION_${dateString}`);
-        sendAnalytics({
-            type: "event",
-            category: "tableView",
-            action: "download",
-            label: "prevention",
-        });
-    };
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TableData) => {
         const isAsc = orderBy === property && order === "asc";

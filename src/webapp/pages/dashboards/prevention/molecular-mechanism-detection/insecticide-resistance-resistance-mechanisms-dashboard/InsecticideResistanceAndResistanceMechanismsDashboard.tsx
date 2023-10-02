@@ -7,6 +7,9 @@ import { useInfoPopup } from "../../../common/popup/useInfoPopup";
 import { useInsecticideResistanceAndResistanceMechanisms } from "./useInsecticideResistanceAndResistanceMechanisms";
 import { ChartType } from "./InsecticideResistanceAndResistanceState";
 import InsecticideResistanceAndResistanceMechanismsTable from "./table/InsecticideResistanceAndResistanceMechanismsTable";
+import { exportToCSV } from "../../../../../components/DataDownload/download";
+import { format } from "date-fns";
+import { sendAnalytics } from "../../../../../utils/analytics";
 
 const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
     const { t } = useTranslation();
@@ -25,6 +28,39 @@ const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
         [onChartTypeChange]
     );
 
+    const downloadTable = () => {
+        if (data.kind === "TableData") {
+            const studies = data.rows.map(group =>
+                Object.entries(group).reduce((acc, [field, value]) => {
+                    if (field === "ID") {
+                        return acc;
+                    } else {
+                        return {
+                            ...acc,
+                            [field]: (typeof value === "number" && isNaN(value)) || value === "-" ? "" : value,
+                        };
+                    }
+                }, {})
+            );
+
+            const tabs = [
+                {
+                    name: "Data",
+                    studies: studies,
+                },
+            ];
+
+            const dateString = format(new Date(), "yyyyMMdd");
+            exportToCSV(tabs, `MTM_PREVENTION_${dateString}`);
+            sendAnalytics({
+                type: "event",
+                category: "tableView",
+                action: "download",
+                label: "prevention",
+            });
+        }
+    };
+
     return (
         <React.Fragment>
             <PreventionFilterableDashboard
@@ -40,6 +76,7 @@ const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
                 filters={filters}
                 onChartTypeChange={handleChartTypeChange}
                 onInfoClick={onChangeOpenPopup}
+                onDownload={data.kind === "TableData" ? downloadTable : undefined}
             >
                 {data.kind === "GraphData" ? (
                     <div>Graph</div>
