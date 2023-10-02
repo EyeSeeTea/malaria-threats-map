@@ -56,7 +56,6 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
     onInfoClick,
     onScreenshot,
     isScreenshot = false,
-    onDownload,
 }) => {
     const { filtersVisible, onChangeFiltersVisible } = useFiltersVisible();
     const { t } = useTranslation();
