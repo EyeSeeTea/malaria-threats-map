@@ -36,8 +36,25 @@ export function useResistanceToInsecticide() {
     const [chartType, setChartType] = React.useState<ResistanceToInsecticideChartType>("by-insecticide-class");
 
     React.useEffect(() => {
-        setData(createChartData(preventionStudies, filteredStudies, selectedCountries, filters, chartType));
-    }, [preventionStudies, filteredStudies, selectedCountries, filters, chartType]);
+        setData(
+            createChartData(
+                preventionStudies,
+                filteredStudies,
+                selectedCountries,
+                filters.insecticideTypes,
+                filters.insecticideClasses,
+                chartType
+            )
+        );
+        console.log("setData");
+    }, [
+        preventionStudies,
+        filteredStudies,
+        selectedCountries,
+        chartType,
+        filters.insecticideTypes,
+        filters.insecticideClasses,
+    ]);
 
     React.useEffect(() => {
         if (chartType === "by-insecticide-class") {
@@ -90,12 +107,13 @@ export function createChartData(
     allStudies: PreventionStudy[],
     filteredsStudies: PreventionStudy[],
     selectedCountries: string[],
-    filters: PreventionFiltersState,
+    insecticideTypes: string[],
+    insecticideClasses: string[],
     type: ResistanceToInsecticideChartType
 ): ResistanceToInsecticideChartData {
     if (type === "by-insecticide") {
-        return createChartDataByInsecticideType(allStudies, filteredsStudies, selectedCountries, filters);
+        return createChartDataByInsecticideType(allStudies, filteredsStudies, selectedCountries, insecticideTypes);
     } else {
-        return createChartDataByInsecticideClass(allStudies, filteredsStudies, selectedCountries, filters);
+        return createChartDataByInsecticideClass(allStudies, filteredsStudies, selectedCountries, insecticideClasses);
     }
 }

@@ -15,7 +15,7 @@ export function usePreventionFilters(): PreventionFiltersState {
     const [years, setYears] = useState<[number, number]>([2010, new Date().getFullYear()]);
     const [onlyIncludeBioassaysWithMoreMosquitoes, setOnlyIncludeBioassaysWithMoreMosquitoes] = useState<number>(0);
     const [onlyIncludeDataByHealth, setOnlyIncludeDataByHealth] = useState<boolean>(false);
-    const [maxMinYears] = useState<[number, number]>(getMinMaxYears(dashboardsPreventionStudies));
+    const [maxMinYears] = useState<[number, number]>(getMinMaxYears(dashboardsPreventionStudies, true));
 
     const onInsecticideClassChange = React.useCallback((values: string[]) => {
         setInsecticideClasses(sortInsecticideClasses(values));
@@ -53,7 +53,7 @@ export function usePreventionFilters(): PreventionFiltersState {
         years,
         onlyIncludeBioassaysWithMoreMosquitoes,
         onlyIncludeDataByHealth,
-        maxMinYears: [maxMinYears[0], new Date().getFullYear()] as [number, number],
+        maxMinYears,
         onInsecticideClassChange,
         onSpeciesChange,
         onInsecticideTypesChange,

@@ -22,10 +22,30 @@ export function usePrevention() {
     const { preventionStudies, dashboardsPreventionStudies, selectedCountries } = useDashboards();
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(dashboardsPreventionStudies, filters);
+        const filteredStudies = filterStudies(dashboardsPreventionStudies, {
+            insecticideClasses: filters.insecticideClasses,
+            insecticideTypes: filters.insecticideTypes,
+            species: filters.species,
+            type: filters.type,
+            onlyIncludeBioassaysWithMoreMosquitoes: filters.onlyIncludeBioassaysWithMoreMosquitoes,
+            onlyIncludeDataByHealth: filters.onlyIncludeDataByHealth,
+            years: filters.years,
+            maxMinYears: filters.maxMinYears,
+        });
 
         setFilteredStudies(filteredStudies);
-    }, [dashboardsPreventionStudies, filters]);
+        console.log("setFilteredStudies");
+    }, [
+        dashboardsPreventionStudies,
+        filters.insecticideClasses,
+        filters.insecticideTypes,
+        filters.maxMinYears,
+        filters.onlyIncludeBioassaysWithMoreMosquitoes,
+        filters.onlyIncludeDataByHealth,
+        filters.species,
+        filters.type,
+        filters.years,
+    ]);
 
     React.useEffect(() => {
         const filteredStudies = filterStudies(preventionStudies, {

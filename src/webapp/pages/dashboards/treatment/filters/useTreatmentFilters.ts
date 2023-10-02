@@ -15,7 +15,7 @@ export function useTreatmentFilters(): TreatmentFiltersState {
     const [years, setYears] = useState<[number, number]>([2015, new Date().getFullYear()]);
     const [excludeLowerPatients, setExcludeLowerPatients] = useState<boolean>(false);
     const [excludeLowerSamples, setExcludeLowerSamples] = useState<boolean>(false);
-    const [maxMinYears] = useState<[number, number]>(getMinMaxYears(dashboardsTreatmentStudies));
+    const [maxMinYears] = useState<[number, number]>(getMinMaxYears(dashboardsTreatmentStudies, true));
     const [showDataForAllCountries, setShowDataForAllCountries] = useState<ShowDataForCountries>("selected");
 
     const onPlasmodiumChange = React.useCallback((value: string) => {
@@ -51,7 +51,7 @@ export function useTreatmentFilters(): TreatmentFiltersState {
         drugs,
         molecularMarker,
         years,
-        maxMinYears: [maxMinYears[0], new Date().getFullYear()] as [number, number],
+        maxMinYears,
         excludeLowerPatients,
         excludeLowerSamples,
         showDataForAllCountries,

@@ -36,7 +36,7 @@ export function useMosquitoMortalityOverTime() {
 
     React.useEffect(() => {
         setData(createChartData(filteredStudies, selectedCountries));
-    }, [filteredStudies, selectedCountries, filters]);
+    }, [filteredStudies, selectedCountries]);
 
     return {
         filteredStudies,

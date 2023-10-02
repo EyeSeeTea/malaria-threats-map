@@ -23,14 +23,15 @@ const chartTypes: Option<ChartType>[] = [
 ];
 
 export function useInsecticideResistanceAndResistanceMechanisms() {
-    const { preventionStudies, filteredStudies, selectedCountries, filters } = usePrevention();
+    const { filteredStudies, filters } = usePrevention();
 
     const [data, setData] = React.useState<InsecticideResistanceAndResistanceData>({ kind: "GraphData", series: [] });
     const [chartType, setChartType] = React.useState<ChartType>("graph");
 
     React.useEffect(() => {
         setData(createChartData(filteredStudies, chartType));
-    }, [preventionStudies, filteredStudies, selectedCountries, filters, chartType]);
+        console.log("setData");
+    }, [filteredStudies, chartType]);
 
     const onChartTypeChange = React.useCallback((type: ChartType) => {
         setChartType(type);
