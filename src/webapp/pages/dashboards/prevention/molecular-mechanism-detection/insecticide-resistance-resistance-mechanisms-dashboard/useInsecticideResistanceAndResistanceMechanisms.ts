@@ -29,7 +29,7 @@ export function useInsecticideResistanceAndResistanceMechanisms() {
     const [chartType, setChartType] = React.useState<ChartType>("graph");
 
     React.useEffect(() => {
-        setData(createChartData(filteredStudies, filters, chartType));
+        setData(createChartData(filteredStudies, chartType));
     }, [preventionStudies, filteredStudies, selectedCountries, filters, chartType]);
 
     const onChartTypeChange = React.useCallback((type: ChartType) => {
@@ -53,7 +53,6 @@ export function useInsecticideResistanceAndResistanceMechanisms() {
 
 export function createChartData(
     filteredsStudies: PreventionStudy[],
-    filters: PreventionFiltersState,
     type: ChartType
 ): InsecticideResistanceAndResistanceData {
     if (type === "graph") {
