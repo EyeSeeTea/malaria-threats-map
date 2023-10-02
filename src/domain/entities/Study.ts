@@ -53,14 +53,20 @@ export interface Study {
     YEAR_START: string;
 }
 
-export function getMaxMinYears(studies: Study[]): [number, number] {
+export function getMinMaxYears(studies: Study[], maxAsCurrent = true): [number, number] {
     if (studies.length === 0) return [2010, new Date().getFullYear()];
-    const years = _.compact(_.uniq(studies.map(study => parseInt(study.YEAR_START)).sort()));
+    const startYears = studies.map(study => parseInt(study.YEAR_START));
+    const endYears = studies.map(study => parseInt(study.YEAR_END));
+    const years = _.compact(_.uniq([...startYears, ...endYears]).sort());
+
+    const current = new Date().getFullYear();
 
     const min = Math.min(...years);
     const max = Math.max(...years);
 
-    return [min, max];
+    const finalMax = maxAsCurrent ? current : max > current ? max : current;
+
+    return [min, finalMax];
 }
 
 export function getRegionBySite(study: Study): RegionState {

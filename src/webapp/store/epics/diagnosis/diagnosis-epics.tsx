@@ -27,6 +27,7 @@ import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import { ActionTypeEnum } from "../../actions";
 import { createDiagnosisSelectionData } from "./utils";
 import { DELETION_TYPES } from "../../../components/filters/DeletionTypeFilter";
+import { getMinMaxYears } from "../../../../domain/entities/Study";
 
 export const getDiagnosisStudiesEpic = (
     action$: Observable<ActionType<typeof fetchDiagnosisStudiesRequest>>,
@@ -40,7 +41,13 @@ export const getDiagnosisStudiesEpic = (
             if (state.diagnosis.studies.length === 0 && !state.diagnosis.error) {
                 return fromFuture(compositionRoot.diagnosis.getStudies()).pipe(
                     mergeMap((studies: DiagnosisStudy[]) => {
-                        return of(fetchDiagnosisStudiesSuccess(studies));
+                        const [start, end] = getMinMaxYears(studies, false);
+
+                        return of(
+                            fetchDiagnosisStudiesSuccess(studies),
+                            setMaxMinYearsAction([start, end]),
+                            setFiltersAction([start, end])
+                        );
                     }),
                     catchError((error: Error) => of(addNotificationAction(error.message), fetchDiagnosisStudiesError()))
                 );
@@ -50,18 +57,20 @@ export const getDiagnosisStudiesEpic = (
         })
     );
 
-export const setDiagnosisThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>) =>
+export const setDiagnosisThemeEpic = (
+    action$: Observable<ActionType<typeof setThemeAction>>,
+    state$: StateObservable<State>
+) =>
     action$.pipe(
         ofType(ActionTypeEnum.MalariaSetTheme),
-        switchMap($action => {
+        withLatestFrom(state$),
+        switchMap(([$action, $state]) => {
             if ($action.payload !== "diagnosis") {
                 return of();
             }
+            const [start, end] = getMinMaxYears($state.diagnosis.studies, false);
 
-            const base = [
-                setMaxMinYearsAction([1998, new Date().getFullYear()]),
-                setFiltersAction([1998, new Date().getFullYear()]),
-            ];
+            const base = [setMaxMinYearsAction([start, end]), setFiltersAction([start, end])];
 
             if ($action.from === "map") {
                 return of(...base, setDiagnosisDeletionType(DELETION_TYPES.HRP2_PROPORTION_DELETION.value));

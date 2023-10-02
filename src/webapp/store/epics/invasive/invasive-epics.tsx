@@ -24,6 +24,7 @@ import { fromFuture } from "../utils";
 import { EpicDependencies } from "../../index";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import { createInvasiveSelectionData } from "./utils";
+import { getMinMaxYears } from "../../../../domain/entities/Study";
 
 export const getInvasiveStudiesEpic = (
     action$: Observable<ActionType<typeof fetchInvasiveStudiesRequest>>,
@@ -37,7 +38,13 @@ export const getInvasiveStudiesEpic = (
             if (state.invasive.studies.length === 0 && !state.invasive.error) {
                 return fromFuture(compositionRoot.invasive.getStudies()).pipe(
                     mergeMap((studies: InvasiveStudy[]) => {
-                        return of(fetchInvasiveStudiesSuccess(studies));
+                        const [start, end] = getMinMaxYears(studies);
+
+                        return of(
+                            fetchInvasiveStudiesSuccess(studies),
+                            setMaxMinYearsAction([start, end]),
+                            setFiltersAction([start, end])
+                        );
                     }),
                     catchError((error: Error) => of(addNotificationAction(error.message), fetchInvasiveStudiesError()))
                 );
@@ -60,17 +67,20 @@ export const setTreatmentMapTypeEpic = (action$: Observable<ActionType<typeof se
         })
     );
 
-export const setInvasiveThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>) =>
+export const setInvasiveThemeEpic = (
+    action$: Observable<ActionType<typeof setThemeAction>>,
+    state$: StateObservable<State>
+) =>
     action$.pipe(
         ofType(ActionTypeEnum.MalariaSetTheme),
-        switchMap($action => {
+        withLatestFrom(state$),
+        switchMap(([$action, $state]) => {
             if ($action.payload !== "invasive") {
                 return of();
             }
-            return of(
-                setMaxMinYearsAction([1985, new Date().getFullYear()]),
-                setFiltersAction([1985, new Date().getFullYear()])
-            );
+            const [start, end] = getMinMaxYears($state.invasive.studies);
+
+            return of(setMaxMinYearsAction([start, end]), setFiltersAction([start, end]));
         })
     );
 

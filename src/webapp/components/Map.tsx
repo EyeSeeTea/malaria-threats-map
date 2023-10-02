@@ -38,14 +38,10 @@ import {
 import { Fade, Box, Fab, Drawer, Tooltip, Stack } from "@mui/material";
 import { Add as ZoomInIcon, Remove as ZoomOutIcon, OpenInFull as MapOnlyIcon } from "@mui/icons-material";
 import LeyendPopover from "./legend/LegendPopover";
-import StoryModeSelector from "./StoryModeSelector";
 import MalariaTour from "./tour/MalariaTour";
 import MekongLayer from "./layers/MekongLayer";
 import Report from "./Report";
-import Feedback from "./Feedback";
 import TheaterMode from "./TheaterMode";
-import TourIcon from "./TourIcon";
-import ShareIcon from "./ShareIcon";
 import { getAnalyticsPageViewFromString } from "../store/analytics";
 import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
@@ -72,10 +68,6 @@ mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worke
 const drawerWidth = 100;
 const rightSideBarWidth = 500;
 
-const Separator = styled.div`
-    width: 20px;
-`;
-
 const BaseContainer = styled.div`
     max-width: 600px;
     margin: 30px;
@@ -87,18 +79,6 @@ const BaseFlexAlignStartContainer = styled(BaseContainer)`
     display: flex;
     align-items: start;
     flex-direction: column;
-`;
-
-const TopRightContainer = styled(BaseContainer)`
-    top: 10%;
-    right: 0;
-    display: flex;
-    align-items: center;
-`;
-
-const TopRightVerticalContainer = styled(BaseFlexAlignStartContainer)`
-    top: 0;
-    right: 0;
 `;
 
 const SearchContainer = styled(BaseFlexAlignStartContainer)`
@@ -385,9 +365,6 @@ class Map extends React.Component<Props, StateTypes> {
                                 <Hidden smDown>
                                     <MalariaTour />
                                 </Hidden>
-                                <Hidden smUp>
-                                    <ShareIcon />
-                                </Hidden>
                                 <Hidden smDown>{["prevention", "treatment"].includes(theme) && <Report />}</Hidden>
                             </SearchContainer>
                         </PushoverContainer>
@@ -400,27 +377,6 @@ class Map extends React.Component<Props, StateTypes> {
                         </FloatingActionContainer>
                     </PushoverContainer>
                 </Fade>
-                <Hidden smDown>
-                    <Fade in={false}>
-                        <TopRightContainer>
-                            <StoryModeSelector />
-
-                            <Feedback />
-                            <TourIcon />
-                            {/* {["prevention", "diagnosis"].includes(theme) && <UploadFile />} */}
-                            <Separator />
-                        </TopRightContainer>
-                    </Fade>
-                </Hidden>
-                <Hidden smUp>
-                    <Fade in={showOptions}>
-                        <TopRightVerticalContainer>
-                            <StoryModeSelector />
-
-                            <Feedback />
-                        </TopRightVerticalContainer>
-                    </Fade>
-                </Hidden>
                 <Fade in={showOptions}>
                     <LegendContainer id={"legend"} rightOpen={this.state.sidebarOpen}>
                         <Hidden smUp>
