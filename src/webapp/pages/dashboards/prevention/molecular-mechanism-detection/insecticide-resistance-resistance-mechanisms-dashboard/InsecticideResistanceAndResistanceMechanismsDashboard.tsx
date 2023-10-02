@@ -10,6 +10,7 @@ import InsecticideResistanceAndResistanceMechanismsTable from "./table/Insectici
 import { exportToCSV } from "../../../../../components/DataDownload/download";
 import { format } from "date-fns";
 import { sendAnalytics } from "../../../../../utils/analytics";
+import InsecticideResistanceAndResistanceMechanismsGraph from "./graph/InsecticideResistanceAndResistanceMechanismsGraph";
 
 const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
     const { t } = useTranslation();
@@ -79,7 +80,7 @@ const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
                 onDownload={data.kind === "TableData" ? downloadTable : undefined}
             >
                 {data.kind === "GraphData" ? (
-                    <div>Graph</div>
+                    <InsecticideResistanceAndResistanceMechanismsGraph series={data.series} />
                 ) : (
                     <InsecticideResistanceAndResistanceMechanismsTable rows={data.rows} />
                 )}

@@ -6,24 +6,25 @@ import { useTranslation } from "react-i18next";
 import { TableHeadCell } from "../../../../../../components/Report/TableHeadCell";
 import { getComparator, Order, stableSort } from "../../../../../../components/Report/utils";
 import { EnhancedTableProps, HeadCell, StyledCell, useStyles } from "../../../../../../components/Report/types";
-import { TableData } from "./TableData";
 import styled from "styled-components";
+import { GraphData } from "./GraphData";
 
 interface InsecticideResistanceAndResistanceMechanismTableProps {
-    rows: TableData[];
+    series: GraphData[];
 }
 
-const InsecticideResistanceAndResistanceMechanismsTable: React.FC<
+const InsecticideResistanceAndResistanceMechanismsGraph: React.FC<
     InsecticideResistanceAndResistanceMechanismTableProps
-> = ({ rows }) => {
+> = ({ series: rows }) => {
     const classes = useStyles({});
     const { t } = useTranslation();
     const [order, setOrder] = React.useState<Order>("desc");
-    const [orderBy, setOrderBy] = React.useState<keyof TableData>("PYRETHROIDS_AVERAGE_MORTALITY");
+    const [orderBy, setOrderBy] = React.useState<keyof GraphData>("PYRETHROIDS_AVERAGE_MORTALITY");
+
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TableData) => {
+    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof GraphData) => {
         const isAsc = orderBy === property && order === "asc";
         setOrder(isAsc ? "desc" : "asc");
         setOrderBy(property);
@@ -52,7 +53,7 @@ const InsecticideResistanceAndResistanceMechanismsTable: React.FC<
         page * rowsPerPage + rowsPerPage
     );
 
-    const finalRows: TableData[] = tablePage.map(row => ({
+    const finalRows: GraphData[] = tablePage.map(row => ({
         ...row,
         COUNTRY_NUMBER: tablePage.filter(r => r.ISO2 === row.ISO2).length,
     }));
@@ -170,13 +171,13 @@ const InsecticideResistanceAndResistanceMechanismsTable: React.FC<
     );
 };
 
-export default InsecticideResistanceAndResistanceMechanismsTable;
+export default InsecticideResistanceAndResistanceMechanismsGraph;
 
 const StyledTableContainer = styled(TableContainer)`
     height: 450px;
 `;
 
-function EnhancedTableHead(props: EnhancedTableProps<TableData>) {
+function EnhancedTableHead(props: EnhancedTableProps<GraphData>) {
     const { t } = useTranslation();
     const { classes, order, orderBy, onRequestSort } = props;
 
@@ -279,7 +280,7 @@ export const COLUMNS = [
     "ACE1R_PERCENT_SITES_DETECTED_NUMBER_SITES",
 ];
 
-export const headCells: HeadCell<TableData>[] = [
+export const headCells: HeadCell<GraphData>[] = [
     {
         id: "COUNTRY",
         numeric: false,

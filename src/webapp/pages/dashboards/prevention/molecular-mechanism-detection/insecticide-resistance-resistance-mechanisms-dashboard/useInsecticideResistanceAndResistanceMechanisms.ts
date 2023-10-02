@@ -4,6 +4,7 @@ import { PreventionStudy } from "../../../../../../domain/entities/PreventionStu
 import { Option } from "../../../common/types";
 import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
 import { usePrevention } from "../../usePrevention";
+import { createGraphData } from "./graph/createGraphData";
 import { ChartType, InsecticideResistanceAndResistanceData } from "./InsecticideResistanceAndResistanceState";
 import { createTableData } from "./table/createTableData";
 
@@ -57,7 +58,7 @@ export function createChartData(
     type: ChartType
 ): InsecticideResistanceAndResistanceData {
     if (type === "graph") {
-        return { kind: "GraphData", series: [] as PreventionStudy[] };
+        return { kind: "GraphData", series: createGraphData(filteredsStudies) };
     } else {
         return { kind: "TableData", rows: createTableData(filteredsStudies) };
     }
