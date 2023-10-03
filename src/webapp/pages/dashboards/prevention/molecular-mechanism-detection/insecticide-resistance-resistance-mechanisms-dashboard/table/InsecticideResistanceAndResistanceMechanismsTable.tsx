@@ -1,10 +1,10 @@
 import React from "react";
 import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material";
-import * as R from "ramda";
+
 import { useTranslation } from "react-i18next";
 
 import { TableHeadCell } from "../../../../../../components/Report/TableHeadCell";
-import { getComparator, Order, stableSort } from "../../../../../../components/Report/utils";
+import { Order } from "../../../../../../components/Report/utils";
 import { EnhancedTableProps, HeadCell, StyledCell, useStyles } from "../../../../../../components/Report/types";
 import { TableData } from "./TableData";
 import styled from "styled-components";
