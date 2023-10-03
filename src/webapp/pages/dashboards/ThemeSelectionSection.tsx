@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { selectTranslations } from "../../store/reducers/translations-reducer";
 import { useAppContext } from "../../context/app-context";
 import { Country } from "../../../domain/entities/Country";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps;
@@ -23,6 +24,8 @@ const mapStateToProps = (state: State) => ({
 const ThemeSelectionSection = ({ translations }: Props) => {
     const [countries, setCountries] = React.useState<Country[]>([]);
     const [countryOptions, setCountryOptions] = React.useState<Option[]>([]);
+    const { search } = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const { t } = useTranslation();
     const { compositionRoot } = useAppContext();
@@ -54,11 +57,42 @@ const ThemeSelectionSection = ({ translations }: Props) => {
         setCountryOptions(options);
     }, [translations, countries, t]);
 
+    useEffect(() => {
+        const params = new URLSearchParams(search);
+        const theme = params.get("theme");
+        const country = params.get("country");
+
+        onThemeChange(theme as DashboardsThemeOptions);
+        onSelectedCountriesChange([country]);
+        setSearchParams(params, { replace: true });
+    }, [search, onSelectedCountriesChange, onThemeChange, setSearchParams]);
+
     const handleThemeChange = useCallback(
         (_event: React.MouseEvent<HTMLElement>, value: any) => {
+            if (value) {
+                searchParams.set("theme", value);
+                setSearchParams(searchParams, { replace: true });
+            } else {
+                searchParams.delete("theme");
+                setSearchParams(searchParams, { replace: true });
+            }
             onThemeChange(value);
         },
-        [onThemeChange]
+        [onThemeChange, searchParams, setSearchParams]
+    );
+
+    const handleCountryChange = useCallback(
+        (selectedCountries: string[]) => {
+            if (selectedCountries.length > 0) {
+                searchParams.set("country", selectedCountries[0]);
+                setSearchParams(searchParams, { replace: true });
+            } else {
+                searchParams.delete("country");
+                setSearchParams(searchParams, { replace: true });
+            }
+            onSelectedCountriesChange(selectedCountries);
+        },
+        [onSelectedCountriesChange, searchParams, setSearchParams]
     );
 
     return (
@@ -98,7 +132,7 @@ const ThemeSelectionSection = ({ translations }: Props) => {
                             <MultiFilter
                                 placeholder={t("common.filters.select_country")}
                                 options={countryOptions}
-                                onChange={onSelectedCountriesChange}
+                                onChange={handleCountryChange}
                                 value={selectedCountries}
                                 margin="10px 0px"
                             />
