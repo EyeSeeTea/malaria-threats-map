@@ -216,7 +216,16 @@
                 "insecticideResistanceAndResistanceMechanisms": {
                     "title": "INSECTICIDE RESISTANCE AND RESISTANCE MECHANISMS DETECTED PER VECTOR SPECIES",
                     "graph": "Graph",
-                    "table": "Table"
+                    "table": "Table",
+                    "legend": {
+                        "phenotypicResistance": "Phenotypic resistance",
+                        "percentageSitesInsecticideClass": "% of sites exibiting resistance (No. sites monitored)",
+                        "resistanceMechanisms": "Resistance mechanisms",
+                        "percentageSitesResistanceMechanisms": " % of sites that detected the mechanism resistance (No. sites monitored)",
+                        "detected": "Detected",
+                        "noDetected": "No detected",
+                        "noDataAvailable": "No data available"
+                    }
                 }
             },
             "treatmentFilters": {

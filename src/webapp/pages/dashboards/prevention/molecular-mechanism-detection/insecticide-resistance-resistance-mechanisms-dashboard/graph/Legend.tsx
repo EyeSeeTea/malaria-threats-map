@@ -11,19 +11,31 @@ export const Legend: React.FC = () => {
         <Stack direction="row" justifyContent="space-around">
             <Stack direction="column" alignItems="start">
                 <Typography variant="caption" fontWeight="bold">
-                    Phenotypic resistance
+                    {t(
+                        "common.dashboard.molecularMechanismDetectionDashboards.insecticideResistanceAndResistanceMechanisms.legend.phenotypicResistance"
+                    )}
                 </Typography>
-                <Typography variant="caption">% of sites exibiting resistance (No. sites monitored)</Typography>
+                <Typography variant="caption">
+                    {t(
+                        "common.dashboard.molecularMechanismDetectionDashboards.insecticideResistanceAndResistanceMechanisms.legend.percentageSitesInsecticideClass"
+                    )}
+                </Typography>
                 <Stack direction="row" justifyContent="space-between" marginTop={1}>
                     <Stack direction="column" justifyContent="space-around" marginRight={2} marginTop={3}>
                         <Typography variant="caption" gutterBottom>
-                            Detected
+                            {t(
+                                "common.dashboard.molecularMechanismDetectionDashboards.insecticideResistanceAndResistanceMechanisms.legend.detected"
+                            )}
                         </Typography>
                         <Typography variant="caption" gutterBottom>
-                            No detected
+                            {t(
+                                "common.dashboard.molecularMechanismDetectionDashboards.insecticideResistanceAndResistanceMechanisms.legend.noDetected"
+                            )}
                         </Typography>
                         <Typography variant="caption" gutterBottom>
-                            No data available
+                            {t(
+                                "common.dashboard.molecularMechanismDetectionDashboards.insecticideResistanceAndResistanceMechanisms.legend.noDataAvailable"
+                            )}
                         </Typography>
                     </Stack>
                     <Stack direction="column" justifyContent="space-around">
@@ -46,27 +58,37 @@ export const Legend: React.FC = () => {
 
             <Stack direction="column" alignItems="start">
                 <Typography variant="caption" fontWeight="bold">
-                    Resistance mechanisms
+                    {t(
+                        "common.dashboard.molecularMechanismDetectionDashboards.insecticideResistanceAndResistanceMechanisms.legend.resistanceMechanisms"
+                    )}
                 </Typography>
                 <Typography variant="caption">
-                    % of sites that detected the mechanism resistance (No. sites monitored)
+                    {t(
+                        "common.dashboard.molecularMechanismDetectionDashboards.insecticideResistanceAndResistanceMechanisms.legend.percentageSitesResistanceMechanisms"
+                    )}
                 </Typography>
                 <Stack direction="row" justifyContent="space-around" marginTop={4}>
                     <CircleIcon background={resistanceMecanismColors[1].color} />
                     <Typography variant="caption" gutterBottom>
-                        Detected
+                        {t(
+                            "common.dashboard.molecularMechanismDetectionDashboards.insecticideResistanceAndResistanceMechanisms.legend.detected"
+                        )}
                     </Typography>
                 </Stack>
                 <Stack direction="row" justifyContent="space-around">
                     <CircleIcon background={resistanceMecanismColors[0].color} />
                     <Typography variant="caption" gutterBottom>
-                        No detected
+                        {t(
+                            "common.dashboard.molecularMechanismDetectionDashboards.insecticideResistanceAndResistanceMechanisms.legend.noDetected"
+                        )}
                     </Typography>
                 </Stack>
                 <Stack direction="row" justifyContent="space-around">
                     <CircleIcon background={"white"} />
                     <Typography variant="caption" gutterBottom>
-                        No data available
+                        {t(
+                            "common.dashboard.molecularMechanismDetectionDashboards.insecticideResistanceAndResistanceMechanisms.legend.noDataAvailable"
+                        )}
                     </Typography>
                 </Stack>
             </Stack>
