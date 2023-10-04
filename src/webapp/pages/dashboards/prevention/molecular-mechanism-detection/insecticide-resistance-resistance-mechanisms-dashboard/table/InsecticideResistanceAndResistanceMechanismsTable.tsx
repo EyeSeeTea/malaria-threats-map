@@ -52,10 +52,6 @@ const InsecticideResistanceAndResistanceMechanismsTable: React.FC<
     return (
         <div className={classes.root}>
             <div className={classes.wrapper}>
-                <Typography variant="h6" id="tableTitle" display="block" fontWeight="bold" gutterBottom>
-                    {t("common.report.prevention.title")}
-                </Typography>
-
                 <StyledTableContainer>
                     <Table
                         className={classes.table}

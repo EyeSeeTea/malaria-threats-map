@@ -979,6 +979,7 @@
                 "title": "Overview of insecticide resistance in malaria vectors",
                 "country": "Country",
                 "resistance": "Resistance status",
+                "insecticideClass": "Insecticide class",
                 "mechanism": "Resistance mechanisms",
                 "species": "Vector Species",
                 "resistance_percentage": "% sites exhibiting resistance (n*)",

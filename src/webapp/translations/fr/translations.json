@@ -981,6 +981,7 @@
                 "title": "Résumé de la résistance aux insecticides chez les vecteurs du paludisme",
                 "country": "Pay",
                 "resistance": "État de résistance",
+                "insecticideClass": "Classes d'insecticides",
                 "mechanism": "Mécanismes de résistance",
                 "species": "Espèce de vecteur",
                 "resistance_percentage": "% de sites confirmant la résistance",

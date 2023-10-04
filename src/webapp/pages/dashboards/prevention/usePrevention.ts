@@ -11,7 +11,7 @@ import {
 } from "../../../../domain/entities/PreventionStudy";
 import { Option } from "../../../components/BasicSelect";
 
-export function usePrevention() {
+export function usePrevention(baseFilters: ((study: PreventionStudy) => boolean)[]) {
     const filters = usePreventionFilters();
 
     const [filteredStudies, setFilteredStudies] = React.useState<PreventionStudy[]>([]);
@@ -22,7 +22,7 @@ export function usePrevention() {
     const { preventionStudies, dashboardsPreventionStudies, selectedCountries } = useDashboards();
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(dashboardsPreventionStudies, {
+        const filteredStudies = filterStudies(dashboardsPreventionStudies, baseFilters, {
             insecticideClasses: filters.insecticideClasses,
             insecticideTypes: filters.insecticideTypes,
             species: filters.species,
@@ -34,8 +34,8 @@ export function usePrevention() {
         });
 
         setFilteredStudies(filteredStudies);
-        console.log("setFilteredStudies");
     }, [
+        baseFilters,
         dashboardsPreventionStudies,
         filters.insecticideClasses,
         filters.insecticideTypes,
@@ -48,7 +48,7 @@ export function usePrevention() {
     ]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(preventionStudies, {
+        const filteredStudies = filterStudies(preventionStudies, baseFilters, {
             insecticideClasses: [],
             insecticideTypes: [],
             species: [],
@@ -63,6 +63,7 @@ export function usePrevention() {
 
         setInsecticideClassOptions(insecticideClasses);
     }, [
+        baseFilters,
         preventionStudies,
         filters.onlyIncludeBioassaysWithMoreMosquitoes,
         filters.onlyIncludeDataByHealth,
@@ -70,7 +71,7 @@ export function usePrevention() {
     ]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(preventionStudies, {
+        const filteredStudies = filterStudies(preventionStudies, baseFilters, {
             insecticideClasses: [],
             insecticideTypes: [],
             species: [],
@@ -84,10 +85,10 @@ export function usePrevention() {
         const insecticideTypes = extractInsecticideTypeOptions(filteredStudies);
 
         setInsecticideTypeOptions(insecticideTypes);
-    }, [preventionStudies]);
+    }, [baseFilters, preventionStudies]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(dashboardsPreventionStudies, {
+        const filteredStudies = filterStudies(dashboardsPreventionStudies, baseFilters, {
             insecticideClasses: filters.insecticideClasses,
             insecticideTypes: [],
             species: [],
@@ -101,10 +102,10 @@ export function usePrevention() {
         const species = extractSpeciesOptions(filteredStudies);
 
         setSpeciesOptions(species);
-    }, [dashboardsPreventionStudies, filters.insecticideClasses]);
+    }, [baseFilters, dashboardsPreventionStudies, filters.insecticideClasses]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(preventionStudies, {
+        const filteredStudies = filterStudies(preventionStudies, baseFilters, {
             insecticideClasses: filters.insecticideClasses,
             insecticideTypes: [],
             species: [],
@@ -118,7 +119,7 @@ export function usePrevention() {
         const types = extractTypeOptions(filteredStudies);
 
         setTypeOptions(types);
-    }, [preventionStudies, filters.insecticideClasses, filters.species]);
+    }, [baseFilters, preventionStudies, filters.insecticideClasses, filters.species]);
 
     return {
         preventionStudies,

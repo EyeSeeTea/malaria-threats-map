@@ -2,13 +2,16 @@ import _ from "lodash";
 import * as R from "ramda";
 import React from "react";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
+import { filterByResistanceStatus } from "../../../../components/layers/studies-filters";
 import { PreventionFiltersState } from "../filters/PreventionFiltersState";
 import { usePrevention } from "../usePrevention";
 import { MosquitoOverTimeBySpecie, MosquitoOverTimeChart, MosquitoOverTimeData } from "./types";
 
+const baseFilters = [filterByResistanceStatus];
+
 export function useMosquitoMortalityOverTime() {
     const { filteredStudies, insecticideTypeOptions, selectedCountries, filters, speciesOptions, typeOptions } =
-        usePrevention();
+        usePrevention(baseFilters);
 
     const [data, setData] = React.useState<MosquitoOverTimeChart>({ years: [], dataByCountry: {} });
     const [count, setCount] = React.useState<number>(0);

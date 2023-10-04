@@ -2,6 +2,7 @@ import i18next from "i18next";
 import _ from "lodash";
 import React from "react";
 import { PreventionStudy } from "../../../../../../domain/entities/PreventionStudy";
+import { filterByResistanceStatus } from "../../../../../components/layers/studies-filters";
 import { Option } from "../../../common/types";
 import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
 import { ResistanceToInsecticideChartType } from "../../types";
@@ -21,6 +22,8 @@ const chartTypes: Option<ResistanceToInsecticideChartType>[] = [
     },
 ];
 
+const baseFilters = [filterByResistanceStatus];
+
 export function useResistanceToInsecticide() {
     const {
         preventionStudies,
@@ -29,7 +32,7 @@ export function useResistanceToInsecticide() {
         insecticideTypeOptions,
         selectedCountries,
         filters,
-    } = usePrevention();
+    } = usePrevention(baseFilters);
 
     const [data, setData] = React.useState<ResistanceToInsecticideChartData>({ kind: "InsecticideByClass", data: {} });
     const [categoriesCount, setCategoriesCount] = React.useState<Record<string, number>>({});

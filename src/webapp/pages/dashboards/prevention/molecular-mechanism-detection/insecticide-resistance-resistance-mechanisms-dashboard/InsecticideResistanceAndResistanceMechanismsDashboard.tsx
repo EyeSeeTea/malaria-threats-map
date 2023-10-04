@@ -72,7 +72,7 @@ const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
                 count={0}
                 chartComponentRef={chartComponentRefs}
                 title={t(
-                    "common.dashboard.phenotypicInsecticideResistanceDashboards.statusOfResistanceToInsecticides.title"
+                    "common.dashboard.molecularMechanismDetectionDashboards.insecticideResistanceAndResistanceMechanisms.title"
                 )}
                 filters={filters}
                 onChartTypeChange={handleChartTypeChange}

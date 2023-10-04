@@ -4,6 +4,7 @@ import * as R from "ramda";
 import {
     filterByInsecticideClass,
     filterByResistanceMechanism,
+    filterByResistanceStatus,
     filterByType,
 } from "../../../../../../components/layers/studies-filters";
 import i18next from "i18next";
@@ -15,33 +16,24 @@ export function createGraphData(studies: PreventionStudy[]): GraphData[] {
         Object.entries(countryStudyGroups).map(([country, countryStudies]) => {
             const countrySpeciesGroup = R.groupBy((study: PreventionStudy) => `${study.SPECIES}`, countryStudies);
 
-            const insecticideClasses = R.uniqBy(
-                study => study.INSECTICIDE_CLASS,
-                countryStudies.filter(study => parseFloat(study.MORTALITY_ADJUSTED) < 0.9)
-            );
-
             const entries = Object.entries(countrySpeciesGroup);
             return entries.map(([species, countrySpeciesStudies]) => {
-                const {
-                    percentage: pyrethroidsPercentage,
-                    sorted: sortedPyrethroidsStudies,
-                    n: pyrethroidsStudies,
-                } = resolvePyrethroids("PYRETHROIDS", countrySpeciesStudies);
-                const {
-                    percentage: organochlorinesPercentage,
-                    sorted: sortedOrganochlorinesStudies,
-                    n: organochlorinesStudies,
-                } = resolvePyrethroids("ORGANOCHLORINES", countrySpeciesStudies);
-                const {
-                    percentage: carbamatesPercentage,
-                    sorted: sortedCarbamatesStudies,
-                    n: carbamatesStudies,
-                } = resolvePyrethroids("CARBAMATES", countrySpeciesStudies);
-                const {
-                    percentage: organophosphatesPercentage,
-                    sorted: sortedOrganophosphatesStudies,
-                    n: organophosphatesStudies,
-                } = resolvePyrethroids("ORGANOPHOSPHATES", countrySpeciesStudies);
+                const { percentage: pyrethroidsPercentage, n: pyrethroidsStudies } = resolvePyrethroids(
+                    "PYRETHROIDS",
+                    countrySpeciesStudies
+                );
+                const { percentage: organochlorinesPercentage, n: organochlorinesStudies } = resolvePyrethroids(
+                    "ORGANOCHLORINES",
+                    countrySpeciesStudies
+                );
+                const { percentage: carbamatesPercentage, n: carbamatesStudies } = resolvePyrethroids(
+                    "CARBAMATES",
+                    countrySpeciesStudies
+                );
+                const { percentage: organophosphatesPercentage, n: organophosphatesStudies } = resolvePyrethroids(
+                    "ORGANOPHOSPHATES",
+                    countrySpeciesStudies
+                );
 
                 const { percentage: monoOxygenases, n: monoOxygenasesNumber } = resolveMechanism(
                     "MONO_OXYGENASES",
@@ -72,27 +64,17 @@ export function createGraphData(studies: PreventionStudy[]): GraphData[] {
                     COUNTRY: i18next.t(country),
                     COUNTRY_NUMBER: entries.length,
                     SPECIES: species,
-                    INSECTICIDE_CLASSES: `${insecticideClasses.length}`,
                     PYRETHROIDS_AVERAGE_MORTALITY: pyrethroidsPercentage,
-                    PYRETHROIDS_LAST_YEAR: `${
-                        sortedPyrethroidsStudies.length ? sortedPyrethroidsStudies[0].YEAR_START : "-"
-                    }`,
+
                     PYRETHROIDS_N: pyrethroidsStudies,
                     ORGANOCHLORINES_AVERAGE_MORTALITY: organochlorinesPercentage,
-                    ORGANOCHLORINES_LAST_YEAR: `${
-                        sortedOrganochlorinesStudies.length ? sortedOrganochlorinesStudies[0].YEAR_START : "-"
-                    }`,
 
                     ORGANOCHLORINES_N: organochlorinesStudies,
                     CARBAMATES_AVERAGE_MORTALITY: carbamatesPercentage,
-                    CARBAMATES_LAST_YEAR: `${
-                        sortedCarbamatesStudies.length ? sortedCarbamatesStudies[0].YEAR_START : "-"
-                    }`,
+
                     CARBAMATES_N: carbamatesStudies,
                     ORGANOPHOSPHATES_AVERAGE_MORTALITY: organophosphatesPercentage,
-                    ORGANOPHOSPHATES_LAST_YEAR: `${
-                        sortedOrganophosphatesStudies.length ? sortedOrganophosphatesStudies[0].YEAR_START : "-"
-                    }`,
+
                     ORGANOPHOSPHATES_N: organophosphatesStudies,
                     MONOXYGENASES_PERCENT_SITES_DETECTED: monoOxygenases,
                     MONOXYGENASES_PERCENT_SITES_DETECTED_NUMBER_SITES: monoOxygenasesNumber,
@@ -117,7 +99,11 @@ export function createGraphData(studies: PreventionStudy[]): GraphData[] {
 }
 
 export function resolvePyrethroids(insecticideClass: string, countrySpeciesStudies: PreventionStudy[]) {
-    const studies = countrySpeciesStudies.filter(filterByInsecticideClass(insecticideClass));
+    const studies = [filterByResistanceStatus, filterByInsecticideClass(insecticideClass)].reduce(
+        (studies, filter) => studies.filter(filter),
+        countrySpeciesStudies
+    );
+
     const detectedPyrethroidsStudies = studies.filter(study => parseFloat(study.MORTALITY_ADJUSTED) < 0.9);
     const percentage: number | "-" = studies.length
         ? Number(((detectedPyrethroidsStudies.length * 100) / studies.length).toFixed(2))

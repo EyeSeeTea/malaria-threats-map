@@ -1,13 +1,23 @@
 import React from "react";
-import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material";
-import * as R from "ramda";
+import { Table, TableBody, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { HeadCell, StyledCell, useStyles } from "../../../../../../components/Report/types";
 
-import { TableHeadCell } from "../../../../../../components/Report/TableHeadCell";
-import { getComparator, Order, stableSort } from "../../../../../../components/Report/utils";
-import { EnhancedTableProps, HeadCell, StyledCell, useStyles } from "../../../../../../components/Report/types";
-import styled from "styled-components";
 import { GraphData } from "./GraphData";
+
+const insecticideClassColors = [
+    { start: 0, end: 0, color: "#869d68" },
+    { start: 1, end: 19, color: "#ffa900" },
+    { start: 20, end: 39, color: "#fe9b04" },
+    { start: 40, end: 59, color: "#fc7e0d" },
+    { start: 60, end: 79, color: "#f95b0c" },
+    { start: 80, end: 100, color: "#f40a0a" },
+];
+
+const resistanceMecanishmColors = [
+    { start: 0, end: 0, color: "#869d68" },
+    { start: 1, end: 100, color: "#f40a0a" },
+];
 
 interface InsecticideResistanceAndResistanceMechanismTableProps {
     series: GraphData[];
@@ -15,77 +25,32 @@ interface InsecticideResistanceAndResistanceMechanismTableProps {
 
 const InsecticideResistanceAndResistanceMechanismsGraph: React.FC<
     InsecticideResistanceAndResistanceMechanismTableProps
-> = ({ series: rows }) => {
+> = ({ series }) => {
     const classes = useStyles({});
-    const { t } = useTranslation();
-    const [order, setOrder] = React.useState<Order>("desc");
-    const [orderBy, setOrderBy] = React.useState<keyof GraphData>("PYRETHROIDS_AVERAGE_MORTALITY");
 
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof GraphData) => {
-        const isAsc = orderBy === property && order === "asc";
-        setOrder(isAsc ? "desc" : "asc");
-        setOrderBy(property);
-        setPage(0);
-    };
-
-    const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
-    const sortedGroups = R.sort(
-        (a, b) =>
-            t(a.ISO2 === "NA" ? "common.COUNTRY_NA" : a.ISO2) < t(b.ISO2 === "NA" ? "common.COUNTRY_NA" : b.ISO2)
-                ? -1
-                : 1,
-        rows
-    );
-
-    const tablePage = stableSort(sortedGroups, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-    );
-
-    const finalRows: GraphData[] = tablePage.map(row => ({
+    const finalRows = series.map(row => ({
         ...row,
-        COUNTRY_NUMBER: tablePage.filter(r => r.ISO2 === row.ISO2).length,
+        COUNTRY_INDEX: series.filter(r => r.ISO2 === row.ISO2).indexOf(row),
+        COUNTRY_NUMBER: series.filter(r => r.ISO2 === row.ISO2).length,
     }));
 
     return (
         <div className={classes.root}>
             <div className={classes.wrapper}>
-                <Typography variant="h6" id="tableTitle" display="block" fontWeight="bold" gutterBottom>
-                    {t("common.report.prevention.title")}
-                </Typography>
-
-                <StyledTableContainer>
+                <TableContainer>
                     <Table
                         className={classes.table}
                         aria-labelledby="tableTitle"
                         size={"small"}
                         aria-label="enhanced table"
                     >
-                        <EnhancedTableHead
-                            classes={classes}
-                            numSelected={0}
-                            order={order}
-                            orderBy={orderBy}
-                            onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
-                        />
+                        <EnhancedTableHead />
                         <TableBody>
                             {finalRows.map((row, index) => {
                                 const labelId = `enhanced-table-checkbox-${index}`;
                                 return (
-                                    <TableRow tabIndex={-1} key={row.ID}>
-                                        {(index === 0 || tablePage[index].ISO2 !== tablePage[index - 1].ISO2) && (
+                                    <TableRow tabIndex={-1} key={row.ID} style={{ border: "0px" }}>
+                                        {(index === 0 || series[index].ISO2 !== series[index - 1].ISO2) && (
                                             <>
                                                 <StyledCell
                                                     component="th"
@@ -94,19 +59,10 @@ const InsecticideResistanceAndResistanceMechanismsGraph: React.FC<
                                                     padding="none"
                                                     rowSpan={row.COUNTRY_NUMBER}
                                                     align={"left"}
+                                                    isBold
+                                                    isRotated
                                                 >
                                                     {row.COUNTRY}
-                                                </StyledCell>
-                                                <StyledCell
-                                                    component="th"
-                                                    id={labelId}
-                                                    scope="row"
-                                                    padding="none"
-                                                    rowSpan={row.COUNTRY_NUMBER}
-                                                    align={"center"}
-                                                    divider={true}
-                                                >
-                                                    {row.INSECTICIDE_CLASSES}
                                                 </StyledCell>
                                             </>
                                         )}
@@ -116,36 +72,57 @@ const InsecticideResistanceAndResistanceMechanismsGraph: React.FC<
                                                 const number = Number(entry[1]);
                                                 const header = headCells.find(cell => cell.id === entry[0]);
                                                 const isNumber = !Number.isNaN(number);
-                                                const percentage = ERROR_COLUMNS.includes(entry[0]);
+                                                const isInsecticideClassColumn = INSECTICIDE_CLASS_COLUMNS.includes(
+                                                    entry[0]
+                                                );
                                                 const cell = entry[0].split("_")[0];
 
-                                                const active = (row as any)[`${cell}_N`];
-                                                const active2 = (row as any)[`${entry[0]}_NUMBER_SITES`];
+                                                const active = row[`${cell}_N` as keyof GraphData];
+                                                const active2 = row[`${entry[0]}_NUMBER_SITES` as keyof GraphData];
                                                 const finalActive = active !== undefined ? active : active2;
 
-                                                const error =
-                                                    percentage && entry[0].indexOf("AVERAGE") > -1 && number > 0;
-                                                const grey = GREY_COLUMNS.includes(entry[0]);
-                                                const darkGrey =
-                                                    grey && (row as any)[`${entry[0]}_NUMBER_SITES`] > 0
-                                                        ? "dimgrey"
-                                                        : "darkgray";
+                                                const selectedColor = isInsecticideClassColumn
+                                                    ? insecticideClassColors.find(
+                                                          color => color.start <= number && color.end >= number
+                                                      )
+                                                    : resistanceMecanishmColors.find(
+                                                          color => color.start <= number && color.end >= number
+                                                      );
+                                                const insecticideClassBackground = selectedColor?.color;
+
+                                                const isLastRowInCountry =
+                                                    finalRows.filter(r => r.ISO2 === row.ISO2).length - 1 ===
+                                                    row.COUNTRY_INDEX;
+
                                                 return (
                                                     <StyledCell
                                                         key={`${entry[0]}_${index}`}
-                                                        component="th"
                                                         id={labelId}
                                                         scope="row"
                                                         padding="none"
-                                                        color={error ? "red" : grey ? darkGrey : undefined}
-                                                        isRight={header.align === "right"}
-                                                        divider={header.divider}
+                                                        color={isNumber ? "white" : "black"}
+                                                        isCenter
+                                                        nowrap
+                                                        removeBottomDivider={!isLastRowInCountry}
                                                     >
-                                                        {header && header.numeric && isNumber
-                                                            ? `${number.toFixed(1)}% ${
-                                                                  finalActive !== undefined ? `(${finalActive})` : ""
-                                                              }`
-                                                            : entry[1] || "-"}
+                                                        {header && header.numeric && isNumber && (
+                                                            <div
+                                                                style={{
+                                                                    width: 80,
+                                                                    height: 60,
+                                                                    background: insecticideClassBackground,
+                                                                    display: "flex",
+                                                                    flexDirection: "column",
+                                                                    justifyContent: "center",
+                                                                }}
+                                                            >
+                                                                {`${number.toFixed(1)}% ${
+                                                                    finalActive !== undefined ? `(${finalActive})` : ""
+                                                                }`}
+                                                            </div>
+                                                        )}
+
+                                                        {(header && !header.numeric && !isNumber && entry[1]) || ""}
                                                     </StyledCell>
                                                 );
                                             })}
@@ -154,18 +131,7 @@ const InsecticideResistanceAndResistanceMechanismsGraph: React.FC<
                             })}
                         </TableBody>
                     </Table>
-                </StyledTableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 15, 20]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-                <Typography variant={"body2"}>{t("common.data_download.footer")}</Typography>
-                <br />
+                </TableContainer>
             </div>
         </div>
     );
@@ -173,92 +139,43 @@ const InsecticideResistanceAndResistanceMechanismsGraph: React.FC<
 
 export default InsecticideResistanceAndResistanceMechanismsGraph;
 
-const StyledTableContainer = styled(TableContainer)`
-    height: 450px;
-`;
-
-function EnhancedTableHead(props: EnhancedTableProps<GraphData>) {
+function EnhancedTableHead() {
     const { t } = useTranslation();
-    const { classes, order, orderBy, onRequestSort } = props;
 
     return (
         <TableHead>
             <TableRow>
-                <StyledCell isBold colSpan={3} />
-                <StyledCell isBold colSpan={8} divider>
-                    {t("common.report.prevention.resistance")}
+                <StyledCell isBold colSpan={2} />
+                <StyledCell isBold colSpan={4} isCenter>
+                    {t("common.report.prevention.insecticideClass")}
                 </StyledCell>
-                <StyledCell isBold colSpan={7} divider>
+                <StyledCell isBold colSpan={7} isCenter>
                     {t("common.report.prevention.mechanism")}
                 </StyledCell>
             </TableRow>
-            <TableRow>
-                <StyledCell isBold colSpan={3} />
-                <StyledCell isBold colSpan={2} divider>
-                    Pyrethroids
-                </StyledCell>
-                <StyledCell isBold colSpan={2}>
-                    Organochlorines
-                </StyledCell>
-                <StyledCell isBold colSpan={2}>
-                    Carbamates
-                </StyledCell>
-                <StyledCell isBold colSpan={2}>
-                    Organophosphates
-                </StyledCell>
-                <StyledCell isBold colSpan={1} divider>
-                    Mono oxygenases
-                </StyledCell>
-                <StyledCell isBold colSpan={1}>
-                    Esterases
-                </StyledCell>
-                <StyledCell isBold colSpan={1}>
-                    GSTs
-                </StyledCell>
-                <StyledCell isBold colSpan={1}>
-                    kdr (K1014S)
-                </StyledCell>
-                <StyledCell isBold colSpan={1}>
-                    kdr (K1014F)
-                </StyledCell>
-                <StyledCell isBold colSpan={1}>
-                    kdr (unspecified mutation)
-                </StyledCell>
-                <StyledCell isBold colSpan={1}>
-                    Ace-1R
-                </StyledCell>
-            </TableRow>
-            <TableRow>
-                {headCells.map(headCell => (
-                    <TableHeadCell
-                        key={headCell.id}
-                        classes={classes}
-                        headCell={headCell}
-                        order={order}
-                        orderBy={orderBy}
-                        onRequestSort={onRequestSort}
-                    />
-                ))}
+            <TableRow style={{ height: 120 }}>
+                <StyledCell colSpan={2} />
+                <StyledCell isRotated>Pyrethroids</StyledCell>
+                <StyledCell isRotated>Organochlorines</StyledCell>
+                <StyledCell isRotated>Carbamates</StyledCell>
+                <StyledCell isRotated>Organophosphates</StyledCell>
+                <StyledCell isRotated>Monooxygenases</StyledCell>
+                <StyledCell isRotated>Esterases</StyledCell>
+                <StyledCell isRotated>GSTs</StyledCell>
+                <StyledCell isRotated>kdr (K1014S)</StyledCell>
+                <StyledCell isRotated>kdr (K1014F)</StyledCell>
+                <StyledCell isRotated>kdr (unspecified mutation)</StyledCell>
+                <StyledCell isRotated>Ace-1R</StyledCell>
             </TableRow>
         </TableHead>
     );
 }
 
-export const ERROR_COLUMNS = [
+export const INSECTICIDE_CLASS_COLUMNS = [
     "PYRETHROIDS_AVERAGE_MORTALITY",
     "ORGANOCHLORINES_AVERAGE_MORTALITY",
     "CARBAMATES_AVERAGE_MORTALITY",
     "ORGANOPHOSPHATES_AVERAGE_MORTALITY",
-];
-
-export const GREY_COLUMNS = [
-    "MONOXYGENASES_PERCENT_SITES_DETECTED",
-    "ESTERASES_PERCENT_SITES_DETECTED",
-    "GSTS_PERCENT_SITES_DETECTED",
-    "K1014S_PERCENT_SITES_DETECTED",
-    "K1014F_PERCENT_SITES_DETECTED",
-    "KDR_UNSPECIFIED_PERCENT_SITES_DETECTED",
-    "ACE1R_PERCENT_SITES_DETECTED",
 ];
 
 export const COLUMNS = [
@@ -288,136 +205,75 @@ export const headCells: HeadCell<GraphData>[] = [
         label: "common.report.prevention.country",
     },
     {
-        id: "INSECTICIDE_CLASSES",
-        numeric: false,
-        disablePadding: false,
-        label: "common.report.prevention.insecticide",
-        align: "center",
-        divider: true,
-    },
-    {
         id: "SPECIES",
         numeric: false,
         disablePadding: false,
         label: "common.report.prevention.species",
-        divider: true,
     },
     {
         id: "PYRETHROIDS_AVERAGE_MORTALITY",
         numeric: true,
         disablePadding: false,
         label: "common.report.prevention.resistance_percentage",
-        sortable: true,
-        align: "right",
-        divider: true,
-    },
-    {
-        id: "PYRETHROIDS_LAST_YEAR",
-        numeric: false,
-        disablePadding: false,
-        label: "common.report.prevention.resistance_year",
-        sortable: true,
-        align: "right",
     },
     {
         id: "ORGANOCHLORINES_AVERAGE_MORTALITY",
         numeric: true,
         disablePadding: false,
         label: "common.report.prevention.resistance_percentage",
-        sortable: true,
-        align: "right",
-        divider: true,
-    },
-    {
-        id: "ORGANOCHLORINES_LAST_YEAR",
-        numeric: false,
-        disablePadding: false,
-        label: "common.report.prevention.resistance_year",
-        sortable: true,
-        align: "right",
     },
     {
         id: "CARBAMATES_AVERAGE_MORTALITY",
         numeric: true,
         disablePadding: false,
         label: "common.report.prevention.resistance_percentage",
-        sortable: true,
-        align: "right",
-        divider: true,
-    },
-    {
-        id: "CARBAMATES_LAST_YEAR",
-        numeric: false,
-        disablePadding: false,
-        label: "common.report.prevention.resistance_year",
-        sortable: true,
-        align: "right",
     },
     {
         id: "ORGANOPHOSPHATES_AVERAGE_MORTALITY",
         numeric: true,
         disablePadding: false,
         label: "common.report.prevention.resistance_percentage",
-        sortable: true,
-        align: "right",
-        divider: true,
-    },
-    {
-        id: "ORGANOPHOSPHATES_LAST_YEAR",
-        numeric: false,
-        disablePadding: false,
-        label: "common.report.prevention.resistance_year",
-        sortable: true,
-        align: "right",
     },
     {
         id: "MONOXYGENASES_PERCENT_SITES_DETECTED",
         numeric: true,
         disablePadding: false,
         label: "common.report.prevention.mechanism_percentage",
-        align: "right",
-        divider: true,
     },
     {
         id: "ESTERASES_PERCENT_SITES_DETECTED",
         numeric: true,
         disablePadding: false,
         label: "common.report.prevention.mechanism_percentage",
-        align: "right",
     },
     {
         id: "GSTS_PERCENT_SITES_DETECTED",
         numeric: true,
         disablePadding: false,
         label: "common.report.prevention.mechanism_percentage",
-        align: "right",
     },
     {
         id: "K1014S_PERCENT_SITES_DETECTED",
         numeric: true,
         disablePadding: false,
         label: "common.report.prevention.mechanism_percentage",
-        align: "right",
     },
     {
         id: "K1014F_PERCENT_SITES_DETECTED",
         numeric: true,
         disablePadding: false,
         label: "common.report.prevention.mechanism_percentage",
-        align: "right",
     },
     {
         id: "KDR_UNSPECIFIED_PERCENT_SITES_DETECTED",
         numeric: true,
         disablePadding: false,
         label: "common.report.prevention.mechanism_percentage",
-        align: "right",
     },
     {
         id: "ACE1R_PERCENT_SITES_DETECTED",
         numeric: true,
         disablePadding: false,
         label: "common.report.prevention.mechanism_percentage",
-        align: "right",
     },
 ];

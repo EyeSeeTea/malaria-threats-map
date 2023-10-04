@@ -981,6 +981,7 @@
                 "title": "Tabla resumen del estado de la resistencia a los insecticidas en los vectores de malaria",
                 "country": "País",
                 "resistance": "Estado de la resistencia",
+                "insecticideClass": "Clases de insecticidas",
                 "mechanism": "Mecanismos de resistencia",
                 "species": "Especie vectora",
                 "resistance_percentage": "% de lugares que confirmaron resistencia",

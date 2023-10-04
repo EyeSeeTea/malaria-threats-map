@@ -3,8 +3,9 @@ import { TableData } from "./TableData";
 import * as R from "ramda";
 import {
     filterByInsecticideClass,
+    filterByProxyType,
     filterByResistanceMechanism,
-    filterByType,
+    filterByResistanceStatus,
 } from "../../../../../../components/layers/studies-filters";
 import i18next from "i18next";
 import _ from "lodash";
@@ -120,7 +121,10 @@ export function createTableData(studies: PreventionStudy[]) {
 }
 
 export function resolvePyrethroids(insecticideClass: string, countrySpeciesStudies: PreventionStudy[]) {
-    const studies = countrySpeciesStudies.filter(filterByInsecticideClass(insecticideClass));
+    const studies = [filterByResistanceStatus, filterByInsecticideClass(insecticideClass)].reduce(
+        (studies, filter) => studies.filter(filter),
+        countrySpeciesStudies
+    );
     const detectedPyrethroidsStudies = studies.filter(study => parseFloat(study.MORTALITY_ADJUSTED) < 0.9);
     const percentage: number | "-" = studies.length
         ? Number(((detectedPyrethroidsStudies.length * 100) / studies.length).toFixed(2))
@@ -134,7 +138,7 @@ export function resolvePyrethroids(insecticideClass: string, countrySpeciesStudi
 }
 
 export function resolveMechanism(type: string, countrySpeciesStudies: PreventionStudy[]) {
-    const studies = [filterByResistanceMechanism, filterByType(type)].reduce(
+    const studies = [filterByResistanceMechanism, filterByProxyType(type)].reduce(
         (studies, filter) => studies.filter(filter),
         countrySpeciesStudies
     );
