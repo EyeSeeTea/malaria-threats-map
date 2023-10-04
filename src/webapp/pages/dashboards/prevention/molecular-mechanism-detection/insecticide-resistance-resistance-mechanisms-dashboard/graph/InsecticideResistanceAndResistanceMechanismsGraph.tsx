@@ -1,23 +1,10 @@
 import React from "react";
-import { Table, TableBody, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Divider, Table, TableBody, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { HeadCell, StyledCell, useStyles } from "../../../../../../components/Report/types";
-
 import { GraphData } from "./GraphData";
-
-const insecticideClassColors = [
-    { start: 0, end: 0, color: "#869d68" },
-    { start: 1, end: 19, color: "#ffa900" },
-    { start: 20, end: 39, color: "#fe9b04" },
-    { start: 40, end: 59, color: "#fc7e0d" },
-    { start: 60, end: 79, color: "#f95b0c" },
-    { start: 80, end: 100, color: "#f40a0a" },
-];
-
-const resistanceMecanishmColors = [
-    { start: 0, end: 0, color: "#869d68" },
-    { start: 1, end: 100, color: "#f40a0a" },
-];
+import { Legend } from "./Legend";
+import { insecticideClassColors, resistanceMecanismColors } from "./colors";
 
 interface InsecticideResistanceAndResistanceMechanismTableProps {
     series: GraphData[];
@@ -37,6 +24,8 @@ const InsecticideResistanceAndResistanceMechanismsGraph: React.FC<
     return (
         <div className={classes.root}>
             <div className={classes.wrapper}>
+                <Legend />
+                <Divider style={{ marginTop: 20, marginBottom: 20 }} />
                 <TableContainer>
                     <Table
                         className={classes.table}
@@ -85,7 +74,7 @@ const InsecticideResistanceAndResistanceMechanismsGraph: React.FC<
                                                     ? insecticideClassColors.find(
                                                           color => color.start <= number && color.end >= number
                                                       )
-                                                    : resistanceMecanishmColors.find(
+                                                    : resistanceMecanismColors.find(
                                                           color => color.start <= number && color.end >= number
                                                       );
                                                 const insecticideClassBackground = selectedColor?.color;
@@ -145,11 +134,11 @@ function EnhancedTableHead() {
     return (
         <TableHead>
             <TableRow>
-                <StyledCell isBold colSpan={2} />
-                <StyledCell isBold colSpan={4} isCenter>
+                <StyledCell isBold colSpan={2} removeBottomDivider />
+                <StyledCell isBold colSpan={4} isCenter removeBottomDivider>
                     {t("common.report.prevention.insecticideClass")}
                 </StyledCell>
-                <StyledCell isBold colSpan={7} isCenter>
+                <StyledCell isBold colSpan={7} isCenter removeBottomDivider>
                     {t("common.report.prevention.mechanism")}
                 </StyledCell>
             </TableRow>
