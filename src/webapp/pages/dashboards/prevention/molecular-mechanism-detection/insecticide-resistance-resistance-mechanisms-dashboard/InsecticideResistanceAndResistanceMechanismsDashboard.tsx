@@ -15,7 +15,7 @@ import InsecticideResistanceAndResistanceMechanismsGraph from "./graph/Insectici
 const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
     const { t } = useTranslation();
 
-    const { chartType, chartTypes, filters, data, onChartTypeChange } =
+    const { chartType, chartTypes, filters, data, onChartTypeChange, speciesOptions } =
         useInsecticideResistanceAndResistanceMechanisms();
 
     const { openPopup, onChangeOpenPopup } = useInfoPopup();
@@ -78,6 +78,7 @@ const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
                 onChartTypeChange={handleChartTypeChange}
                 onInfoClick={onChangeOpenPopup}
                 onDownload={data.kind === "TableData" ? downloadTable : undefined}
+                speciesOptions={speciesOptions}
             >
                 {data.kind === "GraphData" ? (
                     <InsecticideResistanceAndResistanceMechanismsGraph series={data.series} />

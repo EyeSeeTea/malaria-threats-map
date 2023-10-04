@@ -1,7 +1,6 @@
 import i18next from "i18next";
 import React from "react";
 import { PreventionStudy } from "../../../../../../domain/entities/PreventionStudy";
-import { filterByResistanceMechanism } from "../../../../../components/layers/studies-filters";
 import { Option } from "../../../common/types";
 import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
 import { usePrevention } from "../../usePrevention";
@@ -31,10 +30,15 @@ export function useInsecticideResistanceAndResistanceMechanisms() {
 
     const [data, setData] = React.useState<InsecticideResistanceAndResistanceData>({ kind: "GraphData", series: [] });
     const [chartType, setChartType] = React.useState<ChartType>("graph");
+    const { onSpeciesChange } = filters;
+
+    React.useEffect(() => {
+        const species = speciesOptions.map(s => s.value);
+        onSpeciesChange(species);
+    }, [onSpeciesChange, speciesOptions]);
 
     React.useEffect(() => {
         setData(createChartData(filteredStudies, chartType));
-        console.log("setData");
     }, [filteredStudies, chartType]);
 
     const onChartTypeChange = React.useCallback((type: ChartType) => {
