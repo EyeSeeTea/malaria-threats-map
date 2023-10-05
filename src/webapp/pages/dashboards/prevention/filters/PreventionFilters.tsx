@@ -12,7 +12,10 @@ import { Option } from "../../../../components/BasicSelect";
 import SingleFilter from "../../../../components/filters/common/SingleFilter";
 import MultiFilter from "../../../../components/filters/common/MultiFilter";
 
-export type PreventionFilterableChart = "status-of-resistance-of-insecticide" | "mosquito-mortality-overtime";
+export type PreventionFilterableChart =
+    | "status-of-resistance-of-insecticide"
+    | "mosquito-mortality-overtime"
+    | "insecticide-resistance-resistance-mechanisms";
 
 interface PreventionFiltersProps {
     chart: PreventionFilterableChart;

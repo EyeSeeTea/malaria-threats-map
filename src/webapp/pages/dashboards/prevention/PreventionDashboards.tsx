@@ -6,8 +6,8 @@ import { useDashboards } from "../context/useDashboards";
 import CountryContextStudies from "../common/country-context/CountryContextStudies";
 import { CountryContext } from "../types";
 import PhenotypicInsecticideResistanceStudies from "./phenotypic-insecticide-resistance/PhenotypicInsecticideResistanceStudies";
-import { PhenotypicInsecticideResistance } from "./types";
-import MolecularMechanismDetection from "./molecular-mechanism-detection/MolecularMechanismDetection";
+import { MolecularMechanismDetection, PhenotypicInsecticideResistance } from "./types";
+import MolecularMechanismDetectionStudies from "./molecular-mechanism-detection/MolecularMechanismDetectionStudies";
 
 const PreventionDashboards: React.FC = () => {
     const { dashboardsPreventionStudies, theme } = useDashboards();
@@ -16,6 +16,10 @@ const PreventionDashboards: React.FC = () => {
     const [phenotypicInsecticideResistance, setPhenotypicInsecticideResistance] =
         React.useState<PhenotypicInsecticideResistance>("phenotypic-insecticide-resistance");
 
+    const [molecularMechanismDetection, setMolecularMechanismDetection] = React.useState<MolecularMechanismDetection>(
+        "molecular-mechanism-detection"
+    );
+
     return (
         <React.Fragment>
             <Container maxWidth="lg">
@@ -23,8 +27,10 @@ const PreventionDashboards: React.FC = () => {
                     <ContentsFilterSection
                         countryContext={countryContext}
                         phenotypicInsecticideResistance={phenotypicInsecticideResistance}
+                        molecularMechanismDetection={molecularMechanismDetection}
                         onCountryContextChange={setCountryContext}
                         onPhenotypicInsecticideResistanceChange={setPhenotypicInsecticideResistance}
+                        onMolecularMechanismDetectionChange={setMolecularMechanismDetection}
                     />
                 )}
             </Container>
@@ -45,7 +51,7 @@ const PreventionDashboards: React.FC = () => {
             <DashboardSection>
                 {dashboardsPreventionStudies && (
                     <Container maxWidth="xl">
-                        <MolecularMechanismDetection />
+                        <MolecularMechanismDetectionStudies />
                     </Container>
                 )}
             </DashboardSection>

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import InsecticideResistanceAndResistanceMechanismsDashboard from "./insecticide-resistance-resistance-mechanisms-dashboard/InsecticideResistanceAndResistanceMechanismsDashboard";
 
-const MolecularMechanismDetection: React.FC = () => {
+const MolecularMechanismDetectionStudies: React.FC = () => {
     const { t } = useTranslation();
 
     return (
@@ -15,7 +15,7 @@ const MolecularMechanismDetection: React.FC = () => {
     );
 };
 
-export default MolecularMechanismDetection;
+export default MolecularMechanismDetectionStudies;
 
 const Container = styled.div<{ width?: string; padding?: string }>`
     width: ${props => props.width || "100%"};

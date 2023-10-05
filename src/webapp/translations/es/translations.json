@@ -113,6 +113,10 @@
                     "phenotypicInsecticideResistance": "Resistencia fenotípica a insecticidas",
                     "statusOfResistanceToInsecticides": "Estado de la resistencia a los insecticidas",
                     "mosquitoOverTime": "Mortalidad de los mosquitos a lo largo del tiempo"
+                },
+                "molecularMechanismDetectionOptions": {
+                    "molecularMechanismDetection": "Detección de mecanismos moleculares",
+                    "insecticideResistanceAndResistanceMechanism": "Resistencia a insecticidas y mecanismos de resistencia detectados por especie vectora"
                 }
             },
             "countryContextDashboards": {

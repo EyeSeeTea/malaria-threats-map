@@ -65,8 +65,8 @@ const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
     return (
         <React.Fragment>
             <PreventionFilterableDashboard
-                id="status-resistance-insecticide"
-                chart="status-of-resistance-of-insecticide"
+                id="insecticide-resistance-resistance-mechanisms"
+                chart="insecticide-resistance-resistance-mechanisms"
                 chartTypes={chartTypes}
                 chartType={chartType}
                 count={0}
