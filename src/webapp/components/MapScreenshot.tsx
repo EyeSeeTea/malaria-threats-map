@@ -181,7 +181,6 @@ const MapSidebarContainer = styled.div`
 `;
 
 const MapInfoSummaryContainer = styled.div`
-    max-width: 310px;
     position: absolute;
     top: 30px;
     left: 30px;
