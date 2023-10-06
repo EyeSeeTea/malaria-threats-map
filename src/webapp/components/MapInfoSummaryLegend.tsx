@@ -126,7 +126,6 @@ const Label = styled.span`
 `;
 
 const InfoValue = styled.span`
-    margin-left: 4px;
     white-space: nowrap;
     width: 100%;
     font-size: 20px;
