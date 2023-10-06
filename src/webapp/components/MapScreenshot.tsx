@@ -200,6 +200,8 @@ const LegendContainer = styled.div`
     span,
     p {
         white-space: nowrap;
+        font-family: sans-serif;
+        font-size: 20px;
     }
     hr,
     .MuiSvgIcon-root {
