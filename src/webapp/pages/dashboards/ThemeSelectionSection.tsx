@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Button, Grid, ToggleButton, ToggleButtonGroup, Typography, Stack } from "@mui/material";
 import { PreventionIcon, TreatmentIcon } from "../../components/Icons";
@@ -12,26 +12,25 @@ import { connect } from "react-redux";
 import { selectTranslations } from "../../store/reducers/translations-reducer";
 import { useAppContext } from "../../context/app-context";
 import { Country } from "../../../domain/entities/Country";
-import { useLocation, useSearchParams } from "react-router-dom";
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type Props = StateProps;
+type OwnProps = {
+    handleThemeChange: (_event: React.MouseEvent<HTMLElement>, value: any) => void;
+    handleCountryChange: (selectedCountries: string[]) => void;
+};
+type Props = StateProps & OwnProps;
 
 const mapStateToProps = (state: State) => ({
     translations: selectTranslations(state),
 });
 
-const ThemeSelectionSection = ({ translations }: Props) => {
+const ThemeSelectionSection = ({ translations, handleThemeChange, handleCountryChange }: Props) => {
     const [countries, setCountries] = React.useState<Country[]>([]);
     const [countryOptions, setCountryOptions] = React.useState<Option[]>([]);
-    const { search } = useLocation();
-    const [searchParams, setSearchParams] = useSearchParams();
 
     const { t } = useTranslation();
     const { compositionRoot } = useAppContext();
-
-    const { theme, selectedCountries, updatedDates, onThemeChange, onSelectedCountriesChange, onGenerate } =
-        useDashboards();
+    const { theme, selectedCountries, updatedDates, onGenerate } = useDashboards();
 
     useEffect(() => {
         compositionRoot.countries.get().run(
@@ -56,44 +55,6 @@ const ThemeSelectionSection = ({ translations }: Props) => {
 
         setCountryOptions(options);
     }, [translations, countries, t]);
-
-    useEffect(() => {
-        const params = new URLSearchParams(search);
-        const theme = params.get("theme");
-        const country = params.get("country");
-
-        onThemeChange(theme as DashboardsThemeOptions);
-        onSelectedCountriesChange([country]);
-        setSearchParams(params, { replace: true });
-    }, [search, onSelectedCountriesChange, onThemeChange, setSearchParams]);
-
-    const handleThemeChange = useCallback(
-        (_event: React.MouseEvent<HTMLElement>, value: any) => {
-            if (value) {
-                searchParams.set("theme", value);
-                setSearchParams(searchParams, { replace: true });
-            } else {
-                searchParams.delete("theme");
-                setSearchParams(searchParams, { replace: true });
-            }
-            onThemeChange(value);
-        },
-        [onThemeChange, searchParams, setSearchParams]
-    );
-
-    const handleCountryChange = useCallback(
-        (selectedCountries: string[]) => {
-            if (selectedCountries.length > 0) {
-                searchParams.set("country", selectedCountries[0]);
-                setSearchParams(searchParams, { replace: true });
-            } else {
-                searchParams.delete("country");
-                setSearchParams(searchParams, { replace: true });
-            }
-            onSelectedCountriesChange(selectedCountries);
-        },
-        [onSelectedCountriesChange, searchParams, setSearchParams]
-    );
 
     return (
         <FilterCard>
