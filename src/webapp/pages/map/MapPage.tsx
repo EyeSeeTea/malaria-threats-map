@@ -23,7 +23,7 @@ import MobileOptions from "../../components/MobileOptions";
 import Loader from "../../components/Loader";
 import Hidden from "../../components/hidden/Hidden";
 import MapContainer from "../../components/MapContainer";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 interface ThemeProps {
     drawerWidth: string;
@@ -137,9 +137,7 @@ function MapPage({ setMobileOptionsOpen, drawerWidth = "500px", setTheme, setReg
         const theme = params.get("theme");
         const country = params.get("country");
         if (theme) {
-            setTimeout(() => {
-                setTheme(theme);
-            }, 500);
+            setTheme(theme);
         }
         if (country) {
             setTimeout(() => {
