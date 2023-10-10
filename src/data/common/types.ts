@@ -9,7 +9,7 @@ export interface ApiResponse<T> {
     fields: Field[];
 }
 
-interface Feature<T> {
+export interface Feature<T> {
     attributes: T;
 }
 
