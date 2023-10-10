@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Container, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -21,7 +21,7 @@ const DashboardsPageContent: React.FC = () => {
     const { t } = useTranslation();
     const { search } = useLocation();
     const [searchParams, setSearchParams] = useSearchParams();
-    const { theme, onThemeChange, onSelectedCountriesChange } = useDashboards();
+    const { theme, onThemeChange, onSelectedCountriesChange, selectedCountries } = useDashboards();
 
     useEffect(() => {
         const params = new URLSearchParams(search);
@@ -34,33 +34,25 @@ const DashboardsPageContent: React.FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleThemeChange = useCallback(
-        (_event: React.MouseEvent<HTMLElement>, value: any) => {
-            if (value) {
-                searchParams.set("theme", value);
-                setSearchParams(searchParams, { replace: true });
-            } else {
-                searchParams.delete("theme");
-                setSearchParams(searchParams, { replace: true });
-            }
-            onThemeChange(value);
-        },
-        [onThemeChange, searchParams, setSearchParams]
-    );
+    useEffect(() => {
+        if (selectedCountries.length > 0) {
+            searchParams.set("country", selectedCountries[0]);
+            setSearchParams(searchParams, { replace: true });
+        } else {
+            searchParams.delete("country");
+            setSearchParams(searchParams, { replace: true });
+        }
+    }, [searchParams, selectedCountries, setSearchParams]);
 
-    const handleCountryChange = useCallback(
-        (selectedCountries: string[]) => {
-            if (selectedCountries.length > 0) {
-                searchParams.set("country", selectedCountries[0]);
-                setSearchParams(searchParams, { replace: true });
-            } else {
-                searchParams.delete("country");
-                setSearchParams(searchParams, { replace: true });
-            }
-            onSelectedCountriesChange(selectedCountries);
-        },
-        [onSelectedCountriesChange, searchParams, setSearchParams]
-    );
+    useEffect(() => {
+        if (theme) {
+            searchParams.set("theme", theme);
+            setSearchParams(searchParams, { replace: true });
+        } else {
+            searchParams.delete("theme");
+            setSearchParams(searchParams, { replace: true });
+        }
+    }, [searchParams, setSearchParams, theme]);
 
     return (
         <SecondaryLayout>
@@ -72,10 +64,7 @@ const DashboardsPageContent: React.FC = () => {
                 </Container>
             </StyledContainer>
             <Container maxWidth="md" sx={{ marginTop: "-200px" }}>
-                <ThemeSelectionSection
-                    handleThemeChange={handleThemeChange}
-                    handleCountryChange={handleCountryChange}
-                />
+                <ThemeSelectionSection />
             </Container>
             {theme === "prevention" ? <PreventionDashboards /> : <TreatmentDashboards />}
         </SecondaryLayout>

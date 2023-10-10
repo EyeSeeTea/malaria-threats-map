@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { Button, Grid, ToggleButton, ToggleButtonGroup, Typography, Stack } from "@mui/material";
 import { PreventionIcon, TreatmentIcon } from "../../components/Icons";
@@ -14,23 +14,20 @@ import { useAppContext } from "../../context/app-context";
 import { Country } from "../../../domain/entities/Country";
 
 type StateProps = ReturnType<typeof mapStateToProps>;
-type OwnProps = {
-    handleThemeChange: (_event: React.MouseEvent<HTMLElement>, value: any) => void;
-    handleCountryChange: (selectedCountries: string[]) => void;
-};
-type Props = StateProps & OwnProps;
+type Props = StateProps;
 
 const mapStateToProps = (state: State) => ({
     translations: selectTranslations(state),
 });
 
-const ThemeSelectionSection = ({ translations, handleThemeChange, handleCountryChange }: Props) => {
+const ThemeSelectionSection = ({ translations }: Props) => {
     const [countries, setCountries] = React.useState<Country[]>([]);
     const [countryOptions, setCountryOptions] = React.useState<Option[]>([]);
 
     const { t } = useTranslation();
     const { compositionRoot } = useAppContext();
-    const { theme, selectedCountries, updatedDates, onGenerate } = useDashboards();
+    const { theme, selectedCountries, updatedDates, onGenerate, onThemeChange, onSelectedCountriesChange } =
+        useDashboards();
 
     useEffect(() => {
         compositionRoot.countries.get().run(
@@ -55,6 +52,13 @@ const ThemeSelectionSection = ({ translations, handleThemeChange, handleCountryC
 
         setCountryOptions(options);
     }, [translations, countries, t]);
+
+    const handleThemeChange = useCallback(
+        (_event: React.MouseEvent<HTMLElement>, value: any) => {
+            onThemeChange(value);
+        },
+        [onThemeChange]
+    );
 
     return (
         <FilterCard>
@@ -93,7 +97,7 @@ const ThemeSelectionSection = ({ translations, handleThemeChange, handleCountryC
                             <MultiFilter
                                 placeholder={t("common.filters.select_country")}
                                 options={countryOptions}
-                                onChange={handleCountryChange}
+                                onChange={onSelectedCountriesChange}
                                 value={selectedCountries}
                                 margin="10px 0px"
                             />
