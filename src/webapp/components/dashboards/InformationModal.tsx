@@ -3,8 +3,9 @@ import { Dialog, DialogContent, DialogTitle, IconButton, Stack, Typography } fro
 import { useTranslation, Trans } from "react-i18next";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDashboards } from "../../pages/dashboards/context/useDashboards";
-import { LastUpdatedDates } from "../../store/types";
+
 import { format } from "date-fns";
+import { LastUpdatedDates } from "../../../domain/entities/LastUpdateDates";
 
 export type SpecificInformationModalProps = Omit<InformationModalProps, "title">;
 
