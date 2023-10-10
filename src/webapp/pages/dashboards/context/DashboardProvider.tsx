@@ -43,8 +43,10 @@ const DashboardProvider: React.FC<Props> = ({
     const [dashboardsTreatmentStudies, setDashboardsTreatmentStudies] = useState<TreatmentStudy[]>(undefined);
     const [updatedDates, setUpdatedDates] = useState<LastUpdatedDates>({
         prevention: null,
+        preventionOngoing: null,
         diagnosis: null,
         treatment: null,
+        treatmentOngoing: null,
         invasive: null,
     });
 
