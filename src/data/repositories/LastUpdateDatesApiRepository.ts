@@ -18,7 +18,7 @@ export class LastUpdateDatesApiRepository implements LastUpdatedDatesRepository 
     constructor(private baseUrl: string) {}
 
     get(): FutureData<LastUpdatedDates> {
-        return request<XMartApiResponse<FACT_UPDATE_ROW>>({ url: `${this.baseUrl}/FACT_UPDATE` })
+        return request<XMartApiResponse<FACT_UPDATE_ROW>>({ url: `${this.baseUrl}/FACT_UPDATE?$top=20` })
             .map(response => {
                 const lastUpdateDates = response.value.reduce((acc: LastUpdatedDates, row: FACT_UPDATE_ROW) => {
                     if (row.THEME_NAME === "AMDER") {
