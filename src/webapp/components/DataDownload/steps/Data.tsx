@@ -72,7 +72,6 @@ import {
     preventionDatasetSuggestions,
     treatmentDatasetSuggestions,
 } from "../filters/DataSetSelector";
-import { getMinMaxYears } from "../../../../domain/entities/Study";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -146,8 +145,6 @@ const Data: React.FC<Props> = ({
     setInvasiveFilteredStudies,
     setActionGroupSelected,
     onChangeSelectedDatabases,
-    setYears,
-    setMaxMinYears,
 }) => {
     const { t } = useTranslation();
 
@@ -188,20 +185,6 @@ const Data: React.FC<Props> = ({
             filterInvasiveStudies(invasiveStudies, invasiveFilters, yearFilters, region, "download")
         );
     }, [invasiveStudies, invasiveFilters, region, yearFilters, setInvasiveFilteredStudies]);
-
-    useEffect(() => {
-        const minMaxYears =
-            theme === "prevention"
-                ? getMinMaxYears(preventionStudies)
-                : theme === "diagnosis"
-                ? getMinMaxYears(diagnosisStudies, false)
-                : theme === "treatment"
-                ? getMinMaxYears(treatmentStudies, false)
-                : getMinMaxYears(invasiveStudies);
-
-        setMaxMinYears(minMaxYears);
-        setYears(minMaxYears);
-    }, [theme, preventionStudies, diagnosisStudies, treatmentStudies, invasiveStudies, setMaxMinYears, setYears]);
 
     const handleAddToDownload = useCallback(() => {
         switch (theme) {
