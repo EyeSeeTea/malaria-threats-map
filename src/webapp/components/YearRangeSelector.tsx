@@ -10,7 +10,6 @@ import { sendAnalytics } from "../utils/analytics";
 import { Divider, FilterColumContainer } from "./filters/Filters";
 import styled from "styled-components";
 import TheaterMode from "./TheaterMode/TheaterMode";
-import { useIsOngoingStudiesMap } from "./hooks/useIsOngoingStudiesMap";
 
 const Row = styled.div`
     display: flex;
@@ -69,15 +68,8 @@ export function range(start: number, end: number, reverse?: boolean) {
     return reverse ? R.reverse(years) : years;
 }
 
-const YearRangeSelector = ({
-    maxMinYears: defaultMaxMinYears,
-    filters,
-    setFilters,
-    showTheatherMode = true,
-}: Props) => {
+const YearRangeSelector = ({ maxMinYears, filters, setFilters, showTheatherMode = true }: Props) => {
     const { t } = useTranslation();
-    const isOngoingStudy = useIsOngoingStudiesMap();
-    const maxMinYears = isOngoingStudy ? [2018, defaultMaxMinYears[1]] : defaultMaxMinYears;
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         const [start, end] = newValue as number[];

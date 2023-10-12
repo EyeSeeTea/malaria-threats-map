@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import makeStyles from "@mui/styles/makeStyles";
 import { Paper, IconButton, Slider } from "@mui/material";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
@@ -8,11 +8,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { setFiltersAction, setTheaterModeAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import { selectMaxMinYears, selectTheme } from "../../store/reducers/base-reducer";
+import { selectTheme } from "../../store/reducers/base-reducer";
 import { sendAnalytics } from "../../utils/analytics";
-import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
-import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
-import { useIsOngoingStudiesMap } from "../hooks/useIsOngoingStudiesMap";
 
 const useStyles = makeStyles({
     root: {
@@ -38,9 +35,10 @@ const useStyles = makeStyles({
     },
 });
 
+const THIS_YEAR = new Date().getFullYear();
+
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
-    maxMinYears: selectMaxMinYears(state),
 });
 
 const mapDispatchToProps = {
@@ -63,22 +61,12 @@ const getMinYear = (theme: string) => {
     }
 };
 
-function TheaterMode({ setYears, setTheaterMode, maxMinYears: defaultMinMaxYears, theme }: Props) {
+function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
     const classes = useStyles({});
-    const [maxMinYears, setMaxMinYears] = useState([getMinYear(theme), defaultMinMaxYears[1]]);
-    const [year, setYear] = React.useState<number>(maxMinYears[0]);
+    const minYear = getMinYear(theme);
+
+    const [year, setYear] = React.useState<number>(minYear);
     const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
-    const isOngoingStudy = useIsOngoingStudiesMap();
-
-    useEffect(() => {
-        if (isOngoingStudy) {
-            setMaxMinYears([2018, defaultMinMaxYears[1]]);
-        }
-    }, [isOngoingStudy, defaultMinMaxYears]);
-
-    useEffect(() => {
-        setYear(maxMinYears[0]);
-    }, [maxMinYears]);
 
     useEffect(() => {
         let interval: NodeJS.Timeout;
@@ -86,18 +74,18 @@ function TheaterMode({ setYears, setTheaterMode, maxMinYears: defaultMinMaxYears
             interval = setInterval(() => {
                 setYear(year => {
                     const newYear = year + 1;
-                    if (newYear > maxMinYears[1]) {
-                        setYears([maxMinYears[0], maxMinYears[0]]);
-                        return maxMinYears[0];
+                    if (newYear > THIS_YEAR) {
+                        setYears([minYear, minYear]);
+                        return minYear;
                     } else {
-                        setYears([maxMinYears[0], newYear]);
+                        setYears([minYear, newYear]);
                         return newYear;
                     }
                 });
             }, 1000);
         }
         return () => clearInterval(interval);
-    }, [isPlaying, setYears, maxMinYears]);
+    }, [isPlaying, setYears, minYear]);
 
     const play = () => {
         sendAnalytics({ type: "event", category: "timeline", action: "play" });
@@ -111,8 +99,8 @@ function TheaterMode({ setYears, setTheaterMode, maxMinYears: defaultMinMaxYears
 
     const beginning = () => {
         sendAnalytics({ type: "event", category: "timeline", action: "restart" });
-        setYear(() => maxMinYears[0]);
-        setYears([maxMinYears[0], maxMinYears[0]]);
+        setYear(() => minYear);
+        setYears([minYear, minYear]);
     };
 
     function valuetext(value: number) {
@@ -123,7 +111,7 @@ function TheaterMode({ setYears, setTheaterMode, maxMinYears: defaultMinMaxYears
         const value = newValue as number;
         sendAnalytics({ type: "event", category: "timeline", action: "drag", label: year.toString() });
         setYear(() => value);
-        setYears([maxMinYears[0], value]);
+        setYears([minYear, value]);
     };
 
     return (
@@ -149,8 +137,8 @@ function TheaterMode({ setYears, setTheaterMode, maxMinYears: defaultMinMaxYears
                 getAriaValueText={valuetext}
                 onChange={handleChange}
                 step={1}
-                min={maxMinYears[0]}
-                max={maxMinYears[1]}
+                min={minYear}
+                max={THIS_YEAR}
             />
             <IconButton
                 className={classes.iconButton}
