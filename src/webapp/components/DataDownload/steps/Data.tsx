@@ -7,7 +7,7 @@ import {
     selectRegion,
     selectTheme,
 } from "../../../store/reducers/base-reducer";
-import { setActionGroupSelected, setFiltersAction, setMaxMinYearsAction } from "../../../store/actions/base-actions";
+import { setActionGroupSelected } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 
 import { Button, Card, Divider, Grid, List, ListItem, Stack, Typography } from "@mui/material";
@@ -103,8 +103,6 @@ const mapDispatchToProps = {
     setDiagnosisFilteredStudies: setDiagnosisFilteredStudiesAction,
     setTreatmentFilteredStudies: setFilteredStudiesAction,
     setInvasiveFilteredStudies: setInvasiveFilteredStudiesAction,
-    setYears: setFiltersAction,
-    setMaxMinYears: setMaxMinYearsAction,
 };
 
 type OwnProps = {
