@@ -11,11 +11,13 @@ import SpeciesSelector from "../../../../components/filters/SpeciesSelector";
 import { Option } from "../../../../components/BasicSelect";
 import SingleFilter from "../../../../components/filters/common/SingleFilter";
 import MultiFilter from "../../../../components/filters/common/MultiFilter";
+import DisaggregateBySpeciesSelector from "../../../../components/filters/DisaggregateBySpecies";
 
 export type PreventionFilterableChart =
     | "status-of-resistance-of-insecticide"
     | "mosquito-mortality-overtime"
-    | "insecticide-resistance-resistance-mechanisms";
+    | "insecticide-resistance-resistance-mechanisms"
+    | "spread-of-resistance-over-time";
 
 interface PreventionFiltersProps {
     chart: PreventionFilterableChart;
@@ -56,6 +58,13 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                 />
             )}
 
+            {speciesOptions && filters.onSpeciesChange && filters.onDisaggregateBySpeciesChange && (
+                <DisaggregateBySpeciesSelector
+                    onChange={filters.onDisaggregateBySpeciesChange}
+                    value={filters.disaggregateBySpeciesSelection}
+                />
+            )}
+
             {speciesOptions && filters.onSpeciesChange && (
                 <SpeciesSelector
                     labelPosition="top"
@@ -64,6 +73,10 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                     onChange={filters.onSpeciesChange}
                     value={filters.species}
                     isClearable={true}
+                    disabled={
+                        filters.onDisaggregateBySpeciesChange &&
+                        filters.disaggregateBySpeciesSelection === "aggregate_species"
+                    }
                 />
             )}
 

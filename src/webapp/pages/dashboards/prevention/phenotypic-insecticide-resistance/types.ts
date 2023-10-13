@@ -39,3 +39,35 @@ export type MosquitoOverTimeData = {
     boxplotData: number[][];
     outliersData: number[][];
 };
+
+export type SpreadOfResistanceOverTimeChartType = "by-insecticide-class" | "by-insecticide";
+
+export type SpreadOfResistanceOverTimeChartData =
+    | SpreadOfResistanceOverTimeChartDataByClass
+    | SpreadOfResistanceOverTimeChartDataByType;
+
+export type SpreadOfResistanceOverTimeChartDataByClass = {
+    kind: "InsecticideByClass";
+    data: SpreadOfResistanceOverTimeChart;
+};
+
+export type SpreadOfResistanceOverTimeChartDataByType = {
+    kind: "InsecticideByType";
+    data: SpreadOfResistanceOverTimeChart;
+};
+
+export type SpreadOfResistanceOverTimeChart = {
+    years: number[];
+    maxSumOfConfirmedResistance: number;
+    dataByCountry: SpreadOfResistanceOverTimeByCountry | SpreadOfResistanceOverTimeByCountryAndSpecies;
+};
+
+export type SpreadOfResistanceOverTimeByCountry = Record<string, SpreadOfResistanceOverTimeData[]>;
+
+export type SpreadOfResistanceOverTimeByCountryAndSpecies = Record<string, SpreadOfResistanceOverTimeBySpecie>;
+export type SpreadOfResistanceOverTimeBySpecie = Record<string, SpreadOfResistanceOverTimeData[]>;
+export type SpreadOfResistanceOverTimeData = {
+    name: string;
+    data: number[];
+    color: string;
+};

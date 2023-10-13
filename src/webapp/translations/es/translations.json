@@ -214,6 +214,12 @@
                     "title": "MORTALIDAD DE MOSQUITOS A LO LARGO DEL TIEMPO",
                     "adjustedMortality": "Mortalidad ajustada (%)",
                     "year": "Año"
+                },
+                "spreadOfResistanceOverTime": {
+                    "title": "Propagación de la resistencia a lo largo del tiempo",
+                    "sumConfirmedResistance": "Suma de centros que han confirmado la resistencia",
+                    "year": "Año",
+                    "insecticideClassLegendTitle": "Clase de insecticida"
                 }
             },
             "molecularMechanismDetectionDashboards": {
@@ -281,6 +287,13 @@
                     "title": "MORTALIDAD DE MOSQUITOS A LO LARGO DEL TIEMPO",
                     "graphInterpretation": "<0>Interpretación del gráfico:</0> Este gráfico presenta la mortalidad de mosquitos en bioensayos de susceptibilidad a lo largo del tiempo. El tamaño de la barra representa los valores de los estudios que se encuentran entre el 25 % y el 75 % de los cuartiles de la distribución de la mortalidad. La línea horizontal dentro de la barra representa el valor medio de mortalidad. Las líneas horizontales por encima y por debajo de la barra representan los valores de mortalidad máximo y mínimo, respectivamente.",
                     "typeOfResistance": "<0>Tipo de bioensayo de monitoreo de resistencia:</0> La resistencia a los insecticidas se determinó mediante la mortalidad de mosquitos (bioensayo de botella de los CDC, prueba de tubo de la OMS o bioensayo de botella de la OMS). La resistencia confirmada se clasifica como mortalidad de mosquitos {{lessThan}}90%."
+                },
+                "spreadOfResistanceOverTimePopup": {
+                    "title": "PROPAGACIÓN DE LA RESISTENCIA A LO LARGO DEL TIEMPO",
+                    "lineChartInterpretation": "<0>Interpretación del gráfico lineal:</0> En este gráfico, el número acumulado de lugares en los que se ha confirmado la resistencia a cada insecticida o clase (es decir, mortalidad de mosquitos {{lessThan}}90% en el bioensayo de la OMS o los CDC con la concentración de insecticida discriminante) se traza en función del año. El área de los círculos en el gráfico representa el número total de sitios que monitorearon la resistencia ese año.",
+                    "barChartInterpretation": "<0>Interpretación del gráfico de barras:</0> Este gráfico presenta el número de lugares en los que se controló la resistencia a los insecticidas por año, desglosado por los que confirmaron la resistencia (rojo), los que detectaron una posible resistencia (naranja) y aquellos en los que los mosquitos eran susceptibles al insecticida (verde).",
+                    "disaggregatedView": "<0>Visión desagregada:</0> Los gráficos pueden visualizarse por clase de insecticida o por insecticida, y para todas las especies de vectores juntas o desagregadas por especies.",
+                    "typeOfResistanceMonitoringBioassay": "<0>Tipo de bioensayo de monitoreo de resistencia:</0> La resistencia a los insecticidas se determinó mediante la mortalidad de los mosquitos (bioensayo en botella de los CDC, prueba en tubo de la OMS o bioensayo en botella de la OMS). La resistencia confirmada se clasifica como una mortalidad de mosquitos {{lessThan}}90%."
                 }
             },
             "tooltip": {
@@ -825,7 +838,11 @@
             "exclude_lower_samples": "Excluir estudios de menos de 20 muestras",
             "onlyIncludeBioassays": "Incluya sólo los bioensayos con más del siguiente número de mosquitos",
             "zero_all_bioassays": "0 (todos los bioensayos)",
-            "only_include_data_by_health": "Incluir solo los datos proporcionados a la OMS por los ministerios de salud"
+            "only_include_data_by_health": "Incluir solo los datos proporcionados a la OMS por los ministerios de salud",
+            "disaggregate_by_species": {
+                "aggregate_species": "Datos agregados de las especies",
+                "disaggregate_species": "Desagregados por especies"
+            }
         },
         "map_info_summary": {
             "all": "Todos",

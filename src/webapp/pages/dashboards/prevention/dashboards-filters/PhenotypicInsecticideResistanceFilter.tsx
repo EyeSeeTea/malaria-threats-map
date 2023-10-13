@@ -21,6 +21,12 @@ const options = (t: TFunction<"translation", undefined>): Option<PhenotypicInsec
         label: t("common.dashboard.dashboardsFilterSection.phenotypicInsecticideResistanceOptions.mosquitoOverTime"),
         value: "mosquito-mortality-over-time",
     },
+    {
+        label: t(
+            "common.dashboard.dashboardsFilterSection.phenotypicInsecticideResistanceOptions.spreadOfResistanceOverTime"
+        ),
+        value: "spread-of-resistance-over-time",
+    },
 ];
 
 interface PhenotypicInsecticideResistanceFilterProps {
