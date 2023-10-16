@@ -113,18 +113,20 @@ const ReportToolbar: React.FC<ReportToolbarProps> = ({
                     >
                         {t("common.data_download.buttons.download")}
                     </Button>
-                    <ReportFilterPopover
-                        countries={countries}
-                        setCountries={setCountries}
-                        species={species}
-                        setSpecies={setSpecies}
-                        drugs={drugs}
-                        setDrugs={setDrugs}
-                        plasmodiumSpecie={plasmodiumSpecie}
-                        setPlasmodiumSpecie={setPlasmodiumSpecie}
-                        treatmentStudies={treatmentStudies}
-                        preventionStudies={preventionStudies}
-                    />
+                    {(treatmentStudies !== undefined || preventionStudies !== undefined) && (
+                        <ReportFilterPopover
+                            countries={countries}
+                            setCountries={setCountries}
+                            species={species}
+                            setSpecies={setSpecies}
+                            drugs={drugs}
+                            setDrugs={setDrugs}
+                            plasmodiumSpecie={plasmodiumSpecie}
+                            setPlasmodiumSpecie={setPlasmodiumSpecie}
+                            treatmentStudies={treatmentStudies}
+                            preventionStudies={preventionStudies}
+                        />
+                    )}
                 </>
             )}
         </Toolbar>

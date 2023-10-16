@@ -9,18 +9,32 @@ import { Order } from "./utils";
 export type CellProps = {
     isBold?: boolean;
     color?: string;
+    background?: string;
     isRight?: boolean;
     divider?: boolean;
+    isRotated?: boolean;
+    isCenter?: boolean;
+    width?: number;
+    height?: number;
+    nowrap?: boolean;
+    removeBottomDivider?: boolean;
 };
 
 export const StyledCell = styled(TableCell)<CellProps>`
-    font-size: ${props => (props.isBold ? "12px" : "11.5px")} !important;
+    font-size: ${props => (props.isBold ? "13px" : "12.5px")} !important;
     line-height: 1rem !important;
-    padding: 3px 6px !important;
+    padding: 3px 4px !important;
     font-weight: ${props => (props.isBold ? "bold" : "normal")} !important;
     color: ${props => props.color || "inherit"} !important;
+    background: ${props => props.background || "inherit"} !important;
     ${props => props.isRight && "text-align: right !important"};
-    ${props => props.divider && "border-left: 1px solid rgba(224, 224, 224, 1)"}
+    ${props => props.isCenter && "text-align: center !important"};
+    ${props => props.divider && "border-left: 1px solid rgba(224, 224, 224, 1)"};
+    ${props => props.isRotated && "transform: rotate(-90deg)"};
+    ${props => props.width && `width: ${props.width}px !important`};
+    ${props => props.height && `height: ${props.height}px !important`};
+    ${props => props.nowrap && `white-space: nowrap`};
+    ${props => props.removeBottomDivider && `border-bottom: none`};
 `;
 
 export const useStyles = makeStyles((theme: Theme) =>
@@ -58,7 +72,7 @@ export interface EnhancedTableProps<T> {
     classes: ReturnType<typeof useStyles>;
     numSelected: number;
     onRequestSort: (event: React.MouseEvent<unknown>, property: keyof T) => void;
-    onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+    onSelectAllClick?: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
     order: Order;
     orderBy: string;
     rowCount: number;

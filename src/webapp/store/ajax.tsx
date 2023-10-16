@@ -48,7 +48,6 @@ export const get = <T extends unknown>(path: string) =>
         path,
     });
 
-
 export const getFull = <T extends unknown>(path: string) =>
     makeRequestAndHandleUnauthorized<T>({
         method: "GET",

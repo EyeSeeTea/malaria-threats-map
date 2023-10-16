@@ -1,4 +1,4 @@
-import { Button, Card, Grid, Stack, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Button, Card, Grid, Stack, ToggleButtonGroup } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
@@ -12,6 +12,7 @@ import { PreventionFiltersState } from "./filters/PreventionFiltersState";
 import CategoriesCount from "../common/CategoriesCount";
 import { useTranslation } from "react-i18next";
 import ScreenshotModal from "../../../components/ScreenshotModal";
+import { ChartTypeOption } from "../common/chart-type-option/ChartTypeOption";
 
 const SCREENSHOT_BACKGROUND_COLOR = "#F7F7F7";
 const SCREENSHOT_EXCLUSION_CLASSES = ["dashboard-action"];
@@ -19,8 +20,8 @@ const SCREENSHOT_EXCLUSION_CLASSES = ["dashboard-action"];
 interface PreventionFilterableDashboardProps {
     id?: string;
     chart: PreventionFilterableChart;
-    chartTypes?: Option<ResistanceToInsecticideChartType>[];
-    chartType?: ResistanceToInsecticideChartType;
+    chartTypes?: Option<unknown>[];
+    chartType?: unknown;
     speciesOptions?: Option<string>[];
     typeOptions?: Option<string>[];
     insecticideTypeOptions?: Option<string>[];
@@ -28,15 +29,9 @@ interface PreventionFilterableDashboardProps {
     count: number | Record<string, number>;
     chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject[] | HighchartsReact.RefObject>;
     filters: PreventionFiltersState;
-    onYearsChange: (years: [number, number]) => void;
-    onInsecticideClassesChange?: (value: string[]) => void;
-    onSpeciesChange?: (value: string[]) => void;
-    onTypeChange?: (value: string) => void;
-    onInsecticideTypesChange?: (value: string[]) => void;
-    onOnlyIncludeBioassaysWithMoreMosquitoesChange: (value: number) => void;
-    onOnlyIncludeDataByHealthChange: (value: boolean) => void;
-    onChartTypeChange?: (value: ResistanceToInsecticideChartType) => void;
+    onChartTypeChange?: (value: unknown) => void;
     onInfoClick: () => void;
+    onDownload?: () => void;
 }
 
 interface PreventionFilterableDashboardComponentProps extends PreventionFilterableDashboardProps {
@@ -55,13 +50,6 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
     filters,
     speciesOptions,
     typeOptions,
-    onInsecticideClassesChange,
-    onSpeciesChange,
-    onInsecticideTypesChange,
-    onTypeChange,
-    onYearsChange,
-    onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-    onOnlyIncludeDataByHealthChange,
     children,
     chartComponentRef,
     onChartTypeChange,
@@ -111,9 +99,9 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                 >
                     {chartTypes.map(type => {
                         return (
-                            <StyledToggleButton key={type.value} value={type.value}>
+                            <ChartTypeOption key={type.label} value={type.value}>
                                 {type.label}
-                            </StyledToggleButton>
+                            </ChartTypeOption>
                         );
                     })}
                 </ToggleButtonGroup>
@@ -130,15 +118,6 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                                     filters={filters}
                                     speciesOptions={speciesOptions}
                                     typeOptions={typeOptions}
-                                    onInsecticideClassesChange={onInsecticideClassesChange}
-                                    onSpeciesChange={onSpeciesChange}
-                                    onInsecticideTypesChange={onInsecticideTypesChange}
-                                    onTypeChange={onTypeChange}
-                                    onYearsChange={onYearsChange}
-                                    onOnlyIncludeBioassaysWithMoreMosquitoesChange={
-                                        onOnlyIncludeBioassaysWithMoreMosquitoesChange
-                                    }
-                                    onOnlyIncludeDataByHealthChange={onOnlyIncludeDataByHealthChange}
                                     onCollapse={onChangeFiltersVisible}
                                 />
                             </FiltersCard>
@@ -169,12 +148,16 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
     );
 };
 
-const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = props => {
+const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = ({ onDownload, ...props }) => {
     const [open, setOpen] = React.useState(false);
 
     const handleScreenshot = React.useCallback(() => {
-        setOpen(true);
-    }, []);
+        if (onDownload) {
+            onDownload();
+        } else {
+            setOpen(true);
+        }
+    }, [onDownload]);
 
     const handleCloseScreenshot = React.useCallback(() => {
         setOpen(false);
@@ -245,18 +228,5 @@ const FiltersCard = styled(Card)<{ $isScreenshot: boolean }>`
         .MuiPaper-root {
             margin-top: 10px;
         }
-    }
-`;
-
-const StyledToggleButton = styled(ToggleButton)`
-    border-radius: 5px !important;
-    margin-right: 16px;
-    padding: 16px 32px;
-    color: black;
-    background-color: white;
-    border: 0px;
-    &.Mui-selected {
-        color: white;
-        background-color: #2fb3af;
     }
 `;

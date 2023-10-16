@@ -1,4 +1,3 @@
-
 import { FutureData } from "../common/FutureData";
 import { Translation } from "../entities/Translation";
 
