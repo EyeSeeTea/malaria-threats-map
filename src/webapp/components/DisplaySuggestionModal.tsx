@@ -6,6 +6,11 @@ import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import { useTranslation } from "react-i18next";
 
+type DisplaySuggestionModalType = {
+    open: boolean;
+    handleClose: () => void;
+};
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         paper: {
@@ -25,18 +30,9 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const DisplaySuggestionModal = () => {
-    const [open, setOpen] = React.useState(false);
+const DisplaySuggestionModal = ({ open, handleClose }: DisplaySuggestionModalType) => {
     const classes = useStyles({});
     const { t } = useTranslation();
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     return (
         <Dialog
