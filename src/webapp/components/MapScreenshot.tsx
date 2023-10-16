@@ -219,6 +219,7 @@ const StyledImage = styled.img<{ $hasSidebar?: boolean }>`
     border-top-right-radius: ${props => (props.$hasSidebar ? "unset" : "10px")};
     border-bottom-right-radius: ${props => (props.$hasSidebar ? "unset" : "10px")};
     border-bottom-left-radius: 10px;
+    width: 100%;
 `;
 
 const WHOInfoContainer = styled.div`
