@@ -8,6 +8,7 @@ import { StoriesPage } from "./stories/StoriesPage";
 import HomePage from "./home/HomePage";
 import MapPage from "./map/MapPage";
 import ShareDataPage from "./shareData/ShareDataPage";
+import DisplaySuggestionModal from "../components/DisplaySuggestionModal";
 
 const ScrollToTop = (): JSX.Element => {
     const { pathname } = useLocation();
@@ -23,6 +24,7 @@ export const Router: React.FC = React.memo(() => {
     return (
         <HashRouter>
             <ScrollToTop />
+            <DisplaySuggestionModal />
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />
