@@ -1,15 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import CloseIcon from "@mui/icons-material/Close";
 import { DialogActions, DialogContent, DialogTitle, IconButton, Theme } from "@mui/material";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
+import { hasShowedDisplaySuggestion, markDisplaySuggestionAsShowed } from "../utils/localStorage-utils";
 import { useTranslation } from "react-i18next";
-
-type DisplaySuggestionModalType = {
-    open: boolean;
-    handleClose: () => void;
-};
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -30,22 +26,44 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const DisplaySuggestionModal = ({ open, handleClose }: DisplaySuggestionModalType) => {
+const DisplaySuggestionModal = () => {
+    const TabletPortraitWidth = 768;
+    const [open, setOpen] = useState(false);
     const classes = useStyles({});
     const { t } = useTranslation();
+
+    useEffect(() => {
+        const handleResize = () => {
+            const isMobile = window.innerWidth <= TabletPortraitWidth;
+            if (isMobile && !hasShowedDisplaySuggestion()) {
+                setOpen(true);
+                markDisplaySuggestionAsShowed();
+            }
+
+            if (!isMobile) {
+                setOpen(false);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     return (
         <Dialog
             fullWidth={true}
             open={open}
-            onClose={handleClose}
+            onClose={() => setOpen(false)}
             PaperProps={{
                 className: classes.paper,
             }}
         >
             <DialogActions className={classes.dialogActions}>
                 <DialogTitle className={classes.dialogTitle}>{t("Larger screens are recommended")}</DialogTitle>
-                <IconButton onClick={handleClose} size="large">
+                <IconButton onClick={() => setOpen(false)} size="large">
                     <CloseIcon />
                 </IconButton>
             </DialogActions>
