@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const BlockerWindow = () => {
+const DisplaySuggestionModal = () => {
     const [open, setOpen] = React.useState(false);
     const classes = useStyles({});
     const { t } = useTranslation();
@@ -62,4 +62,4 @@ const BlockerWindow = () => {
     );
 };
 
-export default BlockerWindow;
+export default DisplaySuggestionModal;
