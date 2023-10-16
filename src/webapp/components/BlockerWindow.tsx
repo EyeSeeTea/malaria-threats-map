@@ -48,13 +48,15 @@ const BlockerWindow = () => {
             }}
         >
             <DialogActions className={classes.dialogActions}>
-                <DialogTitle className={classes.dialogTitle}>{t("Action not available")}</DialogTitle>
+                <DialogTitle className={classes.dialogTitle}>{t("Larger screens are recommended")}</DialogTitle>
                 <IconButton onClick={handleClose} size="large">
                     <CloseIcon />
                 </IconButton>
             </DialogActions>
             <DialogContent>
-                {t("This view or action is not available on your device. Please try again on a laptop or desktop.")}
+                {t(
+                    "While this site is designed to be accessible, you might find it more accurate on larger screens. If possible, please interact with this website using a laptop or desktop computer."
+                )}
             </DialogContent>
         </Dialog>
     );
