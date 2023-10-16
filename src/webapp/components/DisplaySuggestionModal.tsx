@@ -35,6 +35,7 @@ const DisplaySuggestionModal = () => {
     useEffect(() => {
         const handleResize = () => {
             const isMobile = window.innerWidth <= TabletPortraitWidth;
+
             if (isMobile && !hasShowedDisplaySuggestion()) {
                 setOpen(true);
                 markDisplaySuggestionAsShowed();
@@ -44,6 +45,8 @@ const DisplaySuggestionModal = () => {
                 setOpen(false);
             }
         };
+
+        handleResize();
 
         window.addEventListener("resize", handleResize);
 
