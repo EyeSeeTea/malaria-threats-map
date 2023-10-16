@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { AppBar, Toolbar, Box, IconButton, Typography, Button, Divider } from "@mui/material";
 import { Menu as MenuIcon, CloseOutlined as CloseOutlinedIcon } from "@mui/icons-material";
 import LeftSidebarMenu from "../../components/LeftSidebarMenu/LeftSidebarMenu";
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 import { ReactNode } from "hoist-non-react-statics/node_modules/@types/react";
 import { LanguageSelectorDialog } from "../../components/LanguageSelectorDialog";
 import i18next from "i18next";
 import { changeLanguage } from "../../config/i18next";
+import { selectRegion, selectTheme } from "../../store/reducers/base-reducer";
+import { State } from "../../store/types";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state: State) => ({
+    theme: selectTheme(state),
+    region: selectRegion(state),
+});
+
+type StateProps = ReturnType<typeof mapStateToProps>;
 
 interface SecondaryHeaderProps {
     onDrawerOpenChange?: (open: boolean) => void;
@@ -16,11 +26,27 @@ interface SecondaryHeaderProps {
     showTakeTour?: boolean;
 }
 
-const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, action, showTakeTour = true }) => {
+type Props = StateProps & SecondaryHeaderProps;
+
+const SecondaryHeader: React.FC<Props> = ({
+    onDrawerOpenChange,
+    action,
+    showTakeTour = true,
+    theme: mapTheme,
+    region,
+}) => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const [changeLanguageOpen, setChangeLanguageOpen] = React.useState(false);
     const [language, setLanguage] = React.useState(i18next.language || window.localStorage.i18nextLng);
     const { t } = useTranslation();
+    const [searchParams] = useSearchParams();
+    const [paramTheme, setParamTheme] = useState("");
+    const [paramCountry, setParamCountry] = useState("");
+
+    useEffect(() => {
+        setParamTheme(mapTheme);
+        setParamCountry(region.country);
+    }, [mapTheme, region]);
 
     const toggleDrawer = React.useCallback(() => {
         const value = !drawerOpen;
@@ -42,6 +68,17 @@ const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, a
         setChangeLanguageOpen(true);
     };
 
+    const dashboardsParams = useCallback(() => {
+        const params = new URLSearchParams();
+        if (paramCountry) {
+            params.append("country", paramCountry);
+        }
+        if (paramTheme) {
+            params.append("theme", paramTheme);
+        }
+        return params.toString();
+    }, [paramCountry, paramTheme]);
+
     return (
         <nav>
             <Box>
@@ -55,10 +92,10 @@ const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, a
                                 <MenuTypography variant="h6">{t("common.topbar.menu")}</MenuTypography>
                             </Flex>
                             <Divider orientation="vertical" flexItem />
-                            <Button component={StyledLink} to="/maps">
+                            <Button component={StyledLink} to={`/maps?${searchParams.toString()}`}>
                                 {t("common.topbar.maps")}
                             </Button>
-                            <Button component={StyledLink} to="/dashboards">
+                            <Button component={StyledLink} to={`/dashboards?${dashboardsParams()}`}>
                                 {t("common.topbar.dashboards")}
                             </Button>
                             <Button component={StyledLink} to="/download">
@@ -77,7 +114,7 @@ const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ onDrawerOpenChange, a
     );
 };
 
-export default SecondaryHeader;
+export default connect(mapStateToProps)(SecondaryHeader);
 
 const StyledToolbar = styled(Toolbar)`
     &.MuiToolbar-root {
