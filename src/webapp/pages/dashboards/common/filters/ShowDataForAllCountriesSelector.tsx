@@ -1,6 +1,5 @@
 import React from "react";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
-import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { ShowDataForCountries } from "../../treatment/filters/TreatmentFiltersState";
 
@@ -10,8 +9,6 @@ type ShowDataForAllCountriesSelectorProps = {
 };
 
 const ShowDataForAllCountriesSelector: React.FC<ShowDataForAllCountriesSelectorProps> = ({ value, onChange }) => {
-    const { t } = useTranslation();
-
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange((event.target as HTMLInputElement).value as ShowDataForCountries);
     };

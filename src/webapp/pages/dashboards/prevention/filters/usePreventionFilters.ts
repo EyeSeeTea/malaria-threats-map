@@ -3,8 +3,9 @@ import { useState } from "react";
 import { sortInsecticideClasses } from "../../../../components/filters/InsecticideClassFilter";
 import { getMinMaxYears } from "../../../../../domain/entities/Study";
 import { useDashboards } from "../../context/useDashboards";
+import { PreventionFiltersState } from "./PreventionFiltersState";
 
-export function usePreventionFilters() {
+export function usePreventionFilters(): PreventionFiltersState {
     const { dashboardsPreventionStudies } = useDashboards();
 
     const [insecticideTypes, setInsecticideTypes] = useState<string[]>([]);
@@ -14,7 +15,7 @@ export function usePreventionFilters() {
     const [years, setYears] = useState<[number, number]>([2010, new Date().getFullYear()]);
     const [onlyIncludeBioassaysWithMoreMosquitoes, setOnlyIncludeBioassaysWithMoreMosquitoes] = useState<number>(0);
     const [onlyIncludeDataByHealth, setOnlyIncludeDataByHealth] = useState<boolean>(false);
-    const [maxMinYears] = useState<[number, number]>(getMinMaxYears(dashboardsPreventionStudies));
+    const [maxMinYears] = useState<[number, number]>(getMinMaxYears(dashboardsPreventionStudies, true));
 
     const onInsecticideClassChange = React.useCallback((values: string[]) => {
         setInsecticideClasses(sortInsecticideClasses(values));
@@ -44,18 +45,7 @@ export function usePreventionFilters() {
         setOnlyIncludeDataByHealth(value);
     }, []);
 
-    const filters = React.useMemo(() => {
-        return {
-            insecticideClasses,
-            species,
-            insecticideTypes,
-            type,
-            years,
-            onlyIncludeBioassaysWithMoreMosquitoes,
-            onlyIncludeDataByHealth,
-            maxMinYears: [maxMinYears[0], new Date().getFullYear()] as [number, number],
-        };
-    }, [
+    return {
         insecticideClasses,
         species,
         insecticideTypes,
@@ -64,10 +54,6 @@ export function usePreventionFilters() {
         onlyIncludeBioassaysWithMoreMosquitoes,
         onlyIncludeDataByHealth,
         maxMinYears,
-    ]);
-
-    return {
-        filters,
         onInsecticideClassChange,
         onSpeciesChange,
         onInsecticideTypesChange,

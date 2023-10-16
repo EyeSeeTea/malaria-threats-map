@@ -51,7 +51,7 @@ export function useTreatmentFilters(): TreatmentFiltersState {
         drugs,
         molecularMarker,
         years,
-        maxMinYears: [maxMinYears[0], new Date().getFullYear()] as [number, number],
+        maxMinYears,
         excludeLowerPatients,
         excludeLowerSamples,
         showDataForAllCountries,

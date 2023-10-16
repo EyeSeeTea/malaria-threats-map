@@ -12,7 +12,10 @@ import { Option } from "../../../../components/BasicSelect";
 import SingleFilter from "../../../../components/filters/common/SingleFilter";
 import MultiFilter from "../../../../components/filters/common/MultiFilter";
 
-export type PreventionFilterableChart = "status-of-resistance-of-insecticide" | "mosquito-mortality-overtime";
+export type PreventionFilterableChart =
+    | "status-of-resistance-of-insecticide"
+    | "mosquito-mortality-overtime"
+    | "insecticide-resistance-resistance-mechanisms";
 
 interface PreventionFiltersProps {
     chart: PreventionFilterableChart;
@@ -20,13 +23,6 @@ interface PreventionFiltersProps {
     filters: PreventionFiltersState;
     speciesOptions?: Option[];
     typeOptions?: Option[];
-    onInsecticideClassesChange?: (value: string[]) => void;
-    onSpeciesChange?: (value: string[]) => void;
-    onInsecticideTypesChange?: (value: string[]) => void;
-    onTypeChange?: (value: string) => void;
-    onYearsChange: (years: [number, number]) => void;
-    onOnlyIncludeBioassaysWithMoreMosquitoesChange: (value: number) => void;
-    onOnlyIncludeDataByHealthChange: (value: boolean) => void;
     onCollapse: () => void;
 }
 
@@ -36,13 +32,6 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
     filters,
     speciesOptions,
     typeOptions,
-    onInsecticideClassesChange,
-    onSpeciesChange,
-    onInsecticideTypesChange,
-    onTypeChange,
-    onYearsChange,
-    onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-    onOnlyIncludeDataByHealthChange,
     onCollapse,
 }) => {
     const { t } = useTranslation();
@@ -59,42 +48,42 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                 </IconButton>
             </Stack>
 
-            {onInsecticideClassesChange && (
+            {filters.onInsecticideClassesChange && (
                 <InsecticideClassSelector
-                    onChange={onInsecticideClassesChange}
+                    onChange={filters.onInsecticideClassesChange}
                     value={filters.insecticideClasses}
                     type={chart === "mosquito-mortality-overtime" ? "radio" : "select"}
                 />
             )}
 
-            {speciesOptions && onSpeciesChange && (
+            {speciesOptions && filters.onSpeciesChange && (
                 <SpeciesSelector
                     labelPosition="top"
                     margin="10px 0px"
                     options={speciesOptions}
-                    onChange={onSpeciesChange}
+                    onChange={filters.onSpeciesChange}
                     value={filters.species}
                     isClearable={true}
                 />
             )}
 
-            {onTypeChange && (
+            {filters.onTypeChange && (
                 <SingleFilter
                     labelPosition={"top"}
                     margin={"10px 0px"}
                     label={t("common.filters.test_type")}
                     options={typeOptions}
-                    onChange={onTypeChange}
+                    onChange={filters.onTypeChange}
                     value={filters.type}
                 />
             )}
 
-            {onInsecticideTypesChange && (
+            {filters.onInsecticideTypesChange && (
                 <MultiFilter
                     labelPosition="top"
                     label={t("common.filters.insecticide_type")}
                     options={insecticideTypeOptions}
-                    onChange={onInsecticideTypesChange}
+                    onChange={filters.onInsecticideTypesChange}
                     value={filters.insecticideTypes}
                     margin={"10px 0px"}
                     isClearable={true}
@@ -105,15 +94,15 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
             <DashboardsYearRangeSelector
                 years={filters.years}
                 maxMinYears={filters.maxMinYears}
-                onChange={onYearsChange}
+                onChange={filters.onYearsChange}
             />
             <OnlyIncludeBioassaysWithMoreMosquitoes
                 value={filters.onlyIncludeBioassaysWithMoreMosquitoes}
-                onChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}
+                onChange={filters.onOnlyIncludeBioassaysWithMoreMosquitoesChange}
             />
             <OnlyIncudeDataByHealth
                 value={filters.onlyIncludeDataByHealth}
-                onChange={onOnlyIncludeDataByHealthChange}
+                onChange={filters.onOnlyIncludeDataByHealthChange}
             />
         </React.Fragment>
     );
