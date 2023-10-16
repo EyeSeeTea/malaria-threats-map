@@ -122,14 +122,14 @@ const InfoRowContainer = styled.div`
 const Label = styled.span`
     font-weight: bold;
     white-space: nowrap;
-    font-size: 20px;
+    font-size: 18px;
     font-family: sans-serif;
 `;
 
 const InfoValue = styled.span`
     white-space: nowrap;
     width: 100%;
-    font-size: 20px;
+    font-size: 18px;
     font-family: sans-serif;
 `;
 
@@ -149,6 +149,6 @@ const DataFilterRowContainer = styled.div`
 
 const DataFilterValue = styled.span`
     width: 100%;
-    font-size: 20px;
+    font-size: 18px;
     font-family: sans-serif;
 `;
