@@ -5,20 +5,25 @@ import { useTranslation } from "react-i18next";
 import { CountryContext } from "../types";
 import CountryContextFilter from "../common/dashboards-filters/CountryContextFilter";
 import PhenotypicInsecticideResistanceFilter from "./dashboards-filters/PhenotypicInsecticideResistanceFilter";
-import { PhenotypicInsecticideResistance } from "./types";
+import { MolecularMechanismDetection, PhenotypicInsecticideResistance } from "./types";
+import MolecularMechanishDetectionFilter from "./dashboards-filters/MolecularMechanishDetectionFilter";
 
 interface ContentsFilterSectionProps {
     countryContext: CountryContext;
     phenotypicInsecticideResistance: PhenotypicInsecticideResistance;
+    molecularMechanismDetection: MolecularMechanismDetection;
     onCountryContextChange: (value: CountryContext) => void;
     onPhenotypicInsecticideResistanceChange: (value: PhenotypicInsecticideResistance) => void;
+    onMolecularMechanismDetectionChange: (value: MolecularMechanismDetection) => void;
 }
 
 export const ContentsFilterSection: React.FC<ContentsFilterSectionProps> = ({
     countryContext,
     phenotypicInsecticideResistance,
+    molecularMechanismDetection,
     onCountryContextChange,
     onPhenotypicInsecticideResistanceChange,
+    onMolecularMechanismDetectionChange,
 }) => {
     const { t } = useTranslation();
 
@@ -34,6 +39,12 @@ export const ContentsFilterSection: React.FC<ContentsFilterSectionProps> = ({
                 <PhenotypicInsecticideResistanceFilter
                     value={phenotypicInsecticideResistance}
                     onChange={onPhenotypicInsecticideResistanceChange}
+                />
+            </Grid>
+            <Grid item md={3} xs={12}>
+                <MolecularMechanishDetectionFilter
+                    value={molecularMechanismDetection}
+                    onChange={onMolecularMechanismDetectionChange}
                 />
             </Grid>
         </Grid>

@@ -113,6 +113,10 @@
                     "phenotypicInsecticideResistance": "Résistance phénotypique aux insecticides",
                     "statusOfResistanceToInsecticides": "Etat de résistance aux insecticides",
                     "mosquitoOverTime": "La mortalité des moustiques au fil du temps"
+                },
+                "molecularMechanismDetectionOptions": {
+                    "molecularMechanismDetection": "Détection de mécanismes moléculaires",
+                    "insecticideResistanceAndResistanceMechanism": "Résistance aux insecticides et mécanismes de résistance détectés par espèce vectrice"
                 }
             },
             "countryContextDashboards": {
@@ -171,7 +175,9 @@
                     "title": "TAUX D'ÉCHEC DU TRAITEMENT AU FIL DU TEMPS",
                     "numberPatients": "Nombre de patients",
                     "treatmentFailure": "Échec du traitement (%)",
-                    "year": "An"
+                    "year": "An",
+                    "graph": "Graphique",
+                    "table": "Tableau"
                 },
                 "parasiteClearanceOverTime": {
                     "title": "ÉLIMINATION DES PARASITES AU FIL DU TEMPS",
@@ -208,6 +214,23 @@
                     "title": "MORTALITÉ DES MOUSTIQUES AU FIL DU TEMPS",
                     "adjustedMortality": "Mortalité ajustée (%)",
                     "year": "An"
+                }
+            },
+            "molecularMechanismDetectionDashboards": {
+                "title": "Détection de mécanismes moléculaires",
+                "insecticideResistanceAndResistanceMechanisms": {
+                    "title": "RÉSISTANCE AUX INSECTICIDES ET MÉCANISMES DE RÉSISTANCE DÉTECTÉS PAR ESPÈCE VECTRICE",
+                    "graph": "Graphique",
+                    "table": "Tableau",
+                    "legend": {
+                        "phenotypiqueResistance": "Résistance phénotypique",
+                        "percentageSitesInsecticideClass": "% de sites présentant une résistance (nombre de sites surveillés)",
+                        "resistanceMechanisms": "Mécanismes de résistance",
+                        "percentageSitesResistanceMechanisms": " % de sites ayant détecté le mécanisme de résistance (Nombre de sites surveillés)",
+                        "detected": "Détecté",
+                        "noDetected": "Aucun détecté",
+                        "noDataAvailable": "Aucune donnée disponible"
+                    }
                 }
             },
             "treatmentFilters": {
@@ -971,6 +994,7 @@
                 "title": "Résumé de la résistance aux insecticides chez les vecteurs du paludisme",
                 "country": "Pay",
                 "resistance": "État de résistance",
+                "insecticideClass": "Classes d'insecticides",
                 "mechanism": "Mécanismes de résistance",
                 "species": "Espèce de vecteur",
                 "resistance_percentage": "% de sites confirmant la résistance",

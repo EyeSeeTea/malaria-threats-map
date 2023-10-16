@@ -53,15 +53,15 @@ export interface Study {
     YEAR_START: string;
 }
 
-export function getMinMaxYears(studies: Study[], maxAsCurrent = true): [number, number] {
-    if (studies.length === 0) return [2010, new Date().getFullYear()];
+export function getMinMaxYears(studies: Study[], maxAsCurrent = true, minToOverwrite?: number): [number, number] {
+    if (studies.length === 0) return [minToOverwrite || 2010, new Date().getFullYear()];
     const startYears = studies.map(study => parseInt(study.YEAR_START));
     const endYears = studies.map(study => parseInt(study.YEAR_END));
     const years = _.compact(_.uniq([...startYears, ...endYears]).sort());
 
     const current = new Date().getFullYear();
 
-    const min = Math.min(...years);
+    const min = minToOverwrite || Math.min(...years);
     const max = Math.max(...years);
 
     const finalMax = maxAsCurrent ? current : max > current ? max : current;

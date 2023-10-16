@@ -5,7 +5,6 @@ import {
     filterByInsecticideTypes,
     filterByOnlyDataByHealthMinistries,
     filterByOnlyIncludeBioassaysWithMoreMosquitoes,
-    filterByResistanceStatus,
     filterBySpecies,
     filterByType,
     filterByYearRange,
@@ -14,10 +13,21 @@ import { PreventionFiltersState } from "./filters/PreventionFiltersState";
 
 export function filterStudies(
     studies: PreventionStudy[],
-    preventionFilters: PreventionFiltersState
+    baseFilters: ((study: PreventionStudy) => boolean)[],
+    preventionFilters: Pick<
+        PreventionFiltersState,
+        | "insecticideClasses"
+        | "insecticideTypes"
+        | "species"
+        | "type"
+        | "years"
+        | "onlyIncludeBioassaysWithMoreMosquitoes"
+        | "onlyIncludeDataByHealth"
+        | "maxMinYears"
+    >
 ): PreventionStudy[] {
     const filters = _.compact([
-        filterByResistanceStatus,
+        ...baseFilters,
         filterByInsecticideClasses(preventionFilters.insecticideClasses),
         filterByInsecticideTypes(preventionFilters.insecticideTypes),
         filterBySpecies(preventionFilters.species),

@@ -14,19 +14,26 @@ export function useTreatment(drugsMulti: boolean) {
         maxMinYears,
         excludeLowerPatients,
         excludeLowerSamples,
+        showDataForAllCountries,
         onPlasmodiumChange,
         onDrugsChange,
         onYearsChange,
         onExcludeLowerPatientsChange,
         onExcludeLowerSamplesChange,
         onMolecularMarkerChange,
+        onChangeShowDataForAllCountries,
     } = useTreatmentFilters();
 
     const [filteredStudies, setFilteredStudies] = React.useState<TreatmentStudy[]>([]);
     const [filteredStudiesForDrugs, setFilteredStudiesForDrugs] = React.useState<TreatmentStudy[]>([]);
-    const { dashboardsTreatmentStudies, selectedCountries } = useDashboards();
+    const { dashboardsTreatmentStudies, selectedCountries, treatmentStudies } = useDashboards();
 
     const studiesCount = React.useMemo(() => filteredStudies.length, [filteredStudies]);
+
+    const studies = React.useMemo(
+        () => (showDataForAllCountries === "all" ? treatmentStudies : dashboardsTreatmentStudies),
+        [showDataForAllCountries, treatmentStudies, dashboardsTreatmentStudies]
+    );
 
     React.useEffect(() => {
         if (drugsMulti) {
@@ -83,13 +90,7 @@ export function useTreatment(drugsMulti: boolean) {
 
             setFilteredStudies(filteredStudies);
         } else {
-            const filteredStudies = filterStudies(
-                dashboardsTreatmentStudies,
-                plasmodiumSpecies,
-                drugs,
-                years,
-                excludeLowerPatients
-            );
+            const filteredStudies = filterStudies(studies, plasmodiumSpecies, drugs, years, excludeLowerPatients);
 
             setFilteredStudies(filteredStudies);
         }
@@ -101,31 +102,37 @@ export function useTreatment(drugsMulti: boolean) {
         years,
         excludeLowerPatients,
         excludeLowerSamples,
+        studies,
     ]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(dashboardsTreatmentStudies, plasmodiumSpecies, [], undefined, false);
+        const filteredStudies = filterStudies(studies, plasmodiumSpecies, [], undefined, false);
 
         setFilteredStudiesForDrugs(filteredStudies);
-    }, [dashboardsTreatmentStudies, plasmodiumSpecies]);
+    }, [studies, plasmodiumSpecies]);
 
     return {
         filteredStudies,
         filteredStudiesForDrugs,
         selectedCountries,
         studiesCount,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerPatients,
-        excludeLowerSamples,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerPatientsChange,
-        onExcludeLowerSamplesChange,
-        onMolecularMarkerChange,
+
+        filters: {
+            plasmodiumSpecies,
+            drugs,
+            molecularMarker,
+            years,
+            maxMinYears,
+            excludeLowerPatients,
+            excludeLowerSamples,
+            showDataForAllCountries,
+            onPlasmodiumChange,
+            onDrugsChange,
+            onYearsChange,
+            onExcludeLowerPatientsChange,
+            onExcludeLowerSamplesChange,
+            onMolecularMarkerChange,
+            onChangeShowDataForAllCountries,
+        },
     };
 }

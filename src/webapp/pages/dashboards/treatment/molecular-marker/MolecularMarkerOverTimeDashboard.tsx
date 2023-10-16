@@ -15,22 +15,7 @@ import { ChartStyles } from "../../../../components/charts/Style";
 More(Highcharts);
 const MolecularMarkerDashboard: React.FC = () => {
     const { t } = useTranslation();
-    const {
-        filteredStudiesForDrugs,
-        studiesCount,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerSamples,
-        data,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerSamplesChange,
-        onMolecularMarkerChange,
-    } = useMolecularMarker();
+    const { filteredStudiesForDrugs, studiesCount, data, filters } = useMolecularMarker();
 
     const chartComponentRefs = React.useRef([]);
 
@@ -45,17 +30,7 @@ const MolecularMarkerDashboard: React.FC = () => {
             drugsClearable={true}
             filteredStudiesForDrugs={filteredStudiesForDrugs}
             studiesCount={studiesCount}
-            plasmodiumSpecies={plasmodiumSpecies}
-            drugs={drugs}
-            molecularMarker={molecularMarker}
-            years={years}
-            maxMinYears={maxMinYears}
-            excludeLowerSamples={excludeLowerSamples}
-            onPlasmodiumChange={onPlasmodiumChange}
-            onDrugsChange={onDrugsChange}
-            onYearsChange={onYearsChange}
-            onExcludeLowerSamplesChange={onExcludeLowerSamplesChange}
-            onMolecularMarkerChange={onMolecularMarkerChange}
+            filters={filters}
         >
             <Table>
                 <tbody>
@@ -81,7 +56,7 @@ const MolecularMarkerDashboard: React.FC = () => {
                                                 legendVisible,
                                                 data.years,
                                                 data.seriesByCountry[country],
-                                                molecularMarker
+                                                filters.molecularMarker
                                             )}
                                         />
                                     </td>

@@ -16,20 +16,8 @@ More(Highcharts);
 const MosquitoOverTimeDashboard: React.FC = () => {
     const { t } = useTranslation();
 
-    const {
-        insecticideTypeOptions,
-        speciesOptions,
-        typeOptions,
-        count,
-        data,
-        filters,
-        onInsecticideClassChange,
-        onSpeciesChange,
-        onYearsChange,
-        onTypeChange,
-        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-        onOnlyIncludeDataByHealthChange,
-    } = useMosquitoMortalityOverTime();
+    const { insecticideTypeOptions, speciesOptions, typeOptions, count, data, filters } =
+        useMosquitoMortalityOverTime();
 
     const { openPopup, onChangeOpenPopup } = useInfoPopup();
 
@@ -47,13 +35,6 @@ const MosquitoOverTimeDashboard: React.FC = () => {
                 filters={filters}
                 speciesOptions={speciesOptions}
                 typeOptions={typeOptions}
-                onInsecticideClassesChange={onInsecticideClassChange}
-                onSpeciesChange={onSpeciesChange}
-                onTypeChange={onTypeChange}
-                onOnlyIncludeBioassaysWithMoreMosquitoesChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}
-                onOnlyIncludeDataByHealthChange={onOnlyIncludeDataByHealthChange}
-                onYearsChange={onYearsChange}
-                onInsecticideTypesChange={undefined}
                 onInfoClick={onChangeOpenPopup}
             >
                 <Stack direction="row" alignItems="center" sx={{ minHeight: 250 }}>

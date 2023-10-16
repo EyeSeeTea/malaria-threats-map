@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
@@ -9,7 +9,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { selectFilters, selectTheme } from "../../store/reducers/base-reducer";
-import { setMobileOptionsOpen, setThemeAction } from "../../store/actions/base-actions";
+import { setMobileOptionsOpen, setRegionAction, setThemeAction } from "../../store/actions/base-actions";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { selectDiagnosisFilters } from "../../store/reducers/diagnosis-reducer";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
@@ -23,6 +23,7 @@ import MobileOptions from "../../components/MobileOptions";
 import Loader from "../../components/Loader";
 import Hidden from "../../components/hidden/Hidden";
 import MapContainer from "../../components/MapContainer";
+import { useLocation } from "react-router-dom";
 
 interface ThemeProps {
     drawerWidth: string;
@@ -116,6 +117,7 @@ const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
     setPreventionMapType: setPreventionMapType,
     setTheme: setThemeAction,
+    setRegion: setRegionAction,
 };
 type OwnProps = {
     drawerWidth?: string;
@@ -124,10 +126,25 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps & OwnProps;
 
-function MapPage({ setMobileOptionsOpen, drawerWidth = "500px", setTheme, theme }: Props) {
+function MapPage({ setMobileOptionsOpen, drawerWidth = "500px", setTheme, setRegion, theme }: Props) {
     const classes = useStyles({ drawerWidth });
+    const { search } = useLocation();
 
     const themes = ["prevention", "diagnosis", "treatment", "invasive"];
+
+    useEffect(() => {
+        const params = new URLSearchParams(search);
+        const theme = params.get("theme");
+        const country = params.get("country");
+        if (theme) {
+            setTheme(theme);
+        }
+        if (country) {
+            setTimeout(() => {
+                setRegion({ country: country });
+            }, 500);
+        }
+    }, [search, setRegion, setTheme]);
 
     const onChange = (event: React.SyntheticEvent, newValue: number) => {
         switch (newValue) {
