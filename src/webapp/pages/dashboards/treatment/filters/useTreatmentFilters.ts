@@ -4,8 +4,9 @@ import { MolecularMarker } from "../../../../components/filters/MolecularMarkerR
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../../../components/filters/PlasmodiumSpeciesFilter";
 import { getMinMaxYears } from "../../../../../domain/entities/Study";
 import { useDashboards } from "../../context/useDashboards";
+import { ShowDataForCountries, TreatmentFiltersState } from "./TreatmentFiltersState";
 
-export function useTreatmentFilters() {
+export function useTreatmentFilters(): TreatmentFiltersState {
     const { dashboardsTreatmentStudies } = useDashboards();
 
     const [plasmodiumSpecies, setPlasmodiumSpecies] = useState<string>(PLASMODIUM_SPECIES_SUGGESTIONS[0].value);
@@ -15,6 +16,7 @@ export function useTreatmentFilters() {
     const [excludeLowerPatients, setExcludeLowerPatients] = useState<boolean>(false);
     const [excludeLowerSamples, setExcludeLowerSamples] = useState<boolean>(false);
     const [maxMinYears] = useState<[number, number]>(getMinMaxYears(dashboardsTreatmentStudies));
+    const [showDataForAllCountries, setShowDataForAllCountries] = useState<ShowDataForCountries>("selected");
 
     const onPlasmodiumChange = React.useCallback((value: string) => {
         setPlasmodiumSpecies(value);
@@ -40,6 +42,10 @@ export function useTreatmentFilters() {
         setMolecularMarker(molecularMarker);
     }, []);
 
+    const onChangeShowDataForAllCountries = React.useCallback((value: ShowDataForCountries) => {
+        setShowDataForAllCountries(value);
+    }, []);
+
     return {
         plasmodiumSpecies,
         drugs,
@@ -48,11 +54,13 @@ export function useTreatmentFilters() {
         maxMinYears: [maxMinYears[0], new Date().getFullYear()] as [number, number],
         excludeLowerPatients,
         excludeLowerSamples,
+        showDataForAllCountries,
         onPlasmodiumChange,
         onDrugsChange,
         onYearsChange,
         onExcludeLowerPatientsChange,
         onExcludeLowerSamplesChange,
         onMolecularMarkerChange,
+        onChangeShowDataForAllCountries,
     };
 }

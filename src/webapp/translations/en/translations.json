@@ -170,7 +170,9 @@
                     "title": "TREATMENT FAILURE RATES OVER TIME",
                     "numberPatients": "Number of patients",
                     "treatmentFailure": "Treatment failure (%)",
-                    "year": "Year"
+                    "year": "Year",
+                    "graph": "Graph",
+                    "table": "Table"
                 },
                 "parasiteClearanceOverTime": {
                     "title": "PERCENTAGE OF PATIENTS WITH PARASITEMIA ON DAY 3",

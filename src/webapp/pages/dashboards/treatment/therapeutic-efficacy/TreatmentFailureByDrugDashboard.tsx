@@ -14,31 +14,17 @@ import { ChartStyles } from "../../../../components/charts/Style";
 More(Highcharts);
 const TreatmentFailureByDrugDashboard: React.FC = () => {
     const { t } = useTranslation();
-    const {
-        filteredStudiesForDrugs,
-        selectedCountries,
-        studiesCount,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerPatients,
-        data,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerPatientsChange,
-        onMolecularMarkerChange,
-    } = useTreatmentFailureByDrug();
+    const { filteredStudiesForDrugs, selectedCountries, studiesCount, data, filters } = useTreatmentFailureByDrug();
 
     const countryLegend = React.useMemo(() => {
         return selectedCountries.map(iso => `${iso}: ${t(iso)}`).join("; ");
     }, [selectedCountries, t]);
 
     const drugLegend = React.useMemo(() => {
-        return drugs?.length > 0 ? drugs.map(drug => `${drug.replace("DRUG_", "")}: ${t(drug)}`).join("; ") : "";
-    }, [drugs, t]);
+        return filters.drugs?.length > 0
+            ? filters.drugs.map(drug => `${drug.replace("DRUG_", "")}: ${t(drug)}`).join("; ")
+            : "";
+    }, [filters.drugs, t]);
 
     return (
         <TreatmentFilterableDashboard
@@ -48,17 +34,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
             drugsClearable={true}
             filteredStudiesForDrugs={filteredStudiesForDrugs}
             studiesCount={studiesCount}
-            plasmodiumSpecies={plasmodiumSpecies}
-            drugs={drugs}
-            molecularMarker={molecularMarker}
-            years={years}
-            maxMinYears={maxMinYears}
-            excludeLowerPatients={excludeLowerPatients}
-            onPlasmodiumChange={onPlasmodiumChange}
-            onDrugsChange={onDrugsChange}
-            onYearsChange={onYearsChange}
-            onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
-            onMolecularMarkerChange={onMolecularMarkerChange}
+            filters={filters}
         >
             <Stack direction="column" alignItems="center" id="summary-treatment-failures">
                 <Typography variant="body2" fontWeight="bold">

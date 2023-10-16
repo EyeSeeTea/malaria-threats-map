@@ -1,4 +1,4 @@
-import { Button, Card, Grid, Stack } from "@mui/material";
+import { Button, Card, Grid, Stack, ToggleButtonGroup } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -8,16 +8,20 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import InformationModal from "../../../components/dashboards/TreatmentInformationModal";
 import HighchartsReact from "highcharts-react-official";
-import { MolecularMarker } from "../../../components/filters/MolecularMarkerRadioFilter";
 import { useFiltersVisible } from "../common/filters/useFiltersVisible";
 import DashboardTitle from "../common/DashboardTitle";
 import ScreenshotModal from "../../../components/ScreenshotModal";
+import { Option } from "../common/types";
+import { ChartTypeOption } from "../common/chart-type-option/ChartTypeOption";
+import { TreatmentFiltersState } from "./filters/TreatmentFiltersState";
 
 const SCREENSHOT_BACKGROUND_COLOR = "#F7F7F7";
 const SCREENSHOT_EXCLUSION_CLASSES = ["dashboard-action"];
 
 interface TreatmentFilterableDashboardProps {
     id?: string;
+    chartTypes?: Option<unknown>[];
+    chartType?: unknown;
     isMolecularMarkerChart?: boolean;
     drugsMultiple: boolean;
     drugsClearable: boolean;
@@ -26,20 +30,10 @@ interface TreatmentFilterableDashboardProps {
     type: "treatmentFailureByDrug" | "treatmentFailure" | "positiveDay3" | "molecularMarkerStudy";
     filteredStudiesForDrugs: TreatmentStudy[];
     studiesCount: number;
-    plasmodiumSpecies: string;
-    drugs: string[];
-    molecularMarker: MolecularMarker;
-    years: [number, number];
-    maxMinYears: [number, number];
-    excludeLowerPatients?: boolean;
-    excludeLowerSamples?: boolean;
-    PlasmodiumSpecieDisabled?: boolean;
-    onPlasmodiumChange: (value: string) => void;
-    onDrugsChange: (value: string[]) => void;
-    onYearsChange: (value: [number, number]) => void;
-    onExcludeLowerPatientsChange?: (value: boolean) => void;
-    onExcludeLowerSamplesChange?: (value: boolean) => void;
-    onMolecularMarkerChange: (value: MolecularMarker) => void;
+    filters: TreatmentFiltersState;
+    plasmodiumSpecieDisabled?: boolean;
+    onChartTypeChange?: (value: unknown) => void;
+    onDownload?: () => void;
 }
 
 interface TreatmentFilterableDashboardComponentProps extends TreatmentFilterableDashboardProps {
@@ -49,6 +43,8 @@ interface TreatmentFilterableDashboardComponentProps extends TreatmentFilterable
 
 const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboardComponentProps> = ({
     id,
+    chartTypes,
+    chartType,
     isMolecularMarkerChart = false,
     drugsMultiple,
     drugsClearable,
@@ -57,23 +53,12 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
     type,
     filteredStudiesForDrugs,
     studiesCount,
-    plasmodiumSpecies,
-    drugs,
-    molecularMarker,
-    years,
-    maxMinYears,
-    excludeLowerPatients,
-    excludeLowerSamples,
-    PlasmodiumSpecieDisabled,
-    onPlasmodiumChange,
-    onDrugsChange,
-    onYearsChange,
-    onExcludeLowerPatientsChange,
-    onExcludeLowerSamplesChange,
-    onMolecularMarkerChange,
+    plasmodiumSpecieDisabled,
+    filters,
     children,
     onScreenshot,
     isScreenshot = false,
+    onChartTypeChange,
 }) => {
     const { filtersVisible, onChangeFiltersVisible } = useFiltersVisible();
     const [openInfoModal, setOpenInfoModal] = React.useState(false);
@@ -92,6 +77,15 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
         }
     }, [filtersVisible, chartComponentRef]);
 
+    const handleChartTypeChange = React.useCallback(
+        (_event: React.MouseEvent<HTMLElement>, value: string) => {
+            if (onChartTypeChange) {
+                onChartTypeChange(value);
+            }
+        },
+        [onChartTypeChange]
+    );
+
     return (
         <Container $isScreenshot={isScreenshot}>
             <DashboardTitle
@@ -102,6 +96,24 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                 showActions={!isScreenshot}
             />
 
+            {chartTypes && !isScreenshot && (
+                <ToggleButtonGroup
+                    value={chartType}
+                    exclusive
+                    onChange={handleChartTypeChange}
+                    aria-label="text alignment"
+                    sx={{ marginBottom: 2 }}
+                >
+                    {chartTypes.map((type, index) => {
+                        return (
+                            <ChartTypeOption key={index} value={type.value}>
+                                {type.label}
+                            </ChartTypeOption>
+                        );
+                    })}
+                </ToggleButtonGroup>
+            )}
+
             <StyledGridContainer container spacing={2} sx={{ marginBottom: 3 }} $isScreenshot={isScreenshot}>
                 {filtersVisible && (
                     <StyledGridItem item md={3} xs={12} $isScreenshot={isScreenshot}>
@@ -111,20 +123,8 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                                 studies={filteredStudiesForDrugs}
                                 drugsMultiple={drugsMultiple}
                                 drugsClearable={drugsClearable}
-                                plasmodiumSpecies={plasmodiumSpecies}
-                                drugs={drugs}
-                                molecularMarker={molecularMarker}
-                                years={years}
-                                maxMinYears={maxMinYears}
-                                excludeLowerPatients={excludeLowerPatients}
-                                excludeLowerSamples={excludeLowerSamples}
-                                PlasmodiumSpecieDisabled={PlasmodiumSpecieDisabled || isScreenshot}
-                                onPlasmodiumSpeciesChange={onPlasmodiumChange}
-                                onDrugsChange={onDrugsChange}
-                                onMolecularMarkerChange={onMolecularMarkerChange}
-                                onYearsChange={onYearsChange}
-                                onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
-                                onExcludeLowerSamplesChange={onExcludeLowerSamplesChange}
+                                plasmodiumSpecieDisabled={plasmodiumSpecieDisabled || isScreenshot}
+                                filters={filters}
                                 onCollapse={onChangeFiltersVisible}
                             ></TreatmentFilters>
                             <StudiesCountCard elevation={0}>
@@ -148,7 +148,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                 <InformationModal
                     title={title}
                     type={type}
-                    years={years}
+                    years={filters.years}
                     openInfoModal={openInfoModal}
                     handleCloseInfoModal={handleCloseInfoModal}
                 />
@@ -157,12 +157,16 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
     );
 };
 
-const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = props => {
+const TreatmentFilterableDashboard: React.FC<TreatmentFilterableDashboardProps> = ({ onDownload, ...props }) => {
     const [open, setOpen] = React.useState(false);
 
     const handleScreenshot = React.useCallback(() => {
-        setOpen(true);
-    }, []);
+        if (onDownload) {
+            onDownload();
+        } else {
+            setOpen(true);
+        }
+    }, [onDownload]);
 
     const handleCloseScreenshot = React.useCallback(() => {
         setOpen(false);
@@ -206,7 +210,7 @@ const StyledGridContainer = styled(Grid)<{ $isScreenshot: boolean }>`
 
 const DasboardCard = styled(Card)`
     min-height: 500px;
-    padding: 42px;
+    padding: 24px;
 `;
 
 const StudiesCountCard = styled(Card)`
