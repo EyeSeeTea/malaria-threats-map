@@ -62,12 +62,34 @@ export type SpreadOfResistanceOverTimeChart = {
     dataByCountry: SpreadOfResistanceOverTimeByCountry | SpreadOfResistanceOverTimeByCountryAndSpecies;
 };
 
-export type SpreadOfResistanceOverTimeByCountry = Record<string, SpreadOfResistanceOverTimeData[]>;
+export type SpreadOfResistanceOverTimeByCountry = Record<string, SpreadOfResistanceOverTimeSeries[]>;
 
 export type SpreadOfResistanceOverTimeByCountryAndSpecies = Record<string, SpreadOfResistanceOverTimeBySpecie>;
-export type SpreadOfResistanceOverTimeBySpecie = Record<string, SpreadOfResistanceOverTimeData[]>;
-export type SpreadOfResistanceOverTimeData = {
+export type SpreadOfResistanceOverTimeBySpecie = Record<string, SpreadOfResistanceOverTimeSeries[]>;
+
+export type SpreadOfResistanceOverTimeSeries =
+    | SpreadOfResistanceOverTimeLineSeries
+    | SpreadOfResistanceOverTimeScatterSeries;
+
+export type SpreadOfResistanceOverTimeLineSeries = {
+    type: "line";
     name: string;
     data: number[];
     color: string;
+};
+
+export type SpreadOfResistanceOverTimeScatterSeries = {
+    type: "scatter";
+    name: string;
+    data: SpreadOfResistanceOverTimeScatterData[];
+};
+
+type SpreadOfResistanceOverTimeScatterData = {
+    y: number;
+    marker: {
+        lineWidth: number;
+        lineColor: string;
+        fillColor: string;
+        radius: number;
+    };
 };

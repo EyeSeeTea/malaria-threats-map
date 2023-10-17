@@ -7,7 +7,7 @@ import i18next from "i18next";
 import {
     SpreadOfResistanceOverTimeByCountry,
     SpreadOfResistanceOverTimeChart,
-    SpreadOfResistanceOverTimeData,
+    SpreadOfResistanceOverTimeLineSeries,
 } from "../../types";
 import { Stack, Typography } from "@mui/material";
 import LineChartLegend from "./LineChartLegend";
@@ -58,7 +58,7 @@ export const LineChart: React.FC<{
 
                                             const dataBySpecie = dataOfCountry[
                                                 specie
-                                            ] as SpreadOfResistanceOverTimeData[];
+                                            ] as SpreadOfResistanceOverTimeLineSeries[];
 
                                             const options = chartOptions(
                                                 data.years,
@@ -96,7 +96,7 @@ export const LineChart: React.FC<{
 
                                 const dataOfCountry = data.dataByCountry[
                                     isoCountry
-                                ] as SpreadOfResistanceOverTimeData[];
+                                ] as SpreadOfResistanceOverTimeLineSeries[];
 
                                 const options = chartOptions(
                                     data.years,
@@ -170,13 +170,12 @@ const NotAvailableTR = styled.tr`
 
 function chartOptions(
     years: number[],
-    data: SpreadOfResistanceOverTimeData[],
+    data: SpreadOfResistanceOverTimeLineSeries[],
     maxSumConfirmedResistance: number,
     xAxisVisible: boolean
 ): Highcharts.Options {
     return {
         chart: {
-            type: "line",
             marginTop: 0,
             marginBottom: xAxisVisible ? 40 : 0,
         },

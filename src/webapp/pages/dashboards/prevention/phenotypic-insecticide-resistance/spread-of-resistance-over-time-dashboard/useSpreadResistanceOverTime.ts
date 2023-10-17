@@ -1,5 +1,5 @@
 import i18next from "i18next";
-import _ from "lodash";
+import { range, countBy } from "lodash";
 import React from "react";
 import { Option } from "../../../common/types";
 import { usePrevention } from "../../usePrevention";
@@ -46,6 +46,7 @@ export function useSpreadResistanceOverTime() {
             createChartDataByType(
                 filteredStudies,
                 selectedCountries,
+                range(filters.years[0], filters.years[1] + 1),
                 filters.insecticideClasses,
                 filters.disaggregateBySpeciesSelection,
                 chartType
@@ -54,6 +55,7 @@ export function useSpreadResistanceOverTime() {
     }, [
         filteredStudies,
         selectedCountries,
+        filters.years,
         filters.disaggregateBySpeciesSelection,
         chartType,
         filters.insecticideClasses,
@@ -61,9 +63,9 @@ export function useSpreadResistanceOverTime() {
 
     React.useEffect(() => {
         if (chartType === "by-insecticide-class") {
-            setCategoriesCount(_.countBy(filteredStudies, "INSECTICIDE_CLASS"));
+            setCategoriesCount(countBy(filteredStudies, "INSECTICIDE_CLASS"));
         } else {
-            setCategoriesCount(_.countBy(filteredStudies, "INSECTICIDE_TYPE"));
+            setCategoriesCount(countBy(filteredStudies, "INSECTICIDE_TYPE"));
         }
     }, [chartType, filteredStudies]);
 
