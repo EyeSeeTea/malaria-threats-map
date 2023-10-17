@@ -76,15 +76,21 @@ export type SpreadOfResistanceOverTimeLineSeries = {
     name: string;
     data: number[];
     color: string;
+    marker: {
+        enabled: boolean;
+    };
 };
 
 export type SpreadOfResistanceOverTimeScatterSeries = {
     type: "scatter";
     name: string;
     data: SpreadOfResistanceOverTimeScatterData[];
+    marker: {
+        symbol: "circle";
+    };
 };
 
-type SpreadOfResistanceOverTimeScatterData = {
+export type SpreadOfResistanceOverTimeScatterData = {
     y: number;
     marker: {
         lineWidth: number;
