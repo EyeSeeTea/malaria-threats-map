@@ -304,7 +304,11 @@
                 "source": {
                     "label": "Fuente",
                     "link": "Instituto Nacional de Alergia y Enfermedades Infecciosas, Institutos Nacionales de Salud"
-                }
+                },
+                "insecticideClass": "Insecticide class",
+                "year": "Year",
+                "numberOfSitesConfirmedResistance": "Number of sites with confirmed resistance",
+                "numberOfSites": "Number of sites that monitored resistance"
             }
         },
         "homepage": {

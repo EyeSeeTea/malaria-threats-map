@@ -5,11 +5,12 @@ import {
     SpreadOfResistanceOverTimeByCountryAndSpecies,
     SpreadOfResistanceOverTimeBySpecie,
     SpreadOfResistanceOverTimeChartData,
-    SpreadOfResistanceOverTimeChartType,
     SpreadOfResistanceOverTimeLineSeries,
     SpreadOfResistanceOverTimeScatterSeries,
     SpreadOfResistanceOverTimeScatterData,
     SpreadOfResistanceOverTimeSeries,
+    SpreadOfResistanceOverTimeLineData,
+    SpreadOfResistanceOverTimeTooltipData,
 } from "../../types";
 import { DisaggregateBySpeciesOptions } from "../../../../../../components/filters/DisaggregateBySpecies";
 
@@ -20,6 +21,7 @@ export const INSECTICIDE_CLASS_COLORS: Record<string, string> = {
     PYRROLES: "#439336",
     PYRETHROIDS: "#5FB4AE",
     CARBAMATES: "#4876a8",
+    NA: "#7B5FD9",
     DEFAULT: "#5FB4AE",
 };
 
@@ -30,6 +32,7 @@ export const INSECTICIDE_CLASS_COLORS_OPACITY: Record<string, string> = {
     PYRROLES: "rgb(67,147,54,0.6)",
     PYRETHROIDS: "rgb(95,180,174,0.6)",
     CARBAMATES: "rgb(72,118,168,0.6)",
+    NA: "rgb(123,95,217)",
     DEFAULT: "rgb(95,180,174,0.6)",
 };
 
@@ -41,33 +44,75 @@ function getColorWithOpacityByInsecticideClass(insecticideClass: string): string
     return INSECTICIDE_CLASS_COLORS_OPACITY[insecticideClass] || INSECTICIDE_CLASS_COLORS_OPACITY.DEFAULT;
 }
 
-function getSumOfConfirmedResistanceSitesOfYear(
-    confirmedStudiesOfInsecticideClassOfYear: PreventionStudy[],
-    year: number,
-    priorYearSumOfConfirmedResistanceStudies: number
-): number {
-    const studiesOfYearGroupedBySite = groupBy(confirmedStudiesOfInsecticideClassOfYear, "SITE_ID");
+function getTooltipData(params: {
+    studiesOfInsecticideClass: PreventionStudy[];
+    currentYear: number;
+    firstYear: number;
+    priorSumOfSites: number;
+    priorYearSumOfConfirmedResistanceSites: number;
+    insecticideClass: string;
+}): SpreadOfResistanceOverTimeTooltipData {
+    const {
+        studiesOfInsecticideClass,
+        currentYear,
+        firstYear,
+        priorSumOfSites,
+        priorYearSumOfConfirmedResistanceSites,
+        insecticideClass,
+    } = params;
 
-    const numberOfSitesConfirmedResistanceOfYear = Object.keys(studiesOfYearGroupedBySite)?.length || 0;
-    return priorYearSumOfConfirmedResistanceStudies + numberOfSitesConfirmedResistanceOfYear;
+    const studiesOfYear = studiesOfInsecticideClass.filter(study => Number(study.YEAR_START) === currentYear);
+    const studiesOfYearGroupedBySite = groupBy(studiesOfYear, "SITE_ID");
+    const numberOfSitesOfYear = Object.keys(studiesOfYearGroupedBySite)?.length || 0;
+    const sumOfSites = priorSumOfSites + numberOfSitesOfYear;
+
+    const confirmedStudiesOfInsecticideClassOfYear = studiesOfYear.filter(
+        study => study.RESISTANCE_STATUS === "CONFIRMED_RESISTANCE"
+    );
+    const confirmedStudiesOfYearGroupedBySite = groupBy(confirmedStudiesOfInsecticideClassOfYear, "SITE_ID");
+    const numberOfSitesConfirmedResistanceOfYear = Object.keys(confirmedStudiesOfYearGroupedBySite)?.length || 0;
+    const sumOfConfirmedResistanceSites =
+        priorYearSumOfConfirmedResistanceSites + numberOfSitesConfirmedResistanceOfYear;
+
+    return {
+        insecticideClass,
+        sumOfConfirmedResistanceSites,
+        sumOfSites,
+        numberOfSites: numberOfSitesOfYear,
+        numberOfSitesConfirmedResistance: numberOfSitesConfirmedResistanceOfYear,
+        year: currentYear.toString(),
+        rangeYears: `${firstYear}-${currentYear}`,
+    };
 }
 
 function getLineChartDataByYear(
-    confirmedStudiesOfInsecticideClass: PreventionStudy[],
-    sortedYears: number[]
-): number[] {
+    studiesOfInsecticideClass: PreventionStudy[],
+    sortedYears: number[],
+    insecticideClass: string
+): SpreadOfResistanceOverTimeLineData[] {
     return sortedYears.reduce((acc, year, i) => {
-        const confirmedStudiesOfInsecticideClassOfYear = confirmedStudiesOfInsecticideClass.filter(
-            study => Number(study.YEAR_START) === year
-        );
-        const priorYearSumOfConfirmedResistanceStudies = i === 0 ? 0 : acc[i - 1];
-        const sumOfConfirmedResistanceStudies = getSumOfConfirmedResistanceSitesOfYear(
-            confirmedStudiesOfInsecticideClassOfYear,
-            year,
-            priorYearSumOfConfirmedResistanceStudies
-        );
-        return [...acc, sumOfConfirmedResistanceStudies];
-    }, [] as number[]);
+        const priorSumOfSites = i === 0 ? 0 : acc[i - 1].sumOfSites;
+
+        const priorYearSumOfConfirmedResistanceSites = i === 0 ? 0 : acc[i - 1].sumOfConfirmedResistanceSites;
+
+        const { sumOfConfirmedResistanceSites, ...restData } = getTooltipData({
+            studiesOfInsecticideClass,
+            currentYear: year,
+            firstYear: sortedYears[0],
+            priorSumOfSites,
+            priorYearSumOfConfirmedResistanceSites,
+            insecticideClass,
+        });
+
+        return [
+            ...acc,
+            {
+                y: sumOfConfirmedResistanceSites,
+                sumOfConfirmedResistanceSites,
+                ...restData,
+            },
+        ];
+    }, [] as SpreadOfResistanceOverTimeLineData[]);
 }
 
 function getScatterChartDataByYear(
@@ -76,30 +121,33 @@ function getScatterChartDataByYear(
     insecticideClass: string
 ): SpreadOfResistanceOverTimeScatterData[] {
     return sortedYears.reduce((acc, year, i) => {
-        const studiesOfYear = studiesOfInsecticideClass.filter(study => Number(study.YEAR_START) === year);
-        const studiesOfYearGroupedBySite = groupBy(studiesOfYear, "SITE_ID");
-        const numberOfSitesOfYear = Object.keys(studiesOfYearGroupedBySite)?.length || 0;
+        const priorSumOfSites = i === 0 ? 0 : acc[i - 1].sumOfSites;
 
-        const confirmedStudiesOfInsecticideClassOfYear = studiesOfYear.filter(
-            study => study.RESISTANCE_STATUS === "CONFIRMED_RESISTANCE"
-        );
-        const priorYearSumOfConfirmedResistanceStudies = i === 0 ? 0 : acc[i - 1].y;
-        const sumOfConfirmedResistanceStudies = getSumOfConfirmedResistanceSitesOfYear(
-            confirmedStudiesOfInsecticideClassOfYear,
-            year,
-            priorYearSumOfConfirmedResistanceStudies
-        );
+        const priorYearSumOfConfirmedResistanceSites = i === 0 ? 0 : acc[i - 1].sumOfConfirmedResistanceSites;
+
+        const { sumOfConfirmedResistanceSites, numberOfSites, ...restData } = getTooltipData({
+            studiesOfInsecticideClass,
+            currentYear: year,
+            firstYear: sortedYears[0],
+            priorSumOfSites,
+            priorYearSumOfConfirmedResistanceSites,
+            insecticideClass,
+        });
+
         return [
             ...acc,
             {
-                y: sumOfConfirmedResistanceStudies,
+                y: sumOfConfirmedResistanceSites,
                 marker: {
                     lineWidth: 0.6,
                     lineColor: getColorByInsecticideClass(insecticideClass),
                     fillColor: getColorWithOpacityByInsecticideClass(insecticideClass),
-                    radius: numberOfSitesOfYear,
+                    radius: numberOfSites,
                 },
-            },
+                sumOfConfirmedResistanceSites,
+                numberOfSites,
+                ...restData,
+            } as SpreadOfResistanceOverTimeScatterData,
         ];
     }, [] as SpreadOfResistanceOverTimeScatterData[]);
 }
@@ -110,11 +158,9 @@ function createScatterChartSeriesData(
     insecticideClasses: string[]
 ): SpreadOfResistanceOverTimeScatterSeries[] {
     return insecticideClasses.reduce((acc, insecticideClass) => {
-        const confirmedStudiesOfInsecticideClass = studies.filter(
-            study => study.INSECTICIDE_CLASS === insecticideClass
-        );
+        const studiesOfInsecticideClass = studies.filter(study => study.INSECTICIDE_CLASS === insecticideClass);
 
-        const data = getScatterChartDataByYear(confirmedStudiesOfInsecticideClass, sortedYears, insecticideClass);
+        const data = getScatterChartDataByYear(studiesOfInsecticideClass, sortedYears, insecticideClass);
 
         if (data.every(value => value.y === 0)) {
             return acc;
@@ -139,14 +185,11 @@ function createLineChartSeriesData(
     insecticideClasses: string[]
 ): SpreadOfResistanceOverTimeLineSeries[] {
     return insecticideClasses.reduce((acc, insecticideClass) => {
-        const resistanceConfirmedStudies = studies.filter(study => study.RESISTANCE_STATUS === "CONFIRMED_RESISTANCE");
-        const confirmedStudiesOfInsecticideClass = resistanceConfirmedStudies.filter(
-            study => study.INSECTICIDE_CLASS === insecticideClass
-        );
+        const studiesOfInsecticideClass = studies.filter(study => study.INSECTICIDE_CLASS === insecticideClass);
 
-        const data = getLineChartDataByYear(confirmedStudiesOfInsecticideClass, sortedYears);
+        const data = getLineChartDataByYear(studiesOfInsecticideClass, sortedYears, insecticideClass);
 
-        if (data.every(value => value === 0)) {
+        if (data.every(value => value.y === 0)) {
             return acc;
         }
         return [
@@ -201,7 +244,7 @@ function createChartDataByInsecticideClass(
 
 function getMaxSumConfirmedResistanceOfSeriesData(lineChartSeriesData: SpreadOfResistanceOverTimeLineSeries[]): number {
     const totalSumsConfirmedResistanceOfData = lineChartSeriesData.flatMap(dataOfYear =>
-        dataOfYear.data.length ? dataOfYear.data[dataOfYear.data.length - 1] : 0
+        dataOfYear.data.length ? dataOfYear.data[dataOfYear.data.length - 1].sumOfConfirmedResistanceSites : 0
     );
     return Math.max(...totalSumsConfirmedResistanceOfData);
 }
@@ -328,13 +371,12 @@ function normalizeScatterChartRadius(
     }, {} as SpreadOfResistanceOverTimeByCountry);
 }
 
-export function createChartDataByType(
+export function createChartData(
     filteredsStudies: PreventionStudy[],
     selectedCountries: string[],
     sortedYears: number[],
     insecticideClasses: string[],
-    disaggregateBySpeciesSelectionFilter: DisaggregateBySpeciesOptions,
-    type: SpreadOfResistanceOverTimeChartType
+    disaggregateBySpeciesSelectionFilter: DisaggregateBySpeciesOptions
 ): SpreadOfResistanceOverTimeChartData {
     const isDisaggregatedBySpecies = disaggregateBySpeciesSelectionFilter === "disaggregate_species";
 

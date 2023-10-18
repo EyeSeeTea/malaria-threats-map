@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import PreventionFilterableDashboard from "../../PreventionFilterableDashboard";
 import { useSpreadResistanceOverTime } from "./useSpreadResistanceOverTime";
 import { useInfoPopup } from "../../../common/popup/useInfoPopup";
-import { LineChart as LineChartByClass } from "./by-insecticide-class/LineChart";
+import LineChart from "./by-insecticide-class/LineChart";
 import SpreadOfResistanceOverTimePopup from "../../../../../components/dashboards/prevention/SpreadOfResistanceOverTimePopup";
 import { ResistanceToInsecticideChartType } from "../../types";
 
@@ -19,6 +19,7 @@ const SpreadResistanceOverTimeDashboard: React.FC = () => {
         speciesOptions,
         isDisaggregatedBySpecies,
         onChartTypeChange,
+        allInsecticideClasses,
     } = useSpreadResistanceOverTime();
 
     const { openPopup, onChangeOpenPopup } = useInfoPopup();
@@ -47,7 +48,8 @@ const SpreadResistanceOverTimeDashboard: React.FC = () => {
                 onChartTypeChange={handleChartTypeChange}
                 onInfoClick={onChangeOpenPopup}
             >
-                <LineChartByClass
+                <LineChart
+                    allInsecticideClasses={allInsecticideClasses}
                     data={data.data}
                     chartComponentRefs={chartComponentRefs}
                     selectedInsecticideClasses={filters.insecticideClasses}

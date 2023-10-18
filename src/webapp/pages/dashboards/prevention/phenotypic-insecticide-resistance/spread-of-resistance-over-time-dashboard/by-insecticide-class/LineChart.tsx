@@ -12,13 +12,15 @@ import {
 import { Stack, Typography } from "@mui/material";
 import LineChartLegend from "./LineChartLegend";
 
-export const LineChart: React.FC<{
+const LineChart: React.FC<{
+    allInsecticideClasses: string[];
     data: SpreadOfResistanceOverTimeChart;
     chartComponentRefs: React.MutableRefObject<HighchartsReact.RefObject[]>;
     selectedInsecticideClasses: string[];
     onInsecticideClassesChange: (insecticideClasses: string[]) => void;
     isDisaggregatedBySpecies: boolean;
 }> = ({
+    allInsecticideClasses,
     data,
     chartComponentRefs,
     isDisaggregatedBySpecies,
@@ -29,6 +31,7 @@ export const LineChart: React.FC<{
     return (
         <React.Fragment>
             <LineChartLegend
+                allInsecticideClasses={allInsecticideClasses}
                 onInsecticideClassesChange={onInsecticideClassesChange}
                 selectedInsecticideClasses={selectedInsecticideClasses}
             />
@@ -169,9 +172,13 @@ const NotAvailableTR = styled.tr`
 `;
 
 interface CustomPoint extends Highcharts.Point {
-    marker: {
-        radius: number;
-    };
+    insecticideClass: string;
+    year: string;
+    rangeYears: string;
+    sumOfConfirmedResistanceSites: number;
+    sumOfSites: number;
+    numberOfSites: number;
+    numberOfSitesConfirmedResistance: number;
 }
 
 function chartOptions(
@@ -187,9 +194,47 @@ function chartOptions(
         },
 
         tooltip: {
+            useHTML: true,
             formatter: function () {
                 const point = this.point as CustomPoint;
-                return `${point?.marker?.radius}`;
+                return `
+                    <div style="padding: 16px;">
+                        <div><h4>${i18next.t("common.dashboard.tooltip.insecticideClass")}: ${i18next.t(
+                    point.insecticideClass
+                )}</h4></div>
+
+                        <div>
+                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px;">
+                                <div>${i18next.t(
+                                    "common.dashboard.tooltip.year"
+                                )}: </div><div style="padding-left:10px;">${point.year}</div>
+                            </div>
+
+                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;">
+                                <div>${i18next.t("common.dashboard.tooltip.numberOfSitesConfirmedResistance")} (${
+                    point.year
+                }): </div><div style="padding-left:10px;">${point.numberOfSitesConfirmedResistance}</div>
+                            </div>
+
+                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;">
+                                <div>${i18next.t("common.dashboard.tooltip.numberOfSites")} (${
+                    point.year
+                }): </div><div style="padding-left:10px;">${point.numberOfSites}</div>
+                            </div>
+
+                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;">
+                                <div>${i18next.t("common.dashboard.tooltip.numberOfSitesConfirmedResistance")} (${
+                    point.rangeYears
+                }): </div><div style="padding-left:10px;">${point.sumOfConfirmedResistanceSites}</div>
+                            </div>
+
+                            <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;"><div>${i18next.t(
+                                "common.dashboard.tooltip.numberOfSites"
+                            )} (${point.rangeYears}): </div><div style="padding-left:10px;">${point.sumOfSites}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
             },
         },
 
@@ -240,3 +285,5 @@ function chartOptions(
         credits: { enabled: false },
     };
 }
+
+export default React.memo(LineChart);

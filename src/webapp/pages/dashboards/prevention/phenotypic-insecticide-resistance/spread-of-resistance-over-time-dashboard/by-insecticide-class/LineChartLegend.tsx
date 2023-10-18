@@ -2,31 +2,16 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Checkbox, Typography, Grid } from "@mui/material";
 import styled from "styled-components";
-import { getInsecticideClassOptions } from "../../../../../../components/filters/InsecticideClassFilter";
-import { Translation } from "../../../../../../types/Translation";
-import { selectInsecticideClasses } from "../../../../../../store/reducers/translations-reducer";
-import { State } from "../../../../../../store/types";
-import { connect } from "react-redux";
 import { INSECTICIDE_CLASS_COLORS } from "./createChartData";
 
-const mapStateToProps = (state: State) => ({
-    insecticideClasses: selectInsecticideClasses(state),
-});
-
-type StateProps = ReturnType<typeof mapStateToProps>;
-interface OwnProps {
+interface Props {
+    allInsecticideClasses: string[];
     selectedInsecticideClasses: string[];
     onInsecticideClassesChange: (insecticideClasses: string[]) => void;
 }
 
-type Props = OwnProps & StateProps;
-
-function LineChartLegend({ selectedInsecticideClasses, insecticideClasses, onInsecticideClassesChange }: Props) {
+function LineChartLegend({ selectedInsecticideClasses, allInsecticideClasses, onInsecticideClassesChange }: Props) {
     const { t } = useTranslation();
-
-    const insecticideClassOptions = getInsecticideClassOptions(
-        insecticideClasses.map((insecticide: Translation) => insecticide.VALUE_)
-    );
 
     const handlerSelectedInsecticideClassesChange = React.useCallback(
         (insecticideClass: string, isChecked: boolean) => {
@@ -51,7 +36,7 @@ function LineChartLegend({ selectedInsecticideClasses, insecticideClasses, onIns
                 columnSpacing={{ xs: 2, md: 3 }}
                 columns={{ xs: 4, sm: 8, md: 12 }}
             >
-                {insecticideClassOptions.map(({ label, value }) => (
+                {allInsecticideClasses.map(value => (
                     <InsecticideClassItem item xs={2} sm={4} md={4} key={value}>
                         <StyledCheckbox
                             $color={INSECTICIDE_CLASS_COLORS[value]}
@@ -60,7 +45,7 @@ function LineChartLegend({ selectedInsecticideClasses, insecticideClasses, onIns
                                 handlerSelectedInsecticideClassesChange(value, e.target.checked)
                             }
                         />
-                        <StyledTypographyOption>{label}</StyledTypographyOption>
+                        <StyledTypographyOption>{t(`${value}`)}</StyledTypographyOption>
                     </InsecticideClassItem>
                 ))}
             </InsecticideClassOptionsGrid>
@@ -68,7 +53,7 @@ function LineChartLegend({ selectedInsecticideClasses, insecticideClasses, onIns
     );
 }
 
-export default connect(mapStateToProps)(LineChartLegend);
+export default LineChartLegend;
 
 const InsecticideClassLegendContainer = styled.div`
     display: flex;

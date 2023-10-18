@@ -74,12 +74,26 @@ export type SpreadOfResistanceOverTimeSeries =
 export type SpreadOfResistanceOverTimeLineSeries = {
     type: "line";
     name: string;
-    data: number[];
+    data: SpreadOfResistanceOverTimeLineData[];
     color: string;
     marker: {
         enabled: boolean;
     };
 };
+
+export type SpreadOfResistanceOverTimeTooltipData = {
+    insecticideClass: string;
+    year: string;
+    rangeYears: string;
+    sumOfConfirmedResistanceSites: number;
+    sumOfSites: number;
+    numberOfSites: number;
+    numberOfSitesConfirmedResistance: number;
+};
+
+export type SpreadOfResistanceOverTimeLineData = {
+    y: number;
+} & SpreadOfResistanceOverTimeTooltipData;
 
 export type SpreadOfResistanceOverTimeScatterSeries = {
     type: "scatter";
@@ -98,4 +112,4 @@ export type SpreadOfResistanceOverTimeScatterData = {
         fillColor: string;
         radius: number;
     };
-};
+} & SpreadOfResistanceOverTimeTooltipData;
