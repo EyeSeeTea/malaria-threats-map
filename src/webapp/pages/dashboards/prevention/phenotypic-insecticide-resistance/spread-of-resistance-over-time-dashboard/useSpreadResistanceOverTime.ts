@@ -21,7 +21,7 @@ const chartTypes: Option<SpreadOfResistanceOverTimeChartType>[] = [
 const baseFilters: ((study: any) => boolean)[] = [];
 
 export function useSpreadResistanceOverTime() {
-    const { preventionStudies, filteredStudies, selectedCountries, filters, speciesOptions, insecticideClassOptions } =
+    const { preventionStudies, filteredStudies, selectedCountries, filters, speciesOptions } =
         usePrevention(baseFilters);
 
     const [data, setData] = React.useState<SpreadOfResistanceOverTimeChartData>({
@@ -35,12 +35,12 @@ export function useSpreadResistanceOverTime() {
     React.useEffect(() => {
         filters.onSpeciesChange(speciesOptions.map(option => option.value));
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filters.onSpeciesChange, speciesOptions]);
+    }, [speciesOptions]);
 
     React.useEffect(() => {
-        filters.onInsecticideClassChange(insecticideClassOptions.map(option => option.value));
+        filters.onInsecticideClassChange(allInsecticideClasses.map(option => option));
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filters.onInsecticideClassChange, insecticideClassOptions]);
+    }, [allInsecticideClasses]);
 
     React.useEffect(() => {
         const insecticideClasses = uniq(preventionStudies.map(study => study.INSECTICIDE_CLASS)).sort();
