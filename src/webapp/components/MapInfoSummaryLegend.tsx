@@ -116,20 +116,20 @@ const InfoRowContainer = styled.div`
     display: flex;
     gap: 4px;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 `;
 
 const Label = styled.span`
     font-weight: bold;
     white-space: nowrap;
-    font-size: 18px;
+    font-size: 16px;
     font-family: sans-serif;
 `;
 
 const InfoValue = styled.span`
     white-space: nowrap;
     width: 100%;
-    font-size: 18px;
+    font-size: 16px;
     font-family: sans-serif;
 `;
 
@@ -144,11 +144,11 @@ const DataFilterRowContainer = styled.div`
     display: flex;
     gap: 5px;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 `;
 
 const DataFilterValue = styled.span`
     width: 100%;
-    font-size: 18px;
+    font-size: 16px;
     font-family: sans-serif;
 `;
