@@ -87,7 +87,7 @@ function MapScreenshot({ map, theme, title, showMapSidebar = false }: MapScreens
                             <MapInfoSummaryContainer>
                                 <MapInfoSummaryLegend />
                             </MapInfoSummaryContainer>
-                            <LegendContainer>
+                            <LegendContainer $hasSidebar={showMapSidebar}>
                                 <Legend />
                             </LegendContainer>
                             <StyledImage alt="Map screenshot" src={mapImage} $hasSidebar={showMapSidebar} />
@@ -168,10 +168,11 @@ const MapAndSidebarContainer = styled.div`
 `;
 
 const MapSidebarContainer = styled.div`
+    position: absolute;
+    inset-inline-end: 20px;
     padding: 16px 0;
     width: 100%;
-    min-width: 500px;
-    max-width: 800px;
+    max-width: 30%;
     border-radius: 0 10px 10px 0;
     background-color: #f3f3f3;
     margin-bottom: 5px;
@@ -187,12 +188,12 @@ const MapInfoSummaryContainer = styled.div`
     width: fit-content;
 `;
 
-const LegendContainer = styled.div`
+const LegendContainer = styled.div<{ $hasSidebar?: boolean }>`
     border-radius: 12px;
     background-color: #ffffff;
     position: absolute;
     bottom: 20px;
-    right: 30px;
+    inset-inline-end: ${props => (props.$hasSidebar ? "32%" : "30px")};
     div {
         width: fit-content;
         max-width: fit-content;
@@ -201,7 +202,7 @@ const LegendContainer = styled.div`
     p {
         white-space: nowrap;
         font-family: sans-serif;
-        font-size: 18px;
+        font-size: 16px;
     }
     hr,
     .MuiSvgIcon-root {
@@ -216,10 +217,11 @@ const LegendContainer = styled.div`
 
 const StyledImage = styled.img<{ $hasSidebar?: boolean }>`
     border-top-left-radius: 10px;
-    border-top-right-radius: ${props => (props.$hasSidebar ? "unset" : "10px")};
-    border-bottom-right-radius: ${props => (props.$hasSidebar ? "unset" : "10px")};
+    border-top-right-radius: ${props => (props.$hasSidebar ? "10px" : "unset")};
+    border-bottom-right-radius: ${props => (props.$hasSidebar ? "10px" : "unset")};
     border-bottom-left-radius: 10px;
     width: 100%;
+    object-fit: cover;
 `;
 
 const WHOInfoContainer = styled.div`
