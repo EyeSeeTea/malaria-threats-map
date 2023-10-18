@@ -165,17 +165,18 @@ const MapContainer = styled.div`
 const MapAndSidebarContainer = styled.div`
     padding: 20px 20px 0 20px;
     display: flex;
+    position: relative;
 `;
 
 const MapSidebarContainer = styled.div`
     position: absolute;
     inset-inline-end: 20px;
+    inset-block: 20px 5px;
     padding: 16px 0;
     width: 100%;
     max-width: 30%;
     border-radius: 0 10px 10px 0;
     background-color: #f3f3f3;
-    margin-bottom: 5px;
     .additional-information-link {
         display: none;
     }
@@ -221,7 +222,6 @@ const StyledImage = styled.img<{ $hasSidebar?: boolean }>`
     border-bottom-right-radius: ${props => (props.$hasSidebar ? "10px" : "unset")};
     border-bottom-left-radius: 10px;
     width: 100%;
-    object-fit: cover;
 `;
 
 const WHOInfoContainer = styled.div`
