@@ -33,38 +33,12 @@ export const INSECTICIDE_CLASS_COLORS_OPACITY: Record<string, string> = {
     DEFAULT: "rgb(95,180,174,0.6)",
 };
 
-function getMaxSumConfirmedResistanceOfData(data: SpreadOfResistanceOverTimeLineSeries[]): number {
-    const totalSumsConfirmedResistanceOfData = data.flatMap(dataOfYear =>
-        dataOfYear.data.length ? dataOfYear.data[dataOfYear.data.length - 1] : 0
-    );
-    return Math.max(...totalSumsConfirmedResistanceOfData);
+function getColorByInsecticideClass(insecticideClass: string): string {
+    return INSECTICIDE_CLASS_COLORS[insecticideClass] || INSECTICIDE_CLASS_COLORS.DEFAULT;
 }
 
-function getMaxSumConfirmedResistance(
-    dataByCountry: SpreadOfResistanceOverTimeByCountry | SpreadOfResistanceOverTimeByCountryAndSpecies,
-    isDisaggregatedBySpecies: boolean
-): number {
-    const maxDataByCountry = Object.keys(dataByCountry).reduce((acc, isoCountry) => {
-        if (isDisaggregatedBySpecies) {
-            const dataOfCountry = dataByCountry[isoCountry] as SpreadOfResistanceOverTimeBySpecie;
-            const allSumConfirmedResistanceOfData = Object.keys(dataOfCountry).map(specie => {
-                const dataOfSpecie = dataOfCountry[specie] as SpreadOfResistanceOverTimeSeries[];
-                const lineChartDataOfSpecie = dataOfSpecie.filter(
-                    ({ type }) => type === "line"
-                ) as SpreadOfResistanceOverTimeLineSeries[];
-                return getMaxSumConfirmedResistanceOfData(lineChartDataOfSpecie);
-            });
-            return [...acc, Math.max(...allSumConfirmedResistanceOfData)];
-        }
-        const dataOfCountry = dataByCountry[isoCountry] as SpreadOfResistanceOverTimeSeries[];
-        const lineChartDataOfCountry = dataOfCountry.filter(
-            ({ type }) => type === "line"
-        ) as SpreadOfResistanceOverTimeLineSeries[];
-
-        const maxOfData = getMaxSumConfirmedResistanceOfData(lineChartDataOfCountry);
-        return [...acc, maxOfData];
-    }, [] as number[]);
-    return Math.max(...maxDataByCountry);
+function getColorWithOpacityByInsecticideClass(insecticideClass: string): string {
+    return INSECTICIDE_CLASS_COLORS_OPACITY[insecticideClass] || INSECTICIDE_CLASS_COLORS_OPACITY.DEFAULT;
 }
 
 function getSumOfConfirmedResistanceSitesOfYear(
@@ -94,14 +68,6 @@ function getLineChartDataByYear(
         );
         return [...acc, sumOfConfirmedResistanceStudies];
     }, [] as number[]);
-}
-
-function getColorByInsecticideClass(insecticideClass: string): string {
-    return INSECTICIDE_CLASS_COLORS[insecticideClass] || INSECTICIDE_CLASS_COLORS.DEFAULT;
-}
-
-function getColorWithOpacityByInsecticideClass(insecticideClass: string): string {
-    return INSECTICIDE_CLASS_COLORS_OPACITY[insecticideClass] || INSECTICIDE_CLASS_COLORS_OPACITY.DEFAULT;
 }
 
 function getScatterChartDataByYear(
@@ -138,7 +104,7 @@ function getScatterChartDataByYear(
     }, [] as SpreadOfResistanceOverTimeScatterData[]);
 }
 
-function createScatterChartData(
+function createScatterChartSeriesData(
     studies: PreventionStudy[],
     sortedYears: number[],
     insecticideClasses: string[]
@@ -167,7 +133,7 @@ function createScatterChartData(
     }, [] as SpreadOfResistanceOverTimeScatterSeries[]);
 }
 
-function createLineChartData(
+function createLineChartSeriesData(
     studies: PreventionStudy[],
     sortedYears: number[],
     insecticideClasses: string[]
@@ -207,14 +173,14 @@ function createChartDataBySpecies(
 
     return sortedSpecies.reduce((acc, specie) => {
         const studiesOfSpecie = studies.filter(study => study.SPECIES === specie);
-        const lineCharData = createLineChartData(studiesOfSpecie, sortedYears, insecticideClasses);
-        const scatterCharData = createScatterChartData(studiesOfSpecie, sortedYears, insecticideClasses);
-        if (lineCharData.length === 0) {
+        const lineChartSeriesData = createLineChartSeriesData(studiesOfSpecie, sortedYears, insecticideClasses);
+        const scatterChartSeriesData = createScatterChartSeriesData(studiesOfSpecie, sortedYears, insecticideClasses);
+        if (lineChartSeriesData.length === 0) {
             return acc;
         }
         return {
             ...acc,
-            [specie]: [...lineCharData, ...scatterCharData] as SpreadOfResistanceOverTimeSeries[],
+            [specie]: [...lineChartSeriesData, ...scatterChartSeriesData] as SpreadOfResistanceOverTimeSeries[],
         };
     }, {} as SpreadOfResistanceOverTimeBySpecie);
 }
@@ -228,9 +194,138 @@ function createChartDataByInsecticideClass(
     if (isDisaggregatedBySpecies) {
         return createChartDataBySpecies(studies, sortedYears, insecticideClasses);
     }
-    const lineCharData = createLineChartData(studies, sortedYears, insecticideClasses);
-    const scatterCharData = createScatterChartData(studies, sortedYears, insecticideClasses);
-    return [...lineCharData, ...scatterCharData] as SpreadOfResistanceOverTimeSeries[];
+    const lineChartSeriesData = createLineChartSeriesData(studies, sortedYears, insecticideClasses);
+    const scatterChartSeriesData = createScatterChartSeriesData(studies, sortedYears, insecticideClasses);
+    return [...lineChartSeriesData, ...scatterChartSeriesData] as SpreadOfResistanceOverTimeSeries[];
+}
+
+function getMaxSumConfirmedResistanceOfSeriesData(lineChartSeriesData: SpreadOfResistanceOverTimeLineSeries[]): number {
+    const totalSumsConfirmedResistanceOfData = lineChartSeriesData.flatMap(dataOfYear =>
+        dataOfYear.data.length ? dataOfYear.data[dataOfYear.data.length - 1] : 0
+    );
+    return Math.max(...totalSumsConfirmedResistanceOfData);
+}
+
+function getMaxSumConfirmedResistance(
+    dataByCountry: SpreadOfResistanceOverTimeByCountry | SpreadOfResistanceOverTimeByCountryAndSpecies,
+    isDisaggregatedBySpecies: boolean
+): number {
+    return Object.keys(dataByCountry).reduce((acc, isoCountry) => {
+        if (isDisaggregatedBySpecies) {
+            const dataOfCountryBySpecie = dataByCountry[isoCountry] as SpreadOfResistanceOverTimeBySpecie;
+            const allSumConfirmedResistanceOfSeriesData = Object.keys(dataOfCountryBySpecie).map(specie => {
+                const dataOfSpecie = dataOfCountryBySpecie[specie] as SpreadOfResistanceOverTimeSeries[];
+                const lineChartSeriesDataOfSpecie = dataOfSpecie.filter(
+                    ({ type }) => type === "line"
+                ) as SpreadOfResistanceOverTimeLineSeries[];
+                return getMaxSumConfirmedResistanceOfSeriesData(lineChartSeriesDataOfSpecie);
+            });
+            return Math.max(acc, ...allSumConfirmedResistanceOfSeriesData);
+        }
+        const dataOfCountry = dataByCountry[isoCountry] as SpreadOfResistanceOverTimeSeries[];
+        const lineChartSeriesDataOfCountry = dataOfCountry.filter(
+            ({ type }) => type === "line"
+        ) as SpreadOfResistanceOverTimeLineSeries[];
+
+        const maxOfSeriesData = getMaxSumConfirmedResistanceOfSeriesData(lineChartSeriesDataOfCountry);
+        return Math.max(acc, maxOfSeriesData);
+    }, 0);
+}
+
+function getMaxNumberOfSitesOfDataSeries(scatterChartDataSeries: SpreadOfResistanceOverTimeScatterSeries[]): number {
+    const allNumberOfSitesOfDataSeries = scatterChartDataSeries
+        .flatMap(dataOfYear => dataOfYear.data)
+        .map(({ marker }) => marker.radius);
+
+    return Math.max(...allNumberOfSitesOfDataSeries);
+}
+
+function getMaxNumberOfSites(
+    dataByCountry: SpreadOfResistanceOverTimeByCountry | SpreadOfResistanceOverTimeByCountryAndSpecies,
+    isDisaggregatedBySpecies: boolean
+): number {
+    return Object.keys(dataByCountry).reduce((acc, isoCountry) => {
+        if (isDisaggregatedBySpecies) {
+            const dataOfCountryBySpecie = dataByCountry[isoCountry] as SpreadOfResistanceOverTimeBySpecie;
+            const allNumberOfSites = Object.keys(dataOfCountryBySpecie).map(specie => {
+                const dataOfSpecie = dataOfCountryBySpecie[specie] as SpreadOfResistanceOverTimeSeries[];
+                const scatterChartDataSeriesOfSpecie = dataOfSpecie.filter(
+                    ({ type }) => type === "scatter"
+                ) as SpreadOfResistanceOverTimeScatterSeries[];
+                return scatterChartDataSeriesOfSpecie.length
+                    ? getMaxNumberOfSitesOfDataSeries(scatterChartDataSeriesOfSpecie)
+                    : 0;
+            });
+            return Math.max(acc, ...allNumberOfSites);
+        }
+        const dataOfCountry = dataByCountry[isoCountry] as SpreadOfResistanceOverTimeSeries[];
+        const scatterChartDataSeriesOfCountry = dataOfCountry.filter(
+            ({ type }) => type === "scatter"
+        ) as SpreadOfResistanceOverTimeScatterSeries[];
+
+        const maxOfData = scatterChartDataSeriesOfCountry.length
+            ? getMaxNumberOfSitesOfDataSeries(scatterChartDataSeriesOfCountry)
+            : 0;
+
+        return Math.max(acc, maxOfData);
+    }, 0);
+}
+
+function getNormalizedRadius(
+    dataSeries: SpreadOfResistanceOverTimeScatterSeries,
+    maxNumberOfSites: number
+): SpreadOfResistanceOverTimeScatterSeries {
+    const maxRadius = 20;
+    const scalingFactor = maxRadius / maxNumberOfSites;
+    return {
+        ...dataSeries,
+        data: dataSeries.data.map(data => {
+            return {
+                ...data,
+                marker: {
+                    ...data.marker,
+                    radius: data.marker.radius * scalingFactor,
+                },
+            };
+        }),
+    };
+}
+
+function normalizeScatterChartRadius(
+    dataByCountry: SpreadOfResistanceOverTimeByCountry | SpreadOfResistanceOverTimeByCountryAndSpecies,
+    isDisaggregatedBySpecies: boolean
+): SpreadOfResistanceOverTimeByCountry | SpreadOfResistanceOverTimeByCountryAndSpecies {
+    const maxNumberOfSites = getMaxNumberOfSites(dataByCountry, isDisaggregatedBySpecies);
+
+    if (isDisaggregatedBySpecies) {
+        return Object.keys(dataByCountry).reduce((accByCountry, isoCountry) => {
+            const dataOfCountryBySpecie = dataByCountry[isoCountry] as SpreadOfResistanceOverTimeBySpecie;
+            return {
+                ...accByCountry,
+                [isoCountry]: Object.keys(dataOfCountryBySpecie).reduce((accBySpecie, specie) => {
+                    const dataOfSpecie = dataOfCountryBySpecie[specie] as SpreadOfResistanceOverTimeSeries[];
+                    return {
+                        ...accBySpecie,
+                        [specie]: dataOfSpecie.map(dataSeries => {
+                            return dataSeries.type === "scatter"
+                                ? getNormalizedRadius(dataSeries, maxNumberOfSites)
+                                : dataSeries;
+                        }),
+                    } as SpreadOfResistanceOverTimeBySpecie;
+                }, {} as SpreadOfResistanceOverTimeBySpecie),
+            } as SpreadOfResistanceOverTimeByCountryAndSpecies;
+        }, {} as SpreadOfResistanceOverTimeByCountryAndSpecies);
+    }
+
+    return Object.keys(dataByCountry).reduce((accByCountry, isoCountry) => {
+        const dataOfCountry = dataByCountry[isoCountry] as SpreadOfResistanceOverTimeSeries[];
+        return {
+            ...accByCountry,
+            [isoCountry]: dataOfCountry.map(dataSeries => {
+                return dataSeries.type === "scatter" ? getNormalizedRadius(dataSeries, maxNumberOfSites) : dataSeries;
+            }),
+        } as SpreadOfResistanceOverTimeByCountry;
+    }, {} as SpreadOfResistanceOverTimeByCountry);
 }
 
 export function createChartDataByType(
@@ -256,11 +351,13 @@ export function createChartDataByType(
         };
     }, {});
 
+    const dataByCountryWithNormalizedRadius = normalizeScatterChartRadius(dataByCountry, isDisaggregatedBySpecies);
+
     return {
         kind: "InsecticideByClass",
         data: {
             years: sortedYears,
-            dataByCountry,
+            dataByCountry: dataByCountryWithNormalizedRadius,
             maxSumOfConfirmedResistance: getMaxSumConfirmedResistance(dataByCountry, isDisaggregatedBySpecies),
         },
     };

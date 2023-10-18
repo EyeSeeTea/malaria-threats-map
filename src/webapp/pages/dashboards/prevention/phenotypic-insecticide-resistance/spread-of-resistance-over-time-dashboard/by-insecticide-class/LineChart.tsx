@@ -168,6 +168,12 @@ const NotAvailableTR = styled.tr`
     height: 100px;
 `;
 
+interface CustomPoint extends Highcharts.Point {
+    marker: {
+        radius: number;
+    };
+}
+
 function chartOptions(
     years: number[],
     data: SpreadOfResistanceOverTimeSeries[],
@@ -180,7 +186,12 @@ function chartOptions(
             marginBottom: xAxisVisible ? 40 : 0,
         },
 
-        plotOptions: {},
+        tooltip: {
+            formatter: function () {
+                const point = this.point as CustomPoint;
+                return `${point?.marker?.radius}`;
+            },
+        },
 
         title: {
             text: "",
