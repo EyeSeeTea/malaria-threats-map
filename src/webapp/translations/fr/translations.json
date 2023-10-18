@@ -305,10 +305,10 @@
                     "label": "Source",
                     "link": "Institut national des allergies et des maladies infectieuses, Instituts nationaux de la santé"
                 },
-                "insecticideClass": "Insecticide class",
-                "year": "Year",
-                "numberOfSitesConfirmedResistance": "Number of sites with confirmed resistance",
-                "numberOfSites": "Number of sites that monitored resistance"
+                "insecticideClass": "Clase de insecticida",
+                "year": "Año",
+                "numberOfSitesConfirmedResistance": "Número de sitios con resistencia confirmada",
+                "numberOfSites": "Número de sitios que controlaron la resistencia"
             }
         },
         "homepage": {
