@@ -78,26 +78,6 @@ function MapScreenshot({ map, theme, title, showMapSidebar = false }: MapScreens
             </OpenScreenshotButton>
             <ScreenshotModal open={open} onClose={handleCloseScreenshot} title={title}>
                 <>
-                    <TitleWrapper>
-                        {Icon}
-                        <Title>{_.capitalize(title)}</Title>
-                    </TitleWrapper>
-                    <MapAndSidebarContainer>
-                        <MapContainer>
-                            <MapInfoSummaryContainer>
-                                <MapInfoSummaryLegend />
-                            </MapInfoSummaryContainer>
-                            <LegendContainer $hasSidebar={showMapSidebar}>
-                                <Legend />
-                            </LegendContainer>
-                            <StyledImage alt="Map screenshot" src={mapImage} $hasSidebar={showMapSidebar} />
-                        </MapContainer>
-                        {showMapSidebar ? (
-                            <MapSidebarContainer>
-                                <SelectionDataContent onClose={fakeFunction} isScreenshot />
-                            </MapSidebarContainer>
-                        ) : null}
-                    </MapAndSidebarContainer>
                     <WHOInfoContainer>
                         <WHOInfoWrapper>
                             <WHOInfoWrapper>
@@ -120,6 +100,26 @@ function MapScreenshot({ map, theme, title, showMapSidebar = false }: MapScreens
                             </WHOLogoSubtitle>
                         </WHOLogoWrapper>
                     </WHOInfoContainer>
+                    <TitleWrapper>
+                        {Icon}
+                        <Title>{_.capitalize(title)}</Title>
+                    </TitleWrapper>
+                    <MapAndSidebarContainer>
+                        <MapContainer>
+                            <MapInfoSummaryContainer>
+                                <MapInfoSummaryLegend />
+                            </MapInfoSummaryContainer>
+                            <LegendContainer $hasSidebar={showMapSidebar}>
+                                <Legend />
+                            </LegendContainer>
+                            <StyledImage alt="Map screenshot" src={mapImage} $hasSidebar={showMapSidebar} />
+                        </MapContainer>
+                        {showMapSidebar ? (
+                            <MapSidebarContainer>
+                                <SelectionDataContent onClose={fakeFunction} isScreenshot />
+                            </MapSidebarContainer>
+                        ) : null}
+                    </MapAndSidebarContainer>
                 </>
             </ScreenshotModal>
         </>
@@ -160,6 +160,7 @@ const MapContainer = styled.div`
     position: relative;
     height: fit-content;
     width: fit-content;
+    margin-block-end: 20px;
 `;
 
 const MapAndSidebarContainer = styled.div`
