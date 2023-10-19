@@ -1,7 +1,7 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
 import _ from "lodash";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { connect } from "react-redux";
 import { Button } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
@@ -158,8 +158,8 @@ const Title = styled.h2`
 
 const MapContainer = styled.div`
     position: relative;
-    height: fit-content;
-    width: fit-content;
+    height: 100%;
+    width: 100%;
     margin-block-end: 20px;
 `;
 
@@ -170,12 +170,10 @@ const MapAndSidebarContainer = styled.div`
 `;
 
 const MapSidebarContainer = styled.div`
-    position: absolute;
-    inset-inline-end: 20px;
-    inset-block: 20px 5px;
     padding: 16px 0;
     width: 100%;
     max-width: 30%;
+    z-index: 2;
     border-radius: 0 10px 10px 0;
     background-color: #f3f3f3;
     .additional-information-link {
@@ -222,7 +220,8 @@ const StyledImage = styled.img<{ $hasSidebar?: boolean }>`
     border-top-right-radius: ${props => (props.$hasSidebar ? "10px" : "unset")};
     border-bottom-right-radius: ${props => (props.$hasSidebar ? "10px" : "unset")};
     border-bottom-left-radius: 10px;
-    width: 100%;
+    width: ${props => (props.$hasSidebar ? "142.5%" : "100%")};
+    position: ${props => (props.$hasSidebar ? "absolute" : "static")};
 `;
 
 const WHOInfoContainer = styled.div`
