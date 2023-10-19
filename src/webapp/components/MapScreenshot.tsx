@@ -1,7 +1,7 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
 import _ from "lodash";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { connect } from "react-redux";
 import { Button } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
@@ -109,10 +109,10 @@ function MapScreenshot({ map, theme, title, showMapSidebar = false }: MapScreens
                             <MapInfoSummaryContainer>
                                 <MapInfoSummaryLegend />
                             </MapInfoSummaryContainer>
+                            <StyledImage alt="Map screenshot" src={mapImage} $hasSidebar={showMapSidebar} />
                             <LegendContainer $hasSidebar={showMapSidebar}>
                                 <Legend />
                             </LegendContainer>
-                            <StyledImage alt="Map screenshot" src={mapImage} $hasSidebar={showMapSidebar} />
                         </MapContainer>
                         {showMapSidebar ? (
                             <MapSidebarContainer>
@@ -186,14 +186,16 @@ const MapInfoSummaryContainer = styled.div`
     top: 30px;
     left: 30px;
     width: fit-content;
+    z-index: 2;
 `;
 
 const LegendContainer = styled.div<{ $hasSidebar?: boolean }>`
     border-radius: 12px;
     background-color: #ffffff;
     position: absolute;
-    bottom: 20px;
-    inset-inline-end: ${props => (props.$hasSidebar ? "32%" : "30px")};
+    z-index: 3;
+    inset-inline-end: ${props => (props.$hasSidebar ? "2%" : "30px")};
+    inset-block-end: ${props => (props.$hasSidebar ? "-690px" : "20px")};
     div {
         width: fit-content;
         max-width: fit-content;
