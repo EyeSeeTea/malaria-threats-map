@@ -70,11 +70,7 @@ const DisplaySuggestionModal = () => {
                     <CloseIcon />
                 </IconButton>
             </DialogActions>
-            <DialogContent>
-                {t(
-                    "While this site is designed to be accessible, you might find it more accurate on larger screens. If possible, please interact with this website using a laptop or desktop computer."
-                )}
-            </DialogContent>
+            <DialogContent>{t("We recommend using this website using a laptop or desktop computer.")}</DialogContent>
         </Dialog>
     );
 };
