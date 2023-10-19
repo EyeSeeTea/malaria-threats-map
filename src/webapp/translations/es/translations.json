@@ -219,7 +219,8 @@
                     "title": "Propagación de la resistencia a lo largo del tiempo",
                     "sumConfirmedResistance": "Suma de centros que han confirmado la resistencia",
                     "year": "Año",
-                    "insecticideClassLegendTitle": "Clase de insecticida"
+                    "insecticideClassLegendTitle": "Clase de insecticida",
+                    "numberOfSites": "Número de centros"
                 }
             },
             "molecularMechanismDetectionDashboards": {

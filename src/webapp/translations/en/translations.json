@@ -218,7 +218,8 @@
                     "title": "Spread of resistance over time",
                     "sumConfirmedResistance": "Sum of sites that have confirmed resistance",
                     "year": "Year",
-                    "insecticideClassLegendTitle": "Insecticide class"
+                    "insecticideClassLegendTitle": "Insecticide class",
+                    "numberOfSites": "Number of sites"
                 }
             },
             "molecularMechanismDetectionDashboards": {

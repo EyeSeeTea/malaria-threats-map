@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Checkbox, Typography, Grid } from "@mui/material";
 import styled from "styled-components";
-import { INSECTICIDE_CLASS_COLORS } from "./createChartData";
+import { INSECTICIDE_CLASS_COLORS } from "./createLineChartData";
 
 interface Props {
     allInsecticideClasses: string[];
@@ -81,4 +81,5 @@ const StyledTypographyTitle = styled(Typography)`
 
 const StyledTypographyOption = styled(Typography)`
     align-self: center;
+    font-size: 14px;
 `;

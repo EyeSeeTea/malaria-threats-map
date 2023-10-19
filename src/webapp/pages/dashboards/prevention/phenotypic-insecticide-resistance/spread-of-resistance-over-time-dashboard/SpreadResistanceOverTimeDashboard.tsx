@@ -6,6 +6,9 @@ import { useInfoPopup } from "../../../common/popup/useInfoPopup";
 import LineChart from "./by-insecticide-class/LineChart";
 import SpreadOfResistanceOverTimePopup from "../../../../../components/dashboards/prevention/SpreadOfResistanceOverTimePopup";
 import { ResistanceToInsecticideChartType } from "../../types";
+import { SpreadOfResistanceOverTimeBarChart, SpreadOfResistanceOverTimeLineChart } from "../types";
+import BarChart from "./by-insecticide-class/BarChart";
+import styled from "styled-components";
 
 const SpreadResistanceOverTimeDashboard: React.FC = () => {
     const { t } = useTranslation();
@@ -14,12 +17,17 @@ const SpreadResistanceOverTimeDashboard: React.FC = () => {
         chartType,
         chartTypes,
         categoriesCount,
-        data,
+        lineChartData,
+        barChartData,
         filters,
         speciesOptions,
         isDisaggregatedBySpecies,
         onChartTypeChange,
         allInsecticideClasses,
+        multipleSelectedInsecticideClasses,
+        singleSelectedInsecticideClass,
+        setMultipleSelectedInsecticideClasses,
+        setSingleSelectedInsecticideClass,
     } = useSpreadResistanceOverTime();
 
     const { openPopup, onChangeOpenPopup } = useInfoPopup();
@@ -48,14 +56,24 @@ const SpreadResistanceOverTimeDashboard: React.FC = () => {
                 onChartTypeChange={handleChartTypeChange}
                 onInfoClick={onChangeOpenPopup}
             >
-                <LineChart
-                    allInsecticideClasses={allInsecticideClasses}
-                    data={data.data}
-                    chartComponentRefs={chartComponentRefs}
-                    selectedInsecticideClasses={filters.insecticideClasses}
-                    onInsecticideClassesChange={filters.onInsecticideClassChange}
-                    isDisaggregatedBySpecies={isDisaggregatedBySpecies}
-                />
+                <ChartsContainer>
+                    <LineChart
+                        allInsecticideClasses={allInsecticideClasses}
+                        data={lineChartData.data as SpreadOfResistanceOverTimeLineChart}
+                        chartComponentRefs={chartComponentRefs}
+                        selectedInsecticideClasses={multipleSelectedInsecticideClasses}
+                        onInsecticideClassesChange={setMultipleSelectedInsecticideClasses}
+                        isDisaggregatedBySpecies={isDisaggregatedBySpecies}
+                    />
+                    <BarChart
+                        allInsecticideClasses={allInsecticideClasses}
+                        data={barChartData.data as SpreadOfResistanceOverTimeBarChart}
+                        chartComponentRefs={chartComponentRefs}
+                        selectedInsecticideClass={singleSelectedInsecticideClass}
+                        onInsecticideClassChange={setSingleSelectedInsecticideClass}
+                        isDisaggregatedBySpecies={isDisaggregatedBySpecies}
+                    />
+                </ChartsContainer>
             </PreventionFilterableDashboard>
             <SpreadOfResistanceOverTimePopup
                 years={filters.years}
@@ -67,3 +85,9 @@ const SpreadResistanceOverTimeDashboard: React.FC = () => {
 };
 
 export default React.memo(SpreadResistanceOverTimeDashboard);
+
+const ChartsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+`;

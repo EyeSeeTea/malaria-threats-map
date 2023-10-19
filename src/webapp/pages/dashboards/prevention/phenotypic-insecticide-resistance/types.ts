@@ -42,32 +42,30 @@ export type MosquitoOverTimeData = {
 
 export type SpreadOfResistanceOverTimeChartType = "by-insecticide-class" | "by-insecticide";
 
-export type SpreadOfResistanceOverTimeChartData =
-    | SpreadOfResistanceOverTimeChartDataByClass
-    | SpreadOfResistanceOverTimeChartDataByType;
+export type SpreadOfResistanceOverTimeChartData = SpreadOfResistanceOverTimeChartDataByClass;
 
 export type SpreadOfResistanceOverTimeChartDataByClass = {
     kind: "InsecticideByClass";
-    data: SpreadOfResistanceOverTimeChart;
+    data: SpreadOfResistanceOverTimeLineChart | SpreadOfResistanceOverTimeBarChart;
 };
 
-export type SpreadOfResistanceOverTimeChartDataByType = {
-    kind: "InsecticideByType";
-    data: SpreadOfResistanceOverTimeChart;
-};
-
-export type SpreadOfResistanceOverTimeChart = {
+export type SpreadOfResistanceOverTimeLineChart = {
     years: number[];
-    maxSumOfConfirmedResistance: number;
-    dataByCountry: SpreadOfResistanceOverTimeByCountry | SpreadOfResistanceOverTimeByCountryAndSpecies;
+    maxValue: number;
+    dataByCountry:
+        | SpreadOfResistanceOverTimeByCountryLineChart
+        | SpreadOfResistanceOverTimeByCountryAndSpeciesLineChart;
 };
 
-export type SpreadOfResistanceOverTimeByCountry = Record<string, SpreadOfResistanceOverTimeSeries[]>;
+export type SpreadOfResistanceOverTimeByCountryLineChart = Record<string, SpreadOfResistanceOverTimeSeriesLineChart[]>;
 
-export type SpreadOfResistanceOverTimeByCountryAndSpecies = Record<string, SpreadOfResistanceOverTimeBySpecie>;
-export type SpreadOfResistanceOverTimeBySpecie = Record<string, SpreadOfResistanceOverTimeSeries[]>;
+export type SpreadOfResistanceOverTimeByCountryAndSpeciesLineChart = Record<
+    string,
+    SpreadOfResistanceOverTimeBySpecieLineChart
+>;
+export type SpreadOfResistanceOverTimeBySpecieLineChart = Record<string, SpreadOfResistanceOverTimeSeriesLineChart[]>;
 
-export type SpreadOfResistanceOverTimeSeries =
+export type SpreadOfResistanceOverTimeSeriesLineChart =
     | SpreadOfResistanceOverTimeLineSeries
     | SpreadOfResistanceOverTimeScatterSeries;
 
@@ -81,7 +79,7 @@ export type SpreadOfResistanceOverTimeLineSeries = {
     };
 };
 
-export type SpreadOfResistanceOverTimeTooltipData = {
+export type SpreadOfResistanceOverTimeTooltipDataLineChart = {
     insecticideClass: string;
     year: string;
     rangeYears: string;
@@ -93,7 +91,7 @@ export type SpreadOfResistanceOverTimeTooltipData = {
 
 export type SpreadOfResistanceOverTimeLineData = {
     y: number;
-} & SpreadOfResistanceOverTimeTooltipData;
+} & SpreadOfResistanceOverTimeTooltipDataLineChart;
 
 export type SpreadOfResistanceOverTimeScatterSeries = {
     type: "scatter";
@@ -112,4 +110,26 @@ export type SpreadOfResistanceOverTimeScatterData = {
         fillColor: string;
         radius: number;
     };
-} & SpreadOfResistanceOverTimeTooltipData;
+} & SpreadOfResistanceOverTimeTooltipDataLineChart;
+
+export type SpreadOfResistanceOverTimeBarChart = {
+    years: number[];
+    maxValue: number;
+    dataByCountry: SpreadOfResistanceOverTimeByCountryBarChart | SpreadOfResistanceOverTimeByCountryAndSpeciesBarChart;
+};
+
+export type SpreadOfResistanceOverTimeByCountryBarChart = Record<string, SpreadOfResistanceOverTimeSeriesBarChart[]>;
+
+export type SpreadOfResistanceOverTimeByCountryAndSpeciesBarChart = Record<
+    string,
+    SpreadOfResistanceOverTimeBySpecieBarChart
+>;
+
+export type SpreadOfResistanceOverTimeBySpecieBarChart = Record<string, SpreadOfResistanceOverTimeSeriesBarChart[]>;
+
+export type SpreadOfResistanceOverTimeSeriesBarChart = {
+    type: "column";
+    name: string;
+    data: number[];
+    color: string;
+};
