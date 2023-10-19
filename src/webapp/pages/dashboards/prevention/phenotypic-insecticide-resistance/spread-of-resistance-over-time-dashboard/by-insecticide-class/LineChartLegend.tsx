@@ -57,7 +57,7 @@ export default LineChartLegend;
 
 const InsecticideClassLegendContainer = styled.div`
     display: flex;
-    gap: 24px;
+    gap: 36px;
     margin-bottom: 16px;
 `;
 

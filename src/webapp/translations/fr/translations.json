@@ -220,7 +220,8 @@
                     "sumConfirmedResistance": "Somme des sites dont la résistance a été confirmée",
                     "year": "An",
                     "insecticideClassLegendTitle": "Classe d'insecticide",
-                    "numberOfSites": "Nombre de sites"
+                    "numberOfSites": "Nombre de sites",
+                    "insecticideResistanceStatus": "Statut de résistance aux insecticides"
                 }
             },
             "molecularMechanismDetectionDashboards": {
