@@ -3,12 +3,13 @@ import { Typography, Card } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { State, DiagnosisMapType, TreatmentMapType } from "../../store/types";
+import { State } from "../../store/types";
 import { selectLastUpdatedDates, selectTheme } from "../../store/reducers/base-reducer";
 import { selectFilteredPreventionStudies, selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { selectDiagnosisFilters, selectFilteredDiagnosisStudies } from "../../store/reducers/diagnosis-reducer";
 import { selectFilteredTreatmentStudies, selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
 import { selectFilteredInvasiveStudies, selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
+import { useLastUpdatedDatesByThemeAndMapType } from "./useLastUpdatedDatesByThemeAndMapType";
 
 const RoundedCard = styled(Card)`
     margin-top: 10px;
@@ -43,6 +44,7 @@ const LastUpdated = ({
     preventionFilters,
     treatmentFilters,
     diagnosisFilters,
+    invasiveFilters,
     lastUpdatedDates,
 }: Props) => {
     const { t } = useTranslation();
@@ -62,42 +64,20 @@ const LastUpdated = ({
         }
     }, [filteredDiagnosisStudies, filteredInvasiveStudies, filteredPreventionStudies, filteredTreatmentStudies, theme]);
 
-    const date = useMemo(() => {
-        switch (theme) {
-            case "prevention":
-                return lastUpdatedDates.prevention;
-            case "diagnosis":
-                return diagnosisFilters.mapType === DiagnosisMapType.GENE_DELETIONS
-                    ? lastUpdatedDates.diagnosis
-                    : lastUpdatedDates.diagnosisOngoing;
-            case "treatment":
-                return treatmentFilters.mapType === TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES
-                    ? lastUpdatedDates.treatmentOngoing
-                    : treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES
-                    ? lastUpdatedDates.treatmentOngoing // treatmentMolecularOngoing
-                    : lastUpdatedDates.treatment;
-            case "invasive":
-                return lastUpdatedDates.invasive;
-        }
-    }, [
-        diagnosisFilters.mapType,
-        lastUpdatedDates.diagnosis,
-        lastUpdatedDates.diagnosisOngoing,
-        lastUpdatedDates.invasive,
-        lastUpdatedDates.prevention,
-        lastUpdatedDates.treatment,
-        lastUpdatedDates.treatmentOngoing,
+    const date = useLastUpdatedDatesByThemeAndMapType(
+        lastUpdatedDates,
         theme,
-        treatmentFilters.mapType,
-    ]);
-
-    const themeSelector = theme as "prevention" | "diagnosis" | "treatment" | "invasive";
+        preventionFilters,
+        treatmentFilters,
+        diagnosisFilters,
+        invasiveFilters
+    );
 
     return (
         <RoundedCard>
-            {lastUpdatedDates[themeSelector] && (
+            {date && (
                 <Typography variant="body2" display="block" gutterBottom>
-                    <strong>{`${t("common.filters.last_updated").toUpperCase()} ${date?.toLocaleDateString()}`}</strong>
+                    <strong>{`${t("common.filters.last_updated").toUpperCase()} ${date.toLocaleDateString()}`}</strong>
                 </Typography>
             )}
 

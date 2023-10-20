@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { selectTranslations } from "../../store/reducers/translations-reducer";
 import { useAppContext } from "../../context/app-context";
 import { Country } from "../../../domain/entities/Country";
+import { useLastUpdatedDatesByTheme } from "../../components/last-updated/useLastUpdatedDatesByTheme";
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type Props = StateProps;
@@ -29,6 +30,8 @@ const ThemeSelectionSection = ({ translations }: Props) => {
 
     const { theme, selectedCountries, updatedDates, onThemeChange, onSelectedCountriesChange, onGenerate } =
         useDashboards();
+
+    const date = useLastUpdatedDatesByTheme(updatedDates, theme);
 
     useEffect(() => {
         compositionRoot.countries.get().run(
@@ -111,11 +114,11 @@ const ThemeSelectionSection = ({ translations }: Props) => {
                             >
                                 {t("common.dashboard.filtersSection.second.cta")}
                             </StyledGenerateButton>
-                            {updatedDates[theme] && (
+                            {date && (
                                 <Typography variant="caption" fontSize={"12px"} textAlign="right">
-                                    {`${t("common.dashboard.filtersSection.second.lastUpdate")} ${
-                                        updatedDates[theme]?.toLocaleDateString() || ""
-                                    }`}
+                                    {`${t(
+                                        "common.dashboard.filtersSection.second.lastUpdate"
+                                    )} ${date.toLocaleDateString()}`}
                                 </Typography>
                             )}
                         </Stack>

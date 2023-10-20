@@ -17,6 +17,7 @@ import { selectPreventionFilters } from "../store/reducers/prevention-reducer";
 import { selectInvasiveFilters } from "../store/reducers/invasive-reducer";
 import { selectTreatmentFilters } from "../store/reducers/treatment-reducer";
 import { selectTranslations } from "../store/reducers/translations-reducer";
+import { useLastUpdatedDatesByThemeAndMapType } from "./last-updated/useLastUpdatedDatesByThemeAndMapType";
 
 const mapStateToProps = (state: State) => ({
     region: selectRegion(state),
@@ -48,6 +49,15 @@ function MapInfoSummaryLegend({
 }: MapInfoSummaryLegendProps) {
     const { t } = useTranslation();
 
+    const date = useLastUpdatedDatesByThemeAndMapType(
+        lastUpdatedDates,
+        theme,
+        preventionFilters,
+        treatmentFilters,
+        diagnosisFilters,
+        invasiveFilters
+    );
+
     const selectedValueLabelFilters = React.useMemo(() => {
         if (!translations?.length) return;
 
@@ -73,8 +83,6 @@ function MapInfoSummaryLegend({
         t,
     ]);
 
-    const themeSelector = theme as "prevention" | "diagnosis" | "treatment" | "invasive";
-
     return (
         <MapInfoSummaryLegendContainer>
             {region?.country && (
@@ -91,10 +99,10 @@ function MapInfoSummaryLegend({
                     </DataFilterRowContainer>
                 ))}
             </DataFilterContainer>
-            {lastUpdatedDates[themeSelector] && (
+            {date && (
                 <InfoRowContainer>
                     <Label>{t("common.map_info_summary.last_updated")}:</Label>
-                    <InfoValue>{lastUpdatedDates[themeSelector]?.toLocaleDateString()}</InfoValue>
+                    <InfoValue>{date.toLocaleDateString()}</InfoValue>
                 </InfoRowContainer>
             )}
         </MapInfoSummaryLegendContainer>

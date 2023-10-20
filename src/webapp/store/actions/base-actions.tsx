@@ -4,6 +4,7 @@ import { ActionGroup, RegionState, SiteSelection } from "../types";
 import { SelectionData } from "../SelectionData";
 import { UploadFileData } from "../../../domain/usecases/UploadFileUseCase";
 import { Option } from "../../components/BasicSelect";
+import { LastUpdatedDates } from "../../../domain/entities/LastUpdateDates";
 
 export type Source = "map" | "download";
 
@@ -82,9 +83,7 @@ export const setLegendExpandedAction = createAction(ActionTypeEnum.SetLegendExpa
 
 export const getLastUpdatedRequestAction = createAction(ActionTypeEnum.GetLastUpdatedRequest)();
 
-type LastUpdated = { prevention: Date; diagnosis: Date; treatment: Date; invasive: Date };
-
-export const getLastUpdatedSuccessAction = createAction(ActionTypeEnum.GetLastUpdatedSuccess)<LastUpdated>();
+export const getLastUpdatedSuccessAction = createAction(ActionTypeEnum.GetLastUpdatedSuccess)<LastUpdatedDates>();
 
 export const getLastUpdatedFailureAction = createAction(ActionTypeEnum.GetLastUpdatedFailure)<Error | string>();
 
