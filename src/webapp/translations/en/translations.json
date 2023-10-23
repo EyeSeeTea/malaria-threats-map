@@ -223,11 +223,11 @@
                     "table": "Table",
                     "legend": {
                         "phenotypicResistance": "Phenotypic resistance",
-                        "percentageSitesInsecticideClass": "% of sites exibiting resistance (No. sites monitored)",
+                        "percentageSitesInsecticideClass": "% of sites exibiting resistance (number of sites monitored)",
                         "resistanceMechanisms": "Resistance mechanisms",
-                        "percentageSitesResistanceMechanisms": " % of sites that detected the mechanism resistance (No. sites monitored)",
+                        "percentageSitesResistanceMechanisms": " % of sites that detected the mechanism resistance (number of sites monitored)",
                         "detected": "Detected",
-                        "noDetected": "No detected",
+                        "noDetected": "Not detected",
                         "noDataAvailable": "No data available"
                     }
                 }
