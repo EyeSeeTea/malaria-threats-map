@@ -6,11 +6,11 @@ export const setToLocalStorage = (key: string, value: string): void => {
     localStorage.setItem(key, value);
 };
 
-export const hasShowedDisplaySuggestion = (): boolean => {
-    const result = getFromLocalStorage("displaySuggestionShowed");
+export const hasSeenDisplaySuggestion = (): boolean => {
+    const result = getFromLocalStorage("displaySuggestionSeen");
     return !!result;
 };
 
-export const markDisplaySuggestionAsShowed = (): void => {
-    setToLocalStorage("displaySuggestionShowed", "true");
+export const markDisplaySuggestionAsSeen = (): void => {
+    setToLocalStorage("displaySuggestionSeen", "true");
 };
