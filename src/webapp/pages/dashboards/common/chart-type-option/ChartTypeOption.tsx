@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const ChartTypeOption = styled(ToggleButton)`
     border-radius: 5px !important;
-    padding: 16px 32px;
+    padding: 16px;
     color: black;
     background-color: white;
     border: 0px;
