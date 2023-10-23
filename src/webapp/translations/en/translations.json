@@ -218,7 +218,7 @@
             "molecularMechanismDetectionDashboards": {
                 "title": "Molecular mechanism detection",
                 "insecticideResistanceAndResistanceMechanisms": {
-                    "title": "INSECTICIDE RESISTANCE AND RESISTANCE MECHANISMS DETECTED PER VECTOR SPECIES",
+                    "title": "INSECTICIDE RESISTANCE AND RESISTANCE MECHANISMS DETECTED BY VECTOR SPECIES",
                     "graph": "Graph",
                     "table": "Table",
                     "legend": {
