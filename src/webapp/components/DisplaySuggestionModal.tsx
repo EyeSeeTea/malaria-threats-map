@@ -6,6 +6,7 @@ import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import { hasSeenDisplaySuggestion, markDisplaySuggestionAsSeen } from "../utils/browserCache";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -27,6 +28,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const DisplaySuggestionModal = () => {
+    const location = useLocation();
+    const pageKey = location.pathname;
     const TabletPortraitWidth = 768;
     const [open, setOpen] = useState(false);
     const classes = useStyles({});
@@ -34,8 +37,8 @@ const DisplaySuggestionModal = () => {
 
     const handleClose = () => {
         setOpen(false);
-        if (!hasSeenDisplaySuggestion()) {
-            markDisplaySuggestionAsSeen();
+        if (!hasSeenDisplaySuggestion(pageKey)) {
+            markDisplaySuggestionAsSeen(pageKey);
         }
     };
 
@@ -43,7 +46,7 @@ const DisplaySuggestionModal = () => {
         const handleResize = () => {
             const isMobile = window.innerWidth <= TabletPortraitWidth;
 
-            if (isMobile && !hasSeenDisplaySuggestion()) {
+            if (isMobile && !hasSeenDisplaySuggestion(pageKey)) {
                 setOpen(true);
             }
 
