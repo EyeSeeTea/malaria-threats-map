@@ -19,163 +19,174 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                 <Title id="epidemiological-profile">
                     {t("common.dashboard.countryContextDashboards.epidemiologicalProfile.title")}
                 </Title>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>
-                                <HeadText>
-                                    {t("common.dashboard.countryContextDashboards.epidemiologicalProfile.country")}
-                                </HeadText>
-                            </th>
-                            <th>
-                                <HeadText>
-                                    {t("common.dashboard.countryContextDashboards.epidemiologicalProfile.year")}
-                                </HeadText>
-                            </th>
-                            <th colSpan={3}>
-                                <HeadText>
-                                    {t("common.dashboard.countryContextDashboards.epidemiologicalProfile.transmission")}
-                                </HeadText>
-                            </th>
-                            <th colSpan={2}>
-                                <HeadText>
-                                    {t(
-                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.burdenEstimates"
-                                    )}
-                                </HeadText>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th>
-                                <SubHeadText align="left">
-                                    {t(
-                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.highTransmission"
-                                    )}
-                                </SubHeadText>
-                                <SubHeadText align="left">
-                                    {t(
-                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.moreThanOneCase"
-                                    )}
-                                </SubHeadText>
-                            </th>
-                            <th>
-                                <SubHeadText align="left">
-                                    {t(
-                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.lowTransmission"
-                                    )}
-                                </SubHeadText>
-                                <SubHeadText align="left">
-                                    {t(
-                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.lessOrEqualtoOneCase"
-                                    )}
-                                </SubHeadText>
-                            </th>
-                            <th>
-                                <Stack direction="row" alignItems="center">
-                                    <Stack direction="column">
-                                        <SubHeadText align="left">
-                                            {t(
-                                                "common.dashboard.countryContextDashboards.epidemiologicalProfile.malariaFree"
-                                            )}
-                                        </SubHeadText>
-                                        <SubHeadText align="left">
-                                            {t(
-                                                "common.dashboard.countryContextDashboards.epidemiologicalProfile.zeroCases"
-                                            )}
-                                        </SubHeadText>
+                <TableContainer>
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <HeadText>
+                                        {t("common.dashboard.countryContextDashboards.epidemiologicalProfile.country")}
+                                    </HeadText>
+                                </th>
+                                <th>
+                                    <HeadText>
+                                        {t("common.dashboard.countryContextDashboards.epidemiologicalProfile.year")}
+                                    </HeadText>
+                                </th>
+                                <th colSpan={3}>
+                                    <HeadText>
+                                        {t(
+                                            "common.dashboard.countryContextDashboards.epidemiologicalProfile.transmission"
+                                        )}
+                                    </HeadText>
+                                </th>
+                                <th colSpan={2}>
+                                    <HeadText>
+                                        {t(
+                                            "common.dashboard.countryContextDashboards.epidemiologicalProfile.burdenEstimates"
+                                        )}
+                                    </HeadText>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <SubHeadText align="left">
+                                        {t(
+                                            "common.dashboard.countryContextDashboards.epidemiologicalProfile.highTransmission"
+                                        )}
+                                    </SubHeadText>
+                                    <SubHeadText align="left">
+                                        {t(
+                                            "common.dashboard.countryContextDashboards.epidemiologicalProfile.moreThanOneCase"
+                                        )}
+                                    </SubHeadText>
+                                </th>
+                                <th>
+                                    <SubHeadText align="left">
+                                        {t(
+                                            "common.dashboard.countryContextDashboards.epidemiologicalProfile.lowTransmission"
+                                        )}
+                                    </SubHeadText>
+                                    <SubHeadText align="left">
+                                        {t(
+                                            "common.dashboard.countryContextDashboards.epidemiologicalProfile.lessOrEqualtoOneCase"
+                                        )}
+                                    </SubHeadText>
+                                </th>
+                                <th>
+                                    <Stack direction="row" alignItems="center">
+                                        <Stack direction="column">
+                                            <SubHeadText align="left">
+                                                {t(
+                                                    "common.dashboard.countryContextDashboards.epidemiologicalProfile.malariaFree"
+                                                )}
+                                            </SubHeadText>
+                                            <SubHeadText align="left">
+                                                {t(
+                                                    "common.dashboard.countryContextDashboards.epidemiologicalProfile.zeroCases"
+                                                )}
+                                            </SubHeadText>
+                                        </Stack>
+                                        <HtmlTooltip
+                                            title={
+                                                <React.Fragment>
+                                                    <Typography
+                                                        variant="body2"
+                                                        fontWeight="bold"
+                                                        sx={{ marginBottom: 2 }}
+                                                    >
+                                                        {t(
+                                                            "common.dashboard.countryContextDashboards.epidemiologicalProfile.malariaFree"
+                                                        )}
+                                                    </Typography>
+                                                    <Typography variant="body2">
+                                                        {t(
+                                                            "common.dashboard.countryContextDashboards.epidemiologicalProfile.malariaFreeInfo"
+                                                        )}
+                                                    </Typography>
+                                                </React.Fragment>
+                                            }
+                                            arrow
+                                        >
+                                            <InfoOutlinedIcon />
+                                        </HtmlTooltip>
                                     </Stack>
-                                    <HtmlTooltip
-                                        title={
-                                            <React.Fragment>
-                                                <Typography variant="body2" fontWeight="bold" sx={{ marginBottom: 2 }}>
-                                                    {t(
-                                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.malariaFree"
-                                                    )}
-                                                </Typography>
-                                                <Typography variant="body2">
-                                                    {t(
-                                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.malariaFreeInfo"
-                                                    )}
-                                                </Typography>
-                                            </React.Fragment>
-                                        }
-                                        arrow
-                                    >
-                                        <InfoOutlinedIcon />
-                                    </HtmlTooltip>
-                                </Stack>
-                            </th>
-                            <th>
-                                <SubHeadText align="left">
-                                    {t(
-                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.estimatedCases"
-                                    )}
-                                </SubHeadText>
-                            </th>
-                            <th>
-                                <SubHeadText align="left">
-                                    {t(
-                                        "common.dashboard.countryContextDashboards.epidemiologicalProfile.estimatedDeaths"
-                                    )}
-                                </SubHeadText>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/* TODO: move this calculations to presenter (custom hook) */}
-                        {data.map(item => {
-                            return (
-                                <tr key={item.ORGANISATIONUNITNAME}>
-                                    <td>
-                                        <CellText>{item.ORGANISATIONUNITNAME}</CellText>
-                                    </td>
-                                    <td>
-                                        <CellText>{item.PERIODID}</CellText>
-                                    </td>
-                                    <td>
-                                        <CellText>{`${numberFormatter.format(item.MAL_CALC_POP_AT_RISK_HIGH)} (${(
-                                            (item.MAL_CALC_POP_AT_RISK_HIGH / item.MAL_POP_UN) *
-                                            100
-                                        ).toFixed()}%)`}</CellText>
-                                    </td>
-                                    <td>
-                                        <CellText>{`${numberFormatter.format(
-                                            item.MAL_CALC_POP_AT_RISK_LOW_HIGH - item.MAL_CALC_POP_AT_RISK_HIGH
-                                        )} (${(
-                                            ((item.MAL_CALC_POP_AT_RISK_LOW_HIGH - item.MAL_CALC_POP_AT_RISK_HIGH) /
-                                                item.MAL_POP_UN) *
-                                            100
-                                        ).toFixed()}%)`}</CellText>
-                                    </td>
-                                    <td>
-                                        <CellText>{`${numberFormatter.format(
-                                            item.MAL_POP_UN - item.MAL_CALC_POP_AT_RISK_LOW_HIGH
-                                        )} (${(
-                                            ((item.MAL_POP_UN - item.MAL_CALC_POP_AT_RISK_LOW_HIGH) / item.MAL_POP_UN) *
-                                            100
-                                        ).toFixed()}%)`}</CellText>
-                                    </td>
-                                    <td>
-                                        <CellText>{`${numberFormatter.format(
-                                            item.MAL_EST_MALARIA_CASES
-                                        )} [${numberFormatter.format(
-                                            item.MAL_EST_MALARIA_CASES_LOWER
-                                        )}, ${numberFormatter.format(item.MAL_EST_MALARIA_CASES_UPPER)}]`}</CellText>
-                                    </td>
-                                    <td>
-                                        <CellText>{`${numberFormatter.format(
-                                            item.MAL_EST_MALARIA_DEATHS
-                                        )} [${numberFormatter.format(
-                                            item.MAL_EST_MALARIA_DEATHS_LOWER
-                                        )}, ${numberFormatter.format(item.MAL_EST_MALARIA_DEATHS_UPPER)}]`}</CellText>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </Table>
+                                </th>
+                                <th>
+                                    <SubHeadText align="left">
+                                        {t(
+                                            "common.dashboard.countryContextDashboards.epidemiologicalProfile.estimatedCases"
+                                        )}
+                                    </SubHeadText>
+                                </th>
+                                <th>
+                                    <SubHeadText align="left">
+                                        {t(
+                                            "common.dashboard.countryContextDashboards.epidemiologicalProfile.estimatedDeaths"
+                                        )}
+                                    </SubHeadText>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/* TODO: move this calculations to presenter (custom hook) */}
+                            {data.map(item => {
+                                return (
+                                    <tr key={item.ORGANISATIONUNITNAME}>
+                                        <td>
+                                            <CellText>{item.ORGANISATIONUNITNAME}</CellText>
+                                        </td>
+                                        <td>
+                                            <CellText>{item.PERIODID}</CellText>
+                                        </td>
+                                        <td>
+                                            <CellText>{`${numberFormatter.format(item.MAL_CALC_POP_AT_RISK_HIGH)} (${(
+                                                (item.MAL_CALC_POP_AT_RISK_HIGH / item.MAL_POP_UN) *
+                                                100
+                                            ).toFixed()}%)`}</CellText>
+                                        </td>
+                                        <td>
+                                            <CellText>{`${numberFormatter.format(
+                                                item.MAL_CALC_POP_AT_RISK_LOW_HIGH - item.MAL_CALC_POP_AT_RISK_HIGH
+                                            )} (${(
+                                                ((item.MAL_CALC_POP_AT_RISK_LOW_HIGH - item.MAL_CALC_POP_AT_RISK_HIGH) /
+                                                    item.MAL_POP_UN) *
+                                                100
+                                            ).toFixed()}%)`}</CellText>
+                                        </td>
+                                        <td>
+                                            <CellText>{`${numberFormatter.format(
+                                                item.MAL_POP_UN - item.MAL_CALC_POP_AT_RISK_LOW_HIGH
+                                            )} (${(
+                                                ((item.MAL_POP_UN - item.MAL_CALC_POP_AT_RISK_LOW_HIGH) /
+                                                    item.MAL_POP_UN) *
+                                                100
+                                            ).toFixed()}%)`}</CellText>
+                                        </td>
+                                        <td>
+                                            <CellText>{`${numberFormatter.format(
+                                                item.MAL_EST_MALARIA_CASES
+                                            )} [${numberFormatter.format(
+                                                item.MAL_EST_MALARIA_CASES_LOWER
+                                            )}, ${numberFormatter.format(
+                                                item.MAL_EST_MALARIA_CASES_UPPER
+                                            )}]`}</CellText>
+                                        </td>
+                                        <td>
+                                            <CellText>{`${numberFormatter.format(
+                                                item.MAL_EST_MALARIA_DEATHS
+                                            )} [${numberFormatter.format(
+                                                item.MAL_EST_MALARIA_DEATHS_LOWER
+                                            )}, ${numberFormatter.format(
+                                                item.MAL_EST_MALARIA_DEATHS_UPPER
+                                            )}]`}</CellText>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </Table>
+                </TableContainer>
                 <CountryContextSource />
             </DasboardCard>
         </React.Fragment>
@@ -230,6 +241,11 @@ const CellText = styled(Typography)`
     font-size: 14px;
     padding: 8px 30px;
     color: #444444;
+`;
+
+const TableContainer = styled.div`
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 `;
 
 const Table = styled.table`

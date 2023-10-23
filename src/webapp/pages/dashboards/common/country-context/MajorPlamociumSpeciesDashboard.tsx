@@ -12,59 +12,61 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
     return (
         <React.Fragment>
             <DasboardCard>
-                <Title id="major-plasmodium">
-                    {t("common.dashboard.countryContextDashboards.majorPlamociumSpecies.title")}
-                </Title>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th> {t("common.dashboard.countryContextDashboards.majorPlamociumSpecies.country")}</th>
-                            <th>{t("common.dashboard.countryContextDashboards.majorPlamociumSpecies.species")}</th>
-                            <th>
-                                {t(
-                                    "common.dashboard.countryContextDashboards.majorPlamociumSpecies.firstLineTreatments"
-                                )}
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map(item => {
-                            return (
-                                <React.Fragment key={item.ORGANISATIONUNITNAME}>
-                                    <tr>
-                                        <td rowSpan={2}>{item.ORGANISATIONUNITNAME}</td>
-                                        <td>{`P. falciparum (${(item.MAL_CALC_PERPF * 100).toFixed()}%)`}</td>
-                                        <td>
-                                            {item.MAL_PROFILE_MEDICINE_FOR_1ST_LINE_TRT_OF_PF &&
-                                                item.MAL_PROFILE_MEDICINE_FOR_1ST_LINE_TRT_OF_PF.split("; ").map(
-                                                    drug => {
+                <TableContainer>
+                    <Title id="major-plasmodium">
+                        {t("common.dashboard.countryContextDashboards.majorPlamociumSpecies.title")}
+                    </Title>
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th> {t("common.dashboard.countryContextDashboards.majorPlamociumSpecies.country")}</th>
+                                <th>{t("common.dashboard.countryContextDashboards.majorPlamociumSpecies.species")}</th>
+                                <th>
+                                    {t(
+                                        "common.dashboard.countryContextDashboards.majorPlamociumSpecies.firstLineTreatments"
+                                    )}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data.map(item => {
+                                return (
+                                    <React.Fragment key={item.ORGANISATIONUNITNAME}>
+                                        <tr>
+                                            <td rowSpan={2}>{item.ORGANISATIONUNITNAME}</td>
+                                            <td>{`P. falciparum (${(item.MAL_CALC_PERPF * 100).toFixed()}%)`}</td>
+                                            <td>
+                                                {item.MAL_PROFILE_MEDICINE_FOR_1ST_LINE_TRT_OF_PF &&
+                                                    item.MAL_PROFILE_MEDICINE_FOR_1ST_LINE_TRT_OF_PF.split("; ").map(
+                                                        drug => {
+                                                            return (
+                                                                <Typography key={drug} variant="body2">{`${t(
+                                                                    `DRUG_${drug}`
+                                                                )} (${drug})`}</Typography>
+                                                            );
+                                                        }
+                                                    )}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>{`P. vivax (${(item.MAL_CALC_PERPV * 100).toFixed()}%)`}</td>
+                                            <td>
+                                                {item.MAL_PROFILE_MEDICINE_FOR_TRT_OF_PVIVAX &&
+                                                    item.MAL_PROFILE_MEDICINE_FOR_TRT_OF_PVIVAX.split(";").map(drug => {
                                                         return (
                                                             <Typography key={drug} variant="body2">{`${t(
                                                                 `DRUG_${drug}`
                                                             )} (${drug})`}</Typography>
                                                         );
-                                                    }
-                                                )}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>{`P. vivax (${(item.MAL_CALC_PERPV * 100).toFixed()}%)`}</td>
-                                        <td>
-                                            {item.MAL_PROFILE_MEDICINE_FOR_TRT_OF_PVIVAX &&
-                                                item.MAL_PROFILE_MEDICINE_FOR_TRT_OF_PVIVAX.split(";").map(drug => {
-                                                    return (
-                                                        <Typography key={drug} variant="body2">{`${t(
-                                                            `DRUG_${drug}`
-                                                        )} (${drug})`}</Typography>
-                                                    );
-                                                })}
-                                        </td>
-                                    </tr>
-                                </React.Fragment>
-                            );
-                        })}
-                    </tbody>
-                </Table>
+                                                    })}
+                                            </td>
+                                        </tr>
+                                    </React.Fragment>
+                                );
+                            })}
+                        </tbody>
+                    </Table>
+                </TableContainer>
                 <CountryContextSource />
             </DasboardCard>
         </React.Fragment>
@@ -82,6 +84,11 @@ const Title = styled.h3`
     margin-bottom: 30px;
     color: #2ba681;
     text-transform: uppercase;
+`;
+
+const TableContainer = styled.div`
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 `;
 
 const Table = styled.table`
