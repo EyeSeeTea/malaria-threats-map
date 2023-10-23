@@ -62,7 +62,7 @@ const DisplaySuggestionModal = () => {
         return () => {
             window.removeEventListener("resize", handleResize);
         };
-    }, []);
+    }, [pageKey]);
 
     return (
         <Dialog
