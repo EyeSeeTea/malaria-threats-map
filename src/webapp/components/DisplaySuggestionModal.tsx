@@ -4,7 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { DialogActions, DialogContent, DialogTitle, IconButton, Theme } from "@mui/material";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
-import { hasShowedDisplaySuggestion, markDisplaySuggestionAsShowed } from "../utils/browserCache";
+import { hasSeenDisplaySuggestion, markDisplaySuggestionAsSeen } from "../utils/browserCache";
 import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -32,13 +32,19 @@ const DisplaySuggestionModal = () => {
     const classes = useStyles({});
     const { t } = useTranslation();
 
+    const handleClose = () => {
+        setOpen(false);
+        if (!hasSeenDisplaySuggestion()) {
+            markDisplaySuggestionAsSeen();
+        }
+    };
+
     useEffect(() => {
         const handleResize = () => {
             const isMobile = window.innerWidth <= TabletPortraitWidth;
 
-            if (isMobile && !hasShowedDisplaySuggestion()) {
+            if (isMobile && !hasSeenDisplaySuggestion()) {
                 setOpen(true);
-                markDisplaySuggestionAsShowed();
             }
 
             if (!isMobile) {
@@ -59,14 +65,14 @@ const DisplaySuggestionModal = () => {
         <Dialog
             fullWidth={true}
             open={open}
-            onClose={() => setOpen(false)}
+            onClose={handleClose}
             PaperProps={{
                 className: classes.paper,
             }}
         >
             <DialogActions className={classes.dialogActions}>
                 <DialogTitle className={classes.dialogTitle}>{t("Larger screens are recommended")}</DialogTitle>
-                <IconButton onClick={() => setOpen(false)} size="large">
+                <IconButton onClick={handleClose} size="large">
                     <CloseIcon />
                 </IconButton>
             </DialogActions>
