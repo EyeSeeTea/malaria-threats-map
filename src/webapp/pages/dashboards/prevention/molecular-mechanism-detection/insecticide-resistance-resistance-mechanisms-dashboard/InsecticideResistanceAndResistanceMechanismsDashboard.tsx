@@ -15,7 +15,7 @@ import InsecticideResistanceAndResistanceMechanismsGraph from "./graph/Insectici
 const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
     const { t } = useTranslation();
 
-    const { chartType, chartTypes, filters, data, onChartTypeChange, speciesOptions } =
+    const { chartType, chartTypes, filters, data, onChartTypeChange, speciesOptions, count } =
         useInsecticideResistanceAndResistanceMechanisms();
 
     const { openPopup, onChangeOpenPopup } = useInfoPopup();
@@ -69,7 +69,7 @@ const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
                 chart="insecticide-resistance-resistance-mechanisms"
                 chartTypes={chartTypes}
                 chartType={chartType}
-                count={0}
+                count={count}
                 chartComponentRef={chartComponentRefs}
                 title={t(
                     "common.dashboard.molecularMechanismDetectionDashboards.insecticideResistanceAndResistanceMechanisms.title"

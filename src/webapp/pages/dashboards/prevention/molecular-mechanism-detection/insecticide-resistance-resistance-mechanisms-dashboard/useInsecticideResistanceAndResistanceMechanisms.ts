@@ -30,6 +30,7 @@ export function useInsecticideResistanceAndResistanceMechanisms() {
 
     const [data, setData] = React.useState<InsecticideResistanceAndResistanceData>({ kind: "GraphData", series: [] });
     const [chartType, setChartType] = React.useState<ChartType>("graph");
+    const [count, setCount] = React.useState<number>(0);
     const { onSpeciesChange } = filters;
 
     React.useEffect(() => {
@@ -45,6 +46,10 @@ export function useInsecticideResistanceAndResistanceMechanisms() {
         setChartType(type);
     }, []);
 
+    React.useEffect(() => {
+        setCount(filteredStudies.length);
+    }, [filteredStudies]);
+
     return {
         filteredStudies,
         chartTypes,
@@ -58,6 +63,7 @@ export function useInsecticideResistanceAndResistanceMechanisms() {
             onInsecticideTypesChange: undefined,
         } as PreventionFiltersState,
         onChartTypeChange,
+        count,
     };
 }
 
