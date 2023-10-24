@@ -5,9 +5,9 @@ import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import i18next from "i18next";
 import {
-    SpreadOfResistanceOverTimeByCountryLineChart,
     SpreadOfResistanceOverTimeLineChart,
-    SpreadOfResistanceOverTimeSeriesLineChart,
+    SpreadOfResistanceOverTimeLineSeries,
+    SpreadOfResistanceOverTimeBySpecie,
 } from "../../types";
 import { Stack, Typography } from "@mui/material";
 import LineChartLegend from "./LineChartLegend";
@@ -57,11 +57,11 @@ const LineChart: React.FC<{
 
                                             const dataOfCountry = data.dataByCountry[
                                                 isoCountry
-                                            ] as SpreadOfResistanceOverTimeByCountryLineChart;
+                                            ] as SpreadOfResistanceOverTimeBySpecie;
 
                                             const dataBySpecie = dataOfCountry[
                                                 specie
-                                            ] as SpreadOfResistanceOverTimeSeriesLineChart[];
+                                            ] as SpreadOfResistanceOverTimeLineSeries[];
 
                                             const options = chartOptions(
                                                 data.years,
@@ -99,7 +99,7 @@ const LineChart: React.FC<{
 
                                 const dataOfCountry = data.dataByCountry[
                                     isoCountry
-                                ] as SpreadOfResistanceOverTimeSeriesLineChart[];
+                                ] as SpreadOfResistanceOverTimeLineSeries[];
 
                                 const options = chartOptions(data.years, dataOfCountry, data.maxValue, isLastCountry);
 
@@ -178,7 +178,7 @@ interface CustomPoint extends Highcharts.Point {
 
 function chartOptions(
     years: number[],
-    data: SpreadOfResistanceOverTimeSeriesLineChart[],
+    data: SpreadOfResistanceOverTimeLineSeries[],
     maxSumConfirmedResistance: number,
     xAxisVisible: boolean
 ): Highcharts.Options {

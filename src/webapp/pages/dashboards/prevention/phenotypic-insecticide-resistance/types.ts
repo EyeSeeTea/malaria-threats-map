@@ -52,22 +52,13 @@ export type SpreadOfResistanceOverTimeChartDataByClass = {
 export type SpreadOfResistanceOverTimeLineChart = {
     years: number[];
     maxValue: number;
-    dataByCountry:
-        | SpreadOfResistanceOverTimeByCountryLineChart
-        | SpreadOfResistanceOverTimeByCountryAndSpeciesLineChart;
+    dataByCountry: SpreadOfResistanceOverTimeByCountry | SpreadOfResistanceOverTimeByCountryAndSpecies;
 };
 
-export type SpreadOfResistanceOverTimeByCountryLineChart = Record<string, SpreadOfResistanceOverTimeSeriesLineChart[]>;
+export type SpreadOfResistanceOverTimeByCountry = Record<string, SpreadOfResistanceOverTimeLineSeries[]>;
 
-export type SpreadOfResistanceOverTimeByCountryAndSpeciesLineChart = Record<
-    string,
-    SpreadOfResistanceOverTimeBySpecieLineChart
->;
-export type SpreadOfResistanceOverTimeBySpecieLineChart = Record<string, SpreadOfResistanceOverTimeSeriesLineChart[]>;
-
-export type SpreadOfResistanceOverTimeSeriesLineChart =
-    | SpreadOfResistanceOverTimeLineSeries
-    | SpreadOfResistanceOverTimeScatterSeries;
+export type SpreadOfResistanceOverTimeByCountryAndSpecies = Record<string, SpreadOfResistanceOverTimeBySpecie>;
+export type SpreadOfResistanceOverTimeBySpecie = Record<string, SpreadOfResistanceOverTimeLineSeries[]>;
 
 export type SpreadOfResistanceOverTimeLineSeries = {
     type: "line";
@@ -75,7 +66,11 @@ export type SpreadOfResistanceOverTimeLineSeries = {
     data: SpreadOfResistanceOverTimeLineData[];
     color: string;
     marker: {
-        enabled: boolean;
+        symbol: "circle";
+        radius: number;
+        lineWidth: number;
+        lineColor: string;
+        fillColor: string;
     };
 };
 
@@ -91,25 +86,6 @@ export type SpreadOfResistanceOverTimeTooltipDataLineChart = {
 
 export type SpreadOfResistanceOverTimeLineData = {
     y: number;
-} & SpreadOfResistanceOverTimeTooltipDataLineChart;
-
-export type SpreadOfResistanceOverTimeScatterSeries = {
-    type: "scatter";
-    name: string;
-    data: SpreadOfResistanceOverTimeScatterData[];
-    marker: {
-        symbol: "circle";
-    };
-};
-
-export type SpreadOfResistanceOverTimeScatterData = {
-    y: number;
-    marker: {
-        lineWidth: number;
-        lineColor: string;
-        fillColor: string;
-        radius: number;
-    };
 } & SpreadOfResistanceOverTimeTooltipDataLineChart;
 
 export type SpreadOfResistanceOverTimeBarChart = {
