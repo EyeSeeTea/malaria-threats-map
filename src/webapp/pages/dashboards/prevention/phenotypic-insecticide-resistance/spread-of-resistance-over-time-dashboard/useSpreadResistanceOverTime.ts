@@ -60,34 +60,31 @@ export function useSpreadResistanceOverTime() {
 
     React.useEffect(() => {
         const yearsRange = range(filters.years[0], filters.years[1] + 1);
-        if (filteredStudies.length && multipleSelectedInsecticideClasses.length) {
-            setLineChartData(
-                createLineChartDataByInsecticideClass(
-                    filteredStudies,
-                    selectedCountries,
-                    yearsRange,
-                    multipleSelectedInsecticideClasses,
-                    filters.disaggregateBySpeciesSelection
-                )
-            );
-        }
-        if (filteredStudies.length && singleSelectedInsecticideClass) {
-            setBarChartData(
-                createBarChartDataByInsecticideClass(
-                    filteredStudies,
-                    selectedCountries,
-                    yearsRange,
-                    singleSelectedInsecticideClass,
-                    filters.disaggregateBySpeciesSelection
-                )
-            );
-        }
+        setLineChartData(
+            createLineChartDataByInsecticideClass(
+                filteredStudies,
+                selectedCountries,
+                yearsRange,
+                multipleSelectedInsecticideClasses,
+                filters.disaggregateBySpeciesSelection
+            )
+        );
+
+        setBarChartData(
+            createBarChartDataByInsecticideClass(
+                filteredStudies,
+                selectedCountries,
+                yearsRange,
+                singleSelectedInsecticideClass,
+                filters.disaggregateBySpeciesSelection
+            )
+        );
     }, [
         filteredStudies,
-        selectedCountries,
-        filters.years,
         filters.disaggregateBySpeciesSelection,
+        filters.years,
         multipleSelectedInsecticideClasses,
+        selectedCountries,
         singleSelectedInsecticideClass,
     ]);
 

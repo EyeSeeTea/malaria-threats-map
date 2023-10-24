@@ -76,33 +76,20 @@ function createChartDataBySpecies(
     return sortedSpecies.reduce((acc, specie) => {
         const studiesOfSpecie = studies.filter(study => study.SPECIES === specie);
         const barChartSeriesData = createBarChartSeriesData(studiesOfSpecie, sortedYears);
-        if (barChartSeriesData.length === 0) {
-            return acc;
-        }
-        return {
-            ...acc,
-            [specie]: barChartSeriesData as SpreadOfResistanceOverTimeSeriesBarChart[],
-        };
+        return barChartSeriesData.length === 0
+            ? acc
+            : {
+                  ...acc,
+                  [specie]: barChartSeriesData as SpreadOfResistanceOverTimeSeriesBarChart[],
+              };
     }, {} as SpreadOfResistanceOverTimeBySpecieBarChart);
-}
-
-function createChartDataByInsecticideClass(
-    studies: PreventionStudy[],
-    sortedYears: number[],
-    isDisaggregatedBySpecies: boolean
-): SpreadOfResistanceOverTimeSeriesBarChart[] | SpreadOfResistanceOverTimeBySpecieBarChart {
-    return isDisaggregatedBySpecies
-        ? createChartDataBySpecies(studies, sortedYears)
-        : createBarChartSeriesData(studies, sortedYears);
 }
 
 function getMaxNumberOfSitesSeriesData(barChartSeriesData: SpreadOfResistanceOverTimeSeriesBarChart[]): number {
     const maxValues = barChartSeriesData.reduce((acc: number[], barChartSerieData) => {
-        if (acc.length === 0) {
-            return barChartSerieData.data;
-        } else {
-            return barChartSerieData.data.map((value, index) => value + acc[index]);
-        }
+        return acc.length === 0
+            ? barChartSerieData.data
+            : barChartSerieData.data.map((value, index) => value + acc[index]);
     }, []);
 
     return Math.max(...maxValues);
@@ -140,13 +127,17 @@ export function createBarChartData(
 
     const dataByCountry = selectedCountries.reduce((acc, countryISO) => {
         const filteredStudiesOfCountry = studiesOfInsecticideClass.filter(study => study.ISO2 === countryISO);
+        if (insecticideClass && filteredStudiesOfCountry.length) {
+            return {
+                ...acc,
+                [countryISO]: isDisaggregatedBySpecies
+                    ? createChartDataBySpecies(filteredStudiesOfCountry, sortedYears)
+                    : createBarChartSeriesData(filteredStudiesOfCountry, sortedYears),
+            };
+        }
         return {
             ...acc,
-            [countryISO]: createChartDataByInsecticideClass(
-                filteredStudiesOfCountry,
-                sortedYears,
-                isDisaggregatedBySpecies
-            ),
+            [countryISO]: [],
         };
     }, {});
 
