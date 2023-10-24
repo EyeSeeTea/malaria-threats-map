@@ -26,15 +26,6 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const hasSeenDisplaySuggestion = (): boolean => {
-    const result = getFromLocalStorage("displaySuggestionSeen");
-    return !!result;
-};
-
-const markDisplaySuggestionAsSeen = (): void => {
-    setToLocalStorage("displaySuggestionSeen", "true");
-};
-
 const DisplaySuggestionModal = () => {
     const TabletPortraitWidth = 768;
     const [open, setOpen] = useState(false);
@@ -43,16 +34,14 @@ const DisplaySuggestionModal = () => {
 
     const handleClose = () => {
         setOpen(false);
-        if (!hasSeenDisplaySuggestion()) {
-            markDisplaySuggestionAsSeen();
-        }
+        setToLocalStorage("displaySuggestionSeen", "true");
     };
 
     useEffect(() => {
         const handleResize = () => {
             const isMobile = window.innerWidth <= TabletPortraitWidth;
 
-            if (isMobile && !hasSeenDisplaySuggestion()) {
+            if (isMobile && !getFromLocalStorage("displaySuggestionSeen")) {
                 setOpen(true);
             }
 
