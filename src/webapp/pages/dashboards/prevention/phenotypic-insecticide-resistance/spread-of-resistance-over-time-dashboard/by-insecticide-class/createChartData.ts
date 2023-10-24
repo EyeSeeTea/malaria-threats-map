@@ -198,11 +198,17 @@ export function createChartData(
 
     const dataByCountry = selectedCountries.reduce((acc, countryISO) => {
         const filteredStudiesOfCountry = filteredsStudies.filter(study => study.ISO2 === countryISO);
+        if (insecticideClasses.length && filteredStudiesOfCountry.length) {
+            return {
+                ...acc,
+                [countryISO]: isDisaggregatedBySpecies
+                    ? createChartDataBySpecies(filteredStudiesOfCountry, sortedYears, insecticideClasses)
+                    : createLineChartSeriesData(filteredStudiesOfCountry, sortedYears, insecticideClasses),
+            };
+        }
         return {
             ...acc,
-            [countryISO]: isDisaggregatedBySpecies
-                ? createChartDataBySpecies(filteredStudiesOfCountry, sortedYears, insecticideClasses)
-                : createLineChartSeriesData(filteredStudiesOfCountry, sortedYears, insecticideClasses),
+            [countryISO]: [],
         };
     }, {});
 
