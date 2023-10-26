@@ -166,6 +166,15 @@ const NotAvailableTR = styled.tr`
     height: 100px;
 `;
 
+interface CustomPoint extends Highcharts.Point {
+    insecticideClass: string;
+    year: string;
+    species: string[];
+    resistanceStatus: string;
+    totalNumberOfSites: number;
+    numberOfSitesWithThisStatus: number;
+}
+
 function chartOptions(
     years: number[],
     data: SpreadOfResistanceOverTimeSeriesBarChart[],
@@ -176,6 +185,56 @@ function chartOptions(
         chart: {
             marginTop: 0,
             marginBottom: xAxisVisible ? 40 : 0,
+        },
+
+        tooltip: {
+            useHTML: true,
+            formatter: function () {
+                const point = this.point as CustomPoint;
+                return `
+                    <div style="padding: 16px;">
+                        <div><h4>${i18next.t("common.dashboard.tooltip.insecticideClass")}: ${i18next.t(
+                    point.insecticideClass
+                )}</h4></div>
+
+                        <div>
+
+                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px;">
+                                <div>${i18next.t(
+                                    "common.dashboard.tooltip.species"
+                                )}: </div><div style="font-style: italic; padding-left:10px;">${point.species.join(
+                    ", "
+                )}</div>
+                            </div>
+
+                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;">
+                                <div>${i18next.t(
+                                    "common.dashboard.tooltip.year"
+                                )}: </div><div style="padding-left:10px;">${point.year}</div>
+                            </div>
+
+                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;">
+                                <div>${i18next.t(
+                                    "common.dashboard.tooltip.resistanceStatus"
+                                )}: </div><div style="padding-left:10px;">${i18next.t(
+                    `common.dashboard.tooltip.resistanceStatusType.${point.resistanceStatus}`
+                )}</div>
+                            </div>
+
+                                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;">
+                                <div>${i18next.t(
+                                    `common.dashboard.tooltip.numberOfSitesWithThisStatus.${point.resistanceStatus}`
+                                )}: </div><div style="padding-left:10px;">${point.numberOfSitesWithThisStatus}</div>
+                            </div>
+
+                            <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;"><div>${i18next.t(
+                                "common.dashboard.tooltip.totalNumberOfSites"
+                            )}: </div><div style="padding-left:10px;">${point.totalNumberOfSites}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
         },
 
         title: {

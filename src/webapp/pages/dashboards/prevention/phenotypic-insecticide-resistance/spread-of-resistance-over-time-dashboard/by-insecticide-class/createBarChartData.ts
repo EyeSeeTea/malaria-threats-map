@@ -5,6 +5,7 @@ import {
     SpreadOfResistanceOverTimeBySpecieBarChart,
     SpreadOfResistanceOverTimeChartDataByClass,
     SpreadOfResistanceOverTimeSeriesBarChart,
+    SpreadOfResistanceOverTimeBarData,
 } from "../../types";
 import { DisaggregateBySpeciesOptions } from "../../../../../../components/filters/DisaggregateBySpecies";
 import { groupBy, uniq } from "lodash";
@@ -14,36 +15,72 @@ import i18next from "i18next";
 function createSerieByStatusAndYear(
     studies: PreventionStudy[],
     sortedYears: number[],
-    resitanceStatus: string,
+    resistanceStatus: string,
+    insecticideClass: string,
     name: string,
     color: string
 ): SpreadOfResistanceOverTimeSeriesBarChart {
-    const resistanceConfirmedStudies = studies.filter(study => study.RESISTANCE_STATUS === resitanceStatus);
+    const resistanceStudiesOfStatus = studies.filter(study => study.RESISTANCE_STATUS === resistanceStatus);
     return {
         type: "column",
         name,
         color,
-        data: getNumberOfSitesByYear(resistanceConfirmedStudies, sortedYears),
+        data: getBarChartDataByYear(
+            studies,
+            resistanceStudiesOfStatus,
+            sortedYears,
+            resistanceStatus,
+            insecticideClass
+        ),
     };
 }
 
-function getNumberOfSitesByYear(studies: PreventionStudy[], sortedYears: number[]): number[] {
+function getBarChartDataByYear(
+    studies: PreventionStudy[],
+    resistanceStudiesOfStatus: PreventionStudy[],
+    sortedYears: number[],
+    resistanceStatus: string,
+    insecticideClass: string
+): SpreadOfResistanceOverTimeBarData[] {
     return sortedYears.reduce((acc, year) => {
         const studiesOfYear = studies.filter(study => Number(study.YEAR_START) === year);
         const studiesOfYearGroupedBySite = groupBy(studiesOfYear, "SITE_ID");
         const numberOfSitesOfYear = Object.keys(studiesOfYearGroupedBySite)?.length || 0;
-        return [...acc, numberOfSitesOfYear];
-    }, [] as number[]);
+
+        const resistanceStudiesOfStatusOfYear = resistanceStudiesOfStatus.filter(
+            study => Number(study.YEAR_START) === year
+        );
+        const resistanceStudiesOfStatusOfYearGroupedBySite = groupBy(resistanceStudiesOfStatusOfYear, "SITE_ID");
+        const numberOfSitesWithThisStatusOfYear =
+            Object.keys(resistanceStudiesOfStatusOfYearGroupedBySite)?.length || 0;
+
+        const species = uniq(resistanceStudiesOfStatus.map(study => study.SPECIES)).sort();
+
+        return [
+            ...acc,
+            {
+                y: numberOfSitesWithThisStatusOfYear,
+                insecticideClass,
+                year,
+                species,
+                resistanceStatus,
+                totalNumberOfSites: numberOfSitesOfYear,
+                numberOfSitesWithThisStatus: numberOfSitesWithThisStatusOfYear,
+            },
+        ] as SpreadOfResistanceOverTimeBarData[];
+    }, [] as SpreadOfResistanceOverTimeBarData[]);
 }
 
 function createBarChartSeriesData(
     studies: PreventionStudy[],
-    sortedYears: number[]
+    sortedYears: number[],
+    insecticideClass: string
 ): SpreadOfResistanceOverTimeSeriesBarChart[] {
     const resistanceConfirmed = createSerieByStatusAndYear(
         studies,
         sortedYears,
         "CONFIRMED_RESISTANCE",
+        insecticideClass,
         i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.confirmed"),
         ResistanceStatusColors.Confirmed[0]
     );
@@ -52,6 +89,7 @@ function createBarChartSeriesData(
         studies,
         sortedYears,
         "POSSIBLE_RESISTANCE",
+        insecticideClass,
         i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.possible"),
         ResistanceStatusColors.Possible[0]
     );
@@ -60,6 +98,7 @@ function createBarChartSeriesData(
         studies,
         sortedYears,
         "SUSCEPTIBLE",
+        insecticideClass,
         i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.susceptible"),
         ResistanceStatusColors.Susceptible[0]
     );
@@ -69,13 +108,13 @@ function createBarChartSeriesData(
 
 function createChartDataBySpecies(
     studies: PreventionStudy[],
-    sortedYears: number[]
+    sortedYears: number[],
+    insecticideClass: string,
+    sortedSpecies: string[]
 ): SpreadOfResistanceOverTimeBySpecieBarChart {
-    const sortedSpecies = uniq(studies.map(study => study.SPECIES)).sort();
-
     return sortedSpecies.reduce((acc, specie) => {
         const studiesOfSpecie = studies.filter(study => study.SPECIES === specie);
-        const barChartSeriesData = createBarChartSeriesData(studiesOfSpecie, sortedYears);
+        const barChartSeriesData = createBarChartSeriesData(studiesOfSpecie, sortedYears, insecticideClass);
         return barChartSeriesData.length === 0
             ? acc
             : {
@@ -88,8 +127,8 @@ function createChartDataBySpecies(
 function getMaxNumberOfSitesSeriesData(barChartSeriesData: SpreadOfResistanceOverTimeSeriesBarChart[]): number {
     const maxValues = barChartSeriesData.reduce((acc: number[], barChartSerieData) => {
         return acc.length === 0
-            ? barChartSerieData.data
-            : barChartSerieData.data.map((value, index) => value + acc[index]);
+            ? barChartSerieData.data.map(({ y }) => y)
+            : barChartSerieData.data.map((value, index) => value.y + acc[index]);
     }, []);
 
     return Math.max(...maxValues);
@@ -128,11 +167,13 @@ export function createBarChartData(
     const dataByCountry = selectedCountries.reduce((acc, countryISO) => {
         const filteredStudiesOfCountry = studiesOfInsecticideClass.filter(study => study.ISO2 === countryISO);
         if (insecticideClass && filteredStudiesOfCountry.length) {
+            const sortedSpecies = uniq(filteredStudiesOfCountry.map(study => study.SPECIES)).sort();
+
             return {
                 ...acc,
                 [countryISO]: isDisaggregatedBySpecies
-                    ? createChartDataBySpecies(filteredStudiesOfCountry, sortedYears)
-                    : createBarChartSeriesData(filteredStudiesOfCountry, sortedYears),
+                    ? createChartDataBySpecies(filteredStudiesOfCountry, sortedYears, insecticideClass, sortedSpecies)
+                    : createBarChartSeriesData(filteredStudiesOfCountry, sortedYears, insecticideClass),
             };
         }
         return {

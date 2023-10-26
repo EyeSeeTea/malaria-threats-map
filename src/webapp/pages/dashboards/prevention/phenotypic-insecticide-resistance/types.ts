@@ -106,6 +106,19 @@ export type SpreadOfResistanceOverTimeBySpecieBarChart = Record<string, SpreadOf
 export type SpreadOfResistanceOverTimeSeriesBarChart = {
     type: "column";
     name: string;
-    data: number[];
+    data: SpreadOfResistanceOverTimeBarData[];
     color: string;
 };
+
+export type SpreadOfResistanceOverTimeTooltipDataBarChart = {
+    insecticideClass: string;
+    year: string;
+    species: string[];
+    resistanceStatus: string;
+    totalNumberOfSites: number;
+    numberOfSitesWithThisStatus: number;
+};
+
+export type SpreadOfResistanceOverTimeBarData = {
+    y: number;
+} & SpreadOfResistanceOverTimeTooltipDataBarChart;

@@ -309,7 +309,20 @@
                 "insecticideClass": "Insecticide class",
                 "year": "Year",
                 "numberOfSitesConfirmedResistance": "Number of sites with confirmed resistance",
-                "numberOfSites": "Number of sites that monitored resistance"
+                "numberOfSites": "Number of sites that monitored resistance",
+                "species": "Species",
+                "resistanceStatus": "Resistance status",
+                "resistanceStatusType": {
+                    "CONFIRMED_RESISTANCE": "Confirmed",
+                    "POSSIBLE_RESISTANCE": "Possible",
+                    "SUSCEPTIBLE": "Susceptible"
+                },
+                "numberOfSitesWithThisStatus": {
+                    "CONFIRMED_RESISTANCE": "Number of sites with confirmed resistance",
+                    "POSSIBLE_RESISTANCE": "Number of sites with possible resistance",
+                    "SUSCEPTIBLE": "Number of sites with susceptible resistance"
+                },
+                "totalNumberOfSites": "Number of sites that monitored resistance"
             }
         },
         "homepage": {

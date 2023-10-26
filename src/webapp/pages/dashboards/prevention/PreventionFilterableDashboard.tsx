@@ -133,16 +133,18 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                         </Stack>
                     </StyledGridItem>
                 )}
-                <StyledGridItem item md={filtersVisible ? 9 : 12} xs={12} $isScreenshot={isScreenshot}>
-                    <DasboardCard elevation={0}>
-                        {!filtersVisible && (
-                            <Button startIcon={<FilterAltIcon />} onClick={onChangeFiltersVisible}>
-                                {"Filter data"}
-                            </Button>
-                        )}
-                        <div>{children}</div>
-                    </DasboardCard>
-                </StyledGridItem>
+                <StyledGridItemCharts item md={filtersVisible ? 9 : 12} xs={12} $isScreenshot={isScreenshot}>
+                    {React.Children.map(children, (child, index) => (
+                        <DasboardCard elevation={0} key={`react_child_${index}`}>
+                            {!filtersVisible && (
+                                <Button startIcon={<FilterAltIcon />} onClick={onChangeFiltersVisible}>
+                                    {"Filter data"}
+                                </Button>
+                            )}
+                            <div>{child}</div>
+                        </DasboardCard>
+                    ))}
+                </StyledGridItemCharts>
             </StyledGridContainer>
         </Container>
     );
@@ -189,6 +191,18 @@ const Container = styled.div<{ $isScreenshot: boolean }>`
 const StyledGridItem = styled(Grid)<{ $isScreenshot: boolean }>`
     width: ${props => props?.$isScreenshot && "fit-content"};
     max-width: ${props => props?.$isScreenshot && "fit-content"};
+    .MuiChip-root,
+    .MuiChip-label {
+        overflow: ${props => props?.$isScreenshot && "initial"};
+    }
+`;
+
+const StyledGridItemCharts = styled(Grid)<{ $isScreenshot: boolean }>`
+    width: ${props => props?.$isScreenshot && "fit-content"};
+    max-width: ${props => props?.$isScreenshot && "fit-content"};
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     .MuiChip-root,
     .MuiChip-label {
         overflow: ${props => props?.$isScreenshot && "initial"};
