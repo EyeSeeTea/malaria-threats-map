@@ -25,6 +25,7 @@ import Step4 from "./steps/Step4";
 import Step5 from "./steps/Step5";
 import { dispatchCustomEvent } from "../../utils/dom-utils";
 import { setInsecticideClass, setInsecticideTypes, setSpecies } from "../../store/actions/prevention-actions";
+import { setToLocalStorage } from "../../utils/browserCache";
 
 const StyledTour = styled(Tour)`
     padding: 10;
@@ -168,7 +169,7 @@ class MalariaTour extends PureComponent<Props> {
         this.setRegion(null);
         this.setBounds(this.initialBounds);
         this.setActionGroupSelected(null);
-        localStorage.setItem("tour", "visited");
+        setToLocalStorage("tour", "visited");
         this.props.setTourOpen(false);
     };
 

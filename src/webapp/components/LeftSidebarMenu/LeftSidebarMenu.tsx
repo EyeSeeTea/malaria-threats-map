@@ -7,6 +7,7 @@ import LanguageIcon from "./Icons/LanguageIcon";
 import ContactIcon from "./Icons/ContactIcon";
 import ShareDataIcon from "./Icons/ShareDataIcon";
 import StoriesIcon from "./Icons/StoriesIcon";
+import { setToLocalStorage } from "../../utils/browserCache";
 
 import { Fab, Drawer, Typography, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -65,7 +66,7 @@ const LeftSidebarMenu = ({ isMenuOpen, handleClickOpen, showTakeTour = true }: P
 
     const handleClickOntour = React.useCallback(() => {
         sendAnalytics({ type: "event", category: "menu", action: "tour" });
-        localStorage.setItem("tour", "");
+        setToLocalStorage("tour", "");
         window.history.pushState({}, document.title, window.location.href.split("?")[0]);
         window.location.reload();
     }, []);

@@ -23,6 +23,7 @@ import MobileOptions from "../../components/MobileOptions";
 import Loader from "../../components/Loader";
 import Hidden from "../../components/hidden/Hidden";
 import MapContainer from "../../components/MapContainer";
+import DisplaySuggestionModal from "../../components/DisplaySuggestionModal";
 import { useLocation } from "react-router-dom";
 
 interface ThemeProps {
@@ -166,74 +167,77 @@ function MapPage({ setMobileOptionsOpen, drawerWidth = "500px", setTheme, setReg
     };
 
     return (
-        <div className={`${classes.root}`}>
-            <Loader />
-            <CssBaseline />
-            <div className={clsx(classes.content)}>
-                <div className={classes.drawerHeader} />
-                <PageWrapper>
-                    <Hidden smUp>
-                        <AppBar position="static" color="default">
-                            <Toolbar className={classes.toolbar}>
-                                <IconButton className={classes.iconButton} aria-label="menu" size="large">
-                                    <FilterIcon />
-                                </IconButton>
+        <>
+            <DisplaySuggestionModal />
+            <div className={`${classes.root}`}>
+                <Loader />
+                <CssBaseline />
+                <div className={clsx(classes.content)}>
+                    <div className={classes.drawerHeader} />
+                    <PageWrapper>
+                        <Hidden smUp>
+                            <AppBar position="static" color="default">
+                                <Toolbar className={classes.toolbar}>
+                                    <IconButton className={classes.iconButton} aria-label="menu" size="large">
+                                        <FilterIcon />
+                                    </IconButton>
 
-                                <IconButton
-                                    color="default"
-                                    className={classes.iconButton}
-                                    aria-label="settings"
-                                    onClick={() => setMobileOptionsOpen(true)}
-                                    size="large"
+                                    <IconButton
+                                        color="default"
+                                        className={classes.iconButton}
+                                        aria-label="settings"
+                                        onClick={() => setMobileOptionsOpen(true)}
+                                        size="large"
+                                    >
+                                        <SettingsIcon />
+                                    </IconButton>
+                                </Toolbar>
+                            </AppBar>
+                        </Hidden>
+                        <MapWrapper>
+                            <MapContainer />
+                        </MapWrapper>
+                        <Disclaimer />
+                        <Hidden smUp>
+                            <AppBar position="static" color="default">
+                                <Tabs
+                                    value={themes.indexOf(theme)}
+                                    onChange={onChange}
+                                    indicatorColor="primary"
+                                    textColor="primary"
+                                    variant="fullWidth"
+                                    aria-label="full width tabs example"
+                                    TabIndicatorProps={{
+                                        style: {
+                                            backgroundColor: colors[theme].N,
+                                        },
+                                    }}
                                 >
-                                    <SettingsIcon />
-                                </IconButton>
-                            </Toolbar>
-                        </AppBar>
-                    </Hidden>
-                    <MapWrapper>
-                        <MapContainer />
-                    </MapWrapper>
-                    <Disclaimer />
-                    <Hidden smUp>
-                        <AppBar position="static" color="default">
-                            <Tabs
-                                value={themes.indexOf(theme)}
-                                onChange={onChange}
-                                indicatorColor="primary"
-                                textColor="primary"
-                                variant="fullWidth"
-                                aria-label="full width tabs example"
-                                TabIndicatorProps={{
-                                    style: {
-                                        backgroundColor: colors[theme].N,
-                                    },
-                                }}
-                            >
-                                <StyledTab
-                                    color={theme === "prevention" ? colors.prevention.N : undefined}
-                                    icon={<PreventionIcon selected={theme === "prevention"} size={36} />}
-                                />
-                                <StyledTab
-                                    color={theme === "diagnosis" ? colors.diagnosis.N : undefined}
-                                    icon={<DiagnosisIcon selected={theme === "diagnosis"} size={36} />}
-                                />
-                                <StyledTab
-                                    color={theme === "treatment" ? colors.treatment.N : undefined}
-                                    icon={<TreatmentIcon selected={theme === "treatment"} size={36} />}
-                                />
-                                <StyledTab
-                                    label=""
-                                    color={theme === "invasive" ? colors.invasive.N : undefined}
-                                    icon={<InvasiveIcon selected={theme === "invasive"} size={36} />}
-                                />
-                            </Tabs>
-                        </AppBar>
-                        <MobileOptions />
-                    </Hidden>
-                </PageWrapper>
+                                    <StyledTab
+                                        color={theme === "prevention" ? colors.prevention.N : undefined}
+                                        icon={<PreventionIcon selected={theme === "prevention"} size={36} />}
+                                    />
+                                    <StyledTab
+                                        color={theme === "diagnosis" ? colors.diagnosis.N : undefined}
+                                        icon={<DiagnosisIcon selected={theme === "diagnosis"} size={36} />}
+                                    />
+                                    <StyledTab
+                                        color={theme === "treatment" ? colors.treatment.N : undefined}
+                                        icon={<TreatmentIcon selected={theme === "treatment"} size={36} />}
+                                    />
+                                    <StyledTab
+                                        label=""
+                                        color={theme === "invasive" ? colors.invasive.N : undefined}
+                                        icon={<InvasiveIcon selected={theme === "invasive"} size={36} />}
+                                    />
+                                </Tabs>
+                            </AppBar>
+                            <MobileOptions />
+                        </Hidden>
+                    </PageWrapper>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 export default connect(mapStateToProps, mapDispatchToProps)(MapPage);

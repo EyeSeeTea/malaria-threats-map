@@ -3,6 +3,7 @@ import WhoSpanish from "../assets/img/WHO-SP-C-H.png";
 import WhoFrench from "../assets/img/WHO-FR-C-H.png";
 import WhoEnglish from "../assets/img/who-logo-blue.png";
 import styled from "styled-components";
+import { getFromLocalStorage } from "../utils/browserCache";
 
 const StyledImage = styled.img`
     width: 100px;
@@ -20,7 +21,7 @@ const StyledSpanFrenImage = styled(StyledImage)<{ width?: string }>`
 `;
 
 const WhoLogoBlue = ({ width }: { width?: string }) => {
-    const lng = localStorage.getItem("language");
+    const lng = getFromLocalStorage("language");
 
     switch (lng) {
         case "es":

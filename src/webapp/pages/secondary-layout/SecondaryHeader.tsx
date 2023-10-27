@@ -12,6 +12,7 @@ import { changeLanguage } from "../../config/i18next";
 import { selectRegion, selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
+import { getFromLocalStorage } from "../../utils/browserCache";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -37,7 +38,8 @@ const SecondaryHeader: React.FC<Props> = ({
 }) => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const [changeLanguageOpen, setChangeLanguageOpen] = React.useState(false);
-    const [language, setLanguage] = React.useState(i18next.language || window.localStorage.i18nextLng);
+    const [language, setLanguage] = React.useState(i18next.language || getFromLocalStorage("i18nextLng"));
+
     const { t } = useTranslation();
     const [searchParams] = useSearchParams();
     const [paramTheme, setParamTheme] = useState("");
