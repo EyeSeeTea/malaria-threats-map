@@ -2,33 +2,47 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Checkbox, Typography, Grid } from "@mui/material";
 import styled from "styled-components";
-import { INSECTICIDE_CLASS_COLORS } from "./createLineChartData";
+
+import { INSECTICIDE_CLASS_COLORS, INSECTICIDE_TYPE_COLORS } from "./createLineChartData";
+import { SpreadOfResistanceOverTimeChartType } from "../types";
 
 interface Props {
-    allInsecticideClasses: string[];
-    selectedInsecticideClasses: string[];
-    onInsecticideClassesChange: (insecticideClasses: string[]) => void;
+    chartType: SpreadOfResistanceOverTimeChartType;
+    allInsecticideClassesOrTypes: string[];
+    selectedInsecticideClassesOrTypes: string[];
+    onInsecticideClassesOrTypesChange: (insecticideClassesOrTypes: string[]) => void;
 }
 
-function LineChartLegend({ selectedInsecticideClasses, allInsecticideClasses, onInsecticideClassesChange }: Props) {
+function LineChartLegend({
+    selectedInsecticideClassesOrTypes,
+    allInsecticideClassesOrTypes,
+    onInsecticideClassesOrTypesChange,
+    chartType,
+}: Props) {
     const { t } = useTranslation();
 
     const handlerSelectedInsecticideClassesChange = React.useCallback(
-        (insecticideClass: string, isChecked: boolean) => {
+        (insecticideClassOrType: string, isChecked: boolean) => {
             const newSelection = isChecked
-                ? [...selectedInsecticideClasses, insecticideClass]
-                : selectedInsecticideClasses.filter(selectedClass => selectedClass !== insecticideClass);
-            onInsecticideClassesChange(newSelection);
+                ? [...selectedInsecticideClassesOrTypes, insecticideClassOrType]
+                : selectedInsecticideClassesOrTypes.filter(
+                      selectedClassOrType => selectedClassOrType !== insecticideClassOrType
+                  );
+            onInsecticideClassesOrTypesChange(newSelection);
         },
-        [onInsecticideClassesChange, selectedInsecticideClasses]
+        [onInsecticideClassesOrTypesChange, selectedInsecticideClassesOrTypes]
     );
 
     return (
         <InsecticideClassLegendContainer>
             <StyledTypographyTitle>
-                {t(
-                    "common.dashboard.phenotypicInsecticideResistanceDashboards.spreadOfResistanceOverTime.insecticideClassLegendTitle"
-                )}
+                {chartType === "by-insecticide-class"
+                    ? t(
+                          "common.dashboard.phenotypicInsecticideResistanceDashboards.spreadOfResistanceOverTime.insecticideClassLegendTitle"
+                      )
+                    : t(
+                          "common.dashboard.phenotypicInsecticideResistanceDashboards.spreadOfResistanceOverTime.insecticideTypeLegendTitle"
+                      )}
             </StyledTypographyTitle>
             <InsecticideClassOptionsGrid
                 container
@@ -36,11 +50,15 @@ function LineChartLegend({ selectedInsecticideClasses, allInsecticideClasses, on
                 columnSpacing={{ xs: 2, md: 3 }}
                 columns={{ xs: 4, sm: 8, md: 12 }}
             >
-                {allInsecticideClasses.map(value => (
+                {allInsecticideClassesOrTypes.map(value => (
                     <InsecticideClassItem item xs={2} sm={4} md={4} key={value}>
                         <StyledCheckbox
-                            $color={INSECTICIDE_CLASS_COLORS[value]}
-                            checked={selectedInsecticideClasses.includes(value)}
+                            $color={
+                                chartType === "by-insecticide-class"
+                                    ? INSECTICIDE_CLASS_COLORS[value]
+                                    : INSECTICIDE_TYPE_COLORS[value]
+                            }
+                            checked={selectedInsecticideClassesOrTypes.includes(value)}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                                 handlerSelectedInsecticideClassesChange(value, e.target.checked)
                             }

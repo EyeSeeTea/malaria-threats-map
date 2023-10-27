@@ -42,10 +42,17 @@ export type MosquitoOverTimeData = {
 
 export type SpreadOfResistanceOverTimeChartType = "by-insecticide-class" | "by-insecticide";
 
-export type SpreadOfResistanceOverTimeChartData = SpreadOfResistanceOverTimeChartDataByClass;
+export type SpreadOfResistanceOverTimeChartData =
+    | SpreadOfResistanceOverTimeChartDataByClass
+    | SpreadOfResistanceOverTimeChartDataByType;
 
 export type SpreadOfResistanceOverTimeChartDataByClass = {
     kind: "InsecticideByClass";
+    data: SpreadOfResistanceOverTimeLineChart | SpreadOfResistanceOverTimeBarChart;
+};
+
+export type SpreadOfResistanceOverTimeChartDataByType = {
+    kind: "InsecticideByType";
     data: SpreadOfResistanceOverTimeLineChart | SpreadOfResistanceOverTimeBarChart;
 };
 
@@ -75,7 +82,7 @@ export type SpreadOfResistanceOverTimeLineSeries = {
 };
 
 export type SpreadOfResistanceOverTimeTooltipDataLineChart = {
-    insecticideClass: string;
+    insecticideClassOrType: string;
     year: string;
     rangeYears: string;
     sumOfConfirmedResistanceSites: number;
@@ -111,7 +118,7 @@ export type SpreadOfResistanceOverTimeSeriesBarChart = {
 };
 
 export type SpreadOfResistanceOverTimeTooltipDataBarChart = {
-    insecticideClass: string;
+    insecticide: string;
     year: string;
     species: string[];
     resistanceStatus: string;

@@ -1,39 +1,44 @@
 import Highcharts from "highcharts";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Stack, Typography } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import i18next from "i18next";
+
 import {
     SpreadOfResistanceOverTimeLineChart,
     SpreadOfResistanceOverTimeLineSeries,
     SpreadOfResistanceOverTimeBySpecie,
-} from "../../types";
-import { Stack, Typography } from "@mui/material";
+    SpreadOfResistanceOverTimeChartType,
+} from "../types";
 import LineChartLegend from "./LineChartLegend";
 
 const LineChart: React.FC<{
-    allInsecticideClasses: string[];
+    chartType: SpreadOfResistanceOverTimeChartType;
+    allInsecticideClassesOrTypes: string[];
     data: SpreadOfResistanceOverTimeLineChart;
     chartComponentRefs: React.MutableRefObject<HighchartsReact.RefObject[]>;
-    selectedInsecticideClasses: string[];
-    onInsecticideClassesChange: (insecticideClasses: string[]) => void;
+    selectedInsecticideClassesOrTypes: string[];
+    onInsecticideClassesOrTypesChange: (insecticideClasses: string[]) => void;
     isDisaggregatedBySpecies: boolean;
 }> = ({
-    allInsecticideClasses,
+    allInsecticideClassesOrTypes,
     data,
     chartComponentRefs,
     isDisaggregatedBySpecies,
-    selectedInsecticideClasses,
-    onInsecticideClassesChange,
+    selectedInsecticideClassesOrTypes,
+    onInsecticideClassesOrTypesChange,
+    chartType,
 }) => {
     const { t } = useTranslation();
     return (
         <React.Fragment>
             <LineChartLegend
-                allInsecticideClasses={allInsecticideClasses}
-                onInsecticideClassesChange={onInsecticideClassesChange}
-                selectedInsecticideClasses={selectedInsecticideClasses}
+                chartType={chartType}
+                allInsecticideClassesOrTypes={allInsecticideClassesOrTypes}
+                onInsecticideClassesOrTypesChange={onInsecticideClassesOrTypesChange}
+                selectedInsecticideClassesOrTypes={selectedInsecticideClassesOrTypes}
             />
             <Stack direction="row" alignItems="center" sx={{ minHeight: 600 }}>
                 <YAxisTitle>
@@ -67,7 +72,8 @@ const LineChart: React.FC<{
                                                 data.years,
                                                 dataBySpecie,
                                                 data.maxValue,
-                                                xAxisVisible
+                                                xAxisVisible,
+                                                chartType
                                             );
 
                                             return (
@@ -101,7 +107,13 @@ const LineChart: React.FC<{
                                     isoCountry
                                 ] as SpreadOfResistanceOverTimeLineSeries[];
 
-                                const options = chartOptions(data.years, dataOfCountry, data.maxValue, isLastCountry);
+                                const options = chartOptions(
+                                    data.years,
+                                    dataOfCountry,
+                                    data.maxValue,
+                                    isLastCountry,
+                                    chartType
+                                );
 
                                 return (
                                     <tr key={isoCountry}>
@@ -167,7 +179,7 @@ const NotAvailableTR = styled.tr`
 `;
 
 interface CustomPoint extends Highcharts.Point {
-    insecticideClass: string;
+    insecticideClassOrType: string;
     year: string;
     rangeYears: string;
     sumOfConfirmedResistanceSites: number;
@@ -180,7 +192,8 @@ function chartOptions(
     years: number[],
     data: SpreadOfResistanceOverTimeLineSeries[],
     maxSumConfirmedResistance: number,
-    xAxisVisible: boolean
+    xAxisVisible: boolean,
+    chartType: SpreadOfResistanceOverTimeChartType
 ): Highcharts.Options {
     return {
         chart: {
@@ -194,9 +207,11 @@ function chartOptions(
                 const point = this.point as CustomPoint;
                 return `
                     <div style="padding: 16px;">
-                        <div><h4>${i18next.t("common.dashboard.tooltip.insecticideClass")}: ${i18next.t(
-                    point.insecticideClass
-                )}</h4></div>
+                        <div><h4>${
+                            chartType === "by-insecticide-class"
+                                ? i18next.t("common.dashboard.tooltip.insecticideClass")
+                                : i18next.t("common.dashboard.tooltip.insecticideType")
+                        }: ${i18next.t(point.insecticideClassOrType)}</h4></div>
 
                         <div>
                             <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px;">

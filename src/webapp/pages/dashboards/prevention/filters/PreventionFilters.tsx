@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { IconButton, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -54,9 +55,15 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                 <InsecticideClassSelector
                     onChange={filters.onInsecticideClassesChange}
                     value={filters.insecticideClasses}
-                    type={chart === "mosquito-mortality-overtime" ? "radio" : "select"}
+                    type={
+                        chart === "mosquito-mortality-overtime" || chart === "spread-of-resistance-over-time"
+                            ? "radio"
+                            : "select"
+                    }
                 />
             )}
+
+            {chart === "spread-of-resistance-over-time" && filters.onInsecticideClassesChange && <StyledHr />}
 
             {speciesOptions && filters.onSpeciesChange && filters.onDisaggregateBySpeciesChange && (
                 <DisaggregateBySpeciesSelector
@@ -122,3 +129,10 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
 };
 
 export default React.memo(PreventionFilters);
+
+const StyledHr = styled.hr`
+    border: 0;
+    height: 1px;
+    background-color: #0000001a;
+    width: 100%;
+`;

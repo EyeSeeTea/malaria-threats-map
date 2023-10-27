@@ -134,16 +134,18 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                     </StyledGridItem>
                 )}
                 <StyledGridItemCharts item md={filtersVisible ? 9 : 12} xs={12} $isScreenshot={isScreenshot}>
-                    {React.Children.map(children, (child, index) => (
-                        <DasboardCard elevation={0} key={`react_child_${index}`}>
-                            {!filtersVisible && (
-                                <Button startIcon={<FilterAltIcon />} onClick={onChangeFiltersVisible}>
-                                    {"Filter data"}
-                                </Button>
-                            )}
-                            <div>{child}</div>
-                        </DasboardCard>
-                    ))}
+                    {React.Children.map(children, (child, index) => {
+                        return child ? (
+                            <DasboardCard elevation={0} key={`react_child_${index}`}>
+                                {!filtersVisible && (
+                                    <Button startIcon={<FilterAltIcon />} onClick={onChangeFiltersVisible}>
+                                        {"Filter data"}
+                                    </Button>
+                                )}
+                                <div>{child}</div>
+                            </DasboardCard>
+                        ) : null;
+                    })}
                 </StyledGridItemCharts>
             </StyledGridContainer>
         </Container>
