@@ -3,8 +3,7 @@ import styled from "styled-components";
 
 export const ChartTypeOption = styled(ToggleButton)`
     border-radius: 5px !important;
-    margin-right: 16px;
-    padding: 16px 32px;
+    padding: 16px;
     color: black;
     background-color: white;
     border: 0px;
@@ -12,5 +11,7 @@ export const ChartTypeOption = styled(ToggleButton)`
         color: white;
         background-color: #2fb3af;
     }
-    min-width: 180px;
+    min-width: fit-content;
+    max-width: 180px;
+    width: 100%;
 `;
