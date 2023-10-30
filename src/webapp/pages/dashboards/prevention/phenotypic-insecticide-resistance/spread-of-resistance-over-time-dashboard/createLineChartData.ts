@@ -13,14 +13,14 @@ import {
 import { DisaggregateBySpeciesOptions } from "../../../../../components/filters/DisaggregateBySpecies";
 
 export const INSECTICIDE_TYPE_COLORS: Record<string, string> = {
-    "ALPHA-CYPERMETHRIN": "",
-    BENDIOCARB: "",
-    BIFENTHRIN: "",
-    CARBOSULFAN: "",
-    CHLORFENAPYR: "",
-    CLOTHIANIDIN: "",
-    CYFLUTHRIN: "",
-    CYPERMETHRIN: "",
+    "ALPHA-CYPERMETHRIN": "#7B5FD9",
+    BENDIOCARB: "#002366",
+    BIFENTHRIN: "#ED5565",
+    CARBOSULFAN: "#DAACD5",
+    CHLORFENAPYR: "#f06800",
+    CLOTHIANIDIN: "#461417",
+    CYFLUTHRIN: "#ad5c61",
+    CYPERMETHRIN: "#5e6e47",
     DDT: "#81252A",
     DELTAMETHRIN: "#e7a98e",
     DIELDRIN: "#8E4585",
@@ -31,19 +31,19 @@ export const INSECTICIDE_TYPE_COLORS: Record<string, string> = {
     PERMETHRIN: "#5FB4AE",
     "PIRIMIPHOS-METHYL": "#4876a8",
     PROPOXUR: "#89B5D4",
-    NA: "#7B5FD9",
+    NA: "#BEBEBE",
     DEFAULT: "#5FB4AE",
 };
 
 export const INSECTICIDE_TYPE_COLORS_OPACITY: Record<string, string> = {
-    "ALPHA-CYPERMETHRIN": "",
-    BENDIOCARB: "",
-    BIFENTHRIN: "",
-    CARBOSULFAN: "",
-    CHLORFENAPYR: "",
-    CLOTHIANIDIN: "",
-    CYFLUTHRIN: "",
-    CYPERMETHRIN: "",
+    "ALPHA-CYPERMETHRIN": "rgb(123,95,217, 0.6)",
+    BENDIOCARB: "rgb(0, 35, 102,0.6)",
+    BIFENTHRIN: "rgb(237, 85, 101,0.6)",
+    CARBOSULFAN: "rgb(218, 172, 213,0.6)",
+    CHLORFENAPYR: "rgb(240, 104, 0,0.6)",
+    CLOTHIANIDIN: "rgb(70, 20, 23,0.6)",
+    CYFLUTHRIN: "rgb(173, 92, 97,0.6)",
+    CYPERMETHRIN: "rgb(94, 110, 71, 0.6)",
     DDT: "rgb(129,37,42,0.6)",
     DELTAMETHRIN: "rgb(231,169,142,0.6)",
     DIELDRIN: "rgb(142,69,133,0.6)",
@@ -54,7 +54,7 @@ export const INSECTICIDE_TYPE_COLORS_OPACITY: Record<string, string> = {
     PERMETHRIN: "rgb(95,180,174,0.6)",
     "PIRIMIPHOS-METHYL": "rgb(72,118,168,0.6)",
     PROPOXUR: "rgb(137,181,212, 0.6)",
-    NA: "rgb(123,95,217, 0.6)",
+    NA: "rgb(190, 190, 190, 0.6)",
     DEFAULT: "rgb(95,180,174,0.6)",
 };
 
@@ -65,7 +65,7 @@ export const INSECTICIDE_CLASS_COLORS: Record<string, string> = {
     PYRROLES: "#439336",
     PYRETHROIDS: "#5FB4AE",
     CARBAMATES: "#4876a8",
-    NA: "#7B5FD9",
+    NA: "#BEBEBE",
     DEFAULT: "#5FB4AE",
 };
 
