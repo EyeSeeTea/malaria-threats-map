@@ -76,7 +76,7 @@ export const INSECTICIDE_CLASS_COLORS_OPACITY: Record<string, string> = {
     PYRROLES: "rgb(67,147,54,0.6)",
     PYRETHROIDS: "rgb(95,180,174,0.6)",
     CARBAMATES: "rgb(72,118,168,0.6)",
-    NA: "rgb(123,95,217, 0.6)",
+    NA: "rgb(190, 190, 190, 0.6)",
     DEFAULT: "rgb(95,180,174,0.6)",
 };
 
