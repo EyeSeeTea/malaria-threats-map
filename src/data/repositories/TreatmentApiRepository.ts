@@ -10,13 +10,6 @@ export class TreatmentApiRepository implements TreatmentRepository {
     getStudies(): FutureData<TreatmentStudy[]> {
         return request<XMartApiResponse<any>>({
             url: `${this.xmartBaseUrl}/FACT_TREATMENT_VIEW`,
-        }).map(response =>
-            response.value.map(item => ({
-                ...item,
-                TREATMENT_FAILURE_KM: item.TREATMENT_FAILURE_KM / 100,
-                TREATMENT_FAILURE_PP: item.TREATMENT_FAILURE_PP / 100,
-                POSITIVE_DAY_3: item.POSITIVE_DAY_3 / 100,
-            }))
-        );
+        }).map(response => response.value);
     }
 }
