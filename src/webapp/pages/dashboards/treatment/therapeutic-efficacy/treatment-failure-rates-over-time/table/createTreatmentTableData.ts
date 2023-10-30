@@ -3,7 +3,6 @@ import _ from "lodash";
 import * as R from "ramda";
 import { TreatmentStudy } from "../../../../../../../domain/entities/TreatmentStudy";
 import { percentile } from "../../../../../../components/Report/utils";
-import { isNotNull } from "../../../../../../utils/number-utils";
 import { TreatmentOverTimeTableData } from "../TreatmentOverTimeState";
 import { TableData } from "./TableData";
 
@@ -38,10 +37,10 @@ export function createTreatmentTableData(
                         const fallbackProp = "TREATMENT_FAILURE_KM";
 
                         const rawValues = followUpCountrySpeciesStudies.map((study: TreatmentStudy) =>
-                            isNotNull(study[defaultProp]) ? study[defaultProp] : study[fallbackProp]
+                            study[defaultProp] === null ? study[defaultProp] : study[fallbackProp]
                         );
 
-                        const values = rawValues.map(value => parseFloat(value)).filter(value => !Number.isNaN(value));
+                        const values = rawValues.filter(value => !Number.isNaN(value));
                         const sortedValues = values.sort();
 
                         const min = values.length ? sortedValues[0] * 100 : "-";
