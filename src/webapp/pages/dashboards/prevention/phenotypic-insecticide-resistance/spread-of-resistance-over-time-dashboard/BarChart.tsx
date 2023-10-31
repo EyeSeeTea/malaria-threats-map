@@ -4,36 +4,41 @@ import { useTranslation } from "react-i18next";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import i18next from "i18next";
+import { Stack, Typography } from "@mui/material";
+
 import {
     SpreadOfResistanceOverTimeByCountryBarChart,
     SpreadOfResistanceOverTimeBarChart,
     SpreadOfResistanceOverTimeSeriesBarChart,
-} from "../../types";
-import { Stack, Typography } from "@mui/material";
+    SpreadOfResistanceOverTimeChartType,
+} from "../types";
 import BarChartLegend from "./BarChartLegend";
 
 const BarChart: React.FC<{
-    allInsecticideClasses: string[];
+    allInsecticideClassesOrTypes: string[];
     data: SpreadOfResistanceOverTimeBarChart;
     chartComponentRefs: React.MutableRefObject<HighchartsReact.RefObject[]>;
-    selectedInsecticideClass: string;
-    onInsecticideClassChange: (insecticideClass: string) => void;
+    selectedInsecticideClassesOrTypes: string;
+    onInsecticideClassesOrTypesChange: (insecticideClassesOrTypes: string) => void;
     isDisaggregatedBySpecies: boolean;
+    chartType: SpreadOfResistanceOverTimeChartType;
 }> = ({
-    allInsecticideClasses,
+    allInsecticideClassesOrTypes,
     data,
     chartComponentRefs,
     isDisaggregatedBySpecies,
-    selectedInsecticideClass,
-    onInsecticideClassChange,
+    selectedInsecticideClassesOrTypes,
+    onInsecticideClassesOrTypesChange,
+    chartType,
 }) => {
     const { t } = useTranslation();
     return (
         <React.Fragment>
             <BarChartLegend
-                allInsecticideClasses={allInsecticideClasses}
-                selectedInsecticideClass={selectedInsecticideClass}
-                onInsecticideClassChange={onInsecticideClassChange}
+                chartType={chartType}
+                allInsecticideClassesOrTypes={allInsecticideClassesOrTypes}
+                selectedInsecticideClassOrType={selectedInsecticideClassesOrTypes}
+                onInsecticideClassOrTypeChange={onInsecticideClassesOrTypesChange}
             />
             <Stack direction="row" alignItems="center" sx={{ minHeight: 600 }}>
                 <YAxisTitle>
@@ -67,7 +72,8 @@ const BarChart: React.FC<{
                                                 data.years,
                                                 dataBySpecie,
                                                 data.maxValue,
-                                                xAxisVisible
+                                                xAxisVisible,
+                                                chartType
                                             );
 
                                             return (
@@ -101,7 +107,13 @@ const BarChart: React.FC<{
                                     isoCountry
                                 ] as SpreadOfResistanceOverTimeSeriesBarChart[];
 
-                                const options = chartOptions(data.years, dataOfCountry, data.maxValue, isLastCountry);
+                                const options = chartOptions(
+                                    data.years,
+                                    dataOfCountry,
+                                    data.maxValue,
+                                    isLastCountry,
+                                    chartType
+                                );
 
                                 return (
                                     <tr key={isoCountry}>
@@ -167,7 +179,7 @@ const NotAvailableTR = styled.tr`
 `;
 
 interface CustomPoint extends Highcharts.Point {
-    insecticideClass: string;
+    insecticide: string;
     year: string;
     species: string[];
     resistanceStatus: string;
@@ -179,7 +191,8 @@ function chartOptions(
     years: number[],
     data: SpreadOfResistanceOverTimeSeriesBarChart[],
     maxSumConfirmedResistance: number,
-    xAxisVisible: boolean
+    xAxisVisible: boolean,
+    chartType: SpreadOfResistanceOverTimeChartType
 ): Highcharts.Options {
     return {
         chart: {
@@ -193,9 +206,11 @@ function chartOptions(
                 const point = this.point as CustomPoint;
                 return `
                     <div style="padding: 16px;">
-                        <div><h4>${i18next.t("common.dashboard.tooltip.insecticideClass")}: ${i18next.t(
-                    point.insecticideClass
-                )}</h4></div>
+                        <div><h4>${
+                            chartType === "by-insecticide-class"
+                                ? i18next.t("common.dashboard.tooltip.insecticideClass")
+                                : i18next.t("common.dashboard.tooltip.insecticideType")
+                        }: ${i18next.t(point.insecticide)}</h4></div>
 
                         <div>
 

@@ -20,7 +20,7 @@ const LineChart: React.FC<{
     data: SpreadOfResistanceOverTimeLineChart;
     chartComponentRefs: React.MutableRefObject<HighchartsReact.RefObject[]>;
     selectedInsecticideClassesOrTypes: string[];
-    onInsecticideClassesOrTypesChange: (insecticideClasses: string[]) => void;
+    onInsecticideClassesOrTypesChange: (insecticideClassesOrTypes: string[]) => void;
     isDisaggregatedBySpecies: boolean;
 }> = ({
     allInsecticideClassesOrTypes,

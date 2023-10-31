@@ -1,6 +1,7 @@
 import i18next from "i18next";
 import { range, countBy, uniq } from "lodash";
 import React from "react";
+
 import { Option } from "../../../common/types";
 import { usePrevention } from "../../usePrevention";
 import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
@@ -9,7 +10,7 @@ import {
     SpreadOfResistanceOverTimeChartDataByType,
     SpreadOfResistanceOverTimeChartType,
 } from "../types";
-import { createBarChartData as createBarChartDataByInsecticideClass } from "./by-insecticide-class/createBarChartData";
+import { createBarChartData } from "./createBarChartData";
 import { createLineChartData } from "./createLineChartData";
 
 const chartTypes: Option<SpreadOfResistanceOverTimeChartType>[] = [
@@ -39,10 +40,16 @@ export function useSpreadResistanceOverTime() {
         data: { years: [], dataByCountry: {}, maxValue: 0 },
     });
 
-    const [barChartData, setBarChartData] = React.useState<SpreadOfResistanceOverTimeChartDataByClass>({
+    const [barChartDataByClass, setBarChartDataByClass] = React.useState<SpreadOfResistanceOverTimeChartDataByClass>({
         kind: "InsecticideByClass",
         data: { years: [], dataByCountry: {}, maxValue: 0 },
     });
+
+    const [barChartDataByType, setBarChartDataByType] = React.useState<SpreadOfResistanceOverTimeChartDataByType>({
+        kind: "InsecticideByType",
+        data: { years: [], dataByCountry: {}, maxValue: 0 },
+    });
+
     const [categoriesCount, setCategoriesCount] = React.useState<Record<string, number>>({});
     const [chartType, setChartType] = React.useState<SpreadOfResistanceOverTimeChartType>("by-insecticide-class");
     const [allInsecticideClasses, setAllInsecticideClasses] = React.useState<string[]>([]);
@@ -94,14 +101,15 @@ export function useSpreadResistanceOverTime() {
                 ) as SpreadOfResistanceOverTimeChartDataByClass
             );
 
-            setBarChartData(
-                createBarChartDataByInsecticideClass(
+            setBarChartDataByClass(
+                createBarChartData(
                     filteredStudies,
                     selectedCountries,
                     yearsRange,
                     singleSelectedInsecticideClass,
-                    filters.disaggregateBySpeciesSelection
-                )
+                    filters.disaggregateBySpeciesSelection,
+                    "by-insecticide-class"
+                ) as SpreadOfResistanceOverTimeChartDataByClass
             );
         }
     }, [
@@ -110,7 +118,6 @@ export function useSpreadResistanceOverTime() {
         filters.disaggregateBySpeciesSelection,
         filters.years,
         multipleSelectedInsecticideClasses,
-        multipleSelectedInsecticides,
         selectedCountries,
         singleSelectedInsecticideClass,
     ]);
@@ -128,16 +135,26 @@ export function useSpreadResistanceOverTime() {
                     "by-insecticide"
                 ) as SpreadOfResistanceOverTimeChartDataByType
             );
+
+            setBarChartDataByType(
+                createBarChartData(
+                    filteredStudies,
+                    selectedCountries,
+                    yearsRange,
+                    singleSelectedInsecticide,
+                    filters.disaggregateBySpeciesSelection,
+                    "by-insecticide"
+                ) as SpreadOfResistanceOverTimeChartDataByType
+            );
         }
     }, [
         chartType,
         filteredStudies,
         filters.disaggregateBySpeciesSelection,
         filters.years,
-        multipleSelectedInsecticideClasses,
         multipleSelectedInsecticides,
         selectedCountries,
-        singleSelectedInsecticideClass,
+        singleSelectedInsecticide,
     ]);
 
     React.useEffect(() => {
@@ -173,7 +190,8 @@ export function useSpreadResistanceOverTime() {
         chartType,
         lineChartDataByClass,
         lineChartDataByType,
-        barChartData,
+        barChartDataByClass,
+        barChartDataByType,
         filters: {
             ...filters,
             onInsecticideClassesChange: chartType === "by-insecticide" ? filters.onInsecticideClassChange : undefined,
