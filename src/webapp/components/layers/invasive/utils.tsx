@@ -14,7 +14,7 @@ const filterByMostRecentYear = (group: any[]) => {
     return R.filter(study => parseInt(study.YEAR_START) === parseInt(sortedStudies[0].YEAR_START), group);
 };
 
-const InvasiveStatusOrder: { [value: string]: number } = {
+export const InvasiveStatusOrder: { [value: string]: number } = {
     [INVASIVE_STATUS.UNKNOWN]: 0,
     [INVASIVE_STATUS.NATIVE]: 1,
     [INVASIVE_STATUS.INVASIVE]: 2,
