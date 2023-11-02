@@ -96,6 +96,7 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                     onChange={handleChartTypeChange}
                     aria-label="text alignment"
                     sx={{ marginBottom: 2 }}
+                    style={{ display: "flex", gap: "16px" }}
                 >
                     {chartTypes.map(type => {
                         return (

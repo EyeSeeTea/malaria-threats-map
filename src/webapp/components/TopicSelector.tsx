@@ -13,21 +13,15 @@ import { selectInvasiveStudiesError } from "../store/reducers/invasive-reducer";
 import { useTranslation } from "react-i18next";
 
 const GridContainer = styled(Grid)`
-    padding: 10px 20px;
-`;
-
-const GridItem = styled(Grid)`
-    padding: 8px 0px;
-`;
-
-const StyledIconButton = styled(IconButton)`
-    padding: 18px 40px 10px 40px !important;
+    padding: 18px 20px;
 `;
 
 const ThemeButton = styled.div<{ disabled?: boolean }>`
     display: flex;
     flex-direction: column;
     text-align: center;
+    align-items: center;
+    justify-content: center;
 
     cursor: ${props => (props.disabled ? "not-allowed" : "")};
     opacity: ${props => (props.disabled ? 0.7 : 1)};
@@ -141,62 +135,62 @@ const ThemeSelector: React.FC<Props> = ({
     return (
         <Box sx={{ flexGrow: 1 }}>
             <GridContainer container spacing={2}>
-                <GridItem item xs={themeItemGridSize || 6}>
+                <Grid item xs={themeItemGridSize || 6}>
                     <ThemeButton disabled={!!preventionError}>
-                        <StyledIconButton
+                        <IconButton
                             disableRipple
                             disabled={!!preventionError}
                             title={t("common.themes.prevention")}
                             onClick={handlePreventionClick}
                         >
                             <PreventionIcon selected={theme === "prevention" && !preventionError} />
-                        </StyledIconButton>
+                        </IconButton>
                         <Title>{t("common.themes.prevention")}</Title>
                         {/* <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton> */}
                     </ThemeButton>
-                </GridItem>
-                <GridItem item xs={themeItemGridSize || 6}>
+                </Grid>
+                <Grid item xs={themeItemGridSize || 6}>
                     <ThemeButton disabled={!!invasiveError}>
-                        <StyledIconButton
+                        <IconButton
                             disableRipple
                             title={t("common.themes.invasive")}
                             disabled={!!invasiveError}
                             onClick={handleInvasiveClick}
                         >
                             <InvasiveIcon selected={theme === "invasive"} />
-                        </StyledIconButton>
+                        </IconButton>
                         <Title>{t("common.themes.invasive")}</Title>
                         {/* <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton> */}
                     </ThemeButton>
-                </GridItem>
-                <GridItem item xs={themeItemGridSize || 6}>
+                </Grid>
+                <Grid item xs={themeItemGridSize || 6}>
                     <ThemeButton disabled={!!treatmentError}>
-                        <StyledIconButton
+                        <IconButton
                             disableRipple
                             title={t("common.themes.treatment")}
                             disabled={!!treatmentError}
                             onClick={handleTreatmentClick}
                         >
                             <TreatmentIcon selected={theme === "treatment"} />
-                        </StyledIconButton>
+                        </IconButton>
                         <Title>{t("common.themes.treatment")}</Title>
                         {/* <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton> */}
                     </ThemeButton>
-                </GridItem>
-                <GridItem item xs={themeItemGridSize || 6}>
+                </Grid>
+                <Grid item xs={themeItemGridSize || 6}>
                     <ThemeButton disabled={!!diagnosisError}>
-                        <StyledIconButton
+                        <IconButton
                             disableRipple
                             disabled={!!diagnosisError}
                             title={t("common.themes.diagnosis")}
                             onClick={handleDiagnosisClick}
                         >
                             <DiagnosisIcon selected={theme === "diagnosis"} />
-                        </StyledIconButton>
+                        </IconButton>
                         <Title>{t("common.themes.diagnosis")}</Title>
                         {/* <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton> */}
                     </ThemeButton>
-                </GridItem>
+                </Grid>
             </GridContainer>
         </Box>
     );

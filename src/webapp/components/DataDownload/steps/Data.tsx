@@ -386,10 +386,9 @@ const ListCard = styled(Card)`
 `;
 
 const DataSelectionCard = styled(Card)`
-    padding: 0px;
+    width: 100%;
+    max-width: 550px;
     border-radius: 12px;
-    width: 550px;
-    overflow: visible;
 `;
 
 const StyledList = styled(List)`
