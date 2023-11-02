@@ -6,6 +6,7 @@ import { usePrevention } from "../../usePrevention";
 import { SpreadOfResistanceOverTimeChartData, SpreadOfResistanceOverTimeChartType } from "../types";
 import { createChartData as createChartDataByInsecticideClass } from "./by-insecticide-class/createChartData";
 import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
+import { sortInsecticideClasses } from "../../../../../components/filters/InsecticideClassFilter";
 
 const chartTypes: Option<SpreadOfResistanceOverTimeChartType>[] = [
     {
@@ -65,7 +66,10 @@ export function useSpreadResistanceOverTime() {
     }, [allInsecticideClasses, onInsecticideClassChange]);
 
     React.useEffect(() => {
-        const insecticideClasses = uniq(preventionStudies.map(study => study.INSECTICIDE_CLASS)).sort();
+        const insecticideClasses = sortInsecticideClasses(
+            uniq(preventionStudies.map(study => study.INSECTICIDE_CLASS))
+        );
+
         setAllInsecticideClasses(insecticideClasses);
     }, [preventionStudies]);
 
