@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import _ from "lodash";
 import * as R from "ramda";
 import React from "react";
@@ -53,10 +54,11 @@ export function useMosquitoMortalityOverTime() {
 }
 
 export function createChartData(studies: PreventionStudy[], selectedCountries: string[]): MosquitoOverTimeChart {
+    const sortCountries = _.orderBy(selectedCountries, country => i18next.t(country), "asc");
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const years = _.uniq(sortedStudies.map(study => parseInt(study.YEAR_START)).sort());
 
-    const dataByCountry = selectedCountries.reduce((acc, countryISO) => {
+    const dataByCountry = sortCountries.reduce((acc, countryISO) => {
         const studiesByCountry = studies.filter(study => study.ISO2 === countryISO);
 
         return { ...acc, [countryISO]: createChartDataBySpecies(studiesByCountry, years) };

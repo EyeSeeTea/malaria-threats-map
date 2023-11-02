@@ -13,7 +13,9 @@ export function createChartDataByInsecticideClass(
 ): ResistanceToInsecticideChartDataByClass {
     if (insecticideClasses.length === 0) return { kind: "InsecticideByClass", data: {} };
 
-    const result = selectedCountries.reduce((acc, countryISO) => {
+    const sortCountries = _.orderBy(selectedCountries, country => i18next.t(country), "asc");
+
+    const result = sortCountries.reduce((acc, countryISO) => {
         const studiesByCountry = studies.filter(study => study.ISO2 === countryISO);
 
         const finalInsecticideClasses = sortInsecticideClasses(
