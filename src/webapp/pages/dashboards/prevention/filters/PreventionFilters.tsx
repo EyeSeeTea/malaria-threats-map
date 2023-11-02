@@ -73,10 +73,7 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                     onChange={filters.onSpeciesChange}
                     value={filters.species}
                     isClearable={true}
-                    disabled={
-                        filters.onDisaggregateBySpeciesChange &&
-                        filters.disaggregateBySpeciesSelection === "aggregate_species"
-                    }
+                    disabled={filters.disableSpeciesFilter}
                 />
             )}
 
