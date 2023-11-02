@@ -111,7 +111,8 @@
                 "phenotypicInsecticideResistanceOptions": {
                     "phenotypicInsecticideResistance": "Phenotypic Insecticide Resistance",
                     "statusOfResistanceToInsecticides": "Status of resistance to insecticides",
-                    "mosquitoOverTime": "Mosquito mortality over time"
+                    "mosquitoOverTime": "Mosquito mortality over time",
+                    "spreadOfResistanceOverTime": "Spread of resistance over time"
                 },
                 "molecularMechanismDetectionOptions": {
                     "molecularMechanismDetection": "Molecular mechanism detection",
