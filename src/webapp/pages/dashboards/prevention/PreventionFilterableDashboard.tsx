@@ -37,6 +37,8 @@ interface PreventionFilterableDashboardProps {
 interface PreventionFilterableDashboardComponentProps extends PreventionFilterableDashboardProps {
     onScreenshot?: () => void;
     isScreenshot?: boolean;
+    filtersVisible: boolean;
+    onChangeFiltersVisible?: () => void;
 }
 
 const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashboardComponentProps> = ({
@@ -56,8 +58,9 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
     onInfoClick,
     onScreenshot,
     isScreenshot = false,
+    filtersVisible,
+    onChangeFiltersVisible,
 }) => {
-    const { filtersVisible, onChangeFiltersVisible } = useFiltersVisible();
     const { t } = useTranslation();
 
     React.useEffect(() => {
@@ -151,6 +154,7 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
 
 const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = ({ onDownload, ...props }) => {
     const [open, setOpen] = React.useState(false);
+    const { filtersVisible, onChangeFiltersVisible } = useFiltersVisible();
 
     const handleScreenshot = React.useCallback(() => {
         if (onDownload) {
@@ -166,7 +170,12 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
 
     return (
         <>
-            <PreventionFilterableDashboardComponent {...props} onScreenshot={handleScreenshot} />
+            <PreventionFilterableDashboardComponent
+                {...props}
+                onScreenshot={handleScreenshot}
+                filtersVisible={filtersVisible}
+                onChangeFiltersVisible={onChangeFiltersVisible}
+            />
             <ScreenshotModal
                 open={open}
                 onClose={handleCloseScreenshot}
@@ -174,7 +183,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
                 backgroundColor={SCREENSHOT_BACKGROUND_COLOR}
                 exclusionClasses={SCREENSHOT_EXCLUSION_CLASSES}
             >
-                <PreventionFilterableDashboardComponent {...props} isScreenshot />
+                <PreventionFilterableDashboardComponent {...props} isScreenshot filtersVisible={filtersVisible} />
             </ScreenshotModal>
         </>
     );
