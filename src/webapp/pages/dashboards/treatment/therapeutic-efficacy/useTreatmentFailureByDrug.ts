@@ -19,7 +19,11 @@ export function useTreatmentFailureByDrug() {
         selectedCountries,
         studiesCount,
         data,
-        filters: { ...filters, onChangeShowDataForAllCountries: undefined } as TreatmentFiltersState,
+        filters: {
+            ...filters,
+            onChangeShowDataForAllCountries: undefined,
+            onExcludeLowerSamplesChange: undefined,
+        } as TreatmentFiltersState,
     };
 }
 

@@ -60,8 +60,15 @@ export function useTreatmentOverTime(treatmentType: TreatmentOverTimeType): Trea
         data,
         filters:
             chartType === "table"
-                ? filters
-                : ({ ...filters, onChangeShowDataForAllCountries: undefined } as TreatmentFiltersState),
+                ? ({
+                      ...filters,
+                      onExcludeLowerSamplesChange: undefined,
+                  } as TreatmentFiltersState)
+                : ({
+                      ...filters,
+                      onChangeShowDataForAllCountries: undefined,
+                      onExcludeLowerSamplesChange: undefined,
+                  } as TreatmentFiltersState),
         onChartTypeChange,
     };
 }
