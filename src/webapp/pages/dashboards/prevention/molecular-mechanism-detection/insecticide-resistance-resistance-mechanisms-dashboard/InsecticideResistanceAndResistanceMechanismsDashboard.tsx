@@ -6,11 +6,15 @@ import StatusOfResistanceToInsecticidePopup from "../../../../../components/dash
 import { useInfoPopup } from "../../../common/popup/useInfoPopup";
 import { useInsecticideResistanceAndResistanceMechanisms } from "./useInsecticideResistanceAndResistanceMechanisms";
 import { ChartType } from "./InsecticideResistanceAndResistanceState";
-import InsecticideResistanceAndResistanceMechanismsTable from "./table/InsecticideResistanceAndResistanceMechanismsTable";
+import InsecticideResistanceAndResistanceMechanismsTable, {
+    headCells,
+} from "./table/InsecticideResistanceAndResistanceMechanismsTable";
 import { exportToCSV } from "../../../../../components/DataDownload/download";
 import { format } from "date-fns";
 import { sendAnalytics } from "../../../../../utils/analytics";
 import InsecticideResistanceAndResistanceMechanismsGraph from "./graph/InsecticideResistanceAndResistanceMechanismsGraph";
+import i18next from "i18next";
+import { capitalizeFirstLetter } from "../../../../../utils/string-utils";
 
 const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
     const { t } = useTranslation();
@@ -31,18 +35,31 @@ const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
 
     const downloadTable = () => {
         if (data.kind === "TableData") {
-            const studies = data.rows.map(group =>
-                Object.entries(group).reduce((acc, [field, value]) => {
-                    if (field === "ID") {
+            const studies = data.rows.map(row => {
+                return Object.entries(row).reduce((acc, [field, value]) => {
+                    const cell = headCells.find(cell => cell.id === field);
+
+                    if (!cell) {
                         return acc;
                     } else {
+                        const fieldParts = field.split("_");
+
+                        const labelField =
+                            fieldParts.length > 0
+                                ? capitalizeFirstLetter(
+                                      `${field.split("_")[0].toLowerCase()} - ${i18next.t(cell.label)}`
+                                  )
+                                : i18next.t(cell.label);
+
                         return {
                             ...acc,
-                            [field]: (typeof value === "number" && isNaN(value)) || value === "-" ? "" : value,
+                            [labelField]: value,
                         };
                     }
-                }, {})
-            );
+                }, {});
+            });
+
+            console.log(studies);
 
             const tabs = [
                 {
