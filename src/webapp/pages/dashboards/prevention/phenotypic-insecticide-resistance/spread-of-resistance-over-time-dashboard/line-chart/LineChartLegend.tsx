@@ -4,7 +4,7 @@ import { Checkbox, Typography, Grid } from "@mui/material";
 import styled from "styled-components";
 
 import { INSECTICIDE_CLASS_COLORS, INSECTICIDE_TYPE_COLORS } from "./createLineChartData";
-import { SpreadOfResistanceOverTimeChartType } from "../types";
+import { SpreadOfResistanceOverTimeChartType } from "../../types";
 
 interface Props {
     chartType: SpreadOfResistanceOverTimeChartType;

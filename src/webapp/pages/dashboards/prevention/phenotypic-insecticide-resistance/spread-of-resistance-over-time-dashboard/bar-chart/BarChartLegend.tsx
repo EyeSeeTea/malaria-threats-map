@@ -2,8 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Typography, RadioGroup, Radio, FormControlLabel } from "@mui/material";
 import styled from "styled-components";
-import { ResistanceStatusColors } from "../../../../../components/layers/prevention/ResistanceStatus/symbols";
-import { SpreadOfResistanceOverTimeChartType } from "../types";
+import { ResistanceStatusColors } from "../../../../../../components/layers/prevention/ResistanceStatus/symbols";
+import { SpreadOfResistanceOverTimeChartType } from "../../types";
 
 interface Props {
     chartType: SpreadOfResistanceOverTimeChartType;

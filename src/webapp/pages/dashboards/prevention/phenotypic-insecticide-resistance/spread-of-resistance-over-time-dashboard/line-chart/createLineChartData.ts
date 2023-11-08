@@ -1,5 +1,5 @@
 import _, { groupBy } from "lodash";
-import { PreventionStudy } from "../../../../../../domain/entities/PreventionStudy";
+import { PreventionStudy } from "../../../../../../../domain/entities/PreventionStudy";
 import {
     SpreadOfResistanceOverTimeLineSeries,
     SpreadOfResistanceOverTimeLineData,
@@ -9,8 +9,8 @@ import {
     SpreadOfResistanceOverTimeByCountry,
     SpreadOfResistanceOverTimeChartData,
     SpreadOfResistanceOverTimeChartType,
-} from "../types";
-import { DisaggregateBySpeciesOptions } from "../../../../../components/filters/DisaggregateBySpecies";
+} from "../../types";
+import { DisaggregateBySpeciesOptions } from "../../../../../../components/filters/DisaggregateBySpecies";
 
 export const INSECTICIDE_TYPE_COLORS: Record<string, string> = {
     "ALPHA-CYPERMETHRIN": "#7B5FD9",

@@ -1,7 +1,7 @@
 import { groupBy, uniq } from "lodash";
 import i18next from "i18next";
 
-import { PreventionStudy } from "../../../../../../domain/entities/PreventionStudy";
+import { PreventionStudy } from "../../../../../../../domain/entities/PreventionStudy";
 import {
     SpreadOfResistanceOverTimeByCountryAndSpeciesBarChart,
     SpreadOfResistanceOverTimeByCountryBarChart,
@@ -10,9 +10,9 @@ import {
     SpreadOfResistanceOverTimeBarData,
     SpreadOfResistanceOverTimeChartType,
     SpreadOfResistanceOverTimeChartData,
-} from "../types";
-import { DisaggregateBySpeciesOptions } from "../../../../../components/filters/DisaggregateBySpecies";
-import { ResistanceStatusColors } from "../../../../../components/layers/prevention/ResistanceStatus/symbols";
+} from "../../types";
+import { DisaggregateBySpeciesOptions } from "../../../../../../components/filters/DisaggregateBySpecies";
+import { ResistanceStatusColors } from "../../../../../../components/layers/prevention/ResistanceStatus/symbols";
 
 function createSerieByStatusAndYear(
     studies: PreventionStudy[],

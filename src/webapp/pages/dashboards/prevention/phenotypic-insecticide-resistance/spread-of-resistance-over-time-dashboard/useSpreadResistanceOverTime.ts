@@ -10,8 +10,8 @@ import {
     SpreadOfResistanceOverTimeChartDataByType,
     SpreadOfResistanceOverTimeChartType,
 } from "../types";
-import { createBarChartData } from "./createBarChartData";
-import { createLineChartData } from "./createLineChartData";
+import { createBarChartData } from "./bar-chart/createBarChartData";
+import { createLineChartData } from "./line-chart/createLineChartData";
 
 const chartTypes: Option<SpreadOfResistanceOverTimeChartType>[] = [
     {
