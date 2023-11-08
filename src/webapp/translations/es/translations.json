@@ -112,7 +112,8 @@
                 "phenotypicInsecticideResistanceOptions": {
                     "phenotypicInsecticideResistance": "Resistencia fenotípica a insecticidas",
                     "statusOfResistanceToInsecticides": "Estado de la resistencia a los insecticidas",
-                    "mosquitoOverTime": "Mortalidad de los mosquitos a lo largo del tiempo"
+                    "mosquitoOverTime": "Mortalidad de los mosquitos a lo largo del tiempo",
+                    "spreadOfResistanceOverTime": "Propagación de la resistencia a lo largo del tiempo"
                 },
                 "molecularMechanismDetectionOptions": {
                     "molecularMechanismDetection": "Detección de mecanismos moleculares",
@@ -1047,7 +1048,8 @@
                 "follow": "Seguimiento",
                 "studies": "Número de estudios",
                 "percentile_25": "Percentile 25",
-                "percentile_75": "Percentile 75"
+                "percentile_75": "Percentile 75",
+                "percentage_patients_treatment_failure": "% de pacientes con fracaso terapéutico"
             }
         },
         "uploadFile": {

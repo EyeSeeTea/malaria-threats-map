@@ -4,9 +4,14 @@ import React from "react";
 import { Option } from "../../../common/types";
 import { usePrevention } from "../../usePrevention";
 import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
-import { SpreadOfResistanceOverTimeChartDataByClass, SpreadOfResistanceOverTimeChartType } from "../types";
+import {
+    SpreadOfResistanceOverTimeChartData,
+    SpreadOfResistanceOverTimeChartDataByClass,
+    SpreadOfResistanceOverTimeChartType,
+} from "../types";
 import { createLineChartData as createLineChartDataByInsecticideClass } from "./by-insecticide-class/createLineChartData";
 import { createBarChartData as createBarChartDataByInsecticideClass } from "./by-insecticide-class/createBarChartData";
+import { sortInsecticideClasses } from "../../../../../components/filters/InsecticideClassFilter";
 
 const chartTypes: Option<SpreadOfResistanceOverTimeChartType>[] = [
     {
@@ -25,7 +30,17 @@ export function useSpreadResistanceOverTime() {
     const { preventionStudies, filteredStudies, selectedCountries, filters, speciesOptions } =
         usePrevention(baseFilters);
 
-    const [lineChartData, setLineChartData] = React.useState<SpreadOfResistanceOverTimeChartDataByClass>({
+    const {
+        disableSpeciesFilter,
+        disaggregateBySpeciesSelection,
+        years,
+        onDisableSpeciesFilter,
+        onDisaggregateBySpeciesChange,
+        onSpeciesChange,
+        onInsecticideClassChange,
+    } = filters;
+
+    const [lineChartData, setLineChartData] = React.useState<SpreadOfResistanceOverTimeChartData>({
         kind: "InsecticideByClass",
         data: { years: [], dataByCountry: {}, maxValue: 0 },
     });
@@ -42,31 +57,45 @@ export function useSpreadResistanceOverTime() {
     );
 
     React.useEffect(() => {
-        filters.onSpeciesChange(speciesOptions.map(option => option.value));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [speciesOptions]);
+        const hasToBeDisabledSpeciesFilter =
+            onDisaggregateBySpeciesChange && disaggregateBySpeciesSelection === "aggregate_species";
+
+        if (!disableSpeciesFilter && hasToBeDisabledSpeciesFilter) {
+            onDisableSpeciesFilter(hasToBeDisabledSpeciesFilter);
+        }
+
+        if (disableSpeciesFilter && !hasToBeDisabledSpeciesFilter) {
+            onDisableSpeciesFilter(false);
+        }
+    }, [disableSpeciesFilter, disaggregateBySpeciesSelection, onDisableSpeciesFilter, onDisaggregateBySpeciesChange]);
 
     React.useEffect(() => {
-        filters.onInsecticideClassChange(allInsecticideClasses.map(option => option));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [allInsecticideClasses]);
+        onSpeciesChange(speciesOptions.map(option => option.value));
+    }, [onSpeciesChange, speciesOptions]);
 
     React.useEffect(() => {
-        const insecticideClasses = uniq(preventionStudies.map(study => study.INSECTICIDE_CLASS)).sort();
+        onInsecticideClassChange(allInsecticideClasses.map(option => option));
+    }, [allInsecticideClasses, onInsecticideClassChange]);
+
+    React.useEffect(() => {
+        const insecticideClasses = sortInsecticideClasses(
+            uniq(preventionStudies.map(study => study.INSECTICIDE_CLASS))
+        );
+
         setAllInsecticideClasses(insecticideClasses);
         setMultipleSelectedInsecticideClasses(insecticideClasses);
         setSingleSelectedInsecticideClass(insecticideClasses[0]);
     }, [preventionStudies]);
 
     React.useEffect(() => {
-        const yearsRange = range(filters.years[0], filters.years[1] + 1);
+        const yearsRange = range(years[0], years[1] + 1);
         setLineChartData(
             createLineChartDataByInsecticideClass(
                 filteredStudies,
                 selectedCountries,
                 yearsRange,
                 multipleSelectedInsecticideClasses,
-                filters.disaggregateBySpeciesSelection
+                disaggregateBySpeciesSelection
             )
         );
 
@@ -76,13 +105,13 @@ export function useSpreadResistanceOverTime() {
                 selectedCountries,
                 yearsRange,
                 singleSelectedInsecticideClass,
-                filters.disaggregateBySpeciesSelection
+                disaggregateBySpeciesSelection
             )
         );
     }, [
         filteredStudies,
-        filters.disaggregateBySpeciesSelection,
-        filters.years,
+        disaggregateBySpeciesSelection,
+        years,
         multipleSelectedInsecticideClasses,
         selectedCountries,
         singleSelectedInsecticideClass,
@@ -101,8 +130,8 @@ export function useSpreadResistanceOverTime() {
     }, []);
 
     const isDisaggregatedBySpecies = React.useMemo(() => {
-        return filters.disaggregateBySpeciesSelection === "disaggregate_species";
-    }, [filters.disaggregateBySpeciesSelection]);
+        return disaggregateBySpeciesSelection === "disaggregate_species";
+    }, [disaggregateBySpeciesSelection]);
 
     return {
         allInsecticideClasses,

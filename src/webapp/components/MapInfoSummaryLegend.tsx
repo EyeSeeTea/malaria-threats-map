@@ -108,27 +108,29 @@ const MapInfoSummaryLegendContainer = styled.div`
     border-radius: 12px;
     background-color: #ffffff;
     width: 100%;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+        0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 `;
 
 const InfoRowContainer = styled.div`
     display: flex;
     gap: 4px;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 `;
 
 const Label = styled.span`
     font-weight: bold;
     white-space: nowrap;
-    width: fit-content;
-    font-size: 12px;
+    font-size: 16px;
+    font-family: sans-serif;
 `;
 
 const InfoValue = styled.span`
-    margin-left: 4px;
     white-space: nowrap;
     width: 100%;
-    font-size: 12px;
+    font-size: 16px;
+    font-family: sans-serif;
 `;
 
 const DataFilterContainer = styled.div`
@@ -142,10 +144,11 @@ const DataFilterRowContainer = styled.div`
     display: flex;
     gap: 5px;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 `;
 
 const DataFilterValue = styled.span`
     width: 100%;
-    font-size: 12px;
+    font-size: 16px;
+    font-family: sans-serif;
 `;

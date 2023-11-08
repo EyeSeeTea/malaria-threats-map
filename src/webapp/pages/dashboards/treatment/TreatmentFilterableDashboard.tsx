@@ -103,6 +103,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                     onChange={handleChartTypeChange}
                     aria-label="text alignment"
                     sx={{ marginBottom: 2 }}
+                    style={{ display: "flex", gap: "16px" }}
                 >
                     {chartTypes.map((type, index) => {
                         return (
