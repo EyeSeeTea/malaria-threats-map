@@ -31,8 +31,7 @@ export const INSECTICIDE_TYPE_COLORS: Record<string, string> = {
     PERMETHRIN: "#5FB4AE",
     "PIRIMIPHOS-METHYL": "#4876a8",
     PROPOXUR: "#89B5D4",
-    NA: "#BEBEBE",
-    DEFAULT: "#5FB4AE",
+    DEFAULT: "#BEBEBE",
 };
 
 export const INSECTICIDE_TYPE_COLORS_OPACITY: Record<string, string> = {
@@ -54,8 +53,7 @@ export const INSECTICIDE_TYPE_COLORS_OPACITY: Record<string, string> = {
     PERMETHRIN: "rgb(95,180,174,0.6)",
     "PIRIMIPHOS-METHYL": "rgb(72,118,168,0.6)",
     PROPOXUR: "rgb(137,181,212, 0.6)",
-    NA: "rgb(190, 190, 190, 0.6)",
-    DEFAULT: "rgb(95,180,174,0.6)",
+    DEFAULT: "rgb(190, 190, 190, 0.6)",
 };
 
 export const INSECTICIDE_CLASS_COLORS: Record<string, string> = {
@@ -65,8 +63,7 @@ export const INSECTICIDE_CLASS_COLORS: Record<string, string> = {
     PYRROLES: "#439336",
     PYRETHROIDS: "#5FB4AE",
     CARBAMATES: "#4876a8",
-    NA: "#BEBEBE",
-    DEFAULT: "#5FB4AE",
+    DEFAULT: "#BEBEBE",
 };
 
 export const INSECTICIDE_CLASS_COLORS_OPACITY: Record<string, string> = {
@@ -76,8 +73,7 @@ export const INSECTICIDE_CLASS_COLORS_OPACITY: Record<string, string> = {
     PYRROLES: "rgb(67,147,54,0.6)",
     PYRETHROIDS: "rgb(95,180,174,0.6)",
     CARBAMATES: "rgb(72,118,168,0.6)",
-    NA: "rgb(190, 190, 190, 0.6)",
-    DEFAULT: "rgb(95,180,174,0.6)",
+    DEFAULT: "rgb(190, 190, 190, 0.6)",
 };
 
 function getColorByInsecticideClassOrType(
