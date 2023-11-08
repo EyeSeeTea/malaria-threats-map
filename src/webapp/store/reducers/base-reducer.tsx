@@ -4,10 +4,11 @@ import { ActionGroup, MalariaState, RegionState, SiteSelection, State } from "..
 import { createReducer } from "../reducer-utils";
 import { ActionTypeEnum } from "../actions";
 import { SelectionData } from "../SelectionData";
+import { getFromLocalStorage } from "../../utils/browserCache";
 
 const query = window.location.search.substring(1);
 
-const isTourInitiallyOpen = localStorage.getItem("tour") !== "visited" && !query;
+const isTourInitiallyOpen = getFromLocalStorage("tour") !== "visited" && !query;
 
 const initialState: MalariaState = Object.freeze({
     theme: "prevention",

@@ -26,8 +26,7 @@ const ThemeSelectionSection = ({ translations }: Props) => {
 
     const { t } = useTranslation();
     const { compositionRoot } = useAppContext();
-
-    const { theme, selectedCountries, updatedDates, onThemeChange, onSelectedCountriesChange, onGenerate } =
+    const { theme, selectedCountries, updatedDates, onGenerate, onThemeChange, onSelectedCountriesChange } =
         useDashboards();
 
     useEffect(() => {

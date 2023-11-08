@@ -28,7 +28,6 @@ export const Router: React.FC = React.memo(() => {
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/share-data" element={<ShareDataPage />} />
-
                 <Route path="/maps" element={<MapPage />} />
                 <Route path="/download" element={<DownloadPage />} />
                 <Route path="/stories" element={<StoriesPage />} />

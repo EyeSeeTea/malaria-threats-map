@@ -6,6 +6,7 @@ import {
     fetchDiagnosisStudiesError,
     fetchDiagnosisStudiesRequest,
     fetchDiagnosisStudiesSuccess,
+    setDiagnosisDataset,
     setDiagnosisDeletionType,
     setDiagnosisFilteredStudiesAction,
     setDiagnosisMapType,
@@ -18,7 +19,7 @@ import {
     setSelectionData,
     setMaxMinYearsAction,
 } from "../../actions/base-actions";
-import { DiagnosisMapType, State } from "../../types";
+import { DiagnosisFilters, DiagnosisMapType, State } from "../../types";
 import { addNotificationAction } from "../../actions/notifier-actions";
 import { getAnalyticsPageView } from "../../analytics";
 import { fromFuture } from "../utils";
@@ -80,17 +81,45 @@ export const setDiagnosisThemeEpic = (
         })
     );
 
-export const setDiagnosisMapTypeEpic = (action$: Observable<ActionType<typeof setDiagnosisMapType>>) =>
+export const setDiagnosisMapTypeEpic = (
+    action$: Observable<ActionType<typeof setDiagnosisMapType>>,
+    state$: StateObservable<State>
+) =>
     action$.pipe(
         ofType(ActionTypeEnum.SetDiagnosisMapType),
-        switchMap(action => {
+        withLatestFrom(state$),
+        switchMap(([action, state]) => {
+            const isOnGoing = isDiagnosisMapTypeOngoing(state.diagnosis.filters);
+            const maxAsCurrent = !isOnGoing;
+
+            const [start, end] = getMinMaxYears(state.diagnosis.studies, maxAsCurrent, isOnGoing ? 2018 : undefined);
+
+            const base = [setMaxMinYearsAction([start, end]), setFiltersAction([start, end])];
+
             const pageView = getAnalyticsPageView({ page: "diagnosis", section: action.payload });
             const logPageView = logPageViewAction(pageView);
 
             if (action.payload === DiagnosisMapType.GENE_DELETIONS) {
-                return of(logPageView);
+                return of(...base, logPageView);
             }
-            return of();
+            return of(...base);
+        })
+    );
+
+export const setDiagnosisDatasetEpic = (
+    action$: Observable<ActionType<typeof setDiagnosisDataset>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetDiagnosisDataset),
+        withLatestFrom(state$),
+        switchMap(([_, state]) => {
+            const isOnGoing = isDiagnosisDatasetOngoing(state.diagnosis.filters);
+            const maxAsCurrent = !isOnGoing;
+
+            const [start, end] = getMinMaxYears(state.diagnosis.studies, maxAsCurrent, isOnGoing ? 2018 : undefined);
+
+            return of(setMaxMinYearsAction([start, end]), setFiltersAction([start, end]));
         })
     );
 
@@ -126,3 +155,11 @@ export const setDiagnosisFilteredStudiesEpic = (
             return of(setSelectionData(null), setSelectionData(selectionData));
         })
     );
+
+function isDiagnosisMapTypeOngoing(diagnosisFilters: DiagnosisFilters) {
+    return diagnosisFilters.mapType === DiagnosisMapType.HRP23_STUDIES;
+}
+
+function isDiagnosisDatasetOngoing(diagnosisFilters: DiagnosisFilters) {
+    return diagnosisFilters.dataset === "HRPO";
+}

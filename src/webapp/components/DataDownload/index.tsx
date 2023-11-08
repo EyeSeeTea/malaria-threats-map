@@ -18,10 +18,6 @@ import CheckIcon from "@mui/icons-material/Check";
 import { useDownload } from "./useDownload";
 import { setPreventionDataset } from "../../store/actions/prevention-actions";
 
-const Wrapper = styled.div`
-    margin: 16px 0;
-`;
-
 const mapStateToProps = (_state: State) => ({});
 
 const mapDispatchToProps = {
@@ -158,6 +154,10 @@ function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset, s
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataDownload);
+
+const Wrapper = styled.div`
+    margin: 16px 0;
+`;
 
 const StyledContainer = styled(Container)`
     background: #ffffff;

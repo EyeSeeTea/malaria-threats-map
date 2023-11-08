@@ -8,7 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { setFiltersAction, setTheaterModeAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import { selectTheme } from "../../store/reducers/base-reducer";
+import { selectMaxMinYears, selectTheme } from "../../store/reducers/base-reducer";
 import { sendAnalytics } from "../../utils/analytics";
 
 const useStyles = makeStyles({
@@ -35,10 +35,9 @@ const useStyles = makeStyles({
     },
 });
 
-const THIS_YEAR = new Date().getFullYear();
-
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
+    maxMinYears: selectMaxMinYears(state),
 });
 
 const mapDispatchToProps = {
@@ -50,22 +49,10 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const getMinYear = (theme: string) => {
-    switch (theme) {
-        case "diagnosis":
-            return 1998;
-        case "invasive":
-            return 1985;
-        default:
-            return 2010;
-    }
-};
-
-function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
+function TheaterMode({ setYears, setTheaterMode, maxMinYears }: Props) {
     const classes = useStyles({});
-    const minYear = getMinYear(theme);
 
-    const [year, setYear] = React.useState<number>(minYear);
+    const [year, setYear] = React.useState<number>(maxMinYears[0]);
     const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
 
     useEffect(() => {
@@ -74,18 +61,18 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
             interval = setInterval(() => {
                 setYear(year => {
                     const newYear = year + 1;
-                    if (newYear > THIS_YEAR) {
-                        setYears([minYear, minYear]);
-                        return minYear;
+                    if (newYear > maxMinYears[1]) {
+                        setYears([maxMinYears[0], maxMinYears[0]]);
+                        return maxMinYears[0];
                     } else {
-                        setYears([minYear, newYear]);
+                        setYears([maxMinYears[0], newYear]);
                         return newYear;
                     }
                 });
             }, 1000);
         }
         return () => clearInterval(interval);
-    }, [isPlaying, setYears, minYear]);
+    }, [isPlaying, setYears, maxMinYears]);
 
     const play = () => {
         sendAnalytics({ type: "event", category: "timeline", action: "play" });
@@ -99,8 +86,8 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
 
     const beginning = () => {
         sendAnalytics({ type: "event", category: "timeline", action: "restart" });
-        setYear(() => minYear);
-        setYears([minYear, minYear]);
+        setYear(() => maxMinYears[0]);
+        setYears([maxMinYears[0], maxMinYears[0]]);
     };
 
     function valuetext(value: number) {
@@ -111,7 +98,7 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
         const value = newValue as number;
         sendAnalytics({ type: "event", category: "timeline", action: "drag", label: year.toString() });
         setYear(() => value);
-        setYears([minYear, value]);
+        setYears([maxMinYears[0], value]);
     };
 
     return (
@@ -137,8 +124,8 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
                 getAriaValueText={valuetext}
                 onChange={handleChange}
                 step={1}
-                min={minYear}
-                max={THIS_YEAR}
+                min={maxMinYears[0]}
+                max={maxMinYears[1]}
             />
             <IconButton
                 className={classes.iconButton}
