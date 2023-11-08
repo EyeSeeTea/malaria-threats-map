@@ -13,9 +13,18 @@ interface TableHeadCellProps<T = TreatmentData | PreventionData> {
     onRequestSort: (event: React.MouseEvent<unknown>, property: keyof T) => void;
     classes: ReturnType<typeof useStyles>;
     isBold?: boolean;
+    rowSpan?: number;
 }
 
-export function TableHeadCell<T>({ headCell, order, orderBy, onRequestSort, classes, isBold }: TableHeadCellProps<T>) {
+export function TableHeadCell<T>({
+    headCell,
+    order,
+    orderBy,
+    onRequestSort,
+    classes,
+    isBold,
+    rowSpan = 1,
+}: TableHeadCellProps<T>) {
     const { t } = useTranslation();
 
     const createSortHandler = (property: keyof T) => (event: React.MouseEvent<unknown>) => {
@@ -29,6 +38,7 @@ export function TableHeadCell<T>({ headCell, order, orderBy, onRequestSort, clas
             sortDirection={orderBy === headCell.id ? order : false}
             divider={headCell.divider}
             isBold={isBold}
+            rowSpan={rowSpan}
         >
             {headCell.sortable ? (
                 <TableSortLabel
