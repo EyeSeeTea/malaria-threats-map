@@ -1033,7 +1033,8 @@
                 "follow": "Seguimiento",
                 "studies": "Número de estudios",
                 "percentile_25": "Percentile 25",
-                "percentile_75": "Percentile 75"
+                "percentile_75": "Percentile 75",
+                "percentage_patients_treatment_failure": "% de pacientes con fracaso terapéutico"
             }
         },
         "uploadFile": {

@@ -100,7 +100,9 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows, p
                                         {Object.entries(row)
                                             .filter(filterColumnsToDisplay)
                                             .map(([field, value]) => {
-                                                const header = headCells.find(cell => cell.id === field);
+                                                const header = [...headCells, ...subheadCells].find(
+                                                    cell => cell.id === field
+                                                );
                                                 const number = Number(value);
                                                 const isNumber = !Number.isNaN(number);
                                                 return (
@@ -110,7 +112,7 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows, p
                                                         id={labelId}
                                                         scope="row"
                                                         padding="none"
-                                                        isRight={header.align === "right"}
+                                                        isRight={header.dataAlign === "right"}
                                                         divider={header.divider}
                                                     >
                                                         {header && header.numeric && isNumber
@@ -143,6 +145,7 @@ export default React.memo(TreatmentOverTimeTable);
 
 function EnhancedTableHead(props: EnhancedTableProps<TableData>) {
     const { classes, order, orderBy, onRequestSort } = props;
+    const { t } = useTranslation();
 
     return (
         <TableHead>
@@ -152,6 +155,23 @@ function EnhancedTableHead(props: EnhancedTableProps<TableData>) {
                         key={headCell.id}
                         classes={classes}
                         headCell={headCell}
+                        order={order}
+                        orderBy={orderBy}
+                        onRequestSort={onRequestSort}
+                        rowSpan={headCell.rowSpan}
+                        isBold
+                    />
+                ))}
+                <StyledCell colSpan={subheadCells.length} align="center" isBold divider>
+                    {t("common.report.treatment.percentage_patients_treatment_failure")}
+                </StyledCell>
+            </TableRow>
+            <TableRow>
+                {subheadCells.map(subHeadCell => (
+                    <TableHeadCell
+                        key={subHeadCell.id}
+                        classes={classes}
+                        headCell={subHeadCell}
                         order={order}
                         orderBy={orderBy}
                         onRequestSort={onRequestSort}
@@ -167,56 +187,15 @@ const StyledTableContainer = styled(TableContainer)`
     height: 450px;
 `;
 
-const headCells: HeadCell<TableData>[] = [
-    {
-        id: "COUNTRY",
-        numeric: false,
-        disablePadding: false,
-        label: "common.report.treatment.country",
-    },
-    {
-        id: "DRUG",
-        numeric: false,
-        disablePadding: false,
-        divider: true,
-        label: "common.report.treatment.drug",
-    },
-    {
-        id: "FOLLOW_UP",
-        numeric: true,
-        disablePadding: false,
-        label: "common.report.treatment.follow",
-        sortable: true,
-        align: "right",
-        divider: true,
-        decimalPositions: 0,
-    },
-    {
-        id: "STUDY_YEARS",
-        numeric: false,
-        disablePadding: false,
-        label: "common.report.treatment.period",
-        sortable: true,
-        align: "right",
-        divider: true,
-    },
-    {
-        id: "NUMBER_OF_STUDIES",
-        numeric: true,
-        disablePadding: false,
-        label: "common.report.treatment.studies",
-        sortable: true,
-        align: "right",
-        divider: true,
-        decimalPositions: 0,
-    },
+const subheadCells: HeadCell<TableData>[] = [
     {
         id: "MEDIAN",
         numeric: true,
         disablePadding: false,
         label: "common.report.treatment.median",
         sortable: true,
-        align: "right",
+        align: "center",
+        dataAlign: "right",
         divider: true,
         decimalPositions: 2,
     },
@@ -226,7 +205,8 @@ const headCells: HeadCell<TableData>[] = [
         disablePadding: false,
         label: "Min",
         sortable: true,
-        align: "right",
+        align: "center",
+        dataAlign: "right",
         divider: true,
         decimalPositions: 2,
     },
@@ -236,7 +216,8 @@ const headCells: HeadCell<TableData>[] = [
         disablePadding: false,
         label: "Max",
         sortable: true,
-        align: "right",
+        align: "center",
+        dataAlign: "right",
         divider: true,
         decimalPositions: 2,
     },
@@ -246,7 +227,8 @@ const headCells: HeadCell<TableData>[] = [
         disablePadding: false,
         label: "common.report.treatment.percentile_25",
         sortable: true,
-        align: "right",
+        align: "center",
+        dataAlign: "right",
         divider: true,
         decimalPositions: 2,
     },
@@ -256,8 +238,64 @@ const headCells: HeadCell<TableData>[] = [
         disablePadding: false,
         label: "common.report.treatment.percentile_75",
         sortable: true,
-        align: "right",
+        align: "center",
+        dataAlign: "right",
         divider: true,
         decimalPositions: 2,
+    },
+];
+
+const headCells: HeadCell<TableData>[] = [
+    {
+        id: "COUNTRY",
+        numeric: false,
+        disablePadding: false,
+        label: "common.report.treatment.country",
+        rowSpan: 2,
+        align: "center",
+    },
+    {
+        id: "DRUG",
+        numeric: false,
+        disablePadding: false,
+        divider: true,
+        label: "common.report.treatment.drug",
+        rowSpan: 2,
+        align: "center",
+    },
+    {
+        id: "FOLLOW_UP",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.treatment.follow",
+        sortable: true,
+        align: "center",
+        dataAlign: "right",
+        divider: true,
+        decimalPositions: 0,
+        rowSpan: 2,
+    },
+    {
+        id: "STUDY_YEARS",
+        numeric: false,
+        disablePadding: false,
+        label: "common.report.treatment.period",
+        sortable: true,
+        align: "center",
+        dataAlign: "right",
+        divider: true,
+        rowSpan: 2,
+    },
+    {
+        id: "NUMBER_OF_STUDIES",
+        numeric: true,
+        disablePadding: false,
+        label: "common.report.treatment.studies",
+        sortable: true,
+        align: "center",
+        dataAlign: "right",
+        divider: true,
+        decimalPositions: 0,
+        rowSpan: 2,
     },
 ];

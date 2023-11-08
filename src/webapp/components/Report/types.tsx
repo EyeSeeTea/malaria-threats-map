@@ -85,6 +85,8 @@ export interface HeadCell<T> {
     label: string;
     sortable?: boolean;
     align?: "right" | "left" | "center";
+    dataAlign?: "right" | "left" | "center";
     divider?: boolean;
     decimalPositions?: number;
+    rowSpan?: number;
 }

@@ -1031,7 +1031,8 @@
                 "follow": "Follow up (days)",
                 "studies": "Number of studies",
                 "percentile_25": "Percentile 25th",
-                "percentile_75": "Percentile 75th"
+                "percentile_75": "Percentile 75th",
+                "percentage_patients_treatment_failure": "% of patients with treatment failure"
             }
         },
         "uploadFile": {

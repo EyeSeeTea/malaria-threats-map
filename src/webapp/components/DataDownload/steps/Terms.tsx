@@ -57,7 +57,7 @@ const Terms = ({ onChange, termsInfo, selectedDatabases, onChooseOther }: OwnPro
                             {t("common.data_download.terms_step.summary_title")}
                         </Typography>
 
-                        <List>
+                        <StyledList>
                             {selectedDatabases.map((database, index) => {
                                 return (
                                     <DatabaseItem
@@ -67,7 +67,7 @@ const Terms = ({ onChange, termsInfo, selectedDatabases, onChooseOther }: OwnPro
                                     />
                                 );
                             })}
-                        </List>
+                        </StyledList>
 
                         <Box sx={{ flexGrow: 1 }} />
 
@@ -90,6 +90,13 @@ const Terms = ({ onChange, termsInfo, selectedDatabases, onChooseOther }: OwnPro
 
 export default connect(null)(Terms);
 
+const TermsContainer = styled.div`
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`;
+
 const RoundedCard = styled(Card)`
     padding: 30px;
     border-radius: 12px;
@@ -99,9 +106,13 @@ const RoundedCard = styled(Card)`
     flex-direction: column;
 `;
 
-const TermsContainer = styled.div`
-    height: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+const StyledList = styled(List)`
+    > div {
+        gap: 16px;
+        flex-direction: column;
+
+        @media (min-width: 768px) {
+            flex-direction: row;
+        }
+    }
 `;

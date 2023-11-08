@@ -337,6 +337,7 @@ function buildDiagnosisFiltersByDownload(diagnosisFilters: DiagnosisFilters, fil
     switch (diagnosisFilters.dataset) {
         case "PFHRP23_GENE_DELETIONS":
             return [
+                filterByDiagnosisGeneDeletions(),
                 filterByDeletionType(diagnosisFilters.deletionType),
                 filterBySurveyTypes(diagnosisFilters.surveyTypes),
                 filterByPatientType(diagnosisFilters.patientType),
