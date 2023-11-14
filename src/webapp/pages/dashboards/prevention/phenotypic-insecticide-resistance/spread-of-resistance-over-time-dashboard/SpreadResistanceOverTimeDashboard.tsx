@@ -62,6 +62,7 @@ const SpreadResistanceOverTimeDashboard: React.FC = () => {
                     selectedInsecticideClasses={multipleSelectedInsecticideClasses}
                     onInsecticideClassesChange={setMultipleSelectedInsecticideClasses}
                     isDisaggregatedBySpecies={isDisaggregatedBySpecies}
+                    chartType={chartType}
                 />
                 <BarChart
                     allInsecticideClasses={allInsecticideClasses}
@@ -70,6 +71,7 @@ const SpreadResistanceOverTimeDashboard: React.FC = () => {
                     selectedInsecticideClass={singleSelectedInsecticideClass}
                     onInsecticideClassChange={setSingleSelectedInsecticideClass}
                     isDisaggregatedBySpecies={isDisaggregatedBySpecies}
+                    chartType={chartType}
                 />
             </PreventionFilterableDashboard>
             <SpreadOfResistanceOverTimePopup

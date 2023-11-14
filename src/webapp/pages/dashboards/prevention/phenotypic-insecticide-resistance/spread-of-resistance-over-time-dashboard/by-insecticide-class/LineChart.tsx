@@ -4,13 +4,17 @@ import { useTranslation } from "react-i18next";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import i18next from "i18next";
+import ReactDOMServer from "react-dom/server";
+
 import {
     SpreadOfResistanceOverTimeLineChart,
     SpreadOfResistanceOverTimeLineSeries,
     SpreadOfResistanceOverTimeBySpecie,
+    SpreadOfResistanceOverTimeChartType,
 } from "../../types";
 import { Stack, Typography } from "@mui/material";
 import LineChartLegend from "./LineChartLegend";
+import LineChartTooltip, { CustomPoint } from "../LineChartTooltip";
 
 const LineChart: React.FC<{
     allInsecticideClasses: string[];
@@ -19,6 +23,7 @@ const LineChart: React.FC<{
     selectedInsecticideClasses: string[];
     onInsecticideClassesChange: (insecticideClasses: string[]) => void;
     isDisaggregatedBySpecies: boolean;
+    chartType: SpreadOfResistanceOverTimeChartType;
 }> = ({
     allInsecticideClasses,
     data,
@@ -26,6 +31,7 @@ const LineChart: React.FC<{
     isDisaggregatedBySpecies,
     selectedInsecticideClasses,
     onInsecticideClassesChange,
+    chartType,
 }) => {
     const { t } = useTranslation();
     return (
@@ -67,7 +73,8 @@ const LineChart: React.FC<{
                                                 data.years,
                                                 dataBySpecie,
                                                 data.maxValue,
-                                                xAxisVisible
+                                                xAxisVisible,
+                                                chartType
                                             );
 
                                             return (
@@ -101,7 +108,13 @@ const LineChart: React.FC<{
                                     isoCountry
                                 ] as SpreadOfResistanceOverTimeLineSeries[];
 
-                                const options = chartOptions(data.years, dataOfCountry, data.maxValue, isLastCountry);
+                                const options = chartOptions(
+                                    data.years,
+                                    dataOfCountry,
+                                    data.maxValue,
+                                    isLastCountry,
+                                    chartType
+                                );
 
                                 return (
                                     <tr key={isoCountry}>
@@ -166,21 +179,12 @@ const NotAvailableTR = styled.tr`
     height: 100px;
 `;
 
-interface CustomPoint extends Highcharts.Point {
-    insecticideClass: string;
-    year: string;
-    rangeYears: string;
-    sumOfConfirmedResistanceSites: number;
-    sumOfSites: number;
-    numberOfSites: number;
-    numberOfSitesConfirmedResistance: number;
-}
-
 function chartOptions(
     years: number[],
     data: SpreadOfResistanceOverTimeLineSeries[],
     maxSumConfirmedResistance: number,
-    xAxisVisible: boolean
+    xAxisVisible: boolean,
+    chartType: SpreadOfResistanceOverTimeChartType
 ): Highcharts.Options {
     return {
         chart: {
@@ -192,44 +196,10 @@ function chartOptions(
             useHTML: true,
             formatter: function () {
                 const point = this.point as CustomPoint;
-                return `
-                    <div style="padding: 16px;">
-                        <div><h4>${i18next.t("common.dashboard.tooltip.insecticideClass")}: ${i18next.t(
-                    point.insecticideClass
-                )}</h4></div>
-
-                        <div>
-                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px;">
-                                <div>${i18next.t(
-                                    "common.dashboard.tooltip.year"
-                                )}: </div><div style="padding-left:10px;">${point.year}</div>
-                            </div>
-
-                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;">
-                                <div>${i18next.t("common.dashboard.tooltip.numberOfSitesConfirmedResistance")} (${
-                    point.year
-                }): </div><div style="padding-left:10px;">${point.numberOfSitesConfirmedResistance}</div>
-                            </div>
-
-                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;">
-                                <div>${i18next.t("common.dashboard.tooltip.numberOfSites")} (${
-                    point.year
-                }): </div><div style="padding-left:10px;">${point.numberOfSites}</div>
-                            </div>
-
-                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;">
-                                <div>${i18next.t("common.dashboard.tooltip.numberOfSitesConfirmedResistance")} (${
-                    point.rangeYears
-                }): </div><div style="padding-left:10px;">${point.sumOfConfirmedResistanceSites}</div>
-                            </div>
-
-                            <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;"><div>${i18next.t(
-                                "common.dashboard.tooltip.numberOfSites"
-                            )} (${point.rangeYears}): </div><div style="padding-left:10px;">${point.sumOfSites}</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                const htmlString = ReactDOMServer.renderToString(
+                    <LineChartTooltip chartType={chartType} point={point} />
+                );
+                return htmlString;
             },
         },
 
