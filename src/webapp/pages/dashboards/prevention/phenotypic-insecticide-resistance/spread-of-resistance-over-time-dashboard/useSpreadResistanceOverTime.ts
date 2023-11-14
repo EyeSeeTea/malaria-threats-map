@@ -56,6 +56,11 @@ export function useSpreadResistanceOverTime() {
         undefined
     );
 
+    const filteredStudiesWithoutNAInsecticideClassStudies = React.useMemo(
+        () => filteredStudies.filter(study => study.INSECTICIDE_CLASS !== "NA"),
+        [filteredStudies]
+    );
+
     React.useEffect(() => {
         const hasToBeDisabledSpeciesFilter =
             onDisaggregateBySpeciesChange && disaggregateBySpeciesSelection === "aggregate_species";
@@ -79,7 +84,11 @@ export function useSpreadResistanceOverTime() {
 
     React.useEffect(() => {
         const insecticideClasses = sortInsecticideClasses(
-            uniq(preventionStudies.map(study => study.INSECTICIDE_CLASS))
+            uniq(
+                preventionStudies
+                    .filter(study => study.INSECTICIDE_CLASS !== "NA")
+                    .map(study => study.INSECTICIDE_CLASS)
+            )
         );
 
         setAllInsecticideClasses(insecticideClasses);
@@ -91,7 +100,7 @@ export function useSpreadResistanceOverTime() {
         const yearsRange = range(years[0], years[1] + 1);
         setLineChartData(
             createLineChartDataByInsecticideClass(
-                filteredStudies,
+                filteredStudiesWithoutNAInsecticideClassStudies,
                 selectedCountries,
                 yearsRange,
                 multipleSelectedInsecticideClasses,
@@ -101,7 +110,7 @@ export function useSpreadResistanceOverTime() {
 
         setBarChartData(
             createBarChartDataByInsecticideClass(
-                filteredStudies,
+                filteredStudiesWithoutNAInsecticideClassStudies,
                 selectedCountries,
                 yearsRange,
                 singleSelectedInsecticideClass,
@@ -109,7 +118,7 @@ export function useSpreadResistanceOverTime() {
             )
         );
     }, [
-        filteredStudies,
+        filteredStudiesWithoutNAInsecticideClassStudies,
         disaggregateBySpeciesSelection,
         years,
         multipleSelectedInsecticideClasses,
@@ -119,11 +128,11 @@ export function useSpreadResistanceOverTime() {
 
     React.useEffect(() => {
         if (chartType === "by-insecticide-class") {
-            setCategoriesCount(countBy(filteredStudies, "INSECTICIDE_CLASS"));
+            setCategoriesCount(countBy(filteredStudiesWithoutNAInsecticideClassStudies, "INSECTICIDE_CLASS"));
         } else {
-            setCategoriesCount(countBy(filteredStudies, "INSECTICIDE_TYPE"));
+            setCategoriesCount(countBy(filteredStudiesWithoutNAInsecticideClassStudies, "INSECTICIDE_TYPE"));
         }
-    }, [chartType, filteredStudies]);
+    }, [chartType, filteredStudiesWithoutNAInsecticideClassStudies]);
 
     const onChartTypeChange = React.useCallback((type: SpreadOfResistanceOverTimeChartType) => {
         setChartType(type);
@@ -139,7 +148,6 @@ export function useSpreadResistanceOverTime() {
         singleSelectedInsecticideClass,
         setMultipleSelectedInsecticideClasses,
         setSingleSelectedInsecticideClass,
-        filteredStudies,
         categoriesCount,
         chartTypes,
         chartType,

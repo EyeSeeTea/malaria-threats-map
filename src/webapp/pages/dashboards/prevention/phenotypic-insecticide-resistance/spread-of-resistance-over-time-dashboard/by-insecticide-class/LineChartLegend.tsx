@@ -39,7 +39,7 @@ function LineChartLegend({ selectedInsecticideClasses, allInsecticideClasses, on
                 {allInsecticideClasses.map(value => (
                     <InsecticideClassItem item xs={2} sm={4} md={4} key={value}>
                         <StyledCheckbox
-                            $color={INSECTICIDE_CLASS_COLORS[value]}
+                            $color={INSECTICIDE_CLASS_COLORS[value] || INSECTICIDE_CLASS_COLORS.DEFAULT}
                             checked={selectedInsecticideClasses.includes(value)}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                                 handlerSelectedInsecticideClassesChange(value, e.target.checked)
