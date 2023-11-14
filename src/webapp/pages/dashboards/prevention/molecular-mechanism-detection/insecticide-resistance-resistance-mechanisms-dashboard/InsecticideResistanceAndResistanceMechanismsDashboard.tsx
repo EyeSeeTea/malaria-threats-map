@@ -1,5 +1,7 @@
 import React, { useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+import { Card } from "@mui/material";
 import PreventionFilterableDashboard from "../../PreventionFilterableDashboard";
 
 import StatusOfResistanceToInsecticidePopup from "../../../../../components/dashboards/prevention/StatusOfResistanceToInsecticidePopup";
@@ -80,11 +82,13 @@ const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
                 onDownload={data.kind === "TableData" ? downloadTable : undefined}
                 speciesOptions={speciesOptions}
             >
-                {data.kind === "GraphData" ? (
-                    <InsecticideResistanceAndResistanceMechanismsGraph series={data.series} />
-                ) : (
-                    <InsecticideResistanceAndResistanceMechanismsTable rows={data.rows} />
-                )}
+                <DasboardCard elevation={0}>
+                    {data.kind === "GraphData" ? (
+                        <InsecticideResistanceAndResistanceMechanismsGraph series={data.series} />
+                    ) : (
+                        <InsecticideResistanceAndResistanceMechanismsTable rows={data.rows} />
+                    )}
+                </DasboardCard>
             </PreventionFilterableDashboard>
             <StatusOfResistanceToInsecticidePopup
                 years={filters.years}
@@ -96,3 +100,8 @@ const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
 };
 
 export default React.memo(InsecticideResistanceAndResistanceMechanismsDashboard);
+
+const DasboardCard = styled(Card)`
+    min-height: 500px;
+    padding: 42px;
+`;
