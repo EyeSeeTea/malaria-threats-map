@@ -39,3 +39,58 @@ export type MosquitoOverTimeData = {
     boxplotData: number[][];
     outliersData: number[][];
 };
+
+export type SpreadOfResistanceOverTimeChartType = "by-insecticide-class" | "by-insecticide";
+
+export type SpreadOfResistanceOverTimeChartData =
+    | SpreadOfResistanceOverTimeChartDataByClass
+    | SpreadOfResistanceOverTimeChartDataByType;
+
+export type SpreadOfResistanceOverTimeChartDataByClass = {
+    kind: "InsecticideByClass";
+    data: SpreadOfResistanceOverTimeChart;
+};
+
+export type SpreadOfResistanceOverTimeChartDataByType = {
+    kind: "InsecticideByType";
+    data: SpreadOfResistanceOverTimeChart;
+};
+
+export type SpreadOfResistanceOverTimeChart = {
+    years: number[];
+    maxSumOfConfirmedResistance: number;
+    dataByCountry: SpreadOfResistanceOverTimeByCountry | SpreadOfResistanceOverTimeByCountryAndSpecies;
+};
+
+export type SpreadOfResistanceOverTimeByCountry = Record<string, SpreadOfResistanceOverTimeLineSeries[]>;
+
+export type SpreadOfResistanceOverTimeByCountryAndSpecies = Record<string, SpreadOfResistanceOverTimeBySpecie>;
+export type SpreadOfResistanceOverTimeBySpecie = Record<string, SpreadOfResistanceOverTimeLineSeries[]>;
+
+export type SpreadOfResistanceOverTimeLineSeries = {
+    type: "line";
+    name: string;
+    data: SpreadOfResistanceOverTimeLineData[];
+    color: string;
+    marker: {
+        symbol: "circle";
+        radius: number;
+        lineWidth: number;
+        lineColor: string;
+        fillColor: string;
+    };
+};
+
+export type SpreadOfResistanceOverTimeTooltipData = {
+    insecticideClass: string;
+    year: string;
+    rangeYears: string;
+    sumOfConfirmedResistanceSites: number;
+    sumOfSites: number;
+    numberOfSites: number;
+    numberOfSitesConfirmedResistance: number;
+};
+
+export type SpreadOfResistanceOverTimeLineData = {
+    y: number;
+} & SpreadOfResistanceOverTimeTooltipData;
