@@ -25,8 +25,9 @@ type ConfigProps = {
 };
 
 const WHO_MALARIA_THREATS_MAP_STAGING =
-    "https://extranet.who.int/map/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer";
-const WHO_MALARIA_THREATS_MAP = "https://extranet.who.int/map/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP/MapServer";
+    "https://extranet.who.int/gis/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP_STAGING/MapServer";
+
+const WHO_MALARIA_THREATS_MAP = "https://extranet.who.int/gis/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP/MapServer";
 
 const FEATURES_SERVER = "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services";
 
