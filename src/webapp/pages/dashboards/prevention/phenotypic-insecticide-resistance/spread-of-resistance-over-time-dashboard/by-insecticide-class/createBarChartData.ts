@@ -103,7 +103,10 @@ function createBarChartSeriesData(
         ResistanceStatusColors.Susceptible[0]
     );
 
-    return [resistanceSusceptible, resistancePosible, resistanceConfirmed];
+    const isAllEmpty = [resistanceSusceptible, resistancePosible, resistanceConfirmed].every(({ data }) => {
+        return data.every(value => value.y === 0);
+    });
+    return isAllEmpty ? [] : [resistanceSusceptible, resistancePosible, resistanceConfirmed];
 }
 
 function createChartDataBySpecies(
@@ -178,7 +181,7 @@ export function createBarChartData(
         }
         return {
             ...acc,
-            [countryISO]: [],
+            [countryISO]: isDisaggregatedBySpecies ? {} : [],
         };
     }, {});
 

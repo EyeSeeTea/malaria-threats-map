@@ -206,7 +206,7 @@ export function createLineChartData(
         }
         return {
             ...acc,
-            [countryISO]: [],
+            [countryISO]: isDisaggregatedBySpecies ? {} : [],
         };
     }, {});
 
