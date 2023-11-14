@@ -135,18 +135,12 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                     </StyledGridItem>
                 )}
                 <StyledGridItemCharts item md={filtersVisible ? 9 : 12} xs={12} $isScreenshot={isScreenshot}>
-                    {React.Children.map(children, (child, index) => {
-                        return child ? (
-                            <DasboardCard elevation={0} key={`react_child_${index}`}>
-                                {!filtersVisible && (
-                                    <Button startIcon={<FilterAltIcon />} onClick={onChangeFiltersVisible}>
-                                        {"Filter data"}
-                                    </Button>
-                                )}
-                                <div>{child}</div>
-                            </DasboardCard>
-                        ) : null;
-                    })}
+                    {!filtersVisible && (
+                        <StyledFiltersButton startIcon={<FilterAltIcon />} onClick={onChangeFiltersVisible}>
+                            {t("common.dashboard.filterDataButton")}
+                        </StyledFiltersButton>
+                    )}
+                    <StyledItemCharts>{children}</StyledItemCharts>
                 </StyledGridItemCharts>
             </StyledGridContainer>
         </Container>
@@ -201,24 +195,30 @@ const StyledGridItem = styled(Grid)<{ $isScreenshot: boolean }>`
 `;
 
 const StyledGridItemCharts = styled(Grid)<{ $isScreenshot: boolean }>`
+    position: relative;
     width: ${props => props?.$isScreenshot && "fit-content"};
     max-width: ${props => props?.$isScreenshot && "fit-content"};
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
     .MuiChip-root,
     .MuiChip-label {
         overflow: ${props => props?.$isScreenshot && "initial"};
     }
 `;
 
-const StyledGridContainer = styled(Grid)<{ $isScreenshot: boolean }>`
-    flex-wrap: ${props => props?.$isScreenshot && "nowrap"};
+const StyledFiltersButton = styled(Button)`
+    position: absolute;
+    background-color: white;
+    left: 60px;
+    top: 25px;
 `;
 
-const DasboardCard = styled(Card)`
-    min-height: 500px;
-    padding: 42px;
+const StyledItemCharts = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+`;
+
+const StyledGridContainer = styled(Grid)<{ $isScreenshot: boolean }>`
+    flex-wrap: ${props => props?.$isScreenshot && "nowrap"};
 `;
 
 const StudiesCountCard = styled(Card)`

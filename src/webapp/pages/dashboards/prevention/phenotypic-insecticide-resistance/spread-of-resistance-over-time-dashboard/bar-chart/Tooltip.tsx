@@ -2,7 +2,7 @@ import React from "react";
 import i18next from "i18next";
 import { SpreadOfResistanceOverTimeChartType } from "../../types";
 
-interface CustomPoint extends Highcharts.Point {
+export interface CustomPoint extends Highcharts.Point {
     insecticide: string;
     year: string;
     species: string[];

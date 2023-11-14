@@ -14,7 +14,7 @@ import {
     SpreadOfResistanceOverTimeChartType,
 } from "../../types";
 import BarChartLegend from "./BarChartLegend";
-import Tooltip from "./Tooltip";
+import Tooltip, { CustomPoint } from "./Tooltip";
 
 const BarChart: React.FC<{
     allInsecticideClassesOrTypes: string[];
@@ -179,15 +179,6 @@ const CountryTd = styled.td`
 const NotAvailableTR = styled.tr`
     height: 100px;
 `;
-
-interface CustomPoint extends Highcharts.Point {
-    insecticide: string;
-    year: string;
-    species: string[];
-    resistanceStatus: string;
-    totalNumberOfSites: number;
-    numberOfSitesWithThisStatus: number;
-}
 
 function chartOptions(
     years: number[],

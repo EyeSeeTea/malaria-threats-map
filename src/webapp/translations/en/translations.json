@@ -75,6 +75,7 @@
         "dashboard": {
             "title": "Dashboards",
             "not-available": "Not available",
+            "filterDataButton": "Filter data",
             "filtersSection": {
                 "first": {
                     "title": "1. Select Theme",

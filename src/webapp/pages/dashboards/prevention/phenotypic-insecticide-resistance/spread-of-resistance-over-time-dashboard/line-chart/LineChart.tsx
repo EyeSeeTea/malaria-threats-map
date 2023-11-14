@@ -14,16 +14,16 @@ import {
     SpreadOfResistanceOverTimeChartType,
 } from "../../types";
 import LineChartLegend from "./LineChartLegend";
-import Tooltip from "./Tooltip";
+import Tooltip, { CustomPoint } from "./Tooltip";
 
 const LineChart: React.FC<{
-    chartType: SpreadOfResistanceOverTimeChartType;
     allInsecticideClassesOrTypes: string[];
     data: SpreadOfResistanceOverTimeLineChart;
     chartComponentRefs: React.MutableRefObject<HighchartsReact.RefObject[]>;
     selectedInsecticideClassesOrTypes: string[];
     onInsecticideClassesOrTypesChange: (insecticideClassesOrTypes: string[]) => void;
     isDisaggregatedBySpecies: boolean;
+    chartType: SpreadOfResistanceOverTimeChartType;
 }> = ({
     allInsecticideClassesOrTypes,
     data,
@@ -179,16 +179,6 @@ const CountryTd = styled.td`
 const NotAvailableTR = styled.tr`
     height: 100px;
 `;
-
-interface CustomPoint extends Highcharts.Point {
-    insecticideClassOrType: string;
-    year: string;
-    rangeYears: string;
-    sumOfConfirmedResistanceSites: number;
-    sumOfSites: number;
-    numberOfSites: number;
-    numberOfSitesConfirmedResistance: number;
-}
 
 function chartOptions(
     years: number[],

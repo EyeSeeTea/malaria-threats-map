@@ -1,9 +1,9 @@
 import React from "react";
 import i18next from "i18next";
-import { SpreadOfResistanceOverTimeChartType } from "../../types";
+import { SpreadOfResistanceOverTimeChartType } from "../types";
 
 export interface CustomPoint extends Highcharts.Point {
-    insecticideClassOrType: string;
+    insecticideClass: string;
     year: string;
     rangeYears: string;
     sumOfConfirmedResistanceSites: number;
@@ -12,7 +12,7 @@ export interface CustomPoint extends Highcharts.Point {
     numberOfSitesConfirmedResistance: number;
 }
 
-const Tooltip: React.FC<{
+const LineChartTooltip: React.FC<{
     chartType: SpreadOfResistanceOverTimeChartType;
     point: CustomPoint;
 }> = ({ point, chartType }) => {
@@ -23,7 +23,7 @@ const Tooltip: React.FC<{
                     {chartType === "by-insecticide-class"
                         ? i18next.t("common.dashboard.tooltip.insecticideClass")
                         : i18next.t("common.dashboard.tooltip.insecticideType")}
-                    : {i18next.t(point.insecticideClassOrType)}
+                    : {i18next.t(point.insecticideClass)}
                 </h4>
             </div>
 
@@ -108,4 +108,4 @@ const Tooltip: React.FC<{
     );
 };
 
-export default Tooltip;
+export default LineChartTooltip;
