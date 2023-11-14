@@ -4,7 +4,7 @@ import { Checkbox, Typography, Grid } from "@mui/material";
 import styled from "styled-components";
 
 import { INSECTICIDE_CLASS_COLORS, INSECTICIDE_TYPE_COLORS } from "./createLineChartData";
-import { SpreadOfResistanceOverTimeChartType } from "../types";
+import { SpreadOfResistanceOverTimeChartType } from "../../types";
 
 interface Props {
     chartType: SpreadOfResistanceOverTimeChartType;
@@ -55,8 +55,8 @@ function LineChartLegend({
                         <StyledCheckbox
                             $color={
                                 chartType === "by-insecticide-class"
-                                    ? INSECTICIDE_CLASS_COLORS[value]
-                                    : INSECTICIDE_TYPE_COLORS[value]
+                                    ? INSECTICIDE_CLASS_COLORS[value] || INSECTICIDE_CLASS_COLORS.DEFAULT
+                                    : INSECTICIDE_TYPE_COLORS[value] || INSECTICIDE_TYPE_COLORS.DEFAULT
                             }
                             checked={selectedInsecticideClassesOrTypes.includes(value)}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

@@ -1,27 +1,29 @@
 import Highcharts from "highcharts";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Stack, Typography } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import i18next from "i18next";
+import { Stack, Typography } from "@mui/material";
+import ReactDOMServer from "react-dom/server";
 
 import {
-    SpreadOfResistanceOverTimeLineChart,
-    SpreadOfResistanceOverTimeLineSeries,
-    SpreadOfResistanceOverTimeBySpecie,
+    SpreadOfResistanceOverTimeByCountryBarChart,
+    SpreadOfResistanceOverTimeBarChart,
+    SpreadOfResistanceOverTimeSeriesBarChart,
     SpreadOfResistanceOverTimeChartType,
-} from "../types";
-import LineChartLegend from "./LineChartLegend";
+} from "../../types";
+import BarChartLegend from "./BarChartLegend";
+import Tooltip from "./Tooltip";
 
-const LineChart: React.FC<{
-    chartType: SpreadOfResistanceOverTimeChartType;
+const BarChart: React.FC<{
     allInsecticideClassesOrTypes: string[];
-    data: SpreadOfResistanceOverTimeLineChart;
+    data: SpreadOfResistanceOverTimeBarChart;
     chartComponentRefs: React.MutableRefObject<HighchartsReact.RefObject[]>;
-    selectedInsecticideClassesOrTypes: string[];
-    onInsecticideClassesOrTypesChange: (insecticideClasses: string[]) => void;
+    selectedInsecticideClassesOrTypes: string;
+    onInsecticideClassesOrTypesChange: (insecticideClassesOrTypes: string) => void;
     isDisaggregatedBySpecies: boolean;
+    chartType: SpreadOfResistanceOverTimeChartType;
 }> = ({
     allInsecticideClassesOrTypes,
     data,
@@ -34,16 +36,16 @@ const LineChart: React.FC<{
     const { t } = useTranslation();
     return (
         <React.Fragment>
-            <LineChartLegend
+            <BarChartLegend
                 chartType={chartType}
                 allInsecticideClassesOrTypes={allInsecticideClassesOrTypes}
-                onInsecticideClassesOrTypesChange={onInsecticideClassesOrTypesChange}
-                selectedInsecticideClassesOrTypes={selectedInsecticideClassesOrTypes}
+                selectedInsecticideClassOrType={selectedInsecticideClassesOrTypes}
+                onInsecticideClassOrTypeChange={onInsecticideClassesOrTypesChange}
             />
             <Stack direction="row" alignItems="center" sx={{ minHeight: 600 }}>
                 <YAxisTitle>
                     {t(
-                        "common.dashboard.phenotypicInsecticideResistanceDashboards.spreadOfResistanceOverTime.sumConfirmedResistance"
+                        "common.dashboard.phenotypicInsecticideResistanceDashboards.spreadOfResistanceOverTime.numberOfSites"
                     )}
                 </YAxisTitle>
 
@@ -62,11 +64,11 @@ const LineChart: React.FC<{
 
                                             const dataOfCountry = data.dataByCountry[
                                                 isoCountry
-                                            ] as SpreadOfResistanceOverTimeBySpecie;
+                                            ] as SpreadOfResistanceOverTimeByCountryBarChart;
 
                                             const dataBySpecie = dataOfCountry[
                                                 specie
-                                            ] as SpreadOfResistanceOverTimeLineSeries[];
+                                            ] as SpreadOfResistanceOverTimeSeriesBarChart[];
 
                                             const options = chartOptions(
                                                 data.years,
@@ -105,7 +107,7 @@ const LineChart: React.FC<{
 
                                 const dataOfCountry = data.dataByCountry[
                                     isoCountry
-                                ] as SpreadOfResistanceOverTimeLineSeries[];
+                                ] as SpreadOfResistanceOverTimeSeriesBarChart[];
 
                                 const options = chartOptions(
                                     data.years,
@@ -179,18 +181,17 @@ const NotAvailableTR = styled.tr`
 `;
 
 interface CustomPoint extends Highcharts.Point {
-    insecticideClassOrType: string;
+    insecticide: string;
     year: string;
-    rangeYears: string;
-    sumOfConfirmedResistanceSites: number;
-    sumOfSites: number;
-    numberOfSites: number;
-    numberOfSitesConfirmedResistance: number;
+    species: string[];
+    resistanceStatus: string;
+    totalNumberOfSites: number;
+    numberOfSitesWithThisStatus: number;
 }
 
 function chartOptions(
     years: number[],
-    data: SpreadOfResistanceOverTimeLineSeries[],
+    data: SpreadOfResistanceOverTimeSeriesBarChart[],
     maxSumConfirmedResistance: number,
     xAxisVisible: boolean,
     chartType: SpreadOfResistanceOverTimeChartType
@@ -205,46 +206,8 @@ function chartOptions(
             useHTML: true,
             formatter: function () {
                 const point = this.point as CustomPoint;
-                return `
-                    <div style="padding: 16px;">
-                        <div><h4>${
-                            chartType === "by-insecticide-class"
-                                ? i18next.t("common.dashboard.tooltip.insecticideClass")
-                                : i18next.t("common.dashboard.tooltip.insecticideType")
-                        }: ${i18next.t(point.insecticideClassOrType)}</h4></div>
-
-                        <div>
-                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px;">
-                                <div>${i18next.t(
-                                    "common.dashboard.tooltip.year"
-                                )}: </div><div style="padding-left:10px;">${point.year}</div>
-                            </div>
-
-                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;">
-                                <div>${i18next.t("common.dashboard.tooltip.numberOfSitesConfirmedResistance")} (${
-                    point.year
-                }): </div><div style="padding-left:10px;">${point.numberOfSitesConfirmedResistance}</div>
-                            </div>
-
-                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;">
-                                <div>${i18next.t("common.dashboard.tooltip.numberOfSites")} (${
-                    point.year
-                }): </div><div style="padding-left:10px;">${point.numberOfSites}</div>
-                            </div>
-
-                            <div style="border-bottom:1px solid #d0d0d0; display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;">
-                                <div>${i18next.t("common.dashboard.tooltip.numberOfSitesConfirmedResistance")} (${
-                    point.rangeYears
-                }): </div><div style="padding-left:10px;">${point.sumOfConfirmedResistanceSites}</div>
-                            </div>
-
-                            <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom: 10px; padding-top: 10px;"><div>${i18next.t(
-                                "common.dashboard.tooltip.numberOfSites"
-                            )} (${point.rangeYears}): </div><div style="padding-left:10px;">${point.sumOfSites}</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                const htmlString = ReactDOMServer.renderToString(<Tooltip chartType={chartType} point={point} />);
+                return htmlString;
             },
         },
 
@@ -254,6 +217,12 @@ function chartOptions(
 
         legend: {
             enabled: false,
+        },
+
+        plotOptions: {
+            column: {
+                stacking: "normal",
+            },
         },
 
         xAxis: {
@@ -283,11 +252,13 @@ function chartOptions(
             title: {
                 text: "",
             },
-            tickInterval: 20,
-            min: -20,
-            max: maxSumConfirmedResistance + 20,
-            showFirstLabel: false,
+            tickInterval: 25,
+            min: 0,
+            max: maxSumConfirmedResistance + 25,
             showLastLabel: false,
+            labels: {
+                y: -1,
+            },
         },
 
         series: data as Highcharts.SeriesOptionsType[],
@@ -296,4 +267,4 @@ function chartOptions(
     };
 }
 
-export default React.memo(LineChart);
+export default React.memo(BarChart);

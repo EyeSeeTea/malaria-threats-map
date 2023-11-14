@@ -1,22 +1,24 @@
+import { groupBy, uniq } from "lodash";
+import i18next from "i18next";
+
 import { PreventionStudy } from "../../../../../../../domain/entities/PreventionStudy";
 import {
     SpreadOfResistanceOverTimeByCountryAndSpeciesBarChart,
     SpreadOfResistanceOverTimeByCountryBarChart,
     SpreadOfResistanceOverTimeBySpecieBarChart,
-    SpreadOfResistanceOverTimeChartDataByClass,
     SpreadOfResistanceOverTimeSeriesBarChart,
     SpreadOfResistanceOverTimeBarData,
+    SpreadOfResistanceOverTimeChartType,
+    SpreadOfResistanceOverTimeChartData,
 } from "../../types";
 import { DisaggregateBySpeciesOptions } from "../../../../../../components/filters/DisaggregateBySpecies";
-import { groupBy, uniq } from "lodash";
 import { ResistanceStatusColors } from "../../../../../../components/layers/prevention/ResistanceStatus/symbols";
-import i18next from "i18next";
 
 function createSerieByStatusAndYear(
     studies: PreventionStudy[],
     sortedYears: number[],
     resistanceStatus: string,
-    insecticideClass: string,
+    insecticideClassOrType: string,
     name: string,
     color: string
 ): SpreadOfResistanceOverTimeSeriesBarChart {
@@ -30,7 +32,7 @@ function createSerieByStatusAndYear(
             resistanceStudiesOfStatus,
             sortedYears,
             resistanceStatus,
-            insecticideClass
+            insecticideClassOrType
         ),
     };
 }
@@ -40,7 +42,7 @@ function getBarChartDataByYear(
     resistanceStudiesOfStatus: PreventionStudy[],
     sortedYears: number[],
     resistanceStatus: string,
-    insecticideClass: string
+    insecticideClassOrType: string
 ): SpreadOfResistanceOverTimeBarData[] {
     return sortedYears.reduce((acc, year) => {
         const studiesOfYear = studies.filter(study => Number(study.YEAR_START) === year);
@@ -55,12 +57,11 @@ function getBarChartDataByYear(
             Object.keys(resistanceStudiesOfStatusOfYearGroupedBySite)?.length || 0;
 
         const species = uniq(resistanceStudiesOfStatus.map(study => study.SPECIES)).sort();
-
         return [
             ...acc,
             {
                 y: numberOfSitesWithThisStatusOfYear,
-                insecticideClass,
+                insecticide: insecticideClassOrType,
                 year,
                 species,
                 resistanceStatus,
@@ -74,13 +75,13 @@ function getBarChartDataByYear(
 function createBarChartSeriesData(
     studies: PreventionStudy[],
     sortedYears: number[],
-    insecticideClass: string
+    insecticideClassOrType: string
 ): SpreadOfResistanceOverTimeSeriesBarChart[] {
     const resistanceConfirmed = createSerieByStatusAndYear(
         studies,
         sortedYears,
         "CONFIRMED_RESISTANCE",
-        insecticideClass,
+        insecticideClassOrType,
         i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.confirmed"),
         ResistanceStatusColors.Confirmed[0]
     );
@@ -89,7 +90,7 @@ function createBarChartSeriesData(
         studies,
         sortedYears,
         "POSSIBLE_RESISTANCE",
-        insecticideClass,
+        insecticideClassOrType,
         i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.possible"),
         ResistanceStatusColors.Possible[0]
     );
@@ -98,7 +99,7 @@ function createBarChartSeriesData(
         studies,
         sortedYears,
         "SUSCEPTIBLE",
-        insecticideClass,
+        insecticideClassOrType,
         i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.susceptible"),
         ResistanceStatusColors.Susceptible[0]
     );
@@ -109,12 +110,12 @@ function createBarChartSeriesData(
 function createChartDataBySpecies(
     studies: PreventionStudy[],
     sortedYears: number[],
-    insecticideClass: string,
+    insecticideClassOrType: string,
     sortedSpecies: string[]
 ): SpreadOfResistanceOverTimeBySpecieBarChart {
     return sortedSpecies.reduce((acc, specie) => {
         const studiesOfSpecie = studies.filter(study => study.SPECIES === specie);
-        const barChartSeriesData = createBarChartSeriesData(studiesOfSpecie, sortedYears, insecticideClass);
+        const barChartSeriesData = createBarChartSeriesData(studiesOfSpecie, sortedYears, insecticideClassOrType);
         return barChartSeriesData.length === 0
             ? acc
             : {
@@ -158,22 +159,32 @@ export function createBarChartData(
     filteredsStudies: PreventionStudy[],
     selectedCountries: string[],
     sortedYears: number[],
-    insecticideClass: string,
-    disaggregateBySpeciesSelectionFilter: DisaggregateBySpeciesOptions
-): SpreadOfResistanceOverTimeChartDataByClass {
+    insecticideClassOrType: string,
+    disaggregateBySpeciesSelectionFilter: DisaggregateBySpeciesOptions,
+    chartType: SpreadOfResistanceOverTimeChartType
+): SpreadOfResistanceOverTimeChartData {
     const isDisaggregatedBySpecies = disaggregateBySpeciesSelectionFilter === "disaggregate_species";
-    const studiesOfInsecticideClass = filteredsStudies.filter(study => study.INSECTICIDE_CLASS === insecticideClass);
+
+    const chartByKey = chartType === "by-insecticide-class" ? "INSECTICIDE_CLASS" : "INSECTICIDE_TYPE";
+    const studiesOfInsecticideClassOrType = filteredsStudies.filter(
+        study => study[chartByKey] === insecticideClassOrType
+    );
 
     const dataByCountry = selectedCountries.reduce((acc, countryISO) => {
-        const filteredStudiesOfCountry = studiesOfInsecticideClass.filter(study => study.ISO2 === countryISO);
-        if (insecticideClass && filteredStudiesOfCountry.length) {
+        const filteredStudiesOfCountry = studiesOfInsecticideClassOrType.filter(study => study.ISO2 === countryISO);
+        if (insecticideClassOrType && filteredStudiesOfCountry.length) {
             const sortedSpecies = uniq(filteredStudiesOfCountry.map(study => study.SPECIES)).sort();
 
             return {
                 ...acc,
                 [countryISO]: isDisaggregatedBySpecies
-                    ? createChartDataBySpecies(filteredStudiesOfCountry, sortedYears, insecticideClass, sortedSpecies)
-                    : createBarChartSeriesData(filteredStudiesOfCountry, sortedYears, insecticideClass),
+                    ? createChartDataBySpecies(
+                          filteredStudiesOfCountry,
+                          sortedYears,
+                          insecticideClassOrType,
+                          sortedSpecies
+                      )
+                    : createBarChartSeriesData(filteredStudiesOfCountry, sortedYears, insecticideClassOrType),
             };
         }
         return {
@@ -183,7 +194,7 @@ export function createBarChartData(
     }, {});
 
     return {
-        kind: "InsecticideByClass",
+        kind: chartType === "by-insecticide-class" ? "InsecticideByClass" : "InsecticideByType",
         data: {
             years: sortedYears,
             dataByCountry,

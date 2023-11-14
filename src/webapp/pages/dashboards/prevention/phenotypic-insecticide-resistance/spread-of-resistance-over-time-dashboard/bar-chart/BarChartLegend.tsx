@@ -3,40 +3,51 @@ import { useTranslation } from "react-i18next";
 import { Typography, RadioGroup, Radio, FormControlLabel } from "@mui/material";
 import styled from "styled-components";
 import { ResistanceStatusColors } from "../../../../../../components/layers/prevention/ResistanceStatus/symbols";
+import { SpreadOfResistanceOverTimeChartType } from "../../types";
 
 interface Props {
-    allInsecticideClasses: string[];
-    selectedInsecticideClass: string;
-    onInsecticideClassChange: (insecticideClass: string) => void;
+    chartType: SpreadOfResistanceOverTimeChartType;
+    allInsecticideClassesOrTypes: string[];
+    selectedInsecticideClassOrType: string;
+    onInsecticideClassOrTypeChange: (insecticideClass: string) => void;
 }
 
-function BarChartLegend({ allInsecticideClasses, selectedInsecticideClass, onInsecticideClassChange }: Props) {
+function BarChartLegend({
+    allInsecticideClassesOrTypes,
+    selectedInsecticideClassOrType,
+    onInsecticideClassOrTypeChange,
+    chartType,
+}: Props) {
     const { t } = useTranslation();
 
     const handlerSelectedInsecticideClassChange = React.useCallback(
         (event: React.ChangeEvent<unknown>) => {
             const newSelection = (event.target as HTMLInputElement).value;
-            onInsecticideClassChange(newSelection);
+            onInsecticideClassOrTypeChange(newSelection);
         },
-        [onInsecticideClassChange]
+        [onInsecticideClassOrTypeChange]
     );
 
-    if (!selectedInsecticideClass) return null;
+    if (!selectedInsecticideClassOrType) return null;
 
     return (
         <React.Fragment>
             <LabelItemsContainer>
                 <StyledTypographyTitle>
-                    {t(
-                        "common.dashboard.phenotypicInsecticideResistanceDashboards.spreadOfResistanceOverTime.insecticideClassLegendTitle"
-                    )}
+                    {chartType === "by-insecticide-class"
+                        ? t(
+                              "common.dashboard.phenotypicInsecticideResistanceDashboards.spreadOfResistanceOverTime.insecticideClassLegendTitle"
+                          )
+                        : t(
+                              "common.dashboard.phenotypicInsecticideResistanceDashboards.spreadOfResistanceOverTime.insecticideTypeLegendTitle"
+                          )}
                 </StyledTypographyTitle>
                 <StyledRadioGroup
-                    value={selectedInsecticideClass}
+                    value={selectedInsecticideClassOrType}
                     onChange={handlerSelectedInsecticideClassChange}
                     sx={{ paddingLeft: 2 }}
                 >
-                    {allInsecticideClasses.map(value => (
+                    {allInsecticideClassesOrTypes.map(value => (
                         <StyledFormControlLabel
                             key={value}
                             value={value}

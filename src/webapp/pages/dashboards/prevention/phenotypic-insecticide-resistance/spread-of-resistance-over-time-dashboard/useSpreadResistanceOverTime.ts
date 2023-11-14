@@ -1,6 +1,7 @@
 import i18next from "i18next";
 import { range, countBy, uniq } from "lodash";
 import React from "react";
+
 import { Option } from "../../../common/types";
 import { usePrevention } from "../../usePrevention";
 import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
@@ -9,8 +10,8 @@ import {
     SpreadOfResistanceOverTimeChartDataByType,
     SpreadOfResistanceOverTimeChartType,
 } from "../types";
-import { createLineChartData } from "./createLineChartData";
-import { createBarChartData as createBarChartDataByInsecticideClass } from "./by-insecticide-class/createBarChartData";
+import { createBarChartData } from "./bar-chart/createBarChartData";
+import { createLineChartData } from "./line-chart/createLineChartData";
 import { sortInsecticideClasses } from "../../../../../components/filters/InsecticideClassFilter";
 
 const chartTypes: Option<SpreadOfResistanceOverTimeChartType>[] = [
@@ -50,10 +51,16 @@ export function useSpreadResistanceOverTime() {
         data: { years: [], dataByCountry: {}, maxValue: 0 },
     });
 
-    const [barChartData, setBarChartData] = React.useState<SpreadOfResistanceOverTimeChartDataByClass>({
+    const [barChartDataByClass, setBarChartDataByClass] = React.useState<SpreadOfResistanceOverTimeChartDataByClass>({
         kind: "InsecticideByClass",
         data: { years: [], dataByCountry: {}, maxValue: 0 },
     });
+
+    const [barChartDataByType, setBarChartDataByType] = React.useState<SpreadOfResistanceOverTimeChartDataByType>({
+        kind: "InsecticideByType",
+        data: { years: [], dataByCountry: {}, maxValue: 0 },
+    });
+
     const [categoriesCount, setCategoriesCount] = React.useState<Record<string, number>>({});
     const [chartType, setChartType] = React.useState<SpreadOfResistanceOverTimeChartType>("by-insecticide-class");
     const [allInsecticideClasses, setAllInsecticideClasses] = React.useState<string[]>([]);
@@ -64,6 +71,11 @@ export function useSpreadResistanceOverTime() {
     const [allInsecticides, setAllInsecticides] = React.useState<string[]>([]);
     const [multipleSelectedInsecticides, setMultipleSelectedInsecticides] = React.useState<string[]>([]);
     const [singleSelectedInsecticide, setSingleSelectedInsecticide] = React.useState<string | undefined>(undefined);
+
+    const filteredStudiesWithoutNAInsecticideClassStudies = React.useMemo(
+        () => filteredStudies.filter(study => study.INSECTICIDE_CLASS !== "NA"),
+        [filteredStudies]
+    );
 
     React.useEffect(() => {
         const hasToBeDisabledSpeciesFilter =
@@ -89,7 +101,11 @@ export function useSpreadResistanceOverTime() {
     React.useEffect(() => {
         if (chartType === "by-insecticide-class") {
             const insecticideClasses = sortInsecticideClasses(
-                uniq(preventionStudies.map(study => study.INSECTICIDE_CLASS))
+                uniq(
+                    preventionStudies
+                        .filter(study => study.INSECTICIDE_CLASS !== "NA")
+                        .map(study => study.INSECTICIDE_CLASS)
+                )
             );
             setAllInsecticideClasses(insecticideClasses);
             setMultipleSelectedInsecticideClasses(insecticideClasses);
@@ -97,7 +113,9 @@ export function useSpreadResistanceOverTime() {
         }
 
         if (chartType === "by-insecticide") {
-            const insecticides = uniq(preventionStudies.map(study => study.INSECTICIDE_TYPE)).sort();
+            const insecticides = uniq(
+                preventionStudies.filter(study => study.INSECTICIDE_CLASS !== "NA").map(study => study.INSECTICIDE_TYPE)
+            ).sort();
             setAllInsecticides(insecticides);
             setMultipleSelectedInsecticides(insecticides);
             setSingleSelectedInsecticide(insecticides[0]);
@@ -109,7 +127,7 @@ export function useSpreadResistanceOverTime() {
             const yearsRange = range(years[0], years[1] + 1);
             setLineChartDataByClass(
                 createLineChartData(
-                    filteredStudies,
+                    filteredStudiesWithoutNAInsecticideClassStudies,
                     selectedCountries,
                     yearsRange,
                     multipleSelectedInsecticideClasses,
@@ -118,25 +136,25 @@ export function useSpreadResistanceOverTime() {
                 ) as SpreadOfResistanceOverTimeChartDataByClass
             );
 
-            setBarChartData(
-                createBarChartDataByInsecticideClass(
-                    filteredStudies,
+            setBarChartDataByClass(
+                createBarChartData(
+                    filteredStudiesWithoutNAInsecticideClassStudies,
                     selectedCountries,
                     yearsRange,
                     singleSelectedInsecticideClass,
-                    disaggregateBySpeciesSelection
-                )
+                    disaggregateBySpeciesSelection,
+                    "by-insecticide-class"
+                ) as SpreadOfResistanceOverTimeChartDataByClass
             );
         }
     }, [
         chartType,
-        filteredStudies,
         disaggregateBySpeciesSelection,
-        years,
+        filteredStudiesWithoutNAInsecticideClassStudies,
         multipleSelectedInsecticideClasses,
-        multipleSelectedInsecticides,
         selectedCountries,
         singleSelectedInsecticideClass,
+        years,
     ]);
 
     React.useEffect(() => {
@@ -144,7 +162,7 @@ export function useSpreadResistanceOverTime() {
             const yearsRange = range(years[0], years[1] + 1);
             setLineChartDataByType(
                 createLineChartData(
-                    filteredStudies,
+                    filteredStudiesWithoutNAInsecticideClassStudies,
                     selectedCountries,
                     yearsRange,
                     multipleSelectedInsecticides,
@@ -152,25 +170,35 @@ export function useSpreadResistanceOverTime() {
                     "by-insecticide"
                 ) as SpreadOfResistanceOverTimeChartDataByType
             );
+
+            setBarChartDataByType(
+                createBarChartData(
+                    filteredStudiesWithoutNAInsecticideClassStudies,
+                    selectedCountries,
+                    yearsRange,
+                    singleSelectedInsecticide,
+                    disaggregateBySpeciesSelection,
+                    "by-insecticide"
+                ) as SpreadOfResistanceOverTimeChartDataByType
+            );
         }
     }, [
         chartType,
-        filteredStudies,
         disaggregateBySpeciesSelection,
-        years,
-        multipleSelectedInsecticideClasses,
+        filteredStudiesWithoutNAInsecticideClassStudies,
         multipleSelectedInsecticides,
         selectedCountries,
-        singleSelectedInsecticideClass,
+        singleSelectedInsecticide,
+        years,
     ]);
 
     React.useEffect(() => {
         if (chartType === "by-insecticide-class") {
-            setCategoriesCount(countBy(filteredStudies, "INSECTICIDE_CLASS"));
+            setCategoriesCount(countBy(filteredStudiesWithoutNAInsecticideClassStudies, "INSECTICIDE_CLASS"));
         } else {
-            setCategoriesCount(countBy(filteredStudies, "INSECTICIDE_TYPE"));
+            setCategoriesCount(countBy(filteredStudiesWithoutNAInsecticideClassStudies, "INSECTICIDE_TYPE"));
         }
-    }, [chartType, filteredStudies]);
+    }, [chartType, filteredStudiesWithoutNAInsecticideClassStudies]);
 
     const onChartTypeChange = React.useCallback((type: SpreadOfResistanceOverTimeChartType) => {
         setChartType(type);
@@ -191,13 +219,13 @@ export function useSpreadResistanceOverTime() {
         singleSelectedInsecticide,
         setMultipleSelectedInsecticides,
         setSingleSelectedInsecticide,
-        filteredStudies,
         categoriesCount,
         chartTypes,
         chartType,
         lineChartDataByClass,
         lineChartDataByType,
-        barChartData,
+        barChartDataByClass,
+        barChartDataByType,
         filters: {
             ...filters,
             onInsecticideClassesChange: chartType === "by-insecticide" ? onInsecticideClassChange : undefined,
