@@ -100,7 +100,7 @@ const BarChart: React.FC<{
                                         <NotAvailableTR key={`${isoCountry}`} style={{ minHeight: 100 }}>
                                             <td>{t(isoCountry)}</td>
                                             <td></td>
-                                            <td>{"Not available"}</td>
+                                            <td>{t("common.dashboard.not-available")}</td>
                                         </NotAvailableTR>
                                     );
                                 }
@@ -117,7 +117,7 @@ const BarChart: React.FC<{
                                     chartType
                                 );
 
-                                return (
+                                return dataOfCountry.length ? (
                                     <tr key={isoCountry}>
                                         <CountryTd>
                                             <Typography variant="body1" sx={{ marginLeft: 8 }}>
@@ -134,6 +134,15 @@ const BarChart: React.FC<{
                                             />
                                         </td>
                                     </tr>
+                                ) : (
+                                    <NotAvailableTR key={`${isoCountry}`} style={{ minHeight: 100 }}>
+                                        <CountryTd>
+                                            <Typography variant="body1" sx={{ marginLeft: 8 }}>
+                                                {t(isoCountry)}
+                                            </Typography>
+                                        </CountryTd>
+                                        <td>{t("common.dashboard.not-available")}</td>
+                                    </NotAvailableTR>
                                 );
                             })}
                         </tbody>
