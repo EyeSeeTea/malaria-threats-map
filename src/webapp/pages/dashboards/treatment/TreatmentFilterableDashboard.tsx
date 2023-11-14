@@ -140,7 +140,7 @@ const TreatmentFilterableDashboardComponent: React.FC<TreatmentFilterableDashboa
                     <DasboardCard elevation={0}>
                         {!filtersVisible && (
                             <Button startIcon={<FilterAltIcon />} onClick={onChangeFiltersVisible}>
-                                {"Filter data"}
+                                {t("common.dashboard.filterDataButton")}
                             </Button>
                         )}
                         <div>{children}</div>

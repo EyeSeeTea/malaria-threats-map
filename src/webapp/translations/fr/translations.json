@@ -76,6 +76,7 @@
         "dashboard": {
             "title": "Tableaux de bord",
             "not-available": "indisponible",
+            "filterDataButton": "Filtrer les données",
             "filtersSection": {
                 "first": {
                     "title": "1. Sélectionnez le thème",

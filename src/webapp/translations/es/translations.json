@@ -76,6 +76,7 @@
         "dashboard": {
             "title": "Tableros",
             "not-available": "No disponible",
+            "filterDataButton": "Filtrar datos",
             "filtersSection": {
                 "first": {
                     "title": "1. Seleccionar tema",
