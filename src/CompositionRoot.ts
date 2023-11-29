@@ -22,7 +22,7 @@ import {  GetTranslationsUseCase } from "./domain/usecases/GetTranslationsUseCas
 import { TranslationApiRepository } from "./data/repositories/TranslationApiRepository";
 
 export class CompositionRoot {
-    private preventionRepository = new PreventionApiRepository(config.mapServerUrl);
+    private preventionRepository = new PreventionApiRepository(config.xmartServerUrl);
     private diagnosisRepository = new DiagnosisApiRepository(config.xmartServerUrl);
     private treatmentRepository = new TreatmentApiRepository(config.xmartServerUrl);
     private invasiveRepository = new InvasiveApiRepository(config.xmartServerUrl);
