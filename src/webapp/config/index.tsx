@@ -32,7 +32,7 @@ const WHO_MALARIA_THREATS_MAP = "https://extranet.who.int/gis/rest/services/MALA
 const FEATURES_SERVER = "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services";
 
 const XMART_URL_STAGING = "https://xmart-api-public-uat.who.int/MAL_THREATS";
-const XMART_URL_PROD = "https://frontdoor-l4uikgap6gz3m.azurefd.net/MAL_THREATS";
+const XMART_URL_PROD = "https://xmart-api-public.who.int/MAL_THREATS";
 
 const FEEDBACK_EMAIL_FROM = process.env.REACT_APP_FEEDBACK_EMAIL_FROM;
 
