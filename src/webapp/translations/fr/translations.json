@@ -76,6 +76,7 @@
         "dashboard": {
             "title": "Tableaux de bord",
             "not-available": "indisponible",
+            "filterDataButton": "Filtrer les données",
             "filtersSection": {
                 "first": {
                     "title": "1. Sélectionnez le thème",
@@ -220,7 +221,9 @@
                     "title": "Propagation de la résistance dans le temps",
                     "sumConfirmedResistance": "Somme des sites dont la résistance a été confirmée",
                     "year": "An",
-                    "insecticideClassLegendTitle": "Classe d'insecticide"
+                    "insecticideClassLegendTitle": "Classe d'insecticide",
+                    "numberOfSites": "Nombre de sites",
+                    "insecticideResistanceStatus": "Statut de résistance aux insecticides"
                 }
             },
             "molecularMechanismDetectionDashboards": {
@@ -309,7 +312,20 @@
                 "insecticideClass": "Classe d'insecticide",
                 "year": "Année",
                 "numberOfSitesConfirmedResistance": "Nombre de sites avec une résistance confirmée",
-                "numberOfSites": "Nombre de sites ayant surveillé la résistance"
+                "numberOfSites": "Nombre de sites ayant surveillé la résistance",
+                "species": "Espèce",
+                "resistanceStatus": "Statut de résistance",
+                "resistanceStatusType": {
+                    "CONFIRMED_RESISTANCE": "Confirmé",
+                    "POSSIBLE_RESISTANCE": "Possible",
+                    "SUSCEPTIBLE": "Susceptible"
+                },
+                "numberOfSitesWithThisStatus": {
+                    "CONFIRMED_RESISTANCE": "Nombre de sites avec une résistance confirmée",
+                    "POSSIBLE_RESISTANCE": "Nombre de sites avec une résistance possible",
+                    "SUSCEPTIBLE": "Nombre de sites présentant une résistance sensible"
+                },
+                "totalNumberOfSites": "Nombre de sites ayant surveillé la résistance"
             }
         },
         "homepage": {

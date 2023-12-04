@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import PreventionFilterableDashboard from "../../PreventionFilterableDashboard";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
+import { Card } from "@mui/material";
 import { useResistanceToInsecticide } from "./useResistanceToInsecticide";
 import {
     ResistanceToInsecticideDataByClass,
@@ -49,11 +50,13 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
                 onChartTypeChange={handleChartTypeChange}
                 onInfoClick={onChangeOpenPopup}
             >
-                {data.kind === "InsecticideByClass" ? (
-                    <ChartByClass data={data.data} chartComponentRefs={chartComponentRefs} />
-                ) : (
-                    <ChartByType data={data.data} chartComponentRefs={chartComponentRefs} />
-                )}
+                <DasboardCard elevation={0}>
+                    {data.kind === "InsecticideByClass" ? (
+                        <ChartByClass data={data.data} chartComponentRefs={chartComponentRefs} />
+                    ) : (
+                        <ChartByType data={data.data} chartComponentRefs={chartComponentRefs} />
+                    )}
+                </DasboardCard>
             </PreventionFilterableDashboard>
             <StatusOfResistanceToInsecticidePopup
                 years={filters.years}
@@ -235,6 +238,11 @@ const TableByType = styled.table`
     tr:last-child td:nth-child(1) {
         padding-bottom: 50px;
     }
+`;
+
+const DasboardCard = styled(Card)`
+    min-height: 500px;
+    padding: 42px;
 `;
 
 const StyledHighcharts = styled(HighchartsReact)``;

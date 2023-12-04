@@ -49,7 +49,6 @@ export function useResistanceToInsecticide() {
                 chartType
             )
         );
-        console.log("setData");
     }, [
         preventionStudies,
         filteredStudies,

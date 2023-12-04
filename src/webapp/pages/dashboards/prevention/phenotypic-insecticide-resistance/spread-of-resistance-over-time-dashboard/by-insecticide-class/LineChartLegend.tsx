@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Checkbox, Typography, Grid } from "@mui/material";
 import styled from "styled-components";
-import { INSECTICIDE_CLASS_COLORS } from "./createChartData";
+import { INSECTICIDE_CLASS_COLORS } from "./createLineChartData";
 
 interface Props {
     allInsecticideClasses: string[];
@@ -57,7 +57,7 @@ export default LineChartLegend;
 
 const InsecticideClassLegendContainer = styled.div`
     display: flex;
-    gap: 24px;
+    gap: 36px;
     margin-bottom: 16px;
 `;
 
@@ -81,4 +81,5 @@ const StyledTypographyTitle = styled(Typography)`
 
 const StyledTypographyOption = styled(Typography)`
     align-self: center;
+    font-size: 14px;
 `;

@@ -1,13 +1,13 @@
 import _, { groupBy } from "lodash";
 import { PreventionStudy } from "../../../../../../../domain/entities/PreventionStudy";
 import {
-    SpreadOfResistanceOverTimeByCountry,
-    SpreadOfResistanceOverTimeByCountryAndSpecies,
-    SpreadOfResistanceOverTimeBySpecie,
-    SpreadOfResistanceOverTimeChartData,
     SpreadOfResistanceOverTimeLineSeries,
     SpreadOfResistanceOverTimeLineData,
-    SpreadOfResistanceOverTimeTooltipData,
+    SpreadOfResistanceOverTimeTooltipDataLineChart,
+    SpreadOfResistanceOverTimeChartDataByClass,
+    SpreadOfResistanceOverTimeBySpecie,
+    SpreadOfResistanceOverTimeByCountryAndSpecies,
+    SpreadOfResistanceOverTimeByCountry,
 } from "../../types";
 import { DisaggregateBySpeciesOptions } from "../../../../../../components/filters/DisaggregateBySpecies";
 
@@ -46,7 +46,7 @@ function getTooltipData(params: {
     priorSumOfSites: number;
     priorYearSumOfConfirmedResistanceSites: number;
     insecticideClass: string;
-}): SpreadOfResistanceOverTimeTooltipData {
+}): SpreadOfResistanceOverTimeTooltipDataLineChart {
     const {
         studiesOfInsecticideClass,
         currentYear,
@@ -185,13 +185,13 @@ function getMaxSumConfirmedResistance(
     }, 0);
 }
 
-export function createChartData(
+export function createLineChartData(
     filteredsStudies: PreventionStudy[],
     selectedCountries: string[],
     sortedYears: number[],
     insecticideClasses: string[],
     disaggregateBySpeciesSelectionFilter: DisaggregateBySpeciesOptions
-): SpreadOfResistanceOverTimeChartData {
+): SpreadOfResistanceOverTimeChartDataByClass {
     const isDisaggregatedBySpecies = disaggregateBySpeciesSelectionFilter === "disaggregate_species";
 
     const dataByCountry = selectedCountries.reduce((acc, countryISO) => {
@@ -206,7 +206,7 @@ export function createChartData(
         }
         return {
             ...acc,
-            [countryISO]: [],
+            [countryISO]: isDisaggregatedBySpecies ? {} : [],
         };
     }, {});
 
@@ -215,7 +215,7 @@ export function createChartData(
         data: {
             years: sortedYears,
             dataByCountry,
-            maxSumOfConfirmedResistance: getMaxSumConfirmedResistance(dataByCountry, isDisaggregatedBySpecies),
+            maxValue: getMaxSumConfirmedResistance(dataByCountry, isDisaggregatedBySpecies),
         },
     };
 }
