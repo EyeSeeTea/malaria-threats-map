@@ -89,7 +89,7 @@ export const filterByYears = (years: number[]) => (study: any) => {
 };
 
 export const filterByDownload = () => (study: any) => {
-    return study.DOWNLOAD === "1";
+    return study.DOWNLOAD === 1;
 };
 
 export const filterByIntensityStatus = (study: any) => {
