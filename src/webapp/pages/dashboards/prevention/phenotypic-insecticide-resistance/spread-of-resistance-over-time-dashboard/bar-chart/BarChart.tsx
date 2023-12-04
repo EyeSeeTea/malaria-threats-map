@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import i18next from "i18next";
+import { Stack, Typography } from "@mui/material";
 import ReactDOMServer from "react-dom/server";
 
 import {
@@ -12,34 +13,34 @@ import {
     SpreadOfResistanceOverTimeSeriesBarChart,
     SpreadOfResistanceOverTimeChartType,
 } from "../../types";
-import { Stack, Typography } from "@mui/material";
 import BarChartLegend from "./BarChartLegend";
-import BarChartTooltip, { CustomPoint } from "../BarChartTooltip";
+import Tooltip, { CustomPoint } from "./Tooltip";
 
 const BarChart: React.FC<{
-    allInsecticideClasses: string[];
+    allInsecticideClassesOrTypes: string[];
     data: SpreadOfResistanceOverTimeBarChart;
     chartComponentRefs: React.MutableRefObject<HighchartsReact.RefObject[]>;
-    selectedInsecticideClass: string;
-    onInsecticideClassChange: (insecticideClass: string) => void;
+    selectedInsecticideClassesOrTypes: string;
+    onInsecticideClassesOrTypesChange: (insecticideClassesOrTypes: string) => void;
     isDisaggregatedBySpecies: boolean;
     chartType: SpreadOfResistanceOverTimeChartType;
 }> = ({
-    allInsecticideClasses,
+    allInsecticideClassesOrTypes,
     data,
     chartComponentRefs,
     isDisaggregatedBySpecies,
-    selectedInsecticideClass,
-    onInsecticideClassChange,
+    selectedInsecticideClassesOrTypes,
+    onInsecticideClassesOrTypesChange,
     chartType,
 }) => {
     const { t } = useTranslation();
     return (
         <React.Fragment>
             <BarChartLegend
-                allInsecticideClasses={allInsecticideClasses}
-                selectedInsecticideClass={selectedInsecticideClass}
-                onInsecticideClassChange={onInsecticideClassChange}
+                chartType={chartType}
+                allInsecticideClassesOrTypes={allInsecticideClassesOrTypes}
+                selectedInsecticideClassOrType={selectedInsecticideClassesOrTypes}
+                onInsecticideClassOrTypeChange={onInsecticideClassesOrTypesChange}
             />
             <Stack direction="row" alignItems="center" sx={{ minHeight: 600 }}>
                 <YAxisTitle>
@@ -205,9 +206,7 @@ function chartOptions(
             useHTML: true,
             formatter: function () {
                 const point = this.point as CustomPoint;
-                const htmlString = ReactDOMServer.renderToString(
-                    <BarChartTooltip chartType={chartType} point={point} />
-                );
+                const htmlString = ReactDOMServer.renderToString(<Tooltip chartType={chartType} point={point} />);
                 return htmlString;
             },
         },

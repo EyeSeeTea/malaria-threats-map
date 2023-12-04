@@ -1,6 +1,7 @@
 import Highcharts from "highcharts";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Stack, Typography } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import i18next from "i18next";
@@ -12,34 +13,34 @@ import {
     SpreadOfResistanceOverTimeBySpecie,
     SpreadOfResistanceOverTimeChartType,
 } from "../../types";
-import { Stack, Typography } from "@mui/material";
 import LineChartLegend from "./LineChartLegend";
-import LineChartTooltip, { CustomPoint } from "../LineChartTooltip";
+import Tooltip, { CustomPoint } from "./Tooltip";
 
 const LineChart: React.FC<{
-    allInsecticideClasses: string[];
+    allInsecticideClassesOrTypes: string[];
     data: SpreadOfResistanceOverTimeLineChart;
     chartComponentRefs: React.MutableRefObject<HighchartsReact.RefObject[]>;
-    selectedInsecticideClasses: string[];
-    onInsecticideClassesChange: (insecticideClasses: string[]) => void;
+    selectedInsecticideClassesOrTypes: string[];
+    onInsecticideClassesOrTypesChange: (insecticideClassesOrTypes: string[]) => void;
     isDisaggregatedBySpecies: boolean;
     chartType: SpreadOfResistanceOverTimeChartType;
 }> = ({
-    allInsecticideClasses,
+    allInsecticideClassesOrTypes,
     data,
     chartComponentRefs,
     isDisaggregatedBySpecies,
-    selectedInsecticideClasses,
-    onInsecticideClassesChange,
+    selectedInsecticideClassesOrTypes,
+    onInsecticideClassesOrTypesChange,
     chartType,
 }) => {
     const { t } = useTranslation();
     return (
         <React.Fragment>
             <LineChartLegend
-                allInsecticideClasses={allInsecticideClasses}
-                onInsecticideClassesChange={onInsecticideClassesChange}
-                selectedInsecticideClasses={selectedInsecticideClasses}
+                chartType={chartType}
+                allInsecticideClassesOrTypes={allInsecticideClassesOrTypes}
+                onInsecticideClassesOrTypesChange={onInsecticideClassesOrTypesChange}
+                selectedInsecticideClassesOrTypes={selectedInsecticideClassesOrTypes}
             />
             <Stack direction="row" alignItems="center" sx={{ minHeight: 600 }}>
                 <YAxisTitle>
@@ -205,9 +206,7 @@ function chartOptions(
             useHTML: true,
             formatter: function () {
                 const point = this.point as CustomPoint;
-                const htmlString = ReactDOMServer.renderToString(
-                    <LineChartTooltip chartType={chartType} point={point} />
-                );
+                const htmlString = ReactDOMServer.renderToString(<Tooltip chartType={chartType} point={point} />);
                 return htmlString;
             },
         },

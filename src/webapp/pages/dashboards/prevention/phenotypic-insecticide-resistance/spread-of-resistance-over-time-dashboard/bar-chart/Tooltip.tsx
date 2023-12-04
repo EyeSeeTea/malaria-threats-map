@@ -1,18 +1,17 @@
 import React from "react";
 import i18next from "i18next";
-import { SpreadOfResistanceOverTimeChartType } from "../types";
+import { SpreadOfResistanceOverTimeChartType } from "../../types";
 
 export interface CustomPoint extends Highcharts.Point {
-    insecticideClass: string;
+    insecticide: string;
     year: string;
-    rangeYears: string;
-    sumOfConfirmedResistanceSites: number;
-    sumOfSites: number;
-    numberOfSites: number;
-    numberOfSitesConfirmedResistance: number;
+    species: string[];
+    resistanceStatus: string;
+    totalNumberOfSites: number;
+    numberOfSitesWithThisStatus: number;
 }
 
-const LineChartTooltip: React.FC<{
+const Tooltip: React.FC<{
     chartType: SpreadOfResistanceOverTimeChartType;
     point: CustomPoint;
 }> = ({ point, chartType }) => {
@@ -23,7 +22,7 @@ const LineChartTooltip: React.FC<{
                     {chartType === "by-insecticide-class"
                         ? i18next.t("common.dashboard.tooltip.insecticideClass")
                         : i18next.t("common.dashboard.tooltip.insecticideType")}
-                    : {i18next.t(point.insecticideClass)}
+                    : {i18next.t(point.insecticide)}
                 </h4>
             </div>
 
@@ -35,6 +34,20 @@ const LineChartTooltip: React.FC<{
                         justifyContent: "space-between",
                         alignItems: "center",
                         paddingBottom: "10px",
+                    }}
+                >
+                    <span>{i18next.t("common.dashboard.tooltip.species")}: </span>
+                    <span style={{ paddingLeft: "10px", fontStyle: "italic" }}>{point.species.join(", ")}</span>
+                </div>
+
+                <div
+                    style={{
+                        borderBottom: "1px solid #d0d0d0",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        paddingBottom: "10px",
+                        paddingTop: "10px",
                     }}
                 >
                     <span>{i18next.t("common.dashboard.tooltip.year")}: </span>
@@ -51,10 +64,10 @@ const LineChartTooltip: React.FC<{
                         paddingTop: "10px",
                     }}
                 >
-                    <span>
-                        {i18next.t("common.dashboard.tooltip.numberOfSitesConfirmedResistance")} ({point.year}):{" "}
+                    <span>{i18next.t("common.dashboard.tooltip.resistanceStatus")}</span>
+                    <span style={{ paddingLeft: "10px" }}>
+                        {i18next.t(`common.dashboard.tooltip.resistanceStatusType.${point.resistanceStatus}`)}
                     </span>
-                    <span style={{ paddingLeft: "10px" }}>{point.numberOfSitesConfirmedResistance}</span>
                 </div>
 
                 <div
@@ -68,25 +81,9 @@ const LineChartTooltip: React.FC<{
                     }}
                 >
                     <span>
-                        {i18next.t("common.dashboard.tooltip.numberOfSites")} ({point.year}):{" "}
+                        {i18next.t(`common.dashboard.tooltip.numberOfSitesWithThisStatus.${point.resistanceStatus}`)}:
                     </span>
-                    <span style={{ paddingLeft: "10px" }}>{point.numberOfSites}</span>
-                </div>
-
-                <div
-                    style={{
-                        borderBottom: "1px solid #d0d0d0",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        paddingBottom: "10px",
-                        paddingTop: "10px",
-                    }}
-                >
-                    <span>
-                        {i18next.t("common.dashboard.tooltip.numberOfSitesConfirmedResistance")} ({point.rangeYears}):{" "}
-                    </span>
-                    <span style={{ paddingLeft: "10px" }}>{point.sumOfConfirmedResistanceSites}</span>
+                    <span style={{ paddingLeft: "10px" }}>{point.numberOfSitesWithThisStatus}</span>
                 </div>
 
                 <div
@@ -98,14 +95,12 @@ const LineChartTooltip: React.FC<{
                         paddingTop: "10px",
                     }}
                 >
-                    <span>
-                        {i18next.t("common.dashboard.tooltip.numberOfSites")} ({point.rangeYears}):{" "}
-                    </span>
-                    <span style={{ paddingLeft: "10px" }}>{point.sumOfSites}</span>
+                    <span>{i18next.t("common.dashboard.tooltip.totalNumberOfSites")}</span>
+                    <span style={{ paddingLeft: "10px" }}>{point.totalNumberOfSites}</span>
                 </div>
             </div>
         </div>
     );
 };
 
-export default LineChartTooltip;
+export default Tooltip;

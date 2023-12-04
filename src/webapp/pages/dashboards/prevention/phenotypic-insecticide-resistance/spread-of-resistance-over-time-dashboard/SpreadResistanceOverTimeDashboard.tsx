@@ -6,11 +6,11 @@ import { Card } from "@mui/material";
 import PreventionFilterableDashboard from "../../PreventionFilterableDashboard";
 import { useSpreadResistanceOverTime } from "./useSpreadResistanceOverTime";
 import { useInfoPopup } from "../../../common/popup/useInfoPopup";
-import LineChart from "./by-insecticide-class/LineChart";
+import LineChart from "./line-chart/LineChart";
 import SpreadOfResistanceOverTimePopup from "../../../../../components/dashboards/prevention/SpreadOfResistanceOverTimePopup";
 import { ResistanceToInsecticideChartType } from "../../types";
 import { SpreadOfResistanceOverTimeBarChart, SpreadOfResistanceOverTimeLineChart } from "../types";
-import BarChart from "./by-insecticide-class/BarChart";
+import BarChart from "./bar-chart/BarChart";
 
 const SpreadResistanceOverTimeDashboard: React.FC = () => {
     const { t } = useTranslation();
@@ -19,8 +19,10 @@ const SpreadResistanceOverTimeDashboard: React.FC = () => {
         chartType,
         chartTypes,
         categoriesCount,
-        lineChartData,
-        barChartData,
+        lineChartDataByClass,
+        lineChartDataByType,
+        barChartDataByClass,
+        barChartDataByType,
         filters,
         speciesOptions,
         isDisaggregatedBySpecies,
@@ -30,6 +32,11 @@ const SpreadResistanceOverTimeDashboard: React.FC = () => {
         singleSelectedInsecticideClass,
         setMultipleSelectedInsecticideClasses,
         setSingleSelectedInsecticideClass,
+        allInsecticides,
+        multipleSelectedInsecticides,
+        singleSelectedInsecticide,
+        setMultipleSelectedInsecticides,
+        setSingleSelectedInsecticide,
     } = useSpreadResistanceOverTime();
 
     const { openPopup, onChangeOpenPopup } = useInfoPopup();
@@ -60,24 +67,52 @@ const SpreadResistanceOverTimeDashboard: React.FC = () => {
             >
                 <DasboardCard elevation={0}>
                     <LineChart
-                        allInsecticideClasses={allInsecticideClasses}
-                        data={lineChartData.data as SpreadOfResistanceOverTimeLineChart}
-                        chartComponentRefs={chartComponentRefs}
-                        selectedInsecticideClasses={multipleSelectedInsecticideClasses}
-                        onInsecticideClassesChange={setMultipleSelectedInsecticideClasses}
-                        isDisaggregatedBySpecies={isDisaggregatedBySpecies}
                         chartType={chartType}
+                        allInsecticideClassesOrTypes={
+                            chartType === "by-insecticide-class" ? allInsecticideClasses : allInsecticides
+                        }
+                        data={
+                            chartType === "by-insecticide-class"
+                                ? (lineChartDataByClass.data as SpreadOfResistanceOverTimeLineChart)
+                                : (lineChartDataByType.data as SpreadOfResistanceOverTimeLineChart)
+                        }
+                        chartComponentRefs={chartComponentRefs}
+                        selectedInsecticideClassesOrTypes={
+                            chartType === "by-insecticide-class"
+                                ? multipleSelectedInsecticideClasses
+                                : multipleSelectedInsecticides
+                        }
+                        onInsecticideClassesOrTypesChange={
+                            chartType === "by-insecticide-class"
+                                ? setMultipleSelectedInsecticideClasses
+                                : setMultipleSelectedInsecticides
+                        }
+                        isDisaggregatedBySpecies={isDisaggregatedBySpecies}
                     />
                 </DasboardCard>
                 <DasboardCard elevation={0}>
                     <BarChart
-                        allInsecticideClasses={allInsecticideClasses}
-                        data={barChartData.data as SpreadOfResistanceOverTimeBarChart}
-                        chartComponentRefs={chartComponentRefs}
-                        selectedInsecticideClass={singleSelectedInsecticideClass}
-                        onInsecticideClassChange={setSingleSelectedInsecticideClass}
-                        isDisaggregatedBySpecies={isDisaggregatedBySpecies}
                         chartType={chartType}
+                        allInsecticideClassesOrTypes={
+                            chartType === "by-insecticide-class" ? allInsecticideClasses : allInsecticides
+                        }
+                        data={
+                            chartType === "by-insecticide-class"
+                                ? (barChartDataByClass.data as SpreadOfResistanceOverTimeBarChart)
+                                : (barChartDataByType.data as SpreadOfResistanceOverTimeBarChart)
+                        }
+                        chartComponentRefs={chartComponentRefs}
+                        selectedInsecticideClassesOrTypes={
+                            chartType === "by-insecticide-class"
+                                ? singleSelectedInsecticideClass
+                                : singleSelectedInsecticide
+                        }
+                        onInsecticideClassesOrTypesChange={
+                            chartType === "by-insecticide-class"
+                                ? setSingleSelectedInsecticideClass
+                                : setSingleSelectedInsecticide
+                        }
+                        isDisaggregatedBySpecies={isDisaggregatedBySpecies}
                     />
                 </DasboardCard>
             </PreventionFilterableDashboard>
