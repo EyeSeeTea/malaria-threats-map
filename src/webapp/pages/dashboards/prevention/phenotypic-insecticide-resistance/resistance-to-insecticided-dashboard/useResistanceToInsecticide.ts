@@ -49,7 +49,6 @@ export function useResistanceToInsecticide() {
                 chartType
             )
         );
-        console.log("setData");
     }, [
         preventionStudies,
         filteredStudies,
@@ -101,6 +100,7 @@ export function useResistanceToInsecticide() {
                 chartType === "by-insecticide-class" ? filters.onInsecticideClassChange : undefined,
             onInsecticideTypesChange: chartType === "by-insecticide" ? filters.onInsecticideTypesChange : undefined,
             onTypeChange: undefined,
+            onDisaggregateBySpeciesChange: undefined,
         } as PreventionFiltersState,
         onChartTypeChange,
     };

@@ -56,6 +56,7 @@ export function useInsecticideResistanceAndResistanceMechanisms() {
             onTypeChange: undefined,
             onInsecticideClassChange: undefined,
             onInsecticideTypesChange: undefined,
+            onDisaggregateBySpeciesChange: undefined,
         } as PreventionFiltersState,
         onChartTypeChange,
     };

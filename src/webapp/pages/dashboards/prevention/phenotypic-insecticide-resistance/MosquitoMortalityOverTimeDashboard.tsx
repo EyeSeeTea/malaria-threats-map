@@ -7,7 +7,7 @@ import styled from "styled-components";
 import More from "highcharts/highcharts-more";
 import { useMosquitoMortalityOverTime } from "./useMosquitoMortalityOverTime";
 import { MosquitoOverTimeData } from "./types";
-import { Stack } from "@mui/material";
+import { Card, Stack } from "@mui/material";
 import i18next from "i18next";
 import { useInfoPopup } from "../../common/popup/useInfoPopup";
 import MosquitoMortalityOverTimePopup from "../../../../components/dashboards/prevention/MosquitoMortalityOverTimePopup";
@@ -37,60 +37,62 @@ const MosquitoOverTimeDashboard: React.FC = () => {
                 typeOptions={typeOptions}
                 onInfoClick={onChangeOpenPopup}
             >
-                <Stack direction="row" alignItems="center" sx={{ minHeight: 250 }}>
-                    <YAxisTitle>
-                        {t(
-                            "common.dashboard.phenotypicInsecticideResistanceDashboards.mosquitoMortalityOverTime.adjustedMortality"
-                        )}
-                    </YAxisTitle>
+                <DasboardCard elevation={0}>
+                    <Stack direction="row" alignItems="center" sx={{ minHeight: 250 }}>
+                        <YAxisTitle>
+                            {t(
+                                "common.dashboard.phenotypicInsecticideResistanceDashboards.mosquitoMortalityOverTime.adjustedMortality"
+                            )}
+                        </YAxisTitle>
 
-                    <div style={{ overflowX: "auto" }}>
-                        <Table>
-                            <tbody>
-                                {Object.keys(data.dataByCountry).map((isoCountry, countryIndex) => {
-                                    const species = Object.keys(data.dataByCountry[isoCountry]);
+                        <div style={{ overflowX: "auto" }}>
+                            <Table>
+                                <tbody>
+                                    {Object.keys(data.dataByCountry).map((isoCountry, countryIndex) => {
+                                        const species = Object.keys(data.dataByCountry[isoCountry]);
 
-                                    return species.length > 0 ? (
-                                        species.map((specie, specieIndex) => {
-                                            const isLastCountry =
-                                                countryIndex === Object.keys(data.dataByCountry).length - 1;
-                                            const isLastSpecie = specieIndex === species.length - 1;
-                                            const xAxisVisible = isLastCountry && isLastSpecie;
+                                        return species.length > 0 ? (
+                                            species.map((specie, specieIndex) => {
+                                                const isLastCountry =
+                                                    countryIndex === Object.keys(data.dataByCountry).length - 1;
+                                                const isLastSpecie = specieIndex === species.length - 1;
+                                                const xAxisVisible = isLastCountry && isLastSpecie;
 
-                                            const dataBySpecie = data.dataByCountry[isoCountry][specie];
+                                                const dataBySpecie = data.dataByCountry[isoCountry][specie];
 
-                                            const options = chartOptions(data.years, dataBySpecie, xAxisVisible);
+                                                const options = chartOptions(data.years, dataBySpecie, xAxisVisible);
 
-                                            return (
-                                                <tr key={`${isoCountry}-${specie}`}>
-                                                    {specieIndex === 0 && (
-                                                        <td rowSpan={species.length}>{t(isoCountry)}</td>
-                                                    )}
-                                                    <td>{specie}</td>
-                                                    <td>
-                                                        <StyledHighcharts
-                                                            highcharts={Highcharts}
-                                                            options={options}
-                                                            ref={(element: HighchartsReact.RefObject) =>
-                                                                chartComponentRefs.current.push(element)
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })
-                                    ) : (
-                                        <NotAvailableTR key={`${isoCountry}`} style={{ minHeight: 100 }}>
-                                            <td>{t(isoCountry)}</td>
-                                            <td></td>
-                                            <td>{"Not available"}</td>
-                                        </NotAvailableTR>
-                                    );
-                                })}
-                            </tbody>
-                        </Table>
-                    </div>
-                </Stack>
+                                                return (
+                                                    <tr key={`${isoCountry}-${specie}`}>
+                                                        {specieIndex === 0 && (
+                                                            <td rowSpan={species.length}>{t(isoCountry)}</td>
+                                                        )}
+                                                        <td>{specie}</td>
+                                                        <td>
+                                                            <StyledHighcharts
+                                                                highcharts={Highcharts}
+                                                                options={options}
+                                                                ref={(element: HighchartsReact.RefObject) =>
+                                                                    chartComponentRefs.current.push(element)
+                                                                }
+                                                            />
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })
+                                        ) : (
+                                            <NotAvailableTR key={`${isoCountry}`} style={{ minHeight: 100 }}>
+                                                <td>{t(isoCountry)}</td>
+                                                <td></td>
+                                                <td>{"Not available"}</td>
+                                            </NotAvailableTR>
+                                        );
+                                    })}
+                                </tbody>
+                            </Table>
+                        </div>
+                    </Stack>
+                </DasboardCard>
             </PreventionFilterableDashboard>
             <MosquitoMortalityOverTimePopup
                 years={filters.years}
@@ -127,6 +129,11 @@ const Table = styled.table`
     tr td:nth-child(3) {
         width: 75%;
     }
+`;
+
+const DasboardCard = styled(Card)`
+    min-height: 500px;
+    padding: 42px;
 `;
 
 const NotAvailableTR = styled.tr`

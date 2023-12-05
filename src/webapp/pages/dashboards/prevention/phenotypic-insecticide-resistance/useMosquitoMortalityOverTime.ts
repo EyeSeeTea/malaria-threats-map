@@ -50,6 +50,7 @@ export function useMosquitoMortalityOverTime() {
             ...filters,
             onInsecticideTypesChange: undefined,
             onInsecticideClassesChange: filters.onInsecticideClassChange,
+            onDisaggregateBySpeciesChange: undefined,
         } as PreventionFiltersState,
         speciesOptions,
         typeOptions,

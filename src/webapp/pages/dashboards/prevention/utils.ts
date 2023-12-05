@@ -24,6 +24,7 @@ export function filterStudies(
         | "onlyIncludeBioassaysWithMoreMosquitoes"
         | "onlyIncludeDataByHealth"
         | "maxMinYears"
+        | "disaggregateBySpeciesSelection"
     >
 ): PreventionStudy[] {
     const filters = _.compact([

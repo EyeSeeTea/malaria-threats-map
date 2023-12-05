@@ -20,11 +20,8 @@ export interface Study {
     ASSAY_TYPE: string;
     COUNTRY_NAME: string;
     INSECTICIDE_CLASS: string;
-    INSECTICIDE_CONC: string;
-    INSECTICIDE_INTENSITY: string;
     INSECTICIDE_TYPE: string;
     INSTITUTE: string;
-    INVESTIGATION_TYPE: string;
     MALARIA_ENDEMIC: number;
     MECHANISM_FREQUENCY: string;
     MECHANISM_PROXY: string;
