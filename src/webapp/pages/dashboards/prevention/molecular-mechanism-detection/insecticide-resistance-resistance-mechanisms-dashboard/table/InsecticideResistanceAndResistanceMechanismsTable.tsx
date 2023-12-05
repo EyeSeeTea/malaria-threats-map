@@ -102,13 +102,8 @@ const InsecticideResistanceAndResistanceMechanismsTable: React.FC<
                                             .map((entry, index) => {
                                                 const number = Number(entry[1]);
                                                 const header = headCells.find(cell => cell.id === entry[0]);
-                                                const isNumber = !Number.isNaN(number);
-                                                const percentage = ERROR_COLUMNS.includes(entry[0]);
-                                                const cell = entry[0].split("_")[0];
 
-                                                const active = (row as any)[`${cell}_N`];
-                                                const active2 = (row as any)[`${entry[0]}_NUMBER_SITES`];
-                                                const finalActive = active !== undefined ? active : active2;
+                                                const percentage = ERROR_COLUMNS.includes(entry[0]);
 
                                                 const error =
                                                     percentage && entry[0].indexOf("AVERAGE") > -1 && number > 0;
@@ -128,11 +123,7 @@ const InsecticideResistanceAndResistanceMechanismsTable: React.FC<
                                                         isRight={header.align === "right"}
                                                         divider={header.divider}
                                                     >
-                                                        {header && header.numeric && isNumber
-                                                            ? `${number.toFixed(1)}% ${
-                                                                  finalActive !== undefined ? `(${finalActive})` : ""
-                                                              }`
-                                                            : entry[1] || "-"}
+                                                        {entry[1] || "-"}
                                                     </StyledCell>
                                                 );
                                             })}
@@ -248,24 +239,7 @@ export const GREY_COLUMNS = [
     "ACE1R_PERCENT_SITES_DETECTED",
 ];
 
-export const COLUMNS = [
-    "ID",
-    "INSECTICIDE_CLASSES",
-    "COUNTRY",
-    "COUNTRY_NUMBER",
-    "ISO2",
-    "PYRETHROIDS_N",
-    "ORGANOCHLORINES_N",
-    "CARBAMATES_N",
-    "ORGANOPHOSPHATES_N",
-    "MONOXYGENASES_PERCENT_SITES_DETECTED_NUMBER_SITES",
-    "ESTERASES_PERCENT_SITES_DETECTED_NUMBER_SITES",
-    "GSTS_PERCENT_SITES_DETECTED_NUMBER_SITES",
-    "K1014S_PERCENT_SITES_DETECTED_NUMBER_SITES",
-    "K1014F_PERCENT_SITES_DETECTED_NUMBER_SITES",
-    "KDR_UNSPECIFIED_PERCENT_SITES_DETECTED_NUMBER_SITES",
-    "ACE1R_PERCENT_SITES_DETECTED_NUMBER_SITES",
-];
+export const COLUMNS = ["ID", "INSECTICIDE_CLASSES", "COUNTRY", "COUNTRY_NUMBER", "ISO2"];
 
 export const headCells: HeadCell<TableData>[] = [
     {

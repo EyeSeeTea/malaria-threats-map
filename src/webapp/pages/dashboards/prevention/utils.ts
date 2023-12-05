@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import _ from "lodash";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import {
@@ -40,5 +41,5 @@ export function filterStudies(
 
     const filteredStudies = filters.reduce((studies, filter) => studies.filter(filter), studies);
 
-    return filteredStudies;
+    return _.orderBy(filteredStudies, study => i18next.t(study.ISO2), "asc");
 }

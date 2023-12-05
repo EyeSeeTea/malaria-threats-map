@@ -23,7 +23,7 @@ export type CellProps = {
 export const StyledCell = styled(TableCell)<CellProps>`
     font-size: ${props => (props.isBold ? "13px" : "12.5px")} !important;
     line-height: 1rem !important;
-    padding: 3px 4px !important;
+    padding: 3px 8px !important;
     font-weight: ${props => (props.isBold ? "bold" : "normal")} !important;
     color: ${props => props.color || "inherit"} !important;
     background: ${props => props.background || "inherit"} !important;
