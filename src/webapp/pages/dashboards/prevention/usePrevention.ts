@@ -31,6 +31,7 @@ export function usePrevention(baseFilters: ((study: PreventionStudy) => boolean)
             onlyIncludeDataByHealth: filters.onlyIncludeDataByHealth,
             years: filters.years,
             maxMinYears: filters.maxMinYears,
+            disaggregateBySpeciesSelection: "aggregate_species",
         });
 
         setFilteredStudies(filteredStudies);
@@ -57,6 +58,7 @@ export function usePrevention(baseFilters: ((study: PreventionStudy) => boolean)
             onlyIncludeDataByHealth: false,
             years: undefined,
             maxMinYears: undefined,
+            disaggregateBySpeciesSelection: "aggregate_species",
         });
 
         const insecticideClasses = extractInsecticideClassesOptions(filteredStudies);
@@ -80,6 +82,7 @@ export function usePrevention(baseFilters: ((study: PreventionStudy) => boolean)
             onlyIncludeDataByHealth: false,
             years: undefined,
             maxMinYears: undefined,
+            disaggregateBySpeciesSelection: "aggregate_species",
         });
 
         const insecticideTypes = extractInsecticideTypeOptions(filteredStudies);
@@ -97,6 +100,7 @@ export function usePrevention(baseFilters: ((study: PreventionStudy) => boolean)
             onlyIncludeDataByHealth: false,
             years: undefined,
             maxMinYears: undefined,
+            disaggregateBySpeciesSelection: "aggregate_species",
         });
 
         const species = extractSpeciesOptions(filteredStudies);
@@ -114,6 +118,7 @@ export function usePrevention(baseFilters: ((study: PreventionStudy) => boolean)
             onlyIncludeDataByHealth: false,
             years: undefined,
             maxMinYears: undefined,
+            disaggregateBySpeciesSelection: "aggregate_species",
         });
 
         const types = extractTypeOptions(filteredStudies);

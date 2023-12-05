@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import MosquitoMortalityOverTimeDashboard from "./MosquitoMortalityOverTimeDashboard";
 import ResistanceToInsecticideDashboard from "./resistance-to-insecticided-dashboard/ResistanceToInsecticideDashboard";
+import SpreadResistanceOverTimeDashboard from "./spread-of-resistance-over-time-dashboard/SpreadResistanceOverTimeDashboard";
 
 const PhenotypicInsecticideResistanceStudies: React.FC = () => {
     const { t } = useTranslation();
@@ -13,6 +14,7 @@ const PhenotypicInsecticideResistanceStudies: React.FC = () => {
             <Title>{t("common.dashboard.phenotypicInsecticideResistanceDashboards.title")}</Title>
             <ResistanceToInsecticideDashboard />
             <MosquitoMortalityOverTimeDashboard />
+            <SpreadResistanceOverTimeDashboard />
         </Container>
     );
 };

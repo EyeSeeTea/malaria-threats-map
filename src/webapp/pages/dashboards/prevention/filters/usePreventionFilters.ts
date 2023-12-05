@@ -4,6 +4,7 @@ import { sortInsecticideClasses } from "../../../../components/filters/Insectici
 import { getMinMaxYears } from "../../../../../domain/entities/Study";
 import { useDashboards } from "../../context/useDashboards";
 import { PreventionFiltersState } from "./PreventionFiltersState";
+import { DisaggregateBySpeciesOptions } from "../../../../components/filters/DisaggregateBySpecies";
 
 export function usePreventionFilters(): PreventionFiltersState {
     const { dashboardsPreventionStudies } = useDashboards();
@@ -16,6 +17,9 @@ export function usePreventionFilters(): PreventionFiltersState {
     const [onlyIncludeBioassaysWithMoreMosquitoes, setOnlyIncludeBioassaysWithMoreMosquitoes] = useState<number>(0);
     const [onlyIncludeDataByHealth, setOnlyIncludeDataByHealth] = useState<boolean>(false);
     const [maxMinYears] = useState<[number, number]>(getMinMaxYears(dashboardsPreventionStudies, true));
+    const [disaggregateBySpeciesSelection, setDisaggregateBySpeciesChange] =
+        useState<DisaggregateBySpeciesOptions>("aggregate_species");
+    const [disableSpeciesFilter, setDisableSpeciesFilter] = useState<boolean>(false);
 
     const onInsecticideClassChange = React.useCallback((values: string[]) => {
         setInsecticideClasses(sortInsecticideClasses(values));
@@ -45,6 +49,14 @@ export function usePreventionFilters(): PreventionFiltersState {
         setOnlyIncludeDataByHealth(value);
     }, []);
 
+    const onDisaggregateBySpeciesChange = React.useCallback((value: DisaggregateBySpeciesOptions) => {
+        setDisaggregateBySpeciesChange(value);
+    }, []);
+
+    const onDisableSpeciesFilter = React.useCallback((value: boolean) => {
+        setDisableSpeciesFilter(value);
+    }, []);
+
     return {
         insecticideClasses,
         species,
@@ -54,6 +66,8 @@ export function usePreventionFilters(): PreventionFiltersState {
         onlyIncludeBioassaysWithMoreMosquitoes,
         onlyIncludeDataByHealth,
         maxMinYears,
+        disaggregateBySpeciesSelection,
+        disableSpeciesFilter,
         onInsecticideClassChange,
         onSpeciesChange,
         onInsecticideTypesChange,
@@ -61,5 +75,7 @@ export function usePreventionFilters(): PreventionFiltersState {
         onYearsChange,
         onOnlyIncludeBioassaysWithMoreMosquitoesChange,
         onOnlyIncludeDataByHealthChange,
+        onDisaggregateBySpeciesChange,
+        onDisableSpeciesFilter,
     };
 }

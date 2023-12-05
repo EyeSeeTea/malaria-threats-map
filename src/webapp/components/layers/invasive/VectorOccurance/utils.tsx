@@ -1,6 +1,6 @@
 export enum INVASIVE_STATUS {
-    INVASIVE = "invasive",
-    NATIVE = "native",
-    NOTFOUND = "not found",
+    INVASIVE = "Invasive",
+    NATIVE = "Native",
+    NOTFOUND = "Not found",
     UNKNOWN = "UNKNOWN",
 }

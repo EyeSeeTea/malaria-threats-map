@@ -75,6 +75,7 @@
         "dashboard": {
             "title": "Dashboards",
             "not-available": "Not available",
+            "filterDataButton": "Filter data",
             "filtersSection": {
                 "first": {
                     "title": "1. Select Theme",
@@ -111,7 +112,8 @@
                 "phenotypicInsecticideResistanceOptions": {
                     "phenotypicInsecticideResistance": "Phenotypic Insecticide Resistance",
                     "statusOfResistanceToInsecticides": "Status of resistance to insecticides",
-                    "mosquitoOverTime": "Mosquito mortality over time"
+                    "mosquitoOverTime": "Mosquito mortality over time",
+                    "spreadOfResistanceOverTime": "Spread of resistance over time"
                 },
                 "molecularMechanismDetectionOptions": {
                     "molecularMechanismDetection": "Molecular mechanism detection",
@@ -213,6 +215,15 @@
                     "title": "MOSQUITO MORTALITY OVER TIME",
                     "adjustedMortality": "Adjusted mortality (%)",
                     "year": "Year"
+                },
+                "spreadOfResistanceOverTime": {
+                    "title": "Spread of resistance over time",
+                    "sumConfirmedResistance": "Sum of sites that have confirmed resistance",
+                    "year": "Year",
+                    "insecticideClassLegendTitle": "Insecticide class",
+                    "insecticideTypeLegendTitle": "Insecticide",
+                    "numberOfSites": "Number of sites",
+                    "insecticideResistanceStatus": "Insecticide resistance status"
                 }
             },
             "molecularMechanismDetectionDashboards": {
@@ -280,6 +291,13 @@
                     "title": "MOSQUITO MORTALITY OVER TIME",
                     "graphInterpretation": "<0>Graph interpretation:</0> This graph presents the mosquito mortality in susceptibility bioassays over time. The size of the bar represents the values of the studies falling between the 25% and the 75% quartiles of the mortality distribution. The horizontal line within the bar represents the median mortality value. The horizontal lines above and below the bar represent the maximum and minimum mortality values respectively.",
                     "typeOfResistance": "<0>Type of resistance monitoring bioassay:</0> Resistance to insecticides was determined by mosquito mortality (CDC bottle bioassay, WHO tube test or WHO bottle bioassay). Confirmed resistance is classified as mosquito mortality {{lessThan}}90%."
+                },
+                "spreadOfResistanceOverTimePopup": {
+                    "title": "SPREAD OF RESISTANCE OVER TIME",
+                    "lineChartInterpretation": "<0>Line chart interpretation:</0> In this graph, the cumulative number of sites that have confirmed resistance to each insecticide or class (i.e. mosquito mortality {{lessThan}}90% on WHO or CDC bioassay with the discriminating insecticide concentration) is plotted against the year. The area of the circles on the graph represents that total number of sites that monitored resistance that year.",
+                    "barChartInterpretation": "<0>Bar chart interpretation:</0> This graph presents the number of sites that monitored insecticide resistance per year, disaggregated by those that confirmed resistance (red), those that detected possible resistance (orange) and those where mosquitoes were susceptible to the insecticide (green).",
+                    "disaggregatedView": "<0>Disaggregated view:</0> The graphs can be viewed by insecticide class or by insecticide, and for all vector species together or disaggregated by species.",
+                    "typeOfResistanceMonitoringBioassay": "<0>Type of resistance monitoring bioassay:</0> Resistance to insecticides was determined by mosquito mortality (CDC bottle bioassay, WHO tube test or WHO bottle bioassay). Confirmed resistance is classified as mosquito mortality {{lessThan}}90%."
                 }
             },
             "tooltip": {
@@ -290,7 +308,25 @@
                 "source": {
                     "label": "Source",
                     "link": "National Institute of Allergy and Infectious Diseases, National Institutes of Health"
-                }
+                },
+                "insecticideClass": "Insecticide class",
+                "year": "Year",
+                "numberOfSitesConfirmedResistance": "Number of sites with confirmed resistance",
+                "numberOfSites": "Number of sites that monitored resistance",
+                "species": "Species",
+                "resistanceStatus": "Resistance status",
+                "resistanceStatusType": {
+                    "CONFIRMED_RESISTANCE": "Confirmed",
+                    "POSSIBLE_RESISTANCE": "Possible",
+                    "SUSCEPTIBLE": "Susceptible"
+                },
+                "numberOfSitesWithThisStatus": {
+                    "CONFIRMED_RESISTANCE": "Number of sites with confirmed resistance",
+                    "POSSIBLE_RESISTANCE": "Number of sites with possible resistance",
+                    "SUSCEPTIBLE": "Number of sites with susceptible resistance"
+                },
+                "totalNumberOfSites": "Number of sites that monitored resistance",
+                "insecticideType": "Insecticide"
             }
         },
         "homepage": {
@@ -823,7 +859,11 @@
             "exclude_lower_samples": "Exclude studies of less than 20 samples",
             "onlyIncludeBioassays": "Only include bioassays with more than the following number of mosquitoes",
             "zero_all_bioassays": "0 (all bioassays)",
-            "only_include_data_by_health": "Only include data provided to WHO by ministries of health"
+            "only_include_data_by_health": "Only include data provided to WHO by ministries of health",
+            "disaggregate_by_species": {
+                "aggregate_species": "Aggregate species' data",
+                "disaggregate_species": "Disaggreagte by species"
+            }
         },
         "map_info_summary": {
             "all": "All",

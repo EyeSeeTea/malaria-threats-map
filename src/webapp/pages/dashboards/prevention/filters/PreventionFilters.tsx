@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { IconButton, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -11,11 +12,13 @@ import SpeciesSelector from "../../../../components/filters/SpeciesSelector";
 import { Option } from "../../../../components/BasicSelect";
 import SingleFilter from "../../../../components/filters/common/SingleFilter";
 import MultiFilter from "../../../../components/filters/common/MultiFilter";
+import DisaggregateBySpeciesSelector from "../../../../components/filters/DisaggregateBySpecies";
 
 export type PreventionFilterableChart =
     | "status-of-resistance-of-insecticide"
     | "mosquito-mortality-overtime"
-    | "insecticide-resistance-resistance-mechanisms";
+    | "insecticide-resistance-resistance-mechanisms"
+    | "spread-of-resistance-over-time";
 
 interface PreventionFiltersProps {
     chart: PreventionFilterableChart;
@@ -52,7 +55,20 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                 <InsecticideClassSelector
                     onChange={filters.onInsecticideClassesChange}
                     value={filters.insecticideClasses}
-                    type={chart === "mosquito-mortality-overtime" ? "radio" : "select"}
+                    type={
+                        chart === "mosquito-mortality-overtime" || chart === "spread-of-resistance-over-time"
+                            ? "radio"
+                            : "select"
+                    }
+                />
+            )}
+
+            {chart === "spread-of-resistance-over-time" && filters.onInsecticideClassesChange && <StyledHr />}
+
+            {speciesOptions && filters.onSpeciesChange && filters.onDisaggregateBySpeciesChange && (
+                <DisaggregateBySpeciesSelector
+                    onChange={filters.onDisaggregateBySpeciesChange}
+                    value={filters.disaggregateBySpeciesSelection}
                 />
             )}
 
@@ -64,6 +80,7 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                     onChange={filters.onSpeciesChange}
                     value={filters.species}
                     isClearable={true}
+                    disabled={filters.disableSpeciesFilter}
                 />
             )}
 
@@ -109,3 +126,10 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
 };
 
 export default React.memo(PreventionFilters);
+
+const StyledHr = styled.hr`
+    border: 0;
+    height: 1px;
+    background-color: #0000001a;
+    width: 100%;
+`;
