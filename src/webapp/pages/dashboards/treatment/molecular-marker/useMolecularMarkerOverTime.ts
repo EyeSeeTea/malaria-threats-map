@@ -26,7 +26,11 @@ export function useMolecularMarker() {
         selectedCountries,
         studiesCount,
         data,
-        filters: { ...filters, onChangeShowDataForAllCountries: undefined } as TreatmentFiltersState,
+        filters: {
+            ...filters,
+            onChangeShowDataForAllCountries: undefined,
+            onExcludeLowerPatientsChange: undefined,
+        } as TreatmentFiltersState,
     };
 }
 
