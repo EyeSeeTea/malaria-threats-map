@@ -44,7 +44,7 @@ function groupStudies(studies: TreatmentStudy[]) {
     return filteredMainStudies.map(study => ({
         ...study,
         groupStudies: studies.filter(
-            relatedStudy => relatedStudy.DimensionID === 257 && relatedStudy.K13_CODE === study.Code
+            relatedStudy => relatedStudy.DimensionID === 257 && relatedStudy.K13_CODE === study.CODE
         ),
     }));
 }

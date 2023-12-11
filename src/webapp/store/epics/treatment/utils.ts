@@ -244,7 +244,7 @@ function createMolecularMarkersChartData(
             name: genotype,
             color: MutationColors[genotype] ? MutationColors[genotype].color : "000",
             data: studies255.map(study255 => {
-                const study257 = studies257.find(study => study255.Code === study.K13_CODE);
+                const study257 = studies257.find(study => study255.CODE === study.K13_CODE);
                 return {
                     y: study257 ? parseFloat((study257.PROPORTION * 100).toFixed(1)) : undefined,
                     n: study255.N,
