@@ -65,7 +65,7 @@ export function createChartDataByInsecticideType(
                 const countrySeries = {
                     ...acc[countryISO],
                     [insecticityClass]: {
-                        categories: finalInsecticideTypes.map(insecticideType => i18next.t(insecticideType)),
+                        categories: insecticideTypes.map(insecticideType => i18next.t(insecticideType)),
                         series: [resistanceSusceptible, resistancePosible, resistanceConfirmed],
                     },
                 };
