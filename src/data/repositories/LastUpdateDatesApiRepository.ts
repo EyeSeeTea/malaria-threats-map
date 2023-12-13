@@ -10,7 +10,8 @@ const emtyData: LastUpdatedDates = {
     diagnosisOngoing: null,
     diagnosis: null,
     treatment: null,
-    treatmentOngoing: null,
+    treatmentMMOngoing: null,
+    treatmentTESOngoing: null,
     invasive: null,
 };
 
@@ -21,15 +22,17 @@ export class LastUpdateDatesApiRepository implements LastUpdatedDatesRepository 
         return request<XMartApiResponse<FACT_UPDATE_ROW>>({ url: `${this.baseUrl}/FACT_UPDATE` })
             .map(response => {
                 const lastUpdateDates = response.value.reduce((acc: LastUpdatedDates, row: FACT_UPDATE_ROW) => {
-                    if (row.THEME_NAME === "AMDER") {
+                    if (row.THEME_NAME === "AMDER_TES") {
                         return { ...acc, treatment: new Date(row.UPDATE_DATE) };
-                    } else if (row.THEME_NAME === "AMDERO") {
-                        return { ...acc, treatmentOngoing: new Date(row.UPDATE_DATE) };
+                    } else if (row.THEME_NAME === "AMDERO_TES") {
+                        return { ...acc, treatmentTESOngoing: new Date(row.UPDATE_DATE) };
+                    } else if (row.THEME_NAME === "AMDERO_MM") {
+                        return { ...acc, treatmentMMOngoing: new Date(row.UPDATE_DATE) };
                     } else if (row.THEME_NAME === "HRP") {
                         return { ...acc, diagnosis: new Date(row.UPDATE_DATE) };
                     } else if (row.THEME_NAME === "HRPO") {
                         return { ...acc, diagnosisOnoing: new Date(row.UPDATE_DATE) };
-                    } else if (row.THEME_NAME === "VIR") {
+                    } else if (row.THEME_NAME === "VIR_DIS") {
                         return { ...acc, prevention: new Date(row.UPDATE_DATE) };
                     } else if (row.THEME_NAME === "INV") {
                         return { ...acc, invasive: new Date(row.UPDATE_DATE) };

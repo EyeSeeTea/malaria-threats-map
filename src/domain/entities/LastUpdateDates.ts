@@ -3,6 +3,7 @@ export type LastUpdatedDates = {
     diagnosis: Date | null;
     diagnosisOngoing: Date | null;
     treatment: Date | null;
-    treatmentOngoing: Date | null;
+    treatmentTESOngoing: Date | null;
+    treatmentMMOngoing: Date | null;
     invasive: Date | null;
 };
