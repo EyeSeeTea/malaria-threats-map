@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { State } from "../../../store/types";
+import { State, MapTheme } from "../../../store/types";
 import {
     selectFilters,
     selectLastUpdatedDates,
@@ -73,7 +73,6 @@ import {
     treatmentDatasetSuggestions,
 } from "../filters/DataSetSelector";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
-import { useLastUpdatedDatesByThemeAndDataSet } from "../../last-updated/useLastUpdatedDatesByThemeAndDataSet";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -203,15 +202,6 @@ const Data: React.FC<Props> = ({
         setMaxMinYears(minMaxYears);
         setYears(minMaxYears);
     }, [theme, preventionStudies, diagnosisStudies, treatmentStudies, invasiveStudies, setMaxMinYears, setYears]);
-
-    const date = useLastUpdatedDatesByThemeAndDataSet(
-        lastUpdatedDates,
-        theme,
-        preventionFilters,
-        treatmentFilters,
-        diagnosisFilters,
-        invasiveFilters
-    );
 
     const handleAddToDownload = useCallback(() => {
         switch (theme) {
@@ -386,7 +376,7 @@ const Data: React.FC<Props> = ({
                                             {t("common.data_download.data_step.last_updated")}
                                         </Typography>
                                         <Typography variant="body1" fontWeight="bold">
-                                            {date?.toLocaleDateString() || ""}
+                                            {lastUpdatedDates[theme as MapTheme]?.toLocaleDateString() || ""}
                                         </Typography>
                                     </Stack>
 

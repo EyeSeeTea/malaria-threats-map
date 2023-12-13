@@ -6,17 +6,12 @@ import { LastUpdatedDates } from "../../domain/entities/LastUpdateDates";
 import { Future } from "../../common/Future";
 
 const emtyData: LastUpdatedDates = {
-    AMDER_TES: null,
-    HRP: null,
-    INV: null,
-    AMDERO_MM: null,
-    HRPO: null,
-    AMDER_MM: null,
-    VIR_DIS: null,
-    VIR_INT: null,
-    VIR_SYN: null,
-    VIR_RMD: null,
-    AMDERO_TES: null,
+    prevention: null,
+    diagnosisOngoing: null,
+    diagnosis: null,
+    treatment: null,
+    treatmentOngoing: null,
+    invasive: null,
 };
 
 export class LastUpdateDatesApiRepository implements LastUpdatedDatesRepository {
@@ -26,7 +21,21 @@ export class LastUpdateDatesApiRepository implements LastUpdatedDatesRepository 
         return request<XMartApiResponse<FACT_UPDATE_ROW>>({ url: `${this.baseUrl}/FACT_UPDATE?$top=20` })
             .map(response => {
                 const lastUpdateDates = response.value.reduce((acc: LastUpdatedDates, row: FACT_UPDATE_ROW) => {
-                    return { ...acc, [row.THEME_NAME]: new Date(row.UPDATE_DATE) };
+                    if (row.THEME_NAME === "AMDER") {
+                        return { ...acc, treatment: new Date(row.UPDATE_DATE) };
+                    } else if (row.THEME_NAME === "AMDERO") {
+                        return { ...acc, treatmentOngoing: new Date(row.UPDATE_DATE) };
+                    } else if (row.THEME_NAME === "HRP") {
+                        return { ...acc, diagnosis: new Date(row.UPDATE_DATE) };
+                    } else if (row.THEME_NAME === "HRPO") {
+                        return { ...acc, diagnosisOnoing: new Date(row.UPDATE_DATE) };
+                    } else if (row.THEME_NAME === "VIR") {
+                        return { ...acc, prevention: new Date(row.UPDATE_DATE) };
+                    } else if (row.THEME_NAME === "INV") {
+                        return { ...acc, invasive: new Date(row.UPDATE_DATE) };
+                    } else {
+                        return { ...acc };
+                    }
                 }, emtyData);
 
                 return lastUpdateDates;

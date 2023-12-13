@@ -42,17 +42,12 @@ const DashboardProvider: React.FC<Props> = ({
     const [dashboardsPreventionStudies, setDashboardsPreventionStudies] = useState<PreventionStudy[]>(undefined);
     const [dashboardsTreatmentStudies, setDashboardsTreatmentStudies] = useState<TreatmentStudy[]>(undefined);
     const [updatedDates, setUpdatedDates] = useState<LastUpdatedDates>({
-        AMDER_TES: null,
-        HRP: null,
-        INV: null,
-        AMDERO_MM: null,
-        HRPO: null,
-        AMDER_MM: null,
-        VIR_DIS: null,
-        VIR_INT: null,
-        VIR_SYN: null,
-        VIR_RMD: null,
-        AMDERO_TES: null,
+        prevention: null,
+        diagnosisOngoing: null,
+        diagnosis: null,
+        treatment: null,
+        treatmentOngoing: null,
+        invasive: null,
     });
 
     useEffect(() => {
