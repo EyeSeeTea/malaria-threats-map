@@ -46,7 +46,8 @@ const DashboardProvider: React.FC<Props> = ({
         diagnosisOngoing: null,
         diagnosis: null,
         treatment: null,
-        treatmentOngoing: null,
+        treatmentMMOngoing: null,
+        treatmentTESOngoing: null,
         invasive: null,
     });
 

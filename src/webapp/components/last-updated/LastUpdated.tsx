@@ -72,9 +72,9 @@ const LastUpdated = ({
                     : lastUpdatedDates.diagnosisOngoing;
             case "treatment":
                 return treatmentFilters.mapType === TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES
-                    ? lastUpdatedDates.treatmentOngoing
+                    ? lastUpdatedDates.treatmentTESOngoing
                     : treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES
-                    ? lastUpdatedDates.treatmentOngoing // treatmentMolecularOngoing
+                    ? lastUpdatedDates.treatmentMMOngoing // treatmentMolecularOngoing
                     : lastUpdatedDates.treatment;
             case "invasive":
                 return lastUpdatedDates.invasive;
@@ -86,7 +86,8 @@ const LastUpdated = ({
         lastUpdatedDates.invasive,
         lastUpdatedDates.prevention,
         lastUpdatedDates.treatment,
-        lastUpdatedDates.treatmentOngoing,
+        lastUpdatedDates.treatmentMMOngoing,
+        lastUpdatedDates.treatmentTESOngoing,
         theme,
         treatmentFilters.mapType,
     ]);
