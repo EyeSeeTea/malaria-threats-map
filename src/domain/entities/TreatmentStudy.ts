@@ -23,7 +23,7 @@ export interface TreatmentStudy extends Study {
     MUT_CAT: string;
     MUT_ORDER: string;
     PROP_RELATED: number;
-    CODE: number;
+    Code: number;
     HEALTHFACILITY_NAME: string;
     SURV_STATUS?: number;
     FUNDING_SOURCE?: string;
