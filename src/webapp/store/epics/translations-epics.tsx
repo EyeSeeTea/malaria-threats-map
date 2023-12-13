@@ -33,7 +33,7 @@ export const getTranslationsEpic = (
                         return of(fetchTranslationsSuccessAction(oldResponse));
                     }),
                     catchError((error: Error) =>
-                        of(addNotificationAction(error.message),fetchTranslationsErrorAction())
+                        of(addNotificationAction(error.message), fetchTranslationsErrorAction())
                     )
                 );
             } else {

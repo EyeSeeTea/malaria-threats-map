@@ -85,7 +85,6 @@ export const diagnosisDatasetSuggestions: ListSelectorItem[] = [
         title: "common.data_download.filters.diagnosis.datasets.hrpo",
         value: "HRPO",
     },
-    
 ];
 
 export const invasiveDatasetSuggestions: ListSelectorItem[] = [
