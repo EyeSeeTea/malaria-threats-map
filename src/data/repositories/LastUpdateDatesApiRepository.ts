@@ -1,12 +1,13 @@
 import { request } from "../common/request";
 import { FutureData } from "../../domain/common/FutureData";
 import { LastUpdatedDatesRepository } from "../../domain/repositories/LastUpdatedDatesRepository";
-import { ApiResponse, ApiParams, Feature } from "../common/types";
+import { XMartApiResponse } from "../common/types";
 import { LastUpdatedDates } from "../../domain/entities/LastUpdateDates";
+import { Future } from "../../common/Future";
 
 const emtyData: LastUpdatedDates = {
     prevention: null,
-    preventionOngoing: null,
+    diagnosisOngoing: null,
     diagnosis: null,
     treatment: null,
     treatmentOngoing: null,
@@ -17,39 +18,36 @@ export class LastUpdateDatesApiRepository implements LastUpdatedDatesRepository 
     constructor(private baseUrl: string) {}
 
     get(): FutureData<LastUpdatedDates> {
-        const params: ApiParams = {
-            f: "json",
-            where: `1=1`,
-            outFields: "*",
-        };
-
-        return request<ApiResponse<ArcgGisLastUpdateDates>>({ url: `${this.baseUrl}/9/query`, params }).map(
-            response => {
-                const lastUpdateDates = response.features.reduce(
-                    (acc: LastUpdatedDates, feature: Feature<ArcgGisLastUpdateDates>) => {
-                        if (feature.attributes.TABLE_NAME === "TREATMENT") {
-                            return { ...acc, treatment: new Date(feature.attributes.DATE) };
-                        } else if (feature.attributes.TABLE_NAME === "HRP") {
-                            return { ...acc, diagnosis: new Date(feature.attributes.DATE) };
-                        } else if (feature.attributes.TABLE_NAME === "PREVENTION") {
-                            return { ...acc, prevention: new Date(feature.attributes.DATE) };
-                        } else if (feature.attributes.TABLE_NAME === "INVASIVE") {
-                            return { ...acc, invasive: new Date(feature.attributes.DATE) };
-                        } else {
-                            return { ...acc };
-                        }
-                    },
-                    emtyData
-                );
+        return request<XMartApiResponse<FACT_UPDATE_ROW>>({ url: `${this.baseUrl}/FACT_UPDATE` })
+            .map(response => {
+                const lastUpdateDates = response.value.reduce((acc: LastUpdatedDates, row: FACT_UPDATE_ROW) => {
+                    if (row.THEME_NAME === "AMDER") {
+                        return { ...acc, treatment: new Date(row.UPDATE_DATE) };
+                    } else if (row.THEME_NAME === "AMDERO") {
+                        return { ...acc, treatmentOngoing: new Date(row.UPDATE_DATE) };
+                    } else if (row.THEME_NAME === "HRP") {
+                        return { ...acc, diagnosis: new Date(row.UPDATE_DATE) };
+                    } else if (row.THEME_NAME === "HRPO") {
+                        return { ...acc, diagnosisOnoing: new Date(row.UPDATE_DATE) };
+                    } else if (row.THEME_NAME === "VIR") {
+                        return { ...acc, prevention: new Date(row.UPDATE_DATE) };
+                    } else if (row.THEME_NAME === "INV") {
+                        return { ...acc, invasive: new Date(row.UPDATE_DATE) };
+                    } else {
+                        return { ...acc };
+                    }
+                }, emtyData);
 
                 return lastUpdateDates;
-            }
-        );
+            })
+            .flatMapError(error => {
+                console.log("Error loading last update dates from xmart", error);
+                return Future.success(emtyData);
+            });
     }
 }
 
-type ArcgGisLastUpdateDates = {
-    DATE: number;
-    OBJECTID: number;
-    TABLE_NAME: "TREATMENT";
+type FACT_UPDATE_ROW = {
+    UPDATE_DATE: string;
+    THEME_NAME: string;
 };

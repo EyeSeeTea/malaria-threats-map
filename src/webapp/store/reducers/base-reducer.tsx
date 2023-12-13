@@ -28,7 +28,7 @@ const initialState: MalariaState = Object.freeze({
     },
     lastUpdatedDates: {
         prevention: null,
-        preventionOngoing: null,
+        diagnosisOngoing: null,
         diagnosis: null,
         treatment: null,
         treatmentOngoing: null,

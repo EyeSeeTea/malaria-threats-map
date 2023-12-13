@@ -33,7 +33,7 @@ export class CompositionRoot {
     private emailRepository = new SmtpJsEmailRepository(config.feedbackEmailSecureToken);
     private countryContextRepository = new CountryContextApiRepository(config.xmartServerUrl);
     private translationRepository = new TranslationApiRepository(config.xmartServerUrl);
-    private lastUpdateDatesRepository = new LastUpdateDatesApiRepository(config.mapServerUrl);
+    private lastUpdateDatesRepository = new LastUpdateDatesApiRepository(config.xmartServerUrl);
     private _districtsUrl: string;
 
     constructor() {
