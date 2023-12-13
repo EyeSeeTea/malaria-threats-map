@@ -200,7 +200,7 @@ function createTreatmentFailureChartData(studies: TreatmentStudy[], yearFilters:
             data: years.map(year => {
                 const yearFilters: any = studies.filter(study => parseInt(year) === parseInt(study.YEAR_START))[0];
                 return yearFilters
-                    ? parseFloat((parseFloat(yearFilters[key.name.toUpperCase()] || -1) * 100).toFixed(2))
+                    ? parseFloat((parseFloat(yearFilters[key.name.toUpperCase()] ?? -1) * 100).toFixed(2))
                     : -1;
             }),
         };
