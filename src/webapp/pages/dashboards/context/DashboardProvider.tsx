@@ -3,13 +3,14 @@ import { DashboardsThemeOptions } from "../types";
 import React from "react";
 import { selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
 import { fetchTreatmentStudiesRequest } from "../../../store/actions/treatment-actions";
-import { LastUpdatedDates, State } from "../../../store/types";
+import { State } from "../../../store/types";
 import { connect } from "react-redux";
 import { selectLastUpdatedDates } from "../../../store/reducers/base-reducer";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { fetchPreventionStudiesRequest } from "../../../store/actions/prevention-actions";
 import { selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
+import { LastUpdatedDates } from "../../../../domain/entities/LastUpdateDates";
 
 export const DashboardContext = React.createContext<DashboardState>(null);
 
