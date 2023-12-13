@@ -93,7 +93,7 @@ const Content = styled.div`
 `;
 
 const ScreenshotContainer = styled.div`
-    width: fit-content;
+    position: relative;
     * {
         pointer-events: none;
         -webkit-user-select: none;

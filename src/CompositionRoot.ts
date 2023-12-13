@@ -24,10 +24,10 @@ import { GetLastUpdatedDatesUseCase } from "./domain/usecases/GetLastUpdatedDate
 import { LastUpdateDatesApiRepository } from "./data/repositories/LastUpdateDatesApiRepository";
 
 export class CompositionRoot {
-    private preventionRepository = new PreventionApiRepository(config.mapServerUrl);
-    private diagnosisRepository = new DiagnosisApiRepository(config.mapServerUrl, config.xmartServerUrl);
-    private treatmentRepository = new TreatmentApiRepository(config.mapServerUrl, config.xmartServerUrl);
-    private invasiveRepository = new InvasiveApiRepository(config.mapServerUrl);
+    private preventionRepository = new PreventionApiRepository(config.xmartServerUrl);
+    private diagnosisRepository = new DiagnosisApiRepository(config.xmartServerUrl);
+    private treatmentRepository = new TreatmentApiRepository(config.xmartServerUrl);
+    private invasiveRepository = new InvasiveApiRepository(config.xmartServerUrl);
     private countryLayerRepository = new CountryLayerApiRepository(config.featuresServerUrl, config.xmartServerUrl);
     private countryRepository = new CountryApiRepository(config.xmartServerUrl);
     private emailRepository = new SmtpJsEmailRepository(config.feedbackEmailSecureToken);

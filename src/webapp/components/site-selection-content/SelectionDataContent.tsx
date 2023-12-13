@@ -151,12 +151,7 @@ const InvasiveContent: React.FC<{ selectionData: InvasiveSelectionData }> = ({ s
             </TopContainer>
 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
-            <RoundedContainer>
-                {selectionData.data && <InvasiveChart selectionData={selectionData} />}
-
-                {selectionData.dataSources && <CitationNew dataSources={selectionData.dataSources} />}
-                {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
-            </RoundedContainer>
+            {selectionData.data && selectionData.data.length && <InvasiveChart selectionData={selectionData} />}
         </>
     );
 };

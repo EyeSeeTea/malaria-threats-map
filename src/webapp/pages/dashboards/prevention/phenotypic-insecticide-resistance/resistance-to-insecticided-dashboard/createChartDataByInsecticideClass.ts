@@ -3,31 +3,32 @@ import _ from "lodash";
 import { PreventionStudy } from "../../../../../../domain/entities/PreventionStudy";
 import { sortInsecticideClasses } from "../../../../../components/filters/InsecticideClassFilter";
 import { ResistanceStatusColors } from "../../../../../components/layers/prevention/ResistanceStatus/symbols";
-import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
 import { ResistanceToInsecticideChartDataByClass } from "../types";
 
 export function createChartDataByInsecticideClass(
     allStudies: PreventionStudy[],
     studies: PreventionStudy[],
     selectedCountries: string[],
-    filters: PreventionFiltersState
+    insecticideClasses: string[]
 ): ResistanceToInsecticideChartDataByClass {
-    if (filters.insecticideClasses.length === 0) return { kind: "InsecticideByClass", data: {} };
+    if (insecticideClasses.length === 0) return { kind: "InsecticideByClass", data: {} };
 
-    const result = selectedCountries.reduce((acc, countryISO) => {
+    const sortCountries = _.orderBy(selectedCountries, country => i18next.t(country), "asc");
+
+    const result = sortCountries.reduce((acc, countryISO) => {
         const studiesByCountry = studies.filter(study => study.ISO2 === countryISO);
 
-        const insecticideClasses = sortInsecticideClasses(
+        const finalInsecticideClasses = sortInsecticideClasses(
             _.uniq(
                 allStudies
-                    .filter(study => filters.insecticideClasses.includes(study.INSECTICIDE_CLASS))
+                    .filter(study => insecticideClasses.includes(study.INSECTICIDE_CLASS))
                     .map(study => study.INSECTICIDE_CLASS)
             )
         );
 
         const resistanceConfirmed = createSerieByStatusAndInsecticideClass(
             studiesByCountry,
-            insecticideClasses,
+            finalInsecticideClasses,
             "CONFIRMED_RESISTANCE",
             i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.confirmed"),
             ResistanceStatusColors.Confirmed[0]
@@ -35,7 +36,7 @@ export function createChartDataByInsecticideClass(
 
         const resistancePosible = createSerieByStatusAndInsecticideClass(
             studiesByCountry,
-            insecticideClasses,
+            finalInsecticideClasses,
             "POSSIBLE_RESISTANCE",
             i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.possible"),
             ResistanceStatusColors.Possible[0]
@@ -43,7 +44,7 @@ export function createChartDataByInsecticideClass(
 
         const resistanceSusceptible = createSerieByStatusAndInsecticideClass(
             studiesByCountry,
-            insecticideClasses,
+            finalInsecticideClasses,
             "SUSCEPTIBLE",
             i18next.t("common.dashboard.phenotypicInsecticideResistanceDashboards.susceptible"),
             ResistanceStatusColors.Susceptible[0]

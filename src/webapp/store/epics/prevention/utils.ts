@@ -235,7 +235,7 @@ function createPreventionMechanismAllelics(
                     yName: y.toString(),
                     value: !study
                         ? i18next.t("common.prevention.chart.resistance_mechanism.not_reported")
-                        : isNA(study.MECHANISM_FREQUENCY)
+                        : isNA(study.MECHANISM_FREQUENCY) || study.MECHANISM_FREQUENCY === null
                         ? "N/A"
                         : isNR(study.MECHANISM_FREQUENCY)
                         ? i18next.t("common.prevention.chart.resistance_mechanism.not_reported")
@@ -246,12 +246,12 @@ function createPreventionMechanismAllelics(
     ];
 }
 
-function getStudyName(mapType: PreventionMapType, study: Study): string {
+function getStudyName(mapType: PreventionMapType, study: PreventionStudy): string {
     switch (mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
             return `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_TYPE)} ${i18next.t(study.INSECTICIDE_CONC)}`;
         case PreventionMapType.INTENSITY_STATUS:
-            return `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_INTENSITY)} ${i18next.t(
+            return `${study.YEAR_START}, ${study.INSECTICIDE_INTENSITY}x ${i18next.t(
                 study.INSECTICIDE_TYPE
             )}`;
         case PreventionMapType.LEVEL_OF_INVOLVEMENT: {
@@ -312,7 +312,7 @@ function createChartDataItems(
         ["INSECTICIDE_TYPE", "asc"],
         mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT ? ["SYNERGIST_TYPE", "asc"] : undefined,
         mapType === PreventionMapType.INTENSITY_STATUS
-            ? [(study: PreventionStudy) => +study.INSECTICIDE_INTENSITY.replace("x", ""), "asc"]
+            ? [(study: PreventionStudy) => +study.INSECTICIDE_INTENSITY, "asc"]
             : undefined,
     ]);
 

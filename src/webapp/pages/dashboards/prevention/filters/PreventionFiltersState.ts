@@ -1,3 +1,5 @@
+import { DisaggregateBySpeciesOptions } from "../../../../components/filters/DisaggregateBySpecies";
+
 export interface PreventionFiltersState {
     insecticideClasses: string[];
     insecticideTypes: string[];
@@ -7,4 +9,16 @@ export interface PreventionFiltersState {
     onlyIncludeBioassaysWithMoreMosquitoes: number;
     onlyIncludeDataByHealth: boolean;
     maxMinYears: [number, number];
+    disaggregateBySpeciesSelection: DisaggregateBySpeciesOptions;
+    disableSpeciesFilter: boolean;
+    onYearsChange: (years: [number, number]) => void;
+    onInsecticideClassesChange?: (value: string[]) => void;
+    onSpeciesChange?: (value: string[]) => void;
+    onTypeChange?: (value: string) => void;
+    onInsecticideClassChange?: (values: string[]) => void;
+    onInsecticideTypesChange?: (value: string[]) => void;
+    onOnlyIncludeBioassaysWithMoreMosquitoesChange: (value: number) => void;
+    onOnlyIncludeDataByHealthChange: (value: boolean) => void;
+    onDisaggregateBySpeciesChange: (value: DisaggregateBySpeciesOptions) => void;
+    onDisableSpeciesFilter: (value: boolean) => void;
 }

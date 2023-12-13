@@ -7,6 +7,7 @@ import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import { emphasize, Theme } from "@mui/material/styles";
 import { Box } from "@mui/material";
+import { getFromLocalStorage } from "../../utils/browserCache";
 
 const LANGUAGES = [
     {
@@ -102,7 +103,7 @@ const classes = makeStyles((theme: Theme) =>
     })
 );
 const LanguageSelector: React.FC = () => {
-    const [language, setLanguage] = React.useState(i18next.language || window.localStorage.i18nextLng);
+    const [language, setLanguage] = React.useState(i18next.language || getFromLocalStorage("i18nextLng"));
     function handleChange(selection: any) {
         const language = selection.value;
         changeLanguage(language);

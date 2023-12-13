@@ -1,9 +1,10 @@
 import Highcharts from "highcharts";
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import PreventionFilterableDashboard from "../../PreventionFilterableDashboard";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
+import { Card } from "@mui/material";
 import { useResistanceToInsecticide } from "./useResistanceToInsecticide";
 import {
     ResistanceToInsecticideDataByClass,
@@ -13,28 +14,24 @@ import {
 import i18next from "i18next";
 import StatusOfResistanceToInsecticidePopup from "../../../../../components/dashboards/prevention/StatusOfResistanceToInsecticidePopup";
 import { useInfoPopup } from "../../../common/popup/useInfoPopup";
+import { ResistanceToInsecticideChartType } from "../../types";
 
 const ResistanceToInsecticideDashboard: React.FC = () => {
     const { t } = useTranslation();
 
-    const {
-        insecticideTypeOptions,
-        chartType,
-        chartTypes,
-        categoriesCount,
-        data,
-        filters,
-        onInsecticideClassChange,
-        onInsecticideTypesChange,
-        onYearsChange,
-        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-        onOnlyIncludeDataByHealthChange,
-        onChartTypeChange,
-    } = useResistanceToInsecticide();
+    const { insecticideTypeOptions, chartType, chartTypes, categoriesCount, data, filters, onChartTypeChange } =
+        useResistanceToInsecticide();
 
     const { openPopup, onChangeOpenPopup } = useInfoPopup();
 
     const chartComponentRefs = useRef([]);
+
+    const handleChartTypeChange = useCallback(
+        (type: unknown) => {
+            onChartTypeChange(type as ResistanceToInsecticideChartType);
+        },
+        [onChartTypeChange]
+    );
 
     return (
         <React.Fragment>
@@ -50,19 +47,16 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
                     "common.dashboard.phenotypicInsecticideResistanceDashboards.statusOfResistanceToInsecticides.title"
                 )}
                 filters={filters}
-                onInsecticideClassesChange={chartType === "by-insecticide-class" ? onInsecticideClassChange : undefined}
-                onInsecticideTypesChange={chartType === "by-insecticide" ? onInsecticideTypesChange : undefined}
-                onYearsChange={onYearsChange}
-                onOnlyIncludeBioassaysWithMoreMosquitoesChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}
-                onOnlyIncludeDataByHealthChange={onOnlyIncludeDataByHealthChange}
-                onChartTypeChange={onChartTypeChange}
+                onChartTypeChange={handleChartTypeChange}
                 onInfoClick={onChangeOpenPopup}
             >
-                {data.kind === "InsecticideByClass" ? (
-                    <ChartByClass data={data.data} chartComponentRefs={chartComponentRefs} />
-                ) : (
-                    <ChartByType data={data.data} chartComponentRefs={chartComponentRefs} />
-                )}
+                <DasboardCard elevation={0}>
+                    {data.kind === "InsecticideByClass" ? (
+                        <ChartByClass data={data.data} chartComponentRefs={chartComponentRefs} />
+                    ) : (
+                        <ChartByType data={data.data} chartComponentRefs={chartComponentRefs} />
+                    )}
+                </DasboardCard>
             </PreventionFilterableDashboard>
             <StatusOfResistanceToInsecticidePopup
                 years={filters.years}
@@ -244,6 +238,11 @@ const TableByType = styled.table`
     tr:last-child td:nth-child(1) {
         padding-bottom: 50px;
     }
+`;
+
+const DasboardCard = styled(Card)`
+    min-height: 500px;
+    padding: 42px;
 `;
 
 const StyledHighcharts = styled(HighchartsReact)``;

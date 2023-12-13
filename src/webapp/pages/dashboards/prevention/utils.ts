@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import _ from "lodash";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import {
@@ -5,7 +6,6 @@ import {
     filterByInsecticideTypes,
     filterByOnlyDataByHealthMinistries,
     filterByOnlyIncludeBioassaysWithMoreMosquitoes,
-    filterByResistanceStatus,
     filterBySpecies,
     filterByType,
     filterByYearRange,
@@ -14,10 +14,22 @@ import { PreventionFiltersState } from "./filters/PreventionFiltersState";
 
 export function filterStudies(
     studies: PreventionStudy[],
-    preventionFilters: PreventionFiltersState
+    baseFilters: ((study: PreventionStudy) => boolean)[],
+    preventionFilters: Pick<
+        PreventionFiltersState,
+        | "insecticideClasses"
+        | "insecticideTypes"
+        | "species"
+        | "type"
+        | "years"
+        | "onlyIncludeBioassaysWithMoreMosquitoes"
+        | "onlyIncludeDataByHealth"
+        | "maxMinYears"
+        | "disaggregateBySpeciesSelection"
+    >
 ): PreventionStudy[] {
     const filters = _.compact([
-        filterByResistanceStatus,
+        ...baseFilters,
         filterByInsecticideClasses(preventionFilters.insecticideClasses),
         filterByInsecticideTypes(preventionFilters.insecticideTypes),
         filterBySpecies(preventionFilters.species),
@@ -29,5 +41,5 @@ export function filterStudies(
 
     const filteredStudies = filters.reduce((studies, filter) => studies.filter(filter), studies);
 
-    return filteredStudies;
+    return _.orderBy(filteredStudies, study => i18next.t(study.ISO2), "asc");
 }

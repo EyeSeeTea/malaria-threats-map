@@ -78,26 +78,6 @@ function MapScreenshot({ map, theme, title, showMapSidebar = false }: MapScreens
             </OpenScreenshotButton>
             <ScreenshotModal open={open} onClose={handleCloseScreenshot} title={title}>
                 <>
-                    <TitleWrapper>
-                        {Icon}
-                        <Title>{_.capitalize(title)}</Title>
-                    </TitleWrapper>
-                    <MapAndSidebarContainer>
-                        <MapContainer>
-                            <MapInfoSummaryContainer>
-                                <MapInfoSummaryLegend />
-                            </MapInfoSummaryContainer>
-                            <LegendContainer>
-                                <Legend />
-                            </LegendContainer>
-                            <StyledImage alt="Map screenshot" src={mapImage} $hasSidebar={showMapSidebar} />
-                        </MapContainer>
-                        {showMapSidebar ? (
-                            <MapSidebarContainer>
-                                <SelectionDataContent onClose={fakeFunction} isScreenshot />
-                            </MapSidebarContainer>
-                        ) : null}
-                    </MapAndSidebarContainer>
                     <WHOInfoContainer>
                         <WHOInfoWrapper>
                             <WHOInfoWrapper>
@@ -120,6 +100,26 @@ function MapScreenshot({ map, theme, title, showMapSidebar = false }: MapScreens
                             </WHOLogoSubtitle>
                         </WHOLogoWrapper>
                     </WHOInfoContainer>
+                    <TitleWrapper>
+                        {Icon}
+                        <Title>{_.capitalize(title)}</Title>
+                    </TitleWrapper>
+                    <MapAndSidebarContainer>
+                        <MapContainer>
+                            <MapInfoSummaryContainer>
+                                <MapInfoSummaryLegend />
+                            </MapInfoSummaryContainer>
+                            <StyledImage alt="Map screenshot" src={mapImage} $hasSidebar={showMapSidebar} />
+                            <LegendContainer $hasSidebar={showMapSidebar}>
+                                <Legend />
+                            </LegendContainer>
+                        </MapContainer>
+                        {showMapSidebar ? (
+                            <MapSidebarContainer>
+                                <SelectionDataContent onClose={fakeFunction} isScreenshot />
+                            </MapSidebarContainer>
+                        ) : null}
+                    </MapAndSidebarContainer>
                 </>
             </ScreenshotModal>
         </>
@@ -158,42 +158,44 @@ const Title = styled.h2`
 
 const MapContainer = styled.div`
     position: relative;
-    height: fit-content;
-    width: fit-content;
+    height: 100%;
+    width: 100%;
+    margin-block-end: 20px;
 `;
 
 const MapAndSidebarContainer = styled.div`
     padding: 20px 20px 0 20px;
     display: flex;
+    position: relative;
 `;
 
 const MapSidebarContainer = styled.div`
     padding: 16px 0;
     width: 100%;
-    min-width: 500px;
-    max-width: 800px;
+    max-width: 30%;
+    z-index: 2;
     border-radius: 0 10px 10px 0;
     background-color: #f3f3f3;
-    margin-bottom: 5px;
     .additional-information-link {
         display: none;
     }
 `;
 
 const MapInfoSummaryContainer = styled.div`
-    max-width: 310px;
     position: absolute;
     top: 30px;
     left: 30px;
     width: fit-content;
+    z-index: 2;
 `;
 
-const LegendContainer = styled.div`
+const LegendContainer = styled.div<{ $hasSidebar?: boolean }>`
     border-radius: 12px;
     background-color: #ffffff;
     position: absolute;
-    bottom: 20px;
-    right: 30px;
+    z-index: 3;
+    inset-inline-end: ${props => (props.$hasSidebar ? "2%" : "30px")};
+    inset-block-end: ${props => (props.$hasSidebar ? "-690px" : "20px")};
     div {
         width: fit-content;
         max-width: fit-content;
@@ -201,6 +203,8 @@ const LegendContainer = styled.div`
     span,
     p {
         white-space: nowrap;
+        font-family: sans-serif;
+        font-size: 16px;
     }
     hr,
     .MuiSvgIcon-root {
@@ -209,13 +213,17 @@ const LegendContainer = styled.div`
     .MuiButtonBase-root {
         padding-bottom: 0;
     }
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+        0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 `;
 
 const StyledImage = styled.img<{ $hasSidebar?: boolean }>`
     border-top-left-radius: 10px;
-    border-top-right-radius: ${props => (props.$hasSidebar ? "unset" : "10px")};
-    border-bottom-right-radius: ${props => (props.$hasSidebar ? "unset" : "10px")};
+    border-top-right-radius: ${props => (props.$hasSidebar ? "10px" : "unset")};
+    border-bottom-right-radius: ${props => (props.$hasSidebar ? "10px" : "unset")};
     border-bottom-left-radius: 10px;
+    width: ${props => (props.$hasSidebar ? "142.5%" : "100%")};
+    position: ${props => (props.$hasSidebar ? "absolute" : "static")};
 `;
 
 const WHOInfoContainer = styled.div`

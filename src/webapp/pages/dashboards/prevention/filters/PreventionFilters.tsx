@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { IconButton, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -11,8 +12,13 @@ import SpeciesSelector from "../../../../components/filters/SpeciesSelector";
 import { Option } from "../../../../components/BasicSelect";
 import SingleFilter from "../../../../components/filters/common/SingleFilter";
 import MultiFilter from "../../../../components/filters/common/MultiFilter";
+import DisaggregateBySpeciesSelector from "../../../../components/filters/DisaggregateBySpecies";
 
-export type PreventionFilterableChart = "status-of-resistance-of-insecticide" | "mosquito-mortality-overtime";
+export type PreventionFilterableChart =
+    | "status-of-resistance-of-insecticide"
+    | "mosquito-mortality-overtime"
+    | "insecticide-resistance-resistance-mechanisms"
+    | "spread-of-resistance-over-time";
 
 interface PreventionFiltersProps {
     chart: PreventionFilterableChart;
@@ -20,13 +26,6 @@ interface PreventionFiltersProps {
     filters: PreventionFiltersState;
     speciesOptions?: Option[];
     typeOptions?: Option[];
-    onInsecticideClassesChange?: (value: string[]) => void;
-    onSpeciesChange?: (value: string[]) => void;
-    onInsecticideTypesChange?: (value: string[]) => void;
-    onTypeChange?: (value: string) => void;
-    onYearsChange: (years: [number, number]) => void;
-    onOnlyIncludeBioassaysWithMoreMosquitoesChange: (value: number) => void;
-    onOnlyIncludeDataByHealthChange: (value: boolean) => void;
     onCollapse: () => void;
 }
 
@@ -36,13 +35,6 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
     filters,
     speciesOptions,
     typeOptions,
-    onInsecticideClassesChange,
-    onSpeciesChange,
-    onInsecticideTypesChange,
-    onTypeChange,
-    onYearsChange,
-    onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-    onOnlyIncludeDataByHealthChange,
     onCollapse,
 }) => {
     const { t } = useTranslation();
@@ -59,42 +51,56 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                 </IconButton>
             </Stack>
 
-            {onInsecticideClassesChange && (
+            {filters.onInsecticideClassesChange && (
                 <InsecticideClassSelector
-                    onChange={onInsecticideClassesChange}
+                    onChange={filters.onInsecticideClassesChange}
                     value={filters.insecticideClasses}
-                    type={chart === "mosquito-mortality-overtime" ? "radio" : "select"}
+                    type={
+                        chart === "mosquito-mortality-overtime" || chart === "spread-of-resistance-over-time"
+                            ? "radio"
+                            : "select"
+                    }
                 />
             )}
 
-            {speciesOptions && onSpeciesChange && (
+            {chart === "spread-of-resistance-over-time" && filters.onInsecticideClassesChange && <StyledHr />}
+
+            {speciesOptions && filters.onSpeciesChange && filters.onDisaggregateBySpeciesChange && (
+                <DisaggregateBySpeciesSelector
+                    onChange={filters.onDisaggregateBySpeciesChange}
+                    value={filters.disaggregateBySpeciesSelection}
+                />
+            )}
+
+            {speciesOptions && filters.onSpeciesChange && (
                 <SpeciesSelector
                     labelPosition="top"
                     margin="10px 0px"
                     options={speciesOptions}
-                    onChange={onSpeciesChange}
+                    onChange={filters.onSpeciesChange}
                     value={filters.species}
                     isClearable={true}
+                    disabled={filters.disableSpeciesFilter}
                 />
             )}
 
-            {onTypeChange && (
+            {filters.onTypeChange && (
                 <SingleFilter
                     labelPosition={"top"}
                     margin={"10px 0px"}
                     label={t("common.filters.test_type")}
                     options={typeOptions}
-                    onChange={onTypeChange}
+                    onChange={filters.onTypeChange}
                     value={filters.type}
                 />
             )}
 
-            {onInsecticideTypesChange && (
+            {filters.onInsecticideTypesChange && (
                 <MultiFilter
                     labelPosition="top"
                     label={t("common.filters.insecticide_type")}
                     options={insecticideTypeOptions}
-                    onChange={onInsecticideTypesChange}
+                    onChange={filters.onInsecticideTypesChange}
                     value={filters.insecticideTypes}
                     margin={"10px 0px"}
                     isClearable={true}
@@ -105,18 +111,25 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
             <DashboardsYearRangeSelector
                 years={filters.years}
                 maxMinYears={filters.maxMinYears}
-                onChange={onYearsChange}
+                onChange={filters.onYearsChange}
             />
             <OnlyIncludeBioassaysWithMoreMosquitoes
                 value={filters.onlyIncludeBioassaysWithMoreMosquitoes}
-                onChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}
+                onChange={filters.onOnlyIncludeBioassaysWithMoreMosquitoesChange}
             />
             <OnlyIncudeDataByHealth
                 value={filters.onlyIncludeDataByHealth}
-                onChange={onOnlyIncludeDataByHealthChange}
+                onChange={filters.onOnlyIncludeDataByHealthChange}
             />
         </React.Fragment>
     );
 };
 
 export default React.memo(PreventionFilters);
+
+const StyledHr = styled.hr`
+    border: 0;
+    height: 1px;
+    background-color: #0000001a;
+    width: 100%;
+`;

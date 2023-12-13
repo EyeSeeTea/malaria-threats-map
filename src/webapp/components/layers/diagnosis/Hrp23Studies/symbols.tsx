@@ -3,7 +3,7 @@ import { HRP23_STUDIES_STATUS } from "./utils";
 
 export const Hrp23StudiesColors: { [key: string]: string[] } = {
     [HRP23_STUDIES_STATUS.ONGOING]: ["#5ABE86", "#4DA072"],
-    [HRP23_STUDIES_STATUS.PLANNED]: ["#4897C7", "#357BA3"],
+    [HRP23_STUDIES_STATUS.PLANNED]: ["#365694", "#2c4371"],
     [HRP23_STUDIES_STATUS.COMPLETED_RESULTS_PENDING]: ["#FD6F21", "#CC5C1E"],
     [HRP23_STUDIES_STATUS.UNKNOWN]: ["#d3d3d3", "#adadad"],
 };

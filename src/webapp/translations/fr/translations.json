@@ -76,6 +76,7 @@
         "dashboard": {
             "title": "Tableaux de bord",
             "not-available": "indisponible",
+            "filterDataButton": "Filtrer les données",
             "filtersSection": {
                 "first": {
                     "title": "1. Sélectionnez le thème",
@@ -112,7 +113,12 @@
                 "phenotypicInsecticideResistanceOptions": {
                     "phenotypicInsecticideResistance": "Résistance phénotypique aux insecticides",
                     "statusOfResistanceToInsecticides": "Etat de résistance aux insecticides",
-                    "mosquitoOverTime": "La mortalité des moustiques au fil du temps"
+                    "mosquitoOverTime": "La mortalité des moustiques au fil du temps",
+                    "spreadOfResistanceOverTime": "Propagation de la résistance dans le temps"
+                },
+                "molecularMechanismDetectionOptions": {
+                    "molecularMechanismDetection": "Détection de mécanismes moléculaires",
+                    "insecticideResistanceAndResistanceMechanism": "Résistance aux insecticides et mécanismes de résistance détectés par espèce vectrice"
                 }
             },
             "countryContextDashboards": {
@@ -171,7 +177,9 @@
                     "title": "TAUX D'ÉCHEC DU TRAITEMENT AU FIL DU TEMPS",
                     "numberPatients": "Nombre de patients",
                     "treatmentFailure": "Échec du traitement (%)",
-                    "year": "An"
+                    "year": "An",
+                    "graph": "Graphique",
+                    "table": "Tableau"
                 },
                 "parasiteClearanceOverTime": {
                     "title": "ÉLIMINATION DES PARASITES AU FIL DU TEMPS",
@@ -208,6 +216,32 @@
                     "title": "MORTALITÉ DES MOUSTIQUES AU FIL DU TEMPS",
                     "adjustedMortality": "Mortalité ajustée (%)",
                     "year": "An"
+                },
+                "spreadOfResistanceOverTime": {
+                    "title": "Propagation de la résistance dans le temps",
+                    "sumConfirmedResistance": "Somme des sites dont la résistance a été confirmée",
+                    "year": "An",
+                    "insecticideClassLegendTitle": "Classe d'insecticide",
+                    "insecticideTypeLegendTitle": "Insecticide",
+                    "numberOfSites": "Nombre de sites",
+                    "insecticideResistanceStatus": "Statut de résistance aux insecticides"
+                }
+            },
+            "molecularMechanismDetectionDashboards": {
+                "title": "Détection de mécanismes moléculaires",
+                "insecticideResistanceAndResistanceMechanisms": {
+                    "title": "RÉSISTANCE AUX INSECTICIDES ET MÉCANISMES DE RÉSISTANCE DÉTECTÉS PAR ESPÈCE VECTRICE",
+                    "graph": "Graphique",
+                    "table": "Tableau",
+                    "legend": {
+                        "phenotypiqueResistance": "Résistance phénotypique",
+                        "percentageSitesInsecticideClass": "% de sites présentant une résistance (nombre de sites surveillés)",
+                        "resistanceMechanisms": "Mécanismes de résistance",
+                        "percentageSitesResistanceMechanisms": " % de sites ayant détecté le mécanisme de résistance (Nombre de sites surveillés)",
+                        "detected": "Détecté",
+                        "noDetected": "Aucun détecté",
+                        "noDataAvailable": "Aucune donnée disponible"
+                    }
                 }
             },
             "treatmentFilters": {
@@ -258,6 +292,13 @@
                     "title": "MORTALITÉ DES MOUSTIQUES AU FIL DU TEMPS",
                     "graphInterpretation": "<0>Interprétation du graphique :</0> Ce graphique présente la mortalité des moustiques dans les bioessais de sensibilité au fil du temps. La taille de la barre représente les valeurs des études comprises entre les quartiles 25 % et 75 % du distribution de la mortalité. La ligne horizontale à l'intérieur de la barre représente la valeur médiane de la mortalité. Les lignes horizontales au-dessus et en dessous de la barre représentent respectivement les valeurs de mortalité maximale et minimale.",
                     "typeOfResistance": "<0>Type d'essai biologique de surveillance de la résistance :</0> La résistance aux insecticides a été déterminée par la mortalité des moustiques (essai biologique en bouteille CDC, test en tube de l'OMS ou essai biologique en bouteille de l'OMS). La résistance confirmée est classée comme mortalité des moustiques {{lessThan}}90%."
+                },
+                "spreadOfResistanceOverTimePopup": {
+                    "title": "PROPAGATION DE LA RÉSISTANCE DANS LE TEMPS",
+                    "lineChartInterpretation": "<0>Interprétation des graphiques linéaires:</0> Dans ce graphique, le nombre cumulé de sites ayant confirmé une résistance à chaque insecticide ou classe d'insecticide (c'est-à-dire une mortalité des moustiques {{lessThan}} 90 % selon l'essai biologique de l'OMS ou du CDC avec la concentration d'insecticide discriminante) est représenté en fonction de l'année. La surface des cercles sur le graphique représente le nombre total de sites ayant surveillé la résistance cette année-là.",
+                    "barChartInterpretation": "<0>Interprétation des diagrammes à barres:</0> Ce graphique présente le nombre de sites qui ont surveillé la résistance aux insecticides par an, ventilé entre ceux qui ont confirmé la résistance (rouge), ceux qui ont détecté une résistance possible (orange) et ceux où les moustiques étaient sensibles à l'insecticide (vert).",
+                    "disaggregatedView": "<0>Vue désagrégée:</0> Les graphiques peuvent être visualisés par classe d'insecticide ou par insecticide, et pour toutes les espèces de vecteurs ensemble ou ventilées par espèce.",
+                    "typeOfResistanceMonitoringBioassay": "<0>Type d'essai biologique de contrôle de la résistance:</0> La résistance aux insecticides a été déterminée par la mortalité des moustiques (essai biologique en bouteille CDC, test en tube de l'OMS ou essai biologique en bouteille de l'OMS). La résistance confirmée est classée comme mortalité des moustiques {{lessThan}}90%."
                 }
             },
             "tooltip": {
@@ -268,7 +309,25 @@
                 "source": {
                     "label": "Source",
                     "link": "Institut national des allergies et des maladies infectieuses, Instituts nationaux de la santé"
-                }
+                },
+                "insecticideClass": "Classe d'insecticide",
+                "year": "Année",
+                "numberOfSitesConfirmedResistance": "Nombre de sites avec une résistance confirmée",
+                "numberOfSites": "Nombre de sites ayant surveillé la résistance",
+                "species": "Espèce",
+                "resistanceStatus": "Statut de résistance",
+                "resistanceStatusType": {
+                    "CONFIRMED_RESISTANCE": "Confirmé",
+                    "POSSIBLE_RESISTANCE": "Possible",
+                    "SUSCEPTIBLE": "Susceptible"
+                },
+                "numberOfSitesWithThisStatus": {
+                    "CONFIRMED_RESISTANCE": "Nombre de sites avec une résistance confirmée",
+                    "POSSIBLE_RESISTANCE": "Nombre de sites avec une résistance possible",
+                    "SUSCEPTIBLE": "Nombre de sites présentant une résistance sensible"
+                },
+                "totalNumberOfSites": "Nombre de sites ayant surveillé la résistance",
+                "insecticideType": "Insecticide"
             }
         },
         "homepage": {
@@ -802,7 +861,11 @@
             "exclude_lower_samples": "Exclure les études portant sur moins de 20 échantillons",
             "onlyIncludeBioassays": "N'incluez que les essais biologiques comportant plus que le nombre suivant de moustiques",
             "zero_all_bioassays": "0 (tous les essais biologiques)",
-            "only_include_data_by_health": "N'inclure que les données fournies à l'OMS par les ministères de la santé"
+            "only_include_data_by_health": "N'inclure que les données fournies à l'OMS par les ministères de la santé",
+            "disaggregate_by_species": {
+                "aggregate_species": "Données agrégées sur les espèces",
+                "disaggregate_species": "Répartition par espèce"
+            }
         },
         "map_info_summary": {
             "all": "Tous",
@@ -971,6 +1034,7 @@
                 "title": "Résumé de la résistance aux insecticides chez les vecteurs du paludisme",
                 "country": "Pay",
                 "resistance": "État de résistance",
+                "insecticideClass": "Classes d'insecticides",
                 "mechanism": "Mécanismes de résistance",
                 "species": "Espèce de vecteur",
                 "resistance_percentage": "% de sites confirmant la résistance",
@@ -987,7 +1051,8 @@
                 "follow": "Suivi",
                 "studies": "Nombre d'études",
                 "percentile_25": "Percentile 25",
-                "percentile_75": "Percentile 75"
+                "percentile_75": "Percentile 75",
+                "percentage_patients_treatment_failure": "% de patients en échec thérapeutique"
             }
         },
         "uploadFile": {
