@@ -2,7 +2,6 @@ import { createAction, createCustomAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
 import { ActionGroup, RegionState, SiteSelection } from "../types";
 import { SelectionData } from "../SelectionData";
-import { AjaxError } from "rxjs/ajax";
 import { UploadFileData } from "../../../domain/usecases/UploadFileUseCase";
 import { Option } from "../../components/BasicSelect";
 
@@ -87,7 +86,7 @@ type LastUpdated = { prevention: Date; diagnosis: Date; treatment: Date; invasiv
 
 export const getLastUpdatedSuccessAction = createAction(ActionTypeEnum.GetLastUpdatedSuccess)<LastUpdated>();
 
-export const getLastUpdatedFailureAction = createAction(ActionTypeEnum.GetLastUpdatedFailure)<AjaxError | string>();
+export const getLastUpdatedFailureAction = createAction(ActionTypeEnum.GetLastUpdatedFailure)<Error | string>();
 
 export const uploadFileRequestAction = createAction(ActionTypeEnum.UploadFileRequest)<UploadFileData>();
 
