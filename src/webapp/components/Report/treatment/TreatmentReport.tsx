@@ -118,7 +118,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                             const fallbackProp = "TREATMENT_FAILURE_KM";
 
                             const rawValues = followUpCountrySpeciesStudies.map((study: TreatmentStudy) =>
-                                study[defaultProp] == null ? study[defaultProp] : study[fallbackProp]
+                                study[defaultProp] !== null ? study[defaultProp] : study[fallbackProp]
                             );
 
                             const values = rawValues.filter(value => !Number.isNaN(value));
