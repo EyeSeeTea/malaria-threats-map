@@ -61,7 +61,7 @@ const InfoToastLink: React.FC<Props> = ({ setRegion, text, type }) => {
                 subRegion: "GREATER_MEKONG",
             });
         } else {
-            sendAnalytics({ type: "event", category: "menu", action: "tour" });
+            sendAnalytics({ type: "event", category: "menu", action: "menuTour" });
             setToLocalStorage("tour", "");
             window.history.pushState({}, document.title, window.location.href.split("?")[0]);
             window.location.reload();
