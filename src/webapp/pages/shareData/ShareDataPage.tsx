@@ -10,6 +10,7 @@ import { selectFeedback } from "../../store/reducers/feedback-reducer";
 import { feedbackFieldChange, feedbackSubmit } from "../../store/actions/feedback-actions";
 import ShareDataChart from "../../assets/img/share-data-page/share-data-chart.png";
 import ContributeDataGraphic from "../../assets/img/share-data-page/contribute-data.png";
+import { useSendAnalyticsPageView } from "../../hooks/useSendAnalyticsPageView";
 
 const ImageBanner = styled.div`
     display: flex;
@@ -46,6 +47,7 @@ const mapDispatchToProps = {
 };
 
 const SectionsFooter = ({ t }: { t: TFunction<"translation", undefined> }) => {
+    useSendAnalyticsPageView("share-data");
     return (
         <Typography variant="body1">
             <Trans i18nKey="common.shareDataPage.sectionsFooter" t={t}>

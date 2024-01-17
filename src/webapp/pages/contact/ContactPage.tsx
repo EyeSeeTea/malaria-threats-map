@@ -11,6 +11,7 @@ import { useTranslation, Trans } from "react-i18next";
 import GoodReview from "../../assets/img/contact-page/good-review.png";
 import TecnicalSupportGraphic from "../../assets/img/contact-page/computer-map.png";
 import { Link } from "react-router-dom";
+import { useSendAnalyticsPageView } from "../../hooks/useSendAnalyticsPageView";
 
 const ImageBanner = styled.div`
     display: flex;
@@ -54,6 +55,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = StateProps & DispatchProps;
 
 const ContactPage: React.FC<Props> = () => {
+    useSendAnalyticsPageView("contact");
     const { t } = useTranslation();
 
     return (
