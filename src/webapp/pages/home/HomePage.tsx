@@ -8,6 +8,7 @@ import { useSendAnalyticsPageView } from "../../hooks/useSendAnalyticsPageView";
 
 const HomePage: React.FC = () => {
     useSendAnalyticsPageView("home");
+
     return (
         <Layout>
             <BannerSection />

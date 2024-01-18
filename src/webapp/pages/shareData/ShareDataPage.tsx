@@ -47,7 +47,8 @@ const mapDispatchToProps = {
 };
 
 const SectionsFooter = ({ t }: { t: TFunction<"translation", undefined> }) => {
-    useSendAnalyticsPageView("share-data");
+    useSendAnalyticsPageView();
+
     return (
         <Typography variant="body1">
             <Trans i18nKey="common.shareDataPage.sectionsFooter" t={t}>

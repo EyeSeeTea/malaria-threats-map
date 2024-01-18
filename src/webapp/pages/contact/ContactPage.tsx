@@ -55,7 +55,8 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = StateProps & DispatchProps;
 
 const ContactPage: React.FC<Props> = () => {
-    useSendAnalyticsPageView("contact");
+    useSendAnalyticsPageView();
+
     const { t } = useTranslation();
 
     return (

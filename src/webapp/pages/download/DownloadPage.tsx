@@ -4,7 +4,7 @@ import SecondaryLayout from "../secondary-layout/SecondaryLayout";
 import { useSendAnalyticsPageView } from "../../hooks/useSendAnalyticsPageView";
 
 export const DownloadPage: React.FC = () => {
-    useSendAnalyticsPageView("downloads");
+    useSendAnalyticsPageView();
 
     return (
         <SecondaryLayout>

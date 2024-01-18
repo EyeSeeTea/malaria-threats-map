@@ -5,7 +5,8 @@ import DashboardsPageContent from "./DashboardsPageContent";
 import { useSendAnalyticsPageView } from "../../hooks/useSendAnalyticsPageView";
 
 const DashboardsPage: React.FC = () => {
-    useSendAnalyticsPageView("dashboards");
+    useSendAnalyticsPageView();
+
     return (
         <DashboardProvider>
             <DashboardsPageContent />

@@ -120,7 +120,9 @@ export const StoriesPage: React.FC = () => {
     const [storyModeStep, setStoryModeStep] = useState<number>(0);
     const [searchParams] = useSearchParams();
     const theme = searchParams.get("theme") as ThemeType;
+
     useSendAnalyticsPageView(`stories/${theme}`);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [theme]);

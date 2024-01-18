@@ -15,7 +15,8 @@ import { useSendAnalyticsPageView } from "../../hooks/useSendAnalyticsPageView";
 `; */
 
 export const AboutPage: React.FC = () => {
-    useSendAnalyticsPageView("about");
+    useSendAnalyticsPageView();
+
     return (
         <Layout>
             <BannerSection />
