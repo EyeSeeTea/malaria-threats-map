@@ -13,7 +13,7 @@ export interface DiagnosisStudy extends Study {
     Code: string;
     SAMPLE_ORIGIN: string;
     SAMPLE_ORIGIN_TEXT: string;
-    PF_POS_SAMPLES: string;
+    PF_POS_SAMPLES: number;
     TYPE_SAMPL_ANALYZED: string;
     TOOLTIP_SITENAME: string;
     DELETION_STATUS: string;
