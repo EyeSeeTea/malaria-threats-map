@@ -34,6 +34,8 @@ export function useResistanceToInsecticide() {
         filters,
     } = usePrevention(baseFilters);
 
+    const { onInsecticideClassChange, onInsecticideTypesChange, insecticideClasses, insecticideTypes } = filters;
+
     const [data, setData] = React.useState<ResistanceToInsecticideChartData>({ kind: "InsecticideByClass", data: {} });
     const [categoriesCount, setCategoriesCount] = React.useState<Record<string, number>>({});
     const [chartType, setChartType] = React.useState<ResistanceToInsecticideChartType>("by-insecticide-class");
@@ -44,35 +46,30 @@ export function useResistanceToInsecticide() {
                 preventionStudies,
                 filteredStudies,
                 selectedCountries,
-                filters.insecticideTypes,
-                filters.insecticideClasses,
+                insecticideTypes,
+                insecticideClasses,
                 chartType
             )
         );
-    }, [
-        preventionStudies,
-        filteredStudies,
-        selectedCountries,
-        chartType,
-        filters.insecticideTypes,
-        filters.insecticideClasses,
-    ]);
+    }, [preventionStudies, filteredStudies, selectedCountries, chartType, insecticideTypes, insecticideClasses]);
 
     React.useEffect(() => {
         if (chartType === "by-insecticide-class") {
-            filters.onInsecticideClassChange(insecticideClassOptions.map(op => op.value));
-            filters.onInsecticideTypesChange([]);
+            if (insecticideClasses.length === 0) {
+                onInsecticideClassChange(insecticideClassOptions.map(op => op.value));
+                onInsecticideTypesChange([]);
+            }
         } else {
-            filters.onInsecticideClassChange([]);
-            filters.onInsecticideTypesChange(insecticideTypeOptions.map(op => op.value));
+            //onInsecticideClassChange([]);
+            onInsecticideTypesChange(insecticideTypeOptions.map(op => op.value));
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         chartType,
-        filters.onInsecticideClassChange,
-        filters.onInsecticideTypesChange,
+        onInsecticideClassChange,
+        onInsecticideTypesChange,
         insecticideClassOptions,
         insecticideTypeOptions,
+        insecticideClasses.length,
     ]);
 
     React.useEffect(() => {
@@ -96,9 +93,10 @@ export function useResistanceToInsecticide() {
         data,
         filters: {
             ...filters,
-            onInsecticideClassesChange:
-                chartType === "by-insecticide-class" ? filters.onInsecticideClassChange : undefined,
-            onInsecticideTypesChange: chartType === "by-insecticide" ? filters.onInsecticideTypesChange : undefined,
+            insecticideClasses,
+            insecticideTypes,
+            onInsecticideClassesChange: chartType === "by-insecticide-class" ? onInsecticideClassChange : undefined,
+            onInsecticideTypesChange: chartType === "by-insecticide" ? onInsecticideTypesChange : undefined,
             onTypeChange: undefined,
             onDisaggregateBySpeciesChange: undefined,
         } as PreventionFiltersState,
