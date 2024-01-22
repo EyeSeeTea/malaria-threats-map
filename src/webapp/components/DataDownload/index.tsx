@@ -48,7 +48,6 @@ function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset, s
     const { t } = useTranslation();
     const {
         activeStep,
-        downloading,
         messageLoader,
         selectedDataBases,
         userInfo,
@@ -94,7 +93,7 @@ function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset, s
 
     return (
         <StyledContainer maxWidth="xl">
-            {downloading && <SimpleLoader message={messageLoader} />}
+            {messageLoader && <SimpleLoader message={messageLoader} />}
 
             <Container maxWidth="md">
                 <PaperStepper alternativeLabel activeStep={activeStep} connector={<StyledStepConnector />}>
