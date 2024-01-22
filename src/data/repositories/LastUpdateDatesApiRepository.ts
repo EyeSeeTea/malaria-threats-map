@@ -33,7 +33,7 @@ export class LastUpdateDatesApiRepository implements LastUpdatedDatesRepository 
                     } else if (row.THEME_NAME === "HRP") {
                         return { ...acc, diagnosis: new Date(row.UPDATE_DATE) };
                     } else if (row.THEME_NAME === "HRPO") {
-                        return { ...acc, diagnosisOnoing: new Date(row.UPDATE_DATE) };
+                        return { ...acc, diagnosisOngoing: new Date(row.UPDATE_DATE) };
                     } else if (row.THEME_NAME === "VIR") {
                         return { ...acc, prevention: new Date(row.UPDATE_DATE) };
                     } else if (row.THEME_NAME === "INV") {
