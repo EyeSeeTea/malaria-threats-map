@@ -30,8 +30,6 @@ export class LastUpdateDatesApiRepository implements LastUpdatedDatesRepository 
                             treatmentTESOngoing: new Date(row.UPDATE_DATE),
                             treatmentMMOngoing: new Date(row.UPDATE_DATE),
                         };
-                        // } else if (row.THEME_NAME === "AMDERO") {
-                        //     return { ...acc, treatmentMMOngoing: new Date(row.UPDATE_DATE) };
                     } else if (row.THEME_NAME === "HRP") {
                         return { ...acc, diagnosis: new Date(row.UPDATE_DATE) };
                     } else if (row.THEME_NAME === "HRPO") {
