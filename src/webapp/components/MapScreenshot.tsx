@@ -16,6 +16,7 @@ import whoLogoWhite from "../assets/img/who-logo-blue.png";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import MapInfoSummaryLegend from "./MapInfoSummaryLegend";
 import SelectionDataContent from "./site-selection-content/SelectionDataContent";
+import { AnalyticsData, sendAnalytics } from "../utils/analytics";
 
 const MALARIA_THREATS_MAP_URL = "https://apps.who.int/malaria/maps/threats/";
 
@@ -32,6 +33,8 @@ type OwnProps = {
     showMapSidebar?: boolean;
 };
 type MapScreenshotProps = StateProps & OwnProps;
+
+const downloadAnalyticsData: AnalyticsData = { type: "event", category: "screenshot", action: "downloadMapScreenshot" };
 
 function MapScreenshot({ map, theme, title, showMapSidebar = false }: MapScreenshotProps) {
     const { t } = useTranslation();
@@ -56,6 +59,7 @@ function MapScreenshot({ map, theme, title, showMapSidebar = false }: MapScreens
         const imgSrc = map?.getCanvas()?.toDataURL();
         setMapImage(imgSrc);
         setOpen(true);
+        sendAnalytics({ type: "event", category: "screenshot", action: "openMapScreenshot" });
     }, [map]);
 
     const handleCloseScreenshot = React.useCallback(() => {
@@ -76,7 +80,12 @@ function MapScreenshot({ map, theme, title, showMapSidebar = false }: MapScreens
                 <StyledCamaraIcon />
                 {t("common.screenshot.screenshot")}
             </OpenScreenshotButton>
-            <ScreenshotModal open={open} onClose={handleCloseScreenshot} title={title}>
+            <ScreenshotModal
+                open={open}
+                onClose={handleCloseScreenshot}
+                title={title}
+                analyticsData={downloadAnalyticsData}
+            >
                 <>
                     <WHOInfoContainer>
                         <WHOInfoWrapper>

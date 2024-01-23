@@ -42,8 +42,6 @@ import MalariaTour from "./tour/MalariaTour";
 import MekongLayer from "./layers/MekongLayer";
 import Report from "./Report";
 import TheaterMode from "./TheaterMode";
-import { getAnalyticsPageViewFromString } from "../store/analytics";
-import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
 import MapActions from "./map-actions/MapActions";
@@ -241,11 +239,6 @@ class Map extends React.Component<Props, StateTypes> {
             const cc = this.map.getBounds().toArray();
             this.props.updateBounds(cc);
         });
-
-        const pageView = getAnalyticsPageViewFromString({ page: this.props.theme });
-        if (pageView) {
-            sendAnalytics({ type: "pageView", ...pageView });
-        }
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
 

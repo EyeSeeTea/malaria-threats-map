@@ -36,6 +36,9 @@ const XMART_URL_PROD = "https://xmart-api-public.who.int/MAL_THREATS";
 
 const FEEDBACK_EMAIL_FROM = process.env.REACT_APP_FEEDBACK_EMAIL_FROM;
 
+const ANALYTICS_STAGING_ID = "G-4BFXR08NKP";
+const ANALYTICS_ID = "G-L4JVKD6B9R";
+
 if (!FEEDBACK_EMAIL_FROM) {
     throw Error("REACT_APP_FEEDBACK_EMAIL_FROM is not configured");
 }
@@ -84,7 +87,7 @@ const configurations: { [key: string]: ConfigProps } = {
         ...base,
         ...stagingMapServer,
         backendUrl: process.env.REACT_APP_BACKEND_URL || "https://extranet.who.int/malthreats-api/", // https://portal-uat.who.int/malthreats-api/ has a temporary problem
-        gaAppId: "UA-191197789-1",
+        gaAppId: ANALYTICS_STAGING_ID,
         env: "local",
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
@@ -95,7 +98,7 @@ const configurations: { [key: string]: ConfigProps } = {
         ...base,
         ...stagingMapServer,
         backendUrl: "https://extranet.who.int/malthreats-api/", // https://portal-uat.who.int/malthreats-api/ has a temporary problem
-        gaAppId: "UA-191197789-2",
+        gaAppId: ANALYTICS_STAGING_ID,
         env: "dev",
         hotjar: { hjid: 2287362, hjsv: 6 },
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
@@ -107,7 +110,7 @@ const configurations: { [key: string]: ConfigProps } = {
         ...base,
         ...stagingMapServer,
         backendUrl: "https://extranet.who.int/malthreats-api/", // https://portal-uat.who.int/malthreats-api/ has a temporary problem
-        gaAppId: "UA-191197789-1",
+        gaAppId: ANALYTICS_STAGING_ID,
         env: "staging",
         hotjar: { hjid: 2280607, hjsv: 6 },
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
@@ -119,7 +122,7 @@ const configurations: { [key: string]: ConfigProps } = {
         ...base,
         ...prodMapServer,
         backendUrl: `https://extranet.who.int/malthreats-api/`,
-        gaAppId: "G-L4JVKD6B9R",
+        gaAppId: ANALYTICS_ID,
         env: "prod",
         hotjar: { hjid: 2269048, hjsv: 6 },
         feedback: feedbackConfig,

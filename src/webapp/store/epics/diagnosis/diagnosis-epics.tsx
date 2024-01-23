@@ -99,10 +99,7 @@ export const setDiagnosisMapTypeEpic = (
             const pageView = getAnalyticsPageView({ page: "diagnosis", section: action.payload });
             const logPageView = logPageViewAction(pageView);
 
-            if (action.payload === DiagnosisMapType.GENE_DELETIONS) {
-                return of(...base, logPageView);
-            }
-            return of(...base);
+            return of(...base, logPageView);
         })
     );
 

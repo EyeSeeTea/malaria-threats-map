@@ -11,12 +11,12 @@ import { exportToCSV, Tab } from "./download";
 import { DatabaseSelection, Download, TermsInfo, UserInfo } from "./types";
 import { ActionCreatorTypeMetadata, PayloadActionCreator } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
-import { Source } from "../../store/actions/base-actions";
+import { GAEvent, Source } from "../../store/actions/base-actions";
 import { emailRegexp } from "../../../domain/common/regex";
 import { ActionGroup } from "../../store/types";
 
 export function useDownload(
-    logEvent: any,
+    logEvent: PayloadActionCreator<ActionTypeEnum.MalariaLogEvent, GAEvent>,
     setTheme: ((
         theme: string,
         options?: Source
