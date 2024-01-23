@@ -863,7 +863,7 @@
             "only_include_data_by_health": "Only include data provided to WHO by ministries of health",
             "disaggregate_by_species": {
                 "aggregate_species": "Aggregate species' data",
-                "disaggregate_species": "Disaggreagte by species"
+                "disaggregate_species": "Disaggregate by species"
             }
         },
         "map_info_summary": {
