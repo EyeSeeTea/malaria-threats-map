@@ -36,6 +36,11 @@ const LineChart: React.FC<{
     const { t } = useTranslation();
     return (
         <React.Fragment>
+            <Typography variant="h6" gutterBottom fontWeight="bold" marginBottom={2}>
+                {t(
+                    "common.dashboard.phenotypicInsecticideResistanceDashboards.spreadOfResistanceOverTime.sumConfirmedResistance"
+                )}
+            </Typography>
             <LineChartLegend
                 chartType={chartType}
                 allInsecticideClassesOrTypes={allInsecticideClassesOrTypes}
@@ -43,12 +48,6 @@ const LineChart: React.FC<{
                 selectedInsecticideClassesOrTypes={selectedInsecticideClassesOrTypes}
             />
             <Stack direction="row" alignItems="center" sx={{ minHeight: 600 }}>
-                <YAxisTitle>
-                    {t(
-                        "common.dashboard.phenotypicInsecticideResistanceDashboards.spreadOfResistanceOverTime.sumConfirmedResistance"
-                    )}
-                </YAxisTitle>
-
                 <div style={{ overflowX: "auto" }}>
                     <Table>
                         <tbody>
@@ -153,14 +152,10 @@ const LineChart: React.FC<{
     );
 };
 
-const YAxisTitle = styled.span`
-    display: inline-block;
-    transform: rotate(-90deg);
-    transform-origin: center;
-    font-size: 14px;
+const Title = styled.span`
+    font-size: 16px;
     font-weight: bold;
-    white-space: nowrap;
-    width: 60px;
+    margin-bottom: 44px;
 `;
 
 const Table = styled.table`
