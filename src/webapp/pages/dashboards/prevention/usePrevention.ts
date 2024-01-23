@@ -105,7 +105,7 @@ export function usePrevention(baseFilters: ((study: PreventionStudy) => boolean)
             onlyIncludeDataByHealth: false,
             years: undefined,
             maxMinYears: undefined,
-            disaggregateBySpeciesSelection: "aggregate_species",
+            disaggregateBySpeciesSelection: "disaggregate_species",
         });
 
         const species = extractSpeciesOptions(filteredStudies);
