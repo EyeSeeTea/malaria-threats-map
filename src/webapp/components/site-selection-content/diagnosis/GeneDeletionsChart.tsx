@@ -65,7 +65,7 @@ const GeneDeletionsChart: React.FC<Props> = ({ selectionData }) => {
             {isNotNull(study.SAMPLE_ORIGIN) && (
                 <SpacedTypography variant="subtitle2">{t(study.SAMPLE_ORIGIN)}</SpacedTypography>
             )}
-            {isNotNull(study.PF_POS_SAMPLES) && (
+            {study.PF_POS_SAMPLES && (
                 <SpacedTypography variant="subtitle2">
                     <Trans
                         i18nKey="common.diagnosis.chart.gene_deletions.content_3"
