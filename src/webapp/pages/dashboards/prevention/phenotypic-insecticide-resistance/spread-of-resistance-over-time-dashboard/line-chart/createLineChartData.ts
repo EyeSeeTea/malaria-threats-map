@@ -11,6 +11,7 @@ import {
     SpreadOfResistanceOverTimeChartType,
 } from "../../types";
 import { DisaggregateBySpeciesOptions } from "../../../../../../components/filters/DisaggregateBySpecies";
+import i18next from "i18next";
 
 export const INSECTICIDE_TYPE_COLORS: Record<string, string> = {
     "ALPHA-CYPERMETHRIN": "#7B5FD9",
@@ -258,7 +259,9 @@ export function createLineChartData(
 ): SpreadOfResistanceOverTimeChartData {
     const isDisaggregatedBySpecies = disaggregateBySpeciesSelectionFilter === "disaggregate_species";
 
-    const dataByCountry = selectedCountries.reduce((acc, countryISO) => {
+    const sortCountries = _.orderBy(selectedCountries, country => i18next.t(country), "asc");
+
+    const dataByCountry = sortCountries.reduce((acc, countryISO) => {
         const filteredStudiesOfCountry = filteredsStudies.filter(study => study.ISO2 === countryISO);
         if (insecticideClassesOrTypes.length && filteredStudiesOfCountry.length) {
             return {

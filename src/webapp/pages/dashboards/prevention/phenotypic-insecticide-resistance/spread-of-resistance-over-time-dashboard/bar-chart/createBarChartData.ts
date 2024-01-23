@@ -13,6 +13,7 @@ import {
 } from "../../types";
 import { DisaggregateBySpeciesOptions } from "../../../../../../components/filters/DisaggregateBySpecies";
 import { ResistanceStatusColors } from "../../../../../../components/layers/prevention/ResistanceStatus/symbols";
+import _ from "lodash";
 
 function createSerieByStatusAndYear(
     studies: PreventionStudy[],
@@ -173,7 +174,9 @@ export function createBarChartData(
         study => study[chartByKey] === insecticideClassOrType
     );
 
-    const dataByCountry = selectedCountries.reduce((acc, countryISO) => {
+    const sortCountries = _.orderBy(selectedCountries, country => i18next.t(country), "asc");
+
+    const dataByCountry = sortCountries.reduce((acc, countryISO) => {
         const filteredStudiesOfCountry = studiesOfInsecticideClassOrType.filter(study => study.ISO2 === countryISO);
         if (insecticideClassOrType && filteredStudiesOfCountry.length) {
             const sortedSpecies = uniq(filteredStudiesOfCountry.map(study => study.SPECIES)).sort();
