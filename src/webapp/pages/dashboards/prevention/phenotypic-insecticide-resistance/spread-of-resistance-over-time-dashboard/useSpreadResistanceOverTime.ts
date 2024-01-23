@@ -51,39 +51,14 @@ export function useSpreadResistanceOverTime() {
 
     const { speciesOptions } = usePrevention(baseFilters);
 
-    const {
-        disableSpeciesFilter,
-        disaggregateBySpeciesSelection,
-        onDisableSpeciesFilter,
-        onDisaggregateBySpeciesChange,
-        onSpeciesChange,
-    } = React.useMemo(() => {
+    const { disaggregateBySpeciesSelection, onSpeciesChange } = React.useMemo(() => {
         return chartByInsecticide ? filtersByInsecticide : filtersByClass;
     }, [chartByInsecticide, filtersByClass, filtersByInsecticide]);
 
     React.useEffect(() => {
-        const hasToBeDisabledSpeciesFilter =
-            onDisaggregateBySpeciesChange && disaggregateBySpeciesSelection === "aggregate_species";
-
-        if (!disableSpeciesFilter && hasToBeDisabledSpeciesFilter) {
-            onDisableSpeciesFilter(hasToBeDisabledSpeciesFilter);
+        if (onSpeciesChange) {
             onSpeciesChange(speciesOptions.map(option => option.value));
         }
-
-        if (disableSpeciesFilter && !hasToBeDisabledSpeciesFilter) {
-            onDisableSpeciesFilter(false);
-        }
-    }, [
-        disableSpeciesFilter,
-        disaggregateBySpeciesSelection,
-        onDisableSpeciesFilter,
-        onDisaggregateBySpeciesChange,
-        onSpeciesChange,
-        speciesOptions,
-    ]);
-
-    React.useEffect(() => {
-        onSpeciesChange(speciesOptions.map(option => option.value));
     }, [onSpeciesChange, speciesOptions]);
 
     const onChartTypeChange = React.useCallback(
