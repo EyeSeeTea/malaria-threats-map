@@ -195,6 +195,7 @@ function chartOptions(
         chart: {
             marginTop: 0,
             marginBottom: xAxisVisible ? 40 : 0,
+            height: 250,
         },
 
         tooltip: {
