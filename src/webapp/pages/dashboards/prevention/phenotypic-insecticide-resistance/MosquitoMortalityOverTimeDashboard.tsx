@@ -6,7 +6,7 @@ import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
 import More from "highcharts/highcharts-more";
 import { useMosquitoMortalityOverTime } from "./useMosquitoMortalityOverTime";
-import { MosquitoOverTimeData } from "./types";
+import { MosquitoOverTimeByCountry, MosquitoOverTimeData } from "./types";
 import { Card, Stack } from "@mui/material";
 import i18next from "i18next";
 import { useInfoPopup } from "../../common/popup/useInfoPopup";
@@ -53,10 +53,13 @@ const MosquitoOverTimeDashboard: React.FC = () => {
 
                                         return species.length > 0 ? (
                                             species.map((specie, specieIndex) => {
-                                                const isLastCountry =
-                                                    countryIndex === Object.keys(data.dataByCountry).length - 1;
+                                                const isLastCountryblock = isLastCountryAvailableblock(
+                                                    countryIndex,
+                                                    data.dataByCountry
+                                                );
+
                                                 const isLastSpecie = specieIndex === species.length - 1;
-                                                const xAxisVisible = isLastCountry && isLastSpecie;
+                                                const xAxisVisible = isLastCountryblock && isLastSpecie;
 
                                                 const dataBySpecie = data.dataByCountry[isoCountry][specie];
 
@@ -104,6 +107,18 @@ const MosquitoOverTimeDashboard: React.FC = () => {
 };
 
 export default React.memo(MosquitoOverTimeDashboard);
+
+function isLastCountryAvailableblock(countryIndex: number, dataByCountry: MosquitoOverTimeByCountry) {
+    const isLast = countryIndex === Object.keys(dataByCountry).length - 1;
+
+    if (isLast) return true;
+
+    const isoCountry = Object.keys(dataByCountry)[countryIndex + 1];
+
+    const species = Object.keys(dataByCountry[isoCountry]);
+
+    return species.length === 0;
+}
 
 const YAxisTitle = styled.span`
     transform: matrix(0, -1, 1, 0, 0, 0);
