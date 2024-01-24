@@ -9,7 +9,9 @@ export function useSummaryInsecticideResistance(): SummaryInsecticideResistanceD
     const { selectedCountries, dashboardsPreventionStudies } = useDashboards();
 
     const data = React.useMemo(() => {
-        return selectedCountries.map(countryISO => {
+        const sortCountries = _.orderBy(selectedCountries, country => i18next.t(country), "asc");
+
+        return sortCountries.map(countryISO => {
             const studiesByCountry = dashboardsPreventionStudies.filter(study => study.ISO2 === countryISO);
 
             const resistanceConfirmedStudies = studiesByCountry
@@ -17,10 +19,14 @@ export function useSummaryInsecticideResistance(): SummaryInsecticideResistanceD
                 .filter(study => study.RESISTANCE_STATUS === "CONFIRMED_RESISTANCE");
 
             const country = countryISO;
-            const vectorSpecies = _.uniq(resistanceConfirmedStudies.map(study => i18next.t(study.SPECIES))).join(", ");
+            const vectorSpecies = _.uniq(resistanceConfirmedStudies.map(study => i18next.t(study.SPECIES)))
+                .sort()
+                .join(", ");
             const insectidiceClasses = _.uniq(
                 resistanceConfirmedStudies.map(study => i18next.t(study.INSECTICIDE_CLASS))
-            ).join(", ");
+            )
+                .sort()
+                .join(", ");
 
             const mechanismDetectedStudies = studiesByCountry
                 .filter(filterByResistanceMechanism)
