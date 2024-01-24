@@ -18,6 +18,7 @@ import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
 import { BIOCHEMICAL_MECHANISM_TYPES, MOLECULAR_MECHANISM_TYPES } from "../DataDownload/mappers/cvsMapper";
 import { Source } from "../../store/actions/base-actions";
 import { MOLECULAR_MARKERS_MAP } from "./treatment/MolecularMarkersOngoingStudies/utils";
+import { Study } from "../../../domain/entities/Study";
 
 export const DELETION_TYPES = {
     HRP2_PROPORTION_DELETION: {
@@ -88,8 +89,8 @@ export const filterByYears = (years: number[]) => (study: any) => {
     return !years.length || years.includes(study.YEAR_START);
 };
 
-export const filterByDownload = () => (study: any) => {
-    return study.DOWNLOAD === "1";
+export const filterByDownload = () => (study: Study) => {
+    return study.DOWNLOAD === 1;
 };
 
 export const filterByIntensityStatus = (study: any) => {

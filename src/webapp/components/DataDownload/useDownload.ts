@@ -31,8 +31,7 @@ export function useDownload(
     setActionGroupSelected: PayloadActionCreator<ActionTypeEnum.MalariaActionGroupSelected, ActionGroup>
 ) {
     const [activeStep, setActiveStep] = React.useState(0);
-    const [downloading, setDownloading] = React.useState(false);
-    const [messageLoader, setMessageLoader] = React.useState("");
+    const [messageLoader, setMessageLoader] = React.useState<string | undefined>("");
 
     const [termsInfo, setTermsInfo] = React.useState<Partial<TermsInfo>>({});
     const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({
@@ -76,7 +75,6 @@ export function useDownload(
     };
 
     const downloadData = () => {
-        // setDownloading(true);
         setMessageLoader(i18next.t("common.data_download.loader.fetching_data"));
         setTimeout(() => {
             const request: Download = {
@@ -135,7 +133,7 @@ export function useDownload(
         setMessageLoader(i18next.t("common.data_download.loader.generating_file"));
         setTimeout(() => {
             exportToCSV(tabs, filename);
-            setDownloading(false);
+            setMessageLoader(undefined);
         }, 100);
     };
 
@@ -163,7 +161,6 @@ export function useDownload(
 
     return {
         activeStep,
-        downloading,
         messageLoader,
         selectedDataBases,
         userInfo,

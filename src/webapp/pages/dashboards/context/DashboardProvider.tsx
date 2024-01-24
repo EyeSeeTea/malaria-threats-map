@@ -11,6 +11,8 @@ import { fetchPreventionStudiesRequest } from "../../../store/actions/prevention
 import { selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { LastUpdatedDates } from "../../../../domain/entities/LastUpdateDates";
+import SimpleLoader from "../../../components/SimpleLoader";
+import { useTranslation } from "react-i18next";
 
 export const DashboardContext = React.createContext<DashboardState>(null);
 
@@ -51,13 +53,13 @@ const DashboardProvider: React.FC<Props> = ({
         invasive: null,
     });
 
+    const { t } = useTranslation();
+
     useEffect(() => {
-        if (theme === "prevention") {
-            fetchPreventionStudies();
-        } else {
-            fetchTreatmentStudies();
-        }
-    }, [theme, fetchPreventionStudies, fetchTreatmentStudies]);
+        fetchPreventionStudies();
+
+        fetchTreatmentStudies();
+    }, [fetchPreventionStudies, fetchTreatmentStudies]);
 
     useEffect(() => {
         setUpdatedDates(lastUpdatedDates);
@@ -79,7 +81,11 @@ const DashboardProvider: React.FC<Props> = ({
                 setDashboardsPreventionStudies,
             }}
         >
-            {children}
+            {preventionStudies.length !== 0 && treatmentStudies.length !== 0 ? (
+                children
+            ) : (
+                <SimpleLoader message={t("common.loading")} />
+            )}
         </DashboardContext.Provider>
     );
 };

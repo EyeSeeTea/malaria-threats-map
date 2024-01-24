@@ -48,6 +48,7 @@ export interface Study {
     VERSION: number;
     YEAR_END: string;
     YEAR_START: string;
+    DOWNLOAD: number;
 }
 
 export function getMinMaxYears(studies: Study[], maxAsCurrent = true, minToOverwrite?: number): [number, number] {
