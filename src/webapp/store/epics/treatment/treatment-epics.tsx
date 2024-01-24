@@ -88,9 +88,12 @@ export const setTreatmentMapTypesEpic = (
             const isOnGoing = isTreatmentMapTypeOngoing(state.treatment.filters);
             const maxAsCurrent = !isOnGoing;
 
+            const pageView = getAnalyticsPageView({ page: "treatment", section: action.payload });
+            const logPageView = logPageViewAction(pageView);
+
             const [start, end] = getMinMaxYears(state.treatment.studies, maxAsCurrent, isOnGoing ? 2018 : undefined);
 
-            const base = [setMaxMinYearsAction([start, end]), setFiltersAction([start, end])];
+            const base = [setMaxMinYearsAction([start, end]), setFiltersAction([start, end]), logPageView];
 
             if (action.payload === TreatmentMapType.MOLECULAR_MARKERS) {
                 return of(...base, setMolecularMarkers([1]));

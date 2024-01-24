@@ -18,6 +18,7 @@ import treatment3 from "../../assets/img/stories-page/treatment3.png";
 
 import Layout from "../layout/Layout";
 import StoryModeStepper from "../../components/StoryModeStepper";
+import { useSendAnalyticsPageView } from "../../hooks/useSendAnalyticsPageView";
 
 type ThemeType = "prevention" | "invasive" | "treatment" | "diagnosis";
 
@@ -119,6 +120,8 @@ export const StoriesPage: React.FC = () => {
     const [storyModeStep, setStoryModeStep] = useState<number>(0);
     const [searchParams] = useSearchParams();
     const theme = searchParams.get("theme") as ThemeType;
+
+    useSendAnalyticsPageView(`stories/${theme}`);
 
     useEffect(() => {
         window.scrollTo(0, 0);

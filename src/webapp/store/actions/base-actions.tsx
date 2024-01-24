@@ -15,7 +15,7 @@ export const setThemeAction = createCustomAction(
     })
 );
 
-interface GAEvent {
+export interface GAEvent {
     category: string;
     action: string;
     label?: string;

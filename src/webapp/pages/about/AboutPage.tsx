@@ -6,6 +6,7 @@ import BannerSection from "./BannerSection";
 import DataSection from "./DataSection";
 //import MapSection from "./MapSection";
 import UserExperience from "./UserExperienceSection";
+import { useSendAnalyticsPageView } from "../../hooks/useSendAnalyticsPageView";
 
 /* const StyledDivider = styled(Divider)`
     width: 100%;
@@ -14,6 +15,8 @@ import UserExperience from "./UserExperienceSection";
 `; */
 
 export const AboutPage: React.FC = () => {
+    useSendAnalyticsPageView();
+
     return (
         <Layout>
             <BannerSection />
