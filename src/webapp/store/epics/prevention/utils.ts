@@ -53,7 +53,8 @@ export function createPreventionSelectionData(
 
     const dataSources = createCitationDataSources(theme, sortedStudies);
 
-    const speciesOptions = R.uniq(R.map(s => s.SPECIES, sortedStudies));
+    const speciesOptions = R.uniq(R.map(s => s.SPECIES, sortedStudies)).sort();
+
     const speciesFilterOptions: Option[] = speciesOptions.map((specie: string) => ({
         label: specie,
         value: specie,
@@ -114,6 +115,7 @@ function createPreventionChartData(
             : undefined;*/
 
     const bySpeciesAndInsecticideType = _(studiesFiltered)
+        .sortBy(({ SPECIES }) => SPECIES)
         .groupBy(({ SPECIES }) => SPECIES)
         .mapValues(studies => {
             return _(studies)
