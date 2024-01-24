@@ -82,6 +82,9 @@ const ChartByClass: React.FC<{
             <TableByClass>
                 <tbody>
                     {Object.keys(data).map((isoCountry, index) => {
+                        const isFirstChart = index === 0;
+                        const isLastChart = index === Object.keys(data).length - 1;
+
                         return (
                             <tr key={isoCountry}>
                                 <td>{t(isoCountry)}</td>
@@ -91,8 +94,8 @@ const ChartByClass: React.FC<{
                                         options={chartOptions(
                                             data[isoCountry].series,
                                             data[isoCountry].categories,
-                                            index === 0,
-                                            index === Object.keys(data).length - 1,
+                                            isFirstChart,
+                                            isLastChart,
                                             maxStackedColumn
                                         )}
                                         ref={(element: HighchartsReact.RefObject) =>
@@ -309,7 +312,7 @@ function chartOptions(
     return {
         chart: {
             type: "bar",
-            height: categories.length * 50 + (enabledLegend ? 100 : 0) + (visibleYAxisLabels ? 60 : 0),
+            height: categories.length * 50 + (enabledLegend ? 100 : 0) + (visibleYAxisLabels ? 90 : 0),
             marginTop: enabledLegend ? 100 : 0,
             marginBottom: visibleYAxisLabels ? 90 : 0,
             marginLeft: 150,
@@ -351,6 +354,10 @@ function chartOptions(
         plotOptions: {
             series: {
                 stacking: "normal",
+            },
+
+            bar: {
+                maxPointWidth: 30,
             },
         },
         series,
