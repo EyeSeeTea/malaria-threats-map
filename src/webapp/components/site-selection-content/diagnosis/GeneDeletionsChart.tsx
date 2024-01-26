@@ -1,8 +1,10 @@
 import { Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import * as React from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { DiagnosisSelectionData, GeneDeletionsChartDataContent } from "../../../store/epics/diagnosis/types";
+import { isNotNull } from "../../../utils/number-utils";
+import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 
 // const SpacedTypography = styled(Typography)`
 //     margin-bottom: 5px;
@@ -34,6 +36,10 @@ const StyledTable = styled(Table)`
     margin-bottom: 16px;
 `;
 
+const SpacedTypography = styled(Typography)`
+    margin-bottom: 5px;
+`;
+
 type Props = {
     selectionData: DiagnosisSelectionData;
 };
@@ -52,14 +58,14 @@ const GeneDeletionsChart: React.FC<Props> = ({ selectionData }) => {
         }
     }, [selectionData]);
 
-    //const study = React.useMemo(() => selectionData.studyObject as DiagnosisStudy, [selectionData]);
+    const study = React.useMemo(() => selectionData.studyObject as DiagnosisStudy, [selectionData]);
 
     return (
         <React.Fragment>
-            {/* {isNotNull(study.SAMPLE_ORIGIN) && (
+            {isNotNull(study.SAMPLE_ORIGIN) && (
                 <SpacedTypography variant="subtitle2">{t(study.SAMPLE_ORIGIN)}</SpacedTypography>
             )}
-            {isNotNull(study.PF_POS_SAMPLES) && (
+            {study.PF_POS_SAMPLES && (
                 <SpacedTypography variant="subtitle2">
                     <Trans
                         i18nKey="common.diagnosis.chart.gene_deletions.content_3"
@@ -76,7 +82,7 @@ const GeneDeletionsChart: React.FC<Props> = ({ selectionData }) => {
                         typeSampleAnalyzed: t(study.TYPE_SAMPL_ANALYZED),
                     })}
                 </SpacedTypography>
-            )} */}
+            )}
 
             {data.map(yearData => {
                 return (

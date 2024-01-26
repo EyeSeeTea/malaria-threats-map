@@ -13,6 +13,7 @@ import { selectTreatmentStudiesLoading } from "../store/reducers/treatment-reduc
 import { connect } from "react-redux";
 import { selectDistrictsAreLoading } from "../store/reducers/districts-reducer";
 import { selectCountryLayerIsLoading } from "../store/reducers/country-layer-reducer";
+import { Stack, Typography } from "@mui/material";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         backdrop: {
@@ -57,7 +58,10 @@ function SimpleBackdrop(props: Props) {
     return (
         <div>
             <Backdrop className={classes.backdrop} open={isLoading()}>
-                <CircularProgress color="inherit" />
+                <Stack direction="column" alignItems="center">
+                    <CircularProgress color="inherit" />
+                    <Typography variant="h4">Data is loading</Typography>
+                </Stack>
             </Backdrop>
         </div>
     );

@@ -15,8 +15,12 @@ import Legend from "./legend/Legend";
 import whoLogoWhite from "../assets/img/who-logo-blue.png";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import MapInfoSummaryLegend from "./MapInfoSummaryLegend";
+import SelectionDataContent from "./site-selection-content/SelectionDataContent";
+import { AnalyticsData, sendAnalytics } from "../utils/analytics";
 
 const MALARIA_THREATS_MAP_URL = "https://apps.who.int/malaria/maps/threats/";
+
+const fakeFunction = () => {};
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -26,10 +30,13 @@ const mapStateToProps = (state: State) => ({
 type StateProps = ReturnType<typeof mapStateToProps>;
 type OwnProps = {
     map: mapboxgl.Map;
+    showMapSidebar?: boolean;
 };
 type MapScreenshotProps = StateProps & OwnProps;
 
-function MapScreenshot({ map, theme, title }: MapScreenshotProps) {
+const downloadAnalyticsData: AnalyticsData = { type: "event", category: "screenshot", action: "downloadMapScreenshot" };
+
+function MapScreenshot({ map, theme, title, showMapSidebar = false }: MapScreenshotProps) {
     const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
     const [mapImage, setMapImage] = React.useState(null);
@@ -49,9 +56,10 @@ function MapScreenshot({ map, theme, title }: MapScreenshotProps) {
     }, [theme]);
 
     const handleOpenScreenshot = React.useCallback(() => {
-        const img = map?.getCanvas().toDataURL();
-        setMapImage(img);
+        const imgSrc = map?.getCanvas()?.toDataURL();
+        setMapImage(imgSrc);
         setOpen(true);
+        sendAnalytics({ type: "event", category: "screenshot", action: "openMapScreenshot" });
     }, [map]);
 
     const handleCloseScreenshot = React.useCallback(() => {
@@ -60,9 +68,11 @@ function MapScreenshot({ map, theme, title }: MapScreenshotProps) {
     }, []);
 
     React.useEffect(() => {
-        const img = map?.getCanvas().toDataURL();
-        setMapImage(img);
-    }, [width, height, map]);
+        if (open) {
+            const imgSrc = map?.getCanvas()?.toDataURL();
+            setMapImage(imgSrc);
+        }
+    }, [width, height, map, open]);
 
     return (
         <>
@@ -70,21 +80,13 @@ function MapScreenshot({ map, theme, title }: MapScreenshotProps) {
                 <StyledCamaraIcon />
                 {t("common.screenshot.screenshot")}
             </OpenScreenshotButton>
-            <ScreenshotModal open={open} onClose={handleCloseScreenshot} title={title}>
+            <ScreenshotModal
+                open={open}
+                onClose={handleCloseScreenshot}
+                title={title}
+                analyticsData={downloadAnalyticsData}
+            >
                 <>
-                    <TitleWrapper>
-                        {Icon}
-                        <Title>{_.capitalize(title)}</Title>
-                    </TitleWrapper>
-                    <MapContainer>
-                        <MapInfoSummaryContainer>
-                            <MapInfoSummaryLegend />
-                        </MapInfoSummaryContainer>
-                        <LegendContainer>
-                            <Legend />
-                        </LegendContainer>
-                        <StyledImage alt="Map screenshot" src={mapImage} />
-                    </MapContainer>
                     <WHOInfoContainer>
                         <WHOInfoWrapper>
                             <WHOInfoWrapper>
@@ -107,6 +109,26 @@ function MapScreenshot({ map, theme, title }: MapScreenshotProps) {
                             </WHOLogoSubtitle>
                         </WHOLogoWrapper>
                     </WHOInfoContainer>
+                    <TitleWrapper>
+                        {Icon}
+                        <Title>{_.capitalize(title)}</Title>
+                    </TitleWrapper>
+                    <MapAndSidebarContainer>
+                        <MapContainer>
+                            <MapInfoSummaryContainer>
+                                <MapInfoSummaryLegend />
+                            </MapInfoSummaryContainer>
+                            <StyledImage alt="Map screenshot" src={mapImage} $hasSidebar={showMapSidebar} />
+                            <LegendContainer $hasSidebar={showMapSidebar}>
+                                <Legend />
+                            </LegendContainer>
+                        </MapContainer>
+                        {showMapSidebar ? (
+                            <MapSidebarContainer>
+                                <SelectionDataContent onClose={fakeFunction} isScreenshot />
+                            </MapSidebarContainer>
+                        ) : null}
+                    </MapAndSidebarContainer>
                 </>
             </ScreenshotModal>
         </>
@@ -145,23 +167,44 @@ const Title = styled.h2`
 
 const MapContainer = styled.div`
     position: relative;
+    height: 100%;
+    width: 100%;
+    margin-block-end: 20px;
+`;
+
+const MapAndSidebarContainer = styled.div`
     padding: 20px 20px 0 20px;
+    display: flex;
+    position: relative;
+`;
+
+const MapSidebarContainer = styled.div`
+    padding: 16px 0;
+    width: 100%;
+    max-width: 30%;
+    z-index: 2;
+    border-radius: 0 10px 10px 0;
+    background-color: #f3f3f3;
+    .additional-information-link {
+        display: none;
+    }
 `;
 
 const MapInfoSummaryContainer = styled.div`
-    max-width: 310px;
     position: absolute;
     top: 30px;
     left: 30px;
     width: fit-content;
+    z-index: 2;
 `;
 
-const LegendContainer = styled.div`
+const LegendContainer = styled.div<{ $hasSidebar?: boolean }>`
     border-radius: 12px;
     background-color: #ffffff;
     position: absolute;
-    bottom: 20px;
-    right: 30px;
+    z-index: 3;
+    inset-inline-end: ${props => (props.$hasSidebar ? "2%" : "30px")};
+    inset-block-end: ${props => (props.$hasSidebar ? "-690px" : "20px")};
     div {
         width: fit-content;
         max-width: fit-content;
@@ -169,6 +212,8 @@ const LegendContainer = styled.div`
     span,
     p {
         white-space: nowrap;
+        font-family: sans-serif;
+        font-size: 16px;
     }
     hr,
     .MuiSvgIcon-root {
@@ -177,10 +222,17 @@ const LegendContainer = styled.div`
     .MuiButtonBase-root {
         padding-bottom: 0;
     }
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+        0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 `;
 
-const StyledImage = styled.img`
-    border-radius: 10px;
+const StyledImage = styled.img<{ $hasSidebar?: boolean }>`
+    border-top-left-radius: 10px;
+    border-top-right-radius: ${props => (props.$hasSidebar ? "10px" : "unset")};
+    border-bottom-right-radius: ${props => (props.$hasSidebar ? "10px" : "unset")};
+    border-bottom-left-radius: 10px;
+    width: ${props => (props.$hasSidebar ? "142.5%" : "100%")};
+    position: ${props => (props.$hasSidebar ? "absolute" : "static")};
 `;
 
 const WHOInfoContainer = styled.div`

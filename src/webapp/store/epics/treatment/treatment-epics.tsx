@@ -12,6 +12,7 @@ import {
     setMolecularMarkers,
     setTreatmentMapType,
     setTreatmentPlasmodiumSpecies,
+    setTreatmentDataset,
 } from "../../actions/treatment-actions";
 import {
     logPageViewAction,
@@ -21,7 +22,7 @@ import {
     setSelectionData,
     setThemeAction,
 } from "../../actions/base-actions";
-import { TreatmentMapType, State } from "../../types";
+import { TreatmentMapType, State, TreatmentFilters } from "../../types";
 import { addNotificationAction } from "../../actions/notifier-actions";
 import { getAnalyticsPageView } from "../../analytics";
 import { fromFuture } from "../utils";
@@ -29,6 +30,8 @@ import { EpicDependencies } from "../../index";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { createTreatmentSelectionData } from "./utils";
 import { molecularMarkersMap } from "../../../components/filters/MolecularMarkerRadioFilter";
+import { getMinMaxYears } from "../../../../domain/entities/Study";
+import { MOLECULAR_MARKERS_MAP } from "../../../components/layers/treatment/MolecularMarkersOngoingStudies/utils";
 
 function groupStudies(studies: TreatmentStudy[]) {
     const filteredMainStudies = studies.filter(
@@ -58,7 +61,13 @@ export const getTreatmentStudiesEpic = (
             if (state.treatment.studies.length === 0 && !state.treatment.error) {
                 return fromFuture(compositionRoot.treatment.getStudies()).pipe(
                     mergeMap((studies: TreatmentStudy[]) => {
-                        return of(fetchTreatmentStudiesSuccess(groupStudies(studies)));
+                        const [start, end] = getMinMaxYears(studies, true);
+
+                        return of(
+                            fetchTreatmentStudiesSuccess(groupStudies(studies)),
+                            setMaxMinYearsAction([start, end]),
+                            setFiltersAction([start, end])
+                        );
                     }),
                     catchError((error: Error) => of(addNotificationAction(error.message), fetchTreatmentStudiesError()))
                 );
@@ -68,16 +77,56 @@ export const getTreatmentStudiesEpic = (
         })
     );
 
-export const setTreatmentMapTypesEpic = (action$: Observable<ActionType<typeof setTreatmentMapType>>) =>
+export const setTreatmentMapTypesEpic = (
+    action$: Observable<ActionType<typeof setTreatmentMapType>>,
+    state$: StateObservable<State>
+) =>
     action$.pipe(
         ofType(ActionTypeEnum.SetTreatmentMapType),
-        switchMap(action => {
+        withLatestFrom(state$),
+        switchMap(([action, state]) => {
+            const isOnGoing = isTreatmentMapTypeOngoing(state.treatment.filters);
+            const maxAsCurrent = !isOnGoing;
+
+            const pageView = getAnalyticsPageView({ page: "treatment", section: action.payload });
+            const logPageView = logPageViewAction(pageView);
+
+            const [start, end] = getMinMaxYears(state.treatment.studies, maxAsCurrent, isOnGoing ? 2018 : undefined);
+
+            const base = [setMaxMinYearsAction([start, end]), setFiltersAction([start, end]), logPageView];
+
             if (action.payload === TreatmentMapType.MOLECULAR_MARKERS) {
-                return of(setMolecularMarkers([1]));
+                return of(...base, setMolecularMarkers([1]));
             } else if (action.payload === TreatmentMapType.DELAYED_PARASITE_CLEARANCE) {
-                return of(setTreatmentPlasmodiumSpecies(["P._FALCIPARUM"]));
+                return of(...base, setTreatmentPlasmodiumSpecies(["P._FALCIPARUM"]));
             } else {
-                return of();
+                return of(...base);
+            }
+        })
+    );
+
+export const setTreatmentDatasetEpic = (
+    action$: Observable<ActionType<typeof setTreatmentDataset>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetTreatmentDataset),
+        withLatestFrom(state$),
+        switchMap(([action, state]) => {
+            const isOnGoing = isTreatmentDatasetOngoing(state.treatment.filters);
+            const maxAsCurrent = !isOnGoing;
+
+            const [start, end] = getMinMaxYears(state.treatment.studies, maxAsCurrent, isOnGoing ? 2018 : undefined);
+
+            if (action.payload === "AMDERO_MM") {
+                const molecularMarkers = Object.values(MOLECULAR_MARKERS_MAP);
+                return of(
+                    setMaxMinYearsAction([start, end]),
+                    setFiltersAction([start, end]),
+                    setMolecularMarkers(molecularMarkers)
+                );
+            } else {
+                return of(setMaxMinYearsAction([start, end]), setFiltersAction([start, end]));
             }
         })
     );
@@ -156,22 +205,25 @@ export const setTreatmentFilteredStudiesEpic = (
                 state.treatment.filteredStudies
             );
 
-            return of(setSelectionData(selectionData));
+            return of(setSelectionData(null), setSelectionData(selectionData));
         })
     );
 
-export const setTreatmentThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>) =>
+export const setTreatmentThemeEpic = (
+    action$: Observable<ActionType<typeof setThemeAction>>,
+    state$: StateObservable<State>
+) =>
     action$.pipe(
         ofType(ActionTypeEnum.MalariaSetTheme),
-        switchMap($action => {
+        withLatestFrom(state$),
+        switchMap(([$action, $state]) => {
             if ($action.payload !== "treatment") {
                 return of();
             }
 
-            const base = [
-                setMaxMinYearsAction([2010, new Date().getFullYear()]),
-                setFiltersAction([2015, new Date().getFullYear()]),
-            ];
+            const [start, end] = getMinMaxYears($state.treatment.studies);
+
+            const base = [setMaxMinYearsAction([2010, end]), setFiltersAction([start, end])];
 
             if ($action.from === "map") {
                 return of(
@@ -185,3 +237,14 @@ export const setTreatmentThemeEpic = (action$: Observable<ActionType<typeof setT
             }
         })
     );
+
+function isTreatmentMapTypeOngoing(treatmentFilters: TreatmentFilters) {
+    return (
+        treatmentFilters.mapType === TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES ||
+        treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES
+    );
+}
+
+function isTreatmentDatasetOngoing(treatmentFilters: TreatmentFilters) {
+    return treatmentFilters.dataset === "AMDERO_TES" || treatmentFilters.dataset === "AMDERO_MM";
+}

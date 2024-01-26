@@ -4,11 +4,13 @@ import { dispatchCustomEvent } from "../../utils/dom-utils";
 import en_translations from "../../translations/en/translations.json";
 import es_translations from "../../translations/es/translations.json";
 import fr_translations from "../../translations/fr/translations.json";
+import { setToLocalStorage, getFromLocalStorage } from "../../utils/browserCache";
 const ALLOWED_LANGUAGES = ["en", "fr", "es"];
-const storageLng = localStorage.getItem("language");
+
+const storageLng = getFromLocalStorage("language");
 
 export const lng = ALLOWED_LANGUAGES.includes(storageLng) ? storageLng : "en";
-localStorage.setItem("language", lng);
+setToLocalStorage("language", lng);
 
 i18next.init({
     interpolation: { escapeValue: false },
@@ -32,7 +34,7 @@ export const changeLanguage = (lng: string) => {
         if (err) {
             return console.log("something went wrong loading", err);
         } else {
-            localStorage.setItem("language", lng);
+            setToLocalStorage("language", lng);
         }
     });
 };

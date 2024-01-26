@@ -8,6 +8,7 @@ import { InvasiveStudy } from "../../domain/entities/InvasiveStudy";
 import { CountryLayer, CountryProperties } from "../../domain/entities/CountryLayer";
 import { FeedbackState } from "../types/FeedbackState";
 import { SelectionData } from "./SelectionData";
+import { LastUpdatedDates } from "../../domain/entities/LastUpdateDates";
 
 export interface State {
     malaria: MalariaState;
@@ -43,18 +44,11 @@ export type PreventionDataset =
     | "MOLECULAR_ASSAY"
     | "BIOCHEMICAL_ASSAY";
 
-export type TreatmentDataset = "THERAPEUTIC_EFFICACY_STUDY" | "MOLECULAR_MARKER_STUDY";
+export type TreatmentDataset = "THERAPEUTIC_EFFICACY_STUDY" | "MOLECULAR_MARKER_STUDY" | "AMDERO_TES" | "AMDERO_MM";
 
 export type InvasiveDataset = "INVASIVE_VECTOR_SPECIES";
 
-export type DiagnosisDataset = "PFHRP23_GENE_DELETIONS";
-
-export type LastUpdatedDates = {
-    prevention: Date | null;
-    diagnosis: Date | null;
-    treatment: Date | null;
-    invasive: Date | null;
-};
+export type DiagnosisDataset = "PFHRP23_GENE_DELETIONS" | "HRPO";
 
 export interface MalariaState {
     theme: string;

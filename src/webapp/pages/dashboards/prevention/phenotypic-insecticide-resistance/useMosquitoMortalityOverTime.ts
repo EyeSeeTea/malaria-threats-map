@@ -1,43 +1,38 @@
+import i18next from "i18next";
 import _ from "lodash";
 import * as R from "ramda";
 import React from "react";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
+import { filterByResistanceStatus } from "../../../../components/layers/studies-filters";
+import { PreventionFiltersState } from "../filters/PreventionFiltersState";
 import { usePrevention } from "../usePrevention";
 import { MosquitoOverTimeBySpecie, MosquitoOverTimeChart, MosquitoOverTimeData } from "./types";
 
+const baseFilters = [filterByResistanceStatus];
+
 export function useMosquitoMortalityOverTime() {
-    const {
-        filteredStudies,
-        insecticideTypeOptions,
-        selectedCountries,
-        filters,
-        speciesOptions,
-        typeOptions,
-        onInsecticideClassChange,
-        onSpeciesChange,
-        onInsecticideTypesChange,
-        onTypeChange,
-        onYearsChange,
-        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-        onOnlyIncludeDataByHealthChange,
-    } = usePrevention();
+    const { filteredStudies, insecticideTypeOptions, selectedCountries, filters, speciesOptions, typeOptions } =
+        usePrevention(baseFilters);
 
     const [data, setData] = React.useState<MosquitoOverTimeChart>({ years: [], dataByCountry: {} });
     const [count, setCount] = React.useState<number>(0);
 
     React.useEffect(() => {
-        onInsecticideClassChange(["PYRETHROIDS"]);
-    }, [onInsecticideClassChange]);
+        filters.onInsecticideClassChange(["PYRETHROIDS"]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filters.onInsecticideClassChange]);
 
     React.useEffect(() => {
-        onSpeciesChange(speciesOptions.map(option => option.value));
-    }, [onSpeciesChange, speciesOptions]);
+        filters.onSpeciesChange(speciesOptions.map(option => option.value));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filters.onSpeciesChange, speciesOptions]);
 
     React.useEffect(() => {
         if (typeOptions.length > 0) {
-            onTypeChange(typeOptions[0].value);
+            filters.onTypeChange(typeOptions[0].value);
         }
-    }, [onTypeChange, typeOptions]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filters.onTypeChange, typeOptions]);
 
     React.useEffect(() => {
         setCount(filteredStudies.length);
@@ -45,31 +40,30 @@ export function useMosquitoMortalityOverTime() {
 
     React.useEffect(() => {
         setData(createChartData(filteredStudies, selectedCountries));
-    }, [filteredStudies, selectedCountries, filters]);
+    }, [filteredStudies, selectedCountries]);
 
     return {
         filteredStudies,
         insecticideTypeOptions,
         count,
         data,
-        filters,
+        filters: {
+            ...filters,
+            onInsecticideTypesChange: undefined,
+            onInsecticideClassesChange: filters.onInsecticideClassChange,
+            onDisaggregateBySpeciesChange: undefined,
+        } as PreventionFiltersState,
         speciesOptions,
         typeOptions,
-        onInsecticideClassChange,
-        onSpeciesChange,
-        onInsecticideTypesChange,
-        onTypeChange,
-        onYearsChange,
-        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-        onOnlyIncludeDataByHealthChange,
     };
 }
 
 export function createChartData(studies: PreventionStudy[], selectedCountries: string[]): MosquitoOverTimeChart {
+    const sortCountries = _.orderBy(selectedCountries, country => i18next.t(country), "asc");
     const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
     const years = _.uniq(sortedStudies.map(study => parseInt(study.YEAR_START)).sort());
 
-    const dataByCountry = selectedCountries.reduce((acc, countryISO) => {
+    const dataByCountry = sortCountries.reduce((acc, countryISO) => {
         const studiesByCountry = studies.filter(study => study.ISO2 === countryISO);
 
         return { ...acc, [countryISO]: createChartDataBySpecies(studiesByCountry, years) };

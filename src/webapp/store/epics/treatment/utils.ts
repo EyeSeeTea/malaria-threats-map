@@ -5,11 +5,13 @@ import {
     CitationDataSource,
     MOLECULAR_MARKERS_ONGOING_STUDY_DETAILS_KEYS,
     MolecularMarkersOngoingStudiesData,
+    MolecularMarkersOngoingStudiesDataWithSameSurvId,
     ONGOING_AND_PLANNED_TREATMENT_STUDY_OVERVIEW_INFO_KEYS,
     OngoingAndPlannedTreatmentStudiesOverviewInfo,
     SelectionData,
     THERAPEUTIC_EFFICACY_STUDY_DETAILS_KEYS,
     TherapeuticEfficacyStudiesData,
+    TherapeuticEfficacyStudiesDataWithSameSurvId,
     TreatmentChartData,
     TreatmentMolecularMarkersChartData,
 } from "../../SelectionData";
@@ -81,14 +83,27 @@ function getTreatmentDataByMapType(
         case TreatmentMapType.MOLECULAR_MARKERS:
             return createMolecularMarkersChartData(sortedStudies, dataSources, filters.treatmentFilters);
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
-            return createTherapeuticEfficacyStudies(sortedStudies);
         case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
-            return createMolecularMarkersOngoingStudies(sortedStudies);
+            return createOngoingAndPlannedTreatmentStudiesData(sortedStudies, filters.treatmentFilters.mapType);
     }
 }
 
+export function groupOngoingAndPlannedStudiesBySurvId(studies: TreatmentStudy[]): Record<string, TreatmentStudy[]> {
+    return studies.reduce((groupsBySurvId: Record<string, TreatmentStudy[]>, study: TreatmentStudy) => {
+        const survId = study["SURV_ID"];
+
+        if (!groupsBySurvId[survId]) {
+            groupsBySurvId[survId] = [];
+        }
+
+        groupsBySurvId[survId].push(study);
+
+        return groupsBySurvId;
+    }, {});
+}
+
 export function sortOngoingAndPlannedStudies(studies: TreatmentStudy[]) {
-    return _.orderBy(studies, ["STUDY_SEQ"]);
+    return _.orderBy(studies, ["SURV_ID", "STUDY_SEQ"]);
 }
 
 function sortStudies(studies: TreatmentStudy[], treatmentFilters: TreatmentFilters) {
@@ -185,7 +200,7 @@ function createTreatmentFailureChartData(studies: TreatmentStudy[], yearFilters:
             data: years.map(year => {
                 const yearFilters: any = studies.filter(study => parseInt(year) === parseInt(study.YEAR_START))[0];
                 return yearFilters
-                    ? parseFloat((parseFloat(yearFilters[key.name.toUpperCase()] || -1) * 100).toFixed(2))
+                    ? parseFloat((parseFloat(yearFilters[key.name.toUpperCase()] ?? -1) * 100).toFixed(2))
                     : -1;
             }),
         };
@@ -263,6 +278,43 @@ function createMolecularMarkersChartData(
     };
 }
 
+function createOngoingAndPlannedTreatmentStudiesData(
+    sortedStudies: TreatmentStudy[],
+    mapType: TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES | TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES
+): TherapeuticEfficacyStudiesData | MolecularMarkersOngoingStudiesData {
+    const studiesBySurvId = groupOngoingAndPlannedStudiesBySurvId(sortedStudies);
+
+    const studyObject = sortedStudies[0];
+    const { [studyObject.SURV_ID]: firstStudies, ...restStudiesBySurvId } = studiesBySurvId;
+
+    const createStudiesDataFunction =
+        mapType === TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES
+            ? createTherapeuticEfficacyStudies
+            : createMolecularMarkersOngoingStudies;
+
+    const data = [firstStudies, ...Object.values(restStudiesBySurvId)].reduce(
+        (
+            groupStudies:
+                | TherapeuticEfficacyStudiesDataWithSameSurvId[]
+                | MolecularMarkersOngoingStudiesDataWithSameSurvId[],
+            studiesWithSameSurvId: TreatmentStudy[]
+        ) => {
+            const sortedStudiesWithSameSurvId = sortOngoingAndPlannedStudies(studiesWithSameSurvId);
+            const studiesWithSameSurvIdData = createStudiesDataFunction(sortedStudiesWithSameSurvId);
+            return [...groupStudies, studiesWithSameSurvIdData];
+        },
+        []
+    );
+
+    return {
+        kind:
+            mapType === TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES
+                ? "therapeutic-efficacy-studies"
+                : "molecular-markers-ongoing-studies",
+        data,
+    };
+}
+
 function createOngoingAndPlannedTreatmentStudiesOverviewInfo(
     studyObject: TreatmentStudy
 ): OngoingAndPlannedTreatmentStudiesOverviewInfo {
@@ -292,7 +344,9 @@ function createOngoingAndPlannedTreatmentStudiesOverviewInfo(
     return overviewInfo;
 }
 
-function createTherapeuticEfficacyStudies(sortedStudies: TreatmentStudy[]): TherapeuticEfficacyStudiesData {
+function createTherapeuticEfficacyStudies(
+    sortedStudies: TreatmentStudy[]
+): TherapeuticEfficacyStudiesDataWithSameSurvId {
     const studyObject = sortedStudies[0];
 
     const studiesDetailsConfig = sortedStudies.map(study => ({
@@ -323,15 +377,14 @@ function createTherapeuticEfficacyStudies(sortedStudies: TreatmentStudy[]): Ther
     }));
 
     return {
-        kind: "therapeutic-efficacy-studies",
-        data: {
-            overviewInfo: createOngoingAndPlannedTreatmentStudiesOverviewInfo(studyObject),
-            studiesDetailsConfig,
-        },
+        overviewInfo: createOngoingAndPlannedTreatmentStudiesOverviewInfo(studyObject),
+        studiesDetailsConfig,
     };
 }
 
-function createMolecularMarkersOngoingStudies(sortedStudies: TreatmentStudy[]): MolecularMarkersOngoingStudiesData {
+function createMolecularMarkersOngoingStudies(
+    sortedStudies: TreatmentStudy[]
+): MolecularMarkersOngoingStudiesDataWithSameSurvId {
     const studyObject = sortedStudies[0];
 
     const studiesDetailsConfig = sortedStudies.map(study => ({
@@ -357,11 +410,8 @@ function createMolecularMarkersOngoingStudies(sortedStudies: TreatmentStudy[]): 
     }));
 
     return {
-        kind: "molecular-markers-ongoing-studies",
-        data: {
-            overviewInfo: createOngoingAndPlannedTreatmentStudiesOverviewInfo(studyObject),
-            studiesDetailsConfig,
-        },
+        overviewInfo: createOngoingAndPlannedTreatmentStudiesOverviewInfo(studyObject),
+        studiesDetailsConfig,
     };
 }
 

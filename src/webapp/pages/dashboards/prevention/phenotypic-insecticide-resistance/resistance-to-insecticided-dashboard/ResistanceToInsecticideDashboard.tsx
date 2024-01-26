@@ -1,9 +1,10 @@
 import Highcharts from "highcharts";
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import PreventionFilterableDashboard from "../../PreventionFilterableDashboard";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
+import { Card } from "@mui/material";
 import { useResistanceToInsecticide } from "./useResistanceToInsecticide";
 import {
     ResistanceToInsecticideDataByClass,
@@ -13,28 +14,24 @@ import {
 import i18next from "i18next";
 import StatusOfResistanceToInsecticidePopup from "../../../../../components/dashboards/prevention/StatusOfResistanceToInsecticidePopup";
 import { useInfoPopup } from "../../../common/popup/useInfoPopup";
+import { ResistanceToInsecticideChartType } from "../../types";
 
 const ResistanceToInsecticideDashboard: React.FC = () => {
     const { t } = useTranslation();
 
-    const {
-        insecticideTypeOptions,
-        chartType,
-        chartTypes,
-        categoriesCount,
-        data,
-        filters,
-        onInsecticideClassChange,
-        onInsecticideTypesChange,
-        onYearsChange,
-        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-        onOnlyIncludeDataByHealthChange,
-        onChartTypeChange,
-    } = useResistanceToInsecticide();
+    const { insecticideTypeOptions, chartType, chartTypes, categoriesCount, data, filters, onChartTypeChange } =
+        useResistanceToInsecticide();
 
     const { openPopup, onChangeOpenPopup } = useInfoPopup();
 
     const chartComponentRefs = useRef([]);
+
+    const handleChartTypeChange = useCallback(
+        (type: unknown) => {
+            onChartTypeChange(type as ResistanceToInsecticideChartType);
+        },
+        [onChartTypeChange]
+    );
 
     return (
         <React.Fragment>
@@ -50,19 +47,16 @@ const ResistanceToInsecticideDashboard: React.FC = () => {
                     "common.dashboard.phenotypicInsecticideResistanceDashboards.statusOfResistanceToInsecticides.title"
                 )}
                 filters={filters}
-                onInsecticideClassesChange={chartType === "by-insecticide-class" ? onInsecticideClassChange : undefined}
-                onInsecticideTypesChange={chartType === "by-insecticide" ? onInsecticideTypesChange : undefined}
-                onYearsChange={onYearsChange}
-                onOnlyIncludeBioassaysWithMoreMosquitoesChange={onOnlyIncludeBioassaysWithMoreMosquitoesChange}
-                onOnlyIncludeDataByHealthChange={onOnlyIncludeDataByHealthChange}
-                onChartTypeChange={onChartTypeChange}
+                onChartTypeChange={handleChartTypeChange}
                 onInfoClick={onChangeOpenPopup}
             >
-                {data.kind === "InsecticideByClass" ? (
-                    <ChartByClass data={data.data} chartComponentRefs={chartComponentRefs} />
-                ) : (
-                    <ChartByType data={data.data} chartComponentRefs={chartComponentRefs} />
-                )}
+                <DasboardCard elevation={0}>
+                    {data.kind === "InsecticideByClass" ? (
+                        <ChartByClass data={data.data} chartComponentRefs={chartComponentRefs} />
+                    ) : (
+                        <ChartByType data={data.data} chartComponentRefs={chartComponentRefs} />
+                    )}
+                </DasboardCard>
             </PreventionFilterableDashboard>
             <StatusOfResistanceToInsecticidePopup
                 years={filters.years}
@@ -88,6 +82,9 @@ const ChartByClass: React.FC<{
             <TableByClass>
                 <tbody>
                     {Object.keys(data).map((isoCountry, index) => {
+                        const isFirstChart = index === 0;
+                        const isLastChart = index === Object.keys(data).length - 1;
+
                         return (
                             <tr key={isoCountry}>
                                 <td>{t(isoCountry)}</td>
@@ -97,8 +94,8 @@ const ChartByClass: React.FC<{
                                         options={chartOptions(
                                             data[isoCountry].series,
                                             data[isoCountry].categories,
-                                            index === 0,
-                                            index === Object.keys(data).length - 1,
+                                            isFirstChart,
+                                            isLastChart,
                                             maxStackedColumn
                                         )}
                                         ref={(element: HighchartsReact.RefObject) =>
@@ -246,6 +243,11 @@ const TableByType = styled.table`
     }
 `;
 
+const DasboardCard = styled(Card)`
+    min-height: 500px;
+    padding: 42px;
+`;
+
 const StyledHighcharts = styled(HighchartsReact)``;
 
 // function getMaxStakedColumn(chartData: ResistanceToInsecticideChartData) {
@@ -310,7 +312,7 @@ function chartOptions(
     return {
         chart: {
             type: "bar",
-            height: categories.length * 50 + (enabledLegend ? 100 : 0) + (visibleYAxisLabels ? 60 : 0),
+            height: categories.length * 50 + (enabledLegend ? 100 : 0) + (visibleYAxisLabels ? 90 : 0),
             marginTop: enabledLegend ? 100 : 0,
             marginBottom: visibleYAxisLabels ? 90 : 0,
             marginLeft: 150,
@@ -352,6 +354,10 @@ function chartOptions(
         plotOptions: {
             series: {
                 stacking: "normal",
+            },
+
+            bar: {
+                maxPointWidth: 30,
             },
         },
         series,

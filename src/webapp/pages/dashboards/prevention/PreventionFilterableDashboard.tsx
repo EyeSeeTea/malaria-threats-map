@@ -1,4 +1,4 @@
-import { Button, Card, Grid, Stack, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Button, Card, Grid, Stack, ToggleButtonGroup } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
@@ -12,6 +12,7 @@ import { PreventionFiltersState } from "./filters/PreventionFiltersState";
 import CategoriesCount from "../common/CategoriesCount";
 import { useTranslation } from "react-i18next";
 import ScreenshotModal from "../../../components/ScreenshotModal";
+import { ChartTypeOption } from "../common/chart-type-option/ChartTypeOption";
 
 const SCREENSHOT_BACKGROUND_COLOR = "#F7F7F7";
 const SCREENSHOT_EXCLUSION_CLASSES = ["dashboard-action"];
@@ -19,8 +20,8 @@ const SCREENSHOT_EXCLUSION_CLASSES = ["dashboard-action"];
 interface PreventionFilterableDashboardProps {
     id?: string;
     chart: PreventionFilterableChart;
-    chartTypes?: Option<ResistanceToInsecticideChartType>[];
-    chartType?: ResistanceToInsecticideChartType;
+    chartTypes?: Option<unknown>[];
+    chartType?: unknown;
     speciesOptions?: Option<string>[];
     typeOptions?: Option<string>[];
     insecticideTypeOptions?: Option<string>[];
@@ -28,20 +29,16 @@ interface PreventionFilterableDashboardProps {
     count: number | Record<string, number>;
     chartComponentRef?: React.MutableRefObject<HighchartsReact.RefObject[] | HighchartsReact.RefObject>;
     filters: PreventionFiltersState;
-    onYearsChange: (years: [number, number]) => void;
-    onInsecticideClassesChange?: (value: string[]) => void;
-    onSpeciesChange?: (value: string[]) => void;
-    onTypeChange?: (value: string) => void;
-    onInsecticideTypesChange?: (value: string[]) => void;
-    onOnlyIncludeBioassaysWithMoreMosquitoesChange: (value: number) => void;
-    onOnlyIncludeDataByHealthChange: (value: boolean) => void;
-    onChartTypeChange?: (value: ResistanceToInsecticideChartType) => void;
+    onChartTypeChange?: (value: unknown) => void;
     onInfoClick: () => void;
+    onDownload?: () => void;
 }
 
 interface PreventionFilterableDashboardComponentProps extends PreventionFilterableDashboardProps {
     onScreenshot?: () => void;
     isScreenshot?: boolean;
+    filtersVisible: boolean;
+    onChangeFiltersVisible?: () => void;
 }
 
 const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashboardComponentProps> = ({
@@ -55,21 +52,15 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
     filters,
     speciesOptions,
     typeOptions,
-    onInsecticideClassesChange,
-    onSpeciesChange,
-    onInsecticideTypesChange,
-    onTypeChange,
-    onYearsChange,
-    onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-    onOnlyIncludeDataByHealthChange,
     children,
     chartComponentRef,
     onChartTypeChange,
     onInfoClick,
     onScreenshot,
     isScreenshot = false,
+    filtersVisible,
+    onChangeFiltersVisible,
 }) => {
-    const { filtersVisible, onChangeFiltersVisible } = useFiltersVisible();
     const { t } = useTranslation();
 
     React.useEffect(() => {
@@ -108,12 +99,13 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                     onChange={handleChartTypeChange}
                     aria-label="text alignment"
                     sx={{ marginBottom: 2 }}
+                    style={{ display: "flex", gap: "16px" }}
                 >
                     {chartTypes.map(type => {
                         return (
-                            <StyledToggleButton key={type.value} value={type.value}>
+                            <ChartTypeOption key={type.label} value={type.value}>
                                 {type.label}
-                            </StyledToggleButton>
+                            </ChartTypeOption>
                         );
                     })}
                 </ToggleButtonGroup>
@@ -130,15 +122,6 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                                     filters={filters}
                                     speciesOptions={speciesOptions}
                                     typeOptions={typeOptions}
-                                    onInsecticideClassesChange={onInsecticideClassesChange}
-                                    onSpeciesChange={onSpeciesChange}
-                                    onInsecticideTypesChange={onInsecticideTypesChange}
-                                    onTypeChange={onTypeChange}
-                                    onYearsChange={onYearsChange}
-                                    onOnlyIncludeBioassaysWithMoreMosquitoesChange={
-                                        onOnlyIncludeBioassaysWithMoreMosquitoesChange
-                                    }
-                                    onOnlyIncludeDataByHealthChange={onOnlyIncludeDataByHealthChange}
                                     onCollapse={onChangeFiltersVisible}
                                 />
                             </FiltersCard>
@@ -154,27 +137,30 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                         </Stack>
                     </StyledGridItem>
                 )}
-                <StyledGridItem item md={filtersVisible ? 9 : 12} xs={12} $isScreenshot={isScreenshot}>
-                    <DasboardCard elevation={0}>
-                        {!filtersVisible && (
-                            <Button startIcon={<FilterAltIcon />} onClick={onChangeFiltersVisible}>
-                                {"Filter data"}
-                            </Button>
-                        )}
-                        <div>{children}</div>
-                    </DasboardCard>
-                </StyledGridItem>
+                <StyledGridItemCharts item md={filtersVisible ? 9 : 12} xs={12} $isScreenshot={isScreenshot}>
+                    {!filtersVisible && (
+                        <StyledFiltersButton startIcon={<FilterAltIcon />} onClick={onChangeFiltersVisible}>
+                            {t("common.dashboard.filterDataButton")}
+                        </StyledFiltersButton>
+                    )}
+                    <StyledItemCharts>{children}</StyledItemCharts>
+                </StyledGridItemCharts>
             </StyledGridContainer>
         </Container>
     );
 };
 
-const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = props => {
+const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps> = ({ onDownload, ...props }) => {
     const [open, setOpen] = React.useState(false);
+    const { filtersVisible, onChangeFiltersVisible } = useFiltersVisible();
 
     const handleScreenshot = React.useCallback(() => {
-        setOpen(true);
-    }, []);
+        if (onDownload) {
+            onDownload();
+        } else {
+            setOpen(true);
+        }
+    }, [onDownload]);
 
     const handleCloseScreenshot = React.useCallback(() => {
         setOpen(false);
@@ -182,7 +168,12 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
 
     return (
         <>
-            <PreventionFilterableDashboardComponent {...props} onScreenshot={handleScreenshot} />
+            <PreventionFilterableDashboardComponent
+                {...props}
+                onScreenshot={handleScreenshot}
+                filtersVisible={filtersVisible}
+                onChangeFiltersVisible={onChangeFiltersVisible}
+            />
             <ScreenshotModal
                 open={open}
                 onClose={handleCloseScreenshot}
@@ -190,7 +181,7 @@ const PreventionFilterableDashboard: React.FC<PreventionFilterableDashboardProps
                 backgroundColor={SCREENSHOT_BACKGROUND_COLOR}
                 exclusionClasses={SCREENSHOT_EXCLUSION_CLASSES}
             >
-                <PreventionFilterableDashboardComponent {...props} isScreenshot />
+                <PreventionFilterableDashboardComponent {...props} isScreenshot filtersVisible={filtersVisible} />
             </ScreenshotModal>
         </>
     );
@@ -212,13 +203,31 @@ const StyledGridItem = styled(Grid)<{ $isScreenshot: boolean }>`
     }
 `;
 
-const StyledGridContainer = styled(Grid)<{ $isScreenshot: boolean }>`
-    flex-wrap: ${props => props?.$isScreenshot && "nowrap"};
+const StyledGridItemCharts = styled(Grid)<{ $isScreenshot: boolean }>`
+    position: relative;
+    width: ${props => props?.$isScreenshot && "fit-content"};
+    max-width: ${props => props?.$isScreenshot && "fit-content"};
+    .MuiChip-root,
+    .MuiChip-label {
+        overflow: ${props => props?.$isScreenshot && "initial"};
+    }
 `;
 
-const DasboardCard = styled(Card)`
-    min-height: 500px;
-    padding: 42px;
+const StyledFiltersButton = styled(Button)`
+    position: absolute;
+    background-color: white;
+    left: 60px;
+    top: 25px;
+`;
+
+const StyledItemCharts = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+`;
+
+const StyledGridContainer = styled(Grid)<{ $isScreenshot: boolean }>`
+    flex-wrap: ${props => props?.$isScreenshot && "nowrap"};
 `;
 
 const StudiesCountCard = styled(Card)`
@@ -232,21 +241,18 @@ const FiltersCard = styled(Card)<{ $isScreenshot: boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    .MultiFilter-container {
-        max-height: ${props => (props?.$isScreenshot ? "initial" : "500px")};
-        overflow: ${props => (props?.$isScreenshot ? "initial" : "auto")};
-    }
-`;
-
-const StyledToggleButton = styled(ToggleButton)`
-    border-radius: 5px !important;
-    margin-right: 16px;
-    padding: 16px 32px;
-    color: black;
-    background-color: white;
-    border: 0px;
-    &.Mui-selected {
-        color: white;
-        background-color: #2fb3af;
+    .InsecticideClassMultiSelector,
+    .InsecticideTypeMultiSelector {
+        position: relative;
+        .basic-select-container {
+            overflow: ${props => (props?.$isScreenshot ? "initial" : "auto")};
+            position: unset;
+        }
+        .MuiFormControl-root {
+            max-height: ${props => (props?.$isScreenshot ? "initial" : "500px")};
+        }
+        .MuiPaper-root {
+            margin-top: 10px;
+        }
     }
 `;

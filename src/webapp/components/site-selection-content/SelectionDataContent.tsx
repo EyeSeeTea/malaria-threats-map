@@ -26,7 +26,7 @@ import { PayloadActionCreator } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
 import { DiagnosisSelectionData } from "../../store/epics/diagnosis/types";
 import CloseIcon from "@mui/icons-material/Close";
-import OngoingAndPlannedTreatmentStudiesChart from "./treatment/OngoingAndPlannedTreatmentStudiesChart";
+import OngoingAndPlannedTreatmentStudiesChart from "./treatment/OngoingAndPlannedTreatmentStudies/OngoingAndPlannedTreatmentStudiesChart";
 import Hrp23StudiesChart from "./diagnosis/Hrp23StudiesChart";
 import GeneDeletionsChart from "./diagnosis/GeneDeletionsChart";
 
@@ -90,11 +90,18 @@ type DispatchProps = typeof mapDispatchToProps;
 
 type OwnProps = {
     onClose: () => void;
+    isScreenshot?: boolean;
 };
 
 type Props = StateProps & DispatchProps & OwnProps;
 
-const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFilterSelection, onClose }: Props) => {
+const SelectionDataContent = ({
+    preventionFilters,
+    selectionData,
+    setSelectionFilterSelection,
+    onClose,
+    isScreenshot = false,
+}: Props) => {
     const chartDataContent = () => {
         switch (selectionData.kind) {
             case "common": {
@@ -103,6 +110,7 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
                         selectionData={selectionData}
                         preventionFilters={preventionFilters}
                         setSelectionFilterSelection={setSelectionFilterSelection}
+                        isScreenshot={isScreenshot}
                     />
                 );
             }
@@ -121,11 +129,15 @@ const SelectionDataContent = ({ preventionFilters, selectionData, setSelectionFi
                 <Container width={"100%"}>{selectionData && chartDataContent()}</Container>
             </Hidden>
             <Hidden smDown>
-                <Container width={"500px"}>{selectionData && chartDataContent()}</Container>
+                <Container width={isScreenshot ? "100%" : "500px"} padding={isScreenshot ? "0" : "70px 0px;"}>
+                    {selectionData && chartDataContent()}
+                </Container>
             </Hidden>
-            <StyledIconButton onClick={onClose}>
-                <CloseIcon />
-            </StyledIconButton>
+            {isScreenshot ? null : (
+                <StyledIconButton onClick={onClose}>
+                    <CloseIcon />
+                </StyledIconButton>
+            )}
         </>
     );
 };
@@ -139,12 +151,7 @@ const InvasiveContent: React.FC<{ selectionData: InvasiveSelectionData }> = ({ s
             </TopContainer>
 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
-            <RoundedContainer>
-                {selectionData.data && <InvasiveChart selectionData={selectionData} />}
-
-                {selectionData.dataSources && <CitationNew dataSources={selectionData.dataSources} />}
-                {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
-            </RoundedContainer>
+            {selectionData.data && selectionData.data.length && <InvasiveChart selectionData={selectionData} />}
         </>
     );
 };
@@ -183,7 +190,8 @@ const CommonContent: React.FC<{
     selectionData: CommonSelectionData;
     preventionFilters: PreventionFilters;
     setSelectionFilterSelection: PayloadActionCreator<ActionTypeEnum.SetSelectionDataFilterSelection, Option[]>;
-}> = ({ selectionData, preventionFilters, setSelectionFilterSelection }) => {
+    isScreenshot?: boolean;
+}> = ({ selectionData, preventionFilters, setSelectionFilterSelection, isScreenshot = false }) => {
     const onFiltersChange = (value: any) => {
         sendAnalytics({ type: "event", category: "popup", action: "filter" });
         setSelectionFilterSelection(value);
@@ -230,7 +238,7 @@ const CommonContent: React.FC<{
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
             {selectionData.data?.kind === "therapeutic-efficacy-studies" ||
             selectionData.data?.kind === "molecular-markers-ongoing-studies" ? (
-                <OngoingAndPlannedTreatmentStudiesChart selectionData={selectionData} />
+                <OngoingAndPlannedTreatmentStudiesChart selectionData={selectionData} isPaginated={!isScreenshot} />
             ) : (
                 <RoundedContainer>
                     {selectionData.data && chartDataContent()}

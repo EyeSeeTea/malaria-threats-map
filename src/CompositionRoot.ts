@@ -22,18 +22,21 @@ import { GetTranslationsUseCase } from "./domain/usecases/GetTranslationsUseCase
 import { TranslationApiRepository } from "./data/repositories/TranslationApiRepository";
 import { SendDownloadUseCase } from "./domain/usecases/SendDownloadUseCase";
 import { DownloadApiRepository } from "./data/repositories/DownloadApiRepository";
+import { GetLastUpdatedDatesUseCase } from "./domain/usecases/GetLastUpdatedDatesUseCase";
+import { LastUpdateDatesApiRepository } from "./data/repositories/LastUpdateDatesApiRepository";
 
 export class CompositionRoot {
-    private preventionRepository = new PreventionApiRepository(config.mapServerUrl);
-    private diagnosisRepository = new DiagnosisApiRepository(config.mapServerUrl, config.xmartServerUrl);
-    private treatmentRepository = new TreatmentApiRepository(config.mapServerUrl, config.xmartServerUrl);
-    private invasiveRepository = new InvasiveApiRepository(config.mapServerUrl);
+    private preventionRepository = new PreventionApiRepository(config.xmartServerUrl);
+    private diagnosisRepository = new DiagnosisApiRepository(config.xmartServerUrl);
+    private treatmentRepository = new TreatmentApiRepository(config.xmartServerUrl);
+    private invasiveRepository = new InvasiveApiRepository(config.xmartServerUrl);
     private countryLayerRepository = new CountryLayerApiRepository(config.featuresServerUrl, config.xmartServerUrl);
     private countryRepository = new CountryApiRepository(config.xmartServerUrl);
     private emailRepository = new SmtpJsEmailRepository(config.feedbackEmailSecureToken);
     private countryContextRepository = new CountryContextApiRepository(config.xmartServerUrl);
     private translationRepository = new TranslationApiRepository(config.xmartServerUrl);
     private downloadApiRepository = new DownloadApiRepository(config.backendUrl);
+    private lastUpdateDatesRepository = new LastUpdateDatesApiRepository(config.xmartServerUrl);
     private _districtsUrl: string;
 
     constructor() {
@@ -107,6 +110,12 @@ export class CompositionRoot {
     public get downloads() {
         return getExecute({
             send: new SendDownloadUseCase(this.downloadApiRepository),
+        });
+    }
+
+    public get lastUpdatedDates() {
+        return getExecute({
+            get: new GetLastUpdatedDatesUseCase(this.lastUpdateDatesRepository),
         });
     }
 

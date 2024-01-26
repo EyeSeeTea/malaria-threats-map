@@ -1,9 +1,9 @@
 {
     "common": {
+        "loading": "Loading data ...",
         "layers": "Layers",
         "mekong_link": "Go to the Greater Mekong Subregion",
         "takeATour": "Unsure where to start? Take a tour.",
-        "minimizedTakeATour": "Take a tour.",
         "zoomIn": "Zoom in",
         "zoomOut": "Zoom out",
         "fullscreen": "View full screen",
@@ -76,6 +76,7 @@
         "dashboard": {
             "title": "Dashboards",
             "not-available": "Not available",
+            "filterDataButton": "Filter data",
             "filtersSection": {
                 "first": {
                     "title": "1. Select Theme",
@@ -112,7 +113,12 @@
                 "phenotypicInsecticideResistanceOptions": {
                     "phenotypicInsecticideResistance": "Phenotypic Insecticide Resistance",
                     "statusOfResistanceToInsecticides": "Status of resistance to insecticides",
-                    "mosquitoOverTime": "Mosquito mortality over time"
+                    "mosquitoOverTime": "Mosquito mortality over time",
+                    "spreadOfResistanceOverTime": "Spread of resistance over time"
+                },
+                "molecularMechanismDetectionOptions": {
+                    "molecularMechanismDetection": "Molecular mechanism detection",
+                    "insecticideResistanceAndResistanceMechanism": "Insecticide resistance and resistance mechanisms detected per vector species"
                 }
             },
             "countryContextDashboards": {
@@ -171,7 +177,9 @@
                     "title": "TREATMENT FAILURE RATES OVER TIME",
                     "numberPatients": "Number of patients",
                     "treatmentFailure": "Treatment failure (%)",
-                    "year": "Year"
+                    "year": "Year",
+                    "graph": "Graph",
+                    "table": "Table"
                 },
                 "parasiteClearanceOverTime": {
                     "title": "PERCENTAGE OF PATIENTS WITH PARASITEMIA ON DAY 3",
@@ -208,6 +216,32 @@
                     "title": "MOSQUITO MORTALITY OVER TIME",
                     "adjustedMortality": "Adjusted mortality (%)",
                     "year": "Year"
+                },
+                "spreadOfResistanceOverTime": {
+                    "title": "Spread of resistance over time",
+                    "sumConfirmedResistance": "Sum of sites that have confirmed resistance",
+                    "year": "Year",
+                    "insecticideClassLegendTitle": "Insecticide class",
+                    "insecticideTypeLegendTitle": "Insecticide",
+                    "numberOfSites": "Number of sites",
+                    "insecticideResistanceStatus": "Insecticide resistance status"
+                }
+            },
+            "molecularMechanismDetectionDashboards": {
+                "title": "Molecular mechanism detection",
+                "insecticideResistanceAndResistanceMechanisms": {
+                    "title": "INSECTICIDE RESISTANCE AND RESISTANCE MECHANISMS DETECTED BY VECTOR SPECIES",
+                    "graph": "Graph",
+                    "table": "Table",
+                    "legend": {
+                        "phenotypicResistance": "Phenotypic resistance",
+                        "percentageSitesInsecticideClass": "% of sites exhibiting resistance (number of sites monitored)",
+                        "resistanceMechanisms": "Resistance mechanisms",
+                        "percentageSitesResistanceMechanisms": " % of sites that detected the mechanism resistance (number of sites monitored)",
+                        "detected": "Detected",
+                        "noDetected": "Not detected",
+                        "noDataAvailable": "No data available"
+                    }
                 }
             },
             "treatmentFilters": {
@@ -258,6 +292,13 @@
                     "title": "MOSQUITO MORTALITY OVER TIME",
                     "graphInterpretation": "<0>Graph interpretation:</0> This graph presents the mosquito mortality in susceptibility bioassays over time. The size of the bar represents the values of the studies falling between the 25% and the 75% quartiles of the mortality distribution. The horizontal line within the bar represents the median mortality value. The horizontal lines above and below the bar represent the maximum and minimum mortality values respectively.",
                     "typeOfResistance": "<0>Type of resistance monitoring bioassay:</0> Resistance to insecticides was determined by mosquito mortality (CDC bottle bioassay, WHO tube test or WHO bottle bioassay). Confirmed resistance is classified as mosquito mortality {{lessThan}}90%."
+                },
+                "spreadOfResistanceOverTimePopup": {
+                    "title": "SPREAD OF RESISTANCE OVER TIME",
+                    "lineChartInterpretation": "<0>Line chart interpretation:</0> In this graph, the cumulative number of sites that have confirmed resistance to each insecticide or class (i.e. mosquito mortality {{lessThan}}90% on WHO or CDC bioassay with the discriminating insecticide concentration) is plotted against the year. The area of the circles on the graph represents that total number of sites that monitored resistance that year.",
+                    "barChartInterpretation": "<0>Bar chart interpretation:</0> This graph presents the number of sites that monitored insecticide resistance per year, disaggregated by those that confirmed resistance (red), those that detected possible resistance (orange) and those where mosquitoes were susceptible to the insecticide (green).",
+                    "disaggregatedView": "<0>Disaggregated view:</0> The graphs can be viewed by insecticide class or by insecticide, and for all vector species together or disaggregated by species.",
+                    "typeOfResistanceMonitoringBioassay": "<0>Type of resistance monitoring bioassay:</0> Resistance to insecticides was determined by mosquito mortality (CDC bottle bioassay, WHO tube test or WHO bottle bioassay). Confirmed resistance is classified as mosquito mortality {{lessThan}}90%."
                 }
             },
             "tooltip": {
@@ -268,7 +309,25 @@
                 "source": {
                     "label": "Source",
                     "link": "National Institute of Allergy and Infectious Diseases, National Institutes of Health"
-                }
+                },
+                "insecticideClass": "Insecticide class",
+                "year": "Year",
+                "numberOfSitesConfirmedResistance": "Number of sites with confirmed resistance",
+                "numberOfSites": "Number of sites that monitored resistance",
+                "species": "Species",
+                "resistanceStatus": "Resistance status",
+                "resistanceStatusType": {
+                    "CONFIRMED_RESISTANCE": "Confirmed",
+                    "POSSIBLE_RESISTANCE": "Possible",
+                    "SUSCEPTIBLE": "Susceptible"
+                },
+                "numberOfSitesWithThisStatus": {
+                    "CONFIRMED_RESISTANCE": "Number of sites with confirmed resistance",
+                    "POSSIBLE_RESISTANCE": "Number of sites with possible resistance",
+                    "SUSCEPTIBLE": "Number of sites with susceptible resistance"
+                },
+                "totalNumberOfSites": "Number of sites that monitored resistance",
+                "insecticideType": "Insecticide"
             }
         },
         "homepage": {
@@ -757,11 +816,12 @@
             },
             "insecticide_class": "Insecticide class",
             "insecticide_type": "Insecticide",
-            "select_insecticide_type": "Select insecticide",
+            "select_insecticide_placeholder": "Insecticide: all",
             "test_type": "Test type",
-            "select_test_type": "Select test type",
             "vector_species": "Vector species",
+            "select_test_type_placeholder": "Test type: all",
             "select_vector_species": "Select vector species",
+            "select_vector_species_placeholder": "Vector species: all",
             "vector_species_options": {
                 "AN_STEPHENSI_TYPE_FORM": "An. stephensi type form",
                 "AN_STEPHENSI_MYSORENSIS": "An. stephensi mysorensis",
@@ -778,7 +838,7 @@
             "mechanism_type": "Mechanism type",
             "assay_type": "Assay type",
             "synergist_type": "Test type",
-            "select_synergist_type": "Select test type",
+            "select_synergist_type_placeholder": "Test type: all",
             "synergist_types": "Synergist types",
             "deletion_type": "Deletion type",
             "select_deletion_type": "Select deletion type",
@@ -800,7 +860,11 @@
             "exclude_lower_samples": "Exclude studies of less than 20 samples",
             "onlyIncludeBioassays": "Only include bioassays with more than the following number of mosquitoes",
             "zero_all_bioassays": "0 (all bioassays)",
-            "only_include_data_by_health": "Only include data provided to WHO by ministries of health"
+            "only_include_data_by_health": "Only include data provided to WHO by ministries of health",
+            "disaggregate_by_species": {
+                "aggregate_species": "Aggregate species' data",
+                "disaggregate_species": "Disaggreagte by species"
+            }
         },
         "map_info_summary": {
             "all": "All",
@@ -896,13 +960,16 @@
                 },
                 "diagnosis": {
                     "datasets": {
-                        "gene_deletions": "pfhrp2/3 gene deletions"
+                        "gene_deletions": "pfhrp2/3 gene deletions",
+                        "hrpo": "Ongoing pfhrp2/3 gene deletions studies"
                     }
                 },
                 "treatment": {
                     "datasets": {
                         "therapeutic_efficacy_studies": "Therapeutic efficacy studies",
-                        "molecular_marker_studies": "Molecular marker studies"
+                        "molecular_marker_studies": "Molecular marker studies",
+                        "amdero_tes": "Ongoing therapeutic efficacy studies",
+                        "amdero_mm": "Ongoing molecular marker studies"
                     }
                 },
                 "invasive": {
@@ -966,6 +1033,7 @@
                 "title": "Overview of insecticide resistance in malaria vectors",
                 "country": "Country",
                 "resistance": "Resistance status",
+                "insecticideClass": "Insecticide class",
                 "mechanism": "Resistance mechanisms",
                 "species": "Vector Species",
                 "resistance_percentage": "% sites exhibiting resistance (n*)",
@@ -982,7 +1050,8 @@
                 "follow": "Follow up (days)",
                 "studies": "Number of studies",
                 "percentile_25": "Percentile 25th",
-                "percentile_75": "Percentile 75th"
+                "percentile_75": "Percentile 75th",
+                "percentage_patients_treatment_failure": "% of patients with treatment failure"
             }
         },
         "uploadFile": {
@@ -1213,8 +1282,7 @@
             "LATITUDE": "Latitude of the site where the mosquitoes were collected",
             "LONGITUDE": "Longitude of the site where the mosquitoes were collected",
             "YEAR_START": "Year when the mosquito collection started",
-            "SURVEY_TYPE": "Type of Survey conducted",
-            "PATIENT_TYPE": "Patient  clinical status",
+            "YEAR_END": "Year when the mosquito collection ended",
             "HRP2_TESTED": "Number of samples tested for HRP2 deletions",
             "HRP2_PROPORTION_DELETION": "Pct of Pf samples tested with HRP2 deletions",
             "HRP3_TESTED": "Number of samples tested for HRP3 deletions",
@@ -1227,6 +1295,77 @@
             "TYPE_SAMPL_ANALYZED": "type  of sample analyzed - all, discordant only, or non-representative",
             "CITATION": "Citation of the publication where the data was published",
             "CITATION_URL": "URL of the publication where the data was published"
+        },
+        "hrpo": {
+            "ID": "Unique identifier of the study",
+            "COUNTRY_NAME": "Name of the country where the study was conducted",
+            "ISO2": "ISO2",
+            "ADMIN2": "Administrative level 2 where the study was conducted",
+            "SITE_NAME": "Site where the study was conducted",
+            "LATITUDE": "Latitude of the site where the study was conducted",
+            "LONGITUDE": "Longitude of the site where the study was conducted",
+            "YEAR_START": "Year when the study started",
+            "YEAR_END": "Year when the study ended",
+            "SURVEY_TYPE": "Type of Survey conducted",
+            "PATIENT_TYPE": "Patient  clinical status",
+            "CITATION": "Citation of the publication where the data was published",
+            "CITATION_URL": "URL of the publication where the data was published",
+            "SURV_STATUS": "Study status",
+            "SURV_ID": "Surv id",
+            "SYMP_STAT_NAME": "Study population",
+            "HRP_GENO_NAME": "Genotyping",
+            "PROMPT_NAME": "Study initiated following",
+            "GEOGR_SCOPE_NAME": "Study sites selected by",
+            "INSTITUTION_CITY": "Lead institution",
+            "INSTITUTION": "Lead institution",
+            "FUNDING_SOURCE": "Funding source"
+        },
+        "ongoing_therapeutic_efficacy": {
+            "ID": "Unique identifier of the study",
+            "COUNTRY_NAME": "Name of the country where the study was conducted",
+            "ADMIN2": "Administrative level 2 where the study was conducted",
+            "SITE_NAME": "Site where the study was conducted",
+            "LATITUDE": "Latitude of the site where the study was conducted",
+            "LONGITUDE": "Longitude of the site where the study was conducted",
+            "YEAR_START": "Year when the study started",
+            "YEAR_END": "Year when the study ended",
+            "DRUG_NAME": "Treatment administered to patients during the study.\nNote: only shown if the data comes from a Therapeutic efficacy study.",
+            "PLASMODIUM_SPECIES": "Plasmodium species",
+            "DATA_SOURCE": "Institution or group that conducted the study",
+            "CITATION_URL": "URL of the publication where the data was published",
+            "SURV_STATUS": "Study status",
+            "STUDY_SEQ": "Study seq",
+            "SURV_ID": "Surv id",
+            "FUNDING_SOURCE": "Funding source",
+            "MM_LIST": "Genotyping",
+            "AGE_GP": "Age Group"
+        },
+        "ongoing_molecular_marker": {
+            "ID": "Unique identifier of the study",
+            "COUNTRY_NAME": "Name of the country where the study was conducted",
+            "ADMIN2": "Administrative level 2 where the study was conducted",
+            "SITE_NAME": "Site where the study was conducted",
+            "LATITUDE": "Latitude of the site where the study was conducted",
+            "LONGITUDE": "Longitude of the site where the study was conducted",
+            "YEAR_START": "Year when the study started",
+            "YEAR_END": "Year when the study ended",
+            "DATA_SOURCE": "Institution or group that conducted the study",
+            "CITATION_URL": "URL of the publication where the data was published",
+            "SURV_STATUS": "Study status",
+            "STUDY_SEQ": "Stufy seq",
+            "SURV_ID": "Surv id",
+            "FUNDING_SOURCE": "Funding source",
+            "PROMPT_NAME": "Study initiated following",
+            "GEOGR_SCOPE_NAME": "Sampling strategy",
+            "PROT_TYPE_NAME": "Survey or study design",
+            "MM_PFK13": "Pfkelch13",
+            "MM_PFCRT": "Pfcrt",
+            "MM_PFPM23": "Pfplasmepsin 2-3",
+            "MM_PFMDR1_CN": "Pfmdr1 copy number",
+            "MM_PFMDR1_MU": "Pfmdr1 mutation",
+            "MM_PFDHFR": "Pfdhfr",
+            "MM_PFDHPS": "Pfdhps",
+            "MM_PFHRP23": "Pfhrp23"
         }
     },
     "legend": {

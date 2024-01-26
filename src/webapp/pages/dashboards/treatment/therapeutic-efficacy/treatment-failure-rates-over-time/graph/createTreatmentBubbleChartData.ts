@@ -1,57 +1,15 @@
 import i18next from "i18next";
 import _ from "lodash";
-import React from "react";
-import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
-import { BubleChartGroup, treatmentdashboardColors, TreatmentOverTimeType } from "./types";
-import { useTreatment } from "../useTreatment";
+import { TreatmentStudy } from "../../../../../../../domain/entities/TreatmentStudy";
+import { TreatmentOverTimeGraphData, TreatmentOverTimeType } from "../TreatmentOverTimeState";
 
-export function useTreatmentOverTime(type: TreatmentOverTimeType) {
-    const {
-        filteredStudies,
-        filteredStudiesForDrugs,
-        studiesCount,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerPatients,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerPatientsChange,
-        onMolecularMarkerChange,
-    } = useTreatment(false);
-
-    const [series, setSeries] = React.useState<BubleChartGroup[]>([]);
-
-    React.useEffect(() => {
-        setSeries(createTreatmentBubbleChartData(filteredStudies, type, years));
-    }, [filteredStudies, type, years]);
-
-    return {
-        studiesCount,
-        filteredStudiesForDrugs,
-        series,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerPatients,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerPatientsChange,
-        onMolecularMarkerChange,
-    };
-}
+const treatmentdashboardColors = ["#7EA0C3", "#FEAF59", "#F78185", "#94CFCA", "#7BC280"];
 
 export function createTreatmentBubbleChartData(
     studies: TreatmentStudy[],
     type: TreatmentOverTimeType,
     yearsFilter: [number, number]
-): BubleChartGroup[] {
+): TreatmentOverTimeGraphData {
     const countries = _.uniq(studies.map(study => study.ISO2));
 
     const years = _.range(yearsFilter[0], yearsFilter[1] + 1);
@@ -63,9 +21,9 @@ export function createTreatmentBubbleChartData(
         const emptyStudies = yearsWithoutStudies.map(year => {
             return {
                 YEAR_START: year,
-                TREATMENT_FAILURE_PP: "-1",
-                TREATMENT_FAILURE_KM: "-1",
-                POSITIVE_DAY_3: " -1",
+                TREATMENT_FAILURE_PP: -1,
+                TREATMENT_FAILURE_KM: -1,
+                POSITIVE_DAY_3: -1,
                 SITE_NAME: "",
                 ISO2: "",
                 DRUG_NAME: "",
@@ -84,8 +42,8 @@ export function createTreatmentBubbleChartData(
             data: finalStudies.map(study => {
                 const rawValue =
                     type === "treatmentFailure"
-                        ? parseFloat(study.TREATMENT_FAILURE_PP) || parseFloat(study.TREATMENT_FAILURE_KM)
-                        : parseFloat(study.POSITIVE_DAY_3);
+                        ? study.TREATMENT_FAILURE_PP || study.TREATMENT_FAILURE_KM
+                        : study.POSITIVE_DAY_3;
 
                 const fixedRawValue = isNaN(rawValue) ? -1 : rawValue;
 
@@ -107,5 +65,8 @@ export function createTreatmentBubbleChartData(
         };
     });
 
-    return series;
+    return {
+        kind: "GraphData",
+        series,
+    };
 }

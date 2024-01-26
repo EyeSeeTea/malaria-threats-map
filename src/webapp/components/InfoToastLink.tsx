@@ -7,6 +7,7 @@ import CursorIcon from "./icons/CursorIcon";
 import { sendAnalytics } from "../utils/analytics";
 import { getAnalyticsPageView } from "../store/analytics";
 import { setRegionAction } from "../store/actions/base-actions";
+import { setToLocalStorage } from "../utils/browserCache";
 
 const RoundedCard = styled(Card)`
     width: fit-content;
@@ -60,8 +61,8 @@ const InfoToastLink: React.FC<Props> = ({ setRegion, text, type }) => {
                 subRegion: "GREATER_MEKONG",
             });
         } else {
-            sendAnalytics({ type: "event", category: "menu", action: "tour" });
-            localStorage.setItem("tour", "");
+            sendAnalytics({ type: "event", category: "menu", action: "menuTour" });
+            setToLocalStorage("tour", "");
             window.history.pushState({}, document.title, window.location.href.split("?")[0]);
             window.location.reload();
         }

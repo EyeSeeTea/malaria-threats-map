@@ -11,13 +11,13 @@ import { exportToCSV, Tab } from "./download";
 import { DatabaseSelection, TermsInfo, UserInfo } from "./types";
 import { ActionCreatorTypeMetadata, PayloadActionCreator } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
-import { Source } from "../../store/actions/base-actions";
+import { GAEvent, Source } from "../../store/actions/base-actions";
 import { emailRegexp } from "../../../domain/common/regex";
 import { ActionGroup } from "../../store/types";
 import { Download } from "../../../domain/entities/Download";
 
 export function useDownload(
-    logEvent: any,
+    logEvent: PayloadActionCreator<ActionTypeEnum.MalariaLogEvent, GAEvent>,
     setTheme: ((
         theme: string,
         options?: Source
@@ -33,8 +33,7 @@ export function useDownload(
     t: TFunction
 ) {
     const [activeStep, setActiveStep] = React.useState(0);
-    const [downloading, setDownloading] = React.useState(false);
-    const [messageLoader, setMessageLoader] = React.useState("");
+    const [messageLoader, setMessageLoader] = React.useState<string | undefined>("");
 
     const [termsInfo, setTermsInfo] = React.useState<Partial<TermsInfo>>({});
     const [userInfo, setUserInfo] = React.useState<Partial<UserInfo>>({
@@ -92,7 +91,6 @@ export function useDownload(
             setMessageLoader(t("common.data_download.loader.generating_file"));
             setTimeout(() => {
                 exportToCSV(tabs, filename);
-                setDownloading(false);
             }, 100);
         },
         [t]
@@ -182,7 +180,6 @@ export function useDownload(
 
     return {
         activeStep,
-        downloading,
         messageLoader,
         selectedDataBases,
         userInfo,

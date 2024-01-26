@@ -1,20 +1,20 @@
 import Highcharts from "highcharts";
-import React, { useRef } from "react";
-import { useTranslation } from "react-i18next";
+import React from "react";
 //import BubbleChartHelpImage from "../../../../assets/img/dashboards/bubble-chart-help.png";
-import { BubleChartGroup, TreatmentOverTimeType } from "./types";
-import { useTreatmentOverTime } from "./useTreatmentOverTime";
+
 import HighchartsReact from "highcharts-react-official";
 import More from "highcharts/highcharts-more";
-import TreatmentFilterableDashboard from "../TreatmentFilterableDashboard";
 import i18next from "i18next";
-import { ChartStyles } from "../../../../components/charts/Style";
+import { ChartStyles } from "../../../../../../components/charts/Style";
+import { TreatmentOverTimeType } from "../TreatmentOverTimeState";
+import { ChartSerie } from "./ChartSerie";
 
 More(Highcharts);
 
-interface TreatmentOverTimeDashboardProps {
-    id?: string;
+interface TreatmentOverTimeGraphProps {
     type: TreatmentOverTimeType;
+    series: ChartSerie[];
+    ref: React.MutableRefObject<any>;
 }
 
 interface CustomPoint extends Highcharts.Point {
@@ -26,62 +26,13 @@ interface CustomPoint extends Highcharts.Point {
     urlText: string;
 }
 
-const TreatmentOverTimeDashboard: React.FC<TreatmentOverTimeDashboardProps> = ({ id, type }) => {
-    const { t } = useTranslation();
-    const {
-        filteredStudiesForDrugs,
-        studiesCount,
-        series,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerPatients,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerPatientsChange,
-        onMolecularMarkerChange,
-    } = useTreatmentOverTime(type);
-
-    const chartComponentRef = useRef(null);
-
-    return (
-        <TreatmentFilterableDashboard
-            id={id}
-            chartComponentRef={chartComponentRef}
-            title={
-                type === "treatmentFailure"
-                    ? t("common.dashboard.therapeuticEfficacyDashboards.treatmentFailureOverTime.title")
-                    : t("common.dashboard.therapeuticEfficacyDashboards.parasiteClearanceOverTime.title")
-            }
-            type={type}
-            drugsMultiple={false}
-            drugsClearable={false}
-            filteredStudiesForDrugs={filteredStudiesForDrugs}
-            studiesCount={studiesCount}
-            plasmodiumSpecies={plasmodiumSpecies}
-            drugs={drugs}
-            molecularMarker={molecularMarker}
-            years={years}
-            maxMinYears={maxMinYears}
-            PlasmodiumSpecieDisabled={type === "positiveDay3"}
-            excludeLowerPatients={excludeLowerPatients}
-            onPlasmodiumChange={onPlasmodiumChange}
-            onDrugsChange={onDrugsChange}
-            onYearsChange={onYearsChange}
-            onExcludeLowerPatientsChange={onExcludeLowerPatientsChange}
-            onMolecularMarkerChange={onMolecularMarkerChange}
-        >
-            <HighchartsReact highcharts={Highcharts} options={chartOptions(type, series)} ref={chartComponentRef} />
-        </TreatmentFilterableDashboard>
-    );
+const TreatmentOverTimeGraph: React.FC<TreatmentOverTimeGraphProps> = ({ type, series, ref }) => {
+    return <HighchartsReact highcharts={Highcharts} options={chartOptions(type, series)} ref={ref} />;
 };
 
-export default React.memo(TreatmentOverTimeDashboard);
+export default React.memo(TreatmentOverTimeGraph);
 
-function chartOptions(type: TreatmentOverTimeType, series: BubleChartGroup[]): Highcharts.Options {
+function chartOptions(type: TreatmentOverTimeType, series: ChartSerie[]): Highcharts.Options {
     return {
         chart: {
             type: "bubble",

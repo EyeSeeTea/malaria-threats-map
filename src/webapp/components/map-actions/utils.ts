@@ -323,19 +323,57 @@ export function getFilters(
     }
 }
 
+const buildFilters = (
+    type:
+        | "insecticideTypes"
+        | "testType"
+        | "species"
+        | "assayTypes"
+        | "synergistTypes"
+        | "years"
+        | "insecticideClass"
+        | "vectorSpecies"
+        | "deletionType"
+        | "surveyTypes"
+        | "patientType"
+        | "excludeStudies"
+        | "plasmodiumSpecies"
+        | "drugs"
+        | "molecularMarkers",
+    filterValues: string | string[] | undefined
+) => {
+    const value = `${i18next.t(`common.map_info_summary.${type}`)}: `;
+
+    if (filterValues && Array.isArray(filterValues)) {
+        return [
+            value.concat(
+                `${
+                    filterValues && filterValues?.length > 0
+                        ? filterValues?.map(item => i18next.t(item)).join(", ")
+                        : i18next.t("common.map_info_summary.all")
+                }`
+            ),
+        ];
+    }
+
+    if (filterValues || (!filterValues && type !== "excludeStudies")) {
+        return value.concat(`${filterValues || i18next.t("common.map_info_summary.all")}`);
+    }
+};
+
 export function preventionFiltersToString(
     preventionFilters: PreventionFilters,
     maxMinYears: number[],
     yearFilters: number[],
     from: Source
 ) {
-    const years = getYearsSummary(maxMinYears, yearFilters);
-    const insecticideClass = i18next.t(preventionFilters.insecticideClass);
-    const insecticideTypes = preventionFilters.insecticideTypes.map(item => i18next.t(item));
-    const type = preventionFilters.type?.map(item => i18next.t(item));
-    const species = preventionFilters.species.map(item => i18next.t(item));
-    const assayTypes = preventionFilters.assayTypes.map(item => i18next.t(item));
-    const synergistTypes = preventionFilters.synergistTypes.map(item => i18next.t(item));
+    const years = buildFilters("years", getYearsSummary(maxMinYears, yearFilters));
+    const insecticideClass = buildFilters("insecticideClass", i18next.t(preventionFilters.insecticideClass));
+    const insecticideTypes = buildFilters("insecticideTypes", preventionFilters.insecticideTypes);
+    const type = buildFilters("testType", preventionFilters.type);
+    const species = buildFilters("species", preventionFilters.species);
+    const assayTypes = buildFilters("assayTypes", preventionFilters.assayTypes);
+    const synergistTypes = buildFilters("synergistTypes", preventionFilters.synergistTypes);
 
     if (from === "map") {
         switch (preventionFilters.mapType) {
@@ -375,20 +413,27 @@ export function treatmentFiltersToString(
     yearFilters: number[],
     from: Source
 ) {
-    const years = getYearsSummary(maxMinYears, yearFilters);
-    const exlude = treatmentFilters.excludeLowerPatients
-        ? i18next.t("common.filters.exclude_lower_patients")
-        : undefined;
+    const years = buildFilters("years", getYearsSummary(maxMinYears, yearFilters));
+    const exlude = buildFilters(
+        "excludeStudies",
+        treatmentFilters.excludeLowerPatients ? i18next.t("common.filters.exclude_lower_patients") : undefined
+    );
 
-    const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.filter(item =>
-        treatmentFilters.plasmodiumSpecies.includes(item.value)
-    ).map(plasmodiumSpecies => plasmodiumSpecies.label);
+    const plasmodiumSpecies = buildFilters(
+        "plasmodiumSpecies",
+        PLASMODIUM_SPECIES_SUGGESTIONS.filter(item => treatmentFilters.plasmodiumSpecies.includes(item.value)).map(
+            plasmodiumSpecies => plasmodiumSpecies.label
+        )
+    );
 
-    const drugs = treatmentFilters.drugs.map(drug => i18next.t(drug));
+    const drugs = buildFilters("drugs", treatmentFilters.drugs);
 
-    const molecularMarkers = MOLECULAR_MARKERS_LABELS.filter(item =>
-        treatmentFilters.molecularMarkers.includes(item.value)
-    ).map(molecularMarkers => molecularMarkers.label);
+    const molecularMarkers = buildFilters(
+        "molecularMarkers",
+        MOLECULAR_MARKERS_LABELS.filter(item => treatmentFilters.molecularMarkers.includes(item.value)).map(
+            molecularMarkers => molecularMarkers.label
+        )
+    );
 
     if (from === "map") {
         switch (treatmentFilters.mapType) {
@@ -414,6 +459,12 @@ export function treatmentFiltersToString(
             case "MOLECULAR_MARKER_STUDY": {
                 return _.compact([...molecularMarkers, exlude, years]).join(" | ");
             }
+            case "AMDERO_TES": {
+                return _.compact([...plasmodiumSpecies, ...drugs, years]).join(" | ");
+            }
+            case "AMDERO_MM": {
+                return _.compact([...molecularMarkers, years]).join(" | ");
+            }
         }
     }
 }
@@ -422,18 +473,28 @@ export function diagnosisFiltersToString(
     diagnosisFilters: DiagnosisFilters,
     maxMinYears: number[],
     yearFilters: number[],
-    _from: Source
+    from: Source
 ) {
-    const years = getYearsSummary(maxMinYears, yearFilters);
+    const years = buildFilters("years", getYearsSummary(maxMinYears, yearFilters)) as string;
 
-    const deletionType = i18next.t(diagnosisFilters.deletionType);
-    const surveyTypes = diagnosisFilters.surveyTypes.map(item => i18next.t(item));
-    const patientType = i18next.t(diagnosisFilters.patientType);
-    switch (diagnosisFilters.mapType) {
-        case DiagnosisMapType.GENE_DELETIONS:
-            return _.compact([deletionType, ...surveyTypes, patientType, years]).join(" | ");
-        case DiagnosisMapType.HRP23_STUDIES:
-            return years;
+    const deletionType = buildFilters("deletionType", i18next.t(diagnosisFilters.deletionType));
+    const surveyTypes = buildFilters("surveyTypes", diagnosisFilters.surveyTypes);
+    const patientType = buildFilters("patientType", i18next.t(diagnosisFilters.patientType));
+
+    if (from === "map") {
+        switch (diagnosisFilters.mapType) {
+            case DiagnosisMapType.GENE_DELETIONS:
+                return _.compact([deletionType, ...surveyTypes, patientType, years]).join(" | ");
+            case DiagnosisMapType.HRP23_STUDIES:
+                return years;
+        }
+    } else {
+        switch (diagnosisFilters.dataset) {
+            case "PFHRP23_GENE_DELETIONS":
+                return _.compact([deletionType, ...surveyTypes, patientType, years]).join(" | ");
+            case "HRPO":
+                return years;
+        }
     }
 }
 
@@ -443,12 +504,15 @@ export function invasiveFiltersToString(
     yearFilters: number[],
     _from: Source
 ) {
-    const years = getYearsSummary(maxMinYears, yearFilters);
+    const years = buildFilters("years", getYearsSummary(maxMinYears, yearFilters));
 
-    const vectorSpecies = invasiveFilters.vectorSpecies.map(item => {
-        const vectorSpecie = suggestions().find(sug => sug.value === item);
-        return vectorSpecie.label;
-    });
+    const vectorSpecies = buildFilters(
+        "vectorSpecies",
+        invasiveFilters.vectorSpecies.map(item => {
+            const vectorSpecie = suggestions().find(sug => sug.value === item);
+            return vectorSpecie.label;
+        })
+    );
 
     return _.compact([...vectorSpecies, years]).join(" | ");
 }

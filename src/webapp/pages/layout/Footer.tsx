@@ -17,7 +17,7 @@ const PrivacyCopyrightStack = styled(Stack)`
     justify-content: space-between;
 `;
 
-const Column = styled(Typography)`
+const Column = styled.div`
     display: flex;
     flex-direction: column;
     height: 100%;

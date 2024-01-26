@@ -2,7 +2,7 @@ import React from "react";
 import { Fab, Stack } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import styled from "styled-components";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import DownloadIcon from "@mui/icons-material/Download";
 
 interface DashboardTitleProps {
     id?: string;
@@ -22,7 +22,7 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({ id, title, showActions,
                         <InfoOutlinedIcon sx={{ color: "white", width: "20px" }} />
                     </Fab>
                     <Fab color="primary" size="small" onClick={onDownloadClick} className={"dashboard-action"}>
-                        <CameraAltIcon sx={{ color: "white" }} />
+                        <DownloadIcon sx={{ color: "white" }} />
                     </Fab>
                 </Stack>
             )}

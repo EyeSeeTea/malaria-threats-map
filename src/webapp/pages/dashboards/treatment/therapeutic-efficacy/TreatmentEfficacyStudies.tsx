@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import TreatmentFailureByDrugDashboard from "./TreatmentFailureByDrugDashboard";
-import TreatmentOverTimeDashboard from "./TreatmentOverTimeDashboard";
+import TreatmentOverTimeDashboard from "./treatment-failure-rates-over-time/TreatmentOverTimeDashboard";
 
 const TreatmentEfficacyStudies: React.FC = () => {
     const { t } = useTranslation();

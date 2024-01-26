@@ -11,17 +11,8 @@ import {
 } from "../../../../domain/entities/PreventionStudy";
 import { Option } from "../../../components/BasicSelect";
 
-export function usePrevention() {
-    const {
-        filters,
-        onInsecticideClassChange,
-        onSpeciesChange,
-        onInsecticideTypesChange,
-        onTypeChange,
-        onYearsChange,
-        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-        onOnlyIncludeDataByHealthChange,
-    } = usePreventionFilters();
+export function usePrevention(baseFilters: ((study: PreventionStudy) => boolean)[]) {
+    const filters = usePreventionFilters();
 
     const [filteredStudies, setFilteredStudies] = React.useState<PreventionStudy[]>([]);
     const [insecticideClassOptions, setInsecticideClassOptions] = React.useState<Option[]>([]);
@@ -30,14 +21,46 @@ export function usePrevention() {
     const [typeOptions, setTypeOptions] = React.useState<Option[]>([]);
     const { preventionStudies, dashboardsPreventionStudies, selectedCountries } = useDashboards();
 
+    const {
+        insecticideClasses,
+        insecticideTypes,
+        species,
+        type,
+        onlyIncludeBioassaysWithMoreMosquitoes,
+        onlyIncludeDataByHealth,
+        years,
+        maxMinYears,
+    } = filters;
+
     React.useEffect(() => {
-        const filteredStudies = filterStudies(dashboardsPreventionStudies, filters);
+        const filteredStudies = filterStudies(dashboardsPreventionStudies, baseFilters, {
+            insecticideClasses: insecticideClasses,
+            insecticideTypes: insecticideTypes,
+            species: species,
+            type: type,
+            onlyIncludeBioassaysWithMoreMosquitoes: onlyIncludeBioassaysWithMoreMosquitoes,
+            onlyIncludeDataByHealth: onlyIncludeDataByHealth,
+            years: years,
+            maxMinYears: maxMinYears,
+            disaggregateBySpeciesSelection: "aggregate_species",
+        });
 
         setFilteredStudies(filteredStudies);
-    }, [dashboardsPreventionStudies, filters]);
+    }, [
+        baseFilters,
+        dashboardsPreventionStudies,
+        insecticideClasses,
+        insecticideTypes,
+        maxMinYears,
+        onlyIncludeBioassaysWithMoreMosquitoes,
+        onlyIncludeDataByHealth,
+        species,
+        type,
+        years,
+    ]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(preventionStudies, {
+        const filteredStudies = filterStudies(preventionStudies, baseFilters, {
             insecticideClasses: [],
             insecticideTypes: [],
             species: [],
@@ -46,21 +69,17 @@ export function usePrevention() {
             onlyIncludeDataByHealth: false,
             years: undefined,
             maxMinYears: undefined,
+            disaggregateBySpeciesSelection: "aggregate_species",
         });
 
         const insecticideClasses = extractInsecticideClassesOptions(filteredStudies);
 
         setInsecticideClassOptions(insecticideClasses);
-    }, [
-        preventionStudies,
-        filters.onlyIncludeBioassaysWithMoreMosquitoes,
-        filters.onlyIncludeDataByHealth,
-        filters.years,
-    ]);
+    }, [baseFilters, preventionStudies, onlyIncludeBioassaysWithMoreMosquitoes, onlyIncludeDataByHealth, years]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(preventionStudies, {
-            insecticideClasses: [],
+        const filteredStudies = filterStudies(preventionStudies, baseFilters, {
+            insecticideClasses,
             insecticideTypes: [],
             species: [],
             type: "",
@@ -68,16 +87,17 @@ export function usePrevention() {
             onlyIncludeDataByHealth: false,
             years: undefined,
             maxMinYears: undefined,
+            disaggregateBySpeciesSelection: "aggregate_species",
         });
 
         const insecticideTypes = extractInsecticideTypeOptions(filteredStudies);
 
         setInsecticideTypeOptions(insecticideTypes);
-    }, [preventionStudies]);
+    }, [baseFilters, insecticideClasses, preventionStudies]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(dashboardsPreventionStudies, {
-            insecticideClasses: filters.insecticideClasses,
+        const filteredStudies = filterStudies(dashboardsPreventionStudies, baseFilters, {
+            insecticideClasses: insecticideClasses,
             insecticideTypes: [],
             species: [],
             type: "",
@@ -85,16 +105,17 @@ export function usePrevention() {
             onlyIncludeDataByHealth: false,
             years: undefined,
             maxMinYears: undefined,
+            disaggregateBySpeciesSelection: "aggregate_species",
         });
 
         const species = extractSpeciesOptions(filteredStudies);
 
         setSpeciesOptions(species);
-    }, [dashboardsPreventionStudies, filters.insecticideClasses, onSpeciesChange]);
+    }, [baseFilters, dashboardsPreventionStudies, insecticideClasses]);
 
     React.useEffect(() => {
-        const filteredStudies = filterStudies(preventionStudies, {
-            insecticideClasses: filters.insecticideClasses,
+        const filteredStudies = filterStudies(preventionStudies, baseFilters, {
+            insecticideClasses: insecticideClasses,
             insecticideTypes: [],
             species: [],
             type: "",
@@ -102,12 +123,13 @@ export function usePrevention() {
             onlyIncludeDataByHealth: false,
             years: undefined,
             maxMinYears: undefined,
+            disaggregateBySpeciesSelection: "aggregate_species",
         });
 
         const types = extractTypeOptions(filteredStudies);
 
         setTypeOptions(types);
-    }, [preventionStudies, filters.insecticideClasses, filters.species, onTypeChange]);
+    }, [baseFilters, preventionStudies, insecticideClasses, species]);
 
     return {
         preventionStudies,
@@ -119,12 +141,5 @@ export function usePrevention() {
         speciesOptions,
         typeOptions,
         dashboardsPreventionStudies,
-        onInsecticideClassChange,
-        onSpeciesChange,
-        onInsecticideTypesChange,
-        onTypeChange,
-        onYearsChange,
-        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-        onOnlyIncludeDataByHealthChange,
     };
 }

@@ -6,6 +6,7 @@ import {
     fetchDiagnosisStudiesError,
     fetchDiagnosisStudiesRequest,
     fetchDiagnosisStudiesSuccess,
+    setDiagnosisDataset,
     setDiagnosisDeletionType,
     setDiagnosisFilteredStudiesAction,
     setDiagnosisMapType,
@@ -18,7 +19,7 @@ import {
     setSelectionData,
     setMaxMinYearsAction,
 } from "../../actions/base-actions";
-import { DiagnosisMapType, State } from "../../types";
+import { DiagnosisFilters, DiagnosisMapType, State } from "../../types";
 import { addNotificationAction } from "../../actions/notifier-actions";
 import { getAnalyticsPageView } from "../../analytics";
 import { fromFuture } from "../utils";
@@ -27,6 +28,7 @@ import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import { ActionTypeEnum } from "../../actions";
 import { createDiagnosisSelectionData } from "./utils";
 import { DELETION_TYPES } from "../../../components/filters/DeletionTypeFilter";
+import { getMinMaxYears } from "../../../../domain/entities/Study";
 
 export const getDiagnosisStudiesEpic = (
     action$: Observable<ActionType<typeof fetchDiagnosisStudiesRequest>>,
@@ -40,7 +42,13 @@ export const getDiagnosisStudiesEpic = (
             if (state.diagnosis.studies.length === 0 && !state.diagnosis.error) {
                 return fromFuture(compositionRoot.diagnosis.getStudies()).pipe(
                     mergeMap((studies: DiagnosisStudy[]) => {
-                        return of(fetchDiagnosisStudiesSuccess(studies));
+                        const [start, end] = getMinMaxYears(studies, false);
+
+                        return of(
+                            fetchDiagnosisStudiesSuccess(studies),
+                            setMaxMinYearsAction([start, end]),
+                            setFiltersAction([start, end])
+                        );
                     }),
                     catchError((error: Error) => of(addNotificationAction(error.message), fetchDiagnosisStudiesError()))
                 );
@@ -50,18 +58,20 @@ export const getDiagnosisStudiesEpic = (
         })
     );
 
-export const setDiagnosisThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>) =>
+export const setDiagnosisThemeEpic = (
+    action$: Observable<ActionType<typeof setThemeAction>>,
+    state$: StateObservable<State>
+) =>
     action$.pipe(
         ofType(ActionTypeEnum.MalariaSetTheme),
-        switchMap($action => {
+        withLatestFrom(state$),
+        switchMap(([$action, $state]) => {
             if ($action.payload !== "diagnosis") {
                 return of();
             }
+            const [start, end] = getMinMaxYears($state.diagnosis.studies, false);
 
-            const base = [
-                setMaxMinYearsAction([1998, new Date().getFullYear()]),
-                setFiltersAction([1998, new Date().getFullYear()]),
-            ];
+            const base = [setMaxMinYearsAction([start, end]), setFiltersAction([start, end])];
 
             if ($action.from === "map") {
                 return of(...base, setDiagnosisDeletionType(DELETION_TYPES.HRP2_PROPORTION_DELETION.value));
@@ -71,17 +81,42 @@ export const setDiagnosisThemeEpic = (action$: Observable<ActionType<typeof setT
         })
     );
 
-export const setDiagnosisMapTypeEpic = (action$: Observable<ActionType<typeof setDiagnosisMapType>>) =>
+export const setDiagnosisMapTypeEpic = (
+    action$: Observable<ActionType<typeof setDiagnosisMapType>>,
+    state$: StateObservable<State>
+) =>
     action$.pipe(
         ofType(ActionTypeEnum.SetDiagnosisMapType),
-        switchMap(action => {
+        withLatestFrom(state$),
+        switchMap(([action, state]) => {
+            const isOnGoing = isDiagnosisMapTypeOngoing(state.diagnosis.filters);
+            const maxAsCurrent = !isOnGoing;
+
+            const [start, end] = getMinMaxYears(state.diagnosis.studies, maxAsCurrent, isOnGoing ? 2018 : undefined);
+
+            const base = [setMaxMinYearsAction([start, end]), setFiltersAction([start, end])];
+
             const pageView = getAnalyticsPageView({ page: "diagnosis", section: action.payload });
             const logPageView = logPageViewAction(pageView);
 
-            if (action.payload === DiagnosisMapType.GENE_DELETIONS) {
-                return of(logPageView);
-            }
-            return of();
+            return of(...base, logPageView);
+        })
+    );
+
+export const setDiagnosisDatasetEpic = (
+    action$: Observable<ActionType<typeof setDiagnosisDataset>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetDiagnosisDataset),
+        withLatestFrom(state$),
+        switchMap(([_, state]) => {
+            const isOnGoing = isDiagnosisDatasetOngoing(state.diagnosis.filters);
+            const maxAsCurrent = !isOnGoing;
+
+            const [start, end] = getMinMaxYears(state.diagnosis.studies, maxAsCurrent, isOnGoing ? 2018 : undefined);
+
+            return of(setMaxMinYearsAction([start, end]), setFiltersAction([start, end]));
         })
     );
 
@@ -114,6 +149,14 @@ export const setDiagnosisFilteredStudiesEpic = (
                 state.diagnosis.filteredStudies
             );
 
-            return of(setSelectionData(selectionData));
+            return of(setSelectionData(null), setSelectionData(selectionData));
         })
     );
+
+function isDiagnosisMapTypeOngoing(diagnosisFilters: DiagnosisFilters) {
+    return diagnosisFilters.mapType === DiagnosisMapType.HRP23_STUDIES;
+}
+
+function isDiagnosisDatasetOngoing(diagnosisFilters: DiagnosisFilters) {
+    return diagnosisFilters.dataset === "HRPO";
+}

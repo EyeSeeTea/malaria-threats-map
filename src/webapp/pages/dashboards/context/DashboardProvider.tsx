@@ -3,13 +3,16 @@ import { DashboardsThemeOptions } from "../types";
 import React from "react";
 import { selectTreatmentStudies } from "../../../store/reducers/treatment-reducer";
 import { fetchTreatmentStudiesRequest } from "../../../store/actions/treatment-actions";
-import { LastUpdatedDates, State } from "../../../store/types";
+import { State } from "../../../store/types";
 import { connect } from "react-redux";
 import { selectLastUpdatedDates } from "../../../store/reducers/base-reducer";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { fetchPreventionStudiesRequest } from "../../../store/actions/prevention-actions";
 import { selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
+import { LastUpdatedDates } from "../../../../domain/entities/LastUpdateDates";
+import SimpleLoader from "../../../components/SimpleLoader";
+import { useTranslation } from "react-i18next";
 
 export const DashboardContext = React.createContext<DashboardState>(null);
 
@@ -42,18 +45,21 @@ const DashboardProvider: React.FC<Props> = ({
     const [dashboardsTreatmentStudies, setDashboardsTreatmentStudies] = useState<TreatmentStudy[]>(undefined);
     const [updatedDates, setUpdatedDates] = useState<LastUpdatedDates>({
         prevention: null,
+        diagnosisOngoing: null,
         diagnosis: null,
         treatment: null,
+        treatmentMMOngoing: null,
+        treatmentTESOngoing: null,
         invasive: null,
     });
 
+    const { t } = useTranslation();
+
     useEffect(() => {
-        if (theme === "prevention") {
-            fetchPreventionStudies();
-        } else {
-            fetchTreatmentStudies();
-        }
-    }, [theme, fetchPreventionStudies, fetchTreatmentStudies]);
+        fetchPreventionStudies();
+
+        fetchTreatmentStudies();
+    }, [fetchPreventionStudies, fetchTreatmentStudies]);
 
     useEffect(() => {
         setUpdatedDates(lastUpdatedDates);
@@ -75,7 +81,11 @@ const DashboardProvider: React.FC<Props> = ({
                 setDashboardsPreventionStudies,
             }}
         >
-            {children}
+            {preventionStudies.length !== 0 && treatmentStudies.length !== 0 ? (
+                children
+            ) : (
+                <SimpleLoader message={t("common.loading")} />
+            )}
         </DashboardContext.Provider>
     );
 };

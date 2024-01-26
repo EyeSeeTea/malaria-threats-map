@@ -7,7 +7,7 @@ import {
     selectRegion,
     selectTheme,
 } from "../../../store/reducers/base-reducer";
-import { setActionGroupSelected, setFiltersAction, setMaxMinYearsAction } from "../../../store/actions/base-actions";
+import { setActionGroupSelected } from "../../../store/actions/base-actions";
 import { connect } from "react-redux";
 
 import { Button, Card, Divider, Grid, List, ListItem, Stack, Typography } from "@mui/material";
@@ -72,7 +72,6 @@ import {
     preventionDatasetSuggestions,
     treatmentDatasetSuggestions,
 } from "../filters/DataSetSelector";
-import { getMaxMinYears } from "../../../../domain/entities/Study";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -104,8 +103,6 @@ const mapDispatchToProps = {
     setDiagnosisFilteredStudies: setDiagnosisFilteredStudiesAction,
     setTreatmentFilteredStudies: setFilteredStudiesAction,
     setInvasiveFilteredStudies: setInvasiveFilteredStudiesAction,
-    setYears: setFiltersAction,
-    setMaxMinYears: setMaxMinYearsAction,
 };
 
 type OwnProps = {
@@ -146,8 +143,6 @@ const Data: React.FC<Props> = ({
     setInvasiveFilteredStudies,
     setActionGroupSelected,
     onChangeSelectedDatabases,
-    setYears,
-    setMaxMinYears,
 }) => {
     const { t } = useTranslation();
 
@@ -188,20 +183,6 @@ const Data: React.FC<Props> = ({
             filterInvasiveStudies(invasiveStudies, invasiveFilters, yearFilters, region, "download")
         );
     }, [invasiveStudies, invasiveFilters, region, yearFilters, setInvasiveFilteredStudies]);
-
-    useEffect(() => {
-        const minMaxYears =
-            theme === "prevention"
-                ? getMaxMinYears(preventionStudies)
-                : theme === "diagnosis"
-                ? getMaxMinYears(diagnosisStudies)
-                : theme === "treatment"
-                ? getMaxMinYears(treatmentStudies)
-                : getMaxMinYears(invasiveStudies);
-
-        setMaxMinYears(minMaxYears);
-        setYears(minMaxYears);
-    }, [theme, preventionStudies, diagnosisStudies, treatmentStudies, invasiveStudies, setMaxMinYears, setYears]);
 
     const handleAddToDownload = useCallback(() => {
         switch (theme) {
@@ -405,10 +386,9 @@ const ListCard = styled(Card)`
 `;
 
 const DataSelectionCard = styled(Card)`
-    padding: 0px;
+    width: 100%;
+    max-width: 550px;
     border-radius: 12px;
-    width: 550px;
-    overflow: visible;
 `;
 
 const StyledList = styled(List)`

@@ -1,5 +1,7 @@
+import { getFromLocalStorage } from "../utils/browserCache";
+
 export const formatList = (list: string[]) => {
-    const lng = localStorage.getItem("language");
+    const lng = getFromLocalStorage("language");
     if (lng === "es") {
         if (list.length === 0) {
             return "";
@@ -28,7 +30,7 @@ export const formatList = (list: string[]) => {
 };
 
 export const formatYears = (from: string, to: string) => {
-    const lng = localStorage.getItem("language");
+    const lng = getFromLocalStorage("language");
     if (lng === "es") {
         if (!from && !to) {
             return "";
@@ -69,7 +71,7 @@ export const formatYears = (from: string, to: string) => {
 };
 
 export const formatYears2 = (from: string, to: string) => {
-    const lng = localStorage.getItem("language");
+    const lng = getFromLocalStorage("language");
     if (lng === "es") {
         if (!from && !to) {
             return "";
@@ -108,3 +110,7 @@ export const formatYears2 = (from: string, to: string) => {
         }
     }
 };
+
+export function capitalizeFirstLetter(text: string) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+}

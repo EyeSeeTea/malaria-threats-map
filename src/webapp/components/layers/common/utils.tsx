@@ -29,17 +29,15 @@ export const updateSelectionAndRegionAfterClick = (
 ): void => {
     const selection = getSiteSelectionOnClick(event, map, layer);
 
-    setTimeout(() => {
-        setSelection(selection);
+    setSelection(selection);
 
-        if (currentRegion) {
-            const region = getRegionBySiteOnClick(event, map, layer);
+    if (currentRegion) {
+        const region = getRegionBySiteOnClick(event, map, layer);
 
-            if (region) {
-                setRegion(region);
-            }
+        if (region) {
+            setRegion(region);
         }
-    }, 100);
+    }
 };
 
 export const getSiteSelectionOnClick = (e: any, map: mapboxgl.Map, layer: string): SiteSelection => {

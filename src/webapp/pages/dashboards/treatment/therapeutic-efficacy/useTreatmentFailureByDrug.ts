@@ -3,48 +3,27 @@ import { TreatmentStudy } from "../../../../../domain/entities/TreatmentStudy";
 import { getTreatmentFailure } from "../utils";
 import { treatmentByDrugColors, TreatmentFailureSeries, TreatmentFailureSeriesItem } from "./types";
 import { useTreatment } from "../useTreatment";
+import { TreatmentFiltersState } from "../filters/TreatmentFiltersState";
 
 export function useTreatmentFailureByDrug() {
-    const {
-        filteredStudies,
-        selectedCountries,
-        filteredStudiesForDrugs,
-        studiesCount,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerPatients,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerPatientsChange,
-        onMolecularMarkerChange,
-    } = useTreatment(true);
+    const { filteredStudies, selectedCountries, filteredStudiesForDrugs, studiesCount, filters } = useTreatment(true);
 
     const [data, setData] = React.useState<TreatmentFailureSeries>({ maxYAxis: 0, itemsByDrug: {} });
 
     React.useEffect(() => {
-        setData(createChartData(filteredStudies, drugs || [], selectedCountries));
-    }, [filteredStudies, drugs, selectedCountries]);
+        setData(createChartData(filteredStudies, filters.drugs || [], selectedCountries));
+    }, [filteredStudies, filters.drugs, selectedCountries]);
 
     return {
         filteredStudiesForDrugs,
         selectedCountries,
         studiesCount,
         data,
-        plasmodiumSpecies,
-        drugs,
-        molecularMarker,
-        years,
-        maxMinYears,
-        excludeLowerPatients,
-        onPlasmodiumChange,
-        onDrugsChange,
-        onYearsChange,
-        onExcludeLowerPatientsChange,
-        onMolecularMarkerChange,
+        filters: {
+            ...filters,
+            onChangeShowDataForAllCountries: undefined,
+            onExcludeLowerSamplesChange: undefined,
+        } as TreatmentFiltersState,
     };
 }
 

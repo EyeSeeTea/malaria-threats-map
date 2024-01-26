@@ -20,11 +20,8 @@ export interface Study {
     ASSAY_TYPE: string;
     COUNTRY_NAME: string;
     INSECTICIDE_CLASS: string;
-    INSECTICIDE_CONC: string;
-    INSECTICIDE_INTENSITY: string;
     INSECTICIDE_TYPE: string;
     INSTITUTE: string;
-    INVESTIGATION_TYPE: string;
     MALARIA_ENDEMIC: number;
     MECHANISM_FREQUENCY: string;
     MECHANISM_PROXY: string;
@@ -51,16 +48,23 @@ export interface Study {
     VERSION: number;
     YEAR_END: string;
     YEAR_START: string;
+    DOWNLOAD: number;
 }
 
-export function getMaxMinYears(studies: Study[]): [number, number] {
-    if (studies.length === 0) return [2010, new Date().getFullYear()];
-    const years = _.compact(_.uniq(studies.map(study => parseInt(study.YEAR_START)).sort()));
+export function getMinMaxYears(studies: Study[], maxAsCurrent = true, minToOverwrite?: number): [number, number] {
+    if (studies.length === 0) return [minToOverwrite || 2010, new Date().getFullYear()];
+    const startYears = studies.map(study => parseInt(study.YEAR_START));
+    const endYears = studies.map(study => parseInt(study.YEAR_END));
+    const years = _.compact(_.uniq([...startYears, ...endYears]).sort());
 
-    const min = Math.min(...years);
+    const current = new Date().getFullYear();
+
+    const min = minToOverwrite || Math.min(...years);
     const max = Math.max(...years);
 
-    return [min, max];
+    const finalMax = maxAsCurrent ? current : max > current ? max : current;
+
+    return [min, finalMax];
 }
 
 export function getRegionBySite(study: Study): RegionState {

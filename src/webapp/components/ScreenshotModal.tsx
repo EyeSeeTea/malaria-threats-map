@@ -6,6 +6,7 @@ import { Modal, Button, Box } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 
 import { downloadHtmlElement } from "../utils/downloadHtmlElement";
+import { AnalyticsData, sendAnalytics } from "../utils/analytics";
 
 interface ScreenshotModalProps {
     open?: boolean;
@@ -14,6 +15,7 @@ interface ScreenshotModalProps {
     children: React.ReactNode;
     backgroundColor?: string;
     exclusionClasses?: string[];
+    analyticsData?: AnalyticsData;
 }
 
 function ScreenshotModal({
@@ -23,13 +25,18 @@ function ScreenshotModal({
     backgroundColor,
     exclusionClasses,
     children,
+    analyticsData,
 }: ScreenshotModalProps) {
     const { t } = useTranslation();
     const ref = useRef<HTMLDivElement>(null);
 
     const handleDownload = useCallback(() => {
         downloadHtmlElement(ref.current, title.replace(".", "_"), { backgroundColor, exclusionClasses });
-    }, [backgroundColor, exclusionClasses, title]);
+
+        if (analyticsData) {
+            sendAnalytics(analyticsData);
+        }
+    }, [analyticsData, backgroundColor, exclusionClasses, title]);
 
     return (
         <Modal
@@ -93,7 +100,7 @@ const Content = styled.div`
 `;
 
 const ScreenshotContainer = styled.div`
-    width: fit-content;
+    position: relative;
     * {
         pointer-events: none;
         -webkit-user-select: none;

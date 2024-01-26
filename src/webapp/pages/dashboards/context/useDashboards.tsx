@@ -1,6 +1,7 @@
 import { useContext, useCallback } from "react";
 import { DashboardsThemeOptions } from "../types";
 import { DashboardContext } from "./DashboardProvider";
+import { sendAnalytics } from "../../../utils/analytics";
 
 export const useDashboards = () => {
     const {
@@ -42,6 +43,12 @@ export const useDashboards = () => {
     );
 
     const onGenerate = useCallback(() => {
+        sendAnalytics({
+            type: "event",
+            category: "dashboards",
+            action: "generate",
+            label: `Theme: ${theme}; Selected countries: ${selectedCountries.join(", ")}`,
+        });
         if (theme === "prevention") {
             const dashboardStudies = preventionStudies.filter(
                 study => selectedCountries.includes(study.ISO2) || selectedCountries.length === 0

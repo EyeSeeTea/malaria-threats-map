@@ -23,16 +23,11 @@ import {
     setSelectionDataFilterSelection,
 } from "../actions/base-actions";
 import { State } from "../types";
-import * as ajax from "../ajax";
-import { MapServerConfig } from "../../constants/constants";
 import { addNotificationAction } from "../actions/notifier-actions";
-import { AjaxError } from "rxjs/ajax";
-import { ErrorResponse } from "../../types/Malaria";
 import { getAnalyticsPageViewFromString } from "../analytics";
 import { sendAnalytics } from "../../utils/analytics";
 import _ from "lodash";
 import { fetchCountryLayerRequest } from "../actions/country-layer-actions";
-import { ApiParams } from "../../../data/common/types";
 import { fromFuture } from "./utils";
 import { EpicDependencies } from "..";
 import { ActionTypeEnum } from "../actions";
@@ -40,6 +35,7 @@ import { createPreventionSelectionData } from "./prevention/utils";
 import { createDiagnosisSelectionData } from "./diagnosis/utils";
 import { createInvasiveSelectionData } from "./invasive/utils";
 import { createTreatmentSelectionData } from "./treatment/utils";
+import { LastUpdatedDates } from "../../../domain/entities/LastUpdateDates";
 
 export const setThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>, state$: StateObservable<State>) =>
     action$.pipe(
@@ -188,57 +184,19 @@ export const logStoryModeStepEpic = (
         })
     );
 
-export type LastUpdated = {
-    OBJECTID: number;
-    TABLE_NAME: string;
-    DATE: number;
-};
-type Response = { features: { attributes: LastUpdated }[] } & ErrorResponse;
-
-export const getLastUpdatedEpic = (action$: Observable<ActionType<typeof getLastUpdatedRequestAction>>) =>
+export const getLastUpdatedEpic = (
+    action$: Observable<ActionType<typeof getLastUpdatedRequestAction>>,
+    _state$: StateObservable<State>,
+    { compositionRoot }: EpicDependencies
+) =>
     action$.pipe(
         ofType(ActionTypeEnum.GetLastUpdatedRequest),
         switchMap(() => {
-            const params: ApiParams = {
-                f: "json",
-                where: `1%3D1`,
-                outFields: "*",
-            };
-            const query: string = Object.keys(params)
-                .map(key => `${key}=${params[key]}`)
-                .join("&");
-            return ajax.get<Response>(`/${MapServerConfig.layers.updates}/query?${query}`).pipe(
-                mergeMap((response: Response) => {
-                    if (response.error) {
-                        return of(
-                            addNotificationAction(response.error.message),
-                            getLastUpdatedFailureAction(response.error.message)
-                        );
-                    } else {
-                        const updatesList = response.features.map(feature => feature.attributes);
-                        const updates: any = {};
-                        for (const update of updatesList) {
-                            switch (update.TABLE_NAME) {
-                                case "TREATMENT":
-                                    updates["treatment"] = new Date(update.DATE);
-                                    break;
-                                case "HRP":
-                                    updates["diagnosis"] = new Date(update.DATE);
-                                    break;
-                                case "PREVENTION":
-                                    updates["prevention"] = new Date(update.DATE);
-                                    break;
-                                case "INVASIVE":
-                                    updates["invasive"] = new Date(update.DATE);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        return of(getLastUpdatedSuccessAction(updates));
-                    }
+            return fromFuture(compositionRoot.lastUpdatedDates.get()).pipe(
+                mergeMap((updates: LastUpdatedDates) => {
+                    return of(getLastUpdatedSuccessAction(updates));
                 }),
-                catchError((error: AjaxError) =>
+                catchError((error: Error) =>
                     of(addNotificationAction(error.message), getLastUpdatedFailureAction(error))
                 )
             );
@@ -333,7 +291,7 @@ export const setSelectionEpic = (
                         state.prevention.studies
                     );
 
-                    return of(setSelectionData(selectionData));
+                    return of(setSelectionData(null), setSelectionData(selectionData));
                 }
                 case "diagnosis": {
                     const selectionData = createDiagnosisSelectionData(
@@ -343,7 +301,7 @@ export const setSelectionEpic = (
                         state.diagnosis.filteredStudies
                     );
 
-                    return of(setSelectionData(selectionData));
+                    return of(setSelectionData(null), setSelectionData(selectionData));
                 }
                 case "treatment": {
                     const selectionData = createTreatmentSelectionData(
@@ -354,7 +312,7 @@ export const setSelectionEpic = (
                         state.treatment.filteredStudies
                     );
 
-                    return of(setSelectionData(selectionData));
+                    return of(setSelectionData(null), setSelectionData(selectionData));
                 }
                 case "invasive": {
                     const selectionData = createInvasiveSelectionData(
@@ -363,7 +321,7 @@ export const setSelectionEpic = (
                         state.invasive.filteredStudies
                     );
 
-                    return of(setSelectionData(selectionData));
+                    return of(setSelectionData(null), setSelectionData(selectionData));
                 }
                 default:
                     return of();
@@ -390,7 +348,7 @@ export const setSelectionDataFilterSelectionEpic = (
                         action.payload
                     );
 
-                    return of(setSelectionData(selectionData));
+                    return of(setSelectionData(null), setSelectionData(selectionData));
                 }
                 default:
                     return of();

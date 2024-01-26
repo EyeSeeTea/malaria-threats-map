@@ -18,6 +18,7 @@ import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
 import { BIOCHEMICAL_MECHANISM_TYPES, MOLECULAR_MECHANISM_TYPES } from "../DataDownload/mappers/cvsMapper";
 import { Source } from "../../store/actions/base-actions";
 import { MOLECULAR_MARKERS_MAP } from "./treatment/MolecularMarkersOngoingStudies/utils";
+import { Study } from "../../../domain/entities/Study";
 
 export const DELETION_TYPES = {
     HRP2_PROPORTION_DELETION: {
@@ -88,8 +89,8 @@ export const filterByYears = (years: number[]) => (study: any) => {
     return !years.length || years.includes(study.YEAR_START);
 };
 
-export const filterByDownload = () => (study: any) => {
-    return study.DOWNLOAD === "1";
+export const filterByDownload = () => (study: Study) => {
+    return study.DOWNLOAD === 1;
 };
 
 export const filterByIntensityStatus = (study: any) => {
@@ -337,12 +338,15 @@ function buildDiagnosisFiltersByDownload(diagnosisFilters: DiagnosisFilters, fil
     switch (diagnosisFilters.dataset) {
         case "PFHRP23_GENE_DELETIONS":
             return [
+                filterByDiagnosisGeneDeletions(),
                 filterByDeletionType(diagnosisFilters.deletionType),
                 filterBySurveyTypes(diagnosisFilters.surveyTypes),
                 filterByPatientType(diagnosisFilters.patientType),
                 filterByYearRange(filters),
                 filterByRegion(region),
             ];
+        case "HRPO":
+            return [filterByDimensionId(302), filterByYearRange(filters), filterByRegion(region)];
         default:
             return [];
     }
@@ -410,6 +414,21 @@ function buildTreatmentFiltersByDownload(treatmentFilters: TreatmentFilters, fil
             return [
                 filterByMolecularMarkerStudyDimension255(),
                 filterByTheMolecularMarkerInStudy(treatmentFilters.molecularMarkers),
+                filterByYearRange(filters),
+                filterByRegion(region),
+            ];
+        case "AMDERO_TES":
+            return [
+                filterByDimensionId(300),
+                filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
+                filterByDrugs(treatmentFilters.drugs),
+                filterByYearRange(filters),
+                filterByRegion(region),
+            ];
+        case "AMDERO_MM":
+            return [
+                filterByDimensionId(301),
+                filterByManyMolecularMarkersInStudies(treatmentFilters.molecularMarkers),
                 filterByYearRange(filters),
                 filterByRegion(region),
             ];

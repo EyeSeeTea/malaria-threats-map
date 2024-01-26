@@ -2,6 +2,7 @@ import i18next from "i18next";
 import _ from "lodash";
 import React from "react";
 import { PreventionStudy } from "../../../../../../domain/entities/PreventionStudy";
+import { filterByResistanceStatus } from "../../../../../components/layers/studies-filters";
 import { Option } from "../../../common/types";
 import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
 import { ResistanceToInsecticideChartType } from "../../types";
@@ -21,6 +22,8 @@ const chartTypes: Option<ResistanceToInsecticideChartType>[] = [
     },
 ];
 
+const baseFilters = [filterByResistanceStatus];
+
 export function useResistanceToInsecticide() {
     const {
         preventionStudies,
@@ -29,28 +32,35 @@ export function useResistanceToInsecticide() {
         insecticideTypeOptions,
         selectedCountries,
         filters,
-        onInsecticideClassChange,
-        onSpeciesChange,
-        onInsecticideTypesChange,
-        onYearsChange,
-        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-        onOnlyIncludeDataByHealthChange,
-    } = usePrevention();
+    } = usePrevention(baseFilters);
+
+    const { onInsecticideClassChange, onInsecticideTypesChange, insecticideClasses, insecticideTypes } = filters;
 
     const [data, setData] = React.useState<ResistanceToInsecticideChartData>({ kind: "InsecticideByClass", data: {} });
     const [categoriesCount, setCategoriesCount] = React.useState<Record<string, number>>({});
     const [chartType, setChartType] = React.useState<ResistanceToInsecticideChartType>("by-insecticide-class");
 
     React.useEffect(() => {
-        setData(createChartData(preventionStudies, filteredStudies, selectedCountries, filters, chartType));
-    }, [preventionStudies, filteredStudies, selectedCountries, filters, chartType]);
+        setData(
+            createChartData(
+                preventionStudies,
+                filteredStudies,
+                selectedCountries,
+                insecticideTypes,
+                insecticideClasses,
+                chartType
+            )
+        );
+    }, [preventionStudies, filteredStudies, selectedCountries, chartType, insecticideTypes, insecticideClasses]);
 
     React.useEffect(() => {
         if (chartType === "by-insecticide-class") {
-            onInsecticideClassChange(insecticideClassOptions.map(op => op.value));
-            onInsecticideTypesChange([]);
+            if (insecticideClasses.length === 0) {
+                onInsecticideClassChange(insecticideClassOptions.map(op => op.value));
+                onInsecticideTypesChange([]);
+            }
         } else {
-            onInsecticideClassChange([]);
+            //onInsecticideClassChange([]);
             onInsecticideTypesChange(insecticideTypeOptions.map(op => op.value));
         }
     }, [
@@ -59,6 +69,7 @@ export function useResistanceToInsecticide() {
         onInsecticideTypesChange,
         insecticideClassOptions,
         insecticideTypeOptions,
+        insecticideClasses.length,
     ]);
 
     React.useEffect(() => {
@@ -80,14 +91,16 @@ export function useResistanceToInsecticide() {
         chartTypes,
         chartType,
         data,
-        filters,
+        filters: {
+            ...filters,
+            insecticideClasses,
+            insecticideTypes,
+            onInsecticideClassesChange: chartType === "by-insecticide-class" ? onInsecticideClassChange : undefined,
+            onInsecticideTypesChange: chartType === "by-insecticide" ? onInsecticideTypesChange : undefined,
+            onTypeChange: undefined,
+            onDisaggregateBySpeciesChange: undefined,
+        } as PreventionFiltersState,
         onChartTypeChange,
-        onInsecticideClassChange,
-        onSpeciesChange,
-        onInsecticideTypesChange,
-        onYearsChange,
-        onOnlyIncludeBioassaysWithMoreMosquitoesChange,
-        onOnlyIncludeDataByHealthChange,
     };
 }
 
@@ -95,12 +108,13 @@ export function createChartData(
     allStudies: PreventionStudy[],
     filteredsStudies: PreventionStudy[],
     selectedCountries: string[],
-    filters: PreventionFiltersState,
+    insecticideTypes: string[],
+    insecticideClasses: string[],
     type: ResistanceToInsecticideChartType
 ): ResistanceToInsecticideChartData {
     if (type === "by-insecticide") {
-        return createChartDataByInsecticideType(allStudies, filteredsStudies, selectedCountries, filters);
+        return createChartDataByInsecticideType(allStudies, filteredsStudies, selectedCountries, insecticideTypes);
     } else {
-        return createChartDataByInsecticideClass(allStudies, filteredsStudies, selectedCountries, filters);
+        return createChartDataByInsecticideClass(allStudies, filteredsStudies, selectedCountries, insecticideClasses);
     }
 }

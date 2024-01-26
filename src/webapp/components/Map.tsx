@@ -38,16 +38,10 @@ import {
 import { Fade, Box, Fab, Drawer, Tooltip, Stack } from "@mui/material";
 import { Add as ZoomInIcon, Remove as ZoomOutIcon, OpenInFull as MapOnlyIcon } from "@mui/icons-material";
 import LeyendPopover from "./legend/LegendPopover";
-import StoryModeSelector from "./StoryModeSelector";
 import MalariaTour from "./tour/MalariaTour";
 import MekongLayer from "./layers/MekongLayer";
 import Report from "./Report";
-import Feedback from "./Feedback";
 import TheaterMode from "./TheaterMode";
-import TourIcon from "./TourIcon";
-import ShareIcon from "./ShareIcon";
-import { getAnalyticsPageViewFromString } from "../store/analytics";
-import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
 import Hidden from "./hidden/Hidden";
 import MapActions from "./map-actions/MapActions";
@@ -72,10 +66,6 @@ mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worke
 const drawerWidth = 100;
 const rightSideBarWidth = 500;
 
-const Separator = styled.div`
-    width: 20px;
-`;
-
 const BaseContainer = styled.div`
     max-width: 600px;
     margin: 30px;
@@ -87,18 +77,6 @@ const BaseFlexAlignStartContainer = styled(BaseContainer)`
     display: flex;
     align-items: start;
     flex-direction: column;
-`;
-
-const TopRightContainer = styled(BaseContainer)`
-    top: 10%;
-    right: 0;
-    display: flex;
-    align-items: center;
-`;
-
-const TopRightVerticalContainer = styled(BaseFlexAlignStartContainer)`
-    top: 0;
-    right: 0;
 `;
 
 const SearchContainer = styled(BaseFlexAlignStartContainer)`
@@ -233,7 +211,7 @@ class Map extends React.Component<Props, StateTypes> {
             container: this.mapContainer,
             style: style,
             center: [0.0, 28.291565],
-            maxZoom: 6.4,
+            maxZoom: 10,
             minZoom: 1.2,
             zoom: 1.5,
             maxBounds: undefined,
@@ -261,11 +239,6 @@ class Map extends React.Component<Props, StateTypes> {
             const cc = this.map.getBounds().toArray();
             this.props.updateBounds(cc);
         });
-
-        const pageView = getAnalyticsPageViewFromString({ page: this.props.theme });
-        if (pageView) {
-            sendAnalytics({ type: "pageView", ...pageView });
-        }
 
         setTimeout(() => dispatchCustomEvent("resize"), 100);
 
@@ -356,14 +329,9 @@ class Map extends React.Component<Props, StateTypes> {
                 {ready && (
                     <TopMiddleContainer rightOpen={this.state.sidebarOpen}>
                         <Stack spacing={1}>
-                            <InfoToastLink
-                                text={
-                                    this.state.viewMapOnly
-                                        ? this.props.t("common.minimizedTakeATour")
-                                        : this.props.t("common.takeATour")
-                                }
-                                type="tour"
-                            />
+                            {!this.state.viewMapOnly && (
+                                <InfoToastLink text={this.props.t("common.takeATour")} type="tour" />
+                            )}
                             {/* {theme === "treatment" && (
                                 <InfoToastLink text={this.props.t("common.mekong_link")} type="greaterMekong" />
                             )} */}
@@ -376,7 +344,7 @@ class Map extends React.Component<Props, StateTypes> {
                         <SecondaryHeader
                             action={
                                 <Box sx={classes.screenshotBox}>
-                                    <MapScreenshot map={this.map} />
+                                    <MapScreenshot map={this.map} showMapSidebar={this.state.sidebarOpen} />
                                 </Box>
                             }
                             onDrawerOpenChange={open => this.setState({ menuOpen: open })}
@@ -390,9 +358,6 @@ class Map extends React.Component<Props, StateTypes> {
                                 <Hidden smDown>
                                     <MalariaTour />
                                 </Hidden>
-                                <Hidden smUp>
-                                    <ShareIcon />
-                                </Hidden>
                                 <Hidden smDown>{["prevention", "treatment"].includes(theme) && <Report />}</Hidden>
                             </SearchContainer>
                         </PushoverContainer>
@@ -405,27 +370,6 @@ class Map extends React.Component<Props, StateTypes> {
                         </FloatingActionContainer>
                     </PushoverContainer>
                 </Fade>
-                <Hidden smDown>
-                    <Fade in={false}>
-                        <TopRightContainer>
-                            <StoryModeSelector />
-
-                            <Feedback />
-                            <TourIcon />
-                            {/* {["prevention", "diagnosis"].includes(theme) && <UploadFile />} */}
-                            <Separator />
-                        </TopRightContainer>
-                    </Fade>
-                </Hidden>
-                <Hidden smUp>
-                    <Fade in={showOptions}>
-                        <TopRightVerticalContainer>
-                            <StoryModeSelector />
-
-                            <Feedback />
-                        </TopRightVerticalContainer>
-                    </Fade>
-                </Hidden>
                 <Fade in={showOptions}>
                     <LegendContainer id={"legend"} rightOpen={this.state.sidebarOpen}>
                         <Hidden smUp>

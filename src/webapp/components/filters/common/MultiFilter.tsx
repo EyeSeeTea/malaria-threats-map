@@ -4,6 +4,7 @@ import IntegrationReactSelect, { Option } from "../../BasicSelect";
 import { FilterRowContainer } from "../Filters";
 import { sendMultiFilterAnalytics } from "../../../utils/analytics";
 import { Typography } from "@mui/material";
+import styled from "styled-components";
 
 type Props = {
     labelPosition?: "top" | "middle";
@@ -15,7 +16,9 @@ type Props = {
     value: string[];
     analyticsMultiFilterAction?: string;
     isClearable?: boolean;
+    disabled?: boolean;
     optionsStyle?: React.CSSProperties;
+    className?: string;
 };
 
 function MultiFilter({
@@ -29,6 +32,8 @@ function MultiFilter({
     isClearable = false,
     margin,
     optionsStyle,
+    disabled = false,
+    className = "",
 }: Props) {
     const onSelectionChange = (options: Option[] = []) => {
         onChange((options || []).map(o => o.value));
@@ -43,11 +48,11 @@ function MultiFilter({
     return (
         <React.Fragment>
             {label && labelPosition === "top" && (
-                <Typography variant="body2" fontWeight={"bold"}>
+                <StyledTypography variant="body2" $disabled={disabled}>
                     {label}
-                </Typography>
+                </StyledTypography>
             )}
-            <FilterRowContainer margin={margin} className="MultiFilter-container">
+            <StyledFilterRowContainer margin={margin} className="MultiFilter-container" $disabled={disabled}>
                 {label && labelPosition === "middle" && selections && selections.length > 0 && (
                     <Typography component="legend" variant="body2">
                         {`${label}:`}&nbsp;
@@ -61,10 +66,24 @@ function MultiFilter({
                     onChange={onSelectionChange}
                     value={selections}
                     optionsStyle={optionsStyle}
+                    className={className}
+                    isDisabled={disabled}
                 />
-            </FilterRowContainer>
+            </StyledFilterRowContainer>
         </React.Fragment>
     );
 }
 
 export default connect()(MultiFilter);
+
+const StyledTypography = styled(Typography)<{ $disabled?: boolean }>`
+    font-weight: bold;
+    color: ${props => props.$disabled && "#999999"};
+`;
+
+const StyledFilterRowContainer = styled(FilterRowContainer)<{ $disabled?: boolean }>`
+    color: ${props => props.$disabled && "#999999"};
+    span {
+        color: ${props => props.$disabled && "#999999"};
+    }
+`;
