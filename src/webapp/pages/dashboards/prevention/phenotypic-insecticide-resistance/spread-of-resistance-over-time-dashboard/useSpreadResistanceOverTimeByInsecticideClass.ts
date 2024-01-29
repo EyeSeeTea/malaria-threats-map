@@ -124,6 +124,8 @@ export function useSpreadResistanceOverTimeByInsecticideClass() {
             onInsecticideClassesChange: undefined,
             onTypeChange: undefined,
             onInsecticideTypesChange: undefined,
+            onSpeciesChange:
+                filters.disaggregateBySpeciesSelection === "aggregate_species" ? undefined : filters.onSpeciesChange,
         } as PreventionFiltersState,
     };
 }

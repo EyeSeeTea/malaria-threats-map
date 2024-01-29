@@ -10,7 +10,6 @@ export interface PreventionFiltersState {
     onlyIncludeDataByHealth: boolean;
     maxMinYears: [number, number];
     disaggregateBySpeciesSelection: DisaggregateBySpeciesOptions;
-    disableSpeciesFilter: boolean;
     onYearsChange: (years: [number, number]) => void;
     onInsecticideClassesChange?: (value: string[]) => void;
     onSpeciesChange?: (value: string[]) => void;
@@ -20,5 +19,4 @@ export interface PreventionFiltersState {
     onOnlyIncludeBioassaysWithMoreMosquitoesChange: (value: number) => void;
     onOnlyIncludeDataByHealthChange: (value: boolean) => void;
     onDisaggregateBySpeciesChange: (value: DisaggregateBySpeciesOptions) => void;
-    onDisableSpeciesFilter: (value: boolean) => void;
 }

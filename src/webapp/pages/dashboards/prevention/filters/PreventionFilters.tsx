@@ -65,7 +65,7 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
 
             {chart === "spread-of-resistance-over-time" && filters.onInsecticideClassesChange && <StyledHr />}
 
-            {speciesOptions && filters.onSpeciesChange && filters.onDisaggregateBySpeciesChange && (
+            {speciesOptions && filters.onDisaggregateBySpeciesChange && (
                 <DisaggregateBySpeciesSelector
                     onChange={filters.onDisaggregateBySpeciesChange}
                     value={filters.disaggregateBySpeciesSelection}
@@ -80,7 +80,6 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                     onChange={filters.onSpeciesChange}
                     value={filters.species}
                     isClearable={true}
-                    disabled={filters.disableSpeciesFilter}
                 />
             )}
 
