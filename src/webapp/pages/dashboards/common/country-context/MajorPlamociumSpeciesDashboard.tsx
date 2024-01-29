@@ -30,11 +30,19 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
                         </thead>
                         <tbody>
                             {data.map(item => {
+                                const isPercentageNotAvailable =
+                                    !item.MAL_CALC_PERPF && !item.MAL_CALC_PERPV && item.MAL_EST_MALARIA_CASES > 0;
                                 return (
                                     <React.Fragment key={item.ORGANISATIONUNITNAME}>
                                         <tr>
                                             <td rowSpan={2}>{item.ORGANISATIONUNITNAME}</td>
-                                            <td>{`P. falciparum (${(item.MAL_CALC_PERPF * 100).toFixed()}%)`}</td>
+                                            <td>{`P. falciparum (${
+                                                isPercentageNotAvailable
+                                                    ? t(
+                                                          "common.dashboard.countryContextDashboards.percentageNotAvailable"
+                                                      )
+                                                    : (item.MAL_CALC_PERPF * 100).toFixed() + "%"
+                                            })`}</td>
                                             <td>
                                                 {item.MAL_PROFILE_MEDICINE_FOR_1ST_LINE_TRT_OF_PF &&
                                                     item.MAL_PROFILE_MEDICINE_FOR_1ST_LINE_TRT_OF_PF.split("; ").map(
@@ -49,7 +57,13 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>{`P. vivax (${(item.MAL_CALC_PERPV * 100).toFixed()}%)`}</td>
+                                            <td>{`P. vivax (${
+                                                isPercentageNotAvailable
+                                                    ? t(
+                                                          "common.dashboard.countryContextDashboards.percentageNotAvailable"
+                                                      )
+                                                    : (item.MAL_CALC_PERPV * 100).toFixed() + "%"
+                                            })`}</td>
                                             <td>
                                                 {item.MAL_PROFILE_MEDICINE_FOR_TRT_OF_PVIVAX &&
                                                     item.MAL_PROFILE_MEDICINE_FOR_TRT_OF_PVIVAX.split(";").map(drug => {

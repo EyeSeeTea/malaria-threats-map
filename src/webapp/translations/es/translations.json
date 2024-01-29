@@ -125,7 +125,8 @@
             "countryContextDashboards": {
                 "title": "Contexto del País / Zona",
                 "source": "Fuente:",
-                "whoWorldMalariaReport": "Informe mundial sobre el paludismo de la OMS 2021",
+                "whoWorldMalariaReport": "Informe mundial sobre el paludismo de la OMS 2023",
+                "percentageNotAvailable": "% no disponible",
                 "epidemiologicalProfile": {
                     "title": "PERFIL EPIDEMIOLÓGICO",
                     "country": "País / Zona",

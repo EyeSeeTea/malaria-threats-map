@@ -124,7 +124,8 @@
             "countryContextDashboards": {
                 "title": "Country / Area context",
                 "source": "Source:",
-                "whoWorldMalariaReport": "WHO. World malaria report 2021",
+                "whoWorldMalariaReport": "WHO. World malaria report 2023",
+                "percentageNotAvailable": "% not available",
                 "epidemiologicalProfile": {
                     "title": "EPIDEMIOLOGICAL PROFILE",
                     "country": "Country / Area",
