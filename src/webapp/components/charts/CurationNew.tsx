@@ -28,7 +28,9 @@ const CurationNew = ({ curations }: Props) => {
                 curations.map(curation => {
                     return (
                         <Typography key={curation.text} variant="caption" display="block">
-                            {`(${curation.dataSources.join(", ")}) ${curation.text}`}
+                            {curation.dataSources.length > 0
+                                ? `(${curation.dataSources.join(", ")}) ${curation.text}`
+                                : curation.text}
                         </Typography>
                     );
                 })}

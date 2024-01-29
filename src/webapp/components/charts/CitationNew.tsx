@@ -51,8 +51,10 @@ const CitationNew = ({ dataSources, logOutboundLinkAction, showKey = true }: Pro
                                                 {dataSource.text}
                                             </Link>
                                         </span>
+                                    ) : showKey ? (
+                                        `(${dataSource.key}) ${dataSource.text}`
                                     ) : (
-                                        `(${showKey ? dataSource.key : ""}) ${dataSource.text}`
+                                        dataSource.text
                                     )}
                                 </Typography>
                             </StyledListItem>
