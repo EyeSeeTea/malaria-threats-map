@@ -18,6 +18,7 @@ export type CellProps = {
     height?: number;
     nowrap?: boolean;
     removeBottomDivider?: boolean;
+    isLast?: boolean;
 };
 
 export const StyledCell = styled(TableCell)<CellProps>`
@@ -35,6 +36,7 @@ export const StyledCell = styled(TableCell)<CellProps>`
     ${props => props.height && `height: ${props.height}px !important`};
     ${props => props.nowrap && `white-space: nowrap`};
     ${props => props.removeBottomDivider && `border-bottom: none`};
+    ${props => props.isLast && "border-bottom: 2px solid rgba(224, 224, 224, 1)"};
 `;
 
 export const useStyles = makeStyles((theme: Theme) =>
