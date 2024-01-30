@@ -152,12 +152,6 @@ const LineChart: React.FC<{
     );
 };
 
-const Title = styled.span`
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 44px;
-`;
-
 const Table = styled.table`
     table-layout: fixed;
     width: 100%;
