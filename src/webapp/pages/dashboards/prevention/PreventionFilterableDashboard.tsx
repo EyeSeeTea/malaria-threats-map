@@ -123,6 +123,7 @@ const PreventionFilterableDashboardComponent: React.FC<PreventionFilterableDashb
                                     speciesOptions={speciesOptions}
                                     typeOptions={typeOptions}
                                     onCollapse={onChangeFiltersVisible}
+                                    isScreenshot={isScreenshot}
                                 />
                             </FiltersCard>
                             <StudiesCountCard elevation={0}>

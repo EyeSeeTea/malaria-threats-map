@@ -27,6 +27,7 @@ interface PreventionFiltersProps {
     speciesOptions?: Option[];
     typeOptions?: Option[];
     onCollapse: () => void;
+    isScreenshot?: boolean;
 }
 
 const PreventionFilters: React.FC<PreventionFiltersProps> = ({
@@ -36,6 +37,7 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
     speciesOptions,
     typeOptions,
     onCollapse,
+    isScreenshot = false,
 }) => {
     const { t } = useTranslation();
 
@@ -65,7 +67,7 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
 
             {chart === "spread-of-resistance-over-time" && filters.onInsecticideClassesChange && <StyledHr />}
 
-            {speciesOptions && filters.onDisaggregateBySpeciesChange && (
+            {filters.onDisaggregateBySpeciesChange && (
                 <DisaggregateBySpeciesSelector
                     onChange={filters.onDisaggregateBySpeciesChange}
                     value={filters.disaggregateBySpeciesSelection}
@@ -80,6 +82,7 @@ const PreventionFilters: React.FC<PreventionFiltersProps> = ({
                     onChange={filters.onSpeciesChange}
                     value={filters.species}
                     isClearable={true}
+                    hasScroll={chart === "spread-of-resistance-over-time" && !isScreenshot}
                 />
             )}
 
