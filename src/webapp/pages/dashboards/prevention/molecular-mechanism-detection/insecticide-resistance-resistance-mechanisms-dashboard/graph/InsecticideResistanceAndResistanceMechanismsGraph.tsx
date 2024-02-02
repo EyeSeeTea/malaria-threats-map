@@ -32,6 +32,7 @@ const InsecticideResistanceAndResistanceMechanismsGraph: React.FC<
                         aria-labelledby="tableTitle"
                         size={"small"}
                         aria-label="enhanced table"
+                        style={{ width: "fit-content" }}
                     >
                         <EnhancedTableHead />
                         <TableBody>
@@ -48,8 +49,9 @@ const InsecticideResistanceAndResistanceMechanismsGraph: React.FC<
                                                     padding="none"
                                                     rowSpan={row.COUNTRY_NUMBER}
                                                     align={"left"}
-                                                    isBold
-                                                    isRotated
+                                                    $isBold
+                                                    $isRotated
+                                                    $isCenter
                                                 >
                                                     {row.COUNTRY}
                                                 </StyledCell>
@@ -90,14 +92,17 @@ const InsecticideResistanceAndResistanceMechanismsGraph: React.FC<
                                                         scope="row"
                                                         padding="none"
                                                         color={isNumber ? "white" : "black"}
-                                                        isCenter
-                                                        nowrap
-                                                        removeBottomDivider={!isLastRowInCountry}
+                                                        $isCenter
+                                                        $removeBottomDivider={!isLastRowInCountry}
+                                                        $paddingBottom="2px"
+                                                        $paddingTop="2px"
+                                                        $paddingLeft="4px"
+                                                        $paddingRight="4px"
                                                     >
                                                         {header && header.numeric && isNumber && (
                                                             <div
                                                                 style={{
-                                                                    width: 80,
+                                                                    width: 60,
                                                                     height: 60,
                                                                     background: insecticideClassBackground,
                                                                     display: "flex",
@@ -134,27 +139,49 @@ function EnhancedTableHead() {
     return (
         <TableHead>
             <TableRow>
-                <StyledCell isBold colSpan={2} removeBottomDivider />
-                <StyledCell isBold colSpan={4} isCenter removeBottomDivider>
+                <StyledCell $isBold colSpan={2} $removeBottomDivider />
+                <StyledCell $isBold colSpan={4} $isCenter $removeBottomDivider>
                     {t("common.report.prevention.insecticideClass")}
                 </StyledCell>
-                <StyledCell isBold colSpan={7} isCenter removeBottomDivider>
+                <StyledCell $isBold colSpan={7} $isCenter $removeBottomDivider>
                     {t("common.report.prevention.mechanism")}
                 </StyledCell>
             </TableRow>
             <TableRow style={{ height: 120 }}>
                 <StyledCell colSpan={2} />
-                <StyledCell isRotated>Pyrethroids</StyledCell>
-                <StyledCell isRotated>Organochlorines</StyledCell>
-                <StyledCell isRotated>Carbamates</StyledCell>
-                <StyledCell isRotated>Organophosphates</StyledCell>
-                <StyledCell isRotated>Monooxygenases</StyledCell>
-                <StyledCell isRotated>Esterases</StyledCell>
-                <StyledCell isRotated>GSTs</StyledCell>
-                <StyledCell isRotated>kdr (K1014S)</StyledCell>
-                <StyledCell isRotated>kdr (K1014F)</StyledCell>
-                <StyledCell isRotated>kdr (unspecified mutation)</StyledCell>
-                <StyledCell isRotated>Ace-1R</StyledCell>
+                <StyledCell $isRotated $paddingTop="8px" width={60}>
+                    Pyrethroids
+                </StyledCell>
+                <StyledCell $isRotated $paddingTop="8px" width={60}>
+                    Organochlorines
+                </StyledCell>
+                <StyledCell $isRotated $paddingTop="8px" width={60}>
+                    Carbamates
+                </StyledCell>
+                <StyledCell $isRotated $paddingTop="8px" width={60}>
+                    Organophosphates
+                </StyledCell>
+                <StyledCell $isRotated $paddingTop="8px" width={60}>
+                    Monooxygenases
+                </StyledCell>
+                <StyledCell $isRotated $paddingTop="8px" width={60}>
+                    Esterases
+                </StyledCell>
+                <StyledCell $isRotated $paddingTop="8px" width={60}>
+                    GSTs
+                </StyledCell>
+                <StyledCell $isRotated $paddingTop="8px" width={60}>
+                    kdr (K1014S)
+                </StyledCell>
+                <StyledCell $isRotated $paddingTop="8px" width={60}>
+                    kdr (K1014F)
+                </StyledCell>
+                <StyledCell $isRotated $paddingTop="8px" width={60}>
+                    kdr (unspecified mutation)
+                </StyledCell>
+                <StyledCell $isRotated $paddingTop="8px" width={60}>
+                    Ace-1R
+                </StyledCell>
             </TableRow>
         </TableHead>
     );
