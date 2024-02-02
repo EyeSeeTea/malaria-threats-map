@@ -113,6 +113,18 @@ export const filterByLevelOfInvolvement = (study: any) => {
     return study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY";
 };
 
+export const filterByStudiesWithInsecticideClass = (study: any) => {
+    return study.INSECTICIDE_CLASS !== "NA";
+};
+
+export const filterByInsecticideResistanceStatusOptions = (study: any) => {
+    return (
+        study.RESISTANCE_STATUS === "CONFIRMED_RESISTANCE" ||
+        study.RESISTANCE_STATUS === "POSSIBLE_RESISTANCE" ||
+        study.RESISTANCE_STATUS === "SUSCEPTIBLE"
+    );
+};
+
 export const filterByRegion = (region: RegionState) => (study: any) => {
     if (region.country) {
         return study.COUNTRY_NAME === region.country || study.ISO2 === region.country;

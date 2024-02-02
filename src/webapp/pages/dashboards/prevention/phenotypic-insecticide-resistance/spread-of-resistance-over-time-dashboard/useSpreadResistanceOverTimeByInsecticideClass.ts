@@ -7,8 +7,17 @@ import { createBarChartData } from "./bar-chart/createBarChartData";
 import { createLineChartData } from "./line-chart/createLineChartData";
 import { sortInsecticideClasses } from "../../../../../components/filters/InsecticideClassFilter";
 import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
+import {
+    filterByInsecticideResistanceStatusOptions,
+    filterByResistanceStatus,
+    filterByStudiesWithInsecticideClass,
+} from "../../../../../components/layers/studies-filters";
 
-const baseFilters: ((study: any) => boolean)[] = [];
+const baseFilters = [
+    filterByResistanceStatus,
+    filterByStudiesWithInsecticideClass,
+    filterByInsecticideResistanceStatusOptions,
+];
 
 export function useSpreadResistanceOverTimeByInsecticideClass() {
     const { preventionStudies, filteredStudies, selectedCountries, filters } = usePrevention(baseFilters);
