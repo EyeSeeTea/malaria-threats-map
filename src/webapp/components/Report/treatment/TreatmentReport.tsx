@@ -284,7 +284,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                                                             id={labelId}
                                                             scope="row"
                                                             padding="none"
-                                                            isRight={header.align === "right"}
+                                                            $isRight={header.align === "right"}
                                                             divider={header.divider}
                                                         >
                                                             {header && header.numeric && isNumber
