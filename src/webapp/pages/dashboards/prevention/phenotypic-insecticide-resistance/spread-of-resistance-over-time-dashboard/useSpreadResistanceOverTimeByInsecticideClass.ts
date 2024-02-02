@@ -13,7 +13,7 @@ const baseFilters: ((study: any) => boolean)[] = [];
 export function useSpreadResistanceOverTimeByInsecticideClass() {
     const { preventionStudies, filteredStudies, selectedCountries, filters } = usePrevention(baseFilters);
 
-    const { disaggregateBySpeciesSelection, years, onInsecticideClassChange } = filters;
+    const { disaggregateBySpeciesSelection, years, onInsecticideClassChange, insecticideClasses } = filters;
 
     const [lineChartDataByClass, setLineChartDataByClass] = React.useState<SpreadOfResistanceOverTimeChartDataByClass>({
         kind: "InsecticideByClass",
@@ -47,17 +47,28 @@ export function useSpreadResistanceOverTimeByInsecticideClass() {
     }, [chartByClass, onInsecticideClassChange]);
 
     React.useEffect(() => {
-        const insecticideClasses = sortInsecticideClasses(
-            uniq(
+        if (chartByClass) {
+            const allInsecticideClasses = sortInsecticideClasses(
+                uniq(
+                    preventionStudies
+                        .filter(study => study.INSECTICIDE_CLASS !== "NA")
+                        .map(study => study.INSECTICIDE_CLASS)
+                )
+            );
+            setAllInsecticideClasses(allInsecticideClasses);
+            const insecticideClassesInSelectedClass = uniq(
                 preventionStudies
-                    .filter(study => study.INSECTICIDE_CLASS !== "NA")
+                    .filter(
+                        study => !insecticideClasses?.length || insecticideClasses.includes(study.INSECTICIDE_CLASS)
+                    )
                     .map(study => study.INSECTICIDE_CLASS)
-            )
-        );
-        setAllInsecticideClasses(insecticideClasses);
-        setMultipleSelectedInsecticideClasses(insecticideClasses);
-        setSingleSelectedInsecticideClass(insecticideClasses[0]);
-    }, [preventionStudies]);
+            ).sort();
+            setMultipleSelectedInsecticideClasses(insecticideClassesInSelectedClass);
+            setSingleSelectedInsecticideClass(
+                insecticideClassesInSelectedClass.length ? insecticideClassesInSelectedClass[0] : undefined
+            );
+        }
+    }, [chartByClass, insecticideClasses, preventionStudies]);
 
     React.useEffect(() => {
         if (chartByClass) {

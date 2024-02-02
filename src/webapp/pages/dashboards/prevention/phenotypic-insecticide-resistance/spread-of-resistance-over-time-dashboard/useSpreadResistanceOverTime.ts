@@ -47,7 +47,7 @@ export function useSpreadResistanceOverTime() {
         barChartDataByType,
         onChartByInsecticideChange,
         filtersByInsecticide,
-    } = useSpreadResistanceOverTimeByInsecticide();
+    } = useSpreadResistanceOverTimeByInsecticide(singleSelectedInsecticideClass);
 
     const { speciesOptions } = usePrevention(baseFilters);
 
