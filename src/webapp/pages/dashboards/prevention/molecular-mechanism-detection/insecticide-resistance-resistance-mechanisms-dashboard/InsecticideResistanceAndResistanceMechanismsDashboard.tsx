@@ -61,8 +61,6 @@ const InsecticideResistanceAndResistanceMechanismsDashboard: React.FC = () => {
                 }, {});
             });
 
-            console.log(studies);
-
             const tabs = [
                 {
                     name: "Data",
