@@ -92,7 +92,7 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows, p
                                                     scope="row"
                                                     padding="none"
                                                     rowSpan={row.COUNTRY_NUMBER}
-                                                    isLast
+                                                    $isLast
                                                 >
                                                     {row.COUNTRY}
                                                 </StyledCell>
@@ -113,9 +113,9 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows, p
                                                         id={labelId}
                                                         scope="row"
                                                         padding="none"
-                                                        isRight={header.dataAlign === "right"}
+                                                        $isRight={header.dataAlign === "right"}
                                                         divider={header.divider}
-                                                        isLast={tablePage[index].ISO2 !== tablePage[index + 1]?.ISO2}
+                                                        $isLast={tablePage[index].ISO2 !== tablePage[index + 1]?.ISO2}
                                                     >
                                                         {header && header.numeric && isNumber
                                                             ? `${number.toFixed(header.decimalPositions | 0)}`
@@ -164,7 +164,7 @@ function EnhancedTableHead(props: EnhancedTableProps<TableData>) {
                         isBold
                     />
                 ))}
-                <StyledCell colSpan={subheadCells.length} align="center" isBold divider>
+                <StyledCell colSpan={subheadCells.length} align="center" $isBold divider>
                     {t("common.report.treatment.percentage_patients_treatment_failure")}
                 </StyledCell>
             </TableRow>

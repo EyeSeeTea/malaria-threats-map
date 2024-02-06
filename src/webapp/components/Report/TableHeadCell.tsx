@@ -37,7 +37,7 @@ export function TableHeadCell<T>({
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
             divider={headCell.divider}
-            isBold={isBold}
+            $isBold={isBold}
             rowSpan={rowSpan}
         >
             {headCell.sortable ? (
