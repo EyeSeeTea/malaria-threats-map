@@ -45,7 +45,7 @@ const SummaryInsecticideResistanceDashboard: React.FC = () => {
                             {data.map(item => {
                                 return (
                                     <tr key={item.country}>
-                                        <td>{t(item.country)}</td>
+                                        <td>{t(`countries.${item.country}`, { defaultValue: t(item.country) })}</td>
                                         <td>{item.vectorSpecies}</td>
                                         <td>{item.insectidiceClasses}</td>
                                         <td>{item.resistanceMechanisms}</td>

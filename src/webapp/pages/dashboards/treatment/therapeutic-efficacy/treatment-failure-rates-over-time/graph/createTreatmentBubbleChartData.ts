@@ -37,7 +37,7 @@ export function createTreatmentBubbleChartData(
 
         return {
             type: "bubble" as const,
-            name: i18next.t(iso2),
+            name: i18next.t(`countries.${iso2}`, { defaultValue: i18next.t(iso2) }),
             color: index <= treatmentdashboardColors.length - 1 ? treatmentdashboardColors[index] : "#000000",
             data: finalStudies.map(study => {
                 const rawValue =
@@ -67,6 +67,6 @@ export function createTreatmentBubbleChartData(
 
     return {
         kind: "GraphData",
-        series,
+        series: _.orderBy(series, ["name"]),
     };
 }

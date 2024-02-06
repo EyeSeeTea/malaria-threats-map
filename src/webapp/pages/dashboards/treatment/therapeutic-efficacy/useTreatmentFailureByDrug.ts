@@ -10,13 +10,17 @@ export function useTreatmentFailureByDrug() {
 
     const [data, setData] = React.useState<TreatmentFailureSeries>({ maxYAxis: 0, itemsByDrug: {} });
 
+    const sortedSelectedCountries = React.useMemo(() => {
+        return selectedCountries.sort();
+    }, [selectedCountries]);
+
     React.useEffect(() => {
-        setData(createChartData(filteredStudies, filters.drugs || [], selectedCountries));
-    }, [filteredStudies, filters.drugs, selectedCountries]);
+        setData(createChartData(filteredStudies, filters.drugs || [], sortedSelectedCountries));
+    }, [filteredStudies, filters.drugs, sortedSelectedCountries]);
 
     return {
         filteredStudiesForDrugs,
-        selectedCountries,
+        selectedCountries: sortedSelectedCountries,
         studiesCount,
         data,
         filters: {
