@@ -6,6 +6,11 @@ import { usePrevention } from "../../usePrevention";
 import { SpreadOfResistanceOverTimeChartType } from "../types";
 import { useSpreadResistanceOverTimeByInsecticide } from "./useSpreadResistanceOverTimeByInsecticide";
 import { useSpreadResistanceOverTimeByInsecticideClass } from "./useSpreadResistanceOverTimeByInsecticideClass";
+import {
+    filterByInsecticideResistanceStatusOptions,
+    filterByResistanceStatus,
+    filterByStudiesWithInsecticideClass,
+} from "../../../../../components/layers/studies-filters";
 
 const chartTypes: Option<SpreadOfResistanceOverTimeChartType>[] = [
     {
@@ -18,7 +23,11 @@ const chartTypes: Option<SpreadOfResistanceOverTimeChartType>[] = [
     },
 ];
 
-const baseFilters: ((study: any) => boolean)[] = [];
+const baseFilters = [
+    filterByResistanceStatus,
+    filterByStudiesWithInsecticideClass,
+    filterByInsecticideResistanceStatusOptions,
+];
 
 export function useSpreadResistanceOverTime() {
     const {
