@@ -42,7 +42,7 @@ const MolecularMarkerDashboard: React.FC = () => {
                                 <tr key={country}>
                                     <td>
                                         <Typography variant="body1" sx={{ marginLeft: 8 }}>
-                                            {t(country)}
+                                            {t(`countries.${country}`, { defaultValue: t(country) })}
                                         </Typography>
                                     </td>
 

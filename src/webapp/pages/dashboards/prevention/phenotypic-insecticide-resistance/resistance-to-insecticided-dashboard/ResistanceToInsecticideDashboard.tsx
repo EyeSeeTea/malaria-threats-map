@@ -87,7 +87,7 @@ const ChartByClass: React.FC<{
 
                         return (
                             <tr key={isoCountry}>
-                                <td>{t(isoCountry)}</td>
+                                <td>{t(`countries.${isoCountry}`, { defaultValue: t(isoCountry) })}</td>
                                 <td>
                                     <StyledHighcharts
                                         highcharts={Highcharts}
@@ -138,7 +138,11 @@ const ChartByType: React.FC<{
 
                             return (
                                 <tr key={`${isoCountry}-${subGroup}`}>
-                                    {groupIndex === 0 && <td rowSpan={rowSpan}>{t(isoCountry)}</td>}
+                                    {groupIndex === 0 && (
+                                        <td rowSpan={rowSpan}>
+                                            {t(`countries.${isoCountry}`, { defaultValue: t(isoCountry) })}
+                                        </td>
+                                    )}
 
                                     <td>{<strong>{t(subGroup)}</strong>}</td>
                                     <td>

@@ -17,7 +17,7 @@ const TreatmentFailureByDrugDashboard: React.FC = () => {
     const { filteredStudiesForDrugs, selectedCountries, studiesCount, data, filters } = useTreatmentFailureByDrug();
 
     const countryLegend = React.useMemo(() => {
-        return selectedCountries.map(iso => `${iso}: ${t(iso)}`).join("; ");
+        return selectedCountries.map(iso => `${iso}: ${t(`countries.${iso}`, { defaultValue: t(iso) })}`).join("; ");
     }, [selectedCountries, t]);
 
     const drugLegend = React.useMemo(() => {

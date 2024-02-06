@@ -68,7 +68,11 @@ const MosquitoOverTimeDashboard: React.FC = () => {
                                                 return (
                                                     <tr key={`${isoCountry}-${specie}`}>
                                                         {specieIndex === 0 && (
-                                                            <td rowSpan={species.length}>{t(isoCountry)}</td>
+                                                            <td rowSpan={species.length}>
+                                                                {t(`countries.${isoCountry}`, {
+                                                                    defaultValue: t(isoCountry),
+                                                                })}
+                                                            </td>
                                                         )}
                                                         <td>{specie}</td>
                                                         <td>
@@ -85,7 +89,7 @@ const MosquitoOverTimeDashboard: React.FC = () => {
                                             })
                                         ) : (
                                             <NotAvailableTR key={`${isoCountry}`} style={{ minHeight: 100 }}>
-                                                <td>{t(isoCountry)}</td>
+                                                <td>{t(`countries.${isoCountry}`, { defaultValue: t(isoCountry) })}</td>
                                                 <td></td>
                                                 <td>{"Not available"}</td>
                                             </NotAvailableTR>

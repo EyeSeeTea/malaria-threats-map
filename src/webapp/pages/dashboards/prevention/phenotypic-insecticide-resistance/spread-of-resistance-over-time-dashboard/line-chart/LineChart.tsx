@@ -80,7 +80,11 @@ const LineChart: React.FC<{
                                             return (
                                                 <tr key={`${isoCountry}-${specie}`}>
                                                     {specieIndex === 0 && (
-                                                        <td rowSpan={species.length}>{t(isoCountry)}</td>
+                                                        <td rowSpan={species.length}>
+                                                            {t(`countries.${isoCountry}`, {
+                                                                defaultValue: t(isoCountry),
+                                                            })}
+                                                        </td>
                                                     )}
                                                     <td>{specie}</td>
                                                     <td>
@@ -97,7 +101,7 @@ const LineChart: React.FC<{
                                         })
                                     ) : (
                                         <NotAvailableTR key={`${isoCountry}`} style={{ minHeight: 100 }}>
-                                            <td>{t(isoCountry)}</td>
+                                            <td>{t(`countries.${isoCountry}`, { defaultValue: t(isoCountry) })}</td>
                                             <td></td>
                                             <td>{t("common.dashboard.not-available")}</td>
                                         </NotAvailableTR>
@@ -120,7 +124,7 @@ const LineChart: React.FC<{
                                     <tr key={isoCountry}>
                                         <CountryTd>
                                             <Typography variant="body1" sx={{ marginLeft: 8 }}>
-                                                {t(isoCountry)}
+                                                {t(`countries.${isoCountry}`, { defaultValue: t(isoCountry) })}
                                             </Typography>
                                         </CountryTd>
                                         <td>
@@ -137,7 +141,7 @@ const LineChart: React.FC<{
                                     <NotAvailableTR key={`${isoCountry}`} style={{ minHeight: 100 }}>
                                         <CountryTd>
                                             <Typography variant="body1" sx={{ marginLeft: 8 }}>
-                                                {t(isoCountry)}
+                                                {t(`countries.${isoCountry}`, { defaultValue: t(isoCountry) })}
                                             </Typography>
                                         </CountryTd>
                                         <td>{t("common.dashboard.not-available")}</td>

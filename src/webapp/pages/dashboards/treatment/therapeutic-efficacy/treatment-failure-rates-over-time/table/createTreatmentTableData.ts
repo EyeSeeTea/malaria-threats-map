@@ -51,7 +51,7 @@ export function createTreatmentTableData(
 
                         return {
                             ID: `${country}_${drug}`,
-                            COUNTRY: i18next.t(`COUNTRY_NAME.${country}`),
+                            COUNTRY: i18next.t(`countries.${country}`, { defaultValue: i18next.t(country) }),
                             ISO2: country,
                             DRUG: i18next.t(drug),
                             COUNTRY_NUMBER: nStudies,

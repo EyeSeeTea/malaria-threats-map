@@ -61,7 +61,7 @@ export function createGraphData(studies: PreventionStudy[]): GraphData[] {
                 return {
                     ID: `${country}_${species}`,
                     ISO2: country,
-                    COUNTRY: i18next.t(country),
+                    COUNTRY: i18next.t(`countries.${country}`, { defaultValue: i18next.t(country) }),
                     COUNTRY_NUMBER: entries.length,
                     SPECIES: species,
                     PYRETHROIDS_AVERAGE_MORTALITY: pyrethroidsPercentage,
