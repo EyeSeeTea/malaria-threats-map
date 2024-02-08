@@ -28,7 +28,8 @@ export function useDownload(
         ActionCreatorTypeMetadata<ActionTypeEnum.MalariaSetTheme>,
     setPreventionDataset: PayloadActionCreator<ActionTypeEnum.SetPreventionDataset, string>,
     addDownload: PayloadActionCreator<ActionTypeEnum.AddDownloadRequest, Download>,
-    setActionGroupSelected: PayloadActionCreator<ActionTypeEnum.MalariaActionGroupSelected, ActionGroup>
+    setActionGroupSelected: PayloadActionCreator<ActionTypeEnum.MalariaActionGroupSelected, ActionGroup>,
+    theme: string
 ) {
     const [activeStep, setActiveStep] = React.useState(0);
     const [messageLoader, setMessageLoader] = React.useState<string | undefined>("");
@@ -62,7 +63,7 @@ export function useDownload(
 
     const onChangeSelectedDatabases = (databases: DatabaseSelection[]) => {
         setSelectedDatabases(databases);
-        setTheme("prevention", "download");
+        setTheme(theme, "download");
         setActionGroupSelected("THEME");
     };
 
