@@ -22,7 +22,7 @@ export const studiesToGeoJson = (studies: Study[]): FeatureCollection => {
                 properties: study,
                 geometry: {
                     type: "Point",
-                    coordinates: [parseFloat(study.Longitude), parseFloat(study.Latitude)],
+                    coordinates: [study.Longitude, study.Latitude],
                 },
             };
         }),

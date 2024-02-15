@@ -37,8 +37,8 @@ export function useMolecularMarker() {
 export function createChartData(studies: TreatmentStudy[], countries: string[]): MolecularChart {
     const valueStudies = getMolecularMarkerStudies(studies);
 
-    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), valueStudies);
-    const years = _.uniq(sortedStudies.map(study => parseInt(study.YEAR_START)).sort());
+    const sortedStudies = R.sortBy(study => -study.YEAR_START, valueStudies);
+    const years = _.uniq(sortedStudies.map(study => study.YEAR_START).sort());
 
     const getSeriesByCountry = (country: string) => {
         const studiesByCountry = valueStudies.filter(study => study.ISO2 === country);
