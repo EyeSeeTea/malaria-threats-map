@@ -98,7 +98,7 @@ export function resolvePyrethroids(insecticideClass: string, countrySpeciesStudi
           })`
         : "-";
 
-    const sorted = R.sortBy(study => -parseInt(study.YEAR_START), studies);
+    const sorted = R.sortBy(study => -study.YEAR_START, studies);
 
     return {
         percentage,

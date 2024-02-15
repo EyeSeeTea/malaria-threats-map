@@ -39,9 +39,9 @@ export function filterByCriteria1(group: PreventionStudy[]) {
         const maxYear = R.reduce(
             R.max,
             0,
-            baseStudies.map(study => parseInt(study.YEAR_START))
+            baseStudies.map(study => study.YEAR_START)
         );
-        filteredStudies = baseStudies.filter(study => maxYear === parseInt(study.YEAR_START));
+        filteredStudies = baseStudies.filter(study => maxYear === study.YEAR_START);
     }
     return filteredStudies;
 }
@@ -88,9 +88,9 @@ export function getMostRecent(studies: PreventionStudy[]): PreventionStudy | und
 }
 
 const filterByMostRecentYear = (group: PreventionStudy[]) => {
-    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), group);
+    const sortedStudies = R.sortBy(study => -study.YEAR_START, group);
     // We filter all studies conducted that year.
-    return R.filter(study => parseInt(study.YEAR_START) === parseInt(sortedStudies[0].YEAR_START), group);
+    return R.filter(study => study.YEAR_START === sortedStudies[0].YEAR_START, group);
 };
 
 export function getByMostRecentYearAndMostPriorityUsignResistanceStatus(studies: PreventionStudy[]) {

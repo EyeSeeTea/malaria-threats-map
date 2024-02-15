@@ -79,10 +79,7 @@ export const filterInvasiveStudies = (
 export const filterByYearRange =
     (years: number[], allowEmpty = false) =>
     (study: any) => {
-        return (
-            (allowEmpty && !study.YEAR_START) ||
-            (parseInt(study.YEAR_START) >= years[0] && parseInt(study.YEAR_START) <= years[1])
-        );
+        return (allowEmpty && !study.YEAR_START) || (study.YEAR_START >= years[0] && study.YEAR_START <= years[1]);
     };
 
 export const filterByYears = (years: number[]) => (study: any) => {
