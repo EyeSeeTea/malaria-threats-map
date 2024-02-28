@@ -734,7 +734,7 @@
                     "medium": "10% - 50%",
                     "low": "< 10%",
                     "help": {
-                        "p1": "Este mapa presenta datos de <1>estudios de marcadores moleculares</1>. El color del punto está determinado por el porcentaje de muestras que tienen mutaciones moleculares. Los resultados más recientes se presentan de forma predeterminada.",
+                        "p1": "Este mapa presenta datos de <1>estudios de marcadores moleculares</1>. El color del punto del mapa viene determinado por el porcentaje de muestras con mutaciones moleculares asociadas a la resistencia. Los resultados más recientes se presentan de forma predeterminada.",
                         "p2": "",
                         "footer": "Fuente de datos: Base de datos mundial de la OMS sobre eficacia y resistencia a los medicamentos antipalúdicos."
                     }
