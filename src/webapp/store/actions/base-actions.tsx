@@ -4,6 +4,7 @@ import { ActionGroup, RegionState, SiteSelection } from "../types";
 import { SelectionData } from "../SelectionData";
 import { UploadFileData } from "../../../domain/usecases/UploadFileUseCase";
 import { Option } from "../../components/BasicSelect";
+import { TotalStudiesInThemes } from "../../../domain/entities/TotalStudiesInThemes";
 
 export type Source = "map" | "download";
 
@@ -93,3 +94,13 @@ export const uploadFileRequestAction = createAction(ActionTypeEnum.UploadFileReq
 export const uploadFileSuccessAction = createAction(ActionTypeEnum.UploadFileSuccess)();
 
 export const uploadFileErrorAction = createAction(ActionTypeEnum.UploadFileError)();
+
+export const getTotalStudiesInThemesRequestAction = createAction(ActionTypeEnum.GetTotalStudiesInThemesRequest)();
+
+export const getTotalStudiesInThemesSuccessAction = createAction(
+    ActionTypeEnum.GetTotalStudiesInThemesSuccess
+)<TotalStudiesInThemes>();
+
+export const getTotalStudiesInThemesFailureAction = createAction(ActionTypeEnum.GetTotalStudiesInThemesFailure)<
+    Error | string
+>();
