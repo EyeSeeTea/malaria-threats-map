@@ -115,4 +115,8 @@ export enum ActionTypeEnum {
     FeedbackSubmit = "feedback/SUBMIT",
     FeedbackSuccess = "feedback/SUCCESS",
     FeedbackError = "feedback/ERROR",
+
+    GetTotalStudiesInThemesRequest = "malaria/GET_TOTAL_STUDIES_IN_THEME_REQUEST",
+    GetTotalStudiesInThemesSuccess = "malaria/GET_TOTAL_STUDIES_IN_THEME_SUCCESS",
+    GetTotalStudiesInThemesFailure = "malaria/GET_TOTAL_STUDIES_IN_THEME_FAILURE",
 }

@@ -5,6 +5,7 @@ import { createReducer } from "../reducer-utils";
 import { ActionTypeEnum } from "../actions";
 import { SelectionData } from "../SelectionData";
 import { getFromLocalStorage } from "../../utils/browserCache";
+import { TotalStudiesInThemes } from "../../../domain/entities/TotalStudiesInThemes";
 
 const query = window.location.search.substring(1);
 
@@ -60,6 +61,12 @@ const initialState: MalariaState = Object.freeze({
     legendExpanded: false,
     isSubmittingSubscription: false,
     isUploadingFile: false,
+    totalStudiesInThemes: {
+        prevention: null,
+        diagnosis: null,
+        treatment: null,
+        invasive: null,
+    },
 });
 
 export default createReducer<MalariaState>(initialState, {
@@ -120,6 +127,8 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.UploadFileSuccess]: () => R.assoc("isUploadingFile", false),
     [ActionTypeEnum.UploadFileError]: () => R.assoc("isUploadingFile", false),
     [ActionTypeEnum.GetLastUpdatedSuccess]: (lastUpdatedDates: any) => R.assoc("lastUpdatedDates", lastUpdatedDates),
+    [ActionTypeEnum.GetTotalStudiesInThemesSuccess]: (totalStudiesInThemes: TotalStudiesInThemes) =>
+        R.assoc("totalStudiesInThemes", totalStudiesInThemes),
 });
 
 const selectMalariaState = (state: State) => state.malaria;
@@ -156,3 +165,5 @@ export const selectIsUploadingFile = createSelector(selectMalariaState, state =>
 export const selectLastUpdatedDates = createSelector(selectMalariaState, state => state.lastUpdatedDates);
 
 export const selectSelectionData = createSelector(selectMalariaState, state => state.selectionData);
+
+export const selectTotalStudiesInThemes = createSelector(selectMalariaState, state => state.totalStudiesInThemes);
