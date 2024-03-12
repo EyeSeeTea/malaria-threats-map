@@ -12,7 +12,7 @@ const query = window.location.search.substring(1);
 const isTourInitiallyOpen = getFromLocalStorage("tour") !== "visited" && !query;
 
 const initialState: MalariaState = Object.freeze({
-    theme: "prevention",
+    theme: "invasive",
     any: null,
     endemicity: false,
     countryMode: false,

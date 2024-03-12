@@ -50,7 +50,7 @@ export function useDownload(
     }, [activeStep, logEvent]);
 
     React.useEffect(() => {
-        setTheme("prevention", "download");
+        setTheme("invasive", "download");
     }, [setTheme, setPreventionDataset]);
 
     const onChangeTermsInfo = (field: keyof TermsInfo, value: any) => {
@@ -62,7 +62,7 @@ export function useDownload(
 
     const onChangeSelectedDatabases = (databases: DatabaseSelection[]) => {
         setSelectedDatabases(databases);
-        setTheme("prevention", "download");
+        setTheme("invasive", "download");
         setActionGroupSelected("THEME");
     };
 

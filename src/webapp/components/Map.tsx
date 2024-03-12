@@ -188,7 +188,7 @@ class Map extends React.Component<Props, StateTypes> {
     mapContainer: any;
     state = {
         ready: false,
-        theme: "prevention",
+        theme: "invasive",
         menuOpen: false,
         sidebarOpen: false,
         viewMapOnly: false, // show only the legend and last-data-update boxes

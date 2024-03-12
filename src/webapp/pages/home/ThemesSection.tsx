@@ -69,10 +69,11 @@ type DispatchProps = typeof mapDispatchToProps;
 
 type Props = StateProps & DispatchProps;
 
+// NOTICE: fetchPreventionStudie has been commented out because it freezes the navigation menu until the request and build from csv to data is not completed.
 const ThemesSection: React.FC<Props> = ({
     lastUpdatedDates,
     totalStudiesInThemes,
-    fetchPreventionStudies,
+    // fetchPreventionStudies,
     fetchDiagnosisStudies,
     fetchTreatmentStudies,
     fetchInvasiveStudies,
@@ -82,13 +83,13 @@ const ThemesSection: React.FC<Props> = ({
     const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
-        fetchPreventionStudies();
+        // fetchPreventionStudies();
         fetchDiagnosisStudies();
         fetchTreatmentStudies();
         fetchInvasiveStudies();
         fetchTotalStudiesInThemes();
     }, [
-        fetchPreventionStudies,
+        // fetchPreventionStudies,
         fetchDiagnosisStudies,
         fetchTreatmentStudies,
         fetchInvasiveStudies,
