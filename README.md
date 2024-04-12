@@ -17,12 +17,31 @@ Build for production:
 ```
 $ yarn build-prod
 ```
-
 When deploying to a server with a path prefix, use the environment variable `PUBLIC_URL`. Example:
 
 ```
 $ PUBLIC_URL=/mtm yarn build
 ```
+
+## Start
+
+Start for staging:
+
+```
+$ yarn run start:staging
+```
+
+Start for production:
+
+```
+$ yarn run start:prod
+```
+
+Enviroment variables:
+
+PORT
+
+XMART_CLIENT_SECRET
 
 ## Development
 
