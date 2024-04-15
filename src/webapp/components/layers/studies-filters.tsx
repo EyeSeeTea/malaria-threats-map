@@ -90,6 +90,10 @@ export const filterByDownload = () => (study: Study) => {
     return study.DOWNLOAD === 1;
 };
 
+export const filterInvasiveByDownload = () => (study: Study) => {
+    return study.DOWNLOAD !== 0;
+};
+
 export const filterByIntensityStatus = (study: any) => {
     return study.ASSAY_TYPE === "INTENSITY_CONCENTRATION_BIOASSAY";
 };
@@ -316,12 +320,13 @@ function buildInvasiveFiltersByDownload(invasiveFilters: InvasiveFilters, filter
     switch (invasiveFilters.mapType) {
         case InvasiveMapType.VECTOR_OCCURANCE:
             return [
+                filterInvasiveByDownload(),
                 filterByVectorSpecies(invasiveFilters.vectorSpecies),
                 filterByYearRange(filters, true),
                 filterByRegion(region),
             ];
         default:
-            return [filterByRegion(region)];
+            return [filterInvasiveByDownload(), filterByRegion(region)];
     }
 }
 
