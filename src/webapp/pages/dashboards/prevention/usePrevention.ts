@@ -10,6 +10,8 @@ import {
     PreventionStudy,
 } from "../../../../domain/entities/PreventionStudy";
 import { Option } from "../../../components/BasicSelect";
+import _ from "lodash";
+import i18next from "i18next";
 
 export function usePrevention(baseFilters: ((study: PreventionStudy) => boolean)[]) {
     const filters = usePreventionFilters();
@@ -44,8 +46,9 @@ export function usePrevention(baseFilters: ((study: PreventionStudy) => boolean)
             maxMinYears: maxMinYears,
             disaggregateBySpeciesSelection: "aggregate_species",
         });
+        const sortedFilteredStudiesByCountry = _.orderBy(filteredStudies, study => i18next.t(study.ISO2), "asc");
 
-        setFilteredStudies(filteredStudies);
+        setFilteredStudies(sortedFilteredStudiesByCountry);
     }, [
         baseFilters,
         dashboardsPreventionStudies,
@@ -105,7 +108,7 @@ export function usePrevention(baseFilters: ((study: PreventionStudy) => boolean)
             onlyIncludeDataByHealth: false,
             years: undefined,
             maxMinYears: undefined,
-            disaggregateBySpeciesSelection: "aggregate_species",
+            disaggregateBySpeciesSelection: "disaggregate_species",
         });
 
         const species = extractSpeciesOptions(filteredStudies);

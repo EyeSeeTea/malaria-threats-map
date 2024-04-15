@@ -136,20 +136,6 @@ const ThemeSelector: React.FC<Props> = ({
         <Box sx={{ flexGrow: 1 }}>
             <GridContainer container spacing={2}>
                 <Grid item xs={themeItemGridSize || 6}>
-                    <ThemeButton disabled={!!preventionError}>
-                        <IconButton
-                            disableRipple
-                            disabled={!!preventionError}
-                            title={t("common.themes.prevention")}
-                            onClick={handlePreventionClick}
-                        >
-                            <PreventionIcon selected={theme === "prevention" && !preventionError} />
-                        </IconButton>
-                        <Title>{t("common.themes.prevention")}</Title>
-                        {/* <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton> */}
-                    </ThemeButton>
-                </Grid>
-                <Grid item xs={themeItemGridSize || 6}>
                     <ThemeButton disabled={!!invasiveError}>
                         <IconButton
                             disableRipple
@@ -160,6 +146,20 @@ const ThemeSelector: React.FC<Props> = ({
                             <InvasiveIcon selected={theme === "invasive"} />
                         </IconButton>
                         <Title>{t("common.themes.invasive")}</Title>
+                        {/* <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton> */}
+                    </ThemeButton>
+                </Grid>
+                <Grid item xs={themeItemGridSize || 6}>
+                    <ThemeButton disabled={!!preventionError}>
+                        <IconButton
+                            disableRipple
+                            disabled={!!preventionError}
+                            title={t("common.themes.prevention")}
+                            onClick={handlePreventionClick}
+                        >
+                            <PreventionIcon selected={theme === "prevention" && !preventionError} />
+                        </IconButton>
+                        <Title>{t("common.themes.prevention")}</Title>
                         {/* <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton> */}
                     </ThemeButton>
                 </Grid>

@@ -49,6 +49,8 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                                 </th>
                             </tr>
                             <tr>
+                                <th></th>
+                                <th></th>
                                 <th>
                                     <SubHeadText align="left">
                                         {t(

@@ -6,6 +6,11 @@ import { usePrevention } from "../../usePrevention";
 import { SpreadOfResistanceOverTimeChartType } from "../types";
 import { useSpreadResistanceOverTimeByInsecticide } from "./useSpreadResistanceOverTimeByInsecticide";
 import { useSpreadResistanceOverTimeByInsecticideClass } from "./useSpreadResistanceOverTimeByInsecticideClass";
+import {
+    filterByInsecticideResistanceStatusOptions,
+    filterByResistanceStatus,
+    filterByStudiesWithInsecticideClass,
+} from "../../../../../components/layers/studies-filters";
 
 const chartTypes: Option<SpreadOfResistanceOverTimeChartType>[] = [
     {
@@ -18,7 +23,11 @@ const chartTypes: Option<SpreadOfResistanceOverTimeChartType>[] = [
     },
 ];
 
-const baseFilters: ((study: any) => boolean)[] = [];
+const baseFilters = [
+    filterByResistanceStatus,
+    filterByStudiesWithInsecticideClass,
+    filterByInsecticideResistanceStatusOptions,
+];
 
 export function useSpreadResistanceOverTime() {
     const {
@@ -47,43 +56,18 @@ export function useSpreadResistanceOverTime() {
         barChartDataByType,
         onChartByInsecticideChange,
         filtersByInsecticide,
-    } = useSpreadResistanceOverTimeByInsecticide();
+    } = useSpreadResistanceOverTimeByInsecticide(singleSelectedInsecticideClass);
 
     const { speciesOptions } = usePrevention(baseFilters);
 
-    const {
-        disableSpeciesFilter,
-        disaggregateBySpeciesSelection,
-        onDisableSpeciesFilter,
-        onDisaggregateBySpeciesChange,
-        onSpeciesChange,
-    } = React.useMemo(() => {
+    const { disaggregateBySpeciesSelection, onSpeciesChange } = React.useMemo(() => {
         return chartByInsecticide ? filtersByInsecticide : filtersByClass;
     }, [chartByInsecticide, filtersByClass, filtersByInsecticide]);
 
     React.useEffect(() => {
-        const hasToBeDisabledSpeciesFilter =
-            onDisaggregateBySpeciesChange && disaggregateBySpeciesSelection === "aggregate_species";
-
-        if (!disableSpeciesFilter && hasToBeDisabledSpeciesFilter) {
-            onDisableSpeciesFilter(hasToBeDisabledSpeciesFilter);
+        if (onSpeciesChange) {
             onSpeciesChange(speciesOptions.map(option => option.value));
         }
-
-        if (disableSpeciesFilter && !hasToBeDisabledSpeciesFilter) {
-            onDisableSpeciesFilter(false);
-        }
-    }, [
-        disableSpeciesFilter,
-        disaggregateBySpeciesSelection,
-        onDisableSpeciesFilter,
-        onDisaggregateBySpeciesChange,
-        onSpeciesChange,
-        speciesOptions,
-    ]);
-
-    React.useEffect(() => {
-        onSpeciesChange(speciesOptions.map(option => option.value));
     }, [onSpeciesChange, speciesOptions]);
 
     const onChartTypeChange = React.useCallback(

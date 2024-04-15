@@ -28,7 +28,7 @@ export function createTreatmentTableData(
                     nStudies += followUpCountrySpeciesGroupStudies.length;
                     return followUpCountrySpeciesGroupStudies.map(([followUpDays, followUpCountrySpeciesStudies]) => {
                         const yearSortedStudies = followUpCountrySpeciesStudies
-                            .map((study: TreatmentStudy) => parseInt(study.YEAR_START))
+                            .map((study: TreatmentStudy) => study.YEAR_START)
                             .sort();
                         const minYear = yearSortedStudies[0];
                         const maxYear = yearSortedStudies[yearSortedStudies.length - 1];
@@ -37,7 +37,7 @@ export function createTreatmentTableData(
                         const fallbackProp = "TREATMENT_FAILURE_KM";
 
                         const rawValues = followUpCountrySpeciesStudies.map((study: TreatmentStudy) =>
-                            study[defaultProp] === null ? study[defaultProp] : study[fallbackProp]
+                            study[defaultProp] !== null ? study[defaultProp] : study[fallbackProp]
                         );
 
                         const values = rawValues.filter(value => !Number.isNaN(value));
@@ -51,7 +51,7 @@ export function createTreatmentTableData(
 
                         return {
                             ID: `${country}_${drug}`,
-                            COUNTRY: i18next.t(`COUNTRY_NAME.${country}`),
+                            COUNTRY: i18next.t(`countries.${country}`, { defaultValue: i18next.t(country) }),
                             ISO2: country,
                             DRUG: i18next.t(drug),
                             COUNTRY_NUMBER: nStudies,

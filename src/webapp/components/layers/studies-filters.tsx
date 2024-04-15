@@ -79,10 +79,7 @@ export const filterInvasiveStudies = (
 export const filterByYearRange =
     (years: number[], allowEmpty = false) =>
     (study: any) => {
-        return (
-            (allowEmpty && !study.YEAR_START) ||
-            (parseInt(study.YEAR_START) >= years[0] && parseInt(study.YEAR_START) <= years[1])
-        );
+        return (allowEmpty && !study.YEAR_START) || (study.YEAR_START >= years[0] && study.YEAR_START <= years[1]);
     };
 
 export const filterByYears = (years: number[]) => (study: any) => {
@@ -111,6 +108,18 @@ export const filterByResistanceMechanism = (study: any) => {
 
 export const filterByLevelOfInvolvement = (study: any) => {
     return study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY";
+};
+
+export const filterByStudiesWithInsecticideClass = (study: any) => {
+    return study.INSECTICIDE_CLASS !== "NA";
+};
+
+export const filterByInsecticideResistanceStatusOptions = (study: any) => {
+    return (
+        study.RESISTANCE_STATUS === "CONFIRMED_RESISTANCE" ||
+        study.RESISTANCE_STATUS === "POSSIBLE_RESISTANCE" ||
+        study.RESISTANCE_STATUS === "SUSCEPTIBLE"
+    );
 };
 
 export const filterByRegion = (region: RegionState) => (study: any) => {

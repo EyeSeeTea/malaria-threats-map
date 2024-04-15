@@ -46,7 +46,7 @@ const MapContainer: React.FC = () => {
             params: {
                 theme: {
                     selector: (state: State) => state.malaria.theme,
-                    action: (value: string) => setThemeAction(value || "prevention"),
+                    action: (value: string) => setThemeAction(value || "invasive"),
                 },
                 mapType: {
                     selector: (state: State) => {

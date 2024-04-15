@@ -22,7 +22,7 @@ export function createInvasiveSelectionData(
 
     const dataSources = createCitationDataSources(theme, siteFilteredStudies);
 
-    const sortedStudiesByRecentYear = R.sortBy(study => -parseInt(study.YEAR_START), siteFilteredStudies);
+    const sortedStudiesByRecentYear = R.sortBy(study => -study.YEAR_START, siteFilteredStudies);
     const sortedStudiesByRecentYearAndInvasiveStatus = R.sortBy(
         study => -InvasiveStatusOrder[study.INVASIVE_STATUS] || 0,
         sortedStudiesByRecentYear
@@ -81,8 +81,8 @@ function getSamplingPeriod(study: InvasiveStudy): string {
 
     const monthStart = getMonthFromNumber(parseInt(study.MONTH_START));
     const monthEnd = getMonthFromNumber(parseInt(study.MONTH_END));
-    const yearStart = parseInt(study.YEAR_START);
-    const yearEnd = parseInt(study.YEAR_END);
+    const yearStart = study.YEAR_START;
+    const yearEnd = study.YEAR_END;
 
     const start = monthStart ? `${monthStart}, ${yearStart}` : `${yearStart}`;
     const end = monthEnd ? `${monthEnd}, ${yearEnd}` : `${yearEnd}`;

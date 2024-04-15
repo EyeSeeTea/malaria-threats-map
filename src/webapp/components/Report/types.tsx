@@ -7,34 +7,45 @@ import React from "react";
 import { Order } from "./utils";
 
 export type CellProps = {
-    isBold?: boolean;
+    $isBold?: boolean;
     color?: string;
     background?: string;
-    isRight?: boolean;
+    $isRight?: boolean;
     divider?: boolean;
-    isRotated?: boolean;
-    isCenter?: boolean;
+    $isRotated?: boolean;
+    $isCenter?: boolean;
     width?: number;
     height?: number;
     nowrap?: boolean;
-    removeBottomDivider?: boolean;
+    $removeBottomDivider?: boolean;
+    $isLast?: boolean;
+    $paddingTop?: string;
+    $paddingBottom?: string;
+    $paddingRight?: string;
+    $paddingLeft?: string;
 };
 
 export const StyledCell = styled(TableCell)<CellProps>`
-    font-size: ${props => (props.isBold ? "13px" : "12.5px")} !important;
+    font-size: ${props => (props.$isBold ? "13px" : "12.5px")} !important;
     line-height: 1rem !important;
-    padding: 3px 8px !important;
-    font-weight: ${props => (props.isBold ? "bold" : "normal")} !important;
+    padding-top: ${props => props.$paddingTop || "3px"} !important;
+    padding-bottom: ${props => props.$paddingBottom || "3px"} !important;
+    padding-right: ${props => props.$paddingRight || "8px"} !important;
+    padding-left: ${props => props.$paddingLeft || "8px"} !important;
+    font-weight: ${props => (props.$isBold ? "bold" : "normal")} !important;
     color: ${props => props.color || "inherit"} !important;
     background: ${props => props.background || "inherit"} !important;
-    ${props => props.isRight && "text-align: right !important"};
-    ${props => props.isCenter && "text-align: center !important"};
+    ${props => props.$isRight && "text-align: right !important"};
+    ${props => props.$isCenter && "text-align: center !important"};
     ${props => props.divider && "border-left: 1px solid rgba(224, 224, 224, 1)"};
-    ${props => props.isRotated && "transform: rotate(-90deg)"};
+    ${props => props.$isRotated && "transform: rotate(180deg)"};
+    ${props => props.$isRotated && "writing-mode: vertical-rl"};
+    ${props => props.$isRotated && "white-space: nowrap"};
     ${props => props.width && `width: ${props.width}px !important`};
     ${props => props.height && `height: ${props.height}px !important`};
     ${props => props.nowrap && `white-space: nowrap`};
-    ${props => props.removeBottomDivider && `border-bottom: none`};
+    ${props => props.$removeBottomDivider && `border-bottom: none`};
+    ${props => props.$isLast && "border-bottom: 2px solid rgba(224, 224, 224, 1)"};
 `;
 
 export const useStyles = makeStyles((theme: Theme) =>

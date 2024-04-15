@@ -61,7 +61,7 @@ export function createGraphData(studies: PreventionStudy[]): GraphData[] {
                 return {
                     ID: `${country}_${species}`,
                     ISO2: country,
-                    COUNTRY: i18next.t(country),
+                    COUNTRY: i18next.t(`countries.${country}`, { defaultValue: i18next.t(country) }),
                     COUNTRY_NUMBER: entries.length,
                     SPECIES: species,
                     PYRETHROIDS_AVERAGE_MORTALITY: pyrethroidsPercentage,
@@ -108,7 +108,7 @@ export function resolvePyrethroids(insecticideClass: string, countrySpeciesStudi
     const percentage: number | "-" = studies.length
         ? Number(((detectedPyrethroidsStudies.length * 100) / studies.length).toFixed(2))
         : "-";
-    const sorted = R.sortBy(study => -parseInt(study.YEAR_START), studies);
+    const sorted = R.sortBy(study => -study.YEAR_START, studies);
     return {
         percentage,
         sorted,

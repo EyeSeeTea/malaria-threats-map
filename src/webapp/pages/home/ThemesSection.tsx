@@ -1,23 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, Card, CircularProgress, Container, Grid, Typography } from "@mui/material";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Button, Card, CircularProgress, Container, Grid, Typography } from "@mui/material";
+
 import { State } from "../../store/types";
-import { selectLastUpdatedDates, selectTheme } from "../../store/reducers/base-reducer";
-import { selectPreventionStudies } from "../../store/reducers/prevention-reducer";
-import { selectDiagnosisStudies } from "../../store/reducers/diagnosis-reducer";
-import { selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
-import { selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
+import { selectLastUpdatedDates, selectTheme, selectTotalStudiesInThemes } from "../../store/reducers/base-reducer";
 import { fetchPreventionStudiesRequest } from "../../store/actions/prevention-actions";
 import { fetchDiagnosisStudiesRequest } from "../../store/actions/diagnosis-actions";
 import { fetchTreatmentStudiesRequest } from "../../store/actions/treatment-actions";
 import { fetchInvasiveStudiesRequest } from "../../store/actions/invasive-actions";
-import { connect } from "react-redux";
+import { getTotalStudiesInThemesRequestAction } from "../../store/actions/base-actions";
 import PreventionIcon from "../../assets/img/prevention-icon.svg";
 import TreatmentIcon from "../../assets/img/treatment-icon.svg";
 import DiagnosisIcon from "../../assets/img/diagnosis-icon.svg";
 import InvasiveIcon from "../../assets/img/invasive-icon.svg";
-import { Link } from "react-router-dom";
 
 const Section = styled.section`
     padding: 10vmin;
@@ -55,10 +53,7 @@ const StyledCardButton = styled(Button)`
 const mapStateToProps = (state: State) => ({
     lastUpdatedDates: selectLastUpdatedDates(state),
     theme: selectTheme(state),
-    preventionStudies: selectPreventionStudies(state),
-    diagnosisStudies: selectDiagnosisStudies(state),
-    treatmentStudies: selectTreatmentStudies(state),
-    invasiveStudies: selectInvasiveStudies(state),
+    totalStudiesInThemes: selectTotalStudiesInThemes(state),
 });
 
 const mapDispatchToProps = {
@@ -66,6 +61,7 @@ const mapDispatchToProps = {
     fetchDiagnosisStudies: fetchDiagnosisStudiesRequest,
     fetchTreatmentStudies: fetchTreatmentStudiesRequest,
     fetchInvasiveStudies: fetchInvasiveStudiesRequest,
+    fetchTotalStudiesInThemes: getTotalStudiesInThemesRequestAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -73,37 +69,48 @@ type DispatchProps = typeof mapDispatchToProps;
 
 type Props = StateProps & DispatchProps;
 
+// NOTICE: fetchPreventionStudie has been commented out because it freezes the navigation menu until the request and build from csv to data is not completed.
 const ThemesSection: React.FC<Props> = ({
-    preventionStudies,
-    diagnosisStudies,
-    treatmentStudies,
-    invasiveStudies,
     lastUpdatedDates,
-    fetchPreventionStudies,
+    totalStudiesInThemes,
+    // fetchPreventionStudies,
     fetchDiagnosisStudies,
     fetchTreatmentStudies,
     fetchInvasiveStudies,
+    fetchTotalStudiesInThemes,
 }) => {
     const { t } = useTranslation();
     const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
-        fetchPreventionStudies();
+        // fetchPreventionStudies();
         fetchDiagnosisStudies();
         fetchTreatmentStudies();
         fetchInvasiveStudies();
-    }, [fetchPreventionStudies, fetchDiagnosisStudies, fetchTreatmentStudies, fetchInvasiveStudies]);
+        fetchTotalStudiesInThemes();
+    }, [
+        // fetchPreventionStudies,
+        fetchDiagnosisStudies,
+        fetchTreatmentStudies,
+        fetchInvasiveStudies,
+        fetchTotalStudiesInThemes,
+    ]);
 
     React.useEffect(() => {
         if (
-            preventionStudies.length !== 0 &&
-            diagnosisStudies.length !== 0 &&
-            treatmentStudies.length !== 0 &&
-            invasiveStudies.length !== 0
+            totalStudiesInThemes.prevention &&
+            totalStudiesInThemes.diagnosis &&
+            totalStudiesInThemes.treatment &&
+            totalStudiesInThemes.invasive
         ) {
             setLoading(false);
         }
-    }, [preventionStudies, diagnosisStudies, treatmentStudies, invasiveStudies]);
+    }, [
+        totalStudiesInThemes.diagnosis,
+        totalStudiesInThemes.invasive,
+        totalStudiesInThemes.prevention,
+        totalStudiesInThemes.treatment,
+    ]);
 
     const themes = React.useMemo(
         () => [
@@ -115,7 +122,7 @@ const ThemesSection: React.FC<Props> = ({
                 color: "#5ABE86",
                 colorOpaque: "rgb(90, 190, 134, 0.9)",
                 lastUpdated: loading ? undefined : lastUpdatedDates["prevention"]?.toLocaleDateString(),
-                numStudies: loading ? undefined : preventionStudies.length,
+                numStudies: loading ? undefined : totalStudiesInThemes.prevention,
                 link: "/stories?theme=prevention",
             },
             {
@@ -126,7 +133,7 @@ const ThemesSection: React.FC<Props> = ({
                 color: "#5CC579",
                 colorOpaque: "rgb(92, 197, 121, 0.9)",
                 lastUpdated: loading ? undefined : lastUpdatedDates["invasive"]?.toLocaleDateString(),
-                numStudies: loading ? undefined : invasiveStudies.length,
+                numStudies: loading ? undefined : totalStudiesInThemes.invasive,
                 link: "/stories?theme=invasive",
             },
             {
@@ -137,7 +144,7 @@ const ThemesSection: React.FC<Props> = ({
                 color: "#5CCDCE",
                 colorOpaque: "rgb(92, 205, 206, 0.9)",
                 lastUpdated: loading ? undefined : lastUpdatedDates["treatment"]?.toLocaleDateString(),
-                numStudies: loading ? undefined : treatmentStudies.length,
+                numStudies: loading ? undefined : totalStudiesInThemes.treatment,
                 link: "/stories?theme=treatment",
             },
             {
@@ -148,11 +155,19 @@ const ThemesSection: React.FC<Props> = ({
                 color: "#1899CC",
                 colorOpaque: "rgb(24, 153, 204, 0.9)",
                 lastUpdated: loading ? undefined : lastUpdatedDates["diagnosis"]?.toLocaleDateString(),
-                numStudies: loading ? undefined : diagnosisStudies.length,
+                numStudies: loading ? undefined : totalStudiesInThemes.diagnosis,
                 link: "/stories?theme=diagnosis",
             },
         ],
-        [t, diagnosisStudies, invasiveStudies, lastUpdatedDates, loading, preventionStudies, treatmentStudies]
+        [
+            lastUpdatedDates,
+            loading,
+            t,
+            totalStudiesInThemes.diagnosis,
+            totalStudiesInThemes.invasive,
+            totalStudiesInThemes.prevention,
+            totalStudiesInThemes.treatment,
+        ]
     );
 
     return (

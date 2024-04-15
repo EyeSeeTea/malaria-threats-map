@@ -6,13 +6,22 @@ import { SpreadOfResistanceOverTimeChartDataByType } from "../types";
 import { createBarChartData } from "./bar-chart/createBarChartData";
 import { createLineChartData } from "./line-chart/createLineChartData";
 import { PreventionFiltersState } from "../../filters/PreventionFiltersState";
+import {
+    filterByInsecticideResistanceStatusOptions,
+    filterByResistanceStatus,
+    filterByStudiesWithInsecticideClass,
+} from "../../../../../components/layers/studies-filters";
 
-const baseFilters: ((study: any) => boolean)[] = [];
+const baseFilters = [
+    filterByResistanceStatus,
+    filterByStudiesWithInsecticideClass,
+    filterByInsecticideResistanceStatusOptions,
+];
 
-export function useSpreadResistanceOverTimeByInsecticide() {
+export function useSpreadResistanceOverTimeByInsecticide(defaultInsecticideClassSelected: string) {
     const { preventionStudies, filteredStudies, selectedCountries, filters } = usePrevention(baseFilters);
 
-    const { disaggregateBySpeciesSelection, years, onInsecticideClassChange } = filters;
+    const { disaggregateBySpeciesSelection, years, onInsecticideClassChange, insecticideClasses } = filters;
 
     const [lineChartDataByType, setLineChartDataByType] = React.useState<SpreadOfResistanceOverTimeChartDataByType>({
         kind: "InsecticideByType",
@@ -37,18 +46,28 @@ export function useSpreadResistanceOverTimeByInsecticide() {
 
     React.useEffect(() => {
         if (chartByInsecticide) {
-            onInsecticideClassChange(["PYRETHROIDS"]);
+            onInsecticideClassChange([defaultInsecticideClassSelected]);
         }
-    }, [chartByInsecticide, onInsecticideClassChange]);
+    }, [chartByInsecticide, defaultInsecticideClassSelected, onInsecticideClassChange]);
 
     React.useEffect(() => {
-        const insecticides = uniq(
-            preventionStudies.filter(study => study.INSECTICIDE_CLASS !== "NA").map(study => study.INSECTICIDE_TYPE)
-        ).sort();
-        setAllInsecticides(insecticides);
-        setMultipleSelectedInsecticides(insecticides);
-        setSingleSelectedInsecticide(insecticides[0]);
-    }, [preventionStudies]);
+        if (insecticideClasses.length) {
+            const allInsecticides = uniq(
+                preventionStudies.filter(study => study.INSECTICIDE_CLASS !== "NA").map(study => study.INSECTICIDE_TYPE)
+            ).sort();
+
+            const insecticidesInSelectedClass = uniq(
+                preventionStudies
+                    .filter(study => insecticideClasses.includes(study.INSECTICIDE_CLASS))
+                    .map(study => study.INSECTICIDE_TYPE)
+            ).sort();
+            setAllInsecticides(allInsecticides);
+            setMultipleSelectedInsecticides(insecticidesInSelectedClass);
+            setSingleSelectedInsecticide(
+                insecticidesInSelectedClass.length ? insecticidesInSelectedClass[0] : undefined
+            );
+        }
+    }, [insecticideClasses, preventionStudies]);
 
     React.useEffect(() => {
         if (chartByInsecticide) {
@@ -115,6 +134,8 @@ export function useSpreadResistanceOverTimeByInsecticide() {
             onInsecticideClassesChange: onInsecticideClassChange,
             onTypeChange: undefined,
             onInsecticideTypesChange: undefined,
+            onSpeciesChange:
+                filters.disaggregateBySpeciesSelection === "aggregate_species" ? undefined : filters.onSpeciesChange,
         } as PreventionFiltersState,
     };
 }

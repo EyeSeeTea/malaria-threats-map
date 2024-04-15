@@ -12,8 +12,8 @@ export interface Study {
     CURATION: string;
     CITATION_URL: string;
     CITATION: string;
-    Latitude: string;
-    Longitude: string;
+    Latitude: number;
+    Longitude: number;
     INSTITUTION?: string;
     INSTITUTION_CITY?: string;
     INSTITUTION_TYPE?: string;
@@ -22,11 +22,9 @@ export interface Study {
     INSECTICIDE_CLASS: string;
     INSECTICIDE_TYPE: string;
     INSTITUTE: string;
-    MALARIA_ENDEMIC: number;
     MECHANISM_FREQUENCY: string;
     MECHANISM_PROXY: string;
     MECHANISM_STATUS: string;
-    METHOD_STANDARD: number;
     MONTH_END: string;
     MONTH_START: string;
     MORTALITY_ADJUSTED: string;
@@ -36,7 +34,7 @@ export interface Study {
     RESISTANCE_FREQUENCY: string;
     RESISTANCE_INTENSITY: string;
     RESISTANCE_STATUS: string;
-    RESISTANCE_STATUS_NUMERIC: number;
+    RESISTANCE_STATUS_NUMERIC: string;
     SPECIES: string;
     STAGE_ORIGIN: string;
     SUBREGION: string;
@@ -46,15 +44,15 @@ export interface Study {
     TYPE: string;
     TYPE_SYNERGIST: string;
     VERSION: number;
-    YEAR_END: string;
-    YEAR_START: string;
+    YEAR_END: number;
+    YEAR_START: number;
     DOWNLOAD: number;
 }
 
 export function getMinMaxYears(studies: Study[], maxAsCurrent = true, minToOverwrite?: number): [number, number] {
     if (studies.length === 0) return [minToOverwrite || 2010, new Date().getFullYear()];
-    const startYears = studies.map(study => parseInt(study.YEAR_START));
-    const endYears = studies.map(study => parseInt(study.YEAR_END));
+    const startYears = studies.map(study => study.YEAR_START);
+    const endYears = studies.map(study => study.YEAR_END);
     const years = _.compact(_.uniq([...startYears, ...endYears]).sort());
 
     const current = new Date().getFullYear();

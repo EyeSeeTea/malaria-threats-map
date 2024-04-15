@@ -105,7 +105,7 @@ const ThemeSelectionSection = ({ translations }: Props) => {
                                 {t("common.dashboard.filtersSection.second.helper")}
                             </Typography>
                             <StyledGenerateButton
-                                disabled={selectedCountries.length === 0 || theme === undefined}
+                                disabled={selectedCountries.length === 0 || !theme}
                                 onClick={onGenerate}
                             >
                                 {t("common.dashboard.filtersSection.second.cta")}

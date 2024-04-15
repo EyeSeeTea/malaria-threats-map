@@ -109,7 +109,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                     return followUpCountrySpeciesGroupStudies
                         .map(([followUpDays, followUpCountrySpeciesStudies]) => {
                             const yearSortedStudies = followUpCountrySpeciesStudies
-                                .map((study: TreatmentStudy) => parseInt(study.YEAR_START))
+                                .map((study: TreatmentStudy) => study.YEAR_START)
                                 .sort();
                             const minYear = yearSortedStudies[0];
                             const maxYear = yearSortedStudies[yearSortedStudies.length - 1];
@@ -284,7 +284,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                                                             id={labelId}
                                                             scope="row"
                                                             padding="none"
-                                                            isRight={header.align === "right"}
+                                                            $isRight={header.align === "right"}
                                                             divider={header.divider}
                                                         >
                                                             {header && header.numeric && isNumber

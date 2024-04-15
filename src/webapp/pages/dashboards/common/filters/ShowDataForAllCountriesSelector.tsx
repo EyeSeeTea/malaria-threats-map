@@ -13,8 +13,6 @@ const ShowDataForAllCountriesSelector: React.FC<ShowDataForAllCountriesSelectorP
         onChange((event.target as HTMLInputElement).value as ShowDataForCountries);
     };
 
-    console.log({ value });
-
     return (
         <Container>
             <RadioGroup aria-label="all Countries" value={String(value)} onChange={handleChange}>

@@ -54,23 +54,30 @@ export function useResistanceToInsecticide() {
     }, [preventionStudies, filteredStudies, selectedCountries, chartType, insecticideTypes, insecticideClasses]);
 
     React.useEffect(() => {
-        if (chartType === "by-insecticide-class") {
-            if (insecticideClasses.length === 0) {
-                onInsecticideClassChange(insecticideClassOptions.map(op => op.value));
-                onInsecticideTypesChange([]);
+        onInsecticideClassChange(insecticideClassOptions.map(op => op.value));
+        onInsecticideTypesChange([]);
+    }, [insecticideClassOptions, onInsecticideClassChange, onInsecticideTypesChange]);
+
+    const resetInsecticideClassAndTypesOptionsByType = React.useCallback(
+        (type: ResistanceToInsecticideChartType) => {
+            if (type === "by-insecticide-class") {
+                if (insecticideClasses.length === 0) {
+                    onInsecticideClassChange(insecticideClassOptions.map(op => op.value));
+                    onInsecticideTypesChange([]);
+                }
+            } else {
+                //onInsecticideClassChange([]);
+                onInsecticideTypesChange(insecticideTypeOptions.map(op => op.value));
             }
-        } else {
-            //onInsecticideClassChange([]);
-            onInsecticideTypesChange(insecticideTypeOptions.map(op => op.value));
-        }
-    }, [
-        chartType,
-        onInsecticideClassChange,
-        onInsecticideTypesChange,
-        insecticideClassOptions,
-        insecticideTypeOptions,
-        insecticideClasses.length,
-    ]);
+        },
+        [
+            insecticideClassOptions,
+            insecticideClasses.length,
+            insecticideTypeOptions,
+            onInsecticideClassChange,
+            onInsecticideTypesChange,
+        ]
+    );
 
     React.useEffect(() => {
         if (chartType === "by-insecticide-class") {
@@ -80,9 +87,13 @@ export function useResistanceToInsecticide() {
         }
     }, [chartType, filteredStudies]);
 
-    const onChartTypeChange = React.useCallback((type: ResistanceToInsecticideChartType) => {
-        setChartType(type);
-    }, []);
+    const onChartTypeChange = React.useCallback(
+        (type: ResistanceToInsecticideChartType) => {
+            setChartType(type);
+            resetInsecticideClassAndTypesOptionsByType(type);
+        },
+        [resetInsecticideClassAndTypesOptionsByType]
+    );
 
     return {
         insecticideTypeOptions,

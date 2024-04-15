@@ -36,6 +36,11 @@ const LineChart: React.FC<{
     const { t } = useTranslation();
     return (
         <React.Fragment>
+            <Typography variant="h6" gutterBottom fontWeight="bold" marginBottom={2}>
+                {t(
+                    "common.dashboard.phenotypicInsecticideResistanceDashboards.spreadOfResistanceOverTime.sumConfirmedResistance"
+                )}
+            </Typography>
             <LineChartLegend
                 chartType={chartType}
                 allInsecticideClassesOrTypes={allInsecticideClassesOrTypes}
@@ -43,12 +48,6 @@ const LineChart: React.FC<{
                 selectedInsecticideClassesOrTypes={selectedInsecticideClassesOrTypes}
             />
             <Stack direction="row" alignItems="center" sx={{ minHeight: 600 }}>
-                <YAxisTitle>
-                    {t(
-                        "common.dashboard.phenotypicInsecticideResistanceDashboards.spreadOfResistanceOverTime.sumConfirmedResistance"
-                    )}
-                </YAxisTitle>
-
                 <div style={{ overflowX: "auto" }}>
                     <Table>
                         <tbody>
@@ -81,7 +80,11 @@ const LineChart: React.FC<{
                                             return (
                                                 <tr key={`${isoCountry}-${specie}`}>
                                                     {specieIndex === 0 && (
-                                                        <td rowSpan={species.length}>{t(isoCountry)}</td>
+                                                        <td rowSpan={species.length}>
+                                                            {t(`countries.${isoCountry}`, {
+                                                                defaultValue: t(isoCountry),
+                                                            })}
+                                                        </td>
                                                     )}
                                                     <td>{specie}</td>
                                                     <td>
@@ -98,7 +101,7 @@ const LineChart: React.FC<{
                                         })
                                     ) : (
                                         <NotAvailableTR key={`${isoCountry}`} style={{ minHeight: 100 }}>
-                                            <td>{t(isoCountry)}</td>
+                                            <td>{t(`countries.${isoCountry}`, { defaultValue: t(isoCountry) })}</td>
                                             <td></td>
                                             <td>{t("common.dashboard.not-available")}</td>
                                         </NotAvailableTR>
@@ -121,7 +124,7 @@ const LineChart: React.FC<{
                                     <tr key={isoCountry}>
                                         <CountryTd>
                                             <Typography variant="body1" sx={{ marginLeft: 8 }}>
-                                                {t(isoCountry)}
+                                                {t(`countries.${isoCountry}`, { defaultValue: t(isoCountry) })}
                                             </Typography>
                                         </CountryTd>
                                         <td>
@@ -138,7 +141,7 @@ const LineChart: React.FC<{
                                     <NotAvailableTR key={`${isoCountry}`} style={{ minHeight: 100 }}>
                                         <CountryTd>
                                             <Typography variant="body1" sx={{ marginLeft: 8 }}>
-                                                {t(isoCountry)}
+                                                {t(`countries.${isoCountry}`, { defaultValue: t(isoCountry) })}
                                             </Typography>
                                         </CountryTd>
                                         <td>{t("common.dashboard.not-available")}</td>
@@ -152,16 +155,6 @@ const LineChart: React.FC<{
         </React.Fragment>
     );
 };
-
-const YAxisTitle = styled.span`
-    display: inline-block;
-    transform: rotate(-90deg);
-    transform-origin: center;
-    font-size: 14px;
-    font-weight: bold;
-    white-space: nowrap;
-    width: 60px;
-`;
 
 const Table = styled.table`
     table-layout: fixed;
@@ -200,6 +193,7 @@ function chartOptions(
         chart: {
             marginTop: 0,
             marginBottom: xAxisVisible ? 40 : 0,
+            height: 250,
         },
 
         tooltip: {

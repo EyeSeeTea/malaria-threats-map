@@ -29,7 +29,9 @@ const DashboardsPageContent: React.FC = () => {
         const country = params.get("country");
 
         onThemeChange(theme as DashboardsThemeOptions);
-        onSelectedCountriesChange([country]);
+        if (country) {
+            onSelectedCountriesChange([country]);
+        }
         setSearchParams(params, { replace: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

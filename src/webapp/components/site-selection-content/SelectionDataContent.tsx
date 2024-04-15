@@ -173,12 +173,7 @@ const DiagnosisContent: React.FC<{ selectionData: DiagnosisSelectionData }> = ({
                 <RoundedContainer>
                     {selectionData.data && <GeneDeletionsChart selectionData={selectionData} />}
 
-                    {selectionData.dataSources && (
-                        <CitationNew
-                            dataSources={selectionData.dataSources}
-                            showKey={selectionData.dataSources.length > 1}
-                        />
-                    )}
+                    {selectionData.dataSources && <CitationNew dataSources={selectionData.dataSources} />}
                     {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
                 </RoundedContainer>
             )}

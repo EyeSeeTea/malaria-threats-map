@@ -19,7 +19,6 @@ export function usePreventionFilters(): PreventionFiltersState {
     const [maxMinYears] = useState<[number, number]>(getMinMaxYears(dashboardsPreventionStudies, true));
     const [disaggregateBySpeciesSelection, setDisaggregateBySpeciesChange] =
         useState<DisaggregateBySpeciesOptions>("aggregate_species");
-    const [disableSpeciesFilter, setDisableSpeciesFilter] = useState<boolean>(false);
 
     const onInsecticideClassChange = React.useCallback((values: string[]) => {
         setInsecticideClasses(sortInsecticideClasses(values));
@@ -53,10 +52,6 @@ export function usePreventionFilters(): PreventionFiltersState {
         setDisaggregateBySpeciesChange(value);
     }, []);
 
-    const onDisableSpeciesFilter = React.useCallback((value: boolean) => {
-        setDisableSpeciesFilter(value);
-    }, []);
-
     return {
         insecticideClasses,
         species,
@@ -67,7 +62,6 @@ export function usePreventionFilters(): PreventionFiltersState {
         onlyIncludeDataByHealth,
         maxMinYears,
         disaggregateBySpeciesSelection,
-        disableSpeciesFilter,
         onInsecticideClassChange,
         onSpeciesChange,
         onInsecticideTypesChange,
@@ -76,6 +70,5 @@ export function usePreventionFilters(): PreventionFiltersState {
         onOnlyIncludeBioassaysWithMoreMosquitoesChange,
         onOnlyIncludeDataByHealthChange,
         onDisaggregateBySpeciesChange,
-        onDisableSpeciesFilter,
     };
 }

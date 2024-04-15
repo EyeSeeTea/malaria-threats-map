@@ -48,7 +48,7 @@ export function createTableData(studies: PreventionStudy[]): TableData[] {
                 return {
                     ID: `${country}_${species}`,
                     ISO2: country,
-                    COUNTRY: i18next.t(country),
+                    COUNTRY: i18next.t(`countries.${country}`, { defaultValue: i18next.t(country) }),
                     COUNTRY_NUMBER: entries.length,
                     SPECIES: species,
                     INSECTICIDE_CLASSES: `${insecticideClasses.length}`,
@@ -98,7 +98,7 @@ export function resolvePyrethroids(insecticideClass: string, countrySpeciesStudi
           })`
         : "-";
 
-    const sorted = R.sortBy(study => -parseInt(study.YEAR_START), studies);
+    const sorted = R.sortBy(study => -study.YEAR_START, studies);
 
     return {
         percentage,

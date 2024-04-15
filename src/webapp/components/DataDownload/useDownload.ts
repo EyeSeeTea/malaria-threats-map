@@ -52,7 +52,7 @@ export function useDownload(
     }, [activeStep, logEvent]);
 
     React.useEffect(() => {
-        setTheme("prevention", "download");
+        setTheme("invasive", "download");
     }, [setTheme, setPreventionDataset]);
 
     const onChangeTermsInfo = useCallback(

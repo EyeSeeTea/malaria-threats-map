@@ -17,7 +17,7 @@ interface TreatmentOverTimeTableProps {
 const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows, plasmodiumSpecie }) => {
     const classes = useStyles({});
     const { t } = useTranslation();
-    const [order, setOrder] = React.useState<Order>("desc");
+    const [order, setOrder] = React.useState<Order>("asc");
     const [orderBy, setOrderBy] = React.useState<keyof TableData>("DRUG");
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(20);
@@ -57,7 +57,7 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows, p
                     {plasmodiumSpecie && (
                         <>
                             <br />
-                            <Typography variant="body1" id="tableTitle">
+                            <Typography variant="body1" id="tableTitle" fontStyle="italic">
                                 ({t(plasmodiumSpecie.replace(".", "%2E"))})
                             </Typography>
                         </>
@@ -92,6 +92,7 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows, p
                                                     scope="row"
                                                     padding="none"
                                                     rowSpan={row.COUNTRY_NUMBER}
+                                                    $isLast
                                                 >
                                                     {row.COUNTRY}
                                                 </StyledCell>
@@ -112,8 +113,9 @@ const TreatmentOverTimeTable: React.FC<TreatmentOverTimeTableProps> = ({ rows, p
                                                         id={labelId}
                                                         scope="row"
                                                         padding="none"
-                                                        isRight={header.dataAlign === "right"}
+                                                        $isRight={header.dataAlign === "right"}
                                                         divider={header.divider}
+                                                        $isLast={tablePage[index].ISO2 !== tablePage[index + 1]?.ISO2}
                                                     >
                                                         {header && header.numeric && isNumber
                                                             ? `${number.toFixed(header.decimalPositions | 0)}`
@@ -162,7 +164,7 @@ function EnhancedTableHead(props: EnhancedTableProps<TableData>) {
                         isBold
                     />
                 ))}
-                <StyledCell colSpan={subheadCells.length} align="center" isBold divider>
+                <StyledCell colSpan={subheadCells.length} align="center" $isBold divider>
                     {t("common.report.treatment.percentage_patients_treatment_failure")}
                 </StyledCell>
             </TableRow>
