@@ -555,7 +555,7 @@
                 },
                 "chlorfenapyr_undetermined": {
                     "help": {
-                        "p1": "Les points gris représentent les données recueillies avec la concentration discriminante recommandée de 100 µg/flacon mais qui ne correspondent pas entièrement aux critères de l'OMS pour la validation du test, soit parce que la température n'a pas été signalée, soit parce que la température est tombée en dehors de la plage recommandée (27 °C ± 2 ° C), parce qu'aucune souche de moustique sensible n'a été testée en parallèle ou parce que les résultats de la souche de moustique sensible n'ont pas été rapportés.",
+                        "p1": "Les points gris représentent les données recueillies avec la concentration discriminante recommandée pour le chlorfénapyr (100 µg/flacon) mais qui ne correspondent pas entièrement aux critères de l'OMS pour la validation du test, soit parce que la température n'a pas été signalée, soit parce que la température est tombée en dehors de la plage recommandée (27 °C ± 2 ° C), parce qu'aucune souche de moustique sensible n'a été testée en parallèle ou parce que les résultats de la souche de moustique sensible n'ont pas été rapportés.  Le statut de résistance ne peut être déterminé que si les conditions susmentionnées sont remplies dans trois tests effectués sur le même site.",
                         "p2": "",
                         "footer": "Source des données : publications et rapports non publiés et informations des bureaux de pays."
                     }

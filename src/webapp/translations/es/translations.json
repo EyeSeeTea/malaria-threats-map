@@ -555,7 +555,7 @@
                 },
                 "chlorfenapyr_undetermined": {
                     "help": {
-                        "p1": "Los puntos grises representan los datos recopilados con la concentración de discriminación recomendada de 100 µg/botella, pero que no coinciden completamente con los criterios de la OMS para la validación de la prueba, ya sea porque no se informó la temperatura o porque la temperatura cayó fuera del rango recomendado (27 °C ± 2 °C). C), porque no se probó ninguna cepa de mosquito susceptible en paralelo o porque no se informaron los resultados de la cepa de mosquito susceptible.",
+                        "p1": "Los puntos grises representan los datos recopilados con la concentración de discriminación recomendada para el clorfenapir (100 µg/botella), pero que no coinciden completamente con los criterios de la OMS para la validación de la prueba, ya sea porque no se informó la temperatura o porque la temperatura cayó fuera del rango recomendado (27 °C ± 2 °C). C), porque no se probó ninguna cepa de mosquito susceptible en paralelo o porque no se informaron los resultados de la cepa de mosquito susceptible.  El estado de resistencia sólo puede determinarse si se cumplen los requisitos anteriores en tres pruebas realizadas en el mismo lugar.",
                         "p2": "",
                         "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
                     }
