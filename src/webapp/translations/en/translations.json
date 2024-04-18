@@ -553,7 +553,7 @@
                 },
                 "chlorfenapyr_undetermined": {
                     "help": {
-                        "p1": "Grey dots represent data collected with the recommended discriminating concentration of 100 µg/bottle but that do not fully match WHO criteria for test validation, either because the temperature was not reported, because temperature fell outside of the recommended range (27 °C ± 2 °C), because no susceptible mosquito strain was tested in parallel or because results of the susceptible mosquito strain were not reported.",
+                        "p1": "Grey dots represent data collected with the recommended discriminating concentration of chlorfenapyr: 100 µg/bottle but that do not fully match WHO criteria for test validation, either because the temperature was not reported, because temperature fell outside of the recommended range (27 °C ± 2 °C), because no susceptible mosquito strain was tested in parallel or because results of the susceptible mosquito strain were not reported. Resistance status can only be determined if the above requirements are met in three tests conducted at the same site.",
                         "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
