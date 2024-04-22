@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { format } from "date-fns";
-import { TFunction } from "i18next";
+import i18next from "i18next";
 import {
     mapDiagnosisStudiesToCSV,
     mapInvasiveStudiesToCSV,
@@ -8,13 +8,12 @@ import {
     mapTreatmentStudiesToCSV,
 } from "./mappers/cvsMapper";
 import { exportToCSV, Tab } from "./download";
-import { DatabaseSelection, TermsInfo, UserInfo } from "./types";
+import { DatabaseSelection, Download, TermsInfo, UserInfo } from "./types";
 import { ActionCreatorTypeMetadata, PayloadActionCreator } from "typesafe-actions";
 import { ActionTypeEnum } from "../../store/actions";
 import { GAEvent, Source } from "../../store/actions/base-actions";
 import { emailRegexp } from "../../../domain/common/regex";
 import { ActionGroup } from "../../store/types";
-import { Download } from "../../../domain/entities/Download";
 
 export function useDownload(
     logEvent: PayloadActionCreator<ActionTypeEnum.MalariaLogEvent, GAEvent>,
@@ -29,8 +28,7 @@ export function useDownload(
         ActionCreatorTypeMetadata<ActionTypeEnum.MalariaSetTheme>,
     setPreventionDataset: PayloadActionCreator<ActionTypeEnum.SetPreventionDataset, string>,
     addDownload: PayloadActionCreator<ActionTypeEnum.AddDownloadRequest, Download>,
-    setActionGroupSelected: PayloadActionCreator<ActionTypeEnum.MalariaActionGroupSelected, ActionGroup>,
-    t: TFunction
+    setActionGroupSelected: PayloadActionCreator<ActionTypeEnum.MalariaActionGroupSelected, ActionGroup>
 ) {
     const [activeStep, setActiveStep] = React.useState(0);
     const [messageLoader, setMessageLoader] = React.useState<string | undefined>("");
@@ -55,63 +53,48 @@ export function useDownload(
         setTheme("invasive", "download");
     }, [setTheme, setPreventionDataset]);
 
-    const onChangeTermsInfo = useCallback(
-        (field: keyof TermsInfo, value: any) => {
-            setTermsInfo({ ...termsInfo, [field]: value });
-        },
-        [termsInfo]
-    );
+    const onChangeTermsInfo = (field: keyof TermsInfo, value: any) => {
+        setTermsInfo({ ...termsInfo, [field]: value });
+    };
+    const onChangeUserInfo = (field: keyof UserInfo, value: any) => {
+        setUserInfo({ ...userInfo, [field]: value });
+    };
 
-    const onChangeUserInfo = useCallback(
-        (field: keyof UserInfo, value: any) => {
-            setUserInfo({ ...userInfo, [field]: value });
-        },
-        [userInfo]
-    );
+    const onChangeSelectedDatabases = (databases: DatabaseSelection[]) => {
+        setSelectedDatabases(databases);
+        setTheme("invasive", "download");
+        setActionGroupSelected("THEME");
+    };
 
-    const onChangeSelectedDatabases = useCallback(
-        (databases: DatabaseSelection[]) => {
-            setSelectedDatabases(databases);
-            setTheme("prevention", "download");
-            setActionGroupSelected("THEME");
-        },
-        [setActionGroupSelected, setTheme]
-    );
-
-    const handleNext = useCallback(() => {
+    const handleNext = () => {
         setActiveStep(prevActiveStep => prevActiveStep + 1);
-    }, []);
+    };
 
-    const handleBack = useCallback(() => {
+    const handleBack = () => {
         setActiveStep(prevActiveStep => prevActiveStep - 1);
-    }, []);
+    };
 
-    const changeLoaderAndExportToCSV = useCallback(
-        (tabs: Tab[], filename: string) => {
-            setMessageLoader(t("common.data_download.loader.generating_file"));
-            setTimeout(() => {
-                exportToCSV(tabs, filename);
-            }, 100);
-        },
-        [t]
-    );
-
-    const downloadData = useCallback(() => {
-        // setDownloading(true);
-        setMessageLoader(t("common.data_download.loader.fetching_data"));
+    const downloadData = () => {
+        setMessageLoader(i18next.t("common.data_download.loader.fetching_data"));
         setTimeout(() => {
             const request: Download = {
                 firstName: userInfo.firstName,
                 lastName: userInfo.lastName,
-                organizationType: userInfo.organizationType,
+                organizationType: i18next.t(`common.${userInfo.organizationType}`),
                 organizationName: userInfo.organizationName,
                 uses: userInfo.uses,
                 country: userInfo.country,
                 email: userInfo.email,
                 contactConsent: userInfo.contactConsent,
+                organisationProjectConsent: userInfo.piConsent,
                 theme: selectedDataBases.map(database => database.kind).join(","),
                 dataset: selectedDataBases.map(database => database.dataset).join(","),
-                date: new Date().toISOString().slice(0, 10),
+                position: "N/A", // TODO: Old field in backend
+                researchInfo: "N/A", // TODO: Old field in backend
+                policiesInfo: "N/A", // TODO: Old field in backend
+                toolsInfo: "N/A", // TODO: Old field in backend
+                implementationCountries: "N/A", // TODO: Old field in backend
+                date: new Date().toISOString().slice(0, 10), // TODO: Old field in backend
             };
             const dateString = format(new Date(), "yyyyMMdd");
 
@@ -144,39 +127,37 @@ export function useDownload(
 
             addDownload(request);
         }, 100);
-    }, [
-        addDownload,
-        changeLoaderAndExportToCSV,
-        logEvent,
-        selectedDataBases,
-        t,
-        userInfo.contactConsent,
-        userInfo.country,
-        userInfo.email,
-        userInfo.firstName,
-        userInfo.lastName,
-        userInfo.organizationName,
-        userInfo.organizationType,
-        userInfo.uses,
-    ]);
+    };
 
-    const isStepValid = useCallback(() => {
+    const changeLoaderAndExportToCSV = (tabs: Tab[], filename: string) => {
+        setMessageLoader(i18next.t("common.data_download.loader.generating_file"));
+        setTimeout(() => {
+            exportToCSV(tabs, filename);
+            setMessageLoader(undefined);
+        }, 100);
+    };
+
+    const isWelcomeFormValid = () => {
+        return termsInfo.agreement;
+    };
+
+    const isUserFormValid = () => {
+        return emailRegexp.test(userInfo.email) || !userInfo.email;
+    };
+    const isStepValid = () => {
         switch (activeStep) {
             case 0:
-                return isDownloadFormValid(selectedDataBases);
+                return isDownloadFormValid();
             case 1:
-                return isDownloadFormValid(selectedDataBases) && isUserFormValid(userInfo);
+                return isDownloadFormValid() && isUserFormValid();
             case 2:
-                return (
-                    isDownloadFormValid(selectedDataBases) && isUserFormValid(userInfo) && isWelcomeFormValid(termsInfo)
-                );
+                return isDownloadFormValid() && isUserFormValid() && isWelcomeFormValid();
         }
-    }, [activeStep, selectedDataBases, termsInfo, userInfo]);
+    };
 
-    const isFormValid = useCallback(
-        () => isWelcomeFormValid(termsInfo) && isUserFormValid(userInfo) && isDownloadFormValid(selectedDataBases),
-        [selectedDataBases, termsInfo, userInfo]
-    );
+    const isFormValid = () => isWelcomeFormValid() && isUserFormValid() && isDownloadFormValid();
+
+    const isDownloadFormValid = () => selectedDataBases.length > 0;
 
     return {
         activeStep,
@@ -194,13 +175,3 @@ export function useDownload(
         onChangeTermsInfo,
     };
 }
-
-const isWelcomeFormValid = (termsInfo: Partial<TermsInfo>) => {
-    return termsInfo.agreement;
-};
-
-const isUserFormValid = (userInfo: Partial<UserInfo>) => {
-    return emailRegexp.test(userInfo.email) || !userInfo.email;
-};
-
-const isDownloadFormValid = (selectedDataBases: DatabaseSelection[]) => selectedDataBases.length > 0;
