@@ -36,9 +36,6 @@ const XMART_URL_PROD = "https://xmart-api-public.who.int/MAL_THREATS";
 
 const FEEDBACK_EMAIL_FROM = process.env.REACT_APP_FEEDBACK_EMAIL_FROM;
 
-const BACKEND_URL_STAGING = "https://apps-dev.who.int/malaria-api";
-const BACKEND_URL_PROD = "https://apps.who.int/malaria-api/";
-
 const ANALYTICS_STAGING_ID = "G-4BFXR08NKP";
 const ANALYTICS_ID = "G-L4JVKD6B9R";
 
@@ -89,7 +86,7 @@ const configurations: { [key: string]: ConfigProps } = {
     local: {
         ...base,
         ...stagingMapServer,
-        backendUrl: BACKEND_URL_STAGING,
+        backendUrl: process.env.REACT_APP_BACKEND_URL || "https://extranet.who.int/malthreats-api/", // https://portal-uat.who.int/malthreats-api/ has a temporary problem
         gaAppId: ANALYTICS_STAGING_ID,
         env: "local",
         feedbackEmailFrom: FEEDBACK_EMAIL_FROM,
@@ -100,7 +97,7 @@ const configurations: { [key: string]: ConfigProps } = {
     dev: {
         ...base,
         ...stagingMapServer,
-        backendUrl: BACKEND_URL_STAGING,
+        backendUrl: "https://extranet.who.int/malthreats-api/", // https://portal-uat.who.int/malthreats-api/ has a temporary problem
         gaAppId: ANALYTICS_STAGING_ID,
         env: "dev",
         hotjar: { hjid: 2287362, hjsv: 6 },
@@ -112,7 +109,7 @@ const configurations: { [key: string]: ConfigProps } = {
     staging: {
         ...base,
         ...stagingMapServer,
-        backendUrl: BACKEND_URL_STAGING,
+        backendUrl: "https://extranet.who.int/malthreats-api/", // https://portal-uat.who.int/malthreats-api/ has a temporary problem
         gaAppId: ANALYTICS_STAGING_ID,
         env: "staging",
         hotjar: { hjid: 2280607, hjsv: 6 },
@@ -124,7 +121,7 @@ const configurations: { [key: string]: ConfigProps } = {
     prod: {
         ...base,
         ...prodMapServer,
-        backendUrl: BACKEND_URL_PROD,
+        backendUrl: `https://extranet.who.int/malthreats-api/`,
         gaAppId: ANALYTICS_ID,
         env: "prod",
         hotjar: { hjid: 2269048, hjsv: 6 },

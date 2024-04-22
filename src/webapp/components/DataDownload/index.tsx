@@ -60,7 +60,7 @@ function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset, s
         onChangeSelectedDatabases,
         onChangeUserInfo,
         onChangeTermsInfo,
-    } = useDownload(logEvent, setTheme, setPreventionDataset, addDownload, setActionGroupSelected, t);
+    } = useDownload(logEvent, setTheme, setPreventionDataset, addDownload, setActionGroupSelected);
 
     const steps = getSteps();
 
@@ -141,7 +141,7 @@ function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset, s
                         variant={"contained"}
                         color={"primary"}
                         disabled={!isFormValid()}
-                        onClick={downloadData}
+                        onClick={() => downloadData()}
                         size="large"
                     >
                         {t("common.data_download.buttons.download")}
