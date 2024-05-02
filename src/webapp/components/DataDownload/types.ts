@@ -56,23 +56,3 @@ export type DatabaseSelection =
     | DiagnosisDatabaseSelection
     | TreatmentDatabaseSelection
     | InvasiveDatabaseSelection;
-
-export type Download = {
-    firstName: string;
-    lastName: string;
-    organizationType: string;
-    organizationName: string;
-    uses: string;
-    position: string;
-    country: string;
-    email: string;
-    date: string;
-    researchInfo: string;
-    policiesInfo: string;
-    contactConsent: boolean;
-    organisationProjectConsent: boolean;
-    toolsInfo: string;
-    implementationCountries: string;
-    theme: string;
-    dataset: string;
-};
