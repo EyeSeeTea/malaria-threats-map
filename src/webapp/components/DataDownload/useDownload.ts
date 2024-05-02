@@ -91,6 +91,7 @@ export function useDownload(
             setMessageLoader(t("common.data_download.loader.generating_file"));
             setTimeout(() => {
                 exportToCSV(tabs, filename);
+                setMessageLoader(undefined);
             }, 100);
         },
         [t]
