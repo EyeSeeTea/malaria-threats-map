@@ -37,7 +37,7 @@ const XMART_URL_PROD = "https://xmart-api-public.who.int/MAL_THREATS";
 const FEEDBACK_EMAIL_FROM = process.env.REACT_APP_FEEDBACK_EMAIL_FROM;
 
 const BACKEND_URL_STAGING = "https://apps-dev.who.int/malaria-api";
-const BACKEND_URL_PROD = "https://apps.who.int/malaria-api/";
+const BACKEND_URL_PROD = "https://apps.who.int/malaria-api";
 
 const ANALYTICS_STAGING_ID = "G-4BFXR08NKP";
 const ANALYTICS_ID = "G-L4JVKD6B9R";
